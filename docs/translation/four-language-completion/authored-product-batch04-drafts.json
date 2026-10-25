@@ -1,0 +1,445 @@
+{
+  "status": "IN PROGRESS: Unreviewed faithful source-bound drafts; fluent and agricultural review remain. Whole app unfinished.",
+  "sourceInventorySha256": "8a7adf7f7e01f094eda9b985b4b0d4cd953374285f18f29d78e866468c304c38",
+  "sourceCount": 17,
+  "rows": [
+    {
+      "english": "ripe berries",
+      "zu": "amajikijolo avuthiwe",
+      "st": "menokotshwai e butswitseng",
+      "ts": "mihandzu ya berry leyi vupfeke",
+      "ve": "mitshelo ya berry yo vhibvaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Use well-drained soil and sun. The source excludes the Cape winter-rainfall area from its natural distribution and distinguishes several subspecies.",
+      "zu": "Sebenzisa inhlabathi edonsa amanzi kahle nendawo enelanga. Umthombo awufaki indawo yaseCape enemvula yasebusika ekusabalaleni kwaso kwemvelo futhi uhlukanisa izinhlobo ezingaphansi kohlobo olukhulu eziningana (subspecies).",
+      "st": "Sebedisa mobu o ntshang metsi hantle le letsatsi. Mohlodi ha o kenye sebaka sa Cape se nang le dipula tsa mariha kabong ya sona ya tlhaho mme o kgetholla mefuta e mmalwa e ka tlasa mofuta o moholo (subspecies).",
+      "ts": "Tirhisa misava leyi humesaka mati kahle ni dyambu. Xihlovo a xi katsi ndhawu ya Cape leyi naka mpfula hi xixika eka ku hangalaka ka xona ka ntumbuluko naswona xi hambanisa tinxaka to hlaya ta le hansi ka species (subspecies).",
+      "ve": "Shumisani mavu a bvisaho maḓi zwavhuḓi na ḓuvha. Tshiko a tshi kateli vhupo ha Cape ha mvula dza vhuria kha u phaḓalala hatsho ha mvelo nahone tshi fhambanyisa tshaka dzi re fhasi ha lushaka luhulwane (subspecies) dzo vhalaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask the nursery to identify the subspecies and sex and provide compatible male and female plants for fruit.",
+      "zu": "Cela inkulisa ihlonze uhlobo olungaphansi kohlobo olukhulu (subspecies) nobulili besitshalo futhi ikunike izitshalo zesilisa nezesifazane ezihambelanayo ukuze kuthele izithelo.",
+      "st": "Kopa sebaka sa ho hodisa dimela ho hlwaya mofuta o ka tlasa mofuta o moholo (subspecies) le bong ba semela le ho fana ka dimela tse tona le tse tshehadi tse dumellanang bakeng sa ditholwana.",
+      "ts": "Kombela ndhawu yo kurisa swimila yi tiva subspecies ni rimbewu ra ximilana, yi nyika swimila swa xinuna ni swa xisati leswi fambelanaka leswaku swi humesa mihandzu.",
+      "ve": "Humbelani fhethu ha u alusa zwimela uri hu ṱalule subspecies na mbeu ya tshimela, hu ṋee zwimela zwa tshiduna na tshisadzi zwi tshimbilelanaho u itela mitshelo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "SANBI describes sweet, jelly-like ripe flesh. January–May is fruiting; it does not state exact ripe-picking limits.",
+      "zu": "I-SANBI ichaza inyama yesithelo evuthiwe enoshukela efana nejeli. Januwari–Meyi yisikhathi sokuthela izithelo; ayisho imingcele eqondile yokukha okuvuthiwe.",
+      "st": "SANBI e hlalosa nama e monate e butswitseng e tshwanang le jeli. Pherekgong–Motsheanong ke nako ya ho beha ditholwana; ha e bolele meedi e nepahetseng ya ho kga tse butswitseng.",
+      "ts": "SANBI yi hlamusela nyama ya muhandzu leyi vupfeke, yo tsokombela yo fana na jeli. Sunguti–Mudyaxihi i nkarhi wo tswala mihandzu; a yi vuli mindzilekano leyi kongomeke yo kha leyi vupfeke.",
+      "ve": "SANBI i ṱalutshedza ṋama yo vhibvaho i re na muthetshelo wavhuḓi, i fanaho na jeli. Phando–Shundunthule ndi tshifhinga tsha u aṋwa mitshelo; a i buli mikano yo teaho ya u kaṋa yo vhibvaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Flowering and fruit development, not a ripe picking calendar",
+      "zu": "Ukuqhakaza nokukhula kwezithelo, hhayi ikhalenda lokukha okuvuthiwe",
+      "st": "Ho thunya le ho hola ha ditholwana, eseng khalendara ya ho kga tse butswitseng",
+      "ts": "Ku rhumbuka ni ku kula ka mihandzu, ku nga ri khalendara yo kha leyi vupfeke",
+      "ve": "U ṱuma maluvha na u aluwa ha mitshelo, hu si khalenda ya u kaṋa yo vhibvaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The source combines flowering and fruiting in November–January and separately describes fruit development. It does not date the ripe yellow-orange fruit. These are flowering/fruit-development observations, not food ready to pick; local ripe picking months remain unknown.",
+      "zu": "Umthombo uhlanganisa ukuqhakaza nokuthela izithelo ngoNovemba–Januwari futhi uchaza ukukhula kwezithelo ngokwehlukana. Awusho ukuthi izithelo ezivuthiwe eziphuzi ngokusawolintshi ziba khona nini. Lokhu ukuqashelwa kokuqhakaza/nokukhula kwezithelo, akukhona ukudla okulungele ukukhiwa; izinyanga zendawo zokukha okuvuthiwe zisalokhu zingaziwa.",
+      "st": "Mohlodi o kopanya ho thunya le ho beha ditholwana ka Pundungwane–Pherekgong mme o hlalosa ho hola ha ditholwana ka thoko. Ha o behe nako ya ditholwana tse butswitseng tse tshehla tse kang lamunu. Tsena ke tse hlokometsoeng tsa ho thunya/ho hola ha ditholwana, eseng dijo tse loketseng ho kgwa; dikgwedi tsa lehae tsa ho kga tse butswitseng di ntse di sa tsejwe.",
+      "ts": "Xihlovo xi hlanganisa ku rhumbuka ni ku tswala mihandzu hi Hukuri–Sunguti, xi tlhela xi hlamusela ku kula ka mihandzu hi ku hambana. A xi veki masiku ya mihandzu leyi vupfeke ya xitshopana xa orenji. Leswi i leswi xiyiwaka swa ku rhumbuka/ku kula ka mihandzu, ku nga ri swakudya leswi lunghekeleke ku khiwa; tin’hweti ta laha kaya to kha leyi vupfeke ta ha ri leti nga tiviwiki.",
+      "ve": "Tshiko tshi ṱanganyisa u ṱuma maluvha na u aṋwa mitshelo nga Ḽara–Phando nahone tshi ṱalutshedza u aluwa ha mitshelo nga thungo. A tshi vhei tshifhinga tsha mitshelo yo vhibvaho ya muvhala wa tshitopana wo yaho kha orenji. Hezwi ndi zwe zwa vhonwa zwa u ṱuma maluvha/u aluwa ha mitshelo, hu si zwiḽiwa zwo no lugelaho u kaṋiwa; miṅwedzi ya henefho ya u kaṋa yo vhibvaho i kha ḓi sa ḓivhei.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "SANBI records it across varied eastern habitats and some Cape areas. It is hardy and drought resistant and can form a hedge.",
+      "zu": "I-SANBI isiqopha ezindaweni zokuphila zemvelo ezihlukahlukene zasempumalanga nakwezinye izindawo zaseCape. Siqinile, simelana nesomiso futhi singakha uthango.",
+      "st": "SANBI e se tlaleha dibakeng tse fapaneng tsa tlhaho tsa botjhabela le dibakeng tse ding tsa Cape. Se tiile, se mamella komello mme se ka etsa lekhoakhoa.",
+      "ts": "SANBI yi xi rhekhoda eka tindhawu to hambana ta ntumbuluko ta le vuxa ni tindhawu tin’wana ta Cape. Xa tiyisela, xi tiyisela dyandza naswona xi nga endla rihlampfu.",
+      "ve": "SANBI i tshi rekhoda kha vhupo ho fhambanaho ha mvelo ha vhubvaḓuvha na kha zwiṅwe zwipiḓa zwa Cape. Tshi a konḓelela, tshi konḓelela gomelelo nahone tshi nga ita luhura.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm the Ehretia species and local subspecies. If fruit is intended, ask about plant sex; the source records male and female flowers on different plants.",
+      "zu": "Qinisekisa uhlobo lwe-Ehretia nohlobo lwendawo olungaphansi kwalo (subspecies). Uma kuhloswe izithelo, buza ngobulili besitshalo; umthombo uqopha izimbali zesilisa nezesifazane ezitshalweni ezahlukene.",
+      "st": "Netefatsa mofuta wa Ehretia le subspecies ya lehae. Haeba ho rerilwe ditholwana, botsa ka bong ba semela; mohlodi o tlaleha dipalesa tse tona le tse tshehadi dimeleng tse fapaneng.",
+      "ts": "Tiyisisa species ya Ehretia ni subspecies ya laha kaya. Loko ku laviwa mihandzu, vutisa hi rimbewu ra ximilana; xihlovo xi rhekhoda maluva ya xinuna ni ya xisati eka swimila swo hambana.",
+      "ve": "Khwaṱhisedzani lushaka lwa Ehretia na subspecies ya henefho. Arali hu tshi ṱoḓiwa mitshelo, vhudzisani nga mbeu ya tshimela; tshiko tshi rekhoda maluvha a tshiduna na a tshisadzi kha zwimela zwo fhambanaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Food is the ripe black fruit. Spring flowers do not supply ripe-harvest months; growth rate is not food-bearing age.",
+      "zu": "Ukudla yisithelo esimnyama esivuthiwe. Izimbali zasentwasahlobo azinikezi izinyanga zokuvuna okuvuthiwe; ijubane lokukhula alilingani neminyaka yokuqala ukuthela ukudla.",
+      "st": "Dijo ke tholwana e ntsho e butswitseng. Dipalesa tsa selemo ha di fane ka dikgwedi tsa ho kotula tse butswitseng; lebelo la kgolo ha se dilemo tsa ho qala ho beha dijo.",
+      "ts": "Swakudya i muhandzu wa ntima lowu vupfeke. Maluva ya ximun’wana a ma nyiki tin’hweti to tshovela leswi vupfeke; rivilo ra ku kula a hi vukhale byo sungula ku humesa swakudya.",
+      "ve": "Zwiḽiwa ndi mutshelo mutswu wo vhibvaho. Maluvha a tshilimo a a ṋei miṅwedzi ya khaṋo yo vhibvaho; luvhilo lwa u aluwa a si miṅwaha ya u thoma u aṋwa zwiḽiwa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Use a hot, dry, well-drained position and allow for slow growth.",
+      "zu": "Sebenzisa indawo eshisayo, eyomile, edonsa amanzi kahle futhi ulindele ukukhula kancane.",
+      "st": "Sebedisa sebaka se tjhesang, se ommeng, se ntshang metsi hantle mme o lebelle kgolo e diehang.",
+      "ts": "Tirhisa ndhawu yo hisa, yo oma, leyi humesaka mati kahle naswona langutela ku kula hi ku nonoka.",
+      "ve": "Shumisani fhethu hu fhisaho, ho omaho, hu bvisaho maḓi zwavhuḓi nahone ni dzhiele nṱha uri u aluwa hu a ongolowa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm male and female planting material when fruit production is the aim.",
+      "zu": "Qinisekisa izitshalo zokutshala zesilisa nezesifazane uma inhloso kuwukukhiqiza izithelo.",
+      "st": "Netefatsa dimela tse tona le tse tshehadi tsa ho lema ha sepheo e le tlhahiso ya ditholwana.",
+      "ts": "Tiyisisa switirhisiwa swo byala swa xinuna ni swa xisati loko xikongomelo ku ri ku humesa mihandzu.",
+      "ve": "Khwaṱhisedzani zwimela zwa u ṱavha zwa tshiduna na tshisadzi musi tshipikwa hu u bveledza mitshelo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask an indigenous nursery for exact species, local provenance and sex information; no quantified food-yield cultivar is established.",
+      "zu": "Cela inkulisa yezitshalo zendabuko ikunike imininingwane yohlobo oluqondile, umsuka wendawo nobulili; alukho uhlobo lwe-cultivar olusunguliwe olunamanani esivuno sokudla.",
+      "st": "Kopa sebaka sa ho hodisa dimela tsa tlhaho bakeng sa mofuta o nepahetseng, tshimoloho ya lehae le tlhahisoleseding ya bong; ha ho cultivar e thehilweng e nang le palo ya kotulo ya dijo.",
+      "ts": "Kombela ndhawu yo kurisa swimila swa ndhavuko yi nyika species leyi kongomeke, masungulo ya laha kaya ni vuxokoxoko bya rimbewu; a ku na cultivar leyi tiyisisiweke leyi nga ni nhlayo ya ntshovelo wa swakudya.",
+      "ve": "Humbelani fhethu ha u alusa zwimela zwa henefho uri hu ṋee lushaka lwo teaho, vhubvo ha henefho na mafhungo a mbeu; a hu na cultivar yo khwaṱhisedzwaho i re na mbalo ya khaṋo ya zwiḽiwa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ripe fruit and arid-region phenology",
+      "zu": "Izithelo ezivuthiwe nezikhathi zokukhula nokuqhakaza endaweni eyomile (phenology)",
+      "st": "Ditholwana tse butswitseng le dinako tsa kgolo le ho thunya sebakeng se omeletseng (phenology)",
+      "ts": "Mihandzu leyi vupfeke ni minkarhi ya ku kula ni ku rhumbuka ya ndhawu yo oma (phenology)",
+      "ve": "Mitshelo yo vhibvaho na zwifhinga zwa u aluwa na u ṱuma maluvha zwa dzingu ḽo omaho (phenology)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The sweet, astringent ripe fruit is documented as edible, ripening February–May. This very slow-growing arid western tree has no quantified first crop age or food kg benchmark.",
+      "zu": "Isithelo esivuthiwe esimnandi esibophayo emlonyeni sibhalwe njengokudliwayo, sivuthwa ngoFebruwari–Meyi. Lesi sihlahla sasentshonalanga eyomile esikhula kancane kakhulu asinaso isilinganiso senani leminyaka yesivuno sokuqala noma ibhentshimakhi ye-kg yokudla.",
+      "st": "Tholwana e monate e butswitseng e tlamang molomo e ngotswe e le e jewang, e butswa ka Hlakola–Motsheanong. Sefate sena sa bophirimela bo omeletseng se holang butle haholo ha se na palo e behilweng ya dilemo tsa kotulo ya pele kapa tekanyetso ya kg ya dijo.",
+      "ts": "Muhandzu lowu vupfeke, wo tsokombela lowu khomaka nomu wu tsariwile leswaku wa dyiwa, wu vupfa hi Nyenyenyani–Mudyaxihi. Murhi lowu wa le vupeladyambu byo oma lowu kulaka hi ku nonoka swinene a wu na nhlayo leyi tiyisisiweke ya vukhale bya ntshovelo wo sungula kumbe mpimo wa kg wa swakudya.",
+      "ve": "Mutshelo wo vhibvaho u re na muthetshelo wavhuḓi une wa vhofha mulomo wo ṅwalwa sa u ḽeaho, u vhibva nga Luhuhi–Shundunthule. Muri uyu wa vhukovhela ho omaho u aluwaho nga u ongolowa vhukuma a u na mbalo ya miṅwaha ya khaṋo ya u thoma kana mpimo wa kg ya zwiḽiwa wo khwaṱhisedzwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "This slow-growing plant suits dry gardens and a range of southern African habitats. Give it space for its natural bushy form.",
+      "zu": "Lesi sitshalo esikhula kancane silungele izingadi ezomile nezindawo zokuphila zemvelo ezihlukahlukene zaseningizimu ye-Afrika. Sinike indawo eyanele yesimo saso semvelo esiyisihlahla esinamagatsha amaningi.",
+      "st": "Semela sena se holang butle se loketse dirapa tse ommeng le dibaka tse fapaneng tsa tlhaho tsa Afrika e ka borwa. Se fe sebaka sa sebopeho sa sona sa tlhaho se nang le makala a mangata.",
+      "ts": "Ximilana lexi kulaka hi ku nonoka xi fanela swirhapa swo oma ni tindhawu to hambana ta ntumbuluko ta le dzongeni wa Afrika. Xi nyike ndhawu ya xivumbeko xa xona xa ntumbuluko xo tala marhavi.",
+      "ve": "Tshimela itshi tshi aluwaho nga u ongolowa tshi tea ngade dzo omaho na vhupo ho fhambanaho ha mvelo ha tshipembe tsha Afrika. Tshi ṋeeni tshikhala tsha tshivhumbeo tshatsho tsha mvelo tsha maṱavhi manzhi.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask for correctly identified Euclea undulata and record the actual planting date and local ripe-picking months.",
+      "zu": "Cela i-Euclea undulata ehlonzwe kahle bese uqopha usuku lwangempela lokutshala nezinyanga zendawo zokukha okuvuthiwe.",
+      "st": "Kopa Euclea undulata e hlwauweng ka nepo mme o ngole letsatsi la nnete la ho lema le dikgwedi tsa lehae tsa ho kga tse butswitseng.",
+      "ts": "Kombela Euclea undulata leyi tivekaka kahle kutani u rhekhoda siku ra xiviri ro byala ni tin’hweti ta laha kaya to kha leyi vupfeke.",
+      "ve": "Humbelani Euclea undulata yo ṱalulwaho zwavhuḓi nahone ni rekhode datumu ya vhukuma ya u ṱavha na miṅwedzi ya henefho ya u kaṋa yo vhibvaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Food is the ripe berry. Fruit appearance from February and overlapping flowers/fruit do not establish a complete ripe-picking window.",
+      "zu": "Ukudla yijikijolo elivuthiwe. Ukuvela kwezithelo kusukela ngoFebruwari nokuba khona kwezimbali/izithelo ngesikhathi esifanayo akusunguli iwindi eliphelele lokukha okuvuthiwe.",
+      "st": "Dijo ke monokotshwai o butswitseng. Ho hlaha ha ditholwana ho tloha ka Hlakola le dipalesa/ditholwana tse bang teng ka nako e le nngwe ha di thehe nako e felletseng ya ho kga tse butswitseng.",
+      "ts": "Swakudya i berry leyi vupfeke. Ku humelela ka mihandzu ku sukela hi Nyenyenyani ni maluva/mihandzu leswi vaka kona hi nkarhi wun’we a swi veki nkarhi lowu heleleke wo kha leyi vupfeke.",
+      "ve": "Zwiḽiwa ndi mutshelo wa berry wo vhibvaho. U vhonala ha mitshelo u bva nga Luhuhi na maluvha/mitshelo zwi re hone nga tshifhinga tshithihi a zwi khwaṱhisedzi tshifhinga tsho fhelelaho tsha u kaṋa yo vhibvaho.",
+      "generatedScope": "product-guidance"
+    }
+  ],
+  "sourceBindings": [
+    {
+      "english": "ripe berries",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "diospyros-lycioides",
+        "euclea-undulata",
+        "rhoicissus-digitata",
+        "searsia-lancea-rhus-lancea",
+        "sideroxylon-inerme",
+        "ziziphus-mucronata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Use well-drained soil and sun. The source excludes the Cape winter-rainfall area from its natural distribution and distinguishes several subspecies.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "diospyros-lycioides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ask the nursery to identify the subspecies and sex and provide compatible male and female plants for fruit.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "diospyros-lycioides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "SANBI describes sweet, jelly-like ripe flesh. January–May is fruiting; it does not state exact ripe-picking limits.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "diospyros-lycioides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Flowering and fruit development, not a ripe picking calendar",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "dovyalis-afra"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The source combines flowering and fruiting in November–January and separately describes fruit development. It does not date the ripe yellow-orange fruit. These are flowering/fruit-development observations, not food ready to pick; local ripe picking months remain unknown.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "dovyalis-afra"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "SANBI records it across varied eastern habitats and some Cape areas. It is hardy and drought resistant and can form a hedge.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "ehretia-rigida"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Confirm the Ehretia species and local subspecies. If fruit is intended, ask about plant sex; the source records male and female flowers on different plants.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "ehretia-rigida"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Food is the ripe black fruit. Spring flowers do not supply ripe-harvest months; growth rate is not food-bearing age.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "ehretia-rigida"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Use a hot, dry, well-drained position and allow for slow growth.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "euclea-pseudebenus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Confirm male and female planting material when fruit production is the aim.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "euclea-pseudebenus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ask an indigenous nursery for exact species, local provenance and sex information; no quantified food-yield cultivar is established.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "euclea-pseudebenus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ripe fruit and arid-region phenology",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "euclea-pseudebenus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The sweet, astringent ripe fruit is documented as edible, ripening February–May. This very slow-growing arid western tree has no quantified first crop age or food kg benchmark.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "euclea-pseudebenus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "This slow-growing plant suits dry gardens and a range of southern African habitats. Give it space for its natural bushy form.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "euclea-undulata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ask for correctly identified Euclea undulata and record the actual planting date and local ripe-picking months.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "euclea-undulata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Food is the ripe berry. Fruit appearance from February and overlapping flowers/fruit do not establish a complete ripe-picking window.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "euclea-undulata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    }
+  ],
+  "representativeSpecies": [
+    "diospyros-lycioides",
+    "dovyalis-afra",
+    "ehretia-rigida",
+    "euclea-pseudebenus",
+    "euclea-undulata"
+  ],
+  "scope": "Complete original wild-fruit display fields: edible ripe stage, flowering versus fruit development versus ripe picking, unassigned local months, subspecies/plant-sex checks, distribution, arid ecology and unknown food amounts. Original English, source authorities, selector behavior, source identities and figures preserved. Shared ripe-berries label also reaches other existing bound species.",
+  "terminology": "Source technical classification subspecies/phenology and berry glosses retained where a new unsupported vernacular label could mislead. No species names added or changed. Source plant sex refers to reproductive role, not farmer demographics. All native calendar month names use the existing records-months authority. Draft grammar awaits fluent review.",
+  "verification": {
+    "typecheck": "PASS Node24",
+    "focused": {
+      "passed": 133,
+      "failed": 0,
+      "files": 7,
+      "duration_ms": 4563.56175,
+      "log": "output/guidance-pdf-qa/authored04-refined-affected.log",
+      "scope": "Guidance/crop-export/graph/projection/product-profile/product-yield/release-window. Full guidance suite not started."
+    },
+    "pdf": "10PDF31pages11424wordbounds372complete guide clauses;72new clause occurrences;8nativePDF23pagesfullcautions;0clipped/parsererrors;2originalEnglishcases pixel/textidentical.",
+    "visual": "All8 native contact sheets inspected; both Sesotho sheets rechecked after plural refinement. Enlarged final St ripe-stage/plant-sex page2 and Ve arid-cautions page2 inspected. No observed clipping/overlap in those views. Automated complete-clause/bounds checks cover31pages. Not all31pages enlarged or approved by fluent speakers.",
+    "evidence": "evidence/guidance-authored04/verification.json"
+  },
+  "draftRefinements": [
+    {
+      "source": "ripe berries",
+      "language": "st",
+      "before": "monokotshwai o butswitseng",
+      "after": "menokotshwai e butswitseng",
+      "reason": "Use the plural berry noun matching the English plural. DBE Sesotho FAL CAPS printedp27 contrasts monokotshwai with menokotshwai e mekae; this supports noun number, not fluent approval of the whole draft.",
+      "primarySource": "https://www.education.gov.za/Portals/0/CD/National%20Curriculum%20Statements%20and%20Vocational/CAPS%20SESOTHO%20FAL%20GR%201-3%20FS.pdf?ver=2015-01-27-155440-097",
+      "excerpt": "Mpontshe monokotshwai. Ho na le menokotshwai e mekae?"
+    }
+  ],
+  "remaining": {
+    "typedFields": 801,
+    "proseCandidates": 438,
+    "pureSourceIdentities": 3,
+    "warning": "Not a whole-app percentage. Other public animal display names, main crop UI/sample/export metadata, current-main updates including weather, other screens/media/accessibility/errors and fluent agricultural review remain."
+  }
+}

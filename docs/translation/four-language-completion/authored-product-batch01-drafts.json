@@ -1,0 +1,1284 @@
+{
+  "status": "Unreviewed AI drafts; faithful source-bound translation requested. No fluent approval or whole-app completion claimed.",
+  "sourceInventorySha256": "497f31a722e65e63fca8f253d87fe5290c987477b92e83bdabc55ccca517c307",
+  "rows": [
+    {
+      "english": "fruit",
+      "zu": "izithelo",
+      "st": "ditholwana",
+      "ts": "mihandzu",
+      "ve": "mitshelo",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Check the actual cultivar's pollen needs. A primary trial includes self-compatible and self-incompatible plants.",
+      "zu": "Hlola izidingo zempova zohlobo lwangempela. Ucwaningo oluyisisekelo luhlanganisa izitshalo ezamukela impova yazo nezingayamukeli.",
+      "st": "Hlahloba ditlhoko tsa peo ya dipalesa tsa mofuta wa nnete. Teko ya mantlha e kenyelletsa dimela tse kgonang ho sebedisa peo ya tsona ya dipalesa le tse sa kgoneng.",
+      "ts": "Kambela swilaveko swa pholeni swa muxaka wa xiviri. Ndzingo wa masungulo wu katsa swimilana leswi amukelaka pholeni ya swona ni leswi nga yi amukeliki.",
+      "ve": "Ṱolani ṱhoḓea dza muvhere dza lushaka lwa vhukuma. Mulingo wa u thoma u katela zwimela zwi ṱanganedzaho muvhere wazwo na zwi sa u ṱanganedzi.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record local ripe picking dates and output. Foreign cultivar seasons do not establish a South African season.",
+      "zu": "Rekhoda izinsuku zendawo zokuvuna izithelo ezivuthiwe nokukhiqizwayo. Izikhathi zezinhlobo zakwamanye amazwe azifakazeli isikhathi sokuvuna saseNingizimu Afrika.",
+      "st": "Rekota matsatsi a sebaka a ho kotula ditholwana tse butswitseng le tlhahiso. Dinako tsa mefuta ya dinaheng tse ding ha di tiise nako ya kotulo ya Afrika Borwa.",
+      "ts": "Rhekhoda masiku ya ndhawu yo tshovela mihandzu leyi vupfeke ni vuhumelerisi. Tinguva ta tinxaka ta le matikweni mambe a ti tiyisisi nguva ya Afrika Dzonga.",
+      "ve": "Rekhodani maḓuvha a henefho a u kaṋa mitshelo yo vhibvaho na mvelelo. Khalaṅwaha dza tshaka dza mashango a nnḓa a dzi khwaṱhisedzi khalaṅwaha ya Afrika Tshipembe.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask the nursery to name the cultivar or identify a seedling and provide local fruiting and compatible-pollen evidence. 'Fruit Salad Tree' is a common sales label and does not identify a tested cultivar.",
+      "zu": "Cela inkulisa yezitshalo ukuthi isho igama lohlobo noma ihlonze isithombo, inikeze nobufakazi bendawo bokuthela nempova ehambisanayo. 'Fruit Salad Tree' yigama elivamile lokuthengisa futhi alisho uhlobo oluhloliwe.",
+      "st": "Kopa sebaka sa kgodiso ya dimela ho bolela lebitso la mofuta kapa ho hlwaya sethopo le ho fana ka bopaki ba sebaka ba ho beha ditholwana le peo ya dipalesa e tsamaisanang. 'Fruit Salad Tree' ke lebitso le tlwaelehileng la thekiso mme ha le hlwaye mofuta o lekilweng.",
+      "ts": "Kombela ndhawu yo kurisa swimilana ku vula vito ra muxaka kumbe ku tiva xithlabyana ni ku nyika vumbhoni bya ndhawu bya ku veka mihandzu ni pholeni leyi fambelanaka. 'Fruit Salad Tree' i vito leri tolovelekeke ro xavisa naswona a ri vuli muxaka lowu ringetiweke.",
+      "ve": "Humbelani nesari uri i bule dzina ḽa lushaka kana i ṱalule tshithuṅu nahone i ṋee vhuṱanzi ha henefho ha u aṋwa mitshelo na muvhere u yelanaho. 'Fruit Salad Tree' ndi dzina ḽo ḓoweleaho ḽa u rengisa nahone a ḽi ṱaluli lushaka lwo lingwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Cultivar-dependent pollen compatibility",
+      "zu": "Ukuhambisana kwempova kuncike ohlotsheni",
+      "st": "Ho tsamaisana ha peo ya dipalesa ho ya ka mofuta",
+      "ts": "Ku fambelana ka pholeni ku ya hi muxaka",
+      "ve": "U yelana ha muvhere zwi ḓitika nga lushaka",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Primary Brazilian germplasm experiment found both compatibility classes. Biological evidence supports checking the actual cultivar and compatible pollen, not assigning one universal species category or copying its calendar to South Africa.",
+      "zu": "Ucwaningo oluyisisekelo lwaseBrazil lwezinto zofuzo (germplasm) lwathola zombili izinhlobo zokuhambisana kwempova. Ubufakazi besayensi yezinto eziphilayo busekela ukuhlola uhlobo lwangempela nempova ehambisanayo, hhayi ukubeka lonke lolu hlobo lwezitshalo esigabeni esisodwa noma ukukopisha ikhalenda lalo eNingizimu Afrika.",
+      "st": "Teko ya mantlha ya Brazil ya disebediswa tsa lefutso (germplasm) e fumane dihlopha ka bobedi tsa ho tsamaisana ha peo ya dipalesa. Bopaki ba baeloji bo tshehetsa ho hlahloba mofuta wa nnete le peo ya dipalesa e tsamaisanang, eseng ho abela mofuta wohle wa semela sehlopha se le seng kapa ho kopitsa khalendara ya wona Afrika Borwa.",
+      "ts": "Ndzingo wa masungulo wa le Brazil wa switirhisiwa swa majini (germplasm) wu kume mintlawa yimbirhi ya ku fambelana ka pholeni. Vumbhoni bya bayoloji byi seketela ku kambela muxaka wa xiviri ni pholeni leyi fambelanaka, ku nga ri ku veka muxaka wa ximilana hinkwaxo eka ntlawa wun’we kumbe ku kopela khalendara ya wona eAfrika Dzonga.",
+      "ve": "Mulingo wa u thoma wa Brazil wa zwishumiswa zwa dzimajini (germplasm) wo wana zwigwada zwoṱhe zwivhili zwa u yelana ha muvhere. Vhuṱanzi ha bayolodzhi vhu tikedza u ṱola lushaka lwa vhukuma na muvhere u yelanaho, hu si u vhea lushaka lwoṱhe lwa tshimela kha tshigwada tshithihi kana u kopela khalenda yatsho kha Afrika Tshipembe.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South African research context",
+      "zu": "Umongo wocwaningo lwaseNingizimu Afrika",
+      "st": "Maemo a dipatlisiso tsa Afrika Borwa",
+      "ts": "Mongo wa ndzavisiso wa Afrika Dzonga",
+      "ve": "Nyimele ya ṱhoḓisiso ya Afrika Tshipembe",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Government confirms ARC evaluated feijoa; no trial result, cultivar, harvest month or yield follows from this mention.",
+      "zu": "Uhulumeni uyaqinisekisa ukuthi i-ARC yahlola i-feijoa; lokhu kushiwo akusho noma yimuphi umphumela wocwaningo, uhlobo, inyanga yokuvuna noma isivuno.",
+      "st": "Mmuso o tiisa hore ARC e ile ya lekola feijoa; ho e bolela hona ha ho fane ka sephetho sa teko, mofuta, kgwedi ya kotulo kapa chai.",
+      "ts": "Mfumo wu tiyisisa leswaku ARC yi kambisise feijoa; ku boxa loku a ku nyiki mbuyelo wa ndzingo, muxaka, n’hweti yo tshovela kumbe ntshovelo.",
+      "ve": "Muvhuso u khwaṱhisedza uri ARC yo lingulula feijoa; u buliwa uhu a hu ṋei mvelelo ya mulingo, lushaka, ṅwedzi wa khaṋo kana khaṋo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "young flower buds",
+      "zu": "izimbali ezincane ezingakavuleki",
+      "st": "dipalesa tse nyane tse so kang di buleha",
+      "ts": "mabilomu lamatsongo lama nga si pfulekaka",
+      "ve": "maluvha maṱuku a sa athu u vuleaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Match cultivation to this arid-land tree and well-drained conditions.",
+      "zu": "Fanisa ukulima nalesi sihlahla sezindawo ezomile nezimo lapho amanzi ephuma kahle emhlabathini.",
+      "st": "Bapisa temo le sefate sena sa dibaka tse ommeng le maemo ao metsi a tswang hantle mobung.",
+      "ts": "Fananisa ku byala ni murhi lowu wa tindhawu to oma ni swiyimo leswi mati ya humaka kahle emhlabeni.",
+      "ve": "Yelanyisani u lima na muri uyu wa vhupo ho omaho na nyimele dzine maḓi a bva zwavhuḓi mavuni.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record young-bud picking separately from flowering or ornamental growth.",
+      "zu": "Rekhoda ukuvunwa kwezimbali ezincane ezingakavuleki ngokwehlukana nokuqhakaza noma ukukhula kokuhlobisa.",
+      "st": "Rekota kotulo ya dipalesa tse nyane tse so kang di buleha ka thoko ho ho thunya ha dipalesa kapa kgolo ya mokgabiso.",
+      "ts": "Rhekhoda ku tshovela mabilomu lamatsongo lama nga si pfulekaka swi hambanile ni ku rhumbuka kumbe ku kula ka ku khavisa.",
+      "ve": "Rekhodani u kaṋa maluvha maṱuku a sa athu u vuleaho nga thungo ha u ṱuma maluvha kana nyaluwo ya u khavhisa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Obtain correctly identified legal nursery stock and local growing advice. No food-yield cultivar or maturity curve is verified.",
+      "zu": "Thola izitshalo zenkulisa ezikhonjwe kahle nezisemthethweni kanye nezeluleko zokukhulisa endaweni. Alukho uhlobo lwesivuno sokudla noma ijika lokukhula kuze kukhiqize oluqinisekisiwe.",
+      "st": "Fumana dimela tsa sebaka sa kgodiso tse hlwauweng ka nepo, tse molaong, le keletso ya ho hodisa sebakeng. Ha ho mofuta wa chai ya dijo kapa mothinya wa ho hola ho fihlela tlhahisong o netefaditsweng.",
+      "ts": "Kuma swimilana swa ndhawu yo kurisa leswi tivekaka kahle naswona swi nga enawini ni switsundzuxo swa ku kurisa endhawini. A ku na muxaka wa ntshovelo wa swakudya kumbe girafu ya ku kula ku fika eku humeleriseni leyi tiyisisiweke.",
+      "ve": "Wanani zwimela zwa nesari zwo ṱalulwaho zwavhuḓi zwi re mulayoni na nyeletshedzo ya u alusa henefho. A hu na lushaka lwa khaṋo ya zwiḽiwa kana tshati ya u aluwa u swika kha u bveledza yo khwaṱhisedzwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Young flower-bud food use",
+      "zu": "Ukusetshenziswa kwezimbali ezincane ezingakavuleki njengokudla",
+      "st": "Tshebediso ya dipalesa tse nyane tse so kang di buleha e le dijo",
+      "ts": "Ku tirhisiwa ka mabilomu lamatsongo lama nga si pfulekaka ku ri swakudya",
+      "ve": "Tshumiso ya maluvha maṱuku a sa athu u vuleaho sa zwiḽiwa",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The edible product is the young flower bud. June–July flowering does not establish the exact pre-opening picking dates, first bud-bearing age or edible kg/plant.",
+      "zu": "Umkhiqizo odliwayo yimbali encane engakavuleki. Ukuqhakaza ngoJuni–Julayi akufakazeli izinsuku eziqondile zokuvuna ngaphambi kokuvuleka, ubudala bokuqala bokuba nezimbali ezingakavuleki noma ama-kg/plant adliwayo.",
+      "st": "Sehlahiswa se jewang ke palesa e nyane e so kang e buleha. Ho thunya ka Phupjane–Phupu ha ho tiise matsatsi a tobileng a kotulo pele dipalesa di buleha, dilemo tsa pele tsa ho ba le dipalesa tse so kang di buleha kapa kg/plant e jewang.",
+      "ts": "Xikumiwa lexi dyiwaka i bilomu leritsongo leri nga si pfulekaka. Ku rhumbuka hi Khotavuxika–Mawuwani a ku tiyisisi masiku yo tshovela lama kongomeke ya loko ma nga si pfuleka, vukhale byo sungula ku va ni mabilomu lama nga si pfulekaka kumbe kg/plant leyi dyiwaka.",
+      "ve": "Tshibveledzwa tshi ḽiwaho ndi luvha ḽiṱuku ḽi sa athu u vuleaho. U ṱuma maluvha nga Fulwi–Fulwana a zwi khwaṱhisedzi maḓuvha a vhukuma a u kaṋa hu sa athu u vulea, vhukale ha u thoma u vha na maluvha a sa athu u vuleaho kana kg/plant i ḽiwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Pineapple fruit; whole fruit and processed portions have different weights.",
+      "zu": "Izithelo zikaphayinaphu; izithelo eziphelele nezingxenye ezicutshunguliwe zinezisindo ezihlukene.",
+      "st": "Ditholwana tsa phaenapole; ditholwana tse felletseng le dikarolo tse sebetsitsweng di na le boima bo fapaneng.",
+      "ts": "Mihandzu ya xihenge; mihandzu leyi heleleke ni swiphemu leswi lulamisiweke swi ni mintiko yo hambana.",
+      "ve": "Mitshelo ya tshienge; mitshelo yo fhelelaho na zwipiḓa zwo lugiswaho zwi na zwileme zwo fhambanaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Use a warm, frost-free, well-drained site. The KZN production reference is Hluhluwe; it does not establish suitability throughout South Africa.",
+      "zu": "Sebenzisa indawo efudumele, engenasithwathwa namanzi aphuma kahle emhlabathini. Inkomba yokukhiqiza yase-KZN ingeyaseHluhluwe; ayifakazeli ukufaneleka kulo lonke elaseNingizimu Afrika.",
+      "st": "Sebedisa sebaka se futhumetseng, se se nang serame seo metsi a tswang hantle mobung. Tshupiso ya tlhahiso ya KZN ke ya Hluhluwe; ha e tiise ho lokela Afrika Borwa ka bophara.",
+      "ts": "Tirhisa ndhawu yo kufumela, leyi nga riki na rharhama ni leyi mati ya humaka kahle emhlabeni. Xikombo xa vuhumelerisi xa KZN i xa Hluhluwe; a xi tiyisisi ku faneleka eAfrika Dzonga hinkwaro.",
+      "ve": "Shumisani fhethu hu dudelaho, hu si na murotholo, hune maḓi a bva zwavhuḓi mavuni. Ndaedzi ya vhubveledzi ya KZN ndi ya Hluhluwe; a i khwaṱhisedzi uri zwi tea Afrika Tshipembe ḽoṱhe.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record planting and actual picking dates. Year-round commercial planting or marketing does not mean every planted pineapple gives fruit in every month.",
+      "zu": "Rekhoda izinsuku zokutshala nezokuphuma ngempela kwesivuno. Ukutshala noma ukuthengisa kwezohwebo unyaka wonke akusho ukuthi uphayinaphu ngamunye otshaliwe ukhiqiza izithelo njalo ngenyanga.",
+      "st": "Rekota matsatsi a ho jala le a kotulo ya nnete. Ho jala kapa ho rekisa ka kgwebo selemo kaofela ha ho bolele hore phaenapole e nngwe le e nngwe e jetsweng e beha ditholwana kgwedi e nngwe le e nngwe.",
+      "ts": "Rhekhoda masiku yo byala ni yo tshovela ya xiviri. Ku byala kumbe ku xavisa hi bindzu lembe hinkwaro a swi vuli leswaku xihenge xin’wana ni xin’wana lexi byariweke xi nyika mihandzu hi n’hweti yin’wana ni yin’wana.",
+      "ve": "Rekhodani maḓuvha a u ṱavha na a u kaṋa a vhukuma. U ṱavha kana u rengisa nga vhubindudzi ṅwaha woṱhe a zwi ambi uri tshienge tshiṅwe na tshiṅwe tsho ṱavhiwaho tshi aṋwa mitshelo ṅwedzi muṅwe na muṅwe.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "KZN guide: Queen is a fresh-fruit candidate; Smooth Cayenne is mainly a processing candidate. Confirm clean crowns/suckers, local suitability and crop-cycle advice with a nursery. Queen re-establishment after the plant crop belongs in the future plan.",
+      "zu": "Umhlahlandlela wase-KZN: i-Queen iyinketho yezithelo ezintsha; i-Smooth Cayenne ikakhulukazi iyinketho yokucutshungulwa. Qinisekisa iziqongo/amahlumela ahlanzekile, ukufaneleka endaweni nezeluleko zomjikelezo wesitshalo nenkulisa yezitshalo. Ukuvuselelwa kwe-Queen ngemva kwesivuno sesitshalo sokuqala kufanele kufakwe ohlelweni oluzayo.",
+      "st": "Tataiso ya KZN: Queen ke kgetho ya ditholwana tse foreshe; Smooth Cayenne haholo ke kgetho ya ho sebetswa. Netefatsa dihloho/mahlomela a hlwekileng, ho lokela ha sebaka le keletso ya potoloho ya sejalo le sebaka sa kgodiso ya dimela. Ho jala Queen hape ka mora kotulo ya semela sa pele ho lokela ho kenngwa moralong o tlang.",
+      "ts": "Nkongomiso wa KZN: Queen i xihlawuriwa xa mihandzu yo basa; Smooth Cayenne ngopfu i xihlawuriwa xa ku lulamisiwa. Tiyisisa tinhloko/mahluke yo tenga, ku faneleka ka ndhawu ni switsundzuxo swa ndzhendzeleko wa xibyariwa ni ndhawu yo kurisa swimilana. Ku tlhela u byala Queen endzhaku ka ntshovelo wa ximilana xo sungula swi fanele ku va eka kungu leri taka.",
+      "ve": "Nyendedzi ya KZN: Queen ndi zwa u nanga zwa mitshelo miswa; Smooth Cayenne kanzhi ndi zwa u nanga zwa u lugiswa. Khwaṱhisedzani ṱhoho/makhule o kunaho, u tea ha fhethu na nyeletshedzo ya mutevhe wa tshiliṅwa na nesari. U ṱavhulula Queen nga murahu ha khaṋo ya tshimela tsha u thoma zwi tea u katelwa kha pulane i ḓaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Hluhluwe crop-cycle output",
+      "zu": "Ukukhiqiza komjikelezo wesitshalo waseHluhluwe",
+      "st": "Tlhahiso ya potoloho ya sejalo ya Hluhluwe",
+      "ts": "Vuhumelerisi bya ndzhendzeleko wa xibyariwa wa Hluhluwe",
+      "ve": "Mvelelo ya mutevhe wa tshiliṅwa ya Hluhluwe",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Regional hectare reference: conservative 50 t/ha, average 60–75 t/ha, good 80 t/ha per production crop. The same page describes a normal 18-month Hluhluwe cycle. These are not kg/plant/year or a forecast for a household planting.",
+      "zu": "Inkomba yesifunda ngehektare: ngokucophelela 50 t/ha, ngokwesilinganiso 60–75 t/ha, okuhle 80 t/ha ngesivuno somjikelezo ngamunye. Ikhasi elifanayo lichaza umjikelezo ojwayelekile waseHluhluwe wezinyanga ezingu-18. Lokhu akuwona ama-kg/plant/year noma isibikezelo sokutshalwe ekhaya.",
+      "st": "Tshupiso ya sebaka ka hektare: kakanyo e hlokolosi 50 t/ha, karolelano 60–75 t/ha, tlhahiso e ntle 80 t/ha ka kotulo ya potoloho ka nngwe. Leqephe leo le hlalosa potoloho e tlwaelehileng ya Hluhluwe ya dikgwedi tse 18. Tsena ha se kg/plant/year kapa ponelopele ya temo ya lelapa.",
+      "ts": "Xikombo xa xifundzha hi hekitara: mpimo wo hlayiseka 50 t/ha, mpimo wa le xikarhini 60–75 t/ha, lowunene 80 t/ha eka ntshovelo wun’wana ni wun’wana wa ndzhendzeleko. Pheji rero ri hlamusela ndzhendzeleko wa ntolovelo wa Hluhluwe wa tin’hweti ta 18. Leyi a hi kg/plant/year kumbe mvhumbo wa leswi byariweke ekaya.",
+      "ve": "Ndaedzi ya dzingu nga hekhithara: tshikalo tsha vhulondi 50 t/ha, tshikati 60–75 t/ha, tshavhuḓi 80 t/ha kha khaṋo ya mutevhe muṅwe na muṅwe. Siaṱari ḽeneḽo ḽi ṱalutshedza mutevhe wo ḓoweleaho wa Hluhluwe wa miṅwedzi ya 18. Izwi a si kg/plant/year kana mbonelaphanḓa ya zwo ṱavhiwaho zwa muṱa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Cultivar and renewal choice",
+      "zu": "Ukukhetha uhlobo nokuvuselela",
+      "st": "Kgetho ya mofuta le ho qala hape",
+      "ts": "Ku hlawula muxaka ni ku sungula nakambe",
+      "ve": "U nanga lushaka na u vusuludza",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Queen and Smooth Cayenne serve different uses. The guide's example fruit weights (Queen 0.75 kg; Smooth Cayenne 2 kg) are cultivar descriptions, not annual yields per plant. Queen is re-established after the plant crop in this system.",
+      "zu": "I-Queen ne-Smooth Cayenne zisetshenziselwa izinto ezihlukene. Izisindo zezithelo eziyizibonelo ezisemhlahlandleleni (Queen 0.75 kg; Smooth Cayenne 2 kg) zichaza izinhlobo, azizona izivuno zonyaka zesitshalo ngasinye. Kulesi simiso i-Queen iphinde itshalwe ngemva kwesivuno sesitshalo sokuqala.",
+      "st": "Queen le Smooth Cayenne di sebedisetswa dintho tse fapaneng. Mehlala ya boima ba ditholwana tataisong (Queen 0.75 kg; Smooth Cayenne 2 kg) ke ditlhaloso tsa mefuta, eseng chai ya selemo ka semela. Queen e lengwa hape ka mora kotulo ya semela sa pele mokgweng ona.",
+      "ts": "Queen na Smooth Cayenne swi tirhisiwa eka swilo swo hambana. Swikombiso swa mintiko ya mihandzu eka nkongomiso (Queen 0.75 kg; Smooth Cayenne 2 kg) i tinhlamuselo ta tinxaka, ku nga ri ntshovelo wa lembe hi ximilana. Queen yi tlhela yi byariwa endzhaku ka ntshovelo wa ximilana xo sungula eka endlelo leri.",
+      "ve": "Queen na Smooth Cayenne zwi shumiswa kha zwithu zwo fhambanaho. Zwileme zwa tsumbo zwa mitshelo kha nyendedzi (Queen 0.75 kg; Smooth Cayenne 2 kg) ndi ṱhalutshedzo dza tshaka, hu si khaṋo dza ṅwaha nga tshimela. Queen i ṱavhululwa nga murahu ha khaṋo ya tshimela tsha u thoma kha sisṱeme iyi.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Climate and calendar conditions",
+      "zu": "Izimo zezulu nezekhalenda",
+      "st": "Maemo a lehodimo le a khalendara",
+      "ts": "Swiyimo swa maxelo ni khalendara",
+      "ve": "Nyimele dza kilima na khalenda",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Frost sensitivity and drainage constrain the site. Year-round planting at Hluhluwe is a planting reference, not an all-year household picking window; cooler sites use warmer planting months.",
+      "zu": "Ukuzwela esithwathweni nokuphuma kwamanzi emhlabathini kunqanda ukufaneleka kwendawo. Ukutshala unyaka wonke eHluhluwe kuyinkomba yokutshala, hhayi isikhathi sokuvuna sasekhaya sonyaka wonke; izindawo ezipholile zisebenzisa izinyanga ezifudumele zokutshala.",
+      "st": "Ho tshaba serame le phallo ya metsi mobung di lekanyetsa sebaka. Ho jala selemo kaofela Hluhluwe ke tshupiso ya ho jala, eseng nako ya kotulo ya lelapa ya selemo kaofela; dibaka tse phodileng di sebedisa dikgwedi tse futhumetseng tsa ho jala.",
+      "ts": "Ku nga tiyiseli rharhama ni ku huma ka mati emhlabeni swi pima ku faneleka ka ndhawu. Ku byala lembe hinkwaro eHluhluwe i xikombo xa ku byala, ku nga ri nkarhi wo tshovela wa le kaya wa lembe hinkwaro; tindhawu to titimela ti tirhisa tin’hweti to kufumela to byala.",
+      "ve": "U sa konḓelela murotholo na u bva ha maḓi mavuni zwi pima u tea ha fhethu. U ṱavha ṅwaha woṱhe ngei Hluhluwe ndi ndaedzi ya u ṱavha, hu si tshifhinga tsha muṱa tsha u kaṋa ṅwaha woṱhe; fhethu hu rotholelaho hu shumisa miṅwedzi i dudelaho ya u ṱavha.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "flowers and flower buds",
+      "zu": "izimbali nezimbali ezingakavuleki",
+      "st": "dipalesa le dipalesa tse so kang di buleha",
+      "ts": "mabilomu ni mabilomu lama nga si pfulekaka",
+      "ve": "maluvha na maluvha a sa athu u vuleaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Start tubers in loam in shallow pond water; move deeper into sun after strong growth.",
+      "zu": "Qala izigaxa emhlabathini wohlobo lwe-loam emanzini echibi angajulile; hambisa ekujuleni nasekukhanyeni kwelanga ngemva kokukhula ngamandla.",
+      "st": "Qala digwere mobung wa loam metsing a sa tebang a letangwana; di ise botebong le letsatsing ka mora kgolo e matla.",
+      "ts": "Sungula swirhumbana eka misava ya loam ematini yo ka ma nga entanga ya xidziva; swi yise laha ku enteke ni le dyambyini endzhaku ka ku kula hi nguvu.",
+      "ve": "Thomani makanda kha mavu a loam kha maḓi a tshivhudu a sa tsaho; zwi iseni hune ha tsa na kha ḓuvha nga murahu ha nyaluwo yo khwaṱhaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record edible flowers/buds and pond area. Dormant tubers resume growth as autumn water returns in the winter-rainfall cycle.",
+      "zu": "Rekhoda izimbali/izimbali ezingakavuleki ezidliwayo nobukhulu bendawo yechibi. Izigaxa ezilele ziqala futhi ukukhula lapho amanzi ebuya ekwindla emjikelezweni wemvula yasebusika.",
+      "st": "Rekota dipalesa/dipalesa tse so kang di buleha tse jewang le boholo ba letangwana. Digwere tse phomotseng di qala ho hola hape ha metsi a kgutla ka hwetla potolohong ya pula ya mariha.",
+      "ts": "Rhekhoda mabilomu/mabilomu lama nga si pfulekaka lama dyiwaka ni vukulu bya xidziva. Swirhumbana leswi wiseke swi tlhela swi kula loko mati ma vuya hi xixikana eka ndzhendzeleko wa mpfula ya vuxika.",
+      "ve": "Rekhodani maluvha/maluvha a sa athu u vuleaho a ḽiwaho na vhuhulwane ha tshivhudu. Makanda o eḓelaho a dovha a aluwa musi maḓi a tshi vhuya nga tshifhefho kha mutevhe wa mvula ya vhuria.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Obtain correctly identified pond plants. Confirm local pond conditions and actual picking dates; no pond-area yield or planting density is sourced.",
+      "zu": "Thola izitshalo zechibi ezikhonjwe kahle. Qinisekisa izimo zechibi lendawo nezinsuku zangempela zokuvuna; awukho umthombo wesivuno ngobukhulu bechibi noma ukuminyana kokutshala.",
+      "st": "Fumana dimela tsa letangwana tse hlwauweng ka nepo. Netefatsa maemo a letangwana la sebaka le matsatsi a nnete a kotulo; ha ho mohlodi wa chai ka boholo ba letangwana kapa palo ya ho jala ka sebaka.",
+      "ts": "Kuma swimilana swa xidziva leswi tivekaka kahle. Tiyisisa swiyimo swa xidziva xa ndhawu ni masiku ya xiviri yo tshovela; a ku na xihlovo xa ntshovelo hi vukulu bya xidziva kumbe ntlimbano wa ku byala.",
+      "ve": "Wanani zwimela zwa tshivhudu zwo ṱalulwaho zwavhuḓi. Khwaṱhisedzani nyimele dza tshivhudu tsha henefho na maḓuvha a u kaṋa a vhukuma; a hu na tshiko tsha khaṋo nga vhuhulwane ha tshivhudu kana tshivhalo tsha zwimela nga tshikhala.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Waterblommetjie food product and establishment",
+      "zu": "Umkhiqizo wokudla we-Waterblommetjie nokuqalisa ukukhulisa",
+      "st": "Sehlahiswa sa dijo sa Waterblommetjie le ho qala kgodiso",
+      "ts": "Xikumiwa xa swakudya xa Waterblommetjie ni ku sungula ku kurisa",
+      "ve": "Tshibveledzwa tsha zwiḽiwa tsha Waterblommetjie na u thoma u alusa",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Western Cape pond food; vigorous winter/spring flowering and winter shop availability are qualitative seasonal evidence, not a numeric picking calendar. Seedlings reach flowering size in one season under ideal conditions, not a universal age-in-years guarantee.",
+      "zu": "Ukudla kwechibi kwase-Western Cape; ukuqhakaza okunamandla ebusika/entwasahlobo nokutholakala ezitolo ebusika kuwubufakazi besikhathi obuchazayo, hhayi ikhalenda lokuvuna elinezinombolo. Izithombo zifinyelela ebukhulwini bokuqhakaza ngesizini eyodwa ngaphansi kwezimo ezifanele, hhayi isiqinisekiso sobudala beminyaka obusebenza yonke indawo.",
+      "st": "Dijo tsa letangwana tsa Western Cape; dipalesa tse ngata mariha/selemo le boteng mabenkeleng mariha ke bopaki bo hlalosang nako, eseng khalendara ya kotulo ya dipalo. Dithopo di fihla boholong ba ho thunya sehleng se le seng tlasa maemo a loketseng, eseng tiiso ya dilemo e sebetsang hohle.",
+      "ts": "Swakudya swa xidziva swa Western Cape; ku rhumbuka hi nguvu hi vuxika/ximun’wana ni ku kumeka emavhengeleni hi vuxika i vumbhoni byo hlamusela nguva, ku nga ri khalendara yo tshovela leyi nga ni tinhlayo. Switlabyana swi fika eka vukulu byo rhumbuka hi nguva yin’we ehansi ka swiyimo leswinene, ku nga ri xitshembiso xa vukhale hi malembe lexi tirhaka hinkwako.",
+      "ve": "Zwiḽiwa zwa tshivhudu zwa Western Cape; u ṱuma maluvha nga maanḓa nga vhuria/lutavula na u wanala mavhengeleni nga vhuria ndi vhuṱanzi vhu ṱalutshedzaho khalaṅwaha, hu si khalenda ya khaṋo ya zwivhalo. Zwithuṅu zwi swika kha vhuhulwane ha u ṱuma maluvha nga khalaṅwaha nthihi fhasi ha nyimele dzavhuḓi, hu si fulufhedziso ḽa vhukale nga miṅwaha ḽi shumaho fhethu hoṱhe.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ideal seedling establishment",
+      "zu": "Ukuqalisa izithombo ngaphansi kwezimo ezifanele",
+      "st": "Ho qala kgodiso ya dithopo tlasa maemo a loketseng",
+      "ts": "Ku sungula ku kurisa switlabyana ehansi ka swiyimo leswinene",
+      "ve": "U thoma u alusa zwithuṅu fhasi ha nyimele dzavhuḓi",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Qualitative ideal-condition establishment duration; it is not inserted into a generic tree-age curve.",
+      "zu": "Isikhathi esichazayo sokuqalisa ukukhulisa ngaphansi kwezimo ezifanele; asifakwa ejikeni elivamile lobudala bezihlahla.",
+      "st": "Nako e hlalosang ho qala kgodiso tlasa maemo a loketseng; ha e kenngwe mothinyeng o akaretsang wa dilemo tsa difate.",
+      "ts": "Nkarhi wo hlamusela ku sungula ku kurisa ehansi ka swiyimo leswinene; a wu nghenisiwi eka girafu ya ntolovelo ya vukhale bya mirhi.",
+      "ve": "Tshifhinga tshi ṱalutshedzaho u thoma u alusa fhasi ha nyimele dzavhuḓi; a tshi dzheniswi kha tshati ya vhukale ha miri yo ḓoweleaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "young shoots for dried rooibos tea",
+      "zu": "amahlumela amancane etiye le-rooibos elomisiwe",
+      "st": "mahlomela a manyane a tee ya rooibos e omisitsweng",
+      "ts": "mahluke lamatsongo ya tiya ya rooibos leyi omisiweke",
+      "ve": "makhule maṱuku a tie ya rooibos yo omiswaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Match planting to acidic, sandy winter-rainfall soils and locally suitable rooibos forms.",
+      "zu": "Fanisa ukutshala nomhlabathi onesimuncu, oyisihlabathi nowemvula yasebusika, kanye nezinhlobo ze-rooibos ezifanele indawo.",
+      "st": "Bapisa ho jala le mobu o esiti, o lehlabathe wa pula ya mariha le mefuta ya rooibos e loketseng sebaka.",
+      "ts": "Fananisa ku byala ni misava ya asidi, ya sava ya mpfula ya vuxika ni tinxaka ta rooibos leti faneleke ndhawu.",
+      "ve": "Yelanyisani u ṱavha na mavu a esidi, a muṱavha a mvula ya vhuria na tshaka dza rooibos dzi teaho henefho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Keep fresh-cut shoot weights separate from processed dried tea; record the actual processing output.",
+      "zu": "Gcina izisindo zamahlumela asanda kusikwa ngokwehlukana netiye elicutshunguliwe nelomisiwe; rekhoda okukhiqizwe ngempela ngesikhathi sokucutshungulwa.",
+      "st": "Boloka boima ba mahlomela a sa tswa kguwa ka thoko ho tee e sebetsitsweng e omisitsweng; rekota tlhahiso ya nnete ya tshebetso.",
+      "ts": "Hlayisa mintiko ya mahluke lama ha ku tsemiwaka yi hambanile ni tiya leyi lulamisiweke yi omisiwile; rhekhoda mbuyelo wa xiviri wa ku lulamisa.",
+      "ve": "Vhulungani zwileme zwa makhule a kha ḓi tou bva u geriwa nga thungo ha tie yo lugiswaho yo omiswaho; rekhodani mvelelo ya vhukuma ya u lugisa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask a local rooibos nursery or adviser for correctly identified, locally proven planting material. The Cape cycle is not a nationwide tea forecast.",
+      "zu": "Buza inkulisa ye-rooibos yendawo noma umeluleki ngezinto zokutshala ezikhonjwe kahle nezihloliwe endaweni. Umjikelezo waseKapa awusona isibikezelo setiye sezwe lonke.",
+      "st": "Botsa sebaka sa kgodiso ya rooibos kapa moeletsi wa sebaka ka dimela tsa ho jala tse hlwauweng ka nepo, tse lekilweng sebakeng. Potoloho ya Kapa ha se ponelopele ya tee ya naha yohle.",
+      "ts": "Vutisa ndhawu yo kurisa rooibos kumbe mutsundzuxi wa ndhawu hi swilo swo byala leswi tivekaka kahle naswona swi tiyisisiweke endhawini. Ndzhendzeleko wa Kapa a hi mvhumbo wa tiya wa tiko hinkwaro.",
+      "ve": "Vhudzisani nesari ya rooibos kana mueletshedzi wa henefho nga zwishumiswa zwa u ṱavha zwo ṱalulwaho zwavhuḓi zwo khwaṱhisedzwaho henefho. Mutevhe wa Kapa a si mbonelaphanḓa ya tie ya shango ḽoṱhe.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Commercial tea cutting cycle and product",
+      "zu": "Umjikelezo wokusika itiye lezohwebo nomkhiqizo",
+      "st": "Potoloho ya kgwebo ya ho kga tee le sehlahiswa",
+      "ts": "Ndzhendzeleko wa ku tsema tiya ya bindzu ni xikumiwa",
+      "ve": "Mutevhe wa u gera tie ya vhubindudzi na tshibveledzwa",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Selected commercial rooibos forms in the Cederberg winter-rainfall region are cut annually December–April, retaining older branches. Cut shoots are chopped, bruised, oxidised and dried. Fresh shoot kg and dried tea kg are separate products. The account describes replacement after up to five harvest years, not a mature kg/plant curve.",
+      "zu": "Izinhlobo ezikhethiwe ze-rooibos yezohwebo esifundeni semvula yasebusika saseCederberg zisikwa minyaka yonke ngoDisemba–Ephreli, kugcinwe amagatsha amadala. Amahlumela asikiwe ayaqotshwa, agxotshwe, enziwe i-oxidation futhi omiswe. Ama-kg amahlumela amasha nama-kg etiye elomisiwe ayimikhiqizo ehlukene. Umbhalo uchaza ukubuyiselwa kwezitshalo ngemva kweminyaka yokuvuna engafika kwemihlanu, hhayi ijika lama-kg/plant esezikhule ngokugcwele.",
+      "st": "Mefuta e kgethilweng ya rooibos ya kgwebo sebakeng sa pula ya mariha sa Cederberg e kguwa selemo le selemo ka Tshitwe–Mmesa, ho siuwa makala a kgale. Mahlomela a kguilweng a a sehwa, a a silakanngwa, a fetolwa ka oxidation mme a omiswe. Kg tsa mahlomela a foreshe le kg tsa tee e omisitsweng ke dihlahiswa tse arohaneng. Tlaleho e hlalosa ho nkela dimela sebaka ka mora dilemo tsa kotulo tse fihlang ho tse hlano, eseng mothinya wa kg/plant e seng e hodile.",
+      "ts": "Tinxaka leti hlawuriweke ta rooibos ya bindzu exifundzheni xa mpfula ya vuxika xa Cederberg ti tsemiwa lembe ni lembe hi N'wendzamhala–Dzivamisoko, ku hlayisiwa marhavi ya khale. Mahluke lama tsemiweke ma tsemiwa matsongo, ma tshikeleriwa, ma endliwa oxidation ma tlhela ma omisiwa. Kg ta mahluke yo basa ni kg ta tiya leyi omisiweke i swikumiwa swo hambana. Xihlovo xi hlamusela ku siva swimilana endzhaku ka malembe yo tshovela yo fika eka ntlhanu, ku nga ri girafu ya kg/plant ya swimilana leswi kuleke.",
+      "ve": "Tshaka dzo nangwaho dza rooibos ya vhubindudzi kha dzingu ḽa mvula ya vhuria ḽa Cederberg dzi geriwa ṅwaha muṅwe na muṅwe nga Nyendavhusiku–Lambamai, hu tshi vhulungwa matavhi a kale. Makhule o geriwaho a a khethekanywa, a a pwashiwa, a itwa oxidation na u omiswa. Kg dza makhule maswa na kg dza tie yo omiswaho ndi zwibveledzwa zwo fhambanaho. Tshiko tshi ṱalutshedza u tshintsha zwimela nga murahu ha miṅwaha ya khaṋo i swikaho miṱanu, hu si tshati ya kg/plant ya zwimela zwo no hulaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "leaves for cooked greens",
+      "zu": "amaqabunga emifino ephekiwe",
+      "st": "makgasi a meroho e phehilweng",
+      "ts": "matluka ya miroho leyi swekiweke",
+      "ve": "maṱari a miroho yo bikwaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Use a moist growing position, with semi-shade or sun where water is adequate.",
+      "zu": "Sebenzisa indawo enomswakama, enomthunzi othile noma ilanga lapho amanzi anele khona.",
+      "st": "Sebedisa sebaka se mongobo, se nang le moriti o itseng kapa letsatsi moo metsi a lekaneng.",
+      "ts": "Tirhisa ndhawu yo tsakama, leyi nga ni ndzhuti wun’wana kumbe dyambu laha mati ma ringaneke.",
+      "ve": "Shumisani fhethu ho ṋukalaho, hu re na murunzi muṅwe kana ḓuvha hune maḓi a eḓana.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Control rooted runners so this fast groundcover does not smother neighbouring plants.",
+      "zu": "Lawula amahlumela ahambayo anezimpande ukuze lesi simila esimboza umhlabathi esikhula ngokushesha singacindezeli izitshalo eziseduze.",
+      "st": "Laola mahlomela a namang a nang le metso hore semela sena se potlakang sa ho kwahela mobu se se ke sa bipetsa dimela tse haufi.",
+      "ts": "Lawula mahluke lama navaka lama nga ni timitsu leswaku ximilana lexi hatlisaka ku funengeta misava xi nga kamanyeti swimilana swa le kusuhi.",
+      "ve": "Langulani makhule a navhaho a re na midzi uri tshimela itshi tshi tavhanyaho u fukedza mavu tshi si tsikeledze zwimela zwa tsini.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Buy correctly identified subspecies material. Record actual leaf-cutting dates and weights; no local yield variety or first-cutting duration is verified.",
+      "zu": "Thenga izinto zohlobo olungaphansi kwezohlobo ezikhonjwe kahle. Rekhoda izinsuku zangempela zokusika amaqabunga nezisindo; alukho uhlobo lwesivuno lwendawo noma isikhathi sokuqala ukusika esiqinisekisiwe.",
+      "st": "Reka dimela tsa mofuta o ka tlase tse hlwauweng ka nepo. Rekota matsatsi a nnete a ho kga makgasi le boima; ha ho mofuta wa chai wa sebaka kapa nako ya pele ya ho kga e netefaditsweng.",
+      "ts": "Xava swimilana swa muxaka lowutsongo leswi tivekaka kahle. Rhekhoda masiku ya xiviri yo tsema matluka ni mintiko; a ku na muxaka wa ntshovelo wa ndhawu kumbe nkarhi wo tsema ro sungula lowu tiyisisiweke.",
+      "ve": "Rengani zwishumiswa zwa lushaka luṱuku zwo ṱalulwaho zwavhuḓi. Rekhodani maḓuvha a vhukuma a u gera maṱari na zwileme; a hu na lushaka lwa khaṋo ya henefho kana tshifhinga tsha u gera lwa u thoma zwo khwaṱhisedzwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Documented leaf food use",
+      "zu": "Ukusetshenziswa kwamaqabunga njengokudla okubhaliwe",
+      "st": "Tshebediso ya makgasi e le dijo e ngotsweng",
+      "ts": "Ku tirhisiwa ka matluka ku ri swakudya loku tsariweke",
+      "ve": "Tshumiso ya maṱari sa zwiḽiwa yo ṅwalwaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The article explicitly identifies the catalogue subspecies and edible leaves. Spring/summer flowering is not a leaf-picking calendar.",
+      "zu": "I-athikili ikhomba ngokusobala uhlobo olungaphansi kwezohlobo olusekhathalogini namaqabunga adliwayo. Ukuqhakaza entwasahlobo/ehlobo akulona ikhalenda lokuvuna amaqabunga.",
+      "st": "Sengolwa se hlwaya ka ho hlaka mofuta o ka tlase o lethathamong le makgasi a jewang. Ho thunya selemo/hlabula ha se khalendara ya ho kotula makgasi.",
+      "ts": "Xihloko xi boxa hi ku kongoma muxaka lowutsongo lowu nga eka khataloko ni matluka lama dyiwaka. Ku rhumbuka hi ximun’wana/ximumu a hi khalendara yo tshovela matluka.",
+      "ve": "Athikili i ṱalula nga ho livhaho lushaka luṱuku lu re kha khathalogo na maṱari a ḽiwaho. U ṱuma maluvha nga lutavula/tshilimo a si khalenda ya u kaṋa maṱari.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "young leaves reported edible — specialist review needed",
+      "zu": "amaqabunga amancane abikwa njengadliwayo — kudingeka ukubuyekezwa uchwepheshe",
+      "st": "makgasi a manyane a tlalehilweng a jewa — ho hlokahala tlhahlobo ya setsebi",
+      "ts": "matluka lamatsongo lama vikiweke ma dyiwa — ku laveka nkambisiso wa mutivi",
+      "ve": "maṱari maṱuku o vhigwaho a tshi ḽiwa — hu ṱoḓea tsedzuluso ya muḓivhi",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Keep this tree in mapped inventory and do not count it as household food until identity and a safe edible-leaf preparation are reviewed.",
+      "zu": "Gcina lesi sihlahla ohlwini lwemephu futhi ungasibali njengokudla kwasekhaya kuze kubuyekezwe ubunikazi nokulungiswa okuphephile kwamaqabunga adliwayo.",
+      "st": "Boloka sefate sena lethathamong la mmapa mme o se se bale e le dijo tsa lelapa ho fihlela ho hlahlobilwe hore ke semela sefe le tokiso e bolokehileng ya makgasi a jewang.",
+      "ts": "Hlayisa murhi lowu eka nxaxamelo wa mepe naswona u nga wu hlayeli eka swakudya swa le kaya ku kondza ku kambisisiwa leswaku i muxaka wihi ni malunghiselelo lama hlayisekeke ya matluka lama dyiwaka.",
+      "ve": "Vhulungani muri uyu kha mutevhe wa mapa ni si u vhalela sa zwiḽiwa zwa muṱa u swika hu tshi sedzuluswa vhuvha na u lugisela ho tsireledzeaho ha maṱari a ḽiwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "SANBI describes humid coastal/estuarine conditions and no tolerance of even mild frost.",
+      "zu": "I-SANBI ichaza izimo zasogwini/ezasemlonyeni womfula ezinomswakama nokungakwazi ukumelana ngisho nesithwathwa esincane.",
+      "st": "SANBI e hlalosa maemo a mongobo a lebopo/a molomo wa noka le ho se mamelle esita le serame se fokolang.",
+      "ts": "SANBI yi hlamusela swiyimo swo tsakama swa ribuwana/swa laha nambu wu hlanganaka ni lwandle ni ku nga tiyiseli hambi ku ri rharhama ritsongo.",
+      "ve": "SANBI i ṱalutshedza nyimele dzo ṋukalaho dza tsini na lwanzhe/dza mulomo wa mulambo na u sa konḓelela na murotholo muṱuku.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask a specialist nursery about lawful provenance and local site fit. Resolve the food-use question before purchasing it as a household crop.",
+      "zu": "Buza inkulisa yezitshalo eyingcweti ngemvelaphi esemthethweni nokufaneleka endaweni. Xazulula umbuzo wokusetshenziswa njengokudla ngaphambi kokusithenga njengesitshalo sokudla kwasekhaya.",
+      "st": "Botsa sebaka sa kgodiso ya dimela sa setsebi ka mohlodi o molaong le ho lokela sebakeng. Rarolla taba ya tshebediso e le dijo pele o se reka e le sejalo sa lelapa.",
+      "ts": "Vutisa ndhawu yo kurisa swimilana ya mutivi hi masungulo lama nga enawini ni ku faneleka ka ndhawu. Lulamisa xivutiso xa ku tirhisiwa ku ri swakudya u nga si wu xava wu ri xibyariwa xa le kaya.",
+      "ve": "Vhudzisani nesari ya vhuḓivhi nga vhubvo vhu re mulayoni na u tea ha fhethu ha henefho. Fhedzisani mbudziso ya tshumiso ya zwiḽiwa ni sa athu u u renga sa tshiliṅwa tsha muṱa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Edible-part and safety review",
+      "zu": "Ukubuyekezwa kwengxenye edliwayo nokuphepha",
+      "st": "Tlhahlobo ya karolo e jewang le polokeho",
+      "ts": "Nkambisiso wa xiphemu lexi dyiwaka ni vuhlayiseki",
+      "ve": "Tsedzuluso ya tshipiḓa tshi ḽiwaho na tsireledzo",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The same source reports poison in seeds, bark, wood and roots. Guava-like fruit appearance is not evidence of edible fruit.",
+      "zu": "Umthombo ofanayo ubika ubuthi embewini, emagxolweni, okhunini nasezimpandeni. Ukubukeka kwezithelo kufana nogwava akubona ubufakazi bokuthi izithelo ziyadliwa.",
+      "st": "Mohlodi oo o tlaleha tjhefo dipeong, makgapetleng, lehong le metsong. Ho tshwana ha ditholwana le guava ha se bopaki ba hore di a jewa.",
+      "ts": "Xihlovo xexo xi vika chefu eka timbewu, mahanti, ntsandza ni timitsu. Ku languteka ka mihandzu yi fana ni guava a hi vumbhoni bya leswaku mihandzu ya dyiwa.",
+      "ve": "Tshiko tshenetsho tshi vhiga mulimo kha mbeu, makwati, danda na midzi. U fana ha mitshelo na guava a si vhuṱanzi ha uri mitshelo i a ḽiwa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Poisonous parts must remain visible",
+      "zu": "Izingxenye ezinobuthi kufanele zihlale zibonakala",
+      "st": "Dikarolo tse tjhefo di lokela ho dula di bonahala",
+      "ts": "Swiphemu leswi nga ni chefu swi fanele ku tshamela ku vonaka",
+      "ve": "Zwipiḓa zwi re na mulimo zwi tea u dzula zwi tshi vhonala",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The account records fish-stunning use. No such use is recommended, and no household fruit food claim is made.",
+      "zu": "Umbhalo urekhoda ukusetshenziswa kokudakisa izinhlanzi (fish-stunning). Akukho ukusetshenziswa okunjalo okunconywayo, futhi akukho simangalo sokuthi izithelo zingukudla kwasekhaya.",
+      "st": "Tlaleho e rekota tshebediso ya ho idibatsa ditlhapi (fish-stunning). Ha ho tshebediso e jwalo e kgothaletswang, mme ha ho bolelwe hore ditholwana ke dijo tsa lelapa.",
+      "ts": "Xihlovo xi rhekhoda ku tirhisiwa ku endla tihlampfi ti hela matimbe (fish-stunning). A ku bumabumeriwi ku tirhisiwa ko tano, naswona a ku vuriwi leswaku mihandzu i swakudya swa le kaya.",
+      "ve": "Tshiko tshi rekhoda tshumiso ya u ita uri khovhe dzi dzienge (fish-stunning). A hu themendelwa tshumiso yo raloho, nahone a hu buliwi uri mitshelo ndi zwiḽiwa zwa muṱa.",
+      "generatedScope": "product-guidance"
+    }
+  ],
+  "sourceBindings": [
+    {
+      "english": "fruit",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "acca-sellowiana",
+        "carica-papaya",
+        "citrus-limon",
+        "citrus-reticulata",
+        "cydonia-oblonga",
+        "ficus-carica",
+        "fragaria-x-ananassa",
+        "litchi-chinensis",
+        "malus-domestica",
+        "mangifera-indica",
+        "morus-nigra",
+        "olea-europaea-subsp-europaea",
+        "passiflora-edulis",
+        "persea-americana",
+        "phoenix-dactylifera",
+        "physalis-peruviana",
+        "prunus-armeniaca",
+        "prunus-persica",
+        "prunus-salicina",
+        "psidium-guajava",
+        "pyrus-communis",
+        "rubus-idaeus",
+        "vaccinium-corymbosum",
+        "vitis-vinifera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Check the actual cultivar's pollen needs. A primary trial includes self-compatible and self-incompatible plants.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "acca-sellowiana"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Record local ripe picking dates and output. Foreign cultivar seasons do not establish a South African season.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "acca-sellowiana"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ask the nursery to name the cultivar or identify a seedling and provide local fruiting and compatible-pollen evidence. 'Fruit Salad Tree' is a common sales label and does not identify a tested cultivar.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "acca-sellowiana"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Cultivar-dependent pollen compatibility",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "acca-sellowiana"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Primary Brazilian germplasm experiment found both compatibility classes. Biological evidence supports checking the actual cultivar and compatible pollen, not assigning one universal species category or copying its calendar to South Africa.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "acca-sellowiana"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South African research context",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "acca-sellowiana"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Government confirms ARC evaluated feijoa; no trial result, cultivar, harvest month or yield follows from this mention.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "acca-sellowiana"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "young flower buds",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "aloidendron-dichotomum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Match cultivation to this arid-land tree and well-drained conditions.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "aloidendron-dichotomum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Record young-bud picking separately from flowering or ornamental growth.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "aloidendron-dichotomum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Obtain correctly identified legal nursery stock and local growing advice. No food-yield cultivar or maturity curve is verified.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "aloidendron-dichotomum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Young flower-bud food use",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "aloidendron-dichotomum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The edible product is the young flower bud. June–July flowering does not establish the exact pre-opening picking dates, first bud-bearing age or edible kg/plant.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "aloidendron-dichotomum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Pineapple fruit; whole fruit and processed portions have different weights.",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "ananas-comosus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Use a warm, frost-free, well-drained site. The KZN production reference is Hluhluwe; it does not establish suitability throughout South Africa.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "ananas-comosus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Record planting and actual picking dates. Year-round commercial planting or marketing does not mean every planted pineapple gives fruit in every month.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "ananas-comosus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "KZN guide: Queen is a fresh-fruit candidate; Smooth Cayenne is mainly a processing candidate. Confirm clean crowns/suckers, local suitability and crop-cycle advice with a nursery. Queen re-establishment after the plant crop belongs in the future plan.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "ananas-comosus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Hluhluwe crop-cycle output",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "ananas-comosus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Regional hectare reference: conservative 50 t/ha, average 60–75 t/ha, good 80 t/ha per production crop. The same page describes a normal 18-month Hluhluwe cycle. These are not kg/plant/year or a forecast for a household planting.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "ananas-comosus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Cultivar and renewal choice",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "ananas-comosus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Queen and Smooth Cayenne serve different uses. The guide's example fruit weights (Queen 0.75 kg; Smooth Cayenne 2 kg) are cultivar descriptions, not annual yields per plant. Queen is re-established after the plant crop in this system.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "ananas-comosus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Climate and calendar conditions",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "ananas-comosus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Frost sensitivity and drainage constrain the site. Year-round planting at Hluhluwe is a planting reference, not an all-year household picking window; cooler sites use warmer planting months.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "ananas-comosus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "flowers and flower buds",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "aponogeton-distachyos"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Start tubers in loam in shallow pond water; move deeper into sun after strong growth.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "aponogeton-distachyos"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Record edible flowers/buds and pond area. Dormant tubers resume growth as autumn water returns in the winter-rainfall cycle.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "aponogeton-distachyos"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Obtain correctly identified pond plants. Confirm local pond conditions and actual picking dates; no pond-area yield or planting density is sourced.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "aponogeton-distachyos"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Waterblommetjie food product and establishment",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "aponogeton-distachyos"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Western Cape pond food; vigorous winter/spring flowering and winter shop availability are qualitative seasonal evidence, not a numeric picking calendar. Seedlings reach flowering size in one season under ideal conditions, not a universal age-in-years guarantee.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "aponogeton-distachyos"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ideal seedling establishment",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "aponogeton-distachyos"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Qualitative ideal-condition establishment duration; it is not inserted into a generic tree-age curve.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "aponogeton-distachyos"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "young shoots for dried rooibos tea",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "aspalathus-linearis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Match planting to acidic, sandy winter-rainfall soils and locally suitable rooibos forms.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "aspalathus-linearis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Keep fresh-cut shoot weights separate from processed dried tea; record the actual processing output.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "aspalathus-linearis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ask a local rooibos nursery or adviser for correctly identified, locally proven planting material. The Cape cycle is not a nationwide tea forecast.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "aspalathus-linearis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Commercial tea cutting cycle and product",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "aspalathus-linearis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Selected commercial rooibos forms in the Cederberg winter-rainfall region are cut annually December–April, retaining older branches. Cut shoots are chopped, bruised, oxidised and dried. Fresh shoot kg and dried tea kg are separate products. The account describes replacement after up to five harvest years, not a mature kg/plant curve.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "aspalathus-linearis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "leaves for cooked greens",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "asystasia-gangetica-subsp-micrantha"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Use a moist growing position, with semi-shade or sun where water is adequate.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "asystasia-gangetica-subsp-micrantha"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Control rooted runners so this fast groundcover does not smother neighbouring plants.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "asystasia-gangetica-subsp-micrantha"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Buy correctly identified subspecies material. Record actual leaf-cutting dates and weights; no local yield variety or first-cutting duration is verified.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "asystasia-gangetica-subsp-micrantha"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Documented leaf food use",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "asystasia-gangetica-subsp-micrantha"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The article explicitly identifies the catalogue subspecies and edible leaves. Spring/summer flowering is not a leaf-picking calendar.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "asystasia-gangetica-subsp-micrantha"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "young leaves reported edible — specialist review needed",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "barringtonia-racemosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Keep this tree in mapped inventory and do not count it as household food until identity and a safe edible-leaf preparation are reviewed.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "barringtonia-racemosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "SANBI describes humid coastal/estuarine conditions and no tolerance of even mild frost.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "barringtonia-racemosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ask a specialist nursery about lawful provenance and local site fit. Resolve the food-use question before purchasing it as a household crop.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "barringtonia-racemosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Edible-part and safety review",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "barringtonia-racemosa",
+        "citrullus-lanatus-landrace-var-citroides",
+        "momordica-balsamina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The same source reports poison in seeds, bark, wood and roots. Guava-like fruit appearance is not evidence of edible fruit.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "barringtonia-racemosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Poisonous parts must remain visible",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "barringtonia-racemosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The account records fish-stunning use. No such use is recommended, and no household fruit food claim is made.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "barringtonia-racemosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    }
+  ],
+  "sourceCount": 52,
+  "scope": "52complete product/care/purchase/supplementary source fields represented by7species in the immutable103tree corpus, plus shared wording. Shared fields also apply to additional captured identities listed in sourceBindings; this does not claim their whole guides are translated. No source species, figures, permissions, model gates or lesson text changed.",
+  "verification": {
+    "typecheck": "PASS",
+    "affectedPass": 155,
+    "affectedFail": 0,
+    "files": 10,
+    "pages": 36,
+    "wordBounds": 15251,
+    "allGuideClauses": 460,
+    "fullNewSourceOccurrences": 208,
+    "nativePdfs": 8,
+    "nativePages": 28,
+    "clippedWords": 0,
+    "parserErrors": 0,
+    "originalEnglishComparisons": "2of2 pixel/text identical",
+    "evidence": "evidence/guidance-authored01/verification.json",
+    "reviewStatus": "Unreviewed; no fluency or whole-guidance/app completion claim."
+  },
+  "remaining": "Other authored product/animal prose, source-region/unit classification, sample/metadata wiring, browser/full-suite verification and the wider goal remain.",
+  "terminologyReview": "Unreviewed. Buds use plain descriptions of unopened flowers to retain the exact edible-part distinction. The source term fish-stunning remains beside a native description; the full no-recommendation and no-household-fruit-food cautions remain. No method or recipe added.",
+  "draftCorrections": [
+    {
+      "english": "Start tubers in loam in shallow pond water; move deeper into sun after strong growth.",
+      "language": "zu",
+      "priorDraft": "Qala izigaxa emhlabathini ovundile emanzini echibi angajulile; hambisa ekujuleni nasekukhanyeni kwelanga ngemva kokukhula ngamandla.",
+      "replacement": "Qala izigaxa emhlabathini wohlobo lwe-loam emanzini echibi angajulile; hambisa ekujuleni nasekukhanyeni kwelanga ngemva kokukhula ngamandla.",
+      "reason": "Loam is a texture class, not a promise of fertile soil; keep the source texture term.",
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "english": "Western Cape pond food; vigorous winter/spring flowering and winter shop availability are qualitative seasonal evidence, not a numeric picking calendar. Seedlings reach flowering size in one season under ideal conditions, not a universal age-in-years guarantee.",
+      "language": "zu",
+      "priorDraft": "Ukudla kwechibi kwase-Western Cape; ukuqhakaza okunamandla ebusika/entwasahlobo nokutholakala ezitolo ebusika kuwubufakazi besikhathi obuchazayo, hhayi ikhalenda lokuvuna elinezinombolo. Izithombo zifinyelela ebukhulwini bokuqhakaza ngesikhathi esisodwa ngaphansi kwezimo ezifanele, hhayi isiqinisekiso sobudala beminyaka obusebenza yonke indawo.",
+      "replacement": "Ukudla kwechibi kwase-Western Cape; ukuqhakaza okunamandla ebusika/entwasahlobo nokutholakala ezitolo ebusika kuwubufakazi besikhathi obuchazayo, hhayi ikhalenda lokuvuna elinezinombolo. Izithombo zifinyelela ebukhulwini bokuqhakaza ngesizini eyodwa ngaphansi kwezimo ezifanele, hhayi isiqinisekiso sobudala beminyaka obusebenza yonke indawo.",
+      "reason": "Retain one growing season rather than an ambiguous occurrence/time.",
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "english": "Western Cape pond food; vigorous winter/spring flowering and winter shop availability are qualitative seasonal evidence, not a numeric picking calendar. Seedlings reach flowering size in one season under ideal conditions, not a universal age-in-years guarantee.",
+      "language": "st",
+      "priorDraft": "Dijo tsa letangwana tsa Western Cape; dipalesa tse ngata mariha/selemo le boteng mabenkeleng mariha ke bopaki bo hlalosang nako, eseng khalendara ya kotulo ya dipalo. Dithopo di fihla boholong ba ho thunya nakong e le nngwe tlasa maemo a loketseng, eseng tiiso ya dilemo e sebetsang hohle.",
+      "replacement": "Dijo tsa letangwana tsa Western Cape; dipalesa tse ngata mariha/selemo le boteng mabenkeleng mariha ke bopaki bo hlalosang nako, eseng khalendara ya kotulo ya dipalo. Dithopo di fihla boholong ba ho thunya sehleng se le seng tlasa maemo a loketseng, eseng tiiso ya dilemo e sebetsang hohle.",
+      "reason": "Retain one season rather than an ambiguous time.",
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "english": "Obtain correctly identified legal nursery stock and local growing advice. No food-yield cultivar or maturity curve is verified.",
+      "language": "zu",
+      "priorDraft": "Thola izitshalo zenkulisa ezikhonjwe kahle nezisemthethweni kanye nezeluleko zokukhulisa endaweni. Alukho uhlobo lwesivuno sokudla noma ijika lokuvuthwa oluqinisekisiwe.",
+      "replacement": "Thola izitshalo zenkulisa ezikhonjwe kahle nezisemthethweni kanye nezeluleko zokukhulisa endaweni. Alukho uhlobo lwesivuno sokudla noma ijika lokukhula kuze kukhiqize oluqinisekisiwe.",
+      "reason": "The source maturity curve concerns establishment/production, not fruit ripening.",
+      "reviewStatus": "unreviewed"
+    }
+  ]
+}

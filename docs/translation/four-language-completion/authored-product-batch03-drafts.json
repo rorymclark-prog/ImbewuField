@@ -1,0 +1,1394 @@
+{
+  "status": "Unreviewed AI drafts. No fluent approval or whole-guidance/app completion claimed.",
+  "sourceInventorySha256": "57c26773e56f7e55cad24d287c4b529829ef4c21d368f5ac763781d4cc4d0ace",
+  "sourceCount": 53,
+  "rows": [
+    {
+      "english": "nut in shell",
+      "zu": "intongomane elisegobolondweni (nut in shell)",
+      "st": "nate e ka hara kgaketla (nut in shell)",
+      "ts": "nati leyi nga ni xikamba (nut in shell)",
+      "ve": "nati i re kha ganda (nut in shell)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Pecan guide output — dry nut-in-shell hectare basis",
+      "zu": "Okukhiqizwa komhlahlandlela we-pecan — isisekelo sehektare samantongomane omile asemagobolondweni",
+      "st": "Tlhahiso ya tataiso ya pecan — motheo wa hektare wa dinate tse ommeng di le ka hara dikgaketla",
+      "ts": "Vuhumelerisi bya nkongomiso wa pecan — masungulo ya hektara ya tinati leti omeke ti ri eswikambeni",
+      "ve": "Vhubveledzi ha nyendedzi ya pecan — mutheo wa hekhithara wa nati dzo omaho dzi kha maganda",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The guide gives conservative 750, average 800–1,200 and good 1,500+ kg/ha Dry-in-Shell. It separately lists alternative tree spacings and later thinning, so one density is not assumed. These are unaged hectare benchmarks; shell weight is not edible kernel weight and no generic kg/tree curve is derived.",
+      "zu": "Umhlahlandlela unikeza u-750 oqaphile, isilinganiso esingu-800–1,200 kanye no-1,500+ omuhle we-kg/ha wamantongomane omile asemagobolondweni (Dry-in-Shell). Ubala ngokwehlukana ezinye izikhala phakathi kwezihlahla nokunciphiswa kwezihlahla kamuva, ngakho akucatshangwa ukuminyana okukodwa. Lezi yizinkomba zehektare ezingaboshelwe eminyakeni yobudala; isisindo esinegobolondo asisona isisindo somongo odliwayo futhi alukho ijika elijwayelekile le-kg/tree elisuselwa kuzo.",
+      "st": "Tataiso e fana ka 750 e hlokolosi, karolelano ya 800–1,200 le 1,500+ e ntle ya kg/ha ya dinate tse ommeng di le ka hara dikgaketla (Dry-in-Shell). E thathamisa ka thoko dikgetho tsa sebaka pakeng tsa difate le ho fokotsa difate hamorao, kahoo ha ho nahannwe bongata bo le bong sebakeng. Tsena ke ditshupiso tsa hektare tse sa behwang dilemo tsa kgolo; boima bo nang le kgaketla ha se boima ba karolo e jewang ka hare, mme ha ho hlahiswe mothinya o akaretsang wa kg/tree.",
+      "ts": "Nkongomiso wu nyika 750 yo tivonela, mpimo wa le xikarhini wa 800–1,200 na 1,500+ ya xiyimo lexinene ya kg/ha ya tinati leti omeke ti ri eswikambeni (Dry-in-Shell). Wu xaxameta hi ku hambana tindlela ta mipfhuka ya mirhi ni ku hungutiwa ka mirhi endzhaku, kutani a ku ehleketeleriwi ntlimbano wun’we. Leti i mimpimo ya xikombiso ya hektara leti nga nyikiwiki vukhale; ntiko lowu katsaka xikamba a hi ntiko wa endzeni loku dyiwaka naswona a ku humesiwi girafu ya ntolovelo ya kg/tree.",
+      "ve": "Nyendedzi i ṋea 750 ya vhuronwane, ya vhukati ya 800–1,200 na 1,500+ ya vhuimo havhuḓi ya kg/ha ya nati dzo omaho dzi kha maganda (Dry-in-Shell). I tevhekanya nga u fhambana zwikhala zwiṅwe vhukati ha miri na u fhungudza miri nga murahu, ngauralo a hu humbulelwi vhutsitsikani vhuthihi. Hedzi ndi ndaedzi dza hekhithara dzi si na vhukale ho tiwaho; tshileme tshi re na ganda a si tshileme tsha ngomu hu ḽiwaho nahone a hu bveledzwi girafu ya u angaredza ya kg/tree.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "cooked leaves",
+      "zu": "amaqabunga aphekiwe",
+      "st": "makgasi a phehilweng",
+      "ts": "matluka lama swekiweke",
+      "ve": "maṱari o bikilwaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm exact identity and record the cooked-leaf product; medicinal use does not establish a food production forecast.",
+      "zu": "Qinisekisa ubunikazi obuqondile bese urekhoda umkhiqizo wamaqabunga aphekiwe; ukusetshenziswa njengomuthi akuqinisekisi isibikezelo sokukhiqizwa kokudla.",
+      "st": "Netefatsa boitsebiso bo tobileng mme o rekote sehlahiswa sa makgasi a phehilweng; tshebediso ya bongaka ha e thehe ponelopele ya tlhahiso ya dijo.",
+      "ts": "Tiyisisa vutitivisi byo kongoma u tlhela u rhekhoda xitirhisiwa xa matluka lama swekiweke; ku tirhisiwa ka vutshunguri a ku tiyisisi nkumbetelo wa vuhumelerisi bya swakudya.",
+      "ve": "Khwaṱhisedzani vhuvha ho tiwaho ni rekhode tshibveledzwa tsha maṱari o bikilwaho; tshumiso ya dzilafho a i khwaṱhisedzi u anganyela vhubveledzi ha zwiḽiwa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Obtain identified Centella asiatica material from a reputable nursery; no regional food cultivar or measured annual leaf yield is verified.",
+      "zu": "Thola izinto zokutshala ezikhonjwe njenge-Centella asiatica enkulisa ethembekile; alukho uhlobo lokudla lwesifunda noma isivuno samaqabunga sonyaka esilinganisiwe esiqinisekisiwe.",
+      "st": "Fumana dimela tse hlwauweng e le Centella asiatica sebakeng se tshepahalang sa kgodiso ya dimela; ha ho mofuta wa dijo wa sebaka kapa kotulo ya selemo ya makgasi e lekantsweng e netefaditsweng.",
+      "ts": "Kuma swilo swo byala leswi tivekaka swi ri Centella asiatica eka ndhawu yo kurisa swimilana leyi tshemberiwaka; a ku tiyisisiwanga muxaka wa swakudya wa xifundzha kumbe ntshovelo wa matluka wa lembe lowu pimiweke.",
+      "ve": "Wanani zwishumiswa zwo ṱavha zwo ṱalulwaho sa Centella asiatica kha nesari i fulufhedzeaho; a hu na lushaka lwa zwiḽiwa lwa dzingu kana khaṋo ya maṱari ya ṅwaha yo kaliwaho zwo khwaṱhisedzwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirmed South African vegetable use",
+      "zu": "Ukusetshenziswa njengemifino kwaseNingizimu Afrika okuqinisekisiwe",
+      "st": "Tshebediso ya meroho e netefaditsweng Afrika Borwa",
+      "ts": "Ku tirhisiwa ka miroho loku tiyisisiweke eAfrika Dzonga",
+      "ve": "Tshumiso yo khwaṱhisedzwaho sa miroho Afrika Tshipembe",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The author identifies C. asiatica as a cooked South African vegetable. Centella species can be difficult to distinguish; nearby C. coriacea food or yield evidence is not transferred. No food picking months, first harvest duration or kg/plant is provided.",
+      "zu": "Umbhali ukhomba i-C. asiatica njengemifino ephekiwe yaseNingizimu Afrika. Izinhlobo ze-Centella zingaba nzima ukuzihlukanisa; ubufakazi bokudla noma isivuno be-C. coriacea esondelene nayo abudluliselwa kuyo. Akunikezwanga izinyanga zokuvuna ukudla, isikhathi sokuqala ukuvuna noma i-kg/plant.",
+      "st": "Mongodi o hlwaya C. asiatica e le meroho e phehilweng ya Afrika Borwa. Mefuta ya Centella e ka ba thata ho e kgetholla; bopaki ba dijo kapa kotulo ba C. coriacea e amanang le yona ha bo fetisetswe ho yona. Ha ho fanwe ka dikgwedi tsa kotulo ya dijo, nako ya kotulo ya pele kapa kg/plant.",
+      "ts": "Mutsari u vula leswaku C. asiatica i miroho leyi swekiwaka ya Afrika Dzonga. Tinxaka ta Centella ti nga tika ku ti hambanisa; vumbhoni bya swakudya kumbe ntshovelo bya C. coriacea leyi nga ekusuhi a byi hundziseriwi eka yona. A ku nyikiwi tin’hweti to tshovela swakudya, nkarhi wo sungula ku tshovela kumbe kg/plant.",
+      "ve": "Muṅwali u ṱalula C. asiatica sa miroho i bikilwaho ya Afrika Tshipembe. Tshaka dza Centella dzi nga konḓa u dzi fhambanya; vhuṱanzi ha zwiḽiwa kana khaṋo ha C. coriacea i re tsini a vhu pfukiselwi khayo. A hu ṋeiwi miṅwedzi ya u kaṋa zwiḽiwa, tshifhinga tsha khaṋo ya u thoma kana kg/plant.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "pods",
+      "zu": "izindumba",
+      "st": "dikgapetla tsa peo (pods)",
+      "ts": "swiphotwana",
+      "ve": "maganda a mbeu (pods)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Harvested product is the pod. Confirm the planting material's sex and compatible pollen; seedling pod crops vary.",
+      "zu": "Umkhiqizo ovunwayo yindumba. Qinisekisa ubulili besitshalo sokutshala (plant sex) nempova ehambisanayo; izivuno zezindumba zezihlahla ezikhule embewini ziyahlukahluka.",
+      "st": "Sehlahiswa se kotulwang ke kgapetla ya peo (pod). Netefatsa bong ba semela sa ho jala (plant sex) le peo e phofo e dumellanang; dikotulo tsa dipods tsa difate tse hodisitsweng ka peo di a fapana.",
+      "ts": "Xitirhisiwa lexi tshoveriwaka i xiphotwana. Tiyisisa rimbewu ra ximilana xo byala (plant sex) ni mpova lowu fambelanaka na xona; mintshovelo ya swiphotwana ya mirhi leyi kurisiweke hi mbewu ya hambana.",
+      "ve": "Tshibveledzwa tshi kaṋiwaho ndi ganda ḽa mbeu (pod). Khwaṱhisedzani mbeu ya tshimela tsha u ṱavha (plant sex) na luvhanda lu yelanaho; khaṋo dza maganda a mbeu dza miri yo aluwaho nga mbeu dzi a fhambana.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Check local frost and water. Food processing needs a suitable method and explicit kept-stock records.",
+      "zu": "Hlola isithwathwa namanzi endawo. Ukucubungula ukudla kudinga indlela efanele namarekhodi acacile esitoko esigciniwe.",
+      "st": "Hlahloba serame le metsi a sebaka. Ho lokisa dijo ho hloka mokgwa o loketseng le direkoto tse hlakileng tsa dijo tse bolokilweng.",
+      "ts": "Kambela rharhama ni mati ya ndhawu. Ku lulamisa swakudya swi lava ndlela leyi faneleke ni tirhekhodo leti nga erivaleni ta nhundzu leyi hlayisiweke.",
+      "ve": "Ṱolani murotholo na maḓi zwa henefho. U lugisa zwiḽiwa zwi ṱoḓa nḓila yo teaho na rekhodo dzi re khagala dza zwiḽiwa zwo vhulungwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Use identified grafted material rather than assuming an unknown seedling will match a productive tree. Tylliria, SFax, Aaronsohn and Santa Fe were in the South African food-composition study; that does not rank their farm yield or regional suitability.",
+      "zu": "Sebenzisa izinto ezixhunyelelwe nezikhonjwe kahle kunokucabanga ukuthi isithombo esingaziwa sizofana nesihlahla esikhiqizayo. I-Tylliria, SFax, Aaronsohn ne-Santa Fe zazikhona ocwaningweni lwaseNingizimu Afrika lokwakheka kokudla; lokhu akuklelisi isivuno sazo epulazini noma ukufaneleka kwesifunda.",
+      "st": "Sebedisa dimela tse hlomathisitsweng tse hlwauweng ho e na le ho nahana hore semela se sa tsejweng se hodisitsweng ka peo se tla tshwana le sefate se hlahisang. Tylliria, SFax, Aaronsohn le Santa Fe di ne di le phuputsong ya Afrika Borwa ya sebopeho sa dijo; hoo ha ho behe kotulo ya tsona polasing kapa ho tshwaneleha ha sebaka ka maemo.",
+      "ts": "Tirhisa swilo leswi hlomeleriweke leswi tivekaka ematshan’weni yo ehleketela leswaku ximilana xa mbewu lexi nga tivekiki xi ta fana ni murhi lowu humelerisaka. Tylliria, SFax, Aaronsohn na Santa Fe a ti ri eka ndzavisiso wa Afrika Dzonga wa leswi swakudya swi vumbiwaka hi swona; leswi a swi xaxameti ntshovelo wa tona epurasini kumbe ku faneleka ka xifundzha hi swiyimo.",
+      "ve": "Shumisani zwishumiswa zwo ṱumetshedzwaho zwo ṱalulwaho nṱhani ha u humbulela uri tshimela tshi sa ḓivhei tsho aluwaho nga mbeu tshi ḓo fana na muri u bveledzaho. Tylliria, SFax, Aaronsohn na Santa Fe dzo vha dzi kha ngudo ya Afrika Tshipembe ya zwivhumbi zwa zwiḽiwa; izwo a zwi vhei khaṋo yadzo bulasini kana u tea ha dzingu nga vhuimo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South African food part and planting context",
+      "zu": "Ingxenye yokudla yaseNingizimu Afrika nomongo wokutshala",
+      "st": "Karolo ya dijo ya Afrika Borwa le maemo a ho jala",
+      "ts": "Xiphemu xa swakudya xa Afrika Dzonga ni mongo wo byala",
+      "ve": "Tshipiḓa tsha zwiḽiwa tsha Afrika Tshipembe na nyimele ya u ṱavha",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Government guidance identifies pods, severe-frost exclusion, irrigation in arid areas and variation between seedling trees. It recommends grafted material and pollen provision; not every tree has the same crop.",
+      "zu": "Umhlahlandlela kahulumeni ukhomba izindumba, ukukhipha izindawo zesithwathwa esinamandla, ukuchelela ezindaweni ezomile nokwehluka phakathi kwezihlahla ezikhule embewini. Uncoma izinto ezixhunyelelwe nokuhlinzekwa kwempova; akuzona zonke izihlahla ezinesivuno esifanayo.",
+      "st": "Tataiso ya mmuso e hlwaya dipods, ho qhelela ka thoko dibaka tsa serame se matla, nosetso dibakeng tse omeletseng le phapang pakeng tsa difate tse hodisitsweng ka peo. E kgothaletsa dimela tse hlomathisitsweng le ho fana ka peo e phofo; ha se difate tsohle tse nang le kotulo e tshwanang.",
+      "ts": "Nkongomiso wa mfumo wu boxa swiphotwana, ku susa tindhawu ta rharhama lerikulu, ku cheleta eka tindhawu leti omeke ni ku hambana ka mirhi leyi kurisiweke hi mbewu. Wu bumabumela swilo leswi hlomeleriweke ni ku nyikiwa ka mpova; a hi mirhi hinkwayo leyi nga ni ntshovelo lowu fanaka.",
+      "ve": "Nyendedzi ya muvhuso i ṱalula maganda a mbeu, u bvisa vhupo ha murotholo muhulu, u sheledza kha vhupo ho omaho na phambano vhukati ha miri yo aluwaho nga mbeu. I themendela zwishumiswa zwo ṱumetshedzwaho na u ṋetshedza luvhanda; a si miri yoṱhe i re na khaṋo i fanaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Locally tested carob food products and cultivars",
+      "zu": "Imikhiqizo yokudla ye-carob nezinhlobo ezihlolwe endaweni",
+      "st": "Dihlahiswa tsa dijo tsa carob le mefuta e lekilweng sebakeng",
+      "ts": "Switirhisiwa swa swakudya swa carob ni tinxaka leti kamberiweke endhawini",
+      "ve": "Zwibveledzwa zwa zwiḽiwa zwa carob na tshaka dzo lingwaho henefho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The primary study tested South African grown pod material, including those named cultivars and an unknown one, and developed food products. This is food-part evidence, not a regional maturity/yield trial. University full-text handle returned HTTP 403 during checking.",
+      "zu": "Ucwaningo oluyisisekelo lwahlola izinto zezindumba ezikhuliswe eNingizimu Afrika, kuhlanganise nalezo zinhlobo eziqanjwe ngamagama neyodwa engaziwa, lwase luthuthukisa imikhiqizo yokudla. Lokhu ubufakazi bengxenye edliwayo, hhayi ukuhlolwa kwesifunda kokuvuthwa/isivuno. Isixhumanisi senyuvesi sombhalo ophelele sabuyisa i-HTTP 403 ngesikhathi kuhlolwa.",
+      "st": "Phuputso ya mantlha e lekile dipods tse hodisitsweng Afrika Borwa, ho kenyeletswa mefuta eo e bitswang ka mabitso le e nngwe e sa tsejweng, mme ya hlahisa dihlahiswa tsa dijo. Bona ke bopaki ba karolo e jewang, eseng teko ya sebaka ya kgolo/kotulo. Sehokelo sa yunivesithi sa mongolo o felletseng se kgutlisitse HTTP 403 nakong ya ho hlahloba.",
+      "ts": "Ndzavisiso wa masungulo wu kambele swiphotwana leswi kurisiweke eAfrika Dzonga, ku katsa tinxaka toleto leti boxiweke hi mavito ni wun’we lowu nga tivekiki, wu tlhela wu tumbuluxa switirhisiwa swa swakudya. Lebyi i vumbhoni bya xiphemu xa swakudya, ku nga ri ndzingo wa xifundzha wa ku kula/ntshovelo. Xihlanganisi xa yunivhesiti xa tsalwa leri heleleke xi vuyise HTTP 403 hi nkarhi wo kambela.",
+      "ve": "Ngudo ya u thoma yo linga maganda a mbeu o aluswaho Afrika Tshipembe, hu tshi katelwa tshaka idzo dzo bulwaho nga madzina na nthihi i sa ḓivhei, ya bveledza zwibveledzwa zwa zwiḽiwa. Uhu ndi vhuṱanzi ha tshipiḓa tshi ḽiwaho, hu si ndingo ya dzingu ya u aluwa/khaṋo. Vhuṱumani ha yunivesithi ha tshibveledzwa tsho fhelelaho ho vhuisa HTTP 403 nga tshifhinga tsha u ṱola.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "identified edible melon landrace — specialist confirmation needed",
+      "zu": "uhlobo lwekhabe lwendabuko oludliwayo olukhonjwe kahle — kudingeka ukuqinisekiswa uchwepheshe",
+      "st": "mofuta wa lehapu wa setso o jewang o hlwauweng — ho hlokeha netefatso ya setsebi",
+      "ts": "muxaka wa ndhavuko wa khalavatla leri dyiwaka lowu tivekaka — ku laveka ku tiyisisiwa hi mutivi",
+      "ve": "lushaka lwa sialala lwa habu ḽi ḽiwaho lwo ṱalulwaho — hu ṱoḓea u khwaṱhisedzwa nga muḓivhi",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Keep this mixed landrace entry out of household-food totals until an experienced local grower confirms the seed source, form and appropriate food preparation.",
+      "zu": "Gcina leli rekhodi lezinhlobo zendabuko ezixubile lingafakiwe ezibalweni zokudla kwasekhaya kuze umlimi wendawo onolwazi aqinisekise umthombo wembewu, uhlobo nendlela efanele yokulungisa ukudla.",
+      "st": "Boloka rekoto ena ya mefuta e kopaneng ya setso e le ka ntle ho dipalo tsohle tsa dijo tsa lelapa ho fihlela molemi wa sebaka ya nang le boiphihlelo a netefatsa mohlodi wa peo, sebopeho le tokiso e loketseng ya dijo.",
+      "ts": "Hlayisa rekodo leyi ya tinxaka ta ndhavuko leti pfanganeke yi nga katsiwi eka nhlayo ya swakudya swa le kaya ku fikela loko murimi wa ndhawu la nga ni ntokoto a tiyisisa xihlovo xa mbewu, xivumbeko ni ku lunghisa swakudya hi ndlela leyi faneleke.",
+      "ve": "Vhulungani rekhodo iyi ya tshaka dza sialala dzo ṱanganaho i nnḓa ha mbalo dzoṱhe dza zwiḽiwa zwa muṱa u swika mulimi wa henefho a re na tshenzhelo a tshi khwaṱhisedza tshiko tsha mbeu, tshivhumbeo na u lugisa zwiḽiwa nga nḓila yo teaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The source describes a sprawling annual for fairly dry areas with adequate space.",
+      "zu": "Umthombo uchaza isitshalo sonyaka esisabalalayo sezindawo ezomile ngokwanele nezinesikhala esanele.",
+      "st": "Mohlodi o hlalosa semela sa selemo se namang bakeng sa dibaka tse batlang di omme tse nang le sebaka se lekaneng.",
+      "ts": "Xihlovo xi hlamusela ximilana xa lembe lexi navaka eka tindhawu leti omeke hi mpimo leti nga ni ndhawu leyi eneleke.",
+      "ve": "Tshiko tshi ṱalutshedza tshimela tsha ṅwaha tshi navhaho tsha vhupo ho omaho nga u linganela hu re na tshikhala tsho eḓanaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Obtain an identified edible food landrace from a trusted local seed source. A wild-looking melon or the common name karkoer alone is insufficient.",
+      "zu": "Thola uhlobo lwendabuko lokudla oludliwayo olukhonjwe kahle emthonjeni wembewu wendawo othembekile. Ikhabe elibukeka lisendle noma igama elijwayelekile elithi karkoer kuphela akwanele.",
+      "st": "Fumana mofuta wa setso wa dijo o jewang o hlwauweng mohloding o tshepahalang wa peo wa sebaka. Lehapu le shebahalang le hlaha kapa lebitso le tlwaelehileng la karkoer feela ha le a lekana.",
+      "ts": "Kuma muxaka wa ndhavuko wa swakudya leswi dyiwaka lowu tivekaka eka xihlovo xa mbewu xa ndhawu lexi tshemberiwaka. Khalavatla leri langutekaka ri ri ra nhova kumbe vito leri tolovelekeke ra karkoer ntsena a swi enelanga.",
+      "ve": "Wanani lushaka lwa sialala lwa zwiḽiwa zwi ḽiwaho lwo ṱalulwaho kha tshiko tsha mbeu tsha henefho tshi fulufhedzeaho. Habu ḽi vhonalaho ḽi ḽa ḓaka kana dzina ḽo ḓoweleaho ḽa karkoer fhedzi a zwi eḓani.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The catalogue entry combines tsamma and var. citroides/landrace labels. SANBI distinguishes edible makataan/tsamma forms from bitter karkoer; identity and edible part must be confirmed.",
+      "zu": "Irekhodi lekhathalogi lihlanganisa amalebula athi tsamma no-var. citroides/uhlobo lwendabuko. I-SANBI ihlukanisa izinhlobo ezidliwayo ze-makataan/tsamma ku-karkoer ebabayo; kufanele kuqinisekiswe ubunikazi nengxenye edliwayo.",
+      "st": "Rekoto ya lethathamo e kopanya mabitso a tsamma le var. citroides/mofuta wa setso. SANBI e kgetholla mefuta e jewang ya makataan/tsamma ho karkoer e babang; boitsebiso le karolo e jewang di lokela ho netefatswa.",
+      "ts": "Rekodo ya khataloko yi hlanganisa tilebulu ta tsamma na var. citroides/muxaka wa ndhavuko. SANBI yi hambanisa swivumbeko swa makataan/tsamma leswi dyiwaka eka karkoer yo bava; vutitivisi ni xiphemu lexi dyiwaka swi fanele ku tiyisisiwa.",
+      "ve": "Rekhodo ya khathalogo i ṱanganya ḽebuḽu dza tsamma na var. citroides/lushaka lwa sialala. SANBI i fhambanya zwivhumbeo zwi ḽiwaho zwa makataan/tsamma na karkoer i vhavhaho; vhuvha na tshipiḓa tshi ḽiwaho zwi tea u khwaṱhisedzwa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "coffee cherries",
+      "zu": "izithelo zekhofi",
+      "st": "ditholwana tsa kofi",
+      "ts": "mihandzu ya kofi",
+      "ve": "mitshelo ya gofhi",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record coffee-cherry picking separately from drying, hulling and roasting. Do not use roasted packet stock months as the fresh harvest calendar.",
+      "zu": "Rekhoda ukuvunwa kwezithelo zekhofi ngokwehlukana nokomisa, ukususa amakhoba nokosa. Ungasebenzisi izinyanga zesitoko samaphakethe ekhofi elosiwe njengekhalenda lesivuno esisha.",
+      "st": "Rekota ho kga ditholwana tsa kofi ka thoko ho ho omisa, ho tlosa makgapetla le ho besa. O se ke wa sebedisa dikgwedi tsa setoko sa dipakete tsa kofi e besitsweng e le khalendara ya kotulo e foreshe.",
+      "ts": "Rhekhoda ku tshovela mihandzu ya kofi hi ku hambana ni ku omisa, ku susa makamba ni ku katinga. U nga tirhisi tin’hweti ta nhundzu ya tiphakiti leti katingiweke ti ri khalendara ya ntshovelo lowuntshwa.",
+      "ve": "Rekhodani u kaṋa mitshelo ya gofhi nga u fhambana na u omisa, u bvisa maganda na u gotsha. Ni songo shumisa miṅwedzi ya zwiḽiwa zwa phakhethe dzo gotshwaho sa khalenda ya khaṋo ntswa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Use the Port Edward reference only after checking the actual site's conditions and chosen cultivar.",
+      "zu": "Sebenzisa inkomba yase-Port Edward kuphela ngemva kokuhlola izimo zendawo yangempela nohlobo olukhethiwe.",
+      "st": "Sebedisa tshupiso ya Port Edward feela ka mora ho hlahloba maemo a sebaka sa nnete le mofuta o kgethilweng.",
+      "ts": "Tirhisa xikombo xa Port Edward ntsena endzhaku ko kambela swiyimo swa ndhawu ya xiviri ni muxaka lowu hlawuriweke.",
+      "ve": "Shumisani ndaedzi ya Port Edward fhedzi musi no no ṱola nyimele dza fhethu ha vhukuma na lushaka lwo khethwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "SL28, Catuai and F6 are documented on a working Port Edward estate. Ask a local nursery or coffee adviser which planting material fits the site and intended processing.",
+      "zu": "I-SL28, Catuai ne-F6 zibhalwe epulazini lekhofi elisebenzayo lase-Port Edward. Buza enkulisa yendawo noma kumeluleki wekhofi ukuthi yiziphi izinto zokutshala ezifanele indawo nendlela yokucubungula ehlosiwe.",
+      "st": "SL28, Catuai le F6 di tlalehilwe polasing ya kofi e sebetsang ya Port Edward. Botsa sebaka sa kgodiso ya dimela sa sebaka kapa moeletsi wa kofi hore na ke dimela dife tse loketseng sebaka le tokiso e rerilweng.",
+      "ts": "SL28, Catuai na F6 swi tsariwile eka purasi leri tirhaka ra Port Edward. Vutisa ndhawu yo kurisa swimilana ya ndhawu kumbe mutsundzuxi wa kofi leswaku hi swihi swilo swo byala leswi faneleke ndhawu ni ku lulamisa loku kunguhatiweke.",
+      "ve": "SL28, Catuai na F6 zwo ṅwalwa kha bulasi ḽa gofhi ḽi shumaho ḽa Port Edward. Vhudzisani nesari ya henefho kana mueletshedzi wa gofhi uri ndi zwishumiswa zwifhio zwa u ṱavha zwi teaho fhethu na u lugisa ho dzudzanywaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Estate cultivar identity and processing basis",
+      "zu": "Ubunikazi bezinhlobo zepulazi nesisekelo sokucubungula",
+      "st": "Boitsebiso ba mefuta ya polasi le motheo wa tokiso",
+      "ts": "Vutitivisi bya tinxaka ta purasi ni masungulo ya ku lulamisa",
+      "ve": "Vhuvha ha tshaka dza bulasi na mutheo wa u lugisa",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The three are SL28, Catuai and F6. The estate explains pulping, fermentation, drying, hulling and roasting after picking; cherry weight, green beans and roasted output are separate products.",
+      "zu": "Lezi ezintathu yi-SL28, Catuai ne-F6. Ipulazi lichaza ukususa inyama yesithelo, ukuvutshelwa, ukomisa, ukususa amakhoba nokosa ngemva kokuvuna; isisindo sesithelo, izimbewu zekhofi ezingakosiwa nomkhiqizo osiwe kuyimikhiqizo eyehlukene.",
+      "st": "Tse tharo ke SL28, Catuai le F6. Polasi e hlalosa ho tlosa nama ya tholwana, ho bedisa (fermentation), ho omisa, ho tlosa makgapetla le ho besa ka mora ho kga; boima ba tholwana, dinawa tsa kofi tse sa beswang le sehlahiswa se besitsweng ke dihlahiswa tse arohaneng.",
+      "ts": "Tinxaka tinharhu i SL28, Catuai na F6. Purasi ri hlamusela ku susa nyama ya muhandzu, ku endla fermentation, ku omisa, ku susa makamba ni ku katinga endzhaku ko tshovela; ntiko wa muhandzu, tinyawa ta kofi leti nga si katingiwaka ni vuhumelerisi byo katingiwa i switirhisiwa leswi hambaneke.",
+      "ve": "Tshaka tharu ndi SL28, Catuai na F6. Bulasi ḽi ṱalutshedza u bvisa ṋama ya mutshelo, u ita fermentation, u omisa, u bvisa maganda na u gotsha nga murahu ha u kaṋa; tshileme tsha mutshelo, ṋawa dza gofhi dzi sa athu u gotshwaho na tshibveledzwa tsho gotshwaho ndi zwibveledzwa zwo fhambanaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Local coffee planting context",
+      "zu": "Umongo wokutshala ikhofi wendawo",
+      "st": "Maemo a ho jala kofi sebakeng",
+      "ts": "Mongo wa ku byala kofi wa ndhawu",
+      "ve": "Nyimele ya u ṱavha gofhi ya henefho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The estate is on the KZN south coast and reports growing SL28, Catuai and F6. This is first-party cultivation evidence, not nationwide suitability.",
+      "zu": "Ipulazi lisogwini oluseningizimu ye-KZN futhi libika ukuthi likhulisa i-SL28, Catuai ne-F6. Lokhu ubufakazi bokulima obuvela epulazini uqobo, hhayi ukufaneleka ezweni lonke.",
+      "st": "Polasi e lebopong le ka borwa la KZN mme e tlaleha ho hodisa SL28, Catuai le F6. Bona ke bopaki ba temo bo tswang ho balemi ka bobona, eseng ho tshwaneleha naheng yohle.",
+      "ts": "Purasi ri le ribuweni ra dzonga ra KZN naswona ri vika ku kurisa SL28, Catuai na F6. Lebyi i vumbhoni bya ku byala byo huma eka varimi hi voxe, ku nga ri ku faneleka etikweni hinkwaro.",
+      "ve": "Bulasi ḽi khunzikhunzini ya tshipembe ya KZN nahone ḽi vhiga u alusa SL28, Catuai na F6. Uhu ndi vhuṱanzi ha u lima vhu bvaho kha vhalimi vhone vhaṋe, hu si u tea kha shango ḽoṱhe.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "edible tubers",
+      "zu": "izigaxa ezidliwayo (tubers)",
+      "st": "dikarolo tsa semela tse ruruhileng tlasa mobu tse jewang (tubers)",
+      "ts": "marhanga lama dyiwaka (tubers)",
+      "ve": "khufhi dzi ḽiwaho (tubers)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Use loose, well-drained soil in full sun under suitably warm conditions.",
+      "zu": "Sebenzisa umhlabathi ovulekile okhipha amanzi kahle elangeni eligcwele ngaphansi kwezimo ezifudumele ezifanele.",
+      "st": "Sebedisa mobu o hlephileng o ntshang metsi hantle letsatsing le felletseng tlasa maemo a mofuthu a loketseng.",
+      "ts": "Tirhisa misava leyi nga tlimbanangiki leyi humesaka mati kahle edyambyini leri heleleke ehansi ka swiyimo swo kufumela leswi faneleke.",
+      "ve": "Shumisani mavu a songo tsitsikanaho a bvisaho maḓi zwavhuḓi kha ḓuvha ḽo fhelelaho fhasi ha nyimele dzi dudelaho dzo teaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record tuber harvest by planting batch and bed area, rather than a generic fruit-tree maturity curve.",
+      "zu": "Rekhoda isivuno sezigaxa (tubers) ngeqoqo lokutshala nendawo yombhede, kunokusebenzisa ijika elijwayelekile lokukhula kwesihlahla sezithelo.",
+      "st": "Rekota kotulo ya dikarolo tsa semela tse ruruhileng tlasa mobu (tubers) ka sehlopha sa ho jala le sebaka sa bethe, ho e na le mothinya o akaretsang wa kgolo ya sefate sa ditholwana.",
+      "ts": "Rhekhoda ntshovelo wa marhanga (tubers) hi ntlawa wo byala ni vukulu bya mubedwa, ematshan’weni ya girafu ya ntolovelo ya ku kula ka murhi wa mihandzu.",
+      "ve": "Rekhodani khaṋo ya khufhi (tubers) nga tshigwada tsha u ṱavha na vhuhulwane ha bethe, nṱhani ha girafu ya u angaredza ya u aluwa ha muri wa mitshelo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The SANBI tuber-cycle reference is 4–6 months after planting, dependent on water, soil and position. Record the actual planting date and mature tuber harvest.",
+      "zu": "Inkomba ye-SANBI yomjikelezo wezigaxa (tubers) yizinyanga ezingu-4–6 ngemva kokutshala, kuye ngamanzi, umhlabathi nendawo. Rekhoda usuku lwangempela lokutshala nesivuno sezigaxa ezikhule ngokuphelele.",
+      "st": "Tshupiso ya SANBI ya potoloho ya dikarolo tsa semela tse ruruhileng tlasa mobu (tubers) ke dikgwedi tse 4–6 ka mora ho jala, ho itshetlehile ka metsi, mobu le sebaka. Rekota letsatsi la nnete la ho jala le kotulo ya tubers tse hodileng.",
+      "ts": "Xikombo xa SANBI xa ndzhendzeleko wa marhanga (tubers) i tin’hweti ta 4–6 endzhaku ko byala, ku ya hi mati, misava ni ndhawu. Rhekhoda siku ra xiviri ro byala ni ntshovelo wa marhanga lama kuleke.",
+      "ve": "Ndaedzi ya SANBI ya mutevhe wa khufhi (tubers) ndi miṅwedzi ya 4–6 nga murahu ha u ṱavha, zwi tshi ya nga maḓi, mavu na fhethu. Rekhodani ḓuvha ḽa vhukuma ḽa u ṱavha na khaṋo ya khufhi dzo aluwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Obtain correctly identified planting tubers or pieces. A local named selection and food kg/plant benchmark remain unverified.",
+      "zu": "Thola izigaxa (tubers) zokutshala noma izingcezu ezikhonjwe kahle. Uhlobo lwendawo oluqanjwe ngegama nenkomba yokudla ye-kg/plant akukaqinisekiswa.",
+      "st": "Fumana dikarolo tsa semela tse ruruhileng tlasa mobu (tubers) kapa dikotwana tsa ho jala tse hlwauweng ka nepo. Mofuta wa sebaka o bitswang ka lebitso le tshupiso ya dijo ya kg/plant di ntse di sa netefatswa.",
+      "ts": "Kuma marhanga (tubers) kumbe swiphemu swo byala leswi tivekaka kahle. Muxaka wa ndhawu lowu nga ni vito ni mpimo wa swakudya wa kg/plant swa ha nga si tiyisisiwa.",
+      "ve": "Wanani khufhi (tubers) kana zwipiḓa zwa u ṱavha zwo ṱalulwaho zwavhuḓi. Lushaka lwa henefho lu re na dzina na ndaedzi ya zwiḽiwa ya kg/plant a zwi athu u khwaṱhisedzwa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Edible tuber product and warm-season habitat",
+      "zu": "Umkhiqizo wezigaxa ezidliwayo (tubers) nendawo yokukhula yenkathi efudumele",
+      "st": "Sehlahiswa sa dikarolo tsa semela tse ruruhileng tlasa mobu tse jewang (tubers) le bodulo ba nako e futhumetseng",
+      "ts": "Xitirhisiwa xa marhanga lama dyiwaka (tubers) ni vutshamo bya nguva yo kufumela",
+      "ve": "Tshibveledzwa tsha khufhi dzi ḽiwaho (tubers) na vhudzulo ha khalaṅwaha i dudelaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The food product is a tuber, not a potato-family fruit. Warm summer-rainfall cultivation with little frost is described; winter/spring flowering after leaf loss is not a dated tuber-digging calendar.",
+      "zu": "Umkhiqizo wokudla yisigaxa (tuber), hhayi isithelo somndeni wamazambane. Kuchazwa ukulima okufudumele kwemvula yasehlobo okunesithwathwa esincane; ukuqhakaza kwasebusika/kwasentwasahlobo ngemva kokuwa kwamaqabunga akulona ikhalenda elinezinsuku zokumba izigaxa.",
+      "st": "Sehlahiswa sa dijo ke karolo ya semela e ruruhileng tlasa mobu (tuber), eseng tholwana ya lelapa la ditapole. Ho hlaloswa temo e futhumetseng ya dipula tsa lehlabula e nang le serame se senyane; ho thunya mariha/selemo ka mora ho wa ha makgasi ha se khalendara e behilweng matsatsi ya ho tjheka tubers.",
+      "ts": "Xitirhisiwa xa swakudya i rhanga (tuber), ku nga ri muhandzu wa ndyangu wa mazambhala. Ku hlamuseriwa ku byala ko kufumela ka mpfula ya ximumu loku nga ni rharhama ritsongo; ku rhumbuka hi xixika/ximun’wana endzhaku ka ku wa ka matluka a hi khalendara leyi nga ni masiku yo cela marhanga.",
+      "ve": "Tshibveledzwa tsha zwiḽiwa ndi khufhi (tuber), hu si mutshelo wa muṱa wa nḓabula. Hu ṱalutshedzwa u lima hu dudelaho ha mvula ya tshilimo hu re na murotholo muṱuku; u ṱuma maluvha vhuria/lutavula nga murahu ha u wa ha maṱari a si khalenda i re na maḓuvha ya u bwa khufhi.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Tuber planting and harvest cycle",
+      "zu": "Umjikelezo wokutshala nokuvuna izigaxa (tubers)",
+      "st": "Potoloho ya ho jala le ho kotula dikarolo tsa semela tse ruruhileng tlasa mobu (tubers)",
+      "ts": "Ndzhendzeleko wo byala ni wo tshovela marhanga (tubers)",
+      "ve": "Mutevhe wa u ṱavha na u kaṋa khufhi (tubers)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Tubers can be harvested 4–6 months after planting, depending on rainfall, soil and situation. Source planting context is the onset of early spring rains, late August–early September in South African summer-rainfall areas. This is a tuber planting cycle, not tree first-bearing age; it does not establish universal picking months. Shelf life is described as relatively short without a numeric duration.",
+      "zu": "Izigaxa (tubers) zingavunwa ezinyangeni ezingu-4–6 ngemva kokutshala, kuye ngemvula, umhlabathi nendawo. Umongo wokutshala osemthonjeni ukuqala kwezimvula zentwasahlobo yokuqala, ekupheleni kuka-Agasti–ekuqaleni kukaSepthemba ezindaweni zaseNingizimu Afrika zemvula yasehlobo. Lona umjikelezo wokutshala izigaxa, hhayi iminyaka yokuqala ukuthela kwesihlahla; awuqinisekisi izinyanga zokuvuna zazo zonke izindawo. Isikhathi sokugcina sichazwa njengesifushane uma kuqhathaniswa, ngaphandle kwenani lesikhathi.",
+      "st": "Dikarolo tsa semela tse ruruhileng tlasa mobu (tubers) di ka kotulwa dikgweding tse 4–6 ka mora ho jala, ho itshetlehile ka pula, mobu le maemo a sebaka. Maemo a ho jala a mohlodi ke qaleho ya dipula tsa qalong ya selemo, qetellong ya Phata–qalong ya Leotshe dibakeng tsa Afrika Borwa tsa dipula tsa lehlabula. Ena ke potoloho ya ho jala tubers, eseng dilemo tsa sefate tsa ho qala ho beha; ha e thehe dikgwedi tsa kotulo tse sebetsang hohle. Nako ya poloko e hlaloswa e le kgutshwane ha e bapiswa, ntle le nako e boletsweng ka palo.",
+      "ts": "Marhanga (tubers) ma nga tshoveriwa tin’hweti ta 4–6 endzhaku ko byala, ku ya hi mpfula, misava ni xiyimo xa ndhawu. Mongo wa ku byala wa xihlovo i ku sungula ka timpfula ta le ku sunguleni ka ximun’wana, eku heleni ka Mhawuri–eku sunguleni ka Ndzhati eka tindhawu ta Afrika Dzonga ta mpfula ya ximumu. Lowu i ndzhendzeleko wo byala marhanga, ku nga ri vukhale bya ku sungula ku veka mihandzu ka murhi; a wu tiyisisi tin’hweti to tshovela hinkwako. Nkarhi wo hlayisa wu hlamuseriwa wu ri wutsongo loko wu pimanisiwa, ku nga nyikiwi nkarhi hi nhlayo.",
+      "ve": "Khufhi (tubers) dzi nga kaṋiwa nga miṅwedzi ya 4–6 nga murahu ha u ṱavha, zwi tshi ya nga mvula, mavu na nyimele ya fhethu. Nyimele ya u ṱavha ya tshiko ndi u thoma ha mvula dza u thoma ha lutavula, mafheloni a Ṱhangule–mathomoni a Khubvumedzi kha vhupo ha Afrika Tshipembe ha mvula ya tshilimo. Uyu ndi mutevhe wa u ṱavha khufhi, hu si vhukale ha u thoma u aṋwa ha muri; a u khwaṱhisedzi miṅwedzi ya u kaṋa fhethu hoṱhe. Tshifhinga tsha u vhulunga tshi ṱalutshedzwa sa tshipfufhi musi tshi tshi vhambedzwa, hu si na tshifhinga tsho bulwaho nga tshivhalo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "leafy shoots for dried honeybush tea",
+      "zu": "amahlumela anamaqabunga etiye le-honeybush elomisiwe",
+      "st": "mahlomela a nang le makgasi bakeng sa tee ya honeybush e omisitsweng",
+      "ts": "swihluke leswi nga ni matluka swa tiya ya honeybush leyi omisiweke",
+      "ve": "matavhi maṱuku a re na maṱari a tie ya honeybush yo omiswaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Use species-suitable, well-drained acidic fynbos conditions and confirm local frost exposure.",
+      "zu": "Sebenzisa izimo ze-fynbos ezine-asidi nezikhipha amanzi kahle ezifanele lolu hlobo bese uqinisekisa ukuchayeka esithwathweni kwendawo.",
+      "st": "Sebedisa maemo a fynbos a nang le asiti a ntshang metsi hantle a loketseng mofuta ona mme o netefatse ho pepeseha serameng sebakeng.",
+      "ts": "Tirhisa swiyimo swa fynbos leswi nga ni asidi leswi humesaka mati kahle leswi faneleke muxaka lowu u tlhela u tiyisisa ku fikeleriwa hi rharhama endhawini.",
+      "ve": "Shumisani nyimele dza fynbos dzi re na esidi dzi bvisaho maḓi zwavhuḓi dzo teaho lushaka ni khwaṱhisedze u swikelwa nga murotholo ha henefho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record fresh cuttings and dried tea output separately; no automatic drying conversion or safe storage duration is assigned.",
+      "zu": "Rekhoda okusanda kusikwa nomkhiqizo wetiye elomisiwe ngokwehlukana; akukho ukuguqulwa kokomisa okuzenzakalelayo noma isikhathi sokugcina esiphephile esibekiwe.",
+      "st": "Rekota dikarolo tse sa tswa sehwa le tlhahiso ya tee e omisitsweng ka thoko; ha ho phetoho ya ho omisa e iketsang kapa nako e sireletsehileng ya poloko e abetsweng.",
+      "ts": "Rhekhoda leswi ha ku tsemiwaka ni vuhumelerisi bya tiya leyi omisiweke hi ku hambana; a ku nyikiwi ku hundzuluxa ko omisa hi ku tisungulela kumbe nkarhi wo hlayisa lowu hlayisekeke.",
+      "ve": "Rekhodani zwo tou geriwaho na vhubveledzi ha tie yo omiswaho nga u fhambana; a hu ṋetshedzwi u shandula ha u omisa ha otomatiki kana tshifhinga tsho tsireledzeaho tsha u vhulunga.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask a specialist local nursery for identified C. genistoides and a locally proven selection; different ecotypes do not perform equally.",
+      "zu": "Buza enkulisa yendawo enguchwepheshe nge-C. genistoides ekhonjwe kahle nohlobo olufakazelwe endaweni; izinhlobo zezindawo zemvelo ezehlukene azikhiqizi ngokulinganayo.",
+      "st": "Botsa setsebi sa sebaka sa kgodiso ya dimela sa sebaka bakeng sa C. genistoides e hlwauweng le mofuta o pakilweng sebakeng; mefuta e fapaneng ya bodulo ba tlhaho ha e sebetse ka ho lekana.",
+      "ts": "Vutisa ndhawu yo kurisa swimilana ya ndhawu leyi nga ni vutshila hi C. genistoides leyi tivekaka ni muxaka lowu tiyisisiweke endhawini; tinxaka ta tindhawu ta ntumbuluko leti hambaneke a ti humelerisi hi ku ringana.",
+      "ve": "Humbelani nesari ya henefho ya vhuḓivhi C. genistoides yo ṱalulwaho na lushaka lwo khwaṱhisedzwaho henefho; tshaka dza nyimele dza mvelo dzo fhambanaho a dzi bveledzi nga u lingana.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Honeybush harvest and processed-product basis",
+      "zu": "Isisekelo sesivuno se-honeybush nomkhiqizo ocutshunguliwe",
+      "st": "Motheo wa kotulo ya honeybush le sehlahiswa se lokisitsweng",
+      "ts": "Masungulo ya ntshovelo wa honeybush ni xitirhisiwa lexi lulamisiweke",
+      "ve": "Mutheo wa khaṋo ya honeybush na tshibveledzwa tsho lugiswaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Cut shoots are chopped, heat-oxidised, dried and sieved; green tea is dried without oxidation. Fresh shoot kg is not dried tea kg. C. genistoides is a specific commercial species, not every honeybush species.",
+      "zu": "Amahlumela asikiwe ayaqotshwa, afakwe ku-oxidation ngokushisa, omiswe bese ayahlungwa; itiye eliluhlaza lomiswa ngaphandle kwe-oxidation. I-kg yamahlumela amasha ayiyona i-kg yetiye elomisiwe. I-C. genistoides iwuhlobo oluthile lwezentengiselwano, hhayi zonke izinhlobo ze-honeybush.",
+      "st": "Mahlomela a sehuweng a a kgabelwa, a kenngwa tshebetsong ya oxidation ka mocheso, a omiswe mme a sefe; tee e tala e omiswa ntle le oxidation. kg ya mahlomela a foreshe ha se kg ya tee e omisitsweng. C. genistoides ke mofuta o itseng wa kgwebo, eseng mefuta yohle ya honeybush.",
+      "ts": "Swihluke leswi tsemiweke swa tsemeleriwa, swi endliwa oxidation hi ku hisa, swi omisiwa swi tlhela swi sefiwa; tiya ya rihlaza yi omisiwa ku nga ri na oxidation. kg ya swihluke leswintshwa a hi kg ya tiya leyi omisiweke. C. genistoides i muxaka wo karhi wa mabindzu, ku nga ri tinxaka hinkwato ta honeybush.",
+      "ve": "Matavhi maṱuku o geriwaho a a tshemiwa zwipiḓa, a itwa oxidation nga mufhiso, a omiswa a sefhiwa; tie dala i omiswa hu si na oxidation. kg ya matavhi maṱuku maswa a si kg ya tie yo omiswaho. C. genistoides ndi lushaka lukene lwa vhubindudzi, hu si tshaka dzoṱhe dza honeybush.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Seasonal wording needs local validation",
+      "zu": "Amagama enkathi adinga ukuqinisekiswa endaweni",
+      "st": "Mantsoe a dinako tsa selemo a hloka netefatso ya sebaka",
+      "ts": "Marito ya nguva ma lava ku tiyisisiwa endhawini",
+      "ve": "Maipfi a khalaṅwaha a ṱoḓa u khwaṱhisedzwa henefho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Text discusses summer for C. genistoides and autumn for C. subternata, but the caption conflicts. No exact month array is inferred.",
+      "zu": "Umbhalo ukhuluma ngehlobo le-C. genistoides nangekwindla le-C. subternata, kodwa amazwibela ayaphikisana nalokho. Alukho uhlu lwezinyanga oluqondile olucatshangwayo.",
+      "st": "Mongolo o bua ka lehlabula bakeng sa C. genistoides le hwetla bakeng sa C. subternata, empa tlhaloso ya setshwantsho e a hanyetsana. Ha ho nahannwe lethathamo le tobileng la dikgwedi.",
+      "ts": "Tsalwa ri bula hi ximumu xa C. genistoides ni xixikana xa C. subternata, kambe nhlamuselo ya xifaniso ya kanetana. A ku ehleketeleriwi nxaxamelo wa tin’hweti lowu kongomeke.",
+      "ve": "Tshibveledzwa tshi amba nga tshilimo tsha C. genistoides na tshifhefho tsha C. subternata, fhedzi ṱhalutshedzo ya tshifanyiso i a hanedzana. A hu humbulelwi mutevhe wa miṅwedzi wo tiwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Species culture",
+      "zu": "Ukulinywa kwalolu hlobo",
+      "st": "Temo ya mofuta",
+      "ts": "Ku kurisa muxaka",
+      "ve": "U alusa lushaka",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Source describes the tea species and sunny, acidic, well-drained southern Cape cultivation; it does not provide transferable food kg/plant or full-production age.",
+      "zu": "Umthombo uchaza uhlobo lwetiye nokulinywa e-southern Cape elangeni, ezimweni ezine-asidi nezikhipha amanzi kahle; awunikezi i-kg/plant yokudla engadluliselwa kwezinye izindawo noma iminyaka yokukhiqiza ngokugcwele.",
+      "st": "Mohlodi o hlalosa mofuta wa tee le temo ya southern Cape e nang le letsatsi, asiti le metsi a tswang hantle; ha o fane ka kg/plant ya dijo e ka fetisetswang dibakeng tse ding kapa dilemo tsa tlhahiso e felletseng.",
+      "ts": "Xihlovo xi hlamusela muxaka wa tiya ni ku byala ka southern Cape eka dyambu, asidi ni ku huma ka mati kahle; a xi nyiki kg/plant ya swakudya leyi hundziseriwaka kumbe vukhale bya vuhumelerisi byo helela.",
+      "ve": "Tshiko tshi ṱalutshedza lushaka lwa tie na u lima ha southern Cape kha ḓuvha, esidi na u bva ha maḓi zwavhuḓi; a tshi ṋei kg/plant ya zwiḽiwa i pfukiselwaho kana vhukale ha vhubveledzi ho fhelelaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The Portuguese-quince May reference comes from irrigated Robertson orchards. Record local first and last picking months before treating it as food available.",
+      "zu": "Inkomba kaMeyi ye-Portuguese quince ivela ezinsimini zezithelo ezichelelwayo zase-Robertson. Rekhoda izinyanga zendawo zokuqala nezokugcina ukuvuna ngaphambi kokuyithatha njengokudla okutholakalayo.",
+      "st": "Tshupiso ya Motsheanong ya Portuguese quince e tswa masimong a ditholwana a nosetswang a Robertson. Rekota dikgwedi tsa sebaka tsa pele le tsa ho qetela tsa kotulo pele o e nka e le dijo tse fumanehang.",
+      "ts": "Xikombo xa Mudyaxihi xa Portuguese quince xi huma eka masimu ya mihandzu lama cheletiwaka ya Robertson. Rhekhoda tin’hweti ta ndhawu to sungula ni to hetelela to tshovela u nga si swi teka swi ri swakudya leswi kumekaka.",
+      "ve": "Ndaedzi ya Shundunthule ya Portuguese quince i bva kha masimu a mitshelo a sheledzwaho a Robertson. Rekhodani miṅwedzi ya henefho ya u thoma na ya u fhedza ya u kaṋa ni sa athu u zwi dzhia sa zwiḽiwa zwi wanalaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Keep preserved-stock dates separate from fruit picking; a canning end use does not establish safe shelf life.",
+      "zu": "Gcina izinsuku zesitoko sokudla okulondoloziwe zehlukene nokuvunwa kwezithelo; ukusetshenziswa ekheni akusunguli isikhathi sokugcina esiphephile.",
+      "st": "Boloka matsatsi a dijo tse bolokilweng a arohane le ho kga ditholwana; tshebediso ya ho kenya makotikoting ha e thehe nako e sireletsehileng ya poloko.",
+      "ts": "Hlayisa masiku ya nhundzu leyi hlayisiweke ma hambanile ni ku tshovela mihandzu; ku tirhisiwa ko chela emathinini a ku tiyisisi nkarhi wo hlayisa lowu hlayisekeke.",
+      "ve": "Vhulungani maḓuvha a zwiḽiwa zwo vhulungwaho o fhambana na u kaṋa mitshelo; tshumiso ya u vhea kha zwikoṱikoṱi a i khwaṱhisedzi tshifhinga tsho tsireledzeaho tsha u vhulunga.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Portuguese quince has a source-backed Robertson orchard reference. Ask for a fruiting quince cultivar: quince names used as pear rootstocks are not a fruit-harvest recommendation.",
+      "zu": "I-Portuguese quince inenkomba yomthombo yezinsimu zezithelo zase-Robertson. Cela uhlobo lwe-quince oluthela izithelo: amagama e-quince asetshenziswa njengezisekelo zokuxhunyelelwa kwamapheya (rootstocks) awasona isincomo sesivuno sezithelo.",
+      "st": "Portuguese quince e na le tshupiso e tshehetswang ke mohlodi ya masimo a ditholwana a Robertson. Kopa mofuta wa quince o behang ditholwana: mabitso a quince a sebediswang e le dimela tse amohelang ho hlomathisa pere (rootstocks) ha se kgothaletso ya kotulo ya ditholwana.",
+      "ts": "Portuguese quince yi na ni xikombo lexi seketeriwaka hi xihlovo xa masimu ya mihandzu ya Robertson. Kombela muxaka wa quince lowu vekaka mihandzu: mavito ya quince lama tirhisiwaka ma ri mirhi yo amukela ku hlomeleriwa ka pere (rootstocks) a hi xibumabumelo xa ntshovelo wa mihandzu.",
+      "ve": "Portuguese quince i na ndaedzi yo tikedzwaho nga tshiko ya masimu a mitshelo a Robertson. Humbelani lushaka lwa quince lu aṋwaho mitshelo: madzina a quince a shumiswaho sa miri i ṱumetshedzwaho pere (rootstocks) a si themendelo ya khaṋo ya mitshelo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Robertson irrigation and food end-use context",
+      "zu": "Umongo wokuchelela wase-Robertson nokusetshenziswa kokudla ekugcineni",
+      "st": "Maemo a nosetso ya Robertson le tshebediso ya ho qetela ya dijo",
+      "ts": "Mongo wa ku cheleta wa Robertson ni ku tirhisiwa ko hetelela ka swakudya",
+      "ve": "Nyimele ya u sheledza ya Robertson na tshumiso ya u fhedza ya zwiḽiwa",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The study documents summer irrigation and managed organic fruit production. It supplies no validated home processing recipe or shelf life.",
+      "zu": "Ucwaningo lubhala ukuchelela kwasehlobo nokukhiqizwa kwezithelo okuphethwe ngezindlela ze-organic. Alunikezi iresiphi eqinisekisiwe yokulungisa ekhaya noma isikhathi sokugcina.",
+      "st": "Phuputso e tlaleha nosetso ya lehlabula le tlhahiso ya ditholwana ya organic e laolwang. Ha e fane ka resepe e netefaditsweng ya ho lokisa lapeng kapa nako ya poloko.",
+      "ts": "Ndzavisiso wu tsala ku cheleta ka ximumu ni vuhumelerisi bya mihandzu bya organic leri lawuriwaka. A wu nyiki rhisipi leyi tiyisisiweke ya ku lulamisa ekaya kumbe nkarhi wo hlayisa.",
+      "ve": "Ngudo i ṅwala u sheledza ha tshilimo na vhubveledzi ha mitshelo ha organic ho langwaho. A i ṋei risipi yo khwaṱhisedzwaho ya u lugisa hayani kana tshifhinga tsha u vhulunga.",
+      "generatedScope": "product-guidance"
+    }
+  ],
+  "sourceBindings": [
+    {
+      "english": "nut in shell",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "carya-illinoinensis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Pecan guide output — dry nut-in-shell hectare basis",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "carya-illinoinensis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The guide gives conservative 750, average 800–1,200 and good 1,500+ kg/ha Dry-in-Shell. It separately lists alternative tree spacings and later thinning, so one density is not assumed. These are unaged hectare benchmarks; shell weight is not edible kernel weight and no generic kg/tree curve is derived.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "carya-illinoinensis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "cooked leaves",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "centella-asiatica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Confirm exact identity and record the cooked-leaf product; medicinal use does not establish a food production forecast.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "centella-asiatica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Obtain identified Centella asiatica material from a reputable nursery; no regional food cultivar or measured annual leaf yield is verified.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "centella-asiatica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Confirmed South African vegetable use",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "centella-asiatica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The author identifies C. asiatica as a cooked South African vegetable. Centella species can be difficult to distinguish; nearby C. coriacea food or yield evidence is not transferred. No food picking months, first harvest duration or kg/plant is provided.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "centella-asiatica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "pods",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "ceratonia-siliqua"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Harvested product is the pod. Confirm the planting material's sex and compatible pollen; seedling pod crops vary.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "ceratonia-siliqua"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Check local frost and water. Food processing needs a suitable method and explicit kept-stock records.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "ceratonia-siliqua"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Use identified grafted material rather than assuming an unknown seedling will match a productive tree. Tylliria, SFax, Aaronsohn and Santa Fe were in the South African food-composition study; that does not rank their farm yield or regional suitability.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "ceratonia-siliqua"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South African food part and planting context",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "ceratonia-siliqua"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Government guidance identifies pods, severe-frost exclusion, irrigation in arid areas and variation between seedling trees. It recommends grafted material and pollen provision; not every tree has the same crop.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "ceratonia-siliqua"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Locally tested carob food products and cultivars",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "ceratonia-siliqua"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The primary study tested South African grown pod material, including those named cultivars and an unknown one, and developed food products. This is food-part evidence, not a regional maturity/yield trial. University full-text handle returned HTTP 403 during checking.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "ceratonia-siliqua"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "identified edible melon landrace — specialist confirmation needed",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "citrullus-lanatus-landrace-var-citroides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Keep this mixed landrace entry out of household-food totals until an experienced local grower confirms the seed source, form and appropriate food preparation.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "citrullus-lanatus-landrace-var-citroides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The source describes a sprawling annual for fairly dry areas with adequate space.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "citrullus-lanatus-landrace-var-citroides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Obtain an identified edible food landrace from a trusted local seed source. A wild-looking melon or the common name karkoer alone is insufficient.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "citrullus-lanatus-landrace-var-citroides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The catalogue entry combines tsamma and var. citroides/landrace labels. SANBI distinguishes edible makataan/tsamma forms from bitter karkoer; identity and edible part must be confirmed.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "citrullus-lanatus-landrace-var-citroides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "coffee cherries",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "coffea-arabica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Record coffee-cherry picking separately from drying, hulling and roasting. Do not use roasted packet stock months as the fresh harvest calendar.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "coffea-arabica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Use the Port Edward reference only after checking the actual site's conditions and chosen cultivar.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "coffea-arabica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "SL28, Catuai and F6 are documented on a working Port Edward estate. Ask a local nursery or coffee adviser which planting material fits the site and intended processing.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "coffea-arabica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Estate cultivar identity and processing basis",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "coffea-arabica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The three are SL28, Catuai and F6. The estate explains pulping, fermentation, drying, hulling and roasting after picking; cherry weight, green beans and roasted output are separate products.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "coffea-arabica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Local coffee planting context",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "coffea-arabica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The estate is on the KZN south coast and reports growing SL28, Catuai and F6. This is first-party cultivation evidence, not nationwide suitability.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "coffea-arabica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "edible tubers",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "coleus-esculentus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Use loose, well-drained soil in full sun under suitably warm conditions.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "coleus-esculentus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Record tuber harvest by planting batch and bed area, rather than a generic fruit-tree maturity curve.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "coleus-esculentus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The SANBI tuber-cycle reference is 4–6 months after planting, dependent on water, soil and position. Record the actual planting date and mature tuber harvest.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "coleus-esculentus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Obtain correctly identified planting tubers or pieces. A local named selection and food kg/plant benchmark remain unverified.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "coleus-esculentus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Edible tuber product and warm-season habitat",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "coleus-esculentus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The food product is a tuber, not a potato-family fruit. Warm summer-rainfall cultivation with little frost is described; winter/spring flowering after leaf loss is not a dated tuber-digging calendar.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "coleus-esculentus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Tuber planting and harvest cycle",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "coleus-esculentus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Tubers can be harvested 4–6 months after planting, depending on rainfall, soil and situation. Source planting context is the onset of early spring rains, late August–early September in South African summer-rainfall areas. This is a tuber planting cycle, not tree first-bearing age; it does not establish universal picking months. Shelf life is described as relatively short without a numeric duration.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "coleus-esculentus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "leafy shoots for dried honeybush tea",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "cyclopia-genistoides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Use species-suitable, well-drained acidic fynbos conditions and confirm local frost exposure.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "cyclopia-genistoides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Record fresh cuttings and dried tea output separately; no automatic drying conversion or safe storage duration is assigned.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "cyclopia-genistoides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ask a specialist local nursery for identified C. genistoides and a locally proven selection; different ecotypes do not perform equally.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "cyclopia-genistoides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Honeybush harvest and processed-product basis",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "cyclopia-genistoides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Cut shoots are chopped, heat-oxidised, dried and sieved; green tea is dried without oxidation. Fresh shoot kg is not dried tea kg. C. genistoides is a specific commercial species, not every honeybush species.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "cyclopia-genistoides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Seasonal wording needs local validation",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "cyclopia-genistoides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Text discusses summer for C. genistoides and autumn for C. subternata, but the caption conflicts. No exact month array is inferred.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "cyclopia-genistoides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Species culture",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "cyclopia-genistoides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Source describes the tea species and sunny, acidic, well-drained southern Cape cultivation; it does not provide transferable food kg/plant or full-production age.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "cyclopia-genistoides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The Portuguese-quince May reference comes from irrigated Robertson orchards. Record local first and last picking months before treating it as food available.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "cydonia-oblonga"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Keep preserved-stock dates separate from fruit picking; a canning end use does not establish safe shelf life.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "cydonia-oblonga"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Portuguese quince has a source-backed Robertson orchard reference. Ask for a fruiting quince cultivar: quince names used as pear rootstocks are not a fruit-harvest recommendation.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "cydonia-oblonga"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Robertson irrigation and food end-use context",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "cydonia-oblonga"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The study documents summer irrigation and managed organic fruit production. It supplies no validated home processing recipe or shelf life.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "cydonia-oblonga"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    }
+  ],
+  "representativeSpecies": [
+    "carya-illinoinensis",
+    "centella-asiatica",
+    "ceratonia-siliqua",
+    "citrullus-lanatus-landrace-var-citroides",
+    "coffea-arabica",
+    "coleus-esculentus",
+    "cyclopia-genistoides",
+    "cydonia-oblonga"
+  ],
+  "scope": "53 full authored fields, bound to captured source identities. Keep shell/kernel/hectare weights, medicinal/food distinction, identity holds, processing stages, tuber cycles, contradictory seasonal source caption and no-recipe/no-storage-duration cautions.",
+  "terminology": {
+    "status": "Primary glossary indexed entries checked; PDF download unavailable, no visual source-page verification or fluent grammar approval. Sesotho uses a descriptive draft with original tuber gloss; native grammar and polysemy need fluent review.",
+    "sources": [
+      {
+        "url": "https://www.dsac.gov.za/sites/default/files/2023-11/natural-sciences-and-technology-for-grade-4-to-6.pdf",
+        "printedPage": 159,
+        "term": "tuber",
+        "ve": "khufhi",
+        "ts": "rhanga"
+      },
+      {
+        "url": "https://www.dsac.gov.za/sites/default/files/2023-11/Natural-Science-and-Technology-term-list-Nguni%20languages.pdf",
+        "printedPage": 240,
+        "term": "tuber",
+        "zu": "isigaxa"
+      }
+    ]
+  },
+  "verification": {
+    "proof": "evidence/guidance-authored03/verification.json",
+    "typecheck": "PASS",
+    "focused": "124pass/0fail7files",
+    "pdfFiles": 10,
+    "pdfPages": 45,
+    "nativePages": 37,
+    "wordBounds": 18122,
+    "completeGuideClauses": 504,
+    "newSourceOccurrences": 212,
+    "clipped": 0,
+    "parserErrors": 0,
+    "english": "Both original cases identical in pixels/text.",
+    "visual": "All8contacts checked,2source-note pages enlarged,3changedcontacts rechecked after kg case correction.",
+    "fullSuite": "Not run on guidance; whole app incomplete."
+  },
+  "remaining": "Other authored research/animal prose, source-region/unit classification, sample and metadata language forwarding, browser/full-suite evidence and the wider app.",
+  "draftRefinements": {
+    "reason": "Keep source technical glosses beside draft polysemous nut/plant-sex terms. Avoid an unverified boil/ferment equivalence in the coffee-processing note. No factual source changed; native terminology and grammar still need fluent review.",
+    "changes": [
+      {
+        "source": "nut in shell",
+        "before": {
+          "english": "nut in shell",
+          "zu": "inadi lisemgodleni",
+          "st": "nate e ka hara kgaketla",
+          "ts": "nati leyi nga ni xikamba",
+          "ve": "ṋawa i re kha ganda",
+          "generatedScope": "product-guidance"
+        },
+        "after": {
+          "english": "nut in shell",
+          "zu": "intongomane elisegobolondweni (nut in shell)",
+          "st": "nate e ka hara kgaketla (nut in shell)",
+          "ts": "nati leyi nga ni xikamba (nut in shell)",
+          "ve": "nati i re kha ganda (nut in shell)",
+          "generatedScope": "product-guidance"
+        }
+      },
+      {
+        "source": "Pecan guide output — dry nut-in-shell hectare basis",
+        "before": {
+          "english": "Pecan guide output — dry nut-in-shell hectare basis",
+          "zu": "Okukhiqizwa komhlahlandlela we-pecan — isisekelo sehektare samantongomane omile asemagobolondweni",
+          "st": "Tlhahiso ya tataiso ya pecan — motheo wa hektare wa dinate tse ommeng di le ka hara dikgaketla",
+          "ts": "Vuhumelerisi bya nkongomiso wa pecan — masungulo ya hektara ya tinati leti omeke ti ri eswikambeni",
+          "ve": "Vhubveledzi ha nyendedzi ya pecan — mutheo wa hekhithara wa ṋawa dzo omaho dzi kha maganda",
+          "generatedScope": "product-guidance"
+        },
+        "after": {
+          "english": "Pecan guide output — dry nut-in-shell hectare basis",
+          "zu": "Okukhiqizwa komhlahlandlela we-pecan — isisekelo sehektare samantongomane omile asemagobolondweni",
+          "st": "Tlhahiso ya tataiso ya pecan — motheo wa hektare wa dinate tse ommeng di le ka hara dikgaketla",
+          "ts": "Vuhumelerisi bya nkongomiso wa pecan — masungulo ya hektara ya tinati leti omeke ti ri eswikambeni",
+          "ve": "Vhubveledzi ha nyendedzi ya pecan — mutheo wa hekhithara wa nati dzo omaho dzi kha maganda",
+          "generatedScope": "product-guidance"
+        }
+      },
+      {
+        "source": "The guide gives conservative 750, average 800–1,200 and good 1,500+ kg/ha Dry-in-Shell. It separately lists alternative tree spacings and later thinning, so one density is not assumed. These are unaged hectare benchmarks; shell weight is not edible kernel weight and no generic kg/tree curve is derived.",
+        "before": {
+          "english": "The guide gives conservative 750, average 800–1,200 and good 1,500+ kg/ha Dry-in-Shell. It separately lists alternative tree spacings and later thinning, so one density is not assumed. These are unaged hectare benchmarks; shell weight is not edible kernel weight and no generic kg/tree curve is derived.",
+          "zu": "Umhlahlandlela unikeza u-750 oqaphile, isilinganiso esingu-800–1,200 kanye no-1,500+ omuhle we-kg/ha wamantongomane omile asemagobolondweni (Dry-in-Shell). Ubala ngokwehlukana ezinye izikhala phakathi kwezihlahla nokunciphiswa kwezihlahla kamuva, ngakho akucatshangwa ukuminyana okukodwa. Lezi yizinkomba zehektare ezingaboshelwe eminyakeni yobudala; isisindo esinegobolondo asisona isisindo somongo odliwayo futhi alukho ijika elijwayelekile le-kg/tree elisuselwa kuzo.",
+          "st": "Tataiso e fana ka 750 e hlokolosi, karolelano ya 800–1,200 le 1,500+ e ntle ya kg/ha ya dinate tse ommeng di le ka hara dikgaketla (Dry-in-Shell). E thathamisa ka thoko dikgetho tsa sebaka pakeng tsa difate le ho fokotsa difate hamorao, kahoo ha ho nahannwe bongata bo le bong sebakeng. Tsena ke ditshupiso tsa hektare tse sa behwang dilemo tsa kgolo; boima bo nang le kgaketla ha se boima ba karolo e jewang ka hare, mme ha ho hlahiswe mothinya o akaretsang wa kg/tree.",
+          "ts": "Nkongomiso wu nyika 750 yo tivonela, mpimo wa le xikarhini wa 800–1,200 na 1,500+ ya xiyimo lexinene ya kg/ha ya tinati leti omeke ti ri eswikambeni (Dry-in-Shell). Wu xaxameta hi ku hambana tindlela ta mipfhuka ya mirhi ni ku hungutiwa ka mirhi endzhaku, kutani a ku ehleketeleriwi ntlimbano wun’we. Leti i tindzavisiso ta hektara leti nga nyikiwiki vukhale; ntiko lowu katsaka xikamba a hi ntiko wa endzeni loku dyiwaka naswona a ku humesiwi girafu ya ntolovelo ya kg/tree.",
+          "ve": "Nyendedzi i ṋea 750 ya vhuronwane, ya vhukati ya 800–1,200 na 1,500+ ya vhuimo havhuḓi ya kg/ha ya ṋawa dzo omaho dzi kha maganda (Dry-in-Shell). I tevhekanya nga u fhambana zwikhala zwiṅwe vhukati ha miri na u fhungudza miri nga murahu, ngauralo a hu humbulelwi vhutsitsikani vhuthihi. Hedzi ndi ndaedzi dza hekhithara dzi si na vhukale ho tiwaho; tshileme tshi re na ganda a si tshileme tsha ngomu hu ḽiwaho nahone a hu bveledzwi girafu ya u angaredza ya kg/tree.",
+          "generatedScope": "product-guidance"
+        },
+        "after": {
+          "english": "The guide gives conservative 750, average 800–1,200 and good 1,500+ kg/ha Dry-in-Shell. It separately lists alternative tree spacings and later thinning, so one density is not assumed. These are unaged hectare benchmarks; shell weight is not edible kernel weight and no generic kg/tree curve is derived.",
+          "zu": "Umhlahlandlela unikeza u-750 oqaphile, isilinganiso esingu-800–1,200 kanye no-1,500+ omuhle we-kg/ha wamantongomane omile asemagobolondweni (Dry-in-Shell). Ubala ngokwehlukana ezinye izikhala phakathi kwezihlahla nokunciphiswa kwezihlahla kamuva, ngakho akucatshangwa ukuminyana okukodwa. Lezi yizinkomba zehektare ezingaboshelwe eminyakeni yobudala; isisindo esinegobolondo asisona isisindo somongo odliwayo futhi alukho ijika elijwayelekile le-kg/tree elisuselwa kuzo.",
+          "st": "Tataiso e fana ka 750 e hlokolosi, karolelano ya 800–1,200 le 1,500+ e ntle ya kg/ha ya dinate tse ommeng di le ka hara dikgaketla (Dry-in-Shell). E thathamisa ka thoko dikgetho tsa sebaka pakeng tsa difate le ho fokotsa difate hamorao, kahoo ha ho nahannwe bongata bo le bong sebakeng. Tsena ke ditshupiso tsa hektare tse sa behwang dilemo tsa kgolo; boima bo nang le kgaketla ha se boima ba karolo e jewang ka hare, mme ha ho hlahiswe mothinya o akaretsang wa kg/tree.",
+          "ts": "Nkongomiso wu nyika 750 yo tivonela, mpimo wa le xikarhini wa 800–1,200 na 1,500+ ya xiyimo lexinene ya kg/ha ya tinati leti omeke ti ri eswikambeni (Dry-in-Shell). Wu xaxameta hi ku hambana tindlela ta mipfhuka ya mirhi ni ku hungutiwa ka mirhi endzhaku, kutani a ku ehleketeleriwi ntlimbano wun’we. Leti i mimpimo ya xikombiso ya hektara leti nga nyikiwiki vukhale; ntiko lowu katsaka xikamba a hi ntiko wa endzeni loku dyiwaka naswona a ku humesiwi girafu ya ntolovelo ya kg/tree.",
+          "ve": "Nyendedzi i ṋea 750 ya vhuronwane, ya vhukati ya 800–1,200 na 1,500+ ya vhuimo havhuḓi ya kg/ha ya nati dzo omaho dzi kha maganda (Dry-in-Shell). I tevhekanya nga u fhambana zwikhala zwiṅwe vhukati ha miri na u fhungudza miri nga murahu, ngauralo a hu humbulelwi vhutsitsikani vhuthihi. Hedzi ndi ndaedzi dza hekhithara dzi si na vhukale ho tiwaho; tshileme tshi re na ganda a si tshileme tsha ngomu hu ḽiwaho nahone a hu bveledzwi girafu ya u angaredza ya kg/tree.",
+          "generatedScope": "product-guidance"
+        }
+      },
+      {
+        "source": "Harvested product is the pod. Confirm the planting material's sex and compatible pollen; seedling pod crops vary.",
+        "before": {
+          "english": "Harvested product is the pod. Confirm the planting material's sex and compatible pollen; seedling pod crops vary.",
+          "zu": "Umkhiqizo ovunwayo yindumba. Qinisekisa ubulili besitshalo sokutshala nempova ehambisanayo; izivuno zezindumba zezihlahla ezikhule embewini ziyahlukahluka.",
+          "st": "Sehlahiswa se kotulwang ke kgapetla ya peo (pod). Netefatsa bong ba semela sa ho jala le peo e phofo e dumellanang; dikotulo tsa dipods tsa difate tse hodisitsweng ka peo di a fapana.",
+          "ts": "Xitirhisiwa lexi tshoveriwaka i xiphotwana. Tiyisisa rimbewu ra ximilana xo byala ni mpova lowu fambelanaka na xona; mintshovelo ya swiphotwana ya mirhi leyi kurisiweke hi mbewu ya hambana.",
+          "ve": "Tshibveledzwa tshi kaṋiwaho ndi ganda ḽa mbeu (pod). Khwaṱhisedzani mbeu ya tshimela tsha u ṱavha na luvhanda lu yelanaho; khaṋo dza maganda a mbeu dza miri yo aluwaho nga mbeu dzi a fhambana.",
+          "generatedScope": "product-guidance"
+        },
+        "after": {
+          "english": "Harvested product is the pod. Confirm the planting material's sex and compatible pollen; seedling pod crops vary.",
+          "zu": "Umkhiqizo ovunwayo yindumba. Qinisekisa ubulili besitshalo sokutshala (plant sex) nempova ehambisanayo; izivuno zezindumba zezihlahla ezikhule embewini ziyahlukahluka.",
+          "st": "Sehlahiswa se kotulwang ke kgapetla ya peo (pod). Netefatsa bong ba semela sa ho jala (plant sex) le peo e phofo e dumellanang; dikotulo tsa dipods tsa difate tse hodisitsweng ka peo di a fapana.",
+          "ts": "Xitirhisiwa lexi tshoveriwaka i xiphotwana. Tiyisisa rimbewu ra ximilana xo byala (plant sex) ni mpova lowu fambelanaka na xona; mintshovelo ya swiphotwana ya mirhi leyi kurisiweke hi mbewu ya hambana.",
+          "ve": "Tshibveledzwa tshi kaṋiwaho ndi ganda ḽa mbeu (pod). Khwaṱhisedzani mbeu ya tshimela tsha u ṱavha (plant sex) na luvhanda lu yelanaho; khaṋo dza maganda a mbeu dza miri yo aluwaho nga mbeu dzi a fhambana.",
+          "generatedScope": "product-guidance"
+        }
+      },
+      {
+        "source": "The three are SL28, Catuai and F6. The estate explains pulping, fermentation, drying, hulling and roasting after picking; cherry weight, green beans and roasted output are separate products.",
+        "before": {
+          "english": "The three are SL28, Catuai and F6. The estate explains pulping, fermentation, drying, hulling and roasting after picking; cherry weight, green beans and roasted output are separate products.",
+          "zu": "Lezi ezintathu yi-SL28, Catuai ne-F6. Ipulazi lichaza ukususa inyama yesithelo, ukuvutshelwa, ukomisa, ukususa amakhoba nokosa ngemva kokuvuna; isisindo sesithelo, izimbewu zekhofi ezingakosiwa nomkhiqizo osiwe kuyimikhiqizo eyehlukene.",
+          "st": "Tse tharo ke SL28, Catuai le F6. Polasi e hlalosa ho tlosa nama ya tholwana, ho bedisa, ho omisa, ho tlosa makgapetla le ho besa ka mora ho kga; boima ba tholwana, dinawa tsa kofi tse sa beswang le sehlahiswa se besitsweng ke dihlahiswa tse arohaneng.",
+          "ts": "Tinxaka tinharhu i SL28, Catuai na F6. Purasi ri hlamusela ku susa nyama ya muhandzu, ku virisa, ku omisa, ku susa makamba ni ku katinga endzhaku ko tshovela; ntiko wa muhandzu, tinyawa ta kofi leti nga si katingiwaka ni vuhumelerisi byo katingiwa i switirhisiwa leswi hambaneke.",
+          "ve": "Tshaka tharu ndi SL28, Catuai na F6. Bulasi ḽi ṱalutshedza u bvisa ṋama ya mutshelo, u bilisa, u omisa, u bvisa maganda na u gotsha nga murahu ha u kaṋa; tshileme tsha mutshelo, ṋawa dza gofhi dzi sa athu u gotshwaho na tshibveledzwa tsho gotshwaho ndi zwibveledzwa zwo fhambanaho.",
+          "generatedScope": "product-guidance"
+        },
+        "after": {
+          "english": "The three are SL28, Catuai and F6. The estate explains pulping, fermentation, drying, hulling and roasting after picking; cherry weight, green beans and roasted output are separate products.",
+          "zu": "Lezi ezintathu yi-SL28, Catuai ne-F6. Ipulazi lichaza ukususa inyama yesithelo, ukuvutshelwa, ukomisa, ukususa amakhoba nokosa ngemva kokuvuna; isisindo sesithelo, izimbewu zekhofi ezingakosiwa nomkhiqizo osiwe kuyimikhiqizo eyehlukene.",
+          "st": "Tse tharo ke SL28, Catuai le F6. Polasi e hlalosa ho tlosa nama ya tholwana, ho bedisa (fermentation), ho omisa, ho tlosa makgapetla le ho besa ka mora ho kga; boima ba tholwana, dinawa tsa kofi tse sa beswang le sehlahiswa se besitsweng ke dihlahiswa tse arohaneng.",
+          "ts": "Tinxaka tinharhu i SL28, Catuai na F6. Purasi ri hlamusela ku susa nyama ya muhandzu, ku endla fermentation, ku omisa, ku susa makamba ni ku katinga endzhaku ko tshovela; ntiko wa muhandzu, tinyawa ta kofi leti nga si katingiwaka ni vuhumelerisi byo katingiwa i switirhisiwa leswi hambaneke.",
+          "ve": "Tshaka tharu ndi SL28, Catuai na F6. Bulasi ḽi ṱalutshedza u bvisa ṋama ya mutshelo, u ita fermentation, u omisa, u bvisa maganda na u gotsha nga murahu ha u kaṋa; tshileme tsha mutshelo, ṋawa dza gofhi dzi sa athu u gotshwaho na tshibveledzwa tsho gotshwaho ndi zwibveledzwa zwo fhambanaho.",
+          "generatedScope": "product-guidance"
+        }
+      },
+      {
+        "source": "Cut shoots are chopped, heat-oxidised, dried and sieved; green tea is dried without oxidation. Fresh shoot kg is not dried tea kg. C. genistoides is a specific commercial species, not every honeybush species.",
+        "before": {
+          "english": "Cut shoots are chopped, heat-oxidised, dried and sieved; green tea is dried without oxidation. Fresh shoot kg is not dried tea kg. C. genistoides is a specific commercial species, not every honeybush species.",
+          "zu": "Amahlumela asikiwe ayaqotshwa, afakwe ku-oxidation ngokushisa, omiswe bese ayahlungwa; itiye eliluhlaza lomiswa ngaphandle kwe-oxidation. I-kg yamahlumela amasha ayiyona i-kg yetiye elomisiwe. I-C. genistoides iwuhlobo oluthile lwezentengiselwano, hhayi zonke izinhlobo ze-honeybush.",
+          "st": "Mahlomela a sehuweng a a kgabelwa, a kenngwa tshebetsong ya oxidation ka mocheso, a omiswe mme a sefe; tee e tala e omiswa ntle le oxidation. Kg ya mahlomela a foreshe ha se kg ya tee e omisitsweng. C. genistoides ke mofuta o itseng wa kgwebo, eseng mefuta yohle ya honeybush.",
+          "ts": "Swihluke leswi tsemiweke swa tsemeleriwa, swi endliwa oxidation hi ku hisa, swi omisiwa swi tlhela swi sefiwa; tiya ya rihlaza yi omisiwa ku nga ri na oxidation. Kg ya swihluke leswintshwa a hi kg ya tiya leyi omisiweke. C. genistoides i muxaka wo karhi wa mabindzu, ku nga ri tinxaka hinkwato ta honeybush.",
+          "ve": "Matavhi maṱuku o geriwaho a a tshemiwa zwipiḓa, a itwa oxidation nga mufhiso, a omiswa a sefhiwa; tie dala i omiswa hu si na oxidation. Kg ya matavhi maṱuku maswa a si kg ya tie yo omiswaho. C. genistoides ndi lushaka lukene lwa vhubindudzi, hu si tshaka dzoṱhe dza honeybush.",
+          "generatedScope": "product-guidance"
+        },
+        "after": {
+          "english": "Cut shoots are chopped, heat-oxidised, dried and sieved; green tea is dried without oxidation. Fresh shoot kg is not dried tea kg. C. genistoides is a specific commercial species, not every honeybush species.",
+          "zu": "Amahlumela asikiwe ayaqotshwa, afakwe ku-oxidation ngokushisa, omiswe bese ayahlungwa; itiye eliluhlaza lomiswa ngaphandle kwe-oxidation. I-kg yamahlumela amasha ayiyona i-kg yetiye elomisiwe. I-C. genistoides iwuhlobo oluthile lwezentengiselwano, hhayi zonke izinhlobo ze-honeybush.",
+          "st": "Mahlomela a sehuweng a a kgabelwa, a kenngwa tshebetsong ya oxidation ka mocheso, a omiswe mme a sefe; tee e tala e omiswa ntle le oxidation. kg ya mahlomela a foreshe ha se kg ya tee e omisitsweng. C. genistoides ke mofuta o itseng wa kgwebo, eseng mefuta yohle ya honeybush.",
+          "ts": "Swihluke leswi tsemiweke swa tsemeleriwa, swi endliwa oxidation hi ku hisa, swi omisiwa swi tlhela swi sefiwa; tiya ya rihlaza yi omisiwa ku nga ri na oxidation. kg ya swihluke leswintshwa a hi kg ya tiya leyi omisiweke. C. genistoides i muxaka wo karhi wa mabindzu, ku nga ri tinxaka hinkwato ta honeybush.",
+          "ve": "Matavhi maṱuku o geriwaho a a tshemiwa zwipiḓa, a itwa oxidation nga mufhiso, a omiswa a sefhiwa; tie dala i omiswa hu si na oxidation. kg ya matavhi maṱuku maswa a si kg ya tie yo omiswaho. C. genistoides ndi lushaka lukene lwa vhubindudzi, hu si tshaka dzoṱhe dza honeybush.",
+          "generatedScope": "product-guidance"
+        },
+        "reason": "Preserve lowercase SI kg in both fresh-shoot and dried-tea quantities; capitalization is not a new unit."
+      }
+    ]
+  }
+}

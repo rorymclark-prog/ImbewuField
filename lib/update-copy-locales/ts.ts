@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Farm guidance PDFs now include more unreviewed translation drafts.": "Ti-PDF ta switsundzuxo swa purasi sweswi ti katsa mimpfapfarhuto yin’wana ya vuhundzuluxeri leyi nga si kamberiwaka.",
+  "Some farm guidance and crop screens still use English.": "Switsundzuxo swin’wana swa purasi ni swikombiso swa swibyariwa swa ha tirhisa Xinghezi.",
+  "Check draft farm guidance": "Kambela mpfapfarhuto wa switsundzuxo swa purasi",
+  "Read the guidance PDF in your language. Check the English source before acting.": "Hlaya PDF ya switsundzuxo hi ririmi ra wena. Kambela xihlovo xa Xinghezi u nga si teka goza.",
   "Future harvest PDFs now have unreviewed translations in four languages.": "Ti-PDF ta ntshovelo wa nkarhi lowu taka sweswi ti ni vuhundzuluxi bya tindzimi ta mune leswi nga si kambisisiwaka.",
   "Production guidance and some crop screens still have English text.": "Swiletelo swa vuhumelerisi ni swikirini swin’wana swa swibyariwa swa ha ri ni tsalwa ra Xinghezi.",
   "Read the future harvest PDF": "Hlaya PDF ya ntshovelo wa nkarhi lowu taka",

@@ -1,0 +1,7 @@
+{
+  "uncompressedSha256": "275e4c0c4e46cd5f52ea68211e8b5e3599b84d90ca692ece4a3973b5193b110f",
+  "uncompressedBytes": 10439105,
+  "compressedSha256": "9697d466f4b1698e96c32d30cc5f0b3af22d186409ee63190c1de4f2aa3478b6",
+  "compressedBytes": 1796731,
+  "reason": "Lossless immutable source capture; repeated model states compress well. Full original remains in output/guidance-pdf-qa/before.json. No original field or assertion removed."
+}

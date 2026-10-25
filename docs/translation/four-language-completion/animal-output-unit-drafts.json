@@ -1,0 +1,413 @@
+{
+  "status": "IN PROGRESS: source-bound unreviewed drafts; no fluent agricultural or language approval.",
+  "sourceCount": 15,
+  "sourceInventorySha256": "743c7ede414200f6bca5831682b33552f0695b59f06acaeceede86d9d702d9bf",
+  "sourceBindings": [
+    {
+      "english": "kg honey/hive/year",
+      "scopes": [
+        "source-output-unit-needs-review"
+      ],
+      "identities": [
+        "bees"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "kg weaning weight/calf",
+      "scopes": [
+        "source-output-unit-needs-review"
+      ],
+      "identities": [
+        "cattle-beef"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "kg milk/cow/lactation",
+      "scopes": [
+        "source-output-unit-needs-review"
+      ],
+      "identities": [
+        "cattle-dairy"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "kg/bird at slaughter (32–33 days)",
+      "scopes": [
+        "source-output-unit-needs-review"
+      ],
+      "identities": [
+        "chicken-broiler"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "eggs/hen/year",
+      "scopes": [
+        "source-output-unit-needs-review"
+      ],
+      "identities": [
+        "chicken-indigenous"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "eggs/hen housed, laying cycle to 90 weeks",
+      "scopes": [
+        "source-output-unit-needs-review"
+      ],
+      "identities": [
+        "chicken-layer"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "kg live weight/bird at slaughter",
+      "scopes": [
+        "source-output-unit-needs-review"
+      ],
+      "identities": [
+        "duck"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "g harvest weight/fish",
+      "scopes": [
+        "source-output-unit-needs-review"
+      ],
+      "identities": [
+        "fish-tilapia"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "kg milk/doe/305-day lactation",
+      "scopes": [
+        "source-output-unit-needs-review"
+      ],
+      "identities": [
+        "goat-dairy"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "kids weaned/doe/year",
+      "scopes": [
+        "source-output-unit-needs-review"
+      ],
+      "identities": [
+        "goat-indigenous"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "kids weaned/doe mated",
+      "scopes": [
+        "source-output-unit-needs-review"
+      ],
+      "identities": [
+        "goat-meat"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "piglets weaned/sow/year",
+      "scopes": [
+        "source-output-unit-needs-review"
+      ],
+      "identities": [
+        "pig-pork"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "young reaching slaughter/reproduction age/doe/year",
+      "scopes": [
+        "source-output-unit-needs-review"
+      ],
+      "identities": [
+        "rabbit"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "lambs born per ewe",
+      "scopes": [
+        "source-output-unit-needs-review"
+      ],
+      "identities": [
+        "sheep-mutton"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "kg greasy wool/sheep/year",
+      "scopes": [
+        "source-output-unit-needs-review"
+      ],
+      "identities": [
+        "sheep-wool"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    }
+  ],
+  "rows": [
+    {
+      "english": "kg honey/hive/year",
+      "zu": "kg woju/ngesidleke sezinyosi (hive)/ngonyaka",
+      "st": "kg ya mahe a dinotshi/ka ntlo ya dinotshi (hive)/ka selemo",
+      "ts": "kg ya vulombe/hi yindlu ya tinyoxi (hive)/hi lembe",
+      "ve": "kg ya mutoli/nga nnḓu ya ṋotshi (hive)/nga ṅwaha",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "kg weaning weight/calf",
+      "zu": "kg yesisindo ngesikhathi sokulumula/ngethole",
+      "st": "kg ya boima nakong ya ho kgweswa/ka namane",
+      "ts": "kg ya ntiko loko ri tshikisiwa ku mama/hi rhole",
+      "ve": "kg ya tshileme musi i tshi lumulwa/nga ṋamana",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "kg milk/cow/lactation",
+      "zu": "kg wobisi/ngenkomazi/ngesikhathi sokuncelisa",
+      "st": "kg ya lebese/ka kgomo e tshehadi/ka nako ya ho hlahisa lebese",
+      "ts": "kg ya masi/hi homo ya xisati/hi nkarhi wo humesa masi",
+      "ve": "kg ya mafhi/nga kholomo ya tshisadzi/nga tshifhinga tsha u bveledza mafhi",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "kg/bird at slaughter (32–33 days)",
+      "zu": "kg/ngenyoni ngesikhathi sokuhlatshwa (izinsuku ezingu-32–33)",
+      "st": "kg/ka nonyana nakong ya ho hlajwa (matsatsi a 32–33)",
+      "ts": "kg/hi xinyenyana loko xi tlhaviwa (masiku ya 32–33)",
+      "ve": "kg/nga tshiṋoni musi tshi tshi ṱhavhiwa (maḓuvha a 32–33)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "eggs/hen/year",
+      "zu": "amaqanda/ngenkukhukazi/ngonyaka",
+      "st": "mahe/ka kgoho e tshehadi/ka selemo",
+      "ts": "matandza/hi huku ya xisati/hi lembe",
+      "ve": "makumba/nga khuhu ya tshisadzi/nga ṅwaha",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "eggs/hen housed, laying cycle to 90 weeks",
+      "zu": "amaqanda/ngenkukhukazi efakwe endlini (hen housed), umjikelezo wokubekela kuze kube amasonto angu-90",
+      "st": "mahe/ka kgoho e tshehadi e kentsweng ntlong (hen housed), potoloho ya ho behela ho fihlela dibeke tse 90",
+      "ts": "matandza/hi huku ya xisati leyi nghenisiweke endlwini (hen housed), ndzhendzeleko wo tshikela ku fika eka mavhiki ya 90",
+      "ve": "makumba/nga khuhu ya tshisadzi yo vhewaho nḓuni (hen housed), mutevhe wa u kudzela u swika kha vhege dza 90",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "kg live weight/bird at slaughter",
+      "zu": "kg yesisindo esiphilayo/ngenyoni ngesikhathi sokuhlatshwa",
+      "st": "kg ya boima bo phelang/ka nonyana nakong ya ho hlajwa",
+      "ts": "kg ya ntiko wa xinyenyana lexi hanyaka/hi xinyenyana loko xi tlhaviwa",
+      "ve": "kg ya tshileme tsha tshiṋoni tshi tshilaho/nga tshiṋoni musi tshi tshi ṱhavhiwa",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "g harvest weight/fish",
+      "zu": "g wesisindo ngesikhathi sokuvuna/ngenhlanzi",
+      "st": "g ya boima nakong ya kotulo/ka tlhapi",
+      "ts": "g ya ntiko loko yi tshoveriwa/hi nhlampfi",
+      "ve": "g ya tshileme musi i tshi kaṋiwa/nga khovhe",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "kg milk/doe/305-day lactation",
+      "zu": "kg wobisi/ngembuzikazi/ngesikhathi sokuncelisa sezinsuku ezingu-305",
+      "st": "kg ya lebese/ka podi e tshehadi/ka nako ya ho hlahisa lebese ya matsatsi a 305",
+      "ts": "kg ya masi/hi mbuti ya xisati/hi nkarhi wo humesa masi wa masiku ya 305",
+      "ve": "kg ya mafhi/nga mbudzi ya tshisadzi/nga tshifhinga tsha u bveledza mafhi tsha maḓuvha a 305",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "kids weaned/doe/year",
+      "zu": "amazinyane ezimbuzi alumuliwe/ngembuzikazi/ngonyaka",
+      "st": "madinyane a dipodi a kgwesitsweng/ka podi e tshehadi/ka selemo",
+      "ts": "swimbudzana leswi tshikisiweke ku mama/hi mbuti ya xisati/hi lembe",
+      "ve": "zwibudzana zwo lumulwaho/nga mbudzi ya tshisadzi/nga ṅwaha",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "kids weaned/doe mated",
+      "zu": "amazinyane ezimbuzi alumuliwe/ngembuzikazi ekhwelwe (doe mated)",
+      "st": "madinyane a dipodi a kgwesitsweng/ka podi e tshehadi e kopantsweng bakeng sa ho tswala (doe mated)",
+      "ts": "swimbudzana leswi tshikisiweke ku mama/hi mbuti ya xisati leyi hlanganisiweke ku tswala (doe mated)",
+      "ve": "zwibudzana zwo lumulwaho/nga mbudzi ya tshisadzi yo ṱanganyiswaho u tswala (doe mated)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "piglets weaned/sow/year",
+      "zu": "amazinyane ezingulube alumuliwe/ngengulubekazi/ngonyaka",
+      "st": "madinyane a dikolobe a kgwesitsweng/ka kolobe e tshehadi/ka selemo",
+      "ts": "swingulubyana leswi tshikisiweke ku mama/hi nguluve ya xisati/hi lembe",
+      "ve": "zwinguluvhwana zwo lumulwaho/nga nguluvhe ya tshisadzi/nga ṅwaha",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "young reaching slaughter/reproduction age/doe/year",
+      "zu": "onogwaja abancane abafinyelela ebudaleni bokuhlatshwa/bokuzala/ngensikazi yonogwaja/ngonyaka",
+      "st": "mebutlanyana e fihlang dilemong tsa ho hlajwa/ho tswala/ka mmutla o motshehadi/ka selemo",
+      "ts": "mimpfundla leyitsongo leyi fikaka eka vukhale byo tlhaviwa/ku tswala/hi mpfundla wa xisati/hi lembe",
+      "ve": "mivhuḓa miṱuku i swikaho kha vhukale ha u ṱhavhiwa/u tswala/nga muvhuḓa wa tshisadzi/nga ṅwaha",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "lambs born per ewe",
+      "zu": "amawundlu azelwe ngemvukazi",
+      "st": "dikonyana tse tswetsweng ka nku e tshehadi",
+      "ts": "swinyimpfana leswi tswariweke hi nyimpfu ya xisati",
+      "ve": "ngwana dza nngu dzo bebwaho nga nngu ya tshisadzi",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "kg greasy wool/sheep/year",
+      "zu": "kg woboya obunamafutha/ngemvu/ngonyaka",
+      "st": "kg ya boya bo mafura/ka nku/ka selemo",
+      "ts": "kg ya voya bya mafurha/hi nyimpfu/hi lembe",
+      "ve": "kg ya wulu i re na mapfura/nga nngu/nga ṅwaha",
+      "generatedScope": "product-guidance"
+    }
+  ],
+  "scope": "Display of the15authored ANIMAL_ENTERPRISES output-unit fields inside production guidance only. Saved/recorded/free-text units, source authority objects, quantities, stage/age and reporting period remain unchanged. No kg-to-litre or per-area conversion, no invented head count.",
+  "terminology": {
+    "status": "Honey noun checked against indexed official DSAC glossaries; no visual glossary-page or fluent grammar review. Housed-hen and mated-doe technical glosses retained.",
+    "sources": [
+      {
+        "url": "https://www.dsac.gov.za/sites/default/files/2023-11/natural-sciences-and-technology-for-grade-4-to-6.pdf",
+        "printedPage": 72,
+        "term": "honey",
+        "ve": "mutoli",
+        "ts": "vulombe"
+      },
+      {
+        "url": "https://www.dsac.gov.za/sites/default/files/2023-11/Natural%20Sciences%20and%20Technology-dictionary-Sotho%20group.pdf",
+        "printedPage": 96,
+        "term": "honey",
+        "st": "mahe a dinotshi"
+      }
+    ]
+  },
+  "verification": {
+    "proof": "evidence/guidance-animal-units/verification.json",
+    "typecheck": "PASS",
+    "focused": "127pass/0fail7files",
+    "pdfFiles": 14,
+    "pdfPages": 135,
+    "nativePages": 127,
+    "wordBounds": 58892,
+    "completeGuideClauses": 1280,
+    "newSourceUnitOccurrences": 52,
+    "sourceTailChecks": 60,
+    "clipped": 0,
+    "parserErrors": 0,
+    "english": "Both originalEnglish cases identical in pixels/text.",
+    "visual": "4actual unit pages and2corrected source-tail pages enlarged and inspected; not every135page manually inspected.",
+    "fullSuite": "NOTRUN on guidance; whole app incomplete."
+  },
+  "draftRefinements": [
+    {
+      "source": "young reaching slaughter/reproduction age/doe/year",
+      "before": {
+        "english": "young reaching slaughter/reproduction age/doe/year",
+        "zu": "onogwaja abancane abafinyelela ebudaleni bokuhlatshwa/bokuzala/ngensikazi yonogwaja/ngonyaka",
+        "st": "mebutlanyana e fihlang dilemong tsa ho hlajwa/ho tswala/ka mmutla o motshehadi/ka selemo",
+        "ts": "swimfuvutana leswi fikaka eka vukhale byo tlhaviwa/ku tswala/hi mpfundla wa xisati/hi lembe",
+        "ve": "mivhuḓanyana i swikaho kha vhukale ha u ṱhavhiwa/u tswala/nga muvhuḓa wa tshisadzi/nga ṅwaha",
+        "generatedScope": "product-guidance"
+      },
+      "after": {
+        "english": "young reaching slaughter/reproduction age/doe/year",
+        "zu": "onogwaja abancane abafinyelela ebudaleni bokuhlatshwa/bokuzala/ngensikazi yonogwaja/ngonyaka",
+        "st": "mebutlanyana e fihlang dilemong tsa ho hlajwa/ho tswala/ka mmutla o motshehadi/ka selemo",
+        "ts": "mimpfundla leyitsongo leyi fikaka eka vukhale byo tlhaviwa/ku tswala/hi mpfundla wa xisati/hi lembe",
+        "ve": "mivhuḓa miṱuku i swikaho kha vhukale ha u ṱhavhiwa/u tswala/nga muvhuḓa wa tshisadzi/nga ṅwaha",
+        "generatedScope": "product-guidance"
+      },
+      "reason": "Use the same explicit rabbit noun as the source enterprise and female denominator; do not introduce a different-animal noun or uncertain diminutive."
+    }
+  ],
+  "paginationCorrection": "Actual native unit PDF left the final citations alone on continuation pages. The original input/text is retained in tests/fixtures/guidance-translation/source-tail-before.json. A measured native-only reservation keeps each fitting source block with its last complete condition; all60animal source tails verified in actualPDFs. It adds1page in the comparison set (134before/135after), retaining all1280clauses and52newunitoccurrences; no page-count reduction claimed. Both originalEnglish cases stay pixel/text identical. This changes the picture; PLAN_VERSION unchanged."
+}

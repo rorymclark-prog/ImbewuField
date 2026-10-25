@@ -1,0 +1,285 @@
+{
+  "scope": "Actual source-bound first7species research/care/purchase/hold paragraphs in all4languages.52new sources shared across7species plus fruit label. Source citations keep original publication identities. Other corpus prose and app workflows remain unfinished.",
+  "rows": [
+    {
+      "file": "en-after-normal.pdf",
+      "pages": 5,
+      "wordBounds": 1662,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 0,
+      "pixelHashes": [
+        "7c7574a7496df1c5891c835af654b1eade5e6c2783f5069717111119059a6b8f",
+        "372b00a436b1c99ee17b267be137c206cb08c68f5ce12d99ce97087abb01f7a6",
+        "273e5ea045962e15205fb922f90bdcf618a8118578d22cd2547b00ed321ba55f",
+        "da97dd9e20cf0eff25ca73a5df46b16a95a6783e83dd2ff5d3a443a4b94301c5",
+        "c4dff5c6342670b7c6b02d4d175f917df7271ca8c675e43d873c697e8626de91"
+      ]
+    },
+    {
+      "file": "en-after-unknown-records.pdf",
+      "pages": 3,
+      "wordBounds": 832,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 0,
+      "pixelHashes": [
+        "4c23a16d523feda95c6569d885ae44398e937a81a7d3d5fe85f4ff30e9a8b45c",
+        "583f34c91535a0fbe17e2918dd760753133be9ea9c31cdde8dbf501e78278e4b",
+        "26b8e49bf356951820945a6eb51742117135b4e3ca634da646b223dbae945d6c"
+      ]
+    },
+    {
+      "file": "st-fruit-buds-pond.pdf",
+      "pages": 4,
+      "wordBounds": 2010,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 62,
+      "pixelHashes": [
+        "db5f290c11c68c6dff796ead43db00c4e0ba1a0ae43855405cb9bafb608d2dc3",
+        "23b0898a468b190261c6965ff593070cdaf5fe6826654be4ab70bf5c32b3a3da",
+        "8b27a29b09c1b94c7f6ea144def57f2f1f8ce1aa8c53dc1cc19f8788d0afe058",
+        "f0ece43ee1601092d1ee0b8553bc66a2b5e2b6617fd0cb266d66b9559f9bcdf0"
+      ]
+    },
+    {
+      "file": "st-tea-leaves-holds.pdf",
+      "pages": 3,
+      "wordBounds": 1467,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 53,
+      "pixelHashes": [
+        "db5f290c11c68c6dff796ead43db00c4e0ba1a0ae43855405cb9bafb608d2dc3",
+        "f6c53faf161d8aa08f4f2ca4beec7698f8b2f900b31839535088e9372adf33a2",
+        "2a6228b9eed051def39edde6b8bd7ce57208c3b43a8e299a6466a217f8c193da"
+      ]
+    },
+    {
+      "file": "ts-fruit-buds-pond.pdf",
+      "pages": 4,
+      "wordBounds": 2018,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 62,
+      "pixelHashes": [
+        "3869dba6cf8598f12c8db26f3c24aff1a6879aa0c69e194585689c35e403e788",
+        "9fc291fad319da70ff2e23edffe26936832d5f1af509d491072ab5bb93755603",
+        "a77c0d363dedbe9494612ada044fabe5ccbe572af40ed2d506fd232ab8c99e2f",
+        "ed3f3724134aa53333ee1e1fe9d8daf270519d39b3d5fb880d27cf0384ed00f4"
+      ]
+    },
+    {
+      "file": "ts-tea-leaves-holds.pdf",
+      "pages": 3,
+      "wordBounds": 1473,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 53,
+      "pixelHashes": [
+        "3869dba6cf8598f12c8db26f3c24aff1a6879aa0c69e194585689c35e403e788",
+        "4cd9e5d774a73f1edabb1adb18598ec62d3914ab75041f026fdfa49904bdd0f3",
+        "52087ed00d24b2b8551df16d57470e18427ff92db38e19d45a1fa1462201f08f"
+      ]
+    },
+    {
+      "file": "ve-fruit-buds-pond.pdf",
+      "pages": 4,
+      "wordBounds": 2120,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 62,
+      "pixelHashes": [
+        "11b8d3ecf7b5d851e981cd04acec325685a254bfe64ab4f95fc72292c5d67580",
+        "fd2ebd4c55ee15e24b697408346784bf44e4eb9ac32ddc9a8bfb2fadfbb4d07e",
+        "30b2fd3a6be3ec2ba0b09620404217617e310400f4ae087f62d5acabf11b344b",
+        "c416ed46fc695f4a013a801f0af1c99bce8190a7388d41a1c7385539635611a9"
+      ]
+    },
+    {
+      "file": "ve-tea-leaves-holds.pdf",
+      "pages": 3,
+      "wordBounds": 1547,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 53,
+      "pixelHashes": [
+        "11b8d3ecf7b5d851e981cd04acec325685a254bfe64ab4f95fc72292c5d67580",
+        "86310e6b003ee4cffd25b51feac50c624cb4b4228b649764033b70064e8e2c2d",
+        "9063e25278a07e941681fa80685d51de53ad59dba02d88f5f121398d746b1822"
+      ]
+    },
+    {
+      "file": "zu-fruit-buds-pond.pdf",
+      "pages": 4,
+      "wordBounds": 1242,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 62,
+      "pixelHashes": [
+        "8fd51c635210d83582fd31ff4846c3fbb70b76e4adcfc4eeb54e6ffb3c1d89ad",
+        "1caca2e294a1ac894a1bad3a4ede19551a786aede83fbfd8966b9b6593d7544b",
+        "ed03d89aa8be09554fda5765ff65f1e8785641b2de3883af180b73e121ab9a3d",
+        "a4302de16530f704cd8f09eff4b8b087552199f5a87d3901022182c972955724"
+      ]
+    },
+    {
+      "file": "zu-tea-leaves-holds.pdf",
+      "pages": 3,
+      "wordBounds": 880,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 53,
+      "pixelHashes": [
+        "8fd51c635210d83582fd31ff4846c3fbb70b76e4adcfc4eeb54e6ffb3c1d89ad",
+        "d0fd02c1786f600777c4cddc26f4fc943ed3ced4c3159b0550baaa77611778a0",
+        "80b4841bfd8b7d82ae041044ac7cb4a469aa7fb74cd8dd91a4bf5bae7a1b19a0"
+      ]
+    }
+  ],
+  "english": {
+    "normal": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "unknown-records": {
+      "samePixels": true,
+      "sameText": true
+    }
+  },
+  "visualInspection": "Eight native contact sheets (both source groups in zu/st/ts/ve) visually inspected. After source-precision refinement, the changed Zu/St Waterblommetjie page4 was enlarged and inspected again. No overlap or clipping seen in those views. Not a fluent-language review or individual inspection of all36pages.",
+  "checkedAt": "2026-10-25T12:28:18.293717+00:00",
+  "newSourceCount": 52,
+  "fullNewSourceOccurrences": 208,
+  "newSourceOccurrenceRule": "Every complete new authored phrase is checked in each applicable generated PDF, in addition to all headings, guide lines and repeated clauses. Source citations retain their publication identities.",
+  "cautions": {
+    "rows": [
+      {
+        "file": "zu-fruit-buds-pond",
+        "pages": 4,
+        "fullCautions": true
+      },
+      {
+        "file": "zu-tea-leaves-holds",
+        "pages": 3,
+        "fullCautions": true
+      },
+      {
+        "file": "st-fruit-buds-pond",
+        "pages": 4,
+        "fullCautions": true
+      },
+      {
+        "file": "st-tea-leaves-holds",
+        "pages": 3,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-fruit-buds-pond",
+        "pages": 4,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-tea-leaves-holds",
+        "pages": 3,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-fruit-buds-pond",
+        "pages": 4,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-tea-leaves-holds",
+        "pages": 3,
+        "fullCautions": true
+      }
+    ]
+  },
+  "codeChecks": {
+    "typecheck": "PASS current source",
+    "pass": 155,
+    "fail": 0,
+    "affectedFiles": 7,
+    "session": 36037,
+    "testLog": "output/guidance-pdf-qa/authored01-refined-affected.log",
+    "sourceInvariant": "All144survey states,36captured guide contexts and192poultry states remain exact by their existing source tests. Complete copied source figures/units/IDs/citations/gates stay original. Missing no-recommendation paragraph fails even with its heading retained.",
+    "fullGuidanceSuite": "Not started while source-body work remains."
+  },
+  "sourceSha256": {
+    "lib/crop-export-copy-data.ts": "94da1f2e5e7b7dabf6bb2a6776ed44bafb69fd44ada9b72defa490b7edb01cc7",
+    "lib/crop-export-copy.ts": "3ece52e397d7a06594be5dc8b77c254d720818ac9e2d8153cc30168e6edfcdd3",
+    "lib/production-product-guidance.ts": "e9c5a8a08ea914b252a01b06e95af31c151d1343c1fc012fd14a782f0720fd06",
+    "lib/crop-export-pdf.ts": "ff394eb342181ecd944b66bbcec2f1f5441f98c386147d02eeea8000b3fd4ae9",
+    "tests/guidance-localization.test.ts": "8111ecd40e53aa94561625318f7c76695b9cb2316a7e59d41d8546935a81b05d",
+    "tests/helpers/product-guidance-expectation.ts": "cfa4c7e294b83422b84036c12cfd21a779de474dcdd3d2cc55abc483a60543a7"
+  },
+  "remaining": "559authored prose candidates remain in the801field source inventory;74additional proper-region/unit candidates require classification. These are scoped candidates, not an app-completion percentage. App/sample/metadata/browser/full-suite/currentmainintegration and broader goal requirements remain. All new prose unreviewed.",
+  "reviewFiles": [
+    {
+      "file": "zu-fruit-buds-pond.pdf",
+      "sha256": "49eac956ab1164a4e8bc1985461f642d0130dfc14868f30dbc9802d1ce7052cf"
+    },
+    {
+      "file": "zu-fruit-buds-pond-contact.png",
+      "sha256": "99d1ad8ebe6b9086e119238e7a1944b0c6e4a050ca1ef4ff35e189cdb8bbc450"
+    },
+    {
+      "file": "zu-tea-leaves-holds.pdf",
+      "sha256": "e7aa0fcebdd99adf5e4647538c61fae46f44795dab70621c5e0269bf5c03f044"
+    },
+    {
+      "file": "zu-tea-leaves-holds-contact.png",
+      "sha256": "c0653818d4461326beaff1bb27060164b586b479a8ced3e7f9c27f58578bde8e"
+    },
+    {
+      "file": "st-fruit-buds-pond.pdf",
+      "sha256": "faa7642bb21dbd16276e82ea8983111dc80eb2fae6a5e0d3295a78991b384248"
+    },
+    {
+      "file": "st-fruit-buds-pond-contact.png",
+      "sha256": "d253e68da369c58d2ae988b33611c35232abea2a72b66aeb5da572ba9be1b4da"
+    },
+    {
+      "file": "st-tea-leaves-holds.pdf",
+      "sha256": "8742985da850758e6574de1e69dab5b85de940889522438c81a4b5a130744ae2"
+    },
+    {
+      "file": "st-tea-leaves-holds-contact.png",
+      "sha256": "c644f8bcdf0ba6950bc1cf16fd53a737b843ed6f52fb528f9cacedffa8d504b3"
+    },
+    {
+      "file": "ts-fruit-buds-pond.pdf",
+      "sha256": "f92cd5133443c5a73125baff5b128b2b549e66381b2e61e8c06e21a10fc116e3"
+    },
+    {
+      "file": "ts-fruit-buds-pond-contact.png",
+      "sha256": "79ea930d32c38e17e7c69f09f2c59ab5718e50a27ebaf08d01105bc782e4bd9a"
+    },
+    {
+      "file": "ts-tea-leaves-holds.pdf",
+      "sha256": "7ce158b710b32169d3c5a6645b13fbade6da9323b73f7f4dd65472d0493ed304"
+    },
+    {
+      "file": "ts-tea-leaves-holds-contact.png",
+      "sha256": "05b349932c3f185b501a4ae4b49574c788b41d80c96f3601930c294a71a3226a"
+    },
+    {
+      "file": "ve-fruit-buds-pond.pdf",
+      "sha256": "dc4af22496ea0c7b112b841f3edaaebac6e758edd4e1cf3051b1eb6a6181e180"
+    },
+    {
+      "file": "ve-fruit-buds-pond-contact.png",
+      "sha256": "15eaca0be21a90a13c3185f21aa6b1d038a129a509bd47ac438b7ea0865d300d"
+    },
+    {
+      "file": "ve-tea-leaves-holds.pdf",
+      "sha256": "7c313c0642dd1226256caa7a8020413b58b778d3e8c2f0cc4e267afd111c4456"
+    },
+    {
+      "file": "ve-tea-leaves-holds-contact.png",
+      "sha256": "92fa9cac8e5b4afdee8e010382a451e94952c9e1fa75e344b96b68d3ac5f43e5"
+    }
+  ]
+}

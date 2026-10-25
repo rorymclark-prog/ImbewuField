@@ -1,0 +1,229 @@
+{
+  "scope": "Actual survey-only native guidance PDF and original full English comparisons. Product/animal body translation remains incomplete.",
+  "rows": [
+    {
+      "file": "en-after-normal.pdf",
+      "pages": 5,
+      "wordBounds": 1662,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 0,
+      "pixelHashes": [
+        "7c7574a7496df1c5891c835af654b1eade5e6c2783f5069717111119059a6b8f",
+        "372b00a436b1c99ee17b267be137c206cb08c68f5ce12d99ce97087abb01f7a6",
+        "273e5ea045962e15205fb922f90bdcf618a8118578d22cd2547b00ed321ba55f",
+        "da97dd9e20cf0eff25ca73a5df46b16a95a6783e83dd2ff5d3a443a4b94301c5",
+        "c4dff5c6342670b7c6b02d4d175f917df7271ca8c675e43d873c697e8626de91"
+      ]
+    },
+    {
+      "file": "en-after-unknown-records.pdf",
+      "pages": 3,
+      "wordBounds": 832,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 0,
+      "pixelHashes": [
+        "4c23a16d523feda95c6569d885ae44398e937a81a7d3d5fe85f4ff30e9a8b45c",
+        "583f34c91535a0fbe17e2918dd760753133be9ea9c31cdde8dbf501e78278e4b",
+        "26b8e49bf356951820945a6eb51742117135b4e3ca634da646b223dbae945d6c"
+      ]
+    },
+    {
+      "file": "st-reported.pdf",
+      "pages": 2,
+      "wordBounds": 599,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 26,
+      "pixelHashes": [
+        "20d2c71b44187f6a0f9f360a6413fe3e1ccf6544371955adeeeb90a8bdfb2195",
+        "9ae44523e4795a7680aa63045d2b379e4814356dcba22f31d937f6f92491698b"
+      ]
+    },
+    {
+      "file": "st-unknown.pdf",
+      "pages": 2,
+      "wordBounds": 586,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 26,
+      "pixelHashes": [
+        "f65f1c203b42e001a1ea74e2a817aed110b44b32e32017fd82cff96ff4c3adda",
+        "d44e9322769008e263a6df2f2db4f0c29262d239aa9d156dcd6497b10133b840"
+      ]
+    },
+    {
+      "file": "ts-reported.pdf",
+      "pages": 2,
+      "wordBounds": 590,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 26,
+      "pixelHashes": [
+        "43cd1cb0e9b4c4c281cb16edd6c5e7c2a0b193f0e664d3ca20cf01dec2b184eb",
+        "f97698acc7ec898a1340ed97d38196abb732def8587a155e439af7da3a9748b0"
+      ]
+    },
+    {
+      "file": "ts-unknown.pdf",
+      "pages": 2,
+      "wordBounds": 577,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 26,
+      "pixelHashes": [
+        "b74109a12e4f42b8080083db2fe4771038bb44a06c8de92d4380a56b93474f37",
+        "76b60fb139d5e9e7e7e69bcf9bc3c652e3842f1d94127ca808c6c045d7594dc7"
+      ]
+    },
+    {
+      "file": "ve-reported.pdf",
+      "pages": 2,
+      "wordBounds": 637,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 26,
+      "pixelHashes": [
+        "806e03fad1f285f5a3051ebc1c3f361f851e2f5f6b089e9e3de9fee73afacb12",
+        "9258c912044c6e63ad3fe512c721531bf8905c3c0b0c467a82f936787426a2af"
+      ]
+    },
+    {
+      "file": "ve-unknown.pdf",
+      "pages": 2,
+      "wordBounds": 623,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 26,
+      "pixelHashes": [
+        "0edc820e5a97fae38a075f1d5a683e2481c468b53d0374e89941ad9cca7c34e9",
+        "9258c912044c6e63ad3fe512c721531bf8905c3c0b0c467a82f936787426a2af"
+      ]
+    },
+    {
+      "file": "zu-reported.pdf",
+      "pages": 2,
+      "wordBounds": 371,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 26,
+      "pixelHashes": [
+        "ddcb25a050548113aef4b43b265d1eca431d51be8becedb5dd89182c6244c5ce",
+        "a04898aec95f912aa5f165d0e10f9abce6fe3819bf16dc478dc74ddfdfc4e69f"
+      ]
+    },
+    {
+      "file": "zu-unknown.pdf",
+      "pages": 2,
+      "wordBounds": 358,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 26,
+      "pixelHashes": [
+        "905ebab8e41d1f12b5059f33f9eff6993607c78d943ec2ecf494327513c634c2",
+        "a04898aec95f912aa5f165d0e10f9abce6fe3819bf16dc478dc74ddfdfc4e69f"
+      ]
+    }
+  ],
+  "english": {
+    "normal": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "unknown-records": {
+      "samePixels": true,
+      "sameText": true
+    }
+  },
+  "visualInspection": "Reported-condition two-page contact sheets visually inspected in zu/st/ts/ve on 25 October 2026. No page overlap or clipped text seen. Other unknown-condition pages have bounds/extraction checks; not every page individually inspected. No fluent-language approval.",
+  "cautions": {
+    "rows": [
+      {
+        "file": "zu-unknown",
+        "pages": 2,
+        "fullCautions": true
+      },
+      {
+        "file": "zu-reported",
+        "pages": 2,
+        "fullCautions": true
+      },
+      {
+        "file": "st-unknown",
+        "pages": 2,
+        "fullCautions": true
+      },
+      {
+        "file": "st-reported",
+        "pages": 2,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-unknown",
+        "pages": 2,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-reported",
+        "pages": 2,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-unknown",
+        "pages": 2,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-reported",
+        "pages": 2,
+        "fullCautions": true
+      }
+    ]
+  },
+  "checkedAt": "2026-10-25T09:56:22.829902+00:00",
+  "files": [
+    {
+      "file": "zu-reported.pdf",
+      "sha256": "06848d9d7a18242daaac88642a5cdbd4c0f69bb6335928086fb94568e6dfa1ef"
+    },
+    {
+      "file": "zu-reported-contact.png",
+      "sha256": "8720994fe7221f5a0dd39235fa646df27c5db97c866ccd483813a1eac122186b"
+    },
+    {
+      "file": "st-reported.pdf",
+      "sha256": "9409598b266c1d35cc669fec62d2dcef8f7002a45c907daf798a5b22bf6eaa2e"
+    },
+    {
+      "file": "st-reported-contact.png",
+      "sha256": "9ae51f3b5ff642f738f209799533691c2e04b01bf7127450a69ea1cddfff8e65"
+    },
+    {
+      "file": "ts-reported.pdf",
+      "sha256": "0f71af54c4b2ce79146db8228e74cacbc6ffcfe91bebd4f153f6bc7b49b3a07c"
+    },
+    {
+      "file": "ts-reported-contact.png",
+      "sha256": "91e8114ea6c080391afb81f65ee87d01bf4d882d4910e6385a893f9cef369488"
+    },
+    {
+      "file": "ve-reported.pdf",
+      "sha256": "15fae929a3646ba58c7e328ff65792a9c79df63532c18778d3c6d6aba16e2b4a"
+    },
+    {
+      "file": "ve-reported-contact.png",
+      "sha256": "e1de11ca0734d81e0aa968347f94206b966bcdd27827499d1447a24345463315"
+    }
+  ],
+  "sourceSha256": {
+    "lib/crop-export-schedule.ts": "19a5253aa1eb2298ff2a93c530eb12c534fa54d633ccadf2fedfc85db74271ba",
+    "lib/crop-export-copy-data.ts": "cd60e734fd0e418fa4502a52de11ebcaca69dbb42ba27209d3e1b4ad2b6686b6",
+    "lib/crop-export-copy.ts": "3ece52e397d7a06594be5dc8b77c254d720818ac9e2d8153cc30168e6edfcdd3",
+    "app/facilitator/crops/page.tsx": "0448e482021de196fbaae454155a88e9cdf6adef4ef57e6fb942d1b13c58df28",
+    "tests/guidance-localization.test.ts": "70569b345e9804211edbec8a93752381e0537e9118e7fbaa2d90d5b792c3d64e",
+    "tests/crop-export-instruction-localization.test.ts": "e2c25a6e2d3bab541ac2504a7c39dd5442dc4ad68573d82a826b2dc859a2a9cd"
+  },
+  "codeChecks": "Current-source Node24 typecheck PASS and132pass/0fail in4affected test files, terminal session65250 on25October2026. Full guidance suite not yet started; product/animal body incomplete. This refers to the sourceSha256 snapshot above. Later product-guidance edits require their own checks.",
+  "boundaries": "All fixture data isolated. Preserves private names, free-text units, catalogue names/varieties, recorded years/months/quantities, source URLs and observed-condition gates. This verifies survey-only PDF presentation and exact English comparisons, not full crop-page browser behavior or language fluency."
+}

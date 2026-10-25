@@ -1,0 +1,290 @@
+{
+  "scope": "Actual source-bound trial, flowering and identity research/care/purchase/hold fields in all4languages:51new sources across8representative species plus shared fields. Source citations keep original publication identities. Other corpus prose and app workflows remain unfinished.",
+  "rows": [
+    {
+      "file": "en-after-normal.pdf",
+      "pages": 5,
+      "wordBounds": 1662,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 0,
+      "pixelHashes": [
+        "7c7574a7496df1c5891c835af654b1eade5e6c2783f5069717111119059a6b8f",
+        "372b00a436b1c99ee17b267be137c206cb08c68f5ce12d99ce97087abb01f7a6",
+        "273e5ea045962e15205fb922f90bdcf618a8118578d22cd2547b00ed321ba55f",
+        "da97dd9e20cf0eff25ca73a5df46b16a95a6783e83dd2ff5d3a443a4b94301c5",
+        "c4dff5c6342670b7c6b02d4d175f917df7271ca8c675e43d873c697e8626de91"
+      ]
+    },
+    {
+      "file": "en-after-unknown-records.pdf",
+      "pages": 3,
+      "wordBounds": 832,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 0,
+      "pixelHashes": [
+        "4c23a16d523feda95c6569d885ae44398e937a81a7d3d5fe85f4ff30e9a8b45c",
+        "583f34c91535a0fbe17e2918dd760753133be9ea9c31cdde8dbf501e78278e4b",
+        "26b8e49bf356951820945a6eb51742117135b4e3ca634da646b223dbae945d6c"
+      ]
+    },
+    {
+      "file": "st-identity-fruit-reference.pdf",
+      "pages": 4,
+      "wordBounds": 1860,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 58,
+      "pixelHashes": [
+        "db5f290c11c68c6dff796ead43db00c4e0ba1a0ae43855405cb9bafb608d2dc3",
+        "d148ec2e93c19b9d4bafd6d5098efa8f7af313fe4f3cb2443263be50badd4abf",
+        "66ab579d2c71a4fd620449588f46caa5ac2b6309bd78a1ba35305e454895a180",
+        "572b09d475263b1502e0373b982ffee048b228b92b3523113c9e0978363cc93b"
+      ]
+    },
+    {
+      "file": "st-leaf-trial-context.pdf",
+      "pages": 4,
+      "wordBounds": 1989,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 62,
+      "pixelHashes": [
+        "db5f290c11c68c6dff796ead43db00c4e0ba1a0ae43855405cb9bafb608d2dc3",
+        "aca37ad9639cb09c5386e74860ec7e5d1fd6ccf56c0917123654db2680a087b9",
+        "befcddac9de50a71c263fd5b4b1430e8f53dfd5a2a1003936e0f4e892300d931",
+        "54bd27d998cb75e1c678ce7948da1ed2d9d147fb3a4fd812030a6fdb305ed296"
+      ]
+    },
+    {
+      "file": "ts-identity-fruit-reference.pdf",
+      "pages": 4,
+      "wordBounds": 1846,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 58,
+      "pixelHashes": [
+        "3869dba6cf8598f12c8db26f3c24aff1a6879aa0c69e194585689c35e403e788",
+        "183546e95a5da3b1ad4f8dbe2bc2e842bcdd884e2a4e0c8456a63fdbfb403ad9",
+        "631c3f1920e0f7c724139eaf847d17aa4053c8dd3d2658ebbcdf9b373fbaf892",
+        "a54ea56a374e75b596a1e3c746f09fde945b94267aaa964b7704fbf23103b876"
+      ]
+    },
+    {
+      "file": "ts-leaf-trial-context.pdf",
+      "pages": 4,
+      "wordBounds": 2010,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 62,
+      "pixelHashes": [
+        "3869dba6cf8598f12c8db26f3c24aff1a6879aa0c69e194585689c35e403e788",
+        "24f3b9c902ce221d1d71e48eae81269fe05b2f94883f9f72eb819deac721f205",
+        "bd07b3878dd2742c6545c1fd96e80394e04f4b0a2e41aafb7050ca8aea505dac",
+        "8d833cb8708a5a02da3e55abc6ad7c0298718cbd917f5bb657077cd490f0229e"
+      ]
+    },
+    {
+      "file": "ve-identity-fruit-reference.pdf",
+      "pages": 4,
+      "wordBounds": 1941,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 58,
+      "pixelHashes": [
+        "11b8d3ecf7b5d851e981cd04acec325685a254bfe64ab4f95fc72292c5d67580",
+        "5775cd866ff05387c23ce80af2b7874a0ab83479d45e36ce231416c43dd9af5a",
+        "ba32f75a94e60e0e07890a64e51f13b4c4f4406c9e690593fbbd7bfd24f0f0dd",
+        "fbdada02092d964be9e05703ee4699bea8a1b779620b648619d701cf1bc84bbf"
+      ]
+    },
+    {
+      "file": "ve-leaf-trial-context.pdf",
+      "pages": 4,
+      "wordBounds": 2116,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 62,
+      "pixelHashes": [
+        "11b8d3ecf7b5d851e981cd04acec325685a254bfe64ab4f95fc72292c5d67580",
+        "8c89a3c0b3f017cbe0729203489d4d6fefad4707b018a2d01aa848b71a2f494a",
+        "e1263d6a7af10f11386f7f754e15e4671397313aa16c40e7b3f1b44921dc567b",
+        "7841e96694b73bbeb384990191c3c7d50acedcb68d657ffd63df36b13dc755b9"
+      ]
+    },
+    {
+      "file": "zu-identity-fruit-reference.pdf",
+      "pages": 4,
+      "wordBounds": 1163,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 58,
+      "pixelHashes": [
+        "8fd51c635210d83582fd31ff4846c3fbb70b76e4adcfc4eeb54e6ffb3c1d89ad",
+        "428ccd3db534a544983e47d80604108d0f839686edf2d65716461e5bad171531",
+        "ddb099794180f28652401b19a5d3d0d6ccb828d099e4306d97b759956393cda2",
+        "575e3ae6adffdabebd2969e90ce1fb551ee1c287dcf545a60820cbb272588603"
+      ]
+    },
+    {
+      "file": "zu-leaf-trial-context.pdf",
+      "pages": 4,
+      "wordBounds": 1216,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 62,
+      "pixelHashes": [
+        "8fd51c635210d83582fd31ff4846c3fbb70b76e4adcfc4eeb54e6ffb3c1d89ad",
+        "1188275696a17ad79972029f32f8487d13ff6fa426836b400fa0abbecd88203f",
+        "b84216ccc9c4b68a8c5db35b41a754e1f29bff1cced1d51414caa7d972aebe9e",
+        "5bef8279073dd9fdc88bfe80c6e264aad5e3742734f404d19ac7e1832de2d973"
+      ]
+    }
+  ],
+  "english": {
+    "normal": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "unknown-records": {
+      "samePixels": true,
+      "sameText": true
+    }
+  },
+  "visualInspection": "All8native contact sheets for the two groups visually inspected in zu/st/ts/ve. The Venda trial page4 and Sesotho identity/alias page3 were additionally enlarged and inspected. No clipping or overlap seen in those views; not a fluent-language review or individual inspection of all40pages.",
+  "checkedAt": "2026-10-25T13:17:04.007257+00:00",
+  "newSourceCount": 51,
+  "fullNewSourceOccurrences": 212,
+  "newSourceRule": "Every complete new authored phrase is checked in every applicable generated PDF, including repeated shared fields. Numerical source order, named cultivar/day/grain pairs, leading zeros, units and month/date associations are checked independently.",
+  "cautions": {
+    "rows": [
+      {
+        "file": "zu-leaf-trial-context",
+        "pages": 4,
+        "fullCautions": true
+      },
+      {
+        "file": "zu-identity-fruit-reference",
+        "pages": 4,
+        "fullCautions": true
+      },
+      {
+        "file": "st-leaf-trial-context",
+        "pages": 4,
+        "fullCautions": true
+      },
+      {
+        "file": "st-identity-fruit-reference",
+        "pages": 4,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-leaf-trial-context",
+        "pages": 4,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-identity-fruit-reference",
+        "pages": 4,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-leaf-trial-context",
+        "pages": 4,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-identity-fruit-reference",
+        "pages": 4,
+        "fullCautions": true
+      }
+    ]
+  },
+  "codeChecks": {
+    "typecheck": "PASS current source",
+    "affectedPass": 157,
+    "affectedFail": 0,
+    "affectedFiles": 7,
+    "session": 13582,
+    "log": "output/guidance-pdf-qa/authored02-current-affected.log",
+    "safetyNegatives": "Removing the complete no-continuous-food paragraph fails while its heading stays; flowering months cannot become picking months. Original source units, biological identities, source URLs, trial numeric pairings and all source-model gates remain guarded.",
+    "fullGuidanceSuite": "Not started while remaining bodies/runtime work are unfinished."
+  },
+  "sourceSha256": {
+    "lib/crop-export-copy-data.ts": "0b83b24afadf1ca8fcb056eca9568e87279212eba45f5cef74e01f223cb80732",
+    "lib/crop-export-copy.ts": "3ece52e397d7a06594be5dc8b77c254d720818ac9e2d8153cc30168e6edfcdd3",
+    "lib/production-product-guidance.ts": "e9c5a8a08ea914b252a01b06e95af31c151d1343c1fc012fd14a782f0720fd06",
+    "lib/crop-export-pdf.ts": "ff394eb342181ecd944b66bbcec2f1f5441f98c386147d02eeea8000b3fd4ae9",
+    "tests/guidance-localization.test.ts": "6c9d887d7f414811c9c41c2e302693bd05e6375cd05e25775e94e95079098a5b",
+    "tests/helpers/product-guidance-expectation.ts": "cfa4c7e294b83422b84036c12cfd21a779de474dcdd3d2cc55abc483a60543a7"
+  },
+  "terminologyReview": "Unreviewed. Source technical terms remain where a fluent specialist should review wording. Pickle was retained without adding a vinegar ingredient or recipe; actual stock/sex forms stay explicit and no bearing count is inferred. Original scientific names are unchanged.",
+  "remaining": "508authored prose candidates remain;74proper source-region/unit candidates need classification. These are not a whole-app completion measure. Native sample/metadata/browser/full-suite/current-main integration and all broader goal requirements remain.",
+  "reviewFiles": [
+    {
+      "file": "zu-leaf-trial-context.pdf",
+      "sha256": "29ecd48ffcc6e67f424846e5c5c9a2b1fbf1ee7e3f9c28bf56186d37316152e5"
+    },
+    {
+      "file": "zu-leaf-trial-context-contact.png",
+      "sha256": "3d89f704d9440592f48e1dbe924875cad0038da2c9fabd4ed4027af7d35feb72"
+    },
+    {
+      "file": "zu-identity-fruit-reference.pdf",
+      "sha256": "42132f19638d41ae55fbfa39bad1c94f65ae83b0587a8f5f07816f20555c7237"
+    },
+    {
+      "file": "zu-identity-fruit-reference-contact.png",
+      "sha256": "e4ed68fd39d3875bfc05e142df3aabbf2ab402eefb52a5b8bf536cc5df505060"
+    },
+    {
+      "file": "st-leaf-trial-context.pdf",
+      "sha256": "232af1eeb022ee0e086283405b7fa18fd7b9ba5cc35b8f57051820bd4803e46d"
+    },
+    {
+      "file": "st-leaf-trial-context-contact.png",
+      "sha256": "10e92a619ad1dc5f347c75ce06821d1ba1d85974c1a841644183267e3c314fae"
+    },
+    {
+      "file": "st-identity-fruit-reference.pdf",
+      "sha256": "33130d6a14687ea82d3c5600900ceced3dc0b8261128f75e84b5f881f78a81b5"
+    },
+    {
+      "file": "st-identity-fruit-reference-contact.png",
+      "sha256": "3fd198fb67ac1ac894081cae30bbc6075171fc4547f42aae0df7daa49ae66b97"
+    },
+    {
+      "file": "ts-leaf-trial-context.pdf",
+      "sha256": "fd0a6be345b940a7ff24f367af98d0fac566e6c85730c17aa6df40e1aad25326"
+    },
+    {
+      "file": "ts-leaf-trial-context-contact.png",
+      "sha256": "37c2ad63ccf0e5537a775819b3ae0a9e0cf76f2f1cdf0ddf49d48def14c008ba"
+    },
+    {
+      "file": "ts-identity-fruit-reference.pdf",
+      "sha256": "bd6302769776eba4138b75fdf2d65e53304fe7290e4b426376e461436a5acbf8"
+    },
+    {
+      "file": "ts-identity-fruit-reference-contact.png",
+      "sha256": "8aad4609de6d62a178a3052919631fb98779cb2e65712ef700629f7ba42572f5"
+    },
+    {
+      "file": "ve-leaf-trial-context.pdf",
+      "sha256": "a33734e46e457bfb9c39f93f5dd752bd002db5a1edef0a81c34c040a1494504e"
+    },
+    {
+      "file": "ve-leaf-trial-context-contact.png",
+      "sha256": "d54eaecb0047eeca53249357ac02ae3b1a874ad8cb13b5fc1af6c5cb8c1741a8"
+    },
+    {
+      "file": "ve-identity-fruit-reference.pdf",
+      "sha256": "af3088f8177dcdae3d8956eeff2388341221bf56f6cef339ad0038bbe591795a"
+    },
+    {
+      "file": "ve-identity-fruit-reference-contact.png",
+      "sha256": "9c740c5ca9c32a87c2c113a8cc64aff76edf7d153057c655cf52fd0b6ce6864a"
+    }
+  ]
+}

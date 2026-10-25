@@ -1,0 +1,1307 @@
+{
+  "status": "Unreviewed AI drafts. No fluent approval or whole-guidance/app completion claimed.",
+  "sourceInventorySha256": "595c9febb8e4e1417792b668ccf65965334a1bb25a9a3374d559969bca9d2247",
+  "sourceCount": 51,
+  "rows": [
+    {
+      "english": "leaves and tender stems",
+      "zu": "amaqabunga neziqu ezithambile",
+      "st": "makgasi le dikutu tse bonolo",
+      "ts": "matluka ni marhavi lama olovaka",
+      "ve": "maṱari na tsinde dzi teṱeaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Provide climbing support and adequate moisture in a warm growing position.",
+      "zu": "Nikeza izisekelo zokukhuphuka nomswakama owanele endaweni efudumele yokukhula.",
+      "st": "Fana ka tshehetso ya ho palama le mongobo o lekaneng sebakeng se futhumetseng sa ho hola.",
+      "ts": "Nyika swiseketelo swo khandziya ni ku tsakama loku eneleke eka ndhawu yo kufumela yo kula.",
+      "ve": "Ṋeani zwitikedzi zwa u gonya na vhuṋu ho eḓanaho kha fhethu hu dudelaho ha u aluwa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record successive leaf harvests by planting batch rather than using tree-age production.",
+      "zu": "Rekhoda izivuno zamaqabunga ezilandelanayo ngeqoqo ngalinye lokutshala, kunokusebenzisa ukukhiqiza ngokobudala besihlahla.",
+      "st": "Rekota dikotulo tse latellanang tsa makgasi ka sehlopha sa ho jala ho e na le ho sebedisa tlhahiso ya dilemo tsa sefate.",
+      "ts": "Rhekhoda mintshovelo ya matluka leyi landzelelanaka hi ntlawa wa ku byala ematshan’weni yo tirhisa vuhumelerisi bya vukhale bya murhi.",
+      "ve": "Rekhodani khaṋo dza maṱari dzi tevhelanaho nga tshigwada tsha u ṱavha nṱhani ha u shumisa vhubveledzi ha vhukale ha muri.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Obtain labelled Basella alba material. A South African regional cultivar, kg/plant benchmark and dated picking window remain unverified.",
+      "zu": "Thola izinto zokutshala ezinelebula elithi Basella alba. Uhlobo lwesifunda saseNingizimu Afrika, inkomba ye-kg/plant nesikhathi sokuvuna esinezinsuku akukaqinisekiswa.",
+      "st": "Fumana dimela tse ngotsweng Basella alba. Mofuta wa sebaka sa Afrika Borwa, tshupiso ya kg/plant le nako ya kotulo e behilweng matsatsi di ntse di sa netefatswa.",
+      "ts": "Kuma swilo swo byala leswi nga ni lebulu ya Basella alba. Muxaka wa xifundzha xa Afrika Dzonga, mpimo wa kg/plant ni nkarhi wo tshovela lowu nga ni masiku swa ha nga si tiyisisiwa.",
+      "ve": "Wanani zwishumiswa zwi re na ḽebuḽu ya Basella alba. Lushaka lwa dzingu ḽa Afrika Tshipembe, ndaedzi ya kg/plant na tshifhinga tsha u kaṋa tshi re na maḓuvha a zwi athu u khwaṱhisedzwa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Leaf vegetable identity and warm-climate culture",
+      "zu": "Ubunikazi bemifino yamaqabunga nokuyikhulisa esimweni sezulu esifudumele",
+      "st": "Boitsebiso ba meroho ya makgasi le temo maemong a futhumetseng",
+      "ts": "Vutitivisi bya miroho ya matluka ni ku kurisa eka maxelo yo kufumela",
+      "ve": "Vhuvha ha miroho ya maṱari na u alusa kha kilima i dudelaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Florida extension confirms Malabar spinach as a warm-climate leaf vegetable. Its Florida planting and harvest calendar is not a South African calendar.",
+      "zu": "Abeluleki bezolimo baseFlorida baqinisekisa i-Malabar spinach njengemifino yamaqabunga yesimo sezulu esifudumele. Ikhalenda layo lokutshala nokuvuna laseFlorida alilona ikhalenda laseNingizimu Afrika.",
+      "st": "Katoloso ya temo ya Florida e tiisa Malabar spinach e le meroho ya makgasi ya maemo a futhumetseng. Khalendara ya yona ya Florida ya ho jala le kotulo ha se khalendara ya Afrika Borwa.",
+      "ts": "Vatsundzuxi va vurimi va Florida va tiyisisa Malabar spinach yi ri miroho ya matluka ya maxelo yo kufumela. Khalendara ya yona ya Florida yo byala ni yo tshovela a hi khalendara ya Afrika Dzonga.",
+      "ve": "Vhaeletshedzi vha vhulimi vha Florida vha khwaṱhisedza Malabar spinach sa miroho ya maṱari ya kilima i dudelaho. Khalenda yayo ya Florida ya u ṱavha na u kaṋa a si khalenda ya Afrika Tshipembe.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Cultivation context",
+      "zu": "Umongo wokulima",
+      "st": "Maemo a temo",
+      "ts": "Mongo wa ku byala",
+      "ve": "Nyimele ya u lima",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Foreign extension reference for support, seed/cutting propagation and warm, moist conditions; no Florida months are imported into the South African plan.",
+      "zu": "Inkomba yabeluleki bezolimo bakwamanye amazwe yezisekelo, ukusabalalisa ngembewu/ngezicucu, nezimo ezifudumele nezinomswakama; azikho izinyanga zaseFlorida ezifakwa ohlelweni lwaseNingizimu Afrika.",
+      "st": "Tshupiso ya katoloso ya temo ya dinaha tse ding bakeng sa tshehetso, ho atisa ka peo/dikutu tse sehuweng le maemo a futhumetseng a mongobo; ha ho dikgwedi tsa Florida tse kenngwang moralong wa Afrika Borwa.",
+      "ts": "Xikombo xa vatsundzuxi va vurimi va le matikweni mambe xa swiseketelo, ku andzisa hi mbewu/swiphemu leswi tsemiweke ni swiyimo swo kufumela swo tsakama; a ku nghenisiwi tin’hweti ta Florida eka kungu ra Afrika Dzonga.",
+      "ve": "Ndaedzi ya vhaeletshedzi vha vhulimi vha mashango a nnḓa ya zwitikedzi, u andisa nga mbeu/zwipiḓa zwo geriwaho na nyimele dzi dudelaho dzo ṋukalaho; a hu dzheniswi miṅwedzi ya Florida kha pulane ya Afrika Tshipembe.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Optimal from-seed cutting-cycle reference — Florida extension",
+      "zu": "Inkomba yomjikelezo wokusika kusukela embewini ngaphansi kwezimo ezifanele — abeluleki baseFlorida",
+      "st": "Tshupiso ya potoloho ya ho kga ho tloha peong tlasa maemo a loketseng — katoloso ya temo ya Florida",
+      "ts": "Xikombo xa ndzhendzeleko wo tsema ku sukela eka mbewu ehansi ka swiyimo leswinene — vatsundzuxi va Florida",
+      "ve": "Ndaedzi ya mutevhe wa u gera u bva kha mbeu fhasi ha nyimele dzavhuḓi — vhaeletshedzi vha Florida",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The extension guide reports maturity around 70 days from seed under optimal conditions, followed by hand trimming leaves and young stems. This foreign optimal-condition duration is supplementary; no South African planting date, exact month window or generic tree-age value is inferred.",
+      "zu": "Umhlahlandlela wabeluleki ubika ukuvuthwa cishe ezinsukwini ezingu-70 kusukela embewini ngaphansi kwezimo ezifanele, kulandelwe ukusika ngesandla amaqabunga neziqu ezincane. Lesi sikhathi sakwamanye amazwe ngaphansi kwezimo ezifanele siyinkomba eyengeziwe; akucatshangwa usuku lokutshala lwaseNingizimu Afrika, isikhathi sezinyanga esiqondile noma inani elivamile lobudala besihlahla.",
+      "st": "Tataiso ya katoloso ya temo e tlaleha ho hola ho fihlela kotulong matsatsing a ka bang 70 ho tloha peong tlasa maemo a loketseng, ho latelwa ke ho kga makgasi le dikutu tse nyane ka letsoho. Nako ena ya dinaha tse ding tlasa maemo a loketseng ke tshupiso e tlatselletsang; ha ho nahannwe letsatsi la ho jala la Afrika Borwa, nako ya dikgwedi e tobileng kapa boleng bo akaretsang ba dilemo tsa sefate.",
+      "ts": "Nkongomiso wa vatsundzuxi wu vika ku kula ku fika eku tshoveriweni kwalomu ka masiku ya 70 ku sukela eka mbewu ehansi ka swiyimo leswinene, ku landzela ku tsema matluka ni marhavi lamatsongo hi mavoko. Nkarhi lowu wa matiko mambe ehansi ka swiyimo leswinene i xikombo xo engetela; a ku ehleketeleriwi siku ro byala ra Afrika Dzonga, nkarhi wa tin’hweti lowu kongomeke kumbe nhlayo ya ntolovelo ya vukhale bya murhi.",
+      "ve": "Nyendedzi ya vhaeletshedzi i vhiga u aluwa u swika kha u kaṋiwa nga maḓuvha a ṱoḓaho u vha 70 u bva kha mbeu fhasi ha nyimele dzavhuḓi, ha tevhela u gera maṱari na tsinde ṱhukhu nga zwanḓa. Tshifhinga itshi tsha mashango a nnḓa fhasi ha nyimele dzavhuḓi ndi ndaedzi ya u engedza; a hu humbulelwi ḓuvha ḽa u ṱavha ḽa Afrika Tshipembe, tshifhinga tsha miṅwedzi tsho tiwaho kana tshivhalo tsho ḓoweleaho tsha vhukale ha muri.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "ripe fruit",
+      "zu": "izithelo ezivuthiwe",
+      "st": "ditholwana tse butswitseng",
+      "ts": "mihandzu leyi vupfeke",
+      "ve": "mitshelo yo vhibvaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Use frost-free conditions: SANBI describes frost sensitivity despite drought resistance, with natural low-altitude riverbank bushveld in northern KwaZulu-Natal, Mpumalanga and Limpopo.",
+      "zu": "Sebenzisa izimo ezingenasithwathwa: i-SANBI ichaza ukuzwela esithwathweni naphezu kokumelana nesomiso, nezindawo zemvelo eziphansi ezinamahlathi aseceleni kwemifula enyakatho yeKwaZulu-Natal, eMpumalanga naseLimpopo.",
+      "st": "Sebedisa maemo a se nang serame: SANBI e hlalosa ho tshaba serame leha sefate se mamella komello, mme ka tlhaho se mela dibakeng tse tlase tsa meru e pela dinoka leboya la KwaZulu-Natal, Mpumalanga le Limpopo.",
+      "ts": "Tirhisa swiyimo leswi nga riki na rharhama: SANBI yi hlamusela ku nga tiyiseli rharhama hambiloko wu tiyisela dyandza, wu mila hi ntumbuluko eka bushveld ya le hansi etibuweni ta milambu en’walungwini wa KwaZulu-Natal, Mpumalanga na Limpopo.",
+      "ve": "Shumisani nyimele dzi si na murotholo: SANBI i ṱalutshedza u sa konḓelela murotholo naho muri u tshi konḓelela gomelelo, u tshi mela nga mvelo kha vhupo ha bushveld ha fhasi tsini na milambo devhula ha KwaZulu-Natal, Mpumalanga na Limpopo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask for Berchemia discolor, not red ivory (B. zeyheri). Record actual local ripe-picking months.",
+      "zu": "Cela i-Berchemia discolor, hhayi i-red ivory (B. zeyheri). Rekhoda izinyanga zangempela zendawo zokuvuna izithelo ezivuthiwe.",
+      "st": "Kopa Berchemia discolor, eseng red ivory (B. zeyheri). Rekota dikgwedi tsa nnete tsa sebaka tsa ho kotula ditholwana tse butswitseng.",
+      "ts": "Kombela Berchemia discolor, ku nga ri red ivory (B. zeyheri). Rhekhoda tin’hweti ta xiviri ta ndhawu to tshovela mihandzu leyi vupfeke.",
+      "ve": "Humbelani Berchemia discolor, hu si red ivory (B. zeyheri). Rekhodani miṅwedzi ya henefho ya vhukuma ya u kaṋa mitshelo yo vhibvaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Edible part and local use",
+      "zu": "Ingxenye edliwayo nokusetshenziswa endaweni",
+      "st": "Karolo e jewang le tshebediso ya sebaka",
+      "ts": "Xiphemu lexi dyiwaka ni ku tirhisiwa endhawini",
+      "ve": "Tshipiḓa tshi ḽiwaho na tshumiso ya henefho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "January–July is fruit appearance in SANBI's account, not an explicit ripe-picking interval.",
+      "zu": "UJanuwari–Julayi usho ukubonakala kwezithelo embhalweni we-SANBI, hhayi isikhathi esiqondile sokuvuna izithelo ezivuthiwe.",
+      "st": "Pherekgong–Phupu e bolela ho hlaha ha ditholwana tlalehong ya SANBI, eseng nako e hlakileng ya ho kotula ditholwana tse butswitseng.",
+      "ts": "Sunguti–Mawuwani i ku vonaka ka mihandzu eka xihlovo xa SANBI, ku nga ri nkarhi lowu boxiweke wo tshovela mihandzu leyi vupfeke.",
+      "ve": "Phando–Fulwana ndi u vhonala ha mitshelo kha tshiko tsha SANBI, hu si tshifhinga tsho bulwaho tsha u kaṋa mitshelo yo vhibvaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Fruit-development duration has context",
+      "zu": "Isikhathi sokukhula kwesithelo sinomongo",
+      "st": "Nako ya ho hola ha tholwana e na le maemo",
+      "ts": "Nkarhi wa ku kula ka muhandzu wu ni mongo",
+      "ve": "Tshifhinga tsha u aluwa ha mutshelo tshi na nyimele",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "This is flower-to-fruit development, not years from planting. Its South African January–July fruiting statement is not an observed household picking window.",
+      "zu": "Lokhu ukukhula kusukela embalini kuya esithelweni, hhayi iminyaka kusukela kutshaliwe. Ukushiwo kokuthela eNingizimu Afrika ngoJanuwari–Julayi akusona isikhathi sokuvuna sasekhaya esibonwe ngempela.",
+      "st": "Sena ke kgolo ho tloha paleseng ho ya tholwaneng, eseng dilemo ho tloha ha ho jetswe. Polelo ya sona ya ho beha ditholwana Afrika Borwa ka Pherekgong–Phupu ha se nako ya kotulo ya lelapa e bonweng.",
+      "ts": "Loku i ku kula ku sukela eka bilomu ku ya eka muhandzu, ku nga ri malembe ku sukela loko wu byariwile. Ku vuriwa ka ku veka mihandzu eAfrika Dzonga hi Sunguti–Mawuwani a hi nkarhi wo tshovela wa le kaya lowu voniweke.",
+      "ve": "Izwi ndi u aluwa u bva kha luvha u ya kha mutshelo, hu si miṅwaha u bva kha u ṱavha. U buliwa ha u aṋwa mitshelo Afrika Tshipembe nga Phando–Fulwana a si tshifhinga tsha muṱa tsha u kaṋa tsho vhonwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "fruit; traditionally prepared flower buds",
+      "zu": "izithelo; izimbali ezingakavuleki ezilungiswa ngokwesiko",
+      "st": "ditholwana; dipalesa tse so kang di buleha tse lokiswang ka setso",
+      "ts": "mihandzu; mabilomu lama nga si pfulekaka lama lunghiseleriwaka hi ndhavuko",
+      "ve": "mitshelo; maluvha a sa athu u vuleaho a lugiswaho nga sialala",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "This hardy, drought-resistant tree occurs in drier southern African regions.",
+      "zu": "Lesi sihlahla esiqinile nesimelana nesomiso sitholakala ezifundeni ezomile zaseningizimu ye-Afrika.",
+      "st": "Sefate sena se tiileng se mamellang komello se fumaneha dibakeng tse ommeng tsa borwa ba Afrika.",
+      "ts": "Murhi lowu tiyeke lowu tiyiselaka dyandza wu kumeka eka swifundzha swo oma swa dzonga wa Afrika.",
+      "ve": "Muri uyu wo khwaṱhaho u konḓelelaho gomelelo u wanala kha madzingu o omaho a tshipembe ha Afrika.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "SANBI reports that leaf browsing can taint cattle milk. No feed ration is recommended.",
+      "zu": "I-SANBI ibika ukuthi ukudliwa kwamaqabunga yimfuyo kungashintsha ukunambitheka kobisi lwezinkomo. Akukho sabelo sokudla kwezilwane esinconywayo.",
+      "st": "SANBI e tlaleha hore ho jewa ha makgasi ke diphoofolo ho ka fetola tatso ya lebese la dikgomo. Ha ho dijo tse lekantsweng tsa diphoofolo tse kgothaletswang.",
+      "ts": "SANBI yi vika leswaku ku dyiwa ka matluka hi swifuwo ku nga onha nantswo wa masi ya tihomu. A ku bumabumeriwi mpimo wa swakudya swa swifuwo.",
+      "ve": "SANBI i vhiga uri u ḽiwa ha maṱari nga zwifuwo zwi nga shandula muḓifho wa mafhi a kholomo. A hu themendelwa mukovhe wa zwiḽiwa zwa zwifuwo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask for correctly identified, lawfully sourced stock and check current protected-tree collection requirements before harvesting existing wild trees.",
+      "zu": "Cela izitshalo ezikhonjwe kahle nezitholwe ngokusemthethweni, uhlole nezidingo zamanje zokuqoqwa kwezihlahla ezivikelwe ngaphambi kokuvuna ezihlahleni zasendle ezikhona.",
+      "st": "Kopa dimela tse hlwauweng ka nepo, tse fumanweng ka molao, mme o hlahlobe ditlhoko tsa hona jwale tsa ho bokella difate tse sireleditsweng pele o kotula difateng tse teng tse hlaha.",
+      "ts": "Kombela swimilana leswi tivekaka kahle leswi kumiweke hi nawu u tlhela u kambela swilaveko swa sweswi swo hlengeleta mirhi leyi sirhelelekeke u nga si tshovela eka mirhi ya nhova leyi nga kona.",
+      "ve": "Humbelani zwimela zwo ṱalulwaho zwavhuḓi zwo wanalaho nga mulayo ni ṱole ṱhoḓea dza zwino dza u kuvhanganya miri yo tsireledzwaho ni sa athu u kaṋa kha miri ya ḓaka i re hone.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "SANBI also records flower-bud pickle use. Root porridge/coffee references are not instructions to harvest roots or a complete preparation guide.",
+      "zu": "I-SANBI iphinde irekhode ukusetshenziswa kwezimbali ezingakavuleki njenge-pickle. Izinkomba zephalishi/zekhofi lezimpande aziyona imiyalelo yokuvuna izimpande noma umhlahlandlela ophelele wokulungisa.",
+      "st": "SANBI e boetse e rekota tshebediso ya dipalesa tse so kang di buleha e le pickle. Ditshupiso tsa motoho/kofi ya metso ha se ditaelo tsa ho kotula metso kapa tataiso e felletseng ya ho lokisa.",
+      "ts": "SANBI yi tlhela yi rhekhoda ku tirhisiwa ka mabilomu lama nga si pfulekaka lama endliweke pickle. Swikombo swa vuswa/kofi ya timitsu a hi swileriso swo tshovela timitsu kumbe nkongomiso lowu heleleke wa ku lunghiselela.",
+      "ve": "SANBI i dovha ya rekhoda tshumiso ya maluvha a sa athu u vuleaho o itwaho pickle. Ndaedzi dza vhuswa/gofhi ya midzi a si ndaela dza u kaṋa midzi kana nyendedzi yo fhelelaho ya u lugisela.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "dry grain or green immature seed; fodder is a separate product",
+      "zu": "izinhlamvu ezomile noma imbewu eluhlaza engakavuthwa; ukudla kwemfuyo kungumkhiqizo ohlukile",
+      "st": "dijo-thollo tse ommeng kapa peo e tala e so butswe; furu ke sehlahiswa se arohaneng",
+      "ts": "ndzoho leyi omeke kumbe mbewu ya rihlaza leyi nga si vupfaka; furu i xikumiwa xo hambana",
+      "ve": "thoro dzo omaho kana mbeu dala i sa athu u vhibvaho; furu ndi tshibveledzwa tsho fhambanaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record green immature seed and dry grain separately; fodder biomass cannot be counted as household food kg.",
+      "zu": "Rekhoda imbewu eluhlaza engakavuthwa nezinhlamvu ezomile ngokwehlukana; isisindo sezitshalo sokudla kwemfuyo asibalwa kuma-kg okudla kwasekhaya.",
+      "st": "Rekota peo e tala e so butswe le dijo-thollo tse ommeng ka thoko; boima ba dimela ba furu bo ke ke ba balwa e le kg tsa dijo tsa lelapa.",
+      "ts": "Rhekhoda mbewu ya rihlaza leyi nga si vupfaka ni ndzoho leyi omeke swi hambanile; ntiko wa swimilana swa furu a wu hlayiwi ku ri kg ta swakudya swa le kaya.",
+      "ve": "Rekhodani mbeu dala i sa athu u vhibvaho na thoro dzo omaho nga thungo; tshileme tsha zwimela zwa furu a tshi vhalelwi kha kg dza zwiḽiwa zwa muṱa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Match the selected duration type and sowing date to local frost, rainfall and water availability; the trials retain their own conditions.",
+      "zu": "Fanisa uhlobo lwesikhathi esikhethiwe nosuku lokutshala nesithwathwa, imvula nokutholakala kwamanzi endaweni; ucwaningo lugcina izimo zalo.",
+      "st": "Bapisa mofuta wa bolelele ba nako o kgethilweng le letsatsi la ho jala le serame sa sebaka, pula le boteng ba metsi; diteko di boloka maemo a tsona.",
+      "ts": "Fananisa muxaka wa nkarhi lowu hlawuriweke ni siku ro byala ni rharhama ra ndhawu, mpfula ni ku kumeka ka mati; mindzingo yi hlayisa swiyimo swa yona.",
+      "ve": "Yelanyisani lushaka lwa vhulapfu ha tshifhinga lwo nangwaho na ḓuvha ḽa u ṱavha na murotholo wa henefho, mvula na u wanala ha maḓi; milingo i vhulunga nyimele dzayo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Discuss the named SA trial cultivars with a local seed supplier or extension adviser. Current purchase availability and suitability for this site are unverified; do not substitute a cultivar silently.",
+      "zu": "Xoxa ngezinhlobo eziqanjwe ocwaningweni lwaseNingizimu Afrika nomhlinzeki wembewu wendawo noma umeluleki wezolimo. Ukutholakala kwazo manje nokufaneleka kwazo kule ndawo akuqinisekisiwe; ungafaki olunye uhlobo buthule esikhundleni salo.",
+      "st": "Buisana ka mefuta e bitswang ka mabitso ditekong tsa Afrika Borwa le mofani wa peo kapa moeletsi wa temo wa sebaka. Boteng ba ho reka hona jwale le ho lokela ha sebaka sena ha di a netefatswa; o se ke wa kenya mofuta o mong sebakeng sa wona ka sephiri.",
+      "ts": "Burisana hi tinxaka leti nga ni mavito ta mindzingo ya Afrika Dzonga ni muphakeri wa mbewu kumbe mutsundzuxi wa vurimi wa ndhawu. Ku kumeka ka tona ku xaviwa sweswi ni ku faneleka ka tona eka ndhawu leyi a swi tiyisisiwanga; u nga sivi muxaka hi wun’wana u nga tivisanga.",
+      "ve": "Haseledzani tshaka dzi re na madzina dza milingo ya Afrika Tshipembe na muṋetshedzi wa mbeu kana mueletshedzi wa vhulimi wa henefho. U wanala ha u renga ha zwino na u tea ha fhethu hafha a zwo ngo khwaṱhisedzwa; ni songo tshintsha lushaka nga luṅwe ni sa zwi buli.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "SA cultivar maturity and grain trial",
+      "zu": "Ukuvuthwa kwezinhlobo nocwaningo lwezinhlamvu lwaseNingizimu Afrika",
+      "st": "Ho butswa ha mefuta le teko ya dijo-thollo ya Afrika Borwa",
+      "ts": "Ku vupfa ka tinxaka ni ndzingo wa ndzoho wa Afrika Dzonga",
+      "ve": "U vhibva ha tshaka na mulingo wa thoro wa Afrika Tshipembe",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Malekutu, Mpumalanga, 1998/99; rainfed mid-December sowing, sandy loam, no fertiliser. Paired days after planting / grain kg/ha: ICPL 88039 127 / 1823; ICPL 85010 129 / 1525; ICPL 87091 140 / 1299; ICPL 87051 193 / 978; ICEAP 00053 231 / 918. Grain differences within each trial were not significant. Visually checked Tables 1–2 (PDF pp43–44). These are dry-grain observations, not green-seed picking dates or nationwide yield defaults.",
+      "zu": "Malekutu, Mpumalanga, 1998/99; ukutshala maphakathi noDisemba kuncike emvuleni, emhlabathini we-sandy loam, kungekho manyolo. Izinsuku ngemva kokutshala / izinhlamvu kg/ha zibhangqwe kanje: ICPL 88039 127 / 1823; ICPL 85010 129 / 1525; ICPL 87091 140 / 1299; ICPL 87051 193 / 978; ICEAP 00053 231 / 918. Umehluko wezinhlamvu ocwaningweni ngalunye awubalulekile ngokwezibalo. Amathebula 1–2 ahlolwe ngokuwabuka (PDF pp43–44). Lokhu okubonwe ngezinhlamvu ezomile, akuzona izinsuku zokuvuna imbewu eluhlaza noma izivuno ezimisiwe zezwe lonke.",
+      "st": "Malekutu, Mpumalanga, 1998/99; ho jala bohareng ba Tshitwe ho itshetlehileng ka pula, mobung wa sandy loam, ho se na manyolo. Matsatsi ka mora ho jala / dijo-thollo kg/ha di tsamaisana tjena: ICPL 88039 127 / 1823; ICPL 85010 129 / 1525; ICPL 87091 140 / 1299; ICPL 87051 193 / 978; ICEAP 00053 231 / 918. Diphapang tsa dijo-thollo tekong ka nngwe ha di bohlokwa ka dipalopalo. Ho hlahlobilwe Dithebole 1–2 ka ho di sheba (PDF pp43–44). Tsena ke tse bonweng ka dijo-thollo tse ommeng, eseng matsatsi a ho kotula peo e tala kapa chai e behilweng bakeng sa naha yohle.",
+      "ts": "Malekutu, Mpumalanga, 1998/99; ku byala exikarhini ka N'wendzamhala ku titshege hi mpfula, eka misava ya sandy loam, ku nga ri na manyoro. Masiku endzhaku ko byala / ndzoho kg/ha swi fambisana hi ndlela leyi: ICPL 88039 127 / 1823; ICPL 85010 129 / 1525; ICPL 87091 140 / 1299; ICPL 87051 193 / 978; ICEAP 00053 231 / 918. Ku hambana ka ndzoho endzeni ka ndzingo wun’wana ni wun’wana a ku nga ri na nkoka hi tinhlayo ta ndzavisiso. Matafula ya 1–2 ma kamberiwile hi ku ma languta (PDF pp43–44). Leyi i mivono ya ndzoho leyi omeke, ku nga ri masiku yo tshovela mbewu ya rihlaza kumbe mintshovelo leyi vekiweke ya tiko hinkwaro.",
+      "ve": "Malekutu, Mpumalanga, 1998/99; u ṱavha vhukati ha Nyendavhusiku ho ḓitikaho nga mvula, kha mavu a sandy loam, hu si na manyoro. Maḓuvha nga murahu ha u ṱavha / thoro kg/ha zwi yelana nga heyi nḓila: ICPL 88039 127 / 1823; ICPL 85010 129 / 1525; ICPL 87091 140 / 1299; ICPL 87051 193 / 978; ICEAP 00053 231 / 918. Phambano dza thoro kha mulingo muṅwe na muṅwe a dzi dza ndeme nga mbalo dza ṱhoḓisiso. Thebuḽu 1–2 dzo ṱolwa nga u dzi sedza (PDF pp43–44). Izwi ndi zwe zwa vhonwa nga thoro dzo omaho, hu si maḓuvha a u kaṋa mbeu dala kana khaṋo dzo tiwaho dza shango ḽoṱhe.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Tentative newer ARC planting comparison",
+      "zu": "Ukuqhathanisa okusha kwe-ARC kokutshala okungakaqinisekiswa ngokugcwele",
+      "st": "Papiso e ntjha ya ARC ya ho jala e so tiiswe ka botlalo",
+      "ts": "Ku pimanisa lokuntshwa ka ARC ka ku byala loku nga si tiyisisiwaka hi ku helela",
+      "ve": "Mbambedzo ntswa ya ARC ya u ṱavha i sa athu u khwaṱhisedzwa tshoṱhe",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Potchefstroom 2020/21, good rainfall season: ICEAP01258 versus ICEAP01284 and 22 October versus 25 November sowing. ARC tentatively favours ICEAP01284 in late October and calls for further agro-ecological trials. Exact yield values were not taken from graph bars. Confirm current seed availability; this is not a national cultivar recommendation.",
+      "zu": "Potchefstroom 2020/21, inkathi yemvula enhle: ICEAP01258 iqhathaniswa ne-ICEAP01284, nokutshala ngo-22 Okthoba kuqhathaniswa no-25 Novemba. I-ARC incoma ngokungakaqinisekiswa ngokuphelele i-ICEAP01284 ngasekupheleni kuka-Okthoba futhi icela olunye ucwaningo lwezindawo nezimo zezolimo. Amanani aqondile esivuno awathathwanga emigqeni yegrafu. Qinisekisa ukutholakala kwembewu manje; lokhu akusona isincomo sohlobo sezwe lonke.",
+      "st": "Potchefstroom 2020/21, sehla sa pula e ntle: ICEAP01258 kgahlanong le ICEAP01284, le ho jala ka 22 Mphalane kgahlanong le 25 Pundungwane. ARC e sekamela ka nakwana ho ICEAP01284 qetellong ya Mphalane mme e batla diteko tse ding tsa temo le tikoloho. Dipalo tse tobileng tsa chai ha di a nkuwa mekolokong ya kerafo. Netefatsa boteng ba peo hona jwale; sena ha se kgothaletso ya mofuta ya naha yohle.",
+      "ts": "Potchefstroom 2020/21, nguva ya mpfula leyinene: ICEAP01258 ku pimanisiwa na ICEAP01284, ni ku byala hi 22 Nhlangula ku pimanisiwa ni 25 Hukuri. ARC yi voyamela eka ICEAP01284 eku heleni ka Nhlangula hi ndlela leyi nga si tiyisisiwaka, yi tlhela yi lava mindzingo yin’wana ya vurimi ni mbangu. Mimpimo leyi kongomeke ya ntshovelo a yi tekiwanga eka tibara ta girafu. Tiyisisa ku kumeka ka mbewu sweswi; lexi a hi xibumabumelo xa muxaka xa tiko hinkwaro.",
+      "ve": "Potchefstroom 2020/21, khalaṅwaha ya mvula yavhuḓi: ICEAP01258 i vhambedzwa na ICEAP01284, na u ṱavha nga 22 Tshimedzi hu vhambedzwa na 25 Ḽara. ARC i sedza ICEAP01284 mafheloni a Tshimedzi sa khetho i sa athu u khwaṱhisedzwa nahone i ṱoḓa miṅwe milingo ya vhulimi na mupo. Zwivhalo zwa vhukuma zwa khaṋo a zwo ngo dzhiiwa kha mitalo ya tshati. Khwaṱhisedzani u wanala ha mbeu ha zwino; iyi a si themendelo ya lushaka ya shango ḽoṱhe.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Green seed is timed from flowering",
+      "zu": "Imbewu eluhlaza ibalwa isikhathi kusukela ekuqhakazeni",
+      "st": "Nako ya peo e tala e balwa ho tloha ho thunyeng ha dipalesa",
+      "ts": "Nkarhi wa mbewu ya rihlaza wu hlayiwa ku sukela eku rhumbukeni",
+      "ve": "Tshifhinga tsha mbeu dala tshi vhalelwa u bva kha u ṱuma maluvha",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The interval starts at flowering, not sowing. Dry-grain harvest is a separate pod-maturity stage. The broad marketing period does not mean that one planting supplies food continuously.",
+      "zu": "Lesi sikhathi siqala ekuqhakazeni, hhayi ekutshaleni. Ukuvuna izinhlamvu ezomile kuyisigaba esihlukile sokuvuthwa kwezindumba. Isikhathi eside sokuthengisa asisho ukuthi ukutshala okukodwa kunikeza ukudla ngokuqhubekayo.",
+      "st": "Nako ena e qala ha dipalesa di thunya, eseng ha ho jalwa. Kotulo ya dijo-thollo tse ommeng ke boemo bo arohaneng ba ho butswa ha diphotlwa. Nako e pharalletseng ya thekiso ha e bolele hore ho jala hang ho fana ka dijo ka ho tswela pele.",
+      "ts": "Nkarhi lowu wu sungula eku rhumbukeni, ku nga ri eku byaleni. Ku tshovela ndzoho leyi omeke i xiyimo xo hambana xa ku vupfa ka swiphotso. Nkarhi wo anama wo xavisa a wu vuli leswaku ku byala kan’we ku nyika swakudya nkarhi ni nkarhi.",
+      "ve": "Tshifhinga itshi tshi thoma kha u ṱuma maluvha, hu si kha u ṱavha. U kaṋa thoro dzo omaho ndi tshiimo tsho fhambanaho tsha u vhibva ha maganda. Tshifhinga tsho angalalaho tsha u rengisa a tshi ambi uri u ṱavha luthihi hu ṋea zwiḽiwa zwi sa ṱuswi.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Plantation renewal",
+      "zu": "Ukuvuselela indawo etshaliwe",
+      "st": "Ho qala temo hape",
+      "ts": "Ku sungula ku byala nakambe",
+      "ve": "U vusuludza zwo ṱavhiwaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The KZN guide gives about 4–5 years as the economic life of a plantation. Review replanting in the future plan; this commercial renewal reference does not mean every household plant dies at five or starts full production then.",
+      "zu": "Umhlahlandlela wase-KZN unikeza cishe iminyaka engu-4–5 njengempilo yezomnotho yendawo etshaliwe. Buyekeza ukutshala kabusha ohlelweni oluzayo; le nkomba yokuvuselela yezohwebo ayisho ukuthi isitshalo ngasinye sasekhaya siyafa lapho sineminyaka emihlanu noma siqala ukukhiqiza ngokugcwele ngaleso sikhathi.",
+      "st": "Tataiso ya KZN e fana ka dilemo tse ka bang 4–5 e le nako ya moruo ya temo eo. Hlahloba ho jala hape moralong o tlang; tshupiso ena ya ho qala hape ya kgwebo ha e bolele hore semela se seng le se seng sa lelapa se shwa ha se le dilemo tse hlano kapa se qala tlhahiso e felletseng ka nako eo.",
+      "ts": "Nkongomiso wa KZN wu nyika kwalomu ka malembe ya 4–5 ma ri nkarhi wa ikhonomi wa leswi byariweke. Kambisisa ku tlhela u byala eka kungu leri taka; xikombo lexi xa bindzu xa ku sungula nakambe a xi vuli leswaku ximilana xin’wana ni xin’wana xa le kaya xa fa loko xi ri ni malembe ya ntlhanu kumbe xi sungula ku humelerisa hi ku helela hi nkarhi wolowo.",
+      "ve": "Nyendedzi ya KZN i ṋea miṅwaha i ṱoḓaho u vha 4–5 sa vhutshilo ha ikonomi ha zwo ṱavhiwaho. Sedzulusani u ṱavhulula kha pulane i ḓaho; ndaedzi iyi ya u vusuludza ya vhubindudzi a i ambi uri tshimela tshiṅwe na tshiṅwe tsha muṱa tshi a fa nga miṅwaha miṱanu kana tsha thoma u bveledza nga vhuḓalo nga tshifhinga tshenetsho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Regional hectare output",
+      "zu": "Ukukhiqiza kwesifunda ngehektare",
+      "st": "Tlhahiso ya sebaka ka hektare",
+      "ts": "Vuhumelerisi bya xifundzha hi hekitara",
+      "ve": "Mvelelo ya dzingu nga hekhithara",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Regional production reference: conservative 10–15 t/ha, average 20–25 t/ha, good 30 t/ha. These area figures are not a per-plant annual age schedule. Match plant sex, bearing plants, spacing, climate and water before setting expected kilograms.",
+      "zu": "Inkomba yokukhiqiza yesifunda: ngokucophelela 10–15 t/ha, ngokwesilinganiso 20–25 t/ha, okuhle 30 t/ha. La manani endawo awasona isimiso sonyaka ngokobudala besitshalo ngasinye. Fanisa ubulili bezitshalo, izitshalo ezithela, izikhala, isimo sezulu namanzi ngaphambi kokubeka ama-kilogram alindelwe.",
+      "st": "Tshupiso ya tlhahiso ya sebaka: kakanyo e hlokolosi 10–15 t/ha, karolelano 20–25 t/ha, tlhahiso e ntle 30 t/ha. Dipalo tsena tsa sebaka ha se lenaneo la selemo ho ya ka dilemo tsa semela ka seng. Bapisa bong ba semela, dimela tse behang, sebaka pakeng tsa tsona, maemo a lehodimo le metsi pele o beha dikilograma tse lebeletsweng.",
+      "ts": "Xikombo xa vuhumelerisi bya xifundzha: mpimo wo hlayiseka 10–15 t/ha, wa le xikarhini 20–25 t/ha, lowunene 30 t/ha. Tinhlayo leti ta ndhawu a hi xiyimiso xa lembe hi vukhale bya ximilana xin’wana ni xin’wana. Fananisa rimbewu ra ximilana, swimilana leswi vekaka mihandzu, mpfhuka, maxelo ni mati u nga si veka tikhilogiramu leti languteriweke.",
+      "ve": "Ndaedzi ya vhubveledzi ya dzingu: tshikalo tsha vhulondi 10–15 t/ha, tshikati 20–25 t/ha, tshavhuḓi 30 t/ha. Zwivhalo izwi zwa tshikhala a si mbekanyo ya ṅwaha nga vhukale ha tshimela tshiṅwe na tshiṅwe. Yelanyisani mbeu ya tshimela, zwimela zwi aṋwaho, tshikhala, kilima na maḓi ni sa athu u vhea dzikhilogiramu dzo lavhelelwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Starting stock and plant sex",
+      "zu": "Izitshalo zokuqala nobulili besitshalo",
+      "st": "Dimela tsa ho qala le bong ba semela",
+      "ts": "Swimilana swo sungula ni rimbewu ra ximilana (plant sex)",
+      "ve": "Zwimela zwa u thoma na mbeu ya tshimela (plant sex)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Sunrise Solo is a hermaphrodite-type candidate; Honey Gold has separate male and female plants. Confirm the actual stock and sex form. A count of mapped plants alone does not establish how many bear fruit.",
+      "zu": "I-Sunrise Solo iyinketho yohlobo lwe-hermaphrodite; i-Honey Gold inezitshalo zesilisa nezesifazane ezihlukene. Qinisekisa izitshalo zangempela nohlobo lobulili. Isibalo sezitshalo ezisemephini sisodwa asisho ukuthi zingaki ezithela izithelo.",
+      "st": "Sunrise Solo ke kgetho ya mofuta wa hermaphrodite; Honey Gold e na le dimela tse arohaneng tse tona le tse tshehadi. Netefatsa dimela tsa nnete le mofuta wa bong. Palo ya dimela tse mmapeng feela ha e tiise hore ke tse kae tse behang ditholwana.",
+      "ts": "Sunrise Solo i xihlawuriwa xa muxaka wa hermaphrodite; Honey Gold yi ni swimilana swo hambana swa xinuna ni swa xisati. Tiyisisa swimilana swa xiviri ni muxaka wa swona wa xinuna/xisati/hermaphrodite. Nhlayo ya swimilana leswi nga eka mepe ntsena a yi tiyisisi leswaku i swingani leswi vekaka mihandzu.",
+      "ve": "Sunrise Solo ndi zwa u nanga zwa lushaka lwa hermaphrodite; Honey Gold i na zwimela zwa tshinna na zwa tshisadzi zwo fhambanaho. Khwaṱhisedzani zwimela zwa vhukuma na vhuvha hazwo ha tshinna/tshisadzi/hermaphrodite. Tshivhalo tsha zwimela zwi re kha mapa tshi tshoṱhe a tshi khwaṱhisedzi uri ndi zwingana zwi aṋwaho mitshelo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "edible ripe berries",
+      "zu": "amajikijolo avuthiwe adliwayo",
+      "st": "monokotshwai o butswitseng o jewang",
+      "ts": "tibere leti vupfeke leti dyiwaka",
+      "ve": "mitshelo miṱuku yo vhibvaho i ḽiwaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Protect young plants from cold; use well-drained soil in sun or semi-shade. SANBI describes frost tenderness and tolerance of sea breezes.",
+      "zu": "Vikela izitshalo ezincane emakhazeni; sebenzisa umhlabathi okhipha amanzi kahle elangeni noma emthunzini othile. I-SANBI ichaza ukuzwela esithwathweni nokumelana nemimoya yolwandle.",
+      "st": "Sireletsa dimela tse nyane serameng; sebedisa mobu oo metsi a tswang hantle ho wona letsatsing kapa moriting o itseng. SANBI e hlalosa ho tshaba serame le ho mamella meya ya lewatle.",
+      "ts": "Sirhelela swimilana leswitsongo eka ku titimela; tirhisa misava leyi mati ya humaka kahle eka yona edyambyini kumbe eka ndzhuti wun’wana. SANBI yi hlamusela ku nga tiyiseli rharhama ni ku tiyisela mimoya ya lwandle.",
+      "ve": "Tsireledzani zwimela zwiṱuku kha murotho; shumisani mavu ane maḓi a bva zwavhuḓi kha ḓuvha kana murunzi muṅwe. SANBI i ṱalutshedza u sa konḓelela murotholo na u konḓelela mimoya ya lwanzhe.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask for botanically identified Carissa bispinosa and local provenance. The checked source supplies no named fruit cultivar.",
+      "zu": "Cela i-Carissa bispinosa ekhonjwe ngokwebhotani nemvelaphi yendawo. Umthombo ohloliwe awunikezi uhlobo oluqanjwe lwezithelo.",
+      "st": "Kopa Carissa bispinosa e hlwauweng ka botaniki le mohlodi wa sebaka. Mohlodi o hlahlobilweng ha o fane ka mofuta wa ditholwana o bitswang ka lebitso.",
+      "ts": "Kombela Carissa bispinosa leyi tivekaka hi botaniki ni masungulo ya ndhawu. Xihlovo lexi kamberiweke a xi nyiki muxaka wa mihandzu lowu nga ni vito.",
+      "ve": "Humbelani Carissa bispinosa yo ṱalulwaho nga botaniki na vhubvo ha henefho. Tshiko tsho ṱolwaho a tshi ṋei lushaka lwa mitshelo lu re na dzina.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The edible berry must be distinguished from bark, which the source describes as containing a poisonous glucoside.",
+      "zu": "Ijikijolo elidliwayo kufanele lihlukaniswe namagxolo, umthombo owachaza njenganezinto ze-glucoside ezinobuthi.",
+      "st": "Monokotshwai o jewang o lokela ho kgethollwa ho makgapetla, ao mohlodi o reng a na le glucoside e tjhefo.",
+      "ts": "Bere leyi dyiwaka yi fanele ku hambanisiwa ni mahanti, lama xihlovo xi hlamuselaka leswaku ma ni glucoside leyi nga ni chefu.",
+      "ve": "Mutshelo muṱuku u ḽiwaho u tea u fhambanywa na makwati, ane tshiko tsha ṱalutshedza uri a na glucoside i re na mulimo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "ripe num-num fruit — identity must be confirmed",
+      "zu": "izithelo ze-num-num ezivuthiwe — ubunikazi kufanele buqinisekiswe",
+      "st": "ditholwana tsa num-num tse butswitseng — boitsebiso bo lokela ho netefatswa",
+      "ts": "mihandzu ya num-num leyi vupfeke — vutitivisi byi fanele ku tiyisisiwa",
+      "ve": "mitshelo ya num-num yo vhibvaho — vhuvha vhu tea u khwaṱhisedzwa",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm botanical identity before using this catalogue entry as a separate fruit enterprise. Do not count it twice merely because the same plant is also labelled C. bispinosa.",
+      "zu": "Qinisekisa ubunikazi bebhothani ngaphambi kokusebenzisa leli rekhodi lekhathalogi njengohlelo lwezithelo oluhlukile. Ungalibali kabili ngoba nje isitshalo esifanayo sibhalwe futhi ngokuthi C. bispinosa.",
+      "st": "Netefatsa boitsebiso ba botaniki pele o sebedisa rekoto ena ya lethathamo e le kgwebo e arohaneng ya ditholwana. O se ke wa e bala habedi feela hobane semela sona seo se boetse se bitswa C. bispinosa.",
+      "ts": "Tiyisisa vutitivisi bya botaniki u nga si tirhisa rekodo leyi ya khataloko yi ri bindzu ro hambana ra mihandzu. U nga xi hlayi kambirhi ntsena hikuva ximilana xexo xi tlhela xi leburiwa C. bispinosa.",
+      "ve": "Khwaṱhisedzani vhuvha ha botaniki ni sa athu u shumisa rekhodo iyi ya khathalogo sa bindu ḽa mitshelo ḽo fhambanaho. Ni songo tshi vhalela luvhili nga uri tshimela tshenetsho tshi dovha tsha vhewa dzina ḽa C. bispinosa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask a local botanical nursery to confirm the plant's identity and suitable provenance; no primary named cultivar or exact frost threshold was verified.",
+      "zu": "Cela inkulisa yebhothani yendawo iqinisekise ubunikazi besitshalo nemvelaphi efanele; alukho uhlobo oluqanjwe noma izinga eliqondile lesithwathwa elaqinisekiswa emthonjeni oyisisekelo.",
+      "st": "Kopa sebaka sa kgodiso ya dimela sa botaniki sa sebaka ho netefatsa boitsebiso ba semela le mohlodi o loketseng; ha ho mofuta o bitswang ka lebitso wa mohlodi wa mantlha kapa moedi o tobileng wa serame o netefaditsweng.",
+      "ts": "Kombela ndhawu ya botaniki yo kurisa swimilana ya ndhawu ku tiyisisa vutitivisi bya ximilana ni masungulo lama faneleke; a ku tiyisisiwanga muxaka lowu nga ni vito eka xihlovo xa masungulo kumbe mpimo lowu kongomeke wa rharhama.",
+      "ve": "Humbelani nesari ya botaniki ya henefho uri i khwaṱhisedze vhuvha ha tshimela na vhubvo ho teaho; a hu na lushaka lu re na dzina kha tshiko tsha u thoma kana tshikalo tsha murotholo tsho tiwaho zwo khwaṱhisedzwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "SANBI's botanical account includes C. haematocarpa among South African Carissa. Its identity is bridged to C. bispinosa by the current SANBI assessment; no distinct Karoo cultivar is established.",
+      "zu": "Umbhalo webhothani we-SANBI ufaka i-C. haematocarpa phakathi kwe-Carissa yaseNingizimu Afrika. Ukuhlolwa kwamanje kwe-SANBI kuxhumanisa ubunikazi bayo ne-C. bispinosa; alukho uhlobo oluhlukile lwaseKaroo olufakazelwe.",
+      "st": "Tlaleho ya botaniki ya SANBI e kenyelletsa C. haematocarpa hara Carissa tsa Afrika Borwa. Boitsebiso ba yona bo hokahanngwa le C. bispinosa ke tlhahlobo ya hona jwale ya SANBI; ha ho mofuta o arohaneng wa Karoo o tiisitsweng.",
+      "ts": "Xihlovo xa botaniki xa SANBI xi katsa C. haematocarpa eka Carissa ta Afrika Dzonga. Vutitivisi bya yona byi hlanganisiwa ni C. bispinosa hi nkambisiso wa sweswi wa SANBI; a ku si tiyisisiwa muxaka wo hambana wa Karoo.",
+      "ve": "Tshiko tsha botaniki tsha SANBI tshi katela C. haematocarpa kha Carissa dza Afrika Tshipembe. Vhuvha hayo vhu ṱumanywa na C. bispinosa nga tsedzuluso ya zwino ya SANBI; a hu athu u khwaṱhisedzwa lushaka lwo fhambanaho lwa Karoo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Current SANBI taxonomic bridge",
+      "zu": "Ukuxhumanisa kwamanje kwe-SANBI ngokwezinhlobo",
+      "st": "Khokahano ya hona jwale ya SANBI ya mefuta",
+      "ts": "Ku hlanganisiwa ka sweswi ka tinxaka hi SANBI",
+      "ve": "Vhuṱumani ha zwino ha SANBI ha tshaka",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Listed among synonyms of Carissa bispinosa. This is identity evidence, not a new fruit cultivar or an independent picking window.",
+      "zu": "Ibhalwe phakathi kwamanye amagama e-Carissa bispinosa. Lobu ubufakazi bobunikazi, hhayi uhlobo olusha lwezithelo noma isikhathi sokuvuna esizimele.",
+      "st": "E thathamisitswe hara mabitso a mang a Carissa bispinosa. Bona ke bopaki ba boitsebiso, eseng mofuta o motjha wa ditholwana kapa nako e ikemetseng ya kotulo.",
+      "ts": "Yi xaxametiwe eka mavito man’wana ya Carissa bispinosa. Lebyi i vumbhoni bya vutitivisi, ku nga ri muxaka wuntshwa wa mihandzu kumbe nkarhi wo tshovela lowu tiyimeleke.",
+      "ve": "Yo tevhekanywa kha maṅwe madzina a Carissa bispinosa. Uhu ndi vhuṱanzi ha vhuvha, hu si lushaka luswa lwa mitshelo kana tshifhinga tsha u kaṋa tshi ḓiimisaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "This sun-loving coastal groundcover can bind sandy soil. SANBI records frost damage, so check cold exposure before using it inland.",
+      "zu": "Lesi simila sasogwini esithanda ilanga nesimboza umhlabathi singabamba umhlabathi oyisihlabathi. I-SANBI irekhoda ukulimala ngesithwathwa, ngakho hlola ukuchayeka emakhazeni ngaphambi kokusisebenzisa phakathi nezwe.",
+      "st": "Semela sena sa lebopo se ratang letsatsi se kwahelang mobu se ka tshwara mobu o lehlabathe. SANBI e rekota tshenyo ya serame, kahoo hlahloba ho pepeseha serameng pele o se sebedisa ka hare ho naha.",
+      "ts": "Ximilana lexi xa ribuwana lexi rhandzaka dyambu lexi funengetaka misava xi nga khoma misava ya sava. SANBI yi rhekhoda ku onhiwa hi rharhama, kutani kambela ku va eka ku titimela u nga si xi tirhisa endzeni ka tiko.",
+      "ve": "Tshimela itshi tsha tsini na lwanzhe tshi funaho ḓuvha tshi fukedzaho mavu tshi nga fara mavu a muṱavha. SANBI i rekhoda u tshinywa nga murotholo, ngauralo ṱolani u swikelwa nga murotho ni sa athu u tshi shumisa vhukati ha shango.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm Carpobrotus deliciosus; do not substitute another sour-fig species merely because the common name matches.",
+      "zu": "Qinisekisa i-Carpobrotus deliciosus; ungayifaki esikhundleni sayo olunye uhlobo lwe-sour-fig ngoba nje amagama ajwayelekile ayafana.",
+      "st": "Netefatsa Carpobrotus deliciosus; o se ke wa e nkela sebaka ka mofuta o mong wa sour-fig hobane feela lebitso le tlwaelehileng le tshwana.",
+      "ts": "Tiyisisa Carpobrotus deliciosus; u nga yi sivi hi muxaka wun’wana wa sour-fig ntsena hikuva vito leri tolovelekeke ra fana.",
+      "ve": "Khwaṱhisedzani Carpobrotus deliciosus; ni songo i tshintsha nga luṅwe lushaka lwa sour-fig nga uri dzina ḽo ḓoweleaho ḽi a fana.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The source identifies ripe fruit as food. June–October is flowering, not a fruit-picking window.",
+      "zu": "Umthombo ukhomba izithelo ezivuthiwe njengokudla. UJuni–Okthoba ukuqhakaza, hhayi isikhathi sokuvuna izithelo.",
+      "st": "Mohlodi o hlwaya ditholwana tse butswitseng e le dijo. Phupjane–Mphalane ke ho thunya ha dipalesa, eseng nako ya kotulo ya ditholwana.",
+      "ts": "Xihlovo xi vula leswaku mihandzu leyi vupfeke i swakudya. Khotavuxika–Nhlangula i ku rhumbuka, ku nga ri nkarhi wo tshovela mihandzu.",
+      "ve": "Tshiko tshi ṱalula mitshelo yo vhibvaho sa zwiḽiwa. Fulwi–Tshimedzi ndi u ṱuma maluvha, hu si tshifhinga tsha u kaṋa mitshelo.",
+      "generatedScope": "product-guidance"
+    }
+  ],
+  "sourceBindings": [
+    {
+      "english": "leaves and tender stems",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "basella-alba"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Provide climbing support and adequate moisture in a warm growing position.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "basella-alba"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Record successive leaf harvests by planting batch rather than using tree-age production.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "basella-alba"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Obtain labelled Basella alba material. A South African regional cultivar, kg/plant benchmark and dated picking window remain unverified.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "basella-alba"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Leaf vegetable identity and warm-climate culture",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "basella-alba"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Florida extension confirms Malabar spinach as a warm-climate leaf vegetable. Its Florida planting and harvest calendar is not a South African calendar.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "basella-alba"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Cultivation context",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "basella-alba"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Foreign extension reference for support, seed/cutting propagation and warm, moist conditions; no Florida months are imported into the South African plan.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "basella-alba"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Optimal from-seed cutting-cycle reference — Florida extension",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "basella-alba"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The extension guide reports maturity around 70 days from seed under optimal conditions, followed by hand trimming leaves and young stems. This foreign optimal-condition duration is supplementary; no South African planting date, exact month window or generic tree-age value is inferred.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "basella-alba"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "ripe fruit",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "berchemia-discolor",
+        "carpobrotus-deliciosus",
+        "ehretia-rigida",
+        "euclea-pseudebenus",
+        "grewia-flava",
+        "mimusops-afra",
+        "osteospermum-moniliferum",
+        "searsia-lucida",
+        "searsia-natalensis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Use frost-free conditions: SANBI describes frost sensitivity despite drought resistance, with natural low-altitude riverbank bushveld in northern KwaZulu-Natal, Mpumalanga and Limpopo.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "berchemia-discolor"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ask for Berchemia discolor, not red ivory (B. zeyheri). Record actual local ripe-picking months.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "berchemia-discolor"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Edible part and local use",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "berchemia-discolor",
+        "boscia-albitrunca",
+        "carissa-bispinosa",
+        "carissa-haematocarpa",
+        "carpobrotus-deliciosus",
+        "diospyros-lycioides",
+        "ehretia-rigida",
+        "euclea-undulata",
+        "ficus-sur",
+        "grewia-flava",
+        "grewia-robusta",
+        "mimusops-afra",
+        "olea-europaea-subsp-africana",
+        "osteospermum-moniliferum",
+        "portulacaria-afra",
+        "rhoicissus-digitata",
+        "rhoicissus-tridentata",
+        "schotia-afra-var-afra",
+        "searsia-lancea-rhus-lancea",
+        "sideroxylon-inerme",
+        "tulbaghia-violacea",
+        "ziziphus-mucronata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "January–July is fruit appearance in SANBI's account, not an explicit ripe-picking interval.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "berchemia-discolor"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Fruit-development duration has context",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "berchemia-discolor"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "This is flower-to-fruit development, not years from planting. Its South African January–July fruiting statement is not an observed household picking window.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "berchemia-discolor"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "fruit; traditionally prepared flower buds",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "boscia-albitrunca"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "This hardy, drought-resistant tree occurs in drier southern African regions.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "boscia-albitrunca"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "SANBI reports that leaf browsing can taint cattle milk. No feed ration is recommended.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "boscia-albitrunca"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ask for correctly identified, lawfully sourced stock and check current protected-tree collection requirements before harvesting existing wild trees.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "boscia-albitrunca"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "SANBI also records flower-bud pickle use. Root porridge/coffee references are not instructions to harvest roots or a complete preparation guide.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "boscia-albitrunca"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "dry grain or green immature seed; fodder is a separate product",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "cajanus-cajan"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Record green immature seed and dry grain separately; fodder biomass cannot be counted as household food kg.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "cajanus-cajan"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Match the selected duration type and sowing date to local frost, rainfall and water availability; the trials retain their own conditions.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "cajanus-cajan"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Discuss the named SA trial cultivars with a local seed supplier or extension adviser. Current purchase availability and suitability for this site are unverified; do not substitute a cultivar silently.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "cajanus-cajan"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "SA cultivar maturity and grain trial",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "cajanus-cajan"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Malekutu, Mpumalanga, 1998/99; rainfed mid-December sowing, sandy loam, no fertiliser. Paired days after planting / grain kg/ha: ICPL 88039 127 / 1823; ICPL 85010 129 / 1525; ICPL 87091 140 / 1299; ICPL 87051 193 / 978; ICEAP 00053 231 / 918. Grain differences within each trial were not significant. Visually checked Tables 1–2 (PDF pp43–44). These are dry-grain observations, not green-seed picking dates or nationwide yield defaults.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "cajanus-cajan"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Tentative newer ARC planting comparison",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "cajanus-cajan"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Potchefstroom 2020/21, good rainfall season: ICEAP01258 versus ICEAP01284 and 22 October versus 25 November sowing. ARC tentatively favours ICEAP01284 in late October and calls for further agro-ecological trials. Exact yield values were not taken from graph bars. Confirm current seed availability; this is not a national cultivar recommendation.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "cajanus-cajan"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Green seed is timed from flowering",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "cajanus-cajan"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The interval starts at flowering, not sowing. Dry-grain harvest is a separate pod-maturity stage. The broad marketing period does not mean that one planting supplies food continuously.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "cajanus-cajan"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Plantation renewal",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "carica-papaya"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The KZN guide gives about 4–5 years as the economic life of a plantation. Review replanting in the future plan; this commercial renewal reference does not mean every household plant dies at five or starts full production then.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "carica-papaya"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Regional hectare output",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "carica-papaya"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Regional production reference: conservative 10–15 t/ha, average 20–25 t/ha, good 30 t/ha. These area figures are not a per-plant annual age schedule. Match plant sex, bearing plants, spacing, climate and water before setting expected kilograms.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "carica-papaya"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Starting stock and plant sex",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "carica-papaya"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Sunrise Solo is a hermaphrodite-type candidate; Honey Gold has separate male and female plants. Confirm the actual stock and sex form. A count of mapped plants alone does not establish how many bear fruit.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "carica-papaya"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "edible ripe berries",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "carissa-bispinosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Protect young plants from cold; use well-drained soil in sun or semi-shade. SANBI describes frost tenderness and tolerance of sea breezes.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "carissa-bispinosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ask for botanically identified Carissa bispinosa and local provenance. The checked source supplies no named fruit cultivar.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "carissa-bispinosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The edible berry must be distinguished from bark, which the source describes as containing a poisonous glucoside.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "carissa-bispinosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "ripe num-num fruit — identity must be confirmed",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "carissa-haematocarpa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Confirm botanical identity before using this catalogue entry as a separate fruit enterprise. Do not count it twice merely because the same plant is also labelled C. bispinosa.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "carissa-haematocarpa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ask a local botanical nursery to confirm the plant's identity and suitable provenance; no primary named cultivar or exact frost threshold was verified.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "carissa-haematocarpa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "SANBI's botanical account includes C. haematocarpa among South African Carissa. Its identity is bridged to C. bispinosa by the current SANBI assessment; no distinct Karoo cultivar is established.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "carissa-haematocarpa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Current SANBI taxonomic bridge",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "carissa-haematocarpa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Listed among synonyms of Carissa bispinosa. This is identity evidence, not a new fruit cultivar or an independent picking window.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "carissa-haematocarpa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "This sun-loving coastal groundcover can bind sandy soil. SANBI records frost damage, so check cold exposure before using it inland.",
+      "scopes": [
+        "tree-care"
+      ],
+      "identities": [
+        "carpobrotus-deliciosus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Confirm Carpobrotus deliciosus; do not substitute another sour-fig species merely because the common name matches.",
+      "scopes": [
+        "tree-purchase"
+      ],
+      "identities": [
+        "carpobrotus-deliciosus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The source identifies ripe fruit as food. June–October is flowering, not a fruit-picking window.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "carpobrotus-deliciosus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    }
+  ],
+  "representativeSpecies": [
+    "basella-alba",
+    "berchemia-discolor",
+    "boscia-albitrunca",
+    "cajanus-cajan",
+    "carica-papaya",
+    "carissa-bispinosa",
+    "carissa-haematocarpa",
+    "carpobrotus-deliciosus"
+  ],
+  "scope": "51complete authored fields across8representative source species and shared fields applying to other captured identities. Original scientific names, trial codes, numeric pairs, units, date/month identities, qualifiers and protected-tree checks remain source-bound.",
+  "verification": {
+    "typecheck": "PASS",
+    "affectedPass": 157,
+    "affectedFail": 0,
+    "files": 10,
+    "pages": 40,
+    "wordBounds": 16635,
+    "allGuideClauses": 480,
+    "fullNewSourceOccurrences": 212,
+    "nativePdfs": 8,
+    "nativePages": 32,
+    "clippedWords": 0,
+    "parserErrors": 0,
+    "originalEnglishComparisons": "2of2 pixel/text identical",
+    "evidence": "evidence/guidance-authored02/verification.json",
+    "reviewStatus": "Unreviewed; no fluency, whole-guidance or app completion claim."
+  },
+  "remaining": "Other research/animal prose, source-region/unit classification, native sample/metadata/browser/full-suite work and the broader goal remain.",
+  "draftCorrections": [
+    {
+      "english": "Starting stock and plant sex",
+      "language": "ve",
+      "priorDraft": "Zwimela zwa u thoma na mbeu ya tshimela",
+      "replacement": "Zwimela zwa u thoma na vhuvha ha tshinna/tshisadzi/hermaphrodite",
+      "reason": "Make plant sex explicit; the three forms are already named in the source paragraph, rather than leaving an ambiguous seed-type phrase.",
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "english": "Sunrise Solo is a hermaphrodite-type candidate; Honey Gold has separate male and female plants. Confirm the actual stock and sex form. A count of mapped plants alone does not establish how many bear fruit.",
+      "language": "ve",
+      "priorDraft": "Sunrise Solo ndi zwa u nanga zwa lushaka lwa hermaphrodite; Honey Gold i na zwimela zwa tshinna na zwa tshisadzi zwo fhambanaho. Khwaṱhisedzani zwimela zwa vhukuma na lushaka lwa mbeu. Tshivhalo tsha zwimela zwi re kha mapa tshi tshoṱhe a tshi khwaṱhisedzi uri ndi zwingana zwi aṋwaho mitshelo.",
+      "replacement": "Sunrise Solo ndi zwa u nanga zwa lushaka lwa hermaphrodite; Honey Gold i na zwimela zwa tshinna na zwa tshisadzi zwo fhambanaho. Khwaṱhisedzani zwimela zwa vhukuma na vhuvha hazwo ha tshinna/tshisadzi/hermaphrodite. Tshivhalo tsha zwimela zwi re kha mapa tshi tshoṱhe a tshi khwaṱhisedzi uri ndi zwingana zwi aṋwaho mitshelo.",
+      "reason": "Keep actual plant sex forms explicit; no seed identity or bearing-plant count inferred.",
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "english": "Starting stock and plant sex",
+      "language": "ts",
+      "priorDraft": "Swimilana swo sungula ni rimbewu ra ximilana",
+      "replacement": "Swimilana swo sungula ni muxaka wa swona wa xinuna/xisati/hermaphrodite",
+      "reason": "Keep plant sex explicit using forms already stated in the source paragraph.",
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "english": "Sunrise Solo is a hermaphrodite-type candidate; Honey Gold has separate male and female plants. Confirm the actual stock and sex form. A count of mapped plants alone does not establish how many bear fruit.",
+      "language": "ts",
+      "priorDraft": "Sunrise Solo i xihlawuriwa xa muxaka wa hermaphrodite; Honey Gold yi ni swimilana swo hambana swa xinuna ni swa xisati. Tiyisisa swimilana swa xiviri ni muxaka wa rimbewu. Nhlayo ya swimilana leswi nga eka mepe ntsena a yi tiyisisi leswaku i swingani leswi vekaka mihandzu.",
+      "replacement": "Sunrise Solo i xihlawuriwa xa muxaka wa hermaphrodite; Honey Gold yi ni swimilana swo hambana swa xinuna ni swa xisati. Tiyisisa swimilana swa xiviri ni muxaka wa swona wa xinuna/xisati/hermaphrodite. Nhlayo ya swimilana leswi nga eka mepe ntsena a yi tiyisisi leswaku i swingani leswi vekaka mihandzu.",
+      "reason": "Keep actual plant sex forms explicit; mapped counts remain inventory, never a bearing-plant promise.",
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "english": "SANBI also records flower-bud pickle use. Root porridge/coffee references are not instructions to harvest roots or a complete preparation guide.",
+      "language": "zu",
+      "priorDraft": "I-SANBI iphinde irekhode ukusetshenziswa kwezimbali ezingakavuleki ezenziwe ukhukhamba. Izinkomba zephalishi/zekhofi lezimpande aziyona imiyalelo yokuvuna izimpande noma umhlahlandlela ophelele wokulungisa.",
+      "replacement": "I-SANBI iphinde irekhode ukusetshenziswa kwezimbali ezingakavuleki njenge-pickle. Izinkomba zephalishi/zekhofi lezimpande aziyona imiyalelo yokuvuna izimpande noma umhlahlandlela ophelele wokulungisa.",
+      "reason": "Retain pickle as a source technical term rather than turning it into cucumber or adding a preparation recipe.",
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "english": "SANBI also records flower-bud pickle use. Root porridge/coffee references are not instructions to harvest roots or a complete preparation guide.",
+      "language": "st",
+      "priorDraft": "SANBI e boetse e rekota tshebediso ya dipalesa tse so kang di buleha tse bolokilweng ka asene. Ditshupiso tsa motoho/kofi ya metso ha se ditaelo tsa ho kotula metso kapa tataiso e felletseng ya ho lokisa.",
+      "replacement": "SANBI e boetse e rekota tshebediso ya dipalesa tse so kang di buleha e le pickle. Ditshupiso tsa motoho/kofi ya metso ha se ditaelo tsa ho kotula metso kapa tataiso e felletseng ya ho lokisa.",
+      "reason": "The source gives no vinegar recipe; remove the unsupported ingredient while retaining pickle use and the full no-preparation-guide caution.",
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "english": "Starting stock and plant sex",
+      "language": "ve",
+      "priorDraft": "Zwimela zwa u thoma na vhuvha ha tshinna/tshisadzi/hermaphrodite",
+      "replacement": "Zwimela zwa u thoma na mbeu ya tshimela (plant sex)",
+      "reason": "Retain a generic plant-sex heading with its original technical term; keep the named sex forms in the source paragraph instead of broadening the heading.",
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "english": "Starting stock and plant sex",
+      "language": "ts",
+      "priorDraft": "Swimilana swo sungula ni muxaka wa swona wa xinuna/xisati/hermaphrodite",
+      "replacement": "Swimilana swo sungula ni rimbewu ra ximilana (plant sex)",
+      "reason": "Retain a generic plant-sex heading with a source technical gloss; the complete paragraph names the actual forms.",
+      "reviewStatus": "unreviewed"
+    }
+  ],
+  "terminologyReview": "Unreviewed. Source technical terms such as pickle, plant sex, hermaphrodite, glucoside and sandy loam remain where a fluent specialist should review the native phrasing. No recipe or ingredient added."
+}

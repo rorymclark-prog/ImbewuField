@@ -1,0 +1,225 @@
+{
+  "sourceClause": "Tshupiso ya tlhahiso: 23–43 kg/semela. HO FETOTSWE, palo e bontshitswe: ho nkilwe sehlopha sa chai sa “Average” (15-18 t/ha) le sebaka pakeng tsa dimela se boletsweng mohloding wona oo (“Generally planted 6m x 4m or 5 m x 3 m”). Ho 6x4m = 24 m²/tree → 10000/24 = 416.7 trees/ha → 15000kg/416.7=36.0 le 18000kg/416.7=43.2 kg/tree. Ho 5x3m = 15 m²/tree → 666.7 trees/ha → 15000/666.7=22.5 le 18000/666.7=27.0 kg/tree. Moedi o kopantsweng wa dibaka tseo ka bobedi, o potolohisitsweng: [23, 43] kg/tree. Phapang ena e bontsha dibaka tse pedi tse fapaneng tse fumanweng mohloding, e seng phapang ya mefuta.",
+  "sourceGuide": {
+    "area": "Sebaka sa temo ha se eso hlake",
+    "siteObservations": [
+      {
+        "title": "Metsi nakong ya komello",
+        "lines": [
+          "Ha ho a rekotwa. Qetella phuputso ya sebaka mme o netefatse metsi pele o kgetha moralo o hlokang disebediswa tse ngata."
+        ]
+      },
+      {
+        "title": "Serame polasing ena",
+        "lines": [
+          "Se bonweng ka serame sebakeng ha se a rekotwa. Dikarolelano tsa kgwedi tsa sathelaete di ke ke tsa tiisa matsatsi a pele le a ho qetela a serame."
+        ]
+      },
+      {
+        "title": "Letsatsi le phallo ya metsi mobung",
+        "lines": [
+          "Letsatsi: ha ho a rekotwa.",
+          "Phallo ya metsi: ha ho a rekotwa. Diphetho tsa teko ya mobu le ditlhoko tsa sejalo ka seng di ntse di hloka ho hlahlojwa."
+        ]
+      }
+    ],
+    "recordedProduction": [
+      {
+        "title": "Original eggs {year} $&",
+        "lines": [
+          "Kakaretso ya selemo e tlalehilweng ke molemi bakeng sa 2025: 240 eggs.",
+          "Tshebediso ya lelapa: 0 eggs. Ho rekisitsweng: ha ho a rekotwa.",
+          "Dikgwedi tsa kotulo tse tlalehilweng: Php, Phu. Tsena ke tse bonweng phuputsong, eseng ponelopele e ntjha ya tlhahiso.",
+          "Hlahloba yuniti le dikakaretso tse rekotilweng pele o sebedisa mola ona."
+        ]
+      },
+      {
+        "title": "Fish",
+        "lines": [
+          "Kakaretso ya selemo e tlalehilweng ke molemi bakeng sa 2025: ha ho a rekotwa.",
+          "Tshebediso ya lelapa: ha ho a rekotwa. Ho rekisitsweng: ha ho a rekotwa.",
+          "Dikgwedi tsa kotulo tse tlalehilweng: ha ho a rekotwa. Tsena ke tse bonweng phuputsong, eseng ponelopele e ntjha ya tlhahiso.",
+          "Hlahloba yuniti le dikakaretso tse rekotilweng pele o sebedisa mola ona."
+        ]
+      },
+      {
+        "title": "Meroho e meng",
+        "lines": [
+          "Kakaretso ya selemo e tlalehilweng ke molemi bakeng sa 2025: 12 kg.",
+          "Tshebediso ya lelapa: 7 kg. Ho rekisitsweng: 3 kg.",
+          "Dikgwedi tsa kotulo tse tlalehilweng: Phe, Tsh. Tsena ke tse bonweng phuputsong, eseng ponelopele e ntjha ya tlhahiso.",
+          "Hlahloba yuniti le dikakaretso tse rekotilweng pele o sebedisa mola ona."
+        ]
+      }
+    ],
+    "cropChoices": [
+      {
+        "title": "Tomatoes",
+        "lines": [
+          "Mofuta o rekotilweng: ha ho eso kgethwe.",
+          "Maemo a lehodimo a sebaka sena ha a eso hlake, kahoo ha ho bolelwe lenane le lekgutshwane la sebaka. Bula karete ya sejalo ho bona mehlodi le ho rekota kgetho ya hao."
+        ],
+        "sources": []
+      }
+    ],
+    "foodForest": [
+      {
+        "title": "Soft citrus",
+        "lines": [
+          "Tse teng: 1; tse rerilweng: 1. Dihlahiswa: ditholwana.",
+          "Nako ya kotulo ya pele: ha e a fumanwa mohloding; o se ke wa itshetleha ka dimela tse sa tswa jalwa bakeng sa dijo hanghang.",
+          "Ditholwana tsa citrus tse bonolo hangata e rata maemo a phodileng, a ommeng. Netefatsa ditlhoko tsa kutu ya motso le ho tsamaisa peo/ho ba le dipeo pele o kopanya mefuta.",
+          "Keletso ya ho reka: Bakeng sa sebaka se loketseng: Miho Wase satsuma ya pele (ho tloha bohareng ba Hlakubele); clementines tsa bohareng (mafelong a Hlakubele–bohareng ba Phupjane); Nadorcott mandarin ya morao (bohareng ba Motsheanong–Leotshe). Matsatsi ke ditshupiso tse batsi tsa Afrika Borwa, ha se khalendara ya lehae. Odara difate tsa keretjhe tse nang le dileibole.",
+          "Nako ya kotulo e lebeletsweng: ha ho nako e le nngwe e tiisitsweng ya mofuta wa sebaka. Dinako tsa ditshupiso tse ka tlase ha se ponelopele.",
+          "Tshupiso feela — Eastern & Western Cape (dibaka tse ka sehloohong tsa soft citrus) — mefuta ya Satsuma: Hlb–Mot.",
+          "Tshupiso feela — Eastern & Western Cape (dibaka tse ka sehloohong tsa soft citrus) — mefuta ya Clementine: Hlb–Php.",
+          "Tshupiso feela — Eastern & Western Cape (dibaka tse ka sehloohong tsa soft citrus) — mefuta ya Mandarin (ho kenyeletswa Nadorcott): Mot–Leo."
+        ],
+        "sources": [
+          {
+            "label": "Citrus Academy, Citrus Types and Cultivars (2017), pp. 7–13",
+            "url": "https://www.crw.org.za/home/document-home/learning-aids-and-resources/ca-citrus-av-series-learning-material/citrus-planting-management/5808-ca-av-series-cpm-lm-m02-citrus-types-and-cultivars-1/file"
+          },
+          {
+            "label": "Citrus Growers' Association / Citrus Academy — 'Citrus Planting Management 2: Citrus Types and Cultivars' Learner Guide (1st edition), Citrus Resource Warehouse (crw.org.za), citing CRI Cultivar Fact Sheets, p. 8",
+            "url": "https://www.crw.org.za/home/document-home/learning-aids-and-resources/ca-citrus-av-series-learning-material/citrus-planting-management/5808-ca-av-series-cpm-lm-m02-citrus-types-and-cultivars-1/file"
+          },
+          {
+            "label": "Citrus Growers' Association / Citrus Academy — 'Citrus Planting Management 2: Citrus Types and Cultivars' Learner Guide (1st edition), citing CRI Cultivar Fact Sheets, p. 8",
+            "url": "https://www.crw.org.za/home/document-home/learning-aids-and-resources/ca-citrus-av-series-learning-material/citrus-planting-management/5808-ca-av-series-cpm-lm-m02-citrus-types-and-cultivars-1/file"
+          },
+          {
+            "label": "Citrus Growers' Association / Citrus Academy — 'Citrus Planting Management 2: Citrus Types and Cultivars' Learner Guide (1st edition), citing CRI Cultivar Fact Sheets, p. 9",
+            "url": "https://www.crw.org.za/home/document-home/learning-aids-and-resources/ca-citrus-av-series-learning-material/citrus-planting-management/5808-ca-av-series-cpm-lm-m02-citrus-types-and-cultivars-1/file"
+          }
+        ]
+      },
+      {
+        "title": "Strawberry",
+        "lines": [
+          "Tse teng: 1; tse rerilweng: 1. Dihlahiswa: ditholwana.",
+          "Nako ya kotulo ya pele: ha e a fumanwa mohloding; o se ke wa itshetleha ka dimela tse sa tswa jalwa bakeng sa dijo hanghang.",
+          "Sebedisa mahlomela a hahabang a hlwekileng mme o nyalanye mofuta le tsamaiso ya tlhahiso le sebaka. Ho nosetsa ho tshepahalang le taolo ya mafu di bohlokwa.",
+          "Keletso ya ho reka: Tataiso ya KZN e bolela Chandler le Selecta. Ho fumaneha le tshebetso ya tsona ya hajwale sebakeng di hloka ho hlahlojwa; dinako tsa ka tonneleng le tsa ka ntle di lokela ho dula di arohane.",
+          "Nako ya kotulo e lebeletsweng: ha ho nako e le nngwe e tiisitsweng ya mofuta wa sebaka. Dinako tsa ditshupiso tse ka tlase ha se ponelopele.",
+          "Tshupiso feela — Western Cape: Leo–Tsh.",
+          "Tshupiso feela — Transvaal (hona jwale Gauteng/Limpopo/Mpumalanga/North West), di hodisitswe dithaneleng tsa temo: Mot–Tsh.",
+          "Tshupiso feela — South Africa (kakaretso ya mokgatlo wa indasteri, dibaka tsohle): Php–Tsh.",
+          "Tshupiso feela — KwaZulu-Natal, dibaka tse se nang serame: Mot–Pha.",
+          "Tshupiso feela — KwaZulu-Natal, dibaka tse nang le serame se bobebe: Leo–Tsh."
+        ],
+        "sources": [
+          {
+            "label": "KZN DARD, Fruit and Nut Production, PDF pp. 34–35 (regional reference; confirm current nursery stock)",
+            "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+          },
+          {
+            "label": "SASGA: An overview of strawberry cultivation in South Africa",
+            "url": "https://strawberries.org.za/an-overview-of-strawberry-cultivation-in-south-africa/"
+          },
+          {
+            "label": "J.P. Human & E.P. Evans, 'STRAWBERRY PRODUCTION IN SOUTH AFRICA', Acta Horticulturae 265 (International Strawberry Symposium), abstract (article 265_125), p. 757",
+            "url": "https://ishs.org/ishs-article/265_125/"
+          },
+          {
+            "label": "South African Strawberry Growers Association (SASGA), An overview of strawberry cultivation in South Africa",
+            "url": "https://strawberries.org.za/an-overview-of-strawberry-cultivation-in-south-africa/"
+          },
+          {
+            "label": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN), p. 34",
+            "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+          }
+        ]
+      },
+      {
+        "title": "Low-chill peach",
+        "lines": [
+          "Tse teng: 1; tse rerilweng: 1. Dihlahiswa: ditholwana.",
+          "Tshupiso ya kotulo ya pele: dilemo tse 3. Tataiso e akaretsang ya diperekisi ya KZN; karolo ena e supa dikgohlo tsa dinoka tsa Muden, Middelrus le Weenen e le dibaka tsa ho lema tse hlokang mohatsela o monyenyane. Netefatsa mofuta le dilemo tsa ho qala sethopong. Nako ya nnete e itshetlehile ka mofuta le tlhokomelo ya sebaka.",
+          "Tshupiso ya tlhahiso e tsitsitseng: dilemo tse 7. Tataiso yona eo ya sebaka e hlalosa bophelo ba serapa sa ditholwana sa kgwebo ba hoo e ka bang dilemo tse 12–15; ha e fane ka chai ya sefate ka seng ho ya ka dilemo.",
+          "Tshupiso ya tlhahiso: 23–43 kg/semela. HO FETOTSWE, palo e bontshitswe: ho nkilwe sehlopha sa chai sa “Average” (15-18 t/ha) le sebaka pakeng tsa dimela se boletsweng mohloding wona oo (“Generally planted 6m x 4m or 5 m x 3 m”). Ho 6x4m = 24 m²/tree → 10000/24 = 416.7 trees/ha → 15000kg/416.7=36.0 le 18000kg/416.7=43.2 kg/tree. Ho 5x3m = 15 m²/tree → 666.7 trees/ha → 15000/666.7=22.5 le 18000/666.7=27.0 kg/tree. Moedi o kopantsweng wa dibaka tseo ka bobedi, o potolohisitsweng: [23, 43] kg/tree. Phapang ena e bontsha dibaka tse pedi tse fapaneng tse fumanweng mohloding, e seng phapang ya mefuta.",
+          "Netefatsa ho bata ho hlokwang ke mofuta o itseng le kotsi ya leqhwa nakong ya selemo. Mocheso o mahareng wa mariha ha se tekanyo ya dihora tsa ho bata.",
+          "Keletso ya ho reka: Mofuta o ka nahanelwang o hlokang ho bata ho fokolang ho isa ho mahareng: Earligold (200–400 Infruitec units), o nang le tshupiso ya ho qala ho kga ka Tshitwe e tswang Bien Donne, Western Cape. Cederberg ya morao e na le tshupiso ya Pherekgong. Netefatsa ho bata ha nnete, dimela le matsatsi a lehae pele o hlophisa tatellano ya mefuta.",
+          "Ho tsamaiswa ha peo ya dipalesa: e ka behang ditholwana ka peo ya yona ya dipalesa. Hlahloba ditlhoko tsa mofuta o kgethilweng le sebaka sa kgodiso ya dimela.",
+          "Nako ya kotulo e lebeletsweng: ha ho nako e le nngwe e tiisitsweng ya mofuta wa sebaka. Dinako tsa ditshupiso tse ka tlase ha se ponelopele.",
+          "Tshupiso feela — South Africa — mofuta wa Earligold o hlokang ho bata ho honyane (low-chill) (o hlahisitswe ke ARC Infruitec-Nietvoorbij, dibaka tsa temo tse nang le ho bata ho honyane): Tsh.",
+          "Tshupiso feela — South Africa — mefuta ya Cederberg le Afrisun e hlokang ho bata ho honyane/ha mahareng (low/medium-chill) (e hlahisitswe ke ARC Infruitec-Nietvoorbij): Phe."
+        ],
+        "sources": [
+          {
+            "label": "Culdevco / ARC: Earligold cultivar sheet, Bien Donne data",
+            "url": "https://culdevco.co.za/peach-cultivar-info-earligold/"
+          },
+          {
+            "label": "Culdevco / ARC: Cederberg cultivar sheet",
+            "url": "https://culdevco.co.za/peach-cultivar-info-cederberg/"
+          },
+          {
+            "label": "Culdevco (Plant Breeders' Rights licensing body for ARC-bred deciduous fruit cultivars) — Earligold peach cultivar information sheet",
+            "url": "https://culdevco.co.za/peach-cultivar-info-earligold/"
+          },
+          {
+            "label": "Culdevco — Cederberg and Afrisun peach cultivar information sheets",
+            "url": "https://culdevco.co.za/peach-cultivar-info-cederberg/"
+          },
+          {
+            "label": "Culdevco — Earligold peach cultivar information sheet",
+            "url": "https://culdevco.co.za/peach-cultivar-info-earligold/"
+          },
+          {
+            "label": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes), p. 28",
+            "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+          },
+          {
+            "label": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes), p. 29",
+            "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+          }
+        ]
+      },
+      {
+        "title": "Grape vine",
+        "lines": [
+          "Tse teng: 1; tse rerilweng: 1. Dihlahiswa: ditholwana.",
+          "Nako ya kotulo ya pele: ha e a fumanwa mohloding; o se ke wa itshetleha ka dimela tse sa tswa jalwa bakeng sa dijo hanghang.",
+          "Flame Seedless year 4 — Hex River Valley enterprise budget: Year 4 commercial budget: 4,400 cartons/ha at 4.5 kg/carton = 19,800 kg/ha. The source does not provide matched vines/ha or row/vine spacing, so no kg/vine is derived. This is a budget assumption for one cultivar and region, not a generic full-bearing age or a local mapped-vine production record.",
+          "Nyalanya mofuta wa serapa sa morara le sebaka sa tlhahiso, metsi le tsamaiso ya tshehetso. Nako ya phepelo ya naha e kopanya dibaka tse mmalwa.",
+          "Keletso ya ho reka: Tshupiso ya indasteri ya DAFF: Prime Seedless, Sugraone le Flame Seedless tsa pele; Dauphine le Crimson Seedless tsa morao. SATI e bolela dikgetho tsa Orange River tse kenyelletsang Prime, Thompson Seedless le Sugraone. Netefatsa matsatsi le dimela tsa lehae; tatellano ya indasteri ha se khalendara ya polasi ya KZN.",
+          "Ho tsamaiswa ha peo ya dipalesa: e ka behang ditholwana ka peo ya yona ya dipalesa. Hlahloba ditlhoko tsa mofuta o kgethilweng le sebaka sa kgodiso ya dimela.",
+          "Nako ya kotulo e lebeletsweng: ha ho nako e le nngwe e tiisitsweng ya mofuta wa sebaka. Dinako tsa ditshupiso tse ka tlase ha se ponelopele.",
+          "Tshupiso feela — South Africa — sebaka sa Northern Province(s) (sebaka sa tlhahiso sa SATI; boemo bo itekanetseng bo haufi le tropike, kotulo ya pele ka ho fetisisa SA): Pun–Tsh.",
+          "Tshupiso feela — South Africa (ka kakaretso yohle, dibaka tsohle di kopantswe): Pun–Mot."
+        ],
+        "sources": [
+          {
+            "label": "DAFF, Table grape market value chain profile (2012), p. 1",
+            "url": "https://www.nda.gov.za/phocadownloadpap/Agricultural_Marketing_Commodity_Profiles/Table%20grape%20market%20value%20chain%20profile%202012.pdf"
+          },
+          {
+            "label": "SATI: Production regions",
+            "url": "https://www.satgi.co.za/about/"
+          },
+          {
+            "label": "South African Table Grape Industry (SATI) — 'About' page, production regions section",
+            "url": "https://www.satgi.co.za/about/"
+          },
+          {
+            "label": "South African Table Grape Industry (SATI) — 'About' page",
+            "url": "https://www.satgi.co.za/about/"
+          },
+          {
+            "label": "Zou, Massonnet, Minio et al., 'Multiple independent recombinations led to hermaphroditism in grapevine', Proceedings of the National Academy of Sciences (PNAS), Vol. 118, No. 15, e2023548118 (2021)",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8053984/"
+          },
+          {
+            "label": "Western Cape Department of Agriculture (Elsenburg), Agricultural Economic Services — 'Table Grape-Flame SL (Yr 4)' Enterprise Budget, Hex River Valley, Cape Winelands (updated 12 March 2024), p. 1",
+            "url": "https://www.elsenburg.com/wp-content/uploads/2024/05/TABLE-GRAPE-FLAME-YR-4.pdf"
+          }
+        ]
+      }
+    ],
+    "animalProducts": []
+  },
+  "paintedText": "ImbewuField                                                                                                                 TATAISO YA TLHAHISO\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nPele o reka kapa o qala\nSebedisa seo o se boneng polasing le manane a makgutshwane a dipatlisiso. Netefatsa dikgetho sebakeng seo pele o\nreka.\n\nSehlopha sa tlelaemete sa dipatlisiso: Sebaka sa temo ha se eso hlake. Sehlopha sena ha se keletso e\nnetefaditsweng bakeng sa polasi ena.\n\nSeo o se tlalehileng ka polasi ena\nMetsi nakong ya komello\nHa ho a rekotwa. Qetella phuputso ya sebaka mme o netefatse metsi pele o kgetha moralo o hlokang disebediswa\ntse ngata.\n\nSerame polasing ena\nSe bonweng ka serame sebakeng ha se a rekotwa. Dikarolelano tsa kgwedi tsa sathelaete di ke ke tsa tiisa matsatsi\na pele le a ho qetela a serame.\n\nLetsatsi le phallo ya metsi mobung\nLetsatsi: ha ho a rekotwa.\nPhallo ya metsi: ha ho a rekotwa. Diphetho tsa teko ya mobu le ditlhoko tsa sejalo ka seng di ntse di hloka ho\nhlahlojwa.\n\nDirekoto tsa selemo sa tlaleho - eseng ponelopele\nDikakaretso le dikgwedi tsa selemo sa tlaleho se fetileng di hlalosa se tlalehilweng. Ha di tshepise dijo moralong o\ntlang.\n\nOriginal eggs {year} $&\nKakaretso ya selemo e tlalehilweng ke molemi bakeng sa 2025: 240 eggs.\nTshebediso ya lelapa: 0 eggs. Ho rekisitsweng: ha ho a rekotwa.\nDikgwedi tsa kotulo tse tlalehilweng: Php, Phu. Tsena ke tse bonweng phuputsong, eseng ponelopele e ntjha ya\ntlhahiso.\nHlahloba yuniti le dikakaretso tse rekotilweng pele o sebedisa mola ona.\n\nFish\nKakaretso ya selemo e tlalehilweng ke molemi bakeng sa 2025: ha ho a rekotwa.\nTshebediso ya lelapa: ha ho a rekotwa. Ho rekisitsweng: ha ho a rekotwa.\nDikgwedi tsa kotulo tse tlalehilweng: ha ho a rekotwa. Tsena ke tse bonweng phuputsong, eseng ponelopele e\nntjha ya tlhahiso.\nHlahloba yuniti le dikakaretso tse rekotilweng pele o sebedisa mola ona.\n\nMeroho e meng\nKakaretso ya selemo e tlalehilweng ke molemi bakeng sa 2025: 12 kg.\nTshebediso ya lelapa: 7 kg. Ho rekisitsweng: 3 kg.\nDikgwedi tsa kotulo tse tlalehilweng: Phe, Tsh. Tsena ke tse bonweng phuputsong, eseng ponelopele e ntjha ya\ntlhahiso.\nHlahloba yuniti le dikakaretso tse rekotilweng pele o sebedisa mola ona.\n\n\n\n\nSynthetic graph source {count} $&                                                                                                                      1\nHa o a hlahlojwa ke setsebi sa temo — ke tataiso ya ho rera, ha se taelo. O bontshe moeletsi wa hao wa temo, mme o etse teko ya mobu pele o sebedisa\ntjhelete mobung.\nPhetolelo ya moralo: ha e so hlahlojwe ke motho ya tsebang puo hantle. Hlahloba mohlodi wa Senyesemane pele o etsa se bolelwang.\n\fImbewuField                                                                                                                 TATAISO YA TLHAHISO\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nDikgetho tsa polasi - di tswela pele\nSebedisa seo o se boneng polasing le manane a makgutshwane a dipatlisiso. Netefatsa dikgetho sebakeng seo pele o\nreka.\n\nDitholwana, linate le dijo tsa lehae\nSoft citrus\nTse teng: 1; tse rerilweng: 1. Dihlahiswa: ditholwana.\nNako ya kotulo ya pele: ha e a fumanwa mohloding; o se ke wa itshetleha ka dimela tse sa tswa jalwa bakeng sa\ndijo hanghang.\nDitholwana tsa citrus tse bonolo hangata e rata maemo a phodileng, a ommeng. Netefatsa ditlhoko tsa kutu ya\nmotso le ho tsamaisa peo/ho ba le dipeo pele o kopanya mefuta.\nKeletso ya ho reka: Bakeng sa sebaka se loketseng: Miho Wase satsuma ya pele (ho tloha bohareng ba Hlakubele);\nclementines tsa bohareng (mafelong a Hlakubele–bohareng ba Phupjane); Nadorcott mandarin ya morao\n(bohareng ba Motsheanong–Leotshe). Matsatsi ke ditshupiso tse batsi tsa Afrika Borwa, ha se khalendara ya lehae.\nOdara difate tsa keretjhe tse nang le dileibole.\nNako ya kotulo e lebeletsweng: ha ho nako e le nngwe e tiisitsweng ya mofuta wa sebaka. Dinako tsa ditshupiso tse\nka tlase ha se ponelopele.\nTshupiso feela — Eastern & Western Cape (dibaka tse ka sehloohong tsa soft citrus) — mefuta ya Satsuma:\nHlb–Mot.\nTshupiso feela — Eastern & Western Cape (dibaka tse ka sehloohong tsa soft citrus) — mefuta ya Clementine:\nHlb–Php.\nTshupiso feela — Eastern & Western Cape (dibaka tse ka sehloohong tsa soft citrus) — mefuta ya Mandarin (ho\nkenyeletswa Nadorcott): Mot–Leo.\nMohlodi: Citrus Academy, Citrus Types and Cultivars (2017), pp. 7–13\nMohlodi: Citrus Growers' Association / Citrus Academy — 'Citrus Planting Management 2: Citrus Types and Cultivars' Learner Guide (1st\nedition), Citrus Resource Warehouse (crw.org.za), citing CRI Cultivar Fact Sheets, p. 8\nMohlodi: Citrus Growers' Association / Citrus Academy — 'Citrus Planting Management 2: Citrus Types and Cultivars' Learner Guide (1st\nedition), citing CRI Cultivar Fact Sheets, p. 8\nMohlodi: Citrus Growers' Association / Citrus Academy — 'Citrus Planting Management 2: Citrus Types and Cultivars' Learner Guide (1st\nedition), citing CRI Cultivar Fact Sheets, p. 9\n\n\n\n\nSynthetic graph source {count} $&                                                                                                                      2\nHa o a hlahlojwa ke setsebi sa temo — ke tataiso ya ho rera, ha se taelo. O bontshe moeletsi wa hao wa temo, mme o etse teko ya mobu pele o sebedisa\ntjhelete mobung.\nPhetolelo ya moralo: ha e so hlahlojwe ke motho ya tsebang puo hantle. Hlahloba mohlodi wa Senyesemane pele o etsa se bolelwang.\n\fImbewuField                                                                                                                 TATAISO YA TLHAHISO\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nDikgetho tsa polasi - di tswela pele\nSebedisa seo o se boneng polasing le manane a makgutshwane a dipatlisiso. Netefatsa dikgetho sebakeng seo pele o\nreka.\n\nDitholwana, linate le dijo tsa lehae (e tswela pele)\nStrawberry\nTse teng: 1; tse rerilweng: 1. Dihlahiswa: ditholwana.\nNako ya kotulo ya pele: ha e a fumanwa mohloding; o se ke wa itshetleha ka dimela tse sa tswa jalwa bakeng sa\ndijo hanghang.\nSebedisa mahlomela a hahabang a hlwekileng mme o nyalanye mofuta le tsamaiso ya tlhahiso le sebaka. Ho\nnosetsa ho tshepahalang le taolo ya mafu di bohlokwa.\nKeletso ya ho reka: Tataiso ya KZN e bolela Chandler le Selecta. Ho fumaneha le tshebetso ya tsona ya hajwale\nsebakeng di hloka ho hlahlojwa; dinako tsa ka tonneleng le tsa ka ntle di lokela ho dula di arohane.\nNako ya kotulo e lebeletsweng: ha ho nako e le nngwe e tiisitsweng ya mofuta wa sebaka. Dinako tsa ditshupiso tse\nka tlase ha se ponelopele.\nTshupiso feela — Western Cape: Leo–Tsh.\nTshupiso feela — Transvaal (hona jwale Gauteng/Limpopo/Mpumalanga/North West), di hodisitswe dithaneleng tsa\ntemo: Mot–Tsh.\nTshupiso feela — South Africa (kakaretso ya mokgatlo wa indasteri, dibaka tsohle): Php–Tsh.\nTshupiso feela — KwaZulu-Natal, dibaka tse se nang serame: Mot–Pha.\nTshupiso feela — KwaZulu-Natal, dibaka tse nang le serame se bobebe: Leo–Tsh.\nMohlodi: KZN DARD, Fruit and Nut Production, PDF pp. 34–35 (regional reference; confirm current nursery stock)\nMohlodi: SASGA: An overview of strawberry cultivation in South Africa\nMohlodi: J.P. Human & E.P. Evans, 'STRAWBERRY PRODUCTION IN SOUTH AFRICA', Acta Horticulturae 265 (International Strawberry\nSymposium), abstract (article 265_125), p. 757\nMohlodi: South African Strawberry Growers Association (SASGA), An overview of strawberry cultivation in South Africa\nMohlodi: KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in\nKZN), p. 34\n\n\n\n\nSynthetic graph source {count} $&                                                                                                                      3\nHa o a hlahlojwa ke setsebi sa temo — ke tataiso ya ho rera, ha se taelo. O bontshe moeletsi wa hao wa temo, mme o etse teko ya mobu pele o sebedisa\ntjhelete mobung.\nPhetolelo ya moralo: ha e so hlahlojwe ke motho ya tsebang puo hantle. Hlahloba mohlodi wa Senyesemane pele o etsa se bolelwang.\n\fImbewuField                                                                                                                 TATAISO YA TLHAHISO\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nDikgetho tsa polasi - di tswela pele\nSebedisa seo o se boneng polasing le manane a makgutshwane a dipatlisiso. Netefatsa dikgetho sebakeng seo pele o\nreka.\n\nDitholwana, linate le dijo tsa lehae (e tswela pele)\nLow-chill peach\nTse teng: 1; tse rerilweng: 1. Dihlahiswa: ditholwana.\nTshupiso ya kotulo ya pele: dilemo tse 3. Tataiso e akaretsang ya diperekisi ya KZN; karolo ena e supa dikgohlo tsa\ndinoka tsa Muden, Middelrus le Weenen e le dibaka tsa ho lema tse hlokang mohatsela o monyenyane. Netefatsa\nmofuta le dilemo tsa ho qala sethopong. Nako ya nnete e itshetlehile ka mofuta le tlhokomelo ya sebaka.\nTshupiso ya tlhahiso e tsitsitseng: dilemo tse 7. Tataiso yona eo ya sebaka e hlalosa bophelo ba serapa sa\nditholwana sa kgwebo ba hoo e ka bang dilemo tse 12–15; ha e fane ka chai ya sefate ka seng ho ya ka dilemo.\nTshupiso ya tlhahiso: 23–43 kg/semela. HO FETOTSWE, palo e bontshitswe: ho nkilwe sehlopha sa chai sa “Average”\n(15-18 t/ha) le sebaka pakeng tsa dimela se boletsweng mohloding wona oo (“Generally planted 6m x 4m or 5 m x 3\nm”). Ho 6x4m = 24 m²/tree 10000/24 = 416.7 trees/ha 15000kg/416.7=36.0 le 18000kg/416.7=43.2 kg/tree. Ho\n5x3m = 15 m²/tree 666.7 trees/ha 15000/666.7=22.5 le 18000/666.7=27.0 kg/tree. Moedi o kopantsweng wa\ndibaka tseo ka bobedi, o potolohisitsweng: [23, 43] kg/tree. Phapang ena e bontsha dibaka tse pedi tse fapaneng\ntse fumanweng mohloding, e seng phapang ya mefuta.\nNetefatsa ho bata ho hlokwang ke mofuta o itseng le kotsi ya leqhwa nakong ya selemo. Mocheso o mahareng wa\nmariha ha se tekanyo ya dihora tsa ho bata.\nKeletso ya ho reka: Mofuta o ka nahanelwang o hlokang ho bata ho fokolang ho isa ho mahareng: Earligold\n(200–400 Infruitec units), o nang le tshupiso ya ho qala ho kga ka Tshitwe e tswang Bien Donne, Western Cape.\nCederberg ya morao e na le tshupiso ya Pherekgong. Netefatsa ho bata ha nnete, dimela le matsatsi a lehae pele o\nhlophisa tatellano ya mefuta.\nHo tsamaiswa ha peo ya dipalesa: e ka behang ditholwana ka peo ya yona ya dipalesa. Hlahloba ditlhoko tsa\nmofuta o kgethilweng le sebaka sa kgodiso ya dimela.\nNako ya kotulo e lebeletsweng: ha ho nako e le nngwe e tiisitsweng ya mofuta wa sebaka. Dinako tsa ditshupiso tse\nka tlase ha se ponelopele.\nTshupiso feela — South Africa — mofuta wa Earligold o hlokang ho bata ho honyane (low-chill) (o hlahisitswe ke\nARC Infruitec-Nietvoorbij, dibaka tsa temo tse nang le ho bata ho honyane): Tsh.\nTshupiso feela — South Africa — mefuta ya Cederberg le Afrisun e hlokang ho bata ho honyane/ha mahareng\n(low/medium-chill) (e hlahisitswe ke ARC Infruitec-Nietvoorbij): Phe.\nMohlodi: Culdevco / ARC: Earligold cultivar sheet, Bien Donne data\nMohlodi: Culdevco / ARC: Cederberg cultivar sheet\nMohlodi: Culdevco (Plant Breeders' Rights licensing body for ARC-bred deciduous fruit cultivars) — Earligold peach cultivar information\nsheet\nMohlodi: Culdevco — Cederberg and Afrisun peach cultivar information sheets\nMohlodi: Culdevco — Earligold peach cultivar information sheet\nMohlodi: KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory\nNotes), p. 28\nMohlodi: KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory\nNotes), p. 29\n\n\n\n\nSynthetic graph source {count} $&                                                                                                                      4\nHa o a hlahlojwa ke setsebi sa temo — ke tataiso ya ho rera, ha se taelo. O bontshe moeletsi wa hao wa temo, mme o etse teko ya mobu pele o sebedisa\ntjhelete mobung.\nPhetolelo ya moralo: ha e so hlahlojwe ke motho ya tsebang puo hantle. Hlahloba mohlodi wa Senyesemane pele o etsa se bolelwang.\n\fImbewuField                                                                                                                 TATAISO YA TLHAHISO\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nDikgetho tsa polasi - di tswela pele\nSebedisa seo o se boneng polasing le manane a makgutshwane a dipatlisiso. Netefatsa dikgetho sebakeng seo pele o\nreka.\n\nDitholwana, linate le dijo tsa lehae (e tswela pele)\nGrape vine\nTse teng: 1; tse rerilweng: 1. Dihlahiswa: ditholwana.\nNako ya kotulo ya pele: ha e a fumanwa mohloding; o se ke wa itshetleha ka dimela tse sa tswa jalwa bakeng sa\ndijo hanghang.\nFlame Seedless year 4 — Hex River Valley enterprise budget: Year 4 commercial budget: 4,400 cartons/ha at 4.5\nkg/carton = 19,800 kg/ha. The source does not provide matched vines/ha or row/vine spacing, so no kg/vine is\nderived. This is a budget assumption for one cultivar and region, not a generic full-bearing age or a local\nmapped-vine production record.\nNyalanya mofuta wa serapa sa morara le sebaka sa tlhahiso, metsi le tsamaiso ya tshehetso. Nako ya phepelo ya\nnaha e kopanya dibaka tse mmalwa.\nKeletso ya ho reka: Tshupiso ya indasteri ya DAFF: Prime Seedless, Sugraone le Flame Seedless tsa pele; Dauphine\nle Crimson Seedless tsa morao. SATI e bolela dikgetho tsa Orange River tse kenyelletsang Prime, Thompson\nSeedless le Sugraone. Netefatsa matsatsi le dimela tsa lehae; tatellano ya indasteri ha se khalendara ya polasi ya\nKZN.\nHo tsamaiswa ha peo ya dipalesa: e ka behang ditholwana ka peo ya yona ya dipalesa. Hlahloba ditlhoko tsa\nmofuta o kgethilweng le sebaka sa kgodiso ya dimela.\nNako ya kotulo e lebeletsweng: ha ho nako e le nngwe e tiisitsweng ya mofuta wa sebaka. Dinako tsa ditshupiso tse\nka tlase ha se ponelopele.\nTshupiso feela — South Africa — sebaka sa Northern Province(s) (sebaka sa tlhahiso sa SATI; boemo bo\nitekanetseng bo haufi le tropike, kotulo ya pele ka ho fetisisa SA): Pun–Tsh.\nTshupiso feela — South Africa (ka kakaretso yohle, dibaka tsohle di kopantswe): Pun–Mot.\nMohlodi: DAFF, Table grape market value chain profile (2012), p. 1\nMohlodi: SATI: Production regions\nMohlodi: South African Table Grape Industry (SATI) — 'About' page, production regions section\nMohlodi: South African Table Grape Industry (SATI) — 'About' page\nMohlodi: Zou, Massonnet, Minio et al., 'Multiple independent recombinations led to hermaphroditism in grapevine', Proceedings of the\nNational Academy of Sciences (PNAS), Vol. 118, No. 15, e2023548118 (2021)\nMohlodi: Western Cape Department of Agriculture (Elsenburg), Agricultural Economic Services — 'Table Grape-Flame SL (Yr 4)' Enterprise\nBudget, Hex River Valley, Cape Winelands (updated 12 March 2024), p. 1\n\nMefuta ya dijalo e lokelang ho hlahlojwa sebakeng seo\nBoloka lebitso la mofuta oo o o kgethang ka nnete. Manane a makgutshwane a dipatlisiso a hloka netefatso\nbakeng sa nako ya sebaka, metsi le mobu.\n\nTomatoes\nMofuta o rekotilweng: ha ho eso kgethwe.\nMaemo a lehodimo a sebaka sena ha a eso hlake, kahoo ha ho bolelwe lenane le lekgutshwane la sebaka. Bula\nkarete ya sejalo ho bona mehlodi le ho rekota kgetho ya hao.\n\n\n\n\nSynthetic graph source {count} $&                                                                                                                      5\nHa o a hlahlojwa ke setsebi sa temo — ke tataiso ya ho rera, ha se taelo. O bontshe moeletsi wa hao wa temo, mme o etse teko ya mobu pele o sebedisa\ntjhelete mobung.\nPhetolelo ya moralo: ha e so hlahlojwe ke motho ya tsebang puo hantle. Hlahloba mohlodi wa Senyesemane pele o etsa se bolelwang.\n\f",
+  "file": "st-season-cultivar-context.pdf",
+  "reason": "Actual PDF extraction failed the full source clause. Preserve meaningful source relation symbols; do not weaken the verifier."
+}

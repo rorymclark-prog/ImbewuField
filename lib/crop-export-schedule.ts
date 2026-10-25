@@ -27,7 +27,7 @@ import type { CropTask, PlanBed, Planting, SeedBoqRow } from '@/lib/crop-plan';
 import type { SiteSurvey } from '@/lib/site-survey';
 import { productionNeedsReview } from '@/lib/site-survey';
 import { cropVarietyRecord, varietiesForSite, type VarietySource } from '@/lib/crop-varieties';
-import { growingZoneLabel, type GrowingZoneId } from '@/lib/growing-zones';
+import { GROWING_ZONES, growingZoneLabel, type GrowingZoneId } from '@/lib/growing-zones';
 import { observedFrostConflictsForPlanting } from '@/lib/crop-autosuggest';
 import {
   bedEntryMonth,
@@ -668,7 +668,8 @@ export interface ProductionGuide {
 
 /** The screen and paper read one preparation checklist. Annual survey records describe
  * a past reporting year; neither their totals nor their months become a future yield curve. */
-export function buildProductionGuide(survey: SiteSurvey | null, plantings: readonly Planting[], zones: readonly GrowingZoneId[], nowMonth = new Date().getMonth() + 1, products?: ProductGuideContext): ProductionGuide {
+export function buildProductionGuide(survey: SiteSurvey | null, plantings: readonly Planting[], zones: readonly GrowingZoneId[], nowMonth = new Date().getMonth() + 1, products?: ProductGuideContext, language = 'en'): ProductionGuide {
+  const t = (source: string, values: Record<string, string | number> = {}) => cropExportText(source, language, values);
   // A survey draft can reach the guide before the persistence normaliser. Do not wrap an
   // invalid month to January or turn a future reporting year into historical production.
   const reportedMonths = (months: number[] | undefined): number[] => Array.isArray(months)
@@ -685,20 +686,20 @@ export function buildProductionGuide(survey: SiteSurvey | null, plantings: reado
   const frostMonths = reportedMonths(conditions?.frostMonths);
   const active = plantings.filter((p) => !p.awaitingSowingConfirmation && !p.finishedOnceSowing);
   const siteObservations: ProductionGuideItem[] = [
-    { title: 'Water through the dry season', lines: [
-      water === 'reliable' ? 'Farmer reports reliable growing water. Confirm that the supply can carry each planned crop cycle.'
-        : water === 'limited' ? 'Farmer reports limited growing water. Confirm which beds can be watered before buying planting material.'
-        : water === 'rain-only' ? 'Farmer reports rain-only growing. Use this site\'s rain-fed crop checks; water for animals is a separate need.'
-        : 'Not recorded. Complete the site survey and confirm water before choosing an intensive plan.',
+    { title: t('Water through the dry season'), lines: [
+      water === 'reliable' ? t('Farmer reports reliable growing water. Confirm that the supply can carry each planned crop cycle.')
+        : water === 'limited' ? t('Farmer reports limited growing water. Confirm which beds can be watered before buying planting material.')
+        : water === 'rain-only' ? t('Farmer reports rain-only growing. Use this site\'s rain-fed crop checks; water for animals is a separate need.')
+        : t('Not recorded. Complete the site survey and confirm water before choosing an intensive plan.'),
     ] },
-    { title: 'Frost on this farm', lines: [
-      frost === 'yes' ? `Frost has been observed here${frostMonths.length ? ` in ${frostMonths.map(month => monthShort(month)).join(', ')}` : '; months not recorded'}. Check frost-tender crops against these observations.`
-        : frost === 'no' ? 'Farmer reports no observed frost. This observation does not establish that future winters will be frost-free.'
-        : 'Local frost observations are not recorded. Satellite monthly averages cannot establish first and last frost dates.',
+    { title: t('Frost on this farm'), lines: [
+      frost === 'yes' ? frostMonths.length ? t('Frost has been observed here in {months}. Check frost-tender crops against these observations.', { months: frostMonths.map(month => monthShort(month, language)).join(', ') }) : t('Frost has been observed here; months not recorded. Check frost-tender crops against these observations.')
+        : frost === 'no' ? t('Farmer reports no observed frost. This observation does not establish that future winters will be frost-free.')
+        : t('Local frost observations are not recorded. Satellite monthly averages cannot establish first and last frost dates.'),
     ] },
-    { title: 'Sun and drainage', lines: [
-      `Sun: ${sunlight === 'full-sun' ? 'full sun reported' : sunlight === 'part-shade' ? 'part shade reported' : sunlight === 'mostly-shade' ? 'mostly shade reported' : 'not recorded'}.`,
-      `Drainage: ${drainage === 'drains-well' ? 'drains well, as reported' : drainage === 'stays-wet' ? 'stays wet, as reported; assess the ground before planting' : 'not recorded'}. Soil-test results and crop-specific needs still need checking.`,
+    { title: t('Sun and drainage'), lines: [
+      t(sunlight === 'full-sun' ? 'Sun: full sun reported.' : sunlight === 'part-shade' ? 'Sun: part shade reported.' : sunlight === 'mostly-shade' ? 'Sun: mostly shade reported.' : 'Sun: not recorded.'),
+      t(drainage === 'drains-well' ? 'Drainage: drains well, as reported. Soil-test results and crop-specific needs still need checking.' : drainage === 'stays-wet' ? 'Drainage: stays wet, as reported; assess the ground before planting. Soil-test results and crop-specific needs still need checking.' : 'Drainage: not recorded. Soil-test results and crop-specific needs still need checking.'),
     ] },
   ];
   if (frost === 'yes' && frostMonths.length) {
@@ -711,9 +712,9 @@ export function buildProductionGuide(survey: SiteSurvey | null, plantings: reado
       months.forEach(month => found.add(month));
       cropsToCheck.set(crop.name, found);
     }
-    if (cropsToCheck.size) siteObservations.push({ title: 'Planned crops to check for frost', lines: [
-      ...[...cropsToCheck].map(([name, months]) => `${name}: ${[...months].sort((a, b) => a - b).map(month => monthShort(month)).join(', ')}.`),
-      'These planned crops will hold ground in months when frost has been observed here. Confirm local protection or change the planting before relying on these dates.',
+    if (cropsToCheck.size) siteObservations.push({ title: t('Planned crops to check for frost'), lines: [
+      ...[...cropsToCheck].map(([name, months]) => `${name}: ${[...months].sort((a, b) => a - b).map(month => monthShort(month, language)).join(', ')}.`),
+      t('These planned crops will hold ground in months when frost has been observed here. Confirm local protection or change the planting before relying on these dates.'),
     ] });
   }
   const names: Record<string, string> = {
@@ -723,16 +724,18 @@ export function buildProductionGuide(survey: SiteSurvey | null, plantings: reado
   };
   const recordedProduction = (survey?.reportedProduction ?? []).map((row): ProductionGuideItem => {
     const quantity = (value: number | null) => typeof value !== 'number' || !Number.isFinite(value) || value < 0
-      ? 'not recorded' : `${numberLabel(value)} ${row.unit || '(unit not recorded)'}`;
+      ? t('not recorded') : `${numberLabel(value)} ${row.unit || t('(unit not recorded)')}`;
     const harvestMonths = reportedMonths(row.harvestMonths);
-    return { title: row.name || names[row.category] || 'Reported production', lines: [
-      `Farmer-reported annual total${reportingYear ? ` for ${reportingYear}` : ' - reporting year not recorded'}: ${quantity(row.quantityPerYear)}.`,
-      `Household use: ${quantity(row.usedByHousehold)}. Sold: ${quantity(row.sold)}.`,
-      `Reported harvest months: ${harvestMonths.length ? harvestMonths.map(month => monthShort(month)).join(', ') : 'not recorded'}. These are survey observations, not a new production forecast.`,
-      ...(productionNeedsReview(row) ? ['Check the recorded unit and totals before using this row.'] : []),
+    // A recorded name or unit can contain source words and placeholders. Only generated
+    // labels enter the translator; interpolated farmer text is never translated or reparsed.
+    return { title: row.name || t(names[row.category] || 'Reported production'), lines: [
+      reportingYear ? t('Farmer-reported annual total for {year}: {quantity}.', { year: reportingYear, quantity: quantity(row.quantityPerYear) }) : t('Farmer-reported annual total - reporting year not recorded: {quantity}.', { quantity: quantity(row.quantityPerYear) }),
+      t('Household use: {household}. Sold: {sold}.', { household: quantity(row.usedByHousehold), sold: quantity(row.sold) }),
+      t('Reported harvest months: {months}. These are survey observations, not a new production forecast.', { months: harvestMonths.length ? harvestMonths.map(month => monthShort(month, language)).join(', ') : t('not recorded') }),
+      ...(productionNeedsReview(row) ? [t('Check the recorded unit and totals before using this row.')] : []),
     ] };
   });
-  const sourceLink = (source: VarietySource) => ({ label: `${source.doc}${source.page ? `, p. ${source.page}` : ''}`, url: source.url });
+  const sourceLink = (source: VarietySource) => ({ label: source.page ? t('{document}, p. {page}', { document: source.doc, page: source.page }) : source.doc, url: source.url });
   const keys = [...new Set(active.map((p) => p.cropKey))];
   const cropChoices = keys.flatMap((key): ProductionGuideItem[] => {
     const crop = cropByKey(key);
@@ -747,11 +750,14 @@ export function buildProductionGuide(survey: SiteSurvey | null, plantings: reado
     const sources = [...match.forYourArea.flatMap((v) => v.sources), ...recordedSources, ...match.advice.flatMap((a) => a.advice.sources)];
     const links = [...new Map(sources.map((source) => [JSON.stringify([source.url, source.doc, source.page]), sourceLink(source)])).values()];
     return [{ title: crop.name, lines: [
-      `Recorded variety: ${recorded.length ? recorded.join('; ') : 'not chosen yet'}.`,
-      match.forYourArea.length ? `Research shortlist for similar climates: ${match.forYourArea.map((v) => v.name).join('; ')}.`
-        : zones.length ? 'The research has no matching regional shortlist. Ask a local grower or extension officer which named variety suits this season.'
-        : 'This site\'s climate has not resolved, so no local shortlist is claimed. Open the crop card to see sources and record your choice.',
+      t('Recorded variety: {variety}.', { variety: recorded.length ? recorded.join('; ') : t('not chosen yet') }),
+      match.forYourArea.length ? t('Research shortlist for similar climates: {varieties}.', { varieties: match.forYourArea.map((v) => v.name).join('; ') })
+        : zones.length ? t('The research has no matching regional shortlist. Ask a local grower or extension officer which named variety suits this season.')
+        : t('This site\'s climate has not resolved, so no local shortlist is claimed. Open the crop card to see sources and record your choice.'),
     ], sources: links }];
   });
-  return { area: zones.length ? growingZoneLabel(zones) : 'Growing area not resolved', siteObservations, recordedProduction, cropChoices, ...(products ? buildProductGuidance(products, zones, conditions) : {}) };
+  const areaNames = isCropExportDraftLanguage(language) ? zones.map(zone => t(GROWING_ZONES[zone].name)) : [];
+  const area = !zones.length ? t('Growing area not resolved') : !isCropExportDraftLanguage(language) ? growingZoneLabel(zones)
+    : areaNames.length === 1 ? areaNames[0] : t('{areas} or {last}', { areas: areaNames.slice(0, -1).join(', '), last: areaNames[areaNames.length - 1] });
+  return { area, siteObservations, recordedProduction, cropChoices, ...(products ? buildProductGuidance(products, zones, conditions, language) : {}) };
 }

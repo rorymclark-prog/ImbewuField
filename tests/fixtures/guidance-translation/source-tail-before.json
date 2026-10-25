@@ -1,0 +1,696 @@
+{
+  "scope": "Real generated native laying-hen card left its final citations alone on page3; whole source footer/clauses retained. Captured before native-tail reservation.",
+  "input": {
+    "plantings": [
+      {
+        "id": "source-crop",
+        "bedId": "source-bed",
+        "cropKey": "tomatoes",
+        "sowMonth": 10
+      }
+    ],
+    "beds": [
+      {
+        "id": "source-bed",
+        "label": "Original source bed {count} $&",
+        "areaM2": 20,
+        "kind": "bed"
+      }
+    ],
+    "tasks": [],
+    "now": "2026-10-10T12:00:00.000Z",
+    "sections": [
+      "guidance"
+    ],
+    "meta": {
+      "planTitle": "Synthetic graph source {count} $&",
+      "siteLine": "Synthetic source site",
+      "locationLine": "Synthetic source location",
+      "climateLine": "Synthetic source climate",
+      "bedsSummary": "Synthetic area",
+      "dateLabel": "1 October 2026",
+      "estimatedKgPerYear": null,
+      "lossPercent": 0,
+      "language": "zu"
+    },
+    "availability": {
+      "veg": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "utilization": [
+        0,
+        0.5,
+        1,
+        1.25,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "forest": [
+        [
+          {
+            "iconKey": "tree:mangifera-indica",
+            "label": "Original mapped Mango {unit} $&"
+          }
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "animals": [
+        [
+          {
+            "iconKey": "animal:chicken-layer",
+            "label": "Original recorded eggs {count} $&"
+          }
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "undated": [
+        {
+          "iconKey": "tree:persea-americana",
+          "label": "Original undated {date} $&",
+          "detail": "Original recorded detail"
+        }
+      ]
+    },
+    "productionRecords": [
+      {
+        "id": "actual-mango",
+        "sourceIconKey": "tree:mangifera-indica",
+        "label": "Original record {date} $& 17",
+        "date": {
+          "year": 2026,
+          "month": 10
+        },
+        "quantity": 0,
+        "unit": "kg",
+        "status": "actual"
+      },
+      {
+        "id": "expected-crop",
+        "sourceIconKey": "crop:tomatoes",
+        "label": "Original expected {count} $&",
+        "date": {
+          "year": 2026,
+          "month": 11
+        },
+        "quantity": 7,
+        "unit": "kg",
+        "status": "expected"
+      },
+      {
+        "id": "eggs",
+        "sourceIconKey": "animal:chicken-layer",
+        "label": "Original egg observation",
+        "date": {
+          "year": 2026,
+          "month": 10
+        },
+        "quantity": 12,
+        "unit": "eggs",
+        "status": "actual"
+      },
+      {
+        "id": "milk",
+        "sourceIconKey": "animal:goat-dairy",
+        "label": "Original milk observation",
+        "date": {
+          "year": 2026,
+          "month": 12
+        },
+        "quantity": 3,
+        "unit": "litres",
+        "status": "expected"
+      },
+      {
+        "id": "items",
+        "sourceIconKey": "crop:butternut",
+        "label": "Original items observation",
+        "date": {
+          "year": 2027,
+          "month": 1
+        },
+        "quantity": 2,
+        "unit": "items",
+        "status": "actual"
+      }
+    ],
+    "preservedProducts": [
+      {
+        "id": "stock-stored",
+        "label": "Original kept stored {method} $&",
+        "sourceIconKey": "crop:tomatoes",
+        "method": "stored",
+        "dates": [
+          {
+            "year": 2026,
+            "month": 10
+          }
+        ],
+        "provenance": "farm-record",
+        "note": "Original private method note {count} $& 23",
+        "quantities": [
+          {
+            "year": 2026,
+            "month": 10,
+            "kg": 5
+          }
+        ]
+      },
+      {
+        "id": "stock-frozen",
+        "label": "Original kept frozen {method} $&",
+        "sourceIconKey": "crop:tomatoes",
+        "method": "frozen",
+        "dates": [
+          {
+            "year": 2026,
+            "month": 11
+          }
+        ],
+        "provenance": "farm-record",
+        "note": "Original private method note {count} $& 23"
+      },
+      {
+        "id": "stock-dried",
+        "label": "Original kept dried {method} $&",
+        "sourceIconKey": "crop:tomatoes",
+        "method": "dried",
+        "dates": [
+          {
+            "year": 2026,
+            "month": 12
+          }
+        ],
+        "provenance": "farm-record",
+        "note": "Original private method note {count} $& 23"
+      },
+      {
+        "id": "stock-fermented",
+        "label": "Original kept fermented {method} $&",
+        "sourceIconKey": "crop:tomatoes",
+        "method": "fermented",
+        "dates": [
+          {
+            "year": 2027,
+            "month": 1
+          }
+        ],
+        "provenance": "farm-record",
+        "note": "Original private method note {count} $& 23"
+      },
+      {
+        "id": "stock-processed",
+        "label": "Original kept processed {method} $&",
+        "sourceIconKey": "crop:tomatoes",
+        "method": "processed",
+        "dates": [
+          {
+            "year": 2027,
+            "month": 2
+          }
+        ],
+        "provenance": "farm-record",
+        "note": "Original private method note {count} $& 23"
+      }
+    ],
+    "productionGuide": {
+      "area": "Highveld",
+      "siteObservations": [
+        {
+          "title": "Amanzi ngesikhathi esomile",
+          "lines": [
+            "Akurekhodiwe. Qedela inhlolovo yendawo bese uqinisekisa amanzi ngaphambi kokukhetha uhlelo oludinga izinsiza eziningi."
+          ]
+        },
+        {
+          "title": "Isithwathwa kuleli pulazi",
+          "lines": [
+            "Okubonwe ngesithwathwa endaweni akurekhodiwe. Izilinganiso zanyanga zonke zesathelayithi azikwazi ukuthola izinsuku zokuqala nezokugcina zesithwathwa."
+          ]
+        },
+        {
+          "title": "Ilanga nokuphuma kwamanzi",
+          "lines": [
+            "Ilanga: akurekhodiwe.",
+            "Ukuphuma kwamanzi: akurekhodiwe. Kusadingeka ukuhlola imiphumela yokuhlolwa komhlabathi nezidingo zesitshalo ngasinye."
+          ]
+        }
+      ],
+      "recordedProduction": [
+        {
+          "title": "Original eggs {year} $&",
+          "lines": [
+            "Isamba sonyaka esibikwe umlimi sango-2025: 240 eggs.",
+            "Okusetshenziswa ekhaya: 0 eggs. Okuthengisiwe: akurekhodiwe.",
+            "Izinyanga zokuvuna ezibikiwe: Jun, Jul. Lokhu ukubonwe kwinhlolovo, akusona isibikezelo esisha sokukhiqiza.",
+            "Hlola iyunithi nezamba ezirekhodiwe ngaphambi kokusebenzisa lo mugqa."
+          ]
+        },
+        {
+          "title": "Fish",
+          "lines": [
+            "Isamba sonyaka esibikwe umlimi sango-2025: akurekhodiwe.",
+            "Okusetshenziswa ekhaya: akurekhodiwe. Okuthengisiwe: akurekhodiwe.",
+            "Izinyanga zokuvuna ezibikiwe: akurekhodiwe. Lokhu ukubonwe kwinhlolovo, akusona isibikezelo esisha sokukhiqiza.",
+            "Hlola iyunithi nezamba ezirekhodiwe ngaphambi kokusebenzisa lo mugqa."
+          ]
+        },
+        {
+          "title": "Eminye imifino",
+          "lines": [
+            "Isamba sonyaka esibikwe umlimi sango-2025: 12 kg.",
+            "Okusetshenziswa ekhaya: 7 kg. Okuthengisiwe: 3 kg.",
+            "Izinyanga zokuvuna ezibikiwe: Jan, Dis. Lokhu ukubonwe kwinhlolovo, akusona isibikezelo esisha sokukhiqiza.",
+            "Hlola iyunithi nezamba ezirekhodiwe ngaphambi kokusebenzisa lo mugqa."
+          ]
+        }
+      ],
+      "cropChoices": [
+        {
+          "title": "Tomatoes",
+          "lines": [
+            "Uhlobo olurekhodiwe: akukakhethwa.",
+            "Uhlu olufushane locwaningo lwezimo zezulu ezifanayo: Rodade."
+          ],
+          "sources": [
+            {
+              "label": "Rodade, Sakata product page",
+              "url": "https://sakata.co.za/shop/vegetables/tomato/determinate-salad/rodade-open-pollinated-tomato/"
+            }
+          ]
+        }
+      ],
+      "foodForest": [],
+      "animalProducts": [
+        {
+          "title": "Izinkukhu: Laying hens (commercial)",
+          "lines": [
+            "Izakhiwo ezikhona ezingu-1; ezihlongozwayo ezingu-0. Uhlobo lokukhiqiza olukhethiwe: amaqanda. Akucatshangwa isibalo sezilwane noma okukhiqizwayo.",
+            "Iseluleko sokuthenga: ukukhiqiza amaqanda, cela izikhukhukazi ezincane ezigonyiwe esezizozalela kumhlinzeki wezinkukhu ezizalelayo, namarekhodi eminyaka, ukudla nokugonywa.",
+            "Hlela ukudla okunomsoco olinganiselwe, amanzi ahlanzekile, umthunzi, umoya nokuvikelwa ezilwaneni ezidlayo. Ukutholakala kwamaqanda kuncike ezinkukhwini ezizalelayo, ubudala bazo, impilo nokunakekelwa; ihhoko lodwa alinikezi amaqanda.",
+            "Qoqa amaqanda njalo, ugcine okwandlalwe ezidlekeni kuhlanzekile futhi komile, uphathe/ugcine amaqanda ngokucophelela ukuze asetshenziswe ekhaya noma athengiswe.",
+            "Inkomba yesikhathi: With a constant 14–16 hour light day, commercial hens keep laying at a high rate all year. Le nkomba yokuphatha kwezohwebo ayisho ukutholakala kwamaqanda kwasekhaya okulinganayo ngokwemvelo.",
+            "Inkomba yomkhiqizo wokuqala: amasonto angu-21. Ubudala benkukhu kusukela ekuchanyuselweni; qinisekisa uhlobo nokukhuliswa nomhlinzeki. Izinkukhu esezizozalela ziqala kamuva kulo mjikelezo.",
+            "Inkomba yokukhiqiza: 407.1–428.6 amaqanda/ngenkukhukazi efakwe endlini (hen housed), umjikelezo wokubekela kuze kube amasonto angu-90. Table 4a's cumulative 'Eggs/hen housed' for five commercial strains; the same table gives 'Age at depop. weeks 90.0' for every strain. Commercial barn/cage average, not a free-range smallholder trial. Kept as the source gives it: a per-year rate would need a point-of-lay age from another document.",
+            "Inkomba yobudala/uhlelo: SAPA 2024 commercial strain standards cumulative to 90 weeks: Dekalb Amberlink 429 eggs/hen housed, Dekalb Brown 428, Hy-Line Silver Brown 435, Hy-Line Brown 434 and Lohmann Brown Lite 413. These are full-cycle objectives, not eggs per calendar year or a smallholder forecast. Purchase age, actual onset of lay, surviving laying hens, feed, water and lighting need separate records.",
+            "Hlola izinkomba ezinemininingwane zohlobo lokukhiqiza mayelana nokudla nezindawo zokuhlala. Fanisa isabelo sokudla nendawo nesigaba sesilwane nohlelo lokuhlalisa; nikeza amanzi ahlanzekile athembekile.",
+            "In free-range systems, hens must have access to the outdoor range for at least 8 hours a day in daylight.",
+            "Where individual nest boxes are used, at least one nest for every 8 hens.",
+            "Hens need at least 8 hours of continuous darkness in every 24-hour cycle to rest properly.",
+            "Floor housing needs litter on at least a third (33%) of the floor.",
+            "The outdoor free-range area must not be overstocked: no more than 5 birds per square metre of range.",
+            "An owner or manager whose animals are, or may be, infected with a controlled animal disease must report it to the state veterinary director immediately.",
+            "Newcastle disease and notifiable avian influenza are on the state list of controlled and notifiable animal diseases.",
+            "No animal may be slaughtered anywhere but an abattoir, with the exceptions below.",
+            "Slaughter for your own household, or for cultural or religious purposes, is exempt from the abattoir rule."
+          ],
+          "sources": [
+            {
+              "label": "SAPA Abridged Code of Practice: Commercial Layers, p. 1",
+              "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-commercial-layers.pdf"
+            },
+            {
+              "label": "Animal Diseases Act 35 of 1984, s.11(1)(b)(ii), p. 9",
+              "url": "https://www.eccogta.gov.za/wp-content/uploads/2025/01/Animal-Diseases-Act-No.-35-of-1984.pdf"
+            },
+            {
+              "label": "Department of Agriculture, Forestry and Fisheries, Controlled and Notifiable Animal Diseases (factsheet), p. 1",
+              "url": "https://www.elsenburg.com/wp-content/uploads/2023/07/Print-CONTROLLED-AND-NOTIFIABLE-ANIMAL-DISEASES.pdf"
+            },
+            {
+              "label": "Meat Safety Act 40 of 2000, s.7(1)(a), p. 6",
+              "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf"
+            },
+            {
+              "label": "Meat Safety Act 40 of 2000, s.7(2)(a), p. 6",
+              "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf"
+            },
+            {
+              "label": "SAPA Industry Profile 2024, Table 4: commercial standards cumulative to 90 weeks, p. 39",
+              "url": "https://www.sapoultry.co.za/wp-content/uploads/2026/01/SAPA-INDUSTRY-PROFILE-2024.pdf"
+            },
+            {
+              "label": "SAPA Layer Notes, Commercial Layers (training module, November 2013), p. 13",
+              "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf"
+            },
+            {
+              "label": "SAPA Industry Profile 2022, Table 4a (Breed standards in laying hens), p. 39",
+              "url": "https://www.sapoultry.co.za/wp-content/uploads/2024/02/SAPA-INDUSTRY-PROFILE-2022.pdf"
+            },
+            {
+              "label": "ARC Climate-Smart Agriculture Training Manual, Poultry production, p. 8",
+              "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf"
+            },
+            {
+              "label": "ARC Climate-Smart Agriculture, module 11, printed pp. 468–480",
+              "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf"
+            },
+            {
+              "label": "FAO: Small-scale poultry production, egg marketing",
+              "url": "https://www.fao.org/4/y5169e/y5169e0a.htm"
+            },
+            {
+              "label": "SAPA Layer Notes, Commercial Layers (training module, November 2013)",
+              "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf"
+            }
+          ]
+        },
+        {
+          "title": "Amadada: Meat duck (Pekin / Muscovy, backyard)",
+          "lines": [
+            "Izakhiwo ezikhona ezingu-1; ezihlongozwayo ezingu-0. Uhlobo lokukhiqiza olukhethiwe: inyama. Akucatshangwa isibalo sezilwane noma okukhiqizwayo.",
+            "Iseluleko sokuthenga: fanisa uhlobo/izilwane nomkhiqizo, ukudla kwendawo, isimo sezulu namandla okunakekela; qinisekisa nomeluleki wendawo wemfuyo noma wokufuywa kwezinyosi.",
+            "Inkomba yomkhiqizo wokuqala: amasonto angu-7–12. P44 = Pekin (7 weeks to slaughter); MR71 = Muscovy (10 weeks for ducks/hens, 12 weeks for drakes). Treated as 'time to first product' = age to slaughter, since this is a single-cycle meat enterprise (no repeat product like eggs). Non-South-African trial by Warsaw researchers, published in SAJAS; journal location does not establish local applicability.",
+            "Inkomba yokukhiqiza: 2.3–2.9 kg yesisindo esiphilayo/ngenyoni ngesikhathi sokuhlatshwa. Non-SA (Guyana study reporting a citation to Steklenev 1990); no SA-specific absolute slaughter live-weight figure was found (see gaps). 2.93 kg = Pekin at 8-10 weeks, 2.29 kg = Muscovy at 8-10 weeks - matches this enterprise's two breeds. The same LRRD paper's own experiment (Table 2, intensive system, Guyana) measured live weight at slaughter (8 weeks) as: Pekin drakes 2.53 kg, Pekin hens 2.29 kg, Muscovy drakes 2.47 kg, Muscovy hens 1.51 kg - broadly consistent with, but not merged into, the cited range above since it is a separate dataset/table in the same source. No sourced eggs/duck/year figure was found for either breed (see gaps); the LRRD and SAJAS sources used here studied ducks reared only for meat.",
+            "Hlola izinkomba ezinemininingwane zohlobo lokukhiqiza mayelana nokudla nezindawo zokuhlala. Fanisa isabelo sokudla nendawo nesigaba sesilwane nohlelo lokuhlalisa; nikeza amanzi ahlanzekile athembekile.",
+            "It is an offence to deny a duck food or water, or keep it somewhere lacking adequate space, ventilation, light or shelter from heat and cold.",
+            "Watch flocks for sudden deaths, ruffled feathers, swollen wattles/combs or a sudden drop in egg production - these are signs of avian influenza and should be reported at once.",
+            "Keep ducks away from wild birds and open water/feed that attracts them, and control visitors' access to duck housing, to reduce avian-influenza risk.",
+            "Ducks are one of the domesticated animal species listed in the Meat Safety Act, so its rules on registered abattoirs and hygiene apply to them.",
+            "Ducks slaughtered to be sold must be slaughtered at a registered abattoir; slaughter for the farmer's own consumption is exempt but that meat may not be sold.",
+            "At the abattoir, ducks must be handled humanely during loading, transport, offloading, housing, immobilising and killing, under the Animals Protection Act.",
+            "Ducks are birds/poultry, so an outbreak of avian influenza in a duck flock is a controlled animal disease under the Animal Diseases Act and must be reported to the state vet immediately."
+          ],
+          "sources": [
+            {
+              "label": "Animals Protection Act 71 of 1962 (consolidated text, s.2(1)(b)-(c)), p. 2",
+              "url": "https://cer.org.za/wp-content/uploads/2019/11/Animals-Protection-Act-No.-71-of-1962.pdf"
+            },
+            {
+              "label": "Western Cape Department of Agriculture, Avian Influenza (Bird Flu) factsheet, p. 2",
+              "url": "https://www.westerncape.gov.za/agriculture/files/wcg-blob-files?file=2024-07%2Favian-infl_0.pdf&type=file"
+            },
+            {
+              "label": "Meat Safety Act 40 of 2000, Schedule 1 (Animals to which this Act applies), p. 16",
+              "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf"
+            },
+            {
+              "label": "Meat Safety Act 40 of 2000, s.7, p. 6",
+              "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf"
+            },
+            {
+              "label": "Meat Safety Act 40 of 2000, s.9, p. 7",
+              "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf"
+            },
+            {
+              "label": "Damaziak et al. (2014), Influence of housing system on the growth and histological structure of duck muscles, S. Afr. J. Anim. Sci. 44(2): Poland trial",
+              "url": "https://www.scielo.org.za/scielo.php?script=sci_arttext&pid=S0375-15892014000200001"
+            },
+            {
+              "label": "Livestock Research for Rural Development 18(11) 2006 - Solomon et al. (Guyana; not an SA figure), citing Steklenev 1990",
+              "url": "https://www.lrrd.org/lrrd18/11/solo18154.htm"
+            }
+          ]
+        },
+        {
+          "title": "Ichibi elincane: Tilapia (Mozambique tilapia, small pond or tank)",
+          "lines": [
+            "Izakhiwo ezikhona ezingu-1; ezihlongozwayo ezingu-0. Uhlobo lokukhiqiza olukhethiwe: inhlanzi. Akucatshangwa isibalo sezilwane noma okukhiqizwayo.",
+            "Iseluleko sokuthenga: fanisa uhlobo/izilwane nomkhiqizo, ukudla kwendawo, isimo sezulu namandla okunakekela; qinisekisa nomeluleki wendawo wemfuyo noma wokufuywa kwezinyosi.",
+            "Inkomba yomkhiqizo wokuqala: amasonto angu-43.5–52.2. 10 months x 4.35 = 43.5 weeks; 12 months x 4.35 = 52.2 weeks. This is Mozambique Tilapia (O. mossambicus) grow-out time to harvestable size; the source separately states Nile Tilapia (O. niloticus) reaches harvestable maturity faster, in 6-10 months (= 26.1-43.5 weeks) — not used here as it is a different species with a different legal status (see 'legal').",
+            "Inkomba yokukhiqiza: 800 g wesisindo ngesikhathi sokuvuna/ngenhlanzi. Table 8-3 gives the Mozambique Tilapia's harvestable size as an approximate single figure ('+- 800g'), not a range, so [800, 800] is used rather than inventing a spread. The same table cell wraps '10-12' across a line break in the PDF ('10-\\n12'), kept verbatim. The table's Nile Tilapia row gives the same approximate weight (+-800g) reached faster, in 6-10 months — not used here because this dossier is framed around the indigenous, legally unrestricted Mozambique Tilapia per task instruction; see 'legal' for why Nile Tilapia is treated separately. No SA source was found giving a feed-conversion-based or per-hectare yield figure specific to O. mossambicus that could be converted to this per-fish unit without stitching numbers across documents, so outputUnit follows the source's own unit (grams harvest weight per fish) rather than being converted.",
+            "Inkomba yobudala/uhlelo: ARC makes tilapia suitability depend on water temperature: summer grow-out can be suitable anywhere in South Africa when water exceeds 20°C; growth is poor below 18°C and winter water below 13°C can kill farmed tilapia. The Highveld reference is a summer crop; tunnels can widen the range. Measure pond water and confirm stocking species and dates. Air climate or a mapped pond does not prove harvest months, fish numbers or food kg.",
+            "Hlola izinkomba ezinemininingwane zohlobo lokukhiqiza mayelana nokudla nezindawo zokuhlala. Fanisa isabelo sokudla nendawo nesigaba sesilwane nohlelo lokuhlalisa; nikeza amanzi ahlanzekile athembekile.",
+            "The indigenous Mozambique Tilapia (O. mossambicus) is not a listed invasive species and may be farmed without an alien-species permit; the faster-growing Nile Tilapia (O. niloticus) is.",
+            "Nile Tilapia (Oreochromis niloticus) is a nationally listed invasive fish species: Category 1b inside National Parks, Provincial Reserves, Mountain Catchment Areas and Forestry Reserves, and Category 3 in all other areas.",
+            "Outside protected areas Nile tilapia is Category 3: it may remain in prescribed areas or provinces, but further propagation or trade is prohibited.",
+            "Nile Tilapia has been listed under the NEMBA Alien and Invasive Species Regulations as requiring a permit to produce.",
+            "Producing an alien or invasive species (such as Nile Tilapia) is prohibited in areas designated under the Protected Areas Act and the Fish Sanctuary Act; a permit is required to produce it elsewhere.",
+            "Producing tilapia in South Africa requires a water use licence under the National Water Act."
+          ],
+          "sources": [
+            {
+              "label": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015), Table 8-3 (Mozambique vs. Nile Tilapia), p. 69",
+              "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf"
+            },
+            {
+              "label": "Dept. of Environmental Affairs / invasives.org.za, National Listed Invasive Species (NEMBA AIS Regulations booklet), List 7 (National List of Invasive Fresh-water Fish Species), p. 32",
+              "url": "https://invasives.org.za/wp-content/uploads/2022/05/South-Africa-Listed-Invasive-Species-A5-Booklet.pdf"
+            },
+            {
+              "label": "Dept. of Environmental Affairs / invasives.org.za, National Listed Invasive Species (NEMBA AIS Regulations booklet), p. 3",
+              "url": "https://invasives.org.za/wp-content/uploads/2022/05/South-Africa-Listed-Invasive-Species-A5-Booklet.pdf"
+            },
+            {
+              "label": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015), p. 69",
+              "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf"
+            },
+            {
+              "label": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015), p. 74",
+              "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf"
+            },
+            {
+              "label": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015), p. 75",
+              "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf"
+            },
+            {
+              "label": "ARC Aquaculture Production App: General FAQ, Can I grow tilapia on the Highveld?",
+              "url": "https://www.arc.agric.za/arc-api/AquacultureProductionApp/Pages/FAQs.aspx"
+            }
+          ]
+        },
+        {
+          "title": "Izimbuzi: Dairy goat (Saanen / Toggenburg / British Alpine)",
+          "lines": [
+            "Izakhiwo ezikhona ezingu-1; ezihlongozwayo ezingu-0. Uhlobo lokukhiqiza olukhethiwe: ubisi. Akucatshangwa isibalo sezilwane noma okukhiqizwayo.",
+            "Iseluleko sokuthenga: fanisa uhlobo/izilwane nomkhiqizo, ukudla kwendawo, isimo sezulu namandla okunakekela; qinisekisa nomeluleki wendawo wemfuyo noma wokufuywa kwezinyosi.",
+            "Hlela ngokuzala kwangempela kwamathole/amazinyane nokuncelisa. Izilwane ezingancelisi azinikezi ubisi.",
+            "Isikhathi somkhiqizo wokuqala: asinamthombo walolu hlobo lokukhiqiza.",
+            "Inkomba yokukhiqiza: 775.4–1073.4 kg wobisi/ngembuzikazi/ngesikhathi sokuncelisa sezinsuku ezingu-305. Lowest (≥7th parity) and highest (3rd parity) group means for milk yield per 305-day standardised lactation in 16,407 analysed South African ARC Saanen lactation records, 1955–2018, mostly intensive/semi-intensive stud herds. Original PDF Table 3 labels the last group ≥7th; HTML renders it >7th. Kept in kg, without litres conversion, annualisation or yield-by-age interpolation.",
+            "Inkomba yobudala/uhlelo: South African Saanen reference by lactation number, not age in years: mean milk mass per standardised 305-day lactation was 947.3 kg at first parity, 1043.2 at second, 1073.4 at third, 1020.3 at fourth, 972.8 at fifth, 901.6 at sixth and 775.4 at ≥7th. These ARC milk-recorded groups were mostly intensive/semi-intensive stud herds. Record actual kidding date, lactation number and collected milk; do not divide these totals evenly into months.",
+            "Inkomba yobudala/uhlelo: At Putukwane near Polokwane, 179 lactating does under extensive feeding with irregular supplementation were observed for 210 days after kidding. Mean milk mass was 1.45 kg/day for Saanen, 0.75 for British Alpine and 0.56 for Toggenburg during observed lactation. Early lactation exceeded mid and late lactation; March–April kidding outperformed October–November in this cohort. These conditions differ from stud-herd records. Discuss adapted stock and feed locally; these are not litres/day or year-round promises.",
+            "Hlola izinkomba ezinemininingwane zohlobo lokukhiqiza mayelana nokudla nezindawo zokuhlala. Fanisa isabelo sokudla nendawo nesigaba sesilwane nohlelo lokuhlalisa; nikeza amanzi ahlanzekile athembekile.",
+            "It is an offence to keep a goat somewhere with inadequate space, ventilation, light or shelter from heat, cold or weather, or to confine/tether it in a way that causes unnecessary suffering.",
+            "It is an offence to starve, under-feed, or deny water or food to a goat.",
+            "An owner must not let a goat stay in a dirty or parasite-infested condition, and must get veterinary or other treatment for a sick, injured or diseased animal when able to.",
+            "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: veterinary services enforce isolation and movement restrictions, and a suspected case must be reported.",
+            "Inside a declared FMD-affected zone, goats and their products (including milk) cannot be moved into, out of, or within the zone without a state veterinary movement permit and compliance with its conditions.",
+            "Every goat owner must register an official identification mark and mark their goats with it, under the Animal Identification Act.",
+            "A goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act (relevant when culled dairy does or male kids are sold for meat); slaughtering for the farmer's own consumption, or for cultural/religious purposes, is exempt but that meat may not then be sold."
+          ],
+          "sources": [
+            {
+              "label": "Animals Protection Act 71 of 1962, s.2(1)(b), p. 1",
+              "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf"
+            },
+            {
+              "label": "Animals Protection Act 71 of 1962, s.2(1)(c), p. 1",
+              "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf"
+            },
+            {
+              "label": "Animals Protection Act 71 of 1962, s.2(1)(e), p. 1",
+              "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf"
+            },
+            {
+              "label": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+              "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended"
+            },
+            {
+              "label": "Animal Identification Act 6 of 2002, s.7(1), p. 4",
+              "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf"
+            },
+            {
+              "label": "Meat Safety Act 40 of 2000, s.7(2)(a), p. 6",
+              "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf"
+            },
+            {
+              "label": "Malemela, Nemutandani & Tada (2024), South African Saanen goats, Table 3, p. 625",
+              "url": "https://www.scielo.org.za/pdf/sajas/v54n5/09.pdf"
+            },
+            {
+              "label": "Norris et al. (2011), Milk Production of Three Exotic Dairy Goat Genotypes in Limpopo Province, South Africa: methods, results and Table 2",
+              "url": "https://scialert.net/fulltext/?doi=ajava.2011.274.281"
+            },
+            {
+              "label": "Malemela, Nemutandani & Tada (2024), South African Saanen goats: Table 3, 305-day milk yield by parity, p. 625",
+              "url": "https://www.scielo.org.za/pdf/sajas/v54n5/09.pdf"
+            }
+          ]
+        },
+        {
+          "title": "Izimbuzi: Indigenous veld / communal goat (e.g. Nguni, Tankwa, Xhosa lob-ear)",
+          "lines": [
+            "Izakhiwo ezikhona ezingu-1; ezihlongozwayo ezingu-0. Uhlobo lokukhiqiza olukhethiwe: inyama. Akucatshangwa isibalo sezilwane noma okukhiqizwayo.",
+            "Iseluleko sokuthenga: fanisa uhlobo/izilwane nomkhiqizo, ukudla kwendawo, isimo sezulu namandla okunakekela; qinisekisa nomeluleki wendawo wemfuyo noma wokufuywa kwezinyosi.",
+            "Inkomba yomkhiqizo wokuqala: amasonto angu-69.6–78.3. This is age at first KIDDING (birth of first kids), not first weaned kids. 16 months x 4.35 = 69.6 weeks; 18 months x 4.35 = 78.3 weeks, from doe birth to her giving birth for the first time. Adding the source's own ~150-day (~5-month, ~21.75-week) weaning assumption would put first WEANED kids at roughly 91-100 weeks of doe age, but that compound figure is not shown as the primary value since the field is documented as 'age/time from start (hatch, birth) to first product' and first kidding is the clearer, directly-stated milestone; the weaning offset is noted here for transparency.",
+            "Inkomba yobudala/uhlelo: The 2016 government goat manual distinguishes indigenous, Boer, Savanna and Kalahari Red meat-purpose stock from milk/fibre breeds, with breeding objectives and individual birth, weaning, weight and sale records. Uncontrolled communal mating can produce births at any time; that does not establish meat or weaned-kid availability all year. Choose stock for the local system and record survival and product stage before forecasting quantities.",
+            "Inkomba yobudala/uhlelo: In KZN Highland Sourveld smallholder systems, winter and early-spring feed shortage can restrict goats. Autumn-kidding does feed kids through winter; spring-kidding does face late-pregnancy feed shortage, especially with late rains. Plan local winter feed and monitor weights with extension support; this is regional care context, not kg or a universal kidding calendar.",
+            "Hlola izinkomba ezinemininingwane zohlobo lokukhiqiza mayelana nokudla nezindawo zokuhlala. Fanisa isabelo sokudla nendawo nesigaba sesilwane nohlelo lokuhlalisa; nikeza amanzi ahlanzekile athembekile.",
+            "It is an offence to keep a goat somewhere with inadequate space, ventilation, light or shelter from heat, cold or weather, or to confine/tether it in a way that causes unnecessary suffering.",
+            "It is an offence to starve, under-feed, or deny water or food to a goat.",
+            "An owner must not let a goat stay in a dirty or parasite-infested condition, and must get veterinary or other treatment for a sick, injured or diseased animal when able to.",
+            "Winter feed shortage on communal sourveld is a known welfare/production risk: does that kid in autumn must feed kids through winter, and does that kid in spring suffer poor nutrition during late pregnancy, so winter feed supplementation matters.",
+            "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: veterinary services enforce isolation and movement restrictions, and a suspected case must be reported.",
+            "Inside a declared FMD-affected zone, goats and their products cannot be moved into, out of, or within the zone without a state veterinary movement permit and compliance with its conditions.",
+            "Every goat owner, including communal/smallholder owners, must register an official identification mark and mark their goats with it, under the Animal Identification Act.",
+            "A goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act; slaughtering it for the farmer's own consumption, or for cultural/religious purposes (including ceremonial slaughter, common with indigenous goats), is exempt from that rule, but that meat may not then be sold."
+          ],
+          "sources": [
+            {
+              "label": "Animals Protection Act 71 of 1962, s.2(1)(b), p. 1",
+              "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf"
+            },
+            {
+              "label": "Animals Protection Act 71 of 1962, s.2(1)(c), p. 1",
+              "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf"
+            },
+            {
+              "label": "Animals Protection Act 71 of 1962, s.2(1)(e), p. 1",
+              "url": "https://www.gov.za/sites/default/files/gcis_document/201505/act-71-1962.pdf"
+            },
+            {
+              "label": "Letty, B. & Madiba, S., KZN DARD. Constraints to Small-Scale Goat Production in the Highland Sourveld Area of KwaZulu-Natal, p. 3",
+              "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/RESEARCH_REPORTS/Constraints%20to%20Small-scale%20Goat%20Production%20in%20KZN.pdf"
+            },
+            {
+              "label": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+              "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended"
+            },
+            {
+              "label": "Animal Identification Act 6 of 2002, s.7(1), p. 4",
+              "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf"
+            },
+            {
+              "label": "Meat Safety Act 40 of 2000, s.7(2)(a), p. 6",
+              "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf"
+            },
+            {
+              "label": "DAFF (2016), Goat Training Manual: breeds p2, records pp4–5, uncontrolled mating section 2.4.6 p7, p. 7",
+              "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/genetic-resources/goat-training-manual-book_a4-layout_.pdf"
+            },
+            {
+              "label": "KZN DARD: Goat Production in KwaZulu-Natal, Highland Sourveld research and winter nutrition",
+              "url": "https://www.kzndard.gov.za/goat-production-in-kwazulu-natal"
+            },
+            {
+              "label": "Webb, E.C. & Mamabolo, M.J. (2004). Production and reproduction characteristics of South African indigenous goats in communal farming systems. S. Afr. J. Anim. Sci. 34(5):236-239",
+              "url": "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S0375-15892004000500070&lng=pt&nrm=iso"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "entry": {
+    "title": "Izinkukhu: Laying hens (commercial)",
+    "lines": [
+      "Izakhiwo ezikhona ezingu-1; ezihlongozwayo ezingu-0. Uhlobo lokukhiqiza olukhethiwe: amaqanda. Akucatshangwa isibalo sezilwane noma okukhiqizwayo.",
+      "Iseluleko sokuthenga: ukukhiqiza amaqanda, cela izikhukhukazi ezincane ezigonyiwe esezizozalela kumhlinzeki wezinkukhu ezizalelayo, namarekhodi eminyaka, ukudla nokugonywa.",
+      "Hlela ukudla okunomsoco olinganiselwe, amanzi ahlanzekile, umthunzi, umoya nokuvikelwa ezilwaneni ezidlayo. Ukutholakala kwamaqanda kuncike ezinkukhwini ezizalelayo, ubudala bazo, impilo nokunakekelwa; ihhoko lodwa alinikezi amaqanda.",
+      "Qoqa amaqanda njalo, ugcine okwandlalwe ezidlekeni kuhlanzekile futhi komile, uphathe/ugcine amaqanda ngokucophelela ukuze asetshenziswe ekhaya noma athengiswe.",
+      "Inkomba yesikhathi: With a constant 14–16 hour light day, commercial hens keep laying at a high rate all year. Le nkomba yokuphatha kwezohwebo ayisho ukutholakala kwamaqanda kwasekhaya okulinganayo ngokwemvelo.",
+      "Inkomba yomkhiqizo wokuqala: amasonto angu-21. Ubudala benkukhu kusukela ekuchanyuselweni; qinisekisa uhlobo nokukhuliswa nomhlinzeki. Izinkukhu esezizozalela ziqala kamuva kulo mjikelezo.",
+      "Inkomba yokukhiqiza: 407.1–428.6 amaqanda/ngenkukhukazi efakwe endlini (hen housed), umjikelezo wokubekela kuze kube amasonto angu-90. Table 4a's cumulative 'Eggs/hen housed' for five commercial strains; the same table gives 'Age at depop. weeks 90.0' for every strain. Commercial barn/cage average, not a free-range smallholder trial. Kept as the source gives it: a per-year rate would need a point-of-lay age from another document.",
+      "Inkomba yobudala/uhlelo: SAPA 2024 commercial strain standards cumulative to 90 weeks: Dekalb Amberlink 429 eggs/hen housed, Dekalb Brown 428, Hy-Line Silver Brown 435, Hy-Line Brown 434 and Lohmann Brown Lite 413. These are full-cycle objectives, not eggs per calendar year or a smallholder forecast. Purchase age, actual onset of lay, surviving laying hens, feed, water and lighting need separate records.",
+      "Hlola izinkomba ezinemininingwane zohlobo lokukhiqiza mayelana nokudla nezindawo zokuhlala. Fanisa isabelo sokudla nendawo nesigaba sesilwane nohlelo lokuhlalisa; nikeza amanzi ahlanzekile athembekile.",
+      "In free-range systems, hens must have access to the outdoor range for at least 8 hours a day in daylight.",
+      "Where individual nest boxes are used, at least one nest for every 8 hens.",
+      "Hens need at least 8 hours of continuous darkness in every 24-hour cycle to rest properly.",
+      "Floor housing needs litter on at least a third (33%) of the floor.",
+      "The outdoor free-range area must not be overstocked: no more than 5 birds per square metre of range.",
+      "An owner or manager whose animals are, or may be, infected with a controlled animal disease must report it to the state veterinary director immediately.",
+      "Newcastle disease and notifiable avian influenza are on the state list of controlled and notifiable animal diseases.",
+      "No animal may be slaughtered anywhere but an abattoir, with the exceptions below.",
+      "Slaughter for your own household, or for cultural or religious purposes, is exempt from the abattoir rule."
+    ],
+    "sources": [
+      {
+        "label": "SAPA Abridged Code of Practice: Commercial Layers, p. 1",
+        "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-commercial-layers.pdf"
+      },
+      {
+        "label": "Animal Diseases Act 35 of 1984, s.11(1)(b)(ii), p. 9",
+        "url": "https://www.eccogta.gov.za/wp-content/uploads/2025/01/Animal-Diseases-Act-No.-35-of-1984.pdf"
+      },
+      {
+        "label": "Department of Agriculture, Forestry and Fisheries, Controlled and Notifiable Animal Diseases (factsheet), p. 1",
+        "url": "https://www.elsenburg.com/wp-content/uploads/2023/07/Print-CONTROLLED-AND-NOTIFIABLE-ANIMAL-DISEASES.pdf"
+      },
+      {
+        "label": "Meat Safety Act 40 of 2000, s.7(1)(a), p. 6",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf"
+      },
+      {
+        "label": "Meat Safety Act 40 of 2000, s.7(2)(a), p. 6",
+        "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf"
+      },
+      {
+        "label": "SAPA Industry Profile 2024, Table 4: commercial standards cumulative to 90 weeks, p. 39",
+        "url": "https://www.sapoultry.co.za/wp-content/uploads/2026/01/SAPA-INDUSTRY-PROFILE-2024.pdf"
+      },
+      {
+        "label": "SAPA Layer Notes, Commercial Layers (training module, November 2013), p. 13",
+        "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf"
+      },
+      {
+        "label": "SAPA Industry Profile 2022, Table 4a (Breed standards in laying hens), p. 39",
+        "url": "https://www.sapoultry.co.za/wp-content/uploads/2024/02/SAPA-INDUSTRY-PROFILE-2022.pdf"
+      },
+      {
+        "label": "ARC Climate-Smart Agriculture Training Manual, Poultry production, p. 8",
+        "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf"
+      },
+      {
+        "label": "ARC Climate-Smart Agriculture, module 11, printed pp. 468–480",
+        "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf"
+      },
+      {
+        "label": "FAO: Small-scale poultry production, egg marketing",
+        "url": "https://www.fao.org/4/y5169e/y5169e0a.htm"
+      },
+      {
+        "label": "SAPA Layer Notes, Commercial Layers (training module, November 2013)",
+        "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf"
+      }
+    ]
+  },
+  "beforePages": [
+    "ImbewuField                                                                                             UMHLAHLANDLELA WOKUKHIQIZA\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nNgaphambi kokuthenga noma ukuqala\nSebenzisa lokho okubonile epulazini nohlu olufushane locwaningo. Qinisekisa izinketho endaweni ngaphambi\nkokuthenga.\n\nIqembu lesimo sezulu locwaningo: Highveld. Leli qembu alisona isincomo esiqinisekisiwe saleli pulazi.\n\nLokho okubikile ngaleli pulazi\nAmanzi ngesikhathi esomile\nAkurekhodiwe. Qedela inhlolovo yendawo bese uqinisekisa amanzi ngaphambi kokukhetha uhlelo oludinga izinsiza\neziningi.\n\nIsithwathwa kuleli pulazi\nOkubonwe ngesithwathwa endaweni akurekhodiwe. Izilinganiso zanyanga zonke zesathelayithi azikwazi ukuthola\nizinsuku zokuqala nezokugcina zesithwathwa.\n\nIlanga nokuphuma kwamanzi\nIlanga: akurekhodiwe.\nUkuphuma kwamanzi: akurekhodiwe. Kusadingeka ukuhlola imiphumela yokuhlolwa komhlabathi nezidingo\nzesitshalo ngasinye.\n\nAmarekhodi onyaka wokubika - hhayi isibikezelo\nIzamba nezinyanga zonyaka wokubika odlule zichaza lokho okwabikwa. Azithembisi ukudla ohlelweni oluzayo.\n\nOriginal eggs {year} $&\nIsamba sonyaka esibikwe umlimi sango-2025: 240 eggs.\nOkusetshenziswa ekhaya: 0 eggs. Okuthengisiwe: akurekhodiwe.\nIzinyanga zokuvuna ezibikiwe: Jun, Jul. Lokhu ukubonwe kwinhlolovo, akusona isibikezelo esisha sokukhiqiza.\nHlola iyunithi nezamba ezirekhodiwe ngaphambi kokusebenzisa lo mugqa.\n\nFish\nIsamba sonyaka esibikwe umlimi sango-2025: akurekhodiwe.\nOkusetshenziswa ekhaya: akurekhodiwe. Okuthengisiwe: akurekhodiwe.\nIzinyanga zokuvuna ezibikiwe: akurekhodiwe. Lokhu ukubonwe kwinhlolovo, akusona isibikezelo esisha\nsokukhiqiza.\nHlola iyunithi nezamba ezirekhodiwe ngaphambi kokusebenzisa lo mugqa.\n\nEminye imifino\nIsamba sonyaka esibikwe umlimi sango-2025: 12 kg.\nOkusetshenziswa ekhaya: 7 kg. Okuthengisiwe: 3 kg.\nIzinyanga zokuvuna ezibikiwe: Jan, Dis. Lokhu ukubonwe kwinhlolovo, akusona isibikezelo esisha sokukhiqiza.\nHlola iyunithi nezamba ezirekhodiwe ngaphambi kokusebenzisa lo mugqa.\n\n\n\n\nSynthetic graph source {count} $&                                                                                                          1\nAwukahlolwa uchwepheshe wezolimo — umhlahlandlela wokuhlela, hhayi umyalelo. Wubonise kumeluleki wakho wezolimo, futhi uhlole umhlabathi\nngaphambi kokuchitha imali kuwo.\nUkuhumusha okusabuyekezwa: akukahlolwa ngumuntu olwazi kahle lolu limi. Hlola umbhalo wesiNgisi ngaphambi kokwenza okushiwoyo.\n",
+    "ImbewuField                                                                                             UMHLAHLANDLELA WOKUKHIQIZA\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nIzinketho zepulazi - kuyaqhubeka\nSebenzisa lokho okubonile epulazini nohlu olufushane locwaningo. Qinisekisa izinketho endaweni ngaphambi\nkokuthenga.\n\nImikhiqizo yezilwane nokunakekela\nIzinkukhu: Laying hens (commercial)\nIzakhiwo ezikhona ezingu-1; ezihlongozwayo ezingu-0. Uhlobo lokukhiqiza olukhethiwe: amaqanda.\nAkucatshangwa isibalo sezilwane noma okukhiqizwayo.\nIseluleko sokuthenga: ukukhiqiza amaqanda, cela izikhukhukazi ezincane ezigonyiwe esezizozalela kumhlinzeki\nwezinkukhu ezizalelayo, namarekhodi eminyaka, ukudla nokugonywa.\nHlela ukudla okunomsoco olinganiselwe, amanzi ahlanzekile, umthunzi, umoya nokuvikelwa ezilwaneni ezidlayo.\nUkutholakala kwamaqanda kuncike ezinkukhwini ezizalelayo, ubudala bazo, impilo nokunakekelwa; ihhoko lodwa\nalinikezi amaqanda.\nQoqa amaqanda njalo, ugcine okwandlalwe ezidlekeni kuhlanzekile futhi komile, uphathe/ugcine amaqanda\nngokucophelela ukuze asetshenziswe ekhaya noma athengiswe.\nInkomba yesikhathi: With a constant 14–16 hour light day, commercial hens keep laying at a high rate all year. Le\nnkomba yokuphatha kwezohwebo ayisho ukutholakala kwamaqanda kwasekhaya okulinganayo ngokwemvelo.\nInkomba yomkhiqizo wokuqala: amasonto angu-21. Ubudala benkukhu kusukela ekuchanyuselweni; qinisekisa\nuhlobo nokukhuliswa nomhlinzeki. Izinkukhu esezizozalela ziqala kamuva kulo mjikelezo.\nInkomba yokukhiqiza: 407.1–428.6 amaqanda/ngenkukhukazi efakwe endlini (hen housed), umjikelezo wokubekela\nkuze kube amasonto angu-90. Table 4a's cumulative 'Eggs/hen housed' for five commercial strains; the same table\ngives 'Age at depop. weeks 90.0' for every strain. Commercial barn/cage average, not a free-range smallholder trial.\nKept as the source gives it: a per-year rate would need a point-of-lay age from another document.\nInkomba yobudala/uhlelo: SAPA 2024 commercial strain standards cumulative to 90 weeks: Dekalb Amberlink 429\neggs/hen housed, Dekalb Brown 428, Hy-Line Silver Brown 435, Hy-Line Brown 434 and Lohmann Brown Lite 413.\nThese are full-cycle objectives, not eggs per calendar year or a smallholder forecast. Purchase age, actual onset of\nlay, surviving laying hens, feed, water and lighting need separate records.\nHlola izinkomba ezinemininingwane zohlobo lokukhiqiza mayelana nokudla nezindawo zokuhlala. Fanisa isabelo\nsokudla nendawo nesigaba sesilwane nohlelo lokuhlalisa; nikeza amanzi ahlanzekile athembekile.\nIn free-range systems, hens must have access to the outdoor range for at least 8 hours a day in daylight.\nWhere individual nest boxes are used, at least one nest for every 8 hens.\nHens need at least 8 hours of continuous darkness in every 24-hour cycle to rest properly.\nFloor housing needs litter on at least a third (33%) of the floor.\nThe outdoor free-range area must not be overstocked: no more than 5 birds per square metre of range.\nAn owner or manager whose animals are, or may be, infected with a controlled animal disease must report it to the\nstate veterinary director immediately.\nNewcastle disease and notifiable avian influenza are on the state list of controlled and notifiable animal diseases.\nNo animal may be slaughtered anywhere but an abattoir, with the exceptions below.\nSlaughter for your own household, or for cultural or religious purposes, is exempt from the abattoir rule.\nUmthombo: SAPA Abridged Code of Practice: Commercial Layers, p. 1\nUmthombo: Animal Diseases Act 35 of 1984, s.11(1)(b)(ii), p. 9\nUmthombo: Department of Agriculture, Forestry and Fisheries, Controlled and Notifiable Animal Diseases (factsheet), p. 1\nUmthombo: Meat Safety Act 40 of 2000, s.7(1)(a), p. 6\nUmthombo: Meat Safety Act 40 of 2000, s.7(2)(a), p. 6\nUmthombo: SAPA Industry Profile 2024, Table 4: commercial standards cumulative to 90 weeks, p. 39\nUmthombo: SAPA Layer Notes, Commercial Layers (training module, November 2013), p. 13\n\n\n\nSynthetic graph source {count} $&                                                                                                          2\nAwukahlolwa uchwepheshe wezolimo — umhlahlandlela wokuhlela, hhayi umyalelo. Wubonise kumeluleki wakho wezolimo, futhi uhlole umhlabathi\nngaphambi kokuchitha imali kuwo.\nUkuhumusha okusabuyekezwa: akukahlolwa ngumuntu olwazi kahle lolu limi. Hlola umbhalo wesiNgisi ngaphambi kokwenza okushiwoyo.\n",
+    "ImbewuField                                                                                             UMHLAHLANDLELA WOKUKHIQIZA\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nIzinketho zepulazi - kuyaqhubeka\nSebenzisa lokho okubonile epulazini nohlu olufushane locwaningo. Qinisekisa izinketho endaweni ngaphambi\nkokuthenga.\n\nImikhiqizo yezilwane nokunakekela (kuyaqhubeka)\nIzinkukhu: Laying hens (commercial) (kuyaqhubeka)\nUmthombo: SAPA Industry Profile 2022, Table 4a (Breed standards in laying hens), p. 39\nUmthombo: ARC Climate-Smart Agriculture Training Manual, Poultry production, p. 8\nUmthombo: ARC Climate-Smart Agriculture, module 11, printed pp. 468–480\nUmthombo: FAO: Small-scale poultry production, egg marketing\nUmthombo: SAPA Layer Notes, Commercial Layers (training module, November 2013)\n\n\n\n\nSynthetic graph source {count} $&                                                                                                          3\nAwukahlolwa uchwepheshe wezolimo — umhlahlandlela wokuhlela, hhayi umyalelo. Wubonise kumeluleki wakho wezolimo, futhi uhlole umhlabathi\nngaphambi kokuchitha imali kuwo.\nUkuhumusha okusabuyekezwa: akukahlolwa ngumuntu olwazi kahle lolu limi. Hlola umbhalo wesiNgisi ngaphambi kokwenza okushiwoyo.\n",
+    "ImbewuField                                                                                             UMHLAHLANDLELA WOKUKHIQIZA\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nIzinketho zepulazi - kuyaqhubeka\nSebenzisa lokho okubonile epulazini nohlu olufushane locwaningo. Qinisekisa izinketho endaweni ngaphambi\nkokuthenga.\n\nImikhiqizo yezilwane nokunakekela (kuyaqhubeka)\nAmadada: Meat duck (Pekin / Muscovy, backyard)\nIzakhiwo ezikhona ezingu-1; ezihlongozwayo ezingu-0. Uhlobo lokukhiqiza olukhethiwe: inyama. Akucatshangwa\nisibalo sezilwane noma okukhiqizwayo.\nIseluleko sokuthenga: fanisa uhlobo/izilwane nomkhiqizo, ukudla kwendawo, isimo sezulu namandla okunakekela;\nqinisekisa nomeluleki wendawo wemfuyo noma wokufuywa kwezinyosi.\nInkomba yomkhiqizo wokuqala: amasonto angu-7–12. P44 = Pekin (7 weeks to slaughter); MR71 = Muscovy (10\nweeks for ducks/hens, 12 weeks for drakes). Treated as 'time to first product' = age to slaughter, since this is a\nsingle-cycle meat enterprise (no repeat product like eggs). Non-South-African trial by Warsaw researchers,\npublished in SAJAS; journal location does not establish local applicability.\nInkomba yokukhiqiza: 2.3–2.9 kg yesisindo esiphilayo/ngenyoni ngesikhathi sokuhlatshwa. Non-SA (Guyana study\nreporting a citation to Steklenev 1990); no SA-specific absolute slaughter live-weight figure was found (see gaps).\n2.93 kg = Pekin at 8-10 weeks, 2.29 kg = Muscovy at 8-10 weeks - matches this enterprise's two breeds. The same\nLRRD paper's own experiment (Table 2, intensive system, Guyana) measured live weight at slaughter (8 weeks) as:\nPekin drakes 2.53 kg, Pekin hens 2.29 kg, Muscovy drakes 2.47 kg, Muscovy hens 1.51 kg - broadly consistent with,\nbut not merged into, the cited range above since it is a separate dataset/table in the same source. No sourced\neggs/duck/year figure was found for either breed (see gaps); the LRRD and SAJAS sources used here studied ducks\nreared only for meat.\nHlola izinkomba ezinemininingwane zohlobo lokukhiqiza mayelana nokudla nezindawo zokuhlala. Fanisa isabelo\nsokudla nendawo nesigaba sesilwane nohlelo lokuhlalisa; nikeza amanzi ahlanzekile athembekile.\nIt is an offence to deny a duck food or water, or keep it somewhere lacking adequate space, ventilation, light or\nshelter from heat and cold.\nWatch flocks for sudden deaths, ruffled feathers, swollen wattles/combs or a sudden drop in egg production -\nthese are signs of avian influenza and should be reported at once.\nKeep ducks away from wild birds and open water/feed that attracts them, and control visitors' access to duck\nhousing, to reduce avian-influenza risk.\nDucks are one of the domesticated animal species listed in the Meat Safety Act, so its rules on registered abattoirs\nand hygiene apply to them.\nDucks slaughtered to be sold must be slaughtered at a registered abattoir; slaughter for the farmer's own\nconsumption is exempt but that meat may not be sold.\nAt the abattoir, ducks must be handled humanely during loading, transport, offloading, housing, immobilising and\nkilling, under the Animals Protection Act.\nDucks are birds/poultry, so an outbreak of avian influenza in a duck flock is a controlled animal disease under the\nAnimal Diseases Act and must be reported to the state vet immediately.\nUmthombo: Animals Protection Act 71 of 1962 (consolidated text, s.2(1)(b)-(c)), p. 2\nUmthombo: Western Cape Department of Agriculture, Avian Influenza (Bird Flu) factsheet, p. 2\nUmthombo: Meat Safety Act 40 of 2000, Schedule 1 (Animals to which this Act applies), p. 16\nUmthombo: Meat Safety Act 40 of 2000, s.7, p. 6\nUmthombo: Meat Safety Act 40 of 2000, s.9, p. 7\nUmthombo: Damaziak et al. (2014), Influence of housing system on the growth and histological structure of duck muscles, S. Afr. J. Anim.\nSci. 44(2): Poland trial\nUmthombo: Livestock Research for Rural Development 18(11) 2006 - Solomon et al. (Guyana; not an SA figure), citing Steklenev 1990\n\n\n\n\nSynthetic graph source {count} $&                                                                                                          4\nAwukahlolwa uchwepheshe wezolimo — umhlahlandlela wokuhlela, hhayi umyalelo. Wubonise kumeluleki wakho wezolimo, futhi uhlole umhlabathi\nngaphambi kokuchitha imali kuwo.\nUkuhumusha okusabuyekezwa: akukahlolwa ngumuntu olwazi kahle lolu limi. Hlola umbhalo wesiNgisi ngaphambi kokwenza okushiwoyo.\n",
+    "ImbewuField                                                                                             UMHLAHLANDLELA WOKUKHIQIZA\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nIzinketho zepulazi - kuyaqhubeka\nSebenzisa lokho okubonile epulazini nohlu olufushane locwaningo. Qinisekisa izinketho endaweni ngaphambi\nkokuthenga.\n\nImikhiqizo yezilwane nokunakekela (kuyaqhubeka)\nIchibi elincane: Tilapia (Mozambique tilapia, small pond or tank)\nIzakhiwo ezikhona ezingu-1; ezihlongozwayo ezingu-0. Uhlobo lokukhiqiza olukhethiwe: inhlanzi. Akucatshangwa\nisibalo sezilwane noma okukhiqizwayo.\nIseluleko sokuthenga: fanisa uhlobo/izilwane nomkhiqizo, ukudla kwendawo, isimo sezulu namandla okunakekela;\nqinisekisa nomeluleki wendawo wemfuyo noma wokufuywa kwezinyosi.\nInkomba yomkhiqizo wokuqala: amasonto angu-43.5–52.2. 10 months x 4.35 = 43.5 weeks; 12 months x 4.35 = 52.2\nweeks. This is Mozambique Tilapia (O. mossambicus) grow-out time to harvestable size; the source separately\nstates Nile Tilapia (O. niloticus) reaches harvestable maturity faster, in 6-10 months (= 26.1-43.5 weeks) — not used\nhere as it is a different species with a different legal status (see 'legal').\nInkomba yokukhiqiza: 800 g wesisindo ngesikhathi sokuvuna/ngenhlanzi. Table 8-3 gives the Mozambique Tilapia's\nharvestable size as an approximate single figure ('+- 800g'), not a range, so [800, 800] is used rather than inventing\na spread. The same table cell wraps '10-12' across a line break in the PDF ('10-\\n12'), kept verbatim. The table's Nile\nTilapia row gives the same approximate weight (+-800g) reached faster, in 6-10 months — not used here because\nthis dossier is framed around the indigenous, legally unrestricted Mozambique Tilapia per task instruction; see\n'legal' for why Nile Tilapia is treated separately. No SA source was found giving a feed-conversion-based or\nper-hectare yield figure specific to O. mossambicus that could be converted to this per-fish unit without stitching\nnumbers across documents, so outputUnit follows the source's own unit (grams harvest weight per fish) rather\nthan being converted.\nInkomba yobudala/uhlelo: ARC makes tilapia suitability depend on water temperature: summer grow-out can be\nsuitable anywhere in South Africa when water exceeds 20°C; growth is poor below 18°C and winter water below\n13°C can kill farmed tilapia. The Highveld reference is a summer crop; tunnels can widen the range. Measure pond\nwater and confirm stocking species and dates. Air climate or a mapped pond does not prove harvest months, fish\nnumbers or food kg.\nHlola izinkomba ezinemininingwane zohlobo lokukhiqiza mayelana nokudla nezindawo zokuhlala. Fanisa isabelo\nsokudla nendawo nesigaba sesilwane nohlelo lokuhlalisa; nikeza amanzi ahlanzekile athembekile.\nThe indigenous Mozambique Tilapia (O. mossambicus) is not a listed invasive species and may be farmed without\nan alien-species permit; the faster-growing Nile Tilapia (O. niloticus) is.\nNile Tilapia (Oreochromis niloticus) is a nationally listed invasive fish species: Category 1b inside National Parks,\nProvincial Reserves, Mountain Catchment Areas and Forestry Reserves, and Category 3 in all other areas.\nOutside protected areas Nile tilapia is Category 3: it may remain in prescribed areas or provinces, but further\npropagation or trade is prohibited.\nNile Tilapia has been listed under the NEMBA Alien and Invasive Species Regulations as requiring a permit to\nproduce.\nProducing an alien or invasive species (such as Nile Tilapia) is prohibited in areas designated under the Protected\nAreas Act and the Fish Sanctuary Act; a permit is required to produce it elsewhere.\nProducing tilapia in South Africa requires a water use licence under the National Water Act.\nUmthombo: IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015),\nTable 8-3 (Mozambique vs. Nile Tilapia), p. 69\nUmthombo: Dept. of Environmental Affairs / invasives.org.za, National Listed Invasive Species (NEMBA AIS Regulations booklet), List 7\n(National List of Invasive Fresh-water Fish Species), p. 32\nUmthombo: Dept. of Environmental Affairs / invasives.org.za, National Listed Invasive Species (NEMBA AIS Regulations booklet), p. 3\nUmthombo: IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015),\np. 69\n\n\n\nSynthetic graph source {count} $&                                                                                                          5\nAwukahlolwa uchwepheshe wezolimo — umhlahlandlela wokuhlela, hhayi umyalelo. Wubonise kumeluleki wakho wezolimo, futhi uhlole umhlabathi\nngaphambi kokuchitha imali kuwo.\nUkuhumusha okusabuyekezwa: akukahlolwa ngumuntu olwazi kahle lolu limi. Hlola umbhalo wesiNgisi ngaphambi kokwenza okushiwoyo.\n",
+    "ImbewuField                                                                                             UMHLAHLANDLELA WOKUKHIQIZA\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nIzinketho zepulazi - kuyaqhubeka\nSebenzisa lokho okubonile epulazini nohlu olufushane locwaningo. Qinisekisa izinketho endaweni ngaphambi\nkokuthenga.\n\nImikhiqizo yezilwane nokunakekela (kuyaqhubeka)\nIchibi elincane: Tilapia (Mozambique tilapia, small pond or tank) (kuyaqhubeka)\nUmthombo: IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015),\np. 74\nUmthombo: IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015),\np. 75\nUmthombo: ARC Aquaculture Production App: General FAQ, Can I grow tilapia on the Highveld?\n\n\n\n\nSynthetic graph source {count} $&                                                                                                          6\nAwukahlolwa uchwepheshe wezolimo — umhlahlandlela wokuhlela, hhayi umyalelo. Wubonise kumeluleki wakho wezolimo, futhi uhlole umhlabathi\nngaphambi kokuchitha imali kuwo.\nUkuhumusha okusabuyekezwa: akukahlolwa ngumuntu olwazi kahle lolu limi. Hlola umbhalo wesiNgisi ngaphambi kokwenza okushiwoyo.\n",
+    "ImbewuField                                                                                             UMHLAHLANDLELA WOKUKHIQIZA\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nIzinketho zepulazi - kuyaqhubeka\nSebenzisa lokho okubonile epulazini nohlu olufushane locwaningo. Qinisekisa izinketho endaweni ngaphambi\nkokuthenga.\n\nImikhiqizo yezilwane nokunakekela (kuyaqhubeka)\nIzimbuzi: Dairy goat (Saanen / Toggenburg / British Alpine)\nIzakhiwo ezikhona ezingu-1; ezihlongozwayo ezingu-0. Uhlobo lokukhiqiza olukhethiwe: ubisi. Akucatshangwa\nisibalo sezilwane noma okukhiqizwayo.\nIseluleko sokuthenga: fanisa uhlobo/izilwane nomkhiqizo, ukudla kwendawo, isimo sezulu namandla okunakekela;\nqinisekisa nomeluleki wendawo wemfuyo noma wokufuywa kwezinyosi.\nHlela ngokuzala kwangempela kwamathole/amazinyane nokuncelisa. Izilwane ezingancelisi azinikezi ubisi.\nIsikhathi somkhiqizo wokuqala: asinamthombo walolu hlobo lokukhiqiza.\nInkomba yokukhiqiza: 775.4–1073.4 kg wobisi/ngembuzikazi/ngesikhathi sokuncelisa sezinsuku ezingu-305. Lowest\n(>=7th parity) and highest (3rd parity) group means for milk yield per 305-day standardised lactation in 16,407\nanalysed South African ARC Saanen lactation records, 1955–2018, mostly intensive/semi-intensive stud herds.\nOriginal PDF Table 3 labels the last group >=7th; HTML renders it >7th. Kept in kg, without litres conversion,\nannualisation or yield-by-age interpolation.\nInkomba yobudala/uhlelo: South African Saanen reference by lactation number, not age in years: mean milk mass\nper standardised 305-day lactation was 947.3 kg at first parity, 1043.2 at second, 1073.4 at third, 1020.3 at fourth,\n972.8 at fifth, 901.6 at sixth and 775.4 at >=7th. These ARC milk-recorded groups were mostly\nintensive/semi-intensive stud herds. Record actual kidding date, lactation number and collected milk; do not divide\nthese totals evenly into months.\nInkomba yobudala/uhlelo: At Putukwane near Polokwane, 179 lactating does under extensive feeding with\nirregular supplementation were observed for 210 days after kidding. Mean milk mass was 1.45 kg/day for Saanen,\n0.75 for British Alpine and 0.56 for Toggenburg during observed lactation. Early lactation exceeded mid and late\nlactation; March–April kidding outperformed October–November in this cohort. These conditions differ from\nstud-herd records. Discuss adapted stock and feed locally; these are not litres/day or year-round promises.\nHlola izinkomba ezinemininingwane zohlobo lokukhiqiza mayelana nokudla nezindawo zokuhlala. Fanisa isabelo\nsokudla nendawo nesigaba sesilwane nohlelo lokuhlalisa; nikeza amanzi ahlanzekile athembekile.\nIt is an offence to keep a goat somewhere with inadequate space, ventilation, light or shelter from heat, cold or\nweather, or to confine/tether it in a way that causes unnecessary suffering.\nIt is an offence to starve, under-feed, or deny water or food to a goat.\nAn owner must not let a goat stay in a dirty or parasite-infested condition, and must get veterinary or other\ntreatment for a sick, injured or diseased animal when able to.\nFoot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: veterinary services\nenforce isolation and movement restrictions, and a suspected case must be reported.\nInside a declared FMD-affected zone, goats and their products (including milk) cannot be moved into, out of, or\nwithin the zone without a state veterinary movement permit and compliance with its conditions.\nEvery goat owner must register an official identification mark and mark their goats with it, under the Animal\nIdentification Act.\nA goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act (relevant when culled\ndairy does or male kids are sold for meat); slaughtering for the farmer's own consumption, or for cultural/religious\npurposes, is exempt but that meat may not then be sold.\nUmthombo: Animals Protection Act 71 of 1962, s.2(1)(b), p. 1\nUmthombo: Animals Protection Act 71 of 1962, s.2(1)(c), p. 1\nUmthombo: Animals Protection Act 71 of 1962, s.2(1)(e), p. 1\nUmthombo: SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)\n\n\n\nSynthetic graph source {count} $&                                                                                                          7\nAwukahlolwa uchwepheshe wezolimo — umhlahlandlela wokuhlela, hhayi umyalelo. Wubonise kumeluleki wakho wezolimo, futhi uhlole umhlabathi\nngaphambi kokuchitha imali kuwo.\nUkuhumusha okusabuyekezwa: akukahlolwa ngumuntu olwazi kahle lolu limi. Hlola umbhalo wesiNgisi ngaphambi kokwenza okushiwoyo.\n",
+    "ImbewuField                                                                                             UMHLAHLANDLELA WOKUKHIQIZA\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nIzinketho zepulazi - kuyaqhubeka\nSebenzisa lokho okubonile epulazini nohlu olufushane locwaningo. Qinisekisa izinketho endaweni ngaphambi\nkokuthenga.\n\nImikhiqizo yezilwane nokunakekela (kuyaqhubeka)\nIzimbuzi: Dairy goat (Saanen / Toggenburg / British Alpine) (kuyaqhubeka)\nUmthombo: Animal Identification Act 6 of 2002, s.7(1), p. 4\nUmthombo: Meat Safety Act 40 of 2000, s.7(2)(a), p. 6\nUmthombo: Malemela, Nemutandani & Tada (2024), South African Saanen goats, Table 3, p. 625\nUmthombo: Norris et al. (2011), Milk Production of Three Exotic Dairy Goat Genotypes in Limpopo Province, South Africa: methods,\nresults and Table 2\nUmthombo: Malemela, Nemutandani & Tada (2024), South African Saanen goats: Table 3, 305-day milk yield by parity, p. 625\n\n\n\n\nSynthetic graph source {count} $&                                                                                                          8\nAwukahlolwa uchwepheshe wezolimo — umhlahlandlela wokuhlela, hhayi umyalelo. Wubonise kumeluleki wakho wezolimo, futhi uhlole umhlabathi\nngaphambi kokuchitha imali kuwo.\nUkuhumusha okusabuyekezwa: akukahlolwa ngumuntu olwazi kahle lolu limi. Hlola umbhalo wesiNgisi ngaphambi kokwenza okushiwoyo.\n",
+    "ImbewuField                                                                                             UMHLAHLANDLELA WOKUKHIQIZA\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nIzinketho zepulazi - kuyaqhubeka\nSebenzisa lokho okubonile epulazini nohlu olufushane locwaningo. Qinisekisa izinketho endaweni ngaphambi\nkokuthenga.\n\nImikhiqizo yezilwane nokunakekela (kuyaqhubeka)\nIzimbuzi: Indigenous veld / communal goat (e.g. Nguni, Tankwa, Xhosa lob-ear)\nIzakhiwo ezikhona ezingu-1; ezihlongozwayo ezingu-0. Uhlobo lokukhiqiza olukhethiwe: inyama. Akucatshangwa\nisibalo sezilwane noma okukhiqizwayo.\nIseluleko sokuthenga: fanisa uhlobo/izilwane nomkhiqizo, ukudla kwendawo, isimo sezulu namandla okunakekela;\nqinisekisa nomeluleki wendawo wemfuyo noma wokufuywa kwezinyosi.\nInkomba yomkhiqizo wokuqala: amasonto angu-69.6–78.3. This is age at first KIDDING (birth of first kids), not first\nweaned kids. 16 months x 4.35 = 69.6 weeks; 18 months x 4.35 = 78.3 weeks, from doe birth to her giving birth for\nthe first time. Adding the source's own ~150-day (~5-month, ~21.75-week) weaning assumption would put first\nWEANED kids at roughly 91-100 weeks of doe age, but that compound figure is not shown as the primary value\nsince the field is documented as 'age/time from start (hatch, birth) to first product' and first kidding is the clearer,\ndirectly-stated milestone; the weaning offset is noted here for transparency.\nInkomba yobudala/uhlelo: The 2016 government goat manual distinguishes indigenous, Boer, Savanna and\nKalahari Red meat-purpose stock from milk/fibre breeds, with breeding objectives and individual birth, weaning,\nweight and sale records. Uncontrolled communal mating can produce births at any time; that does not establish\nmeat or weaned-kid availability all year. Choose stock for the local system and record survival and product stage\nbefore forecasting quantities.\nInkomba yobudala/uhlelo: In KZN Highland Sourveld smallholder systems, winter and early-spring feed shortage\ncan restrict goats. Autumn-kidding does feed kids through winter; spring-kidding does face late-pregnancy feed\nshortage, especially with late rains. Plan local winter feed and monitor weights with extension support; this is\nregional care context, not kg or a universal kidding calendar.\nHlola izinkomba ezinemininingwane zohlobo lokukhiqiza mayelana nokudla nezindawo zokuhlala. Fanisa isabelo\nsokudla nendawo nesigaba sesilwane nohlelo lokuhlalisa; nikeza amanzi ahlanzekile athembekile.\nIt is an offence to keep a goat somewhere with inadequate space, ventilation, light or shelter from heat, cold or\nweather, or to confine/tether it in a way that causes unnecessary suffering.\nIt is an offence to starve, under-feed, or deny water or food to a goat.\nAn owner must not let a goat stay in a dirty or parasite-infested condition, and must get veterinary or other\ntreatment for a sick, injured or diseased animal when able to.\nWinter feed shortage on communal sourveld is a known welfare/production risk: does that kid in autumn must\nfeed kids through winter, and does that kid in spring suffer poor nutrition during late pregnancy, so winter feed\nsupplementation matters.\nFoot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: veterinary services\nenforce isolation and movement restrictions, and a suspected case must be reported.\nInside a declared FMD-affected zone, goats and their products cannot be moved into, out of, or within the zone\nwithout a state veterinary movement permit and compliance with its conditions.\nEvery goat owner, including communal/smallholder owners, must register an official identification mark and mark\ntheir goats with it, under the Animal Identification Act.\nA goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act; slaughtering it for the\nfarmer's own consumption, or for cultural/religious purposes (including ceremonial slaughter, common with\nindigenous goats), is exempt from that rule, but that meat may not then be sold.\nUmthombo: Animals Protection Act 71 of 1962, s.2(1)(b), p. 1\nUmthombo: Animals Protection Act 71 of 1962, s.2(1)(c), p. 1\nUmthombo: Animals Protection Act 71 of 1962, s.2(1)(e), p. 1\n\n\n\n\nSynthetic graph source {count} $&                                                                                                          9\nAwukahlolwa uchwepheshe wezolimo — umhlahlandlela wokuhlela, hhayi umyalelo. Wubonise kumeluleki wakho wezolimo, futhi uhlole umhlabathi\nngaphambi kokuchitha imali kuwo.\nUkuhumusha okusabuyekezwa: akukahlolwa ngumuntu olwazi kahle lolu limi. Hlola umbhalo wesiNgisi ngaphambi kokwenza okushiwoyo.\n",
+    "ImbewuField                                                                                             UMHLAHLANDLELA WOKUKHIQIZA\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nIzinketho zepulazi - kuyaqhubeka\nSebenzisa lokho okubonile epulazini nohlu olufushane locwaningo. Qinisekisa izinketho endaweni ngaphambi\nkokuthenga.\n\nImikhiqizo yezilwane nokunakekela (kuyaqhubeka)\nIzimbuzi: Indigenous veld / communal goat (e.g. Nguni, Tankwa, Xhosa lob-ear) (kuyaqhubeka)\nUmthombo: Letty, B. & Madiba, S., KZN DARD. Constraints to Small-Scale Goat Production in the Highland Sourveld Area of\nKwaZulu-Natal, p. 3\nUmthombo: SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)\nUmthombo: Animal Identification Act 6 of 2002, s.7(1), p. 4\nUmthombo: Meat Safety Act 40 of 2000, s.7(2)(a), p. 6\nUmthombo: DAFF (2016), Goat Training Manual: breeds p2, records pp4–5, uncontrolled mating section 2.4.6 p7, p. 7\nUmthombo: KZN DARD: Goat Production in KwaZulu-Natal, Highland Sourveld research and winter nutrition\nUmthombo: Webb, E.C. & Mamabolo, M.J. (2004). Production and reproduction characteristics of South African indigenous goats in\ncommunal farming systems. S. Afr. J. Anim. Sci. 34(5):236-239\n\nIzinhlobo zezitshalo okufanele zihlolwe endaweni\nGcina igama lohlobo olukhethayo ngempela. Uhlu olufushane locwaningo ludinga ukuqinisekiswa kwesikhathi\nsendawo, amanzi nomhlabathi.\n\nTomatoes\nUhlobo olurekhodiwe: akukakhethwa.\nUhlu olufushane locwaningo lwezimo zezulu ezifanayo: Rodade.\nUmthombo: Rodade, Sakata product page\n\n\n\n\nSynthetic graph source {count} $&                                                                                                          10\nAwukahlolwa uchwepheshe wezolimo — umhlahlandlela wokuhlela, hhayi umyalelo. Wubonise kumeluleki wakho wezolimo, futhi uhlole umhlabathi\nngaphambi kokuchitha imali kuwo.\nUkuhumusha okusabuyekezwa: akukahlolwa ngumuntu olwazi kahle lolu limi. Hlola umbhalo wesiNgisi ngaphambi kokwenza okushiwoyo.\n",
+    ""
+  ]
+}

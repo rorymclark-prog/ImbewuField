@@ -3,6 +3,7 @@ import test from 'node:test';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {jsPDF} from 'jspdf';
+import ts from 'typescript';
 import {registerReportPdfFont} from '../lib/report-pdf-font.ts';
 import {CROP_EXPORT_COPY} from '../lib/crop-export-copy-data.ts';
 import {CROP_EXPORT_DRAFT_LANGUAGES,cropExportText,cropProjectionAgeText,cropProjectionDetailText,cropProjectionPeriodText} from '../lib/crop-export-copy.ts';
@@ -18,7 +19,15 @@ const flat=(value:string)=>value.normalize('NFC').replace(/\s/g,'');
 const figures=(value:string)=>(value.match(/\d+(?:\.\d+)?/g)??[]).sort();
 
 test('projection translation preserves complete numeric models, all catalogue identities and source authorities',()=>{
-  for(const file of ['lib/production-projection.ts','lib/perennial-harvest.ts','lib/production-product-guidance.ts'])assert.equal(createHash('sha256').update(read(file)).digest('hex'),before.sources.find(row=>row.file===file)!.sha256,'presentation must not mutate ages, crop figures, species or source notes');
+  for(const file of ['lib/production-projection.ts','lib/perennial-harvest.ts'])assert.equal(createHash('sha256').update(read(file)).digest('hex'),before.sources.find(row=>row.file===file)!.sha256,'presentation must not mutate ages, crop figures, species or source notes');
+  // The descendant guidance batch translates two presentation functions. Requiring
+  // their old bytes would reject that work; every researched source outside them
+  // must still match the immutable projection capture, including species and URLs.
+  const source=before.sources.find(row=>row.file==='lib/production-product-guidance.ts')!.source,current=read('lib/production-product-guidance.ts');
+  const restorePresentation=(value:string)=>{let restored=value.replace('HOUSING_LABEL, PRODUCT_LABEL,','HOUSING_LABEL,');for(const name of['productGuideText','buildProductGuidance']){const extract=(text:string)=>{const file=ts.createSourceFile('source.ts',text,ts.ScriptTarget.Latest,true),node=file.statements.find(node=>ts.isFunctionDeclaration(node)&&node.name?.text===name);assert.ok(node);return node.getText(file);};restored=restored.replace(extract(value),extract(source));}return restored.replace('region: cropExportText(window.region, language), note:','region: window.region, note:');};
+  const requireSource=(value:string)=>assert.equal(restorePresentation(value),source,'only the declared display functions, display-label import and source-region display argument may differ; all profiles, notes, species, numbers and citations remain exact');requireSource(current);
+  assert.ok(current.includes("'carya-illinoinensis': {"));assert.throws(()=>requireSource(current.replace("'carya-illinoinensis': {","'unverified-species': {")),'altering a species outside presentation must fail');
+  const citation=source.match(/https:\/\/[^'\s]+/)?.[0];assert.ok(citation);assert.ok(current.includes(citation));assert.throws(()=>requireSource(current.replace(citation,'https://unverified.invalid/source')),'altering a source citation must fail');
   for(const row of before.rows){const input=row.input;assert.deepEqual(plain(buildProductionProjection({plantings:input.plantings,beds:input.beds,trees:input.treeGroups??[],choices:input.treeSeasons??{},now:new Date(input.now)})),row.projection);}
   assert.equal(before.allTrees.length,103);
   for(const row of before.allTrees)assert.deepEqual(plain(treeAgeProjection(row.group,row.choice,2026*12+9,2027*12+8,2026*12+9)),row.ageProjection);

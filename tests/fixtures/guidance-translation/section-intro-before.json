@@ -1,0 +1,445 @@
+{
+  "scope": "Actual new-qualifier PDF left the Crop varieties section heading and introductory caution on page4, first card on page5. Preserve before input/text so a reservation check can reject the real orphan.",
+  "input": {
+    "plantings": [
+      {
+        "id": "source-crop",
+        "bedId": "source-bed",
+        "cropKey": "tomatoes",
+        "sowMonth": 10
+      }
+    ],
+    "beds": [
+      {
+        "id": "source-bed",
+        "label": "Original source bed {count} $&",
+        "areaM2": 20,
+        "kind": "bed"
+      }
+    ],
+    "tasks": [],
+    "now": "2026-10-10T12:00:00.000Z",
+    "sections": [
+      "guidance"
+    ],
+    "meta": {
+      "planTitle": "Synthetic graph source {count} $&",
+      "siteLine": "Synthetic source site",
+      "locationLine": "Synthetic source location",
+      "climateLine": "Synthetic source climate",
+      "bedsSummary": "Synthetic area",
+      "dateLabel": "1 October 2026",
+      "estimatedKgPerYear": null,
+      "lossPercent": 0,
+      "language": "zu"
+    },
+    "availability": {
+      "veg": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "utilization": [
+        0,
+        0.5,
+        1,
+        1.25,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "forest": [
+        [
+          {
+            "iconKey": "tree:mangifera-indica",
+            "label": "Original mapped Mango {unit} $&"
+          }
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "animals": [
+        [
+          {
+            "iconKey": "animal:chicken-layer",
+            "label": "Original recorded eggs {count} $&"
+          }
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "undated": [
+        {
+          "iconKey": "tree:persea-americana",
+          "label": "Original undated {date} $&",
+          "detail": "Original recorded detail"
+        }
+      ]
+    },
+    "productionRecords": [
+      {
+        "id": "actual-mango",
+        "sourceIconKey": "tree:mangifera-indica",
+        "label": "Original record {date} $& 17",
+        "date": {
+          "year": 2026,
+          "month": 10
+        },
+        "quantity": 0,
+        "unit": "kg",
+        "status": "actual"
+      },
+      {
+        "id": "expected-crop",
+        "sourceIconKey": "crop:tomatoes",
+        "label": "Original expected {count} $&",
+        "date": {
+          "year": 2026,
+          "month": 11
+        },
+        "quantity": 7,
+        "unit": "kg",
+        "status": "expected"
+      },
+      {
+        "id": "eggs",
+        "sourceIconKey": "animal:chicken-layer",
+        "label": "Original egg observation",
+        "date": {
+          "year": 2026,
+          "month": 10
+        },
+        "quantity": 12,
+        "unit": "eggs",
+        "status": "actual"
+      },
+      {
+        "id": "milk",
+        "sourceIconKey": "animal:goat-dairy",
+        "label": "Original milk observation",
+        "date": {
+          "year": 2026,
+          "month": 12
+        },
+        "quantity": 3,
+        "unit": "litres",
+        "status": "expected"
+      },
+      {
+        "id": "items",
+        "sourceIconKey": "crop:butternut",
+        "label": "Original items observation",
+        "date": {
+          "year": 2027,
+          "month": 1
+        },
+        "quantity": 2,
+        "unit": "items",
+        "status": "actual"
+      }
+    ],
+    "preservedProducts": [
+      {
+        "id": "stock-stored",
+        "label": "Original kept stored {method} $&",
+        "sourceIconKey": "crop:tomatoes",
+        "method": "stored",
+        "dates": [
+          {
+            "year": 2026,
+            "month": 10
+          }
+        ],
+        "provenance": "farm-record",
+        "note": "Original private method note {count} $& 23",
+        "quantities": [
+          {
+            "year": 2026,
+            "month": 10,
+            "kg": 5
+          }
+        ]
+      },
+      {
+        "id": "stock-frozen",
+        "label": "Original kept frozen {method} $&",
+        "sourceIconKey": "crop:tomatoes",
+        "method": "frozen",
+        "dates": [
+          {
+            "year": 2026,
+            "month": 11
+          }
+        ],
+        "provenance": "farm-record",
+        "note": "Original private method note {count} $& 23"
+      },
+      {
+        "id": "stock-dried",
+        "label": "Original kept dried {method} $&",
+        "sourceIconKey": "crop:tomatoes",
+        "method": "dried",
+        "dates": [
+          {
+            "year": 2026,
+            "month": 12
+          }
+        ],
+        "provenance": "farm-record",
+        "note": "Original private method note {count} $& 23"
+      },
+      {
+        "id": "stock-fermented",
+        "label": "Original kept fermented {method} $&",
+        "sourceIconKey": "crop:tomatoes",
+        "method": "fermented",
+        "dates": [
+          {
+            "year": 2027,
+            "month": 1
+          }
+        ],
+        "provenance": "farm-record",
+        "note": "Original private method note {count} $& 23"
+      },
+      {
+        "id": "stock-processed",
+        "label": "Original kept processed {method} $&",
+        "sourceIconKey": "crop:tomatoes",
+        "method": "processed",
+        "dates": [
+          {
+            "year": 2027,
+            "month": 2
+          }
+        ],
+        "provenance": "farm-record",
+        "note": "Original private method note {count} $& 23"
+      }
+    ],
+    "productionGuide": {
+      "area": "Indawo yokulima ayikacaci",
+      "siteObservations": [
+        {
+          "title": "Amanzi ngesikhathi esomile",
+          "lines": [
+            "Akurekhodiwe. Qedela inhlolovo yendawo bese uqinisekisa amanzi ngaphambi kokukhetha uhlelo oludinga izinsiza eziningi."
+          ]
+        },
+        {
+          "title": "Isithwathwa kuleli pulazi",
+          "lines": [
+            "Okubonwe ngesithwathwa endaweni akurekhodiwe. Izilinganiso zanyanga zonke zesathelayithi azikwazi ukuthola izinsuku zokuqala nezokugcina zesithwathwa."
+          ]
+        },
+        {
+          "title": "Ilanga nokuphuma kwamanzi",
+          "lines": [
+            "Ilanga: akurekhodiwe.",
+            "Ukuphuma kwamanzi: akurekhodiwe. Kusadingeka ukuhlola imiphumela yokuhlolwa komhlabathi nezidingo zesitshalo ngasinye."
+          ]
+        }
+      ],
+      "recordedProduction": [
+        {
+          "title": "Original eggs {year} $&",
+          "lines": [
+            "Isamba sonyaka esibikwe umlimi sango-2025: 240 eggs.",
+            "Okusetshenziswa ekhaya: 0 eggs. Okuthengisiwe: akurekhodiwe.",
+            "Izinyanga zokuvuna ezibikiwe: Jun, Jul. Lokhu ukubonwe kwinhlolovo, akusona isibikezelo esisha sokukhiqiza.",
+            "Hlola iyunithi nezamba ezirekhodiwe ngaphambi kokusebenzisa lo mugqa."
+          ]
+        },
+        {
+          "title": "Fish",
+          "lines": [
+            "Isamba sonyaka esibikwe umlimi sango-2025: akurekhodiwe.",
+            "Okusetshenziswa ekhaya: akurekhodiwe. Okuthengisiwe: akurekhodiwe.",
+            "Izinyanga zokuvuna ezibikiwe: akurekhodiwe. Lokhu ukubonwe kwinhlolovo, akusona isibikezelo esisha sokukhiqiza.",
+            "Hlola iyunithi nezamba ezirekhodiwe ngaphambi kokusebenzisa lo mugqa."
+          ]
+        },
+        {
+          "title": "Eminye imifino",
+          "lines": [
+            "Isamba sonyaka esibikwe umlimi sango-2025: 12 kg.",
+            "Okusetshenziswa ekhaya: 7 kg. Okuthengisiwe: 3 kg.",
+            "Izinyanga zokuvuna ezibikiwe: Jan, Dis. Lokhu ukubonwe kwinhlolovo, akusona isibikezelo esisha sokukhiqiza.",
+            "Hlola iyunithi nezamba ezirekhodiwe ngaphambi kokusebenzisa lo mugqa."
+          ]
+        }
+      ],
+      "cropChoices": [
+        {
+          "title": "Tomatoes",
+          "lines": [
+            "Uhlobo olurekhodiwe: akukakhethwa.",
+            "Isimo sezulu sale ndawo asikacaci, ngakho akukho hlu olufushane lwendawo olushiwo. Vula ikhadi lesitshalo ukuze ubone imithombo bese urekhoda okukhethile."
+          ],
+          "sources": []
+        }
+      ],
+      "foodForest": [
+        {
+          "title": "Pecan",
+          "lines": [
+            "Okukhona: 1; okuhleliwe: 1. Okukhiqizwayo: intongomane elisegobolondweni (nut in shell).",
+            "Isikhombo sesivuno sokuqala: iminyaka engu-5. Ukuthela okuncane cishe ngonyaka wesi-5 encwadini yase-KZN, ezindaweni eziniselwayo ezinehlobo elishisayo, ubusika obubandayo nomswakama ophansi ngesikhathi sokukhula. Ikhomba izigodi zemifula ezomile zase-Zululand/Lowveld njengezindawo zesifunda ezifanelekile. Indlela yokwandisa, uhlobo nobudala basenkulisa akucacisiwe; lesi isikhombo esijwayelekile esinemibandela, akulona inani elilindelekile epulazini. Isikhathi sangempela sincike ohlotsheni nasekunakekelweni kwendawo.",
+            "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-12–13. Ukukhiqiza okugcwele cishe ngeminyaka engu-12–13 encwadini ejwayelekile yase-KZN. Uhlobo olukhethiwe, indlela yokwandisa, ukuminyana nokuphathwa kuthinta ukukhiqiza kwangempela; ubudala bokuvuthwa abuzakheli ngokuzenzakalela igrafu yama-kg ngesihlahla ngonyaka.",
+            "Okukhiqizwa komhlahlandlela we-pecan — isisekelo sehektare samantongomane omile asemagobolondweni: Umhlahlandlela unikeza u-750 oqaphile, isilinganiso esingu-800–1,200 kanye no-1,500+ omuhle we-kg/ha wamantongomane omile asemagobolondweni (Dry-in-Shell). Ubala ngokwehlukana ezinye izikhala phakathi kwezihlahla nokunciphiswa kwezihlahla kamuva, ngakho akucatshangwa ukuminyana okukodwa. Lezi yizinkomba zehektare ezingaboshelwe eminyakeni yobudala; isisindo esinegobolondo asisona isisindo somongo odliwayo futhi alukho ijika elijwayelekile le-kg/tree elisuselwa kuzo.",
+            "Sebenzisa izinhlobo ezikhipha impova neziyemukelayo ezihambisanayo. Izindawo ezinemvula yasehlobo zidinga izinhlobo ezimelana nesifo se-scab; ukuvuthwa kwamantongomane kusenesikhathi kukodwa akuqinisekisi ukuhambisana kwempova.",
+            "Iseluleko sokuthenga: Uhlu olufushane lwe-SAPPA: e-KZN/Lowveld enomswakama omningi — Ukulinga, Cape Fear, Choctaw; e-KZN emanzi nebandayo kakhulu — Barton; e-Highveld eyomile kakhudlwana — Barton, Pawnee, Wichita; ezindaweni ezomile zasentshonalanga — Wichita, Choctaw, Western Schley. Iqembu lesimo sezulu elicatshangelwe lodwa alikwazi ukuhlukanisa zonke lezi zindawo. Qinisekisa umswakama wendawo, umhlabathi nezinhlobo ezimbili zempova ngaphambi kokuthenga.",
+            "Impova: idinga impova yesinye isitshalo esihambisanayo. Hlola izidingo zohlobo olukhethiwe nenkulisa yezitshalo.",
+            "Isikhathi sokuvuna esilindelwe: alukho uhlobo olulodwa lwendawo olunefasitela eliqinisekisiwe. Izikhathi eziyizinkomba ezingezansi azisona isibikezelo.",
+            "Inkomba kuphela — South Africa (ngokujwayelekile — umjikelezo wezinkathi zezitshalo eNingizimu Yenkabazwe; izindawo eziyinhloko i-Vaalharts/Northern Cape, Lower Orange River): Mas–Jun."
+          ],
+          "sources": [
+            {
+              "label": "SAPPA: Cultivar Recommendation by Production Area, p. 1 (retrieved 4 October 2026)",
+              "url": "https://www.sappa.za.org/download/16957/?tmstv=1779439974"
+            },
+            {
+              "label": "Lötze, E., 'Literature Review: Factors influencing pollination of pecans for commercial production', published by SAPPA (South African Pecan Nut Producers' Association), p. 3",
+              "url": "https://www.sappa.za.org/download/16968/?tmstv=1790592292"
+            },
+            {
+              "label": "Lötze, E., 'Literature Review: Factors influencing pollination of pecans for commercial production', published by SAPPA",
+              "url": "https://www.sappa.za.org/download/16968/?tmstv=1790592292"
+            },
+            {
+              "label": "KZN DARD, Fruit and Nut Production in KZN, Pecan bearing age; printed p.22, p. 26",
+              "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+            },
+            {
+              "label": "KZN DARD, Fruit and Nut Production in KZN, Pecan yield; printed p.22, p. 26",
+              "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+            }
+          ]
+        },
+        {
+          "title": "Mango",
+          "lines": [
+            "Okukhona: 1; okuhleliwe: 1. Okukhiqizwayo: izithelo.",
+            "Isikhombo sesivuno sokuqala: iminyaka engu-3–4. Izitshalo zomango ezixhunyelelwe encwadini yase-KZN ngokuvamile ziqala ukuthela emva kweminyaka engu-3–4. Isimo esichaziwe ukukhiqiza endaweni engenasithwathwa, eshisayo/efudumele eseduze nesimo sasezindaweni ezishisayo, enomswakama ophansi ngesikhathi sokuqhakaza, kuhlanganisa i-Zululand eyomile, i-Valley Bushveld ne-Lowveld. Umbhalo uhlukanisa izitshalo ezixhunyelelwe ne-Peach/Sabre ekhuliswe ngembewu; ungasebenzisi lobu budala esithombeni esingaqoshiwe noma ucabange ama-kg onyaka. Isikhathi sangempela sincike ohlotsheni nasekunakekelweni kwendawo.",
+            "Grafted mango establishment — regional guide: Grafted stock generally first bears around 3–4 years and may remain productive 20 years or longer under the guide conditions. Seed-raised trees are a separate planting-material case. Frost, wet spring flowering conditions, cultivar and field establishment must be checked; longevity is not an age-yield curve.",
+            "Hlola isithwathwa, ukuphuma kwamanzi nobungozi bezifo ngesikhathi sokuqhakaza. Ukuzwela ekushiseni nasekushisweni yilanga kuyehluka ngezinhlobo.",
+            "Iseluleko sokuthenga: I-ARC ibala i-Tommy Atkins ne-Kent phakathi kwezinhlobo ezibekezelela ukushisa/ukushiswa yilanga kangcono; i-Sensation ne-Keitt zithinteka kalula. Qinisekisa izinsuku zokuvuna zendawo ngaphambi kokukhetha izinhlobo ezilandelanayo.",
+            "Isikhathi sokuvuna esilindelwe: alukho uhlobo olulodwa lwendawo olunefasitela eliqinisekisiwe. Izikhathi eziyizinkomba ezingezansi azisona isibikezelo.",
+            "Inkomba kuphela — South Africa (ngokujwayelekile; Limpopo + Mpumalanga = 96% yendawo yama-mango yase-SA): Nov–Mas."
+          ],
+          "sources": [
+            {
+              "label": "ARC Climate-Smart Agriculture, module 6, printed pp. 239–242",
+              "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/6.pdf"
+            },
+            {
+              "label": "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF 2024), p. 3",
+              "url": "https://www.namc.co.za/wp-content/uploads/2024/11/SA-Fruit-Trade-Flow-Report-Issue-56-December-2024-submission.pdf"
+            },
+            {
+              "label": "KZN DARD, Fruit and Nut Production in KZN, Mango bearing age; printed p.16, p. 20",
+              "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+            }
+          ]
+        },
+        {
+          "title": "Purple granadilla",
+          "lines": [
+            "Okukhona: 1; okuhleliwe: 1. Okukhiqizwayo: izithelo.",
+            "Isikhombo sesivuno sokuqala: izinyanga ezingu-6–8. Isikhombo sase-KZN: izinyanga ezingu-6–8 emva kokutshala izithombo, cishe iminyaka engu-0.5–0.67. Lesi isikhathi esiphakathi kokutshala nokuvuna kokuqala, akulona ikhalenda lokukha lesifunda. Isikhathi sangempela sincike ohlotsheni nasekunakekelweni kwendawo.",
+            "Isikhombo sokukhiqiza osekusimeme: iminyaka engu-1.5. Incwadi yase-KZN ithi ukuthela ngokugcwele kungakapheli izinyanga ezingu-18. Lesi isikhombo sesikhathi esingumkhawulo ongaphezulu, akusona isithembiso samakhilogremu okudla ngonyaka.",
+            "Faka izisekelo zokukhuphuka futhi uthene; gwema ukugcwala kwamanzi uhlole ukubola kwezimpande nezinkinga zamagciwane.",
+            "Iseluleko sokuthenga: I-purple granadilla iyireferensi yezithelo ezintsha yase-KZN; izinhlobo eziphuzi zimuncu kakhulu futhi zisetshenziselwa ujusi. Qinisekisa impilo yezitshalo nesikhathi sendawo.",
+            "Isikhathi sokuvuna esilindelwe: alukho uhlobo olulodwa lwendawo olunefasitela eliqinisekisiwe. Izikhathi eziyizinkomba ezingezansi azisona isibikezelo.",
+            "Inkomba kuphela — KwaZulu-Natal (amaqembu e-Bioresource Groups 3 no-5, indawo epholile eseduze nezishisayo): Jun–Jul, Nov–Jan."
+          ],
+          "sources": [
+            {
+              "label": "KZN DARD, Fruit and Nut Production, PDF pp. 14–15 (regional reference; confirm current nursery stock)",
+              "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+            },
+            {
+              "label": "KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in KZN), p. 14",
+              "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+            }
+          ]
+        },
+        {
+          "title": "Wild medlar",
+          "lines": [
+            "Okukhona: 1; okuhleliwe: 1. Okukhiqizwayo: Izithelo ezivuthiwe, ezintsha noma ezomisiwe.",
+            "Isikhathi sesivuno sokuqala: asitholakali emthonjeni; ungathembeli ezitshalweni ezisanda kutshalwa ukuze uthole ukudla ngokushesha.",
+            "Wider fruiting observations, not a ripe picking interval: This account separately distinguishes green unripe and brown ripe fruit, but its November–April biology sentence does not date that ripening change. The wider interval remains southern African phenology. SANBI's January–April description of ripe edible fruit supplies the food-ready regional reference.",
+            "Qinisekisa izimo zokusimama endaweni ngaphambi kokuthembela kureferensi yesifunda yokuthela izithelo.",
+            "Iseluleko sokuthenga: Cela izitshalo ezithela izithelo ezifanele indawo; alukho uhlobo oluqanjwe igama olunomthombo.",
+            "Isikhathi sokuvuna esilindelwe: alukho uhlobo olulodwa lwendawo olunefasitela eliqinisekisiwe. Izikhathi eziyizinkomba ezingezansi azisona isibikezelo.",
+            "Inkomba kuphela — South Africa (ngokujwayelekile; ukusabalala e-SA kunikezwe njenge-Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape): Jan–Eph."
+          ],
+          "sources": [
+            {
+              "label": "SANBI PlantZAfrica: vangueria-infausta",
+              "url": "https://pza.sanbi.org/vangueria-infausta"
+            },
+            {
+              "label": "Vangueria infausta | PlantZAfrica (SANBI)",
+              "url": "https://pza.sanbi.org/vangueria-infausta"
+            },
+            {
+              "label": "Agroforestree Database 4.0 (Orwa et al. 2009), Vangueria infausta fact sheet, BIOLOGY section, p. 1",
+              "url": "https://apps.worldagroforestry.org/treedb2/AFTPDFS/Vangueria_infausta.PDF"
+            }
+          ]
+        }
+      ],
+      "animalProducts": []
+    }
+  },
+  "firstEntry": {
+    "title": "Tomatoes",
+    "lines": [
+      "Uhlobo olurekhodiwe: akukakhethwa.",
+      "Isimo sezulu sale ndawo asikacaci, ngakho akukho hlu olufushane lwendawo olushiwo. Vula ikhadi lesitshalo ukuze ubone imithombo bese urekhoda okukhethile."
+    ],
+    "sources": []
+  },
+  "beforePages": [
+    "ImbewuField                                                                                             UMHLAHLANDLELA WOKUKHIQIZA\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nNgaphambi kokuthenga noma ukuqala\nSebenzisa lokho okubonile epulazini nohlu olufushane locwaningo. Qinisekisa izinketho endaweni ngaphambi\nkokuthenga.\n\nIqembu lesimo sezulu locwaningo: Indawo yokulima ayikacaci. Leli qembu alisona isincomo esiqinisekisiwe saleli\npulazi.\n\nLokho okubikile ngaleli pulazi\nAmanzi ngesikhathi esomile\nAkurekhodiwe. Qedela inhlolovo yendawo bese uqinisekisa amanzi ngaphambi kokukhetha uhlelo oludinga izinsiza\neziningi.\n\nIsithwathwa kuleli pulazi\nOkubonwe ngesithwathwa endaweni akurekhodiwe. Izilinganiso zanyanga zonke zesathelayithi azikwazi ukuthola\nizinsuku zokuqala nezokugcina zesithwathwa.\n\nIlanga nokuphuma kwamanzi\nIlanga: akurekhodiwe.\nUkuphuma kwamanzi: akurekhodiwe. Kusadingeka ukuhlola imiphumela yokuhlolwa komhlabathi nezidingo\nzesitshalo ngasinye.\n\nAmarekhodi onyaka wokubika - hhayi isibikezelo\nIzamba nezinyanga zonyaka wokubika odlule zichaza lokho okwabikwa. Azithembisi ukudla ohlelweni oluzayo.\n\nOriginal eggs {year} $&\nIsamba sonyaka esibikwe umlimi sango-2025: 240 eggs.\nOkusetshenziswa ekhaya: 0 eggs. Okuthengisiwe: akurekhodiwe.\nIzinyanga zokuvuna ezibikiwe: Jun, Jul. Lokhu ukubonwe kwinhlolovo, akusona isibikezelo esisha sokukhiqiza.\nHlola iyunithi nezamba ezirekhodiwe ngaphambi kokusebenzisa lo mugqa.\n\nFish\nIsamba sonyaka esibikwe umlimi sango-2025: akurekhodiwe.\nOkusetshenziswa ekhaya: akurekhodiwe. Okuthengisiwe: akurekhodiwe.\nIzinyanga zokuvuna ezibikiwe: akurekhodiwe. Lokhu ukubonwe kwinhlolovo, akusona isibikezelo esisha\nsokukhiqiza.\nHlola iyunithi nezamba ezirekhodiwe ngaphambi kokusebenzisa lo mugqa.\n\nEminye imifino\nIsamba sonyaka esibikwe umlimi sango-2025: 12 kg.\nOkusetshenziswa ekhaya: 7 kg. Okuthengisiwe: 3 kg.\nIzinyanga zokuvuna ezibikiwe: Jan, Dis. Lokhu ukubonwe kwinhlolovo, akusona isibikezelo esisha sokukhiqiza.\nHlola iyunithi nezamba ezirekhodiwe ngaphambi kokusebenzisa lo mugqa.\n\n\n\n\nSynthetic graph source {count} $&                                                                                                          1\nAwukahlolwa uchwepheshe wezolimo — umhlahlandlela wokuhlela, hhayi umyalelo. Wubonise kumeluleki wakho wezolimo, futhi uhlole umhlabathi\nngaphambi kokuchitha imali kuwo.\nUkuhumusha okusabuyekezwa: akukahlolwa ngumuntu olwazi kahle lolu limi. Hlola umbhalo wesiNgisi ngaphambi kokwenza okushiwoyo.\n",
+    "ImbewuField                                                                                             UMHLAHLANDLELA WOKUKHIQIZA\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nIzinketho zepulazi - kuyaqhubeka\nSebenzisa lokho okubonile epulazini nohlu olufushane locwaningo. Qinisekisa izinketho endaweni ngaphambi\nkokuthenga.\n\nIzithelo, amantongomane nokudla komdabu\nPecan\nOkukhona: 1; okuhleliwe: 1. Okukhiqizwayo: intongomane elisegobolondweni (nut in shell).\nIsikhombo sesivuno sokuqala: iminyaka engu-5. Ukuthela okuncane cishe ngonyaka wesi-5 encwadini yase-KZN,\nezindaweni eziniselwayo ezinehlobo elishisayo, ubusika obubandayo nomswakama ophansi ngesikhathi sokukhula.\nIkhomba izigodi zemifula ezomile zase-Zululand/Lowveld njengezindawo zesifunda ezifanelekile. Indlela\nyokwandisa, uhlobo nobudala basenkulisa akucacisiwe; lesi isikhombo esijwayelekile esinemibandela, akulona\ninani elilindelekile epulazini. Isikhathi sangempela sincike ohlotsheni nasekunakekelweni kwendawo.\nIsikhombo sokukhiqiza osekusimeme: iminyaka engu-12–13. Ukukhiqiza okugcwele cishe ngeminyaka engu-12–13\nencwadini ejwayelekile yase-KZN. Uhlobo olukhethiwe, indlela yokwandisa, ukuminyana nokuphathwa kuthinta\nukukhiqiza kwangempela; ubudala bokuvuthwa abuzakheli ngokuzenzakalela igrafu yama-kg ngesihlahla\nngonyaka.\nOkukhiqizwa komhlahlandlela we-pecan — isisekelo sehektare samantongomane omile asemagobolondweni:\nUmhlahlandlela unikeza u-750 oqaphile, isilinganiso esingu-800–1,200 kanye no-1,500+ omuhle we-kg/ha\nwamantongomane omile asemagobolondweni (Dry-in-Shell). Ubala ngokwehlukana ezinye izikhala phakathi\nkwezihlahla nokunciphiswa kwezihlahla kamuva, ngakho akucatshangwa ukuminyana okukodwa. Lezi yizinkomba\nzehektare ezingaboshelwe eminyakeni yobudala; isisindo esinegobolondo asisona isisindo somongo odliwayo futhi\nalukho ijika elijwayelekile le-kg/tree elisuselwa kuzo.\nSebenzisa izinhlobo ezikhipha impova neziyemukelayo ezihambisanayo. Izindawo ezinemvula yasehlobo zidinga\nizinhlobo ezimelana nesifo se-scab; ukuvuthwa kwamantongomane kusenesikhathi kukodwa akuqinisekisi\nukuhambisana kwempova.\nIseluleko sokuthenga: Uhlu olufushane lwe-SAPPA: e-KZN/Lowveld enomswakama omningi — Ukulinga, Cape Fear,\nChoctaw; e-KZN emanzi nebandayo kakhulu — Barton; e-Highveld eyomile kakhudlwana — Barton, Pawnee,\nWichita; ezindaweni ezomile zasentshonalanga — Wichita, Choctaw, Western Schley. Iqembu lesimo sezulu\nelicatshangelwe lodwa alikwazi ukuhlukanisa zonke lezi zindawo. Qinisekisa umswakama wendawo, umhlabathi\nnezinhlobo ezimbili zempova ngaphambi kokuthenga.\nImpova: idinga impova yesinye isitshalo esihambisanayo. Hlola izidingo zohlobo olukhethiwe nenkulisa yezitshalo.\nIsikhathi sokuvuna esilindelwe: alukho uhlobo olulodwa lwendawo olunefasitela eliqinisekisiwe. Izikhathi\neziyizinkomba ezingezansi azisona isibikezelo.\nInkomba kuphela — South Africa (ngokujwayelekile — umjikelezo wezinkathi zezitshalo eNingizimu Yenkabazwe;\nizindawo eziyinhloko i-Vaalharts/Northern Cape, Lower Orange River): Mas–Jun.\nUmthombo: SAPPA: Cultivar Recommendation by Production Area, p. 1 (retrieved 4 October 2026)\nUmthombo: Lötze, E., 'Literature Review: Factors influencing pollination of pecans for commercial production', published by SAPPA\n(South African Pecan Nut Producers' Association), p. 3\nUmthombo: Lötze, E., 'Literature Review: Factors influencing pollination of pecans for commercial production', published by SAPPA\nUmthombo: KZN DARD, Fruit and Nut Production in KZN, Pecan bearing age; printed p.22, p. 26\nUmthombo: KZN DARD, Fruit and Nut Production in KZN, Pecan yield; printed p.22, p. 26\n\n\n\n\nSynthetic graph source {count} $&                                                                                                          2\nAwukahlolwa uchwepheshe wezolimo — umhlahlandlela wokuhlela, hhayi umyalelo. Wubonise kumeluleki wakho wezolimo, futhi uhlole umhlabathi\nngaphambi kokuchitha imali kuwo.\nUkuhumusha okusabuyekezwa: akukahlolwa ngumuntu olwazi kahle lolu limi. Hlola umbhalo wesiNgisi ngaphambi kokwenza okushiwoyo.\n",
+    "ImbewuField                                                                                             UMHLAHLANDLELA WOKUKHIQIZA\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nIzinketho zepulazi - kuyaqhubeka\nSebenzisa lokho okubonile epulazini nohlu olufushane locwaningo. Qinisekisa izinketho endaweni ngaphambi\nkokuthenga.\n\nIzithelo, amantongomane nokudla komdabu (kuyaqhubeka)\nMango\nOkukhona: 1; okuhleliwe: 1. Okukhiqizwayo: izithelo.\nIsikhombo sesivuno sokuqala: iminyaka engu-3–4. Izitshalo zomango ezixhunyelelwe encwadini yase-KZN\nngokuvamile ziqala ukuthela emva kweminyaka engu-3–4. Isimo esichaziwe ukukhiqiza endaweni\nengenasithwathwa, eshisayo/efudumele eseduze nesimo sasezindaweni ezishisayo, enomswakama ophansi\nngesikhathi sokuqhakaza, kuhlanganisa i-Zululand eyomile, i-Valley Bushveld ne-Lowveld. Umbhalo uhlukanisa\nizitshalo ezixhunyelelwe ne-Peach/Sabre ekhuliswe ngembewu; ungasebenzisi lobu budala esithombeni\nesingaqoshiwe noma ucabange ama-kg onyaka. Isikhathi sangempela sincike ohlotsheni nasekunakekelweni\nkwendawo.\nGrafted mango establishment — regional guide: Grafted stock generally first bears around 3–4 years and may\nremain productive 20 years or longer under the guide conditions. Seed-raised trees are a separate\nplanting-material case. Frost, wet spring flowering conditions, cultivar and field establishment must be checked;\nlongevity is not an age-yield curve.\nHlola isithwathwa, ukuphuma kwamanzi nobungozi bezifo ngesikhathi sokuqhakaza. Ukuzwela ekushiseni\nnasekushisweni yilanga kuyehluka ngezinhlobo.\nIseluleko sokuthenga: I-ARC ibala i-Tommy Atkins ne-Kent phakathi kwezinhlobo ezibekezelela ukushisa/ukushiswa\nyilanga kangcono; i-Sensation ne-Keitt zithinteka kalula. Qinisekisa izinsuku zokuvuna zendawo ngaphambi\nkokukhetha izinhlobo ezilandelanayo.\nIsikhathi sokuvuna esilindelwe: alukho uhlobo olulodwa lwendawo olunefasitela eliqinisekisiwe. Izikhathi\neziyizinkomba ezingezansi azisona isibikezelo.\nInkomba kuphela — South Africa (ngokujwayelekile; Limpopo + Mpumalanga = 96% yendawo yama-mango\nyase-SA): Nov–Mas.\nUmthombo: ARC Climate-Smart Agriculture, module 6, printed pp. 239–242\nUmthombo: National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF\n2024), p. 3\nUmthombo: KZN DARD, Fruit and Nut Production in KZN, Mango bearing age; printed p.16, p. 20\n\n\n\n\nSynthetic graph source {count} $&                                                                                                          3\nAwukahlolwa uchwepheshe wezolimo — umhlahlandlela wokuhlela, hhayi umyalelo. Wubonise kumeluleki wakho wezolimo, futhi uhlole umhlabathi\nngaphambi kokuchitha imali kuwo.\nUkuhumusha okusabuyekezwa: akukahlolwa ngumuntu olwazi kahle lolu limi. Hlola umbhalo wesiNgisi ngaphambi kokwenza okushiwoyo.\n",
+    "ImbewuField                                                                                             UMHLAHLANDLELA WOKUKHIQIZA\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nIzinketho zepulazi - kuyaqhubeka\nSebenzisa lokho okubonile epulazini nohlu olufushane locwaningo. Qinisekisa izinketho endaweni ngaphambi\nkokuthenga.\n\nIzithelo, amantongomane nokudla komdabu (kuyaqhubeka)\nPurple granadilla\nOkukhona: 1; okuhleliwe: 1. Okukhiqizwayo: izithelo.\nIsikhombo sesivuno sokuqala: izinyanga ezingu-6–8. Isikhombo sase-KZN: izinyanga ezingu-6–8 emva kokutshala\nizithombo, cishe iminyaka engu-0.5–0.67. Lesi isikhathi esiphakathi kokutshala nokuvuna kokuqala, akulona\nikhalenda lokukha lesifunda. Isikhathi sangempela sincike ohlotsheni nasekunakekelweni kwendawo.\nIsikhombo sokukhiqiza osekusimeme: iminyaka engu-1.5. Incwadi yase-KZN ithi ukuthela ngokugcwele\nkungakapheli izinyanga ezingu-18. Lesi isikhombo sesikhathi esingumkhawulo ongaphezulu, akusona isithembiso\nsamakhilogremu okudla ngonyaka.\nFaka izisekelo zokukhuphuka futhi uthene; gwema ukugcwala kwamanzi uhlole ukubola kwezimpande nezinkinga\nzamagciwane.\nIseluleko sokuthenga: I-purple granadilla iyireferensi yezithelo ezintsha yase-KZN; izinhlobo eziphuzi zimuncu\nkakhulu futhi zisetshenziselwa ujusi. Qinisekisa impilo yezitshalo nesikhathi sendawo.\nIsikhathi sokuvuna esilindelwe: alukho uhlobo olulodwa lwendawo olunefasitela eliqinisekisiwe. Izikhathi\neziyizinkomba ezingezansi azisona isibikezelo.\nInkomba kuphela — KwaZulu-Natal (amaqembu e-Bioresource Groups 3 no-5, indawo epholile eseduze\nnezishisayo): Jun–Jul, Nov–Jan.\nUmthombo: KZN DARD, Fruit and Nut Production, PDF pp. 14–15 (regional reference; confirm current nursery stock)\nUmthombo: KwaZulu-Natal Department of Agriculture and Rural Development, Horticultural Advisory Notes: Fruit and Nut Production (in\nKZN), p. 14\n\nWild medlar\nOkukhona: 1; okuhleliwe: 1. Okukhiqizwayo: Izithelo ezivuthiwe, ezintsha noma ezomisiwe.\nIsikhathi sesivuno sokuqala: asitholakali emthonjeni; ungathembeli ezitshalweni ezisanda kutshalwa ukuze uthole\nukudla ngokushesha.\nWider fruiting observations, not a ripe picking interval: This account separately distinguishes green unripe and\nbrown ripe fruit, but its November–April biology sentence does not date that ripening change. The wider interval\nremains southern African phenology. SANBI's January–April description of ripe edible fruit supplies the food-ready\nregional reference.\nQinisekisa izimo zokusimama endaweni ngaphambi kokuthembela kureferensi yesifunda yokuthela izithelo.\nIseluleko sokuthenga: Cela izitshalo ezithela izithelo ezifanele indawo; alukho uhlobo oluqanjwe igama\nolunomthombo.\nIsikhathi sokuvuna esilindelwe: alukho uhlobo olulodwa lwendawo olunefasitela eliqinisekisiwe. Izikhathi\neziyizinkomba ezingezansi azisona isibikezelo.\nInkomba kuphela — South Africa (ngokujwayelekile; ukusabalala e-SA kunikezwe njenge-Eastern Cape, Free State,\nGauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape): Jan–Eph.\nUmthombo: SANBI PlantZAfrica: vangueria-infausta\nUmthombo: Vangueria infausta | PlantZAfrica (SANBI)\nUmthombo: Agroforestree Database 4.0 (Orwa et al. 2009), Vangueria infausta fact sheet, BIOLOGY section, p. 1\n\nIzinhlobo zezitshalo okufanele zihlolwe endaweni\nGcina igama lohlobo olukhethayo ngempela. Uhlu olufushane locwaningo ludinga ukuqinisekiswa kwesikhathi\nsendawo, amanzi nomhlabathi.\n\n\n\nSynthetic graph source {count} $&                                                                                                          4\nAwukahlolwa uchwepheshe wezolimo — umhlahlandlela wokuhlela, hhayi umyalelo. Wubonise kumeluleki wakho wezolimo, futhi uhlole umhlabathi\nngaphambi kokuchitha imali kuwo.\nUkuhumusha okusabuyekezwa: akukahlolwa ngumuntu olwazi kahle lolu limi. Hlola umbhalo wesiNgisi ngaphambi kokwenza okushiwoyo.\n",
+    "ImbewuField                                                                                             UMHLAHLANDLELA WOKUKHIQIZA\n\n\nSYNTHETIC GRAPH SOURCE {COUNT} $&\n\nIzinketho zepulazi - kuyaqhubeka\nSebenzisa lokho okubonile epulazini nohlu olufushane locwaningo. Qinisekisa izinketho endaweni ngaphambi\nkokuthenga.\n\nIzinhlobo zezitshalo okufanele zihlolwe endaweni (kuyaqhubeka)\nTomatoes\nUhlobo olurekhodiwe: akukakhethwa.\nIsimo sezulu sale ndawo asikacaci, ngakho akukho hlu olufushane lwendawo olushiwo. Vula ikhadi lesitshalo ukuze\nubone imithombo bese urekhoda okukhethile.\n\n\n\n\nSynthetic graph source {count} $&                                                                                                          5\nAwukahlolwa uchwepheshe wezolimo — umhlahlandlela wokuhlela, hhayi umyalelo. Wubonise kumeluleki wakho wezolimo, futhi uhlole umhlabathi\nngaphambi kokuchitha imali kuwo.\nUkuhumusha okusabuyekezwa: akukahlolwa ngumuntu olwazi kahle lolu limi. Hlola umbhalo wesiNgisi ngaphambi kokwenza okushiwoyo.\n",
+    ""
+  ]
+}

@@ -1,0 +1,1076 @@
+[
+  {
+    "id": "normal",
+    "input": {
+      "plantings": [
+        {
+          "id": "source-crop",
+          "bedId": "source-bed",
+          "cropKey": "tomatoes",
+          "sowMonth": 10
+        }
+      ],
+      "beds": [
+        {
+          "id": "source-bed",
+          "label": "Original source bed {count} $&",
+          "areaM2": 20,
+          "kind": "bed"
+        }
+      ],
+      "tasks": [],
+      "now": "2026-10-10T12:00:00.000Z",
+      "sections": [
+        "guidance"
+      ],
+      "meta": {
+        "planTitle": "Synthetic graph source {count} $&",
+        "siteLine": "Synthetic source site",
+        "locationLine": "Synthetic source location",
+        "climateLine": "Synthetic source climate",
+        "bedsSummary": "Synthetic area",
+        "dateLabel": "1 October 2026",
+        "estimatedKgPerYear": null,
+        "lossPercent": 0
+      },
+      "availability": {
+        "veg": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "utilization": [
+          0,
+          0.5,
+          1,
+          1.25,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "forest": [
+          [
+            {
+              "iconKey": "tree:mangifera-indica",
+              "label": "Original mapped Mango {unit} $&"
+            }
+          ],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "animals": [
+          [
+            {
+              "iconKey": "animal:chicken-layer",
+              "label": "Original recorded eggs {count} $&"
+            }
+          ],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "undated": [
+          {
+            "iconKey": "tree:persea-americana",
+            "label": "Original undated {date} $&",
+            "detail": "Original recorded detail"
+          }
+        ]
+      },
+      "productionRecords": [
+        {
+          "id": "actual-mango",
+          "sourceIconKey": "tree:mangifera-indica",
+          "label": "Original record {date} $& 17",
+          "date": {
+            "year": 2026,
+            "month": 10
+          },
+          "quantity": 0,
+          "unit": "kg",
+          "status": "actual"
+        },
+        {
+          "id": "expected-crop",
+          "sourceIconKey": "crop:tomatoes",
+          "label": "Original expected {count} $&",
+          "date": {
+            "year": 2026,
+            "month": 11
+          },
+          "quantity": 7,
+          "unit": "kg",
+          "status": "expected"
+        },
+        {
+          "id": "eggs",
+          "sourceIconKey": "animal:chicken-layer",
+          "label": "Original egg observation",
+          "date": {
+            "year": 2026,
+            "month": 10
+          },
+          "quantity": 12,
+          "unit": "eggs",
+          "status": "actual"
+        },
+        {
+          "id": "milk",
+          "sourceIconKey": "animal:goat-dairy",
+          "label": "Original milk observation",
+          "date": {
+            "year": 2026,
+            "month": 12
+          },
+          "quantity": 3,
+          "unit": "litres",
+          "status": "expected"
+        },
+        {
+          "id": "items",
+          "sourceIconKey": "crop:butternut",
+          "label": "Original items observation",
+          "date": {
+            "year": 2027,
+            "month": 1
+          },
+          "quantity": 2,
+          "unit": "items",
+          "status": "actual"
+        }
+      ],
+      "preservedProducts": [
+        {
+          "id": "stock-stored",
+          "label": "Original kept stored {method} $&",
+          "sourceIconKey": "crop:tomatoes",
+          "method": "stored",
+          "dates": [
+            {
+              "year": 2026,
+              "month": 10
+            }
+          ],
+          "provenance": "farm-record",
+          "note": "Original private method note {count} $& 23",
+          "quantities": [
+            {
+              "year": 2026,
+              "month": 10,
+              "kg": 5
+            }
+          ]
+        },
+        {
+          "id": "stock-frozen",
+          "label": "Original kept frozen {method} $&",
+          "sourceIconKey": "crop:tomatoes",
+          "method": "frozen",
+          "dates": [
+            {
+              "year": 2026,
+              "month": 11
+            }
+          ],
+          "provenance": "farm-record",
+          "note": "Original private method note {count} $& 23"
+        },
+        {
+          "id": "stock-dried",
+          "label": "Original kept dried {method} $&",
+          "sourceIconKey": "crop:tomatoes",
+          "method": "dried",
+          "dates": [
+            {
+              "year": 2026,
+              "month": 12
+            }
+          ],
+          "provenance": "farm-record",
+          "note": "Original private method note {count} $& 23"
+        },
+        {
+          "id": "stock-fermented",
+          "label": "Original kept fermented {method} $&",
+          "sourceIconKey": "crop:tomatoes",
+          "method": "fermented",
+          "dates": [
+            {
+              "year": 2027,
+              "month": 1
+            }
+          ],
+          "provenance": "farm-record",
+          "note": "Original private method note {count} $& 23"
+        },
+        {
+          "id": "stock-processed",
+          "label": "Original kept processed {method} $&",
+          "sourceIconKey": "crop:tomatoes",
+          "method": "processed",
+          "dates": [
+            {
+              "year": 2027,
+              "month": 2
+            }
+          ],
+          "provenance": "farm-record",
+          "note": "Original private method note {count} $& 23"
+        }
+      ],
+      "productionGuide": {
+        "area": "Subtropical coast",
+        "siteObservations": [
+          {
+            "title": "Water through the dry season",
+            "lines": [
+              "Not recorded. Complete the site survey and confirm water before choosing an intensive plan."
+            ]
+          },
+          {
+            "title": "Frost on this farm",
+            "lines": [
+              "Local frost observations are not recorded. Satellite monthly averages cannot establish first and last frost dates."
+            ]
+          },
+          {
+            "title": "Sun and drainage",
+            "lines": [
+              "Sun: not recorded.",
+              "Drainage: not recorded. Soil-test results and crop-specific needs still need checking."
+            ]
+          }
+        ],
+        "recordedProduction": [
+          {
+            "title": "Original eggs {year} $&",
+            "lines": [
+              "Farmer-reported annual total for 2025: 240 eggs.",
+              "Household use: 0 eggs. Sold: not recorded.",
+              "Reported harvest months: Jun, Jul. These are survey observations, not a new production forecast.",
+              "Check the recorded unit and totals before using this row."
+            ]
+          },
+          {
+            "title": "Fish",
+            "lines": [
+              "Farmer-reported annual total for 2025: not recorded.",
+              "Household use: not recorded. Sold: not recorded.",
+              "Reported harvest months: not recorded. These are survey observations, not a new production forecast.",
+              "Check the recorded unit and totals before using this row."
+            ]
+          },
+          {
+            "title": "Other vegetables",
+            "lines": [
+              "Farmer-reported annual total for 2025: 12 kg.",
+              "Household use: 7 kg. Sold: 3 kg.",
+              "Reported harvest months: Jan, Dec. These are survey observations, not a new production forecast.",
+              "Check the recorded unit and totals before using this row."
+            ]
+          }
+        ],
+        "cropChoices": [
+          {
+            "title": "Tomatoes",
+            "lines": [
+              "Recorded variety: not chosen yet.",
+              "Research shortlist for similar climates: Rodade."
+            ],
+            "sources": [
+              {
+                "label": "Rodade, Sakata product page",
+                "url": "https://sakata.co.za/shop/vegetables/tomato/determinate-salad/rodade-open-pollinated-tomato/"
+              }
+            ]
+          }
+        ],
+        "foodForest": [
+          {
+            "title": "Moringa",
+            "lines": [
+              "1 existing; 1 proposed. Products: Leaves and green pods; keep their records separate.",
+              "First crop reference: 6–12 months. The 6–12-month reference concerns the first leaf harvest after planting. Flowers and pods are normally produced during the second year of growth in the same North West guide. Leaf readiness does not establish pod production or picking months. Actual timing depends on variety and site care.",
+              "Pod development, not a young green-pod picking calendar: This botanical description discusses pods that become brown at maturity. The separate harvesting section requires young, tender, green pods for food and supplies no calendar for that stage. March–April is retained as pod-development phenology, not a confirmed young-pod picking season or leaf calendar.",
+              "Choose a sunny, well-drained growing position, protect establishment and plan pruning for leaf harvest.",
+              "Buying advice: Use correctly identified local planting material. No locally validated named cultivar shortlist is sourced; this plan does not claim nitrogen fixation or medicinal effects.",
+              "Expected picking season: no fixed regional months sourced. Record planting and picking dates locally."
+            ],
+            "sources": [
+              {
+                "label": "North West DARD: Moringa production for food security (2021)",
+                "url": "https://dard.nwpg.gov.za/wp-content/uploads/2022/05/Moringa-production-for-food-security.pdf"
+              },
+              {
+                "label": "North West Department of Agriculture and Rural Development, Moringa (Moringa oleifera) production: A possible solution to South African food security challenges, p. 33",
+                "url": "https://dard.nwpg.gov.za/wp-content/uploads/2022/05/Moringa-production-for-food-security.pdf"
+              },
+              {
+                "label": "North West Department of Agriculture and Rural Development, Moringa (Moringa oleifera) production: A possible solution to South African food security challenges, p. 7",
+                "url": "https://dard.nwpg.gov.za/wp-content/uploads/2022/05/Moringa-production-for-food-security.pdf"
+              }
+            ]
+          },
+          {
+            "title": "Avocado",
+            "lines": [
+              "1 existing; 1 proposed. Products: fruit.",
+              "First crop reference: 2–3 years. Bruyns Hill, Natal Midlands bioclimatic group 2; irrigated Hass on clonal Duke 7 rootstock, 7 x 7 m (200 trees/ha), planted 1982–1984. The paper reports Hass starting in its second season and Fuerte in its third. The two-to-three-year reference describes those trial cultivars, not every avocado or nursery starting age. Actual timing depends on variety and site care.",
+              "Established production reference: 6–8 years. In this irrigated, intensively managed Natal Midlands trial, Hass reached about 20 t/ha at age 6 and orchards approached maximum sustainable average yield by age 8. This is a trial-specific bearing reference; there is no national plateau or automatically interpolated age-yield curve.",
+              "Production reference: 100–112.5 kg/plant. Same-trial arithmetic at the initial 200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree at age 6; sustainable average 22,500 kg/ha / 200 = 112.5 kg/tree. At age 3, 10,000 kg/ha / 200 = 50 kg/tree equivalent. These are average-equivalent reference values for the named Hass/Duke 7 orchard conditions, not measured individual-tree yields or default production for a different density, cultivar, climate or management. Intermediate ages are not inferred.",
+              "Hass age benchmarks — irrigated Natal Midlands trial: Hass on Duke 7, initially 200 trees/ha at Bruyns Hill (Natal Midlands bioclimatic group 2), with intensive irrigation and nutrition. Age 3: 10,000 kg/ha; age 6: 20,000 kg/ha; sustainable average about 22,500 kg/ha. Same-study density permits equivalents of 50 kg/tree at age 3 and 100 kg/tree at age 6; there is no reference for every intermediate age. These orchard benchmarks are conditional on good resources, comparable climate and timely orchard management, including Phytophthora control and thinning; do not auto-fill farm quantities.",
+              "Keep roots well drained; water matters during flowering.",
+              "Buying advice: KZN sequence: earlier Fuerte (May–Nov), middle Hass (Aug–Dec), later Ryan (Nov–Feb). These seasons overlap. Buy labelled grafted trees; confirm rootstock and pollination partners.",
+              "Pollination: partly self fertile. Check the chosen cultivar's requirements with the nursery.",
+              "Assumed variety: Hass. South Africa - warm subtropical regions (Hass cultivar). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised."
+            ],
+            "sources": [
+              {
+                "label": "KZN DARD, Fruit and Nut Production, PDF pp. 6–7 (regional reference; confirm current nursery stock)",
+                "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+              },
+              {
+                "label": "SA Avocado Industry Overview – South African Avocado Growers' Association (SAAGA)",
+                "url": "https://avocado.co.za/sa-avocado-industry-overview/"
+              },
+              {
+                "label": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops), p. 5",
+                "url": "http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf"
+              },
+              {
+                "label": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18",
+                "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf"
+              },
+              {
+                "label": "Wolstenholme, Kaiser & Palmer, 'Yield Potential of Intensively Managed Avocados in the Natal Midlands — The Early Bearing Years', South African Avocado Growers' Association Yearbook 1991, 14:15-18, p. 6",
+                "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf"
+              },
+              {
+                "label": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18, p. 7",
+                "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf"
+              },
+              {
+                "label": "Wolstenholme, Kaiser & Palmer (1991), SAAGA Yearbook 14:15–18; reflowed PDF, p. 6",
+                "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf"
+              }
+            ],
+            "expectedSeason": {
+              "label": "Assumed variety: Hass",
+              "months": [
+                6,
+                7,
+                8,
+                9,
+                10
+              ],
+              "basis": "South Africa - warm subtropical regions (Hass cultivar). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+              "source": {
+                "label": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops), p. 5",
+                "url": "http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf"
+              }
+            }
+          }
+        ],
+        "animalProducts": []
+      },
+      "poultryGuidance": {
+        "purpose": "unknown",
+        "selectedEnterprise": {
+          "id": "chicken-layer",
+          "name": "Laying hens (commercial)"
+        },
+        "recordedBreed": "Fish {age} $&",
+        "recordedLayingHens": 7,
+        "status": "needs-confirmation",
+        "statusText": "Check the farm details before choosing",
+        "missing": [
+          "What are the chickens for: eggs, meat or both?",
+          "Is clean drinking water always available?",
+          "What feed is available?",
+          "Are the birds protected at night?"
+        ],
+        "attention": [],
+        "careNotes": [
+          {
+            "text": "Every breed needs clean drinking water, suitable feed and protected housing.",
+            "source": {
+              "doc": "ARC: Climate-Smart Agriculture, Poultry Production",
+              "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+              "page": "468–471, 478–480"
+            }
+          },
+          {
+            "text": "Foraging alone may not supply enough nutrients for eggs.",
+            "source": {
+              "doc": "South African village-chicken feeding study",
+              "url": "https://www.scielo.org.za/pdf/sajas/v45n2/05.pdf"
+            }
+          }
+        ],
+        "climateNotes": [
+          {
+            "text": "Growing water is limited. Check drinking water separately; garden water does not confirm a safe poultry supply.",
+            "source": {
+              "doc": "ARC: Climate-Smart Agriculture, Poultry Production",
+              "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+              "page": "468–471, 478–480"
+            }
+          },
+          {
+            "text": "You reported wet ground. Check that chicken housing drains and bedding stays dry.",
+            "source": {
+              "doc": "ARC: Climate-Smart Agriculture, Poultry Production",
+              "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+              "page": "468–471, 478–480"
+            }
+          },
+          {
+            "text": "You reported frost. Check winter shelter and chick warmth with a local adviser.",
+            "source": {
+              "doc": "ARC: Climate-Smart Agriculture, Poultry Production",
+              "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+              "page": "468–471, 478–480"
+            }
+          },
+          {
+            "text": "In hot weather, provide shade, airflow and reliable water. This is general care advice; heat at this site has not been confirmed.",
+            "source": {
+              "doc": "ARC: Climate-Smart Agriculture, Poultry Production",
+              "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+              "page": "468–471, 478–480"
+            }
+          },
+          {
+            "text": "Local chicken adaptation varies within provinces. Location alone does not identify the best breed for this farm.",
+            "source": {
+              "doc": "ARC researchers: Local chicken environmental suitability",
+              "url": "https://www.frontiersin.org/journals/genetics/articles/10.3389/fgene.2024.1450939/full"
+            }
+          }
+        ],
+        "options": [
+          {
+            "id": "potchefstroom-koekoek",
+            "name": "Potchefstroom Koekoek",
+            "kind": "breed",
+            "detail": "An egg-and-meat option. It outperformed the other indigenous breeds for eggs in a managed ARC trial; those results do not predict this farm.",
+            "source": {
+              "doc": "ARC: Indigenous chicken egg-production study",
+              "url": "https://www.fao.org/4/i1353t/i1353t04.pdf",
+              "page": "27–32"
+            }
+          },
+          {
+            "id": "venda",
+            "name": "Venda",
+            "kind": "breed",
+            "detail": "An ARC-conserved indigenous option for eggs and meat; check local stock and care needs.",
+            "source": {
+              "doc": "ARC: Indigenous chicken egg-production study",
+              "url": "https://www.fao.org/4/i1353t/i1353t04.pdf",
+              "page": "27–32"
+            }
+          },
+          {
+            "id": "ovambo",
+            "name": "Ovambo",
+            "kind": "breed",
+            "detail": "An ARC-conserved indigenous option for eggs and meat; check local stock and care needs.",
+            "source": {
+              "doc": "ARC: Indigenous chicken egg-production study",
+              "url": "https://www.fao.org/4/i1353t/i1353t04.pdf",
+              "page": "27–32"
+            }
+          },
+          {
+            "id": "naked-neck",
+            "name": "Naked Neck",
+            "kind": "breed",
+            "detail": "An indigenous option described across diverse South African climates; confirm suitability with local advice.",
+            "source": {
+              "doc": "ARC: Indigenous chicken egg-production study",
+              "url": "https://www.fao.org/4/i1353t/i1353t04.pdf",
+              "page": "27–32"
+            }
+          },
+          {
+            "id": "commercial-layers",
+            "name": "Commercial layers — egg system",
+            "kind": "management-system",
+            "detail": "Consider only after checking reliable feed, drinking water, housing, health care and managed lighting. Breed and supplier still need local confirmation.",
+            "source": {
+              "doc": "SAPA: Commercial Layers",
+              "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
+              "page": "12–15"
+            }
+          },
+          {
+            "id": "commercial-broilers",
+            "name": "Commercial broilers — meat system",
+            "kind": "management-system",
+            "detail": "Needs dependable balanced feed, water, suitable housing and management. Confirm chick supply and a meat outlet before choosing.",
+            "source": {
+              "doc": "ARC: Climate-Smart Agriculture, Poultry Production",
+              "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+              "page": "468–471, 478–480"
+            }
+          }
+        ],
+        "localCheck": "These are options to discuss, not a final breed recommendation. Confirm healthy stock, supplier availability, ventilation, chick warmth and a health plan locally. Record actual production months separately; this guide promises no output or dates.",
+        "sources": [
+          {
+            "doc": "ARC: Indigenous chicken egg-production study",
+            "url": "https://www.fao.org/4/i1353t/i1353t04.pdf",
+            "page": "27–32"
+          },
+          {
+            "doc": "SAPA: Commercial Layers",
+            "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
+            "page": "12–15"
+          },
+          {
+            "doc": "ARC: Climate-Smart Agriculture, Poultry Production",
+            "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+            "page": "468–471, 478–480"
+          },
+          {
+            "doc": "South African village-chicken feeding study",
+            "url": "https://www.scielo.org.za/pdf/sajas/v45n2/05.pdf"
+          },
+          {
+            "doc": "ARC researchers: Local chicken environmental suitability",
+            "url": "https://www.frontiersin.org/journals/genetics/articles/10.3389/fgene.2024.1450939/full"
+          },
+          {
+            "doc": "ARC: Conserved South African chicken breeds",
+            "url": "https://www.arc.agric.za/arc-api/Pages/Rangelands%20and%20Nutrition/Germplasm-Conservation-and-Reproductive-Biotechnologies.aspx"
+          }
+        ]
+      }
+    }
+  },
+  {
+    "id": "unknown-records",
+    "input": {
+      "plantings": [
+        {
+          "id": "source-crop",
+          "bedId": "source-bed",
+          "cropKey": "tomatoes",
+          "sowMonth": 10
+        }
+      ],
+      "beds": [
+        {
+          "id": "source-bed",
+          "label": "Original source bed {count} $&",
+          "areaM2": 20,
+          "kind": "bed"
+        }
+      ],
+      "tasks": [],
+      "now": "2026-10-10T12:00:00.000Z",
+      "sections": [
+        "guidance"
+      ],
+      "meta": {
+        "planTitle": "Synthetic graph source {count} $&",
+        "siteLine": "Synthetic source site",
+        "locationLine": "Synthetic source location",
+        "climateLine": "Synthetic source climate",
+        "bedsSummary": "Synthetic area",
+        "dateLabel": "1 October 2026",
+        "estimatedKgPerYear": null,
+        "lossPercent": 0
+      },
+      "availability": {
+        "veg": [
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "utilization": [
+          0,
+          0.5,
+          1,
+          1.25,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "forest": [
+          [
+            {
+              "iconKey": "tree:mangifera-indica",
+              "label": "Original mapped Mango {unit} $&"
+            }
+          ],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "animals": [
+          [
+            {
+              "iconKey": "animal:chicken-layer",
+              "label": "Original recorded eggs {count} $&"
+            }
+          ],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          []
+        ],
+        "undated": [
+          {
+            "iconKey": "tree:persea-americana",
+            "label": "Original undated {date} $&",
+            "detail": "Original recorded detail"
+          }
+        ]
+      },
+      "productionRecords": [
+        {
+          "id": "actual-mango",
+          "sourceIconKey": "tree:mangifera-indica",
+          "label": "Original record {date} $& 17",
+          "date": {
+            "year": 2026,
+            "month": 10
+          },
+          "quantity": 0,
+          "unit": "kg",
+          "status": "actual"
+        },
+        {
+          "id": "expected-crop",
+          "sourceIconKey": "crop:tomatoes",
+          "label": "Original expected {count} $&",
+          "date": {
+            "year": 2026,
+            "month": 11
+          },
+          "quantity": 7,
+          "unit": "kg",
+          "status": "expected"
+        },
+        {
+          "id": "eggs",
+          "sourceIconKey": "animal:chicken-layer",
+          "label": "Original egg observation",
+          "date": {
+            "year": 2026,
+            "month": 10
+          },
+          "quantity": 12,
+          "unit": "eggs",
+          "status": "actual"
+        },
+        {
+          "id": "milk",
+          "sourceIconKey": "animal:goat-dairy",
+          "label": "Original milk observation",
+          "date": {
+            "year": 2026,
+            "month": 12
+          },
+          "quantity": 3,
+          "unit": "litres",
+          "status": "expected"
+        },
+        {
+          "id": "items",
+          "sourceIconKey": "crop:butternut",
+          "label": "Original items observation",
+          "date": {
+            "year": 2027,
+            "month": 1
+          },
+          "quantity": 2,
+          "unit": "items",
+          "status": "actual"
+        }
+      ],
+      "preservedProducts": [
+        {
+          "id": "stock-stored",
+          "label": "Original kept stored {method} $&",
+          "sourceIconKey": "crop:tomatoes",
+          "method": "stored",
+          "dates": [
+            {
+              "year": 2026,
+              "month": 10
+            }
+          ],
+          "provenance": "farm-record",
+          "note": "Original private method note {count} $& 23",
+          "quantities": [
+            {
+              "year": 2026,
+              "month": 10,
+              "kg": 5
+            }
+          ]
+        },
+        {
+          "id": "stock-frozen",
+          "label": "Original kept frozen {method} $&",
+          "sourceIconKey": "crop:tomatoes",
+          "method": "frozen",
+          "dates": [
+            {
+              "year": 2026,
+              "month": 11
+            }
+          ],
+          "provenance": "farm-record",
+          "note": "Original private method note {count} $& 23"
+        },
+        {
+          "id": "stock-dried",
+          "label": "Original kept dried {method} $&",
+          "sourceIconKey": "crop:tomatoes",
+          "method": "dried",
+          "dates": [
+            {
+              "year": 2026,
+              "month": 12
+            }
+          ],
+          "provenance": "farm-record",
+          "note": "Original private method note {count} $& 23"
+        },
+        {
+          "id": "stock-fermented",
+          "label": "Original kept fermented {method} $&",
+          "sourceIconKey": "crop:tomatoes",
+          "method": "fermented",
+          "dates": [
+            {
+              "year": 2027,
+              "month": 1
+            }
+          ],
+          "provenance": "farm-record",
+          "note": "Original private method note {count} $& 23"
+        },
+        {
+          "id": "stock-processed",
+          "label": "Original kept processed {method} $&",
+          "sourceIconKey": "crop:tomatoes",
+          "method": "processed",
+          "dates": [
+            {
+              "year": 2027,
+              "month": 2
+            }
+          ],
+          "provenance": "farm-record",
+          "note": "Original private method note {count} $& 23"
+        }
+      ],
+      "productionGuide": {
+        "area": "Subtropical coast",
+        "siteObservations": [
+          {
+            "title": "Water through the dry season",
+            "lines": [
+              "Not recorded. Complete the site survey and confirm water before choosing an intensive plan."
+            ]
+          },
+          {
+            "title": "Frost on this farm",
+            "lines": [
+              "Local frost observations are not recorded. Satellite monthly averages cannot establish first and last frost dates."
+            ]
+          },
+          {
+            "title": "Sun and drainage",
+            "lines": [
+              "Sun: not recorded.",
+              "Drainage: not recorded. Soil-test results and crop-specific needs still need checking."
+            ]
+          }
+        ],
+        "recordedProduction": [
+          {
+            "title": "Original eggs {year} $&",
+            "lines": [
+              "Farmer-reported annual total for 2025: 240 eggs.",
+              "Household use: 0 eggs. Sold: not recorded.",
+              "Reported harvest months: Jun, Jul. These are survey observations, not a new production forecast.",
+              "Check the recorded unit and totals before using this row."
+            ]
+          },
+          {
+            "title": "Fish",
+            "lines": [
+              "Farmer-reported annual total for 2025: not recorded.",
+              "Household use: not recorded. Sold: not recorded.",
+              "Reported harvest months: not recorded. These are survey observations, not a new production forecast.",
+              "Check the recorded unit and totals before using this row."
+            ]
+          },
+          {
+            "title": "Other vegetables",
+            "lines": [
+              "Farmer-reported annual total for 2025: 12 kg.",
+              "Household use: 7 kg. Sold: 3 kg.",
+              "Reported harvest months: Jan, Dec. These are survey observations, not a new production forecast.",
+              "Check the recorded unit and totals before using this row."
+            ]
+          }
+        ],
+        "cropChoices": [
+          {
+            "title": "Tomatoes",
+            "lines": [
+              "Recorded variety: not chosen yet.",
+              "Research shortlist for similar climates: Rodade."
+            ],
+            "sources": [
+              {
+                "label": "Rodade, Sakata product page",
+                "url": "https://sakata.co.za/shop/vegetables/tomato/determinate-salad/rodade-open-pollinated-tomato/"
+              }
+            ]
+          }
+        ]
+      },
+      "poultryGuidance": {
+        "purpose": "both",
+        "selectedEnterprise": {
+          "id": "chicken-layer",
+          "name": "Laying hens (commercial)"
+        },
+        "recordedBreed": "Fish {age} $&",
+        "recordedLayingHens": 7,
+        "status": "care-needs-attention",
+        "statusText": "Care needs attention before expansion",
+        "missing": [],
+        "attention": [
+          "Secure reliable clean drinking water before buying more birds.",
+          "Check feed suitability; scavenging and scraps may not meet laying hens’ needs.",
+          "Improve night protection and weatherproof housing."
+        ],
+        "careNotes": [
+          {
+            "text": "Every breed needs clean drinking water, suitable feed and protected housing.",
+            "source": {
+              "doc": "ARC: Climate-Smart Agriculture, Poultry Production",
+              "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+              "page": "468–471, 478–480"
+            }
+          },
+          {
+            "text": "Foraging alone may not supply enough nutrients for eggs.",
+            "source": {
+              "doc": "South African village-chicken feeding study",
+              "url": "https://www.scielo.org.za/pdf/sajas/v45n2/05.pdf"
+            }
+          }
+        ],
+        "climateNotes": [
+          {
+            "text": "Growing water is limited. Check drinking water separately; garden water does not confirm a safe poultry supply.",
+            "source": {
+              "doc": "ARC: Climate-Smart Agriculture, Poultry Production",
+              "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+              "page": "468–471, 478–480"
+            }
+          },
+          {
+            "text": "You reported wet ground. Check that chicken housing drains and bedding stays dry.",
+            "source": {
+              "doc": "ARC: Climate-Smart Agriculture, Poultry Production",
+              "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+              "page": "468–471, 478–480"
+            }
+          },
+          {
+            "text": "You reported frost. Check winter shelter and chick warmth with a local adviser.",
+            "source": {
+              "doc": "ARC: Climate-Smart Agriculture, Poultry Production",
+              "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+              "page": "468–471, 478–480"
+            }
+          },
+          {
+            "text": "In hot weather, provide shade, airflow and reliable water. This is general care advice; heat at this site has not been confirmed.",
+            "source": {
+              "doc": "ARC: Climate-Smart Agriculture, Poultry Production",
+              "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+              "page": "468–471, 478–480"
+            }
+          },
+          {
+            "text": "Local chicken adaptation varies within provinces. Location alone does not identify the best breed for this farm.",
+            "source": {
+              "doc": "ARC researchers: Local chicken environmental suitability",
+              "url": "https://www.frontiersin.org/journals/genetics/articles/10.3389/fgene.2024.1450939/full"
+            }
+          }
+        ],
+        "options": [
+          {
+            "id": "potchefstroom-koekoek",
+            "name": "Potchefstroom Koekoek",
+            "kind": "breed",
+            "detail": "An egg-and-meat option. It outperformed the other indigenous breeds for eggs in a managed ARC trial; those results do not predict this farm.",
+            "source": {
+              "doc": "ARC: Indigenous chicken egg-production study",
+              "url": "https://www.fao.org/4/i1353t/i1353t04.pdf",
+              "page": "27–32"
+            }
+          },
+          {
+            "id": "venda",
+            "name": "Venda",
+            "kind": "breed",
+            "detail": "An ARC-conserved indigenous option for eggs and meat; check local stock and care needs.",
+            "source": {
+              "doc": "ARC: Indigenous chicken egg-production study",
+              "url": "https://www.fao.org/4/i1353t/i1353t04.pdf",
+              "page": "27–32"
+            }
+          },
+          {
+            "id": "ovambo",
+            "name": "Ovambo",
+            "kind": "breed",
+            "detail": "An ARC-conserved indigenous option for eggs and meat; check local stock and care needs.",
+            "source": {
+              "doc": "ARC: Indigenous chicken egg-production study",
+              "url": "https://www.fao.org/4/i1353t/i1353t04.pdf",
+              "page": "27–32"
+            }
+          },
+          {
+            "id": "naked-neck",
+            "name": "Naked Neck",
+            "kind": "breed",
+            "detail": "An indigenous option described across diverse South African climates; confirm suitability with local advice.",
+            "source": {
+              "doc": "ARC: Indigenous chicken egg-production study",
+              "url": "https://www.fao.org/4/i1353t/i1353t04.pdf",
+              "page": "27–32"
+            }
+          },
+          {
+            "id": "commercial-layers",
+            "name": "Commercial layers — egg system",
+            "kind": "management-system",
+            "detail": "Consider only after checking reliable feed, drinking water, housing, health care and managed lighting. Breed and supplier still need local confirmation.",
+            "source": {
+              "doc": "SAPA: Commercial Layers",
+              "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
+              "page": "12–15"
+            }
+          },
+          {
+            "id": "commercial-broilers",
+            "name": "Commercial broilers — meat system",
+            "kind": "management-system",
+            "detail": "Needs dependable balanced feed, water, suitable housing and management. Confirm chick supply and a meat outlet before choosing.",
+            "source": {
+              "doc": "ARC: Climate-Smart Agriculture, Poultry Production",
+              "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+              "page": "468–471, 478–480"
+            }
+          }
+        ],
+        "localCheck": "These are options to discuss, not a final breed recommendation. Confirm healthy stock, supplier availability, ventilation, chick warmth and a health plan locally. Record actual production months separately; this guide promises no output or dates.",
+        "sources": [
+          {
+            "doc": "ARC: Indigenous chicken egg-production study",
+            "url": "https://www.fao.org/4/i1353t/i1353t04.pdf",
+            "page": "27–32"
+          },
+          {
+            "doc": "SAPA: Commercial Layers",
+            "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
+            "page": "12–15"
+          },
+          {
+            "doc": "ARC: Climate-Smart Agriculture, Poultry Production",
+            "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+            "page": "468–471, 478–480"
+          },
+          {
+            "doc": "South African village-chicken feeding study",
+            "url": "https://www.scielo.org.za/pdf/sajas/v45n2/05.pdf"
+          },
+          {
+            "doc": "ARC researchers: Local chicken environmental suitability",
+            "url": "https://www.frontiersin.org/journals/genetics/articles/10.3389/fgene.2024.1450939/full"
+          },
+          {
+            "doc": "ARC: Conserved South African chicken breeds",
+            "url": "https://www.arc.agric.za/arc-api/Pages/Rangelands%20and%20Nutrition/Germplasm-Conservation-and-Reproductive-Biotechnologies.aspx"
+          }
+        ]
+      }
+    }
+  }
+]
