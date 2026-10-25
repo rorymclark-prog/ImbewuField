@@ -192,7 +192,12 @@ export function buildProgrammeReport(o: ProgrammeReportOptions): ProgrammeReport
 /** Scope in the filename keeps two reports from different cohorts distinguishable after sharing. */
 export function programmeReportFilename(report: Pick<ProgrammeReportModel, 'title' | 'scope' | 'period'>, date: string): string {
   const slug = (value: string) => value.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-  const identity = slug(`${report.title}-${report.scope}`).slice(0,100).replace(/-$/,'');
+  const fullIdentity = slug(`${report.title}-${report.scope}`);
+  // Long project names can share their first hundred characters. Keep a compact
+  // fingerprint of the complete selection so their downloaded files stay distinct.
+  let fingerprint = 2166136261;
+  for (const char of `${report.title}\u0000${report.scope}`) fingerprint = Math.imul(fingerprint ^ char.charCodeAt(0), 16777619);
+  const identity = fullIdentity.length > 80 ? `${fullIdentity.slice(0, 70).replace(/-$/, '')}-${(fingerprint >>> 0).toString(36)}` : fullIdentity;
   const period = report.period.startsWith('Cumulative') ? 'cumulative' : slug(report.period.split('(')[0]).slice(0,50).replace(/-$/,'');
   return `ImbewuField-${identity || 'programme-report'}-${period || 'no-period'}-${/^\d{4}-\d{2}-\d{2}$/.test(date) ? date : 'undated'}`;
 }

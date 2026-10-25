@@ -41,6 +41,21 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 October 2026', sha: 'becd2a958', changes: [
+    'Farmers can download production and finance reports from My records.',
+    'Mentors and facilitators have reports for visits, training, feedback and follow-up.',
+    'MEL reports compare matched responses and show evidence dates and missing data.',
+    'Reports share full, brief and ink-saving layouts; funders see published evidence.',
+  ], tour: [{ title: 'Open your farm reports',
+    where: 'My records → Production & finance reports', href: '/records',
+    detail: 'Choose production or finances, set the period and download the matching PDF.',
+  }, { title: 'Review visits and training',
+    where: 'Mentor → Field report or Training', href: '/mentor',
+    detail: 'Review follow-up actions or open the facilitator delivery report in Training.',
+  }, { title: 'Review MEL evidence',
+    where: 'Organisation → Reports → MEL evidence', href: '/ngo',
+    detail: 'Choose a project, assessment and compatible earlier stage to review matched change.',
+  }] },
   { when: '25 October 2026', sha: '8d2e1a9a', changes: [
     'Home and Invoice open faster and no longer redraw the day after an update.',
     'On a computer the Lima button sits bottom-right and no longer hides buttons.',
