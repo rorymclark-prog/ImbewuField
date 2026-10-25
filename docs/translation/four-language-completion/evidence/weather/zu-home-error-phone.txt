@@ -1,0 +1,37 @@
+Browser tab: 1, Title: "Isolated weather component verification", URL: "http://127.0.0.1:4266/".
+1 AXWebArea Isolated weather component verification, URL: 127.0.0.1:4266/
+	2 container
+		3 text Isolated component test · synthetic forecast · provider calls:  2
+	4 container
+		5 text Language
+		6 pop up button (collapsed, settable) Description: Language, Value: zu, Secondary Actions: Expand
+			7 menu
+				8 en
+				9 (selected) zu
+				10 st
+				11 ts
+				12 ve
+				13 xx
+		14 text Scenario
+		15 pop up button (collapsed, settable) Description: Scenario, Value: error, Secondary Actions: Expand
+			16 menu
+				17 forecast
+				18 (selected) error
+				19 zero
+				20 missing
+				21 clear
+				22 loading
+		23 text Context
+		24 pop up button (collapsed, settable) Description: Context, Value: home, Secondary Actions: Expand
+			25 menu
+				26 report
+				27 (selected) home
+		28 checkbox (settable, integer) Description: Compact, Value: 1
+		29 checkbox (settable, integer) Description: Original snapshot, Value: 0
+		30 button Light
+		31 button Dark
+		32 text Isimo sezulu asitholakali okwamanje.
+		33 container
+			34 text Unreviewed isiZulu draft.  English source:  Weather is not available right now.
+
+The focused UI element is 28 checkbox (settable, integer) Description: Compact, Value: 1

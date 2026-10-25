@@ -6,7 +6,7 @@ import { fetchWeatherForecast, describeWeatherCode, type WeatherForecast } from 
 import { getElementArt2 } from '@/lib/element-art-2';
 import { useLanguage } from '@/lib/i18n';
 import IsiZuluDraftSource from './IsiZuluDraftSource';
-import { fillWeather, weatherDayKey, weatherDescKey, weatherEnglish, weatherText } from '@/lib/weather-copy';
+import { fillWeather, weatherDayKey, weatherDescKey, weatherEnglish, weatherText, isWeatherDraftLanguage, isWeatherRegionalLanguage, weatherDraftNotice } from '@/lib/weather-copy';
 
 interface Props {
   lat: number;
@@ -27,7 +27,7 @@ function weekdayOf(isoDate: string): number {
   return new Date(y, m - 1, d).getDay();
 }
 
-// The label for one forecast day in `lang` (isiZulu draft or English); index 0 is "Today".
+// Index 0 is the provider's first forecast day; language changes its label only.
 function dayLabel(lang: string, isoDate: string, index: number): string {
   return weatherText(lang, weatherDayKey(weekdayOf(isoDate), index === 0));
 }
@@ -55,18 +55,14 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
   }, [lat, lon]);
 
   if (status === 'error') {
-    const english = context === 'home'
-      ? 'Weather is not available right now.'
-      : 'Weather unavailable right now — showing site climate data below instead.';
-    const zulu = context === 'home'
-      ? 'Isimo sezulu asitholakali okwamanje.'
-      : 'Isimo sezulu asitholakali okwamanje — imininingwane yesimo sezulu yendawo iboniswa ngezansi.';
+    const errorKey = context === 'home' ? 'weatherErrorHome' : 'weatherErrorReport';
+    const english = weatherEnglish(errorKey);
     return (
       <div
         className="font-sans rounded-2xl px-3.5 py-2.5"
         style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', fontSize: 12, color: 'var(--text-muted)' }}
       >
-        <IsiZuluDraftSource lang={lang} zulu={zulu} english={english} />
+        <WeatherDraftSource lang={lang} draft={weatherText(lang, errorKey)} english={english} />
       </div>
     );
   }
@@ -84,6 +80,7 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
   const currentDesc = describeWeatherCode(current.weatherCode);
   const today = daily[0];
   const zu = lang === 'zu';
+  const draftLanguage = isWeatherDraftLanguage(lang);
   const daysIn = (l: string, list: typeof daily) => list.map((d) => dayLabel(l, d.date, daily.indexOf(d))).join(', ');
   const hazardText = (key: string, list: typeof daily) => ({
     text: fillWeather(weatherText(lang, key), { days: daysIn(lang, list) }),
@@ -137,7 +134,7 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
             <div className="font-display font-bold" style={{ fontSize: compact ? 16 : 18, color: 'var(--text-primary)', lineHeight: 1.1 }}>
               {Math.round(current.tempC)}°C
             </div>
-            <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{zu ? <DescLabel lang={lang} label={currentDesc.label} /> : currentDesc.label}</div>
+            <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{draftLanguage ? <DescLabel lang={lang} label={currentDesc.label} /> : currentDesc.label}</div>
           </div>
           <div className="flex items-center gap-1 flex-shrink-0" style={{ color: 'var(--text-muted)' }}>
             <Wind size={14} />
@@ -148,17 +145,17 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
         {today.et0Mm !== null && (
           <div className="flex items-center gap-2 px-3.5 py-2" style={{ borderBottom: '1px solid var(--border)' }}>
             <Droplets size={14} style={{ color: 'var(--blue)', flexShrink: 0 }} />
-            <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
-              {zu ? (
-                <IsiZuluDraftSource
+            <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
+              {draftLanguage ? (
+                <WeatherDraftSource
                   lang={lang}
-                  zulu={fillWeather(weatherText(lang, 'weatherWaterLoss'), { mm: today.et0Mm.toFixed(1) })}
+                  draft={fillWeather(weatherText(lang, 'weatherWaterLoss'), { mm: today.et0Mm.toFixed(1) })}
                   english={fillWeather(weatherEnglish('weatherWaterLoss'), { mm: today.et0Mm.toFixed(1) })}
                 />
               ) : (
                 <>Crops will lose about <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{today.et0Mm.toFixed(1)}mm</span> of water today — water roughly that much if there's no rain</>
               )}
-            </span>
+            </div>
           </div>
         )}
 
@@ -169,7 +166,7 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
             return (
               <div
                 key={d.date}
-                className="flex flex-col items-center flex-shrink-0 px-2 py-2"
+                className="relative flex flex-col items-center flex-shrink-0 px-2 py-2"
                 style={{ minWidth: 58, borderRight: i < stripDays.length - 1 ? '1px solid var(--border)' : 'none' }}
               >
                 <div className="font-sans font-medium" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{dayLabel(lang, d.date, i)}</div>
@@ -186,7 +183,7 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
                   {d.precipMm > 0 ? `${d.precipMm.toFixed(0)}mm` : (
                     <>
                       <span aria-hidden>—</span>
-                      <span className="sr-only" lang={zu ? 'zu' : undefined}>{weatherText(lang, 'weatherNoRain')}</span>
+                      <span className="sr-only" lang={draftLanguage ? lang : undefined}>{weatherText(lang, 'weatherNoRain')}</span>
                     </>
                   )}
                   {d.precipProbability !== null && d.precipProbability > 0 ? ` · ${d.precipProbability}%` : ''}
@@ -195,9 +192,9 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
             );
           })}
         </div>
-        {zu && (
+        {draftLanguage && (
           <p className="font-sans" style={{ margin: 0, padding: '6px 14px', fontSize: 12, color: 'var(--text-muted)', borderTop: '1px solid var(--border)' }}>
-            Unreviewed isiZulu draft. <span lang="en">English source for the days: {[0, 1, 2, 3, 4, 5, 6].map((n) => weatherEnglish(weatherDayKey(n, false))).join(', ')}; Today.</span>
+            {zu ? 'Unreviewed isiZulu draft.' : <span lang={lang}>{weatherDraftNotice(lang)}</span>} <span lang="en">English source for the days: {[0, 1, 2, 3, 4, 5, 6].map((n) => weatherEnglish(weatherDayKey(n, false))).join(', ')}; Today.</span>
           </p>
         )}
       </div>
@@ -208,7 +205,7 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
 function DescLabel({ lang, label }: { lang: string; label: string }) {
   const key = weatherDescKey(label);
   if (!key) return <>{label}</>;
-  return <IsiZuluDraftSource lang={lang} zulu={weatherText(lang, key)} english={label} />;
+  return <WeatherDraftSource lang={lang} draft={weatherText(lang, key)} english={label} />;
 }
 
 function HazardBanner({ icon, tone, text, english, lang }: { icon: React.ReactNode; tone: 'blue' | 'orange'; text: string; english: string; lang: string }) {
@@ -222,9 +219,25 @@ function HazardBanner({ icon, tone, text, english, lang }: { icon: React.ReactNo
       }}
     >
       <span className="flex-shrink-0">{icon}</span>
-      <span className="font-sans font-medium" style={{ fontSize: 12, color: c }}>
-        <IsiZuluDraftSource lang={lang} zulu={lang === 'zu' ? text : ''} english={english} />
-      </span>
+      <div className="font-sans font-medium" style={{ fontSize: 12, color: c }}>
+        <WeatherDraftSource lang={lang} draft={text} english={english} />
+      </div>
+    </div>
+  );
+}
+
+/** Weather templates carry dates/amounts, so pair the already-filled native sentence with
+ * its filled English source rather than looking up a sentence containing one particular value. */
+function WeatherDraftSource({ lang, draft, english }: {lang: string; draft: string; english: string}) {
+  if (lang === 'zu') return <IsiZuluDraftSource lang={lang} zulu={draft} english={english} />;
+  if (!isWeatherRegionalLanguage(lang) || !draft || draft === english) return <>{english}</>;
+  return (
+    <div>
+      <p lang={lang} style={{ margin: 0 }}>{draft}</p>
+      <p className="mt-1 text-xs leading-snug text-[var(--text-muted)]" style={{ marginBottom: 0 }}>
+        <span lang={lang}>{weatherDraftNotice(lang)}</span>{' '}
+        <span lang="en">English source: {english}</span>
+      </p>
     </div>
   );
 }

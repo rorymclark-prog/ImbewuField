@@ -1,0 +1,84 @@
+Browser tab: 1, Title: "Isolated weather component verification", URL: "http://127.0.0.1:4266/".
+1 AXWebArea Isolated weather component verification, URL: 127.0.0.1:4266/
+	2 container
+		3 text Isolated component test · synthetic forecast · provider calls:  7
+	4 container
+		5 text Language
+		6 pop up button (collapsed, settable) Description: Language, Value: ve, Secondary Actions: Expand
+			7 menu
+				8 en
+				9 zu
+				10 st
+				11 ts
+				12 (selected) ve
+				13 xx
+		14 text Scenario
+		15 pop up button (collapsed, settable) Description: Scenario, Value: forecast, Secondary Actions: Expand
+			16 menu
+				17 (selected) forecast
+				18 error
+				19 zero
+				20 missing
+				21 clear
+				22 loading
+		23 text Context
+		24 pop up button (collapsed, settable) Description: Context, Value: report, Secondary Actions: Expand
+			25 menu
+				26 (selected) report
+				27 home
+		28 checkbox (settable, integer) Description: Compact, Value: 0
+		29 checkbox (settable, integer) Description: Original snapshot, Value: 0
+		30 button Light
+		31 button Dark
+		81 text Hu lavhelelwa maḍaḓa Ṋamusi — tsireledzani zwimela zwiṱuku
+		82 container
+			83 text Mvetamveto ya ṱhalutshedzelo i sa athu u sedzuluswa. English source:  Frost expected Today — protect seedlings
+		84 text Tsivhudzo ya mufhiso Musumbuluwo — sheledzani nga matsheloni-tsheloni, itelani zwimela zwiṱuku murunzi
+		85 container
+			86 text Mvetamveto ya ṱhalutshedzelo i sa athu u sedzuluswa. English source:  Heat warning Mon — water early morning, shade seedlings
+		87 text Hu lavhelelwa mvula khulu Ḽavhuvhili — ṱolani u bva ha maḓi, lengisani u ṱavha
+		88 container
+			89 text Mvetamveto ya ṱhalutshedzelo i sa athu u sedzuluswa. English source:  Heavy rain expected Tue — check drainage, delay planting
+		41 container
+			42 text 23 °C
+		90 text Lutombo lu na makole kha zwiṅwe zwipiḓa
+		91 container
+			92 text Mvetamveto ya ṱhalutshedzelo i sa athu u sedzuluswa. English source:  Partly cloudy
+		46 text 12  km/h
+		93 text Zwiliṅwa zwi ḓo xelelwa nga maḓi a ṱoḓaho u vha 3.2mm ṋamusi — sheledzani nga mpimo u ṱoḓaho u lingana na wonoyo arali hu si na mvula
+		94 container
+			95 text Mvetamveto ya ṱhalutshedzelo i sa athu u sedzuluswa. English source:  Crops will lose about 3.2mm of water today — water roughly that much if there's no rain
+		50 container
+			51 text Ṋamusi
+			52 container
+				53 text 23 ° -1 °
+			54 text A hu na mvula
+			55 text Musumbuluwo
+			56 container
+				57 text 38 ° 12 °
+			58 text A hu na mvula
+			59 text Ḽavhuvhili
+			60 container
+				61 text 23 ° 12 °
+			62 container
+				63 text 30mm  · 80%
+			64 text Ḽavhuraru
+			65 container
+				66 text 23 ° 12 °
+			67 text A hu na mvula
+			68 text Ḽavhuṋa
+			69 container
+				70 text 23 ° 12 °
+			71 text A hu na mvula
+			72 text Ḽavhuṱanu
+			73 container
+				74 text 23 ° 12 °
+			75 text A hu na mvula
+			76 text Mugivhela
+			77 container
+				78 text 23 ° 12 °
+			79 text A hu na mvula
+		80 container
+			96 text Mvetamveto ya ṱhalutshedzelo i sa athu u sedzuluswa. English source for the days:  Sun, Mon, Tue, Wed, Thu, Fri, Sat ; Today.
+
+The focused UI element is 30 button Light

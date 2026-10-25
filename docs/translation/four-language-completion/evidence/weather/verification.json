@@ -1,0 +1,540 @@
+{
+  "scope": "Isolated real WeatherWidget with real forecast parser/cache and compiled application CSS. Context-based language provider and synthetic fetch responses; no Auth/consent/account providers. System fallback fonts. Not full Home/Farmer route validation.",
+  "cases": [
+    {
+      "lang": "zu",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "forecast",
+      "metrics": {
+        "cardWidth": 325,
+        "documentWidth": 357,
+        "width": 360
+      },
+      "providerCalls": 1,
+      "stem": "/private/tmp/imbewu-weather-zu-phone-dark"
+    },
+    {
+      "lang": "st",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "forecast",
+      "metrics": {
+        "cardWidth": 325,
+        "documentWidth": 357,
+        "width": 360
+      },
+      "providerCalls": 1,
+      "stem": "/private/tmp/imbewu-weather-st-phone-dark"
+    },
+    {
+      "lang": "ts",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "forecast",
+      "metrics": {
+        "cardWidth": 325,
+        "documentWidth": 357,
+        "providerCalls": 1,
+        "width": 360
+      },
+      "providerCalls": 1,
+      "stem": "/private/tmp/imbewu-weather-ts-phone-dark"
+    },
+    {
+      "lang": "ve",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "forecast",
+      "metrics": {
+        "cardWidth": 325,
+        "documentWidth": 357,
+        "providerCalls": 1,
+        "width": 360
+      },
+      "providerCalls": 1,
+      "stem": "/private/tmp/imbewu-weather-ve-phone-dark"
+    },
+    {
+      "lang": "ve",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "forecast-tail",
+      "scrollLeft": 189,
+      "maxScroll": 189,
+      "documentWidth": 360,
+      "stem": "/private/tmp/imbewu-weather-ve-phone-tail"
+    },
+    {
+      "lang": "ve",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "compact",
+      "metrics": {
+        "days": 4,
+        "documentWidth": 357,
+        "providerCalls": 1,
+        "width": 360
+      }
+    },
+    {
+      "lang": "zu",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "home-error",
+      "metrics": {
+        "documentWidth": 360,
+        "providerCalls": 2,
+        "width": 360
+      },
+      "stem": "/private/tmp/imbewu-weather-zu-home-error-phone"
+    },
+    {
+      "lang": "zu",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "report-error",
+      "metrics": {
+        "documentWidth": 360,
+        "providerCalls": 2,
+        "width": 360
+      },
+      "stem": "/private/tmp/imbewu-weather-zu-report-error-phone"
+    },
+    {
+      "lang": "st",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "home-error",
+      "metrics": {
+        "documentWidth": 360,
+        "providerCalls": 2,
+        "width": 360
+      },
+      "stem": "/private/tmp/imbewu-weather-st-home-error-phone"
+    },
+    {
+      "lang": "st",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "report-error",
+      "metrics": {
+        "documentWidth": 360,
+        "providerCalls": 2,
+        "width": 360
+      },
+      "stem": "/private/tmp/imbewu-weather-st-report-error-phone"
+    },
+    {
+      "lang": "ts",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "home-error",
+      "metrics": {
+        "documentWidth": 360,
+        "providerCalls": 2,
+        "width": 360
+      },
+      "stem": "/private/tmp/imbewu-weather-ts-home-error-phone"
+    },
+    {
+      "lang": "ts",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "report-error",
+      "metrics": {
+        "documentWidth": 360,
+        "providerCalls": 2,
+        "width": 360
+      },
+      "stem": "/private/tmp/imbewu-weather-ts-report-error-phone"
+    },
+    {
+      "lang": "ve",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "home-error",
+      "metrics": {
+        "documentWidth": 360,
+        "providerCalls": 2,
+        "width": 360
+      },
+      "stem": "/private/tmp/imbewu-weather-ve-home-error-phone"
+    },
+    {
+      "lang": "ve",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "report-error",
+      "metrics": {
+        "documentWidth": 360,
+        "providerCalls": 2,
+        "width": 360
+      },
+      "stem": "/private/tmp/imbewu-weather-ve-report-error-phone"
+    },
+    {
+      "lang": "zu",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "zero",
+      "metrics": {
+        "documentWidth": 357,
+        "providerCalls": 3,
+        "width": 360
+      }
+    },
+    {
+      "lang": "zu",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "missing",
+      "metrics": {
+        "documentWidth": 360,
+        "providerCalls": 4,
+        "width": 360
+      }
+    },
+    {
+      "lang": "zu",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "clear",
+      "metrics": {
+        "documentWidth": 360,
+        "providerCalls": 5,
+        "width": 360
+      }
+    },
+    {
+      "lang": "st",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "zero",
+      "metrics": {
+        "documentWidth": 357,
+        "providerCalls": 5,
+        "width": 360
+      }
+    },
+    {
+      "lang": "st",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "missing",
+      "metrics": {
+        "documentWidth": 357,
+        "providerCalls": 5,
+        "width": 360
+      }
+    },
+    {
+      "lang": "st",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "clear",
+      "metrics": {
+        "documentWidth": 360,
+        "providerCalls": 5,
+        "width": 360
+      }
+    },
+    {
+      "lang": "ts",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "zero",
+      "metrics": {
+        "documentWidth": 357,
+        "providerCalls": 5,
+        "width": 360
+      }
+    },
+    {
+      "lang": "ts",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "missing",
+      "metrics": {
+        "documentWidth": 357,
+        "providerCalls": 5,
+        "width": 360
+      }
+    },
+    {
+      "lang": "ts",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "clear",
+      "metrics": {
+        "documentWidth": 360,
+        "providerCalls": 5,
+        "width": 360
+      }
+    },
+    {
+      "lang": "ve",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "zero",
+      "metrics": {
+        "documentWidth": 357,
+        "providerCalls": 5,
+        "width": 360
+      }
+    },
+    {
+      "lang": "ve",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "missing",
+      "metrics": {
+        "documentWidth": 357,
+        "providerCalls": 5,
+        "width": 360
+      }
+    },
+    {
+      "lang": "ve",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "clear",
+      "metrics": {
+        "documentWidth": 360,
+        "providerCalls": 5,
+        "width": 360
+      }
+    },
+    {
+      "lang": "ve",
+      "size": "360x800",
+      "mode": "dark",
+      "scenario": "loading",
+      "metrics": {
+        "height": 88,
+        "providerCalls": 6,
+        "text": ""
+      }
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "mode": "light",
+      "scenario": "forecast",
+      "metrics": {
+        "cardWidth": 428,
+        "documentWidth": 1277,
+        "providerCalls": 7,
+        "width": 1280
+      },
+      "stem": "/private/tmp/imbewu-weather-zu-desktop-light"
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "mode": "light",
+      "scenario": "forecast",
+      "metrics": {
+        "cardWidth": 428,
+        "documentWidth": 1277,
+        "providerCalls": 7,
+        "width": 1280
+      },
+      "stem": "/private/tmp/imbewu-weather-st-desktop-light"
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "mode": "light",
+      "scenario": "forecast",
+      "metrics": {
+        "cardWidth": 428,
+        "documentWidth": 1277,
+        "providerCalls": 7,
+        "width": 1280
+      },
+      "stem": "/private/tmp/imbewu-weather-ts-desktop-light"
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "mode": "light",
+      "scenario": "forecast",
+      "metrics": {
+        "cardWidth": 428,
+        "documentWidth": 1277,
+        "providerCalls": 7,
+        "width": 1280
+      },
+      "stem": "/private/tmp/imbewu-weather-ve-desktop-light"
+    }
+  ],
+  "phoneFailure": {
+    "beforeWidth": 360,
+    "beforeDocumentWidth": 444,
+    "afterContained": true,
+    "fixture": "tests/fixtures/weather-translation/no-rain-overflow-before.json"
+  },
+  "viewportOverride": "Reset to default before completion",
+  "status": "Unreviewed drafts; full suite and fluent review pending.",
+  "date": "2026-10-25T17:26:19.277248+00:00",
+  "focused": {
+    "passed": 13,
+    "failed": 0,
+    "files": 2,
+    "scope": "Weather actual JSX/source copies,36immutableEnglish/isiZulu/unsupported states, real original model/source hashes, all weekday positions, complete warnings/errors/water-null-zero, and no-rain clipping context. Earlier12case set predates observed overflow correction.",
+    "log": "output/weather-translation-qa/focused-overflow.log"
+  },
+  "typecheck": "Earlier clean before new source/release/test additions; final ordered full suite pending.",
+  "visualInspection": "All4 phone/dark forecast screenshots and4 desktop/light forecasts inspected. TS andVE report-error screenshots inspected. Other error/zero/missing/clear/loading states use actual UI/DOM observations; not every screenshot manually viewed or approved by fluent speakers.",
+  "preservation": "Original24English pending sources,24existingisiZulu drafts, entireweather model/provider/cache/threshold source and shared source-pair component stay exact. Original36defaultEnglish/isiZulu/unsupported state texts and quantities match immutable before capture. Two invalid block-in-span wrappers repaired; native templates pair fully filled source sentences.",
+  "draftReview": "No fluent language/agricultural review. Indexed primary vocabulary sources and retained draft refinements are in weather-drafts.json. Xitsonga frost/snow ambiguity retains explicit English frost gloss. Whole app remains unfinished.",
+  "files": [
+    {
+      "file": "st-desktop-light.png",
+      "sha256": "c61795c95f7395226436b33c469828d202fcff52fa0e6080110b35317147ea5c"
+    },
+    {
+      "file": "st-desktop-light.txt",
+      "sha256": "16a02d4a11ee200ad71dc2195c6952fd3632ff27108bb655e333786e2fc2b6e1"
+    },
+    {
+      "file": "st-home-error-phone.png",
+      "sha256": "961543091cc5e6e62fd7757e4df32974440bf249a3ed4317c2c33eb5d683ff7a"
+    },
+    {
+      "file": "st-home-error-phone.txt",
+      "sha256": "6f193d22b1469f22d68a1e86e5008337a265e74f9e2932d5bd7c239ddb0b9dca"
+    },
+    {
+      "file": "st-phone-dark.png",
+      "sha256": "ce103a890fe617261f9188967e1e5bb507babf69d4d3980095b5d9d225995928"
+    },
+    {
+      "file": "st-phone-dark.txt",
+      "sha256": "5684385fd3045e8e09ce0a3890239862959e8db1b33cea1417948f4d9ff94d9b"
+    },
+    {
+      "file": "st-report-error-phone.png",
+      "sha256": "c5dab0ffe027c30bf54de3a6aaa2aa0dfa8af77032c4cc75390ef1cc6f0d7e7f"
+    },
+    {
+      "file": "st-report-error-phone.txt",
+      "sha256": "9db2ed68837b65b5604378f8c3ff8e4c6525478b506fa73b2367f418e672a0e6"
+    },
+    {
+      "file": "ts-desktop-light.png",
+      "sha256": "a8356677b27e6a9997353b9f8f12de7e2769960d3b1b6537670ada9321d8a5c2"
+    },
+    {
+      "file": "ts-desktop-light.txt",
+      "sha256": "35694f10d08e30d5b81073cbb6282b7b3b6c7bc2ef7c0e7c43fc8c78a1bd83fb"
+    },
+    {
+      "file": "ts-home-error-phone.png",
+      "sha256": "ab419c6bc60d77c24d941451da7ee32311228a8095826041ea4217da0f7fe7c5"
+    },
+    {
+      "file": "ts-home-error-phone.txt",
+      "sha256": "94075a72975cf7f42d62b156b1f23c9ee564fbad234f25a91375a9fe1c2cf438"
+    },
+    {
+      "file": "ts-phone-dark.png",
+      "sha256": "2340f941971eaa3c160b06fdeb89c8d2cc0c60ae7f426931cee02c552704dedb"
+    },
+    {
+      "file": "ts-phone-dark.txt",
+      "sha256": "7ff9ed82992e393c59462e5af9ce79b04df19fdcf6ed57645edbf3863fa02063"
+    },
+    {
+      "file": "ts-report-error-phone.png",
+      "sha256": "45b1d930dcfeb650d6c92e556fb64a599c64f631b81122272f0d4b1e25e8b2e9"
+    },
+    {
+      "file": "ts-report-error-phone.txt",
+      "sha256": "ce744509044d6a36b7698f90c941e10e8a3324b96c58baed85d91e9cfb62093b"
+    },
+    {
+      "file": "ve-desktop-light.png",
+      "sha256": "78f1130385ef3e3e078252478f71d12fc8b38ef40e307c6e75cab3b871e29e81"
+    },
+    {
+      "file": "ve-desktop-light.txt",
+      "sha256": "8972ed93d59d0a1f55ddcfd375fb27fe0afe730c7e52fe5d65b145943fa2dab3"
+    },
+    {
+      "file": "ve-home-error-phone.png",
+      "sha256": "b8d23c0441d69acabd639b75c912db778139f63495f9247acd81e7b756fb2a23"
+    },
+    {
+      "file": "ve-home-error-phone.txt",
+      "sha256": "555dcdce1d3eec054226f8a552816e69a9ef7992343ee8903a59bb43ff6f81cf"
+    },
+    {
+      "file": "ve-phone-dark.png",
+      "sha256": "d0fdbfbfcf9392dad3abaa563a1271a9bdee7312d2e98dc0d66dc8b6a21bfdd0"
+    },
+    {
+      "file": "ve-phone-dark.txt",
+      "sha256": "b7da6e497e69b972493a7fa43809ae8863be567dcf26e8dd9534664f6b78768d"
+    },
+    {
+      "file": "ve-phone-tail.png",
+      "sha256": "36d4325718427ad323a9e62104e9904ca17ebaef23b656b01c7938519c6643c2"
+    },
+    {
+      "file": "ve-report-error-phone.png",
+      "sha256": "17a7d6aa470000e823601f5b1b9895eb7f0e584410c8445b07eb49214fc90160"
+    },
+    {
+      "file": "ve-report-error-phone.txt",
+      "sha256": "cdc8a3fc9aaca287a8fbe61ef0b2cdae380009c45ca82d104ca78e6e1580fe61"
+    },
+    {
+      "file": "zu-desktop-light.png",
+      "sha256": "868a161539d786f35e3c935924ae9b93a3400e833440cfd3d9fc80c9b8abc411"
+    },
+    {
+      "file": "zu-desktop-light.txt",
+      "sha256": "ae0478d392d2d599d6338291d5a0eedff5a26c39781193673175e3c2ff22fd8b"
+    },
+    {
+      "file": "zu-home-error-phone.png",
+      "sha256": "3b66db72d76343df278976b23069b5cb6e21dad381cbd0c01a9d75b531960248"
+    },
+    {
+      "file": "zu-home-error-phone.txt",
+      "sha256": "61a6cb825d649239d165fa91337503fede5e376da1b36740c4f8aeb25a8a4182"
+    },
+    {
+      "file": "zu-phone-dark.png",
+      "sha256": "d321c2c210002b8381b4dcea6b3699100211f42bb1384b471c3489e2aa7939ef"
+    },
+    {
+      "file": "zu-phone-dark.txt",
+      "sha256": "7be0adf2b4387467c8eb33ac9adfd93f17d859eb5c6688dce434603bb5580a5a"
+    },
+    {
+      "file": "zu-report-error-phone.png",
+      "sha256": "fb694b54ce99f17a0f13abfe0190b81121154f91e48af18d2820e612e30ffec3"
+    },
+    {
+      "file": "zu-report-error-phone.txt",
+      "sha256": "ec87280c98cb830277f960096bfb7c4505d51621e391eca1f367942d198f3d07"
+    },
+    {
+      "file": "no-rain-overflow-before.png",
+      "sha256": "362943aa0d3a971e97e2314fb435cbb91e7d10eecfc484f1762d4607f30873bb"
+    }
+  ],
+  "sourceSha256": {
+    "components/WeatherWidget.tsx": "74b526126dadda10f55911c4c885f57ea1ef7f6c86e176fbaea2aa313c4f2cd6",
+    "lib/weather-copy.ts": "1816359891d6a42835d460ba4dc6c30bec97920b0ee22286e28a31baf0924eaa",
+    "lib/weather.ts": "6510aa730b13f6fee2fcb42b70a0762c6307c582f110f3a750956449feb40cd2",
+    "lib/i18n-pending.ts": "0bee54676d7d039daa1b2281f47f7de4fb68cfff3c6d0b6857deb6de3030788d",
+    "tests/weather-localization.test.ts": "834a389edb29a2ea797aabe9fe487ef546050f9a87222e39bc739822355c7ed6",
+    "tests/helpers/weather-widget-harness.ts": "6bd56d465601ec138f94e094b9d9dc79703aa74c102106845dab3acf395016d9",
+    "tests/fixtures/weather-translation/before.json.gz": "ce49bd0f446c1bcf8b9aa20e6a208d5c602a9eafce576e24e02cea3a0996b8b9",
+    "tests/fixtures/weather-translation/no-rain-overflow-before.json": "62fc4d23550ff94db65ff0066f63b2c4dcb1a9afb1577b416f8cf7b3a57efa43"
+  }
+}

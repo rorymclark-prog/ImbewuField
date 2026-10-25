@@ -1,0 +1,133 @@
+{
+  "status": "Required ordered local checks PASSED. Native language quality and whole-app completion remain unverified.",
+  "base": "cfb75437c447fdb457d05c06ca7d833e7719bae4",
+  "startedAt": "2026-10-25T17:29:29.682499+00:00",
+  "endedAt": "2026-10-25T18:33:42.790628+00:00",
+  "commands": [
+    {
+      "command": "typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "test",
+      "exitCode": 0
+    },
+    {
+      "command": "diff",
+      "exitCode": 0
+    }
+  ],
+  "summary": [
+    "ℹ tests 5580",
+    "ℹ suites 2",
+    "ℹ pass 5579",
+    "ℹ fail 0",
+    "ℹ cancelled 0",
+    "ℹ skipped 0",
+    "ℹ todo 1",
+    "ℹ duration_ms 3846561.278542"
+  ],
+  "registeredTestFiles": 564,
+  "frozenInputs": {
+    "components/WeatherWidget.tsx": "74b526126dadda10f55911c4c885f57ea1ef7f6c86e176fbaea2aa313c4f2cd6",
+    "docs/translation/four-language-completion/evidence/weather/verification.json": "f95f781cbb728c2c58c9e929a79c1ea5621687bc1f71bb0b837a5fbfd3cb3f12",
+    "docs/translation/four-language-completion/weather-drafts.json": "43db91361908dfc2dc7f344b695303bd48aa972b13075c23a0eef4ea7eaa8180",
+    "lib/release-notes.ts": "84833950b18236e2c58df874e73559236af7663266829ec3cd5536068101deef",
+    "lib/weather-copy.ts": "1816359891d6a42835d460ba4dc6c30bec97920b0ee22286e28a31baf0924eaa",
+    "package.json": "85a06937f8b9cc9bfcf5213ffc2e94b520e879eba2aae7dee543a46ab0ea8373",
+    "tests/fixtures/weather-translation/before.json.gz": "ce49bd0f446c1bcf8b9aa20e6a208d5c602a9eafce576e24e02cea3a0996b8b9",
+    "tests/fixtures/weather-translation/capture-manifest.json": "a85d347db519129c759e06e362db8454df46f8ea0cb2e7172bc44925a4d4a8b8",
+    "tests/fixtures/weather-translation/no-rain-overflow-before.json": "62fc4d23550ff94db65ff0066f63b2c4dcb1a9afb1577b416f8cf7b3a57efa43",
+    "tests/helpers/weather-widget-harness.ts": "6bd56d465601ec138f94e094b9d9dc79703aa74c102106845dab3acf395016d9",
+    "tests/weather-localization.test.ts": "834a389edb29a2ea797aabe9fe487ef546050f9a87222e39bc739822355c7ed6"
+  },
+  "allFrozenInputsUnchanged": true,
+  "scope": "Current-main based weather branch only. 31isolated actual WeatherWidget browser cases, source preservation, and measured phone containment fix are documented in verification.json. No production/Home/Farmer route or whole-app pass inferred.",
+  "evidenceWhitespaceNormalization": {
+    "reason": "Staging includes newly added AX snapshots that git diff --check did not inspect while untracked. Readable copies now strip trailing spaces only. Exact raw browser bytes are retained losslessly in original-ax-snapshots.json.gz; frozen verification.json remains original. No code/test/frozen JSON change.",
+    "archive": "original-ax-snapshots.json.gz",
+    "archiveSha256": "a77fdaa4a4c8194bba5133ac264885a0d9d8dc3f2dd61a3eba9dffcc0b5c8057",
+    "files": [
+      {
+        "file": "st-desktop-light.txt",
+        "rawSha256": "16a02d4a11ee200ad71dc2195c6952fd3632ff27108bb655e333786e2fc2b6e1",
+        "readableSha256": "dc47572f78b3f2b0b6bacf625b489b47a536f18c70781f510fcc589d7e6ca263"
+      },
+      {
+        "file": "st-home-error-phone.txt",
+        "rawSha256": "6f193d22b1469f22d68a1e86e5008337a265e74f9e2932d5bd7c239ddb0b9dca",
+        "readableSha256": "091bd9d11743e2da15c5581cdd5c456b487808be671beb6df66bba2ea001efbc"
+      },
+      {
+        "file": "st-phone-dark.txt",
+        "rawSha256": "5684385fd3045e8e09ce0a3890239862959e8db1b33cea1417948f4d9ff94d9b",
+        "readableSha256": "f76d06eb20065730ee2b4d4e731e154870682a6f2ae6697e2b03cb964f2eff8b"
+      },
+      {
+        "file": "st-report-error-phone.txt",
+        "rawSha256": "9db2ed68837b65b5604378f8c3ff8e4c6525478b506fa73b2367f418e672a0e6",
+        "readableSha256": "f83c4a9e14b400317de407a62c6c6da27f2c4f95e1b2c078a596bca78503a65b"
+      },
+      {
+        "file": "ts-desktop-light.txt",
+        "rawSha256": "35694f10d08e30d5b81073cbb6282b7b3b6c7bc2ef7c0e7c43fc8c78a1bd83fb",
+        "readableSha256": "a1a0211cfa0365ba4ef5de7b93c9fe6c842b9f419f8adf09314ad0e7552c75df"
+      },
+      {
+        "file": "ts-home-error-phone.txt",
+        "rawSha256": "94075a72975cf7f42d62b156b1f23c9ee564fbad234f25a91375a9fe1c2cf438",
+        "readableSha256": "94d18538860fb18826a8bdf13f11be07f74f8e6173c74f16627fed11e159f60d"
+      },
+      {
+        "file": "ts-phone-dark.txt",
+        "rawSha256": "7ff9ed82992e393c59462e5af9ce79b04df19fdcf6ed57645edbf3863fa02063",
+        "readableSha256": "56e5ea886da8630ce2443c5690f7f63c280d9b5c465eb5f8285e501cae1c5a3b"
+      },
+      {
+        "file": "ts-report-error-phone.txt",
+        "rawSha256": "ce744509044d6a36b7698f90c941e10e8a3324b96c58baed85d91e9cfb62093b",
+        "readableSha256": "4c25d7c8e9525ac235164c2eda65e231401a9f5cc20c414ec77458968154e8bd"
+      },
+      {
+        "file": "ve-desktop-light.txt",
+        "rawSha256": "8972ed93d59d0a1f55ddcfd375fb27fe0afe730c7e52fe5d65b145943fa2dab3",
+        "readableSha256": "5d6555e76cf22f1c40b38e1b7f44457437d2e0ebf0c0d07a517a807deb61b831"
+      },
+      {
+        "file": "ve-home-error-phone.txt",
+        "rawSha256": "555dcdce1d3eec054226f8a552816e69a9ef7992343ee8903a59bb43ff6f81cf",
+        "readableSha256": "8fb21386da66c2ec3f4efae45a6539d29fbf0f05dcc6c1b9ea5a2e5367895ee8"
+      },
+      {
+        "file": "ve-phone-dark.txt",
+        "rawSha256": "b7da6e497e69b972493a7fa43809ae8863be567dcf26e8dd9534664f6b78768d",
+        "readableSha256": "d20dd95cfd3046023ac5d7e938a9021a4afc321c5a7cc41b01346125aa53fd8a"
+      },
+      {
+        "file": "ve-report-error-phone.txt",
+        "rawSha256": "cdc8a3fc9aaca287a8fbe61ef0b2cdae380009c45ca82d104ca78e6e1580fe61",
+        "readableSha256": "f74f61fd38dbbb24ef6c688db557d43782b7af37aa4c8cb42032515792d6db8b"
+      },
+      {
+        "file": "zu-desktop-light.txt",
+        "rawSha256": "ae0478d392d2d599d6338291d5a0eedff5a26c39781193673175e3c2ff22fd8b",
+        "readableSha256": "3684e5c247d63a898a2bf573a4e5ffaa45644d896dc6da1e2862b533f7bdcebc"
+      },
+      {
+        "file": "zu-home-error-phone.txt",
+        "rawSha256": "61a6cb825d649239d165fa91337503fede5e376da1b36740c4f8aeb25a8a4182",
+        "readableSha256": "6e0eb03330759f9b95d6d458f51fde26c84de8db0ca3b2c8255d3d77a1c0784f"
+      },
+      {
+        "file": "zu-phone-dark.txt",
+        "rawSha256": "7be0adf2b4387467c8eb33ac9adfd93f17d859eb5c6688dce434603bb5580a5a",
+        "readableSha256": "633aeefb8b743dec55afef89c741fbf1b6f1a78f6837b24543f50da64717f7e3"
+      },
+      {
+        "file": "zu-report-error-phone.txt",
+        "rawSha256": "ec87280c98cb830277f960096bfb7c4505d51621e391eca1f367942d198f3d07",
+        "readableSha256": "ca655c4c6b54c8201f1a3d783470e246dcfabc77c40509ee941c586e6717340b"
+      }
+    ]
+  }
+}

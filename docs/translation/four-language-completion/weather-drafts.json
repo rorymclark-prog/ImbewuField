@@ -1,0 +1,346 @@
+{
+  "status": "IN PROGRESS: unreviewed source-bound drafts. Fluent language and agricultural review remain; whole-app work unfinished.",
+  "sourceSha": "cfb75437c447fdb457d05c06ca7d833e7719bae4",
+  "rows": [
+    {
+      "key": "weatherToday",
+      "english": "Today",
+      "st": "Kajeno",
+      "ts": "Namuntlha",
+      "ve": "Ṋamusi"
+    },
+    {
+      "key": "weatherDaySun",
+      "english": "Sun",
+      "st": "Sontaha",
+      "ts": "Sonto",
+      "ve": "Swondaha"
+    },
+    {
+      "key": "weatherDayMon",
+      "english": "Mon",
+      "st": "Mantaha",
+      "ts": "Musumbhunuku",
+      "ve": "Musumbuluwo"
+    },
+    {
+      "key": "weatherDayTue",
+      "english": "Tue",
+      "st": "Labobedi",
+      "ts": "Ravumbirhi",
+      "ve": "Ḽavhuvhili"
+    },
+    {
+      "key": "weatherDayWed",
+      "english": "Wed",
+      "st": "Laboraro",
+      "ts": "Ravunharhu",
+      "ve": "Ḽavhuraru"
+    },
+    {
+      "key": "weatherDayThu",
+      "english": "Thu",
+      "st": "Labone",
+      "ts": "Ravumune",
+      "ve": "Ḽavhuṋa"
+    },
+    {
+      "key": "weatherDayFri",
+      "english": "Fri",
+      "st": "Labohlano",
+      "ts": "Ravuntlhanu",
+      "ve": "Ḽavhuṱanu"
+    },
+    {
+      "key": "weatherDaySat",
+      "english": "Sat",
+      "st": "Moqebelo",
+      "ts": "Mugqivela",
+      "ve": "Mugivhela"
+    },
+    {
+      "key": "weatherNoRain",
+      "english": "No rain",
+      "st": "Ha ho pula",
+      "ts": "Ku hava mpfula",
+      "ve": "A hu na mvula"
+    },
+    {
+      "key": "weatherFrostBanner",
+      "english": "Frost expected {days} — protect seedlings",
+      "st": "Ho lebeletswe serame se etsang leqhwa {days} — sireletsa dithopo",
+      "ts": "Ku languteriwe gamboko (frost) {days} — sirhelela swimilana",
+      "ve": "Hu lavhelelwa maḍaḓa {days} — tsireledzani zwimela zwiṱuku"
+    },
+    {
+      "key": "weatherHeatBanner",
+      "english": "Heat warning {days} — water early morning, shade seedlings",
+      "st": "Temoso ya mocheso {days} — nosetsa hoseng haholo, etsetsa dithopo moriti",
+      "ts": "Xilemukiso xa ku hisa {days} — cheleta nimixo swinene, nyika swimilana ndzhuti",
+      "ve": "Tsivhudzo ya mufhiso {days} — sheledzani nga matsheloni-tsheloni, itelani zwimela zwiṱuku murunzi"
+    },
+    {
+      "key": "weatherHeavyRainBanner",
+      "english": "Heavy rain expected {days} — check drainage, delay planting",
+      "st": "Ho lebeletswe pula e matla {days} — hlahloba ho tswa ha metsi, diehisa ho lema",
+      "ts": "Ku languteriwe mpfula leyikulu {days} — kambela ku huma ka mati, hlwela ku byala",
+      "ve": "Hu lavhelelwa mvula khulu {days} — ṱolani u bva ha maḓi, lengisani u ṱavha"
+    },
+    {
+      "key": "weatherWaterLoss",
+      "english": "Crops will lose about {mm}mm of water today — water roughly that much if there's no rain",
+      "st": "Dijalo di tla lahlehelwa ke metsi a ka bang {mm}mm kajeno — nosetsa hoo e ka bang palo eo ha ho se na pula",
+      "ts": "Swibyariwa swi ta lahlekeriwa hi mati ya kwalomu ka {mm}mm namuntlha — cheleta kwalomu ka mpimo wolowo loko ku nga ri na mpfula",
+      "ve": "Zwiliṅwa zwi ḓo xelelwa nga maḓi a ṱoḓaho u vha {mm}mm ṋamusi — sheledzani nga mpimo u ṱoḓaho u lingana na wonoyo arali hu si na mvula"
+    },
+    {
+      "key": "weatherDescClear",
+      "english": "Clear",
+      "st": "Lehodimo le hlakile",
+      "ts": "Matilo ma basile",
+      "ve": "Lutombo lu si na makole"
+    },
+    {
+      "key": "weatherDescPartlyCloudy",
+      "english": "Partly cloudy",
+      "st": "Ho na le maru dikarolong tse ding tsa lehodimo",
+      "ts": "Ku ni mapapa eka swiphemu swin’wana swa matilo",
+      "ve": "Lutombo lu na makole kha zwiṅwe zwipiḓa"
+    },
+    {
+      "key": "weatherDescOvercast",
+      "english": "Overcast",
+      "st": "Lehodimo le kwahetswe ke maru",
+      "ts": "Matilo ma funengetiwe hi mapapa",
+      "ve": "Lutombo lwo tibedzwa nga makole"
+    },
+    {
+      "key": "weatherDescFog",
+      "english": "Fog",
+      "st": "Mohodi",
+      "ts": "Nkungu",
+      "ve": "Khuli"
+    },
+    {
+      "key": "weatherDescDrizzle",
+      "english": "Drizzle",
+      "st": "Pula ya marothodi a manyenyane",
+      "ts": "Mpfula ya mathonsi lamatsongo",
+      "ve": "Mvula ya marotha maṱuku"
+    },
+    {
+      "key": "weatherDescRain",
+      "english": "Rain",
+      "st": "Pula",
+      "ts": "Mpfula",
+      "ve": "Mvula"
+    },
+    {
+      "key": "weatherDescSnow",
+      "english": "Snow",
+      "st": "Lehlwa",
+      "ts": "Gamboko",
+      "ve": "Mahaḓa"
+    },
+    {
+      "key": "weatherDescShowers",
+      "english": "Showers",
+      "st": "Dipula tsa nakwana",
+      "ts": "Mpfula ya minkarhi yo koma",
+      "ve": "Mvula dza zwifhinga zwiṱuku"
+    },
+    {
+      "key": "weatherDescSnowShowers",
+      "english": "Snow showers",
+      "st": "Lehlwa la nakwana",
+      "ts": "Gamboko ya minkarhi yo koma",
+      "ve": "Mahaḓa a zwifhinga zwiṱuku"
+    },
+    {
+      "key": "weatherDescThunderstorm",
+      "english": "Thunderstorm",
+      "st": "Sefefo sa pula e nang le diaduma",
+      "ts": "Xidzedze xa mpfula leyi dzindzaka",
+      "ve": "Dumbu ḽa mvula na mithathabo"
+    },
+    {
+      "key": "weatherDescUnsettled",
+      "english": "Unsettled",
+      "st": "Boemo ba lehodimo ha bo a tsitsa",
+      "ts": "Maxelo a ma tshamisekanga",
+      "ve": "Mutsho a wo dzika"
+    }
+  ],
+  "errors": {
+    "weatherErrorHome": {
+      "english": "Weather is not available right now.",
+      "zu": "Isimo sezulu asitholakali okwamanje.",
+      "st": "Boemo ba lehodimo ha bo fumanehe hona jwale.",
+      "ts": "Maxelo a ma kumeki sweswi.",
+      "ve": "Mutsho a u wanali zwino."
+    },
+    "weatherErrorReport": {
+      "english": "Weather unavailable right now — showing site climate data below instead.",
+      "zu": "Isimo sezulu asitholakali okwamanje — imininingwane yesimo sezulu yendawo iboniswa ngezansi.",
+      "st": "Boemo ba lehodimo ha bo fumanehe hona jwale — ho bontshwa dintlha tsa tlelaemete ya sebaka ka tlase ho e-na le tsona.",
+      "ts": "Maxelo a ma kumeki sweswi — ku kombisiwa rungula ra maxelo ya nkarhi wo leha ya ndhawu laha hansi ematshan’weni ya rona.",
+      "ve": "Mutsho a u wanali zwino — hu khou sumbedzwa mafhungo a kilima ya fhethu afho fhasi vhudzuloni hazwo."
+    }
+  },
+  "notices": {
+    "en": "Unreviewed translation draft.",
+    "zu": "Unreviewed isiZulu draft.",
+    "st": "Moralo wa phetolelo o so hlahlojwe.",
+    "ts": "Mpfapfarhuto wa vuhundzuluxeri lowu nga si kamberiwaka.",
+    "ve": "Mvetamveto ya ṱhalutshedzelo i sa athu u sedzuluswa."
+  },
+  "preservation": "Original24 English weather sources and24 existing isiZulu drafts stay exact. No weather model, threshold, provider request, date identity, quantity formatting or forecast selection changes. Regional copy is bound to the exact English source and template placeholders; updated source retires a draft.2 context-specific error sentences preserve home/report distinction.",
+  "layout": "Two existing span wrappers contained block-level source paragraphs. They become div wrappers with the same classes/styles; source/quantities remain unchanged. Real browser inspection required. No source-free translated hazards.",
+  "terminology": "Full native weekday names; no new abbreviations. Source-bound draft wording; no fluent approval. Sesotho sethopo/semelana and weekday orders checked against primary educational sources; Tshivenda weekdays checked against UNISA schedule. Weather-condition terms need further fluent review. Indexed DSAC printedp62/139 distinguish frost maḍaḓa and snow mahaḓa in Tshivenda; Sotho groupp80 supports mohodi. PDF direct fetch timed out: indexed source evidence only, no rendered glossary-page or fluent review. Xitsonga frost uses the indexed DSAC term with an explicit source gloss to distinguish its overloaded snow sense. Fluent comprehension is unverified; no amount/threshold changed.",
+  "primaryVocabularySources": [
+    "https://www.education.gov.za/Portals/0/Documents/MTbBE/mttbe%20terminology/Authenticated%20Terminology_Grade%204_Sesotho_2024.pdf?ver=2025-11-06-164849-730",
+    "https://www.education.gov.za/LinkClick.aspx?fileticket=WAouFs7FQCw%3D&forcedownload=true&mid=14758&portalid=0&tabid=5726",
+    "https://www.education.gov.za/Portals/0/Documents/Manuals/2025%20Workbooks/Vol%202/Maths/Grade%202/Num%20gr2%20tsonga%20lowres.pdf",
+    "https://w2.unisa.ac.za/myUnisa/SITES/MYUNISA/DEFAULT/LEARNER_/COUNSELL/MANAGE_Y/PLAN.HTM",
+    "https://www.dsac.gov.za/sites/default/files/2023-11/natural-sciences-and-technology-for-grade-4-to-6.pdf",
+    "https://www.dsac.gov.za/sites/default/files/2023-11/Natural%20Sciences%20and%20Technology-dictionary-Sotho%20group.pdf"
+  ],
+  "verification": {
+    "focused": {
+      "passed": 13,
+      "failed": 0,
+      "files": 2,
+      "scope": "Weather actual JSX/source copies,36immutableEnglish/isiZulu/unsupported states, real original model/source hashes, all weekday positions, complete warnings/errors/water-null-zero, and no-rain clipping context. Earlier12case set predates observed overflow correction.",
+      "log": "output/weather-translation-qa/focused-overflow.log"
+    },
+    "browserCases": 31,
+    "browserProof": "evidence/weather/verification.json",
+    "scope": "Isolated real WeatherWidget with real forecast parser/cache and compiled application CSS. Context-based language provider and synthetic fetch responses; no Auth/consent/account providers. System fallback fonts. Not full Home/Farmer route validation.",
+    "remaining": "Final ordered tsc/fullnpmtest/diff, pushed draft/CI, native update-note integration and full Home/Farmer route verification; wholeapp work/fluent review remain."
+  },
+  "draftRefinements": [
+    {
+      "key": "weatherFrostBanner",
+      "language": "ve",
+      "before": "Hu lavhelelwa gwada {days} — tsireledzani zwimela zwiṱuku",
+      "after": "Hu lavhelelwa maḍaḓa {days} — tsireledzani zwimela zwiṱuku",
+      "reason": "DSAC printedp62: frost maḍaḓa; gwada belongs to sod, not this warning."
+    },
+    {
+      "key": "weatherDescSnow",
+      "language": "ve",
+      "before": "Mahada",
+      "after": "Mahaḓa",
+      "reason": "DSAC printedp139 snow mahaḓa: retain its distinct spelling from frost."
+    },
+    {
+      "key": "weatherDescSnowShowers",
+      "language": "ve",
+      "before": "Mahada a zwifhinga zwiṱuku",
+      "after": "Mahaḓa a zwifhinga zwiṱuku",
+      "reason": "Use the same source snow noun with its short-interval qualifier."
+    },
+    {
+      "key": "weatherDescDrizzle",
+      "language": "st",
+      "before": "Pula ya moduwane",
+      "after": "Pula ya marothodi a manyenyane",
+      "reason": "Describe fine rain droplets rather than leave an uncertain fog-related noun."
+    },
+    {
+      "key": "weatherDescDrizzle",
+      "language": "ts",
+      "before": "Mpfula ya swimpfulana",
+      "after": "Mpfula ya mathonsi lamatsongo",
+      "reason": "Keep the fine-droplet meaning with plain source-bound wording."
+    },
+    {
+      "key": "weatherDescDrizzle",
+      "language": "ve",
+      "before": "Mvula ya zwisiwana",
+      "after": "Mvula ya marotha maṱuku",
+      "reason": "Correct an unsupported noun to plain fine-droplet wording. No rainfall amount invented."
+    },
+    {
+      "key": "weatherFrostBanner",
+      "language": "ts",
+      "before": "Ku languteriwe ndzhwelo {days} — sirhelela swimilana",
+      "after": "Ku languteriwe gamboko (frost) {days} — sirhelela swimilana",
+      "reason": "No primary support found for the first proposed noun. DSAC printedp62 explicitly gives gamboko for frost and p139 for snow; retain explicit source gloss (frost) to distinguish the warning rather than invent another term. Fluent comprehension still unverified."
+    }
+  ],
+  "observedPhoneCorrection": {
+    "before": "Actual360px isolated phone viewport had444px document width. Absolute sr-only no-rain labels from offscreen day cells escaped their scroll clipping because their positioned containing block was outside that strip.",
+    "implementation": "Position each day cell relative so its hidden accessible meaning remains inside the scroll clipping context. Preserve every native/English label and source forecast value.",
+    "fixture": "tests/fixtures/weather-translation/no-rain-overflow-before.json",
+    "verification": "Actual360px phone document was444px before. Corrected actualphone layouts in all4languages stay within360px; ordinary UI scroll reacheslastday (189of189px in recordedVecheck). Complete hidden native no-rain labels remain. General containment rule rejects captured originalDOM and passes actual current JSX. This changes the picture;PLAN_VERSION unchanged."
+  },
+  "existingIsiZuluDrafts": {
+    "weatherToday": "Namuhla",
+    "weatherDaySun": "Son",
+    "weatherDayMon": "Mso",
+    "weatherDayTue": "Bil",
+    "weatherDayWed": "Tha",
+    "weatherDayThu": "Sin",
+    "weatherDayFri": "Hla",
+    "weatherDaySat": "Mgq",
+    "weatherNoRain": "Ayikho imvula",
+    "weatherFrostBanner": "Kulindeleke isithwathwa: {days} — vikela izithombo",
+    "weatherHeatBanner": "Isexwayiso sokushisa: {days} — nisela ekuseni kakhulu, umthunzi wezithombo",
+    "weatherHeavyRainBanner": "Kulindeleke imvula enkulu: {days} — hlola ukuphuma kwamanzi, ulibazise ukutshala",
+    "weatherWaterLoss": "Izitshalo ziyolahlekelwa amanzi angaba ngu-{mm}mm namuhla — nisela cishe lokho uma kungekho mvula",
+    "weatherDescClear": "Kuyacaca",
+    "weatherDescPartlyCloudy": "Amafu kancane",
+    "weatherDescOvercast": "Kunamafu",
+    "weatherDescFog": "Inkungu",
+    "weatherDescDrizzle": "Imvula encane",
+    "weatherDescRain": "Imvula",
+    "weatherDescSnow": "Iqhwa",
+    "weatherDescShowers": "Imvula yesikhashana",
+    "weatherDescSnowShowers": "Iqhwa lesikhashana",
+    "weatherDescThunderstorm": "Isivunguvungu nokuduma",
+    "weatherDescUnsettled": "Isimo sezulu asizinzile"
+  },
+  "releaseNote": {
+    "rows": [
+      {
+        "english": "Weather drafts now include Sesotho, Xitsonga and Tshivenda.",
+        "zu": "Ukuhumusha kwesimo sezulu okusenguhlaka manje kufaka isiSuthu, isiTsonga nesiVenda.",
+        "st": "Meralo ya phetolelo ya boemo ba lehodimo jwale e kenyelletsa Sesotho, Xitsonga le Tshivenda.",
+        "ts": "Mimpfapfarhuto ya maxelo sweswi yi katsa Sesotho, Xitsonga na Tshivenda.",
+        "ve": "Mvetamveto ya ṱhalutshedzelo ya mutsho zwino i katela Sesotho, Xitsonga na Tshivenda."
+      },
+      {
+        "english": "Weather cards keep the English source beside draft instructions.",
+        "zu": "Amakhadi esimo sezulu agcina umthombo wesiNgisi eceleni kweziqondiso ezisenguhlaka.",
+        "st": "Dikarete tsa boemo ba lehodimo di boloka mohlodi wa Senyesemane pela ditaelo tsa moralo.",
+        "ts": "Makhadi ya maxelo ma hlayisa xihlovo xa Xinghezi etlhelo ka swiletelo swa mpfapfarhuto.",
+        "ve": "Garaṱa dza mutsho dzi vhea tshiko tsha Luisimane tsini na ndaela dza mvetamveto."
+      },
+      {
+        "english": "Check weather drafts",
+        "zu": "Hlola ukuhumusha kwesimo sezulu okusenguhlaka",
+        "st": "Hlahloba meralo ya phetolelo ya boemo ba lehodimo",
+        "ts": "Kambela mimpfapfarhuto ya maxelo",
+        "ve": "Ṱolani mvetamveto ya mutsho"
+      },
+      {
+        "english": "Read the weather card in your language and compare the English source.",
+        "zu": "Funda ikhadi lesimo sezulu ngolimi lwakho bese uliqhathanisa nomthombo wesiNgisi.",
+        "st": "Bala karete ya boemo ba lehodimo ka puo ya hao mme o e bapise le mohlodi wa Senyesemane.",
+        "ts": "Hlaya khadi ra maxelo hi ririmi ra wena kutani u pimanisa ni xihlovo xa Xinghezi.",
+        "ve": "Vhalani garaṱa ya mutsho nga luambo lwaṋu ni vhambedze na tshiko tsha Luisimane."
+      },
+      {
+        "english": "Home → Weather",
+        "zu": "Ekhaya → Isimo sezulu",
+        "st": "Lehae → Boemo ba lehodimo",
+        "ts": "Ekaya → Maxelo",
+        "ve": "Hayani → Mutsho"
+      }
+    ],
+    "sourceSha": "cfb75437",
+    "reviewStatus": "Unreviewed drafts.",
+    "integrationGap": "Current main has no translation-stack update-copy authority. Source release note/tour is added here and complete native pairs are preserved for that existing authority on the translation stack. PWA update-note rendering remains English on this main-based branch; wire these keys during integration instead of adding a parallel authority."
+  }
+}
