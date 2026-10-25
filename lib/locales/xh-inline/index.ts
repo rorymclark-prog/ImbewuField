@@ -31,9 +31,10 @@ import g28 from './g28-study-downloads';
 import g29 from './g29-document-titles';
 import g30 from './g30-farmer-gaps';
 import g31 from './g31-staff-demo';
+import g32 from './g32-role-reports';
 import s01 from './s01-mel-templates';
 import s02 from './s02-study-tracks';
 
-const SHARDS: Record<string, string>[] = [g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, g11, g13, g14, g15, g16, g17, g18, g19, g20, g21, g22, g23, g24, g25, g26, g27, g28, g29, g30, g31, s01, s02];
+const SHARDS: Record<string, string>[] = [g01, g02, g03, g04, g05, g06, g07, g08, g09, g10, g11, g13, g14, g15, g16, g17, g18, g19, g20, g21, g22, g23, g24, g25, g26, g27, g28, g29, g30, g31, g32, s01, s02];
 
 export const XH_INLINE_SOURCE: Record<string, string> = Object.assign({}, ...SHARDS);
