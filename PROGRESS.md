@@ -52,7 +52,7 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
-- **2026-10-25 — Stacked report continuation integrated (Codex).** #1101 now carries prerequisite `0a08ccc57` and main `8d2e1a9aa`, retaining market notes/source/date, soil-source safeguards and all earlier audit records. Typecheck clean; 233 focused checks pass. Core survey/report/calendar/PDF modules retain their prior source; fresh full CI and preview certify the combined tree. [Integration and handover scope](docs/audits/2026-10-25/site-report-main-integration-codex.md).
+- **2026-10-25 — Stacked report continuation integrated (Codex).** #1101 now carries prerequisite `0a08ccc57` and main `8d2e1a9aa`, retaining market notes/source/date, soil-source safeguards and all earlier audit records. Typecheck clean; 233 focused checks pass. Core survey/report/calendar/PDF modules retain their prior source; fresh full CI and preview are pending for the combined tree. [Integration and handover scope](docs/audits/2026-10-25/site-report-main-integration-codex.md).
 
 - **2026-10-25 — Report branch integration (Codex).** #1099 became conflicting after waves 19–21 landed. Integrated main `8d2e1a9aa`, preserving both histories/release entries and combining the report-archive heading cleanup with saved purpose/origin labels. [Integration record](docs/audits/2026-10-25/site-report-main-integration-codex.md). Fresh integrated CI/preview supersedes old-source green checks; #1101 follows this prerequisite. No saved data, species, farming figures or PLAN_VERSION edits.
 
