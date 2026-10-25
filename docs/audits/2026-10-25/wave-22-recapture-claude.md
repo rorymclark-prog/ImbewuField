@@ -24,7 +24,7 @@
 | w22-05 | /calendar, light, isiZulu | "isiZulu translation pending — English source:" in `--text-muted` on the tinted draft box: 4.16:1 | `--text-secondary` | Fixed |
 | w22-06 | /student/design, dark, isiZulu | "English source:" lines in `--text-muted` on the dark Study notice: 4.37:1 | `components/studies/DesignDraftCopy.module.css` uses `--text-secondary` | Fixed |
 | w22-07 | Lima button at the end of the page | Covers content that scrolling can never uncover: "Send message" and the practice notice on /contact (phone), "Open people & gardens" on /mentor and /facilitator (phone), the last farmer rows on /network (desktop list), the last crop chips on /prices, the last site's links on /reports, the footer on /samples/production. Each page's scroll area ends with 8–120px of padding against the 180px (desktop) or 202px (phone) that `--lima-fab-clearance` publishes | Each scroller's bottom padding is `max(<its own>, var(--lima-fab-clearance, 0px))`; /mentor's was overridden by a phone `!important` rule on `.workspace-main` in `app/globals.css` (rorymclark-prog/imbewufield#1103) | Fixed |
-| w22-08 | Lima button on first view, desktop | At 1280px it sits over the left edge of the content column on most staff and Study pages (/assessments cycle cards, /exchange chips, /mentor, /network, /reports, /tips, /tour). It parks bottom-left by design (see `components/ChatWidget.tsx`) | A design call for Rory: keep, or move to the bottom-right at `lg` | Asked |
+| w22-08 | Lima button on first view, desktop | At 1280px it sat over the left edge of the content column on most staff and Study pages (/assessments cycle cards, /exchange chips, /mentor, /network, /reports, /tips, /tour). It parked bottom-left by design (see `components/ChatWidget.tsx`) | Rory chose bottom-right on desktop (25 Oct). From `lg` the launcher and its chat panel park bottom-right; phones keep bottom-left, and /farmer keeps left because its map zoom control owns the bottom-right. The top-right /network map legend is capped at `--lima-fab-clearance` so the longer isiZulu legend no longer grows onto it | Fixed |
 | w22-09 | /samples/production, dark | Still as `w21-10`, plus chart axis titles ("Production in kilograms", "Crop growing space", "Fresh food", "Fresh + kept food") in `#EEE4D0` on the near-white chart card: 1.25:1 | `components/crops/*` is Codex's | Handed to Codex, unchanged |
 | w22-10 | Every route | No horizontal overflow at 390, 768, 1024 or 1280px in either language; `html lang` matches on every load; no failed loads | — | Checked |
 
@@ -61,8 +61,11 @@ time would mismatch the way it does on Vercel the day after a deploy.
   are Codex's.
 - **Overflow and language:** no horizontal overflow at 390, 768, 1024 or 1280px; `html lang`
   matches on every load.
-- **First view:** the launcher still overlaps content on first view on 19 routes, which is the
-  open design question `w22-08`.
+- **First view (after `w22-08`):** re-measured on 27 routes at 1280 and 1024px. At 1280px the
+  launcher now overlaps first-view content on 3 routes in each language (was 7), and at 1024px
+  on 8 (was 11) — headings and cards on the right of /assessments, /mentor and /facilitator that
+  scroll out from under it. Nothing sits under it at the end of any page, and /atlas and /farmer
+  (map controls) are clear. Phones are unchanged (bottom-left).
 - **Tests:** `tests/w22-recapture.test.ts`, `tests/w22-weather.test.ts`,
   `tests/w22-invoice-hydration.test.ts` and `tests/lima-fab-clearance.test.ts` pin the fixes. Every
   test file that reads a changed file passes locally, apart from the known sandbox-only failures

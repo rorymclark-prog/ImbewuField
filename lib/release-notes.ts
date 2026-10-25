@@ -43,7 +43,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '25 October 2026', sha: '8d2e1a9a', changes: [
     'Home and Invoice open faster and no longer redraw the day after an update.',
-    'The Lima button no longer covers the last button on Contact, Prices or Reports.',
+    'On a computer the Lima button sits bottom-right and no longer hides buttons.',
     'The weather card reads in isiZulu (as a draft) and stays clear in dark mode.',
   ], tour: [{ title: 'Check the weather card',
     where: 'Home', href: '/home',

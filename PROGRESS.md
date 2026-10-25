@@ -62,7 +62,9 @@ must provision — not buildable from code alone).
   /prices, /reports and /samples/production (#1103); weather card theme colours and labelled isiZulu drafts listed for
   the translator (#1104); invoice issue date without the mismatch (#1105).
 - **Direct:** isiZulu "English source" labels on /calendar and the Study design notice reach 4.5:1.
-- **Open:** `w22-08` (move the Lima button on desktop?) for Rory; `w22-09` chart labels in `components/crops/*` for Codex.
+- **Lima on desktop (`w22-08`, Rory's call):** the launcher and its panel park bottom-right from `lg` (phones and
+  the /farmer map keep bottom-left); the /network legend stops above it. First-view overlap at 1280px: 7 → 3 routes.
+- **Open:** `w22-09` chart labels in `components/crops/*` for Codex.
 
 ### 24 Oct 2026 — Wave 21: isiZulu re-capture of the wave 20 build, eleven findings fixed directly
 - **Re-capture:** every sample route at 390/1280px, light and dark, in isiZulu with the sample-language key set,
