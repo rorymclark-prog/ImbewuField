@@ -1472,7 +1472,7 @@ export default function StudentPage() {
             <img src={guideScreens(guide.id)[0]?.src ?? guide.image} alt="" loading="lazy" width={160} height={107} />
             {/* Simple: the card itself is the "read the guide" link — the identical "Read the
                 guide · English →" line does not need to repeat once per card (14 times). */}
-            <span><strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span>{!simple && <em>{t('studentAppGuideAction')}</em>}</span>
+            <span><strong className="font-display">{inlineText(lang, guide.cardTitle)}</strong><span>{inlineText(lang, guide.summary)}</span>{!simple && <em>{t('studentAppGuideAction')}</em>}</span>
           </OfflinePageLink>)}
           <Link href="/tour" className={styles.guideTour}>{t('studentSampleTourAction')}</Link>
 

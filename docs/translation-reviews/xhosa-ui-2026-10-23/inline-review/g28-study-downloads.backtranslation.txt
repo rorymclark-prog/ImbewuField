@@ -1,0 +1,28 @@
+0 IMBEWUFIELD PRACTISING WITH FARM MONEY
+1 A scenario designed for the classroom. This is not a farm record, not financial advice, and not an uploaded/entered assessment.
+2 Scenario: {title} ({id})
+3 Practice period: {start} to {end}
+4 [Not yet filled in]
+5 metres
+6 Units: {unit}. {axis}.
+7 Teaching frame: {width} × {height} m. It is not a land-rights record or a set scale for printing.
+8 Keep the exported drawings together with this record. This is a guided example, not your learning folder.
+9 SOURCE CARDS
+10 MODEL MEASUREMENTS — all coordinates are made-up numbers provided
+11 {id} — {label}: x={x}, y={y}, width={width}, height={height} m.
+12 {id} — {label}: x={x}, y={y} m (reference location).
+13 FAIR COMPARISON
+14 What is not known:
+15 CHOICE OF TIME PERIOD
+16 PRACTICAL WORK, COSTS AND CARE
+17 Before the work:
+18 {revision}: {phase}; {quantity}; cost {cost}; {care}.
+19 Cost details:
+20 Next discussion:
+21 UPDATE / REFRESH
+22 REVIEW PLAN — no products provided
+23 Review by facilitator, specialist, learner and language is still needed. This first look does not give tested progress.
+24 The page or drawing references below are not links. Keep a separate copy of those sources.
+25 For discussion with the reviewer:
+26 A drawing explaining a home plan; this drawing does not show real measurements of the practice scenario
+27 A drawing of farmers discussing a paper plan; it shows a scenario only, it is not the place designed for the class

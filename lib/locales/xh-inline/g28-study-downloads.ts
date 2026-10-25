@@ -5,7 +5,7 @@
 const drafts: Record<string, string> = {
   // Farm Finance practice worksheet (lib/finance-project.ts projectDraftText)
   "IMBEWUFIELD FARM FINANCE PRACTICE": "IMBEWUFIELD UKUZIQHELANISA NGEMALI YEFAMA",
-  "Synthetic classroom case. This is not a farm record, financial advice or a submitted assessment.": "Imeko eyilelwe eklasini. Le asiyiyo irekhodi yefama, asingcebiso yemali, kwaye asingovavanyo olungeniswe.",
+  "Synthetic classroom case. This is not a farm record, financial advice or a submitted assessment.": "Imeko eqanjiweyo yeklasi. Le asiyiyo irekhodi yefama, asingcebiso yemali, kwaye asingovavanyo olungeniswe.",
   "Case: {title} ({id})": "Imeko: {title} ({id})",
   "Practice period: {start} to {end}": "Ixesha lokuziqhelanisa: {start} ukuya ku-{end}",
   "[Not yet entered]": "[Ayikafakwa]",
@@ -28,7 +28,7 @@ const drafts: Record<string, string> = {
   "Cost detail:": "Iinkcukacha zendleko:",
   "Next discussion:": "Ingxoxo elandelayo:",
   "REVISION": "UHLAZIYO",
-  "OBSERVATION PLAN — no outcomes supplied": "ISICWANGCISO SOKUJONGA — akukho zimveliso zinikiweyo",
+  "OBSERVATION PLAN — no outcomes supplied": "ISICWANGCISO SOKUJONGA — akukho ziphumo zinikiweyo",
   "Facilitator, practitioner, learner and language review are still required. This preview awards no assessed progress.": "Uphononongo lomququzeleli, lochwephesha, lomfundi nololwimi lusafuneka. Esi sikhangelo sokuqala asinikeli nkqubela phambili ehlolwayo.",
 
   // Design learning folder (lib/design-portfolio.ts portfolioText)
@@ -36,7 +36,7 @@ const drafts: Record<string, string> = {
   "For discussion with a reviewer:": "Yokuxoxwa nomhloli:",
   // Alt text of the illustration on the design case and worked-example pages
   "Illustrative homestead planning scene; this image is not a measured picture of the practice case": "Umzobo ocacisa ucwangciso lwekhaya; lo mzobo awubonisi imilinganiselo yokwenyani yemeko yokuziqhelanisa",
-  "Illustrated growers discussing a paper plan; it is contextual only and not the fictional classroom site": "Umzobo wabalimi bexoxa ngesicwangciso sephepha; ubonisa imeko kuphela, awuyiyo indawo eyilelwe yeklasi",
+  "Illustrated growers discussing a paper plan; it is contextual only and not the fictional classroom site": "Umzobo wabalimi bexoxa ngesicwangciso sephepha; ubonisa imeko kuphela, awuyiyo indawo eqanjiweyo yeklasi",
 };
 
 export default drafts;

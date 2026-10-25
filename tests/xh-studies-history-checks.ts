@@ -10,7 +10,8 @@ import { fileURLToPath } from 'node:url';
 // slide cards (lib/course-deck-release-bindings-xh-data.ts). The wave 17 layer pins the page
 // byte-exact, so this layer keeps the exact wave 17 bytes as a fixture (the wave 17 layer and every
 // older owner see their predecessor through it), pins the live file byte-exact itself and holds the
-// named markers that distinguish the two.
+// named markers that distinguish the two. Round 6 (25 Oct) adds the app-guide card titles and
+// summaries, looked up by their exact English (lib/locales/xh-inline/g26-study-content.ts).
 const root = fileURLToPath(new URL('../', import.meta.url));
 const sha = (v: string | Uint8Array) => createHash('sha256').update(v).digest('hex');
 const read = (file: string) => readFileSync(resolve(root, file));
@@ -19,12 +20,12 @@ const files: Record<string, Row> = {
   'app/student/page.tsx': {
     beforePath: 'tests/fixtures/student-page-before-xh-studies.tsx.txt',
     beforeSha256: 'a361890bfdb03c22e74a01b61516f759cf93225ca20b83edf422aa37a9712272',
-    afterSha256: '7e5644602e64bf44427f3c94f9c5ea1c7aed40b61250f0c1885901504387df77',
-    afterBytes: 89749,
+    afterSha256: 'd5cdf42e6773cb7d95ed2549a061987ba79a5d59bb4867bd12ef8c9adaf040bf',
+    afterBytes: 89785,
     // Present in the wave 17 file, absent from the isiXhosa one.
-    gone: ["const SOURCE_PAIRED_LANGUAGES = new Set(['st', 've', 'ts']);", "{regionalDraft && lang !== 've' && <div role=\"status\""],
+    gone: ["const SOURCE_PAIRED_LANGUAGES = new Set(['st', 've', 'ts']);", "{regionalDraft && lang !== 've' && <div role=\"status\"", '<strong className="font-display">{guide.cardTitle}</strong><span>{guide.summary}</span>'],
     // Absent from the wave 17 file, present in the isiXhosa one.
-    arrived: ["const SOURCE_PAIRED_LANGUAGES = new Set(['st', 've', 'ts', 'xh']);", 'Unreviewed isiXhosa AI draft.', "<span lang=\"xh\">{t('xhosaUiDraftNotice')}</span>", "lang === 'xh' ? 'isiXhosa AI draft · review pending'", "'Slides: isiXhosa AI draft + English source'", "inlineText(lang, 'Loading your account…')"],
+    arrived: ["const SOURCE_PAIRED_LANGUAGES = new Set(['st', 've', 'ts', 'xh']);", 'Unreviewed isiXhosa AI draft.', "<span lang=\"xh\">{t('xhosaUiDraftNotice')}</span>", "lang === 'xh' ? 'isiXhosa AI draft · review pending'", "'Slides: isiXhosa AI draft + English source'", "inlineText(lang, 'Loading your account…')", '{inlineText(lang, guide.cardTitle)}</strong><span>{inlineText(lang, guide.summary)}</span>'],
   },
 };
 const beforeFiles = new Map<string, Buffer>();

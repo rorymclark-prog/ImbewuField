@@ -1,0 +1,89 @@
+{
+  "unit": "g19-crop-production",
+  "shard": "g19-crop-production.ts",
+  "range": "all",
+  "okCount": 418,
+  "items": [
+    {
+      "index": 120,
+      "key": "Planned pantry food",
+      "verdict": "repair",
+      "draft": "Ukutya okuceliweyo kwipantri",
+      "backtranslation": "Food that is put in the pantry",
+      "problem": "\"okuceliweyo\" means requested/asked for, not planned; the rest of the file uses \"ecetywayo\" for planned/proposed.",
+      "corrected": "Ukutya okucetywayo kwipantri"
+    },
+    {
+      "index": 128,
+      "key": "Food in store follows each crop’s sourced storage conditions. Freezing, drying, fermentation and other processing enter only through dated stock records. A harvest does not automatically create preserved food.",
+      "verdict": "repair",
+      "draft": "Ukutya okugciniweyo kulandela iimeko zokugcina ezinomthombo zesityalo ngasinye. Ukuqandisa, ukomisa, ukubilisa nolunye uqhutyo kungena kuphela ngeerekhodi zokugcina ezinemihla. Isivuno asenzi ngokwaso ukutya okugciniweyo.",
+      "backtranslation": "Stored food follows the storage conditions with a source for each crop. Freezing, drying, boiling and other processing only enter with dated storage records. The harvest does not by itself make stored food.",
+      "problem": "\"fermentation\" rendered as \"ukubilisa\" (boiling) - a different preservation method; food-safety meaning changed. Coordinator: \"-vundisa\" can read as rot or fertilise; used \"-vubela\" (leaven, ferment) with the English term in brackets until a fluent reviewer confirms.",
+      "corrected": "Ukutya okugciniweyo kulandela iimeko zokugcina ezinomthombo zesityalo ngasinye. Ukuqandisa, ukomisa, ukuvubela (fermentation) nolunye uqhutyo kungena kuphela ngeerekhodi zokugcina ezinemihla. Isivuno asenzi ngokwaso ukutya okugciniweyo."
+    },
+    {
+      "index": 137,
+      "key": "Weights recorded as present in each month. Stored, dried, frozen, fermented and processed foods are stocks; they are not a second harvest.",
+      "verdict": "repair",
+      "draft": "Ubunzima obubhalwe njengobukhoyo kwinyanga nganye. Ukutya okugciniweyo, okomisiweyo, okuqandisiweyo, okubilisiweyo nokuqhutywe kuyigcino; ayisosivuno sesibini.",
+      "backtranslation": "Weight recorded as present in each month. Stored, dried, frozen, boiled and processed food is storage; it is not a second harvest.",
+      "problem": "\"fermented\" rendered as \"okubilisiweyo\" (boiled) - different preservation method. Coordinator: \"-vundisa\" can read as rot or fertilise; used \"-vubela\" (leaven, ferment) with the English term in brackets until a fluent reviewer confirms.",
+      "corrected": "Ubunzima obubhalwe njengobukhoyo kwinyanga nganye. Ukutya okugciniweyo, okomisiweyo, okuqandisiweyo, okuvubelweyo (fermented) nokuqhutywe kuyigcino; ayisosivuno sesibini."
+    },
+    {
+      "index": 253,
+      "key": "Numbers are projections in kg",
+      "verdict": "repair",
+      "draft": "Amanani ngamabango e-kg",
+      "backtranslation": "Numbers are claims of kg",
+      "problem": "\"projections\" rendered as \"amabango\" (claims) - wrong term for a projected figure.",
+      "corrected": "Amanani ngamaqikelelo e-kg"
+    },
+    {
+      "index": 329,
+      "key": "Greens, roots and fresh vegetables",
+      "verdict": "repair",
+      "draft": "Imifuno yamagqabi, eyezinti nemifuno emitsha",
+      "backtranslation": "Leafy vegetables, stalk vegetables and fresh vegetables",
+      "problem": "\"roots\" rendered as \"eyezinti\" (stalks/sticks) - wrong vegetable type.",
+      "corrected": "Imifuno yamagqabi, yeengcambu nemifuno emitsha"
+    },
+    {
+      "index": 337,
+      "key": "Tilapia pond and reliable dry-season water assumed",
+      "verdict": "repair",
+      "draft": "Ichibi le-tilapia namanzi anokuthenjwa ngexesha lomhlaba owomileyo kuthathelwe ingqalelo",
+      "backtranslation": "A tilapia pond and reliable water in the dry season taken into account",
+      "problem": "\"assumed\" rendered as \"taken into account\", and \"dry-season\" as \"dry ground time\"; the sentence states an assumption of the example, not that something was considered.",
+      "corrected": "Kucingelwa ichibi le-tilapia namanzi anokuthenjwa ngexesha elomileyo"
+    },
+    {
+      "index": 338,
+      "key": "No frost assumed",
+      "verdict": "repair",
+      "draft": "Akukho qabaka kuthathelwe ingqalelo",
+      "backtranslation": "No frost taken into account",
+      "problem": "\"No frost assumed\" rendered as \"No frost taken into account\" - reads as frost not considered, which reverses the safety assumption of the example (it assumes there is no frost).",
+      "corrected": "Kucingelwa ukuba akukho qabaka"
+    },
+    {
+      "index": 352,
+      "key": "Fictional farm production calendar. Filled marks show the example plan, gold shows stored food, outlined marks show regional references.",
+      "verdict": "repair",
+      "draft": "Ikhalenda yemveliso yefama eqanjiweyo. Iimpawu ezizalisiweyo zibonisa isicwangciso somzekelo, igolide ibonisa ukutya okugciniweyo, iimpawu ezigqunyiweyo zibonisa izalathiso zommandla.",
+      "backtranslation": "Produce calendar of the made-up farm. Filled marks show the sample plan, gold shows stored food, covered marks show region indicators.",
+      "problem": "\"outlined marks\" rendered as \"iimpawu ezigqunyiweyo\" (covered/wrapped marks) - wrong description of the legend.",
+      "corrected": "Ikhalenda yemveliso yefama eqanjiweyo. Iimpawu ezizalisiweyo zibonisa isicwangciso somzekelo, igolide ibonisa ukutya okugciniweyo, iimpawu ezinemigca yangaphandle zibonisa izalathiso zommandla."
+    },
+    {
+      "index": 391,
+      "key": "Fermented",
+      "verdict": "repair",
+      "draft": "Kubilisiwe",
+      "backtranslation": "Boiled",
+      "problem": "\"Fermented\" rendered as \"Kubilisiwe\" (boiled) - wrong preservation method. Coordinator: \"-vundisa\" can read as rot or fertilise; used \"-vubela\" (leaven, ferment) with the English term in brackets until a fluent reviewer confirms.",
+      "corrected": "Kuvubelwe (fermented)"
+    }
+  ]
+}

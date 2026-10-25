@@ -1,0 +1,341 @@
+{
+  "unit": "g25-facilitator-crops",
+  "shard": "g25-facilitator-crops.ts",
+  "range": "all",
+  "okCount": 469,
+  "items": [
+    {
+      "index": 34,
+      "key": "This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop.",
+      "verdict": "repair",
+      "draft": "Oku akulona myalelo uqinisekisiweyo wezithole kwaye akushiyeli nto kwizityalo ezingatyhutyhiyo; buza umthengisi wakho oko akucebisayo kweso sityalo.",
+      "backtranslation": "This is not a confirmed seedling order and leaves nothing to (\"shiyeli nto\") the crops that are not \"tyhutyhiyo\" (shaken?); ask your seller what they advise for that crop.",
+      "problem": "\"akushiyeli nto kwizityalo ezingatyhutyhiyo\" is meaningless (plants that are not shaken); English: allows nothing for plants that do not take.",
+      "corrected": "Oku akulona myalelo uqinisekisiweyo wezithole kwaye akongezi nto ngenxa yezityalo ezingakhuli; buza umthengisi wakho oko akucebisayo kweso sityalo."
+    },
+    {
+      "index": 35,
+      "key": "This is not a guaranteed buy quantity and it allows nothing for material that does not take; ask the supplier what they advise for this crop.",
+      "verdict": "repair",
+      "draft": "Oku akulona nani lokuthenga eliqinisekisiweyo kwaye akushiyeli nto kwizinto ezingatyhutyhiyo; buza umthengisi oko akucebisayo kweso sityalo.",
+      "backtranslation": "This is not a confirmed purchase amount and leaves nothing for the things that are not shaken; ask the seller what they advise for that crop.",
+      "problem": "\"kwizinto ezingatyhutyhiyo\" is meaningless; English: allows nothing for material that does not take.",
+      "corrected": "Oku akulona nani lokuthenga eliqinisekisiweyo kwaye akongezi nto ngenxa yezinto ezingakhuli; buza umthengisi oko akucebisayo kweso sityalo."
+    },
+    {
+      "index": 39,
+      "key": "Confirm the sowing method and cultivar with the supplier; no germination allowance is added.",
+      "verdict": "repair",
+      "draft": "Qinisekisa indlela yokuhlwayela nohlobo lwesityalo nomthengisi; akukho nkxaso yokuhluma eyongezelelweyo.",
+      "backtranslation": "Confirm the sowing method, the type of crop and the seller; there is no extra germination support.",
+      "problem": "\"germination allowance\" rendered as \"nkxaso\" (support); meaning of no extra seed allowed for failures lost.",
+      "corrected": "Qinisekisa indlela yokuhlwayela nohlobo lwesityalo nomthengisi; akukho ongezelelo kuba ezinye zingahlumi."
+    },
+    {
+      "index": 60,
+      "key": "drill at 70kg seed/ha, or broadcast at 105–140kg/ha; terminate before the next summer staple crop",
+      "verdict": "repair",
+      "draft": "phalaza ngo-70kg wembewu/ha, okanye uhlwayele ngokuhlamba ngo-105–140kg/ha; yigqibe phambi kwesityalo esiyisiseko sehlobo esilandelayo",
+      "backtranslation": "spread/scatter at 70kg of seed/ha, or sow by \"washing\" at 105–140kg/ha; finish it before the next main summer crop",
+      "problem": "Drill vs broadcast mixed up: \"phalaza\" (scatter) used for drill, and broadcast rendered as \"ngokuhlamba\" (washing) - sowing method reversed/meaningless; seed rates are safety/cost relevant.",
+      "corrected": "hlwayela kwimitya ngo-70kg wembewu/ha, okanye sasaza ngo-105–140kg/ha; yigqibe phambi kwesityalo esiyisiseko sehlobo esilandelayo"
+    },
+    {
+      "index": 61,
+      "key": "broadcast at 20kg/ha (Red cultivar) to 40-50kg/ha (Black cultivar); terminate at large biomass, before the next crop",
+      "verdict": "repair",
+      "draft": "hlwayela ngokuhlamba ngo-20kg/ha (uhlobo oluBomvu) ukuya ku-40-50kg/ha (uhlobo oluMnyama); yigqibe xa ubunzima bezityalo bukhulu, phambi kwesityalo esilandelayo",
+      "backtranslation": "sow by \"washing\" at 20kg/ha (Red type) up to 40-50kg/ha (Black type); finish it when the weight of plants is big, before the next crop",
+      "problem": "Broadcast rendered as \"ngokuhlamba\" (washing) - meaningless sowing method.",
+      "corrected": "sasaza ngo-20kg/ha (uhlobo oluBomvu) ukuya ku-40-50kg/ha (uhlobo oluMnyama); yigqibe xa ubunzima bezityalo bukhulu, phambi kwesityalo esilandelayo"
+    },
+    {
+      "index": 62,
+      "key": "broadcast at 12-15kg/ha alone, or 4-7kg/ha in a pasture mixture; terminate before the next crop",
+      "verdict": "repair",
+      "draft": "hlwayela ngokuhlamba ngo-12-15kg/ha ngokwayo, okanye ngo-4-7kg/ha xa kuxutywe nengca yokufuya; yigqibe phambi kwesityalo esilandelayo",
+      "backtranslation": "sow by \"washing\" at 12-15kg/ha alone, or 4-7kg/ha when mixed with fodder grass; finish before the next crop",
+      "problem": "Broadcast rendered as \"ngokuhlamba\" (washing) - meaningless sowing method.",
+      "corrected": "sasaza ngo-12-15kg/ha ngokwayo, okanye ngo-4-7kg/ha xa kuxutywe nengca yokufuya; yigqibe phambi kwesityalo esilandelayo"
+    },
+    {
+      "index": 63,
+      "key": "broadcast at up to 4kg/ha, or drill in rows up to 90cm apart at 2kg/ha; terminate at full flowering, before the next crop",
+      "verdict": "repair",
+      "draft": "hlwayela ngokuhlamba ukuya kuma-4kg/ha, okanye uphalaze kwimitya ukuya kuma-90cm ngokwahlukana ngo-2kg/ha; yigqibe xa kutyatyambile ngokupheleleyo, phambi kwesityalo esilandelayo",
+      "backtranslation": "sow by \"washing\" up to 4kg/ha, or scatter in rows up to 90cm apart at 2kg/ha; finish when fully flowering, before the next crop",
+      "problem": "Broadcast rendered as \"ngokuhlamba\" (washing); drill in rows rendered as \"uphalaze\" (scatter) - the two methods are swapped/garbled.",
+      "corrected": "sasaza ukuya kuma-4kg/ha, okanye uhlwayele kwimitya ukuya kuma-90cm ngokwahlukana ngo-2kg/ha; yigqibe xa kutyatyambile ngokupheleleyo, phambi kwesityalo esilandelayo"
+    },
+    {
+      "index": 85,
+      "key": "Rainfall pattern derived from satellite climate records (NASA POWER / ERA5) for this site's own coordinates",
+      "verdict": "repair",
+      "draft": "Ipatheni yemvula ithathwe kwiirekhodi zemozulu zesathelayithi (NASA POWER / ERA5) kwiikhowudi zale ndawo ngokwayo",
+      "backtranslation": "The rain pattern is taken from satellite weather records (NASA POWER / ERA5) at the codes/coordinates of this place itself",
+      "problem": "\"coordinates\" rendered as \"iikhowudi\" (codes).",
+      "corrected": "Ipatheni yemvula ithathwe kwiirekhodi zemozulu zesathelayithi (NASA POWER / ERA5) kwindawo echanekileyo yale ndawo ngokwayo"
+    },
+    {
+      "index": 90,
+      "key": "Vegetables and staples · Fruit, nuts & berries · Animal products. Housing is listed. Use the site survey for animal numbers and care checks.",
+      "verdict": "repair",
+      "draft": "Imifuno nezityalo eziyisiseko · Iziqhamo, amantongomane namajikijolo · Iimveliso zezilwanyana. Izindlu ziyaboniswa. Sebenzisa uphando lwendawo ukuze ufumane amanani ezilwanyana nokujonga ukhathalelo.",
+      "backtranslation": "Vegetables and main crops · Fruit, nuts and berries · Animal products. Houses are shown. Use the site survey to get animal numbers and care checks.",
+      "problem": "isiZulu plural \"Izindlu\" (houses); isiXhosa is \"Iindlu\".",
+      "corrected": "Imifuno nezityalo eziyisiseko · Iziqhamo, amantongomane namajikijolo · Iimveliso zezilwanyana. Iindlu ziyaboniswa. Sebenzisa uphando lwendawo ukuze ufumane amanani ezilwanyana nokujonga ukhathalelo."
+    },
+    {
+      "index": 91,
+      "key": "Unreviewed isiXhosa draft. This interface and the task instructions are an isiXhosa draft that has not been reviewed by a fluent isiXhosa speaker. Crop names stay in English. Check planting times, climate and price assumptions against their sources and local farming advice before you act on them.",
+      "verdict": "repair",
+      "draft": "Idrafti yesiXhosa engekahlolwa. Olu hlobo lokusebenzisa nemiyalelo yemisebenzi yidrafti yesiXhosa engekahlolwa ngumntu othetha isiXhosa kakuhle. Amagama ezityalo ahlala esesiNgesi. Jonga amaxesha okutyala, imozulu nemiqikelelo yamaxabiso kwimithombo yawo nasekucebisweni kwezolimo lalapha ekuhlaleni phambi kokuba wenze ngawo.",
+      "backtranslation": "Unreviewed isiXhosa draft. This kind of use and the instructions for tasks are an isiXhosa draft not reviewed by a person who speaks isiXhosa well. Plant names stay in English. Check planting times, climate and price estimates at their sources and in local farming advice before acting on them.",
+      "problem": "\"This interface\" rendered as \"Olu hlobo lokusebenzisa\" (this kind of using) - unclear.",
+      "corrected": "Idrafti yesiXhosa engekahlolwa. Le app nemiyalelo yemisebenzi yidrafti yesiXhosa engekahlolwa ngumntu othetha isiXhosa kakuhle. Amagama ezityalo ahlala esesiNgesi. Jonga amaxesha okutyala, imozulu nemiqikelelo yamaxabiso kwimithombo yawo nasekucebisweni kwezolimo lalapha ekuhlaleni phambi kokuba wenze ngawo."
+    },
+    {
+      "index": 100,
+      "key": "Your mapped plants and animal housing are listed below. To plan vegetable or staple crops,",
+      "verdict": "repair",
+      "draft": "Izityalo zakho ezibonakala kwimephu nezindlu zezilwanyana zidweliswe ngezantsi. Ukucwangcisa imifuno okanye izityalo eziyisiseko,",
+      "backtranslation": "Your crops seen on the map and animal houses are listed below. To plan vegetables or main crops,",
+      "problem": "isiZulu plural \"izindlu\".",
+      "corrected": "Izityalo zakho ezibonakala kwimephu neendlu zezilwanyana zidweliswe ngezantsi. Ukucwangcisa imifuno okanye izityalo eziyisiseko,"
+    },
+    {
+      "index": 103,
+      "key": "No staple plots on your map yet. Draw a plot in the Design Studio for maize, beans, pumpkins or sweet potato.",
+      "verdict": "repair",
+      "draft": "Akukabikho ziza zezityalo eziyisiseko kwimephu yakho. Zoba isiza kwisitudiyo soyilo sombona, iimbotyi, iimpuphu okanye iitapile ezimnandi.",
+      "backtranslation": "There are no main-crop sites on your map yet. Draw a site in the design studio of maize, beans, \"iimpuphu\" (?) or sweet potatoes.",
+      "problem": "\"pumpkins\" rendered as \"iimpuphu\", not the term used elsewhere (ithanga/amathanga).",
+      "corrected": "Akukabikho ziza zezityalo eziyisiseko kwimephu yakho. Zoba isiza kwisitudiyo soyilo sombona, iimbotyi, amathanga okanye iitapile ezimnandi."
+    },
+    {
+      "index": 108,
+      "key": "No locally confirmed production months yet. Hives, coops and pens on your map stay listed below and on the printed plan.",
+      "verdict": "repair",
+      "draft": "Akukabikho nyanga zemveliso eziqinisekisiweyo apha ekuhlaleni. Izicaka zeenyosi, iindlu zeenkukhu neenkxalabo ezikwimephu yakho ziqhubeka zidweliswe ngezantsi nakwisicwangciso esishicilelweyo.",
+      "backtranslation": "There are no confirmed production months here locally yet. Beehives (bee-houses), chicken houses and \"iinkxalabo\" on your map continue to be listed below and in the printed plan.",
+      "problem": "\"Hives\" rendered as \"Izicaka\" (servants/maids) and \"pens\" as \"iinkxalabo\" (worries/anxieties) - wrong terms; shard elsewhere uses imizinga and ibhoma.",
+      "corrected": "Akukabikho nyanga zemveliso eziqinisekisiweyo apha ekuhlaleni. Imizinga yeenyosi, iindlu zeenkukhu neebhoma ezikwimephu yakho ziqhubeka zidweliswe ngezantsi nakwisicwangciso esishicilelweyo."
+    },
+    {
+      "index": 128,
+      "key": "only avoids immediate same-family sequences inside this annual plan and after a crop marked as already growing. A sound multi-year rotation needs dated records from earlier seasons; this screen does not store or invent them.",
+      "verdict": "repair",
+      "draft": "ikuphepha kuphela ukulandelelana ngoko nangoko kwentsapho enye ngaphakathi kwesi sicwangciso sonyaka nasemva kwesityalo esiphawulwe njengesele sikhula. Ukujikelezisa okuhle kweminyaka emininzi kufuna iirekhodi ezinemihla zamaxesha adlulileyo; esi sikrini asizigcini kwaye asizilungisi.",
+      "backtranslation": "it is safe only to follow one family immediately after another within this year's plan and after a crop marked as already growing. Good multi-year rotation needs dated records of past seasons; this screen does not save or fix them.",
+      "problem": "Sentence starts with garbled \"ikuphepha\"; \"does not store or invent them\" rendered \"asizilungisi\" (does not fix/repair) - \"invent\" lost.",
+      "corrected": "iyakuphepha kuphela ukulandelelana ngoko nangoko kwentsapho enye ngaphakathi kwesi sicwangciso sonyaka nasemva kwesityalo esiphawulwe njengesele sikhula. Ukujikelezisa okuhle kweminyaka emininzi kufuna iirekhodi ezinemihla zamaxesha adlulileyo; esi sikrini asizigcini kwaye asiziqambi."
+    },
+    {
+      "index": 175,
+      "key": "; proposed housing is left out",
+      "verdict": "repair",
+      "draft": "; izindlu ezicetywayo azifakwanga",
+      "backtranslation": "; suggested houses are not included",
+      "problem": "isiZulu plural \"izindlu\".",
+      "corrected": "; iindlu ezicetywayo azifakwanga"
+    },
+    {
+      "index": 204,
+      "key": "Same sliders and prices as the blended figure. Staple ground reads low per m² by nature — maize, beans and potatoes are cheap per kilogram but store and feed the household through the year — so compare beds with beds and plots with plots, not one against the other.",
+      "verdict": "repair",
+      "draft": "Ziziisilayidi namaxabiso afanayo nelo linani lidityanisiweyo. Umhlaba wezityalo eziyisiseko uhlala ubonakala uphantsi nge-m² ngokwendalo — umbona, iimbotyi neetapile zisemgangathweni ophantsi ngekhilogram kodwa ziyagcinwa zondle ikhaya unyaka wonke — ngoko thelekisa imibhede nemibhede neziza neziza, hayi enye nenye.",
+      "backtranslation": "They are sliders and prices like that combined number. Land of main crops always looks low per m² by nature — maize, beans and potatoes are low-grade per kilogram but are kept to feed the household all year — so compare beds with beds and sites with sites, not one with another.",
+      "problem": "\"cheap per kilogram\" rendered as low quality (\"zisemgangathweni ophantsi\") - price/quality confusion; opening word garbled \"Ziziisilayidi\".",
+      "corrected": "Iisilayidi namaxabiso afanayo nelo linani lidityanisiweyo. Umhlaba wezityalo eziyisiseko uhlala ubonakala uphantsi nge-m² ngokwendalo — umbona, iimbotyi neetapile zibiza kancinci ngekhilogram kodwa ziyagcinwa zondle ikhaya unyaka wonke — ngoko thelekisa imibhede nemibhede neziza neziza, hayi enye nenye."
+    },
+    {
+      "index": 207,
+      "key": "Dryland staple plot — maize, dry beans, pumpkin, no irrigation",
+      "verdict": "repair",
+      "draft": "Isiza sesityalo esiyisiseko sasemhlabeni owomileyo — umbona, iimbotyi ezomileyo, iimpuphu, akukho nkcenkceshelo",
+      "backtranslation": "Main-crop site on dry land — maize, dry beans, \"iimpuphu\", no irrigation",
+      "problem": "\"pumpkin\" rendered as \"iimpuphu\", not the term used elsewhere (amathanga).",
+      "corrected": "Isiza sesityalo esiyisiseko sasemhlabeni owomileyo — umbona, iimbotyi ezomileyo, amathanga, akukho nkcenkceshelo"
+    },
+    {
+      "index": 213,
+      "key": "Water that fails in the dry months — the single biggest driver here; one missed month can cost the whole crop cycle, which is the gap between the two irrigated bands above and the two that are not.",
+      "verdict": "repair",
+      "draft": "Amanzi angaphumeleliyo ezinyangeni ezomileyo — likhona elona lunobangela omkhulu apha; inyanga enye eshiyekileyo inokuthi iduse wonke umjikelo wesityalo, nokokwahlukileyo phakathi kwemikhakha emibini enkcenkceshelwayo ngentla nemibini engenjalo.",
+      "backtranslation": "Water that didn't succeed in dry months — the one with the biggest cause here; one missed month can ruin a whole crop cycle, and the difference between two irrigated ranges above and two not so.",
+      "problem": "\"iduse\" is not meaningful for \"can cost the whole crop cycle\"; \"likhona elona lunobangela\" garbled.",
+      "corrected": "Amanzi angaphumeleliyo ezinyangeni ezomileyo — yeyona nto inobangela omkhulu apha; inyanga enye eshiyekileyo inokulahlekisa wonke umjikelo wesityalo, nokokwahlukileyo phakathi kwemikhakha emibini enkcenkceshelwayo ngentla nemibini engenjalo."
+    },
+    {
+      "index": 217,
+      "key": "Patchy stands: poor germination never re-sown, or spacing wider than the packet calls for, quietly harvests a fraction of the bed you prepared.",
+      "verdict": "repair",
+      "draft": "Izityalo ezinezikhewu: ukuhluma okubi okungazange kuphinde kuhlwayelwe, okanye ibanga elibanzi kunelo lifunwa ngepakethi, kuvuna ngokungathethi nje into encinci yombhede owulungisileyo.",
+      "backtranslation": "Crops with gaps: poor germination that was not resown, or a wider distance than the packet wants, harvest without saying a small thing of a prepared bed.",
+      "problem": "\"quietly harvests a fraction of the bed\" rendered as the garbled \"kuvuna ngokungathethi nje into encinci\".",
+      "corrected": "Izityalo ezinezikhewu: ukuhluma okubi okungazange kuphinde kuhlwayelwe, okanye ibanga elibanzi kunelo lifunwa ngepakethi, kuvuna kuphela ucezu oluncinci lombhede owulungisileyo."
+    },
+    {
+      "index": 249,
+      "key": "This plan does not prescribe a fertiliser or pesticide programme. Soil condition, the diagnosed problem, the exact crop and the current South African label all matter; ask a local extension officer or qualified adviser where possible.",
+      "verdict": "repair",
+      "draft": "Esi sicwangciso asimiseli nkqubo yomanyolo okanye yezibulali-zinambuzane. Imeko yomhlaba, ingxaki ehlolwe ngokuchanekileyo, isityalo ngqo nelebhile yangoku yaseMzantsi Afrika zonke ziyathamba; buza igosa lolwandiso lalapha ekuhlaleni okanye ingcali efanelekileyo apho kunokwenzeka.",
+      "backtranslation": "This plan doesn't set a fertiliser or pesticide programme. The state of the soil, a correctly checked problem, the crop itself and the current South African label all matter (\"ziyathamba\" = are soft/gentle?); ask a local extension officer or a suitable specialist where possible.",
+      "problem": "\"all matter\" rendered \"ziyathamba\" (they are soft/wet) - meaning lost on a fertiliser/pesticide advice caveat.",
+      "corrected": "Esi sicwangciso asimiseli nkqubo yomanyolo okanye yezibulali-zinambuzane. Imeko yomhlaba, ingxaki ehlolwe ngokuchanekileyo, isityalo ngqo nelebhile yangoku yaseMzantsi Afrika zonke ziyabalulekile; buza igosa lolwandiso lalapha ekuhlaleni okanye ingcali efanelekileyo apho kunokwenzeka."
+    },
+    {
+      "index": 254,
+      "key": "dry beans, green beans, peas, broad beans and groundnuts are useful rotation crops. This planner avoids immediate family repeats; it does not calculate a fertiliser credit.",
+      "verdict": "repair",
+      "draft": "iimbotyi ezomileyo, iimbotyi eziluhlaza, iipizi, ii-broad beans neenzama ziyizityalo ezilungileyo zokujikelezisa. Esi sicwangciso siyakuphepha ukuphindaphinda ngoko nangoko intsapho enye; asibali mvuzo womanyolo.",
+      "backtranslation": "dry beans, green beans, peas, broad beans and cowpeas are good rotation crops. This plan will avoid repeating one family immediately; it doesn't count a fertiliser reward.",
+      "problem": "\"groundnuts\" rendered as \"iinzama\" (attempts) - wrong term; the draft already keeps English names for other legumes (ii-broad beans).",
+      "corrected": "iimbotyi ezomileyo, iimbotyi eziluhlaza, iipizi, ii-broad beans nee-groundnuts ziyizityalo ezilungileyo zokujikelezisa. Esi sicwangciso siyakuphepha ukuphindaphinda ngoko nangoko intsapho enye; asibali mvuzo womanyolo."
+    },
+    {
+      "index": 255,
+      "key": "If you use a commercial input, check the current product label and your certifier's current rules. “Organic” does not establish a safe dose or prove that a product suits this soil.",
+      "verdict": "repair",
+      "draft": "Ukuba usebenzisa into yorhwebo, jonga ilebhile yemveliso yangoku nemigaqo yangoku yesatifikethi sakho. “Organic” ayiqinisekisi mlinganiselo ukhuselekileyo okanye ayibonisi ukuba imveliso ifanele esi sihlabathi.",
+      "backtranslation": "If you use a commercial product, check the current product label and the current rules of your certificate. \"Organic\" doesn't confirm a safe level or show that the product suits this soil (\"isihlabathi\" = sand).",
+      "problem": "\"suits this soil\" rendered as \"this sand/world\" (esi sihlabathi); \"certifier\" rendered as \"certificate\" - label/organic-certification safety text.",
+      "corrected": "Ukuba usebenzisa into yorhwebo, jonga ilebhile yemveliso yangoku nemigaqo yangoku yomnikezeli wesatifikethi sakho. “Organic” ayiqinisekisi mlinganiselo ukhuselekileyo okanye ayibonisi ukuba imveliso ifanele lo mhlaba."
+    },
+    {
+      "index": 266,
+      "key": "Your trees & bushes",
+      "verdict": "repair",
+      "draft": "Imithi neentlokoma zakho",
+      "backtranslation": "Your trees and shrubs(?)",
+      "problem": "\"bushes\" rendered as \"iintlokoma\" (not shrubs); shard elsewhere uses amatyholo for shrubs.",
+      "corrected": "Imithi namatyholo akho"
+    },
+    {
+      "index": 269,
+      "key": "From your map · hover or tap a bar",
+      "verdict": "repair",
+      "draft": "Ukusuka kwimephu yakho · beka umnxeba okanye cofa ibha",
+      "backtranslation": "From your map · put the phone/hover or tap the bar",
+      "problem": "\"hover\" rendered as \"beka umnxeba\" (put the phone).",
+      "corrected": "Ukusuka kwimephu yakho · beka isalathisi okanye cofa ibha"
+    },
+    {
+      "index": 278,
+      "key": "{n} recorded flow",
+      "verdict": "repair",
+      "draft": "ukuhamba kwenyosi okurekhodiweyo: {n}",
+      "backtranslation": "recorded bee movement: {n}",
+      "problem": "\"flow\" (honey flow) rendered as bee movement (\"ukuhamba kwenyosi\"), inconsistent with the header \"honey flows\".",
+      "corrected": "ukuhamba kobusi okurekhodiweyo: {n}"
+    },
+    {
+      "index": 279,
+      "key": "{n} recorded flows",
+      "verdict": "repair",
+      "draft": "ukuhamba kwenyosi okurekhodiweyo: {n}",
+      "backtranslation": "same",
+      "problem": "\"flows\" (honey flow) rendered as bee movement; inconsistent with the header \"honey flows\".",
+      "corrected": "ukuhamba kobusi okurekhodiweyo: {n}"
+    },
+    {
+      "index": 284,
+      "key": "Staple grain",
+      "verdict": "repair",
+      "draft": "Ukutya okuyisiseko kwamabele",
+      "backtranslation": "Basic food of sorghum/millet (amabele = sorghum)",
+      "problem": "\"Staple grain\" rendered as \"amabele\" (sorghum, also a vulgar/other sense) - too narrow and ambiguous.",
+      "corrected": "Iinkozo eziyisiseko"
+    },
+    {
+      "index": 290,
+      "key": "Squashes & melons",
+      "verdict": "repair",
+      "draft": "Iimpuphu neemelon",
+      "backtranslation": "Pumpkins and melons",
+      "problem": "\"Squashes\" rendered as \"Iimpuphu\"; use amathanga.",
+      "corrected": "Amathanga neemelon"
+    },
+    {
+      "index": 380,
+      "key": "Only these crops will be used. The planner balances supported sowing slots, variety and your harvest rhythm; it will not substitute an unchosen crop or claim a guaranteed maximum.",
+      "verdict": "repair",
+      "draft": "Kuza kusetyenziswa kuphela ezi zityalo. Isicwangciso silinganisa iindawo zokuhlwayela ezixhaswayo, iindidi nesantya sesivuno sakho; asiyi kutshintsha isityalo esingakhethwanga okanye sibanjiswe obona buninzi buqinisekisiweyo.",
+      "backtranslation": "Only these crops will be used. The plan measures supported sowing areas, types and your harvest speed; it will not change a crop not chosen or hold the one with the most confirmed (\"obona buninzi buqinisekisiweyo\").",
+      "problem": "\"or claim a guaranteed maximum\" rendered as garbled \"sibanjiswe obona buninzi buqinisekisiweyo\".",
+      "corrected": "Kuza kusetyenziswa kuphela ezi zityalo. Isicwangciso silinganisa iindawo zokuhlwayela ezixhaswayo, iindidi nesantya sesivuno sakho; asiyi kutshintsha isityalo esingakhethwanga okanye sithi sinika elona nani liphezulu eliqinisekisiweyo."
+    },
+    {
+      "index": 400,
+      "key": "A month with no sowing job is not always a gap — most often every bed is still holding a crop that has not come out yet.",
+      "verdict": "repair",
+      "draft": "Inyanga engenamsebenzi wokuhlwayela ayisoloko ililizwe — kaninzi yonke imibhede isabambe isityalo esingekaphumi.",
+      "backtranslation": "A month with no sowing work is not always empty — often all beds still hold a crop that has not yet come out.",
+      "problem": "\"ililizwe\" means \"is a country\" - nonsense for \"is not always a gap\".",
+      "corrected": "Inyanga engenamsebenzi wokuhlwayela ayisoloko iyisikhewu — kaninzi yonke imibhede isabambe isityalo esingekaphumi."
+    },
+    {
+      "index": 411,
+      "key": "On by default: Auto-suggest may use full, half, third or quarter-bed sections side by side so a long crop does not leave the whole bed blank. These are area shares, not a claimed intercropping row layout; check the section positions on the ground.",
+      "verdict": "repair",
+      "draft": "Ivuliwe ngokwesiqhelo: Cebisa ngokuzenzekelayo isenokusebenzisa iinxalenye zombhede opheleleyo, isiqingatha, isithathu okanye isine ecaleni kwenye ukuze isityalo esinde singayishiyi yonke imibhede ingenanto. Ezi zizabelo zendawo, hayi uhlengahlengiso lwemitya yezityalo ezidibeneyo; khangela iindawo zeenxalenye emhlabeni.",
+      "backtranslation": "On by default: Recommend automatically may use parts of a whole bed, half, third or quarter beside one another so that a lasting crop does not leave all the bed empty. These are shares of space, not adjustments of rows of mixed crops; look at the positions of the parts in the ground.",
+      "problem": "\"a long crop does not leave the whole bed blank\" rendered as ALL beds blank (yonke imibhede); \"esinde\" reads as tall.",
+      "corrected": "Ivuliwe ngokwesiqhelo: Cebisa ngokuzenzekelayo isenokusebenzisa iinxalenye zombhede opheleleyo, isiqingatha, isithathu okanye isine ecaleni kwenye ukuze isityalo esithatha ixesha elide singawushiyi wonke umbhede ungenanto. Ezi zizabelo zendawo, hayi uhlengahlengiso lwemitya yezityalo ezidibeneyo; khangela iindawo zeenxalenye emhlabeni."
+    },
+    {
+      "index": 414,
+      "key": "Grow big vines in a veg bed anyway",
+      "verdict": "repair",
+      "draft": "Tyala imithi emikhulu ekhasayo kumbhede wemifuno kunjalo",
+      "backtranslation": "Plant big climbing/spreading trees (vines?) in a vegetable bed anyway",
+      "problem": "\"vines\" rendered as \"imithi emikhulu ekhasayo\" (big climbing trees).",
+      "corrected": "Tyala iintsente ezinkulu kumbhede wemifuno kunjalo"
+    },
+    {
+      "index": 415,
+      "key": "Off by default: watermelon, pumpkin and butternut sprawl too much for a veg bed and only fill it for part of the year — we'll recommend a dedicated plot, a property edge, or a food forest area instead. Turn this on only if you'd rather use one of your regular beds for them anyway.",
+      "verdict": "repair",
+      "draft": "Icinyiwe ngokwesiqhelo: i-watermelon, i-pumpkin ne-butternut zisasazeka kakhulu kumbhede wemifuno kwaye ziwugcwalisa kuphela kwinxalenye yonyaka — siza kucebisa isiza esizinikeleyo, unxantathu wepropati, okanye indawo yehlathi lokutya endaweni yoko. Yivule oku kuphela ukuba ukhetha ukusebenzisa omnye wemibhede yakho eqhelekileyo ngazo kunjalo.",
+      "backtranslation": "Off by default: watermelon, pumpkin and butternut spread very much in a vegetable bed and fill it only for part of the year — we will suggest a dedicated site, a property triangle, or a food forest place instead. Turn this on only if you prefer to use one of your ordinary beds for them anyway.",
+      "problem": "\"property edge\" rendered as \"unxantathu wepropati\" (property triangle); \"vines\" as trees.",
+      "corrected": "Icinyiwe ngokwesiqhelo: i-watermelon, i-pumpkin ne-butternut zisasazeka kakhulu kumbhede wemifuno kwaye ziwugcwalisa kuphela kwinxalenye yonyaka — siza kucebisa isiza esizinikeleyo, icala lepropati, okanye indawo yehlathi lokutya endaweni yoko. Yivule oku kuphela ukuba ukhetha ukusebenzisa omnye wemibhede yakho eqhelekileyo ngazo kunjalo."
+    },
+    {
+      "index": 434,
+      "key": "Even the best starting month leaves no fresh harvest in {months} — see the gaps section below.",
+      "verdict": "repair",
+      "draft": "Nasona sona sona senyanga yokuqala silungileyo asishiyi sivuno sitsha ngo-{months} — jonga icandelo leziphakamiso ngezantsi.",
+      "backtranslation": "Even the very best first month leaves no new harvest in {months} — look at the suggestions section below.",
+      "problem": "Pointer to the \"gaps section\" rendered as \"suggestions section\" (leziphakamiso).",
+      "corrected": "Nasona sona sona senyanga yokuqala silungileyo asishiyi sivuno sitsha ngo-{months} — jonga icandelo lezikhewu ngezantsi."
+    },
+    {
+      "index": 479,
+      "key": "Field-position ranges come from mapped area and published spacing; they are not guaranteed buy quantities or germination/loss allowances. Supplier and crop-specific guidance may change what to purchase. Botanical seed quantity is not inferred from mature spacing: use the packet's crop-specific direct-sowing rate and germination guidance. Planting-piece ranges are shown only for seedlings, cloves, corms, slips and seed potatoes when both spacing axes are verified. Where a row layout is not verified, confirm it locally before buying material.",
+      "verdict": "repair",
+      "draft": "Uluhlu lweendawo zokutyala luvela kwindawo ebonakalayo kwimephu nakwibanga elipapashiweyo; aluwo mlinganiselo wokuthenga oqinisekisiweyo okanye iimvume zokuhluma/zelahleko. Isikhokelo somthengisi nesesityalo ngasinye sinokutshintsha oko kufunekaukuthenge. Ubungakanani bembewu abuthathwa kwibanga lesityalo esikhulileyo: sebenzisa umlinganiselo wepakethi wokuhlwayela ngqo kwesi sityalo nesikhokelo sokuhluma. Uluhlu lweziqwenga zokutyala luboniswa kuphela kwizithole, amaqhekeza, iikhormu, amahlumela neetapile zembewu xa zombini iimbombo zebanga ziqinisekisiwe. Apho uhlengahlengiso lwemitya lungaqinisekiswanga, luqinisekise apha ekuhlaleni phambi kokuthenga izinto.",
+      "backtranslation": "The list of planting places comes from the area visible on the map and the published distance; it is not a confirmed purchase measure or germination/loss allowances. The seller's guide and of each crop may change what you must buy. The quantity of seed is not taken from the distance of the grown crop: use the packet rate of direct sowing of this crop and the germination guide. The list of planting pieces is shown only for seedlings, pieces, corms, shoots and seed potatoes when both distance measures are confirmed. Where the row adjustment is not confirmed, confirm it locally before buying the things.",
+      "problem": "\"allowances\" rendered as \"iimvume\" (permissions); \"iimbombo zebanga\" for spacing axes unclear; missing space \"kufunekaukuthenge\".",
+      "corrected": "Uluhlu lweendawo zokutyala luvela kwindawo ebonakalayo kwimephu nakwibanga elipapashiweyo; aluwo mlinganiselo wokuthenga oqinisekisiweyo okanye ongezelelo lokuhluma/lelahleko. Isikhokelo somthengisi nesesityalo ngasinye sinokutshintsha oko kufuneka uthenge. Ubungakanani bembewu abuthathwa kwibanga lesityalo esikhulileyo: sebenzisa umlinganiselo wepakethi wokuhlwayela ngqo kwesi sityalo nesikhokelo sokuhluma. Uluhlu lweziqwenga zokutyala luboniswa kuphela kwizithole, amaqhekeza, iikhormu, amahlumela neetapile zembewu xa zombini iindlela zebanga ziqinisekisiwe. Apho uhlengahlengiso lwemitya lungaqinisekiswanga, luqinisekise apha ekuhlaleni phambi kokuthenga izinto."
+    },
+    {
+      "index": 484,
+      "key": "Every yield figure and date here is either from a published source or labelled as an estimate to confirm locally — tap for the method and the sources.",
+      "verdict": "repair",
+      "draft": "Linye inani lesivuno nomhla apha livela kumthombo opapashiweyo okanye luphawulwe njengoqikelelo oluqinisekiswa apha ekuhlaleni — cofa ukufumana indlela nemithombo.",
+      "backtranslation": "Each harvest number and date here comes from a published source or is marked as an estimate confirmed here locally — tap for method and sources.",
+      "problem": "\"Every yield figure and date\" rendered as \"Linye inani\" (one number).",
+      "corrected": "Linye nalinye inani lesivuno nomhla apha livela kumthombo opapashiweyo okanye luphawulwe njengoqikelelo oluqinisekiswa apha ekuhlaleni — cofa ukufumana indlela nemithombo."
+    },
+    {
+      "index": 505,
+      "key": "This is the mapped area multiplied by the published {range} kg/ha field-rate range. {instruction} Confirm the sowing method and cultivar with the supplier; no germination allowance is added.",
+      "verdict": "repair",
+      "draft": "Le yindawo ebonakalayo kwimephu iphindaphindwe ngoluhlu olupapashiweyo lwe-{range} kg/ha lomlinganiselo wentsimi. {instruction} Qinisekisa indlela yokuhlwayela nohlobo lwesityalo nomthengisi; akukho nkxaso yokuhluma eyongezelelweyo.",
+      "backtranslation": "This is the area visible on the map multiplied by the published range of {range} kg/ha of field rate. {instruction} Confirm sowing method and crop type with the seller; no extra germination support.",
+      "problem": "\"germination allowance\" rendered as \"nkxaso\" (support); meaning of no extra seed allowed for failures lost.",
+      "corrected": "Le yindawo ebonakalayo kwimephu iphindaphindwe ngoluhlu olupapashiweyo lwe-{range} kg/ha lomlinganiselo wentsimi. {instruction} Qinisekisa indlela yokuhlwayela nohlobo lwesityalo nomthengisi; akukho ongezelelo kuba ezinye zingahlumi."
+    }
+  ]
+}

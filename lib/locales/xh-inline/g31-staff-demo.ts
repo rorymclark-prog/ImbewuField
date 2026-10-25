@@ -111,7 +111,7 @@ const drafts: Record<string, string> = {
   "Saved privately for the organisation.": "Kugcinwe ngokwabucala kumbutho.",
   "This practice workspace has ended. Reopen production areas.": "Le ndawo yokuziqhelanisa iphelile. Phinda uvule iindawo zemveliso.",
   "Total planted area": "Indawo etyalwe iyonke",
-  "Counts show assessment assignments and responses. A participant may appear in several assessments. Missing numerical answers remain unknown. Awaiting review means closed but not shared; it is not a separate recorded approval status.": "Amanani abonisa ukwabelwa kovavanyo neempendulo. Umthathi-nxaxheba usenokubonakala kuvavanyo oluliqela. Iimpendulo zamanani ezingekhoyo zihlala zingaziwa. Ilindele uphononongo ithetha ivaliwe kodwa ayabelwananga; asiso simo sohlukileyo semvume esirekhodiweyo.",
+  "Counts show assessment assignments and responses. A participant may appear in several assessments. Missing numerical answers remain unknown. Awaiting review means closed but not shared; it is not a separate recorded approval status.": "Amanani abonisa ukwabelwa kovavanyo neempendulo. Umthathi-nxaxheba usenokubonakala kuvavanyo oluliqela. Iimpendulo zamanani ezingekhoyo zihlala zingaziwa. Ilindele uphononongo ithetha ivaliwe kodwa ayabelwananga; asiso simo sohlukileyo sokuvunywa esirekhodiweyo.",
   "Lima example conversation": "Ingxoxo yomzekelo ne-Lima",
   "Lima · guided conversation": "I-Lima · ingxoxo ekhokelwayo",
   "Explore this prepared conversation. Live questions are available from your own workspace.": "Hlola le ngxoxo ilungisiweyo. Imibuzo ephilayo ifumaneka kwindawo yakho yokusebenza.",

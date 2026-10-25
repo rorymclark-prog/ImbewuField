@@ -1,0 +1,504 @@
+504. Choose Save harvest once. Read any message, then find the new row in Recent harvests. Check its crop, the kilograms and the date shown.
+505. Switch to another tab and come back to Harvested to check the income again. If the app reports pending saving or offline, follow that message; do not add the same harvest again to try again.
+506. If the income is not right, keep the source record and write the needed correction. This harvest list does not currently offer an Edit button. A second estimated income will not correct the first.
+507. The saved row matches the source, or identify the exact correction needed.
+508. Read the difference without guessing
+509. Charts → Harvest graphs → Harvested & sold
+510. Choose the period you want to compare. Check the Orchard in settings to know which produce is included.
+511. The chart counts what is left as harvested minus sold. It does not separately record food eaten at home, gifts, storage, seed, animal feed or loss. Keep where those went in a supporting book if you want to explain them.
+512. More sold than harvested may mean a harvest record is missing or a sale from an earlier harvest. Investigate dates and records; do not change the weight just to make the chart look clean.
+513. You can explain what the chart shows and which supporting record is still needed.
+514. The number of bunches is not weight.
+515. You harvested six bunches but did not weigh them. What should be in Kg harvested?
+516. Enter 6 kg
+517. Six bunches do not confirm six kilograms. The form wants weight, not number of bunches.
+518. Weigh them before entering kilograms
+519. Yes. Keep the number of bunches in your source record and enter measured kilograms when you have them.
+520. Enter zero so the record is complete
+521. Zero would mean no weight. Unknown weight must not be zero.
+522. Keep dates and destinations beside the app
+523. The harvest form records kilograms and the date of entering. It does not take the date back and does not divide into food for home, stored produce and loss. Keep those details in your source record.
+524. The harvest amount is not income or sales profit. Track the latest sale and its payment separately.
+525. Now record the real harvest
+526. Open Harvested when you have the crop and weight ready. Confirm your workspace and first check what exists.
+527. Open Harvested
+528. Keep the sale and its payment together.
+529. Choose the right record first, check the payment, and find the one sale again.
+530. Picture of a grower and buyer talking about vegetables at a rural market stall
+531. Agree on produce, price and payment terms · illustrative example
+532. Start with what really happened
+533. Have the buyer, produce, quantity, unit, agreed price and dates beside you. Check whether the invoice or sale already exists before adding anything.
+534. To practise, open the sample tour and choose Record work and sales. Choose Try now if tour tips cover the screen. Sample changes are practice only and are deleted when you reload the whole page.
+535. Look for the existing record
+536. My records → Sold → Recent sales or money list
+537. If the sale already has an invoice, choose its link that says View or View invoice. A buyer asking for another copy does not mean there is another sale.
+538. If the recorded sale has no invoice, use Create invoice on that sale when available. Keep its recorded crop, kilograms, amount and payment date. Do not start another sale to make its papers.
+539. For an unrecorded sale, choose New sale with invoice. For an old sale or paper document, choose Past sale / paper invoice and keep the date reference of the original.
+540. You know whether you are opening an existing record or really adding an unrecorded sale.
+541. Choose the source before filling in details
+542. What are you writing? → Is this sale already in My Records?
+543. Read the chosen Invoice type. In Produce already sold or Invoice already written on paper, answer whether the sale is already recorded. Choose the correct existing sale when you link it.
+544. Make these choices first. Changing the invoice type or the existing-sale choice starts a new form, so check the details again before saving.
+545. For a paper copy, enter the original paper reference. The invoice issue date is not automatically the customer's payment day.
+546. The source choice and any linked sale match your evidence.
+547. Check quantity and the total agreed amount
+548. Payer → Crop or produce → Quantity → Unit → Price per item
+549. Check the buyer and each row. Keep kilograms, bags, bunches and other units as agreed. The app does not know the weight of a bag unless you measured and entered it.
+550. Use the price you agreed with the buyer. The suggested price is a guide, not the customer's agreement. Compare the row amounts and the total with your source.
+551. Choose a growing area only when the invoice belongs to it. Keep a mixed invoice unassigned rather than giving one bed the income from another job.
+552. Buyer, units, quantity, agreed price and total match the source record.
+553. Record whether full payment has arrived
+554. Has the buyer paid? → Payment received on date → Method of payment
+555. Choose Not yet — payment is still pending if money is still owed. Choose Yes — fully paid only after confirming that full payment has arrived.
+556. For full payment, check the real date of receipt and the method. A payment promise or screenshot from the buyer needs to be checked against your bank record [or receipt?].
+557. A deposit or partial payment is not full payment. This app does not keep a balance list of partial payments. Keep a checked supporting record of amounts received and still owed; do not mark the whole invoice as paid because of a deposit.
+558. Keep the real receipt date of each payment in that separate record. The app gives a paid invoice one payment date for its whole amount, so its charts cannot show the dates of each payment.
+559. The status describes the evidence, and a partial payment must not be represented as full payment.
+560. Save and check one invoice
+561. Save invoice → Saved → Open one number
+562. Choose Save invoice and read the message. Open Saved to find one invoice number, the buyer, amount and payment status.
+563. If the document is saved on this device but the crop sales book still needs updating, reconnect and follow the message on that one invoice. Making another document is not a safe way to try again.
+564. Paid invoices contribute to income in my records; paid kilogram rows can make linked crop sales records. Other units keep their quantity. An unpaid invoice is not money received.
+565. The saved document is the intended one, and any pending update is visible.
+566. Trace the record back to Sold
+567. My records → Sold → View invoice
+568. For a paid invoice, check the amount in Sold and open its invoice link again. Do not add its income by hand because the linked crop record exists.
+569. When an unpaid invoice is later paid in full, open that existing invoice or its Review payment button, check the date of receipt and save the update. Keep the same invoice number.
+570. To send another copy, reopen the saved invoice and look for Share as PDF or Print. Downloading a copy does not send it to the buyer. Check the destination yourself before sending.
+571. You can trace the sale, payment and document without making a duplicate copy.
+572. Only part of the payment has arrived.
+573. The invoice is for R120.00. The buyer pays R40.00. What should you do?
+574. Mark the invoice as fully paid
+575. R80.00 is still owed. Saying it is fully paid would misreport the payment; this screen does not track a partial balance.
+576. Keep a separate payment record and leave full payment unconfirmed
+577. Yes. Link the R40.00 evidence to the invoice and keep the R80.00 owed in a checked supporting record. Do not make a second produce sale.
+578. Make another R40.00 produce sale
+579. The payment pays part of an existing sale. It does not describe another delivery of produce.
+580. Keep the original evidence
+581. The invoice document is saved on this device. The linked crop sales row is not a store of all the document's details. Keep the source and a checked copy.
+582. A saved invoice or payment status alone does not confirm receipt, full profit or tax compliance. For deposits, corrections or questioned amounts, keep a checked supporting balance record and seek bookkeeping help.
+583. Find your sale before adding another
+584. Open Sold in your current workspace. Reopen the existing record when there is one.
+585. Open Sold
+586. Keep the cost and its evidence together.
+587. Record what you paid, check the cents, and reopen the cost and its supporting receipt.
+588. Picture of a grower thinking about costs with a notebook, calculator and produce on a household table
+589. Check the source before saving a cost · illustrative example
+590. Bring the receipt or payment record
+591. Have the item, the amount paid and the seller ready. Keep the real payment date. This form records today's income date and has no date picker for now.
+592. To practise, open the sample tour, choose Record work and sales, then Try now. Choose Costs. Use the sample details in a group lesson.
+593. Check the book before adding a cost
+594. My records → Costs → Write down costs
+595. Check the cost first in Costs. If it is already there, use Edit on that row to fix it. Do not add another copy of the one payment.
+596. For a new cost, choose Write down costs. The form has the heading Money you paid.
+597. You know whether you added a new payment or edited an existing cost.
+598. Copy the amount and describe the cost
+599. What for → Amount (R) → Seller → Category
+600. Write what the payment was for and enter the full amount, including cents. Compare it with the receipt or checked payment evidence.
+601. Seller and Category are not required. Choose them when you know them. If the amount is unknown, get evidence before saving; do not enter zero as a substitute.
+602. Keep the real date in your source record when entering an old cost. The app puts this entry in the month you type it.
+603. The description, amount and seller match your source record.
+604. Assign a cost only when you know
+605. Growing area of this item written → Crop these costs are for
+606. Choose a growing area only when the cost belongs to it. Beds and basic areas are both available for a really assigned cost; Unassigned leaves it unassigned.
+607. Fill in the Crop these costs are for only when the payment was for that crop alone. Leave blank for a whole-garden cost. Do not invent a split to make a crop look more profitable.
+608. Any assignment to a growing area or crop is supported by what the payment actually covered.
+609. Keep the original receipt photo
+610. Receipt photo → Take a photo or Choose a photo
+611. A receipt photo is not required. You can attach it and fill in the cost yourself. Check that important details are readable.
+612. Read this photo with Lima is an optional online assistant. Compare any suggestion, seller and total with the photo before saving. In the sample tour, Read receipt with Lima uses a corrected example.
+613. The original receipt photo stays on this device. A cost visible somewhere else does not mean its original photo is there too.
+614. Saved details match the source; you did not take the AI suggestion as evidence.
+615. Save, reopen and compare
+616. Write down costs → Costs → Edit or View receipt
+617. Choose Write down costs and read the final result. Find that one cost in Costs and compare its amount with your evidence.
+618. Use Edit to check or fix the fields, then Save changes. Use View receipt to open the receipt photo saved on this device. The sample tour may show a corrected receipt instead.
+619. If the receipt is missing, keep the original and check the device where you saved it. Do not make another cost just to retry the photo or pending saving.
+620. You can find the cost again, confirm its cents and identify where the original evidence is kept.
+621. The receipt total and the suggestion differ.
+622. Lima suggests an amount that does not match the readable receipt. What should you do?
+623. Keep the suggestion because it is automatic
+624. Automatic reading may be inaccurate. Compare the source and check the amount before saving.
+625. Check the receipt and fix the amount
+626. Yes. Use the checked source. If the total is unclear, get better evidence before recording the amount.
+627. Keep both amounts as separate costs
+628. That would risk counting one payment twice. Resolve the difference in one cost.
+629. A useful record is not the whole account
+630. Costs records payments, but the app cannot know which costs you have not entered. Sales minus recorded costs do not show full profit when information is missing.
+631. Keep dates and original evidence. Tools, loans and household money need separate treatment when preparing full accounts; use the Farm money work book with your bookkeeper instead of taking every money movement as a crop cost.
+632. Now record a checked cost
+633. Open Costs in your current workspace. Find the existing income first, or add a payment once to its source record.
+634. Open Costs
+635. Make an invoice. Keep the sale together.
+636. Make an invoice, check the payment and find the saved document again.
+637. Picture of a grower keeping a harvest record beside a produce basket
+638. Keep the produce and its record together · illustrative example
+639. Have your source record ready
+640. Bring the buyer, produce, quantity, unit, agreed price and dates. Check payment evidence before choosing paid. To practise, open the sample tour and choose Record work and sales.
+641. Use the sample details in a group lesson. Keep real customer and bank details private.
+642. Start with the right record
+643. My records → Invoice → Saved or New invoice
+644. If the invoice already exists, open Saved and choose that document. A buyer asking for another copy does not mean there is another sale.
+645. For a new document, read "What are you writing?" Choose New invoice, Produce already sold, or Invoice already written on paper.
+646. For an earlier sale or paper copy, answer whether the sale is already in my records. If so, link the correct existing recorded sale. Keep the original paper reference and issue date.
+647. You can say whether this is a new sale, an existing sale or another copy of a document.
+648. Check the buyer, units and price
+649. Payer → Item lines → Payment period
+650. Check your details as seller and choose the right buyer. On each line, check the produce, Quantity, Unit and Price per item. Use Add line for other produce.
+651. Use the price you agreed with the buyer. The suggested guide price is not an agreement. Kilograms, bags and bunches are different units; do not change the unit without checking quantity and price.
+652. Check the issue date, payment terms and buyer's reference. Compare the preview with your source record before saving.
+653. Buyer, produce, quantity, unit, agreed price and total match the source record.
+654. State whether payment has arrived
+655. Has the buyer paid? → Payment received on date
+656. Choose Not yet — payment is pending when payment is still owed. Choose Yes — fully paid only after full payment has been received and checked.
+657. For a paid invoice, check Payment received on date and the method of payment. The payment date can differ from the invoice issue date.
+658. A deposit is not full payment. This screen does not track partial balances. Keep a checked supporting record of deposits and amounts owed; do not mark the whole invoice paid to stand in for a deposit.
+659. Payment status and date of receipt describe what really happened.
+660. Save, then find it again
+661. Save invoice → Saved → Open one invoice
+662. Choose Save invoice and read the result. Then open Saved, find that one invoice and check it again.
+663. If the app says the document is saved on this device but the crop sales book still needs updating, reconnect and follow that message. Do not make another invoice as a retry.
+664. Kilogram rows of a paid invoice can appear in my records. Other units keep their original quantity; the app does not estimate their weight. Check the linked record before entering another sale.
+665. You can reopen the invoice and identify any saving or linking message that still needs attention.
+666. Check the copy before sharing
+667. Saved invoice → Share as PDF or Print
+668. On a saved invoice, choose Share as PDF or Print. Check the buyer, reference, dates, rows, total, payment status and payment details in the result.
+669. Downloading the PDF does not mean the buyer has received it. You choose the intended recipient when you are ready to send the real invoice.
+670. When an unpaid invoice is later paid in full, reopen that same invoice or use Review payment. Check the real date of receipt and save the update.
+671. You have the right document for the right buyer, and have not recorded the sale twice.
+672. A buyer wants another copy.
+673. You already saved the invoice yesterday. What should you do?
+674. Make a new sale and invoice
+675. That would risk counting the sale again. The buyer needs another copy of an existing document.
+676. Open the invoice in Saved
+677. Yes. Reopen that one invoice, check it and use Share as PDF or Print. Another copy is not a second sale.
+678. Mark an unpaid invoice as paid
+679. A request for a copy is not evidence of payment. Check payment separately and keep the status accurate.
+680. Know what the app keeps
+681. Invoices are kept on this device. Do not assume a full document is available on another device because a linked sale is joined. Keep the source record and a checked copy.
+682. The VAT/tax number field prints a reference; it does not calculate VAT or establish that the document meets tax invoice requirements. Check current SARS guidance and your bookkeeper.
+683. Current SARS VAT guidance
+684. Now try with your source record
+685. Open Invoice when you are ready to work in your current workspace. Check whether the sale or invoice already exists before adding anything.
+686. Bring a paper and earlier sales into the app
+687. Keep the old paper. Record a sale once.
+688. Bring an earlier sale into the app with its original evidence, date and reference.
+689. Picture of a grower keeping a written record beside a produce basket
+690. The source record comes first · illustrative example
+691. Have the paper and payment evidence ready
+692. Bring the original reference, issue date, buyer, goods, quantity, units and agreed prices. Check whether payment has arrived and on what date. Do not guess missing details.
+693. To practise, use the sample tour → Record work and sales → Try now. Use a made-up example clearly marked. Sample changes are deleted when you reload the whole page.
+694. Check the sale before entering it
+695. My records → Sold → Invoice → Saved
+696. Check both Sold and Saved. Compare reference, buyer, date, goods and amount. A paper copy and the app's income can describe the same sale.
+697. If the invoice already exists, reopen it in Saved or from its View link. Do not make a new sale because the buyer wants another copy.
+698. You know whether the sale and invoice are already recorded.
+699. Choose the right income type
+700. Sold → Past sale / paper invoice → What are you writing?
+701. Choose Invoice already written on paper to copy an existing paper invoice. Choose Produce already sold when writing an earlier sale without that paper invoice.
+702. Answer Is this sale already in My Records? Choose Yes — link existing sale if recorded. Choose No — write it with this invoice only after confirming it does not exist.
+703. Choose the income type and the answer on the existing sale before filling in anything else. Changing these choices starts a new form, so check all details again.
+704. The choice shows the source, not merely the page you happened to open.
+705. Link only the right recorded sale
+706. Yes — link existing sale → Written sale
+707. Choose the right existing sale in kilograms. Read its crop, weight, amount, buyer and date. Its recorded crop, kilograms, total amount and payment date stay together.
+708. An empty list is not evidence that the sale did not happen. It may already have an invoice or not be the right kilogram record. Check Saved and your original evidence. Do not choose a similar sale instead.
+709. If the app says the invoice is on another device, open it there. A linked sale can be joined without copying the full invoice document. Connect to the internet before linking a real existing sale.
+710. You found a directly matching sale, or stopped to resolve why it cannot be found.
+711. Keep the reference, date and units
+712. Original paper invoice reference → Invoice issue date → Item lines
+713. For a paper copy, enter the number and the original date of the paper. The app gives its copy its own invoice number. Keep both references; the customer's order reference is a separate field.
+714. Check the date against the look of the document before saving. Copy goods, quantity, units and agreed prices. The suggested price is not the price on your paper.
+715. Bunches, bags and kilograms are different units. Keep the unit as in the origin. Do not invent weight to make an old record go in.
+716. The preview agrees with the paper, including the original date and exact cents.
+717. Record what actually happened with payment
+718. Choose Yes — fully paid only when full payment is supported by checked evidence. Use the real date of receipt and method. The old invoice date does not show the buyer paid on that day.
+719. Choose Not yet — payment is pending when payment is still owed. The app does not keep a book of partial payments. Keep deposits and the remaining balance separately; do not mark a deposit as full payment.
+720. For a linked recorded sale, keep its recorded payment status and payment date. If they do not match your evidence, fix the original record instead of making a duplicate copy.
+721. The invoice date and payment date each describe their own event.
+722. Save and reopen one copy
+723. Save once and read the result. Find that one invoice again and compare paper reference, issue date, buyer, units, total and payment status.
+724. The issue date of a saved invoice is closed. Check it before saving; keep the original evidence and seek help for wrong records. Do not add another sale as a correction.
+725. If the message says the crop sales book still needs updating, reconnect and save that one invoice again. Keep the paper even if the app copy is already saved.
+726. You can link one source sale with its app document without counting its income twice.
+727. An old sale is already recorded.
+728. Your paper says the sale is already in my records. What should you do first?
+729. Enter a second sale with today's date
+730. That could double the income and change the story of when it happened. Find the existing record first.
+731. Reopen its invoice, or link the right existing sale
+732. Yes. Start by comparing the source. If the invoice exists, reopen it; otherwise use the supported existing-sale link.
+733. Link another sale with the same amount
+734. The same amount does not establish it is the same sale. Keep the evidence and resolve the missing mismatch.
+735. Keep gaps visible
+736. The app copy does not replace missing source evidence. It does not change units, establish tax compliance or fix an old wrong record by itself.
+737. To practise on your own: find one existing sample invoice and identify its issue date and payment status. Explain which income route you would use for a paper copy and when you should stop looking for a possible duplicate copy.
+738. Start by checking Sold
+739. Check for an existing sale before opening the earlier-sale or paper-copy sale form. Use the sample area until you can explain your choice.
+740. Review the payment and share the right invoice
+741. Check the payment. Send the right copy.
+742. Update the existing invoice with checked payment evidence and check the document before sharing it.
+743. Picture of a grower checking a notebook and calculator at a household table
+744. Check the amount against its evidence · illustrative example
+745. Bring the invoice reference and payment evidence
+746. Have the buyer, invoice number and payment evidence ready. A buyer's request for a copy is not payment evidence.
+747. Practise in the sample tour. Keep real bank and customer details private. Exporting for practice is finished by checking the copy; do not send it to a real buyer.
+748. Reopen the right invoice
+749. Invoice → Saved → Invoice number or Review payment
+750. Find the existing invoice by number, buyer, issue date and total. Choose its row or Review payment to open it.
+751. Check that you are editing that invoice. Do not start a New invoice to record payment for goods already invoiced.
+752. The document and buyer match the payment you are reviewing.
+753. Check the whole payment
+754. Compare the payment record with the invoice
+755. Check that money was really received and belongs to this invoice. Compare the amount and reference with your checked payment record.
+756. A promise, payment request or screenshot you have not confirmed is not enough to say fully paid. Resolve the difference before changing the status.
+757. This screen supports fully paid or not paid. For a deposit or partial payment, keep amounts, dates and balance in a separate supporting record. Do not mark the whole invoice paid.
+758. You can explain why the evidence supports full payment, or what remains unresolved.
+759. Update one document
+760. Has the buyer paid? → Payment received on date → Method of payment → Save invoice
+761. Once full payment has been checked, choose Yes — fully paid. Check Payment received on date and choose the method when known. Keep the original issue date.
+762. Save and read the result. Reopen that one invoice in Saved. Check the payment status, receipt date and method. The invoice number must stay the same.
+763. A sale linked to an existing record keeps its recorded payment details together. If these need correcting, resolve that original record instead of making a new invoice.
+764. One invoice now holds checked payment, without adding an extra sale.
+765. Check the money book once
+766. My records → Sold → View linked invoice
+767. Check the linked invoice and amount in Sold. Paid invoice income is included in the money book. Do not enter another quick sale of the same payment.
+768. Kilogram rows can give evidence of a crop sale. Bunches and bags keep their units; the app does not estimate their kilograms. Read the units beside the amount.
+769. If the invoice is saved on this device but its crop sales book update is pending, reconnect and save that one invoice again. Keep source evidence while you resolve the message.
+770. The money and units still describe the original sale, counted once.
+771. Check the result before sharing
+772. Review the screen document first: seller and buyer, both references where applicable, dates, goods, units, prices, total, payment status and bank details.
+773. Share as PDF and Print keep the current form before producing the result. Check your changes first. A paid document shows Invoice total and its Paid mark; an unpaid document shows Total due.
+774. Share as PDF opens the device's share page where supported, or downloads the PDF. Check the copy produced. If making the PDF reports an error, the invoice may already be saved; follow the message and try Print instead of making a duplicate copy.
+775. You checked the right document, not just pressed the export button.
+776. You choose the recipient
+777. Check the copy → Choose the intended recipient
+778. For a real invoice, check the recipient and attachment before sending using the app you chose. Downloading or printing does not mean the buyer has received it.
+779. If the buyer needs another copy, reopen and share that one invoice. Keep the checked copy with the source records.
+780. The full invoice stays on its original device. Seeing a sale on another device does not show that the full document is there too.
+781. You can identify which copy was sent, to whom, and which invoice it is.
+782. Only part of the invoice was paid.
+783. The buyer paid a deposit. Which step keeps the record honest?
+784. A deposit is not full payment. That would hide the amount still owed.
+785. Keep the partial payment and balance in a supporting record
+786. Correct. The app has no book of partial payments. Keep the evidence separately and do not mark full payment until it is supported.
+787. Make another sale for the deposit
+788. A deposit toward an existing invoice is not a second sale. Keep it linked in your supporting payment record.
+789. A paid label is a record, not independent evidence
+790. The app depends on the payment details you put in. It does not check your bank account or establish that the change has arrived. Keep evidence supporting your update.
+791. To practise on your own: reopen one paid and one unpaid sample invoice. Explain the date and status of each, and identify the document and recipient you would check before sharing. Do not send the samples.
+792. Find the invoice you want to review
+793. Open Saved, compare the reference and compare the payment evidence. Trace one record by reviewing and sharing.
+794. Read the charts and check the evidence
+795. Read the chart. Check the story.
+796. Choose the right period, separate plans from records and trace the number back to its source.
+797. Picture of a grower reviewing a notebook and calculator in a household garden
+798. Keep the record beside the decision · illustrative example
+799. Start with the right workspace
+800. Open My records, then Charts. Check whether you are using demonstration records or your own farm. For a sign-in request, Review with sample records opens a corrected example without changing the real farm.
+801. In your own records, have a receipt, sale or harvest income to compare. Read loading, offline and saving messages before concluding a missing number means zero. Keep customer and bank details private in group practice.
+802. Choose the window on this chart
+803. Charts → Cash flow → 6m, 12m or 24m
+804. The buttons choose the number of months shown by the cash flow graph. Read the dates on that graph. Tap a month to check money in, money out and the running total.
+805. The harvest graphs card has its own window buttons. On a wide screen, the money page has its own Month, Season and Year buttons. Changing one control does not set all the other views in that space.
+806. On a phone, the top summary says this month. Read the period beside each card below. Check the labels again after changing screen size or reopening the page.
+807. You can name the period of the number you are reading.
+808. Explain the running total
+809. Cash flow → Money in, money out and the running total's lower band
+810. The running total starts at zero at the left edge of the chosen window. It adds recorded money in and removes spent amounts across those months. It is not your bank balance, since it has no opening bank balance.
+811. Balance and Money remaining recorded describe the included records. Missing costs, stock, equipment treatment, debt and other money can change the whole-business result. Do not call one chart a full profit and loss report.
+812. A cut mark means a long bar was shortened so other months are readable. Read the amount that goes with it instead of guessing by its length. The two bands use different scales: monthly movement and its running total answer different questions.
+813. You can explain why a running total below zero does not by itself confirm an overdrawn account.
+814. Read what was harvested, sold and left
+815. Harvest graphs → Harvested & sold → Read the month and orchard setting
+816. Check the chosen window and whether Orchard in or Orchard out is shown. That setting changes which kilograms are counted; it does not remove all those activities from the money amounts.
+817. What is left is the remainder of what was harvested minus what was sold in the records. It does not identify how much was eaten, given away, stored, used elsewhere or lost. Keep those destinations separately when needed.
+818. A dotted edge may mark a month with more sales than recorded as harvested. Read the description and look for missing harvests or sales from earlier stock. Do not enter an invented harvest to make the bars agree.
+819. You know the units, the included produce and what the remainder cannot explain.
+820. Compare the plan with the relevant facts
+821. Harvest graphs → Plan and actual
+822. This view puts the harvest recorded this year beside the full-cycle estimate of one crop on the planned land. The estimate is not automatically a goal for the whole calendar year.
+823. Check the crop, mapped growing area and cycle stage. A short real bar may mean the cycle is not finished or records are missing; it is not evidence that production is lost. A big bar also needs fair timing and area comparison.
+824. The plan comes from mapped beds of the main saved site where available. Part of an area or a whole section is not a bed area. Orchard produce has no bed cycle estimate comparable here; read the separate description.
+825. You can explain another reason bars differ before judging the planting result.
+826. Check what is included in the review by area
+827. Review of your growing area → Read the period, mapped m² and assigned items written
+828. This card uses recorded sales minus assigned costs and the current mapped area. Its square metres are not a previous measure of land harvested.
+829. Read the notes of assigned and unassigned costs. Extra costs or missing work are not silently included. Crop performance may say Cost per m²: not attributed instead of giving the crop's full profit.
+830. Compare the same period, units and growing area before reaching a conclusion. Keep uncertain or missing prices visible and check the map and records beneath.
+831. You can name the included cost, the cost left out or unknown, and the area used.
+832. Trace the number back to evidence
+833. My records → Sold, Costs or Harvested → Reopen the source record
+834. Choose one amount or harvest and find its record. On a wide screen, the money page gives a list of dated entries with invoice and receipt links. Reopen the same document instead of adding another income.
+835. The harvest and cost recording forms set the entry date. Paid invoices use the recorded payment date. Check the real source dates and keep evidence of late entry; do not assume each chart month is the date the work happened.
+836. A paid invoice has a single payment date for its whole amount. The app cannot show the full history of partial payments there. Keep separate evidence of partial payments and do not mark a deposit as full payment.
+837. Write one question that evidence can answer and one gap still to resolve. Follow the harvest, cost or invoice guide if real supported income needs fixing.
+838. You can link a number to its source and explain remaining uncertainty without inventing income.
+839. The running total is below zero.
+840. The chosen cash flow window shows −R50.00. Does that confirm that the bank account is overdrawn?
+841. Yes, the chart is a bank balance
+842. The running total starts at zero for the chosen months. Without an opening balance and all account movements, it cannot be taken as a bank balance.
+843. No; check the opening balance and complete account evidence
+844. Correct. The chart shows the net movement of the included records. Reconcile the account separately before deciding what money is available.
+845. Add an extra sale to bring it above zero
+846. Do not invent a sale to change the chart. Investigate the period, missing records and original evidence.
+847. A useful view still has limits
+848. Charts help you investigate recorded money, harvests and planning ideas. They do not produce a full balance sheet, stock value, bank reconciliation or tax return.
+849. Keep checked supporting plans for amounts the app cannot track, and seek suitable bookkeeping help for full accounts. A map, chart or export does not show profit or approval of money.
+850. Choose one number and explain it
+851. Open Charts in your current workspace. Read its period, check one month and trace the number back to its source. Use sample records to practise.
+852. Open Charts
+853. Export records and prepare evidence
+854. Take a checked copy of your records.
+855. Choose the right period, check the file and keep the evidence behind its numbers.
+856. Keep numbers beside their evidence · illustrative example
+857. Bring records and supporting papers
+858. Have the period you need, your invoices, receipts and payment records ready. First check which farm and account you are using.
+859. Practise with the sample tour. Its numbers belong to a sample farm. Keep practice files separate from your records and do not send them to a lender or buyer.
+860. Choose what you need to take
+861. My records → Charts or Harvested
+862. Charts can export a CSV: a table a spreadsheet app can open. It contains rows with dates of harvest, sale, paid invoice and cost for the chosen period.
+863. Harvested has Records prepared for a lender: a PDF summary of entered records. Useful for discussing those records. It is not a loan score or loan approval.
+864. No single file is a full copy of the app's storage. Keep original invoices, receipt photos and other evidence separately.
+865. You know whether you need a row-by-row table, a summary or both.
+866. Check the export period
+867. Charts → Money page → month, season or year
+868. On a wide screen, the money page has month, season and year buttons. The export uses that sheet's choice: the current calendar month, current season or current calendar year.
+869. The app arranges seasons as September–November, December–February, March–May and June–August. This is a report window, not your crop's planting season.
+870. On a phone or small screen, Export this month (CSV) exports the current calendar month. The chart buttons 6m, 12m and 24m do not change that export. Use the wide money page when you need its other periods.
+871. You can name the months you want the file to include before exporting.
+872. Open and check the table
+873. Export or Export this month (CSV) → Open the exported file
+874. Find and open the file on your device. Check the Date, Description, Qty, In, Source, Out and Check columns. If the file is missing, export again after checking the browser's download controls. Just clicking Export does not show that you have a usable copy.
+875. Compare each row with its saved invoice, harvest or receipt. Keep their units: a bunch is not a kilogram. A harvest row records produce, not money received. Paid invoices use the recorded payment date; unpaid invoices are not money income here.
+876. Read any Check warning before adding up amounts. A possible duplicate needs investigation against its source. If there are no rows, check the period and saved records before concluding nothing happened.
+877. You can trace a row, state its date and units and identify any warning.
+878. Read the summary's own dates
+879. Harvested → Records prepared for a lender → View summary → Export records prepared for a lender
+880. View summary shows monthly income, costs and balance. The money summary covers up to twelve months including the current month, starting no earlier than the first dated sale, paid invoice or cost in your records.
+881. Export records prepared for a lender makes a PDF. Depending on the device, it downloads or opens the share page. Keep a copy and check the whole page, including the farm name, the date of making and Covers dates.
+882. The harvest and sales record can cover different dates from the monthly money summary. Read the dates in each section. A gap or zero in these records does not show that nothing happened outside the app.
+883. You can say which dates each section covers and whose records it shows.
+884. Keep evidence and gaps together
+885. Compare what was exported with the source records
+886. Keep checked invoices, receipts and payment records beside exported files. The CSV does not contain the original receipt images or full invoice documents.
+887. Write down missing costs, unpaid amounts and records entered later. Harvest and cost forms use the entry date, so also keep the real event date and your supporting papers.
+888. Income minus entered costs is not full profit or your bank balance. The app cannot include costs you have not recorded, or check your bank. Explain what is missing instead of filling gaps with guesses.
+889. A person helping you can trace the numbers to evidence and see what is still unknown.
+890. Keep the checked copy and choose who sees it
+891. Check files → Keep a dated copy → Review the intended recipient
+892. CSV dates show day and month, without the year. Give your saved copy the farm name and full period, including the year, so it stays clear later. Keep the original exported file unchanged; make a separate working copy if you want to add notes in a spreadsheet.
+893. For real records, check what your bookkeeper or advisor needs and choose the recipient yourself. Review attachments and private details before sending. Saving or downloading does not send the file to them.
+894. In this practice case, stop with your checked sample copy. Explain its limits; do not enter sample records as your own.
+895. You have a usable copy with its period and sources, and you control who receives it.
+896. The chart shows twelve months.
+897. On a phone, you choose Export this month (CSV). Which period should you check in the file?
+898. The twelve months visible on the chart
+899. The chart window and the small-screen export are different. This button exports the current calendar month.
+900. The current calendar month
+901. Correct. Check the rows and their dates. For the current season or year, use the wide money page's period choice together with Export.
+902. All records entered by the farm for all periods
+903. This export is by period; it is not a full copy of storage. Keep source records and check the real size of the file.
+904. A clear summary still needs its source records
+905. Exported items summarise entered records. They do not confirm payment, prove full accounts or support loan eligibility. Keep evidence and unresolved questions available to the person helping you.
+906. To practise on your own: in the sample tour, compare the CSV period and View summary. Open the exported copy, trace one number back to its source and name one thing the file does not contain. Stop before sharing.
+907. Choose the period you want to check
+908. Open Charts to get the CSV, or switch to Harvested to get Records prepared for a lender. Start with sample records if you are practising.
+909. Keep field evidence and check the report
+910. Keep the report linked to the land.
+911. Choose the right site, keep the source evidence and check what the saved report really contains.
+912. Picture of two growers looking together at a site plan beside a household garden
+913. Look at the site together before trusting the plan · illustrative example
+914. Bring what you saw, dates and original records
+915. Have the site name, visit notes, photos and any original assessment reports ready. Know when and where each record was made. Use only images and information you have permission to include.
+916. To practise, open the sample tour and choose Turn site evidence into a report. Its images, household interview and land prices are examples. Do not use them as evidence about your own land.
+917. Start with the right saved site
+918. Saved sites and reports → Saved sites → Open the site and make a report
+919. Compare the name and map location with the place you want to describe. Open that site's report workspace, then open Improve this report.
+920. If the site is not saved, name it and use Save site before attaching evidence. A familiar name is not enough if the map location is wrong.
+921. The checklist shows whether records exist. It does not show whether they are correct, checked or complete.
+922. The report workspace is for the site you visited, and you know which evidence is still missing.
+923. Keep what you saw separate from plans
+924. Improve this report → Add site photos and Complete or review survey
+925. Use Add site photos to include clear views of the real place. Keep original files with their dates, places and notes. The app keeps small copies; it is not your only photo storage.
+926. Review the site survey and household survey. Write down what was seen or reported, and identify what you still need to check. Do not invent an answer to fill a gap.
+927. Review again Boundary and size, Site design and Planting plan. A drawn tank, bed or crop may be planned work. Check on the ground before saying it is installed, planted or harvested.
+928. You can separate what was really seen, what was proposed and what is pictured.
+929. Enter results next to their source
+930. Add soil test results or Add water test results → Results and sample details → Save test results
+931. Keep the original lab report. The test folder accepts its PDF or a clear photo, but uploading a file does not make the app read its results automatically.
+932. Enter the sampling date, location or sample ID, lab, results, units and any suitable method or comments in Results and sample details. Copy these from the source and compare them with it before choosing Save test results.
+933. Reopen one test folder to check the saved entry. The file name itself is not a measured result. Leave missing results as unknown. Land and climate area layers are context, not a test of your sample.
+934. Each entered result has a source, unit and sample you can identify.
+935. Review the information before producing
+936. Improve this report → Review settings and the included map → Make report
+937. Check source records, chosen sections, language, names and depth. Review the maps chosen in the report. A map saved on another device may not be available here.
+938. Make report gives advice from the information available. Read it against your real site and records. Investigate conflicts or missing evidence before acting on the advice.
+939. If you add evidence after the report was written, the earlier text stays as it was. Use Make a new report when you need updated advice. Changing the screen, print layout or summary view does not rewrite the whole report.
+940. You know which information supports the advice and which questions still need an answer.
+941. Keep a version you can return to
+942. Save → Check the result → Saved sites and reports → Saved reports
+943. Choose Save and read the result. If the app says Not saved or reports a saving problem, keep the report open and keep a copy while you resolve it.
+944. Use the report's Back button to go back. In Saved sites and reports, open Saved reports or use Read latest saved report on the site card. Check the site, saved date and text without regenerating it.
+945. An old saved report is a snapshot of a certain time. The current evidence checklist and photos may be newer than its text. Read those labels and dates before assuming the advice used new evidence.
+946. You can reopen the intended version and say what has changed since it was written.
+947. Check the copy before sharing
+948. Export PDF → Open the file → Compare it with source records
+949. Choose the view type and image options you need. On a phone, open View and print options to find these. Then use Export PDF and open the saved file.
+950. Check the whole page: site name, dates, measurements, units, maps and images included, source labels and gaps. Check that text and tables are readable. Keep the original evidence separate; the report is not a full copy of storage.
+951. Keep a dated copy. Before sending a real report, check the intended recipient and any household, face or exact-location details it contains. Downloading the file does not mean someone else has received it.
+952. You checked the correct version, understand its limits and know who should see it.
+953. A test PDF has been uploaded.
+954. Does an attached file mean its results are ready for use by the report?
+955. Yes, all results are read automatically
+956. This test folder keeps the file but does not automatically read its contents. You still need to enter and check the relevant results.
+957. Enter and check results, units and sample details
+958. Correct. Use the original report as the source, keep the entered results and reopen the folder to check them.
+959. Use sample farm prices for now
+960. Sample prices are designed for practice. They say nothing about your land. Leave your unknown results missing until you have evidence.
+961. Practise the evidence package, and check the site report
+962. On the sample farm, change Mentor notes and follow-up to a clearly marked practice note. Use Save edits, then Download evidence report. Open the file to find this note and the label of the sample images. Stop before sharing.
+963. That practice evidence package is different from the full Site Analysis Report. Its edited images are not a photo of a real garden, and its land prices are not lab results. The practice workspace is deleted when you reload; it is not a place to keep real records.
+964. To practise on your own: describe one recorded fact, one proposal and one gap. Then save and reopen the sample site report, check its date and explain why adding a later photo does not show its earlier advice has been updated.
+965. Start with a site you can identify
+966. Open your saved sites and review the evidence checklist. Use the sample tour first if you are practising.
+967. Open saved sites and reports
+968. Study offline, practise and get guidance
+969. Take your lessons home.
+970. Save the available lessons, check them without connection and continue learning at your own pace.
+971. Picture of two growers studying together a site plan beside a household garden
+972. Study together, then practise in your own place · illustrative example
+973. Prepare on the device you will use
+974. Start while connected, with enough data, battery and empty storage. Use the usual browser or installed app you want to go with. Stay signed in to your course work.
+975. Use the sample tour to practise. Its progress is discarded. Do not keep your real course evidence in the sample workspace. Ask your facilitator which module and practical activity you are working on.
+976. Choose lessons and language
+977. My lessons → Open the module, or Study offline
+978. Open the module you need to find its download control. Study offline offers the available lessons together. It does not open modules you have not been given access to.
+979. Check the language shown for slides and narration. Some translations are not available yet, so the app may show English instead. Downloading does not create a missing translation.
+980. Read the download size before starting. Standard uses less data where a higher-quality version is offered. Choose what suits your connection and storage.
+981. You know which module, language and download size you are choosing.
+982. Wait for the download to finish
+983. Download → Check On this phone
+984. Keep the page open while the files arrive. If you must stop the download, use Stop. Saved files can already be used when you finish downloading later.
+985. Finish download means some files are still missing. Reconnect and use this button, then check again. A progress bar or a few working slides does not mean the whole module is ready.
+986. Check its module message that says On this phone. If you downloaded one module, the whole course control may show files missing from other modules. Read which package each message describes.
+987. The module you need says On this phone, with no unfinished download for that package.
+988. Try it before leaving the signal
+989. Open the module online → Disconnect briefly → Reopen My lessons
+990. While you are somewhere you can reconnect, open the module once. Then turn off your connection briefly and reopen My lessons in the same browser or app.
+991. Check that the slide image is loading. Open Read this slide to read its text. Choose Play to check narration. Use Stop when you want to read silently; Back and Next start narration on the chosen slide.
+992. If a page, image or voice is missing, reconnect and check the download and the device's storage. Resolve the gap before leaving. Repeat this check when changing devices or finding saved files disappear.
+993. You really reopened the lesson and used its picture, text and voice without connection.
+994. Read, listen and explain it yourself
+995. Open the lesson → Read or listen → Try its questions
+996. The slide display and the lesson list are different ways into this topic. Open the lesson named below the slides to find the reading and its questions.
+997. Read the answer after answering. If the idea is unclear, return to the explanation and explain it in your own words. Use the practical activity to link it to your place.
+998. Downloading a package does not mark the module complete or submit its practical task. Mark done is a sign of your progress; it is not evidence that the facilitator has assessed your work.
+999. You can explain the idea and the practical activity still needed, not just notice the slide.
+1000. Keep your practical evidence
+1001. Submit this module → Read the task and self-check prompts
+1002. Read the real task before taking the photo. Keep the original photo and any notes on your device. Use evidence of your own work, with permission of all people shown.
+1003. The submission form needs a photo and offers an optional voice note. Adding a file only prepares it; Submit sends it. Reconnect before submitting to check the result. An error is not confirmation that your facilitator received it.
+1004. Submit again replaces the photo and voice note of the earlier submission. Check which version you want to send and keep the originals. If you need help, show your facilitator the task, your attempt and the question you still have.
+1005. Your evidence is of the task, and you separate the edited file from a confirmed submission.
+1006. Check what needs connection
+1007. Reconnect → Read saving messages → Offline and syncing when needed
