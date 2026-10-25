@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Sprout, Users, GraduationCap, BarChart3, Building2, type LucideIcon } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import { useRouter } from 'next/navigation';
 import { useRoleNavigation, startRolePreview } from '@/lib/use-role-navigation';
 import { visibleRoleTabs } from '@/lib/role-navigation';
@@ -20,7 +21,7 @@ const ROLES: { key: string; labelKey: string; Icon: LucideIcon; href: string; re
 const ROLE_ALIASES: Record<string, string> = { facilitator: 'mentor' };
 
 export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { current: string; inMenu?: boolean; onNavigate?: () => void }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const router = useRouter();
   const { accountRole, navigationRole, sample } = useRoleNavigation();
   const visible = visibleRoleTabs(navigationRole);
@@ -38,11 +39,11 @@ export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { 
           : r.ready
           ? { background: 'transparent', border: '1px solid transparent', color: 'var(--text-primary)' }
           : { background: 'transparent', border: '1px solid transparent', color: 'var(--text-secondary)', opacity: 0.5, cursor: 'not-allowed' };
-        const ariaLabel = `${t(r.labelKey)}${active ? ' (current)' : ''}`;
+        const ariaLabel = active ? inlineTemplate(lang, '{label} (current)', null, { label: t(r.labelKey) }) : t(r.labelKey);
 
         if (!r.ready) {
           return (
-            <span key={r.key} className={base} style={style} title="Coming soon" aria-label={`${t(r.labelKey)} (coming soon)`}>
+            <span key={r.key} className={base} style={style} title={inlineText(lang, 'Coming soon')} aria-label={inlineTemplate(lang, '{label} (coming soon)', null, { label: t(r.labelKey) })}>
               <r.Icon size={16} />
               <span data-header-label className={inMenu ? undefined : 'hidden md:inline'}>{t(r.labelKey)}</span>
             </span>
@@ -57,7 +58,7 @@ export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { 
             style={style}
             aria-label={ariaLabel}
             aria-current={active ? 'page' : undefined}
-            title={isAliasMatch ? 'Design map is the Mentor toolkit' : undefined}
+            title={isAliasMatch ? inlineText(lang, 'Design map is the Mentor toolkit') : undefined}
           >
             <r.Icon size={16} />
             <span data-header-label className={inMenu ? undefined : 'hidden md:inline'}>{t(r.labelKey)}</span>
@@ -65,9 +66,9 @@ export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { 
         );
       })}
       {(accountRole === 'ngo' || accountRole === 'admin') && <label className="font-sans text-sm" style={{ padding: '4px 8px', color: '#243d2d' }}>
-        <span className="sr-only">View as with demonstration records</span>
-        <select aria-label="View as with demonstration records" value="" onChange={e => { const target = ROLES.find(r => r.key === e.target.value); if (target && startRolePreview(target.key)) { onNavigate?.(); router.push(target.href); } }} style={{ minHeight: 44, maxWidth: 180, background: 'white', color: '#243d2d', borderRadius: 8, padding: 6 }}>
-          <option value="">{sample ? 'Switch view…' : 'Switch practice view…'}</option>
+        <span className="sr-only">{inlineText(lang, 'View as with demonstration records')}</span>
+        <select aria-label={inlineText(lang, 'View as with demonstration records')} value="" onChange={e => { const target = ROLES.find(r => r.key === e.target.value); if (target && startRolePreview(target.key)) { onNavigate?.(); router.push(target.href); } }} style={{ minHeight: 44, maxWidth: 180, background: 'white', color: '#243d2d', borderRadius: 8, padding: 6 }}>
+          <option value="">{sample ? inlineText(lang, 'Switch view…') : inlineText(lang, 'Switch practice view…')}</option>
           {ROLES.map(r => <option key={r.key} value={r.key}>{t(r.labelKey)}</option>)}
         </select>
       </label>}
