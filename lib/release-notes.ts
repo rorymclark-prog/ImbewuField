@@ -41,6 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '23 October 2026', sha: 'dc9ade0c', changes: ["Production PDF charts now have unreviewed translations in four languages.", "Crop screens and long-term production PDFs still have English text."], tour: [{"title": "Read translated production PDF charts", "where": "Production plan → Share or print", "detail": "Open the detailed reference PDF in your language. Its graph text is an unreviewed draft.", "href": "/facilitator/crops"}, {"title": "Check quantities and missing records", "where": "Farm → Production plan", "detail": "Review monthly records in their own units. A missing quantity is unknown, not zero.", "href": "/facilitator/crops"}] },
   { when: '23 October 2026', sha: 'dc9ade0c', changes: ["Crop calendars and field work exports now have unreviewed translation drafts.", "Production charts and some crop screens still use English."] },
   { when: '22 October 2026', sha: 'c3ddc207', changes: [
     "Site PDFs now keep native letters and have unreviewed translated labels.",

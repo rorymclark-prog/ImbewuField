@@ -1,0 +1,54 @@
+{
+  "reason": "Observed native 12-month quantity table split ten rows and two rows, isolating its missing-record explanation. Preserve the source occurrence, not a desired page count.",
+  "sourcePdfSha256": "49b1577ddb3ccc7af98bfc40716abf25317cccd40cdfb40a22af5232496e79e0",
+  "rows": [
+    {
+      "month": "Okt 2026",
+      "page": 3
+    },
+    {
+      "month": "Nov 2026",
+      "page": 3
+    },
+    {
+      "month": "Dis 2026",
+      "page": 3
+    },
+    {
+      "month": "Jan 2027",
+      "page": 3
+    },
+    {
+      "month": "Feb 2027",
+      "page": 3
+    },
+    {
+      "month": "Mas 2027",
+      "page": 3
+    },
+    {
+      "month": "Eph 2027",
+      "page": 3
+    },
+    {
+      "month": "Mey 2027",
+      "page": 3
+    },
+    {
+      "month": "Jun 2027",
+      "page": 3
+    },
+    {
+      "month": "Jul 2027",
+      "page": 3
+    },
+    {
+      "month": "Aga 2027",
+      "page": 4
+    },
+    {
+      "month": "Sep 2027",
+      "page": 4
+    }
+  ]
+}

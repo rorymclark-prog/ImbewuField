@@ -1,6 +1,14 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Read translated production PDF charts": "Funda amashadi okukhiqiza e-PDF ahunyushiwe",
+  "Open the detailed reference PDF in your language. Its graph text is an unreviewed draft.": "Vula i-PDF yereferensi enemininingwane ngolimi lwakho. Umbhalo wamashadi ayo usaluhlaka olungakabuyekezwa.",
+  "Check quantities and missing records": "Hlola amanani namarekhodi angekho",
+  "Review monthly records in their own units. A missing quantity is unknown, not zero.": "Buyekeza amarekhodi enyanga ngamayunithi awo. Inani elingekho alaziwa, akuwona uziro.",
+  "Production plan → Share or print": "Uhlelo lokukhiqiza → Yabelana noma phrinta",
+  "Farm → Production plan": "Ipulazi → Uhlelo lokukhiqiza",
+  "Production PDF charts now have unreviewed translations in four languages.": "Amashadi okukhiqiza e-PDF manje anokuhumusha okungakabuyekezwa ngezilimi ezine.",
+  "Crop screens and long-term production PDFs still have English text.": "Izikrini zezitshalo nama-PDF okukhiqiza kwesikhathi eside kusenombhalo wesiNgisi.",
   "Crop calendars and field work exports now have unreviewed translation drafts.": "Amakhalenda ezitshalo nokuthunyelwa komsebenzi wensimu manje kunokuhumusha okusaluhlaka okungakabuyekezwa.",
   "Production charts and some crop screens still use English.": "Amashadi okukhiqiza nezinye izikrini zezitshalo zisasebenzisa isiNgisi.",
   "Offline saving and sending messages now have drafts in all four languages.": "Imilayezo yokugcina nokuthumela ungaxhunyiwe manje inohlaka kuzo zonke izilimi ezine.",

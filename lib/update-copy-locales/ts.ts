@@ -1,6 +1,14 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Read translated production PDF charts": "Hlaya tichati ta vuhumelerisi ta PDF leti hundzuluxiweke",
+  "Open the detailed reference PDF in your language. Its graph text is an unreviewed draft.": "Pfula PDF ya xisekelo lexi nga ni vuxokoxoko hi ririmi ra wena. Tsalwa ra tichati ta yona i mpfapfarhuto lowu nga si kambisisiwaka.",
+  "Check quantities and missing records": "Kambela tinhlayo ni tirhekhodo leti kayivelaka",
+  "Review monthly records in their own units. A missing quantity is unknown, not zero.": "Kambisisa tirhekhodo ta n’hweti hi tiyuniti ta tona. Nhlayo leyi kayivelaka a yi tiveki, a hi ziro.",
+  "Production plan → Share or print": "Kungu ra vuhumelerisi → Avelana kumbe kandziyisa",
+  "Farm → Production plan": "Purasi → Kungu ra vuhumelerisi",
+  "Production PDF charts now have unreviewed translations in four languages.": "Tichati ta vuhumelerisi ta PDF sweswi ti ni vuhundzuluxi bya tindzimi ta mune leswi nga si kambisisiwaka.",
+  "Crop screens and long-term production PDFs still have English text.": "Swikirini swa swibyariwa ni ti-PDF ta vuhumelerisi bya nkarhi wo leha swa ha ri ni tsalwa ra Xinghezi.",
   "Crop calendars and field work exports now have unreviewed translation drafts.": "Tikhalendara ta swibyariwa ni ku humesa mintirho ya masimu swi na vuhundzuluxeri bya mpfapfarhuto byo ka byi nga si kamberiwa.",
   "Production charts and some crop screens still use English.": "Tichati ta vuhumelerisi ni swikombiso swin’wana swa swibyariwa swa ha tirhisa Xinghezi.",
   "Offline saving and sending messages now have drafts in all four languages.": "Swiviko swa ku hlayisa handle ka vuhlanganisi ni ku rhumela sweswi swi ni mipfapfarhuto hi tindzimi hinkwato ta mune.",

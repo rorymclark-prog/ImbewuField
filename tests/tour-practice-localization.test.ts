@@ -100,10 +100,16 @@ for(const lang of allDrafts)test(`${lang}: the actual staff role selector keeps 
 });
 
 import { loadUpdateCopy, updateDescription } from '../lib/update-copy.ts';
-import { visibleNotes, visibleUpdateTour } from '../lib/release-notes.ts';
-test('the announced practice change retains native source-bound release text and a real guide action in every language',async()=>{
- assert.ok(visibleNotes().includes(packet.releaseRows[0].english));assert.ok(visibleUpdateTour().some(s=>s.href==='/samples'&&s.title===packet.releaseRows[1].english));assert.ok(visibleUpdateTour().length>=2);
- for(const lang of allDrafts){const copy=await loadUpdateCopy(lang);for(const row of packet.releaseRows)assert.equal(updateDescription(copy,row.english),row[lang]);}
+import { RELEASE_NOTES, MAX_SHOWN, visibleNotes, visibleUpdateTour, type ReleaseNote } from '../lib/release-notes.ts';
+test('practice announcements keep their native source and working guide after newer releases leave the five-line banner',async()=>{
+ // New PDF notes legitimately displaced this historical announcement. Pinning it in
+ // today's capped banner made every later release fail without testing its real promise.
+ const announcement=RELEASE_NOTES.find(note=>note.changes.includes(packet.releaseRows[0].english));assert.ok(announcement,'the original announcement must remain in release history');
+ function assertPractice(note:ReleaseNote){assert.ok(visibleNotes([note]).includes(packet.releaseRows[0].english));assert.ok(visibleUpdateTour([note]).some(stop=>stop.href==='/samples'&&stop.title===packet.releaseRows[1].english),'the announcement must retain its real practice action');}
+ assertPractice(announcement);assert.throws(()=>assertPractice({...announcement,tour:[]}),/real practice action/,'deleting the action must still fail');
+ const newer:ReleaseNote={when:'newer test release',changes:Array(MAX_SHOWN).fill('Newer test item')};assert.equal(visibleNotes([newer,announcement]).length,MAX_SHOWN);assert.ok(!visibleNotes([newer,announcement]).includes(packet.releaseRows[0].english));assert.ok(!visibleUpdateTour([newer,announcement]).some(stop=>stop.title===packet.releaseRows[1].english),'an old guide must not be attached to unrelated newer notes');
+ assert.ok(visibleNotes().length<=MAX_SHOWN);assert.ok(visibleUpdateTour().length>=2);
+ for(const lang of allDrafts){const copy=await loadUpdateCopy(lang);for(const row of packet.releaseRows)assert.equal(updateDescription(copy,row.english),row[lang]);for(const source of [...visibleNotes(),...visibleUpdateTour().flatMap(stop=>[stop.title,stop.where,stop.detail])])assert.notEqual(updateDescription(copy,source),source,`${lang}: current announced copy must resolve natively`);}
 });
 
 test('native role wording never changes a role key, icon, readiness flag, destination or mentor alias',()=>{

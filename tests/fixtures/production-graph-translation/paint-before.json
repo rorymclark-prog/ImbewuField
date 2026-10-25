@@ -1,0 +1,600 @@
+{
+  "rows": [
+    {
+      "id": "unknown",
+      "bars": [
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        }
+      ]
+    },
+    {
+      "id": "empty-records",
+      "bars": [
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        }
+      ]
+    },
+    {
+      "id": "recorded",
+      "bars": [
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 66.5
+        },
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 76
+        }
+      ]
+    },
+    {
+      "id": "repeat",
+      "bars": [
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 66.5
+        },
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 76
+        }
+      ]
+    },
+    {
+      "id": "hidden",
+      "bars": [
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 66.5
+        },
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 76
+        }
+      ]
+    },
+    {
+      "id": "conflict",
+      "bars": [
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 32
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 66.5
+        }
+      ]
+    },
+    {
+      "id": "invalid-records",
+      "bars": [
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        }
+      ]
+    },
+    {
+      "id": "overflow",
+      "bars": [
+        {
+          "shape": "rounded",
+          "width": 25.072799999999997,
+          "height": 64
+        },
+        {
+          "shape": "stack",
+          "width": 25.072799999999997,
+          "height": 64
+        }
+      ],
+      "error": "Invalid arguments passed to jsPDF.text"
+    }
+  ]
+}
