@@ -41,6 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '25 October 2026', sha: '8d2e1a9a', changes: [
+    'Home and Invoice open faster and no longer redraw the day after an update.',
+    'On a computer the Lima button sits bottom-right and no longer hides buttons.',
+    'The weather card reads in isiZulu (as a draft) and stays clear in dark mode.',
+  ], tour: [{ title: 'Check the weather card',
+    where: 'Home', href: '/home',
+    detail: 'Rain totals, frost and heat warnings now follow dark mode and your language.',
+  }] },
   { when: '24 October 2026', sha: '0858cf13', changes: [
     'Exchange crop chips and the Home task board now read in isiZulu as well.',
     'Records, invoices and the farm data panel use one green and plain, readable controls.',

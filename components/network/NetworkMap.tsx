@@ -511,15 +511,19 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
              * ChatWidget FAB's resting band only while collapsed — opening it grew the panel
              * upward (bottom-anchored) straight into that band. Top-right, below the
              * NavigationControl's zoom buttons, grows downward instead, so it can never land
-             * on the FAB at any expansion height, on any route that mounts it there. */
+             * on the FAB at any expansion height, on any route that mounts it there.
+             * w22-08: the FAB now parks bottom-RIGHT on desktop, under this legend; the
+             * isiZulu legend at 1024×768 grew down onto it. The height stops at the clearance
+             * ChatWidget publishes (0 when the FAB is hidden) and the legend scrolls inside. */
             top: 100,
             right: 12,
+            maxHeight: 'calc(100% - 100px - var(--lima-fab-clearance, 0px))',
+            overflowY: 'auto',
             background: 'color-mix(in srgb, var(--bg-1) 96%, transparent)',
             border: `1px solid ${LINE}`,
             borderRadius: 12,
             boxShadow: '0 4px 16px rgba(32,25,15,0.14)',
             maxWidth: 236,
-            overflow: 'hidden',
           }}
         >
           <button

@@ -494,7 +494,7 @@ export default function NetworkPage() {
           </div>
 
           {/* Site roster — server-rendered, so the portfolio reads without the map */}
-          <div className="flex-1 overflow-y-auto px-2.5 py-2" style={{ minHeight: 0 }}>
+          <div className="flex-1 overflow-y-auto px-2.5 py-2" style={{ minHeight: 0, paddingBottom: 'max(8px, var(--lima-fab-clearance, 0px))' }}>
             {sorted.length === 0 && (
               <p className="font-sans" style={{ fontSize: 12.5, color: INK_MUTED, padding: '14px 8px' }}>
                 {tr('No sites match that search.', 'Azikho izindawo ezihambisana nalolu sesho.')}

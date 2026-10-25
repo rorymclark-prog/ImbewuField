@@ -52,6 +52,20 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 25 Oct 2026 — Wave 22: re-capture of the live build, hydration errors, Lima clearance, weather card
+- **Re-capture:** 41 routes × phone/desktop × light/dark × English/isiZulu, plus 768/1024px, with a checker that now
+  composites translucent backgrounds, collects page errors and measures what the Lima button covers —
+  `docs/audits/2026-10-25/wave-22-recapture-claude.md` (`w22-01`…`w22-10`).
+- **Hydration:** /home and /invoice are prerendered and computed "today" during render, so the HTML carried the build
+  day and every visit on a later day threw React #425 and re-rendered the page. Both now take the date after mount.
+- **Swarm (Sonnet), folded into #1102:** Lima clearance at the end of /contact, /mentor, /facilitator, /network,
+  /prices, /reports and /samples/production (#1103); weather card theme colours and labelled isiZulu drafts listed for
+  the translator (#1104); invoice issue date without the mismatch (#1105).
+- **Direct:** isiZulu "English source" labels on /calendar and the Study design notice reach 4.5:1.
+- **Lima on desktop (`w22-08`, Rory's call):** the launcher and its panel park bottom-right from `lg` (phones and
+  the /farmer map keep bottom-left); the /network legend stops above it. First-view overlap at 1280px: 7 → 3 routes.
+- **Open:** `w22-09` chart labels in `components/crops/*` for Codex.
+
 ### 24 Oct 2026 — Wave 21: isiZulu re-capture of the wave 20 build, eleven findings fixed directly
 - **Re-capture:** every sample route at 390/1280px, light and dark, in isiZulu with the sample-language key set,
   plus a 768/1024/1280px header sweep — `docs/audits/2026-10-24/wave-21-recapture-claude.md` (`w21-01`…`w21-11`).
