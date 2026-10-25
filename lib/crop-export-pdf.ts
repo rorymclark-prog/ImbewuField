@@ -32,7 +32,7 @@
 // All the numbers come from lib/crop-export-benchmark.ts. Nothing in this file
 // computes a quantity — it only decides what things look like.
 
-import { cropExportText } from './crop-export-copy';
+import { cropExportText, cropPreservedMethodText, cropProductionIssueText, cropProjectionPeriodText } from './crop-export-copy';
 import { isStapleCropKey } from '@/lib/staple-crops';
 import { numberLabel } from '@/lib/format-figures';
 import type { CropTask, FoodAvailabilityItem, PlanBed, Planting } from '@/lib/crop-plan';
@@ -936,10 +936,38 @@ function drawPlanNotes(s: Sheet, input: CropPlanPdfInput): void {
 
 // ── 2. Year in numbers ──────────────────────────────────────────────────────
 
+interface NativeChartTitle { lines: string[]; axis: string; axisX: number; axisOffset: number; extra: number }
+function nativeChartTitle(s: Sheet, title: string, axis: string): NativeChartTitle {
+  s.font(11, true);
+  const lines = s.doc.splitTextToSize(s.safe(title), s.contentWidth) as string[];
+  const lastWidth = s.doc.getTextWidth(lines.at(-1) ?? '');
+  s.font(7.5);
+  const unit = s.safe(`(${axis})`), separate = lastWidth + 5 + s.doc.getTextWidth(unit) > s.contentWidth;
+  return { lines, axis: unit, axisX: s.margin + (separate ? 0 : lastWidth + 5), axisOffset: (lines.length - 1) * 13.2 + (separate ? 11 : 0), extra: (lines.length - 1) * 13.2 + (separate ? 11 : 0) };
+}
+function drawNativeChartTitle(s: Sheet, title: NativeChartTitle): void {
+  s.font(11, true); s.ink(INK.text);
+  s.doc.text(title.lines, s.margin, s.y, { lineHeightFactor: 1.2 });
+  s.font(7.5); s.ink(INK.faint);
+  s.doc.text(title.axis, title.axisX, s.y + title.axisOffset);
+}
+function nativeChartLegend(s: Sheet, series: { label: string; ink: readonly number[] }[]) {
+  s.font(7.5);
+  const start = s.margin + 30; let x = start, y = 0, rowHeight = 16;
+  const entries = series.map(entry => {
+    const lines = s.doc.splitTextToSize(s.safe(entry.label), s.contentWidth - 54) as string[];
+    const width = 24 + Math.max(...lines.map(line => s.doc.getTextWidth(line)));
+    if (x > start && x + width > s.width - s.margin) { x = start; y += rowHeight; rowHeight = 16; }
+    const result = { ...entry, lines, x, y }; x += width; rowHeight = Math.max(rowHeight, lines.length * 9 + 7); return result;
+  });
+  return { entries, height: y + rowHeight };
+}
+
 function barChart(
   s: Sheet,
   opts: {
     title: string;
+    onPage?: () => void;
     labels: string[];
     values: number[];
     inks: readonly (readonly number[])[];
@@ -955,7 +983,10 @@ function barChart(
 ): void {
   const h = opts.height ?? 108;
   const extraLabelHeight = (Math.max(1, ...opts.labels.map(label => label.split('\n').length)) - 1) * 12;
-  s.need(h + 52 + extraLabelHeight);
+  const nativeTitle = isNativePdfLanguage(s.language) ? nativeChartTitle(s, opts.title, opts.axis) : undefined;
+  if (s.need(h + 52 + extraLabelHeight + (nativeTitle?.extra ?? 0))) opts.onPage?.();
+  if (nativeTitle) drawNativeChartTitle(s, nativeTitle);
+  else {
   s.font(11, true);
   s.ink(INK.text);
   s.doc.text(s.safe(opts.title), s.margin, s.y);
@@ -965,8 +996,9 @@ function barChart(
   s.font(7.5);
   s.ink(INK.faint);
   s.doc.text(s.safe(`(${opts.axis})`), s.margin + titleW + 5, s.y);
+  }
   // Headroom so the tallest bar's value label never touches the title.
-  s.y += 18;
+  s.y += 18 + (nativeTitle?.extra ?? 0);
 
   const plotX = s.margin + 30;
   const plotW = s.contentWidth - 30;
@@ -1725,6 +1757,7 @@ function stackedMonthChart(
   s: Sheet,
   opts: {
     title: string;
+    onPage?: () => void;
     labels: string[];
     series: { label: string; values: number[]; ink: readonly number[] }[];
     maxValue: number;
@@ -1735,13 +1768,26 @@ function stackedMonthChart(
   },
 ): void {
   const extraLabelHeight = (Math.max(1, ...opts.labels.map(label => label.split('\n').length)) - 1) * 12;
-  s.need(opts.height + 72 + extraLabelHeight);
+  const native = isNativePdfLanguage(s.language);
+  const nativeTitle = native ? nativeChartTitle(s, opts.title, opts.axis) : undefined;
+  const legend = native ? nativeChartLegend(s, opts.series) : undefined;
+  if (s.need(opts.height + 72 + extraLabelHeight + (nativeTitle?.extra ?? 0) + (legend ? legend.height - 16 : 0))) opts.onPage?.();
+  if (nativeTitle) drawNativeChartTitle(s, nativeTitle);
+  else {
   s.font(11, true); s.ink(INK.text);
   s.doc.text(s.safe(opts.title), s.margin, s.y);
   const titleW = s.doc.getTextWidth(s.safe(opts.title));
   s.font(7.5); s.ink(INK.faint);
   s.doc.text(s.safe('(' + opts.axis + ')'), s.margin + titleW + 5, s.y);
-  s.y += 16;
+  }
+  s.y += 16 + (nativeTitle?.extra ?? 0);
+  if (legend) {
+    for (const entry of legend.entries) {
+      s.fill(entry.ink); s.doc.rect(entry.x, s.y + entry.y - 6, 8, 8, 'F');
+      s.font(7.5); s.ink(INK.muted); s.doc.text(entry.lines, entry.x + 12, s.y + entry.y, { lineHeightFactor: 1.2 });
+    }
+    s.y += legend.height;
+  } else {
   let keyX = s.margin + 30;
   for (const series of opts.series) {
     s.fill(series.ink); s.doc.rect(keyX, s.y - 6, 8, 8, 'F');
@@ -1750,6 +1796,7 @@ function stackedMonthChart(
     keyX += 24 + s.doc.getTextWidth(s.safe(series.label));
   }
   s.y += 16;
+  }
   const plotX = s.margin + 30;
   const plotW = s.contentWidth - 30;
   const top = s.y;
@@ -1770,7 +1817,8 @@ function stackedMonthChart(
     const x = plotX + i * slot + (slot - width) / 2;
     let bottom = base;
     for (const series of opts.series) {
-      const h = opts.height * series.values[i] / maximum;
+      const product = opts.height * series.values[i];
+      const h = Number.isFinite(product) ? product / maximum : opts.height * (series.values[i] / maximum);
       s.fill(series.ink);
       if (h > 0) s.doc.rect(x, bottom - h, width, h, 'F');
       bottom -= h;
@@ -1785,6 +1833,8 @@ function stackedMonthChart(
 }
 
 function drawAvailabilityGraphs(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: number): void {
+  const native = isNativePdfLanguage(s.language);
+  const copy = (source: string, values?: Record<string, string | number>) => cropExportText(source, s.language, values);
   const preservedRecords = (input.preservedProducts ?? []).filter(record => isVisibleProductionFoodSource(record.sourceIconKey, input.availability ?? {}));
   const resolved = resolveAvailability(input, nowMonth);
   const axis = monthAxisSlots(nowMonth, now.getFullYear(), 12);
@@ -1796,39 +1846,49 @@ function drawAvailabilityGraphs(s: Sheet, input: CropPlanPdfInput, now: Date, no
     preservedProducts: input.preservedProducts, productionRecords: input.productionRecords,
   });
   const heading = () => {
-    masthead(s, 'Food and growing space');
-    pageTitle(s, input.meta.planTitle, 'Fresh food, kept food and space',
+    masthead(s, copy('Food and growing space'));
+    pageTitle(s, input.meta.planTitle, copy('Fresh food, kept food and space'),
       resolved.yearMode === 'fromToday'
-        ? 'Known food options by month. Counted once per crop or product, not kilograms, portions or meals.'
-        : 'Repeat-year comparison, not a first-year harvest forecast. Preserved stock records use exact dates.');
+        ? copy('Known food options by month. Counted once per crop or product, not kilograms, portions or meals.')
+        : copy('Repeat-year comparison, not a first-year harvest forecast. Preserved stock records use exact dates.'));
   };
   heading();
-  const labels = axis.map(slot => monthShort(slot.month) + '\n' + slot.year);
+  const labels = axis.map(slot => monthShort(slot.month, s.language) + '\n' + slot.year);
   const scale = Math.max(1, ...graph.months.map(month => month.totalCount));
   barChart(s, {
-    title: '1. Fresh food', axis: 'food kinds', height: 64, maxValue: scale,
+    onPage: native ? heading : undefined,
+    title: copy('1. Fresh food'), axis: copy('food kinds'), height: 64, maxValue: scale,
     labels, values: graph.months.map(month => month.freshCount), inks: graph.months.map(() => INK.green),
   });
   stackedMonthChart(s, {
-    title: '2. Fresh food + kept food', axis: 'food kinds', height: 64, maxValue: scale, labels,
+    onPage: native ? heading : undefined,
+    title: copy('2. Fresh food + kept food'), axis: copy('food kinds'), height: 64, maxValue: scale, labels,
     series: [
-      { label: 'Fresh', values: graph.months.map(month => month.freshCount), ink: INK.green },
-      { label: 'Planned pantry food', values: graph.months.map(month => month.storedCount), ink: INK.gold },
-      { label: 'Recorded kept food', values: graph.months.map(month => month.preservedCount), ink: INK.preserved },
+      { label: copy('Fresh'), values: graph.months.map(month => month.freshCount), ink: INK.green },
+      { label: copy('Planned pantry food'), values: graph.months.map(month => month.storedCount), ink: INK.gold },
+      { label: copy('Recorded kept food'), values: graph.months.map(month => month.preservedCount), ink: INK.preserved },
     ],
     labelValues: graph.months.map(month => month.totalCount),
   });
-  if (graph.growingAreaM2 > 0) stackedMonthChart(s, {
-    title: '3. Used and free crop-growing space', axis: 'm2', height: 64, maxValue: graph.growingAreaM2, labels,
+  const areaStep = niceStep(Math.max(1, graph.growingAreaM2) / 4);
+  const areaMaximum = areaStep * Math.max(1, Math.ceil(Math.max(1, graph.growingAreaM2) / areaStep));
+  s.font(6.5);
+  // A finite entered area can still overflow the rounded chart scale or its label column.
+  // Keep that source figure in the note below instead of crashing or painting a fake zero.
+  const areaCanBeLabelled = Number.isFinite(areaMaximum) && s.doc.getTextWidth(String(Number(areaMaximum.toFixed(2)))) <= 26;
+  if (graph.growingAreaM2 > 0 && areaCanBeLabelled) stackedMonthChart(s, {
+    onPage: native ? heading : undefined,
+    title: copy('3. Used and free crop-growing space'), axis: 'm2', height: 64, maxValue: graph.growingAreaM2, labels,
     series: [
-      { label: 'Used beds / plots', values: graph.months.map(month => month.growingUsedM2), ink: INK.green },
-      { label: 'Free beds / plots', values: graph.months.map(month => month.growingFreeM2), ink: INK.rule },
+      { label: copy('Used beds / plots'), values: graph.months.map(month => month.growingUsedM2), ink: INK.green },
+      { label: copy('Free beds / plots'), values: graph.months.map(month => month.growingFreeM2), ink: INK.rule },
     ],
     labelValues: graph.months.map(month => month.growingUsedM2), format: (value) => numberLabel(value),
   });
   else {
-    s.paragraph('3. Used and free crop-growing space', { size: 11, bold: true, gap: 8 });
-    s.paragraph('No mapped bed or plot area is supplied, so used and free space cannot be shown.', { size: 8, ink: INK.muted, gap: 10 });
+    if (native && s.need(65)) heading();
+    s.paragraph(copy('3. Used and free crop-growing space'), { size: 11, bold: true, gap: 8 });
+    s.paragraph(copy(graph.growingAreaM2 > 0 ? 'The space graph cannot label the supplied area clearly. Check the mapped area.' : 'No mapped bed or plot area is supplied, so used and free space cannot be shown.'), { size: 8, ink: INK.muted, gap: 10 });
   }
   const note = (text: string) => {
     s.font(8);
@@ -1836,20 +1896,37 @@ function drawAvailabilityGraphs(s: Sheet, input: CropPlanPdfInput, now: Date, no
     if (s.need(lines.length * 11.2 + 5)) heading();
     s.paragraph(text, { size: 8, ink: INK.muted, gap: 5 });
   };
-  note('The two food charts share a scale. A crop present fresh and kept still counts once; kept colours add other food kinds. Dated output records update fresh counts. Research season references and sources without local dates are outside food counts.');
-  note('Pantry storage requires each crop\'s source conditions. Preserved stock is shown only for recorded months; no amount, recipe or safe shelf life is inferred.');
+  const spaceNote = () => {
+    if (graph.growingAreaM2 > 0) note(copy(areaCanBeLabelled ? 'Space is for {area} m2 of mapped beds and plots only; trees, animal housing and ponds are outside this area. Numbers above space bars show used m2.' : 'Mapped growing area: {area} m2 of beds and plots only; trees, animal housing and ponds are outside this area.', { area: numberLabel(graph.growingAreaM2) }));
+    const conflicts = benchmarkAreaConflictDetails(input.plantings, input.beds);
+    if (conflicts.length) note(copy('Some beds or plots have overlapping or invalid planting shares. Used space is capped at their mapped area; resolve the layout before relying on this comparison.'));
+  };
+  if (native) spaceNote();
+  note(copy('The two food charts share a scale. A crop present fresh and kept still counts once; kept colours add other food kinds. Dated output records update fresh counts. Research season references and sources without local dates are outside food counts.'));
+  note(copy('Pantry storage requires each crop\'s source conditions. Preserved stock is shown only for recorded months; no amount, recipe or safe shelf life is inferred.'));
   if (!graph.preservationRecordsProvided) {
-    note('No preservation records supplied. Frozen, dried, fermented and processed food are not inferred from fresh harvest.');
+    note(copy('No preservation records supplied. Frozen, dried, fermented and processed food are not inferred from fresh harvest.'));
   } else if (!input.preservedProducts?.length) {
-    note('No preserved stock is recorded. This is a record status, not proof that the farm has no stock.');
+    note(copy('No preserved stock is recorded. This is a record status, not proof that the farm has no stock.'));
   } else if (!preservedRecords.length) {
-    note('No kept-stock records are shown for the selected food categories.');
+    note(copy('No kept-stock records are shown for the selected food categories.'));
   } else {
-    note('Preservation methods recorded: ' + [...new Set(preservedRecords.map(record => record.method))].join(', ') + '.');
-    for (const record of preservedRecords) {
-      const copy = record.label + ' (' + record.method + '): ' + record.dates.map(date => monthShort(date.month) + ' ' + date.year).join(', ') + '. ' + record.note;
+    const methodsNote = copy('Preservation methods recorded: {methods}.', { methods: [...new Set(preservedRecords.map(record => record.method))].map(method => cropPreservedMethodText(method, s.language)).join(', ') });
+    if (native) {
       s.font(8);
-      const lines = s.doc.splitTextToSize(s.safe(copy), s.contentWidth - 31) as string[];
+      const stockHeight = preservedRecords.reduce((height, record) => {
+        const text = record.label + ' (' + cropPreservedMethodText(record.method, s.language) + '): ' + record.dates.map(date => monthShort(date.month, s.language) + ' ' + date.year).join(', ') + '. ' + record.note;
+        return height + Math.max(28, (s.doc.splitTextToSize(s.safe(text), s.contentWidth - 31) as string[]).length * 11.2 + 4);
+      }, (s.doc.splitTextToSize(s.safe(methodsNote), s.contentWidth) as string[]).length * 11.2 + 5);
+      // The observed short list left only its fifth private record on a new sheet.
+      // Keep a compact list with its method explanation; long lists may still paginate.
+      if (stockHeight <= (s.bottom - s.margin) / 2 && s.need(stockHeight)) heading();
+    }
+    note(methodsNote);
+    for (const record of preservedRecords) {
+      const recordLine = record.label + ' (' + cropPreservedMethodText(record.method, s.language) + '): ' + record.dates.map(date => monthShort(date.month, s.language) + ' ' + date.year).join(', ') + '. ' + record.note;
+      s.font(8);
+      const lines = s.doc.splitTextToSize(s.safe(recordLine), s.contentWidth - 31) as string[];
       const height = Math.max(28, lines.length * 11.2 + 4);
       if (s.need(height)) heading();
       drawIconOrCode(s, { iconKey: preservedFoodIconKey(record), code: fallbackCode(record.label) }, s.margin, s.y - 7, 23, input.icons);
@@ -1858,15 +1935,15 @@ function drawAvailabilityGraphs(s: Sheet, input: CropPlanPdfInput, now: Date, no
       s.y += height;
     }
   }
-  if (graph.growingAreaM2 > 0) note('Space is for ' + numberLabel(graph.growingAreaM2) + ' m2 of mapped beds and plots only; trees, animal housing and ponds are outside this area. Numbers above space bars show used m2.');
-  const conflicts = benchmarkAreaConflictDetails(input.plantings, input.beds);
-  if (conflicts.length) note('Some beds or plots have overlapping or invalid planting shares. Used space is capped at their mapped area; resolve the layout before relying on this comparison.');
+  if (!native) spaceNote();
   s.page('portrait');
   drawProductionKgGraphs(s, input, now, nowMonth);
 }
 
 
 function drawProductionKgGraphs(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: number): void {
+  const native = isNativePdfLanguage(s.language);
+  const copy = (source: string, values?: Record<string, string | number>) => cropExportText(source, s.language, values);
   const resolved = resolveAvailability(input, nowMonth);
   const dates = monthAxisSlots(nowMonth, now.getFullYear(), 12);
   const graph = buildProductionKgGraphs({
@@ -1878,9 +1955,9 @@ function drawProductionKgGraphs(s: Sheet, input: CropPlanPdfInput, now: Date, no
     treeGroups: input.treeGroups, treeSeasons: input.treeSeasons,
   });
   const heading = () => {
-    masthead(s, 'Production weights');
-    pageTitle(s, input.meta.planTitle, 'Production weights and missing records',
-      'Monthly records, crop-cycle benchmarks and food kept in stock are separate measures. Missing quantities are not zero.');
+    masthead(s, copy('Production weights'));
+    pageTitle(s, input.meta.planTitle, copy('Production weights and missing records'),
+      copy('Monthly records, crop-cycle benchmarks and food kept in stock are separate measures. Missing quantities are not zero.'));
   };
   heading();
   const note = (text: string) => {
@@ -1889,73 +1966,77 @@ function drawProductionKgGraphs(s: Sheet, input: CropPlanPdfInput, now: Date, no
     if (s.need(lines.length * 11.9 + 6)) heading();
     s.paragraph(text, { size: 8.5, ink: INK.muted, gap: 6 });
   };
-  const labels = dates.map(date => monthShort(date.month) + '\n' + date.year);
+  const labels = dates.map(date => monthShort(date.month, s.language) + '\n' + date.year);
   if (graph.months.some(month => month.recordedKg !== null)) {
     barChart(s, {
-      title: 'Monthly kg records', axis: 'kg', height: 76, labels,
+    onPage: native ? heading : undefined,
+      title: copy('Monthly kg records'), axis: 'kg', height: 76, labels,
       values: graph.months.map(month => month.recordedKg ?? 0),
       inks: graph.months.map(month => month.expectedKg === null ? INK.green : INK.gold),
       missing: graph.months.map(month => month.recordedKg === null), showZero: true, format: numberLabel,
     });
-    note('Green bars contain actual kg records only. Gold bars include expected kg. Actual replaces expected for the same food source and month. These are known subtotals; missing crop, tree and animal quantities stay outside them.');
+    note(copy('Green bars contain actual kg records only. Gold bars include expected kg. Actual replaces expected for the same food source and month. These are known subtotals; missing crop, tree and animal quantities stay outside them.'));
   } else {
-    note('Monthly production kg are not recorded. The crop-cycle graph below is a planning benchmark; it does not fill in missing monthly harvest weights.');
+    note(copy('Monthly production kg are not recorded. The crop-cycle graph below is a planning benchmark; it does not fill in missing monthly harvest weights.'));
   }
   const hasCycles = graph.months.some(month => month.cropCycleKgStartingHarvest !== null);
   if (hasCycles) {
     barChart(s, {
-      title: 'Crop-cycle kg by first picking month', axis: 'full-cycle kg', height: 76, labels,
+    onPage: native ? heading : undefined,
+      title: copy('Crop-cycle kg by first picking month'), axis: copy('full-cycle kg'), height: 76, labels,
       values: graph.months.map(month => month.cropCycleKgStartingHarvest ?? 0),
       inks: graph.months.map(() => INK.green),
       missing: graph.months.map(month => month.cropCycleMissingSources.length > 0 && month.cropCycleKgStartingHarvest === null),
       format: numberLabel,
     });
-    note('Each bar groups the entire crop-cycle benchmark by the month picking starts. It is not the weight harvested in that month. The source does not supply a monthly picking curve; quantities are not divided across a picking window.');
-  } else note('No crop-cycle kg comparison is available for cycles starting harvest in this dated year. Check planting dates, growing space and sourced crop benchmarks.');
+    note(copy('Each bar groups the entire crop-cycle benchmark by the month picking starts. It is not the weight harvested in that month. The source does not supply a monthly picking curve; quantities are not divided across a picking window.'));
+  } else note(copy('No crop-cycle kg comparison is available for cycles starting harvest in this dated year. Check planting dates, growing space and sourced crop benchmarks.'));
   const cropMissing = graph.unquantifiedCropSources.map(source => source.label);
-  if (cropMissing.length) note('Crop quantities outside the known cycle subtotal: ' + cropMissing.join(', ') + '.');
+  if (cropMissing.length) note(copy('Crop quantities outside the known cycle subtotal: {crops}.', { crops: cropMissing.join(', ') }));
 
   const hasMonthlyQuantities = graph.months.some(month => Object.values(month.nativeUnits).some(value => value !== null) || month.stockKg !== null);
   // A table containing only question marks pushed the missing-record notes onto
   // an almost empty sheet. Preserve the dated table as soon as any quantity is
   // entered, including zero; an unrecorded plan can state its coverage directly.
   if (hasMonthlyQuantities) {
-    if (s.need(70)) heading();
-    s.paragraph('Monthly quantities in their own units', { size: 10, bold: true, ink: INK.green, gap: 6 });
+    if (!native) {
+      if (s.need(70)) heading();
+      s.paragraph(copy('Monthly quantities in their own units'), { size: 10, bold: true, ink: INK.green, gap: 6 });
+    }
     const quantity = (value: number | null) => value === null ? '?' : numberLabel(value);
     const hasItems = graph.months.some(month => month.nativeUnits.items !== null);
     table(s, [
     { key: 'month', header: 'Month', width: 82 },
-    { key: 'actual', header: 'Actual kg', width: 76, align: 'right' },
-    { key: 'expected', header: 'Expected kg', width: 82, align: 'right' },
-    { key: 'eggs', header: 'Eggs', width: 68, align: 'right' },
-    { key: 'milk', header: 'Litres', width: 68, align: 'right' },
-    ...(hasItems ? [{ key: 'items', header: 'Items', width: 68, align: 'right' as const }] : []),
-    { key: 'stock', header: 'Stock kg', width: 80, align: 'right' },
+    { key: 'actual', header: copy('Actual kg'), width: 76, align: 'right' },
+    { key: 'expected', header: copy('Expected kg'), width: 82, align: 'right' },
+    { key: 'eggs', header: copy('Eggs'), width: 68, align: 'right' },
+    { key: 'milk', header: copy('Litres'), width: 68, align: 'right' },
+    ...(hasItems ? [{ key: 'items', header: copy('Items'), width: 68, align: 'right' as const }] : []),
+    { key: 'stock', header: copy('Stock kg'), width: 80, align: 'right' },
     ], graph.months.map(month => ({
-    month: monthShort(month.month) + ' ' + month.year,
+    month: monthShort(month.month, s.language) + ' ' + month.year,
     actual: quantity(month.actualKg), expected: quantity(month.expectedKg),
     eggs: quantity(month.nativeUnits.eggs), milk: quantity(month.nativeUnits.litres),
     items: quantity(month.nativeUnits.items), stock: quantity(month.stockKg) + (month.stockKgPartial && month.stockKg !== null ? ' *' : ''),
-    })), { band: 'Production weights', title: 'Monthly quantities in their own units', size: 8 });
+    })), { band: copy('Production weights'), title: copy('Monthly quantities in their own units'), size: 8, keepTogether: native, onPage: native ? heading : undefined });
     s.y += 10;
-  } else note('No monthly quantities are recorded for this dated year in kg, eggs, litres, items or kept-stock kg. Enter expected or actual amounts in the app; the printed monthly table appears once a quantity is recorded, including zero.');
-  note('? means quantity not recorded, not zero. * marks a known stock subtotal with missing batch weights. Egg counts and litres use actual records where entered, otherwise expected records. They are never converted to kg. Stock kg are food already held; they are never added to new production.');
+  } else note(copy('No monthly quantities are recorded for this dated year in kg, eggs, litres, items or kept-stock kg. Enter expected or actual amounts in the app; the printed monthly table appears once a quantity is recorded, including zero.'));
+  note(copy('? means quantity not recorded, not zero. * marks a known stock subtotal with missing batch weights. Egg counts and litres use actual records where entered, otherwise expected records. They are never converted to kg. Stock kg are food already held; they are never added to new production.'));
 
   const unique = (entries: AvailabilityEntry[]) => [...new Map(entries.map(entry => [entry.iconKey, entry])).values()];
   const missing = unique(graph.months.flatMap(month => month.unrecordedSources));
-  if (missing.length) note('Monthly quantities still needed: ' + missing.map(source => source.label).join(', ') + '. Research season references do not establish a harvest weight.');
-  if (graph.undatedSources.length) note('Food sources with no dated quantity: ' + graph.undatedSources.map(source => source.label).join(', ') + '.');
+  if (missing.length) note(copy('Monthly quantities still needed: {sources}. Research season references do not establish a harvest weight.', { sources: missing.map(source => source.label).join(', ') }));
+  if (graph.undatedSources.length) note(copy('Food sources with no dated quantity: {sources}.', { sources: graph.undatedSources.map(source => source.label).join(', ') }));
   const stockMissing = unique(graph.months.flatMap(month => month.stockKgMissingSources));
-  if (stockMissing.length) note('Kept food without recorded stock kg: ' + stockMissing.map(source => source.label).join(', ') + '. Catalogue pantry windows and preservation months supply no stock weight.');
+  if (stockMissing.length) note(copy('Kept food without recorded stock kg: {sources}. Catalogue pantry windows and preservation months supply no stock weight.', { sources: stockMissing.map(source => source.label).join(', ') }));
   for (const year of graph.annualTreeEstimates) {
     if (!year.trees.length) continue;
     const missingTrees = year.trees.filter(tree => tree.kg === null).map(tree => tree.name);
-    if (missingTrees.length) note('Annual tree yield schedules are incomplete for ' + year.label + ': ' + missingTrees.join(', ') + '. ' + (year.trees.some(tree => tree.kg !== null) ? 'Known annual subtotal: ' + projectedKgLabel(year.knownKg) + '; unknown yields are excluded.' : 'No annual tree kg subtotal is known.'));
-    else note('Annual tree yield schedules for ' + year.label + ': ' + projectedKgLabel(year.knownKg) + '.');
-    note('Tree kg by age are annual farm assumptions. They are shown in the future harvest pages and are not spread across monthly production bars.');
+    if (missingTrees.length) note(copy('Annual tree yield schedules are incomplete for {period}: {trees}. {subtotal}', { period: cropProjectionPeriodText(year.label, s.language), trees: missingTrees.join(', '), subtotal: year.trees.some(tree => tree.kg !== null) ? copy('Known annual subtotal: {kg}; unknown yields are excluded.', { kg: copy(projectedKgLabel(year.knownKg)) }) : copy('No annual tree kg subtotal is known.') }));
+    else note(copy('Annual tree yield schedules for {period}: {kg}.', { period: cropProjectionPeriodText(year.label, s.language), kg: copy(projectedKgLabel(year.knownKg)) }));
+    note(copy('Tree kg by age are annual farm assumptions. They are shown in the future harvest pages and are not spread across monthly production bars.'));
   }
-  for (const issue of graph.recordIssues) note(issue);
+  for (const issue of graph.recordIssues) note(cropProductionIssueText(issue, s.language));
 }
 
 function drawProductionProjection(s: Sheet, input: CropPlanPdfInput): void {
@@ -2187,7 +2268,7 @@ function table(
   s: Sheet,
   columns: Column[],
   rows: Record<string, string>[],
-  opts: { band?: string; title?: string; groupKey?: string; size?: number } = {},
+  opts: { band?: string; title?: string; groupKey?: string; size?: number; keepTogether?: boolean; onPage?: () => void } = {},
 ): void {
   const totalW = columns.reduce((a, c) => a + c.width, 0);
   const scale = s.contentWidth / totalW;
@@ -2226,6 +2307,15 @@ function table(
     });
     s.y += headH;
   };
+
+  if (native && opts.keepTogether && !opts.groupKey) {
+    s.font(size);
+    const bodyHeight = rows.reduce((height, row) => height + Math.max(18, Math.max(...columns.map((column, i) => (s.doc.splitTextToSize(s.safe(row[column.key] ?? ''), widths[i] - 16) as string[]).length)) * leading + 12), 0);
+    s.font(10, true);
+    const titleHeight = opts.title ? (s.doc.splitTextToSize(s.safe(opts.title), s.contentWidth) as string[]).length * 14 + 6 : 0;
+    if (s.need(headH + bodyHeight + titleHeight + 24)) opts.onPage?.();
+    if (opts.title) s.paragraph(opts.title, { size: 10, bold: true, ink: INK.green, gap: 6 });
+  }
 
   if (native && rows.length) {
     const firstH = Math.max(...columns.map((column, i) => {

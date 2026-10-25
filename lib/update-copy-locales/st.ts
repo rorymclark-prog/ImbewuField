@@ -1,6 +1,14 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Read translated production PDF charts": "Bala ditjhate tsa tlhahiso tsa PDF tse fetoletsweng",
+  "Open the detailed reference PDF in your language. Its graph text is an unreviewed draft.": "Bula PDF ya referense e qaqileng ka puo ya hao. Mongolo wa ditjhate tsa yona ke moralo o so hlahlojwe.",
+  "Check quantities and missing records": "Hlahloba bongata le direkoto tse siyo",
+  "Review monthly records in their own units. A missing quantity is unknown, not zero.": "Hlahloba direkoto tsa kgwedi ka diyuniti tsa tsona. Bongata bo siyo ha bo tsejwe, ha se lefela.",
+  "Production plan → Share or print": "Moralo wa tlhahiso → Arolelana kapa hatisa",
+  "Farm → Production plan": "Polasi → Moralo wa tlhahiso",
+  "Production PDF charts now have unreviewed translations in four languages.": "Ditjhate tsa tlhahiso tsa PDF jwale di na le diphetolelo tse so hlahlojwe ka dipuo tse nne.",
+  "Crop screens and long-term production PDFs still have English text.": "Dikirini tsa dijalo le di-PDF tsa tlhahiso ya nako e telele di sa na le mongolo wa Senyesemane.",
   "Crop calendars and field work exports now have unreviewed translation drafts.": "Dikhalendara tsa dijalo le ditokomane tsa mosebetsi wa tshimo di na le diphetolelo tsa moralo tse so hlahlojwe.",
   "Production charts and some crop screens still use English.": "Ditjhate tsa tlhahiso le dikirini tse ding tsa dijalo di sa sebedisa Senyesemane.",
   "Offline saving and sending messages now have drafts in all four languages.": "Melaetsa ya ho boloka ntle le kgokahano le ho romela jwale e na le meralo ka dipuo tsohle tse nne.",

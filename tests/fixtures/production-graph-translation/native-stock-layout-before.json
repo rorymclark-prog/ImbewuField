@@ -1,0 +1,14 @@
+{
+  "reason": "Observed short five-record stock list stranded its final card alone after a page break; retain its actual occurrence for a failing context check.",
+  "sourcePdfSha256": "9a42d320ede542444cd3639593b730b758df36e4758d9ac2db0cc4e04466b6ad",
+  "pages": [
+    {
+      "page": 1,
+      "records": 4
+    },
+    {
+      "page": 2,
+      "records": 1
+    }
+  ]
+}

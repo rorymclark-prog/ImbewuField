@@ -1,6 +1,14 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Read translated production PDF charts": "Vhalani tshati dza mveledzo dza PDF dzo ṱhalutshedzelwaho",
+  "Open the detailed reference PDF in your language. Its graph text is an unreviewed draft.": "Vulani PDF ya tshisumbedzi tsho ṱanḓavhuwaho nga luambo lwaṋu. Maṅwalwa a tshati dzayo ndi mvetamveto i sa athu u sedzuluswa.",
+  "Check quantities and missing records": "Sedzulusani zwivhalo na rekhodo dzi siho",
+  "Review monthly records in their own units. A missing quantity is unknown, not zero.": "Sedzulusani rekhodo dza ṅwedzi nga yunithi dzadzo. Tshivhalo tshi siho a tshi ḓivhei, a si zero.",
+  "Production plan → Share or print": "Pulane ya mveledzo → Kovhelanani kana ganḓisani",
+  "Farm → Production plan": "Bulasi → Pulane ya mveledzo",
+  "Production PDF charts now have unreviewed translations in four languages.": "Tshati dza mveledzo dza PDF zwino dzi na ṱhalutshedzelo nga nyambo nṋa dzi sa athu u sedzuluswa.",
+  "Crop screens and long-term production PDFs still have English text.": "Zwikirini zwa zwiliṅwa na dzi-PDF dza mveledzo ya tshifhinga tshilapfu zwi kha ḓi vha na maṅwalwa a Luisimane.",
   "Crop calendars and field work exports now have unreviewed translation drafts.": "Khalenda dza zwiliṅwa na u bvisa mishumo ya tsimu zwi na ṱhalutshedzelo dza mvetamveto dzi sa athu u sedzuluswa.",
   "Production charts and some crop screens still use English.": "Tshati dza mveledzo na zwiṅwe zwikirini zwa zwiliṅwa zwi kha ḓi shumisa Luisimane.",
   "Offline saving and sending messages now have drafts in all four languages.": "Milaedza ya u vhulunga hu si na vhuṱumani na u rumela zwino i na mvetomveto nga nyambo dzoṱhe nṋa.",

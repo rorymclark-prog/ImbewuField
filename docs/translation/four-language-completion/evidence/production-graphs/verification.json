@@ -1,0 +1,106 @@
+{
+  "checkedAt": "2026-10-23T00:28:55.148172+00:00",
+  "draftStatus": "Unreviewed translations; no fluent speaker or agricultural approval claimed.",
+  "files": [
+    {
+      "file": "zu-recorded.pdf",
+      "sha256": "eb3b8aa34a19f63785f46b0f487d7efc39dd64ac483b9416f6e75cd5ef5bcaef",
+      "purpose": "Synthetic recorded graph, all typed units, private placeholder-looking names/notes, complete month table and cautions."
+    },
+    {
+      "file": "zu-recorded-contact.png",
+      "sha256": "90a7c398abab044dbc668d5fa60db4e6c88f7fe3f6011d5a1d71a22110bfb8cf",
+      "purpose": "Synthetic recorded graph, all typed units, private placeholder-looking names/notes, complete month table and cautions."
+    },
+    {
+      "file": "st-recorded.pdf",
+      "sha256": "7dbee55bc6b5c20a330b0b32db78fc6cdb8b53efae31b4be9d8c5c2f947c6a7a",
+      "purpose": "Synthetic recorded graph, all typed units, private placeholder-looking names/notes, complete month table and cautions."
+    },
+    {
+      "file": "st-recorded-contact.png",
+      "sha256": "ac24c69e608740e8d08f1a4fa17b1d20702268cad3211d877fb20843055c2000",
+      "purpose": "Synthetic recorded graph, all typed units, private placeholder-looking names/notes, complete month table and cautions."
+    },
+    {
+      "file": "ts-recorded.pdf",
+      "sha256": "e2493319c5a24e02f9976a1753358cd5bb19b1c3fc46f496bcf3e61e699acc57",
+      "purpose": "Synthetic recorded graph, all typed units, private placeholder-looking names/notes, complete month table and cautions."
+    },
+    {
+      "file": "ts-recorded-contact.png",
+      "sha256": "0efc82d7717e2bbf155679cc31db5d0277ea6cbffe3563829f3cbd3ca101761b",
+      "purpose": "Synthetic recorded graph, all typed units, private placeholder-looking names/notes, complete month table and cautions."
+    },
+    {
+      "file": "ve-recorded.pdf",
+      "sha256": "261ca028c626c2b11d988025af55848a2a7572a15709dd73ff38c329da8a31e8",
+      "purpose": "Synthetic recorded graph, all typed units, private placeholder-looking names/notes, complete month table and cautions."
+    },
+    {
+      "file": "ve-recorded-contact.png",
+      "sha256": "8576b109c1acc5f2ad5a32664f65e2e01cbd5ca81b06d16e6dfd5adb465da7a0",
+      "purpose": "Synthetic recorded graph, all typed units, private placeholder-looking names/notes, complete month table and cautions."
+    },
+    {
+      "file": "ve-overflow.pdf",
+      "sha256": "c8fc61b107f91ac88de936fc6d96783dde8921015224943dc3f21b1a522958f9",
+      "purpose": "Observed original area-render crash now has explicit warning and original source-area explanation."
+    },
+    {
+      "file": "ve-overflow-contact.png",
+      "sha256": "6c063b3d90d29772a619c189a90684bda394b74ac617c6f98e82fc2a2d7fd3b8",
+      "purpose": "Observed original area-render crash now has explicit warning and original source-area explanation."
+    }
+  ],
+  "generatedPdfs": 40,
+  "comparisonFiles": 47,
+  "pages": 132,
+  "wordBounds": 39430,
+  "clippedWords": 0,
+  "english": {
+    "unknown": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "empty-records": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "recorded": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "repeat": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "hidden": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "conflict": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "invalid-records": {
+      "samePixels": true,
+      "sameText": true
+    }
+  },
+  "nativeExtraction": {
+    "pdfs": 32,
+    "pages": 96,
+    "completeParagraphs": 384,
+    "allPageCautionsComplete": true
+  },
+  "visualInspection": [
+    "zu recorded four-page contact",
+    "st recorded four-page contact",
+    "ts recorded four-page contact",
+    "ve recorded four-page contact",
+    "ve extreme-area two-page contact"
+  ],
+  "limits": "Representative graph PDFs only; no whole-crop-screen, long-term projection, sample-generated-note or fluency completion claim.",
+  "pictureChange": "This changes the picture: native labels, measured wrapping and keeping complete monthly tables/compact stock lists together; extreme mapped-area diagram now warns instead of crashing. Seven valid original English cases remain pixel/text identical."
+}
