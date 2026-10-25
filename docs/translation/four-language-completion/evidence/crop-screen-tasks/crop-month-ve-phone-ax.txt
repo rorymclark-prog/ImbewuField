@@ -1,0 +1,33 @@
+Browser tab: 3, Title: "Isolated task and dynamic control verification", URL: "http://127.0.0.1:4273/".
+1 AXWebArea Isolated task and dynamic control verification, URL: 127.0.0.1:4273/
+	2 container
+		3 heading Isolated actual crop components, Value: 1
+			4 text Isolated actual crop components
+		5 text Synthetic tasks and names; system fonts. No account, saved records or message sending. Picker list/search only; full production route and selected-crop detail form are not verified.
+		6 container
+			7 text Verification language
+			8 pop up button (collapsed, settable) Description: Verification language, Value: ve, Secondary Actions: Expand
+				9 menu
+					10 en
+					11 zu
+					12 st
+					13 ts
+					14 (selected) ve
+		15 container
+			16 text Verification state
+			17 pop up button (collapsed, settable) Description: Verification state, Value: month, Secondary Actions: Expand
+				18 menu
+					19 tasks
+					20 prep
+					21 sow
+					22 transplant
+					23 harvest
+					24 empty
+					25 picker
+					26 (selected) month
+		27 text Ṱhalutshedzelo idzi dza ndangulo a dzi athu u sedzwa nga muthu a ambaho luambo nga nḓila yavhuḓi. Miṅwe miṅwalo ya tshikirini i kha ḓi shumisa Luisimane.
+		28 text Nyen
+		29 button Valani zwidodombedzwa zwa Nyen
+		30 text A hu na zwo dzudzanywaho u kaṋiwa mibeduni, nahone a hu na zwi re na tshifhinga tsha u vhulunga tshi bvaho kha tshiko zwine zwa kha ḓi vha vhuvhulungeloni.
+
+The focused UI element is 1 AXWebArea Isolated task and dynamic control verification, URL: 127.0.0.1:4273/

@@ -1,0 +1,48 @@
+Browser tab: 3, Title: "Isolated task and dynamic control verification", URL: "http://127.0.0.1:4273/".
+1 AXWebArea Isolated task and dynamic control verification, URL: 127.0.0.1:4273/
+	2 container
+		3 heading Isolated actual crop components, Value: 1
+			4 text Isolated actual crop components
+		5 text Synthetic tasks and names; system fonts. No account, saved records or message sending. Picker list/search only; full production route and selected-crop detail form are not verified.
+		6 container
+			7 text Verification language
+			8 pop up button (collapsed, settable) Description: Verification language, Value: st, Secondary Actions: Expand
+				9 menu
+					10 en
+					11 zu
+					12 (selected) st
+					13 ts
+					14 ve
+		15 container
+			16 text Verification state
+			17 pop up button (collapsed, settable) Description: Verification state, Value: tasks, Secondary Actions: Expand
+				18 menu
+					19 (selected) tasks
+					20 prep
+					21 sow
+					22 transplant
+					23 harvest
+					24 empty
+					25 picker
+					26 month
+		27 text Diphetolelo tsena tsa ditaolo ha di eso hlahlojwe ke motho ya buang puo hantle. Mongolo o mong wa skrine o ntse o le ka Senyesemane. Lokisa sebaka 4 mesebetsi PRIVATE crop carrots {count} $& PRIVATE second bed
+		46 text lekola mobu le phallo ya metsi; sebedisa teko ya mobu kapa keletso ya lehae pele o kenya dintho tse ntlafatsang mobu
+		47 text PRIVATE crop tomatoes {count} $& PRIVATE second bed
+		48 text lekola mobu le phallo ya metsi; sebedisa teko ya mobu kapa keletso ya lehae pele o kenya dintho tse ntlafatsang mobu
+		49 text PRIVATE crop green-beans {count} $& PRIVATE bed {count} $&
+		50 text lekola mobu le phallo ya metsi; sebedisa teko ya mobu kapa keletso ya lehae pele o kenya dintho tse ntlafatsang mobu
+		51 text PRIVATE crop green-beans {count} $& PRIVATE plot
+		52 text lekola mobu le phallo ya metsi; sebedisa teko ya mobu kapa keletso ya lehae pele o lema kapa o kenya dintho tse ntlafatsang mobu
+		53 text Jala 4 mesebetsi PRIVATE crop carrots {count} $& PRIVATE second bed
+		54 text mela e arohane ka 20–40cm · 2–5cm pakeng tsa dimela moleng · jala botebong ba 1–2.5cm
+		55 text PRIVATE crop tomatoes {count} $& PRIVATE second bed
+		56 text qala ka tereing, botebong ba 1cm
+		57 text PRIVATE crop green-beans {count} $& PRIVATE bed {count} $& PRIVATE plot
+		58 text mela e arohane ka 45–60cm · 4–7cm pakeng tsa dimela moleng · jala botebong ba 2–5cm
+		59 text Hlahloba / fallisetsa tshimong 1 mosebetsi PRIVATE crop tomatoes {count} $& PRIVATE second bed
+		60 text mela e arohane ka 90–120cm · 30–60cm pakeng tsa dimela moleng
+		61 text Kotula 6 mesebetsi PRIVATE crop green-beans {count} $& PRIVATE bed {count} $& PRIVATE plot PRIVATE crop carrots {count} $& PRIVATE second bed PRIVATE crop tomatoes {count} $& PRIVATE second bed Ho tswa difateng tsa hao
+		44 text Kga PRIVATE fruit {month} $& (0) — dikgwedi tse netefaditsweng sebakeng sena Tsh–Phe
+		45 text Dinako tsa Afrika Borwa tse tswang mehloding, dibaka tsohle di kopantswe — difate tsa hao di ka qala kapa tsa qeta kgwedi pele kapa morao.
+
+The focused UI element is 1 AXWebArea Isolated task and dynamic control verification, URL: 127.0.0.1:4273/

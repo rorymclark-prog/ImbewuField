@@ -1,0 +1,192 @@
+Browser tab: 2, Title: "127.0.0.1:4272/zu.html", URL: "http://127.0.0.1:4272/zu.html".
+1 AXWebArea 127.0.0.1:4272/zu.html
+	2 container
+		3 heading Isolated crop-component verification, Value: 1
+			4 text Isolated crop-component verification
+		5 text Synthetic inputs; system fonts; actual tree, empty-task and scroll components plus a copy gallery. Full production route is not tested here.
+		6 link Description: en, Value: 127.0.0.1:4272/en.html
+		7 link Description: zu, Value: 127.0.0.1:4272/zu.html
+		8 link Description: st, Value: 127.0.0.1:4272/st.html
+		9 link Description: ts, Value: 127.0.0.1:4272/ts.html
+		10 link Description: ve, Value: 127.0.0.1:4272/ve.html
+		11 text Lokhu kuhumusha kwezinkinobho akukakabuyekezwa umuntu olukhuluma kahle ulimi. Omunye umbhalo wesikrini usasebenzisa isiNgisi. Ezihlahleni zakho
+		12 text Pick Original name {count} $& (0) — confirmed local months Dec–Jan
+		13 text Izikhathi zaseNingizimu Afrika ezicashunwe emithonjeni, zonke izifunda ndawonye — izihlahla zakho zingaqala noma ziphele ngenyanga ngaphambili noma ngemuva.
+		14 text Akukho okumele kwenziwe okwamanje.
+		15 container Izinyanga zeshadi lezitshalo; skrola ukuze zihambisane nekhalenda lokutshala
+			16 text 1
+			17 text 2
+			18 text 3
+			19 text 4
+			20 text 5
+			21 text 6
+			22 text 7
+			23 text 8
+			24 text 9
+			25 text 10
+			26 text 11
+			27 text 12
+			28 text 13
+			29 text 14
+			30 text 15
+			31 text 16
+			32 text 17
+			33 text 18
+			34 text 19
+			35 text 20
+			36 text 21
+			37 text 22
+			38 text 23
+			39 text 24
+		40 heading Control copy gallery, Value: 2
+			41 text Control copy gallery
+		42 content list
+			43 container
+				44 button Ezihlahleni zakho
+				45 text From your trees
+			46 container
+				47 button Izikhathi zaseNingizimu Afrika ezicashunwe emithonjeni, zonke izifunda ndawonye — izihlahla zakho zingaqala noma ziphele ngenyanga ngaphambili noma ngemuva.
+				48 text Sourced South African seasons, all regions together — your own trees may start or finish a month either side.
+			49 container
+				50 button Akukho okumele kwenziwe okwamanje.
+				51 text Nothing due.
+			52 container
+				53 button Ikhaya
+				54 text Home
+			55 container
+				56 button Buyela ekwakhiweni
+				57 text Back to design
+			58 container
+				59 button Shintshela ohlelweni lokukhiqiza lomunye umklamo
+				60 text Switch to a different design's production plan
+			61 container
+				62 button Zonke izinhlelo zokukhiqiza
+				63 text All production plans
+			64 container
+				65 button Uhlelo lokukhiqiza
+				66 text Production plan
+			67 container
+				68 button Izitshalo nezindlu zezilwane ezisemephini yakho
+				69 text Plants and housing from your map
+			70 container
+				71 button Hlola imibhede namapuloti asetshenziswa yilolu hlelo — inani, ubukhulu nomthombo
+				72 text Check the beds and plots this plan is using — count, sizes and where they came from
+			73 container
+				74 button Funda
+				75 text Learn
+			76 container
+				77 button Kulayishwa uhlelo lokukhiqiza…
+				78 text Loading production plan…
+			79 container
+				80 button Uhlela siphi isiza?
+				81 text Which site are you planning?
+			82 container
+				83 button Khansela
+				84 text Cancel
+			85 container
+				86 button Azikho izakhiwo ezilondoloziwe okwamanje. Dweba imibhede yakho ku-Design Studio; izovela lapha.
+				87 text No saved designs yet. Draw your beds in the Design Studio and this is where they will appear.
+			88 container
+				89 button imiklamo elondoloziwe. Ngayinye iboniswa njengoba injalo emhlabeni.
+				90 text saved designs. Each one is drawn as it sits on the ground.
+			91 container
+				92 button Noma sebenzisa umklamo ovuliwe kule divayisi
+				93 text Or use the design already open on this device
+			94 container
+				95 button Faka imibhede yangempela esigabeni sokuTshala
+				96 text Place real beds on the Planting step
+			97 container
+				98 button ukuze uwushintshe.
+				99 text to replace it.
+			100 container
+				101 button Phakamisa uhlelo ngokuzenzakalelayo
+				102 text Auto-suggest a plan
+			103 container
+				104 button Buyisela emuva ushintsho lokugcina kulolu hlelo
+				105 text Undo the last change to this plan
+			106 container
+				107 button Buyisela emuva
+				108 text Undo
+			109 container
+				110 button Susa konke okutshalwe kulolu hlelo
+				111 text Clear every planting from this plan
+			112 container
+				113 button Umbhede
+				114 text Bed
+			115 container
+				116 button Engeza isilimo
+				117 text Add a crop
+			118 container
+				119 button Eminye imibhede ibhukhwe kabili
+				120 text Some beds are double-booked
+			121 container
+				122 button Imisebenzi
+				123 text Tasks
+			124 container
+				125 button Yabelana ngemisebenzi
+				126 text Share tasks
+			127 container
+				128 button Okulandelayo
+				129 text Looking ahead
+			130 container
+				131 button Akukho okutshalwe okwamanje — cindezela + crop embhedeni ongenhla.
+				132 text No plantings yet — tap + crop on a bed above.
+			133 container
+				134 button Ngesilimo
+				135 text By crop
+			136 container
+				137 button Ngombhede
+				138 text By bed
+			139 container
+				140 button Akukho okutshalwe okwamanje.
+				141 text Nothing planted yet.
+			142 container
+				143 button Ayikho imibhede eklanyiwe okwamanje
+				144 text No beds designed yet
+			145 container
+				146 button Qala ngokubeka imibhede yemifino esigabeni sokuTshala — bese ubuya lapha uzohlela okuzotshalwa kuyo.
+				147 text Place veg beds on the Planting step first — then come back here to plan what goes in them.
+			148 container
+				149 button Izinyanga zeshadi lezitshalo; skrola ukuze zihambisane nekhalenda lokutshala
+				150 text Crop chart months, scroll to match the planting calendar
+			151 container
+				152 button Vala
+				153 text Close
+			154 container
+				155 button Sesha izitshalo…
+				156 text Search crops…
+			157 container
+				158 button Susa ezintandokazini
+				159 text Remove from favourites
+			160 container
+				161 button Engeza ezintandokazini
+				162 text Add to favourites
+			163 container
+				164 button Buyela ohlwini
+				165 text Back to list
+			166 container
+				167 button Londoloza izinguquko / Save changes
+				168 text Save changes
+			169 container
+				170 button Engeza njengokukhona kakade
+				171 text Add as existing
+			172 container
+				173 button Engeza embhedeni
+				174 text Add to bed
+			175 container
+				176 button Susa isilimo / Remove crop
+				177 text Remove crop
+			178 container
+				179 button Hlela
+				180 text Edit
+			181 container
+				182 button Susa / Remove
+				183 text Remove
+			184 container
+				185 button Buyela
+				186 text Back
+			187 container
+				188 button Lahla / Discard
+				189 text Discard
+
+The focused UI element is 1 AXWebArea 127.0.0.1:4272/zu.html

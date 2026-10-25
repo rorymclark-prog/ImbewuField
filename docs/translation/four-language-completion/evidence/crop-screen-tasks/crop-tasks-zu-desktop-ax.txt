@@ -1,0 +1,48 @@
+Browser tab: 3, Title: "Isolated task and dynamic control verification", URL: "http://127.0.0.1:4273/".
+1 AXWebArea Isolated task and dynamic control verification, URL: 127.0.0.1:4273/
+	2 container
+		3 heading Isolated actual crop components, Value: 1
+			4 text Isolated actual crop components
+		5 text Synthetic tasks and names; system fonts. No account, saved records or message sending. Picker list/search only; full production route and selected-crop detail form are not verified.
+		6 container
+			7 text Verification language
+			8 pop up button (collapsed, settable) Description: Verification language, Value: zu, Secondary Actions: Expand
+				9 menu
+					10 en
+					11 (selected) zu
+					12 st
+					13 ts
+					14 ve
+		15 container
+			16 text Verification state
+			17 pop up button (collapsed, settable) Description: Verification state, Value: tasks, Secondary Actions: Expand
+				18 menu
+					19 (selected) tasks
+					20 prep
+					21 sow
+					22 transplant
+					23 harvest
+					24 empty
+					25 picker
+					26 month
+		27 text Lokhu kuhumusha kwezinkinobho akukakabuyekezwa umuntu olukhuluma kahle ulimi. Omunye umbhalo wesikrini usasebenzisa isiNgisi. Lungisa indawo 4 imisebenzi PRIVATE crop carrots {count} $& PRIVATE second bed
+		28 text hlola umhlabathi nokuphuma kwamanzi; sebenzisa ukuhlolwa komhlabathi noma iseluleko sendawo ngaphambi kokufaka izinto zokulungisa umhlabathi
+		29 text PRIVATE crop tomatoes {count} $& PRIVATE second bed
+		30 text hlola umhlabathi nokuphuma kwamanzi; sebenzisa ukuhlolwa komhlabathi noma iseluleko sendawo ngaphambi kokufaka izinto zokulungisa umhlabathi
+		31 text PRIVATE crop green-beans {count} $& PRIVATE bed {count} $&
+		32 text hlola umhlabathi nokuphuma kwamanzi; sebenzisa ukuhlolwa komhlabathi noma iseluleko sendawo ngaphambi kokufaka izinto zokulungisa umhlabathi
+		33 text PRIVATE crop green-beans {count} $& PRIVATE plot
+		34 text hlola umhlabathi nokuphuma kwamanzi; sebenzisa ukuhlolwa komhlabathi noma iseluleko sendawo ngaphambi kokulima noma ukufaka izinto zokulungisa umhlabathi
+		35 text Hlwanyela 4 imisebenzi PRIVATE crop carrots {count} $& PRIVATE second bed
+		36 text imigqa iqhelelane ngo-20–40cm · izitshalo ziqhelelane ngo-2–5cm emgqeni · hlwanyela ekujuleni okungu-1–2.5cm
+		37 text PRIVATE crop tomatoes {count} $& PRIVATE second bed
+		38 text qala ethreyini, ekujuleni okungu-1cm
+		39 text PRIVATE crop green-beans {count} $& PRIVATE bed {count} $& PRIVATE plot
+		40 text imigqa iqhelelane ngo-45–60cm · izitshalo ziqhelelane ngo-4–7cm emgqeni · hlwanyela ekujuleni okungu-2–5cm
+		41 text Hlola / tshala kwenye indawo 1 umsebenzi PRIVATE crop tomatoes {count} $& PRIVATE second bed
+		42 text imigqa iqhelelane ngo-90–120cm · izitshalo ziqhelelane ngo-30–60cm emgqeni
+		43 text Vuna 6 imisebenzi PRIVATE crop green-beans {count} $& PRIVATE bed {count} $& PRIVATE plot PRIVATE crop carrots {count} $& PRIVATE second bed PRIVATE crop tomatoes {count} $& PRIVATE second bed Ezihlahleni zakho
+		44 text Kha PRIVATE fruit {month} $& (0) — izinyanga eziqinisekisiwe endaweni Dis–Jan
+		45 text Izikhathi zaseNingizimu Afrika ezicashunwe emithonjeni, zonke izifunda ndawonye — izihlahla zakho zingaqala noma ziphele ngenyanga ngaphambili noma ngemuva.
+
+The focused UI element is 1 AXWebArea Isolated task and dynamic control verification, URL: 127.0.0.1:4273/

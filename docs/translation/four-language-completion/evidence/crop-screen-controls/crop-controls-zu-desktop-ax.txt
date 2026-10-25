@@ -1,0 +1,57 @@
+Browser tab: 2, Title: "127.0.0.1:4272/zu.html", URL: "http://127.0.0.1:4272/zu.html".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~1 AXWebArea 127.0.0.1:4272/zu.html
+~		11 text Lokhu kuhumusha kwezinkinobho akukakabuyekezwa umuntu olukhuluma kahle ulimi. Omunye umbhalo wesikrini usasebenzisa isiNgisi. Ezihlahleni zakho
+~		13 text Izikhathi zaseNingizimu Afrika ezicashunwe emithonjeni, zonke izifunda ndawonye — izihlahla zakho zingaqala noma ziphele ngenyanga ngaphambili noma ngemuva.
+~		14 text Akukho okumele kwenziwe okwamanje.
+~		15 container Izinyanga zeshadi lezitshalo; skrola ukuze zihambisane nekhalenda lokutshala
+~				44 button Ezihlahleni zakho
+~				47 button Izikhathi zaseNingizimu Afrika ezicashunwe emithonjeni, zonke izifunda ndawonye — izihlahla zakho zingaqala noma ziphele ngenyanga ngaphambili noma ngemuva.
+~				50 button Akukho okumele kwenziwe okwamanje.
+~				53 button Ikhaya
+~				56 button Buyela ekwakhiweni
+~				59 button Shintshela ohlelweni lokukhiqiza lomunye umklamo
+~				62 button Zonke izinhlelo zokukhiqiza
+~				65 button Uhlelo lokukhiqiza
+~				68 button Izitshalo nezindlu zezilwane ezisemephini yakho
+~				71 button Hlola imibhede namapuloti asetshenziswa yilolu hlelo — inani, ubukhulu nomthombo
+~				74 button Funda
+~				77 button Kulayishwa uhlelo lokukhiqiza…
+~				80 button Uhlela siphi isiza?
+~				83 button Khansela
+~				86 button Azikho izakhiwo ezilondoloziwe okwamanje. Dweba imibhede yakho ku-Design Studio; izovela lapha.
+~				89 button imiklamo elondoloziwe. Ngayinye iboniswa njengoba injalo emhlabeni.
+~				92 button Noma sebenzisa umklamo ovuliwe kule divayisi
+~				95 button Faka imibhede yangempela esigabeni sokuTshala
+~				98 button ukuze uwushintshe.
+~				101 button Phakamisa uhlelo ngokuzenzakalelayo
+~				104 button Buyisela emuva ushintsho lokugcina kulolu hlelo
+~				107 button Buyisela emuva
+~				110 button Susa konke okutshalwe kulolu hlelo
+~				113 button Umbhede
+~				116 button Engeza isilimo
+~				119 button Eminye imibhede ibhukhwe kabili
+~				122 button Imisebenzi
+~				125 button Yabelana ngemisebenzi
+~				128 button Okulandelayo
+~				131 button Akukho okutshalwe okwamanje — cindezela + crop embhedeni ongenhla.
+~				134 button Ngesilimo
+~				137 button Ngombhede
+~				140 button Akukho okutshalwe okwamanje.
+~				143 button Ayikho imibhede eklanyiwe okwamanje
+~				146 button Qala ngokubeka imibhede yemifino esigabeni sokuTshala — bese ubuya lapha uzohlela okuzotshalwa kuyo.
+~				149 button Izinyanga zeshadi lezitshalo; skrola ukuze zihambisane nekhalenda lokutshala
+~				152 button Vala
+~				155 button Sesha izitshalo…
+~				158 button Susa ezintandokazini
+~				161 button Engeza ezintandokazini
+~				164 button Buyela ohlwini
+~				167 button Londoloza izinguquko / Save changes
+~				170 button Engeza njengokukhona kakade
+~				173 button Engeza embhedeni
+~				176 button Susa isilimo / Remove crop
+~				179 button Hlela
+~				182 button Susa / Remove
+~				185 button Buyela
+~				188 button Lahla / Discard
+The focused UI element is 1 AXWebArea 127.0.0.1:4272/zu.html

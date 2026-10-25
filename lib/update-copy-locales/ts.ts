@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Crop task panels now use unreviewed translations in four languages.": "Tiphanele ta mintirho ya swibyariwa sweswi ti tirhisa vuhundzuluxeri bya tindzimi ta mune byo ka byi nga si kamberiwa.",
+  "Crop search and month controls have more unreviewed translation drafts.": "Ku lava swibyariwa ni swilawuri swa tin’hweti swi ni vuhundzuluxeri byin’wana byo ka byi nga si kamberiwa.",
+  "Review crop task drafts": "Kambela matsalwa ya mintirho ya swibyariwa lama nga si kamberiwa",
+  "Open tasks, crop search and a month detail. Check the English source before acting.": "Pfula mintirho, ku lava swibyariwa ni vuxokoxoko bya n’hweti. Kambela xihlovo xa Xinghezi u nga si teka goza.",
   "More crop guidance now has unreviewed translations in four languages.": "Nkongomiso wun’wana wa swibyariwa sweswi wu ni vuhundzuluxeri bya tindzimi ta mune byo ka byi nga si kamberiwa.",
   "Food-use cautions and trial figures stay with their source.": "Switsundzuxo swa ku tirhisa tani hi swakudya ni tinhlayo ta ndzingo swi sala ni xihlovo xa swona.",
   "Review crop guidance drafts": "Kambela matsalwa ya nkongomiso wa swibyariwa lama nga si kamberiwa",

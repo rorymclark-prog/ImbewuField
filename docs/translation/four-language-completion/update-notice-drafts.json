@@ -1384,6 +1384,34 @@
       "st": "Bala ditemoso tsohle tsa mohlodi ho PDF ya tataiso. Diphetolelo di ntse di hloka tlhahlobo.",
       "ts": "Hlaya switsundzuxo hinkwato swa xihlovo eka PDF ya nkongomiso. Vuhundzuluxeri bya ha lava ku kamberiwa.",
       "ve": "Vhalani tsevho dzo fhelelaho dza tshiko kha PDF ya nyendedzi. Ṱhalutshedzelo dzi kha ḓi ṱoḓa u sedzwa."
+    },
+    {
+      "english": "Crop task panels now use unreviewed translations in four languages.",
+      "zu": "Amaphaneli emisebenzi yezitshalo manje anokuhumusha okungakabuyekezwa ngezilimi ezine.",
+      "st": "Diphanele tsa mesebetsi ya dijalo jwale di sebedisa diphetolelo tse eso hlahlojwe ka dipuo tse nne.",
+      "ts": "Tiphanele ta mintirho ya swibyariwa sweswi ti tirhisa vuhundzuluxeri bya tindzimi ta mune byo ka byi nga si kamberiwa.",
+      "ve": "Phanele dza mishumo ya zwiliṅwa zwino dzi shumisa ṱhalutshedzelo dzi sa athu u sedzwa nga nyambo nṋa."
+    },
+    {
+      "english": "Crop search and month controls have more unreviewed translation drafts.",
+      "zu": "Ukusesha izitshalo nezinkinobho zezinyanga kunokuhumusha okwengeziwe okusenguhlaka okungakabuyekezwa.",
+      "st": "Patlo ya dijalo le ditaolo tsa dikgwedi di na le meralo e meng ya diphetolelo tse eso hlahlojwe.",
+      "ts": "Ku lava swibyariwa ni swilawuri swa tin’hweti swi ni vuhundzuluxeri byin’wana byo ka byi nga si kamberiwa.",
+      "ve": "U ṱoḓa zwiliṅwa na ndangulo dza miṅwedzi zwi na dziṅwe ṱhalutshedzelo dzi sa athu u sedzwa."
+    },
+    {
+      "english": "Review crop task drafts",
+      "zu": "Buyekeza imisebenzi yezitshalo esenguhlaka",
+      "st": "Hlahloba meralo ya mesebetsi ya dijalo",
+      "ts": "Kambela matsalwa ya mintirho ya swibyariwa lama nga si kamberiwa",
+      "ve": "Sedzani mishumo ya zwiliṅwa i sa athu u khwaṱhisedzwa"
+    },
+    {
+      "english": "Open tasks, crop search and a month detail. Check the English source before acting.",
+      "zu": "Vula imisebenzi, ukusesha izitshalo nemininingwane yenyanga. Hlola umthombo wesiNgisi ngaphambi kokwenza.",
+      "st": "Bula mesebetsi, patlo ya dijalo le dintlha tsa kgwedi. Hlahloba mohlodi wa Senyesemane pele o nka kgato.",
+      "ts": "Pfula mintirho, ku lava swibyariwa ni vuxokoxoko bya n’hweti. Kambela xihlovo xa Xinghezi u nga si teka goza.",
+      "ve": "Vulani mishumo, u ṱoḓa zwiliṅwa na zwidodombedzwa zwa ṅwedzi. Sedzani tshiko tsha Luisimane musi ni sa athu u dzhia vhukando."
     }
   ],
   "historyBefore": [

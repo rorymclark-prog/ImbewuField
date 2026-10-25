@@ -1,0 +1,48 @@
+Browser tab: 3, Title: "Isolated task and dynamic control verification", URL: "http://127.0.0.1:4273/".
+1 AXWebArea Isolated task and dynamic control verification, URL: 127.0.0.1:4273/
+	2 container
+		3 heading Isolated actual crop components, Value: 1
+			4 text Isolated actual crop components
+		5 text Synthetic tasks and names; system fonts. No account, saved records or message sending. Picker list/search only; full production route and selected-crop detail form are not verified.
+		6 container
+			7 text Verification language
+			8 pop up button (collapsed, settable) Description: Verification language, Value: ve, Secondary Actions: Expand
+				9 menu
+					10 en
+					11 zu
+					12 st
+					13 ts
+					14 (selected) ve
+		15 container
+			16 text Verification state
+			17 pop up button (collapsed, settable) Description: Verification state, Value: tasks, Secondary Actions: Expand
+				18 menu
+					19 (selected) tasks
+					20 prep
+					21 sow
+					22 transplant
+					23 harvest
+					24 empty
+					25 picker
+					26 month
+		27 text Ṱhalutshedzelo idzi dza ndangulo a dzi athu u sedzwa nga muthu a ambaho luambo nga nḓila yavhuḓi. Miṅwe miṅwalo ya tshikirini i kha ḓi shumisa Luisimane. Lugisani fhethu 4 mishumo PRIVATE crop carrots {count} $& PRIVATE second bed
+		46 text sedzulusani mavu na u elela ha maḓi; shumisani ndingo ya mavu kana ngeletshedzo ya henefho phanḓa ha u engedza zwishumiswa zwa u khwinisa mavu
+		47 text PRIVATE crop tomatoes {count} $& PRIVATE second bed
+		48 text sedzulusani mavu na u elela ha maḓi; shumisani ndingo ya mavu kana ngeletshedzo ya henefho phanḓa ha u engedza zwishumiswa zwa u khwinisa mavu
+		49 text PRIVATE crop green-beans {count} $& PRIVATE bed {count} $&
+		50 text sedzulusani mavu na u elela ha maḓi; shumisani ndingo ya mavu kana ngeletshedzo ya henefho phanḓa ha u engedza zwishumiswa zwa u khwinisa mavu
+		51 text PRIVATE crop green-beans {count} $& PRIVATE plot
+		52 text sedzulusani mavu na u elela ha maḓi; shumisani ndingo ya mavu kana ngeletshedzo ya henefho phanḓa ha u lima kana u engedza zwishumiswa zwa u khwinisa mavu
+		53 text Zwalani 4 mishumo PRIVATE crop carrots {count} $& PRIVATE second bed
+		54 text mitalo i fhambane nga 20–40cm · 2–5cm vhukati ha zwimela kha mutalo · zwalani kha vhudzivha ha 1–2.5cm
+		55 text PRIVATE crop tomatoes {count} $& PRIVATE second bed
+		56 text thomani kha thireyi, kha vhudzivha ha 1cm
+		57 text PRIVATE crop green-beans {count} $& PRIVATE bed {count} $& PRIVATE plot
+		58 text mitalo i fhambane nga 45–60cm · 4–7cm vhukati ha zwimela kha mutalo · zwalani kha vhudzivha ha 2–5cm
+		59 text Sedzulusani / sudzuluselani tsimuni 1 mushumo PRIVATE crop tomatoes {count} $& PRIVATE second bed
+		60 text mitalo i fhambane nga 90–120cm · 30–60cm vhukati ha zwimela kha mutalo
+		61 text Kaṋani 6 mishumo PRIVATE crop green-beans {count} $& PRIVATE bed {count} $& PRIVATE plot PRIVATE crop carrots {count} $& PRIVATE second bed PRIVATE crop tomatoes {count} $& PRIVATE second bed U bva kha miri yaṋu
+		44 text Kaṋani PRIVATE fruit {month} $& (0) — miṅwedzi yo khwaṱhisedzwaho henefho Nyen–Phan
+		45 text Zwifhinga zwa Afrika Tshipembe zwi bvaho kha zwiko, madzingu oṱhe o ṱangana — miri yaṋu i nga thoma kana ya fhedza ṅwedzi phanḓa kana nga murahu.
+
+The focused UI element is 1 AXWebArea Isolated task and dynamic control verification, URL: 127.0.0.1:4273/
