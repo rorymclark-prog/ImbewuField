@@ -1,4 +1,4 @@
-.page { height:100dvh; overflow-y:auto; overflow-x:hidden; color:var(--text-primary); background:var(--bg-0); padding:0 28px calc(120px + env(safe-area-inset-bottom, 0px)); font:15px/1.5 var(--font-sans),sans-serif; }
+.page { height:100dvh; overflow-y:auto; overflow-x:hidden; color:var(--text-primary); background:var(--bg-0); padding:0 28px calc(max(120px, var(--lima-fab-clearance, 0px)) + env(safe-area-inset-bottom, 0px)); font:15px/1.5 var(--font-sans),sans-serif; }
 .wrap { max-width:1180px; margin:auto; }
 .page a { color:inherit; text-underline-offset:4px; }
 .page h1,.page h2,.page h3,.page h4 { color:var(--text-primary); }

@@ -1,4 +1,4 @@
-.root { --mel-ink:var(--text-primary); --mel-muted:var(--text-secondary); color:var(--mel-ink); background:var(--bg-0); padding:24px; font-family:var(--font-sans),sans-serif; width:100%; min-width:0; min-height:0; overflow:auto; padding-bottom:180px; }
+.root { --mel-ink:var(--text-primary); --mel-muted:var(--text-secondary); color:var(--mel-ink); background:var(--bg-0); padding:24px; font-family:var(--font-sans),sans-serif; width:100%; min-width:0; min-height:0; overflow:auto; padding-bottom:max(180px, var(--lima-fab-clearance, 0px)); }
 .wrap { max-width:1440px; margin:auto; }
 /* w18-01: header and tab bar are siblings of the padded scroller, not children of it, so they run
    edge to edge. TabBar is in normal flow (not fixed), so the shell stays a 100dvh column. */
@@ -67,7 +67,7 @@
    not a stretched rule. */
 .metric .bar { max-width:420px; }
 @media(max-width:650px) {
-  .root { padding:12px; padding-bottom:calc(96px + env(safe-area-inset-bottom)); }
+  .root { padding:12px; padding-bottom:calc(max(96px, var(--lima-fab-clearance, 0px)) + env(safe-area-inset-bottom)); }
   .hero { padding:0; margin-bottom:10px; border-radius:0; background:transparent; color:var(--mel-ink); }
   .hero h1 { font-size:24px; line-height:1.15; margin:0; }
   .hero p { margin:4px 0; }

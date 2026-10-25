@@ -180,6 +180,7 @@ export default function ContactPage() {
       {/* Content */}
       <main
         className={`${workspace.workspace} ${workspace.formWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}
+        style={{ paddingBottom: 'max(24px, var(--lima-fab-clearance, 0px))' }}
       >
         {sent ? (
           /* Success state */
