@@ -117,7 +117,7 @@ export default function DesignPortfolio() {
   }
   function download() {
     if (!ready) return;
-    const url = URL.createObjectURL(new Blob([portfolioText(answers)], { type: 'text/plain;charset=utf-8' }));
+    const url = URL.createObjectURL(new Blob([portfolioText(answers, lang)], { type: 'text/plain;charset=utf-8' }));
     const link = document.createElement('a'); link.href = url; link.download = 'imbewu-design-learning-folder.txt';
     document.body.appendChild(link); link.click(); link.remove();
     window.setTimeout(() => URL.revokeObjectURL(url), 1000);

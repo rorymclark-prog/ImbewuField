@@ -427,9 +427,9 @@ function HomeLandingInner() {
   const STAFF_LINKS = !staffRole ? [] : [
     // w19-09: the role dashboard link is gone — the hero CTA and the Dashboard tab already go there.
     // isiZulu descriptions are not drafted: lang zu shows the English line until a reviewed one exists.
-    { href: '/assessments', Icon: ClipboardList, label: t('navAssessments'), desc: 'Check how farms and learners are doing' },
-    { href: '/reports', Icon: FileText, label: t('siteReportOverline'), desc: 'Site analysis reports you can open or share' },
-    { href: '/network', Icon: Users, label: t('navNetwork'), desc: 'Farmers, mentors and partners near you' },
+    { href: '/assessments', Icon: ClipboardList, label: t('navAssessments'), desc: inlineText(lang, 'Check how farms and learners are doing') },
+    { href: '/reports', Icon: FileText, label: t('siteReportOverline'), desc: inlineText(lang, 'Site analysis reports you can open or share') },
+    { href: '/network', Icon: Users, label: t('navNetwork'), desc: inlineText(lang, 'Farmers, mentors and partners near you') },
   ].filter(({ href }) => canSeeNavLink(navigationRole, href) && canSeeWorkspaceLink(navigationRole, href));
   const quickActions = simple ? QUICK_ACTIONS.filter((q) => q.href !== '/records') : QUICK_ACTIONS;
 

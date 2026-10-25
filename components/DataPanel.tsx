@@ -1474,7 +1474,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             : kp.startsWith('BS') ? t('summarySemiAridSteppe')
             : kp.startsWith('BW') ? t('summaryAridDesert')
             : kp.startsWith('ET') ? t('summaryHighAltitude')
-            : 'Variable climate — use local rainfall and temperature data to plan your seasonal crop calendar.';
+            : inlineText(lang, 'Variable climate — use local rainfall and temperature data to plan your seasonal crop calendar.');
 
           const CROPS: Record<string, Array<{ pre: string; bold: string; post: string }>> = {
             Cwb: [{ pre: 'Year-round vegetables on summer rain — ', bold: 'maize, beans, leafy greens, brassicas & sweet potato', post: '. The mild, dry winter suits cool-season crops; the warm, frost-free conditions also carry ' }, { pre: '', bold: 'bananas, avocado & subtropical fruit', post: '.' }],
@@ -1576,7 +1576,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   </div>
                   <div style={{ fontFamily: 'var(--font-display)', fontWeight: 400, fontSize: 14, color: '#3D4A36', lineHeight: 1.5 }}>
                     {cropSegs.map((seg, i) => (
-                      <span key={i}>{seg.pre}{seg.bold && <b style={{ fontWeight: 600 }}>{seg.bold}</b>}{seg.post}</span>
+                      <span key={i}>{inlineText(lang, seg.pre)}{seg.bold && <b style={{ fontWeight: 600 }}>{seg.bold}</b>}{inlineText(lang, seg.post)}</span>
                     ))}
                   </div>
                 </div>
@@ -1656,8 +1656,8 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 </div>
                 <div style={{ ...implSt, marginTop: 11 }}>
                   → {data.rainfall.pattern === 'winter'
-                    ? 'Sunniest in the wet summer — maximise solar gain in autumn and spring.'
-                    : 'Sunniest in the dry winter — ideal for cool-season crops and drying produce.'}
+                    ? inlineText(lang, 'Sunniest in the wet summer — maximise solar gain in autumn and spring.')
+                    : inlineText(lang, 'Sunniest in the dry winter — ideal for cool-season crops and drying produce.')}
                 </div>
               </div>
 
@@ -1666,7 +1666,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 14 }}>
                   <div style={ovlSt}>{t('windKmhCard')}</div>
                   <div style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: 13, color: '#5E7A66' }}>
-                    {kmh > 22 ? 'Moderate – strong' : kmh > 12 ? 'Light – moderate' : 'Light'}
+                    {kmh > 22 ? inlineText(lang, 'Moderate – strong') : kmh > 12 ? inlineText(lang, 'Light – moderate') : (lang === 'xh' ? inlineText(lang, 'Light wind') : 'Light')}
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: 16, alignItems: 'flex-end' }}>

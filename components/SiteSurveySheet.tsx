@@ -30,7 +30,7 @@ import SiteSurveyReview from './SiteSurveyReview';
 import SurveyZuluDraftPair, { surveyZuluConfirmDraft, SURVEY_DISCARD_CONFIRM_ENGLISH, SURVEY_DISCARD_BUTTON_ENGLISH } from './SurveyZuluDraftPair';
 import { resolveSiteSurveyWelcomeDraft, type SiteSurveyWelcomeField } from '@/lib/site-survey-welcome-drafts';
 import type { LocationData } from '@/lib/types';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 
 interface Props {
   placeId: string;
@@ -293,6 +293,9 @@ export default function SiteSurveySheet(props: Props) {
 }
 
 function SurveyRecoverySession(props: Props & { siteId: string; scope: string }) {
+  const { lang } = useLanguage();
+  // These notices have no isiZulu draft yet: English for everyone except isiXhosa (unreviewed draft).
+  const textLang = lang === 'xh' ? 'xh' : 'en';
   const [stored] = useState(() => readSurveyDraft(props.scope));
   const [choice, setChoice] = useState<'resume' | 'discard' | null>(null);
   const [discardError, setDiscardError] = useState(false);
@@ -307,20 +310,20 @@ function SurveyRecoverySession(props: Props & { siteId: string; scope: string })
     return () => { document.body.style.overflow = overflow; prior?.focus(); };
   }, [pending]);
   if (pending) return typeof document === 'undefined' ? null : createPortal(
-    <dialog ref={dialog} className={styles.recovery} aria-labelledby="survey-recovery-title" lang="en"
+    <dialog ref={dialog} className={styles.recovery} aria-labelledby="survey-recovery-title" lang={textLang}
       onCancel={event => { event.preventDefault(); props.onClose(); }}>
-      <h1 id="survey-recovery-title">Continue your unfinished survey?</h1>
-      <p>Your unfinished answers are kept on this browser. They are separate from your saved survey and report.</p>
-      {stored.error && <p role="alert">This browser could not read the draft. Close this screen to keep it, or discard it to use your saved answers.</p>}
-      {stored.draft && stored.draft.baseRevision !== surveyRevision(loadSurvey(props.siteId)) && <p role="note">Your saved survey has changed since this draft began. Check the answers carefully before saving a resumed draft.</p>}
-      {discardError && <p role="alert">The draft could not be discarded, or changed in another tab. Close this screen and reopen the survey to try again.</p>}
+      <h1 id="survey-recovery-title">{inlineText(lang, 'Continue your unfinished survey?')}</h1>
+      <p>{inlineText(lang, 'Your unfinished answers are kept on this browser. They are separate from your saved survey and report.')}</p>
+      {stored.error && <p role="alert">{inlineText(lang, 'This browser could not read the draft. Close this screen to keep it, or discard it to use your saved answers.')}</p>}
+      {stored.draft && stored.draft.baseRevision !== surveyRevision(loadSurvey(props.siteId)) && <p role="note">{inlineText(lang, 'Your saved survey has changed since this draft began. Check the answers carefully before saving a resumed draft.')}</p>}
+      {discardError && <p role="alert">{inlineText(lang, 'The draft could not be discarded, or changed in another tab. Close this screen and reopen the survey to try again.')}</p>}
       <div className={styles.recoveryActions}>
-        {stored.draft && <button className={styles.primary} onClick={() => setChoice('resume')}>Resume draft</button>}
+        {stored.draft && <button className={styles.primary} onClick={() => setChoice('resume')}>{inlineText(lang, 'Resume draft')}</button>}
         <button className={styles.back} onClick={() => {
           if (clearSurveyDraft(props.scope, props.siteId, stored.token)) setChoice('discard');
           else setDiscardError(true);
-        }}>Discard draft and use saved answers</button>
-        <button className={styles.back} aria-label="Close and keep draft" onClick={props.onClose}>Close and keep draft</button>
+        }}>{inlineText(lang, 'Discard draft and use saved answers')}</button>
+        <button className={styles.back} aria-label={inlineText(lang, 'Close and keep draft')} onClick={props.onClose}>{inlineText(lang, 'Close and keep draft')}</button>
       </div>
     </dialog>, document.body);
   return <SurveyEditor {...props} initialDraft={choice === 'resume' ? stored.draft : null}
@@ -331,6 +334,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, sco
   scope: string; initialDraft: SiteSurveyDraft | null; initialDraftToken: string | null;
 }) {
   const { lang, t } = useLanguage();
+  const textLang = lang === 'xh' ? 'xh' : 'en'; // English-only notices: isiXhosa draft for xh, English otherwise
   const paired = (key: string, english: string): ReactNode => {
     const zulu = t(key);
     return lang === 'zu' && zulu !== english ? <SurveyZuluDraftPair english={english}>{zulu}</SurveyZuluDraftPair> : zulu;
@@ -1233,23 +1237,23 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, sco
       </div>
 
       <footer className={styles.footer}>
-        {draftError && <p lang="en" role="alert" className={styles.warning}>Your unfinished answers could not be kept on this browser, or changed in another tab. Keep this screen open. <button onClick={() => {
+        {draftError && <p lang={textLang} role="alert" className={styles.warning}>{inlineText(lang, 'Your unfinished answers could not be kept on this browser, or changed in another tab. Keep this screen open.')} <button onClick={() => {
           const token = writeSurveyDraft(scope, draft, draftToken.current);
           if (token !== null) draftToken.current = token;
           setDraftError(token === null);
-        }}>Try keeping the draft again</button></p>}
-        {saveConflict && <p lang="en" role="alert" className={styles.warning}>Your saved survey changed while this screen was open. Your draft is separate. Close and reopen the survey to check the newer saved answers before saving.</p>}
-        {draftDirty && !draftError && <p lang="en" role="status" className={styles.smallNote}>Unfinished answers kept on this browser. Your report changes only after Save &amp; continue. <button className={styles.back} aria-label="Close and keep draft" onClick={() => {
+        }}>{inlineText(lang, 'Try keeping the draft again')}</button></p>}
+        {saveConflict && <p lang={textLang} role="alert" className={styles.warning}>{inlineText(lang, 'Your saved survey changed while this screen was open. Your draft is separate. Close and reopen the survey to check the newer saved answers before saving.')}</p>}
+        {draftDirty && !draftError && <p lang={textLang} role="status" className={styles.smallNote}>{inlineText(lang, 'Unfinished answers kept on this browser. Your report changes only after Save & continue.')} <button className={styles.back} aria-label={inlineText(lang, 'Close and keep draft')} onClick={() => {
           const token = writeSurveyDraft(scope, draft, draftToken.current);
           if (token === null) { setDraftError(true); return; }
           draftToken.current = token;
           completed.current = true;
           onClose();
-        }}>Close and keep draft</button></p>}
+        }}>{inlineText(lang, 'Close and keep draft')}</button></p>}
         {!started && <div className={styles.footerInner}><span className={styles.saveReminder}>{t('surveySwitchHint')}</span><button className={styles.primary} onClick={() => { if (!route.includes(step)) setStep(2); setStarted(true); }}><RegionalWelcomeCopy language={lang} field={dirty || existing ? 'continue' : 'begin'}>{dirty || existing ? t('surveyContinue') : t('surveyBegin')}</RegionalWelcomeCopy><ArrowRight size={18}/></button></div>}
         {saveError && <p role="alert" className={styles.warning}>{lang === 'zu' ? <SurveyZuluDraftPair english="Your survey could not be saved. Keep this screen open and try again.">{t('surveySaveError')}</SurveyZuluDraftPair> : t('surveySaveError')}</p>}
-        {started && invalidLayingHens && <p lang="en" role="alert" className={styles.warning}>Check the laying-hen count before saving. Enter a whole number, zero, or leave it blank.</p>}
-        {started && invalidProductionYear && <p lang="en" role="alert" className={styles.warning}>Check the production reporting year before saving. Use a recorded year up to {new Date().getFullYear()}, or leave it blank.</p>}
+        {started && invalidLayingHens && <p lang={textLang} role="alert" className={styles.warning}>{inlineText(lang, 'Check the laying-hen count before saving. Enter a whole number, zero, or leave it blank.')}</p>}
+        {started && invalidProductionYear && <p lang={textLang} role="alert" className={styles.warning}>{inlineTemplate(lang, 'Check the production reporting year before saving. Use a recorded year up to {year}, or leave it blank.', null, { year: new Date().getFullYear() })}</p>}
         {started && (invalidArea || invalidProduction.length > 0) && <p role="alert" className={styles.warning}>{lang === 'zu' ? <SurveyZuluDraftPair english="Check the production entries and areas before saving. Use positive numbers or zero; leave unknowns blank.">{t('surveyFixBeforeSave')}</SurveyZuluDraftPair> : t('surveyFixBeforeSave')}</p>}
         {started && <div className={styles.footerInner}>
           <button className={styles.back} onClick={() => routeIndex > 0 ? goTo(route[routeIndex - 1]) : setStarted(false)}><ChevronLeft size={17}/>{t('buttonBack')}</button>

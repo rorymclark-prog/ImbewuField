@@ -62,7 +62,7 @@ export default function FinanceProjectWorksheet({ exercise }: { exercise: Financ
   };
   const download = () => {
     if (!ready) return;
-    const url = URL.createObjectURL(new Blob([projectDraftText(exercise, answers)], { type: 'text/plain;charset=utf-8' }));
+    const url = URL.createObjectURL(new Blob([projectDraftText(exercise, answers, lang)], { type: 'text/plain;charset=utf-8' }));
     const link = document.createElement('a'); link.href = url; link.download = `imbewu-finance-practice-${exercise.id}.txt`;
     document.body.appendChild(link); link.click(); link.remove();
     window.setTimeout(() => URL.revokeObjectURL(url), 1000);

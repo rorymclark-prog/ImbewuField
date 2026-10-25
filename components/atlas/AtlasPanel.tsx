@@ -150,17 +150,26 @@ const SOIL_CAUTION_STYLE: Record<'lab' | 'soilgrids' | 'estimate' | 'unknown', {
   unknown: { bg: 'rgba(32,25,15,0.05)', border: 'var(--border)', color: 'var(--text-secondary)', title: 'Source unknown' },
 };
 
-function SoilProvenance({ source }: { source: LocationData['soil']['soilSource'] }) {
+// One-line copies of lib/plan-assurance.ts's SOIL_CAUTION, so the isiXhosa drafts can be keyed by the
+// exact English. If the lib wording ever changes, the comparison below fails and the lib's own
+// English is shown instead of a stale draft.
+const SOIL_CAUTION_DRAFTABLE: Record<'lab' | 'soilgrids' | 'estimate', string> = {
+  soilgrids: 'From the SoilGrids global model, which reads an area far wider than your field. Treat it as the district, not your soil. A soil test is the only way to know your own.',
+  estimate: "NOT A READING. No soil data was available for this point, so these are the app's general figures — the same numbers it would show anywhere. Do not spend money on the strength of them. A soil test is the only way to know.",
+  lab: 'From a soil test you uploaded for this site. This is the most reliable soil figure in the app and it overrides the global model.',
+};
+
+function SoilProvenance({ source, lang }: { source: LocationData['soil']['soilSource']; lang: string }) {
   const key = source ?? 'unknown';
   const st = SOIL_CAUTION_STYLE[key];
   const text = source
-    ? SOIL_CAUTION[source]
-    : 'This reading did not record where its numbers came from. Treat it with the same caution as a model estimate.';
+    ? (SOIL_CAUTION_DRAFTABLE[source] === SOIL_CAUTION[source] ? inlineText(lang, SOIL_CAUTION[source]) : SOIL_CAUTION[source])
+    : inlineText(lang, 'This reading did not record where its numbers came from. Treat it with the same caution as a model estimate.');
   return (
     <div className="flex gap-2 items-start rounded-xl px-3 py-2.5 mt-3" style={{ background: st.bg, border: `1px solid ${st.border}` }}>
       <AlertTriangle size={13} style={{ color: st.color, flexShrink: 0, marginTop: 2 }} />
       <div>
-        <div className="font-sans font-bold uppercase" style={{ fontSize: 'clamp(11px, 0.8vw, 12px)', letterSpacing: '0.1em', color: st.color }}>{st.title}</div>
+        <div className="font-sans font-bold uppercase" style={{ fontSize: 'clamp(11px, 0.8vw, 12px)', letterSpacing: '0.1em', color: st.color }}>{inlineText(lang, st.title)}</div>
         <p className="font-display leading-relaxed mt-0.5" style={{ fontSize: 12.5, color: '#3A2E22' }}>{text}</p>
       </div>
     </div>
@@ -326,7 +335,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
             </div>
           ))}
         </div>
-        <SoilProvenance source={soil.soilSource} />
+        <SoilProvenance source={soil.soilSource} lang={lang} />
       </Card>
 
       {/* 5 — Terrain */}

@@ -69,7 +69,7 @@ test('a person\'s own card in the people list is a real button, not a clickable 
   const s = source('../components/PeoplePanel.tsx');
   assert.match(s, /const Wrapper = isCurrentUser \? 'button' : 'div'/,
     'PersonCard no longer switches its own root element to a button when clickable');
-  assert.match(s, /aria-label=\{isCurrentUser \? 'Open your profile' : undefined\}/,
+  assert.match(s, /aria-label=\{isCurrentUser \? (?:'Open your profile'|inlineText\(lang, 'Open your profile'\)) : undefined\}/,
     'the clickable own-profile card lost its accessible name');
 });
 
