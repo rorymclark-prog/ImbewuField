@@ -77,6 +77,11 @@ and isiZulu output are unchanged.
   - Remaining farmer screens: site-survey recovery and footer warnings, climate panel, atlas soil
     notes, weather, audio player and accessible names.
   - Staff, field and demo screens. Consent wording sits beside its English source.
+- **Round 3 blind review of g18–g31:**
+  - 5,047 strings, 215 repairs and 0 holds. Record: `docs/translation-reviews/xhosa-ui-2026-10-23/README.md`.
+  - Repairs included profit "unknown" read as "known", a supervision warning reversed, poison warnings
+    garbled, and fermenting rendered as boiling.
+- **`/student` app-guide cards:** now in isiXhosa; the `xh-studies` byte-pin layer is updated.
 - **Still English:**
   - Crop and species names, catalogue notes and custom bed labels.
   - The site-survey chicken block and the calendar advice holds, both deliberately held until review.

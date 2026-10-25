@@ -153,6 +153,44 @@ meaning errors in place. Style preferences were left alone.
 
 None of this replaces a fluent-speaker review; it removes the errors a careful reader would catch.
 
+## Round 3 review (25 Oct 2026): phases 4–6 shards (g18–g31)
+Same method as round 2: blind back-translation of the values first, then a comparison with the
+English. Reviewers did not edit the shards; they recorded every repair with the exact key and
+draft in `inline-review/<unit>.review.json`, and the coordinator applied them with a matcher that
+refuses on any key, draft or placeholder mismatch. None were refused.
+
+| Unit | Reviewed | Repair | Hold |
+|---|---|---|---|
+| g18 programme report body | 148 | 2 | 0 |
+| g19 crop production | 427 | 9 | 0 |
+| g20 study components | 564 | 8 | 0 |
+| g21 staff misc | 286 | 13 | 0 |
+| g22 production data | 347 | 22 | 0 |
+| g23 funder charts | 77 | 0 | 0 |
+| g24 product guidance | 697 | 66 | 0 |
+| g25 facilitator crop plan | 506 | 37 | 0 |
+| g26 study content (3 parts) | 1,512 | 47 | 0 |
+| g27 crop-plan built text | 187 | 7 | 0 |
+| g28–g31 downloads, titles, farmer gaps, staff/demo | 296 | 4 | 0 |
+| **Total** | **5,047** | **215** | **0** |
+
+The most serious repairs:
+- **Money:** "Full profit remains unknown" read "is still known". Grant disbursements were "uhlawulo" (a fine). "Earlier costs are outside the budget" read "above the budget".
+- **Safety:** an unsupervised-surveying warning had become "under supervision". "Report at once" for avian-influenza signs was softened to "notice". The fish-stunning and tuberous-root poison warnings were garbled.
+- **Farming:** "No frost assumed" read as frost not considered. Cover-crop seed rates had the drill and broadcast methods swapped. Fermentation was rendered as boiling.
+- **Plants and animals:** melon read as cow, bats as hyenas, pumpkin as an unrelated word, and bee hives as "bee servants".
+
+The coordinator also made these changes:
+- **Fermentation:** one term, the loanword `-fermenta`, in all shards.
+- **"Assigned":** the verb form that read "stolen" (`ebelwe`) is fixed in g21, g24 and g27.
+- **One label:** the "Grow big vines" setting and the four notes that quote it now share one wording.
+
+**For a fluent reviewer to confirm:**
+- `-fermenta`
+- "utolo" (arrow)
+- the SARS word for a tax "return"
+- the many "ingeniso" uses that mean entry or input rather than income
+
 ## Still English for isiXhosa readers
 - Lesson narration audio. No isiXhosa recording or TTS voice exists; the decks are silent or use the
   optional English source voice.
