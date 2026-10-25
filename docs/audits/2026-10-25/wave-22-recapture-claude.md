@@ -18,12 +18,12 @@
 | ID | Where | What the render showed | Fix | Status |
 | --- | --- | --- | --- | --- |
 | w22-01 | /home, every role and language | React error #425 on load. `getDayDate()` ran during render, and /home is prerendered, so the HTML carried the build day ("Saturday") and every visit on a later day re-rendered the whole page in the browser | The date is computed after mount; a non-breaking space holds its line until then | Fixed |
-| w22-02 | /invoice | React error #425 on load. The issue date starts as `new Date()` in state, so the prerendered invoice reads "Issued" plus the build day and the date input's `max` is the build day | Track C | Open |
-| w22-03 | Weather card (/home, /community, /community/profile) | Fixed colours: rain totals in water blue `#235E86` on the dark card (2.67:1), the "no rain" dash in `#C4BAA4` on the light card (1.91:1), a light divider `#F0E9D8` in dark, hazard banner text in fixed `#235E86` / `#B83A18` | Track B | Open |
-| w22-04 | Weather card in isiZulu | English only: day labels ("Today", "Mon"), the frost, heat and heavy-rain warnings, the "Crops will lose about … mm" line and the weather descriptions. Only the error state had an isiZulu draft | Track B | Open |
+| w22-02 | /invoice | React error #425 on load. The issue date starts as `new Date()` in state, so the prerendered invoice reads "Issued" plus the build day and the date input's `max` is the build day | `app/invoice/page.tsx` keeps a `today` state set after mount; the issue date defaults to it, validation and `max` wait for it, and the preview reads "Issued —" until then. What is saved is unchanged (rorymclark-prog/imbewufield#1105) | Fixed |
+| w22-03 | Weather card (/home, /community, /community/profile) | Fixed colours: rain totals in water blue `#235E86` on the dark card (2.67:1), the "no rain" dash in `#C4BAA4` on the light card (1.91:1), a light divider `#F0E9D8` in dark, hazard banner text in fixed `#235E86` / `#B83A18` | Theme tokens throughout `components/WeatherWidget.tsx`; hazard tints are `color-mix` of `--blue` / `--orange` with `--bg-1`; the dash carries a visually hidden "No rain" (rorymclark-prog/imbewufield#1104) | Fixed |
+| w22-04 | Weather card in isiZulu | English only: day labels ("Today", "Mon"), the frost, heat and heavy-rain warnings, the "Crops will lose about … mm" line and the weather descriptions. Only the error state had an isiZulu draft | Labelled, unreviewed isiZulu drafts shown with their English source (`lib/weather-copy.ts`), every string listed in `lib/i18n-pending.ts` and `docs/translation/pending-isizulu.csv` for the translator (rorymclark-prog/imbewufield#1104) | Fixed (drafts await review) |
 | w22-05 | /calendar, light, isiZulu | "isiZulu translation pending — English source:" in `--text-muted` on the tinted draft box: 4.16:1 | `--text-secondary` | Fixed |
 | w22-06 | /student/design, dark, isiZulu | "English source:" lines in `--text-muted` on the dark Study notice: 4.37:1 | `components/studies/DesignDraftCopy.module.css` uses `--text-secondary` | Fixed |
-| w22-07 | Lima button at the end of the page | Covers content that scrolling can never uncover: "Send message" and the practice notice on /contact (phone), "Open people & gardens" on /mentor and /facilitator (phone), the last farmer rows on /network (desktop list), the last crop chips on /prices, the last site's links on /reports, the footer on /samples/production. Each page's scroll area ends with 8–120px of padding against the 180px (desktop) or 202px (phone) that `--lima-fab-clearance` publishes | Track A | Open |
+| w22-07 | Lima button at the end of the page | Covers content that scrolling can never uncover: "Send message" and the practice notice on /contact (phone), "Open people & gardens" on /mentor and /facilitator (phone), the last farmer rows on /network (desktop list), the last crop chips on /prices, the last site's links on /reports, the footer on /samples/production. Each page's scroll area ends with 8–120px of padding against the 180px (desktop) or 202px (phone) that `--lima-fab-clearance` publishes | Each scroller's bottom padding is `max(<its own>, var(--lima-fab-clearance, 0px))`; /mentor's was overridden by a phone `!important` rule on `.workspace-main` in `app/globals.css` (rorymclark-prog/imbewufield#1103) | Fixed |
 | w22-08 | Lima button on first view, desktop | At 1280px it sits over the left edge of the content column on most staff and Study pages (/assessments cycle cards, /exchange chips, /mentor, /network, /reports, /tips, /tour). It parks bottom-left by design (see `components/ChatWidget.tsx`) | A design call for Rory: keep, or move to the bottom-right at `lg` | Asked |
 | w22-09 | /samples/production, dark | Still as `w21-10`, plus chart axis titles ("Production in kilograms", "Crop growing space", "Fresh food", "Fresh + kept food") in `#EEE4D0` on the near-white chart card: 1.25:1 | `components/crops/*` is Codex's | Handed to Codex, unchanged |
 | w22-10 | Every route | No horizontal overflow at 390, 768, 1024 or 1280px in either language; `html lang` matches on every load; no failed loads | — | Checked |
@@ -46,7 +46,27 @@
 
 ## Verification
 
-Filled in after the fixed build is re-measured.
+The integrated branch (this record, the three swarm PRs and the direct fixes) was rebuilt with
+`next build`, served in sample mode, and re-measured with the same script and the same 492 loads.
+The browser clock was set two days after the build (`2026-10-27`), so any date baked in at build
+time would mismatch the way it does on Vercel the day after a deploy.
+
+- **Page errors:** none on any load. Before: React #425 on every /home and /invoice load. /home now
+  shows the visitor's day ("TUESDAY · 27 OCTOBER" under the shifted clock) and its prerendered HTML
+  carries no weekday; /invoice defaults the issue date to the 27th with `max="2026-10-27"`.
+- **Lima at the end of the page:** no content under the launcher on any route, phone or desktop,
+  in either language (before: 21 route/text pairs, `w22-07`).
+- **Contrast:** the weather strip, the /calendar draft note and the Study design source line no
+  longer appear. The only hits left are the `w22-09` chart labels on /samples/production, which
+  are Codex's.
+- **Overflow and language:** no horizontal overflow at 390, 768, 1024 or 1280px; `html lang`
+  matches on every load.
+- **First view:** the launcher still overlaps content on first view on 19 routes, which is the
+  open design question `w22-08`.
+- **Tests:** `tests/w22-recapture.test.ts`, `tests/w22-weather.test.ts`,
+  `tests/w22-invoice-hydration.test.ts` and `tests/lima-fab-clearance.test.ts` pin the fixes. Every
+  test file that reads a changed file passes locally, apart from the known sandbox-only failures
+  (`product-tour`, `public-route-ssr`, `course-deck`, `firestore-rules`).
 
 ## Next continuation
 
