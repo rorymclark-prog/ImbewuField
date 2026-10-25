@@ -1,0 +1,261 @@
+{
+  "rows": [
+    {
+      "id": "empty",
+      "bars": []
+    },
+    {
+      "id": "crop-cycles",
+      "bars": [
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        }
+      ]
+    },
+    {
+      "id": "unknown-age",
+      "bars": []
+    },
+    {
+      "id": "dated-young",
+      "bars": []
+    },
+    {
+      "id": "changing",
+      "bars": [
+        {
+          "width": 103.056,
+          "height": 9
+        },
+        {
+          "width": 412.224,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        }
+      ]
+    },
+    {
+      "id": "missing-date",
+      "bars": []
+    },
+    {
+      "id": "invalid-count",
+      "bars": []
+    },
+    {
+      "id": "future-existing",
+      "bars": []
+    },
+    {
+      "id": "duplicate-age",
+      "bars": []
+    },
+    {
+      "id": "overflow",
+      "bars": [
+        {
+          "width": "Infinity",
+          "height": 9
+        },
+        {
+          "width": "Infinity",
+          "height": 9
+        },
+        {
+          "width": "Infinity",
+          "height": 9
+        },
+        {
+          "width": "Infinity",
+          "height": 9
+        },
+        {
+          "width": "Infinity",
+          "height": 9
+        },
+        {
+          "width": "Infinity",
+          "height": 9
+        },
+        {
+          "width": "Infinity",
+          "height": 9
+        },
+        {
+          "width": "Infinity",
+          "height": 9
+        },
+        {
+          "width": "Infinity",
+          "height": 9
+        },
+        {
+          "width": "Infinity",
+          "height": 9
+        }
+      ]
+    },
+    {
+      "id": "sixty-cohorts",
+      "bars": [
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        },
+        {
+          "width": 515.28,
+          "height": 9
+        }
+      ]
+    },
+    {
+      "id": "long-schedule",
+      "bars": [
+        {
+          "width": 206.112,
+          "height": 9
+        },
+        {
+          "width": 206.112,
+          "height": 9
+        },
+        {
+          "width": 206.112,
+          "height": 9
+        },
+        {
+          "width": 206.112,
+          "height": 9
+        },
+        {
+          "width": 206.112,
+          "height": 9
+        },
+        {
+          "width": 206.112,
+          "height": 9
+        },
+        {
+          "width": 206.112,
+          "height": 9
+        },
+        {
+          "width": 206.112,
+          "height": 9
+        },
+        {
+          "width": 206.112,
+          "height": 9
+        },
+        {
+          "width": 206.112,
+          "height": 9
+        }
+      ]
+    }
+  ]
+}

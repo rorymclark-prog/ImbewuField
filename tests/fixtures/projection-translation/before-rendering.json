@@ -1,0 +1,50 @@
+[
+  {
+    "id": "empty",
+    "bytes": 15923
+  },
+  {
+    "id": "crop-cycles",
+    "bytes": 16649
+  },
+  {
+    "id": "unknown-age",
+    "bytes": 21410
+  },
+  {
+    "id": "dated-young",
+    "bytes": 25190
+  },
+  {
+    "id": "changing",
+    "bytes": 33603
+  },
+  {
+    "id": "missing-date",
+    "bytes": 25258
+  },
+  {
+    "id": "invalid-count",
+    "bytes": 28049
+  },
+  {
+    "id": "future-existing",
+    "bytes": 25351
+  },
+  {
+    "id": "duplicate-age",
+    "bytes": 25388
+  },
+  {
+    "id": "overflow",
+    "bytes": 25843
+  },
+  {
+    "id": "sixty-cohorts",
+    "bytes": 218373
+  },
+  {
+    "id": "long-schedule",
+    "bytes": 41446
+  }
+]

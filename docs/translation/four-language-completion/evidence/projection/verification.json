@@ -1,0 +1,169 @@
+{
+  "checkedAt": "2026-10-23T01:13:08.860687+00:00",
+  "status": "Source-bound unreviewed drafts; no fluent speaker or agricultural approval.",
+  "files": [
+    {
+      "file": "zu-changing.pdf",
+      "sha256": "0ed04a298a3a7e2c0651f12274e69a04c179be8eaaf49572d7b9ecb842e436e2"
+    },
+    {
+      "file": "zu-changing-contact.png",
+      "sha256": "345877d6612cbcfb86a7e08251922f0e50f5528b02c2f96bb84e645f1c04e3f1"
+    },
+    {
+      "file": "st-changing.pdf",
+      "sha256": "45893cf9ee8e27c455c98bc8141248c62a12e72200e2eed9a0328dcd3980dc3a"
+    },
+    {
+      "file": "st-changing-contact.png",
+      "sha256": "c131aee0708a3a744f723f155f6b82bea19981fc841e18f483a72597eea0daab"
+    },
+    {
+      "file": "ts-changing.pdf",
+      "sha256": "268a9ceb89be33571cfa6b006e54dfc4f0a8f65ed4fd0bafdd31d10056bb9f29"
+    },
+    {
+      "file": "ts-changing-contact.png",
+      "sha256": "bcc076383a468953d5bc5fc90db7b1817fb0049245abb8aae07f2085779ebd3d"
+    },
+    {
+      "file": "ve-changing.pdf",
+      "sha256": "429e5b130f85e545d258562f83be892198b259f6c6ce844d7fd14c94f9e5b229"
+    },
+    {
+      "file": "ve-changing-contact.png",
+      "sha256": "3bda11673b976b7de9e78f0a4362737227ecc6b3b88d5ff4c2f90285c4989913"
+    },
+    {
+      "file": "ve-overflow.pdf",
+      "sha256": "b898dcb173a26b99a9d4291e81f95336c6c06e061a8a44f746940acedebeb2c2"
+    },
+    {
+      "file": "ve-overflow-contact.png",
+      "sha256": "1b7602a90682c30b01ccdc3863c286e965a3ac0051314dc854125c12c17882f2"
+    },
+    {
+      "file": "ve-long-schedule.pdf",
+      "sha256": "a7573bc92b35f8af6acdab568f587e47b49731ba934bbca8dc6eace764ea6c93"
+    },
+    {
+      "file": "ve-long-schedule-contact.png",
+      "sha256": "7681f57adaa96e8c58482a4da6add8eb0fb436ccf29951308947dd9586ad11a9"
+    },
+    {
+      "file": "ve-sixty-cohorts.pdf",
+      "sha256": "a6ed47798c2b21a9c9528818df53b831dcceba9a12cb77711c9cd6629977ef07"
+    },
+    {
+      "file": "ve-sixty-cohorts-reference-page15.png",
+      "sha256": "8e63dfa36f4ab5bc75297f9b68dba9065380f04c877b2a7f3476d38e0513a13e"
+    },
+    {
+      "file": "zu-sixty-cohorts-last-table-page11.png",
+      "sha256": "940285672187d705d6a3955618f3f85d1f1b62bc2103635a2fb8ed856aa1c1e8"
+    }
+  ],
+  "generatedPdfs": 60,
+  "comparisonFiles": 72,
+  "pages": 344,
+  "wordBounds": 102269,
+  "clippedWords": 0,
+  "currentParserErrors": [],
+  "english": {
+    "empty": {
+      "samePixels": true,
+      "sameText": true,
+      "originalParserErrors": "",
+      "currentParserErrors": ""
+    },
+    "crop-cycles": {
+      "samePixels": true,
+      "sameText": true,
+      "originalParserErrors": "",
+      "currentParserErrors": ""
+    },
+    "unknown-age": {
+      "samePixels": true,
+      "sameText": true,
+      "originalParserErrors": "",
+      "currentParserErrors": ""
+    },
+    "dated-young": {
+      "samePixels": true,
+      "sameText": true,
+      "originalParserErrors": "",
+      "currentParserErrors": ""
+    },
+    "changing": {
+      "samePixels": true,
+      "sameText": true,
+      "originalParserErrors": "",
+      "currentParserErrors": ""
+    },
+    "missing-date": {
+      "samePixels": true,
+      "sameText": true,
+      "originalParserErrors": "",
+      "currentParserErrors": ""
+    },
+    "invalid-count": {
+      "samePixels": true,
+      "sameText": true,
+      "originalParserErrors": "",
+      "currentParserErrors": ""
+    },
+    "future-existing": {
+      "samePixels": true,
+      "sameText": true,
+      "originalParserErrors": "",
+      "currentParserErrors": ""
+    },
+    "duplicate-age": {
+      "samePixels": true,
+      "sameText": true,
+      "originalParserErrors": "",
+      "currentParserErrors": ""
+    },
+    "overflow": {
+      "samePixels": false,
+      "sameText": false,
+      "originalParserErrors": "Syntax Error (2186): Unknown operator 'Infinity'\nSyntax Error (2191): Too few (1) args to 're' operator",
+      "currentParserErrors": ""
+    },
+    "sixty-cohorts": {
+      "samePixels": true,
+      "sameText": true,
+      "originalParserErrors": "",
+      "currentParserErrors": ""
+    },
+    "long-schedule": {
+      "samePixels": true,
+      "sameText": true,
+      "originalParserErrors": "",
+      "currentParserErrors": ""
+    }
+  },
+  "nativeExtraction": {
+    "pdfs": 48,
+    "pages": 240,
+    "completeAssumptionChecks": 336,
+    "exactEnteredCheckpointOccurrences": 1472,
+    "completeSourceNoteChecks": 72,
+    "completeAllPageCautions": true
+  },
+  "canonicalNotes": {
+    "uniqueEnglishSources": 28,
+    "nativeValues": 112,
+    "missing": 0
+  },
+  "models": "All12 complete projection outputs and103 catalogue age decisions match immutable originals. Entire production-projection/perennial-harvest/production-product-guidance files byte-exact from graph parent. Default annual bar widths/range stripes match original in11 ordinary cases.",
+  "visualInspection": [
+    "four native changing-yield four-page contacts",
+    "Ve extreme-value contact",
+    "Zu sixty-cohort first/last sampled contact and enlarged final cohort table page11",
+    "Ve300-checkpoint first/last sampled contact",
+    "final corrected Ve sixty-cohort complete source-reference page15 enlarged"
+  ],
+  "limits": "Every extracted word bound checked; contacts longer than6pages show first/last3, not every stress page visually inspected. No main crop-screen, guidance PDF or fluent-language completion claim.",
+  "pictureChange": "This changes the picture: native projection headings, complete assumptions, age/source text and measured cells; complete native checkpoints and compact citation/link blocks stay together. Original finite MAX_VALUE yield produced invalid Infinity rectangle and a dash; presentation now draws a bounded bar and prints its exact scientific value. All11 ordinary English cases pixel/text identical."
+}

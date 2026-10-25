@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Future harvest PDFs now have unreviewed translations in four languages.": "Di-PDF tsa kotulo ya nakong e tlang jwale di na le diphetolelo tse so hlahlojwe ka dipuo tse nne.",
+  "Production guidance and some crop screens still have English text.": "Tataiso ya tlhahiso le dikirini tse ding tsa dijalo di sa na le mongolo wa Senyesemane.",
+  "Read the future harvest PDF": "Bala PDF ya kotulo ya nakong e tlang",
+  "Open the future harvest PDF. Age tables and full source cautions have unreviewed translations.": "Bula PDF ya kotulo ya nakong e tlang. Ditafoleng tsa dilemo le ditemosong tse felletseng tsa mehlodi ho na le diphetolelo tse so hlahlojwe.",
   "Read translated production PDF charts": "Bala ditjhate tsa tlhahiso tsa PDF tse fetoletsweng",
   "Open the detailed reference PDF in your language. Its graph text is an unreviewed draft.": "Bula PDF ya referense e qaqileng ka puo ya hao. Mongolo wa ditjhate tsa yona ke moralo o so hlahlojwe.",
   "Check quantities and missing records": "Hlahloba bongata le direkoto tse siyo",
