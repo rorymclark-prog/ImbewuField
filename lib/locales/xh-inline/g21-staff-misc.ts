@@ -155,7 +155,7 @@ const drafts: Record<string, string> = {
   "Assessment summaries reviewed and shared by the organisation.": "Izishwankathelo zovavanyo ezijongwe zabelwana ngazo ngumbutho.",
   "Loading approved summaries…": "Iyalayisha izishwankathelo ezivunyiweyo…",
   "No approved assessment summaries are available here yet.": "Azikabikho izishwankathelo zovavanyo ezivunyiweyo apha okwangoku.",
-  "Due {date} · {completed} completed / {assigned} assigned": "Kufuneka ngomhla {date} · {completed} egqityiwe / {assigned} ebelwe",
+  "Due {date} · {completed} completed / {assigned} assigned": "Kufuneka ngomhla {date} · {completed} egqityiwe / {assigned} ezabelweyo",
   "Survey responses are self-reported. Small groups are withheld; these figures alone do not establish project impact.": "Iimpendulo zophando zixelwa ngabantu ngokwabo. Amaqela amancinci ayangaveli; ezi nani zodwa aziqinisekisi impembelelo yeprojekthi.",
   // app/partners/page.tsx, components/partners/*
   "Get the app": "Fumana i-app",
