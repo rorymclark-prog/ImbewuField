@@ -52,6 +52,8 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+- **2026-10-25 — Site-report verification complete (Codex).** Read final push/PR CI for #1099 (`45d3dabe`: 5,480 pass, zero fail, one existing TODO) and #1101 (`23922e558`: 5,489 pass, zero fail, one existing TODO); both test and rules jobs pass. Rechecked deployed short/complete and comprehensive/potential survey routes, retained synthetic notes, absent date, Public Sans 16px fields and 390px phone width. Earlier real Ubhejane PDFs/source files remain intact. This follow-up changes only documentation/evidence. [Completion audit, exact CI and screenshots](docs/audits/2026-10-25/site-report-verification-codex.md). Merge #1099 before #1101; fluent, physical-device, current field/buyer and generated-narrative checks retain their recorded limits.
+
 - **2026-10-24 — Site-report continuation: market evidence and soil source (Codex).** Built on unmerged #1099 at `45d3dabe`; merge it first. Re-read the original six private Ubhejane reports and exported/inspected the current real five-page handout. Added optional market notes/source/observation date to the existing survey, recovery, capture, prompt and exports; unverified opportunities remain unverified. Full headers now reject unsourced soil placeholders. Desktop/phone and actual PDFs inspected; 211 focused tests pass, final typecheck/whitespace clean. Full suite and prerequisite CI are pending. [Shared audit and private-folder pointers](docs/audits/2026-10-24/site-report-market-evidence-codex.md). This changes the picture; `PLAN_VERSION` retained.
 
 ### 2026-10-24 — Site reports continue the existing production work
