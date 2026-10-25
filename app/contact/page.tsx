@@ -4,7 +4,7 @@ import workspace from '@/components/layout/Workspace.module.css';
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { MessageCircle, Phone, Mail, Users, Building2, Send, CheckCircle, MailOpen, ChevronDown, ChevronUp } from 'lucide-react';
+import { MessageCircle, Phone, Mail, Users, Building2, Send, CheckCircle, MailOpen, ChevronDown, ChevronUp, Plus } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
@@ -374,8 +374,8 @@ export default function ContactPage() {
                       aria-pressed={recipient === value}
                       className={`flex items-center gap-3 rounded-xl p-3 text-left ${motion.recipient}`}
                       style={{
-                        background: recipient === value ? 'color-mix(in srgb, var(--color-forest-800) 8%, transparent)' : 'var(--bg-1)',
-                        border: `1px solid ${recipient === value ? 'color-mix(in srgb, var(--color-forest-800) 35%, transparent)' : 'var(--border)'}`,
+                        background: recipient === value ? 'color-mix(in srgb, var(--color-forest-800) 8%, var(--bg-1))' : 'var(--bg-1)',
+                        border: recipient === value ? '1.5px solid var(--color-forest-800)' : '1px solid var(--border)',
                         cursor: orgLocked ? 'default' : 'pointer',
                         opacity: orgLocked ? 0.55 : 1,
                       }}
@@ -436,7 +436,7 @@ export default function ContactPage() {
                   className="font-sans font-semibold text-left"
                   style={{ fontSize: 13, color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0, minHeight: 44 }}
                 >
-                  + {ui('Add a subject', 'Engeza isihloko')}
+                  <span className="inline-flex items-center gap-1"><Plus size={14} aria-hidden="true" />{ui('Add a subject', 'Engeza isihloko')}</span>
                 </button>
               )}
 
@@ -468,7 +468,7 @@ export default function ContactPage() {
                 <p className="font-sans m-0" style={{ fontSize: 13, lineHeight: 1.5, color: 'var(--text-secondary)', borderLeft: '3px solid var(--border-strong, var(--border))', padding: '4px 0 4px 12px' }}>
                   {/* ux-03/nav-04: was developer vocabulary ("backend", "Firebase") on a
                       farmer-facing screen — rewritten in plain words below. */}
-                  {ui('Practice version: your message is kept on this phone and is not sent yet.', 'Inguqulo yokuzilolonga: umlayezo wakho ugcinwa kule foni futhi awukathunyelwa.')}
+                  {ui('Practice version: your message is kept on this device and is not sent yet.', 'Inguqulo yokuzilolonga: umlayezo wakho ugcinwa kule foni futhi awukathunyelwa.')}
                 </p>
               )}
 

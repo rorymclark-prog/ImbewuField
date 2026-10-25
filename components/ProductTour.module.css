@@ -9,8 +9,8 @@
 .header{margin-bottom:24px}
 .hero{display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center;margin:24px 0}
 .eyebrow{color:var(--text-secondary);font-size:13px;font-weight:700;letter-spacing:.09em}
-.page h1{font:600 clamp(24px,3.2vw,32px)/1.15 var(--font-display),serif;letter-spacing:-.02em;color:var(--text-primary);margin:12px 0 16px;max-width:620px}
-.page h2,.dialog h2{font:600 26px/1.25 var(--font-display),serif;margin:12px 0}
+.page h1{font:600 clamp(24px,3.2vw,32px)/1.15 var(--font-display),serif;letter-spacing:-.02em;color:var(--text-primary);margin:12px 0 16px;max-width:620px;text-wrap:balance}
+.page h2,.dialog h2{font:600 26px/1.25 var(--font-display),serif;margin:12px 0;text-wrap:balance}
 .page p,.dialog p{margin:12px 0}
 .hero img{width:100%;height:300px;object-fit:cover;border-radius:22px}
 .hero figure{margin:0}.hero figcaption,.hint,.time{font-size:13px;color:var(--text-secondary)}
@@ -21,6 +21,7 @@
 .notice{padding:14px 18px;border-radius:14px;background:var(--bg-2);font-size:14px}
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:22px 0}
 .card{background:var(--bg-1);border:1px solid var(--border);border-radius:18px;padding:20px;min-width:0}
+.tipCard{display:flex;flex-direction:column}
 .card h2{font-size:23px}.card p{font-size:15px}.card .primary{width:100%;margin-top:8px}.cardMeta{font-size:13px;color:var(--text-secondary)}
 .complete{padding:24px;background:var(--bg-2);border-radius:18px;margin:20px 0}
 .progress{width:100%;height:12px;accent-color:#245739}

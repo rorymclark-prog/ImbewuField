@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, Sprout, Map, BookOpen, ReceiptText, Users, Building2, BarChart3, FileText, MessageCircle, type LucideIcon } from 'lucide-react';
+import { ArrowRight, Sprout, Map, BookOpen, ReceiptText, Users, Building2, BarChart3, FileText, MessageCircle, type LucideIcon } from 'lucide-react';
 import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import { useProductTour } from '@/components/ProductTourProvider';
@@ -69,7 +69,7 @@ export default function TourPage() {
         <div className={cards.top}><span className={cards.icon} aria-hidden="true"><Icon size={26} strokeWidth={1.75}/></span><span className={styles.cardMeta}>{String(index+1).padStart(2,'0')} · {duration}{tour?.done.includes(step.id) ? ui(' · Explored', ' · Kuhloliwe') : ''}</span></div>
         <h2><button type="button" className={cards.open} data-tour-stop={step.id} aria-label={tourUi('stopAria', `Open stop ${index + 1}: ${step.title}`, { current: index + 1, title: copy.title })} aria-describedby={`tour-${step.id}-description`} aria-current={current ? 'step' : undefined} disabled={!allowed || pendingStop !== null} onClick={()=>openStop(index)}>{copy.title}</button></h2>
         <p id={`tour-${step.id}-description`} className={cards.description}>{copy.task}</p>
-        <span className={cards.action} aria-hidden="true">{pendingStop === index ? tourUi('opening', 'Opening…') : !tour?.ready ? tourUi('gettingReady', 'Getting ready…') : allowed ? ui('Open stop', 'Vula indawo') : tourUi('unavailable', 'Unavailable for this account')}{allowed && <ArrowUpRight size={18}/>}</span>
+        <span className={cards.action} aria-hidden="true">{pendingStop === index ? tourUi('opening', 'Opening…') : !tour?.ready ? tourUi('gettingReady', 'Getting ready…') : allowed ? ui('Open stop', 'Vula indawo') : tourUi('unavailable', 'Unavailable for this account')}{allowed && <ArrowRight size={16}/>}</span>
       </article>;
     })}</div>
     <div className={styles.controls}><Link href="/samples/farm">{ui('Full farm evidence pack', 'Iphakethe eligcwele lobufakazi bepulazi')}</Link><Link href="/samples">{ui('All role workspaces', 'Zonke izindawo zokusebenza')}</Link><Link href="/feedback">{ui('Feature requests & programme customisation', 'Izicelo zezici nokwenza uhlelo lufaneleke')}</Link></div>

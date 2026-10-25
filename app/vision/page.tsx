@@ -237,13 +237,13 @@ export default function VisionPage() {
 
           {/* code-13: AppHeader's title is a <span>, not a heading — this page needs its own
               real <h1> now that the old text-xs chip is gone. */}
-          <h1 className="font-display" style={{ fontSize: 'clamp(20px, 2vw, 28px)', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>
+          <h1 className="font-display text-center" style={{ fontSize: 'clamp(20px, 2vw, 28px)', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>
             Lima Vision
           </h1>
 
           {/* Mode toggle */}
           <div
-            className="flex rounded-2xl p-1 gap-1"
+            className="grid grid-cols-2 rounded-2xl p-1 gap-1 w-fit mx-auto max-w-full"
             style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}
           >
             {([
@@ -256,7 +256,7 @@ export default function VisionPage() {
                   key={v}
                   onClick={() => switchMode(v)}
                   aria-pressed={on}
-                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold transition-all"
+                  className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-sans font-semibold whitespace-nowrap transition-all"
                   style={{
                     background: on ? 'var(--color-forest-800)' : 'transparent',
                     color: on ? 'var(--on-forest-800)' : 'var(--text-secondary)',

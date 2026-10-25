@@ -249,6 +249,7 @@ export const T_en: Dict = {
   // English, and an open composer is the hardest control there is for someone who types slowly.
   // Now a labelled button, and Lima is finally introduced. See components/LimaBar.tsx.
   limaWhoIs: 'Lima, your planting helper',
+  limaWhoIsStaff: 'Lima, your helper',
   limaAskButton: 'Ask for help',
   limaPhotoButton: 'Photo',
   askLimaSubtitle: 'Sizes, water, what to plant…',
@@ -1806,7 +1807,7 @@ export const T_en: Dict = {
   loginContinueToMap: 'Sign in to continue to your map',
   // ux-03/nav-04: was 'Backend not connected yet — auth is unavailable. The app runs in tour
   // mode.' — developer vocabulary on a farmer's first-contact screen.
-  loginBackendUnavailableNotice: 'Sign-in is not available in this practice version. Everything you try here is kept on this phone.',
+  loginBackendUnavailableNotice: 'Sign-in is not available in this practice version. Everything you try here is kept on this device.',
   loginSignIn: 'Sign in',
   loginCreateAccount: 'Create account',
   loginResetEmailSent: 'Reset email sent to',
@@ -1878,6 +1879,7 @@ export const T_en: Dict = {
   offlineReadinessLimit: 'These checks cover startup files. They do not promise fresh map imagery, every report image, or every optional tool.',
   offlineSavedEntriesTitle: 'Saved entries waiting to send',
   offlineSavedEntriesDescription: 'Completed visits, training registers, signatures, feedback, photographs, garden observations and assessment responses can wait here. Sync runs when the app is open and a connection returns.',
+  offlineSavedEntriesDescriptionFarmer: 'Journal notes, records and photos wait here until you have signal. They send by themselves when the app is open and you are back online.',
   offlineSyncNow: 'Send now',
   offlineQueueEmpty: 'Nothing waiting to send. My Records saves separately.',
   offlineNeedsReview: 'Needs review — server save not confirmed',

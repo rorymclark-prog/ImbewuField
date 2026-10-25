@@ -20,9 +20,10 @@ test('w18-13 session rows have a chevron and numbered steps', () => {
   assert.match(refresher, /\.sessionBody ol \{[^}]*list-style: decimal/);
 });
 
-test('w18-14 hero jump links are outlined and the shell is 1080px', () => {
+test('w18-14 hero jump links are outlined and the shell is 1120px', () => {
   assert.match(refresher, /\.heroLinks a \{[^}]*border: 1px solid var\(--border-strong\)[^}]*background: var\(--bg-1\)/);
-  assert.match(refresher, /\.main \{ width: min\(100%, 1080px\)/);
+  // w20-32 widened the shell from 1080/16 to 1120/20 to match the other Study pages.
+  assert.match(refresher, /\.main \{ width: min\(100%, 1120px\); margin: 0 auto; padding: 20px 20px /);
 });
 
 test('w18-15 tour stop tiles follow the theme', () => {
