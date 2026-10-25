@@ -196,7 +196,7 @@ export default function ChatWidget() {
     // tests/chat-widget-fab-overlap.test.ts, which fails if a route is excluded here without a
     // LimaBar, or gains a LimaBar without being excluded here.
     pathname.startsWith('/journal') || pathname.startsWith('/calendar') ||
-    pathname.startsWith('/cropplan') || pathname.startsWith('/records') ||
+    pathname.startsWith('/cropplan') || pathname.startsWith('/records') || pathname.startsWith('/invoice') ||
     pathname.startsWith('/finances') || pathname.startsWith('/facilitator/crops')
   ) return null;
 
@@ -360,7 +360,7 @@ function isLimaFabHiddenRoute(pathname: string): boolean {
     pathname.startsWith('/partners') || pathname.startsWith('/funder') ||
     pathname.startsWith('/ngo') || pathname.startsWith('/pitch') ||
     pathname.startsWith('/journal') || pathname.startsWith('/calendar') ||
-    pathname.startsWith('/cropplan') || pathname.startsWith('/records') ||
+    pathname.startsWith('/cropplan') || pathname.startsWith('/records') || pathname.startsWith('/invoice') ||
     pathname.startsWith('/finances') || pathname.startsWith('/facilitator/crops')
   );
 }

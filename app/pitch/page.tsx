@@ -24,6 +24,7 @@
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { enterSampleMode } from '@/lib/sample-mode';
 
 const DECK_W = 1280;
@@ -653,20 +654,20 @@ export default function PitchPage() {
         ))}
       </div>
 
-      <div className="pitch-ui counter" aria-live="polite">
-        {idx + 1} / {SLIDE_COUNT}
-      </div>
       <div className="pitch-ui navbtns">
         <button type="button" aria-label="Previous slide" onClick={() => go(-1)} disabled={idx === 0}>
-          ‹ Back
+          <ChevronLeft size={16} aria-hidden="true" /> Back
         </button>
+        <span className="counter" aria-live="polite">
+          {idx + 1} / {SLIDE_COUNT}
+        </span>
         <button
           type="button"
           aria-label="Next slide"
           onClick={() => go(1)}
           disabled={idx === SLIDE_COUNT - 1}
         >
-          Next ›
+          Next <ChevronRight size={16} aria-hidden="true" />
         </button>
       </div>
       <div className="pitch-ui hints">ImbewuField&ensp;·&ensp;← → move · F fullscreen · P print / PDF</div>
@@ -994,9 +995,9 @@ export default function PitchPage() {
           user-select: none;
         }
         .counter {
-          right: 22px;
-          bottom: 64px;
           font-variant-numeric: tabular-nums;
+          white-space: nowrap;
+          padding: 0 6px;
         }
         .hints {
           left: 22px;
@@ -1012,9 +1013,13 @@ export default function PitchPage() {
           right: 18px;
           bottom: 18px;
           display: flex;
+          align-items: center;
           gap: 8px;
         }
         .navbtns button {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
           appearance: none;
           border: 1px solid rgba(242, 238, 225, 0.35);
           background: rgba(12, 26, 17, 0.6);

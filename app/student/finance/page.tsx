@@ -1,5 +1,4 @@
-import MenuButton from '@/components/MenuButton';
-import BackButton from '@/components/BackButton';
+import { ChevronDown } from 'lucide-react';
 import { FINANCE_UNITS, FINANCE_LESSONS } from '@/lib/course-finance';
 import { financeZu, FINANCE_ZU_UNIT_TITLE, FINANCE_ZU_UNIT_SUMMARY, FINANCE_ZU_LESSON_TITLE } from '@/lib/course-finance-i18n';
 import FinanceReadingChecklist from '@/components/studies/FinanceReadingChecklist';
@@ -10,12 +9,13 @@ import FullToolsOnly from '@/components/studies/FullToolsOnly';
 import { FinanceZuText, FinanceZuCourseNotice } from '@/components/studies/FinanceZu';
 import styles from '@/components/studies/FinanceCourse.module.css';
 import ArrowLabel from '@/components/studies/ArrowLabel';
+import StudyHeader from '@/components/studies/StudyHeader';
 
 export const metadata = { title: 'Farm Finance — ImbewuField teaching preview', robots: { index: false, follow: false } };
 
 export default function FarmFinancePage() {
   return <div className={styles.page}>
-    <header className={styles.header}><MenuButton /><BackButton fallback="/student" /><OfflinePageLink href="/student">My Studies</OfflinePageLink><span>Farm Finance</span></header>
+    <StudyHeader title="Farm Finance" />
     <main className={styles.main}>
       <section className={styles.hero}>
         <div className={styles.heroText}>
@@ -27,7 +27,7 @@ export default function FarmFinancePage() {
         </div>
         <img src="/studies-guides/expense-record.jpg" alt="Illustrated homestead record-keeping scene with a grower, notebook and source documents" width={1672} height={941} />
       </section>
-      <aside className={`${styles.notice} ${styles.projectNotice}`}><p><strong>Teaching preview.</strong> Content review, learner trials and final assessment remain in preparation.</p><details><summary>More</summary><p>English lesson drafts and worked practice are available. Content review, learner trials, narration, translation and final assessment remain in preparation.</p></details><FinanceZuCourseNotice /></aside>
+      <aside className={`${styles.notice} ${styles.projectNotice}`}><p><strong>Teaching preview.</strong> Content review, learner trials and final assessment remain in preparation.</p><details><summary>More<ChevronDown className={styles.chevron} size={20} aria-hidden="true" /></summary><p>English lesson drafts and worked practice are available. Content review, learner trials, narration, translation and final assessment remain in preparation.</p></details><FinanceZuCourseNotice /></aside>
       <FinanceReadingChecklist lessonIds={FINANCE_LESSONS.map(e => e.lesson.id)} />
       <section className={styles.section}>
         <h2>Learn by doing</h2>

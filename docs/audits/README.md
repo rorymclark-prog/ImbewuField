@@ -6,7 +6,9 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Site reports and mapping: start here
 
-Latest verification: [Completed CI and deployed questionnaire checks — 25 October 2026](2026-10-25/site-report-verification-codex.md).
+Latest integration: [Report branch updated with current main — 25 October 2026](2026-10-25/site-report-main-integration-codex.md).
+
+Previous verification: [Completed CI and deployed questionnaire checks — 25 October 2026](2026-10-25/site-report-verification-codex.md).
 
 Previous continuation: [Market evidence, real Ubhejane comparison and soil source — 24 October 2026](2026-10-24/site-report-market-evidence-codex.md).
 
@@ -80,6 +82,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Site-report main integration — 25 October 2026](2026-10-25/site-report-main-integration-codex.md).
+
 - [Site report completed CI and deployed verification — 25 October 2026](2026-10-25/site-report-verification-codex.md).
 
 - [Site report market evidence and soil-source continuation — 24 October 2026](2026-10-24/site-report-market-evidence-codex.md).
@@ -87,6 +91,15 @@ or main. Local Downloads packs remain dated reading snapshots.
 - [Site report CI readability-register follow-up — 24 October 2026](2026-10-24/site-report-ci-followup-codex.md).
 
 - [Two report purposes, annual production handoff and Record plan — 24 October 2026](2026-10-24/site-report-production-mapping-codex.md).
+
+- [Wave 21 rendered re-capture of the wave 20 build in isiZulu: w21-01 to w21-11, ten fixed, one handed to Codex — 24 October 2026](2026-10-24/wave-21-recapture-claude.md).
+- [Wave 20 integration close-out: five tracks folded onto the wave 19 branch with main, w20-01 to w20-46 implemented, w19 partials closed with them — 24 October 2026](2026-10-24/wave-20-integration-claude.md).
+
+- [Wave 20 rendered re-capture and visual review of the wave 19 build: new IDs w20-01 to w20-46 across five tracks, w19 partials carried — 23 October 2026](2026-10-23/wave-20-recapture-claude.md).
+
+- [Wave 19 integration close-out: five tracks folded, w19-01 to w19-42 implemented, w18 partials closed with them — 23 October 2026](2026-10-23/wave-19-integration-claude.md).
+
+- [Wave 19 rendered re-capture and visual review of the wave 18 build: new IDs w19-01 to w19-42 across five tracks, w18 partials carried — 23 October 2026](2026-10-23/wave-19-recapture-claude.md).
 
 - [Wave 18 integration close-out: eight tracks folded, w18-01 to w18-59 implemented, w17-08 closed — 23 October 2026](2026-10-23/wave-18-integration-claude.md).
 

@@ -144,8 +144,8 @@ function Card({
       className={`rounded-xl p-4 transition-all duration-200 glass glass-hover ${className}`}
       style={
         accent
-          ? { background: 'var(--color-surface)', color: 'var(--color-ink)', borderLeftWidth: 2, borderLeftColor: accent, borderLeftStyle: 'solid' }
-          : { background: 'var(--color-surface)', color: 'var(--color-ink)' }
+          ? { background: 'var(--bg-1)', color: 'var(--text-primary)', borderLeftWidth: 2, borderLeftColor: accent, borderLeftStyle: 'solid' }
+          : { background: 'var(--bg-1)', color: 'var(--text-primary)' }
       }
     >
       {children}
@@ -179,7 +179,7 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
       {...props}
-      className={`dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] transition-all ${props.className ?? ''}`}
+      className={`dark-input w-full rounded-lg px-3 py-2 text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] transition-all ${props.className ?? ''}`}
       style={{
         background: 'var(--bg-1)',
         border: '1px solid var(--border)',
@@ -271,7 +271,7 @@ function SignInPrompt() {
       </div>
       <a
         href="/login"
-        className="px-5 py-2 rounded-xl text-sm font-display font-semibold transition-all flex items-center gap-1.5"
+        className="px-5 py-2 rounded-xl text-sm font-sans font-semibold transition-all flex items-center gap-1.5"
         style={{
           background: 'rgba(31,77,43,0.14)',
           border: '1px solid rgba(31,77,43,0.35)',
@@ -388,7 +388,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
   }
 
   return (
-    <Card accent="#1F4D2B">
+    <Card accent="#1F4D2B" className="md:max-w-xl">
       <SectionLabel>{t('myRecordsLogProductionHeader')}</SectionLabel>
       <form onSubmit={handleSubmit} className="space-y-3 u-form-column">
         {sampleProducePhoto(form.crop) && <figure className="flex items-center gap-3"><img src={sampleProducePhoto(form.crop)!} alt={form.crop} width={56} height={56} style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover' }} /><figcaption className="text-xs">{recordsUi(lang, 'AI-generated crop reference · add your own harvest photo below.', 'Isithombe sesitshalo esenziwe nge-AI · faka esakho isithombe sesivuno ngezansi.')}</figcaption></figure>}
@@ -429,7 +429,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
             </div>
           )}
           <label
-            className="flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg text-xs font-display transition-all"
+            className="flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg text-xs font-sans transition-all"
             style={{
               background: 'var(--bg-1)',
               border: '1px dashed var(--border)',
@@ -540,7 +540,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
   }
 
   return (
-    <Card accent="#9E5C08">
+    <Card accent="#9E5C08" className="md:max-w-xl">
       <SectionLabel>{t('myRecordsLogSaleHeader')}</SectionLabel>
       <form onSubmit={handleSubmit} className="space-y-3 u-form-column">
         <div>
@@ -1293,7 +1293,7 @@ export default function MyRecords({
   }
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="space-y-4">
 
       {/* ── Section header ────────────────────────────
              Only on the one-scroll view. Inside the book the tab strip directly above already
@@ -1387,12 +1387,12 @@ export default function MyRecords({
                 />
               </div>
               {recent.length > 0 && <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
-                <polyline points={pts} fill="none" stroke="rgba(31,77,43,0.25)" strokeWidth="1.5" strokeLinejoin="round" />
-                <polyline points={pts} fill="none" stroke="#1F4D2B" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="3 2" />
+                <polyline points={pts} fill="none" stroke="var(--color-forest-800)" strokeOpacity={0.3} strokeWidth="1.5" strokeLinejoin="round" />
+                <polyline points={pts} fill="none" stroke="var(--color-forest-800)" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="3 2" />
                 {recent.map((p, i) => {
                   const x = (i / Math.max(recent.length - 1, 1)) * W;
                   const y = H - ((p.kg ?? 0) / maxKg) * H;
-                  return <circle key={i} cx={x} cy={y} r="2.5" fill="#1F4D2B" />;
+                  return <circle key={i} cx={x} cy={y} r="2.5" fill="var(--color-forest-800)" />;
                 })}
               </svg>}
             </div>
@@ -1471,12 +1471,12 @@ export default function MyRecords({
                 <div className="font-sans mt-2" style={{ color: 'var(--text-secondary)' }}><RecordQuantitySummary compact totals={soldQuantities} /></div>
               </div>
               <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
-                <polyline points={pts} fill="none" stroke="rgba(192,122,30,0.25)" strokeWidth="1.5" strokeLinejoin="round" />
-                <polyline points={pts} fill="none" stroke="#C07A1E" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="3 2" />
+                <polyline points={pts} fill="none" stroke="color-mix(in srgb, var(--gold) 30%, var(--bg-1))" strokeWidth="1.5" strokeLinejoin="round" />
+                <polyline points={pts} fill="none" stroke="var(--gold)" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="3 2" />
                 {recent.map((p, i) => {
                   const x = (i / Math.max(recent.length - 1, 1)) * W;
                   const y = H - ((p.amount ?? 0) / maxAmt) * H;
-                  return <circle key={i} cx={x} cy={y} r="2.5" fill="#C07A1E" />;
+                  return <circle key={i} cx={x} cy={y} r="2.5" fill="var(--gold)" />;
                 })}
               </svg>
             </div>

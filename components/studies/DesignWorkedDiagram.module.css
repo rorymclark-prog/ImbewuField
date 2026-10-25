@@ -10,8 +10,9 @@
   background: var(--bg-1);
 }
 
-/* On screen the drawing follows the theme: the paper rect is transparent and, in dark, the fixed
-   inks are inverted. The downloaded SVG carries none of this CSS, so it stays the light drawing. */
+/* On screen the drawing follows the theme: the paper rect is transparent and, in dark, the plan and
+   legend surfaces use theme tokens and the loose inks are lifted. The downloaded SVG carries none of
+   this CSS, so it stays the light drawing. */
 .diagram {
   font-family: var(--font-sans), system-ui, sans-serif;
   display: block;
@@ -20,21 +21,40 @@
   height: auto;
 }
 
+/* Below 760px the drawing keeps its 720px size and scrolls inside the viewport, so the 12px labels
+   stay 12px instead of shrinking to about 5px. */
+@media (max-width: 760px) {
+  .diagram { min-width: 720px; }
+}
+
 .controls {
   display: flex;
   justify-content: flex-end;
   margin: 0 0 0.5rem;
 }
 
+.controls button { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1px solid color-mix(in srgb, var(--color-forest-800) 30%, transparent); border-radius: 12px; background: var(--bg-1); color: var(--color-forest-800); font: inherit; font-size: 16px; font-weight: 600; cursor: pointer; }
+.controls button:focus-visible { outline: 3px solid var(--gold); outline-offset: 4px; }
+.controls button[aria-pressed="true"] { background: color-mix(in srgb, var(--color-forest-800) 10%, var(--bg-1)); border: 2px solid var(--color-forest-800); font-weight: 700; }
+/* Under 760px the drawing already keeps its 720px size and scrolls, so the toggle would do nothing. */
+@media (max-width: 760px) { .controls { display: none; } }
+
 .enlarged {
   min-width: 720px;
 }
 
 .caption {
+  max-width: 72ch;
   margin: 0.75rem 0 0;
   font-size: 0.92rem;
   line-height: 1.45;
 }
 .diagram .paper { fill: transparent; }
-:global(html.dark) .diagram { filter: invert(1) hue-rotate(180deg); }
-.diagram * { font-family: inherit; }
+
+:global(html.dark) .diagram .plan { fill: var(--bg-2); }
+:global(html.dark) .diagram .legendPanel { fill: var(--bg-2); stroke: var(--border-strong, var(--border)); }
+:global(html.dark) .diagram .pin { stroke: var(--bg-2); }
+:global(html.dark) .diagram text { fill: var(--text-primary); }
+:global(html.dark) .diagram text.onShape { fill: black; }
+:global(html.dark) .diagram text.warn { fill: var(--gold); }
+:global(html.dark) .diagram g.dim { stroke: var(--text-muted); }

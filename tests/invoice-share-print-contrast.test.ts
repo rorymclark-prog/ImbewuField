@@ -40,21 +40,17 @@ test('invoice header Share/Print use the themed forest fill and the CLAUDE.md oc
   // header pair + the bottom-of-form duplicate pair = 2 each, plus (code-05, w14 dark-leftovers)
   // the "Save invoice" button below the form, which used to fill with a literal '#1F4D2B' and now
   // shares the same themed forest-fill token — a third, equally correct match for Share's pattern.
-  assert.equal(shareCount, 3, 'expected the Share button fill in the header, the bottom duplicate, and the Save invoice button');
-  assert.equal(printCount, 2, 'expected the Print button fill in both the header and the bottom duplicate');
+  // w19-15: the header pair was removed (it duplicated the bottom row and squeezed the title in
+  // isiZulu on phone), so Share is now the bottom button + Save invoice, and Print the bottom one.
+  assert.equal(shareCount, 2, 'expected the Share button fill at the bottom of the form and the Save invoice button');
+  assert.equal(printCount, 1, 'expected the Print button fill at the bottom of the form');
 });
 
-test('invoice header Share/Print clear the 44px tap-target floor and keep an aria-label once icon-only', () => {
-  const header = invoiceSrc.slice(invoiceSrc.indexOf('<MenuButton />'), invoiceSrc.indexOf('<SettingsButton />'));
-  assert.match(header, /onClick=\{shareInvoice\}[\s\S]{0,400}min-h-11/, 'Share button should carry min-h-11');
-  assert.match(header, /onClick=\{printInvoice\}[\s\S]{0,400}min-h-11/, 'Print button should carry min-h-11');
-  assert.match(
-    header,
-    /onClick=\{printInvoice\}[\s\S]{0,200}aria-label=\{ui\('Print'/,
-    'Print button needs an aria-label now that its text label can be hidden below sm',
-  );
-  assert.match(header, /<Share2[^/]*\/><span className="hidden sm:inline">/, 'Share label should collapse to icon-only below sm');
-  assert.match(header, /<Printer[^/]*\/><span className="hidden sm:inline">/, 'Print label should collapse to icon-only below sm');
+test('invoice Share/Print (bottom row only, w19-15) clear the 44px tap-target floor', () => {
+  assert.equal((invoiceSrc.match(/onClick=\{shareInvoice\}/g) ?? []).length, 1, 'Share lives once, at the bottom');
+  assert.equal((invoiceSrc.match(/onClick=\{printInvoice\}/g) ?? []).length, 1, 'Print lives once, at the bottom');
+  assert.match(invoiceSrc, /onClick=\{shareInvoice\}[\s\S]{0,400}min-h-11/, 'Share button should carry min-h-11');
+  assert.match(invoiceSrc, /onClick=\{printInvoice\}[\s\S]{0,400}min-h-11/, 'Print button should carry min-h-11');
 });
 
 test('ShareListingButton no longer fills its WhatsApp-share pill with white-on-green', () => {

@@ -45,7 +45,10 @@ export default function FinanceReadingChecklist({ lessonIds, lessonId }: { lesso
       setSaved({ key, ids: [...ids] }); setError('');
     } catch { setError('This reading tick could not be saved. Your lesson is still available.'); }
   };
-  return <div className={styles.checklist}>
+  const done = current?.length ?? 0;
+  const total = lessonIds.length;
+  return <div className={`${styles.checklist}${lessonId ? '' : ` ${styles.checklistCard}`}`}>
+    {current && total > 0 && <div className={styles.progress} role="progressbar" aria-label="Lessons marked as read" aria-valuemin={0} aria-valuemax={total} aria-valuenow={done}><span style={{ width: `${Math.round((done / total) * 100)}%` }} /></div>}
     <p>{current ? `${current.length} of ${lessonIds.length} lessons marked as read on this device.` : error ? 'Reading checklist unavailable.' : 'Opening your reading checklist…'}</p>
     {lessonId && <div className={styles.actions}><button type="button" disabled={!current} aria-pressed={read} onClick={toggle}>{read ? 'Marked as read · undo' : 'Mark this lesson as read'}</button></div>}
     <p>This is your reading checklist, not an assessment result. {sample ? 'Sample ticks are temporary and reset when the sample session ends.' : 'It is saved only on this device.'}</p>

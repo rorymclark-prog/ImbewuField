@@ -193,7 +193,7 @@ export default function FieldJournal() {
   return (
     // Bottom padding clears the tab bar AND the sample-mode banner stacked above it,
     // so the oldest entry is never trapped behind them.
-    <div className={`${workspace.workspace} ${workspace.journal}`} style={{ padding: '14px 14px 176px' }}>
+    <div className={`${workspace.workspace} ${workspace.journal}`} style={{ padding: '14px 14px 176px', maxWidth: 1040 }}>
       <aside className={workspace.journalSidebar} aria-label={ui('Journal overview', 'Uhlolojikelele lwejenali')}>
       {/* Stat row — extra dashboard detail, not the entries or the add-note action Simple
           leads with. Still one tap away: switch to All tools in Settings. */}
@@ -303,7 +303,7 @@ export default function FieldJournal() {
             {usedCategories.map((c) => (
               <Chip key={c.key} on={filter === c.key} onClick={() => setFilter(c.key)} tint={c.tint} ink={c.ink}>
                 {getElementArt2(`journal_${c.key}`) ? (
-                  <img className="produce-art" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain', display: 'inline-block', verticalAlign: '-2px' }} />
+                  <img className="produce-art produce-art--inline" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain', display: 'inline-block', verticalAlign: '-2px' }} />
                 ) : (
                   <c.icon size={12} aria-hidden />
                 )}{' '}
@@ -328,7 +328,7 @@ export default function FieldJournal() {
             background: 'var(--bg-1)', border: '1px dashed var(--border)', marginBottom: 20,
           }}>
             <NotebookPen size={26} style={{ color: 'var(--text-muted)', margin: '0 auto 10px' }} />
-            <div style={{ font: '600 16px Newsreader, Georgia, serif', color: 'var(--text-primary)', marginBottom: 6 }}>
+            <div style={{ font: '600 16px var(--font-display), Georgia, serif', color: 'var(--text-primary)', marginBottom: 6 }}>
               {ui('Nothing recorded yet', 'Akukho okubhaliwe okwamanje')}
             </div>
             <div style={{ font: '400 13px/1.5 var(--font-sans), sans-serif', color: 'var(--text-muted)', maxWidth: 320, margin: '0 auto' }}>
@@ -384,7 +384,7 @@ export default function FieldJournal() {
                         font: '700 12px/1 var(--font-sans), sans-serif',
                       }}>
                         {getElementArt2(`journal_${cat.key}`) ? (
-                          <img className="produce-art" src={getElementArt2(`journal_${cat.key}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
+                          <img className="produce-art produce-art--inline" src={getElementArt2(`journal_${cat.key}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
                         ) : (
                           <cat.icon size={11} aria-hidden />
                         )}{' '}
@@ -392,7 +392,7 @@ export default function FieldJournal() {
                       </span>
                     </div>
 
-                    <div style={{ font: '600 15.5px/1.3 Newsreader, Georgia, serif', color: 'var(--text-primary)', marginBottom: 4 }}>
+                    <div style={{ font: '600 15.5px/1.3 var(--font-display), Georgia, serif', color: 'var(--text-primary)', marginBottom: 4 }}>
                       {ex.title}
                     </div>
                     <div style={{ font: '400 13.5px/1.55 var(--font-sans), sans-serif', color: 'var(--text-secondary)' }}>
@@ -468,7 +468,7 @@ export default function FieldJournal() {
                           font: '700 12px/1 var(--font-sans), sans-serif',
                         }}>
                           {getElementArt2(`journal_${entry.category}`) ? (
-                            <img className="produce-art" src={getElementArt2(`journal_${entry.category}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
+                            <img className="produce-art produce-art--inline" src={getElementArt2(`journal_${entry.category}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
                           ) : (
                             <cat.icon size={11} aria-hidden />
                           )}{' '}
@@ -477,7 +477,7 @@ export default function FieldJournal() {
                       </div>
 
                       {entry.title && (
-                        <div style={{ font: '600 15.5px/1.3 Newsreader, Georgia, serif', color: 'var(--text-primary)', marginBottom: entry.notes ? 4 : 0 }}>
+                        <div style={{ font: '600 15.5px/1.3 var(--font-display), Georgia, serif', color: 'var(--text-primary)', marginBottom: entry.notes ? 4 : 0 }}>
                           {entry.title}
                         </div>
                       )}

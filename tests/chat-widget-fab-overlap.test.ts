@@ -92,14 +92,16 @@ test('/invoice raises the FAB clear of the Share PDF / Print row at the bottom o
   // Only a raised offset clears the row; pin that the branch did not instead (or also) flip sides.
   assert.equal(side, 'left', 'moving to the right does not clear this row — it is two buttons spanning nearly the full width');
 
-  // /invoice must not be in the exclusion list — a single button row is a repositioning problem,
-  // not a whole-page one, and invoicing is exactly the kind of thing Lima should be askable about.
+  // w19-13 (deliberate change): /invoice IS now in the exclusion list. The raised FAB landed on
+  // the "Note on the invoice" textarea on phone and on the Save row on desktop, so Lima moves into
+  // the page flow (LimaBar, paired in FLOW_HELP_ROUTES below) instead of floating. The position
+  // branch above stays only because tests/lima-fab-clearance.test.ts pins its shape.
   const skipAt = widget.indexOf("pathname.startsWith('/login')");
   // Sliced to the real end of the condition, not a fixed 400 characters: the exclusion list grew
   // past that window when the five measured-collision routes were added, and a length guess
   // failing as the list grows reads as "/ngo stopped being excluded", which was not true.
   const skipBlock = widget.slice(skipAt, widget.indexOf(') return null;', skipAt) + ') return null;'.length);
-  assert.doesNotMatch(skipBlock, /\/invoice/, 'Lima should move on the invoice builder, not disappear from it');
+  assert.match(skipBlock, /\/invoice/, 'the invoice builder gets Lima in the page flow, not a floating FAB over the form');
 });
 
 // ── 24 September: the five routes where the FAB was measured on top of content ────────────────
@@ -123,6 +125,7 @@ test('/invoice raises the FAB clear of the Share PDF / Print row at the bottom o
 // page with no route to help at all, and a LimaBar WITHOUT the exclusion is both at once.
 const FLOW_HELP_ROUTES: { route: string; page: string }[] = [
   { route: '/journal', page: '../app/journal/page.tsx' },
+  { route: '/invoice', page: '../app/invoice/page.tsx' },
   { route: '/calendar', page: '../app/calendar/page.tsx' },
   { route: '/cropplan', page: '../app/cropplan/page.tsx' },
   { route: '/records', page: '../app/records/page.tsx' },

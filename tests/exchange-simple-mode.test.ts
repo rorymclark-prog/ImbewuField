@@ -118,7 +118,9 @@ test('the exchange feature paints with theme tokens, not literal hex, so it foll
 });
 
 test('the header has exactly one back control — no duplicate chevron before the title', () => {
-  assert.match(HEADER, /<MenuButton \/><BackButton fallback="\/home" \/>/);
+  // w19-01: the one back control now comes from the shared AppHeader (burger + Back + brand).
+  assert.match(HEADER, /<AppHeader/);
+  assert.doesNotMatch(HEADER, /<BackButton/, 'AppHeader already renders Back; a second one would double it');
   assert.doesNotMatch(HEADER, /<Link href="\/home"/,
     'the duplicate "<" chevron link before "Farmer exchange" must be removed; BackButton is the one back control');
   assert.doesNotMatch(HEADER, /import Link from 'next\/link';/,

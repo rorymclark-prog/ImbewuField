@@ -18,12 +18,12 @@ export default function NotFound() {
           <path d="M12 21V11" /><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" /><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
         </svg>
       </div>
-      <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 22, fontWeight: 600, color: '#20190F', marginBottom: 8 }}>{copy.notFoundTitle}</h2>
-      <p style={{ fontFamily: 'system-ui, sans-serif', fontSize: 14, color: '#5C5040', marginBottom: copy.zuluDraftNotice ? 4 : 24 }}>
+      <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 22, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 8 }}>{copy.notFoundTitle}</h2>
+      <p style={{ fontFamily: 'system-ui, sans-serif', fontSize: 14, color: 'var(--text-secondary)', marginBottom: copy.zuluDraftNotice ? 4 : 24 }}>
         {copy.notFoundBody}
       </p>
       {copy.zuluDraftNotice && (
-        <p style={{ fontFamily: 'system-ui, sans-serif', fontSize: 12, color: '#755942', marginBottom: 24 }}>
+        <p style={{ fontFamily: 'system-ui, sans-serif', fontSize: 12, color: 'var(--text-muted)', marginBottom: 24 }}>
           {copy.zuluDraftNotice}
         </p>
       )}
