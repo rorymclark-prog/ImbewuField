@@ -67,8 +67,8 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
         staff-dark track — not edited here) carries a 180px padding-bottom sized for a bar this
         page didn't use to have, which left a long blank tail below short content. TabBar now
         supplies its own clearance (and hides entirely at lg+), so this page only needs enough
-        padding to clear it on phone. */}
-    <main className={styles.root} style={{ flex: 1, paddingBottom: 32 }}><div className={styles.wrap}>
+        padding to clear it on phone, and the Lima launcher (--lima-fab-clearance) at the end of the scroll. */}
+    <main className={styles.root} style={{ flex: 1, paddingBottom: 'max(32px, var(--lima-fab-clearance, 0px))' }}><div className={styles.wrap}>
     <div className={styles.hero} style={{ marginTop: 20 }}><h1>{t('reportsTitle')}</h1><p>{t('reportsIntro')}</p></div>
     {!allowed ? (
       // staff-15: this used to read as one sentence with a plain inline Link at the end —
