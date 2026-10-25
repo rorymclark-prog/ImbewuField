@@ -1,0 +1,53 @@
+{
+  "status": "IN PROGRESS — current affected checks pass; full ordered branch verification still outstanding.",
+  "at": "2026-10-25T20:44:37.160098+00:00",
+  "currentFreshStages": {
+    "scope": "Fresh typecheck, corrected8-test note file and whitespace; not the required full npm test. Previous five-file run had139pass and1HTML-encoding assertion failure; other139 checks remain valid because application code is unchanged.",
+    "startedAt": "2026-10-25T20:42:14.251918+00:00",
+    "sourceSha256": {
+      "tests/plan-note-localization.test.ts": "7069792195d235be16b34204cd1a313f808b339567345e592441fd3907750e98",
+      "lib/crop-plan-ideal.ts": "d5ce72fe37f993961c180525a97a6e9f8e99d6072b6efff03f2fde8c71765e2a",
+      "app/facilitator/crops/page.tsx": "0f171260095e2e15354f57677c434d240a5c9abf867a32029e4ced0219a46c72",
+      "lib/crop-export-copy.ts": "343c8eaca48bfb0270b6bb642b34856dc61c0664f4231d7dfa636e4f9a22bc99",
+      "lib/crop-export-copy-data.ts": "815bf1722a7560918e832888ff646672f61cfb8d44b249b957ef3b6f08d03e59",
+      "lib/crop-export-pdf.ts": "1b9b5bad1d6b180b711b1e16ed9ceb910fc1fa50fd8d5d99032fd4b869ecec10"
+    },
+    "stages": [
+      {
+        "name": "typecheck",
+        "exitCode": 0
+      },
+      {
+        "name": "targeted",
+        "exitCode": 0
+      },
+      {
+        "name": "diff",
+        "exitCode": 0
+      }
+    ],
+    "sourceUnchanged": true
+  },
+  "affectedChecks": {
+    "fiveFileRun": {
+      "session": 20245,
+      "tests": 140,
+      "pass": 139,
+      "fail": 1,
+      "reason": "One new assertion compared the raw Xitsonga apostrophe against correctly escaped HTML. Application behavior and the real eight-state DOM proof were correct."
+    },
+    "correctedNoteFile": {
+      "session": 87642,
+      "tests": 8,
+      "pass": 8,
+      "fail": 0,
+      "duration_ms": 9476.507542
+    },
+    "otherChecks": 132,
+    "distinctChecksNowPassed": 140,
+    "applicationFilesUnchangedSinceFiveFileRun": true
+  },
+  "browser": "Sixteen actual isolated phone/desktop states across four languages, including eight saved-note group/disclosure states and eight corrected starter reviews. Not full production routes.",
+  "PDF": "Eight PDFs25pages:17native pages and8default comparison pages;52complete native clauses plus52originals, same-page native/source pairs, zero clipping or parser errors; English/unsupported images and text exact.",
+  "full": "NOT STARTED for plan-note branch; crop-screen full2624 is separate and still live. No all-suite or whole-app completion claim."
+}

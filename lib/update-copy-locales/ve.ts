@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Some saved plan notes now have unreviewed translations in four languages.": "Dziṅwe notsi dza pulane dzo vhulungwaho zwino dzi na ṱhalutshedzelo dza nyambo nṋa dzi sa athu sedzuluswaho.",
+  "Original notes stay available; untranslated notes still use English.": "Notsi dza u thoma dzi dzula dzi tshi wanala; dzi sa athu ṱalutshedzelwaho dzi kha ḓi vha nga Luisimane.",
   "Crop task panels now use unreviewed translations in four languages.": "Phanele dza mishumo ya zwiliṅwa zwino dzi shumisa ṱhalutshedzelo dzi sa athu u sedzwa nga nyambo nṋa.",
   "Crop search and month controls have more unreviewed translation drafts.": "U ṱoḓa zwiliṅwa na ndangulo dza miṅwedzi zwi na dziṅwe ṱhalutshedzelo dzi sa athu u sedzwa.",
   "Review crop task drafts": "Sedzani mishumo ya zwiliṅwa i sa athu u khwaṱhisedzwa",

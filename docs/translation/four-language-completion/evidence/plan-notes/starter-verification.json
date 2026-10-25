@@ -1,0 +1,133 @@
+{
+  "scope": "Actual StarterPlanNote component, isolated language hook and common CSS; synthetic existing-fixture summer/few-big plan. No full route, account, storage or planting mutation.",
+  "cases": [
+    {
+      "language": "zu",
+      "view": "phone",
+      "overflow": [],
+      "scrollWidth": 360,
+      "sourceOpen": true,
+      "text": "Ukuze kusetshenziswe indawo ebingahlala ingenalutho ezinyangeni zakho zokuqala, kufakiwe ukuhlwanyela kokuqala okwenzeka kanye: Lettuce (Mas), Carrots (Aga), Cucumber (Dis). Ngakunye kwenzeka kanye. Hlola uhlelo oluphindaphindayo ngaphambi konyaka ozayo: kulezi zinyanga kungase kudingeke okunye ukuhlwanyela okwenzeka kanye uma uhlelo lungashintshi.\n\nUmbhalo ongakabuyekezwa — inothi lohlelo lokuqala ngesiNgisi\n\nTo cover ground that would stand empty in your first months, one-time starter sowings are included: Lettuce (Mar), Carrots (Aug), Cucumber (Dec). Each runs once. Check the repeating plan before next year: these months may need another one-time sowing unless the plan changes.",
+      "width": 360
+    },
+    {
+      "language": "st",
+      "view": "phone",
+      "overflow": [],
+      "scrollWidth": 360,
+      "sourceOpen": true,
+      "text": "Ho sebedisa mobu o neng o tla dula o se na dijalo dikgweding tsa hao tsa pele, ho kenyelleditswe ho jala ha qalo ho etswang hang feela: Lettuce (Hlb), Carrots (Pha), Cucumber (Tsh). Ho hong le ho hong ho etsahala hang feela. Hlahloba moralo o iphetang pele ho selemo se tlang: dikgwedi tsena di ka hloka ho jala ho hong ha hang feela ntle le haeba moralo o fetoha.\n\nMoralo o eso hlahlojwe — noto ya pele ya moralo ka Senyesemane\n\nTo cover ground that would stand empty in your first months, one-time starter sowings are included: Lettuce (Mar), Carrots (Aug), Cucumber (Dec). Each runs once. Check the repeating plan before next year: these months may need another one-time sowing unless the plan changes.",
+      "width": 360
+    },
+    {
+      "language": "ts",
+      "view": "phone",
+      "overflow": [],
+      "scrollWidth": 360,
+      "sourceOpen": true,
+      "text": "Ku tirhisa misava leyi a yi ta va yi nga ri na swibyariwa etinhwetini ta wena to sungula, ku engeteriwe ku byala ko sungula loku endlekaka kan'we ntsena: Lettuce (Nyku), Carrots (Mhaw), Cucumber (N'we). Ku byala kun'wana ni kun'wana ku endleka kan'we. Kambela pulani leyi vuyelelaka ku nga si fika lembe leri taka: tinhweti leti ti nga ha lava ku byala kun'wana ka kan'we ntsena handle ka loko pulani yi cinca.\n\nTsalwa ro sungula leri nga si kamberiwaka — notsi ya pulani ya Xinghezi xo sungula\n\nTo cover ground that would stand empty in your first months, one-time starter sowings are included: Lettuce (Mar), Carrots (Aug), Cucumber (Dec). Each runs once. Check the repeating plan before next year: these months may need another one-time sowing unless the plan changes.",
+      "width": 360
+    },
+    {
+      "language": "ve",
+      "view": "phone",
+      "overflow": [],
+      "scrollWidth": 360,
+      "sourceOpen": true,
+      "text": "U shumisa mavu e a ḓo sala a si na zwimela kha miṅwedzi yaṋu ya u thoma, ho dzheniswa u zwala ha u thoma ha khathihi fhedzi: Lettuce (Ṱhaf), Carrots (Ṱhan), Cucumber (Nyen). U zwala huṅwe na huṅwe hu itea luthihi. Sedzulusani pulane i dovhololaho phanḓa ha ṅwaha u ḓaho: miṅwedzi iyi i nga ṱoḓa huṅwe u zwala ha khathihi fhedzi nga nnḓa ha musi pulane i tshi shanduka.\n\nMvetamveto i sa athu sedzuluswaho — notsi ya pulane ya u thoma nga Luisimane\n\nTo cover ground that would stand empty in your first months, one-time starter sowings are included: Lettuce (Mar), Carrots (Aug), Cucumber (Dec). Each runs once. Check the repeating plan before next year: these months may need another one-time sowing unless the plan changes.",
+      "width": 360
+    },
+    {
+      "language": "zu",
+      "view": "desktop",
+      "overflow": [],
+      "scrollWidth": 1280,
+      "sourceOpen": true,
+      "text": "Ukuze kusetshenziswe indawo ebingahlala ingenalutho ezinyangeni zakho zokuqala, kufakiwe ukuhlwanyela kokuqala okwenzeka kanye: Lettuce (Mas), Carrots (Aga), Cucumber (Dis). Ngakunye kwenzeka kanye. Hlola uhlelo oluphindaphindayo ngaphambi konyaka ozayo: kulezi zinyanga kungase kudingeke okunye ukuhlwanyela okwenzeka kanye uma uhlelo lungashintshi.\n\nUmbhalo ongakabuyekezwa — inothi lohlelo lokuqala ngesiNgisi\n\nTo cover ground that would stand empty in your first months, one-time starter sowings are included: Lettuce (Mar), Carrots (Aug), Cucumber (Dec). Each runs once. Check the repeating plan before next year: these months may need another one-time sowing unless the plan changes.",
+      "width": 1280
+    },
+    {
+      "language": "st",
+      "view": "desktop",
+      "overflow": [],
+      "scrollWidth": 1280,
+      "sourceOpen": true,
+      "text": "Ho sebedisa mobu o neng o tla dula o se na dijalo dikgweding tsa hao tsa pele, ho kenyelleditswe ho jala ha qalo ho etswang hang feela: Lettuce (Hlb), Carrots (Pha), Cucumber (Tsh). Ho hong le ho hong ho etsahala hang feela. Hlahloba moralo o iphetang pele ho selemo se tlang: dikgwedi tsena di ka hloka ho jala ho hong ha hang feela ntle le haeba moralo o fetoha.\n\nMoralo o eso hlahlojwe — noto ya pele ya moralo ka Senyesemane\n\nTo cover ground that would stand empty in your first months, one-time starter sowings are included: Lettuce (Mar), Carrots (Aug), Cucumber (Dec). Each runs once. Check the repeating plan before next year: these months may need another one-time sowing unless the plan changes.",
+      "width": 1280
+    },
+    {
+      "language": "ts",
+      "view": "desktop",
+      "overflow": [],
+      "scrollWidth": 1280,
+      "sourceOpen": true,
+      "text": "Ku tirhisa misava leyi a yi ta va yi nga ri na swibyariwa etinhwetini ta wena to sungula, ku engeteriwe ku byala ko sungula loku endlekaka kan'we ntsena: Lettuce (Nyku), Carrots (Mhaw), Cucumber (N'we). Ku byala kun'wana ni kun'wana ku endleka kan'we. Kambela pulani leyi vuyelelaka ku nga si fika lembe leri taka: tinhweti leti ti nga ha lava ku byala kun'wana ka kan'we ntsena handle ka loko pulani yi cinca.\n\nTsalwa ro sungula leri nga si kamberiwaka — notsi ya pulani ya Xinghezi xo sungula\n\nTo cover ground that would stand empty in your first months, one-time starter sowings are included: Lettuce (Mar), Carrots (Aug), Cucumber (Dec). Each runs once. Check the repeating plan before next year: these months may need another one-time sowing unless the plan changes.",
+      "width": 1280
+    },
+    {
+      "language": "ve",
+      "view": "desktop",
+      "overflow": [],
+      "scrollWidth": 1280,
+      "sourceOpen": true,
+      "text": "U shumisa mavu e a ḓo sala a si na zwimela kha miṅwedzi yaṋu ya u thoma, ho dzheniswa u zwala ha u thoma ha khathihi fhedzi: Lettuce (Ṱhaf), Carrots (Ṱhan), Cucumber (Nyen). U zwala huṅwe na huṅwe hu itea luthihi. Sedzulusani pulane i dovhololaho phanḓa ha ṅwaha u ḓaho: miṅwedzi iyi i nga ṱoḓa huṅwe u zwala ha khathihi fhedzi nga nnḓa ha musi pulane i tshi shanduka.\n\nMvetamveto i sa athu sedzuluswaho — notsi ya pulane ya u thoma nga Luisimane\n\nTo cover ground that would stand empty in your first months, one-time starter sowings are included: Lettuce (Mar), Carrots (Aug), Cucumber (Dec). Each runs once. Check the repeating plan before next year: these months may need another one-time sowing unless the plan changes.",
+      "width": 1280
+    }
+  ],
+  "completeDraftAndSourcePairs": 8,
+  "overflow": 0,
+  "sourceDisclosuresOpen": 8,
+  "selectedCaseCounterexamples": [
+    {
+      "bedId": "b4",
+      "cropKey": "carrots",
+      "once": "2026-08",
+      "monthOffset": 4,
+      "calendarMonth": 12,
+      "starterShare": 0.5,
+      "nextYearRepeatingShare": 0
+    },
+    {
+      "bedId": "b4",
+      "cropKey": "cucumber",
+      "once": "2026-12",
+      "monthOffset": 4,
+      "calendarMonth": 12,
+      "starterShare": 0.5,
+      "nextYearRepeatingShare": 0
+    },
+    {
+      "bedId": "b4",
+      "cropKey": "cucumber",
+      "once": "2026-12",
+      "monthOffset": 5,
+      "calendarMonth": 1,
+      "starterShare": 0.5,
+      "nextYearRepeatingShare": 0
+    },
+    {
+      "bedId": "b4",
+      "cropKey": "cucumber",
+      "once": "2026-12",
+      "monthOffset": 6,
+      "calendarMonth": 2,
+      "starterShare": 0.5,
+      "nextYearRepeatingShare": 0
+    }
+  ],
+  "visualInspection": "All eight source-open native phone/desktop screenshots inspected in two contact sheets; complete corrected English source and native months visible, zero overflow.",
+  "checks": {
+    "typecheck": "Node24 clean, session1178 terminal0",
+    "focused": "LIVE session20245: five affected files, no final result yet",
+    "full": "Not started for this branch. Separate crop-screen run2624 still live."
+  },
+  "sourceCorrection": "One display sentence plus source-bound four-language drafts. Eight bounded fixture scenarios found11 starter-month counterexamples across all four few-big rainfall patterns; steady cases found none. The summer/few-big regression recomputes the actual plan and verifies its plantings and notes stay identical.",
+  "currentCodeSha256": {
+    "lib/crop-plan-ideal.ts": "d5ce72fe37f993961c180525a97a6e9f8e99d6072b6efff03f2fde8c71765e2a",
+    "lib/crop-export-copy.ts": "343c8eaca48bfb0270b6bb642b34856dc61c0664f4231d7dfa636e4f9a22bc99",
+    "lib/crop-export-copy-data.ts": "815bf1722a7560918e832888ff646672f61cfb8d44b249b957ef3b6f08d03e59",
+    "lib/crop-export-pdf.ts": "1b9b5bad1d6b180b711b1e16ed9ceb910fc1fa50fd8d5d99032fd4b869ecec10",
+    "app/facilitator/crops/page.tsx": "0f171260095e2e15354f57677c434d240a5c9abf867a32029e4ced0219a46c72",
+    "tests/plan-note-localization.test.ts": "daa1825b1b51c55d2281b92eb81fab5110d0d5bd42d4127678354c5be153e467"
+  }
+}

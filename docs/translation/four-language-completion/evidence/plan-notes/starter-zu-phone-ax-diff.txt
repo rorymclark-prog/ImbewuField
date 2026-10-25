@@ -1,0 +1,13 @@
+Browser tab: 5, Title: "Starter note translation QA", URL: "http://127.0.0.1:31819/starter-zu.html".
+0 AXWebArea Starter note translation QA, URL: 127.0.0.1:31819/starter-zu.html
+	1 container
+		2 heading Isolated actual starter review · zu, Value: 1
+			3 text Isolated actual starter review · zu
+		4 container starter
+			5 text Ukuze kusetshenziswe indawo ebingahlala ingenalutho ezinyangeni zakho zokuqala, kufakiwe ukuhlwanyela kokuqala okwenzeka kanye: Lettuce (Mas), Carrots (Aga), Cucumber (Dis). Ngakunye kwenzeka kanye. Hlola uhlelo oluphindaphindayo ngaphambi konyaka ozayo: kulezi zinyanga kungase kudingeke okunye ukuhlwanyela okwenzeka kanye uma uhlelo lungashintshi.
+			6 container
+				7 button (expanded) Umbhalo ongakabuyekezwa — inothi lohlelo lokuqala ngesiNgisi, Secondary Actions: Collapse
+					8 text Umbhalo ongakabuyekezwa — inothi lohlelo lokuqala ngesiNgisi
+				9 text To cover ground that would stand empty in your first months, one-time starter sowings are included: Lettuce (Mar), Carrots (Aug), Cucumber (Dec). Each runs once. Check the repeating plan before next year: these months may need another one-time sowing unless the plan changes.
+
+The focused UI element is 7 button (expanded) Umbhalo ongakabuyekezwa — inothi lohlelo lokuqala ngesiNgisi, Secondary Actions: Collapse

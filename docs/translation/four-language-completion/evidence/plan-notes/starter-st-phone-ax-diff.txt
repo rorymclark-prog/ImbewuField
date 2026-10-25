@@ -1,0 +1,13 @@
+Browser tab: 5, Title: "Starter note translation QA", URL: "http://127.0.0.1:31819/starter-st.html".
+1 AXWebArea Starter note translation QA, URL: 127.0.0.1:31819/starter-st.html
+	2 container
+		3 heading Isolated actual starter review · st, Value: 1
+			4 text Isolated actual starter review · st
+		5 container starter
+			6 text Ho sebedisa mobu o neng o tla dula o se na dijalo dikgweding tsa hao tsa pele, ho kenyelleditswe ho jala ha qalo ho etswang hang feela: Lettuce (Hlb), Carrots (Pha), Cucumber (Tsh). Ho hong le ho hong ho etsahala hang feela. Hlahloba moralo o iphetang pele ho selemo se tlang: dikgwedi tsena di ka hloka ho jala ho hong ha hang feela ntle le haeba moralo o fetoha.
+			7 container
+				8 button (expanded) Moralo o eso hlahlojwe — noto ya pele ya moralo ka Senyesemane, Secondary Actions: Collapse
+					9 text Moralo o eso hlahlojwe — noto ya pele ya moralo ka Senyesemane
+				10 text To cover ground that would stand empty in your first months, one-time starter sowings are included: Lettuce (Mar), Carrots (Aug), Cucumber (Dec). Each runs once. Check the repeating plan before next year: these months may need another one-time sowing unless the plan changes.
+
+The focused UI element is 8 button (expanded) Moralo o eso hlahlojwe — noto ya pele ya moralo ka Senyesemane, Secondary Actions: Collapse
