@@ -70,3 +70,24 @@ for (const [label, rel] of [
     assert.match(page, /var\(--lima-fab-clearance/, `${rel} must read the published clearance variable`);
   });
 }
+
+// w22-07 (2026-10-25 recapture): the scroll containers below still ended with 8-120px of padding,
+// so the launcher covered their last controls at the end of the scroll.
+for (const [label, rel, pattern] of [
+  ['/contact main', '../app/contact/page.tsx', /paddingBottom:\s*'max\(24px, var\(--lima-fab-clearance, 0px\)\)'/],
+  ['/prices main', '../app/prices/page.tsx', /paddingBottom:\s*'max\(20px, var\(--lima-fab-clearance, 0px\)\)'/],
+  ['/reports main', '../app/reports/page.tsx', /paddingBottom:\s*'max\(32px, var\(--lima-fab-clearance, 0px\)\)'/],
+  ['/network list column', '../app/network/page.tsx', /paddingBottom:\s*'max\(8px, var\(--lima-fab-clearance, 0px\)\)'/],
+  ['MelDashboard .root (desktop)', '../components/MelDashboard.module.css', /padding-bottom:max\(180px, var\(--lima-fab-clearance, 0px\)\)/],
+  ['MelDashboard .root (phone)', '../components/MelDashboard.module.css', /padding-bottom:calc\(max\(96px, var\(--lima-fab-clearance, 0px\)\) \+ env\(safe-area-inset-bottom\)\)/],
+  ['/samples/production page', '../app/samples/production/ProductionExample.module.css', /calc\(max\(120px, var\(--lima-fab-clearance, 0px\)\) \+ env\(safe-area-inset-bottom, 0px\)\)/],
+  ['.workspace-main phone override (/mentor, /facilitator)', '../app/globals.css', /\.workspace-main \{[^}]*padding-bottom:calc\(max\(90px, var\(--lima-fab-clearance, 0px\)\) \+ env\(safe-area-inset-bottom\)\) !important/],
+] as const) {
+  test(`${label} keeps its padding but never less than --lima-fab-clearance`, () => {
+    assert.match(source(rel), pattern);
+  });
+}
+
+test('/reports no longer overrides the MelDashboard padding with a fixed 32px', () => {
+  assert.doesNotMatch(source('../app/reports/page.tsx'), /paddingBottom:\s*32\b/);
+});

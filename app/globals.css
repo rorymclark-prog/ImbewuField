@@ -981,6 +981,6 @@ img[data-photo-preview]:focus-visible { outline: 3px solid var(--accent, #b87924
   header:has(> [data-app-menu]) > [data-header-secondary] { display:none !important; }
   header:has(> [data-app-menu]) > span:has(> [data-header-secondary]) { display:none !important; }
   header:has(> [data-app-menu]) > a[aria-label="ImbewuField home"] { min-height:44px; }
-  .workspace-main { padding:12px !important; padding-bottom:calc(90px + env(safe-area-inset-bottom)) !important; }
+  .workspace-main { padding:12px !important; padding-bottom:calc(max(90px, var(--lima-fab-clearance, 0px)) + env(safe-area-inset-bottom)) !important; }
   .workspace-main > [class*="MelDashboard_root"] { padding:0; }
 }
