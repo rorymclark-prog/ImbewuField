@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Future harvest PDFs now have unreviewed translations in four languages.": "Dzi-PDF dza khaṋo ya tshifhinga tshi ḓaho zwino dzi na ṱhalutshedzelo nga nyambo nṋa dzi sa athu u sedzuluswa.",
+  "Production guidance and some crop screens still have English text.": "Nyeletshedzo ya mveledzo na zwiṅwe zwikirini zwa zwiliṅwa zwi kha ḓi vha na maṅwalwa a Luisimane.",
+  "Read the future harvest PDF": "Vhalani PDF ya khaṋo ya tshifhinga tshi ḓaho",
+  "Open the future harvest PDF. Age tables and full source cautions have unreviewed translations.": "Vulani PDF ya khaṋo ya tshifhinga tshi ḓaho. Thebuḽu dza miṅwaha na tsivhudzo dzo fhelelaho dza zwiko zwi na ṱhalutshedzelo dzi sa athu u sedzuluswa.",
   "Read translated production PDF charts": "Vhalani tshati dza mveledzo dza PDF dzo ṱhalutshedzelwaho",
   "Open the detailed reference PDF in your language. Its graph text is an unreviewed draft.": "Vulani PDF ya tshisumbedzi tsho ṱanḓavhuwaho nga luambo lwaṋu. Maṅwalwa a tshati dzayo ndi mvetamveto i sa athu u sedzuluswa.",
   "Check quantities and missing records": "Sedzulusani zwivhalo na rekhodo dzi siho",

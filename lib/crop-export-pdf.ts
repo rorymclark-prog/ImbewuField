@@ -32,7 +32,7 @@
 // All the numbers come from lib/crop-export-benchmark.ts. Nothing in this file
 // computes a quantity — it only decides what things look like.
 
-import { cropExportText, cropPreservedMethodText, cropProductionIssueText, cropProjectionPeriodText } from './crop-export-copy';
+import { cropExportText, cropPreservedMethodText, cropProductionIssueText, cropProjectionPeriodText, cropProjectionDetailText, cropProjectionAgeText } from './crop-export-copy';
 import { isStapleCropKey } from '@/lib/staple-crops';
 import { numberLabel } from '@/lib/format-figures';
 import type { CropTask, FoodAvailabilityItem, PlanBed, Planting } from '@/lib/crop-plan';
@@ -53,10 +53,10 @@ import {
   type CalendarRow, type FieldSheetSection, type MonthCount,
 } from '@/lib/crop-export-benchmark';
 import { cropByKey, type RainPattern } from '@/lib/crop-catalog';
-import { firstCropAgeLabel, formatRange, treePickingByMonth, treePickingPhrase, type PlacedTreeGroup, type TreeSeasonChoices } from '@/lib/perennial-harvest';
+import { PERENNIAL_HARVEST, firstCropAgeLabel, formatRange, treePickingByMonth, treePickingPhrase, type PlacedTreeGroup, type TreeSeasonChoices } from '@/lib/perennial-harvest';
 import { projectedKgLabel, treeAgeProjection, type AgeProjection, type ProductionProjection } from '@/lib/production-projection';
 import { ASSURANCE_TITLE, ASSURANCE_ONE_LINE, planAssuranceParagraphs, planAssuranceText } from '@/lib/plan-assurance';
-import type { ExpectedSeason } from '@/lib/production-product-guidance';
+import { productGuideText, type ExpectedSeason } from '@/lib/production-product-guidance';
 import type { PoultryGuidance } from '@/lib/animal-enterprises';
 import { registerReportPdfFont, reportPdfText } from './report-pdf-font';
 import { isNativePdfLanguage, sitePdfAssurance, sitePdfText } from './site-pdf-copy';
@@ -2041,50 +2041,84 @@ function drawProductionKgGraphs(s: Sheet, input: CropPlanPdfInput, now: Date, no
 
 function drawProductionProjection(s: Sheet, input: CropPlanPdfInput): void {
   const projection = input.productionProjection!;
-  const head = () => { masthead(s, 'Production over time'); pageTitle(s, input.meta.planTitle, 'As your plants grow', 'Vegetables and staples alongside fruit, nuts and berries. Ten-year projection; not a harvest promise.'); };
+  const native = isNativePdfLanguage(s.language);
+  const copy = (source: string, values?: Record<string, string | number>) => cropExportText(source, s.language, values);
+  const quantity = (kg: Parameters<typeof projectedKgLabel>[0]) => {
+    // The old rounding step turned a finite entered amount into a dash at MAX_VALUE.
+    // Preserve that exact source value in scientific notation, without changing ordinary labels.
+    if (kg?.every(value => Number.isFinite(value) && value >= 0) && kg.some(value => value > Number.MAX_VALUE / 10)) {
+      const values = kg.map(value => value > Number.MAX_VALUE / 10 ? String(value) : projectedKgLabel([value, value]).replace(/ kg$/, ''));
+      return `${values[0] === values[1] ? values[0] : values.join('–')} kg`;
+    }
+    return copy(projectedKgLabel(kg));
+  };
+  const knownSourceNotes = new Set(Object.values(PERENNIAL_HARVEST).flatMap(entry => [entry.yearsToFirstCrop?.note, entry.yearsToFullBearing?.note]).filter((note): note is string => note !== undefined));
+  const sourceNote = (source: string) => !native ? source : knownSourceNotes.has(source)
+    ? productGuideText(source, s.language) : copy('Original source note: {note}', { note: source });
+  const head = () => { masthead(s, copy('Production over time')); pageTitle(s, input.meta.planTitle, copy('As your plants grow'), copy('Vegetables and staples alongside fruit, nuts and berries. Ten-year projection; not a harvest promise.')); };
   head();
   const maximum = Math.max(1, ...projection.years.map(y => y.combinedKg?.[1] ?? y.treeKg[1]));
-  s.paragraph('Green = vegetable and staple crop cycles. Gold = your tree yield schedule. Striped ends show harvest that changes as plants age during the year. * = known subtotal only; missing yields are not zero.', { size: 9, ink: INK.muted, gap: 12 });
+  const canDrawValues = Number.isFinite(maximum);
+  if (!canDrawValues) s.paragraph(copy('The supplied production values cannot be drawn clearly. Check the recorded quantities.'), { size: 9, ink: INK.muted, gap: 8 });
+  s.paragraph(copy('Green = vegetable and staple crop cycles. Gold = your tree yield schedule. Striped ends show harvest that changes as plants age during the year. * = known subtotal only; missing yields are not zero.'), { size: 9, ink: INK.muted, gap: 12 });
   for (const year of projection.years) {
     if (s.need(44)) head();
-    s.font(9, true); s.ink(INK.text); s.doc.text(s.safe(year.label), s.margin, s.y + 12);
-    s.doc.text(s.safe(`${projectedKgLabel(year.combinedKg)}${year.partial ? ' *' : ''}`), s.width - s.margin, s.y + 12, { align: 'right' });
-    const x = s.margin, w = s.contentWidth, y = s.y + 20;
-    s.fill(INK.hair); s.doc.roundedRect(x, y, w, 9, 3, 3, 'F');
-    const veg = w * (year.vegetableKg ?? 0) / maximum;
-    const tree = w * year.treeKg[0] / maximum, changing = w * (year.treeKg[1] - year.treeKg[0]) / maximum;
-    if (veg > 0) { s.fill(INK.green); s.doc.rect(x, y, veg, 9, 'F'); }
-    if (tree > 0) { s.fill(INK.gold); s.doc.rect(x + veg, y, tree, 9, 'F'); }
-    if (changing > 0) {
-      const left = x + veg + tree, right = left + changing;
-      s.fill(mixWithWhite(INK.gold, 0.3)); s.doc.rect(left, y, changing, 9, 'F');
-      s.stroke(INK.gold); s.doc.setLineWidth(0.6);
-      // Clip each diagonal mathematically to its tail, without changing the PDF drawing state.
-      for (let base = left - 9; base < right; base += 5) {
-        const from = Math.max(left, base), to = Math.min(right, base + 9);
-        if (to > from) s.doc.line(from, y + 9 - (from - base), to, y + 9 - (to - base));
+    s.font(9, true); s.ink(INK.text); s.doc.text(s.safe(cropProjectionPeriodText(year.label, s.language)), s.margin, s.y + 12);
+    s.doc.text(s.safe(`${quantity(year.combinedKg)}${year.partial ? ' *' : ''}`), s.width - s.margin, s.y + 12, { align: 'right' });
+    if (canDrawValues) {
+      const x = s.margin, w = s.contentWidth, y = s.y + 20;
+      s.fill(INK.hair); s.doc.roundedRect(x, y, w, 9, 3, 3, 'F');
+      // Ratio-first scaling is needed only when multiplying the finite source value overflows.
+      const scaled = (value: number) => Number.isFinite(w * value) ? w * value / maximum : w * (value / maximum);
+      const veg = scaled(year.vegetableKg ?? 0);
+      const tree = scaled(year.treeKg[0]), changing = scaled(year.treeKg[1] - year.treeKg[0]);
+      if (veg > 0) { s.fill(INK.green); s.doc.rect(x, y, veg, 9, 'F'); }
+      if (tree > 0) { s.fill(INK.gold); s.doc.rect(x + veg, y, tree, 9, 'F'); }
+      if (changing > 0) {
+        const left = x + veg + tree, right = left + changing;
+        s.fill(mixWithWhite(INK.gold, 0.3)); s.doc.rect(left, y, changing, 9, 'F');
+        s.stroke(INK.gold); s.doc.setLineWidth(0.6);
+        // Clip each diagonal mathematically to its tail, without changing the PDF drawing state.
+        for (let base = left - 9; base < right; base += 5) {
+          const from = Math.max(left, base), to = Math.min(right, base + 9);
+          if (to > from) s.doc.line(from, y + 9 - (from - base), to, y + 9 - (to - base));
+        }
       }
     }
     s.y += 40;
   }
   s.y += 12;
   s.font(9);
-  const assumptionsHeight = projection.assumptions.reduce((height, note) => height + (s.doc.splitTextToSize(s.safe(note), s.contentWidth) as string[]).length * 9 * 1.4 + 8, 0);
+  const assumptions = projection.assumptions.map(note => cropProjectionDetailText(note, s.language));
+  const assumptionsHeight = assumptions.reduce((height, note) => height + (s.doc.splitTextToSize(s.safe(note), s.contentWidth) as string[]).length * 9 * 1.4 + 8, 0);
   if (!s.fits(assumptionsHeight)) {
-    s.page('portrait'); masthead(s, 'Projection assumptions');
-    pageTitle(s, input.meta.planTitle, 'What this forecast assumes');
+    s.page('portrait'); masthead(s, copy('Projection assumptions'));
+    pageTitle(s, input.meta.planTitle, copy('What this forecast assumes'));
   }
-  for (const assumption of projection.assumptions) s.paragraph(assumption, { size: 9, ink: INK.muted, gap: 8 });
+  for (const assumption of assumptions) {
+    if (native) {
+      s.font(9);
+      if (s.need((s.doc.splitTextToSize(s.safe(assumption), s.contentWidth) as string[]).length * 12.6 + 8)) {
+        masthead(s, copy('Projection assumptions')); pageTitle(s, input.meta.planTitle, copy('What this forecast assumes'));
+      }
+    }
+    s.paragraph(assumption, { size: 9, ink: INK.muted, gap: 8 });
+  }
   if (!projection.years[0]?.trees.length) return;
   s.page('landscape');
   const tableHead = () => {
-    masthead(s, 'Plant ages & harvest');
-    pageTitle(s, input.meta.planTitle, 'Fruit, nuts and berries by age', 'Each column covers twelve months. Species total = all mapped plants. Group rows give kg for that age group. ? = missing information.');
-    s.fill(INK.green); s.doc.rect(s.margin, s.y, s.contentWidth, 30, 'F'); s.font(8, true); s.ink(INK.white);
-    s.doc.text('PLANT / AGE GROUPS', s.margin + 8, s.y + 19);
+    masthead(s, copy('Plant ages & harvest'));
+    pageTitle(s, input.meta.planTitle, copy('Fruit, nuts and berries by age'), copy('Each column covers twelve months. Species total = all mapped plants. Group rows give kg for that age group. ? = missing information.'));
+    s.font(8, true);
+    const plantHead = native ? s.doc.splitTextToSize(s.safe(copy('PLANT / AGE GROUPS')), 134) as string[] : [copy('PLANT / AGE GROUPS')];
     const width = (s.contentWidth - 150) / projection.years.length;
-    projection.years.forEach((year, i) => s.doc.text(s.safe(year.label.split(' – ')[0]), s.margin + 150 + (i + 0.5) * width, s.y + 19, { align: 'center' }));
-    s.y += 30;
+    const yearHeads = projection.years.map(year => s.safe(cropProjectionPeriodText(year.label, s.language).split(' – ')[0]));
+    const yearLines = yearHeads.map(label => native ? s.doc.splitTextToSize(label, width - 6) as string[] : [label]);
+    const height = native ? Math.max(30, Math.max(plantHead.length, ...yearLines.map(lines => lines.length)) * 9.6 + 12) : 30;
+    s.fill(INK.green); s.doc.rect(s.margin, s.y, s.contentWidth, height, 'F'); s.font(8, true); s.ink(INK.white);
+    s.doc.text(plantHead.length === 1 ? plantHead[0] : plantHead, s.margin + 8, s.y + (native ? 13 : 19), { lineHeightFactor: 1.2 });
+    yearLines.forEach((lines, i) => s.doc.text(lines.length === 1 ? lines[0] : lines, s.margin + 150 + (i + 0.5) * width, s.y + (native ? 13 : 19), { align: 'center', lineHeightFactor: 1.2 }));
+    s.y += height;
   };
   tableHead();
   const date = input.now ?? new Date();
@@ -2093,16 +2127,18 @@ function drawProductionProjection(s: Sheet, input: CropPlanPdfInput): void {
   const drawAgeRow = (name: string, count: string, speciesId: string, periods: AgeProjection[], total: boolean) => {
     const width = (s.contentWidth - 150) / projection.years.length;
     s.font(7.5);
-    const cells = periods.map(t => s.doc.splitTextToSize(s.safe(`${total ? 'Species total' : t.ages}
-${t.kg ? projectedKgLabel(t.kg) : t.knownKg[1] > 0 ? `${projectedKgLabel(t.knownKg)} *` : '? kg'}`), width - 6) as string[]);
+    const cells = periods.map(t => s.doc.splitTextToSize(s.safe(`${total ? copy('Species total') : cropProjectionAgeText(t.ages, s.language)}
+${t.kg ? quantity(t.kg) : t.knownKg[1] > 0 ? `${quantity(t.knownKg)} *` : '? kg'}`), width - 6) as string[]);
     s.font(9, true);
     const names = s.doc.splitTextToSize(s.safe(name), 111) as string[];
-    const height = Math.max(46, names.length * 11 + 24, ...cells.map(c => c.length * 10 + 12));
+    s.font(7.5);
+    const countLines = native ? s.doc.splitTextToSize(s.safe(count), 111) as string[] : [s.safe(count)];
+    const height = Math.max(46, names.length * 11 + 24 + (countLines.length - 1) * 10, ...cells.map(c => c.length * 10 + 12));
     if (!s.fits(height)) { s.page('landscape'); tableHead(); }
     if (total || rowIndex % 2 === 0) { s.fill(total ? INK.panelGreen : INK.panelGrey); s.doc.rect(s.margin, s.y, s.contentWidth, height, 'F'); }
     drawIconOrCode(s, { iconKey: `tree:${speciesId}`, code: fallbackCode(name) }, s.margin + 4, s.y + 8, 26, input.icons);
     s.font(9, true); s.ink(INK.text); s.doc.text(names, s.margin + 35, s.y + 15, { lineHeightFactor: 1.22 });
-    s.font(7.5); s.ink(INK.muted); s.doc.text(s.safe(count), s.margin + 35, s.y + height - 10);
+    s.font(7.5); s.ink(INK.muted); s.doc.text(countLines.length === 1 ? countLines[0] : countLines, s.margin + 35, s.y + height - 10 - (countLines.length - 1) * 10, { lineHeightFactor: 1.33 });
     cells.forEach((cell, i) => { s.font(7.5); s.ink(INK.text); s.doc.text(cell, s.margin + 150 + (i + 0.5) * width, s.y + 15, { align: 'center', lineHeightFactor: 1.33 }); });
     s.stroke(INK.hair); s.doc.line(s.margin, s.y + height, s.width - s.margin, s.y + height);
     s.y += height; rowIndex++;
@@ -2117,11 +2153,11 @@ ${t.kg ? projectedKgLabel(t.kg) : t.knownKg[1] > 0 ? `${projectedKgLabel(t.known
       // When every mapped plant has the same age, its cohort is also the species total.
       // Printing the identical number twice made a small farmer's plan unnecessarily long.
       const cohort = cohorts[0];
-      drawAgeRow(tree.name, `${tree.plants} ${cohort.status === 'existing' ? 'planted' : 'planned'} ${tree.plants === 1 ? 'plant' : 'plants'}`, tree.speciesId, projection.years.map(y => y.trees[treeIndex]), false);
+      drawAgeRow(tree.name, copy(`{count} ${cohort.status === 'existing' ? 'planted' : 'planned'} ${tree.plants === 1 ? 'plant' : 'plants'}`, { count: tree.plants }), tree.speciesId, projection.years.map(y => y.trees[treeIndex]), false);
       continue;
     }
     if (cohorts.length > 0 && cohorts.length <= 3 && !s.fits((cohorts.length + 1) * 46)) { s.page('landscape'); tableHead(); }
-    drawAgeRow(tree.name, `${tree.plants} ${tree.plants === 1 ? 'plant' : 'plants'} on map`, tree.speciesId, projection.years.map(y => y.trees[treeIndex]), true);
+    drawAgeRow(tree.name, copy(`{count} ${tree.plants === 1 ? 'plant' : 'plants'} on map`, { count: tree.plants }), tree.speciesId, projection.years.map(y => y.trees[treeIndex]), true);
     if (!group) continue;
     const unsafeCounts = cohorts.some(c => !Number.isSafeInteger(c.plants) || c.plants < 1)
       || (['existing', 'proposed'] as const).some(status => cohorts.filter(c => c.status === status).reduce((sum, c) => sum + c.plants, 0) > group[status]);
@@ -2134,19 +2170,23 @@ ${t.kg ? projectedKgLabel(t.kg) : t.knownKg[1] > 0 ? `${projectedKgLabel(t.known
         const period = treeAgeProjection(single, { ...choice!, production: [cohort] }, start, start + 11, nowIndex);
         return unsafeCounts ? { ...period, kg: null, knownKg: [0, 0] as [number, number] } : period;
       });
-      drawAgeRow(`${tree.name} - group ${index + 1}`, `${numberLabel(cohort.plants)} ${cohort.status === 'existing' ? 'planted' : 'planned'} ${cohort.plants === 1 ? 'plant' : 'plants'}`, tree.speciesId, periods, false);
+      drawAgeRow(copy('{name} - group {number}', { name: tree.name, number: index + 1 }), copy(`{count} ${cohort.status === 'existing' ? 'planted' : 'planned'} ${cohort.plants === 1 ? 'plant' : 'plants'}`, { count: numberLabel(cohort.plants) }), tree.speciesId, periods, false);
     }
   }
   s.y += 14;
-  for (const tree of projection.years[0].trees.filter(t => t.missing.length)) s.paragraph(`${tree.name}: ${tree.missing.join('; ')}`, { size: 8.5, ink: INK.muted, gap: 6 });
+  for (const tree of projection.years[0].trees.filter(t => t.missing.length)) s.paragraph(`${tree.name}: ${tree.missing.map(message => cropProjectionDetailText(message, s.language)).join('; ')}`, { size: 8.5, ink: INK.muted, gap: 6 });
   const recordedGroups = (input.treeGroups ?? []).filter(g => input.treeSeasons?.[g.harvest.speciesId]?.production?.length);
   if (!recordedGroups.length) return;
   s.page('portrait');
-  const notesHead = () => { masthead(s, 'Age assumptions'); pageTitle(s, input.meta.planTitle, 'Plant ages: assumptions and sources', 'Farm yield schedules are entered assumptions. Research first-crop ages are references to check locally.'); };
+  const notesHead = () => { masthead(s, copy('Age assumptions')); pageTitle(s, input.meta.planTitle, copy('Plant ages: assumptions and sources'), copy('Farm yield schedules are entered assumptions. Research first-crop ages are references to check locally.')); };
   notesHead();
   const ageNote = (text: string, gap = 6, reserveAfter = 0) => {
     s.font(8.5);
     const lines = s.doc.splitTextToSize(s.safe(text), s.contentWidth) as string[];
+    const height = lines.length * 8.5 * 1.4 + gap + reserveAfter;
+    // The Ve stress PDF broke a publication title around a repeated page header.
+    // Compact source paragraphs and their link must travel together.
+    if (native && height <= s.bottom - s.margin - 150 && s.need(height)) notesHead();
     for (const [index, line] of lines.entries()) {
       if (s.need(8.5 * 1.4 + (index === lines.length - 1 ? gap + reserveAfter : 4))) notesHead();
       s.text(line, s.margin, { size: 8.5, ink: INK.muted }); s.y += 8.5 * 1.4;
@@ -2155,16 +2195,30 @@ ${t.kg ? projectedKgLabel(t.kg) : t.knownKg[1] > 0 ? `${projectedKgLabel(t.known
   };
   for (const group of recordedGroups) {
     const choice = input.treeSeasons?.[group.harvest.speciesId];
-    for (const age of choice?.production ?? []) ageNote(`${group.harvest.name}: ${age.plants} ${age.status} ${age.plants === 1 ? 'plant' : 'plants'}, planted ${age.planted || 'date not recorded'}. Farm schedule: ${age.yields.filter(p => Number.isFinite(p.age) && Number.isFinite(p.kg)).map(p => `age ${p.age}: ${p.kg} kg/plant/year`).join('; ') || 'not entered'}.`);
+    for (const age of choice?.production ?? []) {
+      const values = { name: group.harvest.name, plants: age.plants, status: copy(age.status), unit: copy(age.plants === 1 ? 'plant' : 'plants'), planted: age.planted || copy('date not recorded') };
+      const points = age.yields.filter(p => Number.isFinite(p.age) && Number.isFinite(p.kg)).map(p => copy('age {age}: {kg} kg/plant/year', { age: p.age, kg: p.kg }));
+      if (native && points.length) {
+        // A repeated page heading used to separate a checkpoint's age from its kg/year.
+        // Keep complete entered points in order, with the farm/date prefix beside the first.
+        ageNote(copy('{name}: {plants} {status} {unit}, planted {planted}. Farm schedule:', values), 0, 16);
+        points.forEach((point, index) => ageNote(point + (index === points.length - 1 ? '.' : ';'), index === points.length - 1 ? 6 : 2));
+      } else ageNote(copy('{name}: {plants} {status} {unit}, planted {planted}. Farm schedule: {schedule}.', { ...values, schedule: points.join('; ') || copy('not entered') }));
+    }
     if (choice?.production?.length && group.harvest.yearsToFirstCrop) {
       const source = group.harvest.yearsToFirstCrop;
-      ageNote(`${group.harvest.name}: first-crop reference ${firstCropAgeLabel(source.value)} after planting. ${source.note ?? 'Check cultivar, starting stock and source conditions.'} ${source.source.doc}${source.source.page ? `, p. ${source.source.page}` : ''}.`, 6, 16);
-      s.font(8.5); s.ink(INK.green); s.doc.textWithLink('First-crop source', s.margin, s.y, { url: source.source.url }); s.y += 16;
+      ageNote(copy('{name}: first-crop reference {age} after planting. {note} {source}.', {
+        name: group.harvest.name, age: firstCropAgeLabel(source.value, (age, unit) => productGuideText(`{age} ${unit}`, s.language, { age })),
+        note: source.note != null ? sourceNote(source.note) : copy('Check cultivar, starting stock and source conditions.'), source: `${source.source.doc}${source.source.page ? `, p. ${source.source.page}` : ''}`,
+      }), 6, 16);
+      s.font(8.5); s.ink(INK.green); s.doc.textWithLink(copy('First-crop source'), s.margin, s.y, { url: source.source.url }); s.y += 16;
     }
     if (choice?.production?.length && group.harvest.yearsToFullBearing) {
       const source = group.harvest.yearsToFullBearing;
-      ageNote(`${group.harvest.name}: established production reference ${formatRange(source.value)} years. ${source.note ?? 'Check cultivar, starting stock and source conditions.'} ${source.source.doc}${source.source.page ? `, p. ${source.source.page}` : ''}.`, 6, 16);
-      s.font(8.5); s.ink(INK.green); s.doc.textWithLink('Established-production source', s.margin, s.y, { url: source.source.url }); s.y += 16;
+      ageNote(copy('{name}: established production reference {range} years. {note} {source}.', {
+        name: group.harvest.name, range: formatRange(source.value), note: source.note != null ? sourceNote(source.note) : copy('Check cultivar, starting stock and source conditions.'), source: `${source.source.doc}${source.source.page ? `, p. ${source.source.page}` : ''}`,
+      }), 6, 16);
+      s.font(8.5); s.ink(INK.green); s.doc.textWithLink(copy('Established-production source'), s.margin, s.y, { url: source.source.url }); s.y += 16;
     }
   }
 }
