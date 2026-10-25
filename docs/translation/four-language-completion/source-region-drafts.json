@@ -1,0 +1,1372 @@
+{
+  "status": "IN PROGRESS: faithful source-bound unreviewed drafts. No fluent language/agricultural approval or whole-app completion.",
+  "sourceInventorySha256": "b66fd5183c9fc44c197af12e26f1619bae97d83106a7213599d74118d0f925b5",
+  "sourceCount": 56,
+  "rows": [
+    {
+      "english": "Cederberg / Western Cape winter-rainfall commercial rooibos",
+      "zu": "i-rooibos yezentengiselwano yase-Cederberg / Western Cape enezimvula zasebusika",
+      "st": "rooibos ya kgwebo ya Cederberg / Western Cape ya dipula tsa mariha",
+      "ts": "rooibos ya mabindzu ya Cederberg / Western Cape ya mpfula ya xixika",
+      "ve": "rooibos ya vhubindudzi ya Cederberg / Western Cape ya mvula ya vhuria",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa (general — Southern Hemisphere phenology; main areas Vaalharts/Northern Cape, Lower Orange River)",
+      "zu": "South Africa (ngokujwayelekile — umjikelezo wezinkathi zezitshalo eNingizimu Yenkabazwe; izindawo eziyinhloko i-Vaalharts/Northern Cape, Lower Orange River)",
+      "st": "South Africa (ka kakaretso — potoloho ya dinako tsa dimela halofong e ka borwa ya lefatshe; dibaka tse ka sehloohong ke Vaalharts/Northern Cape, Lower Orange River)",
+      "ts": "South Africa (hi ku angarhela — ndzhendzeleko wa nguva ya swimilana eka hafu ya misava ya le dzongeni; tindhawu letikulu i Vaalharts/Northern Cape, Lower Orange River)",
+      "ve": "South Africa (nga u angaredza — mutevhe wa khalaṅwaha wa zwimela kha hafu ya shango ya tshipembe; vhupo vhuhulwane ndi Vaalharts/Northern Cape, Lower Orange River)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "KZN (hot low-lying areas, e.g. Nkwaleni, Mkhuze vs. cooler KZN Midlands)",
+      "zu": "KZN (izindawo ezishisayo eziphansi, isib. Nkwaleni, Mkhuze uma kuqhathaniswa ne-KZN Midlands epholile)",
+      "st": "KZN (dibaka tse tjhesang tse tlase, mohl. Nkwaleni, Mkhuze ha di bapiswa le KZN Midlands e phodileng)",
+      "ts": "KZN (tindhawu leti hisaka ta le hansi, xik. Nkwaleni, Mkhuze loko ti pimanisiwa na KZN Midlands leyi titimelaka)",
+      "ve": "KZN (vhupo vhu fhisaho ha fhasi, tsumbo Nkwaleni, Mkhuze hu tshi vhambedzwa na KZN Midlands hu rotholelaho)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa (general; main areas Eastern Cape, Limpopo, Western Cape)",
+      "zu": "South Africa (ngokujwayelekile; izindawo eziyinhloko i-Eastern Cape, Limpopo, Western Cape)",
+      "st": "South Africa (ka kakaretso; dibaka tse ka sehloohong ke Eastern Cape, Limpopo, Western Cape)",
+      "ts": "South Africa (hi ku angarhela; tindhawu letikulu i Eastern Cape, Limpopo, Western Cape)",
+      "ve": "South Africa (nga u angaredza; vhupo vhuhulwane ndi Eastern Cape, Limpopo, Western Cape)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Eastern & Western Cape (main soft citrus areas) — Satsuma cultivars",
+      "zu": "Eastern & Western Cape (izindawo eziyinhloko ze-soft citrus) — izinhlobo ze-Satsuma",
+      "st": "Eastern & Western Cape (dibaka tse ka sehloohong tsa soft citrus) — mefuta ya Satsuma",
+      "ts": "Eastern & Western Cape (tindhawu letikulu ta soft citrus) — tinxaka ta Satsuma",
+      "ve": "Eastern & Western Cape (vhupo vhuhulwane ha soft citrus) — tshaka dza Satsuma",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Eastern & Western Cape (main soft citrus areas) — Clementine cultivars",
+      "zu": "Eastern & Western Cape (izindawo eziyinhloko ze-soft citrus) — izinhlobo ze-Clementine",
+      "st": "Eastern & Western Cape (dibaka tse ka sehloohong tsa soft citrus) — mefuta ya Clementine",
+      "ts": "Eastern & Western Cape (tindhawu letikulu ta soft citrus) — tinxaka ta Clementine",
+      "ve": "Eastern & Western Cape (vhupo vhuhulwane ha soft citrus) — tshaka dza Clementine",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Eastern & Western Cape (main soft citrus areas) — Mandarin cultivars (incl. Nadorcott)",
+      "zu": "Eastern & Western Cape (izindawo eziyinhloko ze-soft citrus) — izinhlobo ze-Mandarin (kuhlanganise ne-Nadorcott)",
+      "st": "Eastern & Western Cape (dibaka tse ka sehloohong tsa soft citrus) — mefuta ya Mandarin (ho kenyeletswa Nadorcott)",
+      "ts": "Eastern & Western Cape (tindhawu letikulu ta soft citrus) — tinxaka ta Mandarin (ku katsa Nadorcott)",
+      "ve": "Eastern & Western Cape (vhupo vhuhulwane ha soft citrus) — tshaka dza Mandarin (hu tshi katelwa Nadorcott)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Beaver Creek Estate, Port Edward, KwaZulu-Natal — SL28, Catuai and F6",
+      "zu": "Beaver Creek Estate, Port Edward, KwaZulu-Natal — SL28, Catuai kanye ne-F6",
+      "st": "Beaver Creek Estate, Port Edward, KwaZulu-Natal — SL28, Catuai le F6",
+      "ts": "Beaver Creek Estate, Port Edward, KwaZulu-Natal — SL28, Catuai na F6",
+      "ve": "Beaver Creek Estate, Port Edward, KwaZulu-Natal — SL28, Catuai na F6",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa (general; SA distribution given as Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West)",
+      "zu": "South Africa (ngokujwayelekile; ukusabalala e-SA kunikezwe njenge-Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West)",
+      "st": "South Africa (ka kakaretso; kabo ya yona SA e fanwa e le Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West)",
+      "ts": "South Africa (hi ku angarhela; ku hangalaka eSA ku nyikiwa ku ri Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West)",
+      "ve": "South Africa (nga u angaredza; u phaḓalala SA ho ṋeiwa sa Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Arid western South Africa / Namibia — SANBI species reference",
+      "zu": "entshonalanga eyomile ye-South Africa / Namibia — inkomba yohlobo ye-SANBI",
+      "st": "bophirima bo omeletseng ba South Africa / Namibia — tshupiso ya mofuta ya SANBI",
+      "ts": "vupeladyambu byo oma bya South Africa / Namibia — xikombo xa muxaka xa SANBI",
+      "ve": "vhukovhela ho omaho ha South Africa / Namibia — ndaedzi ya lushaka ya SANBI",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Western Cape (Breede River valley, near Worcester)",
+      "zu": "Western Cape (esigodini sase-Breede River, eduze ne-Worcester)",
+      "st": "Western Cape (phuleng ya Breede River, haufi le Worcester)",
+      "ts": "Western Cape (enkoveni wa Breede River, ekusuhi na Worcester)",
+      "ve": "Western Cape (govhani ḽa Breede River, tsini na Worcester)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Prince Albert / Weltevrede, Western Cape Karoo — Adams cultivar, including early figs",
+      "zu": "Prince Albert / Weltevrede, Western Cape Karoo — uhlobo lwe-Adams, kuhlanganise namakhiwane okuqala",
+      "st": "Prince Albert / Weltevrede, Western Cape Karoo — mofuta wa Adams, ho kenyeletswa difeie tsa pele",
+      "ts": "Prince Albert / Weltevrede, Western Cape Karoo — muxaka wa Adams, ku katsa makuwa ya le ku sunguleni",
+      "ve": "Prince Albert / Weltevrede, Western Cape Karoo — lushaka lwa Adams, hu tshi katelwa mahuyu a u thoma",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South African botanical account — approximate ripe figs",
+      "zu": "umbhalo webhothani wase-South Africa — amakhiwane avuthiwe (okulinganiselwe)",
+      "st": "tlaleho ya botaniki ya South Africa — difeie tse butswitseng (ka kgakanyo)",
+      "ts": "xihlovo xa botaniki xa South Africa — makuwa lama vupfeke (hi ku ringanyeta)",
+      "ve": "tshiko tsha botaniki tsha South Africa — mahuyu o vhibvaho (nga u anganyela)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Transvaal (now Gauteng/Limpopo/Mpumalanga/North West), grown in tunnels",
+      "zu": "Transvaal (manje i-Gauteng/Limpopo/Mpumalanga/North West), kutshalwe emihubheni yokukhulisa izitshalo",
+      "st": "Transvaal (hona jwale Gauteng/Limpopo/Mpumalanga/North West), di hodisitswe dithaneleng tsa temo",
+      "ts": "Transvaal (sweswi Gauteng/Limpopo/Mpumalanga/North West), swi kurisiwile etithaneleni ta ku byala",
+      "ve": "Transvaal (zwino Gauteng/Limpopo/Mpumalanga/North West), zwo aluswa kha thaneḽa dza u lima",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa (industry body overview, all regions)",
+      "zu": "South Africa (uhlolojikelele lwenhlangano yemboni, zonke izifunda)",
+      "st": "South Africa (kakaretso ya mokgatlo wa indasteri, dibaka tsohle)",
+      "ts": "South Africa (nkatsakanyo wa nhlangano wa indasitiri, swifundzha hinkwato)",
+      "ve": "South Africa (mvulatswinga ya dzangano ḽa indasṱiri, madzingu oṱhe)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "KwaZulu-Natal, frost-free areas",
+      "zu": "KwaZulu-Natal, izindawo ezingenasithwathwa",
+      "st": "KwaZulu-Natal, dibaka tse se nang serame",
+      "ts": "KwaZulu-Natal, tindhawu leti nga riki na rharhama",
+      "ve": "KwaZulu-Natal, vhupo vhu si na murotholo",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "KwaZulu-Natal, areas with light frosts",
+      "zu": "KwaZulu-Natal, izindawo ezinesithwathwa esincane",
+      "st": "KwaZulu-Natal, dibaka tse nang le serame se bobebe",
+      "ts": "KwaZulu-Natal, tindhawu leti nga ni rharhama ritsongo",
+      "ve": "KwaZulu-Natal, vhupo vhu re na murotholo muṱuku",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa (general)",
+      "zu": "South Africa (ngokujwayelekile)",
+      "st": "South Africa (ka kakaretso)",
+      "ts": "South Africa (hi ku angarhela)",
+      "ve": "South Africa (nga u angaredza)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa (general; SANBI: Eastern Cape, KwaZulu-Natal, Limpopo, Mpumalanga)",
+      "zu": "South Africa (ngokujwayelekile; SANBI: Eastern Cape, KwaZulu-Natal, Limpopo, Mpumalanga)",
+      "st": "South Africa (ka kakaretso; SANBI: Eastern Cape, KwaZulu-Natal, Limpopo, Mpumalanga)",
+      "ts": "South Africa (hi ku angarhela; SANBI: Eastern Cape, KwaZulu-Natal, Limpopo, Mpumalanga)",
+      "ve": "South Africa (nga u angaredza; SANBI: Eastern Cape, KwaZulu-Natal, Limpopo, Mpumalanga)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa (general — Mpumalanga lowveld, Limpopo, KZN coast)",
+      "zu": "South Africa (ngokujwayelekile — indawo ephansi yase-Mpumalanga, Limpopo, ugu lwe-KZN)",
+      "st": "South Africa (ka kakaretso — dibaka tse tlase tsa Mpumalanga, Limpopo, lebopo la KZN)",
+      "ts": "South Africa (hi ku angarhela — tindhawu ta le hansi ta Mpumalanga, Limpopo, ribuwa ra KZN)",
+      "ve": "South Africa (nga u angaredza — vhupo ha fhasi ha Mpumalanga, Limpopo, khunzikhunzini ya KZN)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa - Fay Zee Siu cultivar (SALGA / ARC reference)",
+      "zu": "South Africa - uhlobo lwe-Fay Zee Siu (inkomba ye-SALGA / ARC)",
+      "st": "South Africa - mofuta wa Fay Zee Siu (tshupiso ya SALGA / ARC)",
+      "ts": "South Africa - muxaka wa Fay Zee Siu (xikombo xa SALGA / ARC)",
+      "ve": "South Africa - lushaka lwa Fay Zee Siu (ndaedzi ya SALGA / ARC)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa - Mauritius cultivar (SALGA / ARC reference)",
+      "zu": "South Africa - uhlobo lwe-Mauritius (inkomba ye-SALGA / ARC)",
+      "st": "South Africa - mofuta wa Mauritius (tshupiso ya SALGA / ARC)",
+      "ts": "South Africa - muxaka wa Mauritius (xikombo xa SALGA / ARC)",
+      "ve": "South Africa - lushaka lwa Mauritius (ndaedzi ya SALGA / ARC)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa - Wai Chee cultivar (SALGA / ARC reference)",
+      "zu": "South Africa - uhlobo lwe-Wai Chee (inkomba ye-SALGA / ARC)",
+      "st": "South Africa - mofuta wa Wai Chee (tshupiso ya SALGA / ARC)",
+      "ts": "South Africa - muxaka wa Wai Chee (xikombo xa SALGA / ARC)",
+      "ve": "South Africa - lushaka lwa Wai Chee (ndaedzi ya SALGA / ARC)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa (general — Mpumalanga, KwaZulu-Natal, Limpopo)",
+      "zu": "South Africa (ngokujwayelekile — Mpumalanga, KwaZulu-Natal, Limpopo)",
+      "st": "South Africa (ka kakaretso — Mpumalanga, KwaZulu-Natal, Limpopo)",
+      "ts": "South Africa (hi ku angarhela — Mpumalanga, KwaZulu-Natal, Limpopo)",
+      "ve": "South Africa (nga u angaredza — Mpumalanga, KwaZulu-Natal, Limpopo)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Bien Donne, Simondium, Western Cape — Afri-Star cultivar trial reference",
+      "zu": "Bien Donne, Simondium, Western Cape — inkomba yokuhlolwa kohlobo lwe-Afri-Star",
+      "st": "Bien Donne, Simondium, Western Cape — tshupiso ya teko ya mofuta wa Afri-Star",
+      "ts": "Bien Donne, Simondium, Western Cape — xikombo xa ndzingo wa muxaka wa Afri-Star",
+      "ve": "Bien Donne, Simondium, Western Cape — ndaedzi ya ndingo ya lushaka lwa Afri-Star",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Elgin, Western Cape — Granny Smith cultivar first pick",
+      "zu": "Elgin, Western Cape — ukuvuna kokuqala kohlobo lwe-Granny Smith",
+      "st": "Elgin, Western Cape — kotulo ya pele ya mofuta wa Granny Smith",
+      "ts": "Elgin, Western Cape — ku tshovela ko sungula ka muxaka wa Granny Smith",
+      "ve": "Elgin, Western Cape — khaṋo ya u thoma ya lushaka lwa Granny Smith",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area)",
+      "zu": "South Africa (ngokujwayelekile; Limpopo + Mpumalanga = 96% yendawo yama-mango yase-SA)",
+      "st": "South Africa (ka kakaretso; Limpopo + Mpumalanga = 96% ya sebaka sa dimango sa SA)",
+      "ts": "South Africa (hi ku angarhela; Limpopo + Mpumalanga = 96% ya ndhawu ya mimango ya SA)",
+      "ve": "South Africa (nga u angaredza; Limpopo + Mpumalanga = 96% ya vhupo ha miango ha SA)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Western Cape — cultivar and end-use dependent olive harvest",
+      "zu": "Western Cape — isivuno se-olive esincike ohlotsheni nasekusetshenzisweni kokugcina",
+      "st": "Western Cape — kotulo ya olive e itshetlehileng ka mofuta le tshebediso ya ho qetela",
+      "ts": "Western Cape — ntshovelo wa olive lowu titshegeke hi muxaka ni ku tirhisiwa ko hetelela",
+      "ve": "Western Cape — khaṋo ya olive i ḓitikaho nga lushaka na tshumiso ya u fhedza",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "KwaZulu-Natal (Bioresource Groups 3 and 5, cool subtropical)",
+      "zu": "KwaZulu-Natal (amaqembu e-Bioresource Groups 3 no-5, indawo epholile eseduze nezishisayo)",
+      "st": "KwaZulu-Natal (dihlopha tsa Bioresource Groups 3 le 5, sebaka se phodileng se haufi le tropike)",
+      "ts": "KwaZulu-Natal (mintlawa ya Bioresource Groups 3 na 5, ndhawu ya le kusuhi ni tropiki leyi titimelaka)",
+      "ve": "KwaZulu-Natal (zwigwada zwa Bioresource Groups 3 na 5, vhupo vhu rotholelaho ha tsini na tropiki)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa (general, SAAGA industry overview)",
+      "zu": "South Africa (ngokujwayelekile, uhlolojikelele lwemboni lwe-SAAGA)",
+      "st": "South Africa (ka kakaretso, kakaretso ya indasteri ya SAAGA)",
+      "ts": "South Africa (hi ku angarhela, nkatsakanyo wa indasitiri wa SAAGA)",
+      "ve": "South Africa (nga u angaredza, mvulatswinga ya indasṱiri ya SAAGA)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa - warm subtropical regions (Hass cultivar)",
+      "zu": "South Africa - izifunda ezifudumele eziseduze nezishisayo (uhlobo lwe-Hass)",
+      "st": "South Africa - dibaka tse futhumetseng tse haufi le tropike (mofuta wa Hass)",
+      "ts": "South Africa - swifundzha swo kufumela swa le kusuhi ni tropiki (muxaka wa Hass)",
+      "ve": "South Africa - madzingu a dudelaho a tsini na tropiki (lushaka lwa Hass)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa - cool subtropical regions (Hass cultivar)",
+      "zu": "South Africa - izifunda ezipholile eziseduze nezishisayo (uhlobo lwe-Hass)",
+      "st": "South Africa - dibaka tse phodileng tse haufi le tropike (mofuta wa Hass)",
+      "ts": "South Africa - swifundzha leswi titimelaka swa le kusuhi ni tropiki (muxaka wa Hass)",
+      "ve": "South Africa - madzingu a rotholelaho a tsini na tropiki (lushaka lwa Hass)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "southern Africa",
+      "zu": "eningizimu ye-Afrika",
+      "st": "borwa ba Afrika",
+      "ts": "dzonga wa Afrika",
+      "ve": "tshipembe ha Afrika",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Stellenbosch, Western Cape (tunnel trial, planted June 2021)",
+      "zu": "Stellenbosch, Western Cape (ukuhlolwa emhubheni wokukhulisa izitshalo, kutshalwe ngoJuni 2021)",
+      "st": "Stellenbosch, Western Cape (teko ya thanele ya temo, di jetswe ka Phupjane 2021)",
+      "ts": "Stellenbosch, Western Cape (ndzingo wa thanele yo byala, swi byariwe hi Khotavuxika 2021)",
+      "ve": "Stellenbosch, Western Cape (ndingo ya thaneḽa ya u lima, zwo ṱavhiwa nga Fulwi 2021)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Orange River farm near Prieska, Northern Cape — Karoo Pistachios producer observation",
+      "zu": "ipulazi lase-Orange River eduze ne-Prieska, Northern Cape — okubikwe umkhiqizi we-Karoo Pistachios",
+      "st": "polasi ya Orange River haufi le Prieska, Northern Cape — se bonweng ke mohlahisi wa Karoo Pistachios",
+      "ts": "purasi ra Orange River ekusuhi na Prieska, Northern Cape — leswi voniweke hi muhumelerisi wa Karoo Pistachios",
+      "ve": "bulasi ḽa Orange River tsini na Prieska, Northern Cape — zwo vhonwaho nga mubveledzi wa Karoo Pistachios",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Bien Donne, Simondium, Western Cape — Solitaire first pick",
+      "zu": "Bien Donne, Simondium, Western Cape — ukuvuna kokuqala kwe-Solitaire",
+      "st": "Bien Donne, Simondium, Western Cape — kotulo ya pele ya Solitaire",
+      "ts": "Bien Donne, Simondium, Western Cape — ku tshovela ko sungula ka Solitaire",
+      "ve": "Bien Donne, Simondium, Western Cape — khaṋo ya u thoma ya Solitaire",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Tierhoek Organic Farm, Robertson, Breede River Valley, Western Cape — Imperial trial",
+      "zu": "Tierhoek Organic Farm, Robertson, Breede River Valley, Western Cape — ukuhlolwa kwe-Imperial",
+      "st": "Tierhoek Organic Farm, Robertson, Breede River Valley, Western Cape — teko ya Imperial",
+      "ts": "Tierhoek Organic Farm, Robertson, Breede River Valley, Western Cape — ndzingo wa Imperial",
+      "ve": "Tierhoek Organic Farm, Robertson, Breede River Valley, Western Cape — ndingo ya Imperial",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South African SAPO cultivar sheet; trial location not stated — Texas Mission first pick",
+      "zu": "ikhasi lohlobo le-SAPO lase-South Africa; indawo yokuhlola ayishiwongo — ukuvuna kokuqala kwe-Texas Mission",
+      "st": "leqephe la mofuta la SAPO la South Africa; sebaka sa teko ha se a bolelwa — kotulo ya pele ya Texas Mission",
+      "ts": "phepha ra muxaka ra SAPO ra South Africa; ndhawu ya ndzingo a yi boxiwanga — ku tshovela ko sungula ka Texas Mission",
+      "ve": "bammbiri ḽa lushaka ḽa SAPO ḽa South Africa; fhethu ha ndingo a ho ngo bulwa — khaṋo ya u thoma ya Texas Mission",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa — low-chill cultivar 'Earligold' (ARC Infruitec-Nietvoorbij bred, low-chill growing areas)",
+      "zu": "South Africa — uhlobo lwe-Earligold oludinga ukubanda okuncane (low-chill) (lwathuthukiswa e-ARC Infruitec-Nietvoorbij, izindawo zokukhula ezinezikhathi ezincane zokubanda)",
+      "st": "South Africa — mofuta wa Earligold o hlokang ho bata ho honyane (low-chill) (o hlahisitswe ke ARC Infruitec-Nietvoorbij, dibaka tsa temo tse nang le ho bata ho honyane)",
+      "ts": "South Africa — muxaka wa Earligold lowu lavaka ku titimela kutsongo (low-chill) (wu tumbuluxiwe hi ARC Infruitec-Nietvoorbij, tindhawu to kurisa leti nga ni ku titimela kutsongo)",
+      "ve": "South Africa — lushaka lwa Earligold lu ṱoḓaho murotho muṱuku (low-chill) (lwo bveledzwa nga ARC Infruitec-Nietvoorbij, vhupo ha u alusa vhu re na murotho muṱuku)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa — low/medium-chill cultivars 'Cederberg' and 'Afrisun' (ARC Infruitec-Nietvoorbij bred)",
+      "zu": "South Africa — izinhlobo ze-Cederberg ne-Afrisun ezidinga ukubanda okuncane/okuphakathi (low/medium-chill) (zathuthukiswa e-ARC Infruitec-Nietvoorbij)",
+      "st": "South Africa — mefuta ya Cederberg le Afrisun e hlokang ho bata ho honyane/ha mahareng (low/medium-chill) (e hlahisitswe ke ARC Infruitec-Nietvoorbij)",
+      "ts": "South Africa — tinxaka ta Cederberg na Afrisun leti lavaka ku titimela kutsongo/ka le xikarhini (low/medium-chill) (ti tumbuluxiwe hi ARC Infruitec-Nietvoorbij)",
+      "ve": "South Africa — tshaka dza Cederberg na Afrisun dzi ṱoḓaho murotho muṱuku/wa vhukati (low/medium-chill) (dzo bveledzwa nga ARC Infruitec-Nietvoorbij)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Western Cape (Boland / Klein Karoo / Robertson stone-fruit areas)",
+      "zu": "Western Cape (izindawo zezithelo zamatshe zase-Boland / Klein Karoo / Robertson)",
+      "st": "Western Cape (dibaka tsa ditholwana tse nang le thotse e thata tsa Boland / Klein Karoo / Robertson)",
+      "ts": "Western Cape (tindhawu ta mihandzu ya tinyungu to tiya ta Boland / Klein Karoo / Robertson)",
+      "ve": "Western Cape (vhupo ha mitshelo i re na mbeu i re kha ganda ḽo khwaṱhaho ha Boland / Klein Karoo / Robertson)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Bien Donne, Simondium, Western Cape — Ruby Crisp first pick",
+      "zu": "Bien Donne, Simondium, Western Cape — ukuvuna kokuqala kwe-Ruby Crisp",
+      "st": "Bien Donne, Simondium, Western Cape — kotulo ya pele ya Ruby Crisp",
+      "ts": "Bien Donne, Simondium, Western Cape — ku tshovela ko sungula ka Ruby Crisp",
+      "ve": "Bien Donne, Simondium, Western Cape — khaṋo ya u thoma ya Ruby Crisp",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Bien Donne, Simondium, Western Cape — Flavour Star first pick",
+      "zu": "Bien Donne, Simondium, Western Cape — ukuvuna kokuqala kwe-Flavour Star",
+      "st": "Bien Donne, Simondium, Western Cape — kotulo ya pele ya Flavour Star",
+      "ts": "Bien Donne, Simondium, Western Cape — ku tshovela ko sungula ka Flavour Star",
+      "ve": "Bien Donne, Simondium, Western Cape — khaṋo ya u thoma ya Flavour Star",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ceres, Koue Bokkeveld, Western Cape — Rosemarie Select first pick",
+      "zu": "Ceres, Koue Bokkeveld, Western Cape — ukuvuna kokuqala kwe-Rosemarie Select",
+      "st": "Ceres, Koue Bokkeveld, Western Cape — kotulo ya pele ya Rosemarie Select",
+      "ts": "Ceres, Koue Bokkeveld, Western Cape — ku tshovela ko sungula ka Rosemarie Select",
+      "ve": "Ceres, Koue Bokkeveld, Western Cape — khaṋo ya u thoma ya Rosemarie Select",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Wolseley, Western Cape — Rosemarie Select first pick",
+      "zu": "Wolseley, Western Cape — ukuvuna kokuqala kwe-Rosemarie Select",
+      "st": "Wolseley, Western Cape — kotulo ya pele ya Rosemarie Select",
+      "ts": "Wolseley, Western Cape — ku tshovela ko sungula ka Rosemarie Select",
+      "ve": "Wolseley, Western Cape — khaṋo ya u thoma ya Rosemarie Select",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South African cultivar sheet; test location not stated — Packham's Triumph first pick",
+      "zu": "ikhasi lohlobo lase-South Africa; indawo yokuhlola ayishiwongo — ukuvuna kokuqala kwe-Packham's Triumph",
+      "st": "leqephe la mofuta la South Africa; sebaka sa teko ha se a bolelwa — kotulo ya pele ya Packham's Triumph",
+      "ts": "phepha ra muxaka ra South Africa; ndhawu ya ndzingo a yi boxiwanga — ku tshovela ko sungula ka Packham's Triumph",
+      "ve": "bammbiri ḽa lushaka ḽa South Africa; fhethu ha ndingo a ho ngo bulwa — khaṋo ya u thoma ya Packham's Triumph",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Western/Eastern Cape, KwaZulu-Natal and Mpumalanga botanical account — ripe berries",
+      "zu": "umbhalo webhothani wase-Western/Eastern Cape, KwaZulu-Natal nase-Mpumalanga — amajikijolo avuthiwe",
+      "st": "tlaleho ya botaniki ya Western/Eastern Cape, KwaZulu-Natal le Mpumalanga — monokotshwai o butswitseng",
+      "ts": "xihlovo xa botaniki xa Western/Eastern Cape, KwaZulu-Natal na Mpumalanga — tibere leti vupfeke",
+      "ve": "tshiko tsha botaniki tsha Western/Eastern Cape, KwaZulu-Natal na Mpumalanga — mitshelo miṱuku yo vhibvaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "KwaZulu-Natal (spring-bearing cultivars: Glen Prosen, Glen Lyon, Tulameen)",
+      "zu": "KwaZulu-Natal (izinhlobo ezithela entwasahlobo: Glen Prosen, Glen Lyon, Tulameen)",
+      "st": "KwaZulu-Natal (mefuta e behang nakong ya selemo: Glen Prosen, Glen Lyon, Tulameen)",
+      "ts": "KwaZulu-Natal (tinxaka leti vekaka mihandzu hi ximun’wana: Glen Prosen, Glen Lyon, Tulameen)",
+      "ve": "KwaZulu-Natal (tshaka dzi aṋwaho nga lutavula: Glen Prosen, Glen Lyon, Tulameen)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Little Karoo and drier Cape botanical account — edible seed production reference",
+      "zu": "umbhalo webhothani wase-Little Karoo nasezindaweni ezomile kakhulu zase-Cape — inkomba yokukhiqizwa kwembewu edliwayo",
+      "st": "tlaleho ya botaniki ya Little Karoo le Cape e ommeng ho feta — tshupiso ya tlhahiso ya peo e jewang",
+      "ts": "xihlovo xa botaniki xa Little Karoo ni Cape leyi omeke ku tlurisa — xikombo xa vuhumelerisi bya mbewu leyi dyiwaka",
+      "ve": "tshiko tsha botaniki tsha Little Karoo na Cape ho omaho nga maanḓa — ndaedzi ya vhubveledzi ha mbeu i ḽiwaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa (general; SA distribution given as KwaZulu-Natal, Limpopo, Mpumalanga)",
+      "zu": "South Africa (ngokujwayelekile; ukusabalala e-SA kunikezwe njenge-KwaZulu-Natal, Limpopo, Mpumalanga)",
+      "st": "South Africa (ka kakaretso; kabo ya yona SA e fanwa e le KwaZulu-Natal, Limpopo, Mpumalanga)",
+      "ts": "South Africa (hi ku angarhela; ku hangalaka eSA ku nyikiwa ku ri KwaZulu-Natal, Limpopo, Mpumalanga)",
+      "ve": "South Africa (nga u angaredza; u phaḓalala SA ho ṋeiwa sa KwaZulu-Natal, Limpopo, Mpumalanga)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Eastern South African botanical account — edible flowers only",
+      "zu": "umbhalo webhothani wasempumalanga ye-South Africa — izimbali ezidliwayo kuphela",
+      "st": "tlaleho ya botaniki ya botjhabela ba South Africa — dipalesa tse jewang feela",
+      "ts": "xihlovo xa botaniki xa le vuxa bya South Africa — mabilomu lama dyiwaka ntsena",
+      "ve": "tshiko tsha botaniki tsha vhubvaḓuvha ha South Africa — maluvha a ḽiwaho fhedzi",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Western Cape (Hex River and Wolseley trial sites)",
+      "zu": "Western Cape (izindawo zokuhlola zase-Hex River nase-Wolseley)",
+      "st": "Western Cape (dibaka tsa diteko tsa Hex River le Wolseley)",
+      "ts": "Western Cape (tindhawu ta mindzingo ta Hex River na Wolseley)",
+      "ve": "Western Cape (fhethu ha ndingo ha Hex River na Wolseley)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa (national, USDA FAS GAIN)",
+      "zu": "South Africa (kuzwelonke, USDA FAS GAIN)",
+      "st": "South Africa (naha ka bophara, USDA FAS GAIN)",
+      "ts": "South Africa (etikweni hinkwaro, USDA FAS GAIN)",
+      "ve": "South Africa (kha shango ḽoṱhe, USDA FAS GAIN)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa (general; SA distribution given as Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape)",
+      "zu": "South Africa (ngokujwayelekile; ukusabalala e-SA kunikezwe njenge-Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape)",
+      "st": "South Africa (ka kakaretso; kabo ya yona SA e fanwa e le Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape)",
+      "ts": "South Africa (hi ku angarhela; ku hangalaka eSA ku nyikiwa ku ri Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape)",
+      "ve": "South Africa (nga u angaredza; u phaḓalala SA ho ṋeiwa sa Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa — Northern Province(s) region (SATI production region; mild sub-tropical, earliest SA harvest)",
+      "zu": "South Africa — isifunda se-Northern Province(s) (isifunda sokukhiqiza se-SATI; indawo emnene eseduze nezishisayo, ukuvuna kokuqala kakhulu e-SA)",
+      "st": "South Africa — sebaka sa Northern Province(s) (sebaka sa tlhahiso sa SATI; boemo bo itekanetseng bo haufi le tropike, kotulo ya pele ka ho fetisisa SA)",
+      "ts": "South Africa — xifundzha xa Northern Province(s) (xifundzha xa vuhumelerisi xa SATI; maxelo yo olova ya le kusuhi ni tropiki, ku tshovela ko sungula ngopfu eSA)",
+      "ve": "South Africa — dzingu ḽa Northern Province(s) (dzingu ḽa vhubveledzi ḽa SATI; nyimele dzi si na vhuhali dza tsini na tropiki, khaṋo ya u thoma nga maanḓa SA)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "South Africa (overall, all regions combined)",
+      "zu": "South Africa (sekukonke, zonke izifunda zihlanganisiwe)",
+      "st": "South Africa (ka kakaretso yohle, dibaka tsohle di kopantswe)",
+      "ts": "South Africa (hi ku helela, swifundzha hinkwato swi hlanganisiwile)",
+      "ve": "South Africa (nga u angaredza hoṱhe, madzingu oṱhe o ṱanganyiswa)",
+      "generatedScope": "product-guidance"
+    }
+  ],
+  "sourceBindings": [
+    {
+      "english": "Cederberg / Western Cape winter-rainfall commercial rooibos",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "aspalathus-linearis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa (general — Southern Hemisphere phenology; main areas Vaalharts/Northern Cape, Lower Orange River)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "carya-illinoinensis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "KZN (hot low-lying areas, e.g. Nkwaleni, Mkhuze vs. cooler KZN Midlands)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "citrus-limon"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa (general; main areas Eastern Cape, Limpopo, Western Cape)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "citrus-limon"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Eastern & Western Cape (main soft citrus areas) — Satsuma cultivars",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "citrus-reticulata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Eastern & Western Cape (main soft citrus areas) — Clementine cultivars",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "citrus-reticulata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Eastern & Western Cape (main soft citrus areas) — Mandarin cultivars (incl. Nadorcott)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "citrus-reticulata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Beaver Creek Estate, Port Edward, KwaZulu-Natal — SL28, Catuai and F6",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "coffea-arabica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa (general; SA distribution given as Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "englerophytum-magalismontanum",
+        "mimusops-zeyheri"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Arid western South Africa / Namibia — SANBI species reference",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "euclea-pseudebenus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Western Cape (Breede River valley, near Worcester)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "ficus-carica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Prince Albert / Weltevrede, Western Cape Karoo — Adams cultivar, including early figs",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "ficus-carica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South African botanical account — approximate ripe figs",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "ficus-sur"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Transvaal (now Gauteng/Limpopo/Mpumalanga/North West), grown in tunnels",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "fragaria-x-ananassa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa (industry body overview, all regions)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "fragaria-x-ananassa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "KwaZulu-Natal, frost-free areas",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "fragaria-x-ananassa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "KwaZulu-Natal, areas with light frosts",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "fragaria-x-ananassa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa (general)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "grewia-occidentalis",
+        "phoenix-reclinata",
+        "punica-granatum",
+        "rhoicissus-tomentosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa (general; SANBI: Eastern Cape, KwaZulu-Natal, Limpopo, Mpumalanga)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "harpephyllum-caffrum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa (general — Mpumalanga lowveld, Limpopo, KZN coast)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "litchi-chinensis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa - Fay Zee Siu cultivar (SALGA / ARC reference)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "litchi-chinensis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa - Mauritius cultivar (SALGA / ARC reference)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "litchi-chinensis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa - Wai Chee cultivar (SALGA / ARC reference)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "litchi-chinensis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa (general — Mpumalanga, KwaZulu-Natal, Limpopo)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "macadamia-integrifolia"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Bien Donne, Simondium, Western Cape — Afri-Star cultivar trial reference",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "malus-domestica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Elgin, Western Cape — Granny Smith cultivar first pick",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "malus-domestica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "mangifera-indica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Western Cape — cultivar and end-use dependent olive harvest",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "olea-europaea-subsp-europaea"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "KwaZulu-Natal (Bioresource Groups 3 and 5, cool subtropical)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "passiflora-edulis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa (general, SAAGA industry overview)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "persea-americana"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa - warm subtropical regions (Hass cultivar)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "persea-americana"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa - cool subtropical regions (Hass cultivar)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "persea-americana"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "southern Africa",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "phoenix-reclinata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Stellenbosch, Western Cape (tunnel trial, planted June 2021)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "physalis-peruviana"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Orange River farm near Prieska, Northern Cape — Karoo Pistachios producer observation",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "pistacia-vera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Bien Donne, Simondium, Western Cape — Solitaire first pick",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "prunus-armeniaca"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Tierhoek Organic Farm, Robertson, Breede River Valley, Western Cape — Imperial trial",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "prunus-armeniaca"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South African SAPO cultivar sheet; trial location not stated — Texas Mission first pick",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "prunus-dulcis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa — low-chill cultivar 'Earligold' (ARC Infruitec-Nietvoorbij bred, low-chill growing areas)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "prunus-persica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa — low/medium-chill cultivars 'Cederberg' and 'Afrisun' (ARC Infruitec-Nietvoorbij bred)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "prunus-persica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Western Cape (Boland / Klein Karoo / Robertson stone-fruit areas)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "prunus-salicina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Bien Donne, Simondium, Western Cape — Ruby Crisp first pick",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "prunus-salicina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Bien Donne, Simondium, Western Cape — Flavour Star first pick",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "prunus-salicina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ceres, Koue Bokkeveld, Western Cape — Rosemarie Select first pick",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "pyrus-communis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Wolseley, Western Cape — Rosemarie Select first pick",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "pyrus-communis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South African cultivar sheet; test location not stated — Packham's Triumph first pick",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "pyrus-communis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Western/Eastern Cape, KwaZulu-Natal and Mpumalanga botanical account — ripe berries",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "rhoicissus-digitata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "KwaZulu-Natal (spring-bearing cultivars: Glen Prosen, Glen Lyon, Tulameen)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "rubus-idaeus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Little Karoo and drier Cape botanical account — edible seed production reference",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "schotia-afra-var-afra"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa (general; SA distribution given as KwaZulu-Natal, Limpopo, Mpumalanga)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "sclerocarya-birrea-subsp-caffra"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Eastern South African botanical account — edible flowers only",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "tulbaghia-violacea"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Western Cape (Hex River and Wolseley trial sites)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "vaccinium-corymbosum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa (national, USDA FAS GAIN)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "vaccinium-corymbosum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa (general; SA distribution given as Eastern Cape, Free State, Gauteng, KwaZulu-Natal, Limpopo, Mpumalanga, North West, Northern Cape)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "vangueria-infausta"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa — Northern Province(s) region (SATI production region; mild sub-tropical, earliest SA harvest)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "vitis-vinifera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South Africa (overall, all regions combined)",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "vitis-vinifera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    }
+  ],
+  "retainedSourceIdentities": [
+    {
+      "source": {
+        "english": "KwaZulu-Natal",
+        "scopes": [
+          "source-region-needs-review"
+        ],
+        "identities": [
+          "carica-papaya"
+        ],
+        "missingLanguages": [
+          "zu",
+          "st",
+          "ts",
+          "ve"
+        ]
+      },
+      "reason": "Pure source identity/provenance: retain original place or farm/cultivar name without manufacturing a translation."
+    },
+    {
+      "source": {
+        "english": "Tierhoek Organic Farm, Robertson, Breede River Valley, Western Cape — Portuguese quince",
+        "scopes": [
+          "source-region-needs-review"
+        ],
+        "identities": [
+          "cydonia-oblonga"
+        ],
+        "missingLanguages": [
+          "zu",
+          "st",
+          "ts",
+          "ve"
+        ]
+      },
+      "reason": "Pure source identity/provenance: retain original place or farm/cultivar name without manufacturing a translation."
+    },
+    {
+      "source": {
+        "english": "Western Cape",
+        "scopes": [
+          "source-region-needs-review"
+        ],
+        "identities": [
+          "fragaria-x-ananassa"
+        ],
+        "missingLanguages": [
+          "zu",
+          "st",
+          "ts",
+          "ve"
+        ]
+      },
+      "reason": "Pure source identity/provenance: retain original place or farm/cultivar name without manufacturing a translation."
+    }
+  ],
+  "scope": "Native qualifiers for authored source-window labels in guide references and planning-season basis. Place/cultivar/institution identities remain explicit; source windows, selectors, month arrays, source citations and source raw region strings remain unchanged. English and unknown supplied labels stay original.",
+  "terminology": "Original technical classification names soft citrus, Bioresource Groups and low/medium-chill remain alongside native qualifiers where a new unsupported vernacular term would be misleading. Proper English source names are not an authored-English fallback exemption for the surrounding qualifier.",
+  "verification": {
+    "typecheck": "PASS Node24",
+    "focused": "135pass/0fail8files; full guidance suite not started",
+    "pdf": "14files67pages28383wordbounds776complete guide clauses;88new regional fields;0clipped/parsererrors;12nativePDF59pages full cautions;2original English cases same pixels/text",
+    "visual": "All12 native contact sheets inspected before final section-intro correction; all4 changed source-scope sheets inspected again after it. Enlarged final St peach calculation page4 and Ve source-scope page4 inspected. No observed clipping/overlap in those views. Automated full-clause/bounds checks cover all67pages; manual/fluent review of every page is not claimed.",
+    "evidence": "evidence/guidance-regions/verification.json",
+    "remaining": {
+      "authoredProseCandidates": 455,
+      "retainedPureSourceIdentityLabels": 3,
+      "typedFieldInventorySize": 801,
+      "warning": "Not a whole-app percentage. Source-public animal display names, sample/title/metadata, actual main crop browser, current-main updates, media/accessibility/errors/other exports and fluent review remain."
+    }
+  }
+}

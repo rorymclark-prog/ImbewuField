@@ -612,28 +612,5 @@
     },
     "fullSuite": "PENDING frozen565-file run; source freeze next. Full suite not proved by focused checks."
   },
-  "remaining": "Production-guidance PDF and generated source prose/metadata; main crop screens and native helper components; built-in sample/ReportCropPlan locale wiring; feedback/signatures; final app/media/accessibility/error/export audit and fluent review. Parent495calendar and66graph batches still await full verification/delivery.",
-  "fullCheckRecovery": {
-    "status": "INCOMPLETE: earlier full run terminal with the failures below; no all-green claim",
-    "priorRun": {
-      "cwd": "/Users/roryclark/.codex/worktrees/four-language-report-content/ImbewuField",
-      "state": "terminal failed",
-      "sourceUnchanged": true,
-      "tests": 5787,
-      "pass": 5784,
-      "fail": 2,
-      "existingTodo": 1,
-      "metadata": "/Users/roryclark/.codex/worktrees/four-language-report-content/ImbewuField/output/verification/2026-10-25-recovery/run.json",
-      "findings": "Shared fixed renderer temp JSON/Python paths collided across checkouts; graph/projection also pinned an old practice announcement inside a5line current banner."
-    },
-    "releaseWindowRepair": "Practice source/guide stay in history and when its own announcement is shown; the capped current banner must show its recent native copy. Includes removed-guide and displacement negative checks.",
-    "focusedValidation": "Node24typecheckPASS;61pass/0failonGraph,55pass/0failonProjection;fullrerunstillrequiredafterparentalignment.",
-    "rendererIsolation": "No script or paired-slide assertion changed. The make-lesson-slides fixed temp filenames collided between concurrent checkouts. Subsequent full runs use a dedicated TMPDIR."
-  },
-  "parent": {
-    "branch": "codex/four-language-production-pdf",
-    "sha": "e4274e4b7fdb417711182974e28dcc9da65fbc99",
-    "pr": 1107
-  },
-  "parentAlignment": "Backed up all prior working files and moved only branch/index to the finished graph parent. Working-source bytes remained exact across mixed reset. Final ancestor evidence restored without changing own55rows/PDF source/fixtures. Current full checks use unique external staging and freeze document JSON inputs."
+  "remaining": "Production-guidance PDF and generated source prose/metadata; main crop screens and native helper components; built-in sample/ReportCropPlan locale wiring; feedback/signatures; final app/media/accessibility/error/export audit and fluent review. Parent495calendar and66graph batches still await full verification/delivery."
 }

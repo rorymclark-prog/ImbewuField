@@ -1,0 +1,290 @@
+{
+  "scope": "Actual full wild-fruit source guides in all4languages:17new source fields across5representative species. Complete flowering/fruit-development versus ripe-picking uncertainty, plant-sex/subspecies checks, arid ecology and missing quantities preserved. Unknown local zones retain reference-only status. Source citations keep original publication identities. Other corpus prose and app workflows remain unfinished.",
+  "rows": [
+    {
+      "file": "en-after-normal.pdf",
+      "pages": 5,
+      "wordBounds": 1662,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 0,
+      "pixelHashes": [
+        "7c7574a7496df1c5891c835af654b1eade5e6c2783f5069717111119059a6b8f",
+        "372b00a436b1c99ee17b267be137c206cb08c68f5ce12d99ce97087abb01f7a6",
+        "273e5ea045962e15205fb922f90bdcf618a8118578d22cd2547b00ed321ba55f",
+        "da97dd9e20cf0eff25ca73a5df46b16a95a6783e83dd2ff5d3a443a4b94301c5",
+        "c4dff5c6342670b7c6b02d4d175f917df7271ca8c675e43d873c697e8626de91"
+      ]
+    },
+    {
+      "file": "en-after-unknown-records.pdf",
+      "pages": 3,
+      "wordBounds": 832,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 0,
+      "pixelHashes": [
+        "4c23a16d523feda95c6569d885ae44398e937a81a7d3d5fe85f4ff30e9a8b45c",
+        "583f34c91535a0fbe17e2918dd760753133be9ea9c31cdde8dbf501e78278e4b",
+        "26b8e49bf356951820945a6eb51742117135b4e3ca634da646b223dbae945d6c"
+      ]
+    },
+    {
+      "file": "st-arid-source-cautions.pdf",
+      "pages": 3,
+      "wordBounds": 1102,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 43,
+      "pixelHashes": [
+        "6dff96115aca2f468ee7719f39d2640e8fc715c303edfb6d296d0d0bc7fdadae",
+        "b8c7c6cb0eb72a75badeef153de63212a1c6a324df7ac908f9e66ad12ae8a650",
+        "f88d154d3abe99477423811c2d7c1dfd2434abf9c09f16c316ca1a9be3d812a3"
+      ]
+    },
+    {
+      "file": "st-ripe-stage-and-sex.pdf",
+      "pages": 3,
+      "wordBounds": 1355,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 50,
+      "pixelHashes": [
+        "6dff96115aca2f468ee7719f39d2640e8fc715c303edfb6d296d0d0bc7fdadae",
+        "68ddc6f4cfb23198fab0532f487aec3732555f43cb9bb785959164dac49f12bb",
+        "d02740889a4a1f258fe9aa0eefb19a0d2d3370507781b2494bdbf1fc5682771b"
+      ]
+    },
+    {
+      "file": "ts-arid-source-cautions.pdf",
+      "pages": 3,
+      "wordBounds": 1101,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 43,
+      "pixelHashes": [
+        "52d992dc43fbeecf9e08e1bfd2fbc7221858529836b5191179b560d25035274f",
+        "d78c3e59751bd7cf824bde69934aa554e7bc45bf6e0113c819f0d32dc9e7d9be",
+        "14a04b508ea8fd190b778b2904fd05608b8a3e6dee16b4be6399f1a175cb62ca"
+      ]
+    },
+    {
+      "file": "ts-ripe-stage-and-sex.pdf",
+      "pages": 3,
+      "wordBounds": 1353,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 50,
+      "pixelHashes": [
+        "52d992dc43fbeecf9e08e1bfd2fbc7221858529836b5191179b560d25035274f",
+        "b4b37494345d7ad2b72b2298afcc36eb9d68bad65150a1c4ffd84a252889f5dd",
+        "277b99e0fbca57774d8330c6561973811985dddc34d97175e08f8d9c3780d4c1"
+      ]
+    },
+    {
+      "file": "ve-arid-source-cautions.pdf",
+      "pages": 3,
+      "wordBounds": 1175,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 43,
+      "pixelHashes": [
+        "75fce1d7a171005120a8f234a86fb11b37c137d449df13f284450116c974f4e4",
+        "b12620e992324000870dccbdd6a0aef72970c2f588f18c1a67d1d103cba9a40d",
+        "02900dd21f574691587cace42df709262b5a01b939b9cb687387ee45019a050a"
+      ]
+    },
+    {
+      "file": "ve-ripe-stage-and-sex.pdf",
+      "pages": 3,
+      "wordBounds": 1425,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 50,
+      "pixelHashes": [
+        "75fce1d7a171005120a8f234a86fb11b37c137d449df13f284450116c974f4e4",
+        "87ffb858d00b48d66d38371087b56fd3a7cb4d5bd8d3cd25f7a4e3af7348a78a",
+        "82f13d2fda85c3bb2bc263323e04d2c656345dbe2e6eb9f29e0c71712f12c6f0"
+      ]
+    },
+    {
+      "file": "zu-arid-source-cautions.pdf",
+      "pages": 2,
+      "wordBounds": 600,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 43,
+      "pixelHashes": [
+        "d997d456bc3f286b0c2fe5fe8081a93ac2b121a222567f10a892e55a091de79b",
+        "163aa0d409af9240e5e1ee221eef10318b5d606cdcfa7cfd5c0b987fb073a999"
+      ]
+    },
+    {
+      "file": "zu-ripe-stage-and-sex.pdf",
+      "pages": 3,
+      "wordBounds": 819,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 50,
+      "pixelHashes": [
+        "d997d456bc3f286b0c2fe5fe8081a93ac2b121a222567f10a892e55a091de79b",
+        "8103824eaa32c285a396f2bbc97c2423b3e97ddf53644f65b9bdc4fcefe8cc89",
+        "b64f1d1b81ca9f47fef0676e4e4cde88fd469dc833cdc58a856404401a02b03f"
+      ]
+    }
+  ],
+  "english": {
+    "normal": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "unknown-records": {
+      "samePixels": true,
+      "sameText": true
+    }
+  },
+  "visualInspection": "All8 native contact sheets inspected; both Sesotho sheets rechecked after plural refinement. Enlarged final St ripe-stage/plant-sex page2 and Ve arid-cautions page2 inspected. No observed clipping/overlap in those views. Automated complete-clause/bounds checks cover31pages. Not all31pages enlarged or approved by fluent speakers.",
+  "date": "2026-10-25T16:02:14.494228+00:00",
+  "newSourceDrafts": 17,
+  "printedNewClauseOccurrences": 72,
+  "nativePageCautions": {
+    "rows": [
+      {
+        "file": "zu-ripe-stage-and-sex",
+        "pages": 3,
+        "fullCautions": true
+      },
+      {
+        "file": "zu-arid-source-cautions",
+        "pages": 2,
+        "fullCautions": true
+      },
+      {
+        "file": "st-ripe-stage-and-sex",
+        "pages": 3,
+        "fullCautions": true
+      },
+      {
+        "file": "st-arid-source-cautions",
+        "pages": 3,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-ripe-stage-and-sex",
+        "pages": 3,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-arid-source-cautions",
+        "pages": 3,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-ripe-stage-and-sex",
+        "pages": 3,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-arid-source-cautions",
+        "pages": 3,
+        "fullCautions": true
+      }
+    ]
+  },
+  "typecheck": "PASS Node24",
+  "focused": {
+    "passed": 133,
+    "failed": 0,
+    "files": 7,
+    "duration_ms": 4563.56175,
+    "log": "output/guidance-pdf-qa/authored04-refined-affected.log",
+    "scope": "Guidance/crop-export/graph/projection/product-profile/product-yield/release-window. Full guidance suite not started."
+  },
+  "preservation": "The existing immutable103-tree authority capture and every English guide digest remain exact. Whole source fields, source citations, proper species identities, all numeric figures and month start/end associations retained. No local picking calendar inferred from flowering, fruit appearance or unselected source windows. Both ordinary original English comparison PDFs pixel/text identical. Missing full source uncertainty or plant-sex clauses must fail even with native product/flowering headings retained.",
+  "draftRefinements": [
+    {
+      "source": "ripe berries",
+      "language": "st",
+      "before": "monokotshwai o butswitseng",
+      "after": "menokotshwai e butswitseng",
+      "reason": "Use the plural berry noun matching the English plural. DBE Sesotho FAL CAPS printedp27 contrasts monokotshwai with menokotshwai e mekae; this supports noun number, not fluent approval of the whole draft.",
+      "primarySource": "https://www.education.gov.za/Portals/0/CD/National%20Curriculum%20Statements%20and%20Vocational/CAPS%20SESOTHO%20FAL%20GR%201-3%20FS.pdf?ver=2015-01-27-155440-097",
+      "excerpt": "Mpontshe monokotshwai. Ho na le menokotshwai e mekae?"
+    }
+  ],
+  "firstAttempt": "Existing crop-export review-packet equality check correctly rejected17 unregistered rows:132pass1fail7files. Complete review packet registration restored; test assertions unchanged. Later133pass0fail is actual post-refinement run.",
+  "remaining": {
+    "typedFields": 801,
+    "proseCandidates": 438,
+    "pureSourceIdentities": 3,
+    "warning": "Not a whole-app percentage. Other public animal display names, main crop UI/sample/export metadata, current-main updates including weather, other screens/media/accessibility/errors and fluent agricultural review remain."
+  },
+  "sourceSha256": {
+    "lib/crop-export-copy-data.ts": "44b6e913788625f1a73f60a39678261fe5766b02a5322fb1671ec2a14fcaf504",
+    "lib/crop-export-copy.ts": "3ece52e397d7a06594be5dc8b77c254d720818ac9e2d8153cc30168e6edfcdd3",
+    "lib/crop-export-schedule.ts": "19a5253aa1eb2298ff2a93c530eb12c534fa54d633ccadf2fedfc85db74271ba",
+    "lib/production-product-guidance.ts": "0765af62e8f33a2eb7abcd8a1a17f7f8c3495d88787172fb049c9302afcf0ca0",
+    "lib/crop-export-pdf.ts": "929aa59eb664c611c4af0290fb2ddec82f57ef39810b1c185746a33198e4b726",
+    "tests/guidance-localization.test.ts": "a3f187fe2d3df98e29d5697aaee60f2958a6ab5fa035893dfa64f9bd5213d560",
+    "tests/helpers/product-guidance-expectation.ts": "d005284877ea632a3a24f949691f86ae5695c490dce34efd587c0bca3ecd6d26",
+    "tests/fixtures/guidance-translation/before.json.gz": "9697d466f4b1698e96c32d30cc5f0b3af22d186409ee63190c1de4f2aa3478b6"
+  },
+  "files": [
+    {
+      "file": "zu-ripe-stage-and-sex.pdf",
+      "sha256": "a572b1aaa43a6521e995d291c7ffc8b6667d47d3008eb3fbbe1c8add6ab47e78"
+    },
+    {
+      "file": "zu-arid-source-cautions.pdf",
+      "sha256": "694aa61abdee93e313ec325dde03aff60028f7fd36467fa08fcec4bf49e3978e"
+    },
+    {
+      "file": "zu-ripe-stage-and-sex-contact.png",
+      "sha256": "83078ac090e8576342cf24cb0f980211c6bc1686715d103a55ca6bec27ff4a20"
+    },
+    {
+      "file": "st-ripe-stage-and-sex.pdf",
+      "sha256": "64174871accdc7268747f1d47a1024c9a606596c305cec81571358226914502a"
+    },
+    {
+      "file": "st-arid-source-cautions.pdf",
+      "sha256": "da02966974836936c4b7171d12056cad389a509becd4dc3632fdbd3b6ee482e0"
+    },
+    {
+      "file": "st-ripe-stage-and-sex-contact.png",
+      "sha256": "3eba9abbed8f6604004ab2d0fd0c83b92ddd6e0a427c255e88bc79c5e97eb044"
+    },
+    {
+      "file": "ts-ripe-stage-and-sex.pdf",
+      "sha256": "75433eb95f5db4c64aba92c0a6fdfbde140c2b4559912729c57030ac33dc68fd"
+    },
+    {
+      "file": "ts-arid-source-cautions.pdf",
+      "sha256": "fbb3b52866a1689b5e67d305f510c08b15304c0b324ac4c1748e5110472528e2"
+    },
+    {
+      "file": "ts-ripe-stage-and-sex-contact.png",
+      "sha256": "72fe318ba395f456b0a5f00ab6793196e271e6b5c3e9d747c5efd91d65749ea8"
+    },
+    {
+      "file": "ve-ripe-stage-and-sex.pdf",
+      "sha256": "c3ab64790200775dbe0da2c98253a4e64b63d2eb4617558cc80fdf55851cac70"
+    },
+    {
+      "file": "ve-arid-source-cautions.pdf",
+      "sha256": "fcb441f60ba70979a2d08f5da6b59527ea7e2736841c5b2d7d491a012bf7f5f6"
+    },
+    {
+      "file": "ve-ripe-stage-and-sex-contact.png",
+      "sha256": "9862f748a869a21588fc335eb687ce04dd4d0cc66403efe0b237106b53351725"
+    },
+    {
+      "file": "st-wildfruit-detail.png",
+      "sha256": "48c00178e107489d678c8a56a2cb488824991f08d56afdfbeb038a6ab4d7cc20"
+    },
+    {
+      "file": "ve-wildfruit-detail.png",
+      "sha256": "42076c9f7101848d050c3c61e3899fbfc8700983f4dc05fd1a2bf80222f23059"
+    }
+  ]
+}

@@ -18,7 +18,8 @@ export function translatedSeasonExpectation(source: ExpectedSeason | undefined, 
   assert.ok(tail.endsWith(caution), 'the complete source qualification must be represented');
   const note = tail.slice(0, -caution.length).trim();
   if (note) assert.notEqual(t(note), note, 'the source-specific qualification needs its complete declared draft');
-  const basis = t('{region}. {note}Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.', { region, note: note ? t(note) + ' ' : '' });
+  // Match the immutable original window first; only its display qualifier is native.
+  const basis = t('{region}. {note}Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.', { region: t(region), note: note ? t(note) + ' ' : '' });
   return { ...source, label, basis, calendarLabel: source.label.startsWith('Regional reference:') ? t('Regional season') : label };
 }
 

@@ -1,3 +1,4 @@
+import type { PoultryGuidance } from './animal-enterprises';
 import { CROP_EXPORT_COPY } from './crop-export-copy-data';
 import { recordsMonthShort } from './records-months';
 import type { PreservedFoodMethod } from './production-records';
@@ -7,7 +8,10 @@ export type CropExportDraftLanguage = typeof CROP_EXPORT_DRAFT_LANGUAGES[number]
 export const isCropExportDraftLanguage = (language: string): language is CropExportDraftLanguage =>
   CROP_EXPORT_DRAFT_LANGUAGES.some(code => code === language);
 
-const exportCopy = new Map<string, typeof CROP_EXPORT_COPY[number]>(CROP_EXPORT_COPY.map(row => [row.english, row]));
+// Check all four required languages once; presenters need strings, not a union of every long draft.
+type CropExportCopyRow = Readonly<{ english: string; zu: string; st: string; ts: string; ve: string; generatedScope?: string }>;
+const copyRows: readonly CropExportCopyRow[] = CROP_EXPORT_COPY;
+const exportCopy = new Map<string, CropExportCopyRow>(copyRows.map(row => [row.english, row]));
 
 /** Values are recorded data. Interpolate once so a bed named {count} stays that bed. */
 export function cropExportText(source: string, language = 'en', values: Record<string, string | number> = {}): string {
@@ -34,7 +38,7 @@ export function cropProjectionPeriodText(source: string, language = 'en'): strin
 }
 
 const escapeSourcePattern = (source: string) => source.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-const generatedIssuePatterns = CROP_EXPORT_COPY.filter(row => 'generatedScope' in row && row.generatedScope === 'production-issue').map(row => {
+const generatedIssuePatterns = copyRows.filter(row => 'generatedScope' in row && row.generatedScope === 'production-issue').map(row => {
   const keys: string[] = [];
   const parts = row.english.split(/(\{\w+\})/g).map(part => {
     if (!/^\{\w+\}$/.test(part)) return escapeSourcePattern(part);
@@ -58,7 +62,7 @@ export function cropProductionIssueText(source: string, language = 'en'): string
   return cropExportText('Original message: {message}', language, { message: source });
 }
 
-const projectionDetails = new Map<string, typeof CROP_EXPORT_COPY[number]>(CROP_EXPORT_COPY.filter(row => 'generatedScope' in row && row.generatedScope === 'projection-detail').map(row => [row.english, row]));
+const projectionDetails = new Map<string, CropExportCopyRow>(copyRows.filter(row => 'generatedScope' in row && row.generatedScope === 'projection-detail').map(row => [row.english, row]));
 /** Only the projection producer's complete generated messages are translated here. */
 export function cropProjectionDetailText(source: string, language = 'en'): string {
   if (!isCropExportDraftLanguage(language)) return source;
@@ -78,4 +82,20 @@ export function cropProjectionAgeText(source: string, language = 'en'): string {
     return range ? cropExportText('{from}–{to} yr', language, { from: range[1], to: range[2] })
       : cropExportText('Original message: {message}', language, { message: age });
   }).join('; ');
+}
+
+const poultrySources = new Set<string>(copyRows.filter(row => 'generatedScope' in row && row.generatedScope === 'poultry-guidance').map(row => row.english));
+/** Translate authored care fields only; a recorded breed matching a source word stays recorded. */
+export function cropPoultryGuidance(source: PoultryGuidance, language = 'en'): PoultryGuidance {
+  if (!isCropExportDraftLanguage(language)) return source;
+  const authored = (text: string) => poultrySources.has(text) ? cropExportText(text, language)
+    : cropExportText('Original source note: {note}', language, { note: text });
+  return {
+    ...source,
+    statusText: authored(source.statusText), missing: source.missing.map(authored), attention: source.attention.map(authored),
+    careNotes: source.careNotes.map(point => ({ ...point, text: authored(point.text) })),
+    climateNotes: source.climateNotes.map(point => ({ ...point, text: authored(point.text) })),
+    options: source.options.map(option => ({ ...option, name: option.kind === 'management-system' ? authored(option.name) : option.name, detail: authored(option.detail) })),
+    localCheck: authored(source.localCheck),
+  };
 }

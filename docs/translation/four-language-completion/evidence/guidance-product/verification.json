@@ -1,0 +1,303 @@
+{
+  "scope": "Source-based mixed tree and animal guidance PDFs. Some researched source paragraphs remain English; this is not full guidance coverage or fluent approval.",
+  "rows": [
+    {
+      "file": "en-after-normal.pdf",
+      "pages": 5,
+      "wordBounds": 1662,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 0,
+      "pixelHashes": [
+        "7c7574a7496df1c5891c835af654b1eade5e6c2783f5069717111119059a6b8f",
+        "372b00a436b1c99ee17b267be137c206cb08c68f5ce12d99ce97087abb01f7a6",
+        "273e5ea045962e15205fb922f90bdcf618a8118578d22cd2547b00ed321ba55f",
+        "da97dd9e20cf0eff25ca73a5df46b16a95a6783e83dd2ff5d3a443a4b94301c5",
+        "c4dff5c6342670b7c6b02d4d175f917df7271ca8c675e43d873c697e8626de91"
+      ]
+    },
+    {
+      "file": "en-after-unknown-records.pdf",
+      "pages": 3,
+      "wordBounds": 832,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 0,
+      "pixelHashes": [
+        "4c23a16d523feda95c6569d885ae44398e937a81a7d3d5fe85f4ff30e9a8b45c",
+        "583f34c91535a0fbe17e2918dd760753133be9ea9c31cdde8dbf501e78278e4b",
+        "26b8e49bf356951820945a6eb51742117135b4e3ca634da646b223dbae945d6c"
+      ]
+    },
+    {
+      "file": "st-cold-options.pdf",
+      "pages": 5,
+      "wordBounds": 2444,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 74,
+      "pixelHashes": [
+        "4b71d57b2fc481db304cf8dafc137e713b88eab23ef45a971019ecb9199298db",
+        "45b11a3807078dd76f6366170e519237b892e76c0b18d84a3e7e6acb92dd4418",
+        "a5b2024948ab88a39743d81b86d5ab8f6994233d859d0bde72f894766dcb5e74",
+        "aa263dabfa2efeb9e6a4d8e88c5dbb566f430fa7ee26b1b9208c735d218ea1b6",
+        "60043e9b06f108c90a55778f812955bb13e4b8de29a926386e8bc7488eab119d"
+      ]
+    },
+    {
+      "file": "st-warm-holds.pdf",
+      "pages": 10,
+      "wordBounds": 4702,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 108,
+      "pixelHashes": [
+        "db5f290c11c68c6dff796ead43db00c4e0ba1a0ae43855405cb9bafb608d2dc3",
+        "dbaf87855119bb606b9ffd3642f92008eee70d83b8ac9c794154c3dcd050645a",
+        "d0a03961b344d4ae320a8aaa7a009f1650131044815fab8ecf80ba37f55ae83c",
+        "f267a91f7e1884bb9632f7beaceea99e21ef07777356f196667b7e6e6736595a",
+        "af5e5d44134c8b0da73689ec102193d7008596e93768d7115b053944f7683bb3",
+        "7973fc4a1300c172a1e17fbefa4b64bf8ecff596c383692c0e5a47f9842457ca",
+        "4bb14208d45b28743c615dbcdc2dd3918ab99be01ff803600b75a621b0e0c232",
+        "7d12265a33f439d03ea0df166f6424e8009336a89ebfde4d3f0209e6d600fd4b",
+        "c6aaa00a07eb63e2e43ad07493586adf5377f6f172a72e456523bf729c70b7fd",
+        "12fac8c04fdbd6b3f94b6256dd9cb5cd92dccf55bfaa79b47cc9c876d5ea6496"
+      ]
+    },
+    {
+      "file": "ts-cold-options.pdf",
+      "pages": 5,
+      "wordBounds": 2439,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 74,
+      "pixelHashes": [
+        "c6d9fc1ed6ae5c6317118d2e0572f4c48fa8b476d75eb5d9c70c2095bad8155e",
+        "07238d4f631321d2aa6495fdac9f8244862b45742a92dda82c96ab2ef37dfff2",
+        "fb7de823bc1d8923965f44546de7754e3905b5fb886c54f3296a9a400cdb7966",
+        "eae37ee06e1bff2bf41bf0886283e8c82ac62808903cd280d271cb356c6153ce",
+        "71cd5a7555a7c693b8db2aa41809730f81da226454b7a13d0279c53b3151c2e8"
+      ]
+    },
+    {
+      "file": "ts-warm-holds.pdf",
+      "pages": 10,
+      "wordBounds": 4751,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 108,
+      "pixelHashes": [
+        "3869dba6cf8598f12c8db26f3c24aff1a6879aa0c69e194585689c35e403e788",
+        "bccfaa8dbe682d358f77430ffdc834fbd140d97c6d55868ee68229b90fd10b1f",
+        "074e74190424f193958130f49fb997be4b0f8541d9ddefb5b170648c5f684b70",
+        "4b3e96d05b23be3d9a9b44c6d081cb9fcb962e86574a32ef6afe02d68eef4072",
+        "ccec78f4da8a074c82c30cd7b3d529fad2caea28905b2bba5af48a83157eba01",
+        "3142b0a6571df3ddec6fcbd4d890c4874a6f7613868f4f881b299bc404f73492",
+        "90f518d4f4df7dc24f618808f029ad0efd46f2f382ee2d596910d13c1ceb01e8",
+        "67370ef1b57b78ed2c3347c439ff9219f907241b1b7c99ebdc11ba83f01ed93d",
+        "48731ec90016d79fc589a9522b2a12b24eb2641b8bcbc6980f2d063acbf9d461",
+        "bbb3450e5bad5467c5b3be6ae3b9b1a0ffe3ac8d15903fcfce8586382c4c6e1e"
+      ]
+    },
+    {
+      "file": "ve-cold-options.pdf",
+      "pages": 5,
+      "wordBounds": 2539,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 74,
+      "pixelHashes": [
+        "857a6ec73671f49da69ec608e2b1455a74386b189cf867d17dcf30846ef326e8",
+        "b1626ce89cf0ca9ef2217ad9b1d0a3c242ef390fda59d6cc300662af9f305948",
+        "941067a483feb0156d984e3f73ee56af9d1785ccb953702bdc01fbf8d25d4d0c",
+        "8902490ffa30b1080a8d9b426cf8c4ccbe67db618bacaf553fdf7bf7c35fa506",
+        "f5394cf648159d9697d8a03e974a0bf4be95a3b3b8cdcefa92df43b85aa63e7a"
+      ]
+    },
+    {
+      "file": "ve-warm-holds.pdf",
+      "pages": 10,
+      "wordBounds": 4911,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 108,
+      "pixelHashes": [
+        "11b8d3ecf7b5d851e981cd04acec325685a254bfe64ab4f95fc72292c5d67580",
+        "7b24768c885fdabe2bd8fc9b18ad5ef62cc03ebb233f38e0db89e67ac175c82a",
+        "25b48faef9f3c0ce230b86539d31c9051392dec83dc40c3a18843d94dc98b7dc",
+        "93536c55c1df315edd50f0ab9a8bd83eb60403a5e6160a938a3d6175412ac186",
+        "eefb0e54bb7e7e387e8c1f063a934c74fe433232b4733217b1fb77fd01a9e0b4",
+        "eb89bc064b863763fc72aaa129d6880d097c85e6aba4505c374d4342e88f5901",
+        "0daf8087b05d8a411f39de338c1d4af5efb9aece636eda7ab48f161281f18d7c",
+        "682a918a64683af7e87bd21405ffddba172faa3ef3f5a9b1467f0f943555a2a3",
+        "ae93a5ac6eb2fe3e0660506a3950b1b7e8b364587bdfa0109dfc8ee5f0ba3db9",
+        "d43c51134ce80b873aab589c107390b8a76397a29b5ada2fcbcd42f51f5cc0be"
+      ]
+    },
+    {
+      "file": "zu-cold-options.pdf",
+      "pages": 5,
+      "wordBounds": 1831,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 74,
+      "pixelHashes": [
+        "a87db2abb3d53e5a77f74d62e2c967ed70ba589a01762afba0b56b7f41e8afb6",
+        "e7ddc32c1568780959d7d8570a75d6fd4f22ea41f28bbc534ad52f8615636950",
+        "95792a4619ef1885e0e0c8037fcea71d346c196676c91685fe8d3888727c6874",
+        "7ea1e00b1b4007c2e3be087a9194996f2bd5098ad97a7a39928d79118c1788d9",
+        "dab68808118fcc44804170155400660fcc12305dff8ac0ab3cd39ab8984b5587"
+      ]
+    },
+    {
+      "file": "zu-warm-holds.pdf",
+      "pages": 10,
+      "wordBounds": 3557,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 108,
+      "pixelHashes": [
+        "8fd51c635210d83582fd31ff4846c3fbb70b76e4adcfc4eeb54e6ffb3c1d89ad",
+        "aa4be680e8c83a9550fa9f93bbcf55c2daff293b6e04e99ee4769be01a439aac",
+        "a11956cd9944394fbc99912689bfe30653c93403e8f0b50c4d1eb3f9953bcb89",
+        "5bd6cdf7376888d78ed8e97c9f4e2b7204f69ca46d16f2847616188d288720f0",
+        "7ae7659e6418dfa5eabca730b208752b6cc72206879404dd83fced5ddc018112",
+        "a9e6db6a0c66766fe4899444de66b0bdc94bc19c02173a09f4ad1876da82382c",
+        "4c117fe23682fef808a93dd22db81888c3b63a91bfd9ab944f449b582eb1e7fb",
+        "55c5701190774537255fef0af4700139bae5113c843ce4e3adbbc6b76f8bb835",
+        "c7130dbad7cba24131d4652ed037d05fc562241419d15e9a00c8484f389f881b",
+        "b9c60985fad5f875b6b133b0d555d2ef98fe882a75ea6e0a0a07c04ae883fc5d"
+      ]
+    }
+  ],
+  "english": {
+    "normal": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "unknown-records": {
+      "samePixels": true,
+      "sameText": true
+    }
+  },
+  "visualInspection": "All four5page cold-options contact sheets and the corrected Sesotho warm-holds page9 visually inspected. The preserved failing page was also inspected. Not every page individually inspected. Prose remains unreviewed; remaining English is visible and inventoried.",
+  "measurementCorrection": "The first report shadowed the word counter with a repeated-clause count. Corrected by recounting every word box from the exact generated PDFs; page/clipping and complete-clause results were unaffected.",
+  "cautions": {
+    "rows": [
+      {
+        "file": "zu-warm-holds",
+        "pages": 10,
+        "fullCautions": true
+      },
+      {
+        "file": "zu-cold-options",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "st-warm-holds",
+        "pages": 10,
+        "fullCautions": true
+      },
+      {
+        "file": "st-cold-options",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-warm-holds",
+        "pages": 10,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-cold-options",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-warm-holds",
+        "pages": 10,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-cold-options",
+        "pages": 5,
+        "fullCautions": true
+      }
+    ]
+  },
+  "checkedAt": "2026-10-25T11:48:12.572730+00:00",
+  "codeChecks": {
+    "typecheck": "PASS, current source",
+    "affectedFiles": 7,
+    "pass": 153,
+    "fail": 0,
+    "testLog": "output/guidance-pdf-qa/product-bounds-verified-affected.log",
+    "session": 66414,
+    "fullGuidanceSuite": "Not started: remaining body translation and runtime work still required."
+  },
+  "sourceSha256": {
+    "lib/crop-export-copy-data.ts": "b54ed3da3e7e80ce2951b5d3b7493daaf4cd24e971a2a15f442b7b488063dfff",
+    "lib/crop-export-copy.ts": "3ece52e397d7a06594be5dc8b77c254d720818ac9e2d8153cc30168e6edfcdd3",
+    "lib/crop-export-pdf.ts": "ff394eb342181ecd944b66bbcec2f1f5441f98c386147d02eeea8000b3fd4ae9",
+    "lib/crop-export-schedule.ts": "19a5253aa1eb2298ff2a93c530eb12c534fa54d633ccadf2fedfc85db74271ba",
+    "lib/production-product-guidance.ts": "e9c5a8a08ea914b252a01b06e95af31c151d1343c1fc012fd14a782f0720fd06",
+    "app/facilitator/crops/page.tsx": "0448e482021de196fbaae454155a88e9cdf6adef4ef57e6fb942d1b13c58df28",
+    "tests/guidance-localization.test.ts": "cbf2bcce526d083624a2ba6c09d318f416179b36911430ed4b3982fed498c79e",
+    "tests/helpers/product-guidance-expectation.ts": "d1dd54aa31ba5f7580e53eddfa8fcaedbd0e91e4cd2a00575c6e0f97a359a591",
+    "tests/product-profile-localization.test.ts": "b6cac2f9eeb6059ac4e772ca6b5a9dd2fe7ce87f830e19deabe4adf3414a31b3",
+    "tests/crop-export-instruction-localization.test.ts": "829efe69b3b5c6326314b61d0057112c8cfa7d404622dd351d5b1269e60a5605"
+  },
+  "sourceBoundFix": "Observed ≥7th was missing its inequality in the actual PDF. A paint-only ASCII>=/<= fallback now keeps all source bounds without changing models or saved text. Regression fixture retains original full source lines and failed painted text; it must fail the complete-note check.",
+  "remainingEnglish": {
+    "completeGeneratedLinesBefore": 482,
+    "completeGeneratedLinesNow": 344,
+    "scope": "136language/context evaluations; not unique missing source templates or a whole-app percentage. Embedded English also audited separately.",
+    "authoredSourceFields": 801,
+    "remainingCandidates": 685,
+    "remainingProseCandidates": 611,
+    "classificationNeeded": "Some remaining candidates are source-region proper names or physical unit codes; no completion percentage inferred."
+  },
+  "reviewFiles": [
+    {
+      "file": "zu-cold-options.pdf",
+      "sha256": "66f17b7eaf99f785ef14a0bcaed138ba3ccb6350c736b7cfba16f5e616f53b94"
+    },
+    {
+      "file": "zu-cold-options-contact.png",
+      "sha256": "c5d570268246a4f6a0f536359d0e72eb6c8222c3681a2fe675c7454009a46e94"
+    },
+    {
+      "file": "st-cold-options.pdf",
+      "sha256": "0b31c9001bba0e98775b34678f616fed10c04176f74d3f944a6ae27ad0d19254"
+    },
+    {
+      "file": "st-cold-options-contact.png",
+      "sha256": "729b858bb6a8410a2f5e337b738aec5d5065ebbd129143b3e81769b7c3421cd1"
+    },
+    {
+      "file": "ts-cold-options.pdf",
+      "sha256": "c2558a4cc527346de67fd620561cbd089ea31903c3fc7710bdc8483b86328437"
+    },
+    {
+      "file": "ts-cold-options-contact.png",
+      "sha256": "aed93d4171114a9544b8e4fc10fe76b34c56155c6d02a95524ef96b7610642fe"
+    },
+    {
+      "file": "ve-cold-options.pdf",
+      "sha256": "004a5655621209ecd0c2076104fde63d5abe419e9c715ca462ece3a10ed481b9"
+    },
+    {
+      "file": "ve-cold-options-contact.png",
+      "sha256": "180824a7cb09fb38ef261389447b79d61445aa0d50ff46b524d4172eabfaa3e1"
+    },
+    {
+      "file": "st-source-bounds-after.png",
+      "sha256": "739283076783ba6d72e3769044c78a85cc188e7bc1eee6705570cdecb93df4e6"
+    },
+    {
+      "file": "st-source-bounds-before.png",
+      "sha256": "2993b66d1f1467c92a49476dd898a89aa86ef092aeb6a72d3aa24929f84865fc"
+    }
+  ]
+}

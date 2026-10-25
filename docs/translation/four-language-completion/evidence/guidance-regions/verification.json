@@ -1,0 +1,452 @@
+{
+  "scope": "Actual full source guides for12representative species with unknown local zones, preserving reference-only status. Regional qualifiers include hemisphere/distribution/96percent/Bioresource IDs, first-pick/not-stated trial locations/June2021, frost contexts/cultivar groups/chilling requirements/SATI scope.56new source-bound qualifier drafts in all4languages;3pure source identity labels retained. Wider authored body translation and whole app remain unfinished. Source citations keep original publication identities. Other corpus prose and app workflows remain unfinished.",
+  "rows": [
+    {
+      "file": "en-after-normal.pdf",
+      "pages": 5,
+      "wordBounds": 1662,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 0,
+      "pixelHashes": [
+        "7c7574a7496df1c5891c835af654b1eade5e6c2783f5069717111119059a6b8f",
+        "372b00a436b1c99ee17b267be137c206cb08c68f5ce12d99ce97087abb01f7a6",
+        "273e5ea045962e15205fb922f90bdcf618a8118578d22cd2547b00ed321ba55f",
+        "da97dd9e20cf0eff25ca73a5df46b16a95a6783e83dd2ff5d3a443a4b94301c5",
+        "c4dff5c6342670b7c6b02d4d175f917df7271ca8c675e43d873c697e8626de91"
+      ]
+    },
+    {
+      "file": "en-after-unknown-records.pdf",
+      "pages": 3,
+      "wordBounds": 832,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 0,
+      "pixelHashes": [
+        "4c23a16d523feda95c6569d885ae44398e937a81a7d3d5fe85f4ff30e9a8b45c",
+        "583f34c91535a0fbe17e2918dd760753133be9ea9c31cdde8dbf501e78278e4b",
+        "26b8e49bf356951820945a6eb51742117135b4e3ca634da646b223dbae945d6c"
+      ]
+    },
+    {
+      "file": "st-season-cultivar-context.pdf",
+      "pages": 5,
+      "wordBounds": 2343,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 67,
+      "pixelHashes": [
+        "6dff96115aca2f468ee7719f39d2640e8fc715c303edfb6d296d0d0bc7fdadae",
+        "d2f5427d8822e10bf0bfd7d411a4a702ea9055f610f219b9edf95776fd13c6df",
+        "a34742844c4639ead3de0fdf7849bcce1a405503345c62198e07c55c69ec9145",
+        "65dd23021873319e4c19b68a18892f7fc7688bf991de9d5cf8905a56b32005c1",
+        "14f3bad2593ff1b3aa19a5e9fdeac8c82f17c1165a7bbc025053be010ed41dfa"
+      ]
+    },
+    {
+      "file": "st-source-scope.pdf",
+      "pages": 4,
+      "wordBounds": 2131,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 60,
+      "pixelHashes": [
+        "6dff96115aca2f468ee7719f39d2640e8fc715c303edfb6d296d0d0bc7fdadae",
+        "0d1a152f7f805b08023ed62be5293dc3ab108f5cefc4e8a50aa92b3363e20be0",
+        "a82bdce7701d52c9cde421522a6f2b439fe9dfc5777c748548ce249b6afdb115",
+        "f1d3865edae70e035587c79928e157bfb799ab36cea7b71c423ae6a0b7ba03aa"
+      ]
+    },
+    {
+      "file": "st-trial-first-pick.pdf",
+      "pages": 5,
+      "wordBounds": 2377,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 67,
+      "pixelHashes": [
+        "6dff96115aca2f468ee7719f39d2640e8fc715c303edfb6d296d0d0bc7fdadae",
+        "5bc3d78be97124e8a2fa861e29e5b15641d5578d544e9755703b16be3657fd16",
+        "cbc207a329f11fe423c7dc2716eabb1cdda106424bd7fe9a8f7e165ca2497927",
+        "a14306f80b0ecc5843d1e6676dd5bc1ae52d8d6b87ac3b71ad0b74a8c9f1888a",
+        "72e4c3fef9f8d89d21e055cb9b3c55390a23b279ed5127c1c0e2a61fff35d815"
+      ]
+    },
+    {
+      "file": "ts-season-cultivar-context.pdf",
+      "pages": 5,
+      "wordBounds": 2324,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 67,
+      "pixelHashes": [
+        "52d992dc43fbeecf9e08e1bfd2fbc7221858529836b5191179b560d25035274f",
+        "3baca752bf5bfb15902b22fd35253c0b79f6b815459f3d69e8ec32adc377e523",
+        "948fa01c1f7107414f756ea1c2666e6cc6562fe5241573f6ecde7669e4b865e7",
+        "1272552b76732567295b9116b29e602da8112fcdf0218a7c10dc7302a3211466",
+        "7f35766e3100b463bc93d69896176ed1e85113c2ffda32ac8d1ad95e790e10f9"
+      ]
+    },
+    {
+      "file": "ts-source-scope.pdf",
+      "pages": 5,
+      "wordBounds": 2231,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 60,
+      "pixelHashes": [
+        "52d992dc43fbeecf9e08e1bfd2fbc7221858529836b5191179b560d25035274f",
+        "c78ce9a73f88bde1d1df18b31fd3730a6a496a614bbb3d3c54bc55a24eac4019",
+        "d00a71eb2f98684f7e5d5d844196e606be816cb737ebd7385a10470cc33e9d2e",
+        "4859f05baa2ba64ac0fec7e024f4e833608ef5cd710cbec65db2a3ab8101ebcf",
+        "5fef39efcbdfece96d36ccce8dd875a560c34202a012128676056f8288d5e77b"
+      ]
+    },
+    {
+      "file": "ts-trial-first-pick.pdf",
+      "pages": 5,
+      "wordBounds": 2395,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 67,
+      "pixelHashes": [
+        "52d992dc43fbeecf9e08e1bfd2fbc7221858529836b5191179b560d25035274f",
+        "37eac764d1a9d4822308323016daeab8e41de903226aecede659d8706f806b39",
+        "b552474de04117bff4beaf288d93f9d5d4d210e3126d0a259db5e21a7193e0b3",
+        "7d8902c7b85fccec642c4dbb081b612eca70400d48cc7c57870d31592f740970",
+        "09acfbb12efb80d7fb430a6023a98281f86f9e8726c3f8b9c1f120c495dc5118"
+      ]
+    },
+    {
+      "file": "ve-season-cultivar-context.pdf",
+      "pages": 5,
+      "wordBounds": 2427,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 67,
+      "pixelHashes": [
+        "75fce1d7a171005120a8f234a86fb11b37c137d449df13f284450116c974f4e4",
+        "96aa738b2660224d8c67e245e50c2271d73c5e9c368bc57131c21fa64a1a4d6b",
+        "864900f46134c85ca0645a6715675a074de1f97a0a8b4e6e95bccae8e48ade0a",
+        "a702690495bd4b52826553e12b33601d3d66225af42a9bdb53f5a963a7468aef",
+        "57fe1178759ace730980bf9a6abac8dff353b567a68bea2e91715dde8d770bce"
+      ]
+    },
+    {
+      "file": "ve-source-scope.pdf",
+      "pages": 5,
+      "wordBounds": 2329,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 60,
+      "pixelHashes": [
+        "75fce1d7a171005120a8f234a86fb11b37c137d449df13f284450116c974f4e4",
+        "68ebde9eab491f8a9fa20971732f259b9a466212dbf3f4a9c6cd2391034ed872",
+        "c2cb3949fc5c5b00c22758c0b50639719051f16e646a9bf1acd7805533afe310",
+        "be7852fbc2712990fe012077a1d0c2b6406007cda9a0a618389cbd0fc33868fc",
+        "d08382b65fdfba7b6b3d2bcceebeb132d63efc0a19246ebbe2ae1af0f0c0cba4"
+      ]
+    },
+    {
+      "file": "ve-trial-first-pick.pdf",
+      "pages": 5,
+      "wordBounds": 2502,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 67,
+      "pixelHashes": [
+        "75fce1d7a171005120a8f234a86fb11b37c137d449df13f284450116c974f4e4",
+        "cff65aaeb2b01f47698d6f68bb01d11ffe3d7fc2f5d0c7a980460954ec0c0dcf",
+        "f12cb9e20fa11cef032775e0b452863e61e66f1c1580c51e1e5e296e17bb5f62",
+        "308652c2e29d3fc780853c9133d2db9ab0dbe17be8ad5565ddc3f134a3abdf3c",
+        "228cdcd802dc0281a774ebc877f3aec9a9a72ad9e8d0819e79fcbf82ff4a0424"
+      ]
+    },
+    {
+      "file": "zu-season-cultivar-context.pdf",
+      "pages": 5,
+      "wordBounds": 1611,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 67,
+      "pixelHashes": [
+        "d997d456bc3f286b0c2fe5fe8081a93ac2b121a222567f10a892e55a091de79b",
+        "58b93173d2422530e5ab85a82ba054c6e5873ec16f0b2b5a1161a91e9b9996f5",
+        "bf4a5d2566cd1a57e05a973dfe879563ed848a110b08c7aa23151d6dddf41936",
+        "a671db912992b8c11ecda3849e9f3f2b56471614d786ac7c84733af6866a8ace",
+        "e3909fe77695c6881253e74c049d09f06d9356bfbc23246ecbcbb333db58f9dd"
+      ]
+    },
+    {
+      "file": "zu-source-scope.pdf",
+      "pages": 5,
+      "wordBounds": 1458,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 60,
+      "pixelHashes": [
+        "d997d456bc3f286b0c2fe5fe8081a93ac2b121a222567f10a892e55a091de79b",
+        "325aad6150bdaf05a7dc156b946118c3dd157449ea9832d0d938095b43e9ecda",
+        "db3d7ccbb1f72b22bc75f9e2434defd28178f9d4ab78f96f76b2381f15f9f469",
+        "a74de391b0d43365b8b55577b79fd05cd36133f8b8715abcb91da6906eaffa5f",
+        "139ed689f65feb6064142850a512a05e248d847376f7902d119b4a7ebca2e6e4"
+      ]
+    },
+    {
+      "file": "zu-trial-first-pick.pdf",
+      "pages": 5,
+      "wordBounds": 1761,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 67,
+      "pixelHashes": [
+        "d997d456bc3f286b0c2fe5fe8081a93ac2b121a222567f10a892e55a091de79b",
+        "26a72c2f5e4332f9466e752f191f9b93ebbeb7b8a298646e4d0b169f35a72c5a",
+        "0fb5b9b9bb31db1d979632c0f851dcd2eedc3c5caef1d5df0c62a77f184aa2f9",
+        "b25b2d7a13fd90ab25b565e52a0be06d24caa47b23b6919c70c924d53fab2d19",
+        "f08013d803c1b549d17cae47a6e83192f4d04d326d0005c6fe94f564c93abf77"
+      ]
+    }
+  ],
+  "english": {
+    "normal": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "unknown-records": {
+      "samePixels": true,
+      "sameText": true
+    }
+  },
+  "visualInspection": "All12 native contact sheets inspected before final section-intro correction; all4 changed source-scope sheets inspected again after it. Enlarged final St peach calculation page4 and Ve source-scope page4 inspected. No observed clipping/overlap in those views. Automated full-clause/bounds checks cover all67pages; manual/fluent review of every page is not claimed.",
+  "date": "2026-10-25T15:52:02.434147+00:00",
+  "newSourceQualifierDrafts": 56,
+  "retainedPureSourceIdentities": [
+    {
+      "source": {
+        "english": "KwaZulu-Natal",
+        "scopes": [
+          "source-region-needs-review"
+        ],
+        "identities": [
+          "carica-papaya"
+        ],
+        "missingLanguages": [
+          "zu",
+          "st",
+          "ts",
+          "ve"
+        ]
+      },
+      "reason": "Pure source identity/provenance: retain original place or farm/cultivar name without manufacturing a translation."
+    },
+    {
+      "source": {
+        "english": "Tierhoek Organic Farm, Robertson, Breede River Valley, Western Cape — Portuguese quince",
+        "scopes": [
+          "source-region-needs-review"
+        ],
+        "identities": [
+          "cydonia-oblonga"
+        ],
+        "missingLanguages": [
+          "zu",
+          "st",
+          "ts",
+          "ve"
+        ]
+      },
+      "reason": "Pure source identity/provenance: retain original place or farm/cultivar name without manufacturing a translation."
+    },
+    {
+      "source": {
+        "english": "Western Cape",
+        "scopes": [
+          "source-region-needs-review"
+        ],
+        "identities": [
+          "fragaria-x-ananassa"
+        ],
+        "missingLanguages": [
+          "zu",
+          "st",
+          "ts",
+          "ve"
+        ]
+      },
+      "reason": "Pure source identity/provenance: retain original place or farm/cultivar name without manufacturing a translation."
+    }
+  ],
+  "typecheck": "PASS Node24",
+  "focused": {
+    "passed": 135,
+    "failed": 0,
+    "files": 8,
+    "duration_ms": 13013.884625,
+    "log": "output/guidance-pdf-qa/regions-grouped-affected.log",
+    "scope": "Guidance/crop-export/graph/projection/product-profile/product-yield/release-window/narration stage focused tests. Full guidance suite not started."
+  },
+  "nativePageCautions": {
+    "rows": [
+      {
+        "file": "zu-source-scope",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "zu-trial-first-pick",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "zu-season-cultivar-context",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "st-source-scope",
+        "pages": 4,
+        "fullCautions": true
+      },
+      {
+        "file": "st-trial-first-pick",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "st-season-cultivar-context",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-source-scope",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-trial-first-pick",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-season-cultivar-context",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-source-scope",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-trial-first-pick",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-season-cultivar-context",
+        "pages": 5,
+        "fullCautions": true
+      }
+    ]
+  },
+  "remaining": {
+    "authoredProseCandidates": 455,
+    "retainedPureSourceIdentityLabels": 3,
+    "typedFieldInventorySize": 801,
+    "warning": "Not a whole-app percentage. Source-public animal display names, sample/title/metadata, actual main crop browser, current-main updates, media/accessibility/errors/other exports and fluent review remain."
+  },
+  "preservation": "All103 captured tree authorities, source windows/months/citations and unknown zones/reference-only statuses preserved. Only source-region display expressions localized; exact source guards restore only those expressions, not selectors. Negative cultivar-qualifier/source mutation checks retained.",
+  "printCorrections": {
+    "arrow": "Actual failing St peach output retained in calculation-arrow-before.json. Paint-only -> preserves the relation unsupported by the PDF font; negative test rejects old lost arrows. Source and English values retained. Existing English range-dash normalization is accounted for without dropping operators.",
+    "sectionIntro": "Actual Zu section heading/intro orphan retained in section-intro-before.json. Native-only measured reservation keeps heading, full intro and first card together. Negative rejects original output. English reservation unchanged. This changes the picture; PLAN_VERSION unchanged."
+  },
+  "newFieldOccurrences": 88,
+  "sourceSha256": {
+    "lib/crop-export-copy-data.ts": "2934781d8177b543271dab0ea04ad20d90195fc5c9703f5a4bed2b830a00543e",
+    "lib/crop-export-copy.ts": "3ece52e397d7a06594be5dc8b77c254d720818ac9e2d8153cc30168e6edfcdd3",
+    "lib/crop-export-schedule.ts": "19a5253aa1eb2298ff2a93c530eb12c534fa54d633ccadf2fedfc85db74271ba",
+    "lib/production-product-guidance.ts": "0765af62e8f33a2eb7abcd8a1a17f7f8c3495d88787172fb049c9302afcf0ca0",
+    "lib/crop-export-pdf.ts": "929aa59eb664c611c4af0290fb2ddec82f57ef39810b1c185746a33198e4b726",
+    "tests/guidance-localization.test.ts": "5ab30002c932fb3274ea3465481f69e32a5c48042707790653f73d81aec51400",
+    "tests/helpers/product-guidance-expectation.ts": "d005284877ea632a3a24f949691f86ae5695c490dce34efd587c0bca3ecd6d26",
+    "tests/helpers/season-translation-expectation.ts": "ee14397c7bef81b324a365236ca2c009678479d68afe92debbf0f08053ca35cc",
+    "tests/fixtures/guidance-translation/calculation-arrow-before.json": "ed71243558d6059b6e4f3835048be150b9444989cbf84f0df069bac663e589bf",
+    "tests/fixtures/guidance-translation/section-intro-before.json": "f5b15892200cab73527cc4e29e3da4f7dc103a6d2a9213401f16ec79c471139b"
+  },
+  "files": [
+    {
+      "file": "zu-source-scope.pdf",
+      "sha256": "82ee519f1b01f4cd0518a6b2009dfe26679964eed27bccc75bce3d9f9b04e80b"
+    },
+    {
+      "file": "zu-trial-first-pick.pdf",
+      "sha256": "e243028fb79d3e285fa35a04c383e372fd8e7d19519c295b8a8a749263a564e4"
+    },
+    {
+      "file": "zu-season-cultivar-context.pdf",
+      "sha256": "76808d1cf881425a8696e8d99a28c74338a148eeb5069f284959e79a820c26e9"
+    },
+    {
+      "file": "zu-source-scope-contact.png",
+      "sha256": "7c314509d44cf26245dbecea64b0acecfb4a38af6b33ea60cb6e9b6809872f4e"
+    },
+    {
+      "file": "st-source-scope.pdf",
+      "sha256": "74f62635db00111f13be5a6b744ff91ba317570d8db9b51fefa20bbbd652b1a7"
+    },
+    {
+      "file": "st-trial-first-pick.pdf",
+      "sha256": "3a2a44f87ab540435947ccbf57295401c8302359b799d91f7255e68e48b025a2"
+    },
+    {
+      "file": "st-season-cultivar-context.pdf",
+      "sha256": "f24266335fe0484ee9528a90e5e11e829d24a7e958a426bcc583c0e4ade0ef91"
+    },
+    {
+      "file": "st-source-scope-contact.png",
+      "sha256": "73a0635660ba908c13438ee370eb7d9aa7441fe871ff3fed84e81840f0e416fb"
+    },
+    {
+      "file": "ts-source-scope.pdf",
+      "sha256": "01eab0ea5815a9d94ae2e16cc9d5e7a25c0fe3d3b608fbf33d81ca86a5ad08d3"
+    },
+    {
+      "file": "ts-trial-first-pick.pdf",
+      "sha256": "2e2fb7de38ac2ca7293dc7cecd1943fbdf440506fcdf80fedb3ed26f4b748b1a"
+    },
+    {
+      "file": "ts-season-cultivar-context.pdf",
+      "sha256": "402d197faa7e4029050db712f79cc3bd4e5ab9dca1a821bccce56f74fae9e950"
+    },
+    {
+      "file": "ts-source-scope-contact.png",
+      "sha256": "3a286f157dfc38b18e28f64fbecc2d8e6bef02131499e5bfe531977685523800"
+    },
+    {
+      "file": "ve-source-scope.pdf",
+      "sha256": "a455aaaa07fd0523f745a97d1ec0273e65e850935e55cca5a3f3af93b47b436f"
+    },
+    {
+      "file": "ve-trial-first-pick.pdf",
+      "sha256": "97ef505dc6bad910b7a969913406472f03c4c5317d5ce4ac542fcd4856277e8b"
+    },
+    {
+      "file": "ve-season-cultivar-context.pdf",
+      "sha256": "659ecbdc94a529472adddb6c7fc88571057a7053bd515f8144ae0c9df946f9e4"
+    },
+    {
+      "file": "ve-source-scope-contact.png",
+      "sha256": "c6fdc6ee61c969edaacc63bf15782f7149f7cbf774162aaf13d67aa90b69d956"
+    },
+    {
+      "file": "st-region-detail.png",
+      "sha256": "837dddc3357740519add1c1b5e46931163d9beb7b6e28f0c713fe844050ca3ea"
+    },
+    {
+      "file": "ve-region-detail.png",
+      "sha256": "f5710f0046c0a0a7de82b24a8d9318956ef7b0a3d94604e78ba5208a56d62d03"
+    }
+  ]
+}

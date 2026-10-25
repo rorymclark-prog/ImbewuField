@@ -32,7 +32,7 @@
 // All the numbers come from lib/crop-export-benchmark.ts. Nothing in this file
 // computes a quantity — it only decides what things look like.
 
-import { cropExportText, cropPreservedMethodText, cropProductionIssueText, cropProjectionPeriodText, cropProjectionDetailText, cropProjectionAgeText } from './crop-export-copy';
+import { cropExportText, cropPreservedMethodText, cropProductionIssueText, cropProjectionPeriodText, cropProjectionDetailText, cropProjectionAgeText, cropPoultryGuidance } from './crop-export-copy';
 import { isStapleCropKey } from '@/lib/staple-crops';
 import { numberLabel } from '@/lib/format-figures';
 import type { CropTask, FoodAvailabilityItem, PlanBed, Planting } from '@/lib/crop-plan';
@@ -2557,19 +2557,31 @@ function drawBuying(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: numb
 /** Long cultivar references must travel onto readable continuation pages. Repeating the
  * item as well as the page title keeps a source on page two attached to the crop it supports. */
 function drawProductionGuidance(s: Sheet, input: CropPlanPdfInput): void {
+  const native = isNativePdfLanguage(s.language);
+  const copy = (source: string, values?: Record<string, string | number>) => cropExportText(source, s.language, values);
+  // The bundled font drops bounds and arrows: >=7th must not become exact7th,
+  // and a sourced calculation must retain the relation between its steps.
+  // Expand only at paint time so source bounds and saved text remain unchanged.
+  const printable = (text: string) => s.safe(text.replace(/≤/g, '<=').replace(/≥/g, '>=').replace(/→/g, '->'));
+  const continuedText = (text: string, size: number, gap: number, ink: readonly number[]) => {
+    s.font(size, true); s.ink(ink);
+    const lines = s.doc.splitTextToSize(printable(text), s.contentWidth) as string[];
+    s.doc.text(lines, s.margin, s.y, { lineHeightFactor: 1.2 });
+    s.y += gap + (lines.length - 1) * size * 1.2;
+  };
   let group = '';
   let item = '';
   const drawHead = (continued = false) => {
-    masthead(s, 'Production guidance');
-    pageTitle(s, input.meta.planTitle, continued ? 'Farm choices - continued' : 'Before you buy or start',
-      'Use your farm observations and the research shortlists. Confirm choices locally before buying.');
+    masthead(s, copy('Production guidance'));
+    pageTitle(s, input.meta.planTitle, continued ? copy('Farm choices - continued') : copy('Before you buy or start'),
+      copy('Use your farm observations and the research shortlists. Confirm choices locally before buying.'));
     if (continued && group) {
-      s.text(`${group} (continued)`, s.margin, { size: 11, bold: true, ink: INK.green });
-      s.y += 18;
+      if (native) continuedText(copy('{title} (continued)', { title: group }), 11, 18, INK.green);
+      else { s.text(`${group} (continued)`, s.margin, { size: 11, bold: true, ink: INK.green }); s.y += 18; }
     }
     if (continued && item) {
-      s.text(`${item} (continued)`, s.margin, { size: 10, bold: true });
-      s.y += 16;
+      if (native) continuedText(copy('{title} (continued)', { title: item }), 10, 16, INK.text);
+      else { s.text(`${item} (continued)`, s.margin, { size: 10, bold: true }); s.y += 16; }
     }
   };
   const ensure = (height: number) => {
@@ -2581,7 +2593,10 @@ function drawProductionGuidance(s: Sheet, input: CropPlanPdfInput): void {
     const size = opts.size ?? 9.5;
     const leading = size * 1.4;
     s.font(size, opts.bold);
-    const lines = s.doc.splitTextToSize(s.safe(text), s.contentWidth) as string[];
+    const lines = s.doc.splitTextToSize(printable(text), s.contentWidth) as string[];
+    const height = lines.length * leading + (opts.gap ?? 3);
+    // Complete care conditions must not acquire a repeated header halfway through a short claim.
+    if (native && height <= s.bottom - s.margin - 170) ensure(height);
     for (const line of lines) {
       ensure(leading + 4);
       s.text(line, s.margin, { size, bold: opts.bold, ink: opts.ink });
@@ -2589,10 +2604,10 @@ function drawProductionGuidance(s: Sheet, input: CropPlanPdfInput): void {
     }
     s.y += opts.gap ?? 3;
   };
-  const heading = (title: string, first?: ProductionGuideItem) => {
+  const heading = (title: string, first?: ProductionGuideItem, followingHeight = 0) => {
     item = '';
     // Keep a section name with its first card, including its month bar and sources.
-    const height = first ? Math.min(entryHeight(first) + 20, s.bottom - s.margin - 170) : 40;
+    const height = first ? Math.min(entryHeight(first) + 20 + followingHeight, s.bottom - s.margin - 170) : 40;
     if (!s.fits(height)) group = '';
     ensure(height);
     group = title;
@@ -2602,7 +2617,8 @@ function drawProductionGuidance(s: Sheet, input: CropPlanPdfInput): void {
   const sourceLine = (label: string, url: string | null) => {
     const size = 8;
     s.font(size);
-    const lines = s.doc.splitTextToSize(s.safe(`Source: ${label}`), s.contentWidth) as string[];
+    const lines = s.doc.splitTextToSize(printable(copy('Source: {label}', { label })), s.contentWidth) as string[];
+    if (native && lines.length * 11.2 + 4 <= s.bottom - s.margin - 170) ensure(lines.length * 11.2 + 4);
     for (const line of lines) {
       ensure(15);
       s.text(line, s.margin, { size, ink: INK.teal });
@@ -2611,13 +2627,17 @@ function drawProductionGuidance(s: Sheet, input: CropPlanPdfInput): void {
     }
     s.y += 4;
   };
+  const sourceBlockHeight = (sources: ProductionGuideItem['sources']): number => {
+    s.font(8);
+    return (sources ?? []).reduce((height, source) => height + (s.doc.splitTextToSize(printable(copy('Source: {label}', { label: source.label })), s.contentWidth) as string[]).length * 11.2 + 4, 0);
+  };
   const entryHeight = (entry: ProductionGuideItem): number => {
     s.font(10.5, true);
-    const titleHeight = (s.doc.splitTextToSize(s.safe(entry.title), s.contentWidth) as string[]).length * 14.7 + 1;
+    const titleHeight = (s.doc.splitTextToSize(printable(entry.title), s.contentWidth) as string[]).length * 14.7 + 1;
     s.font(9.5);
-    const bodyHeight = entry.lines.reduce((height, line) => height + (s.doc.splitTextToSize(s.safe(line), s.contentWidth) as string[]).length * 13.3 + 3, 0);
+    const bodyHeight = entry.lines.reduce((height, line) => height + (s.doc.splitTextToSize(printable(line), s.contentWidth) as string[]).length * 13.3 + 3, 0);
     s.font(8);
-    const sourcesHeight = (entry.sources ?? []).reduce((height, source) => height + (s.doc.splitTextToSize(s.safe(`Source: ${source.label}`), s.contentWidth) as string[]).length * 11.2 + 4, 0);
+    const sourcesHeight = sourceBlockHeight(entry.sources);
     return titleHeight + bodyHeight + sourcesHeight + (entry.expectedSeason ? 50 : 0) + 10;
   };
   const guideItem = (entry: ProductionGuideItem) => {
@@ -2629,9 +2649,9 @@ function drawProductionGuidance(s: Sheet, input: CropPlanPdfInput): void {
     paragraph(entry.title, { size: 10.5, bold: true, gap: 1 });
     if (entry.expectedSeason) {
       ensure(50);
-      paragraph(`${entry.expectedSeason.label} - expected when established`, { size: 9, bold: true });
+      paragraph(copy('{label} - expected when established', { label: entry.expectedSeason.label }), { size: 9, bold: true });
       const cell = s.contentWidth / 12;
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const months = native ? Array.from({ length: 12 }, (_, i) => monthShort(i + 1, s.language)) : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       months.forEach((month, i) => {
         const fill = entry.expectedSeason!.months.includes(i + 1) ? INK.green : INK.panelGrey;
         s.doc.setFillColor(fill[0], fill[1], fill[2]);
@@ -2642,7 +2662,19 @@ function drawProductionGuidance(s: Sheet, input: CropPlanPdfInput): void {
       });
       s.y += 27;
     }
-    for (const line of entry.lines) paragraph(line);
+    const lastLine = entry.lines.at(-1);
+    let tailHeight = 0;
+    if (native && lastLine && entry.sources?.length) {
+      s.font(9.5);
+      tailHeight = (s.doc.splitTextToSize(printable(lastLine), s.contentWidth) as string[]).length * 13.3 + 3 + sourceBlockHeight(entry.sources) + 6;
+    }
+    for (const [index, line] of entry.lines.entries()) {
+      // Long animal references left only their final citations on an otherwise
+      // empty continuation page. Keep a complete final condition with its source
+      // block when both fit, without truncating an exceptionally long reference.
+      if (index === entry.lines.length - 1 && tailHeight > 0 && tailHeight <= s.bottom - s.margin - 170) ensure(tailHeight);
+      paragraph(line);
+    }
     for (const source of entry.sources ?? []) sourceLine(source.label, source.url);
     s.y += 6;
   };
@@ -2651,40 +2683,45 @@ function drawProductionGuidance(s: Sheet, input: CropPlanPdfInput): void {
   drawHead();
   const guide = input.productionGuide;
   if (guide) {
-    paragraph(`Research climate group: ${guide.area}. This grouping is not a validated recommendation for this farm.`, { ink: INK.muted, gap: 10 });
+    paragraph(copy('Research climate group: {area}. This grouping is not a validated recommendation for this farm.', { area: guide.area }), { ink: INK.muted, gap: 10 });
     if (guide.siteObservations.length) {
-      heading('What you reported about this farm');
+      heading(copy('What you reported about this farm'));
       for (const entry of guide.siteObservations) guideItem(entry);
     }
     if (guide.recordedProduction.length) {
-      heading('Reporting-year records - not a forecast');
-      paragraph('Past reporting-year totals and months describe what was reported. They do not promise food in the coming plan.', { ink: INK.muted, gap: 8 });
+      heading(copy('Reporting-year records - not a forecast'));
+      paragraph(copy('Past reporting-year totals and months describe what was reported. They do not promise food in the coming plan.'), { ink: INK.muted, gap: 8 });
       for (const entry of guide.recordedProduction) guideItem(entry);
     }
     if (guide.foodForest?.length) {
-      heading('Fruit, nuts and indigenous foods', guide.foodForest[0]);
+      heading(copy('Fruit, nuts and indigenous foods'), guide.foodForest[0]);
       for (const entry of guide.foodForest) guideItem(entry);
     }
     if (guide.animalProducts?.length) {
-      heading('Animal products and care', guide.animalProducts[0]);
+      heading(copy('Animal products and care'), guide.animalProducts[0]);
       for (const entry of guide.animalProducts) guideItem(entry);
     }
     if (guide.cropChoices.length) {
-      heading('Crop varieties to check locally');
-      paragraph('Keep the named variety you actually choose. Research shortlists need confirmation for your local season, water and ground.', { ink: INK.muted, gap: 8 });
+      const intro = copy('Keep the named variety you actually choose. Research shortlists need confirmation for your local season, water and ground.');
+      s.font(9.5);
+      const introHeight = native ? (s.doc.splitTextToSize(printable(intro), s.contentWidth) as string[]).length * 13.3 + 8 : 0;
+      // Longer native references left this heading and caution without a crop card.
+      // Reserve the complete intro and first ordinary card together.
+      heading(copy('Crop varieties to check locally'), native ? guide.cropChoices[0] : undefined, introHeight);
+      paragraph(intro, { ink: INK.muted, gap: 8 });
       for (const entry of guide.cropChoices) guideItem(entry);
     }
   }
-  const poultry = input.poultryGuidance;
+  const poultry = input.poultryGuidance ? cropPoultryGuidance(input.poultryGuidance, s.language) : undefined;
   if (poultry) {
-    heading('Chickens - choices to confirm');
-    const purpose = { eggs: 'Eggs', meat: 'Meat', both: 'Eggs and meat', unknown: 'Not yet recorded' }[poultry.purpose];
-    paragraph(`${poultry.statusText}. Purpose: ${purpose}.`, { bold: true });
-    if (poultry.selectedEnterprise) paragraph(`Selected plan enterprise: ${poultry.selectedEnterprise.name}.`);
-    if (poultry.recordedBreed !== null) paragraph(`Your recorded breed: ${poultry.recordedBreed}.`);
-    if (poultry.recordedLayingHens !== null) paragraph(`Laying hens you recorded: ${numberLabel(poultry.recordedLayingHens)}. This count does not promise an egg yield.`);
-    for (const text of poultry.attention) paragraph(`Care check: ${text}`);
-    for (const text of poultry.missing) paragraph(`Still to check: ${text}`);
+    heading(copy('Chickens - choices to confirm'));
+    const purpose = copy({ eggs: 'Eggs', meat: 'Meat', both: 'Eggs and meat', unknown: 'Not yet recorded' }[poultry.purpose]);
+    paragraph(copy('{status}. Purpose: {purpose}.', { status: poultry.statusText, purpose }), { bold: true });
+    if (poultry.selectedEnterprise) paragraph(copy('Selected plan enterprise: {name}.', { name: poultry.selectedEnterprise.name }));
+    if (poultry.recordedBreed !== null) paragraph(copy('Your recorded breed: {breed}.', { breed: poultry.recordedBreed }));
+    if (poultry.recordedLayingHens !== null) paragraph(copy('Laying hens you recorded: {count}. This count does not promise an egg yield.', { count: numberLabel(poultry.recordedLayingHens) }));
+    for (const text of poultry.attention) paragraph(copy('Care check: {text}', { text }));
+    for (const text of poultry.missing) paragraph(copy('Still to check: {text}', { text }));
     const printedCareSources = new Set<string>();
     for (const point of [...poultry.careNotes, ...poultry.climateNotes]) {
       paragraph(point.text);

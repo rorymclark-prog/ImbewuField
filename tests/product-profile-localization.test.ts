@@ -1,3 +1,5 @@
+import { CROP_EXPORT_COPY } from '../lib/crop-export-copy-data.ts';
+import { translateAdditionalProductPresentation } from './helpers/product-guidance-expectation.ts';
 import { translatedSeasonExpectation, translateExpectedGuideSeason } from './helpers/season-translation-expectation.ts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -107,6 +109,9 @@ test('declared profile, age and yield wording preserves safety holds, item order
     }
     // Native season qualifiers are a declared presentation layer; every source decision stays exact.
     for(const[index,item]of expected.foodForest.entries())translateExpectedGuideSeason(item,context.trees[index],lang);
+    // Newly translated full qualifiers and animal furniture retain the immutable English
+    // line positions, source gates and every field outside their declared presentation.
+    translateAdditionalProductPresentation(expected,c.guide,context,lang);
     assert.deepEqual(guide,expected,`${lang}/${c.name}: an undeclared research or husbandry field changed`);
     assert.deepEqual(figures(JSON.stringify(guide)),figures(JSON.stringify(c.guide)));
     assert.equal(JSON.stringify(context),before,'translation cannot mutate source inventory');
@@ -143,7 +148,9 @@ test('the saved crop page uses the selected native summary with exact crop names
 });
 
 test('all newly authored purchasing templates are registered and a deliberately unregistered template fails the audit',()=>{
-  function audit(text:string){const tree=ts.createSourceFile('guide.ts',text,ts.ScriptTarget.Latest,true);function visit(node:ts.Node){if(ts.isCallExpression(node)&&ts.isIdentifier(node.expression)&&node.expression.text==='t'&&node.arguments[0]&&ts.isStringLiteral(node.arguments[0]))assert.ok(new Map([...PRODUCT_GUIDE_COPY,...PRODUCT_FIRST_CROP_COPY,...PRODUCT_YIELD_COPY].map(r=>[r.english,r])).has(node.arguments[0].text),`unregistered presentation: ${node.arguments[0].text}`);ts.forEachChild(node,visit);}visit(tree);}
+  // The shared product-guidance registry now owns additional source-bound templates;
+  // unknown copy must still fail, and existing profile/age/yield authorities remain.
+  function audit(text:string){const tree=ts.createSourceFile('guide.ts',text,ts.ScriptTarget.Latest,true);function visit(node:ts.Node){if(ts.isCallExpression(node)&&ts.isIdentifier(node.expression)&&node.expression.text==='t'&&node.arguments[0]&&ts.isStringLiteral(node.arguments[0]))assert.ok(new Map([...PRODUCT_GUIDE_COPY,...PRODUCT_FIRST_CROP_COPY,...PRODUCT_YIELD_COPY,...(CROP_EXPORT_COPY as readonly {english:string;generatedScope?:string}[]).filter(row=>row.generatedScope==='product-guidance')].map(r=>[r.english,r])).has(node.arguments[0].text),`unregistered presentation: ${node.arguments[0].text}`);ts.forEachChild(node,visit);}visit(tree);}
   audit(read('lib/production-product-guidance.ts'));assert.throws(()=>audit("t('New unchecked buying advice')"),/unregistered presentation/);
 });
 

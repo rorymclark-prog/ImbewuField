@@ -1300,7 +1300,7 @@ function FacilitatorCropsPageInner() {
     const bedIds = new Set(beds.map((b) => b.id));
     return (plan?.plantings ?? []).filter((p) => bedIds.has(p.bedId));
   }, [plan, beds]);
-  const productionGuide = useMemo(() => buildProductionGuide(siteSurvey, plantings, growingZones, currentMonth, { bananaCircles, trees: includeTrees ? canvasTrees : [], animals: includeAnimals ? canvasAnimals : [], animalChoices }), [siteSurvey, plantings, growingZones, currentMonth, bananaCircles, canvasTrees, canvasAnimals, animalChoices, includeTrees, includeAnimals]);
+  const productionGuide = useMemo(() => buildProductionGuide(siteSurvey, plantings, growingZones, currentMonth, { bananaCircles, trees: includeTrees ? canvasTrees : [], animals: includeAnimals ? canvasAnimals : [], animalChoices }, lang), [siteSurvey, plantings, growingZones, currentMonth, bananaCircles, canvasTrees, canvasAnimals, animalChoices, includeTrees, includeAnimals, lang]);
   const chickenGuide = useMemo(() => {
     const coop = canvasAnimals.find((group) => group.housing === 'chicken');
     if (!coop && !siteSurvey?.livestock.includes('chickens') && !siteSurvey?.poultryManagement) return undefined;

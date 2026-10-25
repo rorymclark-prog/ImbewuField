@@ -1,0 +1,298 @@
+{
+  "scope": "Actual source-bound shell/hectare weights, identity/medicinal holds, coffee processing, tuber cycles, seasonal contradictions and preservation cautions in all4languages:53new sources across8representative species. Source citations keep original publication identities. Other corpus prose and app workflows remain unfinished.",
+  "rows": [
+    {
+      "file": "en-after-normal.pdf",
+      "pages": 5,
+      "wordBounds": 1662,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 0,
+      "pixelHashes": [
+        "7c7574a7496df1c5891c835af654b1eade5e6c2783f5069717111119059a6b8f",
+        "372b00a436b1c99ee17b267be137c206cb08c68f5ce12d99ce97087abb01f7a6",
+        "273e5ea045962e15205fb922f90bdcf618a8118578d22cd2547b00ed321ba55f",
+        "da97dd9e20cf0eff25ca73a5df46b16a95a6783e83dd2ff5d3a443a4b94301c5",
+        "c4dff5c6342670b7c6b02d4d175f917df7271ca8c675e43d873c697e8626de91"
+      ]
+    },
+    {
+      "file": "en-after-unknown-records.pdf",
+      "pages": 3,
+      "wordBounds": 832,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 0,
+      "pixelHashes": [
+        "4c23a16d523feda95c6569d885ae44398e937a81a7d3d5fe85f4ff30e9a8b45c",
+        "583f34c91535a0fbe17e2918dd760753133be9ea9c31cdde8dbf501e78278e4b",
+        "26b8e49bf356951820945a6eb51742117135b4e3ca634da646b223dbae945d6c"
+      ]
+    },
+    {
+      "file": "st-processing-tuber-season.pdf",
+      "pages": 5,
+      "wordBounds": 2149,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 65,
+      "pixelHashes": [
+        "db5f290c11c68c6dff796ead43db00c4e0ba1a0ae43855405cb9bafb608d2dc3",
+        "15c0f4b4a4e31c253e90004433646ae7ec58de7cd56e5ad0ac2b3defe86f8292",
+        "76d06358780ecc209a59210309a4260f4d26628645b5e59985518b76062af037",
+        "491e4bf0147cdc6ef451e265bc5443190c0f22dee355f54475a30cbb6b64572d",
+        "4301945a3d6e1414cadbc5552b54001939130ae7cacc4d80043a0b37f8bc02bc"
+      ]
+    },
+    {
+      "file": "st-shell-identity-food-holds.pdf",
+      "pages": 4,
+      "wordBounds": 2122,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 61,
+      "pixelHashes": [
+        "db5f290c11c68c6dff796ead43db00c4e0ba1a0ae43855405cb9bafb608d2dc3",
+        "90429b328e063ca3b45e0ccc24faa5bc38fe1183a6a8dedd151c425be7e44369",
+        "53e1630303aca25f2894291f9d716af2a4a88af63faa1eefe809c94b839516cd",
+        "9bf9494c59e3f33f2c1b1b92a609f99608926bb0cf8e3a147ee07090e8af43a0"
+      ]
+    },
+    {
+      "file": "ts-processing-tuber-season.pdf",
+      "pages": 5,
+      "wordBounds": 2101,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 65,
+      "pixelHashes": [
+        "3869dba6cf8598f12c8db26f3c24aff1a6879aa0c69e194585689c35e403e788",
+        "69f9ce2e49d911f420d6c3bd06a415d942e08bffa8b9ef8f3d4e10132dc988cf",
+        "b13c08c4148f6ec0d4c291b3806f7d8e178416c4ab2c4459799e212400cf782e",
+        "bb31153a48924b51f46421cde8d949934f26e68ffe092676728fd28c0cccb5a0",
+        "90fc003621675ea004920537d5173fbb36fab0996bf056e51e62c2f4d6aab420"
+      ]
+    },
+    {
+      "file": "ts-shell-identity-food-holds.pdf",
+      "pages": 4,
+      "wordBounds": 2120,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 61,
+      "pixelHashes": [
+        "3869dba6cf8598f12c8db26f3c24aff1a6879aa0c69e194585689c35e403e788",
+        "493bf0a18ba7179a88940fd27956e74bfe6503e86cc27d773bd23686ee59990f",
+        "4ef61f8f8f0d5a31094f317fcf72cdae861242b517651c2ea3e9ecef75079ec1",
+        "ab0d97a179345145b620fffce36bff30ceb08eb7fcba526a8c0c8ce87a332169"
+      ]
+    },
+    {
+      "file": "ve-processing-tuber-season.pdf",
+      "pages": 5,
+      "wordBounds": 2218,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 65,
+      "pixelHashes": [
+        "11b8d3ecf7b5d851e981cd04acec325685a254bfe64ab4f95fc72292c5d67580",
+        "b64cae7a6071a27528e9e395eee546fc12b873341b79a2ca9eb3a119555a2563",
+        "1ee514369f79ab6c38a866368e9cbe0b58314078634cf4ff34b29937b3e0fb57",
+        "d85b51c899a07220cd6be5c4feeb932612084f17ce143c081be839a24a8dedb1",
+        "a351bbd792ab6ccab93449298f2792c1a9efc4d0cb2126ae0625346547111dec"
+      ]
+    },
+    {
+      "file": "ve-shell-identity-food-holds.pdf",
+      "pages": 5,
+      "wordBounds": 2334,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 61,
+      "pixelHashes": [
+        "11b8d3ecf7b5d851e981cd04acec325685a254bfe64ab4f95fc72292c5d67580",
+        "99015eb42fc1bfc75459513e76cfa2935bc514e78eed3aa4fd5e0b85e63efd22",
+        "2c341b58a1d36a15c60688ca1a6901a941c6134ab665b234df7491955433f335",
+        "cdcfcb1d519cb7a595c377a872d4fe6b2dc729c68ca486d4ec5cf8bee1c01c11",
+        "bea72a52e2df163d2b1e1c2990964ca71b3a58ac68f341accdb442fecd912f41"
+      ]
+    },
+    {
+      "file": "zu-processing-tuber-season.pdf",
+      "pages": 5,
+      "wordBounds": 1282,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 65,
+      "pixelHashes": [
+        "8fd51c635210d83582fd31ff4846c3fbb70b76e4adcfc4eeb54e6ffb3c1d89ad",
+        "6efc808351030e3aa9e0b993d8937f00492c47aef5590615c476301302f31be3",
+        "7c5aca1fbb5bb80cf23ef6c7d19de6f99bb4cb7fbad5d879dc2685dcbc8ddc59",
+        "1d1753f6e024c14837fdc1d2c4677a1674fad0fae188cde6cf23015be1187509",
+        "2750328040e82d0d203e96e10dcff9ce602d564a60eb8d72ab592d85cb6a3cf7"
+      ]
+    },
+    {
+      "file": "zu-shell-identity-food-holds.pdf",
+      "pages": 4,
+      "wordBounds": 1302,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 61,
+      "pixelHashes": [
+        "8fd51c635210d83582fd31ff4846c3fbb70b76e4adcfc4eeb54e6ffb3c1d89ad",
+        "be12e41821075846702c37b65419e227bd78ac0363aceba6d64b705379d0c5da",
+        "f621cfe99106aa1d0030d30328b578adfa124bca8e72ffce6f03625275bb2976",
+        "488b42095fbcb4e7659d7076d496967190bceddf0702bf5750a610aaf5f06f35"
+      ]
+    }
+  ],
+  "english": {
+    "normal": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "unknown-records": {
+      "samePixels": true,
+      "sameText": true
+    }
+  },
+  "visualInspection": "All8 native contact sheets visually inspected. Sesotho tuber page3 and Tshivenda honeybush page4 enlarged for full source notes; after the lowercase kg correction, all3changed processing contacts re-inspected. No visible clipping/overlap/stranded cautions in the inspected pages. Automated bounds do not replace visual review or fluent language approval.",
+  "date": "25 October 2026",
+  "sourceCount": 53,
+  "expectedNewSourceOccurrences": 212,
+  "nativeCautions": {
+    "rows": [
+      {
+        "file": "zu-shell-identity-food-holds",
+        "pages": 4,
+        "fullCautions": true
+      },
+      {
+        "file": "zu-processing-tuber-season",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "st-shell-identity-food-holds",
+        "pages": 4,
+        "fullCautions": true
+      },
+      {
+        "file": "st-processing-tuber-season",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-shell-identity-food-holds",
+        "pages": 4,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-processing-tuber-season",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-shell-identity-food-holds",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-processing-tuber-season",
+        "pages": 5,
+        "fullCautions": true
+      }
+    ]
+  },
+  "tests": {
+    "typecheck": "PASS Node24, no diagnostics",
+    "focusedFiles": 7,
+    "passed": 124,
+    "failed": 0,
+    "todo": 0,
+    "log": "output/guidance-pdf-qa/authored03-final-affected.log",
+    "fullGuidanceSuite": "NOT RUN; this is focused evidence only. Parent-calendar full run and graph in-progress run do not establish guidance completion."
+  },
+  "extractionCorrection": "First extraction compared canonically equivalent decomposed and composed Tshivenda n-with-mark as different. NFC normalization matches the unchanged underlying text; no substring/caution omitted. Initial failed log retained locally.",
+  "sourceGuardCorrection": {
+    "file": "tests/projection-pdf-localization.test.ts",
+    "reason": "Old whole-file hash rejected the descendant localization of2presentation functions. Whole projection/perennial files still match immutable hashes; restore only productGuideText/buildProductGuidance plus the display-label import and require the rest of the product source byte-exact. New negative species-key and citation mutations must both fail. Original fixture and assertions retained."
+  },
+  "sourceSha256": {
+    "lib/crop-export-copy-data.ts": "ca0702bca863f5cae6a35cfbd620ecb23694188c96d7a8ae27315776d5f65f29",
+    "lib/crop-export-copy.ts": "3ece52e397d7a06594be5dc8b77c254d720818ac9e2d8153cc30168e6edfcdd3",
+    "lib/crop-export-schedule.ts": "19a5253aa1eb2298ff2a93c530eb12c534fa54d633ccadf2fedfc85db74271ba",
+    "lib/crop-export-pdf.ts": "ff394eb342181ecd944b66bbcec2f1f5441f98c386147d02eeea8000b3fd4ae9",
+    "lib/production-product-guidance.ts": "e9c5a8a08ea914b252a01b06e95af31c151d1343c1fc012fd14a782f0720fd06",
+    "tests/guidance-localization.test.ts": "7d0b23397def7bbd790823d3dee1b238e617a179228680baf809e58348950901",
+    "tests/projection-pdf-localization.test.ts": "e9645b6c1c4ddfc2c4ea78af598ab6ac663f28354071b1fb8c36066c40eee7ff"
+  },
+  "files": [
+    {
+      "file": "zu-shell-identity-food-holds.pdf",
+      "sha256": "c5b8546595d07003bde63659c61bec6edd0bbaa6f6d83d7917b18d402b0000e8"
+    },
+    {
+      "file": "zu-shell-identity-food-holds-contact.png",
+      "sha256": "41ca6d4d8b52ae426875c54fcd2f4551b6f35473bfb5d123c6e51ef29060aa8c"
+    },
+    {
+      "file": "zu-processing-tuber-season.pdf",
+      "sha256": "10a0441f377c3ee2d9c1a36344398abc684649dd1fdaf8b2ff3914c5b5792599"
+    },
+    {
+      "file": "zu-processing-tuber-season-contact.png",
+      "sha256": "8636c6272c78baede83b728942186c1d5cf090a3d64c920c77debef3613d7464"
+    },
+    {
+      "file": "st-shell-identity-food-holds.pdf",
+      "sha256": "4ac0d7f74b89775ea78396b95adfcd8d009c405f0f734e82f39c52c244e4f5b7"
+    },
+    {
+      "file": "st-shell-identity-food-holds-contact.png",
+      "sha256": "4a2d4e3562a244dff3f8e9cac339ef081217eda2a93fdb6b05369b9af2fd58c8"
+    },
+    {
+      "file": "st-processing-tuber-season.pdf",
+      "sha256": "5089f84a30435b9827a3922cff71f88eb4ae0dc9bed5478ce669c9e71fcedb0f"
+    },
+    {
+      "file": "st-processing-tuber-season-contact.png",
+      "sha256": "18d4a366f5ad1271b27bcfbfc7cf02910f48469a155a222df3ce36171e1b0ac4"
+    },
+    {
+      "file": "ts-shell-identity-food-holds.pdf",
+      "sha256": "cf980a5e8d96cd867e0c945ac4ce083e5a0fbcd0fefa9aa8b97561b41ab84755"
+    },
+    {
+      "file": "ts-shell-identity-food-holds-contact.png",
+      "sha256": "d71be8521e90fecf23a63051ea48a0583fc6c0ca4aab39b96397b3b2fe60863b"
+    },
+    {
+      "file": "ts-processing-tuber-season.pdf",
+      "sha256": "c4b0e47937a9f2a5a7e183bcd14cdbc7e23c165f956559e3f7737b3f635f229a"
+    },
+    {
+      "file": "ts-processing-tuber-season-contact.png",
+      "sha256": "cefb3faba5f3789e442c2b43e06e3cdd9106dc1a161e7e668801a1440e9c171b"
+    },
+    {
+      "file": "ve-shell-identity-food-holds.pdf",
+      "sha256": "041868ae569a3a881d48d1c976f4d67d7d0395ceb92dc9f2d6e0f676e47e5d16"
+    },
+    {
+      "file": "ve-shell-identity-food-holds-contact.png",
+      "sha256": "aaee09c3057dcd15b66e0a3d6f8aca49930b5f18e90b1286508716162b22bd38"
+    },
+    {
+      "file": "ve-processing-tuber-season.pdf",
+      "sha256": "c7be8b5191aabccd0ceea56e64f91ab155b8f8f23413c0a32ec5681e2d7518b9"
+    },
+    {
+      "file": "ve-processing-tuber-season-contact.png",
+      "sha256": "827b104122bc6682e54e9d55987e831fff29cc232416b4521b9cd7f182fbf880"
+    }
+  ],
+  "limits": "Unreviewed drafts with source technical glosses for polysemous terms; official glossary entries checked via indexed primary text only, no visual glossary page or fluent grammar approval. Broader authored corpus, unit/qualified-region display, sample/metadata/crop-screen forwarding and current-main/full-app checks still outstanding."
+}

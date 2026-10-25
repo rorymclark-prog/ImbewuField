@@ -1,0 +1,71 @@
+{
+  "checkedAt": "2026-10-25T09:34:27.060315+00:00",
+  "scope": "Poultry-only native guidance and PDF furniture; survey/product guidance bodies and app locale forwarding remain unfinished. All new prose unreviewed.",
+  "files": [
+    {
+      "file": "zu-care.pdf",
+      "sha256": "5bbc73d48bd22c779978b6748ff4aca8552a8ce33baeeb290cabf90879a5e857"
+    },
+    {
+      "file": "zu-care-contact.png",
+      "sha256": "53efe352abd713fb85ed431375aefe74f0b47653be5ed48bf5364c30a50b8199"
+    },
+    {
+      "file": "st-care.pdf",
+      "sha256": "d39f05da70e830acaf4b8a703d9fb00e16793d5a3d32c0ff8e60382d719c6780"
+    },
+    {
+      "file": "st-care-contact.png",
+      "sha256": "8b90b3b2d36648a11b98ee6911f7330c2d8ac174c16fdff55014c035d2f892d2"
+    },
+    {
+      "file": "ts-care.pdf",
+      "sha256": "55e3f6234b491b33bd771560f30b2ff6de29401c4b010212f778080bb2bd3518"
+    },
+    {
+      "file": "ts-care-contact.png",
+      "sha256": "b0c920627c3bcd3a85b52171dd9ab5284868824a29cdfc5c4c9d0a02f1886604"
+    },
+    {
+      "file": "ve-care.pdf",
+      "sha256": "df3441195bd8ebf9088f0e9c1dd0b8df57c3a230c82266006d8afab26b22d69b"
+    },
+    {
+      "file": "ve-care-contact.png",
+      "sha256": "f6121849476a2e778847a7d5ae1f74c450558b45b294a02614d7bed984aa14a8"
+    }
+  ],
+  "modelCoverage": {
+    "surveyStates": 144,
+    "productContexts": 36,
+    "poultryStates": 192,
+    "wholeAnimalAndProductAuthorities": "byte-exact from captured projection parent; no selector, source, species, rate or record mutation"
+  },
+  "typecheck": "PASS exact current copy-row contract and strengthened tests; output/guidance-pdf-qa/poultry-current-tsc.log",
+  "affected": "169 passed,0 failed in8files; output/guidance-pdf-qa/poultry-affected.log",
+  "pdf": {
+    "files": 16,
+    "pages": 36,
+    "wordBounds": 12253,
+    "clipped": 0,
+    "parserErrors": [],
+    "english": {
+      "normal": {
+        "samePixels": true,
+        "sameText": true
+      },
+      "unknown-records": {
+        "samePixels": true,
+        "sameText": true
+      }
+    },
+    "nativePdfs": 12,
+    "nativePages": 20,
+    "fullCareClauseChecks": 192,
+    "bothRepeatedBreedDescriptionsCounted": true,
+    "completeCautionsOnEveryNativePage": true
+  },
+  "visual": "All4 care contacts inspected; two pages each. Missing/confirmed files have measured bounds and full text extraction, but were not all separately visually inspected.",
+  "privacy": "Recorded breeds and enterprise identities stay original even when matching authored copy. Zero differs from missing; no egg yield or local heat inferred. Unknown authored additions retain original text under native source-note labels.",
+  "fullSuite": "Not started on unfinished guidance branch. Three ancestor full suites restarted after verified environment loss, with durable logs. No full green claim."
+}
