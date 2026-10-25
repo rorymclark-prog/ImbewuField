@@ -13,6 +13,7 @@ import { sampleAssessments } from '@/lib/sample-programme';
 import { resizeLogoForStorage } from '@/lib/invoice-logo';
 import { completeSampleEvidence, freshEvidenceData, milestoneAt, publishedTraining, trainingTotals, validTrainingRecord, validProgrammeMilestone, type EvidenceData, type TrainingRecord, type ProgrammeMilestone } from '@/lib/programme-evidence';
 import ReportComposer from './ReportComposer';
+import FacilitatorReport from './FacilitatorReport';
 import ProgrammeProgress from './ProgrammeProgress';
 import { loadProgrammeProgressRecords } from '@/lib/programme-progress-records';
 import { PROGRESS_AREAS, PROGRESS_TEMPLATES, progressArea, progressValue, progressRecordSections, programmeRecordMetrics, type ProgrammeRecords, type ProgressArea } from '@/lib/programme-progress';
@@ -159,6 +160,7 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
         ]}/>
       </>}
       {!data.brandingOnly&&tab==='training'&&<>
+        {!funder&&<FacilitatorReport key={`${org}:${user?.uid ?? 'sample'}`} data={data} project={project} orgId={org} />}
         {data.canRecord&&<FieldDraft name={`training:${org}`} value={session} onRestore={value=>{setSession(value);setReviewed(false);}} />}
         {data.canRecord&&<button className={styles.primary} disabled={busy||photosBusy} onClick={()=>{setSession({...emptySession(),project,attendance:data.people.map(p=>({...p,present:false})),facilitator:data.sample?(mentor?"Sibusiso Ndlovu":"Nosipho Khumalo"):profile?.full_name??''});setReviewed(false);}}>{ui('Record a training session','Rekhoda isikhathi sokuqeqesha')}</button>}
         {photosBusy&&<p>{ui('Loading session photos…','Kulayishwa izithombe zesikhathi sokuqeqesha…')}</p>}

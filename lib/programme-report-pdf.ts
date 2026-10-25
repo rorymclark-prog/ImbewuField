@@ -4,10 +4,19 @@ import { pdfSafe } from '@/lib/crop-export-pdf';
 import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 
 export type ReportSection = { title: string; lines: string[]; summaryLines?: string[]; references?: { label: string; url: string }[] };
-export type ReportTable = { title: string; note: string; columns: string[]; rows: string[][]; includeInSummary?: boolean };
+export type ReportTable = { title: string; note: string; columns: string[]; rows: string[][]; includeInSummary?: boolean; columnWeights?: number[]; keepAllRowsInSummary?: boolean };
+export function programmeReportTableRows(table: ReportTable, format: 'summary' | 'full') {
+  return format === 'summary' && !table.keepAllRowsInSummary ? table.rows.slice(0, 5) : table.rows;
+}
+export function programmeReportColumnWidths(table: ReportTable): number[] {
+  const weights = table.columnWeights?.length === table.columns.length && table.columnWeights.every(weight => Number.isFinite(weight) && weight > 0) ? table.columnWeights : null;
+  const totalWeight = weights?.reduce((sum, weight) => sum + weight, 0) ?? 0;
+  return weights && Number.isFinite(totalWeight) ? weights.map(weight => weight / totalWeight * 174)
+    : table.columns.length === 3 ? [65,40,69] : table.columns.length === 4 ? [55,38,32,49] : table.columns.map(() => 174 / table.columns.length);
+}
 export type ReportMetric = { label: string; value: string; detail?: string };
 export type ReportChart = { title: string; rows: { label: string; value: number; display?: string }[]; suffix?: string; minimumScale?:number; note?: string };
-export type ProgrammePresentation = { metrics?: ReportMetric[]; chart?: ReportChart; session?: TrainingRecord; funder?: boolean; ink?: boolean; language?: 'en' | 'zu' | 'xh'; tables?: ReportTable[]; subtitle?: string; date?: string };
+export type ProgrammePresentation = { metrics?: ReportMetric[]; chart?: ReportChart; session?: TrainingRecord; funder?: boolean; ink?: boolean; language?: 'en' | 'zu' | 'xh'; tables?: ReportTable[]; subtitle?: string; date?: string; reportLabel?: string; ownerLabel?: string };
 const pdfLabel = (en: string, language: 'en' | 'zu' | 'xh' | undefined) => language === 'xh' ? pdfLabelXh(en) : language === 'zu' ? ({
   'Full report':'Umbiko ogcwele', 'Brief summary':'Isifinyezo esifushane', 'Tour workspace':'Indawo yokuhlola',
   'Attendance':'Ukuba khona', 'No register yet':'Alukho uhlu okwamanje', 'Signed register':'Uhlu olusayiniwe',
@@ -67,6 +76,10 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
   const write=(text:string,size=10.5,bold=false,width=174,x=18)=>{
     doc.setFont('helvetica',bold?'bold':'normal');doc.setFontSize(size);doc.setTextColor(31,51,39);
     const rows=doc.splitTextToSize(pdfSafe(text),width) as string[];
+    // A short caveat split across pages can leave its number without its meaning.
+    // Keep paragraphs together when they fit; genuinely long notes still flow.
+    const blockHeight=rows.length*(size*.4+1)+3;
+    if(blockHeight<=250)ensure(blockHeight);
     for(const row of rows){ensure(size*.4+1);const link = text.match(/https?:\/\/[^\s]+/)?.[0]; if(link)doc.textWithLink(row,x,y,{url:link});else doc.text(row,x,y);y+=size*.4+1;}
     y+=3;
   };
@@ -100,7 +113,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
       if(p.image){const a=doc.getImageProperties(p.image);const scale=Math.min(13/a.width,15/a.height);doc.addImage(p.image,a.fileType,x,y,a.width*scale,a.height*scale);}
       const labelX=x+(p.image?16:0),width=p.image?40:55;
       doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(60,82,67);
-      doc.text(pdfSafe(pdfLabel(key==='organisation'?'Implemented by':key==='garden'?'Community / project':'Supported by',presentation.language).toLocaleUpperCase(presentation.language==='zu'?'zu-ZA':'en-ZA')),labelX,y+3);
+      doc.text(pdfSafe(pdfLabel(key==='organisation'&&presentation.ownerLabel?presentation.ownerLabel:key==='organisation'?'Implemented by':key==='garden'?'Community / project':'Supported by',presentation.language).toLocaleUpperCase(presentation.language==='zu'?'zu-ZA':'en-ZA')),labelX,y+3);
       doc.setFont('helvetica','bold');doc.setFontSize(9);const names=doc.splitTextToSize(pdfSafe(p.label),width) as string[];doc.text(names,labelX,y+9);height=Math.max(height,names.length*4+12);
     });y+=height+8;
   }
@@ -139,12 +152,22 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     }
   }
   if(presentation.chart && (format==='full' || !presentation.tables?.length)){
-    ensure(25);write(presentation.chart.title,14,true);if(presentation.chart.note)write(presentation.chart.note,9);
     const chart=presentation.chart,max=Math.max(chart.minimumScale??1,...chart.rows.map(r=>r.value));
-    for(const r of format==='summary'?chart.rows.slice(0,5):chart.rows){
+    const rows=format==='summary'?chart.rows.slice(0,5):chart.rows;
+    doc.setFont('helvetica','bold');doc.setFontSize(14);
+    const titleHeight=(doc.splitTextToSize(pdfSafe(chart.title),174) as string[]).length*6.6+3;
+    doc.setFont('helvetica','normal');doc.setFontSize(9);
+    const noteHeight=chart.note?(doc.splitTextToSize(pdfSafe(chart.note),174) as string[]).length*4.6+3:0;
+    const rowHeights=rows.map(row=>Math.max(presentation.tables?.length?10:12,(doc.splitTextToSize(pdfSafe(row.label),52) as string[]).length*4+3));
+    // Measure the full chart before partner marks can push its last bands onto
+    // another page. Charts larger than a page repeat their heading when they flow.
+    ensure(Math.min(250,titleHeight+noteHeight+rowHeights.reduce((sum,height)=>sum+height,0)+6));
+    write(chart.title,14,true);if(chart.note)write(chart.note,9);
+    for(const [index,r] of rows.entries()){
       doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(31,51,39);
-      // Partner marks share the first page; keep a full course distribution beside its heading.
-      const names=doc.splitTextToSize(pdfSafe(r.label),52) as string[];const h=Math.max(presentation.tables?.length?10:12,names.length*4+3);ensure(h);doc.text(names,18,y);
+      const names=doc.splitTextToSize(pdfSafe(r.label),52) as string[];const h=rowHeights[index];
+      if(y+h>273){page();write(`${chart.title} · continued`,12,true);doc.setFont('helvetica','normal');doc.setFontSize(9);}
+      doc.text(names,18,y);
       doc.setFillColor(229,238,232);doc.rect(73,y-3,83,4,'F');doc.setFillColor(46,107,72);doc.rect(73,y-3,83*Math.max(0,r.value)/max,4,'F');
       doc.text(pdfSafe(r.display??`${numberLabel(r.value)}${chart.suffix??''}`),192,y,{align:'right'});y+=h;
     }y+=6;
@@ -154,7 +177,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
   // Repeat column headings after page breaks: a number carried onto a new page must keep its unit.
   for (const table of (presentation.tables ?? []).filter(t=>format==='full'||t.includeInSummary!==false)) {
     ensure(50); write(table.title,15,true); write(table.note,9);
-    const widths = table.columns.length === 3 ? [65,40,69] : [55,38,32,49];
+    const widths = programmeReportColumnWidths(table);
     const offsets = widths.map((_, i) => 18 + widths.slice(0,i).reduce((a,b)=>a+b,0));
     const heading = () => {
       doc.setFont('helvetica','bold'); doc.setFontSize(8);
@@ -164,11 +187,13 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
       doc.setTextColor(31,51,39); labels.forEach((l,i)=>doc.text(l,offsets[i]+2,y)); y+=h;
     };
     heading();
-    const rows = format === 'summary' ? table.rows.slice(0,5) : table.rows;
+    const rows = programmeReportTableRows(table, format);
     if (!rows.length) write(xhText('No records available for this selection.'),9);
     for (const row of rows) {
       doc.setFont('helvetica','normal'); doc.setFontSize(8.5);
       const cells = table.columns.map((_,i)=>doc.splitTextToSize(pdfSafe(row[i]??''),widths[i]-5) as string[]);
+      const rowHeight=Math.max(...cells.map(cell=>cell.length))*4+6;
+      if(rowHeight<=235 && y+rowHeight>273){page();heading();}
       // Long names and notes can exceed a page; carry their remaining lines rather than clipping.
       while(cells.some(c=>c.length)) {
         if(y+15>273) { page(); heading(); }
@@ -188,14 +213,16 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
   let chapter=0;
   for(const [sectionIndex,section] of sections.entries()){
     if(presentation.session&&['Attendance register','Attendance summary'].includes(section.title))continue;
-    ensure(24);doc.setDrawColor(69,117,82);doc.setLineWidth(.5);doc.line(18,y-3,192,y-3);y+=4;
-    write(`${String(++chapter).padStart(2,'0')}  ${section.title}`,14,true);
     const lines=format==='summary'?(section.summaryLines??section.lines.slice(0,5)):section.lines;
+    doc.setFont('helvetica','normal');doc.setFontSize(10.5);
+    const firstParagraph=doc.splitTextToSize(pdfSafe(lines[0]??''),174) as string[];
+    ensure(Math.min(250,24+firstParagraph.length*5.2));doc.setDrawColor(69,117,82);doc.setLineWidth(.5);doc.line(18,y-3,192,y-3);y+=4;
+    write(`${String(++chapter).padStart(2,'0')}  ${section.title}`,14,true);
     (lines.length?lines:[pdfLabel('Nothing recorded yet.',presentation.language)]).forEach(text=>write(text));
     for(const reference of section.references ?? []) {
       doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(35,75,49);
       const labels=doc.splitTextToSize(pdfSafe(reference.label+' (source)'),174) as string[];
-      for(const label of labels){ensure(6);doc.textWithLink(label,18,y,{url:reference.url});y+=4.5;}y+=3;
+      for(const label of labels){ensure(5);doc.textWithLink(label,18,y,{url:reference.url});y+=4.5;}y+=1;
     }
     y+=4;
     if(sectionIndex===1)drawTables();
@@ -248,6 +275,6 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     }
   }
   const pages=doc.getNumberOfPages();
-  for(let p=1;p<=pages;p++){doc.setPage(p);doc.setDrawColor(207,220,211);doc.line(18,281,192,281);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(64,86,72);doc.text(presentation.language==='zu'||presentation.language==='xh'?`ImbewuField · ${pdfLabel(presentation.session&&!presentation.funder?'Internal session record':'Programme report',presentation.language)}`:'ImbewuField',18,288);doc.text(`${p} / ${pages}`,192,288,{align:'right'});}
+  for(let p=1;p<=pages;p++){doc.setPage(p);doc.setDrawColor(207,220,211);doc.line(18,281,192,281);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(64,86,72);doc.text(presentation.reportLabel?`ImbewuField · ${pdfSafe(presentation.reportLabel)}`:presentation.language==='zu'||presentation.language==='xh'?`ImbewuField · ${pdfLabel(presentation.session&&!presentation.funder?'Internal session record':'Programme report',presentation.language)}`:'ImbewuField',18,288);doc.text(`${p} / ${pages}`,192,288,{align:'right'});}
   return doc;
 }

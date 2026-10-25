@@ -23,6 +23,7 @@
 .evidenceTable > p{font-size:14px;line-height:1.6;color:var(--text-secondary);max-width:85ch}
 .evidenceTable .table th[scope=row]{background:transparent;font-weight:600;border-bottom:1px solid var(--border);vertical-align:top;min-width:120px}
 .evidenceTable .table td{vertical-align:top;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.evidenceTable .table{table-layout:fixed}
 .evidenceTable .table th{font-size:13px}.tableCaption{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
 .evidenceTable .tableWrap:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 .ink{color:#183427}.ink .subtitle,.ink .sampleStamp{color:#334d3c;border-color:#334d3c}
