@@ -1,5 +1,5 @@
 {
-  "status": "495 source-bound unreviewed draft rows implemented and locally verified for this calendar/field-export batch. Draft PR delivery; whole app and fluent language review remain incomplete.",
+  "status": "IN PROGRESS: 495 source-bound unreviewed draft rows implemented and locally verified for this calendar/field-export batch. Draft PR delivery; whole app and fluent language review remain incomplete.",
   "sourceSha": "dc9ade0cc9a208de55c7d0cccc6393f79257769d",
   "sourceBaseline": "output/crop-pdf-qa/baseline.json (immutable17files)",
   "instructionEnglishBaseline": "output/crop-pdf-qa/instruction-english-baseline.json: original49cataloguecrops/166tasks beforeedits",
@@ -3891,5 +3891,11 @@
     ],
     "remaining": "Production availability/kg graphs, projection/guidance PDFs, source-generated year/plan notes and metadata, main crop screens, sample/ReportCropPlan locale wiring, feedback/signatures, final whole-app/media audit and fluent agricultural review remain."
   },
-  "sourceCount": 495
+  "sourceCount": 495,
+  "deliveryMetadataCorrection": {
+    "before": "495 source-bound unreviewed draft rows implemented and locally verified for this calendar/field-export batch. Draft PR delivery; whole app and fluent language review remain incomplete.",
+    "after": "IN PROGRESS: 495 source-bound unreviewed draft rows implemented and locally verified for this calendar/field-export batch. Draft PR delivery; whole app and fluent language review remain incomplete.",
+    "reason": "The whole-app draft-status assertion deliberately requires IN PROGRESS. Restored its marker after a delivery-only metadata edit. Source rows and all code remain unchanged from the5774pass full run. Exact corrected-head CI must be checked before a green-CI claim.",
+    "focused": "PASS: Node24 tsc clean; all48 crop-export instruction tests pass; diff clean. Final corrected-head full CI pending."
+  }
 }
