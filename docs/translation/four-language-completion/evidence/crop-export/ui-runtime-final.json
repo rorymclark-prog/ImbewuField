@@ -1,0 +1,368 @@
+{
+  "states": [
+    {
+      "language": "zu",
+      "phone": false,
+      "lines": 23,
+      "bad": [],
+      "controls": [
+        {
+          "text": "Engeza 14 imisebenzi ekhalendeni",
+          "height": 44
+        },
+        {
+          "text": "Landa uhlelo (PDF)",
+          "height": 44
+        },
+        {
+          "text": "Ikhalenda nemisebenzi",
+          "height": 44
+        },
+        {
+          "text": "A4A3A2",
+          "height": 44
+        },
+        {
+          "text": "yivule ukuze uphrinte",
+          "height": 44
+        },
+        {
+          "text": "I-PDF yesivuno sesikhathi esizayo",
+          "height": 44
+        },
+        {
+          "text": "I-PDF yemininingwane yokubhekisela",
+          "height": 44
+        },
+        {
+          "text": "yithumele kwenye indawo",
+          "height": 44
+        }
+      ],
+      "overflow": false,
+      "calendarFilename": "ImbewuField-Crop-Plan-Original-Ṱanḓa-count-2026-10-22.ics",
+      "pdfFilename": "ImbewuField-Crop-Plan-Original-Ṱanḓa-count-2026-10-22.pdf",
+      "simulatedShares": 2,
+      "sourceRecordsUnchanged": true
+    },
+    {
+      "language": "zu",
+      "phone": true,
+      "lines": 41,
+      "bad": [],
+      "controls": [
+        {
+          "text": "Engeza 14 imisebenzi ekhalendeni",
+          "height": 44
+        },
+        {
+          "text": "Yabelana ngohlelo (PDF)",
+          "height": 44
+        },
+        {
+          "text": "Ikhalenda nemisebenzi",
+          "height": 44
+        },
+        {
+          "text": "A4A3A2",
+          "height": 44
+        },
+        {
+          "text": "yivule ukuze uphrinte",
+          "height": 44
+        },
+        {
+          "text": "I-PDF yesivuno sesikhathi esizayo",
+          "height": 44
+        },
+        {
+          "text": "I-PDF yemininingwane yokubhekisela",
+          "height": 44
+        },
+        {
+          "text": "yigcine kule divayisi",
+          "height": 44
+        }
+      ],
+      "overflow": false,
+      "calendarFilename": "ImbewuField-Crop-Plan-Original-Ṱanḓa-count-2026-10-22.ics",
+      "pdfFilename": "ImbewuField-Crop-Plan-Original-Ṱanḓa-count-2026-10-22.pdf",
+      "simulatedShares": 5,
+      "sourceRecordsUnchanged": true
+    },
+    {
+      "language": "st",
+      "phone": false,
+      "lines": 23,
+      "bad": [],
+      "controls": [
+        {
+          "text": "Kenya mesebetsi e 14 khalendareng",
+          "height": 44
+        },
+        {
+          "text": "Jarolla moralo (PDF)",
+          "height": 44
+        },
+        {
+          "text": "Khalendara le mesebetsi",
+          "height": 44
+        },
+        {
+          "text": "A4A3A2",
+          "height": 44
+        },
+        {
+          "text": "e bule hore o e hatise",
+          "height": 44
+        },
+        {
+          "text": "PDF ya kotulo ya nakong e tlang",
+          "height": 44
+        },
+        {
+          "text": "PDF ya tshupiso e qaqileng",
+          "height": 44
+        },
+        {
+          "text": "e romele sebakeng se seng",
+          "height": 44
+        }
+      ],
+      "overflow": false,
+      "calendarFilename": "ImbewuField-Crop-Plan-Original-Ṱanḓa-count-2026-10-22.ics",
+      "pdfFilename": "ImbewuField-Crop-Plan-Original-Ṱanḓa-count-2026-10-22.pdf",
+      "simulatedShares": 2,
+      "sourceRecordsUnchanged": true
+    },
+    {
+      "language": "st",
+      "phone": true,
+      "lines": 41,
+      "bad": [],
+      "controls": [
+        {
+          "text": "Kenya mesebetsi e 14 khalendareng",
+          "height": 44
+        },
+        {
+          "text": "Arolelana moralo (PDF)",
+          "height": 44
+        },
+        {
+          "text": "Khalendara le mesebetsi",
+          "height": 44
+        },
+        {
+          "text": "A4A3A2",
+          "height": 44
+        },
+        {
+          "text": "e bule hore o e hatise",
+          "height": 44
+        },
+        {
+          "text": "PDF ya kotulo ya nakong e tlang",
+          "height": 44
+        },
+        {
+          "text": "PDF ya tshupiso e qaqileng",
+          "height": 44
+        },
+        {
+          "text": "e boloke sesebedisweng sena",
+          "height": 44
+        }
+      ],
+      "overflow": false,
+      "calendarFilename": "ImbewuField-Crop-Plan-Original-Ṱanḓa-count-2026-10-22.ics",
+      "pdfFilename": "ImbewuField-Crop-Plan-Original-Ṱanḓa-count-2026-10-22.pdf",
+      "simulatedShares": 4,
+      "sourceRecordsUnchanged": true
+    },
+    {
+      "language": "ts",
+      "phone": false,
+      "lines": 24,
+      "bad": [],
+      "controls": [
+        {
+          "text": "Engetela mintirho ya 14 eka khalendara",
+          "height": 44
+        },
+        {
+          "text": "Kopa pulani (PDF)",
+          "height": 44
+        },
+        {
+          "text": "Khalendara ni mintirho",
+          "height": 44
+        },
+        {
+          "text": "A4A3A2",
+          "height": 44
+        },
+        {
+          "text": "yi pfule leswaku u yi kandziyisa",
+          "height": 44
+        },
+        {
+          "text": "PDF ya ntshovelo wa nkarhi lowu taka",
+          "height": 44
+        },
+        {
+          "text": "PDF ya nkombiso wa vuxokoxoko",
+          "height": 44
+        },
+        {
+          "text": "yi rhumele kun'wana",
+          "height": 44
+        }
+      ],
+      "overflow": false,
+      "calendarFilename": "ImbewuField-Crop-Plan-Original-Ṱanḓa-count-2026-10-22.ics",
+      "pdfFilename": "ImbewuField-Crop-Plan-Original-Ṱanḓa-count-2026-10-22.pdf",
+      "simulatedShares": 2,
+      "sourceRecordsUnchanged": true
+    },
+    {
+      "language": "ts",
+      "phone": true,
+      "lines": 42,
+      "bad": [],
+      "controls": [
+        {
+          "text": "Engetela mintirho ya 14 eka khalendara",
+          "height": 44
+        },
+        {
+          "text": "Avelana pulani (PDF)",
+          "height": 44
+        },
+        {
+          "text": "Khalendara ni mintirho",
+          "height": 44
+        },
+        {
+          "text": "A4A3A2",
+          "height": 44
+        },
+        {
+          "text": "yi pfule leswaku u yi kandziyisa",
+          "height": 44
+        },
+        {
+          "text": "PDF ya ntshovelo wa nkarhi lowu taka",
+          "height": 44
+        },
+        {
+          "text": "PDF ya nkombiso wa vuxokoxoko",
+          "height": 44
+        },
+        {
+          "text": "yi hlayise eka xitirhisiwa lexi",
+          "height": 44
+        }
+      ],
+      "overflow": false,
+      "calendarFilename": "ImbewuField-Crop-Plan-Original-Ṱanḓa-count-2026-10-22.ics",
+      "pdfFilename": "ImbewuField-Crop-Plan-Original-Ṱanḓa-count-2026-10-22.pdf",
+      "simulatedShares": 4,
+      "sourceRecordsUnchanged": true
+    },
+    {
+      "language": "ve",
+      "phone": false,
+      "lines": 24,
+      "bad": [],
+      "controls": [
+        {
+          "text": "Engedzani mishumo ya 14 kha khaḽenda",
+          "height": 44
+        },
+        {
+          "text": "Dzhenisani pulane (PDF)",
+          "height": 44
+        },
+        {
+          "text": "Khaḽenda na mishumo",
+          "height": 44
+        },
+        {
+          "text": "A4A3A2",
+          "height": 44
+        },
+        {
+          "text": "i vuleni uri ni i ganḓise",
+          "height": 44
+        },
+        {
+          "text": "PDF ya khaṋo ya tshifhingani tshi ḓaho",
+          "height": 44
+        },
+        {
+          "text": "PDF ya tshiko tsha zwidodombedzwa",
+          "height": 44
+        },
+        {
+          "text": "i rumeleni huṅwe fhethu",
+          "height": 44
+        }
+      ],
+      "overflow": false,
+      "calendarFilename": "ImbewuField-Crop-Plan-Original-Ṱanḓa-count-2026-10-22.ics",
+      "pdfFilename": "ImbewuField-Crop-Plan-Original-Ṱanḓa-count-2026-10-22.pdf",
+      "simulatedShares": 2,
+      "sourceRecordsUnchanged": true
+    },
+    {
+      "language": "ve",
+      "phone": true,
+      "lines": 41,
+      "bad": [],
+      "controls": [
+        {
+          "text": "Engedzani mishumo ya 14 kha khaḽenda",
+          "height": 44
+        },
+        {
+          "text": "Kovhani pulane (PDF)",
+          "height": 44
+        },
+        {
+          "text": "Khaḽenda na mishumo",
+          "height": 44
+        },
+        {
+          "text": "A4A3A2",
+          "height": 44
+        },
+        {
+          "text": "i vuleni uri ni i ganḓise",
+          "height": 44
+        },
+        {
+          "text": "PDF ya khaṋo ya tshifhingani tshi ḓaho",
+          "height": 44
+        },
+        {
+          "text": "PDF ya tshiko tsha zwidodombedzwa",
+          "height": 44
+        },
+        {
+          "text": "i vhulungeni kha tshishumiswa itshi",
+          "height": 44
+        }
+      ],
+      "overflow": false,
+      "calendarFilename": "ImbewuField-Crop-Plan-Original-Ṱanḓa-count-2026-10-22.ics",
+      "pdfFilename": "ImbewuField-Crop-Plan-Original-Ṱanḓa-count-2026-10-22.pdf",
+      "simulatedShares": 4,
+      "sourceRecordsUnchanged": true
+    }
+  ],
+  "limitation": "Actual CropPlanExportCard in an isolated context provider. The app-level floating guide is outside this component and overlaps some reading text in initial screenshots; later isolated visual captures hide it. Share operations are simulated, not sent.",
+  "scope": "Actual component in isolated language provider, not a whole-page locale audit. Sharing and popup routes mocked locally; actual file bytes downloaded. No real messages or backend writes.",
+  "correction": "Tshivenda share-link imperative corrected and both complete phone/desktop workflows rerun successfully.",
+  "pendingLanguageSwitch": "isiZulu phone: held a simulated share pending, switched to Sesotho, saw disabled Sesotho busy controls and then a Sesotho outcome; switched back and the outcome rendered in isiZulu. Original records unchanged."
+}

@@ -1,0 +1,465 @@
+{
+  "sourceSha": "dc9ade0cc9a208de55c7d0cccc6393f79257769d",
+  "now": "2026-10-22T08:00:00.000Z",
+  "stamp": "2026-10-22T08:30:00.000Z",
+  "emptySha256": "34ff05a65acc5feb07ec059ba690e2754baa0856c64c864373c730d3ce26a7ae",
+  "rows": [
+    {
+      "cropKey": "maize",
+      "sha256": "b07b4819f57163c1e3f9810482dcca27578bbb927f8e71a093043c8824bba634",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for maize (mielies) (Original Ṱanḓa {count} $& 0).\nAny time during December is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow maize (mielies) — rows 91cm apart · 25cm apart in the row · sow 5–10cm deep (Original Ṱanḓa {count} $& 0).\nAny time during January is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest maize (mielies) (Original Ṱanḓa {count} $& 0).\nAny time during June is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "dry-beans",
+      "sha256": "228cfb886d1e69990c13b139cdc1e37beccd06859a3c9b116208243858e18579",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for dry beans (sugar beans) (Original Ṱanḓa {count} $& 1).\nAny time during January is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow dry beans (sugar beans) — rows 45cm apart · 25cm apart in the row · sow 2.5–7cm deep (Original Ṱanḓa {count} $& 1).\nAny time during February is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest dry beans (sugar beans) (Original Ṱanḓa {count} $& 1).\nAny time during June is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "green-beans",
+      "sha256": "2d049b2df7fe6bed9dcbe1e055ffaa598869cf5bdb3848bf2b4fa504242bcf87",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for green beans (Original Ṱanḓa {count} $& 2).\nAny time during February is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow green beans — rows 45–60cm apart · 4–7cm apart in the row · sow 2–5cm deep (Original Ṱanḓa {count} $& 2).\nAny time during March is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest green beans (Original Ṱanḓa {count} $& 2).\nAny time during May is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "butternut",
+      "sha256": "97c8fe669bb0fd0cdfecc800c3ce3990dfb4a7dca081f3c6cfb29f2e838ad0b7",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for butternut (Original Ṱanḓa {count} $& 3).\nAny time during March is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow butternut — rows 150cm apart · 40cm apart in the row (Original Ṱanḓa {count} $& 3).\nAny time during April is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest butternut (Original Ṱanḓa {count} $& 3).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest butternut (Original Ṱanḓa {count} $& 3).\nAny time during September is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "pumpkin",
+      "sha256": "11c4cf6b12fafd3951702743de0509c5bad4077c6aa87a8d6b5b137bde1b7ff3",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for pumpkin (Original Ṱanḓa {count} $& 4).\nAny time during April is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow pumpkin — rows 250cm apart · 60–70cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 4).\nAny time during May is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest pumpkin (Original Ṱanḓa {count} $& 4).\nAny time during October is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest pumpkin (Original Ṱanḓa {count} $& 4).\nAny time during November is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "swiss-chard",
+      "sha256": "9354f3489613ca957099f007f78e14b4fd04e5aea5ae8f47cb64c8eb0919b937",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for swiss chard (spinach) (Original Ṱanḓa {count} $& 5).\nAny time during May is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow swiss chard (spinach) — rows 40–60cm apart · 20–40cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 5).\nAny time during June is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest swiss chard (spinach) (Original Ṱanḓa {count} $& 5).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest swiss chard (spinach) (Original Ṱanḓa {count} $& 5).\nAny time during September is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest swiss chard (spinach) (Original Ṱanḓa {count} $& 5).\nAny time during October is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest swiss chard (spinach) (Original Ṱanḓa {count} $& 5).\nAny time during November is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "kale",
+      "sha256": "0b31b1093f840badd713850025e888e1be4576ce8e48242c56b24064d2e8c340",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for kale (Original Ṱanḓa {count} $& 6).\nAny time during July is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow kale — start in a tray, 0.2–1cm deep (Original Ṱanḓa {count} $& 6).\nAny time during July is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Check seedlings; transplant when ready kale — plant spacing 40cm each way (Original Ṱanḓa {count} $& 6).\nMove the tray seedlings into Original Ṱanḓa {count} $& 6 — plant spacing 40cm each way · sow 0.2–1cm deep.\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest kale (Original Ṱanḓa {count} $& 6).\nAny time during January is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "cabbage",
+      "sha256": "e3615f862faa3f5eb2763fdaec0fce5e48f25a361e1515c771d10720ad13d84f",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for cabbage (Original Ṱanḓa {count} $& 7).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow cabbage — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 7).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Check seedlings; transplant when ready cabbage — rows 50–60cm apart · 35–45cm apart in the row (Original Ṱanḓa {count} $& 7).\nMove the tray seedlings into Original Ṱanḓa {count} $& 7 — rows 50–60cm apart · 35–45cm apart in the row · sow 1.5–2cm deep.\nAny time during September is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest cabbage (Original Ṱanḓa {count} $& 7).\nAny time during March is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "carrots",
+      "sha256": "d71064cea62f4e7ab50b18bab2a1e5ce1934293bcd6079b2b1440db23cfa8e72",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for carrots (Original Ṱanḓa {count} $& 8).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow carrots — rows 20–40cm apart · 2–5cm apart in the row · sow 1–2.5cm deep (Original Ṱanḓa {count} $& 8).\nAny time during September is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest carrots (Original Ṱanḓa {count} $& 8).\nAny time during January is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "beetroot",
+      "sha256": "5f7bf362714c8482d36dbe44e3edb6f8e9b34e65dd402e2328a7158cfbb45e08",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for beetroot (Original Ṱanḓa {count} $& 9).\nAny time during September is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow beetroot — rows 20–30cm apart · 5–7cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 9).\nAny time during October is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest beetroot (Original Ṱanḓa {count} $& 9).\nAny time during January is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest beetroot (Original Ṱanḓa {count} $& 9).\nAny time during February is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "onions",
+      "sha256": "70036883323d3a6423ff298ab00d523b905df4e54f7c53f7d00c43c9cf122df8",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for onions (Original Ṱanḓa {count} $& 10).\nAny time during November is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow onions — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 10).\nAny time during November is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Check seedlings; transplant when ready onions — rows 20–30cm apart · 6–8cm apart in the row (Original Ṱanḓa {count} $& 10).\nMove the tray seedlings into Original Ṱanḓa {count} $& 10 — rows 20–30cm apart · 6–8cm apart in the row · sow 1.5–2cm deep.\nAny time during December is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest onions (Original Ṱanḓa {count} $& 10).\nAny time during July is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "tomatoes",
+      "sha256": "c0aa254d53d0f17fb2999adcadd415fb88feec38bfaaa507b0985348a2fed419",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for tomatoes (Original Ṱanḓa {count} $& 11).\nAny time during December is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow tomatoes — start in a tray, 1cm deep (Original Ṱanḓa {count} $& 11).\nAny time during December is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Check seedlings; transplant when ready tomatoes — rows 90–120cm apart · 30–60cm apart in the row (Original Ṱanḓa {count} $& 11).\nMove the tray seedlings into Original Ṱanḓa {count} $& 11 — rows 90–120cm apart · 30–60cm apart in the row · sow 1cm deep.\nAny time during January is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest tomatoes (Original Ṱanḓa {count} $& 11).\nAny time during May is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest tomatoes (Original Ṱanḓa {count} $& 11).\nAny time during June is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest tomatoes (Original Ṱanḓa {count} $& 11).\nAny time during July is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "peppers",
+      "sha256": "e63adecfc8cb17b04ba6a38a4fe53ee8747f5d4091b5dfaa12a56ae724bfcf1f",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for peppers (Original Ṱanḓa {count} $& 12).\nAny time during January is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow peppers — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 12).\nAny time during January is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Check seedlings; transplant when ready peppers — rows 60–80cm apart · 40–50cm apart in the row (Original Ṱanḓa {count} $& 12).\nMove the tray seedlings into Original Ṱanḓa {count} $& 12 — rows 60–80cm apart · 40–50cm apart in the row · sow 1.5–2cm deep.\nAny time during February is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest peppers (Original Ṱanḓa {count} $& 12).\nAny time during June is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest peppers (Original Ṱanḓa {count} $& 12).\nAny time during July is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest peppers (Original Ṱanḓa {count} $& 12).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "chilli",
+      "sha256": "0d125519018d7368c32efdbe75975b210e569b68df82a3e830f80f6f92aeccfa",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for chilli (Original Ṱanḓa {count} $& 13).\nAny time during February is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow chilli — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 13).\nAny time during February is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Check seedlings; transplant when ready chilli — rows 60–80cm apart · 40–50cm apart in the row (Original Ṱanḓa {count} $& 13).\nMove the tray seedlings into Original Ṱanḓa {count} $& 13 — rows 60–80cm apart · 40–50cm apart in the row · sow 1.5–2cm deep.\nAny time during March is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest chilli (Original Ṱanḓa {count} $& 13).\nAny time during July is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest chilli (Original Ṱanḓa {count} $& 13).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest chilli (Original Ṱanḓa {count} $& 13).\nAny time during September is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "sweet-potato",
+      "sha256": "eecb5e1c91fc097a2538ca71a9c8b075b56ab35ed30e0fed424f1a5b6cec5eb0",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for sweet potato (Original Ṱanḓa {count} $& 14).\nAny time during February is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow sweet potato — rows 90–100cm apart · 25–40cm apart in the row (Original Ṱanḓa {count} $& 14).\nAny time during March is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest sweet potato (Original Ṱanḓa {count} $& 14).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest sweet potato (Original Ṱanḓa {count} $& 14).\nAny time during September is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "potato",
+      "sha256": "da5bce7dee4842ffbf77142e78fc3fb976be1f4cb07a464c5d7de086434e6b3b",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for potato (Original Ṱanḓa {count} $& 15).\nAny time during March is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow potato — rows 90–100cm apart · 30–40cm apart in the row · sow 7–10cm deep (Original Ṱanḓa {count} $& 15).\nAny time during April is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest potato (Original Ṱanḓa {count} $& 15).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "lettuce",
+      "sha256": "be313a154d1f162fbba573d7d403deb82c63473eecf7d9fc0fd34243308627fe",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for lettuce (Original Ṱanḓa {count} $& 16).\nAny time during May is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow lettuce — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 16).\nAny time during May is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Check seedlings; transplant when ready lettuce — rows 40–50cm apart · 25–35cm apart in the row (Original Ṱanḓa {count} $& 16).\nMove the tray seedlings into Original Ṱanḓa {count} $& 16 — rows 40–50cm apart · 25–35cm apart in the row · sow 1.5–2cm deep.\nAny time during June is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest lettuce (Original Ṱanḓa {count} $& 16).\nAny time during October is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "amadumbe",
+      "sha256": "d3911624e04d83faed7f70d8a2bd7418348b6549ec395c6cff6e32f379c4b966",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for amadumbe (taro) (Original Ṱanḓa {count} $& 17).\nAny time during May is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow amadumbe (taro) — rows 130cm apart · 40–50cm apart in the row · sow 15–20cm deep (Original Ṱanḓa {count} $& 17).\nAny time during June is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest amadumbe (taro) (Original Ṱanḓa {count} $& 17).\nAny time during April is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "groundnuts",
+      "sha256": "4fc4cafc383dfffc804ff1f838ede4a38ed431f45d7bf873b6ec3d00a49f57c5",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for groundnuts (peanuts) (Original Ṱanḓa {count} $& 18).\nAny time during June is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow groundnuts (peanuts) — rows 30–45cm apart · 5–7.5cm apart in the row · sow 5–7.5cm deep (Original Ṱanḓa {count} $& 18).\nAny time during July is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest groundnuts (peanuts) (Original Ṱanḓa {count} $& 18).\nAny time during January is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "garlic",
+      "sha256": "d0c7e477ef3c5d8f154718c024a5a7140ad85b77d7b9725c7df4deee75f28110",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for garlic (Original Ṱanḓa {count} $& 19).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow garlic — rows 30–45cm apart · 7–10cm apart in the row (Original Ṱanḓa {count} $& 19).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest garlic (Original Ṱanḓa {count} $& 19).\nAny time during March is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "peas",
+      "sha256": "fcf21ccde34eea87bebf8ace6f658e88106539141bcfc6a145c9c8e01706572c",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for peas (Original Ṱanḓa {count} $& 20).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow peas — rows 60cm apart · 5–8cm apart in the row · sow 3–6cm deep (Original Ṱanḓa {count} $& 20).\nAny time during September is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest peas (Original Ṱanḓa {count} $& 20).\nAny time during December is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "broad-beans",
+      "sha256": "a5d946f48bd0835c45f10ce7862120c7fa23433a84d133b254e5dd4897a31d07",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for broad beans (fava beans) (Original Ṱanḓa {count} $& 21).\nAny time during September is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow broad beans (fava beans) — rows 80cm apart · 20cm apart in the row · sow 4–5cm deep (Original Ṱanḓa {count} $& 21).\nAny time during October is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest broad beans (fava beans) (Original Ṱanḓa {count} $& 21).\nAny time during February is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest broad beans (fava beans) (Original Ṱanḓa {count} $& 21).\nAny time during March is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "broccoli",
+      "sha256": "fc0e8d15bcc130f9c1acbf1255c0066269cf2cc089fd4396c733bad9d9a81951",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for broccoli (Original Ṱanḓa {count} $& 22).\nAny time during November is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow broccoli — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 22).\nAny time during November is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Check seedlings; transplant when ready broccoli — rows 60–70cm apart · 30–45cm apart in the row (Original Ṱanḓa {count} $& 22).\nMove the tray seedlings into Original Ṱanḓa {count} $& 22 — rows 60–70cm apart · 30–45cm apart in the row · sow 1.5–2cm deep.\nAny time during December is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest broccoli (Original Ṱanḓa {count} $& 22).\nAny time during April is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest broccoli (Original Ṱanḓa {count} $& 22).\nAny time during May is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "cucumber",
+      "sha256": "afc117558abcaea97c6b587f3d4510d1c1c3b6e3e125413955ce7556cd8cde74",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for cucumber (Original Ṱanḓa {count} $& 23).\nAny time during November is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow cucumber — rows 120–140cm apart · 35–50cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 23).\nAny time during December is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest cucumber (Original Ṱanḓa {count} $& 23).\nAny time during March is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "watermelon",
+      "sha256": "5f3f9401e9907d4c24c4c8cf9bb3242bd534e36c3122fa2d74b2e7ec278b01ce",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for watermelon (Original Ṱanḓa {count} $& 24).\nAny time during December is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow watermelon — rows 170–200cm apart · 50–60cm apart in the row · sow 4–6cm deep (Original Ṱanḓa {count} $& 24).\nAny time during January is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest watermelon (Original Ṱanḓa {count} $& 24).\nAny time during May is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest watermelon (Original Ṱanḓa {count} $& 24).\nAny time during June is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "coriander",
+      "sha256": "c551626041cb4946109996269b8ee9c58ab93784531858298962568bb753e1b6",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for coriander (Original Ṱanḓa {count} $& 25).\nAny time during January is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow coriander — rows 30–35cm apart · 8–10cm apart in the row · sow 1–1.5cm deep (Original Ṱanḓa {count} $& 25).\nAny time during February is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest coriander (Original Ṱanḓa {count} $& 25).\nAny time during April is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "oats",
+      "sha256": "6290c332a37f5309746697da789b68c3fd087500f5bea921563485886279c438",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for oats (winter cover crop) (Original Ṱanḓa {count} $& 26).\nAny time during February is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow oats (winter cover crop) — drill at 70kg seed/ha, or broadcast at 105–140kg/ha; terminate before the next summer staple crop (Original Ṱanḓa {count} $& 26).\nAny time during March is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Cut or roll down oats (winter cover crop) (Original Ṱanḓa {count} $& 26).\nAny time during September is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "true-spinach",
+      "sha256": "654c54425b0e0496b0051b28830a80616708612c3acfd4c39c9d67f8ee0e7a38",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for true spinach (English spinach) (Original Ṱanḓa {count} $& 27).\nAny time during March is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow true spinach (English spinach) — rows 20cm apart · 7–8cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 27).\nAny time during April is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest true spinach (English spinach) (Original Ṱanḓa {count} $& 27).\nAny time during June is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "turnip",
+      "sha256": "e831e5459c3a8242b271a051c0a9d87a348e8d53d1483665b5630a7cadb9c6d9",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for turnips (Original Ṱanḓa {count} $& 28).\nAny time during April is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow turnips — rows 40–60cm apart · 8cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 28).\nAny time during May is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest turnips (Original Ṱanḓa {count} $& 28).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "amaranth",
+      "sha256": "e347d838fd5d773442410f6622cdfe5fe2fb45ffc6913758bb82081e2f807599",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for amaranth (imbuya/thepe) (Original Ṱanḓa {count} $& 29).\nAny time during May is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow amaranth (imbuya/thepe) — rows 76.2–150cm apart · 30cm apart in the row · sow 1.25cm deep (Original Ṱanḓa {count} $& 29).\nAny time during June is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest amaranth (imbuya/thepe) (Original Ṱanḓa {count} $& 29).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "cauliflower",
+      "sha256": "f935f133a5dd3cc6471608ea7575955a1eab2e41c0e02f84da5fd23f42a377d6",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for cauliflower (Original Ṱanḓa {count} $& 30).\nAny time during July is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow cauliflower — start in a tray, 1.2–2cm deep (Original Ṱanḓa {count} $& 30).\nAny time during July is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Check seedlings; transplant when ready cauliflower — rows 60–90cm apart · 35–50cm apart in the row (Original Ṱanḓa {count} $& 30).\nMove the tray seedlings into Original Ṱanḓa {count} $& 30 — rows 60–90cm apart · 35–50cm apart in the row · sow 1.2–2cm deep.\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest cauliflower (Original Ṱanḓa {count} $& 30).\nAny time during February is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "parsley",
+      "sha256": "92371e8f52eab04db1c094c25ae52c4502c0e1fe473e96347d31029eca70d188",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for parsley (Original Ṱanḓa {count} $& 31).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow parsley — rows 30cm apart · 10cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 31).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest parsley (Original Ṱanḓa {count} $& 31).\nAny time during November is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "sorghum",
+      "sha256": "1d65cbf33f73fab0ba8c5aeea5c968e6a39785582e8d686d06e60b3bc84fe3d8",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for sorghum (Original Ṱanḓa {count} $& 32).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow sorghum — rows 91–230cm apart · 1–15cm apart in the row · sow 2.5–5cm deep (Original Ṱanḓa {count} $& 32).\nAny time during September is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest sorghum (Original Ṱanḓa {count} $& 32).\nAny time during February is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "soybean",
+      "sha256": "cf5a654a17f4c2d10403cb107076a2436bf135983df1d31d4f834dde4324f635",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for soybean (Original Ṱanḓa {count} $& 33).\nAny time during September is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow soybean — rows 40–90cm apart · 5–15cm apart in the row · sow 2–5cm deep (Original Ṱanḓa {count} $& 33).\nAny time during October is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest soybean (Original Ṱanḓa {count} $& 33).\nAny time during March is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "brinjal",
+      "sha256": "e88ceec90bb68d6ea12c229eadc08c1186eab4b512c4becfa531fff34bbcc8ba",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for brinjal (eggplant) (Original Ṱanḓa {count} $& 34).\nAny time during November is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow brinjal (eggplant) — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 34).\nAny time during November is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Check seedlings; transplant when ready brinjal (eggplant) — rows 70–80cm apart · 50cm apart in the row (Original Ṱanḓa {count} $& 34).\nMove the tray seedlings into Original Ṱanḓa {count} $& 34 — rows 70–80cm apart · 50cm apart in the row · sow 1.5–2cm deep.\nAny time during December is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest brinjal (eggplant) (Original Ṱanḓa {count} $& 34).\nAny time during April is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "gem-squash",
+      "sha256": "ddb01fe74cbe16565cbaf28c2a50b3aa618e4e89f98804b58e47ca22dd2b1500",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for gem squash (Original Ṱanḓa {count} $& 35).\nAny time during November is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow gem squash — rows 100–150cm apart · 40–50cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 35).\nAny time during December is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest gem squash (Original Ṱanḓa {count} $& 35).\nAny time during March is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "baby-marrow",
+      "sha256": "7d478af8bc384fb2fd1ec6ab08e8ae87f20e30e008f11afb9c75c2e00c2b1ef1",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for baby marrow (courgette) (Original Ṱanḓa {count} $& 36).\nAny time during December is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow baby marrow (courgette) — rows 80–120cm apart · 35–50cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 36).\nAny time during January is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest baby marrow (courgette) (Original Ṱanḓa {count} $& 36).\nAny time during March is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "spanspek",
+      "sha256": "de8d8a20f9e2e90a024d1bf0af66743f0efdb7f2e59b7cbafb99b677af76d7a5",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for spanspek (sweet melon) (Original Ṱanḓa {count} $& 37).\nAny time during January is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow spanspek (sweet melon) — rows 150cm apart · 25–35cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 37).\nAny time during February is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest spanspek (sweet melon) (Original Ṱanḓa {count} $& 37).\nAny time during June is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "sweetcorn",
+      "sha256": "557fe5075251bff299ff73beb920f007c79550e194f3d47c5f36bc033ac1f1f7",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for sweetcorn (Original Ṱanḓa {count} $& 38).\nAny time during February is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow sweetcorn — rows 70–80cm apart · 25–35cm apart in the row · sow 2.5–4cm deep (Original Ṱanḓa {count} $& 38).\nAny time during March is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest sweetcorn (Original Ṱanḓa {count} $& 38).\nAny time during June is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "cowpea",
+      "sha256": "9aebf77dbafdb25cb85d29d38d7a154e7721d459d66e3474ebb80daab6b694a4",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for cowpea (imbumba/dinawa) (Original Ṱanḓa {count} $& 39).\nAny time during March is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow cowpea (imbumba/dinawa) — rows 50–75cm apart · 15–75cm apart in the row · sow 3–4cm deep (Original Ṱanḓa {count} $& 39).\nAny time during April is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest cowpea (imbumba/dinawa) (Original Ṱanḓa {count} $& 39).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "bambara-groundnut",
+      "sha256": "05ddb820fd198f3e7f2f82dfe82413bb350c5473b6f0ed9f8cc579f037b8e8cc",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for bambara groundnut (jugo bean) (Original Ṱanḓa {count} $& 40).\nAny time during April is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow bambara groundnut (jugo bean) — rows 45–90cm apart · 10–15cm apart in the row · sow 2.5–7.5cm deep (Original Ṱanḓa {count} $& 40).\nAny time during May is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest bambara groundnut (jugo bean) (Original Ṱanḓa {count} $& 40).\nAny time during October is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "sunflower",
+      "sha256": "6c39c82a8f17c6052beb579d977a9d95d559bfbe3c3aea13f8c89d4d9cc4d132",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for sunflower (for seed) (Original Ṱanḓa {count} $& 41).\nAny time during May is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow sunflower (for seed) — rows 90–100cm apart · 30cm apart in the row · sow 5–8cm deep (Original Ṱanḓa {count} $& 41).\nAny time during June is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest sunflower (for seed) (Original Ṱanḓa {count} $& 41).\nAny time during November is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "radish",
+      "sha256": "cf1d577ce8a04f5037c851a8db6a3bbc10e3e9e8440a6b846986a1c6e9739e89",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for radish (Original Ṱanḓa {count} $& 42).\nAny time during June is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow radish — rows 15–20cm apart · 4–6cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 42).\nAny time during July is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest radish (Original Ṱanḓa {count} $& 42).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "mung-bean",
+      "sha256": "f5c5aec975fa57202b9baa58a98c842965868f6536a061355aa848843a729fa4",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for mung bean (Original Ṱanḓa {count} $& 43).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow mung bean — rows 18–120cm apart · 5–15cm apart in the row · sow 4–7.5cm deep (Original Ṱanḓa {count} $& 43).\nAny time during August is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest mung bean (Original Ṱanḓa {count} $& 43).\nAny time during November is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "spider-plant",
+      "sha256": "99867170da1e2af71e57ec47631242fd67d205762a48bc7c18474d8d4992a10c",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before adding amendments for spider plant (Cleome gynandra) (Original Ṱanḓa {count} $& 44).\nAny time during September is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow spider plant (Cleome gynandra) — start in a tray (Original Ṱanḓa {count} $& 44).\nAny time during September is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Check seedlings; transplant when ready spider plant (Cleome gynandra) — rows 25–50cm apart · 10–15cm apart in the row (Original Ṱanḓa {count} $& 44).\nMove the tray seedlings into Original Ṱanḓa {count} $& 44 — rows 25–50cm apart · 10–15cm apart in the row.\nAny time during October is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest spider plant (Cleome gynandra) (Original Ṱanḓa {count} $& 44).\nAny time during January is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "african-nightshade",
+      "sha256": "3bb0da61627e21feb217a08c166b8b5ed12b40eb264b992cf33afa93fa36b60f",
+      "descriptions": [
+        "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for african nightshade (umsobo) (Original Ṱanḓa {count} $& 45).\nAny time during October is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Sow african nightshade (umsobo) — start in a tray (Original Ṱanḓa {count} $& 45).\nAny time during October is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Check seedlings; transplant when ready african nightshade (umsobo) — plant spacing 30cm each way (Original Ṱanḓa {count} $& 45).\nMove the tray seedlings into Original Ṱanḓa {count} $& 45 — plant spacing 30cm each way.\nAny time during November is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan.",
+        "Harvest african nightshade (umsobo) (Original Ṱanḓa {count} $& 45).\nAny time during January is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.\nFrom your ImbewuField crop plan."
+      ]
+    },
+    {
+      "cropKey": "sunn-hemp",
+      "sha256": "34ff05a65acc5feb07ec059ba690e2754baa0856c64c864373c730d3ce26a7ae",
+      "descriptions": []
+    },
+    {
+      "cropKey": "medic",
+      "sha256": "34ff05a65acc5feb07ec059ba690e2754baa0856c64c864373c730d3ce26a7ae",
+      "descriptions": []
+    },
+    {
+      "cropKey": "fodder-radish",
+      "sha256": "34ff05a65acc5feb07ec059ba690e2754baa0856c64c864373c730d3ce26a7ae",
+      "descriptions": []
+    }
+  ]
+}

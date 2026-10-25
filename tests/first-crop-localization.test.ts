@@ -1,3 +1,4 @@
+import { translatedSeasonExpectation } from './helpers/season-translation-expectation.ts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
@@ -50,7 +51,7 @@ test('every baseline first-crop guide line translates its complete note without 
      if(reference?.note)assert.ok(item.lines[at].includes(productGuideText(reference.note,lang)),'the full qualification is retained, not just a short native heading');
      assert.ok(productPurchasingMarkdown(context,c.zones,c.conditions,lang).includes(item.lines[at]));
     }
-    assert.equal(item.title,c.guide.foodForest[index].title);assert.deepEqual(item.sources,c.guide.foodForest[index].sources);assert.deepEqual(item.expectedSeason,c.guide.foodForest[index].expectedSeason);
+    assert.equal(item.title,c.guide.foodForest[index].title);assert.deepEqual(item.sources,c.guide.foodForest[index].sources);assert.deepEqual(item.expectedSeason,translatedSeasonExpectation(c.guide.foodForest[index].expectedSeason,context.trees[index],lang));
    }
   }
   assert.equal(JSON.stringify(context),before,'translation must not change source records');

@@ -1,3 +1,4 @@
+import { translatedSeasonExpectation, translateExpectedGuideSeason } from './helpers/season-translation-expectation.ts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { registerHooks } from 'node:module';
@@ -104,6 +105,8 @@ test('declared profile, age and yield wording preserves safety holds, item order
         item.lines[at]=productGuideText(template,lang,{range:formatRange(h[key].value),note:productGuideText(h[key].note??fallback,lang)});
       }
     }
+    // Native season qualifiers are a declared presentation layer; every source decision stays exact.
+    for(const[index,item]of expected.foodForest.entries())translateExpectedGuideSeason(item,context.trees[index],lang);
     assert.deepEqual(guide,expected,`${lang}/${c.name}: an undeclared research or husbandry field changed`);
     assert.deepEqual(figures(JSON.stringify(guide)),figures(JSON.stringify(c.guide)));
     assert.equal(JSON.stringify(context),before,'translation cannot mutate source inventory');
@@ -172,4 +175,12 @@ test('the real API gives all four targets the native saved crop page and purchas
       }
     }
   }finally{hooks.deregister();globalThis.fetch=old;}
+});
+
+
+test('translated guide seasons still reject changed months, citations, missing cautions and English-only metadata',()=>{
+  const row=fx.cases.find((row:any)=>row.guide.foodForest.some((item:any)=>item.expectedSeason));assert.ok(row);const index=row.guide.foodForest.findIndex((item:any)=>item.expectedSeason),group=fx.contexts[row.context].trees[index],source=row.guide.foodForest[index].expectedSeason;
+  for(const lang of languages){const actual=buildProductGuidance(fx.contexts[row.context],row.zones,row.conditions,lang).foodForest[index].expectedSeason!,expected=translatedSeasonExpectation(source,group,lang)!;assert.deepEqual(actual,expected);
+    for(const broken of [{...actual,months:[...actual.months,0]},{...actual,source:{...actual.source!,url:'https://example.com/wrong-source'}},{...actual,basis:actual.basis.split('.')[0]},{...actual,label:source.label,calendarLabel:source.label}])assert.throws(()=>assert.deepEqual(broken,expected),/Expected values/,'the source-preservation rule must still fail when a reference decision or complete caution changes');
+  }
 });

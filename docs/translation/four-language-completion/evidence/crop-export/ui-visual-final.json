@@ -1,0 +1,60 @@
+{
+  "states": [
+    {
+      "language": "zu",
+      "phone": false,
+      "path": "output/crop-pdf-qa/ui-zu-desktop-isolated.png",
+      "scope": "actual CropPlanExportCard; unrelated floating guide hidden for text inspection; outer app language and overlays are not part of this component-only evidence"
+    },
+    {
+      "language": "zu",
+      "phone": true,
+      "path": "output/crop-pdf-qa/ui-zu-phone-isolated.png",
+      "scope": "actual CropPlanExportCard; unrelated floating guide hidden for text inspection; outer app language and overlays are not part of this component-only evidence"
+    },
+    {
+      "language": "st",
+      "phone": false,
+      "path": "output/crop-pdf-qa/ui-st-desktop-isolated.png",
+      "scope": "actual CropPlanExportCard; unrelated floating guide hidden for text inspection; outer app language and overlays are not part of this component-only evidence"
+    },
+    {
+      "language": "st",
+      "phone": true,
+      "path": "output/crop-pdf-qa/ui-st-phone-isolated.png",
+      "scope": "actual CropPlanExportCard; unrelated floating guide hidden for text inspection; outer app language and overlays are not part of this component-only evidence"
+    },
+    {
+      "language": "ts",
+      "phone": false,
+      "path": "output/crop-pdf-qa/ui-ts-desktop-isolated.png",
+      "scope": "actual CropPlanExportCard; unrelated floating guide hidden for text inspection; outer app language and overlays are not part of this component-only evidence"
+    },
+    {
+      "language": "ts",
+      "phone": true,
+      "path": "output/crop-pdf-qa/ui-ts-phone-isolated.png",
+      "scope": "actual CropPlanExportCard; unrelated floating guide hidden for text inspection; outer app language and overlays are not part of this component-only evidence"
+    },
+    {
+      "language": "ve",
+      "phone": false,
+      "path": "output/crop-pdf-qa/ui-ve-desktop-isolated.png",
+      "scope": "actual CropPlanExportCard; unrelated floating guide hidden for text inspection; outer app language and overlays are not part of this component-only evidence"
+    },
+    {
+      "language": "ve",
+      "phone": true,
+      "path": "output/crop-pdf-qa/ui-ve-phone-isolated.png",
+      "scope": "actual CropPlanExportCard; unrelated floating guide hidden for text inspection; outer app language and overlays are not part of this component-only evidence"
+    }
+  ],
+  "visuallyInspected": [
+    "zu-phone-isolated",
+    "st-phone-isolated",
+    "ts-phone-isolated",
+    "ve-phone-isolated",
+    "ve-desktop-corrected-share-link"
+  ],
+  "limitation": "Unrelated fixed app chrome hidden in isolated captures. This proves the component reading layout only, not the outer page locale or global guide/back/tour placement."
+}

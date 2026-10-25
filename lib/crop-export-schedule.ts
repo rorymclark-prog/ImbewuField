@@ -1,3 +1,5 @@
+import { cropExportText, isCropExportDraftLanguage } from './crop-export-copy';
+import { recordsMonthShort, recordsMonthLong } from './records-months';
 import { buildProductGuidance, type ProductGuideContext, type ExpectedSeason } from './production-product-guidance';
 // ── Crop plan → the things a farmer takes away from the screen ──────────────
 //
@@ -63,12 +65,12 @@ export function wrapMonth(m: number): number {
   return ((m - 1) % 12 + 12) % 12 + 1;
 }
 
-export function monthShort(m: number): string {
-  return MONTHS_SHORT[wrapMonth(m) - 1];
+export function monthShort(m: number, language = 'en'): string {
+  return isCropExportDraftLanguage(language) ? recordsMonthShort(language, wrapMonth(m)) : MONTHS_SHORT[wrapMonth(m) - 1];
 }
 
-export function monthLong(m: number): string {
-  return MONTH_NAMES[wrapMonth(m) - 1];
+export function monthLong(m: number, language = 'en'): string {
+  return isCropExportDraftLanguage(language) ? recordsMonthLong(language, wrapMonth(m)) : MONTH_NAMES[wrapMonth(m) - 1];
 }
 
 /**
@@ -98,8 +100,8 @@ export function resolveMonthYear(month: number, now: Date): number {
 }
 
 /** "October 2026" — a month heading that is an actual date, not just a name. */
-export function monthYearLabel(month: number, now: Date): string {
-  return `${monthLong(month)} ${resolveMonthYear(month, now)}`;
+export function monthYearLabel(month: number, now: Date, language = 'en'): string {
+  return `${monthLong(month, language)} ${resolveMonthYear(month, now)}`;
 }
 
 // ── Task wording ────────────────────────────────────────────────────────────
@@ -115,8 +117,9 @@ export function monthYearLabel(month: number, now: Date): string {
  * Garlic printed "rows 25cm apart" and nothing else — an instruction nobody
  * can plant from. Never fabricates: every number here is on the crop record.
  */
-export function sowingInstruction(crop: CropDef): string {
-  if (crop.fieldSpacingInstruction) return crop.fieldSpacingInstruction;
+export function sowingInstruction(crop: CropDef, language = 'en'): string {
+  const copy = (source: string, values?: Record<string, string | number>) => cropExportText(source, language, values);
+  if (crop.fieldSpacingInstruction) return copy(crop.fieldSpacingInstruction);
   const parts: string[] = [];
   const { rowCm, inRowCm } = plantSpacingCm(crop);
   const ranges = plantSpacingRangeCm(crop);
@@ -124,10 +127,10 @@ export function sowingInstruction(crop: CropDef): string {
   const inRow = formatCmRange(ranges.inRowCm);
   const bothAreExact = ranges.rowCm[0] === ranges.rowCm[1]
     && ranges.inRowCm[0] === ranges.inRowCm[1];
-  if (bothAreExact && rowCm === inRowCm) parts.push(`plant spacing ${row}cm each way`);
-  else parts.push(`rows ${row}cm apart`, `${inRow}cm apart in the row`);
+  if (bothAreExact && rowCm === inRowCm) parts.push(copy('plant spacing {row}cm each way', { row }));
+  else parts.push(copy('rows {row}cm apart', { row }), copy('{inRow}cm apart in the row', { inRow }));
   const depth = sowDepthRange(crop);
-  if (depth) parts.push(`sow ${formatCmRange(depth)}cm deep`);
+  if (depth) parts.push(copy('sow {depth}cm deep', { depth: formatCmRange(depth) }));
   return parts.join(' · ');
 }
 
@@ -140,15 +143,16 @@ function sowDepthRange(crop: CropDef): readonly [number, number] | null {
     ?? (crop.sowDepthCm ? [crop.sowDepthCm, crop.sowDepthCm] as const : null);
 }
 
-function fieldSpacingInstruction(crop: CropDef): string {
-  if (crop.fieldSpacingInstruction) return crop.fieldSpacingInstruction;
+function fieldSpacingInstruction(crop: CropDef, language = 'en'): string {
+  const copy = (source: string, values?: Record<string, string | number>) => cropExportText(source, language, values);
+  if (crop.fieldSpacingInstruction) return copy(crop.fieldSpacingInstruction);
   const { rowCm, inRowCm } = plantSpacingCm(crop);
   const ranges = plantSpacingRangeCm(crop);
   const bothAreExact = ranges.rowCm[0] === ranges.rowCm[1]
     && ranges.inRowCm[0] === ranges.inRowCm[1];
   return bothAreExact && rowCm === inRowCm
-    ? `plant spacing ${formatCmRange(ranges.rowCm)}cm each way`
-    : `rows ${formatCmRange(ranges.rowCm)}cm apart · ${formatCmRange(ranges.inRowCm)}cm apart in the row`;
+    ? copy('plant spacing {row}cm each way', { row: formatCmRange(ranges.rowCm) })
+    : copy('rows {row}cm apart · {inRow}cm apart in the row', { row: formatCmRange(ranges.rowCm), inRow: formatCmRange(ranges.inRowCm) });
 }
 
 // Verb phrase per task action — 'prep'/'mulch' need a bit more than a single
@@ -178,20 +182,21 @@ export const TASK_TITLE: Record<CropTask['action'], string> = {
 };
 
 /** One task as a sentence fragment: "sow maize (mielies) — rows 90cm apart (Plot 1)". */
-export function taskPhrase(t: CropTask): string {
+export function taskPhrase(t: CropTask, language = 'en'): string {
+  const copy = (source: string, values?: Record<string, string | number>) => cropExportText(source, language, values);
   const crop = (t.action === 'sow' || t.action === 'transplant') ? cropByKey(t.cropKey) : undefined;
   let instruction = '';
   if (crop && t.action === 'sow') {
     const trayDepth = sowDepthRange(crop);
     instruction = crop.transplant
-      ? ` — start in a tray${trayDepth ? `, ${formatCmRange(trayDepth)}cm deep` : ''}`
-      : ` — ${sowingInstruction(crop)}`;
+      ? ` — ${copy(trayDepth ? 'start in a tray, {depth}cm deep' : 'start in a tray', { depth: trayDepth ? formatCmRange(trayDepth) : '' })}`
+      : ` — ${sowingInstruction(crop, language)}`;
   } else if (crop?.transplant && t.action === 'transplant') {
-    instruction = ` — ${fieldSpacingInstruction(crop)}`;
+    instruction = ` — ${fieldSpacingInstruction(crop, language)}`;
   }
   // Prep wording is per-ground: tasksForPlan says plough/rip for a staple PLOT and
   // soil-assessment wording for a bed (CropTask.prepText); the static verb is the fallback.
-  const verb = (t.action === 'prep' && t.prepText) ? `${t.prepText} for` : TASK_VERB[t.action];
+  const verb = (t.action === 'prep' && t.prepText) ? copy('{instruction} for', { instruction: copy(t.prepText) }) : copy(TASK_VERB[t.action]);
   return `${verb} ${inSentence(t.cropName)}${instruction} (${t.bedLabel})`;
 }
 
@@ -209,16 +214,17 @@ export function taskPhrase(t: CropTask): string {
  * Returns null when the action carries no how-to, so a caller can tell "nothing to
  * say" from an empty string it would have to render anyway.
  */
-export function taskDetail(t: CropTask): string | null {
+export function taskDetail(t: CropTask, language = 'en'): string | null {
+  const copy = (source: string, values?: Record<string, string | number>) => cropExportText(source, language, values);
   const crop = (t.action === 'sow' || t.action === 'transplant') ? cropByKey(t.cropKey) : undefined;
   if (crop && t.action === 'sow') {
     const trayDepth = sowDepthRange(crop);
     return crop.transplant
-      ? `start in a tray${trayDepth ? `, ${formatCmRange(trayDepth)}cm deep` : ''}`
-      : sowingInstruction(crop);
+      ? copy(trayDepth ? 'start in a tray, {depth}cm deep' : 'start in a tray', { depth: trayDepth ? formatCmRange(trayDepth) : '' })
+      : sowingInstruction(crop, language);
   }
-  if (crop?.transplant && t.action === 'transplant') return fieldSpacingInstruction(crop);
-  if (t.action === 'prep' && t.prepText) return t.prepText;
+  if (crop?.transplant && t.action === 'transplant') return fieldSpacingInstruction(crop, language);
+  if (t.action === 'prep' && t.prepText) return copy(t.prepText);
   return null;
 }
 
@@ -292,14 +298,14 @@ export function groupTasksByAction(tasks: CropTask[]): TaskActionGroup[] {
     });
 }
 
-export function taskSentence(tasks: CropTask[]): string {
-  if (tasks.length === 0) return 'nothing due';
-  return tasks.map(taskPhrase).join(' · ');
+export function taskSentence(tasks: CropTask[], language = 'en'): string {
+  if (tasks.length === 0) return cropExportText('nothing due', language);
+  return tasks.map(task => taskPhrase(task, language)).join(' · ');
 }
 
 /** Sentence-cased standalone line — what a calendar event or a printed row shows. */
-export function taskLine(t: CropTask): string {
-  const phrase = taskPhrase(t);
+export function taskLine(t: CropTask, language = 'en'): string {
+  const phrase = taskPhrase(t, language);
   return phrase.charAt(0).toUpperCase() + phrase.slice(1);
 }
 
@@ -308,9 +314,9 @@ export function taskLine(t: CropTask): string {
  * The bed is always in there because a calendar entry read five months later,
  * with no app open beside it, has to say WHICH ground it means.
  */
-export function taskTitle(t: CropTask): string {
-  if (t.action === 'prep') return `Prep ${t.bedLabel} for ${t.cropName}`;
-  return `${TASK_TITLE[t.action]} ${t.cropName} — ${t.bedLabel}`;
+export function taskTitle(t: CropTask, language = 'en'): string {
+  if (t.action === 'prep') return cropExportText('Prep {bed} for {crop}', language, { bed: t.bedLabel, crop: t.cropName });
+  return `${cropExportText(TASK_TITLE[t.action], language)} ${t.cropName} — ${t.bedLabel}`;
 }
 
 // ── Bed-by-bed plan ─────────────────────────────────────────────────────────
@@ -453,7 +459,9 @@ export function buildBuyingSchedule(
   plantings: Planting[],
   beds: PlanBed[],
   nowMonth: number,
+  language = 'en',
 ): BuyingMonth[] {
+  const copy = (source: string, values?: Record<string, string | number>) => cropExportText(source, language, values);
   const items: BuyingItem[] = [];
 
   for (const boq of seedBoqBatchesForPlan(plantings, beds)) {
@@ -500,7 +508,7 @@ export function buildBuyingSchedule(
       transplant: !!crop.transplant,
       bedLabels,
       note: boq.quantityStatus === 'sourced-weight-range' && boq.countRange
-        ? `Source ${weightRangeLabel(boq.countRange)} before sowing in ${monthLong(sowMonth)}. This is the mapped area multiplied by the published ${positionRangeLabel(crop.seedRateKgPerHaRange!)} kg/ha field-rate range. ${crop.fieldSpacingInstruction ?? crop.note} Confirm the sowing method and cultivar with the supplier; no germination allowance is added.`
+        ? copy('Source {weight} before sowing in {month}. This is the mapped area multiplied by the published {rate} kg/ha field-rate range. {instruction} Confirm the sowing method and cultivar with the supplier; no germination allowance is added.', { weight: weightRangeLabel(boq.countRange, language), month: monthLong(sowMonth, language), rate: positionRangeLabel(crop.seedRateKgPerHaRange!), instruction: copy(crop.fieldSpacingInstruction ?? crop.note) })
         : buyingNote(
         boq.unit,
         !!crop.transplant,
@@ -510,6 +518,7 @@ export function buildBuyingSchedule(
         boq.finalPlantPositionsRange,
         boq.quantityStatus,
         boq.inNursery,
+        language,
       ),
     });
   }
@@ -552,31 +561,30 @@ function buyingNote(
   finalPlantPositionsRange: readonly [number, number],
   quantityStatus: SeedBoqRow['quantityStatus'],
   inNursery = false,
+  language = 'en',
 ): string {
+  const copy = (source: string, values?: Record<string, string | number>) => cropExportText(source, language, values);
   if (transplant) {
-    const quantity = quantityStatus === 'spacing-confirmation-required'
-      ? 'Confirm the local row layout before deciding how many are needed. '
-      : `The mapped area holds about ${positionRangeLabel(finalPlantPositionsRange)} plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. `;
+    const quantity = (quantityStatus === 'spacing-confirmation-required'
+      ? copy('Confirm the local row layout before deciding how many are needed.')
+      : copy('The mapped area holds about {positions} plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop.', { positions: positionRangeLabel(finalPlantPositionsRange) })) + ' ';
     const fieldWindow = bedMonth === bedMonthLatest
-      ? monthLong(bedMonth)
-      : `${monthLong(bedMonth)}–${monthLong(bedMonthLatest)}`;
-    return `Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is ${fieldWindow}. ${quantity}`
+      ? monthLong(bedMonth, language)
+      : `${monthLong(bedMonth, language)}–${monthLong(bedMonthLatest, language)}`;
+    return copy('Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is {window}. {quantity}', { window: fieldWindow, quantity })
       + (inNursery
-        // The tray-sowing month is behind the farmer, so the "raise your own"
-        // half is spent — printing it in October tells them to buy packet seed
-        // for a month that has gone.
-        ? `This one-time starter's tray-sowing month (${monthLong(sowMonth)}) has passed, so buying ready-grown seedlings is the remaining route. `
-        : `Raising your own instead? Source packet seed before the ${monthLong(sowMonth)} tray-sowing month, use its tray-sowing rate, and sow trays in ${monthLong(sowMonth)}. `)
-      + TRANSPLANT_NURSERY_GUIDANCE;
+        // A completed tray month must not become another seed purchase after translation.
+        ? copy("This one-time starter's tray-sowing month ({month}) has passed, so buying ready-grown seedlings is the remaining route.", { month: monthLong(sowMonth, language) })
+        : copy('Raising your own instead? Source packet seed before the {month} tray-sowing month, use its tray-sowing rate, and sow trays in {month}.', { month: monthLong(sowMonth, language) })) + ' '
+      + copy(TRANSPLANT_NURSERY_GUIDANCE);
   }
   if (quantityStatus === 'spacing-confirmation-required') {
-    return `Confirm a locally appropriate row layout before buying planting material; the catalog does not have both verified spacing axes needed for an exact quantity. Plan to establish it in ${monthLong(sowMonth)}.`;
+    return copy('Confirm a locally appropriate row layout before buying planting material; the catalog does not have both verified spacing axes needed for an exact quantity. Plan to establish it in {month}.', { month: monthLong(sowMonth, language) });
   }
   if (unit !== 'seeds') {
-    return `Living planting material — the mapped area holds about ${positionRangeLabel(finalPlantPositionsRange)} ${unit} at the spacings this plan uses. This is not a guaranteed buy quantity and it allows nothing for material that does not take; ask the supplier what they advise for this crop. Get it close to planting in ${monthLong(sowMonth)}, then follow the supplier's or your local handling advice. No general storage advice is assumed here.`;
+    return copy("Living planting material — the mapped area holds about {positions} {unit} at the spacings this plan uses. This is not a guaranteed buy quantity and it allows nothing for material that does not take; ask the supplier what they advise for this crop. Get it close to planting in {month}, then follow the supplier's or your local handling advice. No general storage advice is assumed here.", { positions: positionRangeLabel(finalPlantPositionsRange), unit: copy(unit), month: monthLong(sowMonth, language) });
   }
-  return `Source packet seed before the ${monthLong(sowMonth)} sowing month. Sow straight into the ground in ${monthLong(sowMonth)} for about ${positionRangeLabel(finalPlantPositionsRange)} plants at the spacings this plan uses. `
-    + `Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy.`;
+  return copy("Source packet seed before the {month} sowing month. Sow straight into the ground in {month} for about {positions} plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy.", { month: monthLong(sowMonth, language), positions: positionRangeLabel(finalPlantPositionsRange) });
 }
 
 export function positionRangeLabel(range: readonly [number, number]): string {
@@ -587,13 +595,13 @@ export function positionRangeLabel(range: readonly [number, number]): string {
 
 /** Keep a small-bed order readable in grams without changing the sourced
  * kg/ha calculation or quietly rounding a positive amount down to zero. */
-export function weightRangeLabel(range: readonly [number, number]): string {
+export function weightRangeLabel(range: readonly [number, number], language = 'en'): string {
   const inGrams = range[1] < 1;
   const scale = inGrams ? 1_000 : 1;
   const quantity = (value: number): string => numberLabel(Number((value * scale).toPrecision(4)), 6);
   const minimum = quantity(range[0]);
   const maximum = quantity(range[1]);
-  return `${range[0] === range[1] ? minimum : `${minimum}–${maximum}`} ${inGrams ? 'g' : 'kg'} seed`;
+  return cropExportText('{amount} {unit} seed', language, { amount: range[0] === range[1] ? minimum : `${minimum}–${maximum}`, unit: inGrams ? 'g' : 'kg' });
 }
 
 /** Per-crop totals across the whole schedule — the cross-check against the on-screen BOQ. */
@@ -684,7 +692,7 @@ export function buildProductionGuide(survey: SiteSurvey | null, plantings: reado
         : 'Not recorded. Complete the site survey and confirm water before choosing an intensive plan.',
     ] },
     { title: 'Frost on this farm', lines: [
-      frost === 'yes' ? `Frost has been observed here${frostMonths.length ? ` in ${frostMonths.map(monthShort).join(', ')}` : '; months not recorded'}. Check frost-tender crops against these observations.`
+      frost === 'yes' ? `Frost has been observed here${frostMonths.length ? ` in ${frostMonths.map(month => monthShort(month)).join(', ')}` : '; months not recorded'}. Check frost-tender crops against these observations.`
         : frost === 'no' ? 'Farmer reports no observed frost. This observation does not establish that future winters will be frost-free.'
         : 'Local frost observations are not recorded. Satellite monthly averages cannot establish first and last frost dates.',
     ] },
@@ -704,7 +712,7 @@ export function buildProductionGuide(survey: SiteSurvey | null, plantings: reado
       cropsToCheck.set(crop.name, found);
     }
     if (cropsToCheck.size) siteObservations.push({ title: 'Planned crops to check for frost', lines: [
-      ...[...cropsToCheck].map(([name, months]) => `${name}: ${[...months].sort((a, b) => a - b).map(monthShort).join(', ')}.`),
+      ...[...cropsToCheck].map(([name, months]) => `${name}: ${[...months].sort((a, b) => a - b).map(month => monthShort(month)).join(', ')}.`),
       'These planned crops will hold ground in months when frost has been observed here. Confirm local protection or change the planting before relying on these dates.',
     ] });
   }
@@ -720,7 +728,7 @@ export function buildProductionGuide(survey: SiteSurvey | null, plantings: reado
     return { title: row.name || names[row.category] || 'Reported production', lines: [
       `Farmer-reported annual total${reportingYear ? ` for ${reportingYear}` : ' - reporting year not recorded'}: ${quantity(row.quantityPerYear)}.`,
       `Household use: ${quantity(row.usedByHousehold)}. Sold: ${quantity(row.sold)}.`,
-      `Reported harvest months: ${harvestMonths.length ? harvestMonths.map(monthShort).join(', ') : 'not recorded'}. These are survey observations, not a new production forecast.`,
+      `Reported harvest months: ${harvestMonths.length ? harvestMonths.map(month => monthShort(month)).join(', ') : 'not recorded'}. These are survey observations, not a new production forecast.`,
       ...(productionNeedsReview(row) ? ['Check the recorded unit and totals before using this row.'] : []),
     ] };
   });

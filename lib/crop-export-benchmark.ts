@@ -44,7 +44,8 @@ import {
   yieldByCrop,
 } from '@/lib/crop-plan';
 import { numberLabel } from '@/lib/format-figures';
-import { bedShareLabel, inSentence, MONTH_NAMES, monthShort, rollingMonths, wrapMonth } from '@/lib/crop-export-schedule';
+import { cropExportText, isCropExportDraftLanguage } from '@/lib/crop-export-copy';
+import { bedShareLabel, inSentence, MONTH_NAMES, monthShort, monthYearLabel, rollingMonths, wrapMonth } from '@/lib/crop-export-schedule';
 
 /**
  * Which planting-material noun a crop actually uses, keyed off the SAME field
@@ -134,6 +135,7 @@ export interface PlanDashboard {
 }
 
 export interface DashboardOptions {
+  language?: string;
   lossPercent?: number;
   /** A stored/default 0 is not evidence that the farmer confirmed 0% loss. */
   lossAllowanceConfirmed?: boolean;
@@ -153,6 +155,8 @@ export function buildPlanDashboard(
   tasks: CropTask[],
   opts: DashboardOptions,
 ): PlanDashboard {
+  const language = opts.language ?? 'en';
+  const copy = (source: string, values: Record<string, string | number> = {}) => cropExportText(source, language, values);
   const lossConfirmed = opts.lossAllowanceConfirmed === true;
   const loss = Math.max(0, Math.min(100, opts.lossPercent ?? 0));
 
@@ -189,41 +193,42 @@ export function buildPlanDashboard(
   const stats: DashboardStat[] = [
     {
       value: `${areaM2.toFixed(1)} m²`,
-      label: 'growing space',
-      detail: `${bedCount} bed${bedCount === 1 ? '' : 's'}${plotCount ? ` + ${plotCount} staple plot${plotCount === 1 ? '' : 's'}` : ''}`,
+      label: copy('growing space'),
+      detail: copy(bedCount === 1 ? '{count} bed' : '{count} beds', { count: bedCount })
+        + (plotCount ? ` + ${copy(plotCount === 1 ? '{count} staple plot' : '{count} staple plots', { count: plotCount })}` : ''),
     },
     {
-      value: hasKnownYield ? `${grossKg!.toFixed(1)} kg` : 'Not shown',
-      label: areaConflictBedLabels.length ? 'benchmark total blocked' : 'known benchmark total',
+      value: hasKnownYield ? `${grossKg!.toFixed(1)} kg` : copy('Not shown'),
+      label: areaConflictBedLabels.length ? copy('benchmark total blocked') : copy('known benchmark total'),
       detail: areaConflictBedLabels.length
-        ? `resolve overlapping shares in ${areaConflictBedLabels.join(', ')}`
-        : hasKnownYield ? 'verified kg/m² crop entries only' : 'no verified kg/m² crop entry',
+        ? copy('resolve overlapping shares in {places}', { places: areaConflictBedLabels.join(', ') })
+        : hasKnownYield ? copy('verified kg/m² crop entries only') : copy('no verified kg/m² crop entry'),
     },
     {
       // Same knownKg ÷ same areaM2 already above — never a separate estimate,
       // so it cannot read "in line" while the two figures it is built from
       // disagree with each other.
-      value: hasKnownYield && benchmark.kgPerM2 !== null ? `${benchmark.kgPerM2.toFixed(2)} kg/m²` : 'Not shown',
-      label: areaConflictBedLabels.length ? 'benchmark density blocked' : 'benchmark density',
+      value: hasKnownYield && benchmark.kgPerM2 !== null ? `${benchmark.kgPerM2.toFixed(2)} kg/m²` : copy('Not shown'),
+      label: areaConflictBedLabels.length ? copy('benchmark density blocked') : copy('benchmark density'),
       detail: areaConflictBedLabels.length
-        ? 'blocked with the total above until shares are resolved'
-        : 'known total ÷ whole growing area, to compare plans',
+        ? copy('blocked with the total above until shares are resolved')
+        : copy('known total ÷ whole growing area, to compare plans'),
     },
     lossConfirmed
       ? {
-        value: hasKnownYield && netKg !== null ? `${netKg.toFixed(1)} kg` : 'Not shown',
-        label: `known total after ${loss}% loss`,
-        detail: 'uses the loss allowance you confirmed',
+        value: hasKnownYield && netKg !== null ? `${netKg.toFixed(1)} kg` : copy('Not shown'),
+        label: copy('known total after {loss}% loss', { loss }),
+        detail: copy('uses the loss allowance you confirmed'),
       }
       : {
-        value: 'Not calculated',
-        label: 'loss-adjusted total',
-        detail: 'confirm a loss allowance from actual records',
+        value: copy('Not calculated'),
+        label: copy('loss-adjusted total'),
+        detail: copy('confirm a loss allowance from actual records'),
       },
     {
       value: `${freshPickingMonths}/12`,
-      label: 'fresh-picking months',
-      detail: 'timing windows only; no monthly kg inferred',
+      label: copy('fresh-picking months'),
+      detail: copy('timing windows only; no monthly kg inferred'),
     },
   ];
 
@@ -233,39 +238,43 @@ export function buildPlanDashboard(
     group: foodGroupOf(cropByKey(entry.cropKey)!),
   }));
   if (areaConflictBedLabels.length) {
-    signals.push(`${areaConflictBedLabels.join(', ')} ${areaConflictBedLabels.length === 1 ? 'has' : 'have'} overlapping or invalid planting shares, so every kg and value subtotal is withheld.`);
+    signals.push(copy(areaConflictBedLabels.length === 1
+      ? '{places} has overlapping or invalid planting shares, so every kg and value subtotal is withheld.'
+      : '{places} have overlapping or invalid planting shares, so every kg and value subtotal is withheld.', { places: areaConflictBedLabels.join(', ') }));
   } else if (top[0]) {
-    signals.push(`${top[0].name} has the largest known benchmark volume at ${top[0].kg.toFixed(1)} kg.`);
+    signals.push(copy('{crop} has the largest known benchmark volume at {kg} kg.', { crop: top[0].name, kg: top[0].kg.toFixed(1) }));
   }
-  if (!areaConflictBedLabels.length && top[1]) signals.push(`${top[1].name} follows in the benchmark comparison at ${top[1].kg.toFixed(1)} kg.`);
+  if (!areaConflictBedLabels.length && top[1]) signals.push(copy('{crop} follows in the benchmark comparison at {kg} kg.', { crop: top[1].name, kg: top[1].kg.toFixed(1) }));
   if (unknownYieldCrops.length) {
-    signals.push(`${unknownYieldCrops.join(', ')} ${unknownYieldCrops.length === 1 ? 'has' : 'have'} no verified kg/m² benchmark and ${unknownYieldCrops.length === 1 ? 'is' : 'are'} excluded from every kg total, not counted as 0kg.`);
+    signals.push(copy(unknownYieldCrops.length === 1
+      ? '{crops} has no verified kg/m² benchmark and is excluded from every kg total, not counted as 0kg.'
+      : '{crops} have no verified kg/m² benchmark and are excluded from every kg total, not counted as 0kg.', { crops: unknownYieldCrops.join(', ') }));
   } else if (!hasKnownYield) {
-    signals.push('No crop in this plan has a verified kg/m² food-yield benchmark, so no kilogram comparison is shown.');
+    signals.push(copy('No crop in this plan has a verified kg/m² food-yield benchmark, so no kilogram comparison is shown.'));
   }
   if (busiest.length) {
     // THE CAVEAT TRAVELS WITH THE CLAIM. It used to live alone on page 2, three pages away from
     // the staffing decision below — so page 1 read as a measured labour finding when it is a count
     // of planned jobs, each of unknown length. A funder reads page 1 and hires against it.
-    const names = busiest.map((b) => monthShort(b.month));
-    signals.push(`${names.join(', ')} carry the most planned jobs — counted as jobs, not hours.`);
+    const names = busiest.map((b) => monthShort(b.month, language));
+    signals.push(copy('{months} carry the most planned jobs — counted as jobs, not hours.', { months: names.join(', ') }));
   }
   const idle = idleBedMonths(plantings, beds, opts.nowMonth);
   if (idle.count > 0) {
-    signals.push(`${idle.count} bed-month${idle.count === 1 ? '' : 's'} of the year have no crop in the ground.`);
+    signals.push(copy(idle.count === 1 ? '{count} bed-month of the year have no crop in the ground.' : '{count} bed-months of the year have no crop in the ground.', { count: idle.count }));
   }
 
   const decisions: string[] = [];
   if (areaConflictBedLabels.length) {
-    decisions.push(`Resolve the planting shares in ${areaConflictBedLabels.join(', ')} before using any crop benchmark or value scenario.`);
+    decisions.push(copy('Resolve the planting shares in {places} before using any crop benchmark or value scenario.', { places: areaConflictBedLabels.join(', ') }));
   } else if (top[0]) {
-    decisions.push(`Compare the ${inSentence(top[0].name)} benchmark with actual harvest records before planning storage or sales.`);
+    decisions.push(copy('Compare the {crop} benchmark with actual harvest records before planning storage or sales.', { crop: isCropExportDraftLanguage(language) ? top[0].name : inSentence(top[0].name) }));
   }
-  decisions.push('Check actual household demand and recorded harvests; the benchmark comparison is not a meal or surplus guarantee.');
+  decisions.push(copy('Check actual household demand and recorded harvests; the benchmark comparison is not a meal or surplus guarantee.'));
   if (busiest.length) {
-    decisions.push(`Check who is available before the ${monthShort(busiest[0].month)}-${monthShort(busiest[busiest.length - 1].month)} job peak, and time the work against real hours.`);
+    decisions.push(copy('Check who is available before the {first}-{last} job peak, and time the work against real hours.', { first: monthShort(busiest[0].month, language), last: monthShort(busiest[busiest.length - 1].month, language) }));
   }
-  if (!lossConfirmed) decisions.push('Confirm a loss allowance from actual records before calculating a usable total.');
+  if (!lossConfirmed) decisions.push(copy('Confirm a loss allowance from actual records before calculating a usable total.'));
 
   return { stats, signals, decisions, grossKg, netKg, freshPickingMonths, storedFoodMonths, storedFoodCrops, unknownYieldCrops, hasKnownYield, areaConflictBedLabels };
 }
@@ -566,7 +575,25 @@ export function buildFieldSheet(
   now: Date,
   plantings: Planting[] = [],
   beds: PlanBed[] = [],
+  language = 'en',
 ): FieldSheet {
+  // Group and count the original work before choosing its presentation. Otherwise
+  // translating a heading or deduplicating native prose can change the workload.
+  const nativeWork = new Map<string, string>();
+  const nativePlaces = new WeakMap<FieldSheetRow, string>();
+  const nativeLabels = new Map<string, string>();
+  const nativePrepNotes = new Map<string, string>();
+  const say = (source: string, values: Record<string, string | number> = {}) => cropExportText(source, language, values);
+  const remember = (source: string, native: string): string => { nativeWork.set(source, native); return source; };
+  const nativeOf = (source: string): string => nativeWork.get(source) ?? source;
+  const rememberLabel = (source: string, native: string): string => { nativeLabels.set(source, native); return source; };
+  const nativeList = (items: string[]): string => {
+    const words = items.map(source => nativeLabels.get(source) ?? source);
+    return words.length < 2 ? words[0] ?? '' : say('{first} and {last}', { first: words.slice(0, -1).join(', '), last: words.at(-1)! });
+  };
+  const sentence = (template: string, items: string[]): string => remember(
+    cropExportText(template, 'en', { crops: joinList(items) }), say(template, { crops: nativeList(items) }),
+  );
   const nowMonth = now.getMonth() + 1;
   const targetOffset = ((wrapMonth(month) - nowMonth) % 12 + 12) % 12;
   // Printed field sheets cover one actionable year. Resolve each task through
@@ -614,12 +641,16 @@ export function buildFieldSheet(
     // A bed shared by successive thirds is not an instruction to sow the
     // whole bed again. Scope each crop's work to its recorded allocation.
     const fraction = planting?.areaFraction ?? 1;
+    const share = bedShareLabel(fraction) || (bed?.kind === 'plot' ? 'whole plot' : 'whole bed');
+    const nativeShare = /% of the bed$/.test(share)
+      ? say('{share}% of the bed', { share: Math.round(fraction * 100) }) : say(share);
     const allocation = planting && bed
-      ? `${bedShareLabel(fraction) || (bed.kind === 'plot' ? 'whole plot' : 'whole bed')}; ${numberLabel(bed.areaM2 * fraction)} m²`
+      ? remember(`${share}; ${numberLabel(bed.areaM2 * fraction)} m²`, `${nativeShare}; ${numberLabel(bed.areaM2 * fraction)} m²`)
       : null;
     const workLabel = (advice?: string): string => {
       const details = [allocation, advice].filter(Boolean).join('; ');
-      return details ? `${name} (${details})` : name;
+      const nativeDetails = [allocation ? nativeOf(allocation) : null, advice ? nativeOf(advice) : null].filter(Boolean).join('; ');
+      return rememberLabel(details ? `${name} (${details})` : name, nativeDetails ? `${t.cropName} (${nativeDetails})` : t.cropName);
     };
     switch (t.action) {
       case 'sow':
@@ -627,12 +658,15 @@ export function buildFieldSheet(
           const b = bucketFor('Nursery - raise seedlings', 'Nursery');
           // Keyed crop|||bed so the section build can say "tomatoes for Beds
           // 10, 11, 12" instead of naming the same crop once per bed.
-          const trayDepth = sowDepthPhrase(crop);
+          const sourceDepth = sowDepthPhrase(crop);
+          const trayDepth = sourceDepth ? remember(sourceDepth, sowDepthPhrase(crop, language)!) : null;
           b.plain.push(`${workLabel(trayDepth ?? undefined)}|||${t.bedLabel}`);
           const sowMonth = t.cohortSowMonth ?? t.month;
           const earliest = bedEntryMonth(sowMonth, crop);
           const latest = latestBedEntryMonth(sowMonth, crop);
-          b.extra.add(`Start checking in ${monthShort(earliest)}; transplant when ready, within the planning window through ${monthShort(latest)}.`);
+          const windowTemplate = 'Start checking in {first}; transplant when ready, within the planning window through {last}.';
+          b.extra.add(remember(cropExportText(windowTemplate, 'en', { first: monthShort(earliest), last: monthShort(latest) }),
+            say(windowTemplate, { first: monthShort(earliest, language), last: monthShort(latest, language) })));
         } else {
           const b = bucketFor('Direct sowing and planting', t.bedLabel);
           const unit = unitByCrop.get(t.cropKey);
@@ -642,29 +676,38 @@ export function buildFieldSheet(
           // driven by the same `unit` the buying schedule already uses, not a
           // second hardcoded list of crop keys.
           if (isLivingPieceUnit(unit)) {
-            b.plantPieces.push(`${pieceLabel(name, unit)} (${[allocation, spacingPhrase(crop)].filter(Boolean).join('; ')})`);
+            const nativePiece = unit.toLowerCase().includes(name.toLowerCase()) ? say(unit) : `${t.cropName} ${say(unit)}`;
+            b.plantPieces.push(rememberLabel(`${pieceLabel(name, unit)} (${[allocation, spacingPhrase(crop)].filter(Boolean).join('; ')})`,
+              `${nativePiece} (${[allocation ? nativeOf(allocation) : null, spacingPhrase(crop, language)].filter(Boolean).join('; ')})`));
           } else {
-            b.sow.push(workLabel(spacingPhrase(crop)));
+            b.sow.push(workLabel(remember(spacingPhrase(crop), spacingPhrase(crop, language))));
           }
           b.waterSow ||= watered;
         }
         break;
       case 'transplant': {
         const b = bucketFor('Direct sowing and planting', t.bedLabel);
-        b.transplant.push(workLabel(spacingPhrase(crop)));
+        b.transplant.push(workLabel(remember(spacingPhrase(crop), spacingPhrase(crop, language))));
         b.waterTransplant ||= watered;
         break;
       }
       case 'prep': {
         const b = bucketFor('Prepare for the next planting', t.bedLabel);
         b.plain.push(workLabel());
-        if (t.prepText) prepNotes.add(`${capitalise(stripPrepWrapper(t.prepText))}.`);
+        if (t.prepText) {
+          const source = stripPrepWrapper(t.prepText);
+          const known = source === 'assess soil and drainage; use a soil test or local advice before cultivating or adding amendments'
+            || source === 'assess soil and drainage; use a soil test or local advice before adding amendments';
+          const note = `${capitalise(source)}.`;
+          prepNotes.add(note);
+          nativePrepNotes.set(note, `${capitalise(known ? say(source) : source)}.`);
+        }
         break;
       }
       case 'harvest': {
         const b = bucketFor('Harvest and record', t.bedLabel);
         b.plain.push(workLabel());
-        b.extra.add('Record kilograms and where it went.');
+        b.extra.add(remember('Record kilograms and where it went.', say('Record kilograms and where it went.')));
         break;
       }
       case 'terminate-cover':
@@ -701,23 +744,24 @@ export function buildFieldSheet(
           if (list) list.push(bedLabel);
           else byCrop.set(crop, [bedLabel]);
         }
-        const phrases = [...byCrop.entries()].map(([crop, bedsOf]) => `${crop} for ${compactPlaces(bedsOf)}`);
-        parts.push(`Raise and label trays for ${joinList(phrases)}.`);
+        const phrases = [...byCrop.entries()].map(([crop, bedsOf]) => rememberLabel(`${crop} for ${compactPlaces(bedsOf)}`,
+          say('{crop} for {places}', { crop: nativeLabels.get(crop) ?? crop, places: compactPlaces(bedsOf, language) })));
+        parts.push(sentence('Raise and label trays for {crops}.', phrases));
       }
-      else if (title === 'Prepare for the next planting') parts.push(`Prepare the ground for ${joinList(unique(b.plain))}.`);
-      else if (title === 'Harvest and record') parts.push(`Harvest ${joinList(unique(b.plain))}.`);
-      else if (title === 'End the cover crop') parts.push(`Cut or roll down ${joinList(unique(b.plain))} before the next crop.`);
-      else if (title === 'Maintenance') parts.push(`Weed and check for pests around ${joinList(unique(b.plain))}.`);
-      if (b.sow.length) parts.push(`Sow ${joinList(unique(b.sow))}.`);
-      if (b.plantPieces.length) parts.push(`Plant ${joinList(unique(b.plantPieces))}.`);
-      if (b.transplant.length) parts.push(`From this month, transplant ${joinList(unique(b.transplant))} when seedlings and the bed are ready.`);
+      else if (title === 'Prepare for the next planting') parts.push(sentence('Prepare the ground for {crops}.', unique(b.plain)));
+      else if (title === 'Harvest and record') parts.push(sentence('Harvest {crops}.', unique(b.plain)));
+      else if (title === 'End the cover crop') parts.push(sentence('Cut or roll down {crops} before the next crop.', unique(b.plain)));
+      else if (title === 'Maintenance') parts.push(sentence('Weed and check for pests around {crops}.', unique(b.plain)));
+      if (b.sow.length) parts.push(sentence('Sow {crops}.', unique(b.sow)));
+      if (b.plantPieces.length) parts.push(sentence('Plant {crops}.', unique(b.plantPieces)));
+      if (b.transplant.length) parts.push(sentence('From this month, transplant {crops} when seedlings and the bed are ready.', unique(b.transplant)));
       // ONE watering sentence per row. A bed that is both sown and planted into
       // in the same month used to end "...Water and mulch. Water, mulch and
       // check they take." — the same walk down the bed, told twice.
-      if (b.waterTransplant) parts.push('Water, mulch and check they take.');
-      else if (b.waterSow) parts.push('Water and mulch.');
+      if (b.waterTransplant) parts.push(remember('Water, mulch and check they take.', say('Water, mulch and check they take.')));
+      else if (b.waterSow) parts.push(remember('Water and mulch.', say('Water and mulch.')));
       parts.push(...b.extra);
-      rows.push({ place, work: parts.filter(Boolean).join(' ') });
+      rows.push({ place, work: remember(parts.filter(Boolean).join(' '), parts.filter(Boolean).map(nativeOf).join(' ')) });
     }
     // The "if this follows another crop, confirm it is clear" reminder and the
     // soil/drainage assessment used to repeat after every single bed. Both are
@@ -725,22 +769,38 @@ export function buildFieldSheet(
     // once for the section instead — see FieldSheetSection.note.
     const note = title === 'Prepare for the next planting' && prepNotes.size
       ? [
-        'Where a bed follows another crop, confirm it is finished and cleared before preparing it.',
+        remember('Where a bed follows another crop, confirm it is finished and cleared before preparing it.', say('Where a bed follows another crop, confirm it is finished and cleared before preparing it.')),
         ...withoutCoveredNotes([...prepNotes]),
       ].join(' ')
       : undefined;
-    sections.push({ title, rows: mergeIdenticalWork(rows), ...(note ? { note } : {}) });
+    const placeLabels: string[] = [];
+    const merged = mergeIdenticalWork(rows, places => {
+      placeLabels.push(compactPlaces(places, language));
+      return compactPlaces(places);
+    });
+    merged.forEach((row, i) => nativePlaces.set(row, placeLabels[i]));
+    sections.push({ title, rows: merged, ...(note ? { note } : {}) });
+    if (note) remember(note, [say('Where a bed follows another crop, confirm it is finished and cleared before preparing it.'),
+      ...withoutCoveredNotes([...prepNotes]).map(source => nativePrepNotes.get(source) ?? source)].join(' '));
   }
 
   const workRows = sections.reduce((s, x) => s + x.rows.length, 0);
   return {
     month,
-    monthLabel: `${MONTH_NAMES[month - 1]} ${resolveYear(month, now)}`,
+    monthLabel: isCropExportDraftLanguage(language)
+      ? monthYearLabel(month, now, language) : `${MONTH_NAMES[month - 1]} ${resolveYear(month, now)}`,
     sourceLines: mine.length,
     workRows,
     plantingFocus: rowsIn(sections, 'Nursery - raise seedlings') + rowsIn(sections, 'Direct sowing and planting'),
     harvestFocus: rowsIn(sections, 'Harvest and record'),
-    sections,
+    sections: isCropExportDraftLanguage(language) ? sections.map(section => ({
+      title: say(section.title),
+      rows: section.rows.map(row => ({
+        place: section.title === 'Nursery - raise seedlings' ? say('Nursery') : nativePlaces.get(row) ?? row.place,
+        work: nativeOf(row.work),
+      })),
+      ...(section.note ? { note: nativeOf(section.note) } : {}),
+    })) : sections,
   };
 }
 
@@ -749,26 +809,27 @@ export function buildFieldSheet(
  * crop it belongs to inside a merged row. Sowing depth only appears on a direct
  * sowing; there is no such thing as the depth of a transplant.
  */
-function spacingPhrase(crop: CropDef | undefined): string {
-  if (!crop) return 'spacing not recorded';
-  if (crop.fieldSpacingInstruction) return crop.fieldSpacingInstruction;
+function spacingPhrase(crop: CropDef | undefined, language = 'en'): string {
+  const say = (source: string, values: Record<string, string | number> = {}) => cropExportText(source, language, values);
+  if (!crop) return say('spacing not recorded');
+  if (crop.fieldSpacingInstruction) return say(crop.fieldSpacingInstruction);
   const { rowCm, inRowCm } = plantSpacingCm(crop);
   const ranges = plantSpacingRangeCm(crop);
   const exact = ranges.rowCm[0] === ranges.rowCm[1]
     && ranges.inRowCm[0] === ranges.inRowCm[1];
   const spacing = exact && rowCm === inRowCm
-    ? `${formatCmRange(ranges.inRowCm)} cm each way`
-    : `rows ${formatCmRange(ranges.rowCm)} cm apart, ${formatCmRange(ranges.inRowCm)} cm in the row`;
+    ? say('{row} cm each way', { row: formatCmRange(ranges.inRowCm) })
+    : say('rows {row} cm apart, {inRow} cm in the row', { row: formatCmRange(ranges.rowCm), inRow: formatCmRange(ranges.inRowCm) });
   const depthRange = crop.sowDepthRangeCm
     ?? (crop.sowDepthCm ? [crop.sowDepthCm, crop.sowDepthCm] as const : null);
-  const depth = !crop.transplant && depthRange ? `, ${formatCmRange(depthRange)} cm deep` : '';
+  const depth = !crop.transplant && depthRange ? `, ${say('{depth} cm deep', { depth: formatCmRange(depthRange) })}` : '';
   return `${spacing}${depth}`;
 }
 
-function sowDepthPhrase(crop: CropDef): string | null {
+function sowDepthPhrase(crop: CropDef, language = 'en'): string | null {
   const range = crop.sowDepthRangeCm
     ?? (crop.sowDepthCm ? [crop.sowDepthCm, crop.sowDepthCm] as const : null);
-  return range ? `sow ${formatCmRange(range)} cm deep` : null;
+  return range ? cropExportText('sow {depth} cm deep', language, { depth: formatCmRange(range) }) : null;
 }
 
 function formatCmRange(range: readonly [number, number]): string {
@@ -832,14 +893,14 @@ function resolveYear(month: number, now: Date): number {
  * of DISTINCT jobs — bounded by the catalog — not with the number of beds.
  * Order is kept from the first appearance of each job.
  */
-function mergeIdenticalWork(rows: FieldSheetRow[]): FieldSheetRow[] {
+function mergeIdenticalWork(rows: FieldSheetRow[], placesLabel = compactPlaces): FieldSheetRow[] {
   const byWork = new Map<string, string[]>();
   for (const row of rows) {
     const places = byWork.get(row.work);
     if (places) places.push(row.place);
     else byWork.set(row.work, [row.place]);
   }
-  return [...byWork.entries()].map(([work, places]) => ({ place: compactPlaces(places), work }));
+  return [...byWork.entries()].map(([work, places]) => ({ place: placesLabel(places), work }));
 }
 
 /** "1, 2, 3, 4, 6" -> "1–4, 6": three or more consecutive numbers become a range, so nine beds fit
@@ -859,13 +920,13 @@ function numberRuns(nums: number[]): string {
 
 /** "Bed 9" + "Bed 2" + "Bed 3" + "Plot 3" -> "Beds 2, 3, 9; Plot 3": numbered beds and plots are
  *  sorted and grouped, anything else keeps its own name, in the order given. */
-export function compactPlaces(places: string[]): string {
+export function compactPlaces(places: string[], language = 'en'): string {
   const unique = [...new Set(places)];
   if (unique.length === 1) return unique[0];
   const group = (singular: string) => {
     const nums = unique.map((p) => new RegExp(`^${singular} (\\d+)$`).exec(p)?.[1]).filter((n): n is string => n !== undefined).map(Number);
     if (!nums.length) return null;
-    return nums.length === 1 ? `${singular} ${nums[0]}` : `${singular}s ${numberRuns(nums)}`;
+    return nums.length === 1 ? `${singular} ${nums[0]}` : cropExportText(`${singular}s {numbers}`, language, { numbers: numberRuns(nums) });
   };
   const others = unique.filter((p) => !/^(Bed|Plot) \d+$/.test(p));
   return [group('Bed'), group('Plot'), ...others].filter((part): part is string => !!part).join('; ');
@@ -908,7 +969,8 @@ export interface PlanTableRow {
  * `mildFrostSite` gates the frost caveat only — it never changes what is
  * sown or when; see SA_WINTER_FROST_MONTHS.
  */
-export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[], mildFrostSite = false): PlanTableRow[] {
+export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[], mildFrostSite = false, language = 'en'): PlanTableRow[] {
+  const copy = (source: string, values: Record<string, string | number> = {}) => cropExportText(source, language, values);
   const rows: PlanTableRow[] = [];
   const unitByCrop = unitByCropKey(plantings, beds);
   for (const bed of beds) {
@@ -921,29 +983,29 @@ export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[], mildF
     mine.forEach(({ p, crop }, i) => {
       const pending = p.awaitingSowingConfirmation === true;
       const pendingStamp = typeof p.once === 'string' && /^(\d{4})-(0[1-9]|1[0-2])$/.test(p.once)
-        ? `${monthShort(Number(p.once.slice(5)))} ${p.once.slice(0, 4)}` : 'dated';
+        ? `${monthShort(Number(p.once.slice(5)), language)} ${p.once.slice(0, 4)}` : null;
       const h = pending || crop.timingVerified === false ? null : harvestMonthForCrop(p.sowMonth, crop);
       const end = h === null ? null : wrapMonth(h + (crop.harvestWindowMonths ?? 0));
       const unit = unitByCrop.get(crop.key);
       const establish = pending
-        ? `Confirm ${pendingStamp} sowing`
+        ? pendingStamp ? copy('Confirm {date} sowing', { date: pendingStamp }) : copy('Confirm dated sowing')
         : crop.transplant
-        ? `Nursery ${monthShort(p.sowMonth)}`
+        ? copy('Nursery {month}', { month: monthShort(p.sowMonth, language) })
         : isLivingPieceUnit(unit)
-          ? `Plant ${unit} ${monthShort(p.sowMonth)}`
-          : `Direct sow ${monthShort(p.sowMonth)}`;
+          ? copy('Plant {unit} {month}', { unit: copy(unit), month: monthShort(p.sowMonth, language) })
+          : copy('Direct sow {month}', { month: monthShort(p.sowMonth, language) });
       rows.push({
         area: bed.label,
         isFirstOfArea: i === 0,
         crop: p.variety ? `${crop.name} - ${p.variety}` : crop.name,
-        share: shareCode(p.areaFraction ?? 1),
+        share: copy(shareCode(p.areaFraction ?? 1)),
         establish,
-        intoField: pending ? 'Not confirmed' : crop.transplant
-          ? `Check ${monthShort(bedEntryMonth(p.sowMonth, crop))}-${monthShort(latestBedEntryMonth(p.sowMonth, crop))}; transplant when ready`
-          : 'Direct',
-        harvest: pending ? 'Confirm sowing' : h === null || end === null
-          ? 'Confirm locally'
-          : h === end ? monthShort(h) : `${monthShort(h)}-${monthShort(end)}`,
+        intoField: pending ? copy('Not confirmed') : crop.transplant
+          ? copy('Check {first}-{last}; transplant when ready', { first: monthShort(bedEntryMonth(p.sowMonth, crop), language), last: monthShort(latestBedEntryMonth(p.sowMonth, crop), language) })
+          : copy('Direct'),
+        harvest: pending ? copy('Confirm sowing') : h === null || end === null
+          ? copy('Confirm locally')
+          : h === end ? monthShort(h, language) : `${monthShort(h, language)}-${monthShort(end, language)}`,
         yieldKg: pending || crop.yieldKgPerM2 === null
           ? null
           : estimatedYieldKgAdjusted(p, bed.areaM2, plantings),
@@ -951,7 +1013,7 @@ export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[], mildF
         awaitingSowingConfirmation: pending,
         frostCaveat: mildFrostSite && crop.frostTender && h !== null && end !== null
           && monthRangeHits(h, end, SA_WINTER_FROST_MONTHS)
-          ? FROST_CAVEAT_TEXT
+          ? copy(FROST_CAVEAT_TEXT)
           : null,
       });
     });

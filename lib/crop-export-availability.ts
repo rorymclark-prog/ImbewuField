@@ -10,6 +10,7 @@ import type { PlanningTreeSeason } from '@/lib/production-product-guidance';
 import type { FoodAvailabilityItem, Planting, PlanBed } from '@/lib/crop-plan';
 import { benchmarkDatedAreaConflictBedLabels, datedPlantingSowIndex, estimatedYieldKgAdjusted, occupiedMonthsForPlanting, planningMaturityMonths, TRANSPLANT_BED_RESERVED_FROM_MONTHS, TRANSPLANT_ENTRY_PLANNED_MONTHS } from '@/lib/crop-plan';
 import { SPECIES } from '@/lib/species-catalog';
+import { cropExportText } from './crop-export-copy';
 import { cropByKey, hasPlanningYield } from '@/lib/crop-catalog';
 import { sanitiseProductionRecords, sanitisePreservedFoodRecords, type DatedProductionRecord, type PreservedFoodRecord, type PreservedFoodMethod, type ProductionUnit, type ProductionDate } from '@/lib/production-records';
 export type { DatedProductionRecord, PreservedFoodRecord, PreservedFoodMethod, ProductionUnit, ProductionDate } from '@/lib/production-records';
@@ -26,10 +27,21 @@ export function forestEntries(slots: readonly TreeAvailabilityItem[][]): Availab
 const shortName = (name: string) => name.replace(/\s*\([^)]*\)\s*$/, '');
 
 const HOUSING_PRINT: Record<HousingKind, string> = { chicken: 'Coops / chicken tractors', bee: 'Hives', goat: 'Goat pens', rabbit: 'Hutches', duck: 'Duck ponds', pig: 'Pig pens', kraal: 'Kraals', pond: 'Small ponds' };
-const mapCounts = (g: { existing: number; proposed: number }) => `${g.existing} existing${g.proposed ? `; ${g.proposed} proposed` : ''}`;
+const mapCounts = (g: { existing: number; proposed: number }, language = 'en') => cropExportText(g.proposed ? '{existing} existing; {proposed} proposed' : '{existing} existing', language, { existing: g.existing, proposed: g.proposed });
+
+function printedLegalCheck(g: UnidentifiedPlantGroup, language: string): string | undefined {
+  if (!g.legalCheck) return undefined;
+  const species = SPECIES.find(species => species.id === g.speciesId);
+  if (!species || species.nemba === 'none') return g.legalCheck;
+  const source = 'Existing catalogue restriction flag: NEMBA {flag}. Legal status needs checking; kept as mapped inventory without planting advice or production dates.';
+  // This field normally comes from the catalogue adapter. A supplied note is still its author’s words.
+  return g.legalCheck === cropExportText(source, 'en', { flag: species.nemba })
+    ? cropExportText(source, language, { flag: species.nemba }) : g.legalCheck;
+}
 
 /** Never lose a placed food source just because it cannot honestly be assigned a harvest date. */
 export function undatedAvailability(opts: {
+  language?: string;
   now?: Date;
   treeGroups?: readonly PlacedTreeGroup[];
   unidentifiedPlants?: readonly UnidentifiedPlantGroup[];
@@ -41,18 +53,20 @@ export function undatedAvailability(opts: {
   includeAnimals?: boolean;
 }): NonNullable<CropPlanAvailability['undated']> {
   const entries: NonNullable<CropPlanAvailability['undated']> = [];
+  const language = opts.language ?? 'en';
+  const copy = (source: string, values?: Record<string, string | number>) => cropExportText(source, language, values);
   if (opts.includeTrees !== false) {
     for (const g of opts.treeGroups ?? []) {
       const season = confirmedTreeMonths(g.harvest, opts.treeSeasons ?? {});
       if (season.length > 0 && g.proposed === 0) continue;
       const now = opts.now ?? new Date();
-      const ageNote = treeAgeCalendarNote(g, opts.treeSeasons?.[g.harvest.speciesId], now.getFullYear() * 12 + now.getMonth());
-      entries.push({ iconKey: `tree:${g.harvest.speciesId}`, label: g.harvest.name, ...(ageNote ? { ageNote } : {}), detail: `Plants on map: ${mapCounts(g)}. ${ageNote ? `${ageNote}. ` : ''}${season.length ? `Local months: ${formatMonthSpan(season)}. Proposed plants are not a current harvest.` : 'Picking months and fruit-bearing plants need local confirmation.'}${g.referenceMissing ? ' No harvest reference is available in this plan; only local observations can supply picking months.' : ''}` });
+      const ageNote = treeAgeCalendarNote(g, opts.treeSeasons?.[g.harvest.speciesId], now.getFullYear() * 12 + now.getMonth(), language);
+      entries.push({ iconKey: `tree:${g.harvest.speciesId}`, label: g.harvest.name, ...(ageNote ? { ageNote } : {}), detail: copy('Plants on map: {counts}. {age}{season}{reference}', { counts: mapCounts(g, language), age: ageNote ? `${ageNote}. ` : '', season: season.length ? copy('Local months: {months}. Proposed plants are not a current harvest.', { months: formatMonthSpan(season, language) }) : copy('Picking months and fruit-bearing plants need local confirmation.'), reference: g.referenceMissing ? ` ${copy('No harvest reference is available in this plan; only local observations can supply picking months.')}` : '' }) });
     }
     for (const g of opts.unidentifiedPlants ?? []) entries.push({
       iconKey: g.speciesId ? `tree:${g.speciesId}` : `element:${g.defId}`,
       label: g.label,
-      detail: `${mapCounts(g)} on your map. ${g.legalCheck ?? (g.speciesId ? 'No harvest reference is available in this plan. Picking months are not recorded.' : 'Choose its species in the design, then confirm picking months locally.')}`,
+      detail: copy('{counts} on your map. {check}', { counts: mapCounts(g, language), check: printedLegalCheck(g, language) ?? copy(g.speciesId ? 'No harvest reference is available in this plan. Picking months are not recorded.' : 'Choose its species in the design, then confirm picking months locally.') }),
     });
   }
   if (opts.includeAnimals !== false) {
@@ -64,20 +78,20 @@ export function undatedAvailability(opts: {
       if (season.length > 0 && g.proposed === 0) continue;
       entries.push({
         iconKey: fits ? `animal:${e.enterpriseId}` : `housing:${g.housing}`,
-        label: fits ? `${HOUSING_PRINT[g.housing]} — ${PRODUCT_LABEL[e.product].toLowerCase()}` : HOUSING_PRINT[g.housing],
-        detail: `Structures on map: ${mapCounts(g)}. Structure counts do not show animal numbers. ${fits ? e.flowNote?.text ?? (season.length ? 'Proposed housing has no animals yet.' : 'Confirm production months for this farm before expecting this product.') : 'Choose what they are kept for. No product or production dates assumed.'}`,
+        label: fits ? `${copy(HOUSING_PRINT[g.housing])} — ${copy(PRODUCT_LABEL[e.product]).toLowerCase()}` : copy(HOUSING_PRINT[g.housing]),
+        detail: copy('Structures on map: {counts}. Structure counts do not show animal numbers. {check}', { counts: mapCounts(g, language), check: copy(fits ? e.flowNote?.text ?? (season.length ? 'Proposed housing has no animals yet.' : 'Confirm production months for this farm before expecting this product.') : 'Choose what they are kept for. No product or production dates assumed.') }),
       });
     }
   }
   return entries;
 }
 
-export function animalEntries(slots: readonly AnimalAvailabilityItem[][]): AvailabilityEntry[][] {
+export function animalEntries(slots: readonly AnimalAvailabilityItem[][], language = 'en'): AvailabilityEntry[][] {
   return slots.map((slot) => {
     const seen = new Set<string>();
     return slot.filter((a) => !seen.has(a.enterpriseId) && seen.add(a.enterpriseId)).map((a) => ({
       iconKey: `animal:${a.enterpriseId}`,
-      label: `${shortName(ANIMAL_ENTERPRISES[a.enterpriseId]?.name ?? a.animal)} - ${PRODUCT_LABEL[a.product].toLowerCase()}`,
+      label: `${shortName(ANIMAL_ENTERPRISES[a.enterpriseId]?.name ?? a.animal)} - ${cropExportText(PRODUCT_LABEL[a.product], language).toLowerCase()}`,
     }));
   });
 }
@@ -88,6 +102,7 @@ export function animalEntries(slots: readonly AnimalAvailabilityItem[][]): Avail
  * while their section explains that they are hidden.
  */
 export function printableAvailability(opts: {
+  language?: string;
   now?: Date;
   yearMode: 'established' | 'fromToday';
   planning?: { months: readonly number[]; trees: readonly PlanningTreeSeason[]; dates?: readonly { year: number; month: number }[] };
@@ -116,7 +131,7 @@ export function printableAvailability(opts: {
       const group = opts.treeGroups?.find(g => g.harvest.speciesId === tree.speciesId);
       return tree.season.months.includes(month) && (!date || !group || ageReadyForSeason(group, opts.treeSeasons?.[tree.speciesId], date.year * 12 + date.month - 1));
     }).map(tree => ({ iconKey: `tree:${tree.speciesId}`, label: tree.name, planning: tree.season }))) : undefined,
-    animals: opts.includeAnimals !== false && opts.animals ? animalEntries(opts.animals.slice(0, 12)) : undefined,
+    animals: opts.includeAnimals !== false && opts.animals ? animalEntries(opts.animals.slice(0, 12), opts.language) : undefined,
     undated: undatedAvailability(opts),
   };
 }

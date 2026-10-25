@@ -1,3 +1,4 @@
+import { recordsMonthLong, hasRecordsMonthNames } from './records-months';
 import type { CropDef, RainPattern } from './crop-catalog';
 import { cropByKey, CROPS, hasPlanningYield, MONTHS_SHORT, plantsPerM2, plantsPerM2Range } from './crop-catalog';
 import { foodGroupOf, nutritionGroupOf } from './crop-groups';
@@ -356,8 +357,10 @@ function isPlanNotesAt(value: unknown): value is number {
 /** "September 2026" — the one label both the on-screen notes panel and the
  *  printed plan derive from planNotesAt, so the two can never disagree about
  *  when the plan was suggested. en-ZA month names are the app's English names. */
-export function planNotesDateLabel(planNotesAt: number): string {
-  return new Date(planNotesAt).toLocaleDateString('en-ZA', { month: 'long', year: 'numeric' });
+export function planNotesDateLabel(planNotesAt: number, language = 'en'): string {
+  const date = new Date(planNotesAt);
+  if (!hasRecordsMonthNames(language) || !Number.isFinite(date.getTime())) return date.toLocaleDateString('en-ZA', { month: 'long', year: 'numeric' });
+  return `${recordsMonthLong(language, date.getMonth() + 1)} ${date.getFullYear()}`;
 }
 
 /**

@@ -44,6 +44,8 @@
 
 import { taskMonthsFromNow, type CropTask } from '@/lib/crop-plan';
 import { cropByKey } from '@/lib/crop-catalog';
+import { cropExportText, isCropExportDraftLanguage } from './crop-export-copy';
+import { reportDocumentText } from './report-localisation';
 import { monthLong, resolveMonthYear, sowingInstruction, taskLine, taskTitle, wrapMonth } from '@/lib/crop-export-schedule';
 
 const PRODID = '-//ImbewuField//Crop Plan//EN';
@@ -52,6 +54,8 @@ const UID_DOMAIN = 'imbewufield.app';
 const ALARM_LEAD_DAYS = 3;
 
 export interface IcsOptions {
+  /** Presentation only; event identities, cohort dates and alarms remain unchanged. */
+  language?: string;
   /** "Today" — anchors each planting cohort to its next real occurrence. Defaults to now. */
   now?: Date;
   /** DTSTAMP/LAST-MODIFIED for every event. Defaults to `now`; injectable so tests are deterministic. */
@@ -197,21 +201,22 @@ export function resolveCropTaskDate(task: CropTask, now: Date): { year: number; 
  * in five months has to answer, on its own: what am I doing, to which crop, on
  * which piece of ground, and how precise is this date really.
  */
-export function icsDescription(task: CropTask): string {
-  const lines: string[] = [`${taskLine(task)}.`];
+export function icsDescription(task: CropTask, language = 'en'): string {
+  const copy = (source: string, values?: Record<string, string | number>) => cropExportText(source, language, values);
+  const lines: string[] = [`${taskLine(task, language)}.`];
 
   // A sow task already carries spacing inside taskLine; a transplant one does
   // not, and "where does this go" is the question at transplant time.
   if (task.action === 'transplant') {
     const crop = cropByKey(task.cropKey);
-    if (crop) lines.push(`Move the tray seedlings into ${task.bedLabel} — ${sowingInstruction(crop)}.`);
+    if (crop) lines.push(copy('Move the tray seedlings into {bed} — {instruction}.', { bed: task.bedLabel, instruction: sowingInstruction(crop, language) }));
   }
 
   lines.push(
-    `Any time during ${monthLong(task.month)} is fine — this plan works in whole months, `
-    + 'so the date on this entry is a marker for the month, not the exact day.',
+    copy('Any time during {month} is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.', { month: monthLong(task.month, language) }),
   );
-  lines.push('From your ImbewuField crop plan.');
+  lines.push(copy('From your ImbewuField crop plan.'));
+  if (isCropExportDraftLanguage(language)) lines.push(reportDocumentText('Draft translation: not yet reviewed by a fluent speaker. Check the English source before acting.', language));
   return lines.join('\n');
 }
 
@@ -237,9 +242,10 @@ function pushText(out: string[], name: string, value: string): void {
  * re-import an update rather than a pile of duplicates.
  */
 export function buildCropPlanIcs(tasks: CropTask[], options: IcsOptions = {}): string {
+  const language = options.language ?? 'en';
   const now = options.now ?? new Date();
   const stamp = icsUtcTimestamp(options.stamp ?? now);
-  const calendarName = options.calendarName ?? 'ImbewuField crop plan';
+  const calendarName = options.calendarName ?? cropExportText('ImbewuField crop plan', language);
 
   const out: string[] = [];
   out.push('BEGIN:VCALENDAR');
@@ -251,7 +257,10 @@ export function buildCropPlanIcs(tasks: CropTask[], options: IcsOptions = {}): s
   // Non-standard, but Google and Apple both honour it: without a name the
   // import lands in a calendar called after the filename.
   pushText(out, 'X-WR-CALNAME', calendarName);
-  pushText(out, 'X-WR-CALDESC', 'Ground prep, sowing, transplanting, weeding and harvest for this crop plan.');
+  pushText(out, 'X-WR-CALDESC', [
+    cropExportText('Ground prep, sowing, transplanting, weeding and harvest for this crop plan.', language),
+    ...(isCropExportDraftLanguage(language) ? [reportDocumentText('Draft translation: not yet reviewed by a fluent speaker. Check the English source before acting.', language)] : []),
+  ].join('\n'));
 
   // Sorted by resolved date so the file reads chronologically if anyone opens
   // it in a text editor, and so the output order cannot depend on the order
@@ -272,8 +281,8 @@ export function buildCropPlanIcs(tasks: CropTask[], options: IcsOptions = {}): s
     push(out, 'LAST-MODIFIED', stamp);
     push(out, 'DTSTART;VALUE=DATE', icsDate(date.year, date.month, date.day));
     push(out, 'DTEND;VALUE=DATE', icsDate(end.year, end.month, end.day));
-    pushText(out, 'SUMMARY', `${task.icon} ${taskTitle(task)}`);
-    pushText(out, 'DESCRIPTION', icsDescription(task));
+    pushText(out, 'SUMMARY', `${task.icon} ${taskTitle(task, language)}`);
+    pushText(out, 'DESCRIPTION', icsDescription(task, language));
     pushText(out, 'LOCATION', task.bedLabel);
     push(out, 'CATEGORIES', 'ImbewuField');
     // A whole-month gardening job must not make the farmer look busy all day
@@ -282,7 +291,7 @@ export function buildCropPlanIcs(tasks: CropTask[], options: IcsOptions = {}): s
     out.push('BEGIN:VALARM');
     push(out, 'ACTION', 'DISPLAY');
     // Apple Calendar drops a DISPLAY alarm that has no DESCRIPTION.
-    pushText(out, 'DESCRIPTION', taskTitle(task));
+    pushText(out, 'DESCRIPTION', taskTitle(task, language));
     push(out, 'TRIGGER', `-P${ALARM_LEAD_DAYS}D`);
     out.push('END:VALARM');
     out.push('END:VEVENT');
@@ -296,10 +305,10 @@ export function buildCropPlanIcs(tasks: CropTask[], options: IcsOptions = {}): s
 }
 
 /** File-system-safe download name, same shape as the report export's. */
-export function cropPlanIcsFilename(planTitle?: string, date = new Date()): string {
+export function cropPlanIcsFilename(planTitle?: string, date = new Date(), language = 'en'): string {
   const safe = (planTitle || 'Crop-plan')
-    .normalize('NFKD')
-    .replace(/[^\w\s-]/g, '')
+    .normalize(isCropExportDraftLanguage(language) ? 'NFC' : 'NFKD')
+    .replace(isCropExportDraftLanguage(language) ? /[^\p{L}\p{N}\p{M}\s_-]/gu : /[^\w\s-]/g, '')
     .trim()
     .replace(/\s+/g, '-')
     .slice(0, 48) || 'Crop-plan';

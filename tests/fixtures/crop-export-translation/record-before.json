@@ -1,0 +1,159 @@
+{
+  "sourceSha": "dc9ade0cc9a208de55c7d0cccc6393f79257769d",
+  "functionSource": "function drawHarvestRecord(s: Sheet, input: CropPlanPdfInput): void {\n  masthead(s, 'Field record');\n  pageTitle(s, 'Plan versus reality', 'Monthly harvest and field record',\n    'Write the month: ____________________   Team: ____________________');\n\n  const h = panel(s, {\n    title: 'Write down what actually happened',\n    accent: INK.green,\n    bg: INK.panelGreen,\n    body: ['Record the date, crop, bed and actual harvest weight. Write how much was used, kept, shared or lost. These records help you check the next plan.'],\n  });\n  s.y += h + 16;\n\n  const blankRows = (cols: Column[], count: number, rowH: number) => {\n    const totalW = cols.reduce((a, c) => a + c.width, 0);\n    const widths = cols.map((c) => (c.width / totalW) * s.contentWidth);\n    s.fill(INK.green);\n    s.doc.rect(s.margin, s.y, s.contentWidth, 18, 'F');\n    s.font(7.5, true);\n    s.ink(INK.white);\n    let x = s.margin;\n    cols.forEach((c, i) => { s.doc.text(s.safe(c.header), x + 6, s.y + 12); x += widths[i]; });\n    s.y += 18;\n    for (let r = 0; r < count; r++) {\n      s.stroke(INK.rule);\n      s.doc.setLineWidth(0.4);\n      s.doc.rect(s.margin, s.y, s.contentWidth, rowH, 'S');\n      let cx = s.margin;\n      for (let i = 0; i < widths.length - 1; i++) {\n        cx += widths[i];\n        s.doc.line(cx, s.y, cx, s.y + rowH);\n      }\n      s.y += rowH;\n    }\n    s.y += 14;\n  };\n\n  s.font(10, true); s.ink(INK.text);\n  s.doc.text(s.safe('Harvest record'), s.margin, s.y); s.y += 10;\n  blankRows([\n    { key: 'a', header: 'Date', width: 48 },\n    { key: 'b', header: 'Crop / bed', width: 132 },\n    { key: 'c', header: 'Picked kg', width: 62 },\n    { key: 'd', header: 'Used kg', width: 56 },\n    { key: 'e', header: 'Stored kg', width: 62 },\n    { key: 'f', header: 'Sold/shared kg', width: 92 },\n    { key: 'g', header: 'Lost kg', width: 56 },\n  ], 10, 29);\n\n  // Eggs and honey need the same actual-record trail as vegetables. Keeping the\n  // unit beside every amount prevents a counted egg from becoming a kilogram.\n  s.page('portrait');\n  masthead(s, 'Production record');\n  pageTitle(s, 'Plan versus reality', 'Fruit, eggs, honey and other production',\n    'Write the month: ____________________   Team: ____________________');\n  const productionNote = panel(s, {\n    title: 'Use the unit you actually measured',\n    accent: INK.green,\n    bg: INK.panelGreen,\n    body: ['Write the food and its source: tree, coop, hive or bed. Use kg for weighed food, eggs for counted eggs, or jars, bunches or items. Record jar size in the source column. Keep all amounts on one row in the same unit.'],\n  });\n  s.y += productionNote + 16;\n  blankRows([\n    { key: 'date', header: 'Date', width: 46 },\n    { key: 'source', header: 'Food / source', width: 128 },\n    { key: 'amount', header: 'Collected', width: 62 },\n    { key: 'unit', header: 'Unit', width: 54 },\n    { key: 'used', header: 'Used', width: 50 },\n    { key: 'sold', header: 'Sold/shared', width: 76 },\n    { key: 'lost', header: 'Lost', width: 50 },\n  ], 10, 29);\n\n  s.font(10, true); s.ink(INK.text);\n  s.doc.text(s.safe('Weekly observation'), s.margin, s.y); s.y += 10;\n  blankRows([\n    { key: 'w', header: 'Week', width: 40 },\n    { key: 'r', header: 'Rainfall', width: 70 },\n    { key: 'i', header: 'Irrigation', width: 70 },\n    { key: 'p', header: 'Pests / disease', width: 90 },\n    { key: 'o', header: 'What we observed', width: 120 },\n    { key: 'c', header: 'What we changed', width: 120 },\n  ], 4, 27);\n\n  s.font(10, true); s.ink(INK.text);\n  s.doc.text(s.safe('Decision for next month'), s.margin, s.y); s.y += 10;\n  s.fill(INK.panelCream);\n  s.doc.rect(s.margin, s.y, s.contentWidth, 54, 'F');\n  s.y += 62;\n  s.font(8.5);\n  s.ink(INK.muted);\n  s.doc.text(s.safe('Observe. Adjust. Write it down.'), s.margin, s.y);\n}",
+  "english": [
+    "Field record",
+    "Plan versus reality",
+    "Monthly harvest and field record",
+    "Write the month: ____________________   Team: ____________________",
+    "Write down what actually happened",
+    "Record the date, crop, bed and actual harvest weight. Write how much was used, kept, shared or lost. These records help you check the next plan.",
+    "Harvest record",
+    "Date",
+    "Crop / bed",
+    "Picked kg",
+    "Used kg",
+    "Stored kg",
+    "Sold/shared kg",
+    "Lost kg",
+    "Production record",
+    "Fruit, eggs, honey and other production",
+    "Use the unit you actually measured",
+    "Write the food and its source: tree, coop, hive or bed. Use kg for weighed food, eggs for counted eggs, or jars, bunches or items. Record jar size in the source column. Keep all amounts on one row in the same unit.",
+    "Food / source",
+    "Collected",
+    "Unit",
+    "Used",
+    "Sold/shared",
+    "Lost",
+    "Weekly observation",
+    "Week",
+    "Rainfall",
+    "Irrigation",
+    "Pests / disease",
+    "What we observed",
+    "What we changed",
+    "Decision for next month",
+    "Observe. Adjust. Write it down."
+  ],
+  "tables": [
+    {
+      "count": 10,
+      "rowHeight": 29,
+      "columns": [
+        {
+          "key": "a",
+          "header": "Date",
+          "width": 48
+        },
+        {
+          "key": "b",
+          "header": "Crop / bed",
+          "width": 132
+        },
+        {
+          "key": "c",
+          "header": "Picked kg",
+          "width": 62
+        },
+        {
+          "key": "d",
+          "header": "Used kg",
+          "width": 56
+        },
+        {
+          "key": "e",
+          "header": "Stored kg",
+          "width": 62
+        },
+        {
+          "key": "f",
+          "header": "Sold/shared kg",
+          "width": 92
+        },
+        {
+          "key": "g",
+          "header": "Lost kg",
+          "width": 56
+        }
+      ]
+    },
+    {
+      "count": 10,
+      "rowHeight": 29,
+      "columns": [
+        {
+          "key": "date",
+          "header": "Date",
+          "width": 46
+        },
+        {
+          "key": "source",
+          "header": "Food / source",
+          "width": 128
+        },
+        {
+          "key": "amount",
+          "header": "Collected",
+          "width": 62
+        },
+        {
+          "key": "unit",
+          "header": "Unit",
+          "width": 54
+        },
+        {
+          "key": "used",
+          "header": "Used",
+          "width": 50
+        },
+        {
+          "key": "sold",
+          "header": "Sold/shared",
+          "width": 76
+        },
+        {
+          "key": "lost",
+          "header": "Lost",
+          "width": 50
+        }
+      ]
+    },
+    {
+      "count": 4,
+      "rowHeight": 27,
+      "columns": [
+        {
+          "key": "w",
+          "header": "Week",
+          "width": 40
+        },
+        {
+          "key": "r",
+          "header": "Rainfall",
+          "width": 70
+        },
+        {
+          "key": "i",
+          "header": "Irrigation",
+          "width": 70
+        },
+        {
+          "key": "p",
+          "header": "Pests / disease",
+          "width": 90
+        },
+        {
+          "key": "o",
+          "header": "What we observed",
+          "width": 120
+        },
+        {
+          "key": "c",
+          "header": "What we changed",
+          "width": 120
+        }
+      ]
+    }
+  ]
+}

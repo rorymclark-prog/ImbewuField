@@ -1,0 +1,83 @@
+{
+  "state": "passed",
+  "cwd": "/Users/roryclark/.codex/worktrees/four-language-reports/ImbewuField",
+  "wrapperPid": 67261,
+  "startedAt": "2026-10-25T12:40:07.396490+00:00",
+  "head": "dc9ade0cc9a208de55c7d0cccc6393f79257769d",
+  "testFiles": 563,
+  "sourceSha256": {
+    "app/facilitator/crops/page.tsx": "a463e44b02b546f812e44547007495ee5edd8efa55b238d47cdf05b725f730bd",
+    "components/crops/CropPlanExportCard.tsx": "8152ea1eb7e98ab03060adca1d9da8a197b0006811634d4ec2bebacef3141c05",
+    "lib/crop-calendar-ics.ts": "ab14e87842b0c34f1985410dfdd84ba381061f105c537f005feeefb0a1676e9a",
+    "lib/crop-export-availability.ts": "9587ba92dbf7ac99668d0f8b71197a7fb0d3005cbbd981596c7c9119d9ad0512",
+    "lib/crop-export-benchmark.ts": "b4549d0c6014cb1fcb04aa72961eb8c76cd1f72f3009f130241809d43146c384",
+    "lib/crop-export-copy-data.ts": "f227d480e246ee352c12d7d231862ecb04c638afabc9f234ff3a957761183ea5",
+    "lib/crop-export-copy.ts": "d3d2569b33a1c490f4ea1a936e1a08a8bc4f13c673dfad5e7488b94b7c19b17e",
+    "lib/crop-export-pdf.ts": "042d2d1d1f6ad023a0e5a500949dcb7f08d285448d504a9be90b7a0a9ae40ff0",
+    "lib/crop-export-schedule.ts": "18c0c4335b73557e62b7405e942a7b8c10d9e45f82dccdc55d7c031a9588ef18",
+    "lib/crop-plan.ts": "ad403a07754c136ec96dbe65ce37df1d7e3f67bfaa1cc94d4ced6f9b9ea11dd8",
+    "lib/perennial-harvest.ts": "bb216efaa1f70db1d4abde4c98f2134eb4b6703610adc77d6bb343d6163f446f",
+    "lib/production-product-guidance.ts": "66fb3e7e2a2943e0ced81fb896b5c88f910920c282b20ac32cc0271c2e6411ec",
+    "lib/production-projection.ts": "1d7c0405436d60d74be06f0e8b4e4efab2271104e343ce4fabe7a0c06ec1c9c0",
+    "lib/records-months.ts": "5ed01e34cc3bfacdc7758669a63459789a72a81c38f0f6177f00b69ac5d9b83c",
+    "lib/release-notes.ts": "8e580c0d1ea507e1ae1612dc87ee268ff8b6ab87a15a7e288bdb142b17c07e6c",
+    "lib/update-copy-locales/st.ts": "91c804b6c307920a609ddf83f4eaeef9047508c05fe93fbdbe8f7a5ff5df5604",
+    "lib/update-copy-locales/ts.ts": "66f26ce2c6e2bdfd3e5943974752479419bc4d915cc8ac66e0e5bfb59e7f71a5",
+    "lib/update-copy-locales/ve.ts": "bcc7bb51bad14d94ee2097e9b4cd163676aa9d28f5c365c5af7e72ba82e53300",
+    "lib/update-copy-locales/zu.ts": "f2559ebc90fd233e59440b461843c9fd73cd45ba1bd7579a4a667db77b4f434c",
+    "package.json": "ecf010697de87cfefc87cb03bb6ba18f5dc9c56d9e605327e98a0876a7e85b96",
+    "tests/crop-export-instruction-localization.test.ts": "bc0f4827000c7d821fdc16e81eab51f8d442fce39fe9218d276aeddfe97e9a02",
+    "tests/first-crop-localization.test.ts": "81609af4dce9a7db41fdb35204542a3e5c3aed9ab940320938a3b4c4a0d0d842",
+    "tests/fixtures/crop-export-translation/availability-before.json": "1f90ef36251245c5082174a7a4e2ed935042c582af3af330b7bb26c3466d359b",
+    "tests/fixtures/crop-export-translation/availability-paint-before.json": "8bcaf517f59070af6a01b1e2f70d67e8c3363ff4dcf531b514ae327777f3b947",
+    "tests/fixtures/crop-export-translation/builders-before.json": "7ce1220e275cb533fb34d9c107b7b040c38a0692bfc56475448a50c23610b535",
+    "tests/fixtures/crop-export-translation/dashboard-before.json": "1500552c87dbc3cce32deeef40ea989ecf1992bbfe45c3522f08e268131bda35",
+    "tests/fixtures/crop-export-translation/export-card-before.tsx.txt": "2c4069f544772156d585872a0d6d603d3b2b46dc36e6bc59e23b29d186987717",
+    "tests/fixtures/crop-export-translation/generated-availability-before.json": "4058452b8131afb30903bd628b3c76846086b70477e4effab56a4ec8ade784cb",
+    "tests/fixtures/crop-export-translation/generated-reference-paint-before.json": "67881c4d848131511ce1dfa2acecaabb5a7df8e3e2b176fa02f298a043ed9984",
+    "tests/fixtures/crop-export-translation/ics-before.json": "5ca4600506f0f8aeb9eff750eb69b574457f137bd4adceb55d72191ab8fa2a84",
+    "tests/fixtures/crop-export-translation/instructions-before.json": "8a6b334693483455d632aac5381c73e1ffd9d215c0121108384d5c6eeff5788f",
+    "tests/fixtures/crop-export-translation/native-availability-tail-before.json": "535b0d90fcf8330b2bbb0e334448746e1996976536f3f7cad24151b2e994e75c",
+    "tests/fixtures/crop-export-translation/note-date-before.json": "173100c442c6224118f235447cf84bdc2ff4518cae58ff98527fcb0fb8bc4a02",
+    "tests/fixtures/crop-export-translation/numbers-paint-before.json": "59d130c846eeba5ab59ae58937f3580eb7958d08b128bf65267c2917d23f45de",
+    "tests/fixtures/crop-export-translation/perennial-before.json": "e9dc513b9166de521c991d4e52d75f3003c66b2ee09f9e00ba5c29ffb3ad1bb2",
+    "tests/fixtures/crop-export-translation/plan-table-before.json": "e35e959494b4773114af1885149f5fd0a4c79c5198500f1e73295574ebfc091b",
+    "tests/fixtures/crop-export-translation/record-before.json": "cb7dbcceddc7b1093ad93d35f76517b163967c1570ee3379206d71d824f93817",
+    "tests/fixtures/crop-export-translation/storage-before.json": "14f0480edd625630ba3b1d8126cf0958f2dd181a5eec67506f503e2c67f07989",
+    "tests/helpers/season-translation-expectation.ts": "6363a27eabb56e916b113d884b1a3ee32151f9eed43cad09bf8dfab1c5351880",
+    "tests/product-profile-localization.test.ts": "1fd11266f896f36b6db5555310bec034ece4b569399aa2bfe7516901218fed70",
+    "tests/product-yield-localization.test.ts": "9e90df509f81e1f3f3f9092fc5b6aa618ea7f60fc0b295e3b16daed18e074ca4"
+  },
+  "stages": [
+    {
+      "name": "typecheck",
+      "exitCode": 0,
+      "log": "/Users/roryclark/.codex/worktrees/four-language-reports/ImbewuField/output/verification/2026-10-25-external-temp/typecheck.log"
+    },
+    {
+      "name": "test",
+      "exitCode": 0,
+      "log": "/Users/roryclark/.codex/worktrees/four-language-reports/ImbewuField/output/verification/2026-10-25-external-temp/test.log"
+    },
+    {
+      "name": "diff",
+      "exitCode": 0,
+      "log": "/Users/roryclark/.codex/worktrees/four-language-reports/ImbewuField/output/verification/2026-10-25-external-temp/diff.log"
+    }
+  ],
+  "recoveryReason": "Previous attempts are terminal and retained. Shared renderer temp files collided across checkouts; repo-internal TMPDIR then correctly failed the narration staging guard. External isolated TMPDIR passed both diagnostic cases2/2. Preserve every source and assertion; run the exact required commands again. No prior full pass inferred. Logs excluded from commits.",
+  "tmpdir": "/private/tmp/imbewufield-crop-checks-20261025-8f0h34kp",
+  "childPid": 6131,
+  "sourceUnchanged": true,
+  "summaryLines": [
+    "ℹ tests 5775",
+    "ℹ suites 2",
+    "ℹ pass 5774",
+    "ℹ fail 0",
+    "ℹ cancelled 0",
+    "ℹ skipped 0",
+    "ℹ todo 1",
+    "ℹ duration_ms 3722691.86575"
+  ],
+  "endedAt": "2026-10-25T13:42:14.738740+00:00"
+}

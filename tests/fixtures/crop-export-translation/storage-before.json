@@ -1,0 +1,195 @@
+{
+  "sourceSha": "dc9ade0cc9a208de55c7d0cccc6393f79257769d",
+  "input": {
+    "beds": [
+      {
+        "id": "synthetic-storage",
+        "label": "Original storage source {count} $&",
+        "areaM2": 100,
+        "kind": "bed"
+      }
+    ],
+    "plantings": [
+      {
+        "id": "storage:maize",
+        "bedId": "synthetic-storage",
+        "cropKey": "maize",
+        "sowMonth": 1
+      },
+      {
+        "id": "storage:dry-beans",
+        "bedId": "synthetic-storage",
+        "cropKey": "dry-beans",
+        "sowMonth": 1
+      },
+      {
+        "id": "storage:butternut",
+        "bedId": "synthetic-storage",
+        "cropKey": "butternut",
+        "sowMonth": 1
+      },
+      {
+        "id": "storage:pumpkin",
+        "bedId": "synthetic-storage",
+        "cropKey": "pumpkin",
+        "sowMonth": 1
+      },
+      {
+        "id": "storage:onions",
+        "bedId": "synthetic-storage",
+        "cropKey": "onions",
+        "sowMonth": 1
+      },
+      {
+        "id": "storage:sweet-potato",
+        "bedId": "synthetic-storage",
+        "cropKey": "sweet-potato",
+        "sowMonth": 1
+      },
+      {
+        "id": "storage:potato",
+        "bedId": "synthetic-storage",
+        "cropKey": "potato",
+        "sowMonth": 1
+      },
+      {
+        "id": "storage:amadumbe",
+        "bedId": "synthetic-storage",
+        "cropKey": "amadumbe",
+        "sowMonth": 1
+      },
+      {
+        "id": "storage:groundnuts",
+        "bedId": "synthetic-storage",
+        "cropKey": "groundnuts",
+        "sowMonth": 1
+      },
+      {
+        "id": "storage:garlic",
+        "bedId": "synthetic-storage",
+        "cropKey": "garlic",
+        "sowMonth": 1
+      }
+    ],
+    "tasks": [],
+    "now": "2026-10-22T08:00:00.000Z",
+    "sections": [
+      "availability"
+    ],
+    "meta": {
+      "planTitle": "Original Ṱanḓa {count} $&",
+      "siteLine": "Original source site",
+      "locationLine": "Original source location",
+      "climateLine": "Original source climate",
+      "bedsSummary": "Original saved area summary",
+      "dateLabel": "22 October 2026",
+      "estimatedKgPerYear": null,
+      "lossPercent": 25
+    },
+    "availability": {
+      "veg": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "utilization": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "includeTrees": false,
+      "includeAnimals": false
+    },
+    "availabilityDetails": true
+  },
+  "crops": [
+    {
+      "key": "maize",
+      "name": "Maize (mielies)",
+      "storageConditions": "Shelled grain dried to ≤14% moisture, kept in a clean sealed container or silo with active weevil/larger-grain-borer control.",
+      "storageMonths": 6,
+      "storageSourceUrl": "https://www.fao.org/fileadmin/user_upload/inpho/docs/Post_Harvest_Compendium_-_MAIZE.pdf"
+    },
+    {
+      "key": "dry-beans",
+      "name": "Dry beans (sugar beans)",
+      "storageConditions": "Fully dried grain (12-15% moisture), clean sealed containers, cool and dry, with bruchid/weevil control (e.g. edible-oil admix at 5ml/kg, or storage in-pod).",
+      "storageMonths": 6,
+      "storageSourceUrl": "https://openknowledge.fao.org/server/api/core/bitstreams/f298d18a-182b-4ded-9863-6d0b60bf3024/content"
+    },
+    {
+      "key": "butternut",
+      "name": "Butternut",
+      "storageConditions": "Mature hard-rind fruit, cured, clean, dry, undamaged, kept ventilated at 10-15°C/50-70% RH.",
+      "storageMonths": 2,
+      "storageSourceUrl": "https://www.fao.org/4/y4893e/y4893e06.htm"
+    },
+    {
+      "key": "pumpkin",
+      "name": "Pumpkin",
+      "storageConditions": "Mature, cured (hardened-skin) fruit, undamaged, kept ventilated at 10-15°C/50-70% RH.",
+      "storageMonths": 2,
+      "storageSourceUrl": "https://www.fao.org/4/y4893e/y4893e06.htm"
+    },
+    {
+      "key": "onions",
+      "name": "Onions",
+      "storageConditions": "Field-dried (cured, necks fully dry) bulbs held at ambient temperature in well-ventilated trays/racks.",
+      "storageMonths": 2,
+      "storageSourceUrl": "https://www.fao.org/4/t0073e/t0073e05.htm"
+    },
+    {
+      "key": "sweet-potato",
+      "name": "Sweet potato",
+      "storageConditions": "Only mature, undamaged roots; cured 30-32°C/85-90% RH for 4-7 days, then stored with minimal handling as cool as achievable (source optimum 13°C) at ~85-90% RH. The sweet potato weevil (Cylas spp.) is the main storage threat.",
+      "storageMonths": 3,
+      "storageSourceUrl": "https://www.fao.org/4/x5415e/x5415e04.htm"
+    },
+    {
+      "key": "potato",
+      "name": "Potato",
+      "storageConditions": "Cured 15-20°C/85-90% RH for 5-10 days, then kept dark and naturally ventilated averaging ~15°C or cooler, no sprout inhibitor.",
+      "storageMonths": 2,
+      "storageSourceUrl": "https://www.fao.org/4/x5415e/x5415e04.htm"
+    },
+    {
+      "key": "amadumbe",
+      "name": "Amadumbe (taro)",
+      "storageConditions": "Cool, dry, well-ventilated storage at ambient 25-30°C — traditionally heaped corms under shade or covered with straw/plantain leaves.",
+      "storageMonths": 1,
+      "storageSourceUrl": "https://www.fao.org/4/x5415e/x5415e04.htm"
+    },
+    {
+      "key": "groundnuts",
+      "name": "Groundnuts (peanuts)",
+      "storageConditions": "Unshelled (in-shell) pods dried to in-shell moisture ~10% or less, stored in gunny bags, mud bins, baskets or a ventilated dry room, protected from pests and damp.",
+      "storageMonths": 6,
+      "storageSourceUrl": "https://www.fao.org/fileadmin/user_upload/inpho/docs/Post_Harvest_Compendium_-_Groundnut.pdf"
+    },
+    {
+      "key": "garlic",
+      "name": "Garlic",
+      "storageConditions": "Well-cured bulbs (dried several weeks, dark/dry/ventilated), then kept unrefrigerated in a cool, dry, dark, well-ventilated place (e.g. mesh bags).",
+      "storageMonths": 3,
+      "storageSourceUrl": "https://www.fao.org/fileadmin/user_upload/inpho/docs/Post_Harvest_Compendium_-_Garlic.pdf"
+    }
+  ]
+}

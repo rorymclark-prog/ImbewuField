@@ -1,3 +1,4 @@
+import { translatedSeasonExpectation } from './helpers/season-translation-expectation.ts';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
@@ -56,7 +57,7 @@ test('every baseline guide keeps the complete production qualifications, exact s
      if(!native)assert.equal(item.lines[at],source);
      else{const row=packet.entries.find((r:any)=>r.english===template),note=productGuideText(reference.note??fallback,lang),values:Record<string,string>={range:formatRange(reference.value),note};assert.ok(row);assert.equal(item.lines[at],row[lang].replace(/\{(\w+)\}/g,(token:string,key:string)=>values[key]??token));assert.ok(item.lines[at].includes(note),'the whole source qualification remains, not only a native label');assert.notEqual(item.lines[at],source);assert.deepEqual(figures(item.lines[at]),figures(source));assert.ok(markdown.includes(item.lines[at]));}
     }
-    assert.equal(item.title,c.guide.foodForest[index].title);assert.deepEqual(item.sources,c.guide.foodForest[index].sources);assert.deepEqual(item.expectedSeason,c.guide.foodForest[index].expectedSeason);
+    assert.equal(item.title,c.guide.foodForest[index].title);assert.deepEqual(item.sources,c.guide.foodForest[index].sources);assert.deepEqual(item.expectedSeason,translatedSeasonExpectation(c.guide.foodForest[index].expectedSeason,context.trees[index],lang));
    }
   }
   assert.equal(JSON.stringify(context),before);

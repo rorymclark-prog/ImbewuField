@@ -1,0 +1,208 @@
+{
+  "rows": [
+    {
+      "file": "en-before-availability-dated.pdf",
+      "pages": 4,
+      "words": 537,
+      "clipped": [],
+      "pixelHashes": [
+        "aad5ac0bed11098f64b46423345ffd53b1af9787b7443499ba54321113cca494",
+        "58bdbccb7f48210f45bdf954d3b0cb355baeff7d6a0c5a9b26eb1501c5fc10dc",
+        "88555192236a6ff2af1fc1c4a7eaf87e9c042f5116b3f9399efc9726bf437c01",
+        "645769d5c57ad3d1d679851a16e13bbe1f97c4c5ff59b6ecef4c6a715ed3ea11"
+      ]
+    },
+    {
+      "file": "en-after-availability-dated.pdf",
+      "pages": 4,
+      "words": 537,
+      "clipped": [],
+      "pixelHashes": [
+        "aad5ac0bed11098f64b46423345ffd53b1af9787b7443499ba54321113cca494",
+        "58bdbccb7f48210f45bdf954d3b0cb355baeff7d6a0c5a9b26eb1501c5fc10dc",
+        "88555192236a6ff2af1fc1c4a7eaf87e9c042f5116b3f9399efc9726bf437c01",
+        "645769d5c57ad3d1d679851a16e13bbe1f97c4c5ff59b6ecef4c6a715ed3ea11"
+      ]
+    },
+    {
+      "file": "zu-availability-dated.pdf",
+      "pages": 5,
+      "words": 652,
+      "clipped": [],
+      "pixelHashes": [
+        "f48ac5da09afbbaec10693bf4ecfb4e41e66a8b0315e2338bc131119407758a9",
+        "8ac82b2b8deffe28ef885532b8c9389a65e87d42bc7c0a29f9e291acf4c870fc",
+        "ca977b6b4581e1325d7636519dc366b658fce2fe529071ff7afdcfff78fd6073",
+        "d495d0bf027089edea61033ca3ed467c19bdc926d62a54cd6040ff8e32046bf7",
+        "064167ac6d573ed71c2014785c72fa6290bf013f4efb6775b6a4a86688c4aa4c"
+      ]
+    },
+    {
+      "file": "st-availability-dated.pdf",
+      "pages": 5,
+      "words": 957,
+      "clipped": [],
+      "pixelHashes": [
+        "eaf3c668aa6ff32ae6ced411fbd4dd3362b1af8fb59e38cea8189989b112093d",
+        "901139036a70acc9760e8c0e905b4d132fc1097ef76174be3e8bd83d646dcb23",
+        "94ed53f30261829da82349b6cbe82fb8f542ad7fac95b94177c34a646c5b9662",
+        "9b04c76453d8c4687718a6d9ed4e545b8a6a9d5c414f8c17dd1f90a89250c51c",
+        "b788b9eb21608aaf74757e20b63210801eafe14907106ede496ef6059e032166"
+      ]
+    },
+    {
+      "file": "ts-availability-dated.pdf",
+      "pages": 5,
+      "words": 967,
+      "clipped": [],
+      "pixelHashes": [
+        "52a73f52391f154b5237f853a9571611c23c43fe57f6b61721366343f4bb4c53",
+        "cb5f7b7577e5935f2eb8e68901dc87711f36b8fc31a4ea27fb48f42dd8fe0ddd",
+        "9709bf7c3c5f0acf9c9eb3f6c82e259a01ee0d33a807cc3c08c13ad1a158122e",
+        "a2935ce32414af7160b680cb59cd846e3f6ad7750ae27d1bb52f95873bf9e464",
+        "655b34856a7861863428bab9560ea9e96a1d7dbca2920bcf7ba98f5ab24937ba"
+      ]
+    },
+    {
+      "file": "ve-availability-dated.pdf",
+      "pages": 5,
+      "words": 1003,
+      "clipped": [],
+      "pixelHashes": [
+        "81434c19e41086f4221e8b811df7b3f8ae27f21a8d398059e0945930703c6858",
+        "32184946fa498bd1fea5459657feb4b487b82939d93ddd690647f79d29830917",
+        "badf5226aaee93d93e46373fa207502a90236e9ba48c1f9f68c0f8c6711310a4",
+        "987471e44ec5ab9ca516aa3a88778679d2a40f79e36c2e7116c7b1f7dc2c0c9b",
+        "53baf46b4b96b10ce1e609f2477cd1c58a26004797ece64d6f6a2334d61f4d02"
+      ]
+    },
+    {
+      "file": "en-before-availability-repeat.pdf",
+      "pages": 2,
+      "words": 322,
+      "clipped": [],
+      "pixelHashes": [
+        "4db3581911e4b7d89b0ca394f89aab5d9d1a2c7d68a52977e6cf0f2a0da0f18e",
+        "11110e861b3ee6f246b82999f30bb890e2c10d1d7af64922556eca444f2df944"
+      ]
+    },
+    {
+      "file": "en-after-availability-repeat.pdf",
+      "pages": 2,
+      "words": 322,
+      "clipped": [],
+      "pixelHashes": [
+        "4db3581911e4b7d89b0ca394f89aab5d9d1a2c7d68a52977e6cf0f2a0da0f18e",
+        "11110e861b3ee6f246b82999f30bb890e2c10d1d7af64922556eca444f2df944"
+      ]
+    },
+    {
+      "file": "zu-availability-repeat.pdf",
+      "pages": 2,
+      "words": 325,
+      "clipped": [],
+      "pixelHashes": [
+        "a236b6f70a86ecdec262f04d8c7d3d1bb6de293e47e77e00dd0b26998191b489",
+        "09e7b7e7eaf11ddef35030c76030f238fffb1690f3cc6ea1132f1a29ae124224"
+      ]
+    },
+    {
+      "file": "st-availability-repeat.pdf",
+      "pages": 2,
+      "words": 458,
+      "clipped": [],
+      "pixelHashes": [
+        "4a662733434c4fc24b475d68757ce43e775208fb7bfa72c94c2686c248c84d3e",
+        "6cd1e4f84ab43618db72fff2e7ffeb6b62226c07b3216913494eaef474a6b777"
+      ]
+    },
+    {
+      "file": "ts-availability-repeat.pdf",
+      "pages": 2,
+      "words": 466,
+      "clipped": [],
+      "pixelHashes": [
+        "21ebe38625f99ffcbcbbd9fa01cce4889d9a95e2653107c47311795c7dbd07e1",
+        "92cb401727176c2e23bc76e3978dd450713da5812993979875d9ba0e121b1b22"
+      ]
+    },
+    {
+      "file": "ve-availability-repeat.pdf",
+      "pages": 2,
+      "words": 486,
+      "clipped": [],
+      "pixelHashes": [
+        "4742232fca1583ec55b86d6917ac0428125ecccddffcf2c4f55d3e6f9388686e",
+        "236eab3449e8e054e2f2d95fe367b57faa983ddfd754dd5bff3762287f3cfdab"
+      ]
+    },
+    {
+      "file": "en-before-availability-hidden.pdf",
+      "pages": 1,
+      "words": 237,
+      "clipped": [],
+      "pixelHashes": [
+        "26d69f5db22bfd6171ef18df6f126dcfac4528a4d84b24e32c887818993fe3f5"
+      ]
+    },
+    {
+      "file": "en-after-availability-hidden.pdf",
+      "pages": 1,
+      "words": 237,
+      "clipped": [],
+      "pixelHashes": [
+        "26d69f5db22bfd6171ef18df6f126dcfac4528a4d84b24e32c887818993fe3f5"
+      ]
+    },
+    {
+      "file": "zu-availability-hidden.pdf",
+      "pages": 1,
+      "words": 224,
+      "clipped": [],
+      "pixelHashes": [
+        "ab7e503035358730a0bf9b4836cbcdd3654ac0dd863f7e0ba3e7b3a48f690d9d"
+      ]
+    },
+    {
+      "file": "st-availability-hidden.pdf",
+      "pages": 1,
+      "words": 338,
+      "clipped": [],
+      "pixelHashes": [
+        "1342c121d47d711cad5d8bd5be0a30b74094e4a1bd669963d59f7d1066aca49b"
+      ]
+    },
+    {
+      "file": "ts-availability-hidden.pdf",
+      "pages": 1,
+      "words": 342,
+      "clipped": [],
+      "pixelHashes": [
+        "c09aabd3ac1d5219b53033ad93ffca631e9eddd91a98349a0a09a745061c94f6"
+      ]
+    },
+    {
+      "file": "ve-availability-hidden.pdf",
+      "pages": 1,
+      "words": 348,
+      "clipped": [],
+      "pixelHashes": [
+        "f2f1c2e97e994132759d94600488d52e40a6a655d020e00812e6a2342042d09a"
+      ]
+    }
+  ],
+  "english": {
+    "dated": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "repeat": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "hidden": {
+      "samePixels": true,
+      "sameText": true
+    }
+  }
+}

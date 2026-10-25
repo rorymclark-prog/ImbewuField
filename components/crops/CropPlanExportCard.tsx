@@ -13,6 +13,7 @@
 
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/lib/i18n';
+import { cropExportText, isCropExportDraftLanguage } from '@/lib/crop-export-copy';
 import { Share2, CalendarPlus, Hourglass, Download, ClipboardList } from 'lucide-react';
 import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
 import type { PlanNote } from '@/lib/crop-autosuggest';
@@ -60,12 +61,16 @@ export interface CropPlanExportCardProps {
 }
 
 type Busy = 'ics' | 'pdf' | null;
-const cropUi = (lang: string, english: string, isiZulu: string) => lang === 'zu' ? isiZulu : english;
+type ExportStatus = { source: string; values?: Record<string, string | number>; englishDetail?: string };
+const message = (source: string, values?: Record<string, string | number>, englishDetail?: string): ExportStatus => ({ source, values, englishDetail });
+const cropUi = (lang: string, english: string, isiZulu: string) => lang === 'zu' ? isiZulu : cropExportText(english, lang);
 
 export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, sections, availabilityDetails, preservedProducts, productionRecords, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, productionProjection, poultryGuidance }: CropPlanExportCardProps) {
   const { lang } = useLanguage();
+  const copy = (source: string, values?: Record<string, string | number>) => cropExportText(source, lang, values);
   const [busy, setBusy] = useState<Busy>(null);
-  const [status, setStatus] = useState<string | null>(null);
+  const [status, setStatus] = useState<ExportStatus | null>(null);
+  const statusText = status && (!isCropExportDraftLanguage(lang) && status.englishDetail ? status.englishDetail : copy(status.source, status.values));
   const [quickPrintFormat, setQuickPrintFormat] = useState<CropPlanPageFormat>('a4');
   const empty = tasks.length === 0;
 
@@ -74,21 +79,21 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
     setBusy('ics');
     setStatus(null);
     try {
-      const ics = buildCropPlanIcs(tasks, { calendarName: `ImbewuField - ${meta.planTitle}`, now, stamp: new Date() });
+      const ics = buildCropPlanIcs(tasks, { calendarName: `ImbewuField - ${meta.planTitle}`, now, stamp: new Date(), language: lang });
       // The charset matters: crop names carry an emoji icon and bed labels
       // carry 'ü' (Hügel). Without it some clients guess Latin-1 and the
       // farmer sees mojibake in every event title.
       const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-      const how = await deliverFile(blob, cropPlanIcsFilename(meta.planTitle), 'ImbewuField production plan');
+      const how = await deliverFile(blob, cropPlanIcsFilename(meta.planTitle, new Date(), lang), copy("ImbewuField production plan"));
       setStatus(
         how === 'cancelled'
-          ? 'Sharing cancelled — no file was sent.'
+          ? message("Sharing cancelled — no file was sent.")
           : how === 'shared'
-          ? `Shared ${tasks.length} tasks — open the file to add them to your calendar.`
-          : `Downloaded ${tasks.length} tasks — open the .ics file to add them to your calendar.`,
+          ? message('Shared {count} tasks — open the file to add them to your calendar.', { count: tasks.length })
+          : message('Downloaded {count} tasks — open the .ics file to add them to your calendar.', { count: tasks.length }),
       );
     } catch (err) {
-      setStatus(`Could not build the calendar file: ${err instanceof Error ? err.message : 'unknown error'}`);
+      setStatus(message('Could not build the calendar file. Please try again.', undefined, `Could not build the calendar file: ${err instanceof Error ? err.message : 'unknown error'}`));
     } finally {
       setBusy(null);
     }
@@ -110,69 +115,69 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
   }, []);
 
   async function withPdf(
-    run: (blob: Blob) => string | Promise<string>,
+    run: (blob: Blob) => ExportStatus | Promise<ExportStatus>,
     overrides?: Pick<CropPlanPdfInput, 'sections' | 'pageFormat' | 'availabilityDetails'>,
   ) {
     if (busy) return;
     setBusy('pdf');
     setStatus(null);
     try {
-      const input: CropPlanPdfInput = { plantings, beds, tasks, meta, now, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, productionProjection, poultryGuidance, sections: sections ?? FARMER_SECTIONS, availabilityDetails, preservedProducts, productionRecords, ...overrides };
+      const input: CropPlanPdfInput = { plantings, beds, tasks, meta: { ...meta, language: lang }, now, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, productionProjection, poultryGuidance, sections: sections ?? FARMER_SECTIONS, availabilityDetails, preservedProducts, productionRecords, ...overrides };
       // Both month views reuse the app's pictures: crops growing in beds, and food to pick.
       const wantsIcons = !input.sections || input.sections.includes('availability') || input.sections.includes('calendar') || input.sections.includes('projection');
       const icons = wantsIcons ? await loadPdfIcons(availabilityIconKeys(input)) : undefined;
       const blob = await buildCropPlanPdf({ ...input, icons });
       setStatus(await run(blob));
     } catch (err) {
-      setStatus(`Could not build the PDF: ${err instanceof Error ? err.message : 'unknown error'}`);
+      setStatus(message('Could not build the PDF. Please try again.', undefined, `Could not build the PDF: ${err instanceof Error ? err.message : 'unknown error'}`));
     } finally {
       setBusy(null);
     }
   }
 
-  const downloadedStatus = 'Plan saved to your downloads — open it to print.';
-  const openedStatus = "Opened in a new tab — use your browser's Print button there.";
+  const downloadedStatus = message("Plan saved to your downloads — open it to print.");
+  const openedStatus = message("Opened in a new tab — use your browser's Print button there.");
   const exportPdf = () => withPdf(async (blob) => {
-    const how = await deliverFile(blob, cropPlanPdfFilename(meta.planTitle), 'ImbewuField production plan');
-    return how === 'cancelled' ? 'Sharing cancelled — no file was sent.'
-      : how === 'shared' ? 'Plan shared — save it to your files or send it on.' : downloadedStatus;
+    const how = await deliverFile(blob, cropPlanPdfFilename(meta.planTitle, new Date(), undefined, lang), copy("ImbewuField production plan"));
+    return how === 'cancelled' ? message("Sharing cancelled — no file was sent.")
+      : how === 'shared' ? message("Plan shared — save it to your files or send it on.") : downloadedStatus;
   });
 
   const downloadPdf = () => withPdf((blob) => {
-    downloadFile(blob, cropPlanPdfFilename(meta.planTitle));
+    downloadFile(blob, cropPlanPdfFilename(meta.planTitle, new Date(), undefined, lang));
     return downloadedStatus;
   });
 
   const sharePdf = () => withPdf(async (blob) => {
-    const how = await shareFile(blob, cropPlanPdfFilename(meta.planTitle), 'ImbewuField production plan');
-    if (how === 'cancelled') return 'Sharing cancelled — no file was sent.';
-    if (how === 'shared') return 'Plan shared.';
-    downloadFile(blob, cropPlanPdfFilename(meta.planTitle));
-    return 'Sharing was unavailable — the plan was saved to your downloads.';
+    const how = await shareFile(blob, cropPlanPdfFilename(meta.planTitle, new Date(), undefined, lang), copy("ImbewuField production plan"));
+    if (how === 'cancelled') return message("Sharing cancelled — no file was sent.");
+    if (how === 'shared') return message("Plan shared.");
+    downloadFile(blob, cropPlanPdfFilename(meta.planTitle, new Date(), undefined, lang));
+    return message("Sharing was unavailable — the plan was saved to your downloads.");
   });
 
   const printPdf = () => withPdf((blob) => {
     if (openFileInTab(blob)) return openedStatus;
-    downloadFile(blob, cropPlanPdfFilename(meta.planTitle));
-    return 'The new tab was blocked — open the downloaded plan to print.';
+    downloadFile(blob, cropPlanPdfFilename(meta.planTitle, new Date(), undefined, lang));
+    return message("The new tab was blocked — open the downloaded plan to print.");
   });
 
   const referencePdf = () => withPdf((blob) => {
-    downloadFile(blob, cropPlanPdfFilename(meta.planTitle, new Date(), 'reference'));
-    return 'Detailed reference saved to your downloads.';
+    downloadFile(blob, cropPlanPdfFilename(meta.planTitle, new Date(), 'reference', lang));
+    return message("Detailed reference saved to your downloads.");
   }, { sections: ALL_SECTIONS, availabilityDetails: true });
 
   const futurePdf = () => withPdf((blob) => {
-    downloadFile(blob, cropPlanPdfFilename(meta.planTitle, new Date(), 'future-harvest'));
-    return 'Future harvest PDF saved to your downloads.';
+    downloadFile(blob, cropPlanPdfFilename(meta.planTitle, new Date(), 'future-harvest', lang));
+    return message("Future harvest PDF saved to your downloads.");
   }, { sections: ['projection'] });
 
   // The wall calendar stays concise; the farmer copy and the separate future
   // harvest download retain the age groups, projected production and sources.
   const quickPrint = () => withPdf((blob) => {
     if (openFileInTab(blob)) return openedStatus;
-    downloadFile(blob, cropPlanPdfFilename(meta.planTitle, new Date(), `quick-print-${quickPrintFormat}`));
-    return 'The new tab was blocked — open the downloaded calendar to print.';
+    downloadFile(blob, cropPlanPdfFilename(meta.planTitle, new Date(), `quick-print-${quickPrintFormat}`, lang));
+    return message("The new tab was blocked — open the downloaded calendar to print.");
   }, { sections: ['availability', 'calendar', 'taskSummary'], pageFormat: quickPrintFormat, availabilityDetails: false });
 
   const buttonStyle = (primary: boolean, disabled: boolean) => ({
@@ -193,12 +198,12 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
         <Share2 size={14} aria-hidden style={{ flexShrink: 0 }} /> {cropUi(lang, 'Take this plan with you', 'Hamba nalolu hlelo')}
       </div>
       <p className="font-sans mb-3" style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.55 }}>
-        Files are made on this device. Download a copy to use away from the app.
+        {copy("Files are made on this device. Download a copy to use away from the app.")}
       </p>
-      <p className="font-sans mb-3" style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.55 }}>Your plan includes vegetables, fruit, nuts, berries and animal products from your map.</p>
-      {lang === 'zu' && (
+      <p className="font-sans mb-3" style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.55 }}>{copy("Your plan includes vegetables, fruit, nuts, berries and animal products from your map.")}</p>
+      {isCropExportDraftLanguage(lang) && (
         <p role="note" className="font-sans mb-3" style={{ fontSize: 11.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-          Draft notice: exported task names, planting times and instructions remain in English pending source and local farming review. Isaziso: amagama emisebenzi, izikhathi zokutshala nemiyalelo kumafayela athunyelwayo kuseNgisini kuze kubuyekezwe imithombo nolwazi lwezolimo lwendawo.
+          {copy('Calendar translations await language and local farming review. PDF labels and instructions are not fully translated yet.')}
         </p>
       )}
 
@@ -208,21 +213,21 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
           disabled={empty || busy !== null}
           className="font-display font-semibold inline-flex items-center gap-1.5"
           style={buttonStyle(true, empty || busy !== null)}
-          title={empty ? 'Add some crops first — there are no tasks to export yet' : 'Every task of the year as a calendar file'}
+          title={empty ? copy("Add some crops first — there are no tasks to export yet") : copy("Every task of the year as a calendar file")}
         >
           {busy === 'ics'
             ? <><Hourglass size={14} aria-hidden /> {cropUi(lang, 'Building…', 'Kwakhiwa…')}</>
-            : <><CalendarPlus size={14} aria-hidden /> {empty ? cropUi(lang, 'Add tasks to calendar', 'Engeza imisebenzi ekhalendeni') : `${cropUi(lang, 'Add', 'Engeza')} ${tasks.length} ${lang === 'zu' ? (tasks.length === 1 ? 'umsebenzi ekhalendeni' : 'imisebenzi ekhalendeni') : 'tasks to calendar'}`}</>}
+            : <><CalendarPlus size={14} aria-hidden /> {empty ? cropUi(lang, 'Add tasks to calendar', 'Engeza imisebenzi ekhalendeni') : lang === 'zu' ? `Engeza ${tasks.length} ${tasks.length === 1 ? 'umsebenzi ekhalendeni' : 'imisebenzi ekhalendeni'}` : copy('Add {count} tasks to calendar', { count: tasks.length })}</>}
         </button>
         <button
           onClick={exportPdf}
           disabled={busy !== null}
           className="font-display font-semibold inline-flex items-center gap-1.5"
           style={buttonStyle(false, busy !== null)}
-          title={sections ? 'Download the selected plan sections shown below' : 'See each crop growing in its bed over the months, pictures of what to pick, what to buy and monthly jobs'}
+          title={sections ? copy("Download the selected plan sections shown below") : copy("See each crop growing in its bed over the months, pictures of what to pick, what to buy and monthly jobs")}
         >
           {busy === 'pdf'
-            ? <><Hourglass size={14} aria-hidden /> Building…</>
+            ? <><Hourglass size={14} aria-hidden /> {copy("Building…")}</>
             : shareFirst
             ? <><Share2 size={14} aria-hidden /> {cropUi(lang, 'Share the plan (PDF)', 'Yabelana ngohlelo (PDF)')}</>
               : <><Download size={14} aria-hidden /> {cropUi(lang, 'Download the plan (PDF)', 'Landa uhlelo (PDF)')}</>}
@@ -235,7 +240,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
           disabled={busy !== null}
           className="font-display font-semibold inline-flex items-center gap-1.5"
           style={buttonStyle(false, busy !== null)}
-          title="Crops growing in each bed, pictures of what to pick and monthly jobs — for pinning on a wall"
+          title={copy("Crops growing in each bed, pictures of what to pick and monthly jobs — for pinning on a wall")}
         >
           {busy === 'pdf'
             ? <><Hourglass size={14} aria-hidden /> {cropUi(lang, 'Building…', 'Kwakhiwa…')}</>
@@ -247,8 +252,8 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
           disabled={busy !== null}
           className="font-sans rounded-lg"
           style={{ fontSize: 12, minHeight: 44, padding: '6px 8px', border: '1px solid var(--border)', color: 'var(--text-secondary)', background: 'var(--bg-2)' }}
-          aria-label="Calendar paper size"
-          title="Paper size — pick A3 or A2 for a wall-sized print"
+          aria-label={copy("Calendar paper size")}
+          title={copy("Paper size — pick A3 or A2 for a wall-sized print")}
         >
           <option value="a4">A4</option>
           <option value="a3">A3</option>
@@ -257,12 +262,12 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
       </div>
 
       <div className="font-sans flex flex-wrap items-center gap-x-3 mt-2" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-        Or:{' '}
+        {copy("Or:")}{' '}
         <button onClick={printPdf} disabled={busy !== null} className="underline" style={{ color: 'var(--text-primary)', minHeight: 44, textAlign: 'left' }}>
           {cropUi(lang, 'open it to print', 'yivule ukuze uphrinte')}
         </button>
-        <button onClick={futurePdf} disabled={busy !== null || !productionProjection} className="underline" style={{ color: 'var(--text-primary)', minHeight: 44, textAlign: 'left' }}>Future harvest PDF</button>
-        <button onClick={referencePdf} disabled={busy !== null} className="underline" style={{ color: 'var(--text-primary)', minHeight: 44, textAlign: 'left' }}>Detailed reference PDF</button>
+        <button onClick={futurePdf} disabled={busy !== null || !productionProjection} className="underline" style={{ color: 'var(--text-primary)', minHeight: 44, textAlign: 'left' }}>{copy("Future harvest PDF")}</button>
+        <button onClick={referencePdf} disabled={busy !== null} className="underline" style={{ color: 'var(--text-primary)', minHeight: 44, textAlign: 'left' }}>{copy("Detailed reference PDF")}</button>
         {shareFirst && (
           <>
             <button onClick={downloadPdf} disabled={busy !== null} className="underline" style={{ color: 'var(--text-primary)', minHeight: 44, textAlign: 'left' }}>
@@ -280,17 +285,16 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
       </div>
 
       <details className="font-sans mt-2.5" style={{ fontSize: 11, color: 'var(--text-secondary)', lineHeight: 1.55 }}>
-        <summary style={{ cursor: 'pointer', minHeight: 44, paddingTop: 12 }}>What each file contains</summary>
-        The calendar file works with Google Calendar and Apple Calendar. Tasks land as whole-day entries on the
-        first of their month — this plan works in months, not exact days — with a reminder three days before.
-        The printed plan shows each crop growing in its bed across the months, like the app, plus pictures of what you can pick.
-        {!sections && ' It also has what to buy, monthly tick-off jobs and a harvest record.'}
-        {' '}Picking dates for trees and animals must be confirmed locally; plants and housing with unknown dates stay listed on the plan. The separate Future harvest PDF has the ten-year graph and age groups. Calendar &amp; jobs gives concise wall sheets in your chosen paper size. Record animal numbers and care checks in the site survey; confirm production months in this plan. The detailed reference includes the full bed-by-bed plan, benchmarks, buying lists, guidance, monthly field sheets and harvest records.
-        {sections && <p>Selected booklet sections: {sections.map(section => ({ calendar: 'bed calendar', availability: 'food calendar', availabilityGraphs: 'food and growing-space graphs', projection: 'future harvest', taskSummary: 'monthly jobs', dashboard: 'overview', numbers: 'benchmarks', guidance: 'guidance', plan: 'planting plan', buying: 'buying lists', fieldsheets: 'field sheets', record: 'harvest records' })[section]).join(', ')}.</p>}
+        <summary style={{ cursor: 'pointer', minHeight: 44, paddingTop: 12 }}>{copy("What each file contains")}</summary>
+        {copy('The calendar file works with Google Calendar and Apple Calendar. Tasks land as whole-day entries on the first of their month — this plan works in months, not exact days — with a reminder three days before.')}
+        {' '}{copy('The printed plan shows each crop growing in its bed across the months, like the app, plus pictures of what you can pick.')}
+        {!sections && ' ' + copy('It also has what to buy, monthly tick-off jobs and a harvest record.')}
+        {' '}{copy('Picking dates for trees and animals must be confirmed locally; plants and housing with unknown dates stay listed on the plan. The separate Future harvest PDF has the ten-year graph and age groups. Calendar & jobs gives concise wall sheets in your chosen paper size. Record animal numbers and care checks in the site survey; confirm production months in this plan. The detailed reference includes the full bed-by-bed plan, benchmarks, buying lists, guidance, monthly field sheets and harvest records.')}
+        {sections && <p>{copy('Selected booklet sections: {sections}.', { sections: sections.map(section => ({ calendar: copy("bed calendar"), availability: copy("food calendar"), availabilityGraphs: copy("food and growing-space graphs"), projection: copy("future harvest"), taskSummary: copy("monthly jobs"), dashboard: copy("overview"), numbers: copy("benchmarks"), guidance: copy("guidance"), plan: copy("planting plan"), buying: copy("buying lists"), fieldsheets: copy("field sheets"), record: copy("harvest records") })[section]).join(', ') })}</p>}
       </details>
 
       {status && (
-        <div role="status" aria-live="polite" className="font-sans mt-2" style={{ fontSize: 12, color: 'var(--text-primary)' }}>{status}</div>
+        <div role="status" aria-live="polite" className="font-sans mt-2" style={{ fontSize: 12, color: 'var(--text-primary)' }}>{statusText}</div>
       )}
     </div>
   );

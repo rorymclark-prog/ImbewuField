@@ -1,0 +1,198 @@
+{
+  "rows": [
+    {
+      "file": "en-before-dashboard-unconfirmed.pdf",
+      "pages": 2,
+      "words": 708,
+      "clipped": [],
+      "pixelHashes": [
+        "558e1bedca82d38be6925c124d104624bd9dfa537c946be328ea278a8eb3fec6",
+        "f3a4e298bfc76e48ce2e4130453ea1ca6f6b320614657191cf90741c8fe029da"
+      ]
+    },
+    {
+      "file": "en-after-dashboard-unconfirmed.pdf",
+      "pages": 2,
+      "words": 708,
+      "clipped": [],
+      "pixelHashes": [
+        "558e1bedca82d38be6925c124d104624bd9dfa537c946be328ea278a8eb3fec6",
+        "f3a4e298bfc76e48ce2e4130453ea1ca6f6b320614657191cf90741c8fe029da"
+      ]
+    },
+    {
+      "file": "zu-dashboard-unconfirmed.pdf",
+      "pages": 2,
+      "words": 620,
+      "clipped": [],
+      "pixelHashes": [
+        "71152573debeadc7c1b17122074de211d0fde7372c3d56b065aeab4456a19ce3",
+        "44db6815879a07d6dfd291684b4151f7f8bd577f95e7b6e2bdae48b18b40ff8d"
+      ]
+    },
+    {
+      "file": "st-dashboard-unconfirmed.pdf",
+      "pages": 2,
+      "words": 1011,
+      "clipped": [],
+      "pixelHashes": [
+        "11cf52d177057e785e2d016c6b0123985fea751a425f9e30cceebdf45efd8e15",
+        "c35287b32009c0e1ff15324c6b30245040c5897b82364ab9f3be42d3e2d0d2d9"
+      ]
+    },
+    {
+      "file": "ts-dashboard-unconfirmed.pdf",
+      "pages": 2,
+      "words": 1031,
+      "clipped": [],
+      "pixelHashes": [
+        "7657c482d6e84cc7c03302c491ae74e1ae6308ffbfbae1f5cbe10268e9865e7e",
+        "838da3c93c29d3174ba1d0a5d34704b1f139adacd90436bdcf82240d0c5ef964"
+      ]
+    },
+    {
+      "file": "ve-dashboard-unconfirmed.pdf",
+      "pages": 2,
+      "words": 1031,
+      "clipped": [],
+      "pixelHashes": [
+        "ea0d7923359f4765cebab525167c371cc983fa4b72d3f5c89fa487cddd22b72e",
+        "24eb743abc85d15c04e21dc234ee277d3df1d89d4083b45d0d518e2b3963e6f8"
+      ]
+    },
+    {
+      "file": "en-before-dashboard-confirmed.pdf",
+      "pages": 2,
+      "words": 696,
+      "clipped": [],
+      "pixelHashes": [
+        "a1c3aa02ace7cb4e19b5565f369a133a82c476f6f44e6ea6c2b392b2baebdfbf",
+        "f3a4e298bfc76e48ce2e4130453ea1ca6f6b320614657191cf90741c8fe029da"
+      ]
+    },
+    {
+      "file": "en-after-dashboard-confirmed.pdf",
+      "pages": 2,
+      "words": 696,
+      "clipped": [],
+      "pixelHashes": [
+        "a1c3aa02ace7cb4e19b5565f369a133a82c476f6f44e6ea6c2b392b2baebdfbf",
+        "f3a4e298bfc76e48ce2e4130453ea1ca6f6b320614657191cf90741c8fe029da"
+      ]
+    },
+    {
+      "file": "zu-dashboard-confirmed.pdf",
+      "pages": 2,
+      "words": 607,
+      "clipped": [],
+      "pixelHashes": [
+        "1ec09b3b5640cc057b3733b92c5020cac25d46ea5f20c48d96018499d2788ac2",
+        "1ffcf212a8811a79cc54af316bbed24efeee419f5ff78145235bee4f63bbd6ef"
+      ]
+    },
+    {
+      "file": "st-dashboard-confirmed.pdf",
+      "pages": 2,
+      "words": 995,
+      "clipped": [],
+      "pixelHashes": [
+        "80d400c2f437d65cbded5674494ae1c9c3e411033a4d635f1cf72dd9d9c607f7",
+        "acc66693e9479b7554b86c97ff294ba6453d5bf91d7f6cd7790975b16ede9e59"
+      ]
+    },
+    {
+      "file": "ts-dashboard-confirmed.pdf",
+      "pages": 2,
+      "words": 1007,
+      "clipped": [],
+      "pixelHashes": [
+        "5d6335d75217cad06edd4fc4abbe23d9fbf3093be2c694ad89016c7e5dd0b187",
+        "a9b859a6e371fc5c7ffb4104f3f969e999e45ec310b9b417b1e84e8ec1953345"
+      ]
+    },
+    {
+      "file": "ve-dashboard-confirmed.pdf",
+      "pages": 2,
+      "words": 1016,
+      "clipped": [],
+      "pixelHashes": [
+        "574b0dcb2860ab0333f086f54598b4fb35bd9876df2ffc19da28c5b94d8c395f",
+        "fdfa3c01881dac8c5fbe904ece7c6f782c87183204f598bc50d934086ab5afb0"
+      ]
+    },
+    {
+      "file": "en-before-dashboard-conflict.pdf",
+      "pages": 2,
+      "words": 698,
+      "clipped": [],
+      "pixelHashes": [
+        "702adfa20fd94d1549330cd39ac7fd6a4b166315245f1cd0f0ab20881e020b83",
+        "f3a4e298bfc76e48ce2e4130453ea1ca6f6b320614657191cf90741c8fe029da"
+      ]
+    },
+    {
+      "file": "en-after-dashboard-conflict.pdf",
+      "pages": 2,
+      "words": 698,
+      "clipped": [],
+      "pixelHashes": [
+        "702adfa20fd94d1549330cd39ac7fd6a4b166315245f1cd0f0ab20881e020b83",
+        "f3a4e298bfc76e48ce2e4130453ea1ca6f6b320614657191cf90741c8fe029da"
+      ]
+    },
+    {
+      "file": "zu-dashboard-conflict.pdf",
+      "pages": 2,
+      "words": 616,
+      "clipped": [],
+      "pixelHashes": [
+        "a22139147b861b951e9833a7a978409d882b29092f72359d53f8704f5ad9858e",
+        "718cada0db3cb65cc50d09eb1634ab7f7ac2322691e39191ab6fe8208eec4e57"
+      ]
+    },
+    {
+      "file": "st-dashboard-conflict.pdf",
+      "pages": 2,
+      "words": 1013,
+      "clipped": [],
+      "pixelHashes": [
+        "9c5a9134c386d847eae7e02155984f1109093632b04ffc415778239d0f9efc96",
+        "18fbcc3dd179a895269e02c7dad4ac1e9718cd3c0c446d49e6e2433d370df22e"
+      ]
+    },
+    {
+      "file": "ts-dashboard-conflict.pdf",
+      "pages": 2,
+      "words": 1024,
+      "clipped": [],
+      "pixelHashes": [
+        "e9b2a3265e1cba093d3e71211b0c2e5ac358fdaf4f0e1728c81c35d64540b7b8",
+        "b2916fc5f158ae5b0e8cdbe030e8ce77ce7610dae72814fa0966dc4e914d5ded"
+      ]
+    },
+    {
+      "file": "ve-dashboard-conflict.pdf",
+      "pages": 2,
+      "words": 1026,
+      "clipped": [],
+      "pixelHashes": [
+        "9d36dad29314f18e8e6b92781008c82105235dddf9e1130a01036b5d09b2911b",
+        "0915da6bda9f0bbc7d436a0a64a353562e8d95b90037ca21e85dbf63350b32df"
+      ]
+    }
+  ],
+  "english": {
+    "unconfirmed": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "confirmed": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "conflict": {
+      "samePixels": true,
+      "sameText": true
+    }
+  }
+}

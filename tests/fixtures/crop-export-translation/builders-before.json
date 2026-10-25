@@ -1,0 +1,3789 @@
+{
+  "sourceSha": "dc9ade0cc9a208de55c7d0cccc6393f79257769d",
+  "now": "2026-10-22T08:00:00.000Z",
+  "crops": 49,
+  "tasks": 166,
+  "rows": [
+    {
+      "id": "all-source-crops",
+      "outputs": {
+        "dashboardUnconfirmed": {
+          "stats": [
+            {
+              "value": "294.0 m²",
+              "label": "growing space",
+              "detail": "25 beds + 24 staple plots"
+            },
+            {
+              "value": "221.3 kg",
+              "label": "known benchmark total",
+              "detail": "verified kg/m² crop entries only"
+            },
+            {
+              "value": "0.75 kg/m²",
+              "label": "benchmark density",
+              "detail": "known total ÷ whole growing area, to compare plans"
+            },
+            {
+              "value": "Not calculated",
+              "label": "loss-adjusted total",
+              "detail": "confirm a loss allowance from actual records"
+            },
+            {
+              "value": "9/12",
+              "label": "fresh-picking months",
+              "detail": "timing windows only; no monthly kg inferred"
+            }
+          ],
+          "signals": [
+            "Cabbage has the largest known benchmark volume at 18.0 kg.",
+            "Tomatoes follows in the benchmark comparison at 18.0 kg.",
+            "African nightshade (umsobo), Amadumbe (taro), Amaranth (imbuya/thepe), Coriander, Cowpea (imbumba/dinawa), Mung bean, Radish, Spider plant (Cleome gynandra) have no verified kg/m² benchmark and are excluded from every kg total, not counted as 0kg.",
+            "Mar, Jun, Aug carry the most planned jobs — counted as jobs, not hours.",
+            "400 bed-months of the year have no crop in the ground."
+          ],
+          "decisions": [
+            "Compare the cabbage benchmark with actual harvest records before planning storage or sales.",
+            "Check actual household demand and recorded harvests; the benchmark comparison is not a meal or surplus guarantee.",
+            "Check who is available before the Mar-Aug job peak, and time the work against real hours.",
+            "Confirm a loss allowance from actual records before calculating a usable total."
+          ],
+          "grossKg": 221.2979999999999,
+          "netKg": null,
+          "freshPickingMonths": 9,
+          "storedFoodMonths": 3,
+          "storedFoodCrops": [
+            "Dry beans (sugar beans)",
+            "Maize (mielies)",
+            "Onions",
+            "Potato"
+          ],
+          "unknownYieldCrops": [
+            "African nightshade (umsobo)",
+            "Amadumbe (taro)",
+            "Amaranth (imbuya/thepe)",
+            "Coriander",
+            "Cowpea (imbumba/dinawa)",
+            "Mung bean",
+            "Radish",
+            "Spider plant (Cleome gynandra)"
+          ],
+          "hasKnownYield": true,
+          "areaConflictBedLabels": []
+        },
+        "dashboardConfirmed": {
+          "stats": [
+            {
+              "value": "294.0 m²",
+              "label": "growing space",
+              "detail": "25 beds + 24 staple plots"
+            },
+            {
+              "value": "221.3 kg",
+              "label": "known benchmark total",
+              "detail": "verified kg/m² crop entries only"
+            },
+            {
+              "value": "0.75 kg/m²",
+              "label": "benchmark density",
+              "detail": "known total ÷ whole growing area, to compare plans"
+            },
+            {
+              "value": "166.0 kg",
+              "label": "known total after 25% loss",
+              "detail": "uses the loss allowance you confirmed"
+            },
+            {
+              "value": "9/12",
+              "label": "fresh-picking months",
+              "detail": "timing windows only; no monthly kg inferred"
+            }
+          ],
+          "signals": [
+            "Cabbage has the largest known benchmark volume at 18.0 kg.",
+            "Tomatoes follows in the benchmark comparison at 18.0 kg.",
+            "African nightshade (umsobo), Amadumbe (taro), Amaranth (imbuya/thepe), Coriander, Cowpea (imbumba/dinawa), Mung bean, Radish, Spider plant (Cleome gynandra) have no verified kg/m² benchmark and are excluded from every kg total, not counted as 0kg.",
+            "Mar, Jun, Aug carry the most planned jobs — counted as jobs, not hours.",
+            "400 bed-months of the year have no crop in the ground."
+          ],
+          "decisions": [
+            "Compare the cabbage benchmark with actual harvest records before planning storage or sales.",
+            "Check actual household demand and recorded harvests; the benchmark comparison is not a meal or surplus guarantee.",
+            "Check who is available before the Mar-Aug job peak, and time the work against real hours."
+          ],
+          "grossKg": 221.2979999999999,
+          "netKg": 165.97349999999992,
+          "freshPickingMonths": 9,
+          "storedFoodMonths": 3,
+          "storedFoodCrops": [
+            "Dry beans (sugar beans)",
+            "Maize (mielies)",
+            "Onions",
+            "Potato"
+          ],
+          "unknownYieldCrops": [
+            "African nightshade (umsobo)",
+            "Amadumbe (taro)",
+            "Amaranth (imbuya/thepe)",
+            "Coriander",
+            "Cowpea (imbumba/dinawa)",
+            "Mung bean",
+            "Radish",
+            "Spider plant (Cleome gynandra)"
+          ],
+          "hasKnownYield": true,
+          "areaConflictBedLabels": []
+        },
+        "planTable": [
+          {
+            "area": "Original Ṱanḓa {count} $& 0",
+            "isFirstOfArea": true,
+            "crop": "Maize (mielies)",
+            "share": "Full",
+            "establish": "Direct sow Jan",
+            "intoField": "Direct",
+            "harvest": "Jun",
+            "yieldKg": 1.7999999999999998,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 1",
+            "isFirstOfArea": true,
+            "crop": "Dry beans (sugar beans)",
+            "share": "Full",
+            "establish": "Direct sow Feb",
+            "intoField": "Direct",
+            "harvest": "Jun",
+            "yieldKg": 1.2000000000000002,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 2",
+            "isFirstOfArea": true,
+            "crop": "Green beans",
+            "share": "Full",
+            "establish": "Direct sow Mar",
+            "intoField": "Direct",
+            "harvest": "May",
+            "yieldKg": 3,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 3",
+            "isFirstOfArea": true,
+            "crop": "Butternut",
+            "share": "Full",
+            "establish": "Direct sow Apr",
+            "intoField": "Direct",
+            "harvest": "Aug-Sep",
+            "yieldKg": 7.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 4",
+            "isFirstOfArea": true,
+            "crop": "Pumpkin",
+            "share": "Full",
+            "establish": "Direct sow May",
+            "intoField": "Direct",
+            "harvest": "Oct-Nov",
+            "yieldKg": 7.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 5",
+            "isFirstOfArea": true,
+            "crop": "Swiss chard (spinach)",
+            "share": "Full",
+            "establish": "Direct sow Jun",
+            "intoField": "Direct",
+            "harvest": "Aug-Nov",
+            "yieldKg": 12,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 6",
+            "isFirstOfArea": true,
+            "crop": "Kale",
+            "share": "Full",
+            "establish": "Nursery Jul",
+            "intoField": "Check Aug-Oct; transplant when ready",
+            "harvest": "Jan",
+            "yieldKg": 9,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 7",
+            "isFirstOfArea": true,
+            "crop": "Cabbage",
+            "share": "Full",
+            "establish": "Nursery Aug",
+            "intoField": "Check Sep-Nov; transplant when ready",
+            "harvest": "Mar",
+            "yieldKg": 18,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 8",
+            "isFirstOfArea": true,
+            "crop": "Carrots",
+            "share": "Full",
+            "establish": "Direct sow Sep",
+            "intoField": "Direct",
+            "harvest": "Jan",
+            "yieldKg": 12,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 9",
+            "isFirstOfArea": true,
+            "crop": "Beetroot",
+            "share": "Full",
+            "establish": "Direct sow Oct",
+            "intoField": "Direct",
+            "harvest": "Jan-Feb",
+            "yieldKg": 8.399999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 10",
+            "isFirstOfArea": true,
+            "crop": "Onions",
+            "share": "Full",
+            "establish": "Nursery Nov",
+            "intoField": "Check Dec-Feb; transplant when ready",
+            "harvest": "Jul",
+            "yieldKg": 9,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 11",
+            "isFirstOfArea": true,
+            "crop": "Tomatoes",
+            "share": "Full",
+            "establish": "Nursery Dec",
+            "intoField": "Check Jan-Mar; transplant when ready",
+            "harvest": "May-Jul",
+            "yieldKg": 18,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 12",
+            "isFirstOfArea": true,
+            "crop": "Peppers",
+            "share": "Full",
+            "establish": "Nursery Jan",
+            "intoField": "Check Feb-Apr; transplant when ready",
+            "harvest": "Jun-Aug",
+            "yieldKg": 12,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 13",
+            "isFirstOfArea": true,
+            "crop": "Chilli",
+            "share": "Full",
+            "establish": "Nursery Feb",
+            "intoField": "Check Mar-May; transplant when ready",
+            "harvest": "Jul-Sep",
+            "yieldKg": 6,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 14",
+            "isFirstOfArea": true,
+            "crop": "Sweet potato",
+            "share": "Full",
+            "establish": "Plant slips Mar",
+            "intoField": "Direct",
+            "harvest": "Aug-Sep",
+            "yieldKg": 9,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 15",
+            "isFirstOfArea": true,
+            "crop": "Potato",
+            "share": "Full",
+            "establish": "Plant seed potatoes Apr",
+            "intoField": "Direct",
+            "harvest": "Aug",
+            "yieldKg": 6,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 16",
+            "isFirstOfArea": true,
+            "crop": "Lettuce",
+            "share": "Full",
+            "establish": "Nursery May",
+            "intoField": "Check Jun-Aug; transplant when ready",
+            "harvest": "Oct",
+            "yieldKg": 7.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 17",
+            "isFirstOfArea": true,
+            "crop": "Amadumbe (taro)",
+            "share": "Full",
+            "establish": "Plant corms Jun",
+            "intoField": "Direct",
+            "harvest": "Apr",
+            "yieldKg": null,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 18",
+            "isFirstOfArea": true,
+            "crop": "Groundnuts (peanuts)",
+            "share": "Full",
+            "establish": "Direct sow Jul",
+            "intoField": "Direct",
+            "harvest": "Jan",
+            "yieldKg": 0.72,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 19",
+            "isFirstOfArea": true,
+            "crop": "Garlic",
+            "share": "Full",
+            "establish": "Plant cloves Aug",
+            "intoField": "Direct",
+            "harvest": "Mar",
+            "yieldKg": 3.5999999999999996,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 20",
+            "isFirstOfArea": true,
+            "crop": "Peas",
+            "share": "Full",
+            "establish": "Direct sow Sep",
+            "intoField": "Direct",
+            "harvest": "Dec",
+            "yieldKg": 2.4000000000000004,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 21",
+            "isFirstOfArea": true,
+            "crop": "Broad beans (fava beans)",
+            "share": "Full",
+            "establish": "Direct sow Oct",
+            "intoField": "Direct",
+            "harvest": "Feb-Mar",
+            "yieldKg": 1.7999999999999998,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 22",
+            "isFirstOfArea": true,
+            "crop": "Broccoli",
+            "share": "Full",
+            "establish": "Nursery Nov",
+            "intoField": "Check Dec-Feb; transplant when ready",
+            "harvest": "Apr-May",
+            "yieldKg": 3,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 23",
+            "isFirstOfArea": true,
+            "crop": "Cucumber",
+            "share": "Full",
+            "establish": "Direct sow Dec",
+            "intoField": "Direct",
+            "harvest": "Mar",
+            "yieldKg": 7.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 24",
+            "isFirstOfArea": true,
+            "crop": "Watermelon",
+            "share": "Full",
+            "establish": "Direct sow Jan",
+            "intoField": "Direct",
+            "harvest": "May-Jun",
+            "yieldKg": 7.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 25",
+            "isFirstOfArea": true,
+            "crop": "Coriander",
+            "share": "Full",
+            "establish": "Direct sow Feb",
+            "intoField": "Direct",
+            "harvest": "Apr",
+            "yieldKg": null,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 26",
+            "isFirstOfArea": true,
+            "crop": "Oats (winter cover crop)",
+            "share": "Full",
+            "establish": "Direct sow Mar",
+            "intoField": "Direct",
+            "harvest": "Sep",
+            "yieldKg": 0,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 27",
+            "isFirstOfArea": true,
+            "crop": "True spinach (English spinach)",
+            "share": "Full",
+            "establish": "Direct sow Apr",
+            "intoField": "Direct",
+            "harvest": "Jun",
+            "yieldKg": 4.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 28",
+            "isFirstOfArea": true,
+            "crop": "Turnips",
+            "share": "Full",
+            "establish": "Direct sow May",
+            "intoField": "Direct",
+            "harvest": "Aug",
+            "yieldKg": 6,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 29",
+            "isFirstOfArea": true,
+            "crop": "Amaranth (imbuya/thepe)",
+            "share": "Full",
+            "establish": "Direct sow Jun",
+            "intoField": "Direct",
+            "harvest": "Aug",
+            "yieldKg": null,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 30",
+            "isFirstOfArea": true,
+            "crop": "Cauliflower",
+            "share": "Full",
+            "establish": "Nursery Jul",
+            "intoField": "Check Aug-Oct; transplant when ready",
+            "harvest": "Feb",
+            "yieldKg": 4.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 31",
+            "isFirstOfArea": true,
+            "crop": "Parsley",
+            "share": "Full",
+            "establish": "Direct sow Aug",
+            "intoField": "Direct",
+            "harvest": "Nov",
+            "yieldKg": 1.2000000000000002,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 32",
+            "isFirstOfArea": true,
+            "crop": "Sorghum",
+            "share": "Full",
+            "establish": "Direct sow Sep",
+            "intoField": "Direct",
+            "harvest": "Feb",
+            "yieldKg": 0.46199999999999997,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 33",
+            "isFirstOfArea": true,
+            "crop": "Soybean",
+            "share": "Full",
+            "establish": "Direct sow Oct",
+            "intoField": "Direct",
+            "harvest": "Mar",
+            "yieldKg": 1.5,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 34",
+            "isFirstOfArea": true,
+            "crop": "Brinjal (eggplant)",
+            "share": "Full",
+            "establish": "Nursery Nov",
+            "intoField": "Check Dec-Feb; transplant when ready",
+            "harvest": "Apr",
+            "yieldKg": 7.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 35",
+            "isFirstOfArea": true,
+            "crop": "Gem squash",
+            "share": "Full",
+            "establish": "Direct sow Dec",
+            "intoField": "Direct",
+            "harvest": "Mar",
+            "yieldKg": 7.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 36",
+            "isFirstOfArea": true,
+            "crop": "Baby marrow (courgette)",
+            "share": "Full",
+            "establish": "Direct sow Jan",
+            "intoField": "Direct",
+            "harvest": "Mar",
+            "yieldKg": 4.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 37",
+            "isFirstOfArea": true,
+            "crop": "Spanspek (sweet melon)",
+            "share": "Full",
+            "establish": "Direct sow Feb",
+            "intoField": "Direct",
+            "harvest": "Jun",
+            "yieldKg": 7.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 38",
+            "isFirstOfArea": true,
+            "crop": "Sweetcorn",
+            "share": "Full",
+            "establish": "Direct sow Mar",
+            "intoField": "Direct",
+            "harvest": "Jun",
+            "yieldKg": 4.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 39",
+            "isFirstOfArea": true,
+            "crop": "Cowpea (imbumba/dinawa)",
+            "share": "Full",
+            "establish": "Direct sow Apr",
+            "intoField": "Direct",
+            "harvest": "Aug",
+            "yieldKg": null,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 40",
+            "isFirstOfArea": true,
+            "crop": "Bambara groundnut (jugo bean)",
+            "share": "Full",
+            "establish": "Direct sow May",
+            "intoField": "Direct",
+            "harvest": "Oct",
+            "yieldKg": 0.096,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 41",
+            "isFirstOfArea": true,
+            "crop": "Sunflower (for seed)",
+            "share": "Full",
+            "establish": "Direct sow Jun",
+            "intoField": "Direct",
+            "harvest": "Nov",
+            "yieldKg": 0.72,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 42",
+            "isFirstOfArea": true,
+            "crop": "Radish",
+            "share": "Full",
+            "establish": "Direct sow Jul",
+            "intoField": "Direct",
+            "harvest": "Aug",
+            "yieldKg": null,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 43",
+            "isFirstOfArea": true,
+            "crop": "Mung bean",
+            "share": "Full",
+            "establish": "Direct sow Aug",
+            "intoField": "Direct",
+            "harvest": "Nov",
+            "yieldKg": null,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 44",
+            "isFirstOfArea": true,
+            "crop": "Spider plant (Cleome gynandra)",
+            "share": "Full",
+            "establish": "Nursery Sep",
+            "intoField": "Check Oct-Dec; transplant when ready",
+            "harvest": "Jan",
+            "yieldKg": null,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 45",
+            "isFirstOfArea": true,
+            "crop": "African nightshade (umsobo)",
+            "share": "Full",
+            "establish": "Nursery Oct",
+            "intoField": "Check Nov-Jan; transplant when ready",
+            "harvest": "Jan",
+            "yieldKg": null,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 46",
+            "isFirstOfArea": true,
+            "crop": "Sunn hemp (cover crop)",
+            "share": "Full",
+            "establish": "Direct sow Nov",
+            "intoField": "Direct",
+            "harvest": "Confirm locally",
+            "yieldKg": 0,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 47",
+            "isFirstOfArea": true,
+            "crop": "Medic (cover crop)",
+            "share": "Full",
+            "establish": "Direct sow Dec",
+            "intoField": "Direct",
+            "harvest": "Confirm locally",
+            "yieldKg": 0,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 48",
+            "isFirstOfArea": true,
+            "crop": "Fodder radish (cover crop)",
+            "share": "Full",
+            "establish": "Direct sow Jan",
+            "intoField": "Direct",
+            "harvest": "Confirm locally",
+            "yieldKg": 0,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          }
+        ],
+        "planTableMildFrost": [
+          {
+            "area": "Original Ṱanḓa {count} $& 0",
+            "isFirstOfArea": true,
+            "crop": "Maize (mielies)",
+            "share": "Full",
+            "establish": "Direct sow Jan",
+            "intoField": "Direct",
+            "harvest": "Jun",
+            "yieldKg": 1.7999999999999998,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": "Frost-tender: finish picking before the first frost or cover on clear, still nights."
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 1",
+            "isFirstOfArea": true,
+            "crop": "Dry beans (sugar beans)",
+            "share": "Full",
+            "establish": "Direct sow Feb",
+            "intoField": "Direct",
+            "harvest": "Jun",
+            "yieldKg": 1.2000000000000002,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": "Frost-tender: finish picking before the first frost or cover on clear, still nights."
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 2",
+            "isFirstOfArea": true,
+            "crop": "Green beans",
+            "share": "Full",
+            "establish": "Direct sow Mar",
+            "intoField": "Direct",
+            "harvest": "May",
+            "yieldKg": 3,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 3",
+            "isFirstOfArea": true,
+            "crop": "Butternut",
+            "share": "Full",
+            "establish": "Direct sow Apr",
+            "intoField": "Direct",
+            "harvest": "Aug-Sep",
+            "yieldKg": 7.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 4",
+            "isFirstOfArea": true,
+            "crop": "Pumpkin",
+            "share": "Full",
+            "establish": "Direct sow May",
+            "intoField": "Direct",
+            "harvest": "Oct-Nov",
+            "yieldKg": 7.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 5",
+            "isFirstOfArea": true,
+            "crop": "Swiss chard (spinach)",
+            "share": "Full",
+            "establish": "Direct sow Jun",
+            "intoField": "Direct",
+            "harvest": "Aug-Nov",
+            "yieldKg": 12,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 6",
+            "isFirstOfArea": true,
+            "crop": "Kale",
+            "share": "Full",
+            "establish": "Nursery Jul",
+            "intoField": "Check Aug-Oct; transplant when ready",
+            "harvest": "Jan",
+            "yieldKg": 9,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 7",
+            "isFirstOfArea": true,
+            "crop": "Cabbage",
+            "share": "Full",
+            "establish": "Nursery Aug",
+            "intoField": "Check Sep-Nov; transplant when ready",
+            "harvest": "Mar",
+            "yieldKg": 18,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 8",
+            "isFirstOfArea": true,
+            "crop": "Carrots",
+            "share": "Full",
+            "establish": "Direct sow Sep",
+            "intoField": "Direct",
+            "harvest": "Jan",
+            "yieldKg": 12,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 9",
+            "isFirstOfArea": true,
+            "crop": "Beetroot",
+            "share": "Full",
+            "establish": "Direct sow Oct",
+            "intoField": "Direct",
+            "harvest": "Jan-Feb",
+            "yieldKg": 8.399999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 10",
+            "isFirstOfArea": true,
+            "crop": "Onions",
+            "share": "Full",
+            "establish": "Nursery Nov",
+            "intoField": "Check Dec-Feb; transplant when ready",
+            "harvest": "Jul",
+            "yieldKg": 9,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 11",
+            "isFirstOfArea": true,
+            "crop": "Tomatoes",
+            "share": "Full",
+            "establish": "Nursery Dec",
+            "intoField": "Check Jan-Mar; transplant when ready",
+            "harvest": "May-Jul",
+            "yieldKg": 18,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": "Frost-tender: finish picking before the first frost or cover on clear, still nights."
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 12",
+            "isFirstOfArea": true,
+            "crop": "Peppers",
+            "share": "Full",
+            "establish": "Nursery Jan",
+            "intoField": "Check Feb-Apr; transplant when ready",
+            "harvest": "Jun-Aug",
+            "yieldKg": 12,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": "Frost-tender: finish picking before the first frost or cover on clear, still nights."
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 13",
+            "isFirstOfArea": true,
+            "crop": "Chilli",
+            "share": "Full",
+            "establish": "Nursery Feb",
+            "intoField": "Check Mar-May; transplant when ready",
+            "harvest": "Jul-Sep",
+            "yieldKg": 6,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": "Frost-tender: finish picking before the first frost or cover on clear, still nights."
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 14",
+            "isFirstOfArea": true,
+            "crop": "Sweet potato",
+            "share": "Full",
+            "establish": "Plant slips Mar",
+            "intoField": "Direct",
+            "harvest": "Aug-Sep",
+            "yieldKg": 9,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 15",
+            "isFirstOfArea": true,
+            "crop": "Potato",
+            "share": "Full",
+            "establish": "Plant seed potatoes Apr",
+            "intoField": "Direct",
+            "harvest": "Aug",
+            "yieldKg": 6,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 16",
+            "isFirstOfArea": true,
+            "crop": "Lettuce",
+            "share": "Full",
+            "establish": "Nursery May",
+            "intoField": "Check Jun-Aug; transplant when ready",
+            "harvest": "Oct",
+            "yieldKg": 7.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 17",
+            "isFirstOfArea": true,
+            "crop": "Amadumbe (taro)",
+            "share": "Full",
+            "establish": "Plant corms Jun",
+            "intoField": "Direct",
+            "harvest": "Apr",
+            "yieldKg": null,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 18",
+            "isFirstOfArea": true,
+            "crop": "Groundnuts (peanuts)",
+            "share": "Full",
+            "establish": "Direct sow Jul",
+            "intoField": "Direct",
+            "harvest": "Jan",
+            "yieldKg": 0.72,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 19",
+            "isFirstOfArea": true,
+            "crop": "Garlic",
+            "share": "Full",
+            "establish": "Plant cloves Aug",
+            "intoField": "Direct",
+            "harvest": "Mar",
+            "yieldKg": 3.5999999999999996,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 20",
+            "isFirstOfArea": true,
+            "crop": "Peas",
+            "share": "Full",
+            "establish": "Direct sow Sep",
+            "intoField": "Direct",
+            "harvest": "Dec",
+            "yieldKg": 2.4000000000000004,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 21",
+            "isFirstOfArea": true,
+            "crop": "Broad beans (fava beans)",
+            "share": "Full",
+            "establish": "Direct sow Oct",
+            "intoField": "Direct",
+            "harvest": "Feb-Mar",
+            "yieldKg": 1.7999999999999998,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 22",
+            "isFirstOfArea": true,
+            "crop": "Broccoli",
+            "share": "Full",
+            "establish": "Nursery Nov",
+            "intoField": "Check Dec-Feb; transplant when ready",
+            "harvest": "Apr-May",
+            "yieldKg": 3,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 23",
+            "isFirstOfArea": true,
+            "crop": "Cucumber",
+            "share": "Full",
+            "establish": "Direct sow Dec",
+            "intoField": "Direct",
+            "harvest": "Mar",
+            "yieldKg": 7.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 24",
+            "isFirstOfArea": true,
+            "crop": "Watermelon",
+            "share": "Full",
+            "establish": "Direct sow Jan",
+            "intoField": "Direct",
+            "harvest": "May-Jun",
+            "yieldKg": 7.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": "Frost-tender: finish picking before the first frost or cover on clear, still nights."
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 25",
+            "isFirstOfArea": true,
+            "crop": "Coriander",
+            "share": "Full",
+            "establish": "Direct sow Feb",
+            "intoField": "Direct",
+            "harvest": "Apr",
+            "yieldKg": null,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 26",
+            "isFirstOfArea": true,
+            "crop": "Oats (winter cover crop)",
+            "share": "Full",
+            "establish": "Direct sow Mar",
+            "intoField": "Direct",
+            "harvest": "Sep",
+            "yieldKg": 0,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 27",
+            "isFirstOfArea": true,
+            "crop": "True spinach (English spinach)",
+            "share": "Full",
+            "establish": "Direct sow Apr",
+            "intoField": "Direct",
+            "harvest": "Jun",
+            "yieldKg": 4.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 28",
+            "isFirstOfArea": true,
+            "crop": "Turnips",
+            "share": "Full",
+            "establish": "Direct sow May",
+            "intoField": "Direct",
+            "harvest": "Aug",
+            "yieldKg": 6,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 29",
+            "isFirstOfArea": true,
+            "crop": "Amaranth (imbuya/thepe)",
+            "share": "Full",
+            "establish": "Direct sow Jun",
+            "intoField": "Direct",
+            "harvest": "Aug",
+            "yieldKg": null,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 30",
+            "isFirstOfArea": true,
+            "crop": "Cauliflower",
+            "share": "Full",
+            "establish": "Nursery Jul",
+            "intoField": "Check Aug-Oct; transplant when ready",
+            "harvest": "Feb",
+            "yieldKg": 4.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 31",
+            "isFirstOfArea": true,
+            "crop": "Parsley",
+            "share": "Full",
+            "establish": "Direct sow Aug",
+            "intoField": "Direct",
+            "harvest": "Nov",
+            "yieldKg": 1.2000000000000002,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 32",
+            "isFirstOfArea": true,
+            "crop": "Sorghum",
+            "share": "Full",
+            "establish": "Direct sow Sep",
+            "intoField": "Direct",
+            "harvest": "Feb",
+            "yieldKg": 0.46199999999999997,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 33",
+            "isFirstOfArea": true,
+            "crop": "Soybean",
+            "share": "Full",
+            "establish": "Direct sow Oct",
+            "intoField": "Direct",
+            "harvest": "Mar",
+            "yieldKg": 1.5,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 34",
+            "isFirstOfArea": true,
+            "crop": "Brinjal (eggplant)",
+            "share": "Full",
+            "establish": "Nursery Nov",
+            "intoField": "Check Dec-Feb; transplant when ready",
+            "harvest": "Apr",
+            "yieldKg": 7.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 35",
+            "isFirstOfArea": true,
+            "crop": "Gem squash",
+            "share": "Full",
+            "establish": "Direct sow Dec",
+            "intoField": "Direct",
+            "harvest": "Mar",
+            "yieldKg": 7.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 36",
+            "isFirstOfArea": true,
+            "crop": "Baby marrow (courgette)",
+            "share": "Full",
+            "establish": "Direct sow Jan",
+            "intoField": "Direct",
+            "harvest": "Mar",
+            "yieldKg": 4.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 37",
+            "isFirstOfArea": true,
+            "crop": "Spanspek (sweet melon)",
+            "share": "Full",
+            "establish": "Direct sow Feb",
+            "intoField": "Direct",
+            "harvest": "Jun",
+            "yieldKg": 7.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": "Frost-tender: finish picking before the first frost or cover on clear, still nights."
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 38",
+            "isFirstOfArea": true,
+            "crop": "Sweetcorn",
+            "share": "Full",
+            "establish": "Direct sow Mar",
+            "intoField": "Direct",
+            "harvest": "Jun",
+            "yieldKg": 4.199999999999999,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": "Frost-tender: finish picking before the first frost or cover on clear, still nights."
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 39",
+            "isFirstOfArea": true,
+            "crop": "Cowpea (imbumba/dinawa)",
+            "share": "Full",
+            "establish": "Direct sow Apr",
+            "intoField": "Direct",
+            "harvest": "Aug",
+            "yieldKg": null,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 40",
+            "isFirstOfArea": true,
+            "crop": "Bambara groundnut (jugo bean)",
+            "share": "Full",
+            "establish": "Direct sow May",
+            "intoField": "Direct",
+            "harvest": "Oct",
+            "yieldKg": 0.096,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 41",
+            "isFirstOfArea": true,
+            "crop": "Sunflower (for seed)",
+            "share": "Full",
+            "establish": "Direct sow Jun",
+            "intoField": "Direct",
+            "harvest": "Nov",
+            "yieldKg": 0.72,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 42",
+            "isFirstOfArea": true,
+            "crop": "Radish",
+            "share": "Full",
+            "establish": "Direct sow Jul",
+            "intoField": "Direct",
+            "harvest": "Aug",
+            "yieldKg": null,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 43",
+            "isFirstOfArea": true,
+            "crop": "Mung bean",
+            "share": "Full",
+            "establish": "Direct sow Aug",
+            "intoField": "Direct",
+            "harvest": "Nov",
+            "yieldKg": null,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 44",
+            "isFirstOfArea": true,
+            "crop": "Spider plant (Cleome gynandra)",
+            "share": "Full",
+            "establish": "Nursery Sep",
+            "intoField": "Check Oct-Dec; transplant when ready",
+            "harvest": "Jan",
+            "yieldKg": null,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 45",
+            "isFirstOfArea": true,
+            "crop": "African nightshade (umsobo)",
+            "share": "Full",
+            "establish": "Nursery Oct",
+            "intoField": "Check Nov-Jan; transplant when ready",
+            "harvest": "Jan",
+            "yieldKg": null,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 46",
+            "isFirstOfArea": true,
+            "crop": "Sunn hemp (cover crop)",
+            "share": "Full",
+            "establish": "Direct sow Nov",
+            "intoField": "Direct",
+            "harvest": "Confirm locally",
+            "yieldKg": 0,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 47",
+            "isFirstOfArea": true,
+            "crop": "Medic (cover crop)",
+            "share": "Full",
+            "establish": "Direct sow Dec",
+            "intoField": "Direct",
+            "harvest": "Confirm locally",
+            "yieldKg": 0,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          },
+          {
+            "area": "Original Ṱanḓa {count} $& 48",
+            "isFirstOfArea": true,
+            "crop": "Fodder radish (cover crop)",
+            "share": "Full",
+            "establish": "Direct sow Jan",
+            "intoField": "Direct",
+            "harvest": "Confirm locally",
+            "yieldKg": 0,
+            "once": false,
+            "awaitingSowingConfirmation": false,
+            "frostCaveat": null
+          }
+        ],
+        "buying": [
+          {
+            "month": 10,
+            "items": [
+              {
+                "cropKey": "beetroot",
+                "cropName": "Beetroot",
+                "icon": "🫜",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 400,
+                "finalPlantPositionsRange": [
+                  285,
+                  600
+                ],
+                "buyMonth": 10,
+                "sowMonth": 10,
+                "bedMonth": 10,
+                "bedMonthLatest": 10,
+                "harvestMonth": 1,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 9"
+                ],
+                "note": "Source packet seed before the October sowing month. Sow straight into the ground in October for about 285–600 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "soybean",
+                "cropName": "Soybean",
+                "icon": "🟡",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 92,
+                "finalPlantPositionsRange": [
+                  44,
+                  300
+                ],
+                "buyMonth": 10,
+                "sowMonth": 10,
+                "bedMonth": 10,
+                "bedMonthLatest": 10,
+                "harvestMonth": 3,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 33"
+                ],
+                "note": "Source packet seed before the October sowing month. Sow straight into the ground in October for about 44–300 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "broad-beans",
+                "cropName": "Broad beans (fava beans)",
+                "icon": "🫘",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 37,
+                "finalPlantPositionsRange": [
+                  37,
+                  38
+                ],
+                "buyMonth": 10,
+                "sowMonth": 10,
+                "bedMonth": 10,
+                "bedMonthLatest": 10,
+                "harvestMonth": 2,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 21"
+                ],
+                "note": "Source packet seed before the October sowing month. Sow straight into the ground in October for about 37–38 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              }
+            ]
+          },
+          {
+            "month": 11,
+            "items": [
+              {
+                "cropKey": "african-nightshade",
+                "cropName": "African nightshade (umsobo)",
+                "icon": "🟪",
+                "unit": "seedlings",
+                "count": null,
+                "countRange": [
+                  66,
+                  67
+                ],
+                "quantityStatus": "counted-piece-range",
+                "finalPlantPositions": 67,
+                "finalPlantPositionsRange": [
+                  66,
+                  67
+                ],
+                "buyMonth": 11,
+                "sowMonth": 10,
+                "bedMonth": 11,
+                "bedMonthLatest": 1,
+                "harvestMonth": 1,
+                "transplant": true,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 45"
+                ],
+                "note": "Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is November–January. The mapped area holds about 66–67 plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. Raising your own instead? Source packet seed before the October tray-sowing month, use its tray-sowing rate, and sow trays in October. Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed."
+              }
+            ]
+          },
+          {
+            "month": 12,
+            "items": [
+              {
+                "cropKey": "onions",
+                "cropName": "Onions",
+                "icon": "🧅",
+                "unit": "seedlings",
+                "count": null,
+                "countRange": [
+                  250,
+                  500
+                ],
+                "quantityStatus": "counted-piece-range",
+                "finalPlantPositions": 343,
+                "finalPlantPositionsRange": [
+                  250,
+                  500
+                ],
+                "buyMonth": 12,
+                "sowMonth": 11,
+                "bedMonth": 12,
+                "bedMonthLatest": 2,
+                "harvestMonth": 7,
+                "transplant": true,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 10"
+                ],
+                "note": "Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is December–February. The mapped area holds about 250–500 plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. Raising your own instead? Source packet seed before the November tray-sowing month, use its tray-sowing rate, and sow trays in November. Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed."
+              },
+              {
+                "cropKey": "broccoli",
+                "cropName": "Broccoli",
+                "icon": "🥦",
+                "unit": "seedlings",
+                "count": null,
+                "countRange": [
+                  19,
+                  34
+                ],
+                "quantityStatus": "counted-piece-range",
+                "finalPlantPositions": 25,
+                "finalPlantPositionsRange": [
+                  19,
+                  34
+                ],
+                "buyMonth": 12,
+                "sowMonth": 11,
+                "bedMonth": 12,
+                "bedMonthLatest": 2,
+                "harvestMonth": 4,
+                "transplant": true,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 22"
+                ],
+                "note": "Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is December–February. The mapped area holds about 19–34 plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. Raising your own instead? Source packet seed before the November tray-sowing month, use its tray-sowing rate, and sow trays in November. Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed."
+              },
+              {
+                "cropKey": "brinjal",
+                "cropName": "Brinjal (eggplant)",
+                "icon": "🍆",
+                "unit": "seedlings",
+                "count": null,
+                "countRange": [
+                  15,
+                  18
+                ],
+                "quantityStatus": "counted-piece-range",
+                "finalPlantPositions": 16,
+                "finalPlantPositionsRange": [
+                  15,
+                  18
+                ],
+                "buyMonth": 12,
+                "sowMonth": 11,
+                "bedMonth": 12,
+                "bedMonthLatest": 2,
+                "harvestMonth": 4,
+                "transplant": true,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 34"
+                ],
+                "note": "Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is December–February. The mapped area holds about 15–18 plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. Raising your own instead? Source packet seed before the November tray-sowing month, use its tray-sowing rate, and sow trays in November. Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed."
+              },
+              {
+                "cropKey": "cucumber",
+                "cropName": "Cucumber",
+                "icon": "🥒",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 11,
+                "finalPlantPositionsRange": [
+                  8,
+                  15
+                ],
+                "buyMonth": 12,
+                "sowMonth": 12,
+                "bedMonth": 12,
+                "bedMonthLatest": 12,
+                "harvestMonth": 3,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 23"
+                ],
+                "note": "Source packet seed before the December sowing month. Sow straight into the ground in December for about 8–15 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "gem-squash",
+                "cropName": "Gem squash",
+                "icon": "🥎",
+                "unit": "kg seed",
+                "count": null,
+                "countRange": [
+                  0.0012,
+                  0.0018
+                ],
+                "quantityStatus": "sourced-weight-range",
+                "finalPlantPositions": 0,
+                "finalPlantPositionsRange": [
+                  0,
+                  0
+                ],
+                "buyMonth": 12,
+                "sowMonth": 12,
+                "bedMonth": 12,
+                "bedMonthLatest": 12,
+                "harvestMonth": 3,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 35"
+                ],
+                "note": "Source 1.2–1.8 g seed before sowing in December. This is the mapped area multiplied by the published 2–3 kg/ha field-rate range. Cucurbitaceae family, same as pumpkin, butternut, cucumber and watermelon — avoid repeating this family in the same bed. Frost-tender vine crop; no Western Cape sowing calendar was found even though it is a known WC crop, so treat that as a local-confirmation item. Confirm the sowing method and cultivar with the supplier; no germination allowance is added."
+              }
+            ]
+          },
+          {
+            "month": 1,
+            "items": [
+              {
+                "cropKey": "maize",
+                "cropName": "Maize (mielies)",
+                "icon": "🌽",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 26,
+                "finalPlantPositionsRange": [
+                  26,
+                  27
+                ],
+                "buyMonth": 1,
+                "sowMonth": 1,
+                "bedMonth": 1,
+                "bedMonthLatest": 1,
+                "harvestMonth": 6,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 0"
+                ],
+                "note": "Source packet seed before the January sowing month. Sow straight into the ground in January for about 26–27 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "tomatoes",
+                "cropName": "Tomatoes",
+                "icon": "🍅",
+                "unit": "seedlings",
+                "count": null,
+                "countRange": [
+                  8,
+                  23
+                ],
+                "quantityStatus": "counted-piece-range",
+                "finalPlantPositions": 13,
+                "finalPlantPositionsRange": [
+                  8,
+                  23
+                ],
+                "buyMonth": 1,
+                "sowMonth": 12,
+                "bedMonth": 1,
+                "bedMonthLatest": 3,
+                "harvestMonth": 5,
+                "transplant": true,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 11"
+                ],
+                "note": "Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is January–March. The mapped area holds about 8–23 plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. Raising your own instead? Source packet seed before the December tray-sowing month, use its tray-sowing rate, and sow trays in December. Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed."
+              },
+              {
+                "cropKey": "watermelon",
+                "cropName": "Watermelon",
+                "icon": "🍉",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 6,
+                "finalPlantPositionsRange": [
+                  5,
+                  8
+                ],
+                "buyMonth": 1,
+                "sowMonth": 1,
+                "bedMonth": 1,
+                "bedMonthLatest": 1,
+                "harvestMonth": 5,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 24"
+                ],
+                "note": "Source packet seed before the January sowing month. Sow straight into the ground in January for about 5–8 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "baby-marrow",
+                "cropName": "Baby marrow (courgette)",
+                "icon": "🟩",
+                "unit": "kg seed",
+                "count": null,
+                "countRange": [
+                  0.0024,
+                  0.0036
+                ],
+                "quantityStatus": "sourced-weight-range",
+                "finalPlantPositions": 0,
+                "finalPlantPositionsRange": [
+                  0,
+                  0
+                ],
+                "buyMonth": 1,
+                "sowMonth": 1,
+                "bedMonth": 1,
+                "bedMonthLatest": 1,
+                "harvestMonth": 3,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 36"
+                ],
+                "note": "Source 2.4–3.6 g seed before sowing in January. This is the mapped area multiplied by the published 4–6 kg/ha field-rate range. A fast-cropping Cucurbitaceae vine picked young and often — same rotation family as pumpkin, gem-squash, cucumber and watermelon. Frost-tender; no Western Cape calendar sourced. Confirm the sowing method and cultivar with the supplier; no germination allowance is added."
+              }
+            ]
+          },
+          {
+            "month": 2,
+            "items": [
+              {
+                "cropKey": "coriander",
+                "cropName": "Coriander",
+                "icon": "🌱",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 205,
+                "finalPlantPositionsRange": [
+                  171,
+                  250
+                ],
+                "buyMonth": 2,
+                "sowMonth": 2,
+                "bedMonth": 2,
+                "bedMonthLatest": 2,
+                "harvestMonth": 4,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 25"
+                ],
+                "note": "Source packet seed before the February sowing month. Sow straight into the ground in February for about 171–250 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "dry-beans",
+                "cropName": "Dry beans (sugar beans)",
+                "icon": "🫘",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 53,
+                "finalPlantPositionsRange": [
+                  53,
+                  54
+                ],
+                "buyMonth": 2,
+                "sowMonth": 2,
+                "bedMonth": 2,
+                "bedMonthLatest": 2,
+                "harvestMonth": 6,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 1"
+                ],
+                "note": "Source packet seed before the February sowing month. Sow straight into the ground in February for about 53–54 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "peppers",
+                "cropName": "Peppers",
+                "icon": "🫑",
+                "unit": "seedlings",
+                "count": null,
+                "countRange": [
+                  15,
+                  25
+                ],
+                "quantityStatus": "counted-piece-range",
+                "finalPlantPositions": 19,
+                "finalPlantPositionsRange": [
+                  15,
+                  25
+                ],
+                "buyMonth": 2,
+                "sowMonth": 1,
+                "bedMonth": 2,
+                "bedMonthLatest": 4,
+                "harvestMonth": 6,
+                "transplant": true,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 12"
+                ],
+                "note": "Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is February–April. The mapped area holds about 15–25 plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. Raising your own instead? Source packet seed before the January tray-sowing month, use its tray-sowing rate, and sow trays in January. Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed."
+              },
+              {
+                "cropKey": "spanspek",
+                "cropName": "Spanspek (sweet melon)",
+                "icon": "🍈",
+                "unit": "kg seed",
+                "count": null,
+                "countRange": [
+                  0.0018,
+                  0.0018
+                ],
+                "quantityStatus": "sourced-weight-range",
+                "finalPlantPositions": 0,
+                "finalPlantPositionsRange": [
+                  0,
+                  0
+                ],
+                "buyMonth": 2,
+                "sowMonth": 2,
+                "bedMonth": 2,
+                "bedMonthLatest": 2,
+                "harvestMonth": 6,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 37"
+                ],
+                "note": "Source 1.8 g seed before sowing in February. This is the mapped area multiplied by the published 3 kg/ha field-rate range. Cucurbitaceae melon vine. A January sowing is left off this catalog's planner because the resulting harvest would run into frost — still workable with local frost protection, just not auto-scheduled here. Confirm the sowing method and cultivar with the supplier; no germination allowance is added."
+              }
+            ]
+          },
+          {
+            "month": 3,
+            "items": [
+              {
+                "cropKey": "green-beans",
+                "cropName": "Green beans",
+                "icon": "🫛",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 208,
+                "finalPlantPositionsRange": [
+                  142,
+                  334
+                ],
+                "buyMonth": 3,
+                "sowMonth": 3,
+                "bedMonth": 3,
+                "bedMonthLatest": 3,
+                "harvestMonth": 5,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 2"
+                ],
+                "note": "Source packet seed before the March sowing month. Sow straight into the ground in March for about 142–334 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "chilli",
+                "cropName": "Chilli",
+                "icon": "🌶️",
+                "unit": "seedlings",
+                "count": null,
+                "countRange": [
+                  15,
+                  25
+                ],
+                "quantityStatus": "counted-piece-range",
+                "finalPlantPositions": 19,
+                "finalPlantPositionsRange": [
+                  15,
+                  25
+                ],
+                "buyMonth": 3,
+                "sowMonth": 2,
+                "bedMonth": 3,
+                "bedMonthLatest": 5,
+                "harvestMonth": 7,
+                "transplant": true,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 13"
+                ],
+                "note": "Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is March–May. The mapped area holds about 15–25 plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. Raising your own instead? Source packet seed before the February tray-sowing month, use its tray-sowing rate, and sow trays in February. Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed."
+              },
+              {
+                "cropKey": "sweet-potato",
+                "cropName": "Sweet potato",
+                "icon": "🍠",
+                "unit": "slips",
+                "count": null,
+                "countRange": [
+                  15,
+                  27
+                ],
+                "quantityStatus": "counted-piece-range",
+                "finalPlantPositions": 19,
+                "finalPlantPositionsRange": [
+                  15,
+                  27
+                ],
+                "buyMonth": 3,
+                "sowMonth": 3,
+                "bedMonth": 3,
+                "bedMonthLatest": 3,
+                "harvestMonth": 8,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 14"
+                ],
+                "note": "Living planting material — the mapped area holds about 15–27 slips at the spacings this plan uses. This is not a guaranteed buy quantity and it allows nothing for material that does not take; ask the supplier what they advise for this crop. Get it close to planting in March, then follow the supplier's or your local handling advice. No general storage advice is assumed here."
+              },
+              {
+                "cropKey": "oats",
+                "cropName": "Oats (winter cover crop)",
+                "icon": "🌾",
+                "unit": "kg seed",
+                "count": null,
+                "countRange": [
+                  0.042,
+                  0.084
+                ],
+                "quantityStatus": "sourced-weight-range",
+                "finalPlantPositions": 0,
+                "finalPlantPositionsRange": [
+                  0,
+                  0
+                ],
+                "buyMonth": 3,
+                "sowMonth": 3,
+                "bedMonth": 3,
+                "bedMonthLatest": 3,
+                "harvestMonth": 9,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 26"
+                ],
+                "note": "Source 42–84 g seed before sowing in March. This is the mapped area multiplied by the published 70–140 kg/ha field-rate range. drill at 70kg seed/ha, or broadcast at 105–140kg/ha; terminate before the next summer staple crop Confirm the sowing method and cultivar with the supplier; no germination allowance is added."
+              },
+              {
+                "cropKey": "sweetcorn",
+                "cropName": "Sweetcorn",
+                "icon": "🟨",
+                "unit": "kg seed",
+                "count": null,
+                "countRange": [
+                  0.0072,
+                  0.009
+                ],
+                "quantityStatus": "sourced-weight-range",
+                "finalPlantPositions": 0,
+                "finalPlantPositionsRange": [
+                  0,
+                  0
+                ],
+                "buyMonth": 3,
+                "sowMonth": 3,
+                "bedMonth": 3,
+                "bedMonthLatest": 3,
+                "harvestMonth": 6,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 38"
+                ],
+                "note": "Source 7.2–9 g seed before sowing in March. This is the mapped area multiplied by the published 12–15 kg/ha field-rate range. Grown and eaten as a fresh vegetable, unlike field maize — the dossier's own food-group is fruiting vegetable, not staple grain, so it is kept there rather than lumped with maize despite the shared species. Tender to frost like maize. Confirm the sowing method and cultivar with the supplier; no germination allowance is added."
+              }
+            ]
+          },
+          {
+            "month": 4,
+            "items": [
+              {
+                "cropKey": "true-spinach",
+                "cropName": "True spinach (English spinach)",
+                "icon": "🍀",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 400,
+                "finalPlantPositionsRange": [
+                  375,
+                  429
+                ],
+                "buyMonth": 4,
+                "sowMonth": 4,
+                "bedMonth": 4,
+                "bedMonthLatest": 4,
+                "harvestMonth": 6,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 27"
+                ],
+                "note": "Source packet seed before the April sowing month. Sow straight into the ground in April for about 375–429 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "potato",
+                "cropName": "Potato",
+                "icon": "🥔",
+                "unit": "seed potatoes",
+                "count": null,
+                "countRange": [
+                  15,
+                  23
+                ],
+                "quantityStatus": "counted-piece-range",
+                "finalPlantPositions": 18,
+                "finalPlantPositionsRange": [
+                  15,
+                  23
+                ],
+                "buyMonth": 4,
+                "sowMonth": 4,
+                "bedMonth": 4,
+                "bedMonthLatest": 4,
+                "harvestMonth": 8,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 15"
+                ],
+                "note": "Living planting material — the mapped area holds about 15–23 seed potatoes at the spacings this plan uses. This is not a guaranteed buy quantity and it allows nothing for material that does not take; ask the supplier what they advise for this crop. Get it close to planting in April, then follow the supplier's or your local handling advice. No general storage advice is assumed here."
+              },
+              {
+                "cropKey": "butternut",
+                "cropName": "Butternut",
+                "icon": "🧡",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 10,
+                "finalPlantPositionsRange": [
+                  10,
+                  10
+                ],
+                "buyMonth": 4,
+                "sowMonth": 4,
+                "bedMonth": 4,
+                "bedMonthLatest": 4,
+                "harvestMonth": 8,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 3"
+                ],
+                "note": "Source packet seed before the April sowing month. Sow straight into the ground in April for about 10 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "cowpea",
+                "cropName": "Cowpea (imbumba/dinawa)",
+                "icon": "🖤",
+                "unit": "kg seed",
+                "count": null,
+                "countRange": [
+                  0.015,
+                  0.018
+                ],
+                "quantityStatus": "sourced-weight-range",
+                "finalPlantPositions": 0,
+                "finalPlantPositionsRange": [
+                  0,
+                  0
+                ],
+                "buyMonth": 4,
+                "sowMonth": 4,
+                "bedMonth": 4,
+                "bedMonthLatest": 4,
+                "harvestMonth": 8,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 39"
+                ],
+                "note": "Source 15–18 g seed before sowing in April. This is the mapped area multiplied by the published 25–30 kg/ha field-rate range. A dual-purpose legume: young leaves (imifino) can be picked from three to four weeks after sowing, and dry grain follows later. No yield figure is given because the only South African trial found disagreed twenty-fold between its two sites. No named SA cultivars were found. Confirm the sowing method and cultivar with the supplier; no germination allowance is added."
+              }
+            ]
+          },
+          {
+            "month": 5,
+            "items": [
+              {
+                "cropKey": "turnip",
+                "cropName": "Turnips",
+                "icon": "🟣",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 150,
+                "finalPlantPositionsRange": [
+                  125,
+                  188
+                ],
+                "buyMonth": 5,
+                "sowMonth": 5,
+                "bedMonth": 5,
+                "bedMonthLatest": 5,
+                "harvestMonth": 8,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 28"
+                ],
+                "note": "Source packet seed before the May sowing month. Sow straight into the ground in May for about 125–188 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "bambara-groundnut",
+                "cropName": "Bambara groundnut (jugo bean)",
+                "icon": "🟠",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 71,
+                "finalPlantPositionsRange": [
+                  44,
+                  134
+                ],
+                "buyMonth": 5,
+                "sowMonth": 5,
+                "bedMonth": 5,
+                "bedMonthLatest": 5,
+                "harvestMonth": 10,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 40"
+                ],
+                "note": "Source packet seed before the May sowing month. Sow straight into the ground in May for about 44–134 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "pumpkin",
+                "cropName": "Pumpkin",
+                "icon": "🎃",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 4,
+                "finalPlantPositionsRange": [
+                  3,
+                  4
+                ],
+                "buyMonth": 5,
+                "sowMonth": 5,
+                "bedMonth": 5,
+                "bedMonthLatest": 5,
+                "harvestMonth": 10,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 4"
+                ],
+                "note": "Source packet seed before the May sowing month. Sow straight into the ground in May for about 3–4 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              }
+            ]
+          },
+          {
+            "month": 6,
+            "items": [
+              {
+                "cropKey": "amaranth",
+                "cropName": "Amaranth (imbuya/thepe)",
+                "icon": "🌺",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "spacing-confirmation-required",
+                "finalPlantPositions": 67,
+                "finalPlantPositionsRange": [
+                  13,
+                  27
+                ],
+                "buyMonth": 6,
+                "sowMonth": 6,
+                "bedMonth": 6,
+                "bedMonthLatest": 6,
+                "harvestMonth": 8,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 29"
+                ],
+                "note": "Confirm a locally appropriate row layout before buying planting material; the catalog does not have both verified spacing axes needed for an exact quantity. Plan to establish it in June."
+              },
+              {
+                "cropKey": "lettuce",
+                "cropName": "Lettuce",
+                "icon": "🥗",
+                "unit": "seedlings",
+                "count": null,
+                "countRange": [
+                  34,
+                  60
+                ],
+                "quantityStatus": "counted-piece-range",
+                "finalPlantPositions": 44,
+                "finalPlantPositionsRange": [
+                  34,
+                  60
+                ],
+                "buyMonth": 6,
+                "sowMonth": 5,
+                "bedMonth": 6,
+                "bedMonthLatest": 8,
+                "harvestMonth": 10,
+                "transplant": true,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 16"
+                ],
+                "note": "Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is June–August. The mapped area holds about 34–60 plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. Raising your own instead? Source packet seed before the May tray-sowing month, use its tray-sowing rate, and sow trays in May. Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed."
+              },
+              {
+                "cropKey": "swiss-chard",
+                "cropName": "Swiss chard (spinach)",
+                "icon": "🍃",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 40,
+                "finalPlantPositionsRange": [
+                  25,
+                  75
+                ],
+                "buyMonth": 6,
+                "sowMonth": 6,
+                "bedMonth": 6,
+                "bedMonthLatest": 6,
+                "harvestMonth": 8,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 5"
+                ],
+                "note": "Source packet seed before the June sowing month. Sow straight into the ground in June for about 25–75 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "sunflower",
+                "cropName": "Sunflower (for seed)",
+                "icon": "🌻",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 21,
+                "finalPlantPositionsRange": [
+                  20,
+                  23
+                ],
+                "buyMonth": 6,
+                "sowMonth": 6,
+                "bedMonth": 6,
+                "bedMonthLatest": 6,
+                "harvestMonth": 11,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 41"
+                ],
+                "note": "Source packet seed before the June sowing month. Sow straight into the ground in June for about 20–23 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "amadumbe",
+                "cropName": "Amadumbe (taro)",
+                "icon": "🌰",
+                "unit": "corms",
+                "count": null,
+                "countRange": [
+                  9,
+                  12
+                ],
+                "quantityStatus": "counted-piece-range",
+                "finalPlantPositions": 10,
+                "finalPlantPositionsRange": [
+                  9,
+                  12
+                ],
+                "buyMonth": 6,
+                "sowMonth": 6,
+                "bedMonth": 6,
+                "bedMonthLatest": 6,
+                "harvestMonth": 4,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 17"
+                ],
+                "note": "Living planting material — the mapped area holds about 9–12 corms at the spacings this plan uses. This is not a guaranteed buy quantity and it allows nothing for material that does not take; ask the supplier what they advise for this crop. Get it close to planting in June, then follow the supplier's or your local handling advice. No general storage advice is assumed here."
+              }
+            ]
+          },
+          {
+            "month": 7,
+            "items": [
+              {
+                "cropKey": "groundnuts",
+                "cropName": "Groundnuts (peanuts)",
+                "icon": "🥜",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 256,
+                "finalPlantPositionsRange": [
+                  177,
+                  400
+                ],
+                "buyMonth": 7,
+                "sowMonth": 7,
+                "bedMonth": 7,
+                "bedMonthLatest": 7,
+                "harvestMonth": 1,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 18"
+                ],
+                "note": "Source packet seed before the July sowing month. Sow straight into the ground in July for about 177–400 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "radish",
+                "cropName": "Radish",
+                "icon": "🔴",
+                "unit": "kg seed",
+                "count": null,
+                "countRange": [
+                  0.0036,
+                  0.0036
+                ],
+                "quantityStatus": "sourced-weight-range",
+                "finalPlantPositions": 0,
+                "finalPlantPositionsRange": [
+                  0,
+                  0
+                ],
+                "buyMonth": 7,
+                "sowMonth": 7,
+                "bedMonth": 7,
+                "bedMonthLatest": 7,
+                "harvestMonth": 8,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 42"
+                ],
+                "note": "Source 3.6 g seed before sowing in July. This is the mapped area multiplied by the published 6 kg/ha field-rate range. A very fast root crop, ready in three to four weeks — good for filling gaps between slower crops. No published yield figure was found, so it stays manual and will not drive auto-suggest ranking. Brassicaceae family, same as cabbage and turnip. Confirm the sowing method and cultivar with the supplier; no germination allowance is added."
+              }
+            ]
+          },
+          {
+            "month": 8,
+            "items": [
+              {
+                "cropKey": "garlic",
+                "cropName": "Garlic",
+                "icon": "🧄",
+                "unit": "cloves",
+                "count": null,
+                "countRange": [
+                  133,
+                  286
+                ],
+                "quantityStatus": "counted-piece-range",
+                "finalPlantPositions": 188,
+                "finalPlantPositionsRange": [
+                  133,
+                  286
+                ],
+                "buyMonth": 8,
+                "sowMonth": 8,
+                "bedMonth": 8,
+                "bedMonthLatest": 8,
+                "harvestMonth": 3,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 19"
+                ],
+                "note": "Living planting material — the mapped area holds about 133–286 cloves at the spacings this plan uses. This is not a guaranteed buy quantity and it allows nothing for material that does not take; ask the supplier what they advise for this crop. Get it close to planting in August, then follow the supplier's or your local handling advice. No general storage advice is assumed here."
+              },
+              {
+                "cropKey": "mung-bean",
+                "cropName": "Mung bean",
+                "icon": "🔵",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 67,
+                "finalPlantPositionsRange": [
+                  33,
+                  667
+                ],
+                "buyMonth": 8,
+                "sowMonth": 8,
+                "bedMonth": 8,
+                "bedMonthLatest": 8,
+                "harvestMonth": 11,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 43"
+                ],
+                "note": "Source packet seed before the August sowing month. Sow straight into the ground in August for about 33–667 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "kale",
+                "cropName": "Kale",
+                "icon": "🌿",
+                "unit": "seedlings",
+                "count": null,
+                "countRange": [
+                  37,
+                  38
+                ],
+                "quantityStatus": "counted-piece-range",
+                "finalPlantPositions": 37,
+                "finalPlantPositionsRange": [
+                  37,
+                  38
+                ],
+                "buyMonth": 8,
+                "sowMonth": 7,
+                "bedMonth": 8,
+                "bedMonthLatest": 10,
+                "harvestMonth": 1,
+                "transplant": true,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 6"
+                ],
+                "note": "Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is August–October. The mapped area holds about 37–38 plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. Raising your own instead? Source packet seed before the July tray-sowing month, use its tray-sowing rate, and sow trays in July. Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed."
+              },
+              {
+                "cropKey": "cauliflower",
+                "cropName": "Cauliflower",
+                "icon": "⚪",
+                "unit": "seedlings",
+                "count": null,
+                "countRange": [
+                  13,
+                  29
+                ],
+                "quantityStatus": "counted-piece-range",
+                "finalPlantPositions": 19,
+                "finalPlantPositionsRange": [
+                  13,
+                  29
+                ],
+                "buyMonth": 8,
+                "sowMonth": 7,
+                "bedMonth": 8,
+                "bedMonthLatest": 10,
+                "harvestMonth": 2,
+                "transplant": true,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 30"
+                ],
+                "note": "Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is August–October. The mapped area holds about 13–29 plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. Raising your own instead? Source packet seed before the July tray-sowing month, use its tray-sowing rate, and sow trays in July. Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed."
+              },
+              {
+                "cropKey": "parsley",
+                "cropName": "Parsley",
+                "icon": "💚",
+                "unit": "kg seed",
+                "count": null,
+                "countRange": [
+                  0.0018,
+                  0.0018
+                ],
+                "quantityStatus": "sourced-weight-range",
+                "finalPlantPositions": 0,
+                "finalPlantPositionsRange": [
+                  0,
+                  0
+                ],
+                "buyMonth": 8,
+                "sowMonth": 8,
+                "bedMonth": 8,
+                "bedMonthLatest": 8,
+                "harvestMonth": 11,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 31"
+                ],
+                "note": "Source 1.8 g seed before sowing in August. This is the mapped area multiplied by the published 3 kg/ha field-rate range. A biennial herb grown as an annual for its leaves. Apiaceae family, same as carrots — avoid repeating that family in the same bed too often. Confirm the sowing method and cultivar with the supplier; no germination allowance is added."
+              }
+            ]
+          },
+          {
+            "month": 9,
+            "items": [
+              {
+                "cropKey": "carrots",
+                "cropName": "Carrots",
+                "icon": "🥕",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 571,
+                "finalPlantPositionsRange": [
+                  299,
+                  1500
+                ],
+                "buyMonth": 9,
+                "sowMonth": 9,
+                "bedMonth": 9,
+                "bedMonthLatest": 9,
+                "harvestMonth": 1,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 8"
+                ],
+                "note": "Source packet seed before the September sowing month. Sow straight into the ground in September for about 299–1 500 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "peas",
+                "cropName": "Peas",
+                "icon": "🟢",
+                "unit": "seeds",
+                "count": null,
+                "countRange": null,
+                "quantityStatus": "packet-rate-required",
+                "finalPlantPositions": 154,
+                "finalPlantPositionsRange": [
+                  125,
+                  200
+                ],
+                "buyMonth": 9,
+                "sowMonth": 9,
+                "bedMonth": 9,
+                "bedMonthLatest": 9,
+                "harvestMonth": 12,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 20"
+                ],
+                "note": "Source packet seed before the September sowing month. Sow straight into the ground in September for about 125–200 plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy."
+              },
+              {
+                "cropKey": "spider-plant",
+                "cropName": "Spider plant (Cleome gynandra)",
+                "icon": "🕸️",
+                "unit": "seedlings",
+                "count": null,
+                "countRange": [
+                  80,
+                  240
+                ],
+                "quantityStatus": "counted-piece-range",
+                "finalPlantPositions": 128,
+                "finalPlantPositionsRange": [
+                  80,
+                  240
+                ],
+                "buyMonth": 9,
+                "sowMonth": 9,
+                "bedMonth": 10,
+                "bedMonthLatest": 12,
+                "harvestMonth": 1,
+                "transplant": true,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 44"
+                ],
+                "note": "Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is October–December. The mapped area holds about 80–240 plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. Raising your own instead? Source packet seed before the September tray-sowing month, use its tray-sowing rate, and sow trays in September. Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed."
+              },
+              {
+                "cropKey": "cabbage",
+                "cropName": "Cabbage",
+                "icon": "🥬",
+                "unit": "seedlings",
+                "count": null,
+                "countRange": [
+                  22,
+                  35
+                ],
+                "quantityStatus": "counted-piece-range",
+                "finalPlantPositions": 27,
+                "finalPlantPositionsRange": [
+                  22,
+                  35
+                ],
+                "buyMonth": 9,
+                "sowMonth": 8,
+                "bedMonth": 9,
+                "bedMonthLatest": 11,
+                "harvestMonth": 3,
+                "transplant": true,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 7"
+                ],
+                "note": "Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is September–November. The mapped area holds about 22–35 plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. Raising your own instead? Source packet seed before the August tray-sowing month, use its tray-sowing rate, and sow trays in August. Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed."
+              },
+              {
+                "cropKey": "sorghum",
+                "cropName": "Sorghum",
+                "icon": "🟤",
+                "unit": "kg seed",
+                "count": null,
+                "countRange": [
+                  0.0018,
+                  0.0042
+                ],
+                "quantityStatus": "sourced-weight-range",
+                "finalPlantPositions": 0,
+                "finalPlantPositionsRange": [
+                  0,
+                  0
+                ],
+                "buyMonth": 9,
+                "sowMonth": 9,
+                "bedMonth": 9,
+                "bedMonthLatest": 9,
+                "harvestMonth": 2,
+                "transplant": false,
+                "bedLabels": [
+                  "Original Ṱanḓa {count} $& 32"
+                ],
+                "note": "Source 1.8–4.2 g seed before sowing in September. This is the mapped area multiplied by the published 3–7 kg/ha field-rate range. A drought-tolerant grain crop, more heat- and dry-tolerant than maize. A December sowing is left off this catalog's planner because the resulting May harvest would run into frost — still workable with local frost protection, just not auto-scheduled here. No named SA cultivars were found. Confirm the sowing method and cultivar with the supplier; no germination allowance is added."
+              }
+            ]
+          }
+        ],
+        "fieldSheets": [
+          {
+            "month": 10,
+            "monthLabel": "October 2026",
+            "sourceLines": 8,
+            "workRows": 8,
+            "plantingFocus": 4,
+            "harvestFocus": 0,
+            "sections": [
+              {
+                "title": "Prepare for the next planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 9",
+                    "work": "Prepare the ground for beetroot (whole plot; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 21",
+                    "work": "Prepare the ground for broad beans (fava beans) (whole plot; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 33",
+                    "work": "Prepare the ground for soybean (whole plot; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 45",
+                    "work": "Prepare the ground for african nightshade (umsobo) (whole plot; 6 m²)."
+                  }
+                ],
+                "note": "Where a bed follows another crop, confirm it is finished and cleared before preparing it. Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments."
+              },
+              {
+                "title": "Nursery - raise seedlings",
+                "rows": [
+                  {
+                    "place": "Nursery",
+                    "work": "Raise and label trays for african nightshade (umsobo) (whole plot; 6 m²) for Original Ṱanḓa {count} $& 45. Start checking in Nov; transplant when ready, within the planning window through Jan."
+                  }
+                ]
+              },
+              {
+                "title": "Direct sowing and planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 9",
+                    "work": "Sow beetroot (whole plot; 6 m²; rows 20–30 cm apart, 5–7 cm in the row, 1.5–2 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 21",
+                    "work": "Sow broad beans (fava beans) (whole plot; 6 m²; rows 80 cm apart, 20 cm in the row, 4–5 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 33",
+                    "work": "Sow soybean (whole plot; 6 m²; rows 40–90 cm apart, 5–15 cm in the row, 2–5 cm deep)."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "month": 11,
+            "monthLabel": "November 2026",
+            "sourceLines": 9,
+            "workRows": 7,
+            "plantingFocus": 2,
+            "harvestFocus": 0,
+            "sections": [
+              {
+                "title": "Prepare for the next planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 10",
+                    "work": "Prepare the ground for onions (whole bed; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 22",
+                    "work": "Prepare the ground for broccoli (whole bed; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 23",
+                    "work": "Prepare the ground for cucumber (whole plot; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 34",
+                    "work": "Prepare the ground for brinjal (eggplant) (whole bed; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 35",
+                    "work": "Prepare the ground for gem squash (whole plot; 6 m²)."
+                  }
+                ],
+                "note": "Where a bed follows another crop, confirm it is finished and cleared before preparing it. Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments."
+              },
+              {
+                "title": "Nursery - raise seedlings",
+                "rows": [
+                  {
+                    "place": "Nursery",
+                    "work": "Raise and label trays for onions (whole bed; 6 m²; sow 1.5–2 cm deep) for Original Ṱanḓa {count} $& 10, broccoli (whole bed; 6 m²; sow 1.5–2 cm deep) for Original Ṱanḓa {count} $& 22 and brinjal (eggplant) (whole bed; 6 m²; sow 1.5–2 cm deep) for Original Ṱanḓa {count} $& 34. Start checking in Dec; transplant when ready, within the planning window through Feb."
+                  }
+                ]
+              },
+              {
+                "title": "Direct sowing and planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 45",
+                    "work": "From this month, transplant african nightshade (umsobo) (whole plot; 6 m²; 30 cm each way) when seedlings and the bed are ready."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "month": 12,
+            "monthLabel": "December 2026",
+            "sourceLines": 10,
+            "workRows": 10,
+            "plantingFocus": 6,
+            "harvestFocus": 0,
+            "sections": [
+              {
+                "title": "Prepare for the next planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 0",
+                    "work": "Prepare the ground for maize (mielies) (whole bed; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 11",
+                    "work": "Prepare the ground for tomatoes (whole plot; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 24",
+                    "work": "Prepare the ground for watermelon (whole bed; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 36",
+                    "work": "Prepare the ground for baby marrow (courgette) (whole bed; 6 m²)."
+                  }
+                ],
+                "note": "Where a bed follows another crop, confirm it is finished and cleared before preparing it. Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments."
+              },
+              {
+                "title": "Nursery - raise seedlings",
+                "rows": [
+                  {
+                    "place": "Nursery",
+                    "work": "Raise and label trays for tomatoes (whole plot; 6 m²; sow 1 cm deep) for Original Ṱanḓa {count} $& 11. Start checking in Jan; transplant when ready, within the planning window through Mar."
+                  }
+                ]
+              },
+              {
+                "title": "Direct sowing and planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 10",
+                    "work": "From this month, transplant onions (whole bed; 6 m²; rows 20–30 cm apart, 6–8 cm in the row) when seedlings and the bed are ready."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 22",
+                    "work": "From this month, transplant broccoli (whole bed; 6 m²; rows 60–70 cm apart, 30–45 cm in the row) when seedlings and the bed are ready."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 23",
+                    "work": "Sow cucumber (whole plot; 6 m²; rows 120–140 cm apart, 35–50 cm in the row, 2–3 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 34",
+                    "work": "From this month, transplant brinjal (eggplant) (whole bed; 6 m²; rows 70–80 cm apart, 50 cm in the row) when seedlings and the bed are ready."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 35",
+                    "work": "Sow gem squash (whole plot; 6 m²; rows 100–150 cm apart, 40–50 cm in the row, 2–3 cm deep)."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "month": 1,
+            "monthLabel": "January 2027",
+            "sourceLines": 11,
+            "workRows": 11,
+            "plantingFocus": 5,
+            "harvestFocus": 2,
+            "sections": [
+              {
+                "title": "Prepare for the next planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 1",
+                    "work": "Prepare the ground for dry beans (sugar beans) (whole plot; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 12",
+                    "work": "Prepare the ground for peppers (whole bed; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 25",
+                    "work": "Prepare the ground for coriander (whole plot; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 37",
+                    "work": "Prepare the ground for spanspek (sweet melon) (whole plot; 6 m²)."
+                  }
+                ],
+                "note": "Where a bed follows another crop, confirm it is finished and cleared before preparing it. Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments."
+              },
+              {
+                "title": "Nursery - raise seedlings",
+                "rows": [
+                  {
+                    "place": "Nursery",
+                    "work": "Raise and label trays for peppers (whole bed; 6 m²; sow 1.5–2 cm deep) for Original Ṱanḓa {count} $& 12. Start checking in Feb; transplant when ready, within the planning window through Apr."
+                  }
+                ]
+              },
+              {
+                "title": "Direct sowing and planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 0",
+                    "work": "Sow maize (mielies) (whole bed; 6 m²; rows 91 cm apart, 25 cm in the row, 5–10 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 11",
+                    "work": "From this month, transplant tomatoes (whole plot; 6 m²; rows 90–120 cm apart, 30–60 cm in the row) when seedlings and the bed are ready."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 24",
+                    "work": "Sow watermelon (whole bed; 6 m²; rows 170–200 cm apart, 50–60 cm in the row, 4–6 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 36",
+                    "work": "Sow baby marrow (courgette) (whole bed; 6 m²; rows 80–120 cm apart, 35–50 cm in the row, 2–3 cm deep)."
+                  }
+                ]
+              },
+              {
+                "title": "Harvest and record",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 9",
+                    "work": "Harvest beetroot (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 45",
+                    "work": "Harvest african nightshade (umsobo) (whole plot; 6 m²). Record kilograms and where it went."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "month": 2,
+            "monthLabel": "February 2027",
+            "sourceLines": 12,
+            "workRows": 12,
+            "plantingFocus": 5,
+            "harvestFocus": 2,
+            "sections": [
+              {
+                "title": "Prepare for the next planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 2",
+                    "work": "Prepare the ground for green beans (whole bed; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 13",
+                    "work": "Prepare the ground for chilli (whole plot; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 14",
+                    "work": "Prepare the ground for sweet potato (whole bed; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 26",
+                    "work": "Prepare the ground for oats (winter cover crop) (whole bed; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 38",
+                    "work": "Prepare the ground for sweetcorn (whole bed; 6 m²)."
+                  }
+                ],
+                "note": "Where a bed follows another crop, confirm it is finished and cleared before preparing it. Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments."
+              },
+              {
+                "title": "Nursery - raise seedlings",
+                "rows": [
+                  {
+                    "place": "Nursery",
+                    "work": "Raise and label trays for chilli (whole plot; 6 m²; sow 1.5–2 cm deep) for Original Ṱanḓa {count} $& 13. Start checking in Mar; transplant when ready, within the planning window through May."
+                  }
+                ]
+              },
+              {
+                "title": "Direct sowing and planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 1",
+                    "work": "Sow dry beans (sugar beans) (whole plot; 6 m²; rows 45 cm apart, 25 cm in the row, 2.5–7 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 12",
+                    "work": "From this month, transplant peppers (whole bed; 6 m²; rows 60–80 cm apart, 40–50 cm in the row) when seedlings and the bed are ready."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 25",
+                    "work": "Sow coriander (whole plot; 6 m²; rows 30–35 cm apart, 8–10 cm in the row, 1–1.5 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 37",
+                    "work": "Sow spanspek (sweet melon) (whole plot; 6 m²; rows 150 cm apart, 25–35 cm in the row, 2–3 cm deep)."
+                  }
+                ]
+              },
+              {
+                "title": "Harvest and record",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 9",
+                    "work": "Harvest beetroot (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 21",
+                    "work": "Harvest broad beans (fava beans) (whole plot; 6 m²). Record kilograms and where it went."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "month": 3,
+            "monthLabel": "March 2027",
+            "sourceLines": 14,
+            "workRows": 14,
+            "plantingFocus": 5,
+            "harvestFocus": 5,
+            "sections": [
+              {
+                "title": "Prepare for the next planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 3",
+                    "work": "Prepare the ground for butternut (whole plot; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 15",
+                    "work": "Prepare the ground for potato (whole plot; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 27",
+                    "work": "Prepare the ground for true spinach (English spinach) (whole plot; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 39",
+                    "work": "Prepare the ground for cowpea (imbumba/dinawa) (whole plot; 6 m²)."
+                  }
+                ],
+                "note": "Where a bed follows another crop, confirm it is finished and cleared before preparing it. Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments."
+              },
+              {
+                "title": "Direct sowing and planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 2",
+                    "work": "Sow green beans (whole bed; 6 m²; rows 45–60 cm apart, 4–7 cm in the row, 2–5 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 13",
+                    "work": "From this month, transplant chilli (whole plot; 6 m²; rows 60–80 cm apart, 40–50 cm in the row) when seedlings and the bed are ready."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 14",
+                    "work": "Plant sweet potato slips (whole bed; 6 m²; rows 90–100 cm apart, 25–40 cm in the row)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 26",
+                    "work": "Sow oats (winter cover crop) (whole bed; 6 m²; drill at 70kg seed/ha, or broadcast at 105–140kg/ha; terminate before the next summer staple crop)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 38",
+                    "work": "Sow sweetcorn (whole bed; 6 m²; rows 70–80 cm apart, 25–35 cm in the row, 2.5–4 cm deep)."
+                  }
+                ]
+              },
+              {
+                "title": "Harvest and record",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 21",
+                    "work": "Harvest broad beans (fava beans) (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 23",
+                    "work": "Harvest cucumber (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 33",
+                    "work": "Harvest soybean (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 35",
+                    "work": "Harvest gem squash (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 36",
+                    "work": "Harvest baby marrow (courgette) (whole bed; 6 m²). Record kilograms and where it went."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "month": 4,
+            "monthLabel": "April 2027",
+            "sourceLines": 10,
+            "workRows": 10,
+            "plantingFocus": 4,
+            "harvestFocus": 3,
+            "sections": [
+              {
+                "title": "Prepare for the next planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 4",
+                    "work": "Prepare the ground for pumpkin (whole bed; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 28",
+                    "work": "Prepare the ground for turnips (whole bed; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 40",
+                    "work": "Prepare the ground for bambara groundnut (jugo bean) (whole bed; 6 m²)."
+                  }
+                ],
+                "note": "Where a bed follows another crop, confirm it is finished and cleared before preparing it. Assess soil and drainage; use a soil test or local advice before adding amendments."
+              },
+              {
+                "title": "Direct sowing and planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 3",
+                    "work": "Sow butternut (whole plot; 6 m²; rows 150 cm apart, 40 cm in the row)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 15",
+                    "work": "Plant seed potatoes (whole plot; 6 m²; rows 90–100 cm apart, 30–40 cm in the row, 7–10 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 27",
+                    "work": "Sow true spinach (English spinach) (whole plot; 6 m²; rows 20 cm apart, 7–8 cm in the row, 1.5–2 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 39",
+                    "work": "Sow cowpea (imbumba/dinawa) (whole plot; 6 m²; rows 50–75 cm apart, 15–75 cm in the row, 3–4 cm deep)."
+                  }
+                ]
+              },
+              {
+                "title": "Harvest and record",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 22",
+                    "work": "Harvest broccoli (whole bed; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 25",
+                    "work": "Harvest coriander (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 34",
+                    "work": "Harvest brinjal (eggplant) (whole bed; 6 m²). Record kilograms and where it went."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "month": 5,
+            "monthLabel": "May 2027",
+            "sourceLines": 13,
+            "workRows": 13,
+            "plantingFocus": 4,
+            "harvestFocus": 4,
+            "sections": [
+              {
+                "title": "Prepare for the next planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 5",
+                    "work": "Prepare the ground for swiss chard (spinach) (whole plot; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 16",
+                    "work": "Prepare the ground for lettuce (whole bed; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 17",
+                    "work": "Prepare the ground for amadumbe (taro) (whole plot; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 29",
+                    "work": "Prepare the ground for amaranth (imbuya/thepe) (whole plot; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 41",
+                    "work": "Prepare the ground for sunflower (for seed) (whole plot; 6 m²)."
+                  }
+                ],
+                "note": "Where a bed follows another crop, confirm it is finished and cleared before preparing it. Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments."
+              },
+              {
+                "title": "Nursery - raise seedlings",
+                "rows": [
+                  {
+                    "place": "Nursery",
+                    "work": "Raise and label trays for lettuce (whole bed; 6 m²; sow 1.5–2 cm deep) for Original Ṱanḓa {count} $& 16. Start checking in Jun; transplant when ready, within the planning window through Aug."
+                  }
+                ]
+              },
+              {
+                "title": "Direct sowing and planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 4",
+                    "work": "Sow pumpkin (whole bed; 6 m²; rows 250 cm apart, 60–70 cm in the row, 2–3 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 28",
+                    "work": "Sow turnips (whole bed; 6 m²; rows 40–60 cm apart, 8 cm in the row, 1.5–2 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 40",
+                    "work": "Sow bambara groundnut (jugo bean) (whole bed; 6 m²; rows 45–90 cm apart, 10–15 cm in the row, 2.5–7.5 cm deep)."
+                  }
+                ]
+              },
+              {
+                "title": "Harvest and record",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 2",
+                    "work": "Harvest green beans (whole bed; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 11",
+                    "work": "Harvest tomatoes (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 22",
+                    "work": "Harvest broccoli (whole bed; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 24",
+                    "work": "Harvest watermelon (whole bed; 6 m²). Record kilograms and where it went."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "month": 6,
+            "monthLabel": "June 2027",
+            "sourceLines": 15,
+            "workRows": 15,
+            "plantingFocus": 5,
+            "harvestFocus": 8,
+            "sections": [
+              {
+                "title": "Prepare for the next planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 18",
+                    "work": "Prepare the ground for groundnuts (peanuts) (whole bed; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 42",
+                    "work": "Prepare the ground for radish (whole bed; 6 m²)."
+                  }
+                ],
+                "note": "Where a bed follows another crop, confirm it is finished and cleared before preparing it. Assess soil and drainage; use a soil test or local advice before adding amendments."
+              },
+              {
+                "title": "Direct sowing and planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 5",
+                    "work": "Sow swiss chard (spinach) (whole plot; 6 m²; rows 40–60 cm apart, 20–40 cm in the row, 1.5–2 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 16",
+                    "work": "From this month, transplant lettuce (whole bed; 6 m²; rows 40–50 cm apart, 25–35 cm in the row) when seedlings and the bed are ready."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 17",
+                    "work": "Plant amadumbe (taro) corms (whole plot; 6 m²; rows 130 cm apart, 40–50 cm in the row, 15–20 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 29",
+                    "work": "Sow amaranth (imbuya/thepe) (whole plot; 6 m²; rows 76.2–150 cm apart, 30 cm in the row, 1.25 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 41",
+                    "work": "Sow sunflower (for seed) (whole plot; 6 m²; rows 90–100 cm apart, 30 cm in the row, 5–8 cm deep)."
+                  }
+                ]
+              },
+              {
+                "title": "Harvest and record",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 0",
+                    "work": "Harvest maize (mielies) (whole bed; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 1",
+                    "work": "Harvest dry beans (sugar beans) (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 11",
+                    "work": "Harvest tomatoes (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 12",
+                    "work": "Harvest peppers (whole bed; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 24",
+                    "work": "Harvest watermelon (whole bed; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 27",
+                    "work": "Harvest true spinach (English spinach) (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 37",
+                    "work": "Harvest spanspek (sweet melon) (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 38",
+                    "work": "Harvest sweetcorn (whole bed; 6 m²). Record kilograms and where it went."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "month": 7,
+            "monthLabel": "July 2027",
+            "sourceLines": 13,
+            "workRows": 12,
+            "plantingFocus": 3,
+            "harvestFocus": 4,
+            "sections": [
+              {
+                "title": "Prepare for the next planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 6",
+                    "work": "Prepare the ground for kale (whole bed; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 19",
+                    "work": "Prepare the ground for garlic (whole plot; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 30",
+                    "work": "Prepare the ground for cauliflower (whole bed; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 31",
+                    "work": "Prepare the ground for parsley (whole plot; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 43",
+                    "work": "Prepare the ground for mung bean (whole plot; 6 m²)."
+                  }
+                ],
+                "note": "Where a bed follows another crop, confirm it is finished and cleared before preparing it. Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments."
+              },
+              {
+                "title": "Nursery - raise seedlings",
+                "rows": [
+                  {
+                    "place": "Nursery",
+                    "work": "Raise and label trays for kale (whole bed; 6 m²; sow 0.2–1 cm deep) for Original Ṱanḓa {count} $& 6 and cauliflower (whole bed; 6 m²; sow 1.2–2 cm deep) for Original Ṱanḓa {count} $& 30. Start checking in Aug; transplant when ready, within the planning window through Oct."
+                  }
+                ]
+              },
+              {
+                "title": "Direct sowing and planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 18",
+                    "work": "Sow groundnuts (peanuts) (whole bed; 6 m²; rows 30–45 cm apart, 5–7.5 cm in the row, 5–7.5 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 42",
+                    "work": "Sow radish (whole bed; 6 m²; rows 15–20 cm apart, 4–6 cm in the row, 1.5–2 cm deep)."
+                  }
+                ]
+              },
+              {
+                "title": "Harvest and record",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 10",
+                    "work": "Harvest onions (whole bed; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 11",
+                    "work": "Harvest tomatoes (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 12",
+                    "work": "Harvest peppers (whole bed; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 13",
+                    "work": "Harvest chilli (whole plot; 6 m²). Record kilograms and where it went."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "month": 8,
+            "monthLabel": "August 2027",
+            "sourceLines": 20,
+            "workRows": 20,
+            "plantingFocus": 6,
+            "harvestFocus": 10,
+            "sections": [
+              {
+                "title": "Prepare for the next planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 7",
+                    "work": "Prepare the ground for cabbage (whole plot; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 8",
+                    "work": "Prepare the ground for carrots (whole bed; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 20",
+                    "work": "Prepare the ground for peas (whole bed; 6 m²)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 32",
+                    "work": "Prepare the ground for sorghum (whole bed; 6 m²)."
+                  }
+                ],
+                "note": "Where a bed follows another crop, confirm it is finished and cleared before preparing it. Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments."
+              },
+              {
+                "title": "Nursery - raise seedlings",
+                "rows": [
+                  {
+                    "place": "Nursery",
+                    "work": "Raise and label trays for cabbage (whole plot; 6 m²; sow 1.5–2 cm deep) for Original Ṱanḓa {count} $& 7. Start checking in Sep; transplant when ready, within the planning window through Nov."
+                  }
+                ]
+              },
+              {
+                "title": "Direct sowing and planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 6",
+                    "work": "From this month, transplant kale (whole bed; 6 m²; 40 cm each way) when seedlings and the bed are ready."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 19",
+                    "work": "Plant garlic cloves (whole plot; 6 m²; rows 30–45 cm apart, 7–10 cm in the row)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 30",
+                    "work": "From this month, transplant cauliflower (whole bed; 6 m²; rows 60–90 cm apart, 35–50 cm in the row) when seedlings and the bed are ready."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 31",
+                    "work": "Sow parsley (whole plot; 6 m²; rows 30 cm apart, 10 cm in the row, 1.5–2 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 43",
+                    "work": "Sow mung bean (whole plot; 6 m²; rows 18–120 cm apart, 5–15 cm in the row, 4–7.5 cm deep)."
+                  }
+                ]
+              },
+              {
+                "title": "Harvest and record",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 3",
+                    "work": "Harvest butternut (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 5",
+                    "work": "Harvest swiss chard (spinach) (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 12",
+                    "work": "Harvest peppers (whole bed; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 13",
+                    "work": "Harvest chilli (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 14",
+                    "work": "Harvest sweet potato (whole bed; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 15",
+                    "work": "Harvest potato (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 28",
+                    "work": "Harvest turnips (whole bed; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 29",
+                    "work": "Harvest amaranth (imbuya/thepe) (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 39",
+                    "work": "Harvest cowpea (imbumba/dinawa) (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 42",
+                    "work": "Harvest radish (whole bed; 6 m²). Record kilograms and where it went."
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "month": 9,
+            "monthLabel": "September 2027",
+            "sourceLines": 11,
+            "workRows": 11,
+            "plantingFocus": 5,
+            "harvestFocus": 4,
+            "sections": [
+              {
+                "title": "Prepare for the next planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 44",
+                    "work": "Prepare the ground for spider plant (Cleome gynandra) (whole bed; 6 m²)."
+                  }
+                ],
+                "note": "Where a bed follows another crop, confirm it is finished and cleared before preparing it. Assess soil and drainage; use a soil test or local advice before adding amendments."
+              },
+              {
+                "title": "Nursery - raise seedlings",
+                "rows": [
+                  {
+                    "place": "Nursery",
+                    "work": "Raise and label trays for spider plant (Cleome gynandra) (whole bed; 6 m²) for Original Ṱanḓa {count} $& 44. Start checking in Oct; transplant when ready, within the planning window through Dec."
+                  }
+                ]
+              },
+              {
+                "title": "Direct sowing and planting",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 7",
+                    "work": "From this month, transplant cabbage (whole plot; 6 m²; rows 50–60 cm apart, 35–45 cm in the row) when seedlings and the bed are ready."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 8",
+                    "work": "Sow carrots (whole bed; 6 m²; rows 20–40 cm apart, 2–5 cm in the row, 1–2.5 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 20",
+                    "work": "Sow peas (whole bed; 6 m²; rows 60 cm apart, 5–8 cm in the row, 3–6 cm deep)."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 32",
+                    "work": "Sow sorghum (whole bed; 6 m²; rows 91–230 cm apart, 1–15 cm in the row, 2.5–5 cm deep)."
+                  }
+                ]
+              },
+              {
+                "title": "Harvest and record",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 3",
+                    "work": "Harvest butternut (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 5",
+                    "work": "Harvest swiss chard (spinach) (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 13",
+                    "work": "Harvest chilli (whole plot; 6 m²). Record kilograms and where it went."
+                  },
+                  {
+                    "place": "Original Ṱanḓa {count} $& 14",
+                    "work": "Harvest sweet potato (whole bed; 6 m²). Record kilograms and where it went."
+                  }
+                ]
+              },
+              {
+                "title": "End the cover crop",
+                "rows": [
+                  {
+                    "place": "Original Ṱanḓa {count} $& 26",
+                    "work": "Cut or roll down oats (winter cover crop) (whole bed; 6 m²) before the next crop."
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "no-plantings",
+      "outputs": {
+        "dashboardUnconfirmed": {
+          "stats": [
+            {
+              "value": "0.0 m²",
+              "label": "growing space",
+              "detail": "0 beds"
+            },
+            {
+              "value": "Not shown",
+              "label": "known benchmark total",
+              "detail": "no verified kg/m² crop entry"
+            },
+            {
+              "value": "Not shown",
+              "label": "benchmark density",
+              "detail": "known total ÷ whole growing area, to compare plans"
+            },
+            {
+              "value": "Not calculated",
+              "label": "loss-adjusted total",
+              "detail": "confirm a loss allowance from actual records"
+            },
+            {
+              "value": "0/12",
+              "label": "fresh-picking months",
+              "detail": "timing windows only; no monthly kg inferred"
+            }
+          ],
+          "signals": [
+            "No crop in this plan has a verified kg/m² food-yield benchmark, so no kilogram comparison is shown.",
+            "Oct, Nov, Dec carry the most planned jobs — counted as jobs, not hours."
+          ],
+          "decisions": [
+            "Check actual household demand and recorded harvests; the benchmark comparison is not a meal or surplus guarantee.",
+            "Check who is available before the Oct-Dec job peak, and time the work against real hours.",
+            "Confirm a loss allowance from actual records before calculating a usable total."
+          ],
+          "grossKg": 0,
+          "netKg": null,
+          "freshPickingMonths": 0,
+          "storedFoodMonths": 0,
+          "storedFoodCrops": [],
+          "unknownYieldCrops": [],
+          "hasKnownYield": false,
+          "areaConflictBedLabels": []
+        },
+        "dashboardConfirmed": {
+          "stats": [
+            {
+              "value": "0.0 m²",
+              "label": "growing space",
+              "detail": "0 beds"
+            },
+            {
+              "value": "Not shown",
+              "label": "known benchmark total",
+              "detail": "no verified kg/m² crop entry"
+            },
+            {
+              "value": "Not shown",
+              "label": "benchmark density",
+              "detail": "known total ÷ whole growing area, to compare plans"
+            },
+            {
+              "value": "Not shown",
+              "label": "known total after 25% loss",
+              "detail": "uses the loss allowance you confirmed"
+            },
+            {
+              "value": "0/12",
+              "label": "fresh-picking months",
+              "detail": "timing windows only; no monthly kg inferred"
+            }
+          ],
+          "signals": [
+            "No crop in this plan has a verified kg/m² food-yield benchmark, so no kilogram comparison is shown.",
+            "Oct, Nov, Dec carry the most planned jobs — counted as jobs, not hours."
+          ],
+          "decisions": [
+            "Check actual household demand and recorded harvests; the benchmark comparison is not a meal or surplus guarantee.",
+            "Check who is available before the Oct-Dec job peak, and time the work against real hours."
+          ],
+          "grossKg": 0,
+          "netKg": 0,
+          "freshPickingMonths": 0,
+          "storedFoodMonths": 0,
+          "storedFoodCrops": [],
+          "unknownYieldCrops": [],
+          "hasKnownYield": false,
+          "areaConflictBedLabels": []
+        },
+        "planTable": [],
+        "planTableMildFrost": [],
+        "buying": [],
+        "fieldSheets": [
+          {
+            "month": 10,
+            "monthLabel": "October 2026",
+            "sourceLines": 0,
+            "workRows": 0,
+            "plantingFocus": 0,
+            "harvestFocus": 0,
+            "sections": []
+          },
+          {
+            "month": 11,
+            "monthLabel": "November 2026",
+            "sourceLines": 0,
+            "workRows": 0,
+            "plantingFocus": 0,
+            "harvestFocus": 0,
+            "sections": []
+          },
+          {
+            "month": 12,
+            "monthLabel": "December 2026",
+            "sourceLines": 0,
+            "workRows": 0,
+            "plantingFocus": 0,
+            "harvestFocus": 0,
+            "sections": []
+          },
+          {
+            "month": 1,
+            "monthLabel": "January 2027",
+            "sourceLines": 0,
+            "workRows": 0,
+            "plantingFocus": 0,
+            "harvestFocus": 0,
+            "sections": []
+          },
+          {
+            "month": 2,
+            "monthLabel": "February 2027",
+            "sourceLines": 0,
+            "workRows": 0,
+            "plantingFocus": 0,
+            "harvestFocus": 0,
+            "sections": []
+          },
+          {
+            "month": 3,
+            "monthLabel": "March 2027",
+            "sourceLines": 0,
+            "workRows": 0,
+            "plantingFocus": 0,
+            "harvestFocus": 0,
+            "sections": []
+          },
+          {
+            "month": 4,
+            "monthLabel": "April 2027",
+            "sourceLines": 0,
+            "workRows": 0,
+            "plantingFocus": 0,
+            "harvestFocus": 0,
+            "sections": []
+          },
+          {
+            "month": 5,
+            "monthLabel": "May 2027",
+            "sourceLines": 0,
+            "workRows": 0,
+            "plantingFocus": 0,
+            "harvestFocus": 0,
+            "sections": []
+          },
+          {
+            "month": 6,
+            "monthLabel": "June 2027",
+            "sourceLines": 0,
+            "workRows": 0,
+            "plantingFocus": 0,
+            "harvestFocus": 0,
+            "sections": []
+          },
+          {
+            "month": 7,
+            "monthLabel": "July 2027",
+            "sourceLines": 0,
+            "workRows": 0,
+            "plantingFocus": 0,
+            "harvestFocus": 0,
+            "sections": []
+          },
+          {
+            "month": 8,
+            "monthLabel": "August 2027",
+            "sourceLines": 0,
+            "workRows": 0,
+            "plantingFocus": 0,
+            "harvestFocus": 0,
+            "sections": []
+          },
+          {
+            "month": 9,
+            "monthLabel": "September 2027",
+            "sourceLines": 0,
+            "workRows": 0,
+            "plantingFocus": 0,
+            "harvestFocus": 0,
+            "sections": []
+          }
+        ]
+      }
+    }
+  ]
+}

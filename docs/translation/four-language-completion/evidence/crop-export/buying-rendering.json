@@ -1,0 +1,96 @@
+{
+  "rows": [
+    {
+      "file": "en-before-buying-fields.pdf",
+      "pages": 14,
+      "words": 2499,
+      "clipped": [],
+      "pixelHashes": [
+        "2f8e9efdf3f31c0cacfcce0ea62f01a2a5bcd57610b5299ab36a3d4d0a75dbce",
+        "06c5916282ba0c9487a0f302eccfd667f482c402179a55c103657111e04d5032",
+        "de34a566bf49cececcc86b8397e2a88ff2bb2d8814ca91a4f2643797534fad50",
+        "72eb5419d1ac23369559fe5cb00cf356777e1f9ce7986658f7b113cda5a716aa",
+        "9894cd74e7a3dcc58db6dcaab82d0f5978d4c1005a4f74e66bb648c3ef829db6",
+        "a24f7d1def9242c6d516ebaa713eecbe9c98200785a951bc7d27f352d754c774",
+        "4890ce529949b62d789801efb086777414d9f71eda3b2ab90e5263beffc03b70",
+        "06cd4a91f8b2a10e3b7f3bf8c05a1547de4f39e63c16e75a55269298ffc042d4",
+        "88ae6cbdf7c4510e9cf7f2ca5f29b2dc9dfd912c85d63c34145488289019a704",
+        "5cb90bab2780485d4177b49225d3705d1382e564e776d0c3e9661ee729bbc622",
+        "7fd2e82cc7ab35c924a276f74dad15f7623ad5afdf0b1be2b2d5d27ea5c6be0a",
+        "832a5c3255d9f84d28d19f9edf147e2e539b884da769882381d710f98aed52bc",
+        "3cd29aa5539a2ab3b6aa96455ea0477d3aa7bff0eaa66fec21e4a324aa9e5721",
+        "1542a58724f15aa6e60e2997b7f3c5e0ccb8fb8fa5bfb8ea467301b50e0b6414"
+      ]
+    },
+    {
+      "file": "en-after-buying-fields.pdf",
+      "pages": 14,
+      "words": 2499,
+      "clipped": [],
+      "pixelHashes": [
+        "2f8e9efdf3f31c0cacfcce0ea62f01a2a5bcd57610b5299ab36a3d4d0a75dbce",
+        "06c5916282ba0c9487a0f302eccfd667f482c402179a55c103657111e04d5032",
+        "de34a566bf49cececcc86b8397e2a88ff2bb2d8814ca91a4f2643797534fad50",
+        "72eb5419d1ac23369559fe5cb00cf356777e1f9ce7986658f7b113cda5a716aa",
+        "9894cd74e7a3dcc58db6dcaab82d0f5978d4c1005a4f74e66bb648c3ef829db6",
+        "a24f7d1def9242c6d516ebaa713eecbe9c98200785a951bc7d27f352d754c774",
+        "4890ce529949b62d789801efb086777414d9f71eda3b2ab90e5263beffc03b70",
+        "06cd4a91f8b2a10e3b7f3bf8c05a1547de4f39e63c16e75a55269298ffc042d4",
+        "88ae6cbdf7c4510e9cf7f2ca5f29b2dc9dfd912c85d63c34145488289019a704",
+        "5cb90bab2780485d4177b49225d3705d1382e564e776d0c3e9661ee729bbc622",
+        "7fd2e82cc7ab35c924a276f74dad15f7623ad5afdf0b1be2b2d5d27ea5c6be0a",
+        "832a5c3255d9f84d28d19f9edf147e2e539b884da769882381d710f98aed52bc",
+        "3cd29aa5539a2ab3b6aa96455ea0477d3aa7bff0eaa66fec21e4a324aa9e5721",
+        "1542a58724f15aa6e60e2997b7f3c5e0ccb8fb8fa5bfb8ea467301b50e0b6414"
+      ]
+    },
+    {
+      "file": "zu-buying.pdf",
+      "pages": 3,
+      "words": 571,
+      "clipped": [],
+      "pixelHashes": [
+        "987c60ba81589588bd33fff68b37333583ae7be5c470486284fd8628cec3b703",
+        "337f7907eacea98cef4bf455e5ccbd1010ecdb4c23158f339d829135a4c1e8e6",
+        "7260c595470accc23dee51a36030eb3a6294cff6a12dec0fc9c5e6236f133d83"
+      ]
+    },
+    {
+      "file": "st-buying.pdf",
+      "pages": 3,
+      "words": 918,
+      "clipped": [],
+      "pixelHashes": [
+        "1cab908680be953388f1848fff57f81d2ff42219bbd6abd22d761282dee0b1f2",
+        "fc59cf0c59a17f601da71baab877ac6af1f0e1d90031741825fb592adb1f8f45",
+        "826f21c1f189de6113668ee2f92057d53d739316418f2fa8d309eeb76e25a057"
+      ]
+    },
+    {
+      "file": "ts-buying.pdf",
+      "pages": 3,
+      "words": 915,
+      "clipped": [],
+      "pixelHashes": [
+        "7704a4e4da6aa66dc3e13cd1bded7ab6eb165e68252c20dfe641c9c9c0b2324b",
+        "76c73525ccab0fdd6595044d70e53e535553375a88e8350a031d20dda4c5e59d",
+        "3910246e65bb8c4fca3e2b833eae88d4aecf20d7ab15acc6487b14c34efeed16"
+      ]
+    },
+    {
+      "file": "ve-buying.pdf",
+      "pages": 3,
+      "words": 948,
+      "clipped": [],
+      "pixelHashes": [
+        "f072027c97126c400eda8dca120bf044d5ab023d2377951953d2d25b9512cb50",
+        "3bcaee9f23bd86a3b0286f8ebc962330fa67cecb9c219cf76593ecb052beade4",
+        "c2e1762deb16c9b710342ae07899195c89f2c1caf81c624ebe7e81fd47693e66"
+      ]
+    }
+  ],
+  "english": {
+    "samePixels": true,
+    "sameText": true
+  }
+}

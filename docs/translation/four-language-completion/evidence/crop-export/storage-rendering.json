@@ -1,0 +1,74 @@
+{
+  "rows": [
+    {
+      "file": "en-before-storage.pdf",
+      "pages": 3,
+      "words": 681,
+      "clipped": [],
+      "pixelHashes": [
+        "26d69f5db22bfd6171ef18df6f126dcfac4528a4d84b24e32c887818993fe3f5",
+        "a53b3847178e520b7cff00cc574939fc688468f40742d226c73f551427b643c3",
+        "7b0ae3965b3cd8542be6249cc1e11812030f724636c13c1252503cff35bf36f4"
+      ]
+    },
+    {
+      "file": "en-after-storage.pdf",
+      "pages": 3,
+      "words": 681,
+      "clipped": [],
+      "pixelHashes": [
+        "26d69f5db22bfd6171ef18df6f126dcfac4528a4d84b24e32c887818993fe3f5",
+        "6e77f9f05cf429a705e6fc9491967ae442287ca504b32a6b67ef92eccad3fd98",
+        "7b0ae3965b3cd8542be6249cc1e11812030f724636c13c1252503cff35bf36f4"
+      ]
+    },
+    {
+      "file": "zu-storage.pdf",
+      "pages": 3,
+      "words": 692,
+      "clipped": [],
+      "pixelHashes": [
+        "ab7e503035358730a0bf9b4836cbcdd3654ac0dd863f7e0ba3e7b3a48f690d9d",
+        "85600b2902f7bf4aee6833936904d737a139e0a2d6cca37aa0a87b0abc9b6cc9",
+        "59484e2c740d0db43f9825b42e536b5cc07de74b13b6322f0094758fefdccdd1"
+      ]
+    },
+    {
+      "file": "st-storage.pdf",
+      "pages": 3,
+      "words": 1076,
+      "clipped": [],
+      "pixelHashes": [
+        "1342c121d47d711cad5d8bd5be0a30b74094e4a1bd669963d59f7d1066aca49b",
+        "35d6d9a4dbc6185c0f24d021b7251630f110b475d311fb480ea1ec325eb629f9",
+        "4693dd8fa27821a69b8569a38d59a8b9ea0d5345cefd3ebc9e30aa64514657c1"
+      ]
+    },
+    {
+      "file": "ts-storage.pdf",
+      "pages": 3,
+      "words": 1105,
+      "clipped": [],
+      "pixelHashes": [
+        "c09aabd3ac1d5219b53033ad93ffca631e9eddd91a98349a0a09a745061c94f6",
+        "a5427e5431e8e1b53165e75bbbfa8b51300806abd2d52c4b9fa613b79be82533",
+        "f5851f051d1a9645bba096a2887f98b3832f7edcda031688688b6086e830e01e"
+      ]
+    },
+    {
+      "file": "ve-storage.pdf",
+      "pages": 3,
+      "words": 1170,
+      "clipped": [],
+      "pixelHashes": [
+        "f2f1c2e97e994132759d94600488d52e40a6a655d020e00812e6a2342042d09a",
+        "9fe6f7311624b6be89f5635c2efa3818b5b33229b50d375806a550374f2ab1f3",
+        "68dee7d99f5477ebd0930cd17092c52566dd7dce6557d03f42059d1389ecbe6f"
+      ]
+    }
+  ],
+  "english": {
+    "samePixels": false,
+    "sameText": false
+  }
+}

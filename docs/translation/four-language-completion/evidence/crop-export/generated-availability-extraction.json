@@ -1,0 +1,55 @@
+{
+  "rows": [
+    {
+      "file": "zu-generated-availability",
+      "completeDetails": 14,
+      "completeReferenceBases": 0,
+      "completeReferenceLabels": 0
+    },
+    {
+      "file": "st-generated-availability",
+      "completeDetails": 14,
+      "completeReferenceBases": 0,
+      "completeReferenceLabels": 0
+    },
+    {
+      "file": "ts-generated-availability",
+      "completeDetails": 14,
+      "completeReferenceBases": 0,
+      "completeReferenceLabels": 0
+    },
+    {
+      "file": "ve-generated-availability",
+      "completeDetails": 14,
+      "completeReferenceBases": 0,
+      "completeReferenceLabels": 0
+    },
+    {
+      "file": "zu-generated-reference",
+      "completeDetails": 14,
+      "completeReferenceBases": 3,
+      "completeReferenceLabels": 3
+    },
+    {
+      "file": "st-generated-reference",
+      "completeDetails": 14,
+      "completeReferenceBases": 3,
+      "completeReferenceLabels": 3
+    },
+    {
+      "file": "ts-generated-reference",
+      "completeDetails": 14,
+      "completeReferenceBases": 3,
+      "completeReferenceLabels": 3
+    },
+    {
+      "file": "ve-generated-reference",
+      "completeDetails": 14,
+      "completeReferenceBases": 3,
+      "completeReferenceLabels": 3
+    }
+  ],
+  "completeNativeDetails": 112,
+  "completeReferenceBases": 12,
+  "status": "Actual final PDF extraction, not only paint calls."
+}

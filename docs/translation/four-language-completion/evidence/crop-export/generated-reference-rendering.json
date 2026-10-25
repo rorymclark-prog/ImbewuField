@@ -1,0 +1,90 @@
+{
+  "rows": [
+    {
+      "file": "en-before-generated-reference.pdf",
+      "pages": 5,
+      "words": 1181,
+      "clipped": [],
+      "pixelHashes": [
+        "f677f2a1a9ec022ae9b52c6b15867dbf3aa3347ae9691190f3a3a60779923ff9",
+        "f9c00d0a41d65680d82c24d3f3fed4a19794e26b44552b1c9815a437f426638f",
+        "a1c7e2d222dda200b3e1872cf309cdf9eedc8783f70fef609281cbf62d892246",
+        "eef34eb85634d7041c5b39e6b760e16ea5227f367c39bfa6d440d769d7f3106e",
+        "50fe6e7b0a9484b0cb3a8e1135597191f7132185b515d736d4ee93cb99fbcb8f"
+      ]
+    },
+    {
+      "file": "en-after-generated-reference.pdf",
+      "pages": 5,
+      "words": 1181,
+      "clipped": [],
+      "pixelHashes": [
+        "f677f2a1a9ec022ae9b52c6b15867dbf3aa3347ae9691190f3a3a60779923ff9",
+        "f9c00d0a41d65680d82c24d3f3fed4a19794e26b44552b1c9815a437f426638f",
+        "a1c7e2d222dda200b3e1872cf309cdf9eedc8783f70fef609281cbf62d892246",
+        "eef34eb85634d7041c5b39e6b760e16ea5227f367c39bfa6d440d769d7f3106e",
+        "50fe6e7b0a9484b0cb3a8e1135597191f7132185b515d736d4ee93cb99fbcb8f"
+      ]
+    },
+    {
+      "file": "zu-generated-reference.pdf",
+      "pages": 6,
+      "words": 1249,
+      "clipped": [],
+      "pixelHashes": [
+        "2e6736b3c401b5f9eba5bd3bd0ca0b8c4b98eacc3aa6e03c6556ebe0c6742a3c",
+        "379d686450cfec28ec6cb3d5479d228c41becfecc41e6a269b591b5f5e80a4c3",
+        "a1e078a7b2de52748af86161d9458b9c74f0ed37076b8a4d9fac48a94906cf0c",
+        "cad6aae623bc81cd769526bc7638560069667e32ba0f9b12c7784e73fb20f4e5",
+        "b198290e6c60a9d1072afb12c26a76a2bfc440eb485ddc9faf91279419a24004",
+        "9e6336d059e0ad56dc9246d6f57d0078dc87ad082cedbd9b69cf7f6de258f988"
+      ]
+    },
+    {
+      "file": "st-generated-reference.pdf",
+      "pages": 6,
+      "words": 1840,
+      "clipped": [],
+      "pixelHashes": [
+        "5a55db04652242a2d339ef28da74e43bd7757ee6e0c2f6143912b756286eb1bf",
+        "944eed8ced073ac4ca40018ea7c9e3ba319975b30efb357c7ba9d5daae0e7fa9",
+        "2d54d50c857d94693258b1c24c2f704fe904dfd9fca38686488a2b6dcb217dbf",
+        "d1ef1f3a1a8b4f91d30dfe55f9ce81690776002584686d95a897ce135fb719c6",
+        "cca9c5fe0e2113516f2c06b77ac99805162c55cc1099bfbff7d13a3cdecb2b84",
+        "6f9941dfb54b6803470b4a303c33a782a8a328a5908cdb221c4c787f79d7d043"
+      ]
+    },
+    {
+      "file": "ts-generated-reference.pdf",
+      "pages": 6,
+      "words": 1875,
+      "clipped": [],
+      "pixelHashes": [
+        "0b535e5e5bca3129e3faa998c805aec206e0ef80138bfbe57b006fb70ec6e2c2",
+        "662fda09f6a5cff12806136e0de3da2262f59d4b5dd260e52e95ebc16128aa82",
+        "be1ba0c65ba36b17544b7005e490e06302430f3f5937d75e75bf20f8a7cbcaf5",
+        "ff451a5ded9b31b57ac6d59ca9a4757386e7d99af4ba6d1772d882dbda20f58a",
+        "4c7921b44ed65b9775dc6cb427af2b3cb842c7844c1e8eed34ff20475b78dbf8",
+        "769cd1bbcf59759c4e362fd1c48087a987d71bad2f7ed95fce47c647d3e3f85c"
+      ]
+    },
+    {
+      "file": "ve-generated-reference.pdf",
+      "pages": 6,
+      "words": 1940,
+      "clipped": [],
+      "pixelHashes": [
+        "590330be4408de26aee0be7a082e9a5059dedf1fde01d15eb30015f6989f6ab3",
+        "dba1f1f91ac2049900a521d9eee8a13f93214522f7578a48ccddedf7cd1eeaa4",
+        "f1a73cb887e23a7d082d76ef8564c6bbf0f2af7906538a7442941b5dd102a2e7",
+        "d5a960d8e5d7cef40ef5f5644eef0255d53282d75dcf442fe831167a9029e761",
+        "dacb636c045e1d1e63763223454317ff842cace6e2a02d83ab1f30d4a0eba270",
+        "0600b43b7f479bc2cf85bbd822365c08196b1e396c5e9eb97f60b5eef1e05758"
+      ]
+    }
+  ],
+  "english": {
+    "samePixels": true,
+    "sameText": true
+  }
+}

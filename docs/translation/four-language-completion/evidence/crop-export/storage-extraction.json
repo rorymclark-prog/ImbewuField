@@ -1,0 +1,73 @@
+{
+  "native": [
+    {
+      "language": "zu",
+      "completeSourceConditions": [
+        "maize",
+        "dry-beans",
+        "butternut",
+        "pumpkin",
+        "onions",
+        "sweet-potato",
+        "potato",
+        "amadumbe",
+        "groundnuts",
+        "garlic"
+      ],
+      "maximumMoistureQualifierVisible": true
+    },
+    {
+      "language": "st",
+      "completeSourceConditions": [
+        "maize",
+        "dry-beans",
+        "butternut",
+        "pumpkin",
+        "onions",
+        "sweet-potato",
+        "potato",
+        "amadumbe",
+        "groundnuts",
+        "garlic"
+      ],
+      "maximumMoistureQualifierVisible": true
+    },
+    {
+      "language": "ts",
+      "completeSourceConditions": [
+        "maize",
+        "dry-beans",
+        "butternut",
+        "pumpkin",
+        "onions",
+        "sweet-potato",
+        "potato",
+        "amadumbe",
+        "groundnuts",
+        "garlic"
+      ],
+      "maximumMoistureQualifierVisible": true
+    },
+    {
+      "language": "ve",
+      "completeSourceConditions": [
+        "maize",
+        "dry-beans",
+        "butternut",
+        "pumpkin",
+        "onions",
+        "sweet-potato",
+        "potato",
+        "amadumbe",
+        "groundnuts",
+        "garlic"
+      ],
+      "maximumMoistureQualifierVisible": true
+    }
+  ],
+  "englishMaximumCorrection": {
+    "originalDroppedComparison": true,
+    "afterAsciiMaximumVisible": true
+  },
+  "status": "All40native source paragraphs and all4maximum qualifiers present in real PDF extraction; original English missing comparison reproduced."
+}

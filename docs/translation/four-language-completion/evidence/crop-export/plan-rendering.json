@@ -1,0 +1,94 @@
+{
+  "rows": [
+    {
+      "file": "en-before-plan.pdf",
+      "pages": 5,
+      "words": 1207,
+      "clipped": [],
+      "pixelHashes": [
+        "0dc16c396558a7ae946724a58274eafffd9b2bf18180dbaf8034bf4c7ab4e3c1",
+        "cc231874fd410f0759405abbfe4a4975d9e4df3eb1789b71c24e6eac0201e5a4",
+        "de75430eba2bb0c99d5909f171924f30ee8df72f06b86ff23869bb5ea31f88fd",
+        "0a57f5ab0ccc93c898066867cd5dd440091ccc0512bad6532c8820751b2c754e",
+        "4621cfec55c459e6ee1256a81d68750a814966b9fe3c8dae3f1d061750b3ca40"
+      ]
+    },
+    {
+      "file": "en-after-plan.pdf",
+      "pages": 5,
+      "words": 1207,
+      "clipped": [],
+      "pixelHashes": [
+        "0dc16c396558a7ae946724a58274eafffd9b2bf18180dbaf8034bf4c7ab4e3c1",
+        "cc231874fd410f0759405abbfe4a4975d9e4df3eb1789b71c24e6eac0201e5a4",
+        "de75430eba2bb0c99d5909f171924f30ee8df72f06b86ff23869bb5ea31f88fd",
+        "0a57f5ab0ccc93c898066867cd5dd440091ccc0512bad6532c8820751b2c754e",
+        "4621cfec55c459e6ee1256a81d68750a814966b9fe3c8dae3f1d061750b3ca40"
+      ]
+    },
+    {
+      "file": "zu-plan.pdf",
+      "pages": 7,
+      "words": 1399,
+      "clipped": [],
+      "pixelHashes": [
+        "95a7a1c8f140ac2a67cbabd7bcf2bf580c2b2eb5aaf03ba9cab49a2c4289856e",
+        "5dcb8c6749ee7ee7eabeb2a9b5c1c58e4b30fc7994d2d19a167e07eb0d817419",
+        "877a9a976dbf791c0d405a7fb1004b933fa3a98232bf9fd7ce243038d7a95b2b",
+        "e1345f5cb64ada4c7e6fe4a30fbf9bb678a842f88f01217eb827f180e60edd16",
+        "3756b4af0fe2580e017ed9ec81b665b11612ea08f43295fc27377fb43d8f053a",
+        "323c60c557d1412e876505b75c850a63e307fbf109a7f297bb20a6b81b80e76b",
+        "7ffd2ac67e7ff4ddd925bb7a431869731b9f56cdd2eb93f2ea7cbee2d890b36b"
+      ]
+    },
+    {
+      "file": "st-plan.pdf",
+      "pages": 7,
+      "words": 1947,
+      "clipped": [],
+      "pixelHashes": [
+        "e63609cd20c2275ee0d31cb55eab343068dc56acd563c9fa1d695a2a4068e578",
+        "5151c29cffae08640b5df431b9ea3c87709a37d91cc0cbcc0b2d67f9246ae5cb",
+        "e1affcba565b5fff292204eff4f39151ec0b7fb3d09e68e46872c429af21bf10",
+        "bd0ff5336cfe4f73c19211f46c3b59aeff4278e90c7ac3e87e99ad208579fa96",
+        "d374a9290748caee4b249b8eca0e26de3dba352273ea99040f8aea07aa28886d",
+        "57a5b4626663889d2409305c3a3477716060c0f1e743b3d1f800fea5d40eb793",
+        "f46d3602b2ca60453d94145c816a4c30f9dd70717c648e1e6f8c9b6c52f4d4df"
+      ]
+    },
+    {
+      "file": "ts-plan.pdf",
+      "pages": 7,
+      "words": 2000,
+      "clipped": [],
+      "pixelHashes": [
+        "e30d1c1d9909e618e48061da08335a857ffcbee5ca90bc419b0241978b5ea5a2",
+        "eb98e11c7f795a95b15ef842c7d0046e47fdc7e2994362bf11f7e3c68bf6db3e",
+        "1950f6f3388b445739ea2db03fcfd9987e4dbe54e1b99ac9bae250e3e7e2a594",
+        "0763b53682b5447639d10d23f1a2a41b3c280ea38cf8f2450052ffd8e370ae99",
+        "dee7427462ed5316a4cb440e3aa696758894470bf74f051bfa3d78b291b31d6d",
+        "a827cbc49b9c57e1c88129b51887339cbcadf19c39af4498570d62718c44ce05",
+        "6af417c6a0574fed8ee08ba331fa237f844cbb213e60b2517e1e1a71cb76aee3"
+      ]
+    },
+    {
+      "file": "ve-plan.pdf",
+      "pages": 7,
+      "words": 2097,
+      "clipped": [],
+      "pixelHashes": [
+        "9de1f64c1c135006451c4c14b16cf24e34e1c76db254c73972a66783e161f8cf",
+        "bb4289d027d9db31d26272a494c57ff6f182c0a57b6298fb692364a8d054bbf3",
+        "f878c1183bfbb784b4860f663f690685b92e99fe185bea2ef9e9d130634ba219",
+        "6b961fb0f3a88c251797b89a881e3391352c2f573d2a65c4c9ef84ff4b4a2448",
+        "1f269bedc10d72053d1c9cdcb0bc85308d497221b2d8e5aa5c7c0d29531d1ad4",
+        "62735e9b5ef51707f47a45eec61e5b9acf07f5dcc89939b74f11b981925a059b",
+        "46e81fc8f8e72dd5a51239fe8d2cfc5a2d20421115479305030ea75b41867d45"
+      ]
+    }
+  ],
+  "english": {
+    "samePixels": true,
+    "sameText": true
+  }
+}

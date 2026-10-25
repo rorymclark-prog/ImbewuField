@@ -5,6 +5,7 @@ import { cropByKey, hasPlanningYield } from './crop-catalog';
 import { benchmarkDatedAreaConflictBedLabels, datedPlantingSowIndex, estimatedYieldKgAdjusted, occupiedMonthsForPlanting, planningMaturityMonths, TRANSPLANT_BED_RESERVED_FROM_MONTHS, TRANSPLANT_ENTRY_PLANNED_MONTHS, type Planting, type PlanBed } from './crop-plan';
 import { isHouseholdFoodHarvest, type PlacedTreeGroup, type TreeAgeGroup, type TreeSeasonChoices } from './perennial-harvest';
 import { numberLabel } from './format-figures';
+import { cropExportText } from './crop-export-copy';
 
 export type KgRange = [number, number];
 export interface AgeProjection {
@@ -59,20 +60,20 @@ export function ageReadyForSeason(g: PlacedTreeGroup, choice: TreeSeasonChoices[
     return date >= planted && (first === undefined || date >= planted + Math.ceil(first * 12));
   });
 }
-export function treeAgeCalendarNote(g: PlacedTreeGroup, choice: TreeSeasonChoices[string], date: number): string | undefined {
-  if (!isHouseholdFoodHarvest(g.harvest)) return 'Food use needs review';
+export function treeAgeCalendarNote(g: PlacedTreeGroup, choice: TreeSeasonChoices[string], date: number, language = 'en'): string | undefined {
+  if (!isHouseholdFoodHarvest(g.harvest)) return cropExportText('Food use needs review', language);
   if (ageReadyForSeason(g, choice, date) || choice?.bearing) return undefined;
   const cohorts = choice?.production ?? [];
   const dates = cohorts.map(c => plantingMonthIndex(c.planted));
   if (dates.some(d => d === null)) return undefined;
-  if (dates.every(d => d! > date)) return 'Not planted yet · see future harvest';
+  if (dates.every(d => d! > date)) return cropExportText('Not planted yet · see future harvest', language);
   const first = g.harvest.yearsToFirstCrop?.value;
   if (first) {
     const from = Math.floor((Math.min(...dates as number[]) + Math.ceil(first[0] * 12)) / 12);
     const to = Math.floor((Math.max(...dates as number[]) + Math.ceil(first[1] * 12)) / 12);
-    if (to >= Math.floor(date / 12)) return `Growing · first-crop ref ${from}${from === to ? '' : `–${to}`}`;
+    if (to >= Math.floor(date / 12)) return cropExportText('Growing · first-crop ref {from}{to}', language, { from, to: from === to ? '' : `–${to}` });
   }
-  return 'Age schedule: no crop planned now';
+  return cropExportText('Age schedule: no crop planned now', language);
 }
 const sumRange = (a: KgRange, b: KgRange): KgRange => [a[0] + b[0], a[1] + b[1]];
 
