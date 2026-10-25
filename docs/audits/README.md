@@ -80,6 +80,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 - [Site-report main integration — 25 October 2026](2026-10-25/site-report-main-integration-codex.md).
 
+- [Wave 22 rendered re-capture of the live build 8d2e1a9: w22-01 to w22-10, hydration errors on /home and /invoice, Lima clearance, weather card — 25 October 2026](2026-10-25/wave-22-recapture-claude.md).
+
 - [Site report CI readability-register follow-up — 24 October 2026](2026-10-24/site-report-ci-followup-codex.md).
 
 - [Two report purposes, annual production handoff and Record plan — 24 October 2026](2026-10-24/site-report-production-mapping-codex.md).

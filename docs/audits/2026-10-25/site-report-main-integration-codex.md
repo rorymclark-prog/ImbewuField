@@ -41,3 +41,31 @@ record remains a historical checkpoint of `23922e558`; read this integration and
 the latest PR/issue #35 status before merging. Fluent review, physical devices,
 current buyer/field evidence and generated narrative quality retain their recorded
 limits. Both PRs remain for review in the order #1099, then #1101.
+
+## Wave 22 integration after completed CI
+
+The four full CI runs on the preceding integrated sources completed successfully.
+For #1099 at `0a08ccc57`, push/PR runs `40192436366` / `40192439093` each
+report **5,563 tests: 5,562 pass, zero fail, one existing TODO**. For #1101 at
+`4b88d5559`, runs `40197264764` / `40197269927` each report **5,573 tests:
+5,572 pass, zero fail, one existing TODO**. Typecheck and all rules jobs pass.
+The TODO remains the pre-existing shape-sync-loss scenario, not a report failure.
+
+The completion audit then found #1099 conflicting after main advanced to
+`cfb75437c` (wave 22). Only progress history, the audit index and release entries
+conflicted; both histories and both sets of release messages/tours are retained.
+The report archive's wave-22 spacing change merges normally with its saved
+purpose/origin metadata. Reviewed main code and tests are carried without hand
+rewrites. The prior successful runs certify their recorded heads; the refreshed
+review heads need their own CI. Read the final PR bodies and issue #35 handover
+for the terminal results, without creating another documentation-only CI cycle.
+
+Report generation, captured facts, annual products, map rendering, farmer data
+and the original six-report collection retain their prior implementation and
+verification scope. No new narrative, field visit, species, figures, geometry or
+PLAN_VERSION changes are introduced by this reconciliation.
+
+On the refreshed #1099 tree, typecheck is clean and **315 focused report,
+survey, production, readability, release and waves 19–22 checks pass, zero fail**.
+Whitespace is clean. Full CI and the combined preview are checked after the one
+finished push; previous rendered report/PDF evidence retains its scope.

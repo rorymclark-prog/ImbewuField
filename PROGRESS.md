@@ -52,7 +52,23 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+- **2026-10-25 — Wave 22 report integration (Codex).** All four preceding report test/rules CI runs passed (5,562 / 5,572 passing tests plus the existing TODO). Main then advanced to `cfb75437c`; reconciled audit/progress/release histories without changing report logic. [Current integration record](docs/audits/2026-10-25/site-report-main-integration-codex.md). Read final PR/issue #35 results for the refreshed heads.
+
 - **2026-10-25 — Report branch integration (Codex).** #1099 became conflicting after waves 19–21 landed. Integrated main `8d2e1a9aa`, preserving both histories/release entries and combining the report-archive heading cleanup with saved purpose/origin labels. [Integration record](docs/audits/2026-10-25/site-report-main-integration-codex.md). Fresh integrated CI/preview supersedes old-source green checks; #1101 follows this prerequisite. No saved data, species, farming figures or PLAN_VERSION edits.
+
+### 25 Oct 2026 — Wave 22: re-capture of the live build, hydration errors, Lima clearance, weather card
+- **Re-capture:** 41 routes × phone/desktop × light/dark × English/isiZulu, plus 768/1024px, with a checker that now
+  composites translucent backgrounds, collects page errors and measures what the Lima button covers —
+  `docs/audits/2026-10-25/wave-22-recapture-claude.md` (`w22-01`…`w22-10`).
+- **Hydration:** /home and /invoice are prerendered and computed "today" during render, so the HTML carried the build
+  day and every visit on a later day threw React #425 and re-rendered the page. Both now take the date after mount.
+- **Swarm (Sonnet), folded into #1102:** Lima clearance at the end of /contact, /mentor, /facilitator, /network,
+  /prices, /reports and /samples/production (#1103); weather card theme colours and labelled isiZulu drafts listed for
+  the translator (#1104); invoice issue date without the mismatch (#1105).
+- **Direct:** isiZulu "English source" labels on /calendar and the Study design notice reach 4.5:1.
+- **Lima on desktop (`w22-08`, Rory's call):** the launcher and its panel park bottom-right from `lg` (phones and
+  the /farmer map keep bottom-left); the /network legend stops above it. First-view overlap at 1280px: 7 → 3 routes.
+- **Open:** `w22-09` chart labels in `components/crops/*` for Codex.
 
 ### 2026-10-24 — Site reports continue the existing production work
 - [CI follow-up](docs/audits/2026-10-24/site-report-ci-followup-codex.md): the full run found one omission in the readability register. The three new farmer-facing components now inherit its strict floor; 174 focused checks pass. Read the fresh full CI result before merging PR #1099.

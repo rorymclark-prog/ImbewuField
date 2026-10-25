@@ -68,7 +68,7 @@ export default function PricesPage() {
         right={<>{!simple && <LessonLink id="prices:overview" label={t('pricesLearn')} />}</>}
       />
 
-      <main className={`flex-1 overflow-y-auto lg:overflow-visible px-4 py-5 sm:px-6 sm:py-6 ${workspace.workspace}`}>
+      <main className={`flex-1 overflow-y-auto lg:overflow-visible px-4 py-5 sm:px-6 sm:py-6 ${workspace.workspace}`} style={{ paddingBottom: 'max(20px, var(--lima-fab-clearance, 0px))' }}>
         <h1 className="t-h1 m-0 mb-3" style={{ color: 'var(--text-primary)' }}>{t('pricesFarmGateTitle')}</h1>
         <div className="mb-3"><LanguageDraftNote lang={lang} scope="prices" /></div>
         <style jsx global>{`
