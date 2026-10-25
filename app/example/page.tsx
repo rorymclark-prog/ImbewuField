@@ -255,7 +255,7 @@ function ExampleInner() {
               {data.biome.keySpecies.slice(0, 6).map((s) => (
                 <span
                   key={s}
-                  className="px-2.5 py-1 rounded-full font-display"
+                  className="px-2.5 py-1 rounded-full font-sans"
                   // dark-07: these were a fixed forest-green text/fill in every theme, which read
                   // as near-invisible dark blobs on the near-black dark-mode card. Tokens (same
                   // ones DataPanel.tsx's own species chips use) follow each theme's own swing.
@@ -272,7 +272,7 @@ function ExampleInner() {
             <Label>{t('cardMainChallenges')}</Label>
             <div className="space-y-1.5">
               {data.biome.challenges.slice(0, 4).map((c, i) => (
-                <div key={i} className="flex gap-2 font-display leading-relaxed" style={{ fontSize: 'clamp(13px, 1vw, 15px)', color: 'var(--text-primary)' }}>
+                <div key={i} className="flex gap-2 font-sans leading-relaxed" style={{ fontSize: 'clamp(13px, 1vw, 15px)', color: 'var(--text-primary)' }}>
                   <span className="flex-shrink-0 mt-0.5 flex items-center" style={{ color: 'var(--gold-dim)' }}><AlertTriangle size={12} /></span>
                   {c}
                 </div>

@@ -249,7 +249,7 @@ export default function AtlasExplorer() {
             }}
           >
             <Earth size={15} className="shrink-0" style={{ color: 'var(--color-forest-800)' }} />
-            <span className="font-display" style={{ fontSize: 13.5, color: 'var(--text-primary)' }}>
+            <span className="font-sans" style={{ fontSize: 13.5, color: 'var(--text-primary)' }}>
               {isZulu ? (
                 <>
                   <span className="block">Thinta noma kuphi emhlabeni ukuze ubone isimo sezulu, imvula nomhlabathi.</span>

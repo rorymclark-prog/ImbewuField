@@ -798,7 +798,7 @@ export default function SurveysPage() {
     <div className="flex flex-col overflow-hidden h-[100dvh] lg:h-auto lg:min-h-0 lg:overflow-visible" style={{ background: 'var(--bg-0)' }}>
       <AppHeader
         title={localUi('Surveys', 'Izinhlolovo', lang)}
-        right={<LessonLink id="surveys:overview" label={localUi('Learn', 'Funda', lang)} />}
+        right={<LessonLink id="surveys:overview" tone="chip" label={localUi('Learn', 'Funda', lang)} />}
       />
 
       {/* code-14: no max-width at all, so content ran edge to edge at 1280px. */}
@@ -901,11 +901,6 @@ export default function SurveysPage() {
           </div>
         )}
 
-        {!isLive && (
-          <p className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
-            {localUi('Sample data', 'Idatha yesibonelo', lang)}
-          </p>
-        )}
       </main>
 
       <TabBar hideAtDesktop />

@@ -14,7 +14,7 @@ import VisitCapture from './VisitCapture';
 import VenueLocation from './VenueLocation';
 import workStyles from './FieldWork.module.css';
 import type { VisitPhoto } from '@/lib/field-teams';
-import { CalendarClock, ClipboardCheck, Users } from 'lucide-react';
+import { CalendarClock, ClipboardCheck } from 'lucide-react';
 import ProfileAvatar from './ProfileAvatar';
 import FieldVisitGuide from './FieldVisitGuide';
 import ReportComposer from './ReportComposer';
@@ -225,12 +225,12 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
         <div className={workStyles.columns}>
           <section className={styles.card}><div className={styles.row}><h2>{t('mentorWhatNeedsAttention')}</h2><span className={styles.tag}>{t('mentorOpenActionsCount').replace('{count}',String(summary.open.length))}</span></div>
             {!summary.open.length&&<p>{t('mentorNoOpenActions')}</p>}
-            {[...summary.due,...summary.open.filter(v=>!summary.due.includes(v))].slice(0,4).map(record=><article key={record.id} className={workStyles.action}><div className={workStyles.actionHeader}><div className={workStyles.personHeading}>{portrait(record.farmerId)}<div><strong>{name(record.farmerId)}</strong><p className={workStyles.personGarden}>{garden(record.farmerId)}</p></div></div><span className={record.followUpDate&&record.followUpDate<=today?workStyles.due:styles.tag}>{actionLabel(record)}</span></div><p>{record.agreedAction}</p><small>{record.responsiblePerson||t('mentorOwnerNeeded')} · {record.followUpDate||t('mentorAgreeFollowUpDate')}</small><button disabled={busy||captureBusy||photosBusy} onClick={()=>void openVisit(record)}>{t('mentorReviewAction')}</button></article>)}
+            {[...summary.due,...summary.open.filter(v=>!summary.due.includes(v))].slice(0,4).map(record=><article key={record.id} className={workStyles.action}><div className={workStyles.actionHeader}><div className={workStyles.personHeading}>{portrait(record.farmerId)}<div><strong>{name(record.farmerId)}</strong><p className={workStyles.personGarden}>{garden(record.farmerId)}</p></div></div><span className={record.followUpDate&&record.followUpDate<=today?workStyles.due:styles.tag}>{actionLabel(record)}</span></div><p>{record.agreedAction}</p><small>{record.responsiblePerson||t('mentorOwnerNeeded')} · {record.followUpDate?formatStaffDate(record.followUpDate,lang):t('mentorAgreeFollowUpDate')}</small><button disabled={busy||captureBusy||photosBusy} onClick={()=>void openVisit(record)}>{t('mentorReviewAction')}</button></article>)}
             {summary.open.length>4&&<button onClick={()=>setPanel('visits')}>{t('mentorViewAllVisitActions')}</button>}
           </section>
           <aside className={styles.card}><FieldVisitGuide actProgramme={!!actProgramme}/></aside>
         </div>
-        <section className={styles.card}><div className={styles.row}><Users size={28} aria-hidden="true"/><h2>{t('mentorPlanNextVisit')}</h2><span className={styles.tag}>{t('mentorParticipantsWithoutVisit').replace('{count}',String(summary.unvisited))}</span></div><p>{t('mentorSearchAssignedGroup')}</p><button onClick={()=>setPanel('people')}>{t('mentorOpenPeopleGardens')}</button></section>
+        <section className={styles.card}><div className={styles.row}><h2>{t('mentorPlanNextVisit')}</h2><span className={styles.tag}>{t('mentorParticipantsWithoutVisit').replace('{count}',String(summary.unvisited))}</span></div><p>{t('mentorSearchAssignedGroup')}</p><button onClick={()=>setPanel('people')}>{t('mentorOpenPeopleGardens')}</button></section>
       </>}
       {visitOpen&&<section ref={visitForm} className={styles.card} style={{margin:'16px 0'}} aria-label={t('mentorVisitDetailsAria')}>
         <div className={styles.row}><h2>{readOnlyVisit?paired('mentorFieldVisitDetailsHeading'):data.visits.some(v=>v.id===visit.id)?paired('mentorEditFieldVisit'):paired('mentorRecordFieldVisit')}</h2><button type="button" disabled={busy||captureBusy} onClick={closeVisit}>{paired('mentorCloseVisit')}</button></div>

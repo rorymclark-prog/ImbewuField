@@ -377,7 +377,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                         minHeight: 44,
                         cursor: sorted.length === 0 ? 'not-allowed' : 'pointer',
                         opacity: sorted.length === 0 ? 0.45 : 1,
-                        background: FOREST, color: 'var(--on-forest-800)', border: `1px solid ${FOREST}`,
+                        background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: '1px solid var(--color-forest-800)',
                       }}
                     >
                       <Download size={13} />
@@ -424,9 +424,9 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                           className="font-sans font-semibold"
                           style={{
                             fontSize: MICRO, borderRadius: 999, padding: '5px 10px', cursor: 'pointer',
-                            background: on ? FOREST : 'var(--bg-2)',
+                            background: on ? 'var(--color-forest-800)' : 'var(--bg-2)',
                             color: on ? 'var(--on-forest-800)' : INK_SOFT,
-                            border: `1px solid ${on ? FOREST : LINE}`,
+                            border: `1px solid ${on ? 'var(--color-forest-800)' : LINE}`,
                           }}
                         >
                           {d.key} {d.count}

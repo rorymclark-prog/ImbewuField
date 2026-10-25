@@ -10,6 +10,7 @@ import DesignDraftCopy from './DesignDraftCopy';
 import styles from './FinanceCourse.module.css';
 import folder from './DesignPortfolio.module.css';
 import ArrowLabel from './ArrowLabel';
+import Summary from './Summary';
 
 type Draft = { key: string; answers: PortfolioAnswers; baseline: string | null; loadError: boolean; dirty: boolean };
 
@@ -129,7 +130,7 @@ export default function DesignPortfolio() {
     {PORTFOLIO_STAGES.map((stage, index) => <section className={`${styles.section} ${folder.stage}`} id={`folder-${stage.id}`} key={stage.id}>
       <p className={styles.eyebrow}><DesignDraftCopy en={`Stage ${index + 1} · Your design evidence`} zu={`Isigaba ${index + 1} · Ubufakazi bomklamo wakho`} /></p>
       <h2><DesignDraftCopy en={stage.title} zu={STAGE_ZU[stage.id].title} /></h2><p><DesignDraftCopy en={stage.purpose} zu={STAGE_ZU[stage.id].purpose} /></p>
-      <details className={folder.example}><summary><DesignDraftCopy en="Discuss the busy-yard example" zu="Xoxani ngesibonelo segceke elimatasa" /></summary><p>{stage.example}</p></details>
+      <details className={folder.example}><Summary><DesignDraftCopy en="Discuss the busy-yard example" zu="Xoxani ngesibonelo segceke elimatasa" /></Summary><p>{stage.example}</p></details>
       {stage.fields.map(field => <div className={styles.answerField} key={field.id}>
         <label htmlFor={`portfolio-${field.id}`}><strong><DesignDraftCopy en={field.label} zu={FIELD_ZU[field.id].label} /></strong></label>
         <span id={`help-${field.id}`}><DesignDraftCopy en={field.prompt} zu={FIELD_ZU[field.id].prompt} /></span>

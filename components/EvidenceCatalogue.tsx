@@ -55,10 +55,10 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
                 <div style={{ font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 7 }}>
                   {t('evidenceCatalogueTitle')}
                 </div>
-                <div style={{ font: '600 22px/1.1 Newsreader, Georgia, serif', color: 'var(--text-primary)' }}>
+                <div style={{ font: '600 22px/1.1 var(--font-display), Georgia, serif', color: 'var(--text-primary)' }}>
                   {t('evidenceCatalogueHeading')}
                 </div>
-                <div style={{ font: '400 13.5px/1.5 Newsreader, Georgia, serif', color: 'var(--text-secondary)', marginTop: 6, maxWidth: 460 }}>
+                <div style={{ font: '400 13.5px/1.5 var(--font-display), Georgia, serif', color: 'var(--text-secondary)', marginTop: 6, maxWidth: 460 }}>
                   {t('evidenceCatalogueIntro')}
                 </div>
               </div>
@@ -127,7 +127,7 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ font: '600 14.5px/1.2 var(--font-sans), sans-serif', color: 'var(--on-forest-800)' }}>{t('evidenceCatalogueDroneTitle')}</div>
-                <div style={{ font: '400 13px/1.45 Newsreader, Georgia, serif', color: 'color-mix(in srgb, var(--on-forest-800) 75%, transparent)', marginTop: 3, fontStyle: 'italic' }}>
+                <div style={{ font: '400 13px/1.45 var(--font-display), Georgia, serif', color: 'color-mix(in srgb, var(--on-forest-800) 75%, transparent)', marginTop: 3, fontStyle: 'italic' }}>
                   {t('evidenceCatalogueDroneBody')}
                 </div>
               </div>
@@ -138,7 +138,7 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
 
             {/* Indigenous edibles reference */}
             <div style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderRadius: 14, padding: '18px 20px' }}>
-              <div style={{ font: '400 14px/1.5 Newsreader, Georgia, serif', color: 'var(--text-primary)', marginBottom: 14 }}>
+              <div style={{ font: '400 14px/1.5 var(--font-display), Georgia, serif', color: 'var(--text-primary)', marginBottom: 14 }}>
                 {t('evidenceCatalogueEdiblesHeading')}
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -148,7 +148,7 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
                     paddingBottom: i < INDIGENOUS_EDIBLES.length - 1 ? 10 : 0,
                     borderBottom: i < INDIGENOUS_EDIBLES.length - 1 ? '1px solid var(--border)' : 'none',
                   }}>
-                    <span style={{ font: '600 14.5px/1 Newsreader, Georgia, serif', color: 'var(--text-primary)', flexShrink: 0, width: 110 }}>
+                    <span style={{ font: '600 14.5px/1 var(--font-display), Georgia, serif', color: 'var(--text-primary)', flexShrink: 0, width: 110 }}>
                       {sp.name}
                       {sp.protected && <span style={{ font: '400 12px/1 var(--font-sans), sans-serif', color: 'var(--color-forest-700)', marginLeft: 4 }}>·{t('evidenceCatalogueEdiblesProtected')}</span>}
                     </span>
@@ -156,7 +156,7 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
                   </div>
                 ))}
               </div>
-              <div style={{ font: '400 13px/1.5 Newsreader, Georgia, serif', color: 'var(--text-secondary)', marginTop: 14, borderTop: '1px solid var(--border)', paddingTop: 12 }}>
+              <div style={{ font: '400 13px/1.5 var(--font-display), Georgia, serif', color: 'var(--text-secondary)', marginTop: 14, borderTop: '1px solid var(--border)', paddingTop: 12 }}>
                 {t('evidenceCatalogueEdiblesFooter')}
               </div>
             </div>

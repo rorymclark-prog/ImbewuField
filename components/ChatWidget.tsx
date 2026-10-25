@@ -196,7 +196,7 @@ export default function ChatWidget() {
     // tests/chat-widget-fab-overlap.test.ts, which fails if a route is excluded here without a
     // LimaBar, or gains a LimaBar without being excluded here.
     pathname.startsWith('/journal') || pathname.startsWith('/calendar') ||
-    pathname.startsWith('/cropplan') || pathname.startsWith('/records') ||
+    pathname.startsWith('/cropplan') || pathname.startsWith('/records') || pathname.startsWith('/invoice') ||
     pathname.startsWith('/finances') || pathname.startsWith('/facilitator/crops')
   ) return null;
 
@@ -234,15 +234,23 @@ export default function ChatWidget() {
   // 43×35px corner of it, since that field ends at y:615, 11px of clearance the button doesn't
   // have. A corner nick on an optional multi-line field beats hiding the send action, and the two
   // can't both be fully clear: the 29px gap between them is smaller than the 56px FAB.
+  //
+  // w22-08 (Rory, 25 Oct): on desktop (lg+) the launcher parks bottom-RIGHT. Bottom-left sat over
+  // the left edge of the content column on first view on 19 routes at 1280px — every staff
+  // dashboard, Study and the public pages are left-aligned, so their headings, first cards and
+  // list rows started right under it. Phones keep bottom-left (the pinned /invoice and /farmer
+  // offsets above are phone measurements). /farmer keeps left on desktop too: its map zoom
+  // control owns the bottom-right from 96px up, and its desktop bottom-left is free (above).
+  const fabRightOnDesktop = !pathname.startsWith('/farmer');
   const FAB_DEFAULT_POS = pathname.startsWith('/farmer')
     ? 'bottom-[188px] left-4 lg:bottom-[100px] lg:left-4'
     : pathname.startsWith('/invoice')
-      ? 'bottom-[176px] left-4 lg:bottom-[100px] lg:left-4'
-      : 'bottom-[130px] left-4 lg:bottom-[100px] lg:left-4';
+      ? 'bottom-[176px] left-4 lg:bottom-[100px] lg:left-auto lg:right-6'
+      : 'bottom-[130px] left-4 lg:bottom-[100px] lg:left-auto lg:right-6';
 
   return (
     <>
-      {/* Launcher FAB — draggable; defaults bottom-left, remembers where you park it */}
+      {/* Launcher FAB — draggable; defaults bottom-left (bottom-right on desktop, w22-08), remembers where you park it */}
       {!open && !drawing && !overlay && (
         <button
           onPointerDown={onFabPointerDown}
@@ -278,7 +286,7 @@ export default function ChatWidget() {
             aria-modal="true"
             aria-labelledby={titleId}
             tabIndex={-1}
-            className="no-print u-anim-sheet fixed z-[61] flex flex-col bottom-0 left-0 right-0 md:right-auto md:bottom-4 md:left-4 w-full md:w-[400px] rounded-t-2xl md:rounded-2xl overflow-hidden"
+            className={`no-print u-anim-sheet fixed z-[61] flex flex-col bottom-0 left-0 right-0 md:right-auto md:bottom-4 md:left-4 ${fabRightOnDesktop ? 'lg:left-auto lg:right-6' : ''} w-full md:w-[400px] rounded-t-2xl md:rounded-2xl overflow-hidden`}
             style={{
               // Themed (a11y-03): the old .u-glass class is a fixed warm-cream glass used by
               // several other sheets, so it stayed a bright block in dark mode here. This sheet
@@ -360,7 +368,7 @@ function isLimaFabHiddenRoute(pathname: string): boolean {
     pathname.startsWith('/partners') || pathname.startsWith('/funder') ||
     pathname.startsWith('/ngo') || pathname.startsWith('/pitch') ||
     pathname.startsWith('/journal') || pathname.startsWith('/calendar') ||
-    pathname.startsWith('/cropplan') || pathname.startsWith('/records') ||
+    pathname.startsWith('/cropplan') || pathname.startsWith('/records') || pathname.startsWith('/invoice') ||
     pathname.startsWith('/finances') || pathname.startsWith('/facilitator/crops')
   );
 }

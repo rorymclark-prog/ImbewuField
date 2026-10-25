@@ -33,7 +33,7 @@ test('ux-03/nav-04: /contact no longer says "Backend not connected" or "Connect 
   const src = source('../app/contact/page.tsx');
   assert.doesNotMatch(src, /Backend not connected/);
   assert.doesNotMatch(src, /Connect Firebase/);
-  assert.match(src, /Practice version: your message is kept on this phone/);
+  assert.match(src, /Practice version: your message is kept on this device/);
 });
 
 test('ux-03/nav-04: ContactInbox no longer says "Backend not connected" or "Connect Firebase"', () => {

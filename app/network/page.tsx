@@ -59,7 +59,7 @@ import {
   type NetworkSortKey,
 } from '@/lib/network';
 import { DEMO_NETWORK_NOTICE } from '@/lib/network-demo';
-import type { GardenStatus } from '@/lib/db/types';
+import { NETWORK_STATUS_COLOR } from '@/components/network/status-colors';
 
 const NetworkMap = dynamic(() => import('@/components/network/NetworkMap'), {
   ssr: false,
@@ -87,11 +87,7 @@ const LINE = 'var(--border)';
 const PAPER = 'var(--bg-1)';
 const ATTENTION = 'var(--orange)';
 
-const STATUS_COLOR: Record<GardenStatus, string> = {
-  thriving: '#1F4D2B',
-  establishing: '#9E5C08',
-  support: '#C0531E',
-};
+const STATUS_COLOR = NETWORK_STATUS_COLOR;
 
 const DASH = '—';
 function group(n: number): string {
@@ -228,7 +224,13 @@ export default function NetworkPage() {
                 // track what the rows actually are. Leaving it on real data would be
                 // the same failure in the other direction: a funder discounting real
                 // programme results as a mock-up.
-                className="font-sans font-semibold whitespace-nowrap shrink-0"
+                //
+                // w20-38: in the header only from sm up; below sm the same label sits as a
+                // full-width strip under the header (still on first paint, never hidden), so it
+                // stops pushing the title down to "N" and Settings off-screen.
+                // w21-03: from xl, not sm. Beside the lg desktop nav the isiZulu pill pushed
+                // Settings 39px past a 1024px viewport; below xl the strip carries it.
+                className="font-sans font-semibold whitespace-nowrap shrink-0 hidden xl:inline-block"
                 style={{
                   fontSize: 12,
                   color: 'var(--gold-dim)',
@@ -249,6 +251,14 @@ export default function NetworkPage() {
           header's h1 is gone. The stat strip right below already repeats "Sites" etc, so this
           stays visually quiet (matches the previous text-xs treatment). */}
       <h1 className="sr-only">{tr('Network', 'Inethiwekhi')}</h1>
+      {portfolio.isDemo && (
+        <div
+          className="xl:hidden flex-shrink-0 px-3 py-1.5 font-sans font-semibold"
+          style={{ fontSize: 12, color: 'var(--gold-dim)', background: 'color-mix(in srgb, var(--gold) 12%, var(--bg-1))', borderBottom: `1px solid ${LINE}` }}
+        >
+          {tr('Programme portfolio', 'Iphothifoliyo yohlelo')}
+        </div>
+      )}
 
       {/* An authorised read that failed says so. It must not render as an empty portfolio:
           "no farmers" and "we could not find out" look identical on a dashboard and mean
@@ -314,7 +324,7 @@ export default function NetworkPage() {
               // borders on the wrapped rows); the divider and spacing return at sm+.
               className="flex flex-col justify-center min-w-0 sm:flex-shrink-0 sm:min-w-[92px] sm:border-r sm:mr-4 sm:pr-4"
               style={{
-                padding: '9px 0',
+                paddingBlock: 9,
                 borderColor: LINE,
               }}
             >
@@ -484,7 +494,7 @@ export default function NetworkPage() {
           </div>
 
           {/* Site roster — server-rendered, so the portfolio reads without the map */}
-          <div className="flex-1 overflow-y-auto px-2.5 py-2" style={{ minHeight: 0 }}>
+          <div className="flex-1 overflow-y-auto px-2.5 py-2" style={{ minHeight: 0, paddingBottom: 'max(8px, var(--lima-fab-clearance, 0px))' }}>
             {sorted.length === 0 && (
               <p className="font-sans" style={{ fontSize: 12.5, color: INK_MUTED, padding: '14px 8px' }}>
                 {tr('No sites match that search.', 'Azikho izindawo ezihambisana nalolu sesho.')}
@@ -504,7 +514,7 @@ export default function NetworkPage() {
                   style={{
                     display: 'block',
                     background: on ? PAPER : 'transparent',
-                    border: `1px solid ${on ? '#1F4D2B' : 'transparent'}`,
+                    border: `1px solid ${on ? 'var(--color-forest-800)' : 'transparent'}`,
                     borderRadius: 10,
                     padding: '8px 9px',
                     marginBottom: 3,
@@ -513,37 +523,42 @@ export default function NetworkPage() {
                 >
                   <div className="flex items-center gap-2">
                     {farmer.photoUrl && <img data-photo-preview src={farmer.photoUrl} alt="" width={44} height={44} style={{ borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }} />}
-                    <span
-                      style={{
-                        width: 9,
-                        height: 9,
-                        borderRadius: '50%',
-                        background: STATUS_COLOR[farmer.status],
-                        flexShrink: 0,
-                      }}
-                    />
-                    <span
-                      className="font-display font-semibold"
-                      style={{ fontSize: 13.5, color: INK, flex: 1, minWidth: 0 }}
-                    >
-                      {farmer.name}
-                    </span>
-                    {flags.length > 0 && (
-                      <AlertTriangle size={12} style={{ color: ATTENTION, flexShrink: 0 }} />
-                    )}
-                  </div>
-                  <div
-                    className="font-sans"
-                    style={{ fontSize: 12, color: INK_MUTED, marginTop: 1, paddingLeft: 17 }}
-                  >
-                    {farmer.siteName} · {farmer.district}
-                  </div>
-                  <div
-                    className="font-sans"
-                    style={{ fontSize: 12, color: INK_SOFT, marginTop: 2, paddingLeft: 17 }}
-                  >
-                    {statKg(metrics.producedKg)} · {statZar(metrics.incomeZar)} ·{' '}
-                    {group(farmer.plotSizeM2)} m²
+                    <div className="flex flex-col min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <span
+                          style={{
+                            width: 9,
+                            height: 9,
+                            borderRadius: '50%',
+                            background: STATUS_COLOR[farmer.status],
+                            boxShadow: `0 0 0 1.5px ${LINE}`,
+                            flexShrink: 0,
+                          }}
+                        />
+                        <span
+                          className="font-display font-semibold"
+                          style={{ fontSize: 13.5, color: INK, flex: 1, minWidth: 0 }}
+                        >
+                          {farmer.name}
+                        </span>
+                        {flags.length > 0 && (
+                          <AlertTriangle size={12} style={{ color: ATTENTION, flexShrink: 0 }} />
+                        )}
+                      </div>
+                      <div
+                        className="font-sans"
+                        style={{ fontSize: 12, color: INK_MUTED, marginTop: 1, paddingLeft: 17 }}
+                      >
+                        {farmer.siteName} · {farmer.district}
+                      </div>
+                      <div
+                        className="font-sans"
+                        style={{ fontSize: 12, color: INK_SOFT, marginTop: 2, paddingLeft: 17 }}
+                      >
+                        {statKg(metrics.producedKg)} · {statZar(metrics.incomeZar)} ·{' '}
+                        {group(farmer.plotSizeM2)} m²
+                      </div>
+                    </div>
                   </div>
                 </button>
               );

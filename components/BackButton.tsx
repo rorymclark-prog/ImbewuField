@@ -26,7 +26,7 @@ export default function BackButton({ fallback = '/' }: { fallback?: string }) {
       onClick={goBack}
       aria-label={accessibleSourceLabel(lang, t('buttonBack'), translate('en', 'buttonBack'))}
       title={t('buttonBack')}
-      className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display transition-all"
+      className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-sans transition-all"
       style={{
         background: 'var(--bg-1)',
         border: '1px solid var(--border)',

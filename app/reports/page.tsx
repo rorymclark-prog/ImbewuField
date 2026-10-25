@@ -67,8 +67,8 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
         staff-dark track — not edited here) carries a 180px padding-bottom sized for a bar this
         page didn't use to have, which left a long blank tail below short content. TabBar now
         supplies its own clearance (and hides entirely at lg+), so this page only needs enough
-        padding to clear it on phone. */}
-    <main className={styles.root} style={{ flex: 1, paddingBottom: 32 }}><div className={styles.wrap}>
+        padding to clear it on phone, and the Lima launcher (--lima-fab-clearance) at the end of the scroll. */}
+    <main className={styles.root} style={{ flex: 1, paddingBottom: 'max(32px, var(--lima-fab-clearance, 0px))' }}><div className={styles.wrap}>
     <div className={styles.hero} style={{ marginTop: 20 }}><h1>{t('reportsTitle')}</h1><p>{t('reportsIntro')}</p></div>
     {!allowed ? (
       // staff-15: this used to read as one sentence with a plain inline Link at the end —
@@ -88,16 +88,16 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
       <div className={styles.row} role="group" aria-label={t('reportsChooseSitesOrReports')}><button aria-pressed={view==='sites'} onClick={()=>setView('sites')}>{t('reportsSavedSites')} · {choices.filter(c=>c.place).length}</button><button aria-pressed={view==='reports'} onClick={()=>setView('reports')}>{t('reportsSavedReports')} · {reports.length}</button></div>
       <Link href="/farmer?reportSite=new&guided=1" className={styles.card} style={{ display:'flex', gap:14, alignItems:'center', margin:'20px 0' }}><Plus size={28}/><div><h2>{t('reportsSelectNewSite')}</h2><p style={{margin:0}}>{t('reportsSelectNewSiteHelp')}</p></div><ArrowRight style={{marginLeft:'auto',flexShrink:0}}/></Link>
       {error && <p role="alert" className={styles.error}>{error}</p>}
-      {view==='sites'&&<><h2>{t('reportsSavedSites')}</h2><p>{t('reportsSitesDescription')}</p>
+      {view==='sites'&&<><p>{t('reportsSitesDescription')}</p>
       {!choices.some(c=>c.place) && <div className={styles.card}><h3>{t('reportsNoSitesTitle')}</h3><p>{t('reportsNoSitesHelp')}</p></div>}
-      <div className={styles.grid}>{choices.filter(c => c.place).map(choice => { const place=choice.place!; const latest=choice.reports[0]; const href=`/farmer?site=${encodeURIComponent(place.id)}&openReport=1`; return <article className={styles.card} style={{ maxWidth: 720 }} key={choice.siteId}>
-        <MapPin size={28} aria-hidden="true"/><h2 style={{marginTop:14}}>{place.name || t('reportsSavedSiteFallback')}</h2><p style={{fontSize:12,color:'var(--text-secondary)'}}>{Math.abs(place.lat).toFixed(5)}°{place.lat<0?'S':'N'} · {Math.abs(place.lon).toFixed(5)}°{place.lon<0?'W':'E'}</p>
+      <div className={styles.grid}>{choices.filter(c => c.place).map(choice => { const place=choice.place!; const latest=choice.reports[0]; const href=`/farmer?site=${encodeURIComponent(place.id)}&openReport=1`; return <article className={styles.card} key={choice.siteId}>
+        <MapPin size={28} aria-hidden="true"/><h2 style={{marginTop:14}}>{place.name || t('reportsSavedSiteFallback')}</h2><p style={{fontSize:12,color:'var(--text-secondary)'}}>{Math.abs(place.lat).toFixed(2)}°{place.lat<0?'S':'N'} · {Math.abs(place.lon).toFixed(2)}°{place.lon<0?'W':'E'}</p>
         <SiteCropPlanPreview siteId={choice.siteId} siteName={place.name || t('reportsSavedSiteFallback')} />
         <p>{latest ? t(choice.reports.length === 1 ? 'reportsOneSavedReportLatest' : 'reportsManySavedReportsLatest').replace('{count}', String(choice.reports.length)).replace('{date}', new Date(latest.savedAt).toLocaleDateString(dateLocale)) : t('reportsReadyForFirstReport')}</p>
         <Link href={href} aria-label={t('reportsOpenWorkspaceForSite').replace('{site}', place.name || t('reportsSavedSiteFallback'))} style={{display:'inline-flex',minHeight:44,alignItems:'center',gap:8,fontWeight:600}}><FileText size={18}/>{t('reportsOpenGenerateReport')}<ArrowRight size={16}/></Link>
         {latest&&<p><button disabled={opening} onClick={()=>void openSaved(latest)}>{opening ? t('reportsOpening') : t('reportsReadLatest')}</button></p>}
       </article>; })}</div></>}
-      {view==='reports'&&<><h2>{t('reportsSavedReports')}</h2><p>{t('reportsEarlierReportsDescription')}</p>{!reports.length&&<p>{t('reportsNoSavedReports')}</p>}{choices.filter(c=>c.reports.length).map(choice=><section className={styles.card} style={{marginBottom:16}} key={choice.siteId}><h3>{choice.place?.name??t('reportsUnlinkedSiteHeading')}</h3>{!choice.place&&<p>{t('reportsRemovedPinNote')}</p>}{choice.reports.map(report=><p key={report.id}><button disabled={opening} onClick={()=>void openSaved(report)}>{report.name} · {new Date(report.savedAt).toLocaleString(dateLocale)}</button></p>)}</section>)}</>}
+      {view==='reports'&&<><p>{t('reportsEarlierReportsDescription')}</p>{!reports.length&&<p>{t('reportsNoSavedReports')}</p>}{choices.filter(c=>c.reports.length).map(choice=><section className={styles.card} style={{marginBottom:16}} key={choice.siteId}><h3>{choice.place?.name??t('reportsUnlinkedSiteHeading')}</h3>{!choice.place&&<p>{t('reportsRemovedPinNote')}</p>}{choice.reports.map(report=><p key={report.id}><button disabled={opening} onClick={()=>void openSaved(report)}>{report.name} · {new Date(report.savedAt).toLocaleString(dateLocale)}</button></p>)}</section>)}</>}
     </>}
   </div></main>
     <TabBar hideAtDesktop />

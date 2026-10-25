@@ -8,6 +8,7 @@ import OfflinePageLink from './OfflinePageLink';
 import DesignDraftCopy from './DesignDraftCopy';
 import styles from './FinanceCourse.module.css';
 import ArrowLabel from './ArrowLabel';
+import Summary from './Summary';
 import { ArrowRight } from 'lucide-react';
 
 type View = 'source' | 'A' | 'B' | 'revision';
@@ -54,8 +55,8 @@ export default function DesignWorkedExample() {
       <p className={styles.eyebrow}>1 · Read the brief and source map</p><h2>What must this plan answer?</h2>
       <p>{pack.sourceCards.find(card => card.id === 'W-BRIEF')!.text}</p>
       <p>Read the source cards before accepting a mark on a drawing. The frame is a classroom model; the top edge is model north by convention.</p>
-      {pack.sourceCards.map(card => <details key={card.id}><summary>{card.id} · {card.title}</summary><p><strong>{card.kind}.</strong> {card.text}</p></details>)}
-      <details><summary><DesignDraftCopy en="Read every supplied coordinate" zu="Funda zonke izixhumanisi ezinikeziwe" /></summary>
+      {pack.sourceCards.map(card => <details key={card.id}><Summary>{card.id} · {card.title}</Summary><p><strong>{card.kind}.</strong> {card.text}</p></details>)}
+      <details><Summary><DesignDraftCopy en="Read every supplied coordinate" zu="Funda zonke izixhumanisi ezinikeziwe" /></Summary>
         <p>All values below are fictional classroom inputs in metres. Existing features belong to W-MAP; the alternative belongs to W-B; the compost proposal belongs to W-A. No value is inferred from the picture.</p>
         <p>Frame: {pack.frame.width} × {pack.frame.height} m. {pack.coordinateSystem.axis}.</p>
         <div className={styles.tableScroll} tabIndex={0} role="region" aria-label="Supplied fictional geometry"><table>
@@ -116,20 +117,20 @@ export default function DesignWorkedExample() {
     <section className={styles.section} id="revision">
       <p className={styles.eyebrow}>6 · Respond to later information</p><h2>What changes when care is not agreed?</h2>
       <p><strong>{pack.revision.source}:</strong> {pack.sourceCards.find(card => card.id === pack.revision.source)!.text}</p><p>Before opening the record, name what should change in the drawing, work sequence, purchasing and care plan.</p>
-      <details><summary><DesignDraftCopy en="Read the R1 → R2 revision record" zu="Funda irekhodi lokubuyekeza kusukela ku-R1 kuya ku-R2" /></summary><p>{pack.revision.change} {pack.revision.reason}</p>
+      <details><Summary><DesignDraftCopy en="Read the R1 → R2 revision record" zu="Funda irekhodi lokubuyekeza kusukela ku-R1 kuya ku-R2" /></Summary><p>{pack.revision.change} {pack.revision.reason}</p>
         {pack.dependencies.map(row => <article key={row.item} className={styles.practice}><h3>{row.item} · {row.featureIds.join(', ')}</h3><p><strong>Work:</strong> {row.R1.phase} → {row.R2.phase}.</p><p><strong>Quantity / purchasing:</strong> {row.R1.quantity} → {row.R2.quantity}.</p><p><strong>Cost:</strong> {row.R1.costStatus} → {row.R2.costStatus}.</p><p><strong>Care:</strong> {row.R1.careStatus} → {row.R2.careStatus}.</p></article>)}
         <p><strong>Next owner:</strong> {pack.revision.nextOwner}</p>
       </details>
       <div className={styles.actions}><button type="button" onClick={() => setView('revision')}><DesignDraftCopy en="Show R2 on the diagram above" zu="Bonisa u-R2 emdwebeni ongenhla" /></button><a href="#map"><DesignDraftCopy en="Go to the diagram ↑" zu="Yiya emdwebeni ↑" /></a></div>
       <h3>Plan the next observations</h3><p>Agree the observer and timing with the household. These are proposed checks; no later field results are supplied.</p>
-      {pack.observationPlan.map(row => <details key={row.goal}><summary>{row.goal}</summary><p>{row.task}</p><p><strong>When:</strong> {row.trigger}.</p><p><strong>What would prompt review:</strong> {row.review}</p></details>)}
+      {pack.observationPlan.map(row => <details key={row.goal}><Summary>{row.goal}</Summary><p>{row.task}</p><p><strong>When:</strong> {row.trigger}.</p><p><strong>What would prompt review:</strong> {row.review}</p></details>)}
       <OfflinePageLink href="/student/design/folder#folder-d6"><DesignDraftCopy en="Record feedback, observation plans and revisions →" zu="Rekhoda impendulo, izinhlelo zokuqaphela nokubuyekeza →" /></OfflinePageLink>
     </section>
 
     <section className={styles.section} id="practice">
       <p className={styles.eyebrow}>Independent practice and facilitator discussion</p><h2>Apply the method to new evidence</h2>
-      <p><strong>{pack.variation.id} · {pack.variation.kind}.</strong> {pack.variation.text}</p><p>{pack.variation.question}</p><details><summary><DesignDraftCopy en="After your attempt: compare the reasoning" zu="Ngemva kokuzama: qhathanisa izizathu" /></summary><p>{pack.variation.feedback}</p></details>
-      <h3>Explain the guided evidence</h3>{pack.facilitator.map(item => <details key={item.question}><summary>{item.question}</summary><p>{item.answer}</p></details>)}<p>Keep your spoken or written explanation for a facilitator to review. Reading or revealing an answer does not award design competence.</p>
+      <p><strong>{pack.variation.id} · {pack.variation.kind}.</strong> {pack.variation.text}</p><p>{pack.variation.question}</p><details><Summary><DesignDraftCopy en="After your attempt: compare the reasoning" zu="Ngemva kokuzama: qhathanisa izizathu" /></Summary><p>{pack.variation.feedback}</p></details>
+      <h3>Explain the guided evidence</h3>{pack.facilitator.map(item => <details key={item.question}><Summary>{item.question}</Summary><p>{item.answer}</p></details>)}<p>Keep your spoken or written explanation for a facilitator to review. Reading or revealing an answer does not award design competence.</p>
     </section>
 
     <section className={styles.section} id="handover">

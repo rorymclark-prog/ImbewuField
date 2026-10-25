@@ -13,8 +13,10 @@ import {
 import { useAppLevel } from '@/lib/app-level';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
+import DesktopPrimaryNav from '@/components/layout/DesktopPrimaryNav';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
+import LimaBar from '@/components/LimaBar';
 import {
   loadCustomers, addCustomer, findCustomer, loadProducts, addProduct,
   loadInvoices, saveInvoice, deleteInvoice, setInvoiceStatus, invoiceId,
@@ -180,7 +182,7 @@ const TERM_CHOICES: { label: string; days: number | null }[] = [
 ];
 
 const CARD = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
-const FIELD = { background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', colorScheme: 'light dark' as const };
+const FIELD = { fontFamily: 'var(--font-sans)', background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', colorScheme: 'light dark' as const };
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
@@ -258,7 +260,16 @@ export default function InvoicePage() {
 
   // The issue date of the document on screen. Held in state, not recomputed on render: a saved
   // invoice reopened next week must still show the day it was issued.
-  const [issuedISO, setIssuedISO] = useState(() => new Date().toISOString());
+  // w22-02: the page is prerendered, so `new Date()` during render froze the BUILD day into the
+  // HTML ("Issued 24 October", max="2026-10-24") and threw React #425 on any later day, or where
+  // the server's UTC day is not the farmer's. Both start empty and take today after mount.
+  const [issuedISO, setIssuedISO] = useState('');
+  const [today, setToday] = useState('');
+  useEffect(() => {
+    const now = new Date().toISOString();
+    setToday(now);
+    setIssuedISO(prev => prev || now);
+  }, []);
   const [termsDays, setTermsDays] = useState<number | null>(null);
   const [reference, setReference] = useState('');
   const [entryKind, setEntryKind] = useState<InvoiceEntryKind>('new');
@@ -387,8 +398,9 @@ export default function InvoicePage() {
   const total = items.filter(it => it.desc.trim()).reduce((s, it) => s + it.qty * it.price, 0);
   const linkedSale = sourceSaleId ? recordedSales.find(sale => sale.id === sourceSaleId) : undefined;
   const financialsLocked = Boolean(sourceSaleId);
-  const entryError = invoiceEntryError({ entryKind, paperReference, dateISO: issuedISO, status: paymentStatus || 'unpaid', paidAt: paymentISO });
-  const valid = !saving && paymentStatus !== '' && !entryError && recordBasis !== ''
+  // Until `today` is known the date is not wrong, just not chosen yet: no date message in the server HTML.
+  const entryError = today ? invoiceEntryError({ entryKind, paperReference, dateISO: issuedISO, status: paymentStatus || 'unpaid', paidAt: paymentISO }) : null;
+  const valid = !saving && today !== '' && paymentStatus !== '' && !entryError && recordBasis !== ''
     && (recordBasis !== 'existing' || Boolean(sourceSaleId))
     && billTo.trim() !== '' && items.some((it) => it.desc.trim() !== '' && it.qty > 0);
   const invoiceNo = `#${String(currentNo).padStart(4, '0')}`;
@@ -765,26 +777,10 @@ export default function InvoicePage() {
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--border)' }} />
         <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--text-secondary)' }}>{ui('Invoice', 'I-invoyisi')} {invoiceNo}</span>
+        {/* TabBar steps aside at lg+ (hideAtDesktop below), so the four destinations move up here. */}
+        <DesktopPrimaryNav />
         <div className="flex-1" />
         <LessonLink id="finances:invoices" label={ui('Learn', 'Funda')} />
-        <button
-          onClick={shareInvoice}
-          disabled={!valid}
-          aria-label={ui('Share PDF (WhatsApp, email…)', 'Yabelana nge-PDF (WhatsApp, i-imeyili…)')}
-          className="flex items-center justify-center gap-1.5 px-3 min-h-11 rounded-lg text-xs font-display font-semibold flex-shrink-0"
-          style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest-800)' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
-        >
-          <Share2 size={16} /><span className="hidden sm:inline">{ui('Share PDF', 'Yabelana nge-PDF')}</span>
-        </button>
-        <button
-          onClick={printInvoice}
-          disabled={!valid}
-          aria-label={ui('Print', 'Phrinta')}
-          className="flex items-center justify-center gap-1.5 px-3 min-h-11 rounded-lg text-xs font-display font-semibold flex-shrink-0"
-          style={{ background: valid ? '#9A6018' : 'var(--bg-2)', color: valid ? '#fff' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}
-        >
-          <Printer size={16} /><span className="hidden sm:inline">{ui('Print', 'Phrinta')}</span>
-        </button>
         <SettingsButton />
       </header>
 
@@ -818,12 +814,12 @@ export default function InvoicePage() {
 
             <div className="flex items-center gap-2 flex-wrap">
               <button onClick={newInvoice}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-display font-semibold"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-sans font-semibold"
                 style={{ ...CARD, color: 'var(--color-forest-800)', cursor: 'pointer' }}>
                 <FilePlus2 size={14} />{ui('New invoice', 'I-invoyisi entsha')}
               </button>
               <button onClick={() => setShowSaved((s) => !s)}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-display font-semibold"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-sans font-semibold"
                 style={{ background: showSaved ? 'rgba(31,77,43,0.1)' : 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--color-forest-800)', cursor: 'pointer' }}>
                 <Clock size={14} />{ui('Saved', 'Okulondoloziwe')}{saved.length ? ` (${saved.length})` : ''}
               </button>
@@ -891,7 +887,7 @@ export default function InvoicePage() {
               )}
               <label className="block">
                 <FieldLabel>{entryKind === 'paper-copy' ? ui('Date on the original paper invoice') : ui('Invoice issue date')}</FieldLabel>
-                <input type="date" aria-label={ui('Invoice issue date')} value={invoiceDateInput(issuedISO)} max={invoiceDateInput(new Date().toISOString())}
+                <input type="date" aria-label={ui('Invoice issue date')} value={invoiceDateInput(issuedISO)} max={today ? invoiceDateInput(today) : undefined}
                   readOnly={Boolean(currentId)} onChange={event => setIssuedISO(invoiceDateFromInput(event.target.value, issuedISO) ?? '')}
                   className="w-full min-h-11 rounded-xl px-3 text-sm" style={FIELD} />
               </label>
@@ -907,7 +903,7 @@ export default function InvoicePage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <label className="block min-w-0">
                     <FieldLabel>{ui('Payment received on')}</FieldLabel>
-                    <input type="date" aria-label={ui('Payment received date')} value={invoiceDateInput(paymentISO)} max={invoiceDateInput(new Date().toISOString())} readOnly={financialsLocked}
+                    <input type="date" aria-label={ui('Payment received date')} value={invoiceDateInput(paymentISO)} max={today ? invoiceDateInput(today) : undefined} readOnly={financialsLocked}
                       onChange={event => setPaymentISO(invoiceDateFromInput(event.target.value, paymentISO) ?? '')}
                       className="w-full min-h-11 rounded-xl px-3 text-sm" style={FIELD} />
                   </label>
@@ -968,7 +964,7 @@ export default function InvoicePage() {
                             onClick={() => openSaved(inv)}
                             disabled={syncingInvoiceId === inv.id}
                             aria-label={`${ui('Review payment for invoice')} ${inv.no}`}
-                            className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
+                            className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-sans font-semibold"
                             style={inv.status === 'paid'
                               ? { background: 'rgba(46,107,58,0.12)', border: '1px solid rgba(46,107,58,0.3)', color: 'var(--color-forest-700)', cursor: 'pointer' }
                               : { background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--gold)', cursor: 'pointer' }}>
@@ -977,7 +973,7 @@ export default function InvoicePage() {
                           {/* Two taps to destroy accounting history. The first tap used to be enough. */}
                           {!inv.sourceSaleId && (confirmDelete === inv.id ? (
                             <button onClick={() => { deleteInvoice(inv.id); setConfirmDelete(null); }}
-                              className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
+                              className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-sans font-semibold"
                               style={{ background: '#B53A3A', color: '#fff', border: 'none', cursor: 'pointer' }}>
                               {ui('Delete?', 'Susa?')}
                             </button>
@@ -1055,7 +1051,7 @@ export default function InvoicePage() {
                 <input value={businessNameDraft} onChange={(e) => setBusinessNameDraft(e.target.value)}
                   onBlur={saveBusinessName}
                   placeholder="e.g. Ubhejane Creche"
-                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
+                  className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                 <div className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>
                   {businessNameDraft.trim()
                     ? ui('This heads your invoices. Your own name is printed underneath it.')
@@ -1069,36 +1065,36 @@ export default function InvoicePage() {
                 <FieldLabel>{ui('Your address')}</FieldLabel>
                 <textarea rows={2} value={letterhead.address} onChange={(e) => patchLetterhead({ address: e.target.value })}
                   placeholder={'Plot 14, Nquthu\nKwaZulu-Natal, 3135'}
-                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
+                  className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
               </label>
               <div className="flex gap-2">
                 <label className="block flex-1 min-w-0">
                   <FieldLabel>{ui('Email')}</FieldLabel>
                   <input type="email" value={letterhead.email} onChange={(e) => patchLetterhead({ email: e.target.value })}
                     placeholder="you@example.co.za"
-                    className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
+                    className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                 </label>
                 <label className="block flex-1 min-w-0">
                   <FieldLabel>{ui('VAT / tax no.')}</FieldLabel>
                   <input value={letterhead.taxNumber} onChange={(e) => patchLetterhead({ taxNumber: e.target.value })}
                     placeholder={ui('Optional')}
-                    className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
+                    className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                 </label>
               </div>
               <div className="pt-1">
                 <FieldLabel>{ui('Where buyers pay you')}</FieldLabel>
                 <div className="space-y-2">
                   <input value={letterhead.bankAccountName} onChange={(e) => patchLetterhead({ bankAccountName: e.target.value })}
-                    placeholder={ui('Account name')} className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
+                    placeholder={ui('Account name')} className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                   <div className="flex gap-2">
                     <input value={letterhead.bankName} onChange={(e) => patchLetterhead({ bankName: e.target.value })}
-                      placeholder={ui('Bank')} className="flex-1 min-w-0 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
+                      placeholder={ui('Bank')} className="flex-1 min-w-0 text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                     <input value={letterhead.bankBranchCode} onChange={(e) => patchLetterhead({ bankBranchCode: e.target.value })}
-                      placeholder={ui('Branch code')} className="w-28 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
+                      placeholder={ui('Branch code')} className="w-28 text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                   </div>
                   <input value={letterhead.bankAccountNumber} onChange={(e) => patchLetterhead({ bankAccountNumber: e.target.value })}
                     placeholder={ui('Account number')} inputMode="numeric"
-                    className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 tabular-nums" style={FIELD} />
+                    className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 tabular-nums" style={FIELD} />
                 </div>
               </div>
             </Disclosure>
@@ -1119,7 +1115,7 @@ export default function InvoicePage() {
                       selectBuyer(event.target.value);
                     }
                   }}
-                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
+                  className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
                   style={FIELD}
                 >
                   <option value="">{ui('Choose a customer')}</option>
@@ -1139,7 +1135,7 @@ export default function InvoicePage() {
                     value={billTo}
                     onChange={(event) => setBillTo(event.target.value)}
                     placeholder={ui('Customer name')}
-                    className="w-full mt-2 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
+                    className="w-full mt-2 text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
                     style={FIELD}
                   />
                 )}
@@ -1156,20 +1152,20 @@ export default function InvoicePage() {
                   <FieldLabel>{ui('Address')}</FieldLabel>
                   <textarea rows={2} value={buyerDetails.address ?? ''} onChange={(e) => setBuyerDetails((d) => ({ ...d, address: e.target.value }))}
                     placeholder={'Shop 3, Main Road\nNquthu'}
-                    className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
+                    className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
                 </label>
                 <div className="flex gap-2">
                   <label className="block flex-1 min-w-0">
                     <FieldLabel>{ui('Phone')}</FieldLabel>
                     <input type="tel" value={buyerDetails.phone ?? ''} onChange={(e) => setBuyerDetails((d) => ({ ...d, phone: e.target.value }))}
                       placeholder="072 345 6789"
-                      className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
+                      className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                   </label>
                   <label className="block flex-1 min-w-0">
                     <FieldLabel>{ui('Email')}</FieldLabel>
                     <input type="email" value={buyerDetails.email ?? ''} onChange={(e) => setBuyerDetails((d) => ({ ...d, email: e.target.value }))}
                       placeholder={ui('Optional')}
-                      className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
+                      className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
                   </label>
                 </div>
               </Disclosure>
@@ -1207,19 +1203,19 @@ export default function InvoicePage() {
                         and WhatsApped invoice with no stored record. */}
                     <input type="number" min={0} step="0.01" inputMode="decimal" value={it.qty || ''} onChange={(e) => updateItem(it.id, { qty: Math.max(0, parseFloat(e.target.value) || 0) })}
                       placeholder={ui('Qty')} aria-label={ui('Quantity')}
-                      className="w-16 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-lg px-2.5 py-2 tabular-nums" style={FIELD} />
+                      className="w-16 text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-lg px-2.5 py-2 tabular-nums" style={FIELD} />
                     <select value={it.unit} aria-label={ui('Unit')} onChange={(e) => updateItem(it.id, {
                       unit: e.target.value,
                       ...(it.unit === 'kg' && e.target.value !== 'kg' ? { price: 0, priceFromGuide: false } : {}),
                     })}
-                      className="text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-lg px-2 py-2 appearance-none" style={FIELD}>
+                      className="text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-lg px-2 py-2 appearance-none" style={FIELD}>
                       {UNITS.map((u) => <option key={u} value={u}>{ui(u)}</option>)}
                     </select>
                     <div className={`flex items-center gap-1 flex-1 rounded-lg px-2.5 py-2${ui('each').length > 10 ? ' basis-full' : ''}`} style={FIELD}>
                       <span className="text-sm font-display" style={{ color: 'var(--text-muted)' }}>R</span>
                       <input type="number" min={0} inputMode="decimal" value={it.price || ''} onChange={(e) => updateItem(it.id, { price: Math.max(0, parseFloat(e.target.value) || 0), priceFromGuide: false })}
                         placeholder="0" aria-label={ui('Price each')}
-                        className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] tabular-nums"
+                        className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] tabular-nums"
                         style={{ background: 'transparent', border: 'none', color: 'var(--text-primary)' }} />
                       <span className="text-xs font-sans whitespace-nowrap" style={{ color: 'var(--text-muted)' }}>{ui('each')}</span>
                     </div>
@@ -1252,7 +1248,7 @@ export default function InvoicePage() {
               ))}
 
               <button onClick={addItem}
-                className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-display font-semibold"
+                className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-sm font-sans font-semibold"
                 style={{ background: 'rgba(31,77,43,0.06)', border: '1px dashed rgba(31,77,43,0.3)', color: 'var(--color-forest-800)', cursor: 'pointer' }}>
                 <Plus size={14} />{simple ? ui('Add another item') : ui('Add line item')}
               </button>
@@ -1284,7 +1280,7 @@ export default function InvoicePage() {
                 <FieldLabel>{ui("Buyer's reference")}</FieldLabel>
                 <input value={reference} onChange={(e) => setReference(e.target.value)}
                   placeholder={ui('Their order number — optional')}
-                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
+                  className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5" style={FIELD} />
               </label>
               {/* Growing area stays reachable — a farmer may still want this sale on their
                   R/m² records — but Simple keeps it closed until asked for, the same as the
@@ -1321,12 +1317,12 @@ export default function InvoicePage() {
                 <textarea rows={2} value={notes} onChange={(e) => setNotes(e.target.value)}
                   onBlur={() => patchLetterhead({ notes })}
                   placeholder={ui('Delivery Thursday. Crates returned with next order.')}
-                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
+                  className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
               </label>
             </div>
 
             <button onClick={() => void persist()} disabled={!valid}
-              className="w-full flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
+              className="w-full flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-sans font-semibold"
               style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest-800)' : 'var(--text-muted)', border: 'none' }}>
               <Save size={16} />{saving ? ui('Saving…') : ui('Save invoice')}
             </button>
@@ -1334,12 +1330,12 @@ export default function InvoicePage() {
 
             <div className="flex gap-2">
               <button onClick={shareInvoice} disabled={!valid}
-                className="flex-1 flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
+                className="flex-1 flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-sans font-semibold"
                 style={{ background: valid ? 'var(--color-forest-800)' : 'var(--bg-2)', color: valid ? 'var(--on-forest-800)' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
                 <Share2 size={15} />{ui('Share PDF')}
               </button>
               <button onClick={printInvoice} disabled={!valid}
-                className="flex-1 flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
+                className="flex-1 flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-sans font-semibold"
                 style={{ background: valid ? '#9A6018' : 'var(--bg-2)', color: valid ? '#fff' : 'var(--text-muted)', border: 'none', cursor: valid ? 'pointer' : 'not-allowed' }}>
                 <Printer size={15} />{ui('Print')}
               </button>
@@ -1366,7 +1362,11 @@ export default function InvoicePage() {
         </div>
       </div>
 
-      <div className="no-print"><TabBar /></div>
+      {/* w19-13: Lima in the page flow, not floating over the note field / Save row;
+          ChatWidget's FAB excludes /invoice. */}
+      <div className="no-print"><LimaBar /></div>
+
+      <div className="no-print"><TabBar hideAtDesktop /></div>
 
       {/* Print styles — see the note in components/invoice/InvoiceDocument.tsx.
           The old rules whitened <body> but not this page's own beige wrapper, and left the 28rem

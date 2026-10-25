@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '24 October 2026', sha: 'bae8604fd', changes: [
+  { when: '25 October 2026', sha: 'cfb75437c', changes: [
     'Farmers can download production and finance reports from My records.',
     'Mentors and facilitators have reports for visits, training, feedback and follow-up.',
     'MEL reports compare matched responses and show evidence dates and missing data.',
@@ -55,6 +55,39 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   }, { title: 'Review MEL evidence',
     where: 'Organisation → Reports → MEL evidence', href: '/ngo',
     detail: 'Choose a project, assessment and compatible earlier stage to review matched change.',
+  }] },
+  { when: '25 October 2026', sha: '8d2e1a9a', changes: [
+    'Home and Invoice open faster and no longer redraw the day after an update.',
+    'On a computer the Lima button sits bottom-right and no longer hides buttons.',
+    'The weather card reads in isiZulu (as a draft) and stays clear in dark mode.',
+  ], tour: [{ title: 'Check the weather card',
+    where: 'Home', href: '/home',
+    detail: 'Rain totals, frost and heat warnings now follow dark mode and your language.',
+  }] },
+  { when: '24 October 2026', sha: '0858cf13', changes: [
+    'Exchange crop chips and the Home task board now read in isiZulu as well.',
+    'Records, invoices and the farm data panel use one green and plain, readable controls.',
+    'Study pages share one header, open sections show an arrow, and Lima no longer hides text.',
+    'Staff headers never cut off links; the network, login and pitch pages are tidier.',
+    'isiZulu notes stay readable in dark mode, and the map header fits on a tablet.',
+  ], tour: [{ title: 'Open the Exchange',
+    where: 'Menu → Exchange', href: '/exchange',
+    detail: 'Crop badges no longer overlap the Sample label, and chips wrap neatly on a phone.',
+  }, { title: 'Open your records',
+    where: 'Menu → Records', href: '/records',
+    detail: 'The completeness card follows dark mode and the tabs fit without scrolling.',
+  }] },
+  { when: '23 October 2026', sha: '774a3530', changes: [
+    'On a laptop each page has one set of links at the top, and titles are no longer cut off.',
+    'Invoices keep amounts on one line, and the Share and Print buttons appear once.',
+    'Sample pages, MEL and the Atlas use one button and badge style, with clearer notices.',
+    'Study diagrams follow dark mode; Tips and the manual now match the rest of the app.',
+  ], tour: [{ title: 'Open an invoice',
+    where: 'Records → Invoice', href: '/invoice',
+    detail: 'Amounts no longer break across lines and the tab bar stays out of the way on a laptop.',
+  }, { title: 'Open the Tips page',
+    where: 'Menu → Tips and help', href: '/tips',
+    detail: 'Tips sit on the same cards as the rest of the app, with one way to start the tour.',
   }] },
   { when: '23 October 2026', sha: 'ee27178e', changes: [
     'Organisation and funder reports now show coverage, evidence tables and follow-up.',
@@ -123,7 +156,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     where: 'Menu → Study', href: '/student',
     detail: 'One header, the language note under it, and the course cards in your language.',
   }, { title: 'See your records in isiZulu',
-    where: 'Menu → My Records', href: '/records',
+    where: 'Menu → Records', href: '/records',
     detail: 'Crop names and the language note now read in isiZulu when that is your language.',
   }] },
   { when: '17 October 2026', sha: '44a7dc08', changes: [

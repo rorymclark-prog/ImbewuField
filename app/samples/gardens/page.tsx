@@ -2,6 +2,7 @@
 import { numberLabel } from '@/lib/format-figures';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import SampleGardenVisual from '@/components/SampleGardenVisual';
@@ -57,11 +58,11 @@ export default function SampleGardensPage() {
       // report link hanging outside it. One card, one set of padding, both links in one row.
       <article key={g.id} className={styles.card} style={{padding:16}}>
         <button onClick={()=>setSelected(g.id)} style={{display:'block',width:'100%',textAlign:'left',border:'none',background:'none',padding:0,margin:0,cursor:'pointer',color:'inherit',font:'inherit'}} aria-label={ui(`Open ${g.name}`,`Vula ${g.name}`)}>
-          <img src={sampleSitePhoto(g.id)} alt="" loading="lazy" style={{width:'100%',aspectRatio:'3/2',objectFit:'cover',borderRadius:12}}/><h2 style={{marginTop:12}}>{g.name}</h2><p style={{margin:'4px 0'}}>{g.kind ? kindLabel(g.kind) : ''} · {g.town}</p>
+          <img src={sampleSitePhoto(g.id)} alt="" loading="lazy" style={{width:'100%',aspectRatio:'3/2',objectFit:'cover',borderRadius:12}}/><h2 className={styles.cardTitle} style={{marginTop:12}}>{g.name}</h2><p style={{margin:'4px 0'}}>{g.kind ? kindLabel(g.kind) : ''} · {g.town}</p>
         </button>
         <div className={styles.cardLinks}>
-          <button onClick={()=>setSelected(g.id)} style={{border:'none',background:'none',padding:0,cursor:'pointer',color:'inherit',font:'inherit',textDecoration:'underline',textUnderlineOffset:4}}>{ui('Open garden →','Vula ingadi →')}</button>
-          <a className={styles.link} href={sampleGardenReportUrl(g.id)} target="_blank" rel="noreferrer">{ui('Open completed report (PDF) →','Vula umbiko ogcwalisiwe (PDF) →')}</a>
+          <button onClick={()=>setSelected(g.id)} style={{border:'none',background:'none',padding:0,cursor:'pointer',color:'inherit',font:'inherit',textDecoration:'underline',textUnderlineOffset:4,gap:6}}>{ui('Open garden','Vula ingadi')}<ArrowRight size={16} aria-hidden="true"/></button>
+          <a className={styles.link} href={sampleGardenReportUrl(g.id)} target="_blank" rel="noreferrer">{ui('Open completed report (PDF)','Vula umbiko ogcwalisiwe (PDF)')}<ArrowRight size={16} aria-hidden="true" style={{display:'inline',verticalAlign:'-3px',marginLeft:6}}/></a>
         </div>
       </article>
     )}</div>

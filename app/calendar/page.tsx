@@ -36,7 +36,8 @@ function CalendarDraftSource({
     return (
       <div style={style}>
         <p style={{ margin: 0 }}>
-          <span className="text-xs leading-snug text-stone-600">isiZulu translation pending — English source: </span>
+          {/* w22-05: muted was 4.16:1 on the tinted draft box in light; secondary clears 4.5:1 in both themes. */}
+          <span className="text-xs leading-snug text-[var(--text-secondary)]">isiZulu translation pending — English source: </span>
           <span lang="en">{english}</span>
         </p>
       </div>
@@ -554,7 +555,7 @@ export default function CalendarPage() {
           </div>
         </div>
 
-        <div style={{ padding: '16px 16px 24px' }}>
+        <div style={{ padding: '16px 16px 24px', maxWidth: 1040, marginInline: 'auto' }}>
           {/* ---- What to do this month ---- */}
           <div
             style={{
