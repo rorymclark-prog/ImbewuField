@@ -468,7 +468,7 @@ test('the red benchmark state names the conflicting plantings and can open each 
   // The JSX itself, not the prose about it in a comment above.
   const at = Math.max(page.indexOf('>Resolve overlapping bed space<'), page.indexOf("inlineText(lang, 'Resolve overlapping bed space')"));
   assert.ok(at > 0, 'the red state is gone; rewrite this test rather than deleting it');
-  const block = page.slice(at, at + 3800);
+  const block = page.slice(at, at + 4200);
   assert.match(block, /areaConflictDetails\.map/, 'the conflicting plantings must be listed, not only the bed labels');
   assert.match(block, /setActivePlanting\(planting\)/, 'each row opens the planting sheet the page already has');
 });
@@ -705,7 +705,8 @@ test('both years are named on the grid axis, not only in the caption below it', 
   // stays put while the months pan and ends up labelling the wrong columns.
   const scrollRegion = page.indexOf('ref={monthHeaderScrollRef}');
   const band = page.indexOf('IDEAL_PLAN_COPY.yearOneBand');
-  const months = page.indexOf('{MONTHS_SHORT[m - 1]}', scrollRegion);
+  // The month label is the English abbreviation, or monthShortText(lang, m) which gives isiXhosa readers theirs.
+  const months = Math.min(...['{MONTHS_SHORT[m - 1]}', '{monthShortText(lang, m)}'].map((label) => page.indexOf(label, scrollRegion)).filter((at) => at >= 0));
   assert.ok(scrollRegion > 0 && band > scrollRegion && band < months,
     'the year band belongs inside the scrolled header, above the month labels');
   // Widths come from DISPLAY_MONTHS. A hardcoded second 12 would mislabel the

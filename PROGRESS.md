@@ -68,8 +68,18 @@ and isiZulu output are unchanged.
     its diagram and the design folder (g26, 1,512 strings).
   - `FinanceText` looks up whole bodies; `components/studies/TxLabelled.tsx` carries aria-labels on
     server pages. The Design draft notice now says lesson text is drafted.
+- **Round 6 (g27–g31):**
+  - Crop-plan page: lib-built suggestion notes, tree and animal lanes, honey flow, "Bed N" labels and
+    months, translated at render; stored notes and the PDF stay English.
+  - The finance, worked-example and design-folder downloads take an optional `lang`.
+  - `components/DocumentTitle.tsx` translates browser tab titles client-side; layout metadata stays
+    English.
+  - Remaining farmer screens: site-survey recovery and footer warnings, climate panel, atlas soil
+    notes, weather, audio player and accessible names.
+  - Staff, field and demo screens. Consent wording sits beside its English source.
 - **Still English:**
-  - Crop and species names, catalogue notes and bed labels.
+  - Crop and species names, catalogue notes and custom bed labels.
+  - The site-survey chicken block and the calendar advice holds, both deliberately held until review.
   - PDFs and download texts.
   - Narration audio.
   - Guide card titles on `/student`, which is byte-pinned.

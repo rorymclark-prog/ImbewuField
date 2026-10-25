@@ -40,7 +40,7 @@ import AnimalEnterprisesCard, { PRODUCT_ICON } from '@/components/crops/AnimalEn
 import { HOUSING_ANIMALS } from '@/lib/animal-enterprises';
 import TreeSeasonsCard from '@/components/crops/TreeSeasonsCard';
 import ProductionProjectionCard from '@/components/crops/ProductionProjectionCard';
-import { buildProductionProjection, treeAgeCalendarNote } from '@/lib/production-projection';
+import { buildProductionProjection, projectionText, treeAgeCalendarNote } from '@/lib/production-projection';
 import YearOfFoodCard from '@/components/crops/YearOfFoodCard';
 import { monthAxisSlots, type MonthAxisSlot } from '@/lib/month-axis';
 import { planningTreeSeasons, type ExpectedSeason } from '@/lib/production-product-guidance';
@@ -90,6 +90,8 @@ import { UNPRICED_CROPS, asFarmerOwnPrice, isUsablePrice, priceFor, loadCropPric
 import { PRICE_SNAPSHOT_MONTHS } from '@/components/prices/CropPriceGuide.format';
 import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import { inlineBuilt, inlineBuiltList } from '@/lib/xh-inline-match';
+import { recordsMonthLong, recordsMonthShort } from '@/lib/records-months';
+import { localeDate } from '@/lib/xh-dates';
 // Task wording lives in the export module now, not here: the screen, the
 // calendar file and the printed plan all have to describe a task the same way,
 // and three copies of that sentence is how they stop doing so.
@@ -128,7 +130,7 @@ function taskDetailText(lang: string, detail: string): string {
 /** The same task phrase the WhatsApp share sends, for an isiXhosa reader: title, crop, bed, how-to. */
 function sharedTaskLine(lang: string, task: CropTask): string {
   const how = taskDetail(task);
-  return `${inlineText(lang, TASK_TITLE[task.action])} ${task.cropName} (${task.bedLabel})${how ? ` — ${taskDetailText(lang, how)}` : ''}`;
+  return `${inlineText(lang, TASK_TITLE[task.action])} ${task.cropName} (${bedLabelText(lang, task.bedLabel)})${how ? ` — ${taskDetailText(lang, how)}` : ''}`;
 }
 function sharedTaskSentence(lang: string, tasks: CropTask[]): string {
   if (lang !== 'xh') return taskSentence(tasks);
@@ -180,6 +182,310 @@ function buyingNoteText(lang: string, note: string): string {
   )).join(' ');
 }
 
+
+// ── Plan notes written in English by lib/crop-autosuggest.ts ───────────────────────────────────
+// The planner (lib/crop-autosuggest.ts, lib/crop-plan-ideal.ts) builds each note as one English
+// string that is stored with the plan and printed in the PDF, so the text itself must not change.
+// The screen translates it at render, for isiXhosa readers only: split into sentences, each
+// matched against the templates below. A sentence that matches nothing stays English, which is
+// the safe failure. Crop names, numbers, bed labels and months are put back (the last two
+// translated by planNoteValue); several of these sentences are also the keys of an isiXhosa draft.
+const PLAN_NOTE_TEMPLATES = [
+  "{names} was chosen, but it has no sowing month on {calendar} this farm uses — the sowing guides this plan follows give none for this calendar (frost or the rainfall season, usually), so making room would not help.",
+  "{names} were chosen, but they have no sowing month on {calendar} this farm uses — the sowing guides this plan follows give none for this calendar (frost or the rainfall season, usually), so making room would not help.",
+  "the summer-rainfall, hard-frost calendar",
+  "the winter-rainfall calendar",
+  "the frost-free calendar",
+  "the summer-rainfall, light-frost calendar",
+  "Ask your extension officer before trying it here.",
+  "Ask your extension officer before trying them here.",
+  "{names} was chosen but didn't fit anywhere in this plan — every sowing window it has was already committed to other crops, or ruled out by rotation.",
+  "{names} were chosen but didn't fit anywhere in this plan — every sowing window they have was already committed to other crops, or ruled out by rotation.",
+  "Add it by hand if you want to make room.",
+  "Add them by hand if you want to make room.",
+  "This plan had 1 veg bed ({area} m² in all) — add beds on the map to fit more of your choices.",
+  "This plan had {n} veg beds ({area} m² in all) — add beds on the map to fit more of your choices.",
+  "Commercial ranking compares conservative fresh-weight kg/m² per crop cycle only.",
+  "It does not estimate profit, nutrition, buyer demand or a global annual maximum; use your own buyer and price information before committing land.",
+  "You asked to focus on {n} crops, but only 1 bed is free — prioritised 1 using the conservative kg/m² crop-cycle benchmarks instead.",
+  "You asked to focus on {n} crops, but only {m} beds are free — prioritised {m} using the conservative kg/m² crop-cycle benchmarks instead.",
+  "None of the crops you chose could be placed this round — either their sowing window does not come round in time, or no growing area on your map has the right shape for them.",
+  "Check the local window or add a crop by hand; this is not proof that the crop cannot grow here.",
+  "No crop fits the shape of {bed} among the focus crops you chose, so it was left for you to plant by hand.",
+  "{crop} has a sowing window here, but none of the growing areas set aside for it is the right shape or width for it.",
+  "{crop} has no sowing window recorded for this rainfall pattern in the current catalog; confirm locally rather than treating that as agronomic impossibility.",
+  "{crop} could not take every growing area set aside for it — crop rotation ruled it out there, because the same botanical family was grown on that ground too recently.",
+  "{crop} could not take every growing area set aside for it — what is already in the ground fills those beds right through {crop}'s sowing windows this year.",
+  "{crop} could not take every growing area set aside for it — crop rotation and what is already in the ground both limited where it can go this year.",
+  "{crop} could not be placed on any of the growing areas set aside for it — crop rotation ruled it out there, because the same botanical family was grown on that ground too recently.",
+  "{crop} could not be placed on any of the growing areas set aside for it — what is already in the ground fills those beds right through {crop}'s sowing windows this year.",
+  "{crop} could not be placed on any of the growing areas set aside for it — crop rotation and what is already in the ground both limited where it can go this year.",
+  "{bed} was set aside for a different focus crop that could not use it, so {crop} — also one of your focus crops — took it instead.",
+  "{bed} has nothing planted: none of your focus crops has a sowing window that reaches it in the next twelve months.",
+  "{bed} has nothing planted: what it has already grown shares a botanical family with every crop in your commercial focus, so Rotate crops blocked all of them here.",
+  "{bed} has nothing planted: what is already growing in it fills the bed through every sowing window your focus crops have this year.",
+  "{bed} has nothing planted: some of your focus crops would repeat this bed's recent family under Rotate crops, and the rest simply could not fit around what is already in the ground.",
+  "Pick a crop for it by hand, or raise the number of crops you are focusing on.",
+  "{where}: oats is the winter cover even though a grass-family crop (maize or oats) grew there recently — KZN DARD documents oats as a winter cover in maize lands, and no rotation-clean cover could be placed there.",
+  "If carrying cereal disease over worries you, swap it for broad beans by hand.",
+  "{bed} would otherwise rest all winter — added {crop} (sow {month}).",
+  "{bed} would otherwise rest all winter — added {crop} (sow {month}) to {pct}% of it.",
+  "It takes the whole area, so nothing else can be sown in it this winter.",
+  "{n} growing areas would otherwise rest all winter, so a winter crop went in: {lines}.",
+  "Where a crop took the whole area, nothing else can be sown there this winter.",
+  "Each of these takes the whole area, so nothing else can be sown in them this winter.",
+  "{labels} — {crop} (sow {month}, the whole area)",
+  "{labels} — {crop} (sow {month}, {pct}% of each)",
+  "{labels} — {crop} (sow {month}, {pct}% of it)",
+  "{bed} would stand empty early on, so a one-time starter went in: {crop} (sow {month}).",
+  "It runs once, this year only — the repeating plan does not reach these months on its own, so this ground will likely need the same kind of one-off help again next year unless the plan itself changes.",
+  "{n} growing areas would stand empty for part of your first year, so one-time starter sowings went in: {lines}.",
+  "{labels} — {crop} (sow {month})",
+  "Each runs once, this year only — the repeating plan does not reach these months on its own, so expect to sow the same kind of bridge again next year unless the plan itself changes.",
+  "First-year gap only: {spans}.",
+  "The repeating plan first sows this ground later in the year, and from then on its crop is still standing through these months every year — so only this first year is bare.",
+  "No chosen crop both suits the ground and finishes in time to bridge it now.",
+  "No chosen crop both suits the ground and finishes in time to bridge them now.",
+  "First-year rest: {spans}.",
+  "No chosen crop both suits that ground and finishes in time this year — and the repeating plan itself does not reach this stretch either, so this is not just a first-year gap: it recurs every year unless the plan itself changes.",
+  "No chosen crop both suits that ground and finishes in time this year — and the repeating plan itself does not reach these stretches either, so this is not just a first-year gap: it recurs every year unless the plan itself changes.",
+  "1 growing area has a stretch with no new sowing: {where}.",
+  "{n} growing areas have a stretch with no new sowing: {where}.",
+  "None of {choice} can fill those stretches in this plan.",
+  "Another crop with a verified schedule could — add one only if the household actually wants it.",
+  "A crop outside your selected groups, with a verified schedule, could cover those stretches.",
+  "Widen your crop groups only if that crop suits the household.",
+  "{choice} and other well-documented crops have a sowing window for those stretches, but the months around them are already fully planted, or crop rotation rules out the families that would fit.",
+  "Well-documented crops have a sowing window for those stretches, but the months around them are already fully planted, or crop rotation rules out the families that would fit.",
+  "Clearing a nearby month, or letting the ground rest, are both fine choices.",
+  "Nothing among {choice}, and no other crop the catalog can plan properly — one with a checked growing time, spacing and yield — has a sowing window that reaches those stretches.",
+  "No crop the catalog can plan properly — one with a checked growing time, spacing and yield — has a sowing window that reaches those stretches.",
+  "Ask locally what else does; this plan is not proof that nothing can grow then.",
+  "A staple plot grows one crop across the whole block, and its course for the year is already spent, so no second staple may follow it and no declared winter cover reaches those months.",
+  "A vegetable crop could cover them, but the planner will not put a vegetable on a traced field on its own — planted at full block width that is a sizeable commitment, so it is left as your decision.",
+  "Sowing one by hand, or resting the ground, are both sound choices.",
+  "your chosen crops ({names})",
+  "the {n} crops you chose",
+  "Your chosen crops ({names})",
+  "The {n} crops you chose",
+  "1 unusable or duplicate bed record was left out of the suggestion.",
+  "{n} unusable or duplicate bed records were left out of the suggestion.",
+  "The current month was unavailable, so suggestions start from January.",
+  "No automatic crop plan was generated because reliable irrigation was not confirmed and this site's own monthly rainfall and temperature were not available to plan a rain-fed season.",
+  "This engine deliberately packs successive crop cycles, and a regional rainfall label does not prove that this farm can water them.",
+  "Rain-fed plan: a crop is only sown where every month it grows gets rain of at least half the estimated evaporation (the FAO growing-period rule, using this site's monthly rainfall; evaporation estimated from temperature by Thornthwaite's method, which can under-estimate it in dry, windy places).",
+  "Average rain is not every year's rain — water in a dry spell if you can.",
+  "Your farmer-observed frost months ({months}) were used: frost-sensitive crops are not suggested when their field growing period crosses those months.",
+  "Unrecorded months are not a promise of frost-free conditions.",
+  "Check each sowing month with your local extension officer — this calendar has been checked crop by crop only for KwaZulu-Natal.",
+  "These sowing months follow the KZN DARD warm-area calendar.",
+  "Outside KwaZulu-Natal, confirm them with your local extension officer.",
+  "1 existing planting record was missing a usable bed or sowing month and could not be scheduled.",
+  "{n} existing planting records were missing a usable bed or sowing month and could not be scheduled.",
+  "{names} is selected, but the catalog still lacks a verified local duration or field-establishment basis.",
+  "{names} are selected, but the catalog still lacks a verified local duration or field-establishment basis.",
+  "It stays selected for review but is not placed automatically.",
+  "They stay selected for review but are not placed automatically.",
+  "None of the crops this household chose has a verified schedule for automatic planning.",
+  "Review those crops by hand or choose one the planner can schedule; it will not guess a substitute.",
+  "{names} has verified timing and field establishment, so it can be scheduled.",
+  "{names} have verified timing and field establishment, so they can be scheduled.",
+  "No supported food-yield benchmark is available, so kilograms and value remain blank rather than being guessed.",
+  "Exact crop choices need verified duration and field establishment for scheduling.",
+  "Yield benchmarks are used only where the catalog has them; missing kilograms are never invented.",
+  "Broad automatic choices use crops with verified yield, duration and field spacing so their productivity comparison has a common evidence basis.",
+  "How many people you feed is not used to guess how much to plant.",
+  "The planner tries the exact crops you chose; your mapped space, the sowing windows and crop rotation decide what fits.",
+  "Maize was not placed for you: the app can measure mapped area, but it cannot draw or check a wind-pollinated maize block.",
+  "Add a staple plot on the map, or add maize by hand once you have checked the real row layout.",
+  "{crop} gets {plot} to itself — a staple plot is exactly the dedicated sprawling room it wants.",
+  "{names} wants more room to sprawl than a veg bed can give — grow it in a dedicated plot, along your property edges, or in a food forest area instead.",
+  "{names} want more room to sprawl than a veg bed can give — grow them in a dedicated plot, along your property edges, or in a food forest area instead.",
+  "Turn on \"Grow big vines in a veg bed anyway\" if you'd rather use one of your beds for it.",
+  "Turn on \"Grow big vines in a veg bed anyway\" if you'd rather use one of your beds for them.",
+  "{crop} wants a whole bed to itself — none free this round.",
+  "{crop} wants a whole bed to itself, but the largest free bed was already too full to fit it this round.",
+  "{crop} gets {bed} to itself.",
+  "Check the actual vine path or trellis before accepting; mapped area alone does not prove that sprawling room works.",
+  "{names} was left out: it needs a whole bed for months, and giving it your only veg bed would crowd out the other crops you chose.",
+  "{names} was left out: it needs a whole bed for months, and giving it more than half of your {n} veg beds would crowd out the other crops you chose.",
+  "{names} were left out: each needs a whole bed for months, and giving them your only veg bed would crowd out the other crops you chose.",
+  "{names} were left out: each needs a whole bed for months, and giving them more than half of your {n} veg beds would crowd out the other crops you chose.",
+  "Grow it along an edge or in a dedicated patch, add a bed on the map, or turn on \"Grow big vines in a veg bed anyway\".",
+  "Grow them along an edge or in a dedicated patch, add a bed on the map, or turn on \"Grow big vines in a veg bed anyway\".",
+  "Staple plots each take one crop at full area — {plotlines}.",
+  "{plot}: {crop} (sow {month})",
+  "With Rotate crops on, this proposal avoids an immediate repeat of the most recently recorded botanical family; it is not a stored multi-year history.",
+  "No earlier crop is recorded on these plots, so rotation could not steer this first choice — record what grew there before, if you know it.",
+  "No growing area is mapped yet, so there was nowhere to put the vegetables you chose.",
+  "Draw a veg bed on the map and run the suggestion again.",
+  "Every growing area on your map is a staple plot, and the vegetables you chose need a regular veg bed.",
+  "Draw a veg bed on the map, or plant them on a plot yourself once you have checked the row layout.",
+  "No beds free for family crops once space-hungry vines were placed.",
+  "Only one bed free — kept it for feeding the family; add more beds to also set some aside for selling.",
+  "A few big harvests was selected: each crop goes in as one big sowing at a time, and its next sowing starts only after that harvest ends.",
+  "No small monthly sowings were added.",
+  "Cover crops is switched off in the crop mix, so each plot rests after its summer crop instead of getting a winter cover of broad beans or oats.",
+  "{where}: every exact crop you selected is in the {family} family, so Rotate crops could not supply a different-family neighbour.",
+  "The planner kept your chosen crop rather than substituting one you did not choose.",
+  "Frost-free sowing months for {names} are not yet from a published local table — check those dates with your extension officer before relying on them.",
+  "{names} was left out: at this site at least one month of every sowing window averages hotter than the crop's upper limit in FAO ECOCROP.",
+  "{names} were left out: at this site at least one month of every sowing window averages hotter than the crop's upper limit in FAO ECOCROP.",
+  "{names} was left out: none of its sowing windows has enough rain through the whole crop without irrigation.",
+  "{names} were left out: none of their sowing windows has enough rain through the whole crop without irrigation.",
+  "{names} was left out: no sowing window remains after checking your observed frost months ({months}) and the available site climate.",
+  "{names} were left out: no sowing window remains after checking your observed frost months ({months}) and the available site climate.",
+  "Check a protected growing area or local timing with your extension officer before adding frost-sensitive crops by hand.",
+  "Some sowing months were skipped for this site's climate — {reason}: {cut}.",
+  "the field period crosses your observed frost months",
+  "the field period crosses your observed frost months, or another site heat or rainfall check rules it out",
+  "too hot, or not enough rain through the crop",
+  "the crop would grow through a month hotter than its FAO ECOCROP upper limit",
+  "not {months}",
+  "Some months here are warmer than the crop's ideal range in FAO ECOCROP, which rates growth as reduced then (not failed) — mulch and afternoon shade help: {warm}.",
+  "{names} goes in only as a first-season starter — the repeating plan had no room for it, so add it by hand for later years if you want it.",
+  "{names} go in only as a first-season starter — the repeating plan had no room for them, so add them by hand for later years if you want them.",
+  "This plan follows a repeating whole-year cycle.",
+  "It was chosen by comparing plans starting in each of the 12 months and keeping the one with the fewest months without a fresh harvest — not just what fits best from {month}.",
+  "Check {beds} before sowing there: something is already growing in that bed and this whole-year plan may overlap it in its first months.",
+  "Check {beds} before sowing there: something is already growing in those beds and this whole-year plan may overlap it in its first months.",
+  "{crop} — its sowing window is open right now, but this plan has nowhere to put it until {month}.",
+  "{crop} — its next sowing window opens in {month}, and this plan still has room for it then.",
+  "{crop} — its next sowing window opens in {month}, but this plan has nowhere to put it that month; the first sowing month it could still fit into is {fit}.",
+  "Bed {n}",
+  "Plot {n}",
+  "all year",
+] as const;
+
+/** "Bed 3" / "Plot 2" as the planner labels them; a farmer's own label passes through unchanged. */
+function bedLabelText(lang: string, label: string): string {
+  if (lang !== 'xh') return label;
+  const bed = /^Bed (\d+)$/.exec(label);
+  if (bed) return inlineTemplate(lang, 'Bed {n}', null, { n: bed[1] });
+  const plot = /^Plot (\d+)$/.exec(label);
+  return plot ? inlineTemplate(lang, 'Plot {n}', null, { n: plot[1] }) : label;
+}
+
+const MONTH_ABBREVIATION = new RegExp(`\\b(${MONTHS_SHORT.join('|')})\\b`, 'g');
+/** English month abbreviations inside a sentence the lib built ("Sep–Dec"), in isiXhosa for xh. */
+function monthsInText(lang: string, text: string): string {
+  return lang === 'xh' ? text.replace(MONTH_ABBREVIATION, (abbreviation) => recordsMonthShort('xh', MONTHS_SHORT.indexOf(abbreviation) + 1)) : text;
+}
+
+/** "Bed 1 (Sep–Dec), Plot 2 (all year)" or "4 plots": labels, months and the two fixed words. */
+function placesAndMonthsText(lang: string, text: string): string {
+  if (lang !== 'xh') return text;
+  return monthsInText(lang, text
+    .replace(/\b(?:Bed|Plot) \d+\b/g, (label) => bedLabelText(lang, label))
+    .replace(/\ball year\b/g, inlineText(lang, 'all year'))
+    .replace(/\b(\d+) (plots|beds)\b/g, (_whole, n: string, noun: string) => inlineTemplate(lang, `{n} ${noun}`, null, { n })));
+}
+
+/** "Kale (not Jan, Feb); Peas (Mar)": each crop with the months after it, split on the last bracket. */
+function capturedMonthListText(lang: string, list: string): string {
+  const month = MONTHS_SHORT.join('|');
+  return list.split('; ').map((item) => {
+    const hit = new RegExp(`^(.*) \\((not )?((?:${month})(?:, (?:${month}))*)\\)$`).exec(item);
+    if (!hit) return item;
+    const months = monthsInText(lang, hit[3]);
+    return `${hit[1]} (${hit[2] ? inlineTemplate(lang, 'not {months}', null, { months }) : months})`;
+  }).join('; ');
+}
+
+function planNoteValue(lang: string): (name: string, captured: string) => string {
+  const value = (name: string, captured: string): string => {
+    switch (name) {
+      case 'bed': case 'plot': case 'where': case 'labels': case 'spans': case 'beds': return placesAndMonthsText(lang, captured);
+      case 'month': case 'months': case 'fit': return monthsInText(lang, captured);
+      case 'calendar': case 'reason': case 'family': return inlineText(lang, captured);
+      case 'choice': return inlineBuilt(lang, captured, PLAN_NOTE_TEMPLATES, value);
+      case 'cut': case 'warm': return capturedMonthListText(lang, captured);
+      case 'lines': return inlineBuiltList(lang, captured, PLAN_NOTE_TEMPLATES, '; ', value);
+      case 'plotlines': return inlineBuiltList(lang, captured, PLAN_NOTE_TEMPLATES, ' · ', value);
+      default: return captured;
+    }
+  };
+  return value;
+}
+
+/** A plan note or "waiting for their sowing window" sentence, as the lib wrote it, in isiXhosa for xh. */
+function planNoteText(lang: string, text: string): string {
+  if (lang !== 'xh') return text;
+  const value = planNoteValue(lang);
+  return text.split(/(?<=[.?]) (?=[A-Z])/).map((sentence) => inlineBuilt(lang, sentence, PLAN_NOTE_TEMPLATES, value)).join(' ');
+}
+
+// ── Calendar produce lines written in English by lib/calendar-produce.ts ───────────────────────
+// treeLineText / animalLineText / animalsNotShownNote are shared with the printed plan, so they
+// stay English in lib; the screen translates their fixed fragments for isiXhosa readers. The
+// species, enterprise and plant names, the planning reference and every number stay as they are.
+const PRODUCE_LINE_TEMPLATES = [
+  '{n} plant on your map',
+  '{n} plants on your map',
+  'proposed, not cropping yet',
+  'proposed, not cropping yet (first crop {years} years after planting)',
+  '{n} of them proposed',
+  '{n} of them proposed (first crop {years} years after planting)',
+  'proposed, no animals yet',
+] as const;
+const PRODUCT_FROM_TEMPLATES = ['{product} from {name}'] as const;
+const ANIMALS_NOT_SHOWN_TEMPLATES = [
+  'On your map, with no month bar — {parts}.',
+  'confirm local production months for {products}',
+  'say what it is for under Animals on your map: {housings}',
+] as const;
+
+/** Splits a list on `separator` except inside brackets: "Meat duck (Pekin, backyard), Honeybee". */
+function splitOutsideBrackets(list: string, separator: string): string[] {
+  const items: string[] = [];
+  let depth = 0;
+  let start = 0;
+  for (let i = 0; i < list.length; i++) {
+    if (list[i] === '(') depth++;
+    else if (list[i] === ')') depth = Math.max(0, depth - 1);
+    else if (depth === 0 && list.startsWith(separator, i)) { items.push(list.slice(start, i)); start = i + separator.length; i += separator.length - 1; }
+  }
+  items.push(list.slice(start));
+  return items;
+}
+
+/**
+ * One line of the food-forest / animal calendar rows ("Mango — fruit · 3 plants on your map · 1 of
+ * them proposed", "Eggs — Layer hens · 2 coops"), in isiXhosa for xh. The head and the structure
+ * noun are looked up as words; the count and the proposed tail go through the templates.
+ */
+function produceLineText(lang: string, english: string, kind: 'trees' | 'animals'): string {
+  if (lang !== 'xh') return english;
+  return english.split(' · ').map((part, index) => {
+    if (index === 0) {
+      const [first, ...rest] = part.split(' — ');
+      return kind === 'trees'
+        ? [first, inlineText(lang, rest.join(' — '))].join(' — ')
+        : [inlineText(lang, first), ...rest].join(' — ');
+    }
+    const structures = kind === 'animals' ? /^(\d+) (?!of them proposed)(.+)$/.exec(part) : null;
+    if (structures) return `${structures[1]} ${inlineText(lang, structures[2])}`;
+    return inlineBuilt(lang, part, PRODUCE_LINE_TEMPLATES);
+  }).join(' · ');
+}
+
+/** The footnote under the animals row ("On your map, with no month bar — confirm local …"). */
+function animalsNotShownText(lang: string, note: string): string {
+  if (lang !== 'xh') return note;
+  const value = (name: string, captured: string): string => {
+    switch (name) {
+      case 'parts': return inlineBuiltList(lang, captured, ANIMALS_NOT_SHOWN_TEMPLATES, '; ', value);
+      case 'products': return splitOutsideBrackets(captured, ', ').map((item) => inlineBuilt(lang, item, PRODUCT_FROM_TEMPLATES, value)).join(', ');
+      case 'housings': return splitOutsideBrackets(captured, ', ').map((item) => inlineText(lang, item)).join(', ');
+      case 'product': {
+        const label = Object.values(PRODUCT_LABEL).find((candidate) => candidate.toLowerCase() === captured);
+        return label ? inlineText(lang, label).toLowerCase() : captured;
+      }
+      default: return captured;
+    }
+  };
+  return inlineBuilt(lang, note, ANIMALS_NOT_SHOWN_TEMPLATES, value);
+}
 // The rolling timeline shows this many months ahead from today (column 0),
 // scrollable. TWO FULL YEARS as of 2026-08-05 (Rory: "the last month i feel
 // is not fully utilised... should we make it 2 years and then we just pan
@@ -349,7 +655,7 @@ function TaskList({ tasks }: { tasks: CropTask[] }) {
                         className="font-sans"
                         style={{ fontSize: 10.5, color: 'var(--color-forest-800)', background: 'var(--brand-soft)', border: '1px solid var(--brand-soft-2)', borderRadius: 999, padding: '1px 7px', whiteSpace: 'nowrap' }}
                       >
-                        {bed}
+                        {bedLabelText(lang, bed)}
                       </span>
                     ))}
                   </div>
@@ -405,19 +711,24 @@ function wrapMonth(m: number): number {
 function patternLabelText(lang: string, pattern: RainPattern): string {
   return inlineText(lang, PATTERN_META[pattern].label);
 }
-function monthLabel(m: number): string {
-  return MONTHS_SHORT[wrapMonth(m) - 1];
+/** 'Jan'…'Dec' (month 1-12); the isiXhosa short name for an isiXhosa reader. Every other
+ * language, and everything that is stored or printed, keeps the English abbreviation. */
+function monthShortText(lang: string, m: number): string {
+  return lang === 'xh' ? recordsMonthShort('xh', m) : MONTHS_SHORT[m - 1];
+}
+function monthLabel(m: number, lang: string): string {
+  return monthShortText(lang, wrapMonth(m));
 }
 
 /** "Jun", "Jun–Aug", or "Jun, Aug, Oct" — a run of months reads as a span, a
  * broken set stays a list rather than being smoothed into a false range. */
-function monthSpanLabel(months: number[]): string {
+function monthSpanLabel(months: number[], lang: string): string {
   if (months.length === 0) return '';
-  if (months.length === 1) return monthLabel(months[0]);
+  if (months.length === 1) return monthLabel(months[0], lang);
   const contiguous = months.every((month, i) => i === 0 || month === wrapMonth(months[i - 1] + 1));
   return contiguous
-    ? `${monthLabel(months[0])}–${monthLabel(months[months.length - 1])}`
-    : months.map(monthLabel).join(', ');
+    ? `${monthLabel(months[0], lang)}–${monthLabel(months[months.length - 1], lang)}`
+    : months.map((month) => monthLabel(month, lang)).join(', ');
 }
 
 /** "maize", "maize and cabbage", "maize, cabbage and beans". */
@@ -488,7 +799,7 @@ function BuyingMonthBlock({ monthGroup, isNow }: { monthGroup: BuyingMonth; isNo
   return (
     <div>
       <div className="font-display font-semibold mb-1" style={{ fontSize: 13, color: isNow ? '#1F4D2B' : 'var(--text-primary)' }}>
-        {monthLabel(monthGroup.month)}{isNow ? ` · ${inlineText(lang, 'this month')}` : ''}
+        {monthLabel(monthGroup.month, lang)}{isNow ? ` · ${inlineText(lang, 'this month')}` : ''}
       </div>
       <div className="space-y-2">
         {monthGroup.items.map((item) => (
@@ -511,7 +822,7 @@ function BuyingMonthBlock({ monthGroup, isNow }: { monthGroup: BuyingMonth; isNo
             </div>
             <div className="font-sans mt-0.5 flex items-start gap-1" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.4 }}>
               <SeedBadge transplant={item.transplant} />
-              <span>{buyingNoteText(lang, item.note)}{item.bedLabels.length > 0 ? ` · ${inlineTemplate(lang, 'for {beds}', null, { beds: item.bedLabels.join(', ') })}` : ''}</span>
+              <span>{buyingNoteText(lang, item.note)}{item.bedLabels.length > 0 ? ` · ${inlineTemplate(lang, 'for {beds}', null, { beds: item.bedLabels.map((label) => bedLabelText(lang, label)).join(', ') })}` : ''}</span>
             </div>
           </div>
         ))}
@@ -1090,7 +1401,7 @@ function FacilitatorCropsPageInner() {
       bedCount: beds.length,
       areaM2: beds.reduce((sum, b) => sum + b.areaM2, 0),
       savedLabel: ms
-        ? inlineTemplate(lang, 'saved {date}', null, { date: new Date(ms).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' }) })
+        ? inlineTemplate(lang, 'saved {date}', null, { date: localeDate(lang, new Date(ms), { day: 'numeric', month: 'short', year: 'numeric' }, 'en-ZA') })
         : null,
     };
   }), [myDesignsList, lang]);
@@ -1581,7 +1892,7 @@ function FacilitatorCropsPageInner() {
     [canvasTrees, canvasAnimals, animalChoices, monthOrder, treeSeasons, animalSeasons, planningTrees, monthAxis],
   );
   const productionProjection = useMemo(() => buildProductionProjection({ plantings, beds, trees: includeTrees ? canvasTrees : [], choices: treeSeasons, now: new Date(currentYear, currentMonth - 1, 1) }), [plantings, beds, includeTrees, canvasTrees, treeSeasons, currentYear, currentMonth]);
-  const ageCalendarNotes = canvasTrees.flatMap(g => { const note = treeAgeCalendarNote(g, treeSeasons[g.harvest.speciesId], currentYear * 12 + currentMonth - 1); return note ? [`${g.harvest.name}: ${note}.`] : []; });
+  const ageCalendarNotes = canvasTrees.flatMap(g => { const note = treeAgeCalendarNote(g, treeSeasons[g.harvest.speciesId], currentYear * 12 + currentMonth - 1); return note ? [`${g.harvest.name}: ${projectionText(lang, note)}.`] : []; });
   // Plants on the map whose harvest record has no sourced picking month yet: named under the row,
   // so a pawpaw that never appears is explained rather than silently missing.
   const treesWithoutSeason = useMemo(
@@ -1736,7 +2047,7 @@ function FacilitatorCropsPageInner() {
 
   function shareTasks() {
     const picking = (i: number) => (treePicking[i] ?? []).map((line) => `\n  ${lang === 'xh' ? treePickingPhraseText(line, lang) : treePickingPhrase(line)}`).join('');
-    const text = `🌱 ${inlineText(lang, 'Production plan tasks')}\n${monthLabel(currentMonth)}: ${sharedTaskSentence(lang, currentTasks)}${picking(0)}\n${monthLabel(nextMonth)}: ${sharedTaskSentence(lang, nextTasks)}${picking(1)}`;
+    const text = `🌱 ${inlineText(lang, 'Production plan tasks')}\n${monthLabel(currentMonth, lang)}: ${sharedTaskSentence(lang, currentTasks)}${picking(0)}\n${monthLabel(nextMonth, lang)}: ${sharedTaskSentence(lang, nextTasks)}${picking(1)}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   }
 
@@ -1995,7 +2306,7 @@ function FacilitatorCropsPageInner() {
                 className="font-mono inline-flex items-center gap-1 px-2 py-1 rounded-lg"
                 style={{ fontSize: 11, color: 'var(--text-primary)', background: 'var(--bg-1)', border: `1px solid ${b.kind === 'plot' ? 'rgba(192,122,30,0.35)' : 'var(--border)'}` }}
               >
-                {b.kind === 'plot' ? <Wheat size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> : <Sprout size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} />} {b.label} · {b.areaM2.toFixed(1)} m²
+                {b.kind === 'plot' ? <Wheat size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} /> : <Sprout size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px' }} />} {bedLabelText(lang, b.label)} · {b.areaM2.toFixed(1)} m²
                 {b.minDimM !== undefined ? ` · ${inlineTemplate(lang, '{w}m wide', null, { w: b.minDimM.toFixed(1) })}` : ''}
               </span>
             ))}
@@ -2240,7 +2551,7 @@ function FacilitatorCropsPageInner() {
                         }}
                         title={monthAxisTitle(monthAxis[i], m, lang)}
                       >
-                        {i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}
+                        {i === 12 ? '↻ ' : ''}{monthShortText(lang, m)}
                         <MonthAxisTag slot={monthAxis[i]} />
                       </div>
                     ))}
@@ -2303,7 +2614,7 @@ function FacilitatorCropsPageInner() {
                       months={calendarProduce}
                       axis={monthAxis}
                       emptyText={inlineText(lang, 'No locally confirmed production months yet. Hives, coops and pens on your map stay listed below and on the printed plan.')}
-                      footnote={animalsNotShown}
+                      footnote={animalsNotShown ? animalsNotShownText(lang, animalsNotShown) : null}
                       unmarked={animalsUnmarked}
                     />
                   ) : (
@@ -2346,10 +2657,10 @@ function FacilitatorCropsPageInner() {
                   {areaConflictDetails.map((conflict) => {
                     const names = listNames([...new Set(conflict.plantings.map((p) => p.cropName))], lang);
                     const months = [...new Set(conflict.plantings.flatMap((p) => p.months))].sort((a, b) => a - b);
-                    const span = months.length > 0 ? ` (${monthSpanLabel(months)})` : '';
+                    const span = months.length > 0 ? ` (${monthSpanLabel(months, lang)})` : '';
                     return (
                       <div key={conflict.bedId}>
-                        <strong style={{ color: 'var(--text-primary)' }}>{conflict.bedLabel}</strong>: {names}{span}
+                        <strong style={{ color: 'var(--text-primary)' }}>{bedLabelText(lang, conflict.bedLabel)}</strong>: {names}{span}
                       </div>
                     );
                   })}
@@ -2361,7 +2672,7 @@ function FacilitatorCropsPageInner() {
               <div className="font-display font-semibold" style={{ fontSize: 16, color: 'var(--text-primary)' }}>{inlineText(lang, 'Were these crops planted?')}</div>
               <p className="font-sans mt-1 mb-3" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>{inlineText(lang, 'Their one-time sowing month has passed. Confirm what happened before the plan counts their harvest or field work.')}</p>
               {(plan?.plantings ?? []).filter((p) => p.awaitingSowingConfirmation && beds.some((b) => b.id === p.bedId)).map((p) => <div key={p.id} className="font-sans flex flex-wrap items-center justify-between gap-2 py-2" style={{ fontSize: 13, borderTop: '1px solid var(--border)', color: 'var(--text-primary)' }}>
-                <span><strong>{cropByKey(p.cropKey)?.name ?? p.cropKey}</strong> · {beds.find((b) => b.id === p.bedId)?.label} · {p.once}</span>
+                <span><strong>{cropByKey(p.cropKey)?.name ?? p.cropKey}</strong> · {bedLabelText(lang, beds.find((b) => b.id === p.bedId)?.label ?? '')} · {p.once}</span>
                 <div className="flex gap-2"><button type="button" onClick={() => confirmPastSowing(p.id)} className="rounded-lg px-3 py-2" style={{ background: 'var(--bg-2)', border: '1px solid var(--emerald)', cursor: 'pointer' }}>{inlineText(lang, 'Already planted')}</button><button type="button" onClick={() => removePlanting(p.id)} className="rounded-lg px-3 py-2" style={{ background: 'transparent', border: '1px solid var(--border)', cursor: 'pointer' }}>{inlineText(lang, 'Not planted')}</button></div>
               </div>)}
             </div>}
@@ -2442,7 +2753,7 @@ function FacilitatorCropsPageInner() {
                 {([[currentMonth, currentTasks], [nextMonth, nextTasks]] as [number, CropTask[]][]).map(([m, t], idx) => (
                   <div key={m} className="mb-2.5">
                     <div className="font-display font-semibold flex items-baseline gap-2 mb-1" style={{ fontSize: 13.5, color: 'var(--text-primary)' }}>
-                      {monthLabel(m)}
+                      {monthLabel(m, lang)}
                       <span className="font-sans" style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
                         {idx === 0 ? inlineText(lang, 'this month') : inlineText(lang, 'next month')}
                       </span>
@@ -2481,7 +2792,7 @@ function FacilitatorCropsPageInner() {
                         return (
                           <div key={i} className="mb-2">
                             <div className="font-display font-semibold mb-1" style={{ fontSize: 12.5, color: 'var(--text-primary)' }}>
-                              {monthLabel(m)}{i >= 12 ? ` (${inlineText(lang, 'next year')})` : ''}
+                              {monthLabel(m, lang)}{i >= 12 ? ` (${inlineText(lang, 'next year')})` : ''}
                             </div>
                             {t.length > 0 && <TaskList tasks={t} />}
                             <TreePickingList lines={picking} />
@@ -2548,10 +2859,10 @@ function FacilitatorCropsPageInner() {
                     </div>
                     {areaConflictDetails.map((conflict) => (
                       <div key={conflict.bedId} className="mb-1.5">
-                        <div className="font-display font-semibold" style={{ fontSize: 12, color: 'var(--text-primary)' }}>{conflict.bedLabel}</div>
+                        <div className="font-display font-semibold" style={{ fontSize: 12, color: 'var(--text-primary)' }}>{bedLabelText(lang, conflict.bedLabel)}</div>
                         {conflict.plantings.map((row) => {
                           const planting = plantings.find((p) => p.id === row.plantingId);
-                          const span = monthSpanLabel(row.months);
+                          const span = monthSpanLabel(row.months, lang);
                           const detail = row.reason === 'invalid-share'
                             ? (Number.isFinite(row.areaFraction)
                               ? inlineTemplate(lang, 'share recorded as {n}% of the bed', null, { n: Math.round(row.areaFraction * 100) })
@@ -2644,7 +2955,7 @@ function FacilitatorCropsPageInner() {
                   ) : (
                     <>
                       {yieldByBed.map(({ bed, kg, unknownNames, coverNames }) => (
-                        <HarvestShareRow key={bed.id} name={bed.label} share={kg > 0 ? shareOfHarvest(kg) : null} relative={kg > 0 ? relativeTo(kg, biggestBedKg) : null}>
+                        <HarvestShareRow key={bed.id} name={bedLabelText(lang, bed.label)} share={kg > 0 ? shareOfHarvest(kg) : null} relative={kg > 0 ? relativeTo(kg, biggestBedKg) : null}>
                           <span className="text-right" style={{ color: 'var(--text-primary)', display: 'inline-block' }}>
                             {kg > 0 && inlineTemplate(lang, '{kg} kg known', null, { kg: kg.toFixed(1) })}
                             {kg > 0 && unknownNames.length > 0 && <br />}
@@ -2984,8 +3295,8 @@ function MonthAvailabilityDetail({
   return (
     <div className="rounded-xl p-3 mt-3" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
       <div className="flex items-start justify-between gap-2 mb-1.5">
-        <div className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{monthLabel(month)}</div>
-        <button onClick={onClose} aria-label={lang === 'zu' ? `Vala imininingwane ka-${monthLabel(month)}` : inlineTemplate(lang, 'Close {month} detail', null, { month: monthLabel(month) })} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0 }}>
+        <div className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{monthLabel(month, lang)}</div>
+        <button onClick={onClose} aria-label={lang === 'zu' ? `Vala imininingwane ka-${monthLabel(month, lang)}` : inlineTemplate(lang, 'Close {month} detail', null, { month: monthLabel(month, lang) })} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0 }}>
           <X size={14} />
         </button>
       </div>
@@ -3092,14 +3403,14 @@ function PlanNoteGroups({ notes }: { notes: PlanNote[] }) {
     <div className="flex flex-col gap-2">
       {warnings.length > 0 && (
         <div className="px-3 py-2 rounded-lg font-sans flex flex-col gap-1.5" style={{ fontSize: 12.5, background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.4)', color: 'var(--gold-dim)' }}>
-          {warnings.map((n, i) => <div key={i}>{n.text}</div>)}
+          {warnings.map((n, i) => <div key={i}>{planNoteText(lang, n.text)}</div>)}
         </div>
       )}
       {choices.length > 0 && (
         <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
           <summary style={{ cursor: 'pointer' }}>{inlineTemplate(lang, 'What the planner chose, bed by bed ({n})', null, { n: choices.length })}</summary>
           <ul className="flex flex-col gap-1 pt-1.5" style={{ listStyle: 'disc', paddingInlineStart: 26 }}>
-            {choices.map((n, i) => <li key={i}>{n.text}</li>)}
+            {choices.map((n, i) => <li key={i}>{planNoteText(lang, n.text)}</li>)}
           </ul>
         </details>
       )}
@@ -3120,7 +3431,7 @@ function PlanNoteGroups({ notes }: { notes: PlanNote[] }) {
             })()})
           </summary>
           <div className="flex flex-col gap-1.5 pt-1.5">
-            {gaps.map((n, i) => <div key={i}>{n.text}</div>)}
+            {gaps.map((n, i) => <div key={i}>{planNoteText(lang, n.text)}</div>)}
           </div>
         </details>
       )}
@@ -3128,7 +3439,7 @@ function PlanNoteGroups({ notes }: { notes: PlanNote[] }) {
         <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 10.5, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
           <summary style={{ cursor: 'pointer' }}>{inlineText(lang, PLAN_NOTES_PANEL_COPY.basisHeading)}</summary>
           <div className="flex flex-col gap-1.5 pt-1.5">
-            {basis.map((n, i) => <div key={i}>{n.text}</div>)}
+            {basis.map((n, i) => <div key={i}>{planNoteText(lang, n.text)}</div>)}
           </div>
         </details>
       )}
@@ -3214,8 +3525,8 @@ function MonthAxisTag({ slot, fontSize = 9.5 }: { slot?: MonthAxisSlot; fontSize
 
 /** "September 2026 (now)" — the words a screen reader and a hover tooltip get for one column. */
 function monthAxisTitle(slot: MonthAxisSlot | undefined, m: number, lang = 'en'): string {
-  if (!slot) return MONTHS_SHORT[m - 1];
-  return `${MONTH_NAMES[slot.month - 1]} ${slot.year}${slot.isNow ? ` (${inlineText(lang, 'now')})` : ''}`;
+  if (!slot) return monthShortText(lang, m);
+  return `${lang === 'xh' ? recordsMonthLong('xh', slot.month) : MONTH_NAMES[slot.month - 1]} ${slot.year}${slot.isNow ? ` (${inlineText(lang, 'now')})` : ''}`;
 }
 
 function MonthLineChart({
@@ -3275,7 +3586,7 @@ function MonthLineChart({
           {monthOrder.map((m, i) => (
             <div key={i} style={{ minWidth: 0, textAlign: 'center', borderLeft: i === 12 ? '2px solid #C4A46A' : undefined }} title={monthAxisTitle(axis?.[i], m, lang)}>
               <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)', marginTop: 4 }}>
-                {i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}
+                {i === 12 ? '↻ ' : ''}{monthShortText(lang, m)}
               </div>
               <MonthAxisTag slot={axis?.[i]} fontSize={9} />
               <div className="font-mono font-semibold" style={{ fontSize: 11, color: labelColor ? labelColor(values[i]) : 'var(--text-primary)', marginTop: 2 }}>
@@ -3660,7 +3971,7 @@ function FoodAvailabilityChart({
                           {/* Month on top, count under the bar. Rory, 2026-10-01: "change the
                               number of products with the month just switch them". The month
                               heads the column the way it heads the calendar's. */}
-                          <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)' }}>{i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}</div>
+                          <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : 'var(--text-muted)' }}>{i === 12 ? '↻ ' : ''}{monthShortText(lang, m)}</div>
                           <MonthAxisTag slot={axis[i]} />
                           <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
                             {total === 0 ? <div style={{ width: '68%', height: 3, background: 'var(--border)', borderRadius: 2 }} /> : (
@@ -4138,7 +4449,7 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
       ? (produceLanes(months, 'trees') as ProduceLane<CalendarTreeLine>[]).map(({ key, line, runs }) => {
         const src = speciesFruitArtworkUrl(line.speciesId);
         return {
-          key, runs, name: line.name, text: treeLineText(line), standing: line.standing, planning: line.planning,
+          key, runs, name: line.name, text: produceLineText(lang, treeLineText(line), 'trees'), standing: line.standing, planning: line.planning,
           art: src
             // eslint-disable-next-line @next/next/no-img-element -- 18px sprite
             ? <img src={src} alt="" width={PRODUCE_ICON} height={PRODUCE_ICON} style={{ width: PRODUCE_ICON, height: PRODUCE_ICON, flexShrink: 0 }} />
@@ -4148,7 +4459,7 @@ function ProduceCalendarRow({ kind, months, axis, emptyText, footnote, unmarked 
       : (produceLanes(months, 'animals') as ProduceLane<CalendarAnimalLine>[]).map(({ key, line, runs }) => {
         const Icon = PRODUCT_ICON[line.product];
         return {
-          key, runs, name: `${inlineText(lang, PRODUCT_LABEL[line.product])} · ${line.name}`, text: animalLineText(line), standing: line.standing,
+          key, runs, name: `${inlineText(lang, PRODUCT_LABEL[line.product])} · ${line.name}`, text: produceLineText(lang, animalLineText(line), 'animals'), standing: line.standing,
           art: <TrayArt src={enterpriseProductArtUrl(line.enterpriseId) ?? animalProductArtUrl(line.product)} label={inlineText(lang, PRODUCT_LABEL[line.product])} Fallback={Icon} color="var(--gold-dim)" />,
         };
       });
@@ -4310,7 +4621,7 @@ function UnmarkedProduceLine({ line }: { line: CalendarUnmarkedLine }) {
   };
   const Icon = PRODUCT_ICON[line.product];
   const docs = [...new Set(line.records.map((r) => r.source.doc))];
-  const noteText = line.note?.text ?? inlineText(lang, 'Local production months are not confirmed, so no months are marked.');
+  const noteText = line.note ? inlineText(lang, line.note.text) : inlineText(lang, 'Local production months are not confirmed, so no months are marked.');
 
   return (
     <div
@@ -4320,7 +4631,7 @@ function UnmarkedProduceLine({ line }: { line: CalendarUnmarkedLine }) {
     >
       <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12.5, fontWeight: 600, color: line.standing === 0 ? 'var(--text-secondary)' : 'var(--text-primary)' }}>
         <TrayArt src={enterpriseProductArtUrl(line.enterpriseId) ?? animalProductArtUrl(line.product)} label={inlineText(lang, PRODUCT_LABEL[line.product])} Fallback={Icon} color="var(--gold-dim)" />
-        {unmarkedLineText(line)}
+        {produceLineText(lang, unmarkedLineText(line), 'animals')}
       </span>
       <span style={{ fontSize: 11.5, color: 'var(--text-muted)' }}>{noteText}</span>
       {line.records.length > 0 && (
@@ -4359,7 +4670,7 @@ function UnmarkedProduceLine({ line }: { line: CalendarUnmarkedLine }) {
           <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 8 }}>
             {line.records.map((r) => (
               <li key={`${r.region}-${r.source.page}`} style={{ fontSize: 12.5, lineHeight: 1.35 }}>
-                <div style={{ fontWeight: 600 }}>{flowRecordText(r)}</div>
+                <div style={{ fontWeight: 600 }}>{lang === 'xh' ? `${inlineText(lang, r.region)}: ${inlineText(lang, r.when)}${r.plant ? `, ${r.plant}` : ''}` : flowRecordText(r)}</div>
                 <div style={{ fontSize: 11, color: 'var(--text-secondary)', fontStyle: 'italic', marginTop: 2 }}>
                   &ldquo;{r.source.quote}&rdquo;{r.source.page !== null ? ` (p. ${r.source.page})` : ''}
                 </div>
@@ -4402,7 +4713,7 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting, simple
     <div className="flex" style={{ borderBottom: '1px solid var(--border)' }}>
       <div style={{ position: 'sticky', left: 0, zIndex: 2, width: BED_LABEL_WIDTH, flexShrink: 0, background: bed.kind === 'plot' ? 'var(--bg-1)' : 'var(--bg-1)', borderRight: '1px solid var(--border)', padding: '10px 10px' }}>
         <div className="font-display font-semibold" style={{ fontSize: 'clamp(13px, 1vw, 15px)', color: 'var(--text-primary)' }}>
-          {bed.label}
+          {bedLabelText(lang, bed.label)}
           {bed.kind === 'plot' && (
             <span
               className="font-sans font-semibold uppercase"
@@ -4531,7 +4842,7 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
   // faded it while the bed's other bars stayed solid. Whatever sits left of the
   // seam is the year the farmer is planting; that reads full strength.
   const isYearTwo = (seg: Segment) => seg.rawStart >= 12;
-  const harvestLabel = crop.harvestWindowMonths ? `${monthLabel(harvest)}-${monthLabel(harvestEnd)}` : monthLabel(harvest);
+  const harvestLabel = crop.harvestWindowMonths ? `${monthLabel(harvest, lang)}-${monthLabel(harvestEnd, lang)}` : monthLabel(harvest, lang);
   const finishLabel = crop.timingVerified === false
     ? inlineText(lang, 'termination timing not verified')
     : crop.yieldKgPerM2 === 0 ? inlineTemplate(lang, 'cut or roll down {when}', null, { when: harvestLabel }) : inlineTemplate(lang, 'harvest {when}', null, { when: harvestLabel });
@@ -4556,7 +4867,7 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
             // colour on both would claim a certainty this plan doesn't have.
             opacity: isYearTwo(seg) ? 0.5 : 1,
           }}
-          title={`${crop.name} — ${inlineTemplate(lang, 'sow {month}', null, { month: monthLabel(planting.sowMonth) })}, ${finishLabel} · ${inlineTemplate(lang, '{share} bed', null, { share: fLabel })}${planting.inNursery ? ` · ${inlineText(lang, 'trays sown, not yet planted out')}` : planting.existing ? ` · ${inlineText(lang, 'already growing')}` : ''}${isYearTwo(seg) ? ` · ${inlineText(lang, 'year two, the same cycle coming round again')}` : ''}`}
+          title={`${crop.name} — ${inlineTemplate(lang, 'sow {month}', null, { month: monthLabel(planting.sowMonth, lang) })}, ${finishLabel} · ${inlineTemplate(lang, '{share} bed', null, { share: fLabel })}${planting.inNursery ? ` · ${inlineText(lang, 'trays sown, not yet planted out')}` : planting.existing ? ` · ${inlineText(lang, 'already growing')}` : ''}${isYearTwo(seg) ? ` · ${inlineText(lang, 'year two, the same cycle coming round again')}` : ''}`}
         >
           {BAR_STYLE === 'solid' && (
             // The "ready to harvest" marker — a hard colour + a line, not a
@@ -4611,8 +4922,8 @@ function PlantingBar({ planting, currentMonth, onTap, simple }: { planting: Plan
               whiteSpace: 'nowrap', cursor: 'pointer', lineHeight: 1.5, zIndex: 2,
               opacity: isYearTwo(seg) ? 0.5 : 1,
             }}
-            title={inlineTemplate(lang, 'Plan to transplant {crop} in {entry}. Start checking seedlings in {start}; if they are still not ready by {latest}, update the plan instead of treating the bed as occupied.', null, { crop: crop.name.toLowerCase(), entry: monthLabel(entry), start: monthLabel(readinessStart), latest: monthLabel(latestEntry) })}
-            aria-label={inlineTemplate(lang, 'Plan to transplant {crop} in {entry}', null, { crop: crop.name, entry: monthLabel(entry) })}
+            title={inlineTemplate(lang, 'Plan to transplant {crop} in {entry}. Start checking seedlings in {start}; if they are still not ready by {latest}, update the plan instead of treating the bed as occupied.', null, { crop: crop.name.toLowerCase(), entry: monthLabel(entry, lang), start: monthLabel(readinessStart, lang), latest: monthLabel(latestEntry, lang) })}
+            aria-label={inlineTemplate(lang, 'Plan to transplant {crop} in {entry}', null, { crop: crop.name, entry: monthLabel(entry, lang) })}
           >
             <Trees size={12} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {inlineText(lang, 'check / transplant')}
           </button>
@@ -4793,7 +5104,7 @@ function CropPickerModal({
             )}
             {crop.timingVerified === false ? (
               <div className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
-                {inlineText(lang, 'Recorded sowing:')} <strong style={{ color: 'var(--text-primary)' }}>{monthLabel(month)}</strong> · {inlineText(lang, 'finish timing:')} <strong style={{ color: 'var(--text-primary)' }}>{inlineText(lang, 'confirm locally')}</strong>
+                {inlineText(lang, 'Recorded sowing:')} <strong style={{ color: 'var(--text-primary)' }}>{monthLabel(month, lang)}</strong> · {inlineText(lang, 'finish timing:')} <strong style={{ color: 'var(--text-primary)' }}>{inlineText(lang, 'confirm locally')}</strong>
               </div>
             ) : (
               <>
@@ -4815,7 +5126,7 @@ function CropPickerModal({
                           cursor: 'pointer',
                         }}
                       >
-                        {MONTHS_SHORT[m - 1]}
+                        {monthShortText(lang, m)}
                       </button>
                     );
                   })}
@@ -4825,10 +5136,10 @@ function CropPickerModal({
                     {(() => {
                       const start = harvestMonthForCrop(month, crop);
                       const end = harvestEndMonthForCrop(month, crop);
-                      return start === end ? monthLabel(start) : `${monthLabel(start)}–${monthLabel(end)}`;
+                      return start === end ? monthLabel(start, lang) : `${monthLabel(start, lang)}–${monthLabel(end, lang)}`;
                     })()}
                   </strong>
-                  {crop.transplant && <> · {inlineText(lang, 'check/transplant when ready')} <strong style={{ color: 'var(--text-primary)' }}>{monthLabel(bedEntryMonth(month, crop))}–{monthLabel(latestBedEntryMonth(month, crop))}</strong></>}
+                  {crop.transplant && <> · {inlineText(lang, 'check/transplant when ready')} <strong style={{ color: 'var(--text-primary)' }}>{monthLabel(bedEntryMonth(month, crop), lang)}–{monthLabel(latestBedEntryMonth(month, crop), lang)}</strong></>}
                 </div>
               </>
             )}
@@ -4895,7 +5206,7 @@ function CropPickerModal({
                     lines under "there are no half-shares here", and no
                     percentage: on a plot the answer is never a share. */}
                 <TriangleAlert size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> This {isPlot ? 'plot' : 'bed'} is already carrying {listNames(overlapWarning.clashes.map((clash) => (
-                  clash.months.length > 0 ? `${clash.cropName} in ${monthSpanLabel(clash.months)}` : clash.cropName
+                  clash.months.length > 0 ? `${clash.cropName} in ${monthSpanLabel(clash.months, lang)}` : clash.cropName
                 )))}
                 {' — '}adding {crop.name}{isPlot ? '' : fraction >= 1 ? ' to the whole bed' : ' on top of that'} means
                 they compete for the same ground{isPlot ? ', and a staple plot grows one field crop at a time' : ''}. Still allowed.
@@ -4918,7 +5229,7 @@ function CropPickerModal({
                     ? 'This bed is already carrying {clashes} — adding {crop} to the whole bed means they compete for the same ground. Still allowed.'
                     : 'This bed is already carrying {clashes} — adding {crop} on top of that means they compete for the same ground. Still allowed.', null, {
                   clashes: listNames(overlapWarning.clashes.map((clash) => (
-                    clash.months.length > 0 ? inlineTemplate(lang, '{crop} in {span}', null, { crop: clash.cropName, span: monthSpanLabel(clash.months) }) : clash.cropName
+                    clash.months.length > 0 ? inlineTemplate(lang, '{crop} in {span}', null, { crop: clash.cropName, span: monthSpanLabel(clash.months, lang) }) : clash.cropName
                   )), lang),
                   crop: crop.name,
                 })}
@@ -4992,7 +5303,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
   if (!crop) return null;
   const harvest = harvestMonthForCrop(planting.sowMonth, crop);
   const harvestEnd = harvestEndMonthForCrop(planting.sowMonth, crop);
-  const harvestLabel = crop.harvestWindowMonths ? `${monthLabel(harvest)}-${monthLabel(harvestEnd)}` : monthLabel(harvest);
+  const harvestLabel = crop.harvestWindowMonths ? `${monthLabel(harvest, lang)}-${monthLabel(harvestEnd, lang)}` : monthLabel(harvest, lang);
   const isCoverCrop = crop.yieldKgPerM2 === 0;
   const yieldKg = estimatedYieldKgAdjusted(planting, bedAreaM2, allPlantings);
   const genuinelyIntercropped = isGenuinelyIntercropped(planting, allPlantings);
@@ -5027,11 +5338,11 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
         )}
         <div className="font-sans space-y-1 mb-3" style={{ fontSize: 12.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
           <div>{crop.timingVerified === false
-            ? inlineTemplate(lang, 'Recorded sowing: {month} · finish timing not verified', null, { month: monthLabel(planting.sowMonth) })
-            : inlineTemplate(lang, isCoverCrop ? 'Sow {month} → cut or roll down {when}' : 'Sow {month} → harvest {when}', null, { month: monthLabel(planting.sowMonth), when: harvestLabel })}</div>
+            ? inlineTemplate(lang, 'Recorded sowing: {month} · finish timing not verified', null, { month: monthLabel(planting.sowMonth, lang) })
+            : inlineTemplate(lang, isCoverCrop ? 'Sow {month} → cut or roll down {when}' : 'Sow {month} → harvest {when}', null, { month: monthLabel(planting.sowMonth, lang), when: harvestLabel })}</div>
           <div>{taskDetailText(lang, sowingInstruction(crop))}{crop.timingVerified === false ? '' : ` · ${inlineTemplate(lang, crop.transplant ? (isCoverCrop ? '{duration} after transplant to flowering' : '{duration} after transplant to first harvest') : (isCoverCrop ? '{duration} from sowing to flowering' : '{duration} from sowing to first harvest'), null, { duration: cropDurationLabel(crop, lang) })}`}</div>
           {pickingPeriodLabel(crop, lang) && <div>{inlineTemplate(lang, 'Usual picking period: {period} · bed reserved through the upper end unless you finish it earlier', null, { period: pickingPeriodLabel(crop, lang) ?? '' })}</div>}
-          {crop.transplant && <div>{inlineTemplate(lang, 'Field-readiness window: {from}–{to}; transplant when ready.', null, { from: monthLabel(bedEntryMonth(planting.sowMonth, crop)), to: monthLabel(latestBedEntryMonth(planting.sowMonth, crop)) })}</div>}
+          {crop.transplant && <div>{inlineTemplate(lang, 'Field-readiness window: {from}–{to}; transplant when ready.', null, { from: monthLabel(bedEntryMonth(planting.sowMonth, crop), lang), to: monthLabel(latestBedEntryMonth(planting.sowMonth, crop), lang) })}</div>}
           {crop.transplant && <div>{inlineText(lang, TRANSPLANT_NURSERY_GUIDANCE)}</div>}
           <CropStorageLine crop={crop} />
           <div>{crop.note}</div>
@@ -5436,7 +5747,7 @@ function AutoSuggestModal({
                 <div className="rounded-xl px-3 py-2.5" style={{ background: 'rgba(28,90,158,0.08)', border: '1px solid rgba(28,90,158,0.3)' }}>
                   <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: 'var(--blue)', letterSpacing: '0.08em' }}>{inlineText(lang, 'Your driest months')}</div>
                   <p className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45 }}>
-                    {inlineTemplate(lang, 'This site gets about {mm} mm of rain in {months} — its three driest months (satellite record for this location).', null, { mm: driest.map((m) => Math.round(m.rainMm)).join(' / '), months: driest.map((m) => monthLabel(m.month)).join(' / ') })}
+                    {inlineTemplate(lang, 'This site gets about {mm} mm of rain in {months} — its three driest months (satellite record for this location).', null, { mm: driest.map((m) => Math.round(m.rainMm)).join(' / '), months: driest.map((m) => monthLabel(m.month, lang)).join(' / ') })}
                   </p>
                   <p className="font-sans mt-1" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45 }}>
                     {inlineText(lang, '“Reliable irrigation” means your water, not the rain, carries every crop through months like these.')}
@@ -5520,7 +5831,7 @@ function AutoSuggestModal({
                       )}
                       {!idealMeta.sameAsToday && idealMeta.rampInMonths.length > 0 && (
                         <p className="font-sans" style={line}>
-                          {inlineBuilt(lang, IDEAL_PLAN_COPY.rampInLine(idealMeta.rampInMonths.length, monthLabel(idealMeta.fullCycleByMonth)), IDEAL_LINE_TEMPLATES)}
+                          {inlineBuilt(lang, IDEAL_PLAN_COPY.rampInLine(idealMeta.rampInMonths.length, monthLabel(idealMeta.fullCycleByMonth, lang)), IDEAL_LINE_TEMPLATES)}
                         </p>
                       )}
                       {(() => {
@@ -5532,7 +5843,7 @@ function AutoSuggestModal({
                           .filter((p) => typeof p.once === 'string')
                           .map((p) => {
                             const crop = cropByKey(p.cropKey);
-                            return crop ? `${crop.name} (${monthLabel(p.sowMonth)})` : null;
+                            return crop ? `${crop.name} (${monthLabel(p.sowMonth, lang)})` : null;
                           })
                           .filter((name): name is string => Boolean(name))
                           .join(', ');
@@ -5542,12 +5853,12 @@ function AutoSuggestModal({
                       })()}
                       {idealMeta.best.score.zeroFreshMonths.length > 0 && (
                         <p className="font-sans" style={line}>
-                          {inlineBuilt(lang, IDEAL_PLAN_COPY.residualGapLine(idealMeta.best.score.zeroFreshMonths.map(monthLabel).join(', ')), IDEAL_LINE_TEMPLATES)}
+                          {inlineBuilt(lang, IDEAL_PLAN_COPY.residualGapLine(idealMeta.best.score.zeroFreshMonths.map((month) => monthLabel(month, lang)).join(', ')), IDEAL_LINE_TEMPLATES)}
                         </p>
                       )}
                       {transitionOnly.length > 0 && (
                         <p className="font-sans" style={line}>
-                          {inlineBuilt(lang, IDEAL_PLAN_COPY.transitionGapLine(transitionOnly.map(monthLabel).join(', ')), IDEAL_LINE_TEMPLATES)}
+                          {inlineBuilt(lang, IDEAL_PLAN_COPY.transitionGapLine(transitionOnly.map((month) => monthLabel(month, lang)).join(', ')), IDEAL_LINE_TEMPLATES)}
                         </p>
                       )}
                       {rhythm === 'few-big' && <p className="font-sans" style={line}>{inlineText(lang, IDEAL_PLAN_COPY.fewBigNote)}</p>}
@@ -5569,7 +5880,7 @@ function AutoSuggestModal({
                           <CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name} ({inlineTemplate(lang, '{share} bed', null, { share: fractionLabel(p.areaFraction ?? 1) })})
                           {bedLabel && (
                             <span className="font-sans" style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>
-                              {bedLabel}
+                              {bedLabelText(lang, bedLabel)}
                             </span>
                           )}
                           {typeof p.once === 'string' && (
@@ -5580,8 +5891,8 @@ function AutoSuggestModal({
                         </span>
                         <span style={{ color: 'var(--text-muted)', textAlign: 'right' }}>
                           {crop.transplant
-                            ? inlineTemplate(lang, 'start tray {sow} → transplant {entry} → harvest {harvest} ({duration} in bed)', null, { sow: monthLabel(p.sowMonth), entry: monthLabel(fieldEntry), harvest: monthLabel(h), duration: cropDurationLabel(crop, lang) })
-                            : inlineTemplate(lang, crop.yieldKgPerM2 === 0 ? 'sow {sow} → cut/roll down {harvest}' : 'sow {sow} → harvest {harvest}', null, { sow: monthLabel(p.sowMonth), harvest: monthLabel(h) })}
+                            ? inlineTemplate(lang, 'start tray {sow} → transplant {entry} → harvest {harvest} ({duration} in bed)', null, { sow: monthLabel(p.sowMonth, lang), entry: monthLabel(fieldEntry, lang), harvest: monthLabel(h, lang), duration: cropDurationLabel(crop, lang) })
+                            : inlineTemplate(lang, crop.yieldKgPerM2 === 0 ? 'sow {sow} → cut/roll down {harvest}' : 'sow {sow} → harvest {harvest}', null, { sow: monthLabel(p.sowMonth, lang), harvest: monthLabel(h, lang) })}
                         </span>
                       </div>
                     );
@@ -5604,7 +5915,7 @@ function AutoSuggestModal({
                   const crop = cropByKey(l.cropKey);
                   return (
                     <div key={l.cropKey} style={{ display: 'flex', alignItems: 'flex-start', gap: 4 }}>
-                      {crop && <CropIcon cropKey={l.cropKey} icon={crop.icon} size={14} />} {l.text}
+                      {crop && <CropIcon cropKey={l.cropKey} icon={crop.icon} size={14} />} {planNoteText(lang, l.text)}
                     </div>
                   );
                 })}
