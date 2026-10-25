@@ -468,10 +468,12 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number, includeM
   lines.push(`Farming practice: ${s.farmingPractice || 'not specified'}`);
   lines.push(`Main challenges: ${s.challenges.length ? s.challenges.join(', ') : 'none highlighted'}`);
   if (s.isCommercial) {
-    lines.push(`Selling produce: Yes — ${s.marketType ?? 'market type not specified'}`);
+    lines.push(`Selling or planning to sell produce: Yes — ${s.marketType ?? 'market type not specified'}`);
   } else {
-    lines.push(`Selling produce: No (household / community use)`);
+    lines.push('Selling or planning to sell produce: Not selected in the saved survey.');
   }
+  // This toggle combines present activity with future intent; neither state proves a sale.
+  lines.push('This combined answer does not establish actual sales, buyer demand or income. Use separately supplied sales or production records, retaining their dates/year, source and uncertainty. If no such records were supplied, actual sales and income are not recorded.');
 
   if (includeMarketEvidence) lines.push('', marketEvidencePromptBlock(s.marketEvidence));
 

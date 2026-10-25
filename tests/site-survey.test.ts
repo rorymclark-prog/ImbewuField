@@ -584,3 +584,16 @@ test('damaged market-note drafts stay recoverable without rendering non-text fie
   assert.equal(readSurveyDraft(scope).error, true);
   assert.equal(local.getItem(scope), damaged, 'the damaged draft remains available for deliberate discard');
 });
+
+test('sales intention cannot become achieved sales or income in either report purpose', () => {
+  for (const reportPurpose of ['potential', 'complete'] as const) {
+    const prompt = surveyToPrompt(survey({ reportPurpose, isCommercial: true, marketType: 'local-market', reportedProduction: [], marketEvidence: undefined }), 800, false);
+    assert.match(prompt, /Selling or planning to sell produce: Yes/);
+    assert.match(prompt, /does not establish actual sales, buyer demand or income/);
+    assert.match(prompt, /actual sales and income are not recorded/);
+    assert.doesNotMatch(prompt, /Selling produce: Yes/);
+  }
+  const unselected = surveyToPrompt(survey({ isCommercial: false, reportedProduction: [] }), 800);
+  assert.match(unselected, /Selling or planning to sell produce: Not selected in the saved survey/);
+  assert.doesNotMatch(unselected, /Selling produce: No \(household \/ community use\)/);
+});

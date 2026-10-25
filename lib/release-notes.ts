@@ -41,8 +41,8 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 October 2026', sha: 'a2b543843', changes: [
-    'Add dated local market notes in the survey; reports keep unconfirmed opportunities clear.',
+  { when: '25 October 2026', sha: '094fa743e', changes: [
+    'Market notes keep their source and date. Selling plans stay separate from recorded sales.',
     'Full report headers keep unsourced soil values unknown.',
     'Survey and reports now show crops, food-forest and animal products through the year.',
     'Choose Site potential or Complete site plan, then the detail you need.',
