@@ -1,0 +1,44 @@
+{
+  "rows": [
+    {
+      "file": "zu-generated-availability",
+      "pages": 5,
+      "completeCautionAndDraftNotice": true
+    },
+    {
+      "file": "zu-generated-reference",
+      "pages": 6,
+      "completeCautionAndDraftNotice": true
+    },
+    {
+      "file": "st-generated-availability",
+      "pages": 5,
+      "completeCautionAndDraftNotice": true
+    },
+    {
+      "file": "st-generated-reference",
+      "pages": 6,
+      "completeCautionAndDraftNotice": true
+    },
+    {
+      "file": "ts-generated-availability",
+      "pages": 6,
+      "completeCautionAndDraftNotice": true
+    },
+    {
+      "file": "ts-generated-reference",
+      "pages": 6,
+      "completeCautionAndDraftNotice": true
+    },
+    {
+      "file": "ve-generated-availability",
+      "pages": 6,
+      "completeCautionAndDraftNotice": true
+    },
+    {
+      "file": "ve-generated-reference",
+      "pages": 6,
+      "completeCautionAndDraftNotice": true
+    }
+  ]
+}

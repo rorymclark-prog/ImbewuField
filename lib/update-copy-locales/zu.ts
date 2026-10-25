@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Crop calendars and field work exports now have unreviewed translation drafts.": "Amakhalenda ezitshalo nokuthunyelwa komsebenzi wensimu manje kunokuhumusha okusaluhlaka okungakabuyekezwa.",
+  "Production charts and some crop screens still use English.": "Amashadi okukhiqiza nezinye izikrini zezitshalo zisasebenzisa isiNgisi.",
   "Offline saving and sending messages now have drafts in all four languages.": "Imilayezo yokugcina nokuthumela ungaxhunyiwe manje inohlaka kuzo zonke izilimi ezine.",
   "Consent choices now show draft translations and the English source in all four languages.": "Izinketho zemvume manje zibonisa ukuhumusha okusaluhlaka nombhalo wokuqala wesiNgisi kuzo zonke izilimi ezine.",
   "Full production and yield notes now have four draft translations.": "Amanothi aphelele okukhiqiza nesivuno manje anokuhumusha okusaluhlaka ngezilimi ezine.",

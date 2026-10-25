@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Crop calendars and field work exports now have unreviewed translation drafts.": "Tikhalendara ta swibyariwa ni ku humesa mintirho ya masimu swi na vuhundzuluxeri bya mpfapfarhuto byo ka byi nga si kamberiwa.",
+  "Production charts and some crop screens still use English.": "Tichati ta vuhumelerisi ni swikombiso swin’wana swa swibyariwa swa ha tirhisa Xinghezi.",
   "Offline saving and sending messages now have drafts in all four languages.": "Swiviko swa ku hlayisa handle ka vuhlanganisi ni ku rhumela sweswi swi ni mipfapfarhuto hi tindzimi hinkwato ta mune.",
   "Consent choices now show draft translations and the English source in all four languages.": "Swihlawuriwa swa mpfumelelo sweswi swi komba vuhundzuluxi bya mpfapfarhuto ni tsalwa ro sungula ra Xinghezi hi tindzimi hinkwato ta mune.",
   "Full production and yield notes now have four draft translations.": "Tinotsi leti heleleke ta vuhumelerisi ni ntshovelo sweswi ti ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",

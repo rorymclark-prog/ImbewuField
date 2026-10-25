@@ -1,0 +1,72 @@
+{
+  "rows": [
+    {
+      "file": "en-before-record.pdf",
+      "pages": 2,
+      "words": 218,
+      "clipped": [],
+      "pixelHashes": [
+        "7581afd66d921536434cafb5393959d6c33d62c472024380830d5f6e028a4845",
+        "540ea95c921ea6a97e72fe80d0a31c805af9566cd66ab524bda247acd9a041b1"
+      ]
+    },
+    {
+      "file": "en-after-record.pdf",
+      "pages": 2,
+      "words": 218,
+      "clipped": [],
+      "pixelHashes": [
+        "7581afd66d921536434cafb5393959d6c33d62c472024380830d5f6e028a4845",
+        "540ea95c921ea6a97e72fe80d0a31c805af9566cd66ab524bda247acd9a041b1"
+      ]
+    },
+    {
+      "file": "zu-record.pdf",
+      "pages": 3,
+      "words": 281,
+      "clipped": [],
+      "pixelHashes": [
+        "325f9bc5bae3da386796a831888a3384ff3d9b6f95b6e077cb5e66517e50ed85",
+        "bea26932a92142bf74633de5c53dc0f63c581da524de9e9655cb858e2529b3c1",
+        "07bb29eb1970353732b83b76500d6ced8e9653da32fdf85e8ba58c47b43f47c5"
+      ]
+    },
+    {
+      "file": "st-record.pdf",
+      "pages": 3,
+      "words": 426,
+      "clipped": [],
+      "pixelHashes": [
+        "3188eac51790a7d50a1be684c258c2c1a47a4c88fd8dfe80d15d973e3377d4a6",
+        "8e838fffbcdbace19a54533bf55c94935f39702ef0d86d92f1a95b3a5d6299b1",
+        "a73bd3b06e49e0ef22740a11f7b4f60bef4448965debc691d30e3c9f53a627c0"
+      ]
+    },
+    {
+      "file": "ts-record.pdf",
+      "pages": 3,
+      "words": 421,
+      "clipped": [],
+      "pixelHashes": [
+        "73e1a6271d627e96df5d084c429b2d60741771844db2320c5f154cdd427a1310",
+        "e8195363c4710020eff3713cd8e02eb06f19d21c150b0ae25d3555ded0f1c082",
+        "91921ce62cfac1fdde48968247e7c483396274de1db5cdd93b1c42822d2310ca"
+      ]
+    },
+    {
+      "file": "ve-record.pdf",
+      "pages": 3,
+      "words": 443,
+      "clipped": [],
+      "pixelHashes": [
+        "412c0733fea02e93a600ba06d7113514848b8e719057d4c1e4176a577c04a776",
+        "442d15b0403e4d8bffe136bdb8f5f82eab3607ddfb1678ddd751b06d19a2a8ca",
+        "8d778d53aa4ba5ddff397c98863b1c49d49a78d0ae37bd13db6f70020271800e"
+      ]
+    }
+  ],
+  "english": {
+    "samePixels": true,
+    "sameText": true
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "rows": [
+    {
+      "file": "en-before-numbers-unconfirmed.pdf",
+      "pages": 1,
+      "words": 279,
+      "clipped": [],
+      "pixelHashes": [
+        "86564d530fd4e0db5f69b3ced80f9c0f207d33413b1f3a52334fb4d54cebbd03"
+      ]
+    },
+    {
+      "file": "en-after-numbers-unconfirmed.pdf",
+      "pages": 1,
+      "words": 279,
+      "clipped": [],
+      "pixelHashes": [
+        "86564d530fd4e0db5f69b3ced80f9c0f207d33413b1f3a52334fb4d54cebbd03"
+      ]
+    },
+    {
+      "file": "zu-numbers-unconfirmed.pdf",
+      "pages": 1,
+      "words": 253,
+      "clipped": [],
+      "pixelHashes": [
+        "aa4e1bad1646ddba97210e93804b38c261b0967b9602c1b701beae6b6660b940"
+      ]
+    },
+    {
+      "file": "st-numbers-unconfirmed.pdf",
+      "pages": 1,
+      "words": 387,
+      "clipped": [],
+      "pixelHashes": [
+        "7a1c920b142093f7504fc606d701d1f73a346dd1bd5a68ec13cb2a2eddd27f21"
+      ]
+    },
+    {
+      "file": "ts-numbers-unconfirmed.pdf",
+      "pages": 1,
+      "words": 384,
+      "clipped": [],
+      "pixelHashes": [
+        "240ecf209129f89a1e40cddc9f9080c17ca978e0d464b555a4c4589a61cde28f"
+      ]
+    },
+    {
+      "file": "ve-numbers-unconfirmed.pdf",
+      "pages": 1,
+      "words": 393,
+      "clipped": [],
+      "pixelHashes": [
+        "1b98d3f0805e428188aa329e4dcc0303f81b7d870c6bd8ce277beaae04f15fbf"
+      ]
+    },
+    {
+      "file": "en-before-numbers-confirmed.pdf",
+      "pages": 1,
+      "words": 279,
+      "clipped": [],
+      "pixelHashes": [
+        "86564d530fd4e0db5f69b3ced80f9c0f207d33413b1f3a52334fb4d54cebbd03"
+      ]
+    },
+    {
+      "file": "en-after-numbers-confirmed.pdf",
+      "pages": 1,
+      "words": 279,
+      "clipped": [],
+      "pixelHashes": [
+        "86564d530fd4e0db5f69b3ced80f9c0f207d33413b1f3a52334fb4d54cebbd03"
+      ]
+    },
+    {
+      "file": "zu-numbers-confirmed.pdf",
+      "pages": 1,
+      "words": 253,
+      "clipped": [],
+      "pixelHashes": [
+        "aa4e1bad1646ddba97210e93804b38c261b0967b9602c1b701beae6b6660b940"
+      ]
+    },
+    {
+      "file": "st-numbers-confirmed.pdf",
+      "pages": 1,
+      "words": 387,
+      "clipped": [],
+      "pixelHashes": [
+        "7a1c920b142093f7504fc606d701d1f73a346dd1bd5a68ec13cb2a2eddd27f21"
+      ]
+    },
+    {
+      "file": "ts-numbers-confirmed.pdf",
+      "pages": 1,
+      "words": 384,
+      "clipped": [],
+      "pixelHashes": [
+        "240ecf209129f89a1e40cddc9f9080c17ca978e0d464b555a4c4589a61cde28f"
+      ]
+    },
+    {
+      "file": "ve-numbers-confirmed.pdf",
+      "pages": 1,
+      "words": 393,
+      "clipped": [],
+      "pixelHashes": [
+        "1b98d3f0805e428188aa329e4dcc0303f81b7d870c6bd8ce277beaae04f15fbf"
+      ]
+    },
+    {
+      "file": "en-before-numbers-conflict.pdf",
+      "pages": 1,
+      "words": 277,
+      "clipped": [],
+      "pixelHashes": [
+        "91cfb5f76306d23e3d9ecfa27029544d18baffc60201afb6770d75f1ba0f54ad"
+      ]
+    },
+    {
+      "file": "en-after-numbers-conflict.pdf",
+      "pages": 1,
+      "words": 248,
+      "clipped": [],
+      "pixelHashes": [
+        "cf8aa2953b837fca34ee07ac766f713dac8bcea63293e5ae3d2558f8fd5e6ded"
+      ]
+    },
+    {
+      "file": "zu-numbers-conflict.pdf",
+      "pages": 1,
+      "words": 226,
+      "clipped": [],
+      "pixelHashes": [
+        "72b2b9a78720c2dcc3591a6478e3944965e5379efb61e679b71678562f9e374c"
+      ]
+    },
+    {
+      "file": "st-numbers-conflict.pdf",
+      "pages": 1,
+      "words": 353,
+      "clipped": [],
+      "pixelHashes": [
+        "e8563c3e31de495deccf58aa08b15d914cab50a4c28e8920cbc32113063d0210"
+      ]
+    },
+    {
+      "file": "ts-numbers-conflict.pdf",
+      "pages": 1,
+      "words": 350,
+      "clipped": [],
+      "pixelHashes": [
+        "77ac9f00e0a9ab8295818493ff380240a1ce77979fe42b380a802bc6ed315319"
+      ]
+    },
+    {
+      "file": "ve-numbers-conflict.pdf",
+      "pages": 1,
+      "words": 360,
+      "clipped": [],
+      "pixelHashes": [
+        "3735649818fa4f7a05ee1d0ac0c16292c38aa2f1ae7fa21585d962227dfaf68b"
+      ]
+    }
+  ],
+  "english": {
+    "unconfirmed": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "confirmed": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "conflict": {
+      "samePixels": false,
+      "sameText": false
+    }
+  }
+}

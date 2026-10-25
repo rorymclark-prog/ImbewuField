@@ -1,0 +1,2322 @@
+{
+  "sourceSha": "dc9ade0cc9a208de55c7d0cccc6393f79257769d",
+  "cases": [
+    {
+      "id": "original51",
+      "plantings": [
+        {
+          "id": "synthetic-planting-0",
+          "bedId": "synthetic-bed-0",
+          "cropKey": "maize",
+          "sowMonth": 1
+        },
+        {
+          "id": "synthetic-planting-1",
+          "bedId": "synthetic-bed-1",
+          "cropKey": "dry-beans",
+          "sowMonth": 2
+        },
+        {
+          "id": "synthetic-planting-2",
+          "bedId": "synthetic-bed-2",
+          "cropKey": "green-beans",
+          "sowMonth": 3
+        },
+        {
+          "id": "synthetic-planting-3",
+          "bedId": "synthetic-bed-3",
+          "cropKey": "butternut",
+          "sowMonth": 4
+        },
+        {
+          "id": "synthetic-planting-4",
+          "bedId": "synthetic-bed-4",
+          "cropKey": "pumpkin",
+          "sowMonth": 5
+        },
+        {
+          "id": "synthetic-planting-5",
+          "bedId": "synthetic-bed-5",
+          "cropKey": "swiss-chard",
+          "sowMonth": 6
+        },
+        {
+          "id": "synthetic-planting-6",
+          "bedId": "synthetic-bed-6",
+          "cropKey": "kale",
+          "sowMonth": 7
+        },
+        {
+          "id": "synthetic-planting-7",
+          "bedId": "synthetic-bed-7",
+          "cropKey": "cabbage",
+          "sowMonth": 8
+        },
+        {
+          "id": "synthetic-planting-8",
+          "bedId": "synthetic-bed-8",
+          "cropKey": "carrots",
+          "sowMonth": 9
+        },
+        {
+          "id": "synthetic-planting-9",
+          "bedId": "synthetic-bed-9",
+          "cropKey": "beetroot",
+          "sowMonth": 10
+        },
+        {
+          "id": "synthetic-planting-10",
+          "bedId": "synthetic-bed-10",
+          "cropKey": "onions",
+          "sowMonth": 11
+        },
+        {
+          "id": "synthetic-planting-11",
+          "bedId": "synthetic-bed-11",
+          "cropKey": "tomatoes",
+          "sowMonth": 12
+        },
+        {
+          "id": "synthetic-planting-12",
+          "bedId": "synthetic-bed-12",
+          "cropKey": "peppers",
+          "sowMonth": 1
+        },
+        {
+          "id": "synthetic-planting-13",
+          "bedId": "synthetic-bed-13",
+          "cropKey": "chilli",
+          "sowMonth": 2
+        },
+        {
+          "id": "synthetic-planting-14",
+          "bedId": "synthetic-bed-14",
+          "cropKey": "sweet-potato",
+          "sowMonth": 3
+        },
+        {
+          "id": "synthetic-planting-15",
+          "bedId": "synthetic-bed-15",
+          "cropKey": "potato",
+          "sowMonth": 4
+        },
+        {
+          "id": "synthetic-planting-16",
+          "bedId": "synthetic-bed-16",
+          "cropKey": "lettuce",
+          "sowMonth": 5
+        },
+        {
+          "id": "synthetic-planting-17",
+          "bedId": "synthetic-bed-17",
+          "cropKey": "amadumbe",
+          "sowMonth": 6
+        },
+        {
+          "id": "synthetic-planting-18",
+          "bedId": "synthetic-bed-18",
+          "cropKey": "groundnuts",
+          "sowMonth": 7
+        },
+        {
+          "id": "synthetic-planting-19",
+          "bedId": "synthetic-bed-19",
+          "cropKey": "garlic",
+          "sowMonth": 8
+        },
+        {
+          "id": "synthetic-planting-20",
+          "bedId": "synthetic-bed-20",
+          "cropKey": "peas",
+          "sowMonth": 9
+        },
+        {
+          "id": "synthetic-planting-21",
+          "bedId": "synthetic-bed-21",
+          "cropKey": "broad-beans",
+          "sowMonth": 10
+        },
+        {
+          "id": "synthetic-planting-22",
+          "bedId": "synthetic-bed-22",
+          "cropKey": "broccoli",
+          "sowMonth": 11
+        },
+        {
+          "id": "synthetic-planting-23",
+          "bedId": "synthetic-bed-23",
+          "cropKey": "cucumber",
+          "sowMonth": 12
+        },
+        {
+          "id": "synthetic-planting-24",
+          "bedId": "synthetic-bed-24",
+          "cropKey": "watermelon",
+          "sowMonth": 1
+        },
+        {
+          "id": "synthetic-planting-25",
+          "bedId": "synthetic-bed-25",
+          "cropKey": "coriander",
+          "sowMonth": 2
+        },
+        {
+          "id": "synthetic-planting-26",
+          "bedId": "synthetic-bed-26",
+          "cropKey": "oats",
+          "sowMonth": 3
+        },
+        {
+          "id": "synthetic-planting-27",
+          "bedId": "synthetic-bed-27",
+          "cropKey": "true-spinach",
+          "sowMonth": 4
+        },
+        {
+          "id": "synthetic-planting-28",
+          "bedId": "synthetic-bed-28",
+          "cropKey": "turnip",
+          "sowMonth": 5
+        },
+        {
+          "id": "synthetic-planting-29",
+          "bedId": "synthetic-bed-29",
+          "cropKey": "amaranth",
+          "sowMonth": 6
+        },
+        {
+          "id": "synthetic-planting-30",
+          "bedId": "synthetic-bed-30",
+          "cropKey": "cauliflower",
+          "sowMonth": 7
+        },
+        {
+          "id": "synthetic-planting-31",
+          "bedId": "synthetic-bed-31",
+          "cropKey": "parsley",
+          "sowMonth": 8
+        },
+        {
+          "id": "synthetic-planting-32",
+          "bedId": "synthetic-bed-32",
+          "cropKey": "sorghum",
+          "sowMonth": 9
+        },
+        {
+          "id": "synthetic-planting-33",
+          "bedId": "synthetic-bed-33",
+          "cropKey": "soybean",
+          "sowMonth": 10
+        },
+        {
+          "id": "synthetic-planting-34",
+          "bedId": "synthetic-bed-34",
+          "cropKey": "brinjal",
+          "sowMonth": 11
+        },
+        {
+          "id": "synthetic-planting-35",
+          "bedId": "synthetic-bed-35",
+          "cropKey": "gem-squash",
+          "sowMonth": 12
+        },
+        {
+          "id": "synthetic-planting-36",
+          "bedId": "synthetic-bed-36",
+          "cropKey": "baby-marrow",
+          "sowMonth": 1
+        },
+        {
+          "id": "synthetic-planting-37",
+          "bedId": "synthetic-bed-37",
+          "cropKey": "spanspek",
+          "sowMonth": 2
+        },
+        {
+          "id": "synthetic-planting-38",
+          "bedId": "synthetic-bed-38",
+          "cropKey": "sweetcorn",
+          "sowMonth": 3
+        },
+        {
+          "id": "synthetic-planting-39",
+          "bedId": "synthetic-bed-39",
+          "cropKey": "cowpea",
+          "sowMonth": 4
+        },
+        {
+          "id": "synthetic-planting-40",
+          "bedId": "synthetic-bed-40",
+          "cropKey": "bambara-groundnut",
+          "sowMonth": 5
+        },
+        {
+          "id": "synthetic-planting-41",
+          "bedId": "synthetic-bed-41",
+          "cropKey": "sunflower",
+          "sowMonth": 6
+        },
+        {
+          "id": "synthetic-planting-42",
+          "bedId": "synthetic-bed-42",
+          "cropKey": "radish",
+          "sowMonth": 7
+        },
+        {
+          "id": "synthetic-planting-43",
+          "bedId": "synthetic-bed-43",
+          "cropKey": "mung-bean",
+          "sowMonth": 8
+        },
+        {
+          "id": "synthetic-planting-44",
+          "bedId": "synthetic-bed-44",
+          "cropKey": "spider-plant",
+          "sowMonth": 9
+        },
+        {
+          "id": "synthetic-planting-45",
+          "bedId": "synthetic-bed-45",
+          "cropKey": "african-nightshade",
+          "sowMonth": 10
+        },
+        {
+          "id": "synthetic-planting-46",
+          "bedId": "synthetic-bed-46",
+          "cropKey": "sunn-hemp",
+          "sowMonth": 11
+        },
+        {
+          "id": "synthetic-planting-47",
+          "bedId": "synthetic-bed-47",
+          "cropKey": "medic",
+          "sowMonth": 12
+        },
+        {
+          "id": "synthetic-planting-48",
+          "bedId": "synthetic-bed-48",
+          "cropKey": "fodder-radish",
+          "sowMonth": 1
+        },
+        {
+          "id": "plan-pending",
+          "bedId": "plan-pending",
+          "cropKey": "tomatoes",
+          "sowMonth": 12,
+          "once": "2026-09",
+          "awaitingSowingConfirmation": true,
+          "variety": "Recorded {crop} $& cultivar 17"
+        },
+        {
+          "id": "plan-once",
+          "bedId": "plan-once",
+          "cropKey": "tomatoes",
+          "sowMonth": 12,
+          "once": "2026-10",
+          "awaitingSowingConfirmation": false,
+          "variety": "Recorded {crop} $& cultivar 17"
+        }
+      ],
+      "beds": [
+        {
+          "id": "synthetic-bed-0",
+          "label": "Original Ṱanḓa {count} $& 0",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-1",
+          "label": "Original Ṱanḓa {count} $& 1",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-2",
+          "label": "Original Ṱanḓa {count} $& 2",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-3",
+          "label": "Original Ṱanḓa {count} $& 3",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-4",
+          "label": "Original Ṱanḓa {count} $& 4",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-5",
+          "label": "Original Ṱanḓa {count} $& 5",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-6",
+          "label": "Original Ṱanḓa {count} $& 6",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-7",
+          "label": "Original Ṱanḓa {count} $& 7",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-8",
+          "label": "Original Ṱanḓa {count} $& 8",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-9",
+          "label": "Original Ṱanḓa {count} $& 9",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-10",
+          "label": "Original Ṱanḓa {count} $& 10",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-11",
+          "label": "Original Ṱanḓa {count} $& 11",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-12",
+          "label": "Original Ṱanḓa {count} $& 12",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-13",
+          "label": "Original Ṱanḓa {count} $& 13",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-14",
+          "label": "Original Ṱanḓa {count} $& 14",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-15",
+          "label": "Original Ṱanḓa {count} $& 15",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-16",
+          "label": "Original Ṱanḓa {count} $& 16",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-17",
+          "label": "Original Ṱanḓa {count} $& 17",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-18",
+          "label": "Original Ṱanḓa {count} $& 18",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-19",
+          "label": "Original Ṱanḓa {count} $& 19",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-20",
+          "label": "Original Ṱanḓa {count} $& 20",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-21",
+          "label": "Original Ṱanḓa {count} $& 21",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-22",
+          "label": "Original Ṱanḓa {count} $& 22",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-23",
+          "label": "Original Ṱanḓa {count} $& 23",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-24",
+          "label": "Original Ṱanḓa {count} $& 24",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-25",
+          "label": "Original Ṱanḓa {count} $& 25",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-26",
+          "label": "Original Ṱanḓa {count} $& 26",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-27",
+          "label": "Original Ṱanḓa {count} $& 27",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-28",
+          "label": "Original Ṱanḓa {count} $& 28",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-29",
+          "label": "Original Ṱanḓa {count} $& 29",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-30",
+          "label": "Original Ṱanḓa {count} $& 30",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-31",
+          "label": "Original Ṱanḓa {count} $& 31",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-32",
+          "label": "Original Ṱanḓa {count} $& 32",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-33",
+          "label": "Original Ṱanḓa {count} $& 33",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-34",
+          "label": "Original Ṱanḓa {count} $& 34",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-35",
+          "label": "Original Ṱanḓa {count} $& 35",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-36",
+          "label": "Original Ṱanḓa {count} $& 36",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-37",
+          "label": "Original Ṱanḓa {count} $& 37",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-38",
+          "label": "Original Ṱanḓa {count} $& 38",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-39",
+          "label": "Original Ṱanḓa {count} $& 39",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-40",
+          "label": "Original Ṱanḓa {count} $& 40",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-41",
+          "label": "Original Ṱanḓa {count} $& 41",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-42",
+          "label": "Original Ṱanḓa {count} $& 42",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-43",
+          "label": "Original Ṱanḓa {count} $& 43",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-44",
+          "label": "Original Ṱanḓa {count} $& 44",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-45",
+          "label": "Original Ṱanḓa {count} $& 45",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-46",
+          "label": "Original Ṱanḓa {count} $& 46",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-47",
+          "label": "Original Ṱanḓa {count} $& 47",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-48",
+          "label": "Original Ṱanḓa {count} $& 48",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "plan-pending",
+          "label": "Ṱanḓa {crop} $& pending",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "plan-once",
+          "label": "Ṱanḓa {crop} $& once",
+          "areaM2": 6,
+          "kind": "plot"
+        }
+      ],
+      "english": [
+        {
+          "area": "Original Ṱanḓa {count} $& 0",
+          "isFirstOfArea": true,
+          "crop": "Maize (mielies)",
+          "share": "Full",
+          "establish": "Direct sow Jan",
+          "intoField": "Direct",
+          "harvest": "Jun",
+          "yieldKg": 1.7999999999999998,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 1",
+          "isFirstOfArea": true,
+          "crop": "Dry beans (sugar beans)",
+          "share": "Full",
+          "establish": "Direct sow Feb",
+          "intoField": "Direct",
+          "harvest": "Jun",
+          "yieldKg": 1.2000000000000002,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 2",
+          "isFirstOfArea": true,
+          "crop": "Green beans",
+          "share": "Full",
+          "establish": "Direct sow Mar",
+          "intoField": "Direct",
+          "harvest": "May",
+          "yieldKg": 3,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 3",
+          "isFirstOfArea": true,
+          "crop": "Butternut",
+          "share": "Full",
+          "establish": "Direct sow Apr",
+          "intoField": "Direct",
+          "harvest": "Aug-Sep",
+          "yieldKg": 7.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 4",
+          "isFirstOfArea": true,
+          "crop": "Pumpkin",
+          "share": "Full",
+          "establish": "Direct sow May",
+          "intoField": "Direct",
+          "harvest": "Oct-Nov",
+          "yieldKg": 7.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 5",
+          "isFirstOfArea": true,
+          "crop": "Swiss chard (spinach)",
+          "share": "Full",
+          "establish": "Direct sow Jun",
+          "intoField": "Direct",
+          "harvest": "Aug-Nov",
+          "yieldKg": 12,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 6",
+          "isFirstOfArea": true,
+          "crop": "Kale",
+          "share": "Full",
+          "establish": "Nursery Jul",
+          "intoField": "Check Aug-Oct; transplant when ready",
+          "harvest": "Jan",
+          "yieldKg": 9,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 7",
+          "isFirstOfArea": true,
+          "crop": "Cabbage",
+          "share": "Full",
+          "establish": "Nursery Aug",
+          "intoField": "Check Sep-Nov; transplant when ready",
+          "harvest": "Mar",
+          "yieldKg": 18,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 8",
+          "isFirstOfArea": true,
+          "crop": "Carrots",
+          "share": "Full",
+          "establish": "Direct sow Sep",
+          "intoField": "Direct",
+          "harvest": "Jan",
+          "yieldKg": 12,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 9",
+          "isFirstOfArea": true,
+          "crop": "Beetroot",
+          "share": "Full",
+          "establish": "Direct sow Oct",
+          "intoField": "Direct",
+          "harvest": "Jan-Feb",
+          "yieldKg": 8.399999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 10",
+          "isFirstOfArea": true,
+          "crop": "Onions",
+          "share": "Full",
+          "establish": "Nursery Nov",
+          "intoField": "Check Dec-Feb; transplant when ready",
+          "harvest": "Jul",
+          "yieldKg": 9,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 11",
+          "isFirstOfArea": true,
+          "crop": "Tomatoes",
+          "share": "Full",
+          "establish": "Nursery Dec",
+          "intoField": "Check Jan-Mar; transplant when ready",
+          "harvest": "May-Jul",
+          "yieldKg": 18,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 12",
+          "isFirstOfArea": true,
+          "crop": "Peppers",
+          "share": "Full",
+          "establish": "Nursery Jan",
+          "intoField": "Check Feb-Apr; transplant when ready",
+          "harvest": "Jun-Aug",
+          "yieldKg": 12,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 13",
+          "isFirstOfArea": true,
+          "crop": "Chilli",
+          "share": "Full",
+          "establish": "Nursery Feb",
+          "intoField": "Check Mar-May; transplant when ready",
+          "harvest": "Jul-Sep",
+          "yieldKg": 6,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 14",
+          "isFirstOfArea": true,
+          "crop": "Sweet potato",
+          "share": "Full",
+          "establish": "Plant slips Mar",
+          "intoField": "Direct",
+          "harvest": "Aug-Sep",
+          "yieldKg": 9,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 15",
+          "isFirstOfArea": true,
+          "crop": "Potato",
+          "share": "Full",
+          "establish": "Plant seed potatoes Apr",
+          "intoField": "Direct",
+          "harvest": "Aug",
+          "yieldKg": 6,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 16",
+          "isFirstOfArea": true,
+          "crop": "Lettuce",
+          "share": "Full",
+          "establish": "Nursery May",
+          "intoField": "Check Jun-Aug; transplant when ready",
+          "harvest": "Oct",
+          "yieldKg": 7.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 17",
+          "isFirstOfArea": true,
+          "crop": "Amadumbe (taro)",
+          "share": "Full",
+          "establish": "Plant corms Jun",
+          "intoField": "Direct",
+          "harvest": "Apr",
+          "yieldKg": null,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 18",
+          "isFirstOfArea": true,
+          "crop": "Groundnuts (peanuts)",
+          "share": "Full",
+          "establish": "Direct sow Jul",
+          "intoField": "Direct",
+          "harvest": "Jan",
+          "yieldKg": 0.72,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 19",
+          "isFirstOfArea": true,
+          "crop": "Garlic",
+          "share": "Full",
+          "establish": "Plant cloves Aug",
+          "intoField": "Direct",
+          "harvest": "Mar",
+          "yieldKg": 3.5999999999999996,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 20",
+          "isFirstOfArea": true,
+          "crop": "Peas",
+          "share": "Full",
+          "establish": "Direct sow Sep",
+          "intoField": "Direct",
+          "harvest": "Dec",
+          "yieldKg": 2.4000000000000004,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 21",
+          "isFirstOfArea": true,
+          "crop": "Broad beans (fava beans)",
+          "share": "Full",
+          "establish": "Direct sow Oct",
+          "intoField": "Direct",
+          "harvest": "Feb-Mar",
+          "yieldKg": 1.7999999999999998,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 22",
+          "isFirstOfArea": true,
+          "crop": "Broccoli",
+          "share": "Full",
+          "establish": "Nursery Nov",
+          "intoField": "Check Dec-Feb; transplant when ready",
+          "harvest": "Apr-May",
+          "yieldKg": 3,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 23",
+          "isFirstOfArea": true,
+          "crop": "Cucumber",
+          "share": "Full",
+          "establish": "Direct sow Dec",
+          "intoField": "Direct",
+          "harvest": "Mar",
+          "yieldKg": 7.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 24",
+          "isFirstOfArea": true,
+          "crop": "Watermelon",
+          "share": "Full",
+          "establish": "Direct sow Jan",
+          "intoField": "Direct",
+          "harvest": "May-Jun",
+          "yieldKg": 7.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 25",
+          "isFirstOfArea": true,
+          "crop": "Coriander",
+          "share": "Full",
+          "establish": "Direct sow Feb",
+          "intoField": "Direct",
+          "harvest": "Apr",
+          "yieldKg": null,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 26",
+          "isFirstOfArea": true,
+          "crop": "Oats (winter cover crop)",
+          "share": "Full",
+          "establish": "Direct sow Mar",
+          "intoField": "Direct",
+          "harvest": "Sep",
+          "yieldKg": 0,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 27",
+          "isFirstOfArea": true,
+          "crop": "True spinach (English spinach)",
+          "share": "Full",
+          "establish": "Direct sow Apr",
+          "intoField": "Direct",
+          "harvest": "Jun",
+          "yieldKg": 4.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 28",
+          "isFirstOfArea": true,
+          "crop": "Turnips",
+          "share": "Full",
+          "establish": "Direct sow May",
+          "intoField": "Direct",
+          "harvest": "Aug",
+          "yieldKg": 6,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 29",
+          "isFirstOfArea": true,
+          "crop": "Amaranth (imbuya/thepe)",
+          "share": "Full",
+          "establish": "Direct sow Jun",
+          "intoField": "Direct",
+          "harvest": "Aug",
+          "yieldKg": null,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 30",
+          "isFirstOfArea": true,
+          "crop": "Cauliflower",
+          "share": "Full",
+          "establish": "Nursery Jul",
+          "intoField": "Check Aug-Oct; transplant when ready",
+          "harvest": "Feb",
+          "yieldKg": 4.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 31",
+          "isFirstOfArea": true,
+          "crop": "Parsley",
+          "share": "Full",
+          "establish": "Direct sow Aug",
+          "intoField": "Direct",
+          "harvest": "Nov",
+          "yieldKg": 1.2000000000000002,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 32",
+          "isFirstOfArea": true,
+          "crop": "Sorghum",
+          "share": "Full",
+          "establish": "Direct sow Sep",
+          "intoField": "Direct",
+          "harvest": "Feb",
+          "yieldKg": 0.46199999999999997,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 33",
+          "isFirstOfArea": true,
+          "crop": "Soybean",
+          "share": "Full",
+          "establish": "Direct sow Oct",
+          "intoField": "Direct",
+          "harvest": "Mar",
+          "yieldKg": 1.5,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 34",
+          "isFirstOfArea": true,
+          "crop": "Brinjal (eggplant)",
+          "share": "Full",
+          "establish": "Nursery Nov",
+          "intoField": "Check Dec-Feb; transplant when ready",
+          "harvest": "Apr",
+          "yieldKg": 7.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 35",
+          "isFirstOfArea": true,
+          "crop": "Gem squash",
+          "share": "Full",
+          "establish": "Direct sow Dec",
+          "intoField": "Direct",
+          "harvest": "Mar",
+          "yieldKg": 7.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 36",
+          "isFirstOfArea": true,
+          "crop": "Baby marrow (courgette)",
+          "share": "Full",
+          "establish": "Direct sow Jan",
+          "intoField": "Direct",
+          "harvest": "Mar",
+          "yieldKg": 4.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 37",
+          "isFirstOfArea": true,
+          "crop": "Spanspek (sweet melon)",
+          "share": "Full",
+          "establish": "Direct sow Feb",
+          "intoField": "Direct",
+          "harvest": "Jun",
+          "yieldKg": 7.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 38",
+          "isFirstOfArea": true,
+          "crop": "Sweetcorn",
+          "share": "Full",
+          "establish": "Direct sow Mar",
+          "intoField": "Direct",
+          "harvest": "Jun",
+          "yieldKg": 4.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 39",
+          "isFirstOfArea": true,
+          "crop": "Cowpea (imbumba/dinawa)",
+          "share": "Full",
+          "establish": "Direct sow Apr",
+          "intoField": "Direct",
+          "harvest": "Aug",
+          "yieldKg": null,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 40",
+          "isFirstOfArea": true,
+          "crop": "Bambara groundnut (jugo bean)",
+          "share": "Full",
+          "establish": "Direct sow May",
+          "intoField": "Direct",
+          "harvest": "Oct",
+          "yieldKg": 0.096,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 41",
+          "isFirstOfArea": true,
+          "crop": "Sunflower (for seed)",
+          "share": "Full",
+          "establish": "Direct sow Jun",
+          "intoField": "Direct",
+          "harvest": "Nov",
+          "yieldKg": 0.72,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 42",
+          "isFirstOfArea": true,
+          "crop": "Radish",
+          "share": "Full",
+          "establish": "Direct sow Jul",
+          "intoField": "Direct",
+          "harvest": "Aug",
+          "yieldKg": null,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 43",
+          "isFirstOfArea": true,
+          "crop": "Mung bean",
+          "share": "Full",
+          "establish": "Direct sow Aug",
+          "intoField": "Direct",
+          "harvest": "Nov",
+          "yieldKg": null,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 44",
+          "isFirstOfArea": true,
+          "crop": "Spider plant (Cleome gynandra)",
+          "share": "Full",
+          "establish": "Nursery Sep",
+          "intoField": "Check Oct-Dec; transplant when ready",
+          "harvest": "Jan",
+          "yieldKg": null,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 45",
+          "isFirstOfArea": true,
+          "crop": "African nightshade (umsobo)",
+          "share": "Full",
+          "establish": "Nursery Oct",
+          "intoField": "Check Nov-Jan; transplant when ready",
+          "harvest": "Jan",
+          "yieldKg": null,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 46",
+          "isFirstOfArea": true,
+          "crop": "Sunn hemp (cover crop)",
+          "share": "Full",
+          "establish": "Direct sow Nov",
+          "intoField": "Direct",
+          "harvest": "Confirm locally",
+          "yieldKg": 0,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 47",
+          "isFirstOfArea": true,
+          "crop": "Medic (cover crop)",
+          "share": "Full",
+          "establish": "Direct sow Dec",
+          "intoField": "Direct",
+          "harvest": "Confirm locally",
+          "yieldKg": 0,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 48",
+          "isFirstOfArea": true,
+          "crop": "Fodder radish (cover crop)",
+          "share": "Full",
+          "establish": "Direct sow Jan",
+          "intoField": "Direct",
+          "harvest": "Confirm locally",
+          "yieldKg": 0,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Ṱanḓa {crop} $& pending",
+          "isFirstOfArea": true,
+          "crop": "Tomatoes - Recorded {crop} $& cultivar 17",
+          "share": "Full",
+          "establish": "Confirm Sep 2026 sowing",
+          "intoField": "Not confirmed",
+          "harvest": "Confirm sowing",
+          "yieldKg": null,
+          "once": true,
+          "awaitingSowingConfirmation": true,
+          "frostCaveat": null
+        },
+        {
+          "area": "Ṱanḓa {crop} $& once",
+          "isFirstOfArea": true,
+          "crop": "Tomatoes - Recorded {crop} $& cultivar 17",
+          "share": "Full",
+          "establish": "Nursery Dec",
+          "intoField": "Check Jan-Mar; transplant when ready",
+          "harvest": "May-Jul",
+          "yieldKg": 18,
+          "once": true,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        }
+      ],
+      "englishMildFrost": [
+        {
+          "area": "Original Ṱanḓa {count} $& 0",
+          "isFirstOfArea": true,
+          "crop": "Maize (mielies)",
+          "share": "Full",
+          "establish": "Direct sow Jan",
+          "intoField": "Direct",
+          "harvest": "Jun",
+          "yieldKg": 1.7999999999999998,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": "Frost-tender: finish picking before the first frost or cover on clear, still nights."
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 1",
+          "isFirstOfArea": true,
+          "crop": "Dry beans (sugar beans)",
+          "share": "Full",
+          "establish": "Direct sow Feb",
+          "intoField": "Direct",
+          "harvest": "Jun",
+          "yieldKg": 1.2000000000000002,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": "Frost-tender: finish picking before the first frost or cover on clear, still nights."
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 2",
+          "isFirstOfArea": true,
+          "crop": "Green beans",
+          "share": "Full",
+          "establish": "Direct sow Mar",
+          "intoField": "Direct",
+          "harvest": "May",
+          "yieldKg": 3,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 3",
+          "isFirstOfArea": true,
+          "crop": "Butternut",
+          "share": "Full",
+          "establish": "Direct sow Apr",
+          "intoField": "Direct",
+          "harvest": "Aug-Sep",
+          "yieldKg": 7.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 4",
+          "isFirstOfArea": true,
+          "crop": "Pumpkin",
+          "share": "Full",
+          "establish": "Direct sow May",
+          "intoField": "Direct",
+          "harvest": "Oct-Nov",
+          "yieldKg": 7.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 5",
+          "isFirstOfArea": true,
+          "crop": "Swiss chard (spinach)",
+          "share": "Full",
+          "establish": "Direct sow Jun",
+          "intoField": "Direct",
+          "harvest": "Aug-Nov",
+          "yieldKg": 12,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 6",
+          "isFirstOfArea": true,
+          "crop": "Kale",
+          "share": "Full",
+          "establish": "Nursery Jul",
+          "intoField": "Check Aug-Oct; transplant when ready",
+          "harvest": "Jan",
+          "yieldKg": 9,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 7",
+          "isFirstOfArea": true,
+          "crop": "Cabbage",
+          "share": "Full",
+          "establish": "Nursery Aug",
+          "intoField": "Check Sep-Nov; transplant when ready",
+          "harvest": "Mar",
+          "yieldKg": 18,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 8",
+          "isFirstOfArea": true,
+          "crop": "Carrots",
+          "share": "Full",
+          "establish": "Direct sow Sep",
+          "intoField": "Direct",
+          "harvest": "Jan",
+          "yieldKg": 12,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 9",
+          "isFirstOfArea": true,
+          "crop": "Beetroot",
+          "share": "Full",
+          "establish": "Direct sow Oct",
+          "intoField": "Direct",
+          "harvest": "Jan-Feb",
+          "yieldKg": 8.399999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 10",
+          "isFirstOfArea": true,
+          "crop": "Onions",
+          "share": "Full",
+          "establish": "Nursery Nov",
+          "intoField": "Check Dec-Feb; transplant when ready",
+          "harvest": "Jul",
+          "yieldKg": 9,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 11",
+          "isFirstOfArea": true,
+          "crop": "Tomatoes",
+          "share": "Full",
+          "establish": "Nursery Dec",
+          "intoField": "Check Jan-Mar; transplant when ready",
+          "harvest": "May-Jul",
+          "yieldKg": 18,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": "Frost-tender: finish picking before the first frost or cover on clear, still nights."
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 12",
+          "isFirstOfArea": true,
+          "crop": "Peppers",
+          "share": "Full",
+          "establish": "Nursery Jan",
+          "intoField": "Check Feb-Apr; transplant when ready",
+          "harvest": "Jun-Aug",
+          "yieldKg": 12,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": "Frost-tender: finish picking before the first frost or cover on clear, still nights."
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 13",
+          "isFirstOfArea": true,
+          "crop": "Chilli",
+          "share": "Full",
+          "establish": "Nursery Feb",
+          "intoField": "Check Mar-May; transplant when ready",
+          "harvest": "Jul-Sep",
+          "yieldKg": 6,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": "Frost-tender: finish picking before the first frost or cover on clear, still nights."
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 14",
+          "isFirstOfArea": true,
+          "crop": "Sweet potato",
+          "share": "Full",
+          "establish": "Plant slips Mar",
+          "intoField": "Direct",
+          "harvest": "Aug-Sep",
+          "yieldKg": 9,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 15",
+          "isFirstOfArea": true,
+          "crop": "Potato",
+          "share": "Full",
+          "establish": "Plant seed potatoes Apr",
+          "intoField": "Direct",
+          "harvest": "Aug",
+          "yieldKg": 6,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 16",
+          "isFirstOfArea": true,
+          "crop": "Lettuce",
+          "share": "Full",
+          "establish": "Nursery May",
+          "intoField": "Check Jun-Aug; transplant when ready",
+          "harvest": "Oct",
+          "yieldKg": 7.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 17",
+          "isFirstOfArea": true,
+          "crop": "Amadumbe (taro)",
+          "share": "Full",
+          "establish": "Plant corms Jun",
+          "intoField": "Direct",
+          "harvest": "Apr",
+          "yieldKg": null,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 18",
+          "isFirstOfArea": true,
+          "crop": "Groundnuts (peanuts)",
+          "share": "Full",
+          "establish": "Direct sow Jul",
+          "intoField": "Direct",
+          "harvest": "Jan",
+          "yieldKg": 0.72,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 19",
+          "isFirstOfArea": true,
+          "crop": "Garlic",
+          "share": "Full",
+          "establish": "Plant cloves Aug",
+          "intoField": "Direct",
+          "harvest": "Mar",
+          "yieldKg": 3.5999999999999996,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 20",
+          "isFirstOfArea": true,
+          "crop": "Peas",
+          "share": "Full",
+          "establish": "Direct sow Sep",
+          "intoField": "Direct",
+          "harvest": "Dec",
+          "yieldKg": 2.4000000000000004,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 21",
+          "isFirstOfArea": true,
+          "crop": "Broad beans (fava beans)",
+          "share": "Full",
+          "establish": "Direct sow Oct",
+          "intoField": "Direct",
+          "harvest": "Feb-Mar",
+          "yieldKg": 1.7999999999999998,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 22",
+          "isFirstOfArea": true,
+          "crop": "Broccoli",
+          "share": "Full",
+          "establish": "Nursery Nov",
+          "intoField": "Check Dec-Feb; transplant when ready",
+          "harvest": "Apr-May",
+          "yieldKg": 3,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 23",
+          "isFirstOfArea": true,
+          "crop": "Cucumber",
+          "share": "Full",
+          "establish": "Direct sow Dec",
+          "intoField": "Direct",
+          "harvest": "Mar",
+          "yieldKg": 7.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 24",
+          "isFirstOfArea": true,
+          "crop": "Watermelon",
+          "share": "Full",
+          "establish": "Direct sow Jan",
+          "intoField": "Direct",
+          "harvest": "May-Jun",
+          "yieldKg": 7.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": "Frost-tender: finish picking before the first frost or cover on clear, still nights."
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 25",
+          "isFirstOfArea": true,
+          "crop": "Coriander",
+          "share": "Full",
+          "establish": "Direct sow Feb",
+          "intoField": "Direct",
+          "harvest": "Apr",
+          "yieldKg": null,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 26",
+          "isFirstOfArea": true,
+          "crop": "Oats (winter cover crop)",
+          "share": "Full",
+          "establish": "Direct sow Mar",
+          "intoField": "Direct",
+          "harvest": "Sep",
+          "yieldKg": 0,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 27",
+          "isFirstOfArea": true,
+          "crop": "True spinach (English spinach)",
+          "share": "Full",
+          "establish": "Direct sow Apr",
+          "intoField": "Direct",
+          "harvest": "Jun",
+          "yieldKg": 4.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 28",
+          "isFirstOfArea": true,
+          "crop": "Turnips",
+          "share": "Full",
+          "establish": "Direct sow May",
+          "intoField": "Direct",
+          "harvest": "Aug",
+          "yieldKg": 6,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 29",
+          "isFirstOfArea": true,
+          "crop": "Amaranth (imbuya/thepe)",
+          "share": "Full",
+          "establish": "Direct sow Jun",
+          "intoField": "Direct",
+          "harvest": "Aug",
+          "yieldKg": null,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 30",
+          "isFirstOfArea": true,
+          "crop": "Cauliflower",
+          "share": "Full",
+          "establish": "Nursery Jul",
+          "intoField": "Check Aug-Oct; transplant when ready",
+          "harvest": "Feb",
+          "yieldKg": 4.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 31",
+          "isFirstOfArea": true,
+          "crop": "Parsley",
+          "share": "Full",
+          "establish": "Direct sow Aug",
+          "intoField": "Direct",
+          "harvest": "Nov",
+          "yieldKg": 1.2000000000000002,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 32",
+          "isFirstOfArea": true,
+          "crop": "Sorghum",
+          "share": "Full",
+          "establish": "Direct sow Sep",
+          "intoField": "Direct",
+          "harvest": "Feb",
+          "yieldKg": 0.46199999999999997,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 33",
+          "isFirstOfArea": true,
+          "crop": "Soybean",
+          "share": "Full",
+          "establish": "Direct sow Oct",
+          "intoField": "Direct",
+          "harvest": "Mar",
+          "yieldKg": 1.5,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 34",
+          "isFirstOfArea": true,
+          "crop": "Brinjal (eggplant)",
+          "share": "Full",
+          "establish": "Nursery Nov",
+          "intoField": "Check Dec-Feb; transplant when ready",
+          "harvest": "Apr",
+          "yieldKg": 7.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 35",
+          "isFirstOfArea": true,
+          "crop": "Gem squash",
+          "share": "Full",
+          "establish": "Direct sow Dec",
+          "intoField": "Direct",
+          "harvest": "Mar",
+          "yieldKg": 7.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 36",
+          "isFirstOfArea": true,
+          "crop": "Baby marrow (courgette)",
+          "share": "Full",
+          "establish": "Direct sow Jan",
+          "intoField": "Direct",
+          "harvest": "Mar",
+          "yieldKg": 4.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 37",
+          "isFirstOfArea": true,
+          "crop": "Spanspek (sweet melon)",
+          "share": "Full",
+          "establish": "Direct sow Feb",
+          "intoField": "Direct",
+          "harvest": "Jun",
+          "yieldKg": 7.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": "Frost-tender: finish picking before the first frost or cover on clear, still nights."
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 38",
+          "isFirstOfArea": true,
+          "crop": "Sweetcorn",
+          "share": "Full",
+          "establish": "Direct sow Mar",
+          "intoField": "Direct",
+          "harvest": "Jun",
+          "yieldKg": 4.199999999999999,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": "Frost-tender: finish picking before the first frost or cover on clear, still nights."
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 39",
+          "isFirstOfArea": true,
+          "crop": "Cowpea (imbumba/dinawa)",
+          "share": "Full",
+          "establish": "Direct sow Apr",
+          "intoField": "Direct",
+          "harvest": "Aug",
+          "yieldKg": null,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 40",
+          "isFirstOfArea": true,
+          "crop": "Bambara groundnut (jugo bean)",
+          "share": "Full",
+          "establish": "Direct sow May",
+          "intoField": "Direct",
+          "harvest": "Oct",
+          "yieldKg": 0.096,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 41",
+          "isFirstOfArea": true,
+          "crop": "Sunflower (for seed)",
+          "share": "Full",
+          "establish": "Direct sow Jun",
+          "intoField": "Direct",
+          "harvest": "Nov",
+          "yieldKg": 0.72,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 42",
+          "isFirstOfArea": true,
+          "crop": "Radish",
+          "share": "Full",
+          "establish": "Direct sow Jul",
+          "intoField": "Direct",
+          "harvest": "Aug",
+          "yieldKg": null,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 43",
+          "isFirstOfArea": true,
+          "crop": "Mung bean",
+          "share": "Full",
+          "establish": "Direct sow Aug",
+          "intoField": "Direct",
+          "harvest": "Nov",
+          "yieldKg": null,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 44",
+          "isFirstOfArea": true,
+          "crop": "Spider plant (Cleome gynandra)",
+          "share": "Full",
+          "establish": "Nursery Sep",
+          "intoField": "Check Oct-Dec; transplant when ready",
+          "harvest": "Jan",
+          "yieldKg": null,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 45",
+          "isFirstOfArea": true,
+          "crop": "African nightshade (umsobo)",
+          "share": "Full",
+          "establish": "Nursery Oct",
+          "intoField": "Check Nov-Jan; transplant when ready",
+          "harvest": "Jan",
+          "yieldKg": null,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 46",
+          "isFirstOfArea": true,
+          "crop": "Sunn hemp (cover crop)",
+          "share": "Full",
+          "establish": "Direct sow Nov",
+          "intoField": "Direct",
+          "harvest": "Confirm locally",
+          "yieldKg": 0,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 47",
+          "isFirstOfArea": true,
+          "crop": "Medic (cover crop)",
+          "share": "Full",
+          "establish": "Direct sow Dec",
+          "intoField": "Direct",
+          "harvest": "Confirm locally",
+          "yieldKg": 0,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Original Ṱanḓa {count} $& 48",
+          "isFirstOfArea": true,
+          "crop": "Fodder radish (cover crop)",
+          "share": "Full",
+          "establish": "Direct sow Jan",
+          "intoField": "Direct",
+          "harvest": "Confirm locally",
+          "yieldKg": 0,
+          "once": false,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": null
+        },
+        {
+          "area": "Ṱanḓa {crop} $& pending",
+          "isFirstOfArea": true,
+          "crop": "Tomatoes - Recorded {crop} $& cultivar 17",
+          "share": "Full",
+          "establish": "Confirm Sep 2026 sowing",
+          "intoField": "Not confirmed",
+          "harvest": "Confirm sowing",
+          "yieldKg": null,
+          "once": true,
+          "awaitingSowingConfirmation": true,
+          "frostCaveat": null
+        },
+        {
+          "area": "Ṱanḓa {crop} $& once",
+          "isFirstOfArea": true,
+          "crop": "Tomatoes - Recorded {crop} $& cultivar 17",
+          "share": "Full",
+          "establish": "Nursery Dec",
+          "intoField": "Check Jan-Mar; transplant when ready",
+          "harvest": "May-Jul",
+          "yieldKg": 18,
+          "once": true,
+          "awaitingSowingConfirmation": false,
+          "frostCaveat": "Frost-tender: finish picking before the first frost or cover on clear, still nights."
+        }
+      ]
+    },
+    {
+      "id": "legacy-and-finished",
+      "plantings": [
+        {
+          "id": "legacy",
+          "bedId": "plan-pending",
+          "cropKey": "tomatoes",
+          "sowMonth": 12,
+          "once": "not-a-calendar",
+          "awaitingSowingConfirmation": true,
+          "variety": "Recorded {crop} $& cultivar 17"
+        },
+        {
+          "id": "finished",
+          "bedId": "plan-once",
+          "cropKey": "tomatoes",
+          "sowMonth": 12,
+          "once": "2026-10",
+          "awaitingSowingConfirmation": false,
+          "variety": "Recorded {crop} $& cultivar 17",
+          "finishedOnceSowing": true
+        }
+      ],
+      "beds": [
+        {
+          "id": "synthetic-bed-0",
+          "label": "Original Ṱanḓa {count} $& 0",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-1",
+          "label": "Original Ṱanḓa {count} $& 1",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-2",
+          "label": "Original Ṱanḓa {count} $& 2",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-3",
+          "label": "Original Ṱanḓa {count} $& 3",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-4",
+          "label": "Original Ṱanḓa {count} $& 4",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-5",
+          "label": "Original Ṱanḓa {count} $& 5",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-6",
+          "label": "Original Ṱanḓa {count} $& 6",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-7",
+          "label": "Original Ṱanḓa {count} $& 7",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-8",
+          "label": "Original Ṱanḓa {count} $& 8",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-9",
+          "label": "Original Ṱanḓa {count} $& 9",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-10",
+          "label": "Original Ṱanḓa {count} $& 10",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-11",
+          "label": "Original Ṱanḓa {count} $& 11",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-12",
+          "label": "Original Ṱanḓa {count} $& 12",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-13",
+          "label": "Original Ṱanḓa {count} $& 13",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-14",
+          "label": "Original Ṱanḓa {count} $& 14",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-15",
+          "label": "Original Ṱanḓa {count} $& 15",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-16",
+          "label": "Original Ṱanḓa {count} $& 16",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-17",
+          "label": "Original Ṱanḓa {count} $& 17",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-18",
+          "label": "Original Ṱanḓa {count} $& 18",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-19",
+          "label": "Original Ṱanḓa {count} $& 19",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-20",
+          "label": "Original Ṱanḓa {count} $& 20",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-21",
+          "label": "Original Ṱanḓa {count} $& 21",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-22",
+          "label": "Original Ṱanḓa {count} $& 22",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-23",
+          "label": "Original Ṱanḓa {count} $& 23",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-24",
+          "label": "Original Ṱanḓa {count} $& 24",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-25",
+          "label": "Original Ṱanḓa {count} $& 25",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-26",
+          "label": "Original Ṱanḓa {count} $& 26",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-27",
+          "label": "Original Ṱanḓa {count} $& 27",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-28",
+          "label": "Original Ṱanḓa {count} $& 28",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-29",
+          "label": "Original Ṱanḓa {count} $& 29",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-30",
+          "label": "Original Ṱanḓa {count} $& 30",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-31",
+          "label": "Original Ṱanḓa {count} $& 31",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-32",
+          "label": "Original Ṱanḓa {count} $& 32",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-33",
+          "label": "Original Ṱanḓa {count} $& 33",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-34",
+          "label": "Original Ṱanḓa {count} $& 34",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-35",
+          "label": "Original Ṱanḓa {count} $& 35",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-36",
+          "label": "Original Ṱanḓa {count} $& 36",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-37",
+          "label": "Original Ṱanḓa {count} $& 37",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-38",
+          "label": "Original Ṱanḓa {count} $& 38",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-39",
+          "label": "Original Ṱanḓa {count} $& 39",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-40",
+          "label": "Original Ṱanḓa {count} $& 40",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-41",
+          "label": "Original Ṱanḓa {count} $& 41",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-42",
+          "label": "Original Ṱanḓa {count} $& 42",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-43",
+          "label": "Original Ṱanḓa {count} $& 43",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-44",
+          "label": "Original Ṱanḓa {count} $& 44",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-45",
+          "label": "Original Ṱanḓa {count} $& 45",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-46",
+          "label": "Original Ṱanḓa {count} $& 46",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "synthetic-bed-47",
+          "label": "Original Ṱanḓa {count} $& 47",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "synthetic-bed-48",
+          "label": "Original Ṱanḓa {count} $& 48",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "id": "plan-pending",
+          "label": "Ṱanḓa {crop} $& pending",
+          "areaM2": 6,
+          "kind": "plot"
+        },
+        {
+          "id": "plan-once",
+          "label": "Ṱanḓa {crop} $& once",
+          "areaM2": 6,
+          "kind": "plot"
+        }
+      ],
+      "english": [
+        {
+          "area": "Ṱanḓa {crop} $& pending",
+          "isFirstOfArea": true,
+          "crop": "Tomatoes - Recorded {crop} $& cultivar 17",
+          "share": "Full",
+          "establish": "Confirm dated sowing",
+          "intoField": "Not confirmed",
+          "harvest": "Confirm sowing",
+          "yieldKg": null,
+          "once": true,
+          "awaitingSowingConfirmation": true,
+          "frostCaveat": null
+        }
+      ],
+      "englishMildFrost": [
+        {
+          "area": "Ṱanḓa {crop} $& pending",
+          "isFirstOfArea": true,
+          "crop": "Tomatoes - Recorded {crop} $& cultivar 17",
+          "share": "Full",
+          "establish": "Confirm dated sowing",
+          "intoField": "Not confirmed",
+          "harvest": "Confirm sowing",
+          "yieldKg": null,
+          "once": true,
+          "awaitingSowingConfirmation": true,
+          "frostCaveat": null
+        }
+      ]
+    }
+  ]
+}

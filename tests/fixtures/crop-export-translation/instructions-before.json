@@ -1,0 +1,4133 @@
+{
+  "sourceSha": "dc9ade0cc9a208de55c7d0cccc6393f79257769d",
+  "rows": [
+    {
+      "cropKey": "maize",
+      "sowing": "rows 91cm apart · 25cm apart in the row · sow 5–10cm deep",
+      "bed": {
+        "id": "synthetic-bed-0",
+        "label": "Original Ṱanḓa {count} $& 0",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-0",
+        "bedId": "synthetic-bed-0",
+        "cropKey": "maize",
+        "sowMonth": 1
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-0:prep",
+            "plantingId": "synthetic-planting-0",
+            "cohortSowMonth": 1,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 12,
+            "bedLabel": "Original Ṱanḓa {count} $& 0",
+            "cropName": "Maize (mielies)",
+            "cropKey": "maize",
+            "icon": "🌽",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for maize (mielies) (Original Ṱanḓa {count} $& 0)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 0 for Maize (mielies)",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for maize (mielies) (Original Ṱanḓa {count} $& 0)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-0:sow",
+            "plantingId": "synthetic-planting-0",
+            "cohortSowMonth": 1,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 1,
+            "bedLabel": "Original Ṱanḓa {count} $& 0",
+            "cropName": "Maize (mielies)",
+            "cropKey": "maize",
+            "icon": "🌽",
+            "action": "sow"
+          },
+          "phrase": "sow maize (mielies) — rows 91cm apart · 25cm apart in the row · sow 5–10cm deep (Original Ṱanḓa {count} $& 0)",
+          "detail": "rows 91cm apart · 25cm apart in the row · sow 5–10cm deep",
+          "title": "Sow Maize (mielies) — Original Ṱanḓa {count} $& 0",
+          "line": "Sow maize (mielies) — rows 91cm apart · 25cm apart in the row · sow 5–10cm deep (Original Ṱanḓa {count} $& 0)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-0:harvest",
+            "plantingId": "synthetic-planting-0",
+            "cohortSowMonth": 1,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 6,
+            "bedLabel": "Original Ṱanḓa {count} $& 0",
+            "cropName": "Maize (mielies)",
+            "cropKey": "maize",
+            "icon": "🌽",
+            "action": "harvest"
+          },
+          "phrase": "harvest maize (mielies) (Original Ṱanḓa {count} $& 0)",
+          "detail": null,
+          "title": "Harvest Maize (mielies) — Original Ṱanḓa {count} $& 0",
+          "line": "Harvest maize (mielies) (Original Ṱanḓa {count} $& 0)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for maize (mielies) (Original Ṱanḓa {count} $& 0) · sow maize (mielies) — rows 91cm apart · 25cm apart in the row · sow 5–10cm deep (Original Ṱanḓa {count} $& 0) · harvest maize (mielies) (Original Ṱanḓa {count} $& 0)"
+    },
+    {
+      "cropKey": "dry-beans",
+      "sowing": "rows 45cm apart · 25cm apart in the row · sow 2.5–7cm deep",
+      "bed": {
+        "id": "synthetic-bed-1",
+        "label": "Original Ṱanḓa {count} $& 1",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-1",
+        "bedId": "synthetic-bed-1",
+        "cropKey": "dry-beans",
+        "sowMonth": 2
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-1:prep",
+            "plantingId": "synthetic-planting-1",
+            "cohortSowMonth": 2,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 1,
+            "bedLabel": "Original Ṱanḓa {count} $& 1",
+            "cropName": "Dry beans (sugar beans)",
+            "cropKey": "dry-beans",
+            "icon": "🫘",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for dry beans (sugar beans) (Original Ṱanḓa {count} $& 1)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 1 for Dry beans (sugar beans)",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for dry beans (sugar beans) (Original Ṱanḓa {count} $& 1)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-1:sow",
+            "plantingId": "synthetic-planting-1",
+            "cohortSowMonth": 2,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 2,
+            "bedLabel": "Original Ṱanḓa {count} $& 1",
+            "cropName": "Dry beans (sugar beans)",
+            "cropKey": "dry-beans",
+            "icon": "🫘",
+            "action": "sow"
+          },
+          "phrase": "sow dry beans (sugar beans) — rows 45cm apart · 25cm apart in the row · sow 2.5–7cm deep (Original Ṱanḓa {count} $& 1)",
+          "detail": "rows 45cm apart · 25cm apart in the row · sow 2.5–7cm deep",
+          "title": "Sow Dry beans (sugar beans) — Original Ṱanḓa {count} $& 1",
+          "line": "Sow dry beans (sugar beans) — rows 45cm apart · 25cm apart in the row · sow 2.5–7cm deep (Original Ṱanḓa {count} $& 1)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-1:harvest",
+            "plantingId": "synthetic-planting-1",
+            "cohortSowMonth": 2,
+            "cohortExisting": false,
+            "cohortMonthOffset": 4,
+            "month": 6,
+            "bedLabel": "Original Ṱanḓa {count} $& 1",
+            "cropName": "Dry beans (sugar beans)",
+            "cropKey": "dry-beans",
+            "icon": "🫘",
+            "action": "harvest"
+          },
+          "phrase": "harvest dry beans (sugar beans) (Original Ṱanḓa {count} $& 1)",
+          "detail": null,
+          "title": "Harvest Dry beans (sugar beans) — Original Ṱanḓa {count} $& 1",
+          "line": "Harvest dry beans (sugar beans) (Original Ṱanḓa {count} $& 1)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for dry beans (sugar beans) (Original Ṱanḓa {count} $& 1) · sow dry beans (sugar beans) — rows 45cm apart · 25cm apart in the row · sow 2.5–7cm deep (Original Ṱanḓa {count} $& 1) · harvest dry beans (sugar beans) (Original Ṱanḓa {count} $& 1)"
+    },
+    {
+      "cropKey": "green-beans",
+      "sowing": "rows 45–60cm apart · 4–7cm apart in the row · sow 2–5cm deep",
+      "bed": {
+        "id": "synthetic-bed-2",
+        "label": "Original Ṱanḓa {count} $& 2",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-2",
+        "bedId": "synthetic-bed-2",
+        "cropKey": "green-beans",
+        "sowMonth": 3
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-2:prep",
+            "plantingId": "synthetic-planting-2",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 2,
+            "bedLabel": "Original Ṱanḓa {count} $& 2",
+            "cropName": "Green beans",
+            "cropKey": "green-beans",
+            "icon": "🫛",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for green beans (Original Ṱanḓa {count} $& 2)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 2 for Green beans",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for green beans (Original Ṱanḓa {count} $& 2)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-2:sow",
+            "plantingId": "synthetic-planting-2",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 2",
+            "cropName": "Green beans",
+            "cropKey": "green-beans",
+            "icon": "🫛",
+            "action": "sow"
+          },
+          "phrase": "sow green beans — rows 45–60cm apart · 4–7cm apart in the row · sow 2–5cm deep (Original Ṱanḓa {count} $& 2)",
+          "detail": "rows 45–60cm apart · 4–7cm apart in the row · sow 2–5cm deep",
+          "title": "Sow Green beans — Original Ṱanḓa {count} $& 2",
+          "line": "Sow green beans — rows 45–60cm apart · 4–7cm apart in the row · sow 2–5cm deep (Original Ṱanḓa {count} $& 2)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-2:harvest",
+            "plantingId": "synthetic-planting-2",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": 2,
+            "month": 5,
+            "bedLabel": "Original Ṱanḓa {count} $& 2",
+            "cropName": "Green beans",
+            "cropKey": "green-beans",
+            "icon": "🫛",
+            "action": "harvest"
+          },
+          "phrase": "harvest green beans (Original Ṱanḓa {count} $& 2)",
+          "detail": null,
+          "title": "Harvest Green beans — Original Ṱanḓa {count} $& 2",
+          "line": "Harvest green beans (Original Ṱanḓa {count} $& 2)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for green beans (Original Ṱanḓa {count} $& 2) · sow green beans — rows 45–60cm apart · 4–7cm apart in the row · sow 2–5cm deep (Original Ṱanḓa {count} $& 2) · harvest green beans (Original Ṱanḓa {count} $& 2)"
+    },
+    {
+      "cropKey": "butternut",
+      "sowing": "rows 150cm apart · 40cm apart in the row",
+      "bed": {
+        "id": "synthetic-bed-3",
+        "label": "Original Ṱanḓa {count} $& 3",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-3",
+        "bedId": "synthetic-bed-3",
+        "cropKey": "butternut",
+        "sowMonth": 4
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-3:prep",
+            "plantingId": "synthetic-planting-3",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 3",
+            "cropName": "Butternut",
+            "cropKey": "butternut",
+            "icon": "🧡",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for butternut (Original Ṱanḓa {count} $& 3)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 3 for Butternut",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for butternut (Original Ṱanḓa {count} $& 3)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-3:sow",
+            "plantingId": "synthetic-planting-3",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 4,
+            "bedLabel": "Original Ṱanḓa {count} $& 3",
+            "cropName": "Butternut",
+            "cropKey": "butternut",
+            "icon": "🧡",
+            "action": "sow"
+          },
+          "phrase": "sow butternut — rows 150cm apart · 40cm apart in the row (Original Ṱanḓa {count} $& 3)",
+          "detail": "rows 150cm apart · 40cm apart in the row",
+          "title": "Sow Butternut — Original Ṱanḓa {count} $& 3",
+          "line": "Sow butternut — rows 150cm apart · 40cm apart in the row (Original Ṱanḓa {count} $& 3)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-3:harvest",
+            "plantingId": "synthetic-planting-3",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": 4,
+            "month": 20,
+            "bedLabel": "Original Ṱanḓa {count} $& 3",
+            "cropName": "Butternut",
+            "cropKey": "butternut",
+            "icon": "🧡",
+            "action": "harvest"
+          },
+          "phrase": "harvest butternut (Original Ṱanḓa {count} $& 3)",
+          "detail": null,
+          "title": "Harvest Butternut — Original Ṱanḓa {count} $& 3",
+          "line": "Harvest butternut (Original Ṱanḓa {count} $& 3)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-3:harvest:1",
+            "plantingId": "synthetic-planting-3",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 21,
+            "bedLabel": "Original Ṱanḓa {count} $& 3",
+            "cropName": "Butternut",
+            "cropKey": "butternut",
+            "icon": "🧡",
+            "action": "harvest"
+          },
+          "phrase": "harvest butternut (Original Ṱanḓa {count} $& 3)",
+          "detail": null,
+          "title": "Harvest Butternut — Original Ṱanḓa {count} $& 3",
+          "line": "Harvest butternut (Original Ṱanḓa {count} $& 3)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for butternut (Original Ṱanḓa {count} $& 3) · sow butternut — rows 150cm apart · 40cm apart in the row (Original Ṱanḓa {count} $& 3) · harvest butternut (Original Ṱanḓa {count} $& 3) · harvest butternut (Original Ṱanḓa {count} $& 3)"
+    },
+    {
+      "cropKey": "pumpkin",
+      "sowing": "rows 250cm apart · 60–70cm apart in the row · sow 2–3cm deep",
+      "bed": {
+        "id": "synthetic-bed-4",
+        "label": "Original Ṱanḓa {count} $& 4",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-4",
+        "bedId": "synthetic-bed-4",
+        "cropKey": "pumpkin",
+        "sowMonth": 5
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-4:prep",
+            "plantingId": "synthetic-planting-4",
+            "cohortSowMonth": 5,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 4,
+            "bedLabel": "Original Ṱanḓa {count} $& 4",
+            "cropName": "Pumpkin",
+            "cropKey": "pumpkin",
+            "icon": "🎃",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for pumpkin (Original Ṱanḓa {count} $& 4)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 4 for Pumpkin",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for pumpkin (Original Ṱanḓa {count} $& 4)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-4:sow",
+            "plantingId": "synthetic-planting-4",
+            "cohortSowMonth": 5,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 5,
+            "bedLabel": "Original Ṱanḓa {count} $& 4",
+            "cropName": "Pumpkin",
+            "cropKey": "pumpkin",
+            "icon": "🎃",
+            "action": "sow"
+          },
+          "phrase": "sow pumpkin — rows 250cm apart · 60–70cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 4)",
+          "detail": "rows 250cm apart · 60–70cm apart in the row · sow 2–3cm deep",
+          "title": "Sow Pumpkin — Original Ṱanḓa {count} $& 4",
+          "line": "Sow pumpkin — rows 250cm apart · 60–70cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 4)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-4:harvest",
+            "plantingId": "synthetic-planting-4",
+            "cohortSowMonth": 5,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 22,
+            "bedLabel": "Original Ṱanḓa {count} $& 4",
+            "cropName": "Pumpkin",
+            "cropKey": "pumpkin",
+            "icon": "🎃",
+            "action": "harvest"
+          },
+          "phrase": "harvest pumpkin (Original Ṱanḓa {count} $& 4)",
+          "detail": null,
+          "title": "Harvest Pumpkin — Original Ṱanḓa {count} $& 4",
+          "line": "Harvest pumpkin (Original Ṱanḓa {count} $& 4)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-4:harvest:1",
+            "plantingId": "synthetic-planting-4",
+            "cohortSowMonth": 5,
+            "cohortExisting": false,
+            "cohortMonthOffset": 6,
+            "month": 23,
+            "bedLabel": "Original Ṱanḓa {count} $& 4",
+            "cropName": "Pumpkin",
+            "cropKey": "pumpkin",
+            "icon": "🎃",
+            "action": "harvest"
+          },
+          "phrase": "harvest pumpkin (Original Ṱanḓa {count} $& 4)",
+          "detail": null,
+          "title": "Harvest Pumpkin — Original Ṱanḓa {count} $& 4",
+          "line": "Harvest pumpkin (Original Ṱanḓa {count} $& 4)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for pumpkin (Original Ṱanḓa {count} $& 4) · sow pumpkin — rows 250cm apart · 60–70cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 4) · harvest pumpkin (Original Ṱanḓa {count} $& 4) · harvest pumpkin (Original Ṱanḓa {count} $& 4)"
+    },
+    {
+      "cropKey": "swiss-chard",
+      "sowing": "rows 40–60cm apart · 20–40cm apart in the row · sow 1.5–2cm deep",
+      "bed": {
+        "id": "synthetic-bed-5",
+        "label": "Original Ṱanḓa {count} $& 5",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-5",
+        "bedId": "synthetic-bed-5",
+        "cropKey": "swiss-chard",
+        "sowMonth": 6
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-5:prep",
+            "plantingId": "synthetic-planting-5",
+            "cohortSowMonth": 6,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 5,
+            "bedLabel": "Original Ṱanḓa {count} $& 5",
+            "cropName": "Swiss chard (spinach)",
+            "cropKey": "swiss-chard",
+            "icon": "🍃",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for swiss chard (spinach) (Original Ṱanḓa {count} $& 5)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 5 for Swiss chard (spinach)",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for swiss chard (spinach) (Original Ṱanḓa {count} $& 5)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-5:sow",
+            "plantingId": "synthetic-planting-5",
+            "cohortSowMonth": 6,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 6,
+            "bedLabel": "Original Ṱanḓa {count} $& 5",
+            "cropName": "Swiss chard (spinach)",
+            "cropKey": "swiss-chard",
+            "icon": "🍃",
+            "action": "sow"
+          },
+          "phrase": "sow swiss chard (spinach) — rows 40–60cm apart · 20–40cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 5)",
+          "detail": "rows 40–60cm apart · 20–40cm apart in the row · sow 1.5–2cm deep",
+          "title": "Sow Swiss chard (spinach) — Original Ṱanḓa {count} $& 5",
+          "line": "Sow swiss chard (spinach) — rows 40–60cm apart · 20–40cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 5)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-5:harvest",
+            "plantingId": "synthetic-planting-5",
+            "cohortSowMonth": 6,
+            "cohortExisting": false,
+            "cohortMonthOffset": 2,
+            "month": 20,
+            "bedLabel": "Original Ṱanḓa {count} $& 5",
+            "cropName": "Swiss chard (spinach)",
+            "cropKey": "swiss-chard",
+            "icon": "🍃",
+            "action": "harvest"
+          },
+          "phrase": "harvest swiss chard (spinach) (Original Ṱanḓa {count} $& 5)",
+          "detail": null,
+          "title": "Harvest Swiss chard (spinach) — Original Ṱanḓa {count} $& 5",
+          "line": "Harvest swiss chard (spinach) (Original Ṱanḓa {count} $& 5)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-5:harvest:1",
+            "plantingId": "synthetic-planting-5",
+            "cohortSowMonth": 6,
+            "cohortExisting": false,
+            "cohortMonthOffset": 3,
+            "month": 21,
+            "bedLabel": "Original Ṱanḓa {count} $& 5",
+            "cropName": "Swiss chard (spinach)",
+            "cropKey": "swiss-chard",
+            "icon": "🍃",
+            "action": "harvest"
+          },
+          "phrase": "harvest swiss chard (spinach) (Original Ṱanḓa {count} $& 5)",
+          "detail": null,
+          "title": "Harvest Swiss chard (spinach) — Original Ṱanḓa {count} $& 5",
+          "line": "Harvest swiss chard (spinach) (Original Ṱanḓa {count} $& 5)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-5:harvest:2",
+            "plantingId": "synthetic-planting-5",
+            "cohortSowMonth": 6,
+            "cohortExisting": false,
+            "cohortMonthOffset": 4,
+            "month": 22,
+            "bedLabel": "Original Ṱanḓa {count} $& 5",
+            "cropName": "Swiss chard (spinach)",
+            "cropKey": "swiss-chard",
+            "icon": "🍃",
+            "action": "harvest"
+          },
+          "phrase": "harvest swiss chard (spinach) (Original Ṱanḓa {count} $& 5)",
+          "detail": null,
+          "title": "Harvest Swiss chard (spinach) — Original Ṱanḓa {count} $& 5",
+          "line": "Harvest swiss chard (spinach) (Original Ṱanḓa {count} $& 5)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-5:harvest:3",
+            "plantingId": "synthetic-planting-5",
+            "cohortSowMonth": 6,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 23,
+            "bedLabel": "Original Ṱanḓa {count} $& 5",
+            "cropName": "Swiss chard (spinach)",
+            "cropKey": "swiss-chard",
+            "icon": "🍃",
+            "action": "harvest"
+          },
+          "phrase": "harvest swiss chard (spinach) (Original Ṱanḓa {count} $& 5)",
+          "detail": null,
+          "title": "Harvest Swiss chard (spinach) — Original Ṱanḓa {count} $& 5",
+          "line": "Harvest swiss chard (spinach) (Original Ṱanḓa {count} $& 5)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for swiss chard (spinach) (Original Ṱanḓa {count} $& 5) · sow swiss chard (spinach) — rows 40–60cm apart · 20–40cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 5) · harvest swiss chard (spinach) (Original Ṱanḓa {count} $& 5) · harvest swiss chard (spinach) (Original Ṱanḓa {count} $& 5) · harvest swiss chard (spinach) (Original Ṱanḓa {count} $& 5) · harvest swiss chard (spinach) (Original Ṱanḓa {count} $& 5)"
+    },
+    {
+      "cropKey": "kale",
+      "sowing": "plant spacing 40cm each way · sow 0.2–1cm deep",
+      "bed": {
+        "id": "synthetic-bed-6",
+        "label": "Original Ṱanḓa {count} $& 6",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-6",
+        "bedId": "synthetic-bed-6",
+        "cropKey": "kale",
+        "sowMonth": 7
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-6:prep",
+            "plantingId": "synthetic-planting-6",
+            "cohortSowMonth": 7,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 7,
+            "bedLabel": "Original Ṱanḓa {count} $& 6",
+            "cropName": "Kale",
+            "cropKey": "kale",
+            "icon": "🌿",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for kale (Original Ṱanḓa {count} $& 6)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 6 for Kale",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for kale (Original Ṱanḓa {count} $& 6)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-6:sow",
+            "plantingId": "synthetic-planting-6",
+            "cohortSowMonth": 7,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 7,
+            "bedLabel": "Original Ṱanḓa {count} $& 6",
+            "cropName": "Kale",
+            "cropKey": "kale",
+            "icon": "🌿",
+            "action": "sow"
+          },
+          "phrase": "sow kale — start in a tray, 0.2–1cm deep (Original Ṱanḓa {count} $& 6)",
+          "detail": "start in a tray, 0.2–1cm deep",
+          "title": "Sow Kale — Original Ṱanḓa {count} $& 6",
+          "line": "Sow kale — start in a tray, 0.2–1cm deep (Original Ṱanḓa {count} $& 6)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-6:transplant",
+            "plantingId": "synthetic-planting-6",
+            "cohortSowMonth": 7,
+            "cohortExisting": false,
+            "cohortMonthOffset": 1,
+            "month": 20,
+            "bedLabel": "Original Ṱanḓa {count} $& 6",
+            "cropName": "Kale",
+            "cropKey": "kale",
+            "icon": "🌿",
+            "action": "transplant"
+          },
+          "phrase": "check seedlings; transplant when ready kale — plant spacing 40cm each way (Original Ṱanḓa {count} $& 6)",
+          "detail": "plant spacing 40cm each way",
+          "title": "Check / transplant Kale — Original Ṱanḓa {count} $& 6",
+          "line": "Check seedlings; transplant when ready kale — plant spacing 40cm each way (Original Ṱanḓa {count} $& 6)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-6:harvest",
+            "plantingId": "synthetic-planting-6",
+            "cohortSowMonth": 7,
+            "cohortExisting": false,
+            "cohortMonthOffset": 6,
+            "month": 13,
+            "bedLabel": "Original Ṱanḓa {count} $& 6",
+            "cropName": "Kale",
+            "cropKey": "kale",
+            "icon": "🌿",
+            "action": "harvest"
+          },
+          "phrase": "harvest kale (Original Ṱanḓa {count} $& 6)",
+          "detail": null,
+          "title": "Harvest Kale — Original Ṱanḓa {count} $& 6",
+          "line": "Harvest kale (Original Ṱanḓa {count} $& 6)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for kale (Original Ṱanḓa {count} $& 6) · sow kale — start in a tray, 0.2–1cm deep (Original Ṱanḓa {count} $& 6) · check seedlings; transplant when ready kale — plant spacing 40cm each way (Original Ṱanḓa {count} $& 6) · harvest kale (Original Ṱanḓa {count} $& 6)"
+    },
+    {
+      "cropKey": "cabbage",
+      "sowing": "rows 50–60cm apart · 35–45cm apart in the row · sow 1.5–2cm deep",
+      "bed": {
+        "id": "synthetic-bed-7",
+        "label": "Original Ṱanḓa {count} $& 7",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-7",
+        "bedId": "synthetic-bed-7",
+        "cropKey": "cabbage",
+        "sowMonth": 8
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-7:prep",
+            "plantingId": "synthetic-planting-7",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 8,
+            "bedLabel": "Original Ṱanḓa {count} $& 7",
+            "cropName": "Cabbage",
+            "cropKey": "cabbage",
+            "icon": "🥬",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for cabbage (Original Ṱanḓa {count} $& 7)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 7 for Cabbage",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for cabbage (Original Ṱanḓa {count} $& 7)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-7:sow",
+            "plantingId": "synthetic-planting-7",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 8,
+            "bedLabel": "Original Ṱanḓa {count} $& 7",
+            "cropName": "Cabbage",
+            "cropKey": "cabbage",
+            "icon": "🥬",
+            "action": "sow"
+          },
+          "phrase": "sow cabbage — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 7)",
+          "detail": "start in a tray, 1.5–2cm deep",
+          "title": "Sow Cabbage — Original Ṱanḓa {count} $& 7",
+          "line": "Sow cabbage — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 7)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-7:transplant",
+            "plantingId": "synthetic-planting-7",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 1,
+            "month": 9,
+            "bedLabel": "Original Ṱanḓa {count} $& 7",
+            "cropName": "Cabbage",
+            "cropKey": "cabbage",
+            "icon": "🥬",
+            "action": "transplant"
+          },
+          "phrase": "check seedlings; transplant when ready cabbage — rows 50–60cm apart · 35–45cm apart in the row (Original Ṱanḓa {count} $& 7)",
+          "detail": "rows 50–60cm apart · 35–45cm apart in the row",
+          "title": "Check / transplant Cabbage — Original Ṱanḓa {count} $& 7",
+          "line": "Check seedlings; transplant when ready cabbage — rows 50–60cm apart · 35–45cm apart in the row (Original Ṱanḓa {count} $& 7)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-7:harvest",
+            "plantingId": "synthetic-planting-7",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 7,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 7",
+            "cropName": "Cabbage",
+            "cropKey": "cabbage",
+            "icon": "🥬",
+            "action": "harvest"
+          },
+          "phrase": "harvest cabbage (Original Ṱanḓa {count} $& 7)",
+          "detail": null,
+          "title": "Harvest Cabbage — Original Ṱanḓa {count} $& 7",
+          "line": "Harvest cabbage (Original Ṱanḓa {count} $& 7)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for cabbage (Original Ṱanḓa {count} $& 7) · sow cabbage — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 7) · check seedlings; transplant when ready cabbage — rows 50–60cm apart · 35–45cm apart in the row (Original Ṱanḓa {count} $& 7) · harvest cabbage (Original Ṱanḓa {count} $& 7)"
+    },
+    {
+      "cropKey": "carrots",
+      "sowing": "rows 20–40cm apart · 2–5cm apart in the row · sow 1–2.5cm deep",
+      "bed": {
+        "id": "synthetic-bed-8",
+        "label": "Original Ṱanḓa {count} $& 8",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-8",
+        "bedId": "synthetic-bed-8",
+        "cropKey": "carrots",
+        "sowMonth": 9
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-8:prep",
+            "plantingId": "synthetic-planting-8",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 8,
+            "bedLabel": "Original Ṱanḓa {count} $& 8",
+            "cropName": "Carrots",
+            "cropKey": "carrots",
+            "icon": "🥕",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for carrots (Original Ṱanḓa {count} $& 8)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 8 for Carrots",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for carrots (Original Ṱanḓa {count} $& 8)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-8:sow",
+            "plantingId": "synthetic-planting-8",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 9,
+            "bedLabel": "Original Ṱanḓa {count} $& 8",
+            "cropName": "Carrots",
+            "cropKey": "carrots",
+            "icon": "🥕",
+            "action": "sow"
+          },
+          "phrase": "sow carrots — rows 20–40cm apart · 2–5cm apart in the row · sow 1–2.5cm deep (Original Ṱanḓa {count} $& 8)",
+          "detail": "rows 20–40cm apart · 2–5cm apart in the row · sow 1–2.5cm deep",
+          "title": "Sow Carrots — Original Ṱanḓa {count} $& 8",
+          "line": "Sow carrots — rows 20–40cm apart · 2–5cm apart in the row · sow 1–2.5cm deep (Original Ṱanḓa {count} $& 8)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-8:harvest",
+            "plantingId": "synthetic-planting-8",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": 4,
+            "month": 1,
+            "bedLabel": "Original Ṱanḓa {count} $& 8",
+            "cropName": "Carrots",
+            "cropKey": "carrots",
+            "icon": "🥕",
+            "action": "harvest"
+          },
+          "phrase": "harvest carrots (Original Ṱanḓa {count} $& 8)",
+          "detail": null,
+          "title": "Harvest Carrots — Original Ṱanḓa {count} $& 8",
+          "line": "Harvest carrots (Original Ṱanḓa {count} $& 8)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for carrots (Original Ṱanḓa {count} $& 8) · sow carrots — rows 20–40cm apart · 2–5cm apart in the row · sow 1–2.5cm deep (Original Ṱanḓa {count} $& 8) · harvest carrots (Original Ṱanḓa {count} $& 8)"
+    },
+    {
+      "cropKey": "beetroot",
+      "sowing": "rows 20–30cm apart · 5–7cm apart in the row · sow 1.5–2cm deep",
+      "bed": {
+        "id": "synthetic-bed-9",
+        "label": "Original Ṱanḓa {count} $& 9",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-9",
+        "bedId": "synthetic-bed-9",
+        "cropKey": "beetroot",
+        "sowMonth": 10
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-9:prep",
+            "plantingId": "synthetic-planting-9",
+            "cohortSowMonth": 10,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 9,
+            "bedLabel": "Original Ṱanḓa {count} $& 9",
+            "cropName": "Beetroot",
+            "cropKey": "beetroot",
+            "icon": "🫜",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for beetroot (Original Ṱanḓa {count} $& 9)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 9 for Beetroot",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for beetroot (Original Ṱanḓa {count} $& 9)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-9:sow",
+            "plantingId": "synthetic-planting-9",
+            "cohortSowMonth": 10,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 10,
+            "bedLabel": "Original Ṱanḓa {count} $& 9",
+            "cropName": "Beetroot",
+            "cropKey": "beetroot",
+            "icon": "🫜",
+            "action": "sow"
+          },
+          "phrase": "sow beetroot — rows 20–30cm apart · 5–7cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 9)",
+          "detail": "rows 20–30cm apart · 5–7cm apart in the row · sow 1.5–2cm deep",
+          "title": "Sow Beetroot — Original Ṱanḓa {count} $& 9",
+          "line": "Sow beetroot — rows 20–30cm apart · 5–7cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 9)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-9:harvest",
+            "plantingId": "synthetic-planting-9",
+            "cohortSowMonth": 10,
+            "cohortExisting": false,
+            "cohortMonthOffset": 3,
+            "month": 1,
+            "bedLabel": "Original Ṱanḓa {count} $& 9",
+            "cropName": "Beetroot",
+            "cropKey": "beetroot",
+            "icon": "🫜",
+            "action": "harvest"
+          },
+          "phrase": "harvest beetroot (Original Ṱanḓa {count} $& 9)",
+          "detail": null,
+          "title": "Harvest Beetroot — Original Ṱanḓa {count} $& 9",
+          "line": "Harvest beetroot (Original Ṱanḓa {count} $& 9)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-9:harvest:1",
+            "plantingId": "synthetic-planting-9",
+            "cohortSowMonth": 10,
+            "cohortExisting": false,
+            "cohortMonthOffset": 4,
+            "month": 2,
+            "bedLabel": "Original Ṱanḓa {count} $& 9",
+            "cropName": "Beetroot",
+            "cropKey": "beetroot",
+            "icon": "🫜",
+            "action": "harvest"
+          },
+          "phrase": "harvest beetroot (Original Ṱanḓa {count} $& 9)",
+          "detail": null,
+          "title": "Harvest Beetroot — Original Ṱanḓa {count} $& 9",
+          "line": "Harvest beetroot (Original Ṱanḓa {count} $& 9)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for beetroot (Original Ṱanḓa {count} $& 9) · sow beetroot — rows 20–30cm apart · 5–7cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 9) · harvest beetroot (Original Ṱanḓa {count} $& 9) · harvest beetroot (Original Ṱanḓa {count} $& 9)"
+    },
+    {
+      "cropKey": "onions",
+      "sowing": "rows 20–30cm apart · 6–8cm apart in the row · sow 1.5–2cm deep",
+      "bed": {
+        "id": "synthetic-bed-10",
+        "label": "Original Ṱanḓa {count} $& 10",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-10",
+        "bedId": "synthetic-bed-10",
+        "cropKey": "onions",
+        "sowMonth": 11
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-10:prep",
+            "plantingId": "synthetic-planting-10",
+            "cohortSowMonth": 11,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 11,
+            "bedLabel": "Original Ṱanḓa {count} $& 10",
+            "cropName": "Onions",
+            "cropKey": "onions",
+            "icon": "🧅",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for onions (Original Ṱanḓa {count} $& 10)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 10 for Onions",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for onions (Original Ṱanḓa {count} $& 10)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-10:sow",
+            "plantingId": "synthetic-planting-10",
+            "cohortSowMonth": 11,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 11,
+            "bedLabel": "Original Ṱanḓa {count} $& 10",
+            "cropName": "Onions",
+            "cropKey": "onions",
+            "icon": "🧅",
+            "action": "sow"
+          },
+          "phrase": "sow onions — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 10)",
+          "detail": "start in a tray, 1.5–2cm deep",
+          "title": "Sow Onions — Original Ṱanḓa {count} $& 10",
+          "line": "Sow onions — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 10)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-10:transplant",
+            "plantingId": "synthetic-planting-10",
+            "cohortSowMonth": 11,
+            "cohortExisting": false,
+            "cohortMonthOffset": 1,
+            "month": 12,
+            "bedLabel": "Original Ṱanḓa {count} $& 10",
+            "cropName": "Onions",
+            "cropKey": "onions",
+            "icon": "🧅",
+            "action": "transplant"
+          },
+          "phrase": "check seedlings; transplant when ready onions — rows 20–30cm apart · 6–8cm apart in the row (Original Ṱanḓa {count} $& 10)",
+          "detail": "rows 20–30cm apart · 6–8cm apart in the row",
+          "title": "Check / transplant Onions — Original Ṱanḓa {count} $& 10",
+          "line": "Check seedlings; transplant when ready onions — rows 20–30cm apart · 6–8cm apart in the row (Original Ṱanḓa {count} $& 10)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-10:harvest",
+            "plantingId": "synthetic-planting-10",
+            "cohortSowMonth": 11,
+            "cohortExisting": false,
+            "cohortMonthOffset": 8,
+            "month": 7,
+            "bedLabel": "Original Ṱanḓa {count} $& 10",
+            "cropName": "Onions",
+            "cropKey": "onions",
+            "icon": "🧅",
+            "action": "harvest"
+          },
+          "phrase": "harvest onions (Original Ṱanḓa {count} $& 10)",
+          "detail": null,
+          "title": "Harvest Onions — Original Ṱanḓa {count} $& 10",
+          "line": "Harvest onions (Original Ṱanḓa {count} $& 10)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for onions (Original Ṱanḓa {count} $& 10) · sow onions — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 10) · check seedlings; transplant when ready onions — rows 20–30cm apart · 6–8cm apart in the row (Original Ṱanḓa {count} $& 10) · harvest onions (Original Ṱanḓa {count} $& 10)"
+    },
+    {
+      "cropKey": "tomatoes",
+      "sowing": "rows 90–120cm apart · 30–60cm apart in the row · sow 1cm deep",
+      "bed": {
+        "id": "synthetic-bed-11",
+        "label": "Original Ṱanḓa {count} $& 11",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-11",
+        "bedId": "synthetic-bed-11",
+        "cropKey": "tomatoes",
+        "sowMonth": 12
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-11:prep",
+            "plantingId": "synthetic-planting-11",
+            "cohortSowMonth": 12,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 12,
+            "bedLabel": "Original Ṱanḓa {count} $& 11",
+            "cropName": "Tomatoes",
+            "cropKey": "tomatoes",
+            "icon": "🍅",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for tomatoes (Original Ṱanḓa {count} $& 11)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 11 for Tomatoes",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for tomatoes (Original Ṱanḓa {count} $& 11)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-11:sow",
+            "plantingId": "synthetic-planting-11",
+            "cohortSowMonth": 12,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 12,
+            "bedLabel": "Original Ṱanḓa {count} $& 11",
+            "cropName": "Tomatoes",
+            "cropKey": "tomatoes",
+            "icon": "🍅",
+            "action": "sow"
+          },
+          "phrase": "sow tomatoes — start in a tray, 1cm deep (Original Ṱanḓa {count} $& 11)",
+          "detail": "start in a tray, 1cm deep",
+          "title": "Sow Tomatoes — Original Ṱanḓa {count} $& 11",
+          "line": "Sow tomatoes — start in a tray, 1cm deep (Original Ṱanḓa {count} $& 11)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-11:transplant",
+            "plantingId": "synthetic-planting-11",
+            "cohortSowMonth": 12,
+            "cohortExisting": false,
+            "cohortMonthOffset": 1,
+            "month": 1,
+            "bedLabel": "Original Ṱanḓa {count} $& 11",
+            "cropName": "Tomatoes",
+            "cropKey": "tomatoes",
+            "icon": "🍅",
+            "action": "transplant"
+          },
+          "phrase": "check seedlings; transplant when ready tomatoes — rows 90–120cm apart · 30–60cm apart in the row (Original Ṱanḓa {count} $& 11)",
+          "detail": "rows 90–120cm apart · 30–60cm apart in the row",
+          "title": "Check / transplant Tomatoes — Original Ṱanḓa {count} $& 11",
+          "line": "Check seedlings; transplant when ready tomatoes — rows 90–120cm apart · 30–60cm apart in the row (Original Ṱanḓa {count} $& 11)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-11:harvest",
+            "plantingId": "synthetic-planting-11",
+            "cohortSowMonth": 12,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 5,
+            "bedLabel": "Original Ṱanḓa {count} $& 11",
+            "cropName": "Tomatoes",
+            "cropKey": "tomatoes",
+            "icon": "🍅",
+            "action": "harvest"
+          },
+          "phrase": "harvest tomatoes (Original Ṱanḓa {count} $& 11)",
+          "detail": null,
+          "title": "Harvest Tomatoes — Original Ṱanḓa {count} $& 11",
+          "line": "Harvest tomatoes (Original Ṱanḓa {count} $& 11)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-11:harvest:1",
+            "plantingId": "synthetic-planting-11",
+            "cohortSowMonth": 12,
+            "cohortExisting": false,
+            "cohortMonthOffset": 6,
+            "month": 6,
+            "bedLabel": "Original Ṱanḓa {count} $& 11",
+            "cropName": "Tomatoes",
+            "cropKey": "tomatoes",
+            "icon": "🍅",
+            "action": "harvest"
+          },
+          "phrase": "harvest tomatoes (Original Ṱanḓa {count} $& 11)",
+          "detail": null,
+          "title": "Harvest Tomatoes — Original Ṱanḓa {count} $& 11",
+          "line": "Harvest tomatoes (Original Ṱanḓa {count} $& 11)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-11:harvest:2",
+            "plantingId": "synthetic-planting-11",
+            "cohortSowMonth": 12,
+            "cohortExisting": false,
+            "cohortMonthOffset": 7,
+            "month": 7,
+            "bedLabel": "Original Ṱanḓa {count} $& 11",
+            "cropName": "Tomatoes",
+            "cropKey": "tomatoes",
+            "icon": "🍅",
+            "action": "harvest"
+          },
+          "phrase": "harvest tomatoes (Original Ṱanḓa {count} $& 11)",
+          "detail": null,
+          "title": "Harvest Tomatoes — Original Ṱanḓa {count} $& 11",
+          "line": "Harvest tomatoes (Original Ṱanḓa {count} $& 11)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for tomatoes (Original Ṱanḓa {count} $& 11) · sow tomatoes — start in a tray, 1cm deep (Original Ṱanḓa {count} $& 11) · check seedlings; transplant when ready tomatoes — rows 90–120cm apart · 30–60cm apart in the row (Original Ṱanḓa {count} $& 11) · harvest tomatoes (Original Ṱanḓa {count} $& 11) · harvest tomatoes (Original Ṱanḓa {count} $& 11) · harvest tomatoes (Original Ṱanḓa {count} $& 11)"
+    },
+    {
+      "cropKey": "peppers",
+      "sowing": "rows 60–80cm apart · 40–50cm apart in the row · sow 1.5–2cm deep",
+      "bed": {
+        "id": "synthetic-bed-12",
+        "label": "Original Ṱanḓa {count} $& 12",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-12",
+        "bedId": "synthetic-bed-12",
+        "cropKey": "peppers",
+        "sowMonth": 1
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-12:prep",
+            "plantingId": "synthetic-planting-12",
+            "cohortSowMonth": 1,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 1,
+            "bedLabel": "Original Ṱanḓa {count} $& 12",
+            "cropName": "Peppers",
+            "cropKey": "peppers",
+            "icon": "🫑",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for peppers (Original Ṱanḓa {count} $& 12)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 12 for Peppers",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for peppers (Original Ṱanḓa {count} $& 12)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-12:sow",
+            "plantingId": "synthetic-planting-12",
+            "cohortSowMonth": 1,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 1,
+            "bedLabel": "Original Ṱanḓa {count} $& 12",
+            "cropName": "Peppers",
+            "cropKey": "peppers",
+            "icon": "🫑",
+            "action": "sow"
+          },
+          "phrase": "sow peppers — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 12)",
+          "detail": "start in a tray, 1.5–2cm deep",
+          "title": "Sow Peppers — Original Ṱanḓa {count} $& 12",
+          "line": "Sow peppers — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 12)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-12:transplant",
+            "plantingId": "synthetic-planting-12",
+            "cohortSowMonth": 1,
+            "cohortExisting": false,
+            "cohortMonthOffset": 1,
+            "month": 2,
+            "bedLabel": "Original Ṱanḓa {count} $& 12",
+            "cropName": "Peppers",
+            "cropKey": "peppers",
+            "icon": "🫑",
+            "action": "transplant"
+          },
+          "phrase": "check seedlings; transplant when ready peppers — rows 60–80cm apart · 40–50cm apart in the row (Original Ṱanḓa {count} $& 12)",
+          "detail": "rows 60–80cm apart · 40–50cm apart in the row",
+          "title": "Check / transplant Peppers — Original Ṱanḓa {count} $& 12",
+          "line": "Check seedlings; transplant when ready peppers — rows 60–80cm apart · 40–50cm apart in the row (Original Ṱanḓa {count} $& 12)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-12:harvest",
+            "plantingId": "synthetic-planting-12",
+            "cohortSowMonth": 1,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 6,
+            "bedLabel": "Original Ṱanḓa {count} $& 12",
+            "cropName": "Peppers",
+            "cropKey": "peppers",
+            "icon": "🫑",
+            "action": "harvest"
+          },
+          "phrase": "harvest peppers (Original Ṱanḓa {count} $& 12)",
+          "detail": null,
+          "title": "Harvest Peppers — Original Ṱanḓa {count} $& 12",
+          "line": "Harvest peppers (Original Ṱanḓa {count} $& 12)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-12:harvest:1",
+            "plantingId": "synthetic-planting-12",
+            "cohortSowMonth": 1,
+            "cohortExisting": false,
+            "cohortMonthOffset": 6,
+            "month": 7,
+            "bedLabel": "Original Ṱanḓa {count} $& 12",
+            "cropName": "Peppers",
+            "cropKey": "peppers",
+            "icon": "🫑",
+            "action": "harvest"
+          },
+          "phrase": "harvest peppers (Original Ṱanḓa {count} $& 12)",
+          "detail": null,
+          "title": "Harvest Peppers — Original Ṱanḓa {count} $& 12",
+          "line": "Harvest peppers (Original Ṱanḓa {count} $& 12)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-12:harvest:2",
+            "plantingId": "synthetic-planting-12",
+            "cohortSowMonth": 1,
+            "cohortExisting": false,
+            "cohortMonthOffset": 7,
+            "month": 20,
+            "bedLabel": "Original Ṱanḓa {count} $& 12",
+            "cropName": "Peppers",
+            "cropKey": "peppers",
+            "icon": "🫑",
+            "action": "harvest"
+          },
+          "phrase": "harvest peppers (Original Ṱanḓa {count} $& 12)",
+          "detail": null,
+          "title": "Harvest Peppers — Original Ṱanḓa {count} $& 12",
+          "line": "Harvest peppers (Original Ṱanḓa {count} $& 12)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for peppers (Original Ṱanḓa {count} $& 12) · sow peppers — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 12) · check seedlings; transplant when ready peppers — rows 60–80cm apart · 40–50cm apart in the row (Original Ṱanḓa {count} $& 12) · harvest peppers (Original Ṱanḓa {count} $& 12) · harvest peppers (Original Ṱanḓa {count} $& 12) · harvest peppers (Original Ṱanḓa {count} $& 12)"
+    },
+    {
+      "cropKey": "chilli",
+      "sowing": "rows 60–80cm apart · 40–50cm apart in the row · sow 1.5–2cm deep",
+      "bed": {
+        "id": "synthetic-bed-13",
+        "label": "Original Ṱanḓa {count} $& 13",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-13",
+        "bedId": "synthetic-bed-13",
+        "cropKey": "chilli",
+        "sowMonth": 2
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-13:prep",
+            "plantingId": "synthetic-planting-13",
+            "cohortSowMonth": 2,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 2,
+            "bedLabel": "Original Ṱanḓa {count} $& 13",
+            "cropName": "Chilli",
+            "cropKey": "chilli",
+            "icon": "🌶️",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for chilli (Original Ṱanḓa {count} $& 13)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 13 for Chilli",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for chilli (Original Ṱanḓa {count} $& 13)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-13:sow",
+            "plantingId": "synthetic-planting-13",
+            "cohortSowMonth": 2,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 2,
+            "bedLabel": "Original Ṱanḓa {count} $& 13",
+            "cropName": "Chilli",
+            "cropKey": "chilli",
+            "icon": "🌶️",
+            "action": "sow"
+          },
+          "phrase": "sow chilli — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 13)",
+          "detail": "start in a tray, 1.5–2cm deep",
+          "title": "Sow Chilli — Original Ṱanḓa {count} $& 13",
+          "line": "Sow chilli — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 13)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-13:transplant",
+            "plantingId": "synthetic-planting-13",
+            "cohortSowMonth": 2,
+            "cohortExisting": false,
+            "cohortMonthOffset": 1,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 13",
+            "cropName": "Chilli",
+            "cropKey": "chilli",
+            "icon": "🌶️",
+            "action": "transplant"
+          },
+          "phrase": "check seedlings; transplant when ready chilli — rows 60–80cm apart · 40–50cm apart in the row (Original Ṱanḓa {count} $& 13)",
+          "detail": "rows 60–80cm apart · 40–50cm apart in the row",
+          "title": "Check / transplant Chilli — Original Ṱanḓa {count} $& 13",
+          "line": "Check seedlings; transplant when ready chilli — rows 60–80cm apart · 40–50cm apart in the row (Original Ṱanḓa {count} $& 13)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-13:harvest",
+            "plantingId": "synthetic-planting-13",
+            "cohortSowMonth": 2,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 7,
+            "bedLabel": "Original Ṱanḓa {count} $& 13",
+            "cropName": "Chilli",
+            "cropKey": "chilli",
+            "icon": "🌶️",
+            "action": "harvest"
+          },
+          "phrase": "harvest chilli (Original Ṱanḓa {count} $& 13)",
+          "detail": null,
+          "title": "Harvest Chilli — Original Ṱanḓa {count} $& 13",
+          "line": "Harvest chilli (Original Ṱanḓa {count} $& 13)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-13:harvest:1",
+            "plantingId": "synthetic-planting-13",
+            "cohortSowMonth": 2,
+            "cohortExisting": false,
+            "cohortMonthOffset": 6,
+            "month": 20,
+            "bedLabel": "Original Ṱanḓa {count} $& 13",
+            "cropName": "Chilli",
+            "cropKey": "chilli",
+            "icon": "🌶️",
+            "action": "harvest"
+          },
+          "phrase": "harvest chilli (Original Ṱanḓa {count} $& 13)",
+          "detail": null,
+          "title": "Harvest Chilli — Original Ṱanḓa {count} $& 13",
+          "line": "Harvest chilli (Original Ṱanḓa {count} $& 13)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-13:harvest:2",
+            "plantingId": "synthetic-planting-13",
+            "cohortSowMonth": 2,
+            "cohortExisting": false,
+            "cohortMonthOffset": 7,
+            "month": 21,
+            "bedLabel": "Original Ṱanḓa {count} $& 13",
+            "cropName": "Chilli",
+            "cropKey": "chilli",
+            "icon": "🌶️",
+            "action": "harvest"
+          },
+          "phrase": "harvest chilli (Original Ṱanḓa {count} $& 13)",
+          "detail": null,
+          "title": "Harvest Chilli — Original Ṱanḓa {count} $& 13",
+          "line": "Harvest chilli (Original Ṱanḓa {count} $& 13)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for chilli (Original Ṱanḓa {count} $& 13) · sow chilli — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 13) · check seedlings; transplant when ready chilli — rows 60–80cm apart · 40–50cm apart in the row (Original Ṱanḓa {count} $& 13) · harvest chilli (Original Ṱanḓa {count} $& 13) · harvest chilli (Original Ṱanḓa {count} $& 13) · harvest chilli (Original Ṱanḓa {count} $& 13)"
+    },
+    {
+      "cropKey": "sweet-potato",
+      "sowing": "rows 90–100cm apart · 25–40cm apart in the row",
+      "bed": {
+        "id": "synthetic-bed-14",
+        "label": "Original Ṱanḓa {count} $& 14",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-14",
+        "bedId": "synthetic-bed-14",
+        "cropKey": "sweet-potato",
+        "sowMonth": 3
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-14:prep",
+            "plantingId": "synthetic-planting-14",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 2,
+            "bedLabel": "Original Ṱanḓa {count} $& 14",
+            "cropName": "Sweet potato",
+            "cropKey": "sweet-potato",
+            "icon": "🍠",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for sweet potato (Original Ṱanḓa {count} $& 14)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 14 for Sweet potato",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for sweet potato (Original Ṱanḓa {count} $& 14)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-14:sow",
+            "plantingId": "synthetic-planting-14",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 14",
+            "cropName": "Sweet potato",
+            "cropKey": "sweet-potato",
+            "icon": "🍠",
+            "action": "sow"
+          },
+          "phrase": "sow sweet potato — rows 90–100cm apart · 25–40cm apart in the row (Original Ṱanḓa {count} $& 14)",
+          "detail": "rows 90–100cm apart · 25–40cm apart in the row",
+          "title": "Sow Sweet potato — Original Ṱanḓa {count} $& 14",
+          "line": "Sow sweet potato — rows 90–100cm apart · 25–40cm apart in the row (Original Ṱanḓa {count} $& 14)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-14:harvest",
+            "plantingId": "synthetic-planting-14",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 20,
+            "bedLabel": "Original Ṱanḓa {count} $& 14",
+            "cropName": "Sweet potato",
+            "cropKey": "sweet-potato",
+            "icon": "🍠",
+            "action": "harvest"
+          },
+          "phrase": "harvest sweet potato (Original Ṱanḓa {count} $& 14)",
+          "detail": null,
+          "title": "Harvest Sweet potato — Original Ṱanḓa {count} $& 14",
+          "line": "Harvest sweet potato (Original Ṱanḓa {count} $& 14)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-14:harvest:1",
+            "plantingId": "synthetic-planting-14",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": 6,
+            "month": 21,
+            "bedLabel": "Original Ṱanḓa {count} $& 14",
+            "cropName": "Sweet potato",
+            "cropKey": "sweet-potato",
+            "icon": "🍠",
+            "action": "harvest"
+          },
+          "phrase": "harvest sweet potato (Original Ṱanḓa {count} $& 14)",
+          "detail": null,
+          "title": "Harvest Sweet potato — Original Ṱanḓa {count} $& 14",
+          "line": "Harvest sweet potato (Original Ṱanḓa {count} $& 14)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for sweet potato (Original Ṱanḓa {count} $& 14) · sow sweet potato — rows 90–100cm apart · 25–40cm apart in the row (Original Ṱanḓa {count} $& 14) · harvest sweet potato (Original Ṱanḓa {count} $& 14) · harvest sweet potato (Original Ṱanḓa {count} $& 14)"
+    },
+    {
+      "cropKey": "potato",
+      "sowing": "rows 90–100cm apart · 30–40cm apart in the row · sow 7–10cm deep",
+      "bed": {
+        "id": "synthetic-bed-15",
+        "label": "Original Ṱanḓa {count} $& 15",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-15",
+        "bedId": "synthetic-bed-15",
+        "cropKey": "potato",
+        "sowMonth": 4
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-15:prep",
+            "plantingId": "synthetic-planting-15",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 15",
+            "cropName": "Potato",
+            "cropKey": "potato",
+            "icon": "🥔",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for potato (Original Ṱanḓa {count} $& 15)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 15 for Potato",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for potato (Original Ṱanḓa {count} $& 15)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-15:sow",
+            "plantingId": "synthetic-planting-15",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 4,
+            "bedLabel": "Original Ṱanḓa {count} $& 15",
+            "cropName": "Potato",
+            "cropKey": "potato",
+            "icon": "🥔",
+            "action": "sow"
+          },
+          "phrase": "sow potato — rows 90–100cm apart · 30–40cm apart in the row · sow 7–10cm deep (Original Ṱanḓa {count} $& 15)",
+          "detail": "rows 90–100cm apart · 30–40cm apart in the row · sow 7–10cm deep",
+          "title": "Sow Potato — Original Ṱanḓa {count} $& 15",
+          "line": "Sow potato — rows 90–100cm apart · 30–40cm apart in the row · sow 7–10cm deep (Original Ṱanḓa {count} $& 15)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-15:harvest",
+            "plantingId": "synthetic-planting-15",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": 4,
+            "month": 20,
+            "bedLabel": "Original Ṱanḓa {count} $& 15",
+            "cropName": "Potato",
+            "cropKey": "potato",
+            "icon": "🥔",
+            "action": "harvest"
+          },
+          "phrase": "harvest potato (Original Ṱanḓa {count} $& 15)",
+          "detail": null,
+          "title": "Harvest Potato — Original Ṱanḓa {count} $& 15",
+          "line": "Harvest potato (Original Ṱanḓa {count} $& 15)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for potato (Original Ṱanḓa {count} $& 15) · sow potato — rows 90–100cm apart · 30–40cm apart in the row · sow 7–10cm deep (Original Ṱanḓa {count} $& 15) · harvest potato (Original Ṱanḓa {count} $& 15)"
+    },
+    {
+      "cropKey": "lettuce",
+      "sowing": "rows 40–50cm apart · 25–35cm apart in the row · sow 1.5–2cm deep",
+      "bed": {
+        "id": "synthetic-bed-16",
+        "label": "Original Ṱanḓa {count} $& 16",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-16",
+        "bedId": "synthetic-bed-16",
+        "cropKey": "lettuce",
+        "sowMonth": 5
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-16:prep",
+            "plantingId": "synthetic-planting-16",
+            "cohortSowMonth": 5,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 5,
+            "bedLabel": "Original Ṱanḓa {count} $& 16",
+            "cropName": "Lettuce",
+            "cropKey": "lettuce",
+            "icon": "🥗",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for lettuce (Original Ṱanḓa {count} $& 16)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 16 for Lettuce",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for lettuce (Original Ṱanḓa {count} $& 16)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-16:sow",
+            "plantingId": "synthetic-planting-16",
+            "cohortSowMonth": 5,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 5,
+            "bedLabel": "Original Ṱanḓa {count} $& 16",
+            "cropName": "Lettuce",
+            "cropKey": "lettuce",
+            "icon": "🥗",
+            "action": "sow"
+          },
+          "phrase": "sow lettuce — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 16)",
+          "detail": "start in a tray, 1.5–2cm deep",
+          "title": "Sow Lettuce — Original Ṱanḓa {count} $& 16",
+          "line": "Sow lettuce — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 16)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-16:transplant",
+            "plantingId": "synthetic-planting-16",
+            "cohortSowMonth": 5,
+            "cohortExisting": false,
+            "cohortMonthOffset": 1,
+            "month": 6,
+            "bedLabel": "Original Ṱanḓa {count} $& 16",
+            "cropName": "Lettuce",
+            "cropKey": "lettuce",
+            "icon": "🥗",
+            "action": "transplant"
+          },
+          "phrase": "check seedlings; transplant when ready lettuce — rows 40–50cm apart · 25–35cm apart in the row (Original Ṱanḓa {count} $& 16)",
+          "detail": "rows 40–50cm apart · 25–35cm apart in the row",
+          "title": "Check / transplant Lettuce — Original Ṱanḓa {count} $& 16",
+          "line": "Check seedlings; transplant when ready lettuce — rows 40–50cm apart · 25–35cm apart in the row (Original Ṱanḓa {count} $& 16)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-16:harvest",
+            "plantingId": "synthetic-planting-16",
+            "cohortSowMonth": 5,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 22,
+            "bedLabel": "Original Ṱanḓa {count} $& 16",
+            "cropName": "Lettuce",
+            "cropKey": "lettuce",
+            "icon": "🥗",
+            "action": "harvest"
+          },
+          "phrase": "harvest lettuce (Original Ṱanḓa {count} $& 16)",
+          "detail": null,
+          "title": "Harvest Lettuce — Original Ṱanḓa {count} $& 16",
+          "line": "Harvest lettuce (Original Ṱanḓa {count} $& 16)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for lettuce (Original Ṱanḓa {count} $& 16) · sow lettuce — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 16) · check seedlings; transplant when ready lettuce — rows 40–50cm apart · 25–35cm apart in the row (Original Ṱanḓa {count} $& 16) · harvest lettuce (Original Ṱanḓa {count} $& 16)"
+    },
+    {
+      "cropKey": "amadumbe",
+      "sowing": "rows 130cm apart · 40–50cm apart in the row · sow 15–20cm deep",
+      "bed": {
+        "id": "synthetic-bed-17",
+        "label": "Original Ṱanḓa {count} $& 17",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-17",
+        "bedId": "synthetic-bed-17",
+        "cropKey": "amadumbe",
+        "sowMonth": 6
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-17:prep",
+            "plantingId": "synthetic-planting-17",
+            "cohortSowMonth": 6,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 5,
+            "bedLabel": "Original Ṱanḓa {count} $& 17",
+            "cropName": "Amadumbe (taro)",
+            "cropKey": "amadumbe",
+            "icon": "🌰",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for amadumbe (taro) (Original Ṱanḓa {count} $& 17)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 17 for Amadumbe (taro)",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for amadumbe (taro) (Original Ṱanḓa {count} $& 17)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-17:sow",
+            "plantingId": "synthetic-planting-17",
+            "cohortSowMonth": 6,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 6,
+            "bedLabel": "Original Ṱanḓa {count} $& 17",
+            "cropName": "Amadumbe (taro)",
+            "cropKey": "amadumbe",
+            "icon": "🌰",
+            "action": "sow"
+          },
+          "phrase": "sow amadumbe (taro) — rows 130cm apart · 40–50cm apart in the row · sow 15–20cm deep (Original Ṱanḓa {count} $& 17)",
+          "detail": "rows 130cm apart · 40–50cm apart in the row · sow 15–20cm deep",
+          "title": "Sow Amadumbe (taro) — Original Ṱanḓa {count} $& 17",
+          "line": "Sow amadumbe (taro) — rows 130cm apart · 40–50cm apart in the row · sow 15–20cm deep (Original Ṱanḓa {count} $& 17)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-17:harvest",
+            "plantingId": "synthetic-planting-17",
+            "cohortSowMonth": 6,
+            "cohortExisting": false,
+            "cohortMonthOffset": 10,
+            "month": 16,
+            "bedLabel": "Original Ṱanḓa {count} $& 17",
+            "cropName": "Amadumbe (taro)",
+            "cropKey": "amadumbe",
+            "icon": "🌰",
+            "action": "harvest"
+          },
+          "phrase": "harvest amadumbe (taro) (Original Ṱanḓa {count} $& 17)",
+          "detail": null,
+          "title": "Harvest Amadumbe (taro) — Original Ṱanḓa {count} $& 17",
+          "line": "Harvest amadumbe (taro) (Original Ṱanḓa {count} $& 17)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for amadumbe (taro) (Original Ṱanḓa {count} $& 17) · sow amadumbe (taro) — rows 130cm apart · 40–50cm apart in the row · sow 15–20cm deep (Original Ṱanḓa {count} $& 17) · harvest amadumbe (taro) (Original Ṱanḓa {count} $& 17)"
+    },
+    {
+      "cropKey": "groundnuts",
+      "sowing": "rows 30–45cm apart · 5–7.5cm apart in the row · sow 5–7.5cm deep",
+      "bed": {
+        "id": "synthetic-bed-18",
+        "label": "Original Ṱanḓa {count} $& 18",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-18",
+        "bedId": "synthetic-bed-18",
+        "cropKey": "groundnuts",
+        "sowMonth": 7
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-18:prep",
+            "plantingId": "synthetic-planting-18",
+            "cohortSowMonth": 7,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 6,
+            "bedLabel": "Original Ṱanḓa {count} $& 18",
+            "cropName": "Groundnuts (peanuts)",
+            "cropKey": "groundnuts",
+            "icon": "🥜",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for groundnuts (peanuts) (Original Ṱanḓa {count} $& 18)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 18 for Groundnuts (peanuts)",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for groundnuts (peanuts) (Original Ṱanḓa {count} $& 18)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-18:sow",
+            "plantingId": "synthetic-planting-18",
+            "cohortSowMonth": 7,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 7,
+            "bedLabel": "Original Ṱanḓa {count} $& 18",
+            "cropName": "Groundnuts (peanuts)",
+            "cropKey": "groundnuts",
+            "icon": "🥜",
+            "action": "sow"
+          },
+          "phrase": "sow groundnuts (peanuts) — rows 30–45cm apart · 5–7.5cm apart in the row · sow 5–7.5cm deep (Original Ṱanḓa {count} $& 18)",
+          "detail": "rows 30–45cm apart · 5–7.5cm apart in the row · sow 5–7.5cm deep",
+          "title": "Sow Groundnuts (peanuts) — Original Ṱanḓa {count} $& 18",
+          "line": "Sow groundnuts (peanuts) — rows 30–45cm apart · 5–7.5cm apart in the row · sow 5–7.5cm deep (Original Ṱanḓa {count} $& 18)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-18:harvest",
+            "plantingId": "synthetic-planting-18",
+            "cohortSowMonth": 7,
+            "cohortExisting": false,
+            "cohortMonthOffset": 6,
+            "month": 13,
+            "bedLabel": "Original Ṱanḓa {count} $& 18",
+            "cropName": "Groundnuts (peanuts)",
+            "cropKey": "groundnuts",
+            "icon": "🥜",
+            "action": "harvest"
+          },
+          "phrase": "harvest groundnuts (peanuts) (Original Ṱanḓa {count} $& 18)",
+          "detail": null,
+          "title": "Harvest Groundnuts (peanuts) — Original Ṱanḓa {count} $& 18",
+          "line": "Harvest groundnuts (peanuts) (Original Ṱanḓa {count} $& 18)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for groundnuts (peanuts) (Original Ṱanḓa {count} $& 18) · sow groundnuts (peanuts) — rows 30–45cm apart · 5–7.5cm apart in the row · sow 5–7.5cm deep (Original Ṱanḓa {count} $& 18) · harvest groundnuts (peanuts) (Original Ṱanḓa {count} $& 18)"
+    },
+    {
+      "cropKey": "garlic",
+      "sowing": "rows 30–45cm apart · 7–10cm apart in the row",
+      "bed": {
+        "id": "synthetic-bed-19",
+        "label": "Original Ṱanḓa {count} $& 19",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-19",
+        "bedId": "synthetic-bed-19",
+        "cropKey": "garlic",
+        "sowMonth": 8
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-19:prep",
+            "plantingId": "synthetic-planting-19",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 8,
+            "bedLabel": "Original Ṱanḓa {count} $& 19",
+            "cropName": "Garlic",
+            "cropKey": "garlic",
+            "icon": "🧄",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for garlic (Original Ṱanḓa {count} $& 19)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 19 for Garlic",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for garlic (Original Ṱanḓa {count} $& 19)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-19:sow",
+            "plantingId": "synthetic-planting-19",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 8,
+            "bedLabel": "Original Ṱanḓa {count} $& 19",
+            "cropName": "Garlic",
+            "cropKey": "garlic",
+            "icon": "🧄",
+            "action": "sow"
+          },
+          "phrase": "sow garlic — rows 30–45cm apart · 7–10cm apart in the row (Original Ṱanḓa {count} $& 19)",
+          "detail": "rows 30–45cm apart · 7–10cm apart in the row",
+          "title": "Sow Garlic — Original Ṱanḓa {count} $& 19",
+          "line": "Sow garlic — rows 30–45cm apart · 7–10cm apart in the row (Original Ṱanḓa {count} $& 19)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-19:harvest",
+            "plantingId": "synthetic-planting-19",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 7,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 19",
+            "cropName": "Garlic",
+            "cropKey": "garlic",
+            "icon": "🧄",
+            "action": "harvest"
+          },
+          "phrase": "harvest garlic (Original Ṱanḓa {count} $& 19)",
+          "detail": null,
+          "title": "Harvest Garlic — Original Ṱanḓa {count} $& 19",
+          "line": "Harvest garlic (Original Ṱanḓa {count} $& 19)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for garlic (Original Ṱanḓa {count} $& 19) · sow garlic — rows 30–45cm apart · 7–10cm apart in the row (Original Ṱanḓa {count} $& 19) · harvest garlic (Original Ṱanḓa {count} $& 19)"
+    },
+    {
+      "cropKey": "peas",
+      "sowing": "rows 60cm apart · 5–8cm apart in the row · sow 3–6cm deep",
+      "bed": {
+        "id": "synthetic-bed-20",
+        "label": "Original Ṱanḓa {count} $& 20",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-20",
+        "bedId": "synthetic-bed-20",
+        "cropKey": "peas",
+        "sowMonth": 9
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-20:prep",
+            "plantingId": "synthetic-planting-20",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 8,
+            "bedLabel": "Original Ṱanḓa {count} $& 20",
+            "cropName": "Peas",
+            "cropKey": "peas",
+            "icon": "🟢",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for peas (Original Ṱanḓa {count} $& 20)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 20 for Peas",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for peas (Original Ṱanḓa {count} $& 20)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-20:sow",
+            "plantingId": "synthetic-planting-20",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 9,
+            "bedLabel": "Original Ṱanḓa {count} $& 20",
+            "cropName": "Peas",
+            "cropKey": "peas",
+            "icon": "🟢",
+            "action": "sow"
+          },
+          "phrase": "sow peas — rows 60cm apart · 5–8cm apart in the row · sow 3–6cm deep (Original Ṱanḓa {count} $& 20)",
+          "detail": "rows 60cm apart · 5–8cm apart in the row · sow 3–6cm deep",
+          "title": "Sow Peas — Original Ṱanḓa {count} $& 20",
+          "line": "Sow peas — rows 60cm apart · 5–8cm apart in the row · sow 3–6cm deep (Original Ṱanḓa {count} $& 20)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-20:harvest",
+            "plantingId": "synthetic-planting-20",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": 3,
+            "month": 12,
+            "bedLabel": "Original Ṱanḓa {count} $& 20",
+            "cropName": "Peas",
+            "cropKey": "peas",
+            "icon": "🟢",
+            "action": "harvest"
+          },
+          "phrase": "harvest peas (Original Ṱanḓa {count} $& 20)",
+          "detail": null,
+          "title": "Harvest Peas — Original Ṱanḓa {count} $& 20",
+          "line": "Harvest peas (Original Ṱanḓa {count} $& 20)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for peas (Original Ṱanḓa {count} $& 20) · sow peas — rows 60cm apart · 5–8cm apart in the row · sow 3–6cm deep (Original Ṱanḓa {count} $& 20) · harvest peas (Original Ṱanḓa {count} $& 20)"
+    },
+    {
+      "cropKey": "broad-beans",
+      "sowing": "rows 80cm apart · 20cm apart in the row · sow 4–5cm deep",
+      "bed": {
+        "id": "synthetic-bed-21",
+        "label": "Original Ṱanḓa {count} $& 21",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-21",
+        "bedId": "synthetic-bed-21",
+        "cropKey": "broad-beans",
+        "sowMonth": 10
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-21:prep",
+            "plantingId": "synthetic-planting-21",
+            "cohortSowMonth": 10,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 9,
+            "bedLabel": "Original Ṱanḓa {count} $& 21",
+            "cropName": "Broad beans (fava beans)",
+            "cropKey": "broad-beans",
+            "icon": "🫘",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for broad beans (fava beans) (Original Ṱanḓa {count} $& 21)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 21 for Broad beans (fava beans)",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for broad beans (fava beans) (Original Ṱanḓa {count} $& 21)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-21:sow",
+            "plantingId": "synthetic-planting-21",
+            "cohortSowMonth": 10,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 10,
+            "bedLabel": "Original Ṱanḓa {count} $& 21",
+            "cropName": "Broad beans (fava beans)",
+            "cropKey": "broad-beans",
+            "icon": "🫘",
+            "action": "sow"
+          },
+          "phrase": "sow broad beans (fava beans) — rows 80cm apart · 20cm apart in the row · sow 4–5cm deep (Original Ṱanḓa {count} $& 21)",
+          "detail": "rows 80cm apart · 20cm apart in the row · sow 4–5cm deep",
+          "title": "Sow Broad beans (fava beans) — Original Ṱanḓa {count} $& 21",
+          "line": "Sow broad beans (fava beans) — rows 80cm apart · 20cm apart in the row · sow 4–5cm deep (Original Ṱanḓa {count} $& 21)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-21:harvest",
+            "plantingId": "synthetic-planting-21",
+            "cohortSowMonth": 10,
+            "cohortExisting": false,
+            "cohortMonthOffset": 4,
+            "month": 2,
+            "bedLabel": "Original Ṱanḓa {count} $& 21",
+            "cropName": "Broad beans (fava beans)",
+            "cropKey": "broad-beans",
+            "icon": "🫘",
+            "action": "harvest"
+          },
+          "phrase": "harvest broad beans (fava beans) (Original Ṱanḓa {count} $& 21)",
+          "detail": null,
+          "title": "Harvest Broad beans (fava beans) — Original Ṱanḓa {count} $& 21",
+          "line": "Harvest broad beans (fava beans) (Original Ṱanḓa {count} $& 21)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-21:harvest:1",
+            "plantingId": "synthetic-planting-21",
+            "cohortSowMonth": 10,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 21",
+            "cropName": "Broad beans (fava beans)",
+            "cropKey": "broad-beans",
+            "icon": "🫘",
+            "action": "harvest"
+          },
+          "phrase": "harvest broad beans (fava beans) (Original Ṱanḓa {count} $& 21)",
+          "detail": null,
+          "title": "Harvest Broad beans (fava beans) — Original Ṱanḓa {count} $& 21",
+          "line": "Harvest broad beans (fava beans) (Original Ṱanḓa {count} $& 21)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for broad beans (fava beans) (Original Ṱanḓa {count} $& 21) · sow broad beans (fava beans) — rows 80cm apart · 20cm apart in the row · sow 4–5cm deep (Original Ṱanḓa {count} $& 21) · harvest broad beans (fava beans) (Original Ṱanḓa {count} $& 21) · harvest broad beans (fava beans) (Original Ṱanḓa {count} $& 21)"
+    },
+    {
+      "cropKey": "broccoli",
+      "sowing": "rows 60–70cm apart · 30–45cm apart in the row · sow 1.5–2cm deep",
+      "bed": {
+        "id": "synthetic-bed-22",
+        "label": "Original Ṱanḓa {count} $& 22",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-22",
+        "bedId": "synthetic-bed-22",
+        "cropKey": "broccoli",
+        "sowMonth": 11
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-22:prep",
+            "plantingId": "synthetic-planting-22",
+            "cohortSowMonth": 11,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 11,
+            "bedLabel": "Original Ṱanḓa {count} $& 22",
+            "cropName": "Broccoli",
+            "cropKey": "broccoli",
+            "icon": "🥦",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for broccoli (Original Ṱanḓa {count} $& 22)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 22 for Broccoli",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for broccoli (Original Ṱanḓa {count} $& 22)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-22:sow",
+            "plantingId": "synthetic-planting-22",
+            "cohortSowMonth": 11,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 11,
+            "bedLabel": "Original Ṱanḓa {count} $& 22",
+            "cropName": "Broccoli",
+            "cropKey": "broccoli",
+            "icon": "🥦",
+            "action": "sow"
+          },
+          "phrase": "sow broccoli — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 22)",
+          "detail": "start in a tray, 1.5–2cm deep",
+          "title": "Sow Broccoli — Original Ṱanḓa {count} $& 22",
+          "line": "Sow broccoli — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 22)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-22:transplant",
+            "plantingId": "synthetic-planting-22",
+            "cohortSowMonth": 11,
+            "cohortExisting": false,
+            "cohortMonthOffset": 1,
+            "month": 12,
+            "bedLabel": "Original Ṱanḓa {count} $& 22",
+            "cropName": "Broccoli",
+            "cropKey": "broccoli",
+            "icon": "🥦",
+            "action": "transplant"
+          },
+          "phrase": "check seedlings; transplant when ready broccoli — rows 60–70cm apart · 30–45cm apart in the row (Original Ṱanḓa {count} $& 22)",
+          "detail": "rows 60–70cm apart · 30–45cm apart in the row",
+          "title": "Check / transplant Broccoli — Original Ṱanḓa {count} $& 22",
+          "line": "Check seedlings; transplant when ready broccoli — rows 60–70cm apart · 30–45cm apart in the row (Original Ṱanḓa {count} $& 22)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-22:harvest",
+            "plantingId": "synthetic-planting-22",
+            "cohortSowMonth": 11,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 4,
+            "bedLabel": "Original Ṱanḓa {count} $& 22",
+            "cropName": "Broccoli",
+            "cropKey": "broccoli",
+            "icon": "🥦",
+            "action": "harvest"
+          },
+          "phrase": "harvest broccoli (Original Ṱanḓa {count} $& 22)",
+          "detail": null,
+          "title": "Harvest Broccoli — Original Ṱanḓa {count} $& 22",
+          "line": "Harvest broccoli (Original Ṱanḓa {count} $& 22)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-22:harvest:1",
+            "plantingId": "synthetic-planting-22",
+            "cohortSowMonth": 11,
+            "cohortExisting": false,
+            "cohortMonthOffset": 6,
+            "month": 5,
+            "bedLabel": "Original Ṱanḓa {count} $& 22",
+            "cropName": "Broccoli",
+            "cropKey": "broccoli",
+            "icon": "🥦",
+            "action": "harvest"
+          },
+          "phrase": "harvest broccoli (Original Ṱanḓa {count} $& 22)",
+          "detail": null,
+          "title": "Harvest Broccoli — Original Ṱanḓa {count} $& 22",
+          "line": "Harvest broccoli (Original Ṱanḓa {count} $& 22)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for broccoli (Original Ṱanḓa {count} $& 22) · sow broccoli — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 22) · check seedlings; transplant when ready broccoli — rows 60–70cm apart · 30–45cm apart in the row (Original Ṱanḓa {count} $& 22) · harvest broccoli (Original Ṱanḓa {count} $& 22) · harvest broccoli (Original Ṱanḓa {count} $& 22)"
+    },
+    {
+      "cropKey": "cucumber",
+      "sowing": "rows 120–140cm apart · 35–50cm apart in the row · sow 2–3cm deep",
+      "bed": {
+        "id": "synthetic-bed-23",
+        "label": "Original Ṱanḓa {count} $& 23",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-23",
+        "bedId": "synthetic-bed-23",
+        "cropKey": "cucumber",
+        "sowMonth": 12
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-23:prep",
+            "plantingId": "synthetic-planting-23",
+            "cohortSowMonth": 12,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 11,
+            "bedLabel": "Original Ṱanḓa {count} $& 23",
+            "cropName": "Cucumber",
+            "cropKey": "cucumber",
+            "icon": "🥒",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for cucumber (Original Ṱanḓa {count} $& 23)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 23 for Cucumber",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for cucumber (Original Ṱanḓa {count} $& 23)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-23:sow",
+            "plantingId": "synthetic-planting-23",
+            "cohortSowMonth": 12,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 12,
+            "bedLabel": "Original Ṱanḓa {count} $& 23",
+            "cropName": "Cucumber",
+            "cropKey": "cucumber",
+            "icon": "🥒",
+            "action": "sow"
+          },
+          "phrase": "sow cucumber — rows 120–140cm apart · 35–50cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 23)",
+          "detail": "rows 120–140cm apart · 35–50cm apart in the row · sow 2–3cm deep",
+          "title": "Sow Cucumber — Original Ṱanḓa {count} $& 23",
+          "line": "Sow cucumber — rows 120–140cm apart · 35–50cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 23)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-23:harvest",
+            "plantingId": "synthetic-planting-23",
+            "cohortSowMonth": 12,
+            "cohortExisting": false,
+            "cohortMonthOffset": 3,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 23",
+            "cropName": "Cucumber",
+            "cropKey": "cucumber",
+            "icon": "🥒",
+            "action": "harvest"
+          },
+          "phrase": "harvest cucumber (Original Ṱanḓa {count} $& 23)",
+          "detail": null,
+          "title": "Harvest Cucumber — Original Ṱanḓa {count} $& 23",
+          "line": "Harvest cucumber (Original Ṱanḓa {count} $& 23)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for cucumber (Original Ṱanḓa {count} $& 23) · sow cucumber — rows 120–140cm apart · 35–50cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 23) · harvest cucumber (Original Ṱanḓa {count} $& 23)"
+    },
+    {
+      "cropKey": "watermelon",
+      "sowing": "rows 170–200cm apart · 50–60cm apart in the row · sow 4–6cm deep",
+      "bed": {
+        "id": "synthetic-bed-24",
+        "label": "Original Ṱanḓa {count} $& 24",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-24",
+        "bedId": "synthetic-bed-24",
+        "cropKey": "watermelon",
+        "sowMonth": 1
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-24:prep",
+            "plantingId": "synthetic-planting-24",
+            "cohortSowMonth": 1,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 12,
+            "bedLabel": "Original Ṱanḓa {count} $& 24",
+            "cropName": "Watermelon",
+            "cropKey": "watermelon",
+            "icon": "🍉",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for watermelon (Original Ṱanḓa {count} $& 24)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 24 for Watermelon",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for watermelon (Original Ṱanḓa {count} $& 24)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-24:sow",
+            "plantingId": "synthetic-planting-24",
+            "cohortSowMonth": 1,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 1,
+            "bedLabel": "Original Ṱanḓa {count} $& 24",
+            "cropName": "Watermelon",
+            "cropKey": "watermelon",
+            "icon": "🍉",
+            "action": "sow"
+          },
+          "phrase": "sow watermelon — rows 170–200cm apart · 50–60cm apart in the row · sow 4–6cm deep (Original Ṱanḓa {count} $& 24)",
+          "detail": "rows 170–200cm apart · 50–60cm apart in the row · sow 4–6cm deep",
+          "title": "Sow Watermelon — Original Ṱanḓa {count} $& 24",
+          "line": "Sow watermelon — rows 170–200cm apart · 50–60cm apart in the row · sow 4–6cm deep (Original Ṱanḓa {count} $& 24)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-24:harvest",
+            "plantingId": "synthetic-planting-24",
+            "cohortSowMonth": 1,
+            "cohortExisting": false,
+            "cohortMonthOffset": 4,
+            "month": 5,
+            "bedLabel": "Original Ṱanḓa {count} $& 24",
+            "cropName": "Watermelon",
+            "cropKey": "watermelon",
+            "icon": "🍉",
+            "action": "harvest"
+          },
+          "phrase": "harvest watermelon (Original Ṱanḓa {count} $& 24)",
+          "detail": null,
+          "title": "Harvest Watermelon — Original Ṱanḓa {count} $& 24",
+          "line": "Harvest watermelon (Original Ṱanḓa {count} $& 24)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-24:harvest:1",
+            "plantingId": "synthetic-planting-24",
+            "cohortSowMonth": 1,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 6,
+            "bedLabel": "Original Ṱanḓa {count} $& 24",
+            "cropName": "Watermelon",
+            "cropKey": "watermelon",
+            "icon": "🍉",
+            "action": "harvest"
+          },
+          "phrase": "harvest watermelon (Original Ṱanḓa {count} $& 24)",
+          "detail": null,
+          "title": "Harvest Watermelon — Original Ṱanḓa {count} $& 24",
+          "line": "Harvest watermelon (Original Ṱanḓa {count} $& 24)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for watermelon (Original Ṱanḓa {count} $& 24) · sow watermelon — rows 170–200cm apart · 50–60cm apart in the row · sow 4–6cm deep (Original Ṱanḓa {count} $& 24) · harvest watermelon (Original Ṱanḓa {count} $& 24) · harvest watermelon (Original Ṱanḓa {count} $& 24)"
+    },
+    {
+      "cropKey": "coriander",
+      "sowing": "rows 30–35cm apart · 8–10cm apart in the row · sow 1–1.5cm deep",
+      "bed": {
+        "id": "synthetic-bed-25",
+        "label": "Original Ṱanḓa {count} $& 25",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-25",
+        "bedId": "synthetic-bed-25",
+        "cropKey": "coriander",
+        "sowMonth": 2
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-25:prep",
+            "plantingId": "synthetic-planting-25",
+            "cohortSowMonth": 2,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 1,
+            "bedLabel": "Original Ṱanḓa {count} $& 25",
+            "cropName": "Coriander",
+            "cropKey": "coriander",
+            "icon": "🌱",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for coriander (Original Ṱanḓa {count} $& 25)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 25 for Coriander",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for coriander (Original Ṱanḓa {count} $& 25)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-25:sow",
+            "plantingId": "synthetic-planting-25",
+            "cohortSowMonth": 2,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 2,
+            "bedLabel": "Original Ṱanḓa {count} $& 25",
+            "cropName": "Coriander",
+            "cropKey": "coriander",
+            "icon": "🌱",
+            "action": "sow"
+          },
+          "phrase": "sow coriander — rows 30–35cm apart · 8–10cm apart in the row · sow 1–1.5cm deep (Original Ṱanḓa {count} $& 25)",
+          "detail": "rows 30–35cm apart · 8–10cm apart in the row · sow 1–1.5cm deep",
+          "title": "Sow Coriander — Original Ṱanḓa {count} $& 25",
+          "line": "Sow coriander — rows 30–35cm apart · 8–10cm apart in the row · sow 1–1.5cm deep (Original Ṱanḓa {count} $& 25)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-25:harvest",
+            "plantingId": "synthetic-planting-25",
+            "cohortSowMonth": 2,
+            "cohortExisting": false,
+            "cohortMonthOffset": 2,
+            "month": 4,
+            "bedLabel": "Original Ṱanḓa {count} $& 25",
+            "cropName": "Coriander",
+            "cropKey": "coriander",
+            "icon": "🌱",
+            "action": "harvest"
+          },
+          "phrase": "harvest coriander (Original Ṱanḓa {count} $& 25)",
+          "detail": null,
+          "title": "Harvest Coriander — Original Ṱanḓa {count} $& 25",
+          "line": "Harvest coriander (Original Ṱanḓa {count} $& 25)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for coriander (Original Ṱanḓa {count} $& 25) · sow coriander — rows 30–35cm apart · 8–10cm apart in the row · sow 1–1.5cm deep (Original Ṱanḓa {count} $& 25) · harvest coriander (Original Ṱanḓa {count} $& 25)"
+    },
+    {
+      "cropKey": "oats",
+      "sowing": "drill at 70kg seed/ha, or broadcast at 105–140kg/ha; terminate before the next summer staple crop",
+      "bed": {
+        "id": "synthetic-bed-26",
+        "label": "Original Ṱanḓa {count} $& 26",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-26",
+        "bedId": "synthetic-bed-26",
+        "cropKey": "oats",
+        "sowMonth": 3
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-26:prep",
+            "plantingId": "synthetic-planting-26",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 2,
+            "bedLabel": "Original Ṱanḓa {count} $& 26",
+            "cropName": "Oats (winter cover crop)",
+            "cropKey": "oats",
+            "icon": "🌾",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for oats (winter cover crop) (Original Ṱanḓa {count} $& 26)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 26 for Oats (winter cover crop)",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for oats (winter cover crop) (Original Ṱanḓa {count} $& 26)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-26:sow",
+            "plantingId": "synthetic-planting-26",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 26",
+            "cropName": "Oats (winter cover crop)",
+            "cropKey": "oats",
+            "icon": "🌾",
+            "action": "sow"
+          },
+          "phrase": "sow oats (winter cover crop) — drill at 70kg seed/ha, or broadcast at 105–140kg/ha; terminate before the next summer staple crop (Original Ṱanḓa {count} $& 26)",
+          "detail": "drill at 70kg seed/ha, or broadcast at 105–140kg/ha; terminate before the next summer staple crop",
+          "title": "Sow Oats (winter cover crop) — Original Ṱanḓa {count} $& 26",
+          "line": "Sow oats (winter cover crop) — drill at 70kg seed/ha, or broadcast at 105–140kg/ha; terminate before the next summer staple crop (Original Ṱanḓa {count} $& 26)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-26:terminate-cover",
+            "plantingId": "synthetic-planting-26",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": 6,
+            "month": 21,
+            "bedLabel": "Original Ṱanḓa {count} $& 26",
+            "cropName": "Oats (winter cover crop)",
+            "cropKey": "oats",
+            "icon": "🌾",
+            "action": "terminate-cover"
+          },
+          "phrase": "cut or roll down oats (winter cover crop) (Original Ṱanḓa {count} $& 26)",
+          "detail": null,
+          "title": "Cut or roll down Oats (winter cover crop) — Original Ṱanḓa {count} $& 26",
+          "line": "Cut or roll down oats (winter cover crop) (Original Ṱanḓa {count} $& 26)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for oats (winter cover crop) (Original Ṱanḓa {count} $& 26) · sow oats (winter cover crop) — drill at 70kg seed/ha, or broadcast at 105–140kg/ha; terminate before the next summer staple crop (Original Ṱanḓa {count} $& 26) · cut or roll down oats (winter cover crop) (Original Ṱanḓa {count} $& 26)"
+    },
+    {
+      "cropKey": "true-spinach",
+      "sowing": "rows 20cm apart · 7–8cm apart in the row · sow 1.5–2cm deep",
+      "bed": {
+        "id": "synthetic-bed-27",
+        "label": "Original Ṱanḓa {count} $& 27",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-27",
+        "bedId": "synthetic-bed-27",
+        "cropKey": "true-spinach",
+        "sowMonth": 4
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-27:prep",
+            "plantingId": "synthetic-planting-27",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 27",
+            "cropName": "True spinach (English spinach)",
+            "cropKey": "true-spinach",
+            "icon": "🍀",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for true spinach (English spinach) (Original Ṱanḓa {count} $& 27)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 27 for True spinach (English spinach)",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for true spinach (English spinach) (Original Ṱanḓa {count} $& 27)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-27:sow",
+            "plantingId": "synthetic-planting-27",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 4,
+            "bedLabel": "Original Ṱanḓa {count} $& 27",
+            "cropName": "True spinach (English spinach)",
+            "cropKey": "true-spinach",
+            "icon": "🍀",
+            "action": "sow"
+          },
+          "phrase": "sow true spinach (English spinach) — rows 20cm apart · 7–8cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 27)",
+          "detail": "rows 20cm apart · 7–8cm apart in the row · sow 1.5–2cm deep",
+          "title": "Sow True spinach (English spinach) — Original Ṱanḓa {count} $& 27",
+          "line": "Sow true spinach (English spinach) — rows 20cm apart · 7–8cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 27)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-27:harvest",
+            "plantingId": "synthetic-planting-27",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": 2,
+            "month": 6,
+            "bedLabel": "Original Ṱanḓa {count} $& 27",
+            "cropName": "True spinach (English spinach)",
+            "cropKey": "true-spinach",
+            "icon": "🍀",
+            "action": "harvest"
+          },
+          "phrase": "harvest true spinach (English spinach) (Original Ṱanḓa {count} $& 27)",
+          "detail": null,
+          "title": "Harvest True spinach (English spinach) — Original Ṱanḓa {count} $& 27",
+          "line": "Harvest true spinach (English spinach) (Original Ṱanḓa {count} $& 27)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for true spinach (English spinach) (Original Ṱanḓa {count} $& 27) · sow true spinach (English spinach) — rows 20cm apart · 7–8cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 27) · harvest true spinach (English spinach) (Original Ṱanḓa {count} $& 27)"
+    },
+    {
+      "cropKey": "turnip",
+      "sowing": "rows 40–60cm apart · 8cm apart in the row · sow 1.5–2cm deep",
+      "bed": {
+        "id": "synthetic-bed-28",
+        "label": "Original Ṱanḓa {count} $& 28",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-28",
+        "bedId": "synthetic-bed-28",
+        "cropKey": "turnip",
+        "sowMonth": 5
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-28:prep",
+            "plantingId": "synthetic-planting-28",
+            "cohortSowMonth": 5,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 4,
+            "bedLabel": "Original Ṱanḓa {count} $& 28",
+            "cropName": "Turnips",
+            "cropKey": "turnip",
+            "icon": "🟣",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for turnips (Original Ṱanḓa {count} $& 28)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 28 for Turnips",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for turnips (Original Ṱanḓa {count} $& 28)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-28:sow",
+            "plantingId": "synthetic-planting-28",
+            "cohortSowMonth": 5,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 5,
+            "bedLabel": "Original Ṱanḓa {count} $& 28",
+            "cropName": "Turnips",
+            "cropKey": "turnip",
+            "icon": "🟣",
+            "action": "sow"
+          },
+          "phrase": "sow turnips — rows 40–60cm apart · 8cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 28)",
+          "detail": "rows 40–60cm apart · 8cm apart in the row · sow 1.5–2cm deep",
+          "title": "Sow Turnips — Original Ṱanḓa {count} $& 28",
+          "line": "Sow turnips — rows 40–60cm apart · 8cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 28)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-28:harvest",
+            "plantingId": "synthetic-planting-28",
+            "cohortSowMonth": 5,
+            "cohortExisting": false,
+            "cohortMonthOffset": 3,
+            "month": 20,
+            "bedLabel": "Original Ṱanḓa {count} $& 28",
+            "cropName": "Turnips",
+            "cropKey": "turnip",
+            "icon": "🟣",
+            "action": "harvest"
+          },
+          "phrase": "harvest turnips (Original Ṱanḓa {count} $& 28)",
+          "detail": null,
+          "title": "Harvest Turnips — Original Ṱanḓa {count} $& 28",
+          "line": "Harvest turnips (Original Ṱanḓa {count} $& 28)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for turnips (Original Ṱanḓa {count} $& 28) · sow turnips — rows 40–60cm apart · 8cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 28) · harvest turnips (Original Ṱanḓa {count} $& 28)"
+    },
+    {
+      "cropKey": "amaranth",
+      "sowing": "rows 76.2–150cm apart · 30cm apart in the row · sow 1.25cm deep",
+      "bed": {
+        "id": "synthetic-bed-29",
+        "label": "Original Ṱanḓa {count} $& 29",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-29",
+        "bedId": "synthetic-bed-29",
+        "cropKey": "amaranth",
+        "sowMonth": 6
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-29:prep",
+            "plantingId": "synthetic-planting-29",
+            "cohortSowMonth": 6,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 5,
+            "bedLabel": "Original Ṱanḓa {count} $& 29",
+            "cropName": "Amaranth (imbuya/thepe)",
+            "cropKey": "amaranth",
+            "icon": "🌺",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for amaranth (imbuya/thepe) (Original Ṱanḓa {count} $& 29)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 29 for Amaranth (imbuya/thepe)",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for amaranth (imbuya/thepe) (Original Ṱanḓa {count} $& 29)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-29:sow",
+            "plantingId": "synthetic-planting-29",
+            "cohortSowMonth": 6,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 6,
+            "bedLabel": "Original Ṱanḓa {count} $& 29",
+            "cropName": "Amaranth (imbuya/thepe)",
+            "cropKey": "amaranth",
+            "icon": "🌺",
+            "action": "sow"
+          },
+          "phrase": "sow amaranth (imbuya/thepe) — rows 76.2–150cm apart · 30cm apart in the row · sow 1.25cm deep (Original Ṱanḓa {count} $& 29)",
+          "detail": "rows 76.2–150cm apart · 30cm apart in the row · sow 1.25cm deep",
+          "title": "Sow Amaranth (imbuya/thepe) — Original Ṱanḓa {count} $& 29",
+          "line": "Sow amaranth (imbuya/thepe) — rows 76.2–150cm apart · 30cm apart in the row · sow 1.25cm deep (Original Ṱanḓa {count} $& 29)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-29:harvest",
+            "plantingId": "synthetic-planting-29",
+            "cohortSowMonth": 6,
+            "cohortExisting": false,
+            "cohortMonthOffset": 2,
+            "month": 20,
+            "bedLabel": "Original Ṱanḓa {count} $& 29",
+            "cropName": "Amaranth (imbuya/thepe)",
+            "cropKey": "amaranth",
+            "icon": "🌺",
+            "action": "harvest"
+          },
+          "phrase": "harvest amaranth (imbuya/thepe) (Original Ṱanḓa {count} $& 29)",
+          "detail": null,
+          "title": "Harvest Amaranth (imbuya/thepe) — Original Ṱanḓa {count} $& 29",
+          "line": "Harvest amaranth (imbuya/thepe) (Original Ṱanḓa {count} $& 29)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for amaranth (imbuya/thepe) (Original Ṱanḓa {count} $& 29) · sow amaranth (imbuya/thepe) — rows 76.2–150cm apart · 30cm apart in the row · sow 1.25cm deep (Original Ṱanḓa {count} $& 29) · harvest amaranth (imbuya/thepe) (Original Ṱanḓa {count} $& 29)"
+    },
+    {
+      "cropKey": "cauliflower",
+      "sowing": "rows 60–90cm apart · 35–50cm apart in the row · sow 1.2–2cm deep",
+      "bed": {
+        "id": "synthetic-bed-30",
+        "label": "Original Ṱanḓa {count} $& 30",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-30",
+        "bedId": "synthetic-bed-30",
+        "cropKey": "cauliflower",
+        "sowMonth": 7
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-30:prep",
+            "plantingId": "synthetic-planting-30",
+            "cohortSowMonth": 7,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 7,
+            "bedLabel": "Original Ṱanḓa {count} $& 30",
+            "cropName": "Cauliflower",
+            "cropKey": "cauliflower",
+            "icon": "⚪",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for cauliflower (Original Ṱanḓa {count} $& 30)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 30 for Cauliflower",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for cauliflower (Original Ṱanḓa {count} $& 30)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-30:sow",
+            "plantingId": "synthetic-planting-30",
+            "cohortSowMonth": 7,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 7,
+            "bedLabel": "Original Ṱanḓa {count} $& 30",
+            "cropName": "Cauliflower",
+            "cropKey": "cauliflower",
+            "icon": "⚪",
+            "action": "sow"
+          },
+          "phrase": "sow cauliflower — start in a tray, 1.2–2cm deep (Original Ṱanḓa {count} $& 30)",
+          "detail": "start in a tray, 1.2–2cm deep",
+          "title": "Sow Cauliflower — Original Ṱanḓa {count} $& 30",
+          "line": "Sow cauliflower — start in a tray, 1.2–2cm deep (Original Ṱanḓa {count} $& 30)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-30:transplant",
+            "plantingId": "synthetic-planting-30",
+            "cohortSowMonth": 7,
+            "cohortExisting": false,
+            "cohortMonthOffset": 1,
+            "month": 20,
+            "bedLabel": "Original Ṱanḓa {count} $& 30",
+            "cropName": "Cauliflower",
+            "cropKey": "cauliflower",
+            "icon": "⚪",
+            "action": "transplant"
+          },
+          "phrase": "check seedlings; transplant when ready cauliflower — rows 60–90cm apart · 35–50cm apart in the row (Original Ṱanḓa {count} $& 30)",
+          "detail": "rows 60–90cm apart · 35–50cm apart in the row",
+          "title": "Check / transplant Cauliflower — Original Ṱanḓa {count} $& 30",
+          "line": "Check seedlings; transplant when ready cauliflower — rows 60–90cm apart · 35–50cm apart in the row (Original Ṱanḓa {count} $& 30)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-30:harvest",
+            "plantingId": "synthetic-planting-30",
+            "cohortSowMonth": 7,
+            "cohortExisting": false,
+            "cohortMonthOffset": 7,
+            "month": 14,
+            "bedLabel": "Original Ṱanḓa {count} $& 30",
+            "cropName": "Cauliflower",
+            "cropKey": "cauliflower",
+            "icon": "⚪",
+            "action": "harvest"
+          },
+          "phrase": "harvest cauliflower (Original Ṱanḓa {count} $& 30)",
+          "detail": null,
+          "title": "Harvest Cauliflower — Original Ṱanḓa {count} $& 30",
+          "line": "Harvest cauliflower (Original Ṱanḓa {count} $& 30)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for cauliflower (Original Ṱanḓa {count} $& 30) · sow cauliflower — start in a tray, 1.2–2cm deep (Original Ṱanḓa {count} $& 30) · check seedlings; transplant when ready cauliflower — rows 60–90cm apart · 35–50cm apart in the row (Original Ṱanḓa {count} $& 30) · harvest cauliflower (Original Ṱanḓa {count} $& 30)"
+    },
+    {
+      "cropKey": "parsley",
+      "sowing": "rows 30cm apart · 10cm apart in the row · sow 1.5–2cm deep",
+      "bed": {
+        "id": "synthetic-bed-31",
+        "label": "Original Ṱanḓa {count} $& 31",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-31",
+        "bedId": "synthetic-bed-31",
+        "cropKey": "parsley",
+        "sowMonth": 8
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-31:prep",
+            "plantingId": "synthetic-planting-31",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 8,
+            "bedLabel": "Original Ṱanḓa {count} $& 31",
+            "cropName": "Parsley",
+            "cropKey": "parsley",
+            "icon": "💚",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for parsley (Original Ṱanḓa {count} $& 31)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 31 for Parsley",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for parsley (Original Ṱanḓa {count} $& 31)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-31:sow",
+            "plantingId": "synthetic-planting-31",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 8,
+            "bedLabel": "Original Ṱanḓa {count} $& 31",
+            "cropName": "Parsley",
+            "cropKey": "parsley",
+            "icon": "💚",
+            "action": "sow"
+          },
+          "phrase": "sow parsley — rows 30cm apart · 10cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 31)",
+          "detail": "rows 30cm apart · 10cm apart in the row · sow 1.5–2cm deep",
+          "title": "Sow Parsley — Original Ṱanḓa {count} $& 31",
+          "line": "Sow parsley — rows 30cm apart · 10cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 31)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-31:harvest",
+            "plantingId": "synthetic-planting-31",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 3,
+            "month": 11,
+            "bedLabel": "Original Ṱanḓa {count} $& 31",
+            "cropName": "Parsley",
+            "cropKey": "parsley",
+            "icon": "💚",
+            "action": "harvest"
+          },
+          "phrase": "harvest parsley (Original Ṱanḓa {count} $& 31)",
+          "detail": null,
+          "title": "Harvest Parsley — Original Ṱanḓa {count} $& 31",
+          "line": "Harvest parsley (Original Ṱanḓa {count} $& 31)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for parsley (Original Ṱanḓa {count} $& 31) · sow parsley — rows 30cm apart · 10cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 31) · harvest parsley (Original Ṱanḓa {count} $& 31)"
+    },
+    {
+      "cropKey": "sorghum",
+      "sowing": "rows 91–230cm apart · 1–15cm apart in the row · sow 2.5–5cm deep",
+      "bed": {
+        "id": "synthetic-bed-32",
+        "label": "Original Ṱanḓa {count} $& 32",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-32",
+        "bedId": "synthetic-bed-32",
+        "cropKey": "sorghum",
+        "sowMonth": 9
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-32:prep",
+            "plantingId": "synthetic-planting-32",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 8,
+            "bedLabel": "Original Ṱanḓa {count} $& 32",
+            "cropName": "Sorghum",
+            "cropKey": "sorghum",
+            "icon": "🟤",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for sorghum (Original Ṱanḓa {count} $& 32)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 32 for Sorghum",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for sorghum (Original Ṱanḓa {count} $& 32)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-32:sow",
+            "plantingId": "synthetic-planting-32",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 9,
+            "bedLabel": "Original Ṱanḓa {count} $& 32",
+            "cropName": "Sorghum",
+            "cropKey": "sorghum",
+            "icon": "🟤",
+            "action": "sow"
+          },
+          "phrase": "sow sorghum — rows 91–230cm apart · 1–15cm apart in the row · sow 2.5–5cm deep (Original Ṱanḓa {count} $& 32)",
+          "detail": "rows 91–230cm apart · 1–15cm apart in the row · sow 2.5–5cm deep",
+          "title": "Sow Sorghum — Original Ṱanḓa {count} $& 32",
+          "line": "Sow sorghum — rows 91–230cm apart · 1–15cm apart in the row · sow 2.5–5cm deep (Original Ṱanḓa {count} $& 32)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-32:harvest",
+            "plantingId": "synthetic-planting-32",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 2,
+            "bedLabel": "Original Ṱanḓa {count} $& 32",
+            "cropName": "Sorghum",
+            "cropKey": "sorghum",
+            "icon": "🟤",
+            "action": "harvest"
+          },
+          "phrase": "harvest sorghum (Original Ṱanḓa {count} $& 32)",
+          "detail": null,
+          "title": "Harvest Sorghum — Original Ṱanḓa {count} $& 32",
+          "line": "Harvest sorghum (Original Ṱanḓa {count} $& 32)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for sorghum (Original Ṱanḓa {count} $& 32) · sow sorghum — rows 91–230cm apart · 1–15cm apart in the row · sow 2.5–5cm deep (Original Ṱanḓa {count} $& 32) · harvest sorghum (Original Ṱanḓa {count} $& 32)"
+    },
+    {
+      "cropKey": "soybean",
+      "sowing": "rows 40–90cm apart · 5–15cm apart in the row · sow 2–5cm deep",
+      "bed": {
+        "id": "synthetic-bed-33",
+        "label": "Original Ṱanḓa {count} $& 33",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-33",
+        "bedId": "synthetic-bed-33",
+        "cropKey": "soybean",
+        "sowMonth": 10
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-33:prep",
+            "plantingId": "synthetic-planting-33",
+            "cohortSowMonth": 10,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 9,
+            "bedLabel": "Original Ṱanḓa {count} $& 33",
+            "cropName": "Soybean",
+            "cropKey": "soybean",
+            "icon": "🟡",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for soybean (Original Ṱanḓa {count} $& 33)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 33 for Soybean",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for soybean (Original Ṱanḓa {count} $& 33)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-33:sow",
+            "plantingId": "synthetic-planting-33",
+            "cohortSowMonth": 10,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 10,
+            "bedLabel": "Original Ṱanḓa {count} $& 33",
+            "cropName": "Soybean",
+            "cropKey": "soybean",
+            "icon": "🟡",
+            "action": "sow"
+          },
+          "phrase": "sow soybean — rows 40–90cm apart · 5–15cm apart in the row · sow 2–5cm deep (Original Ṱanḓa {count} $& 33)",
+          "detail": "rows 40–90cm apart · 5–15cm apart in the row · sow 2–5cm deep",
+          "title": "Sow Soybean — Original Ṱanḓa {count} $& 33",
+          "line": "Sow soybean — rows 40–90cm apart · 5–15cm apart in the row · sow 2–5cm deep (Original Ṱanḓa {count} $& 33)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-33:harvest",
+            "plantingId": "synthetic-planting-33",
+            "cohortSowMonth": 10,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 33",
+            "cropName": "Soybean",
+            "cropKey": "soybean",
+            "icon": "🟡",
+            "action": "harvest"
+          },
+          "phrase": "harvest soybean (Original Ṱanḓa {count} $& 33)",
+          "detail": null,
+          "title": "Harvest Soybean — Original Ṱanḓa {count} $& 33",
+          "line": "Harvest soybean (Original Ṱanḓa {count} $& 33)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for soybean (Original Ṱanḓa {count} $& 33) · sow soybean — rows 40–90cm apart · 5–15cm apart in the row · sow 2–5cm deep (Original Ṱanḓa {count} $& 33) · harvest soybean (Original Ṱanḓa {count} $& 33)"
+    },
+    {
+      "cropKey": "brinjal",
+      "sowing": "rows 70–80cm apart · 50cm apart in the row · sow 1.5–2cm deep",
+      "bed": {
+        "id": "synthetic-bed-34",
+        "label": "Original Ṱanḓa {count} $& 34",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-34",
+        "bedId": "synthetic-bed-34",
+        "cropKey": "brinjal",
+        "sowMonth": 11
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-34:prep",
+            "plantingId": "synthetic-planting-34",
+            "cohortSowMonth": 11,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 11,
+            "bedLabel": "Original Ṱanḓa {count} $& 34",
+            "cropName": "Brinjal (eggplant)",
+            "cropKey": "brinjal",
+            "icon": "🍆",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for brinjal (eggplant) (Original Ṱanḓa {count} $& 34)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 34 for Brinjal (eggplant)",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for brinjal (eggplant) (Original Ṱanḓa {count} $& 34)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-34:sow",
+            "plantingId": "synthetic-planting-34",
+            "cohortSowMonth": 11,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 11,
+            "bedLabel": "Original Ṱanḓa {count} $& 34",
+            "cropName": "Brinjal (eggplant)",
+            "cropKey": "brinjal",
+            "icon": "🍆",
+            "action": "sow"
+          },
+          "phrase": "sow brinjal (eggplant) — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 34)",
+          "detail": "start in a tray, 1.5–2cm deep",
+          "title": "Sow Brinjal (eggplant) — Original Ṱanḓa {count} $& 34",
+          "line": "Sow brinjal (eggplant) — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 34)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-34:transplant",
+            "plantingId": "synthetic-planting-34",
+            "cohortSowMonth": 11,
+            "cohortExisting": false,
+            "cohortMonthOffset": 1,
+            "month": 12,
+            "bedLabel": "Original Ṱanḓa {count} $& 34",
+            "cropName": "Brinjal (eggplant)",
+            "cropKey": "brinjal",
+            "icon": "🍆",
+            "action": "transplant"
+          },
+          "phrase": "check seedlings; transplant when ready brinjal (eggplant) — rows 70–80cm apart · 50cm apart in the row (Original Ṱanḓa {count} $& 34)",
+          "detail": "rows 70–80cm apart · 50cm apart in the row",
+          "title": "Check / transplant Brinjal (eggplant) — Original Ṱanḓa {count} $& 34",
+          "line": "Check seedlings; transplant when ready brinjal (eggplant) — rows 70–80cm apart · 50cm apart in the row (Original Ṱanḓa {count} $& 34)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-34:harvest",
+            "plantingId": "synthetic-planting-34",
+            "cohortSowMonth": 11,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 4,
+            "bedLabel": "Original Ṱanḓa {count} $& 34",
+            "cropName": "Brinjal (eggplant)",
+            "cropKey": "brinjal",
+            "icon": "🍆",
+            "action": "harvest"
+          },
+          "phrase": "harvest brinjal (eggplant) (Original Ṱanḓa {count} $& 34)",
+          "detail": null,
+          "title": "Harvest Brinjal (eggplant) — Original Ṱanḓa {count} $& 34",
+          "line": "Harvest brinjal (eggplant) (Original Ṱanḓa {count} $& 34)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for brinjal (eggplant) (Original Ṱanḓa {count} $& 34) · sow brinjal (eggplant) — start in a tray, 1.5–2cm deep (Original Ṱanḓa {count} $& 34) · check seedlings; transplant when ready brinjal (eggplant) — rows 70–80cm apart · 50cm apart in the row (Original Ṱanḓa {count} $& 34) · harvest brinjal (eggplant) (Original Ṱanḓa {count} $& 34)"
+    },
+    {
+      "cropKey": "gem-squash",
+      "sowing": "rows 100–150cm apart · 40–50cm apart in the row · sow 2–3cm deep",
+      "bed": {
+        "id": "synthetic-bed-35",
+        "label": "Original Ṱanḓa {count} $& 35",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-35",
+        "bedId": "synthetic-bed-35",
+        "cropKey": "gem-squash",
+        "sowMonth": 12
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-35:prep",
+            "plantingId": "synthetic-planting-35",
+            "cohortSowMonth": 12,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 11,
+            "bedLabel": "Original Ṱanḓa {count} $& 35",
+            "cropName": "Gem squash",
+            "cropKey": "gem-squash",
+            "icon": "🥎",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for gem squash (Original Ṱanḓa {count} $& 35)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 35 for Gem squash",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for gem squash (Original Ṱanḓa {count} $& 35)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-35:sow",
+            "plantingId": "synthetic-planting-35",
+            "cohortSowMonth": 12,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 12,
+            "bedLabel": "Original Ṱanḓa {count} $& 35",
+            "cropName": "Gem squash",
+            "cropKey": "gem-squash",
+            "icon": "🥎",
+            "action": "sow"
+          },
+          "phrase": "sow gem squash — rows 100–150cm apart · 40–50cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 35)",
+          "detail": "rows 100–150cm apart · 40–50cm apart in the row · sow 2–3cm deep",
+          "title": "Sow Gem squash — Original Ṱanḓa {count} $& 35",
+          "line": "Sow gem squash — rows 100–150cm apart · 40–50cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 35)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-35:harvest",
+            "plantingId": "synthetic-planting-35",
+            "cohortSowMonth": 12,
+            "cohortExisting": false,
+            "cohortMonthOffset": 3,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 35",
+            "cropName": "Gem squash",
+            "cropKey": "gem-squash",
+            "icon": "🥎",
+            "action": "harvest"
+          },
+          "phrase": "harvest gem squash (Original Ṱanḓa {count} $& 35)",
+          "detail": null,
+          "title": "Harvest Gem squash — Original Ṱanḓa {count} $& 35",
+          "line": "Harvest gem squash (Original Ṱanḓa {count} $& 35)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for gem squash (Original Ṱanḓa {count} $& 35) · sow gem squash — rows 100–150cm apart · 40–50cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 35) · harvest gem squash (Original Ṱanḓa {count} $& 35)"
+    },
+    {
+      "cropKey": "baby-marrow",
+      "sowing": "rows 80–120cm apart · 35–50cm apart in the row · sow 2–3cm deep",
+      "bed": {
+        "id": "synthetic-bed-36",
+        "label": "Original Ṱanḓa {count} $& 36",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-36",
+        "bedId": "synthetic-bed-36",
+        "cropKey": "baby-marrow",
+        "sowMonth": 1
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-36:prep",
+            "plantingId": "synthetic-planting-36",
+            "cohortSowMonth": 1,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 12,
+            "bedLabel": "Original Ṱanḓa {count} $& 36",
+            "cropName": "Baby marrow (courgette)",
+            "cropKey": "baby-marrow",
+            "icon": "🟩",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for baby marrow (courgette) (Original Ṱanḓa {count} $& 36)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 36 for Baby marrow (courgette)",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for baby marrow (courgette) (Original Ṱanḓa {count} $& 36)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-36:sow",
+            "plantingId": "synthetic-planting-36",
+            "cohortSowMonth": 1,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 1,
+            "bedLabel": "Original Ṱanḓa {count} $& 36",
+            "cropName": "Baby marrow (courgette)",
+            "cropKey": "baby-marrow",
+            "icon": "🟩",
+            "action": "sow"
+          },
+          "phrase": "sow baby marrow (courgette) — rows 80–120cm apart · 35–50cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 36)",
+          "detail": "rows 80–120cm apart · 35–50cm apart in the row · sow 2–3cm deep",
+          "title": "Sow Baby marrow (courgette) — Original Ṱanḓa {count} $& 36",
+          "line": "Sow baby marrow (courgette) — rows 80–120cm apart · 35–50cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 36)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-36:harvest",
+            "plantingId": "synthetic-planting-36",
+            "cohortSowMonth": 1,
+            "cohortExisting": false,
+            "cohortMonthOffset": 2,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 36",
+            "cropName": "Baby marrow (courgette)",
+            "cropKey": "baby-marrow",
+            "icon": "🟩",
+            "action": "harvest"
+          },
+          "phrase": "harvest baby marrow (courgette) (Original Ṱanḓa {count} $& 36)",
+          "detail": null,
+          "title": "Harvest Baby marrow (courgette) — Original Ṱanḓa {count} $& 36",
+          "line": "Harvest baby marrow (courgette) (Original Ṱanḓa {count} $& 36)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for baby marrow (courgette) (Original Ṱanḓa {count} $& 36) · sow baby marrow (courgette) — rows 80–120cm apart · 35–50cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 36) · harvest baby marrow (courgette) (Original Ṱanḓa {count} $& 36)"
+    },
+    {
+      "cropKey": "spanspek",
+      "sowing": "rows 150cm apart · 25–35cm apart in the row · sow 2–3cm deep",
+      "bed": {
+        "id": "synthetic-bed-37",
+        "label": "Original Ṱanḓa {count} $& 37",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-37",
+        "bedId": "synthetic-bed-37",
+        "cropKey": "spanspek",
+        "sowMonth": 2
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-37:prep",
+            "plantingId": "synthetic-planting-37",
+            "cohortSowMonth": 2,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 1,
+            "bedLabel": "Original Ṱanḓa {count} $& 37",
+            "cropName": "Spanspek (sweet melon)",
+            "cropKey": "spanspek",
+            "icon": "🍈",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for spanspek (sweet melon) (Original Ṱanḓa {count} $& 37)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 37 for Spanspek (sweet melon)",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for spanspek (sweet melon) (Original Ṱanḓa {count} $& 37)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-37:sow",
+            "plantingId": "synthetic-planting-37",
+            "cohortSowMonth": 2,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 2,
+            "bedLabel": "Original Ṱanḓa {count} $& 37",
+            "cropName": "Spanspek (sweet melon)",
+            "cropKey": "spanspek",
+            "icon": "🍈",
+            "action": "sow"
+          },
+          "phrase": "sow spanspek (sweet melon) — rows 150cm apart · 25–35cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 37)",
+          "detail": "rows 150cm apart · 25–35cm apart in the row · sow 2–3cm deep",
+          "title": "Sow Spanspek (sweet melon) — Original Ṱanḓa {count} $& 37",
+          "line": "Sow spanspek (sweet melon) — rows 150cm apart · 25–35cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 37)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-37:harvest",
+            "plantingId": "synthetic-planting-37",
+            "cohortSowMonth": 2,
+            "cohortExisting": false,
+            "cohortMonthOffset": 4,
+            "month": 6,
+            "bedLabel": "Original Ṱanḓa {count} $& 37",
+            "cropName": "Spanspek (sweet melon)",
+            "cropKey": "spanspek",
+            "icon": "🍈",
+            "action": "harvest"
+          },
+          "phrase": "harvest spanspek (sweet melon) (Original Ṱanḓa {count} $& 37)",
+          "detail": null,
+          "title": "Harvest Spanspek (sweet melon) — Original Ṱanḓa {count} $& 37",
+          "line": "Harvest spanspek (sweet melon) (Original Ṱanḓa {count} $& 37)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for spanspek (sweet melon) (Original Ṱanḓa {count} $& 37) · sow spanspek (sweet melon) — rows 150cm apart · 25–35cm apart in the row · sow 2–3cm deep (Original Ṱanḓa {count} $& 37) · harvest spanspek (sweet melon) (Original Ṱanḓa {count} $& 37)"
+    },
+    {
+      "cropKey": "sweetcorn",
+      "sowing": "rows 70–80cm apart · 25–35cm apart in the row · sow 2.5–4cm deep",
+      "bed": {
+        "id": "synthetic-bed-38",
+        "label": "Original Ṱanḓa {count} $& 38",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-38",
+        "bedId": "synthetic-bed-38",
+        "cropKey": "sweetcorn",
+        "sowMonth": 3
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-38:prep",
+            "plantingId": "synthetic-planting-38",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 2,
+            "bedLabel": "Original Ṱanḓa {count} $& 38",
+            "cropName": "Sweetcorn",
+            "cropKey": "sweetcorn",
+            "icon": "🟨",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for sweetcorn (Original Ṱanḓa {count} $& 38)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 38 for Sweetcorn",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for sweetcorn (Original Ṱanḓa {count} $& 38)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-38:sow",
+            "plantingId": "synthetic-planting-38",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 38",
+            "cropName": "Sweetcorn",
+            "cropKey": "sweetcorn",
+            "icon": "🟨",
+            "action": "sow"
+          },
+          "phrase": "sow sweetcorn — rows 70–80cm apart · 25–35cm apart in the row · sow 2.5–4cm deep (Original Ṱanḓa {count} $& 38)",
+          "detail": "rows 70–80cm apart · 25–35cm apart in the row · sow 2.5–4cm deep",
+          "title": "Sow Sweetcorn — Original Ṱanḓa {count} $& 38",
+          "line": "Sow sweetcorn — rows 70–80cm apart · 25–35cm apart in the row · sow 2.5–4cm deep (Original Ṱanḓa {count} $& 38)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-38:harvest",
+            "plantingId": "synthetic-planting-38",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": 3,
+            "month": 6,
+            "bedLabel": "Original Ṱanḓa {count} $& 38",
+            "cropName": "Sweetcorn",
+            "cropKey": "sweetcorn",
+            "icon": "🟨",
+            "action": "harvest"
+          },
+          "phrase": "harvest sweetcorn (Original Ṱanḓa {count} $& 38)",
+          "detail": null,
+          "title": "Harvest Sweetcorn — Original Ṱanḓa {count} $& 38",
+          "line": "Harvest sweetcorn (Original Ṱanḓa {count} $& 38)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for sweetcorn (Original Ṱanḓa {count} $& 38) · sow sweetcorn — rows 70–80cm apart · 25–35cm apart in the row · sow 2.5–4cm deep (Original Ṱanḓa {count} $& 38) · harvest sweetcorn (Original Ṱanḓa {count} $& 38)"
+    },
+    {
+      "cropKey": "cowpea",
+      "sowing": "rows 50–75cm apart · 15–75cm apart in the row · sow 3–4cm deep",
+      "bed": {
+        "id": "synthetic-bed-39",
+        "label": "Original Ṱanḓa {count} $& 39",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-39",
+        "bedId": "synthetic-bed-39",
+        "cropKey": "cowpea",
+        "sowMonth": 4
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-39:prep",
+            "plantingId": "synthetic-planting-39",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 39",
+            "cropName": "Cowpea (imbumba/dinawa)",
+            "cropKey": "cowpea",
+            "icon": "🖤",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for cowpea (imbumba/dinawa) (Original Ṱanḓa {count} $& 39)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 39 for Cowpea (imbumba/dinawa)",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for cowpea (imbumba/dinawa) (Original Ṱanḓa {count} $& 39)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-39:sow",
+            "plantingId": "synthetic-planting-39",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 4,
+            "bedLabel": "Original Ṱanḓa {count} $& 39",
+            "cropName": "Cowpea (imbumba/dinawa)",
+            "cropKey": "cowpea",
+            "icon": "🖤",
+            "action": "sow"
+          },
+          "phrase": "sow cowpea (imbumba/dinawa) — rows 50–75cm apart · 15–75cm apart in the row · sow 3–4cm deep (Original Ṱanḓa {count} $& 39)",
+          "detail": "rows 50–75cm apart · 15–75cm apart in the row · sow 3–4cm deep",
+          "title": "Sow Cowpea (imbumba/dinawa) — Original Ṱanḓa {count} $& 39",
+          "line": "Sow cowpea (imbumba/dinawa) — rows 50–75cm apart · 15–75cm apart in the row · sow 3–4cm deep (Original Ṱanḓa {count} $& 39)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-39:harvest",
+            "plantingId": "synthetic-planting-39",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": 4,
+            "month": 20,
+            "bedLabel": "Original Ṱanḓa {count} $& 39",
+            "cropName": "Cowpea (imbumba/dinawa)",
+            "cropKey": "cowpea",
+            "icon": "🖤",
+            "action": "harvest"
+          },
+          "phrase": "harvest cowpea (imbumba/dinawa) (Original Ṱanḓa {count} $& 39)",
+          "detail": null,
+          "title": "Harvest Cowpea (imbumba/dinawa) — Original Ṱanḓa {count} $& 39",
+          "line": "Harvest cowpea (imbumba/dinawa) (Original Ṱanḓa {count} $& 39)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for cowpea (imbumba/dinawa) (Original Ṱanḓa {count} $& 39) · sow cowpea (imbumba/dinawa) — rows 50–75cm apart · 15–75cm apart in the row · sow 3–4cm deep (Original Ṱanḓa {count} $& 39) · harvest cowpea (imbumba/dinawa) (Original Ṱanḓa {count} $& 39)"
+    },
+    {
+      "cropKey": "bambara-groundnut",
+      "sowing": "rows 45–90cm apart · 10–15cm apart in the row · sow 2.5–7.5cm deep",
+      "bed": {
+        "id": "synthetic-bed-40",
+        "label": "Original Ṱanḓa {count} $& 40",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-40",
+        "bedId": "synthetic-bed-40",
+        "cropKey": "bambara-groundnut",
+        "sowMonth": 5
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-40:prep",
+            "plantingId": "synthetic-planting-40",
+            "cohortSowMonth": 5,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 4,
+            "bedLabel": "Original Ṱanḓa {count} $& 40",
+            "cropName": "Bambara groundnut (jugo bean)",
+            "cropKey": "bambara-groundnut",
+            "icon": "🟠",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for bambara groundnut (jugo bean) (Original Ṱanḓa {count} $& 40)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 40 for Bambara groundnut (jugo bean)",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for bambara groundnut (jugo bean) (Original Ṱanḓa {count} $& 40)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-40:sow",
+            "plantingId": "synthetic-planting-40",
+            "cohortSowMonth": 5,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 5,
+            "bedLabel": "Original Ṱanḓa {count} $& 40",
+            "cropName": "Bambara groundnut (jugo bean)",
+            "cropKey": "bambara-groundnut",
+            "icon": "🟠",
+            "action": "sow"
+          },
+          "phrase": "sow bambara groundnut (jugo bean) — rows 45–90cm apart · 10–15cm apart in the row · sow 2.5–7.5cm deep (Original Ṱanḓa {count} $& 40)",
+          "detail": "rows 45–90cm apart · 10–15cm apart in the row · sow 2.5–7.5cm deep",
+          "title": "Sow Bambara groundnut (jugo bean) — Original Ṱanḓa {count} $& 40",
+          "line": "Sow bambara groundnut (jugo bean) — rows 45–90cm apart · 10–15cm apart in the row · sow 2.5–7.5cm deep (Original Ṱanḓa {count} $& 40)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-40:harvest",
+            "plantingId": "synthetic-planting-40",
+            "cohortSowMonth": 5,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 22,
+            "bedLabel": "Original Ṱanḓa {count} $& 40",
+            "cropName": "Bambara groundnut (jugo bean)",
+            "cropKey": "bambara-groundnut",
+            "icon": "🟠",
+            "action": "harvest"
+          },
+          "phrase": "harvest bambara groundnut (jugo bean) (Original Ṱanḓa {count} $& 40)",
+          "detail": null,
+          "title": "Harvest Bambara groundnut (jugo bean) — Original Ṱanḓa {count} $& 40",
+          "line": "Harvest bambara groundnut (jugo bean) (Original Ṱanḓa {count} $& 40)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for bambara groundnut (jugo bean) (Original Ṱanḓa {count} $& 40) · sow bambara groundnut (jugo bean) — rows 45–90cm apart · 10–15cm apart in the row · sow 2.5–7.5cm deep (Original Ṱanḓa {count} $& 40) · harvest bambara groundnut (jugo bean) (Original Ṱanḓa {count} $& 40)"
+    },
+    {
+      "cropKey": "sunflower",
+      "sowing": "rows 90–100cm apart · 30cm apart in the row · sow 5–8cm deep",
+      "bed": {
+        "id": "synthetic-bed-41",
+        "label": "Original Ṱanḓa {count} $& 41",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-41",
+        "bedId": "synthetic-bed-41",
+        "cropKey": "sunflower",
+        "sowMonth": 6
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-41:prep",
+            "plantingId": "synthetic-planting-41",
+            "cohortSowMonth": 6,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 5,
+            "bedLabel": "Original Ṱanḓa {count} $& 41",
+            "cropName": "Sunflower (for seed)",
+            "cropKey": "sunflower",
+            "icon": "🌻",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for sunflower (for seed) (Original Ṱanḓa {count} $& 41)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 41 for Sunflower (for seed)",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for sunflower (for seed) (Original Ṱanḓa {count} $& 41)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-41:sow",
+            "plantingId": "synthetic-planting-41",
+            "cohortSowMonth": 6,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 6,
+            "bedLabel": "Original Ṱanḓa {count} $& 41",
+            "cropName": "Sunflower (for seed)",
+            "cropKey": "sunflower",
+            "icon": "🌻",
+            "action": "sow"
+          },
+          "phrase": "sow sunflower (for seed) — rows 90–100cm apart · 30cm apart in the row · sow 5–8cm deep (Original Ṱanḓa {count} $& 41)",
+          "detail": "rows 90–100cm apart · 30cm apart in the row · sow 5–8cm deep",
+          "title": "Sow Sunflower (for seed) — Original Ṱanḓa {count} $& 41",
+          "line": "Sow sunflower (for seed) — rows 90–100cm apart · 30cm apart in the row · sow 5–8cm deep (Original Ṱanḓa {count} $& 41)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-41:harvest",
+            "plantingId": "synthetic-planting-41",
+            "cohortSowMonth": 6,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 23,
+            "bedLabel": "Original Ṱanḓa {count} $& 41",
+            "cropName": "Sunflower (for seed)",
+            "cropKey": "sunflower",
+            "icon": "🌻",
+            "action": "harvest"
+          },
+          "phrase": "harvest sunflower (for seed) (Original Ṱanḓa {count} $& 41)",
+          "detail": null,
+          "title": "Harvest Sunflower (for seed) — Original Ṱanḓa {count} $& 41",
+          "line": "Harvest sunflower (for seed) (Original Ṱanḓa {count} $& 41)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for sunflower (for seed) (Original Ṱanḓa {count} $& 41) · sow sunflower (for seed) — rows 90–100cm apart · 30cm apart in the row · sow 5–8cm deep (Original Ṱanḓa {count} $& 41) · harvest sunflower (for seed) (Original Ṱanḓa {count} $& 41)"
+    },
+    {
+      "cropKey": "radish",
+      "sowing": "rows 15–20cm apart · 4–6cm apart in the row · sow 1.5–2cm deep",
+      "bed": {
+        "id": "synthetic-bed-42",
+        "label": "Original Ṱanḓa {count} $& 42",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-42",
+        "bedId": "synthetic-bed-42",
+        "cropKey": "radish",
+        "sowMonth": 7
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-42:prep",
+            "plantingId": "synthetic-planting-42",
+            "cohortSowMonth": 7,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 6,
+            "bedLabel": "Original Ṱanḓa {count} $& 42",
+            "cropName": "Radish",
+            "cropKey": "radish",
+            "icon": "🔴",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for radish (Original Ṱanḓa {count} $& 42)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 42 for Radish",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for radish (Original Ṱanḓa {count} $& 42)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-42:sow",
+            "plantingId": "synthetic-planting-42",
+            "cohortSowMonth": 7,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 7,
+            "bedLabel": "Original Ṱanḓa {count} $& 42",
+            "cropName": "Radish",
+            "cropKey": "radish",
+            "icon": "🔴",
+            "action": "sow"
+          },
+          "phrase": "sow radish — rows 15–20cm apart · 4–6cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 42)",
+          "detail": "rows 15–20cm apart · 4–6cm apart in the row · sow 1.5–2cm deep",
+          "title": "Sow Radish — Original Ṱanḓa {count} $& 42",
+          "line": "Sow radish — rows 15–20cm apart · 4–6cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 42)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-42:harvest",
+            "plantingId": "synthetic-planting-42",
+            "cohortSowMonth": 7,
+            "cohortExisting": false,
+            "cohortMonthOffset": 1,
+            "month": 20,
+            "bedLabel": "Original Ṱanḓa {count} $& 42",
+            "cropName": "Radish",
+            "cropKey": "radish",
+            "icon": "🔴",
+            "action": "harvest"
+          },
+          "phrase": "harvest radish (Original Ṱanḓa {count} $& 42)",
+          "detail": null,
+          "title": "Harvest Radish — Original Ṱanḓa {count} $& 42",
+          "line": "Harvest radish (Original Ṱanḓa {count} $& 42)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for radish (Original Ṱanḓa {count} $& 42) · sow radish — rows 15–20cm apart · 4–6cm apart in the row · sow 1.5–2cm deep (Original Ṱanḓa {count} $& 42) · harvest radish (Original Ṱanḓa {count} $& 42)"
+    },
+    {
+      "cropKey": "mung-bean",
+      "sowing": "rows 18–120cm apart · 5–15cm apart in the row · sow 4–7.5cm deep",
+      "bed": {
+        "id": "synthetic-bed-43",
+        "label": "Original Ṱanḓa {count} $& 43",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-43",
+        "bedId": "synthetic-bed-43",
+        "cropKey": "mung-bean",
+        "sowMonth": 8
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-43:prep",
+            "plantingId": "synthetic-planting-43",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 8,
+            "bedLabel": "Original Ṱanḓa {count} $& 43",
+            "cropName": "Mung bean",
+            "cropKey": "mung-bean",
+            "icon": "🔵",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for mung bean (Original Ṱanḓa {count} $& 43)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 43 for Mung bean",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for mung bean (Original Ṱanḓa {count} $& 43)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-43:sow",
+            "plantingId": "synthetic-planting-43",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 8,
+            "bedLabel": "Original Ṱanḓa {count} $& 43",
+            "cropName": "Mung bean",
+            "cropKey": "mung-bean",
+            "icon": "🔵",
+            "action": "sow"
+          },
+          "phrase": "sow mung bean — rows 18–120cm apart · 5–15cm apart in the row · sow 4–7.5cm deep (Original Ṱanḓa {count} $& 43)",
+          "detail": "rows 18–120cm apart · 5–15cm apart in the row · sow 4–7.5cm deep",
+          "title": "Sow Mung bean — Original Ṱanḓa {count} $& 43",
+          "line": "Sow mung bean — rows 18–120cm apart · 5–15cm apart in the row · sow 4–7.5cm deep (Original Ṱanḓa {count} $& 43)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-43:harvest",
+            "plantingId": "synthetic-planting-43",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 3,
+            "month": 11,
+            "bedLabel": "Original Ṱanḓa {count} $& 43",
+            "cropName": "Mung bean",
+            "cropKey": "mung-bean",
+            "icon": "🔵",
+            "action": "harvest"
+          },
+          "phrase": "harvest mung bean (Original Ṱanḓa {count} $& 43)",
+          "detail": null,
+          "title": "Harvest Mung bean — Original Ṱanḓa {count} $& 43",
+          "line": "Harvest mung bean (Original Ṱanḓa {count} $& 43)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for mung bean (Original Ṱanḓa {count} $& 43) · sow mung bean — rows 18–120cm apart · 5–15cm apart in the row · sow 4–7.5cm deep (Original Ṱanḓa {count} $& 43) · harvest mung bean (Original Ṱanḓa {count} $& 43)"
+    },
+    {
+      "cropKey": "spider-plant",
+      "sowing": "rows 25–50cm apart · 10–15cm apart in the row",
+      "bed": {
+        "id": "synthetic-bed-44",
+        "label": "Original Ṱanḓa {count} $& 44",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-44",
+        "bedId": "synthetic-bed-44",
+        "cropKey": "spider-plant",
+        "sowMonth": 9
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-44:prep",
+            "plantingId": "synthetic-planting-44",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 9,
+            "bedLabel": "Original Ṱanḓa {count} $& 44",
+            "cropName": "Spider plant (Cleome gynandra)",
+            "cropKey": "spider-plant",
+            "icon": "🕸️",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before adding amendments for spider plant (Cleome gynandra) (Original Ṱanḓa {count} $& 44)",
+          "detail": "assess soil and drainage; use a soil test or local advice before adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 44 for Spider plant (Cleome gynandra)",
+          "line": "Assess soil and drainage; use a soil test or local advice before adding amendments for spider plant (Cleome gynandra) (Original Ṱanḓa {count} $& 44)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-44:sow",
+            "plantingId": "synthetic-planting-44",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 9,
+            "bedLabel": "Original Ṱanḓa {count} $& 44",
+            "cropName": "Spider plant (Cleome gynandra)",
+            "cropKey": "spider-plant",
+            "icon": "🕸️",
+            "action": "sow"
+          },
+          "phrase": "sow spider plant (Cleome gynandra) — start in a tray (Original Ṱanḓa {count} $& 44)",
+          "detail": "start in a tray",
+          "title": "Sow Spider plant (Cleome gynandra) — Original Ṱanḓa {count} $& 44",
+          "line": "Sow spider plant (Cleome gynandra) — start in a tray (Original Ṱanḓa {count} $& 44)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-44:transplant",
+            "plantingId": "synthetic-planting-44",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": 1,
+            "month": 10,
+            "bedLabel": "Original Ṱanḓa {count} $& 44",
+            "cropName": "Spider plant (Cleome gynandra)",
+            "cropKey": "spider-plant",
+            "icon": "🕸️",
+            "action": "transplant"
+          },
+          "phrase": "check seedlings; transplant when ready spider plant (Cleome gynandra) — rows 25–50cm apart · 10–15cm apart in the row (Original Ṱanḓa {count} $& 44)",
+          "detail": "rows 25–50cm apart · 10–15cm apart in the row",
+          "title": "Check / transplant Spider plant (Cleome gynandra) — Original Ṱanḓa {count} $& 44",
+          "line": "Check seedlings; transplant when ready spider plant (Cleome gynandra) — rows 25–50cm apart · 10–15cm apart in the row (Original Ṱanḓa {count} $& 44)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-44:harvest",
+            "plantingId": "synthetic-planting-44",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": 4,
+            "month": 1,
+            "bedLabel": "Original Ṱanḓa {count} $& 44",
+            "cropName": "Spider plant (Cleome gynandra)",
+            "cropKey": "spider-plant",
+            "icon": "🕸️",
+            "action": "harvest"
+          },
+          "phrase": "harvest spider plant (Cleome gynandra) (Original Ṱanḓa {count} $& 44)",
+          "detail": null,
+          "title": "Harvest Spider plant (Cleome gynandra) — Original Ṱanḓa {count} $& 44",
+          "line": "Harvest spider plant (Cleome gynandra) (Original Ṱanḓa {count} $& 44)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before adding amendments for spider plant (Cleome gynandra) (Original Ṱanḓa {count} $& 44) · sow spider plant (Cleome gynandra) — start in a tray (Original Ṱanḓa {count} $& 44) · check seedlings; transplant when ready spider plant (Cleome gynandra) — rows 25–50cm apart · 10–15cm apart in the row (Original Ṱanḓa {count} $& 44) · harvest spider plant (Cleome gynandra) (Original Ṱanḓa {count} $& 44)"
+    },
+    {
+      "cropKey": "african-nightshade",
+      "sowing": "plant spacing 30cm each way",
+      "bed": {
+        "id": "synthetic-bed-45",
+        "label": "Original Ṱanḓa {count} $& 45",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-45",
+        "bedId": "synthetic-bed-45",
+        "cropKey": "african-nightshade",
+        "sowMonth": 10
+      },
+      "tasks": [
+        {
+          "task": {
+            "id": "synthetic-planting-45:prep",
+            "plantingId": "synthetic-planting-45",
+            "cohortSowMonth": 10,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 10,
+            "bedLabel": "Original Ṱanḓa {count} $& 45",
+            "cropName": "African nightshade (umsobo)",
+            "cropKey": "african-nightshade",
+            "icon": "🟪",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          "phrase": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for african nightshade (umsobo) (Original Ṱanḓa {count} $& 45)",
+          "detail": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+          "title": "Prep Original Ṱanḓa {count} $& 45 for African nightshade (umsobo)",
+          "line": "Assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for african nightshade (umsobo) (Original Ṱanḓa {count} $& 45)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-45:sow",
+            "plantingId": "synthetic-planting-45",
+            "cohortSowMonth": 10,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 10,
+            "bedLabel": "Original Ṱanḓa {count} $& 45",
+            "cropName": "African nightshade (umsobo)",
+            "cropKey": "african-nightshade",
+            "icon": "🟪",
+            "action": "sow"
+          },
+          "phrase": "sow african nightshade (umsobo) — start in a tray (Original Ṱanḓa {count} $& 45)",
+          "detail": "start in a tray",
+          "title": "Sow African nightshade (umsobo) — Original Ṱanḓa {count} $& 45",
+          "line": "Sow african nightshade (umsobo) — start in a tray (Original Ṱanḓa {count} $& 45)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-45:transplant",
+            "plantingId": "synthetic-planting-45",
+            "cohortSowMonth": 10,
+            "cohortExisting": false,
+            "cohortMonthOffset": 1,
+            "month": 11,
+            "bedLabel": "Original Ṱanḓa {count} $& 45",
+            "cropName": "African nightshade (umsobo)",
+            "cropKey": "african-nightshade",
+            "icon": "🟪",
+            "action": "transplant"
+          },
+          "phrase": "check seedlings; transplant when ready african nightshade (umsobo) — plant spacing 30cm each way (Original Ṱanḓa {count} $& 45)",
+          "detail": "plant spacing 30cm each way",
+          "title": "Check / transplant African nightshade (umsobo) — Original Ṱanḓa {count} $& 45",
+          "line": "Check seedlings; transplant when ready african nightshade (umsobo) — plant spacing 30cm each way (Original Ṱanḓa {count} $& 45)"
+        },
+        {
+          "task": {
+            "id": "synthetic-planting-45:harvest",
+            "plantingId": "synthetic-planting-45",
+            "cohortSowMonth": 10,
+            "cohortExisting": false,
+            "cohortMonthOffset": 3,
+            "month": 1,
+            "bedLabel": "Original Ṱanḓa {count} $& 45",
+            "cropName": "African nightshade (umsobo)",
+            "cropKey": "african-nightshade",
+            "icon": "🟪",
+            "action": "harvest"
+          },
+          "phrase": "harvest african nightshade (umsobo) (Original Ṱanḓa {count} $& 45)",
+          "detail": null,
+          "title": "Harvest African nightshade (umsobo) — Original Ṱanḓa {count} $& 45",
+          "line": "Harvest african nightshade (umsobo) (Original Ṱanḓa {count} $& 45)"
+        }
+      ],
+      "sentence": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments for african nightshade (umsobo) (Original Ṱanḓa {count} $& 45) · sow african nightshade (umsobo) — start in a tray (Original Ṱanḓa {count} $& 45) · check seedlings; transplant when ready african nightshade (umsobo) — plant spacing 30cm each way (Original Ṱanḓa {count} $& 45) · harvest african nightshade (umsobo) (Original Ṱanḓa {count} $& 45)"
+    },
+    {
+      "cropKey": "sunn-hemp",
+      "sowing": "broadcast at 20kg/ha (Red cultivar) to 40-50kg/ha (Black cultivar); terminate at large biomass, before the next crop",
+      "bed": {
+        "id": "synthetic-bed-46",
+        "label": "Original Ṱanḓa {count} $& 46",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-46",
+        "bedId": "synthetic-bed-46",
+        "cropKey": "sunn-hemp",
+        "sowMonth": 11
+      },
+      "tasks": [],
+      "sentence": "nothing due"
+    },
+    {
+      "cropKey": "medic",
+      "sowing": "broadcast at 12-15kg/ha alone, or 4-7kg/ha in a pasture mixture; terminate before the next crop",
+      "bed": {
+        "id": "synthetic-bed-47",
+        "label": "Original Ṱanḓa {count} $& 47",
+        "areaM2": 6,
+        "kind": "plot"
+      },
+      "planting": {
+        "id": "synthetic-planting-47",
+        "bedId": "synthetic-bed-47",
+        "cropKey": "medic",
+        "sowMonth": 12
+      },
+      "tasks": [],
+      "sentence": "nothing due"
+    },
+    {
+      "cropKey": "fodder-radish",
+      "sowing": "broadcast at up to 4kg/ha, or drill in rows up to 90cm apart at 2kg/ha; terminate at full flowering, before the next crop",
+      "bed": {
+        "id": "synthetic-bed-48",
+        "label": "Original Ṱanḓa {count} $& 48",
+        "areaM2": 6,
+        "kind": "bed"
+      },
+      "planting": {
+        "id": "synthetic-planting-48",
+        "bedId": "synthetic-bed-48",
+        "cropKey": "fodder-radish",
+        "sowMonth": 1
+      },
+      "tasks": [],
+      "sentence": "nothing due"
+    }
+  ]
+}

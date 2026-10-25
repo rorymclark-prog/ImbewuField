@@ -23,6 +23,8 @@
 //    spacings; a tree's crop swings with age, cultivar, water and alternate bearing. Nothing here
 //    is ever divided by bed area (lib/produce-scope.ts: per-m² figures always exclude perennials).
 
+import { cropExportText, isCropExportDraftLanguage } from './crop-export-copy';
+import { recordsMonthShort } from './records-months';
 import { PERENNIAL_HARVEST_DATA } from './perennial-harvest-data';
 import { canonicalSpeciesId } from './species-aliases';
 import { activeAccountLocalStorageKey } from './account-local-storage';
@@ -156,16 +158,17 @@ const MONTH_ABBR = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep
  * "Feb–Oct", "Nov–Jan", "Dec, Mar–Apr": consecutive months (wrapping over New Year) collapsed
  * into ranges, in picking order for a single run.
  */
-export function formatMonthSpan(months: readonly number[]): string {
+export function formatMonthSpan(months: readonly number[], language = 'en'): string {
+  const month = (value: number) => isCropExportDraftLanguage(language) ? recordsMonthShort(language, value) : MONTH_ABBR[value - 1];
   const set = new Set(months.filter((m) => Number.isInteger(m) && m >= 1 && m <= 12));
   if (set.size === 0) return '';
-  if (set.size === 12) return 'All year';
+  if (set.size === 12) return cropExportText('All year', language);
   // Start each run at a month whose predecessor is absent, so a Nov-Dec-Jan window reads Nov–Jan.
   const starts = [...set].filter((m) => !set.has(m === 1 ? 12 : m - 1)).sort((a, b) => a - b);
   const runs = starts.map((start) => {
     let end = start;
     while (set.has(end === 12 ? 1 : end + 1)) end = end === 12 ? 1 : end + 1;
-    return start === end ? MONTH_ABBR[start - 1] : `${MONTH_ABBR[start - 1]}–${MONTH_ABBR[end - 1]}`;
+    return start === end ? month(start) : `${month(start)}–${month(end)}`;
   });
   return runs.join(', ');
 }
@@ -434,6 +437,6 @@ export function treePickingByMonth(groups: readonly PlacedTreeGroup[], months: r
 }
 
 /** One locally confirmed picking instruction, the same on screen and on paper. */
-export function treePickingPhrase(line: TreePickingLine): string {
-  return `Pick ${line.name} (${line.trees}) — confirmed local months ${formatMonthSpan(line.season)}`;
+export function treePickingPhrase(line: TreePickingLine, language = 'en'): string {
+  return cropExportText('Pick {name} ({trees}) — confirmed local months {months}', language, { name: line.name, trees: line.trees, months: formatMonthSpan(line.season, language) });
 }

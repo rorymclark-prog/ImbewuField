@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Crop calendars and field work exports now have unreviewed translation drafts.": "Dikhalendara tsa dijalo le ditokomane tsa mosebetsi wa tshimo di na le diphetolelo tsa moralo tse so hlahlojwe.",
+  "Production charts and some crop screens still use English.": "Ditjhate tsa tlhahiso le dikirini tse ding tsa dijalo di sa sebedisa Senyesemane.",
   "Offline saving and sending messages now have drafts in all four languages.": "Melaetsa ya ho boloka ntle le kgokahano le ho romela jwale e na le meralo ka dipuo tsohle tse nne.",
   "Consent choices now show draft translations and the English source in all four languages.": "Dikgetho tsa tumello jwale di bontsha diphetolelo tsa moralo le mongolo wa pele wa Senyesemane ka dipuo tsohle tse nne.",
   "Full production and yield notes now have four draft translations.": "Dintlha tse felletseng tsa tlhahiso le kotulo jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",

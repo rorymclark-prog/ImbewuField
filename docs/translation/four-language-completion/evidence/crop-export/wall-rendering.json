@@ -1,0 +1,148 @@
+{
+  "rows": [
+    {
+      "file": "en-before-wall.pdf",
+      "pages": 2,
+      "words": 449,
+      "clipped": [],
+      "pixelHashes": [
+        "38a3710dad857b96822272c50950f956eecb7f0caa2f2c36e77b271bc3675eb6",
+        "358cf8d8f4595ec7737a241b2f33443da0fbc71b01a21053f24280ab2ab4245f"
+      ]
+    },
+    {
+      "file": "en-a4-wall.pdf",
+      "pages": 2,
+      "words": 449,
+      "clipped": [],
+      "pixelHashes": [
+        "38a3710dad857b96822272c50950f956eecb7f0caa2f2c36e77b271bc3675eb6",
+        "358cf8d8f4595ec7737a241b2f33443da0fbc71b01a21053f24280ab2ab4245f"
+      ]
+    },
+    {
+      "file": "zu-a4-wall.pdf",
+      "pages": 2,
+      "words": 469,
+      "clipped": [],
+      "pixelHashes": [
+        "634c9453d12b4796681d985251cf8c9e4531d33d321c05f5770f1dabf6ea38bb",
+        "1a520b4b53b4584fd8e0e2f426c35f3882b00f5b265880fbd26dd8363c4d1136"
+      ]
+    },
+    {
+      "file": "zu-a3-wall.pdf",
+      "pages": 2,
+      "words": 469,
+      "clipped": [],
+      "pixelHashes": [
+        "6f2eebc125af7f75293243de2e4f58e07f4e83d3b240ae5ae65e53cca350c278",
+        "f25c2acb75194a5b222021640f43458b84d10fc47a313bf7513581d3932de058"
+      ]
+    },
+    {
+      "file": "zu-a2-wall.pdf",
+      "pages": 2,
+      "words": 469,
+      "clipped": [],
+      "pixelHashes": [
+        "b2616d651aaa3271ec21038bee64190ab2fb3befaff4ec7c5bb1e7a796963e29",
+        "ec9b761b3bae0da0c9729992d4fdafc9507392812b029dc3f29be32206873c71"
+      ]
+    },
+    {
+      "file": "st-a4-wall.pdf",
+      "pages": 2,
+      "words": 611,
+      "clipped": [],
+      "pixelHashes": [
+        "2dc24f1ec2e4f10e9903ec111aeb320255d046df0c1f9408e5e87aba990523fe",
+        "b0acfbe9eaf9aae551c4a40a8fd8baa43db790aaa01e159cbb6025ec6b3c1dc1"
+      ]
+    },
+    {
+      "file": "st-a3-wall.pdf",
+      "pages": 2,
+      "words": 611,
+      "clipped": [],
+      "pixelHashes": [
+        "be351b92d6ef3b9a2e3ea9cc587d0320a0c1aca263a049a8fdb25847477c52b6",
+        "5b9d871ecf171acc7098169582f0dc07b98fda333d948614de93532ded43fb91"
+      ]
+    },
+    {
+      "file": "st-a2-wall.pdf",
+      "pages": 2,
+      "words": 611,
+      "clipped": [],
+      "pixelHashes": [
+        "27abb93885dfa67daa2214cb5254a84839028035cfc1308d23545dcfc9a227af",
+        "a026c95fa251e9866d83689baa78533f8bcef0267707b6563f143bd8c07c9505"
+      ]
+    },
+    {
+      "file": "ts-a4-wall.pdf",
+      "pages": 2,
+      "words": 610,
+      "clipped": [],
+      "pixelHashes": [
+        "8379f1c406b3b12a55e0893f23f18e77f955ebb992c5be7f4b15f86bef248427",
+        "9805e6b87dd6a258dfc3effa57cc71bdb48d3d4c006550842ab51c8353724985"
+      ]
+    },
+    {
+      "file": "ts-a3-wall.pdf",
+      "pages": 2,
+      "words": 610,
+      "clipped": [],
+      "pixelHashes": [
+        "86ee683d2c8e0e8d4a65750c977709f9380c4ac1a1c03835884253ce30395b90",
+        "01b7b11349f11fc010ca602b65fed261b5bca03be8d4a0eb2140e9d1aca393ac"
+      ]
+    },
+    {
+      "file": "ts-a2-wall.pdf",
+      "pages": 2,
+      "words": 610,
+      "clipped": [],
+      "pixelHashes": [
+        "280f808bb9f7c5972064e616f1daa673bf20c4a84579b8246b3fee05a7b7b499",
+        "f614a022905b611cf84f8f3bc4ce9f98d9f8d0f23ac613a0100d8e8588d4f2a9"
+      ]
+    },
+    {
+      "file": "ve-a4-wall.pdf",
+      "pages": 2,
+      "words": 633,
+      "clipped": [],
+      "pixelHashes": [
+        "8e14845de09ac1b2e63f830f1334ea5adca4612a0aad46ffb342fa7e061007ad",
+        "583360ee9f7af0fe66f63b2ef1e4014f444321c414fe2fffeb406f9295adf1bc"
+      ]
+    },
+    {
+      "file": "ve-a3-wall.pdf",
+      "pages": 2,
+      "words": 633,
+      "clipped": [],
+      "pixelHashes": [
+        "d07e8a08b981a677e8230ef1fe91ff39bf241584f092d356ee52579d7d59760e",
+        "3f237776f48541642f3ea1ac8ccea11c85f07e04f7d6bdb183feaeae510c6836"
+      ]
+    },
+    {
+      "file": "ve-a2-wall.pdf",
+      "pages": 2,
+      "words": 633,
+      "clipped": [],
+      "pixelHashes": [
+        "526340ce06db92113d8cc2e853c89c592eebf91622cb1f37368f4587f142c90d",
+        "28df789a0d2fec59cd8a4da09c60963b2621ba5ce95bf760ddb975e02770f654"
+      ]
+    }
+  ],
+  "english": {
+    "samePixels": true,
+    "sameText": true
+  }
+}

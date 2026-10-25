@@ -1,0 +1,86 @@
+{
+  "rows": [
+    {
+      "file": "en-before-generated-availability.pdf",
+      "pages": 4,
+      "words": 974,
+      "clipped": [],
+      "pixelHashes": [
+        "b29710256811e7ac6a5baf0db354ab1704b360b78acde6aa462335559a9f042d",
+        "f9c00d0a41d65680d82c24d3f3fed4a19794e26b44552b1c9815a437f426638f",
+        "5a1d9848426c877f294d040d2fee5371a0b9c1152855afb7469fe7dcec043ae0",
+        "bdeb52455c9a4ebf470c90f6aada963022774617f4a26e6c0419ea53f399164c"
+      ]
+    },
+    {
+      "file": "en-after-generated-availability.pdf",
+      "pages": 4,
+      "words": 974,
+      "clipped": [],
+      "pixelHashes": [
+        "b29710256811e7ac6a5baf0db354ab1704b360b78acde6aa462335559a9f042d",
+        "f9c00d0a41d65680d82c24d3f3fed4a19794e26b44552b1c9815a437f426638f",
+        "5a1d9848426c877f294d040d2fee5371a0b9c1152855afb7469fe7dcec043ae0",
+        "bdeb52455c9a4ebf470c90f6aada963022774617f4a26e6c0419ea53f399164c"
+      ]
+    },
+    {
+      "file": "zu-generated-availability.pdf",
+      "pages": 5,
+      "words": 1041,
+      "clipped": [],
+      "pixelHashes": [
+        "d882e06001b189a7a20858249dc3edadf5988f6cc73994e9bcb7eb0689339892",
+        "379d686450cfec28ec6cb3d5479d228c41becfecc41e6a269b591b5f5e80a4c3",
+        "a1e078a7b2de52748af86161d9458b9c74f0ed37076b8a4d9fac48a94906cf0c",
+        "da060492ca85577b57758045f0cdfc33fb3d7840983b9cb38f39303733c046df",
+        "f36381309698872630a06f692a38126142170af27620092ef2e71fa9e16333dd"
+      ]
+    },
+    {
+      "file": "st-generated-availability.pdf",
+      "pages": 5,
+      "words": 1577,
+      "clipped": [],
+      "pixelHashes": [
+        "5252e3cdef502b06a923dcdc83145a1f4428df110271bef24a751dcc6eb8c4ce",
+        "944eed8ced073ac4ca40018ea7c9e3ba319975b30efb357c7ba9d5daae0e7fa9",
+        "2d54d50c857d94693258b1c24c2f704fe904dfd9fca38686488a2b6dcb217dbf",
+        "196041d1665ae15a8d771696923647df096f449c2f3d03b05df3150d1301257f",
+        "db008a315ec2779bc986c1b261cb5c0496f058466aa69896a3b8cb6d0cc624f5"
+      ]
+    },
+    {
+      "file": "ts-generated-availability.pdf",
+      "pages": 6,
+      "words": 1695,
+      "clipped": [],
+      "pixelHashes": [
+        "1cdb3bf9a2bda97a93e08a43eb40405ee8238944dce090b9c34b6dcec72345ce",
+        "662fda09f6a5cff12806136e0de3da2262f59d4b5dd260e52e95ebc16128aa82",
+        "be1ba0c65ba36b17544b7005e490e06302430f3f5937d75e75bf20f8a7cbcaf5",
+        "726242a1d46c539337e07f83faa98725ba97f8321c67d47960bac28f49cda9ff",
+        "17c180bf9f67bf78964e7037213b126e7a939f03a1b497ca9eab2d05fc050069",
+        "e713ffac600feb121921d34892a9761ecd46d8286695f8aaf9e5932f3fc037c8"
+      ]
+    },
+    {
+      "file": "ve-generated-availability.pdf",
+      "pages": 6,
+      "words": 1767,
+      "clipped": [],
+      "pixelHashes": [
+        "a629f9b5a6aae4f3a6a99e31d66aa3ca55f96ae86a806886c49d090e4f06ee94",
+        "dba1f1f91ac2049900a521d9eee8a13f93214522f7578a48ccddedf7cd1eeaa4",
+        "f1a73cb887e23a7d082d76ef8564c6bbf0f2af7906538a7442941b5dd102a2e7",
+        "d7c33ad718741d9f71da59d6b86172de2bef988315c261d4b83af5e5ebd5d917",
+        "fd5a2e8a83c040bfe850fdbe9121915cb44cad6d979466dcc8b1000387d3bddd",
+        "e5ffc56d2afb6d656edeb39929a1580e74f3bb33ae016a76cb7362e7f22f083f"
+      ]
+    }
+  ],
+  "english": {
+    "samePixels": true,
+    "sameText": true
+  }
+}

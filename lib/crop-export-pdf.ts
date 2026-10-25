@@ -32,6 +32,7 @@
 // All the numbers come from lib/crop-export-benchmark.ts. Nothing in this file
 // computes a quantity — it only decides what things look like.
 
+import { cropExportText } from './crop-export-copy';
 import { isStapleCropKey } from '@/lib/staple-crops';
 import { numberLabel } from '@/lib/format-figures';
 import type { CropTask, FoodAvailabilityItem, PlanBed, Planting } from '@/lib/crop-plan';
@@ -54,11 +55,11 @@ import {
 import { cropByKey, type RainPattern } from '@/lib/crop-catalog';
 import { firstCropAgeLabel, formatRange, treePickingByMonth, treePickingPhrase, type PlacedTreeGroup, type TreeSeasonChoices } from '@/lib/perennial-harvest';
 import { projectedKgLabel, treeAgeProjection, type AgeProjection, type ProductionProjection } from '@/lib/production-projection';
-import { ASSURANCE_TITLE, ASSURANCE_PARAGRAPHS, ASSURANCE_ONE_LINE } from '@/lib/plan-assurance';
+import { ASSURANCE_TITLE, ASSURANCE_ONE_LINE, planAssuranceParagraphs, planAssuranceText } from '@/lib/plan-assurance';
 import type { ExpectedSeason } from '@/lib/production-product-guidance';
 import type { PoultryGuidance } from '@/lib/animal-enterprises';
 import { registerReportPdfFont, reportPdfText } from './report-pdf-font';
-import { isNativePdfLanguage, sitePdfAssurance, sitePdfText, SITE_PDF_REVIEW_SOURCE } from './site-pdf-copy';
+import { isNativePdfLanguage, sitePdfAssurance, sitePdfText } from './site-pdf-copy';
 
 export interface CropPlanPdfMeta {
   /** The language of the document labels, independently of saved farmer notes. */
@@ -239,9 +240,9 @@ export function pdfSafe(text: string): string {
 /** Keep an unavailable crop benchmark visible as unavailable. Formatting a
  * nullable value through arithmetic turned kale and coriander into a false
  * "0.0 kg" claim in the printed bed table. */
-export function benchmarkYieldLabel(yieldKg: number | null): string {
-  if (yieldKg === null) return 'Not verified';
-  if (yieldKg === 0) return 'No food yield';
+export function benchmarkYieldLabel(yieldKg: number | null, language = 'en'): string {
+  if (yieldKg === null) return cropExportText('Not verified', language);
+  if (yieldKg === 0) return cropExportText('No food yield', language);
   return `${yieldKg.toFixed(1)} kg`;
 }
 
@@ -364,7 +365,7 @@ class Sheet {
     if (rows) return rows;
     const font = this.doc.getFont(), size = this.doc.getFontSize();
     this.font(7);
-    rows = [this.documentNotice, sitePdfAssurance(this.language), sitePdfText(SITE_PDF_REVIEW_SOURCE, this.language)]
+    rows = [this.documentNotice, sitePdfAssurance(this.language), sitePdfText('Draft translation: not yet reviewed by a fluent speaker. Check the English source before acting.', this.language)]
       .filter((value): value is string => Boolean(value))
       .flatMap(value => this.doc.splitTextToSize(this.safe(value), this.contentWidth) as string[]);
     this.doc.setFont(font.fontName, font.fontStyle); this.doc.setFontSize(size);
@@ -390,6 +391,8 @@ class Sheet {
       this.doc.text(truncateToWidth(this.doc, this.safe(this.footerNote), this.contentWidth - 35), this.margin, top - 12);
       this.doc.text(String(this.doc.getNumberOfPages()), this.width - this.margin, top - 12, { align: 'right' });
       this.font(7);
+      // The caution and unreviewed-translation notice must be readable, not faded like page metadata.
+      this.ink(INK.muted);
       this.footerRows().forEach((row, index) => this.doc.text(row, this.margin, top + index * 8.5));
       return;
     }
@@ -477,14 +480,18 @@ function masthead(s: Sheet, band: string): void {
   s.ink(INK.gold);
   s.doc.text('Field', s.margin + w, s.y);
 
-  const bandW = 176;
+  s.font(7.5, true);
+  const native = isNativePdfLanguage(s.language);
+  const wording = s.safe(cropExportText(band, s.language).toUpperCase());
+  const bandW = native ? Math.min(s.contentWidth / 2, Math.max(176, s.doc.getTextWidth(wording) + 24)) : 176;
+  const lines = native ? s.doc.splitTextToSize(wording, bandW - 24) as string[] : [wording];
+  const bandH = native ? Math.max(26, lines.length * 9.375 + 10) : 26;
   const bandX = s.width - s.margin - bandW;
   s.fill(INK.green);
-  s.doc.rect(bandX, s.y - 15, bandW, 26, 'F');
-  s.font(7.5, true);
+  s.doc.rect(bandX, s.y - 15, bandW, bandH, 'F');
   s.ink(INK.white);
-  s.doc.text(s.safe(band.toUpperCase()), s.width - s.margin - 12, s.y - 0.5, { align: 'right' });
-  s.y += 28;
+  s.doc.text(lines.length === 1 ? lines[0] : lines, s.width - s.margin - 12, s.y - 0.5, { align: 'right', lineHeightFactor: 1.25 });
+  s.y += bandH + 2;
 }
 
 /** Eyebrow + big title, the benchmark's page-opening pattern. */
@@ -498,8 +505,10 @@ function pageTitle(s: Sheet, eyebrow: string, title: string, standfirst?: string
   }
   s.font(19, true);
   s.ink(INK.text);
-  s.doc.text(s.safe(title), s.margin, s.y);
-  s.y += 16;
+  // A translated title can span lines; measure before placing the standfirst below it.
+  const titleLines = isNativePdfLanguage(s.language) ? s.doc.splitTextToSize(s.safe(title), s.contentWidth) as string[] : [s.safe(title)];
+  s.doc.text(titleLines.length === 1 ? titleLines[0] : titleLines, s.margin, s.y, { lineHeightFactor: 1.2 });
+  s.y += 16 + (titleLines.length - 1) * 19 * 1.2;
   if (standfirst) {
     s.paragraph(standfirst, { size: 9, ink: INK.muted, gap: 8 });
   } else {
@@ -519,7 +528,11 @@ function panel(
 
   s.font(8.5);
   const paras = opts.body.map((b) => s.doc.splitTextToSize(s.safe(b), innerW) as string[]);
-  const h = pad * 2 + (opts.title ? 14 : 0) + panelBodyHeight(paras.map((p) => p.length));
+  s.font(9, true);
+  const titleLines = opts.title ? (isNativePdfLanguage(s.language)
+    ? s.doc.splitTextToSize(s.safe(opts.title), innerW) as string[] : [s.safe(opts.title)]) : [];
+  const titleH = titleLines.length ? 14 + (titleLines.length - 1) * PANEL_LEADING : 0;
+  const h = pad * 2 + titleH + panelBodyHeight(paras.map((p) => p.length));
 
   s.fill(opts.bg);
   s.doc.rect(x, s.y, w, h, 'F');
@@ -532,8 +545,8 @@ function panel(
   if (opts.title) {
     s.font(9, true);
     s.ink(opts.accent ?? INK.green);
-    s.doc.text(s.safe(opts.title), tx, ty);
-    ty += 14;
+    s.doc.text(titleLines.length === 1 ? titleLines[0] : titleLines, tx, ty, { lineHeightFactor: PANEL_LEADING / 9 });
+    ty += titleH;
   }
   s.font(8.5);
   s.ink(INK.text);
@@ -556,8 +569,51 @@ function panelBodyHeight(lineCounts: number[]): number {
 
 // ── 1. Plan dashboard ───────────────────────────────────────────────────────
 
+function dashboardTotalExplanation(s: Sheet, input: CropPlanPdfInput, dash: ReturnType<typeof buildPlanDashboard>): string[] {
+  const { meta } = input;
+  const copy = (source: string, values: Record<string, string | number> = {}) => cropExportText(source, s.language, values);
+  const totalExplanation = dash.areaConflictBedLabels.length
+    ? [
+      copy(dash.areaConflictBedLabels.length === 1
+        ? 'No kilogram or value total is shown because {places} has overlapping or invalid planting shares.'
+        : 'No kilogram or value total is shown because {places} have overlapping or invalid planting shares.', { places: dash.areaConflictBedLabels.join(', ') }),
+      copy('Resolve the bed layout instead of guessing which crop loses growing area.'),
+    ]
+    : dash.hasKnownYield
+    ? [
+      meta.lossAllowanceConfirmed
+        ? copy('Only crops with a verified kg/m² entry are added to the conservative commercial benchmark comparison. Known total {gross} kg; {net} kg after the {loss}% loss allowance you confirmed.', { gross: dash.grossKg!.toFixed(1), net: dash.netKg!.toFixed(1), loss: meta.lossPercent })
+        : copy('Only crops with a verified kg/m² entry are added to the conservative commercial benchmark comparison. Known total {gross} kg; no loss-adjusted total is calculated until an allowance is confirmed.', { gross: dash.grossKg!.toFixed(1) }),
+      copy('This is a benchmark comparison, not a household or farm-yield guarantee. Record actual harvests and losses on the monthly record sheet.'),
+    ]
+    : [
+      copy('No kilogram total is shown because this plan has no crop with a verified kg/m² food-yield benchmark.'),
+      copy('An unavailable benchmark is not a 0kg harvest. Record actual harvests on the monthly record sheet.'),
+    ];
+  if (dash.unknownYieldCrops.length) totalExplanation.push(copy(dash.unknownYieldCrops.length === 1
+    ? '{crops} is excluded from every kilogram total, not counted as 0kg.'
+    : '{crops} are excluded from every kilogram total, not counted as 0kg.', { crops: dash.unknownYieldCrops.join(', ') }));
+  return totalExplanation;
+}
+
 function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: number): void {
   const { meta } = input;
+  const copy = (source: string, values: Record<string, string | number> = {}) => cropExportText(source, s.language, values);
+  const months = rollingMonths(nowMonth);
+  const period = copy('{start} to {end}', { start: monthYearLabel(months[0], now, s.language), end: monthYearLabel(months[11], now, s.language) });
+  const facts = [
+    { k: copy('LOCATION'), v: meta.locationLine || meta.siteLine },
+    { k: copy('CLIMATE'), v: meta.climateLine || copy('Not set') },
+    { k: copy('PLAN PERIOD'), v: period },
+    { k: copy('GENERATED'), v: meta.dateLabel },
+  ];
+  const dash = buildPlanDashboard(input.plantings, input.beds, input.tasks, {
+    lossPercent: meta.lossPercent, lossAllowanceConfirmed: meta.lossAllowanceConfirmed, nowMonth, language: s.language,
+  });
+  if (isNativePdfLanguage(s.language)) {
+    drawNativeDashboard(s, input, period, facts, dash, dashboardTotalExplanation(s, input, dash));
+    return;
+  }
   masthead(s, 'Production plan');
 
   s.font(7.5, true);
@@ -574,20 +630,12 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
     : titleLines;
   s.doc.text(shownTitle, s.margin, s.y);
   s.y += 18 + (shownTitle.length - 1) * 23;
-  const months = rollingMonths(nowMonth);
-  const period = `${monthYearLabel(months[0], now)} to ${monthYearLabel(months[11], now)}`;
   s.font(10);
   s.ink(INK.muted);
   s.doc.text(s.safe(period), s.margin, s.y);
   s.y += 18;
 
   // Site strip — four facts, evenly spread, in the benchmark's header band.
-  const facts = [
-    { k: 'LOCATION', v: meta.locationLine || meta.siteLine },
-    { k: 'CLIMATE', v: meta.climateLine || 'Not set' },
-    { k: 'PLAN PERIOD', v: period },
-    { k: 'GENERATED', v: meta.dateLabel },
-  ];
   const stripH = 46;
   s.fill(INK.panelGreen);
   s.doc.rect(s.margin, s.y, s.contentWidth, stripH, 'F');
@@ -609,11 +657,6 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
     { size: 9.5, gap: 8 },
   );
 
-  const dash = buildPlanDashboard(input.plantings, input.beds, input.tasks, {
-    lossPercent: meta.lossPercent,
-    lossAllowanceConfirmed: meta.lossAllowanceConfirmed,
-    nowMonth,
-  });
 
   // Stat tiles, sized to however many dash.stats actually holds — a fixed
   // "four tiles" assumption crashed the moment a fifth stat was added
@@ -679,27 +722,7 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
   });
   s.y += Math.max(signalsH, decisionsH) + 10;
 
-  const totalExplanation = dash.areaConflictBedLabels.length
-    ? [
-      `No kilogram or value total is shown because ${dash.areaConflictBedLabels.join(', ')} ${dash.areaConflictBedLabels.length === 1 ? 'has' : 'have'} overlapping or invalid planting shares.`,
-      'Resolve the bed layout instead of guessing which crop loses growing area.',
-    ]
-    : dash.hasKnownYield
-    ? [
-      `Only crops with a verified kg/m² entry are added to the conservative commercial benchmark comparison. `
-      + `Known total ${dash.grossKg!.toFixed(1)} kg`
-      + (meta.lossAllowanceConfirmed
-        ? `; ${dash.netKg!.toFixed(1)} kg after the ${meta.lossPercent}% loss allowance you confirmed.`
-        : '; no loss-adjusted total is calculated until an allowance is confirmed.'),
-      'This is a benchmark comparison, not a household or farm-yield guarantee. Record actual harvests and losses on the monthly record sheet.',
-    ]
-    : [
-      'No kilogram total is shown because this plan has no crop with a verified kg/m² food-yield benchmark.',
-      'An unavailable benchmark is not a 0kg harvest. Record actual harvests on the monthly record sheet.',
-    ];
-  if (dash.unknownYieldCrops.length) {
-    totalExplanation.push(`${dash.unknownYieldCrops.join(', ')} ${dash.unknownYieldCrops.length === 1 ? 'is' : 'are'} excluded from every kilogram total, not counted as 0kg.`);
-  }
+  const totalExplanation = dashboardTotalExplanation(s, input, dash);
 
   const h = panel(s, {
     title: 'How the totals are calculated',
@@ -717,7 +740,7 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
   // here: the crop plan, the site report and the in-app view must not each grow
   // their own version, because the weakest one becomes the promise the product
   // is judged on. See lib/plan-assurance.ts for the full reasoning.
-  const assuranceBody = [...ASSURANCE_PARAGRAPHS.map(value => s.safe(value)), s.safe(SUCCESSION_TIMING_GUIDANCE)];
+  const assuranceBody = [...planAssuranceParagraphs(s.language).map(value => s.safe(value)), s.safe(copy(SUCCESSION_TIMING_GUIDANCE))];
   // panel() never checks the page; a long title and a wrapped tile row once pushed this panel's
   // last line under the footer.
   s.need(panelHeight(s, assuranceBody, true, true));
@@ -747,6 +770,116 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
   }
 
   drawPlanNotes(s, input);
+}
+
+function drawNativeDashboard(
+  s: Sheet, input: CropPlanPdfInput, period: string, facts: { k: string; v: string }[],
+  dash: ReturnType<typeof buildPlanDashboard>, explanation: string[],
+): void {
+  const copy = (source: string, values: Record<string, string | number> = {}) => cropExportText(source, s.language, values);
+  const title = copy('Production plan - {plan}', { plan: input.meta.planTitle });
+  const continued = () => {
+    masthead(s, 'Production plan');
+    pageTitle(s, '', copy('{title} (continued)', { title }), period);
+  };
+  const reserve = (height: number) => { if (s.need(height)) continued(); };
+  const block = (title: string, body: string[]) => {
+    const heading = (repeat = false) => {
+      const wording = repeat ? copy('{title} (continued)', { title }) : title;
+      s.font(11, true);
+      const lines = s.doc.splitTextToSize(s.safe(wording), s.contentWidth - 16) as string[];
+      const height = lines.length * 14 + 12;
+      s.fill(INK.panelGreen); s.doc.rect(s.margin, s.y, s.contentWidth, height, 'F');
+      s.ink(INK.green); s.doc.text(lines, s.margin + 8, s.y + 15, { lineHeightFactor: 14 / 11 });
+      s.y += height + 6;
+    };
+    s.font(11, true);
+    const headH = (s.doc.splitTextToSize(s.safe(title), s.contentWidth - 16) as string[]).length * 14 + 18;
+    s.font(9.5);
+    const firstH = body[0] ? (s.doc.splitTextToSize(s.safe(body[0]), s.contentWidth - 16) as string[]).length * 13.3 + 4 : 0;
+    reserve(headH + Math.min(firstH, s.height / 2)); heading();
+    for (const paragraph of body) {
+      s.font(9.5);
+      const lines = s.doc.splitTextToSize(s.safe(paragraph), s.contentWidth - 16) as string[];
+      const wholeH = lines.length * 13.3 + 4;
+      // Short cautions belong with their conditions, not a trailing line on another sheet.
+      if (wholeH <= s.height / 2 && !s.fits(wholeH)) { s.page('portrait'); continued(); heading(true); }
+      let offset = 0;
+      while (offset < lines.length) {
+        const capacity = Math.floor((s.bottom - s.y - 8) / 13.3);
+        if (capacity < 1) { s.page('portrait'); continued(); heading(true); continue; }
+        const chunk = lines.slice(offset, offset + capacity);
+        s.font(9.5); s.ink(INK.text);
+        s.doc.text(chunk, s.margin + 8, s.y + 10, { lineHeightFactor: 1.4 });
+        s.y += chunk.length * 13.3 + 4;
+        offset += chunk.length;
+        if (offset < lines.length) { s.page('portrait'); continued(); heading(true); }
+      }
+    }
+    s.y += 6;
+  };
+  masthead(s, 'Production plan');
+  s.paragraph(copy('A PRACTICAL PLAN FOR THE GARDEN TEAM'), { size: 7.5, bold: true, ink: INK.gold, gap: 5 });
+  pageTitle(s, '', title, period);
+
+  const factW = (s.contentWidth - 8) / 2;
+  for (let start = 0; start < facts.length; start += 2) {
+    const row = facts.slice(start, start + 2).map(fact => {
+      s.font(7.5, true); const label = s.doc.splitTextToSize(s.safe(fact.k), factW - 20) as string[];
+      s.font(9); const value = s.doc.splitTextToSize(s.safe(fact.v), factW - 20) as string[];
+      return { label, value };
+    });
+    const height = Math.max(...row.map(fact => fact.label.length * 9.5 + fact.value.length * 12.6 + 20));
+    reserve(height + 8);
+    row.forEach((fact, i) => {
+      const x = s.margin + i * (factW + 8);
+      s.fill(INK.panelGreen); s.doc.rect(x, s.y, factW, height, 'F');
+      s.font(7.5, true); s.ink(INK.muted); s.doc.text(fact.label, x + 10, s.y + 13, { lineHeightFactor: 9.5 / 7.5 });
+      s.font(9); s.ink(INK.text); s.doc.text(fact.value, x + 10, s.y + 13 + fact.label.length * 9.5 + 3, { lineHeightFactor: 1.4 });
+    });
+    s.y += height + 8;
+  }
+  s.paragraph(copy('A crop plan should reduce uncertainty. It should show the garden team what to prepare, plant, harvest and buy - without making them decode the system behind it.'), { size: 9.5, gap: 10 });
+
+  const tileW = (s.contentWidth - 16) / 3;
+  const tints = [INK.panelGrey, INK.panelCream, INK.panelGreen, INK.panelPink];
+  for (let start = 0; start < dash.stats.length; start += 3) {
+    const row = dash.stats.slice(start, start + 3).map(stat => {
+      s.font(17, true); const value = s.doc.splitTextToSize(s.safe(stat.value), tileW - 20) as string[];
+      s.font(9, true); const label = s.doc.splitTextToSize(s.safe(stat.label), tileW - 20) as string[];
+      s.font(8); const detail = s.doc.splitTextToSize(s.safe(stat.detail), tileW - 20) as string[];
+      return { value, label, detail };
+    });
+    const valueH = Math.max(...row.map(tile => tile.value.length)) * 20.4;
+    const labelH = Math.max(...row.map(tile => tile.label.length)) * 12;
+    const height = valueH + labelH + Math.max(...row.map(tile => tile.detail.length)) * 11.2 + 26;
+    reserve(height + 10);
+    row.forEach((tile, i) => {
+      const x = s.margin + i * (tileW + 8);
+      s.fill(tints[(start + i) % tints.length]); s.doc.rect(x, s.y, tileW, height, 'F');
+      s.font(17, true); s.ink(INK.text); s.doc.text(tile.value, x + 10, s.y + 25, { lineHeightFactor: 1.2 });
+      s.font(9, true); s.doc.text(tile.label, x + 10, s.y + valueH + 20, { lineHeightFactor: 12 / 9 });
+      s.font(8); s.ink(INK.muted); s.doc.text(tile.detail, x + 10, s.y + valueH + labelH + 23, { lineHeightFactor: 1.4 });
+    });
+    s.y += height + 10;
+  }
+  block(copy('PLAN SIGNALS'), dash.signals.map(value => `- ${value}`));
+  block(copy('DECISIONS TO MAKE'), dash.decisions.map(value => `- ${value}`));
+  block(copy('How the totals are calculated'), explanation);
+  block(planAssuranceText(ASSURANCE_TITLE, s.language), [...planAssuranceParagraphs(s.language), copy(SUCCESSION_TIMING_GUIDANCE)]);
+  if (input.yearReport?.length) block(copy('Planned crop comparison'), [
+    copy('This comparison covers planned new bed-crop cycles. It is not a whole-farm production forecast. Read the monthly growing and food calendars for timing.'), ...input.yearReport,
+  ]);
+  if (input.planNotes?.length) {
+    const intro = input.planNotesAt
+      ? copy('From the plan suggested in {date}. Anything changed by hand since is not described here.', { date: planNotesDateLabel(input.planNotesAt, s.language) })
+      : copy('From the suggested plan that was accepted. Anything changed by hand since is not described here.');
+    block(copy('How this plan was put together'), [intro]);
+    for (const kind of PLAN_NOTE_PANEL_ORDER) {
+      const body = input.planNotes.filter(note => note.kind === kind).map(note => note.text);
+      if (body.length) block(copy(PLAN_NOTE_PANEL_TITLES[kind]), body);
+    }
+  }
 }
 
 /** panel() draws at s.y without checking whether the page has room; this is the
@@ -885,97 +1018,119 @@ function drawYearInNumbers(
   s: Sheet, input: CropPlanPdfInput,
   nowMonth: number, workload: MonthCount[],
 ): void {
+  const copy = (source: string, values: Record<string, string | number> = {}) => cropExportText(source, s.language, values);
+  const native = isNativePdfLanguage(s.language);
+  const reserve = (height: number) => {
+    if (s.need(height) && native) {
+      masthead(s, 'Manager view');
+      pageTitle(s, '', copy('{title} (continued)', { title: copy('The year in numbers') }));
+    }
+  };
   masthead(s, 'Manager view');
-  pageTitle(s, 'Manager view', 'The year in numbers',
-    'Use this page to compare benchmark timing with labour, kitchen demand, storage and mentoring visits before the work reaches the field.');
+  pageTitle(s, copy('Manager view'), copy('The year in numbers'),
+    copy('Use this page to compare benchmark timing with labour, kitchen demand, storage and mentoring visits before the work reaches the field.'));
 
   const coverage = buildPlanDashboard(input.plantings, input.beds, input.tasks, {
     lossPercent: input.meta.lossPercent,
     lossAllowanceConfirmed: input.meta.lossAllowanceConfirmed,
-    nowMonth,
+    nowMonth, language: s.language,
   });
   const yieldNote = coverage.areaConflictBedLabels.length
-    ? `No kilogram figure is shown because ${coverage.areaConflictBedLabels.join(', ')} ${coverage.areaConflictBedLabels.length === 1 ? 'has' : 'have'} overlapping or invalid planting shares. Resolve the layout before using a benchmark.`
+    ? copy(coverage.areaConflictBedLabels.length === 1
+      ? 'No kilogram figure is shown because {places} has overlapping or invalid planting shares. Resolve the layout before using a benchmark.'
+      : 'No kilogram figure is shown because {places} have overlapping or invalid planting shares. Resolve the layout before using a benchmark.', { places: coverage.areaConflictBedLabels.join(', ') })
     : coverage.hasKnownYield
-    ? `The ${coverage.grossKg!.toFixed(1)} kg figure is a sum of crop-cycle benchmarks. It is not divided into months because the source does not provide a within-window picking curve.`
-    : 'No kilogram comparison is available because none of this plan\'s food crops has a verified kg/m² benchmark. An unavailable benchmark is not a 0kg harvest.';
+    ? copy('The {kg} kg figure is a sum of crop-cycle benchmarks. It is not divided into months because the source does not provide a within-window picking curve.', { kg: coverage.grossKg!.toFixed(1) })
+    : copy('No kilogram comparison is available because none of this plan\'s food crops has a verified kg/m² benchmark. An unavailable benchmark is not a 0kg harvest.');
   // The standfirst above tells the reader to use this page to compare storage,
   // and until now the page said nothing whatsoever about storage: the sourced
   // shelf lives existed in the catalog and reached the printed plan nowhere. A
   // plan with no storage crop gets no line at all rather than a "0 of 12", which
   // would read as a finding about the year instead of the absence of the data.
   const storedNote = coverage.storedFoodMonths > 0
-    ? `${coverage.storedFoodMonths} of 12 months also have food from store, from ${coverage.storedFoodCrops.length} crop${coverage.storedFoodCrops.length === 1 ? '' : 's'} with a sourced shelf life (${coverage.storedFoodCrops.join(', ')}). Each shelf life assumes particular storage conditions for that crop and does not hold without them.`
+    ? copy(coverage.storedFoodCrops.length === 1
+      ? '{months} of 12 months also have food from store, from {count} crop with a sourced shelf life ({crops}). Each shelf life assumes particular storage conditions for that crop and does not hold without them.'
+      : '{months} of 12 months also have food from store, from {count} crops with a sourced shelf life ({crops}). Each shelf life assumes particular storage conditions for that crop and does not hold without them.', { months: coverage.storedFoodMonths, count: coverage.storedFoodCrops.length, crops: coverage.storedFoodCrops.join(', ') })
     : null;
   const yieldH = panel(s, {
-    title: 'CROP-CYCLE BENCHMARK ONLY',
+    title: copy('CROP-CYCLE BENCHMARK ONLY'),
     accent: INK.gold,
     bg: INK.panelCream,
     body: [
       yieldNote,
-      `${coverage.freshPickingMonths} of 12 months have at least one verified fresh-picking window; that is timing, not monthly kilograms.`,
+      copy('{months} of 12 months have at least one verified fresh-picking window; that is timing, not monthly kilograms.', { months: coverage.freshPickingMonths }),
       ...(storedNote ? [storedNote] : []),
     ],
   });
   s.y += yieldH + 18;
 
   const busiest = Math.max(...workload.map((v) => v.count));
+  if (native) reserve(160);
   barChart(s, {
-    title: 'Workload by month',
-    labels: workload.map((v) => monthShort(v.month)),
+    title: copy('Workload by month'),
+    labels: workload.map((v) => monthShort(v.month, s.language)),
     values: workload.map((v) => v.count),
     inks: workload.map((v) => (v.count >= busiest * 0.9 ? INK.terracotta : INK.teal)),
-    axis: 'jobs planned',
+    axis: copy('jobs planned'),
   });
 
   // Biggest crops — horizontal, because crop names do not fit under a column.
-  const top = buildTopCrops(input.plantings, input.beds, 7);
+  // An unresolved layout already withholds kg in the coverage authority above.
+  // The old bars contradicted that notice by still presenting crop-volume subtotals.
+  const top = coverage.areaConflictBedLabels.length ? [] : buildTopCrops(input.plantings, input.beds, 7);
   if (top.length) {
-    s.need(top.length * 16 + 40);
+    s.font(8);
+    const cropLines = top.map(crop => native ? s.doc.splitTextToSize(s.safe(crop.name), 88) as string[] : [s.safe(crop.name)]);
+    s.font(11, true);
+    const headingLines = native ? s.doc.splitTextToSize(s.safe(copy('Largest crops by known benchmark volume')), s.contentWidth) as string[] : [s.safe('Largest crops by known benchmark volume')];
+    if (native) reserve(cropLines.reduce((sum, lines) => sum + Math.max(15, lines.length * 10.56 + 2), 0) + headingLines.length * 14 + 20);
+    else s.need(top.length * 16 + 40);
     s.font(11, true);
     s.ink(INK.text);
-    s.doc.text(s.safe('Largest crops by known benchmark volume'), s.margin, s.y);
-    s.y += 14;
+    s.doc.text(headingLines.length === 1 ? headingLines[0] : headingLines, s.margin, s.y, { lineHeightFactor: 14 / 11 });
+    s.y += headingLines.length * 14;
     const labelW = 96;
     const trackX = s.margin + labelW;
     const trackW = s.contentWidth - labelW - 46;
     const maxKg = Math.max(1, ...top.map((c) => c.kg));
-    for (const crop of top) {
+    for (const [index, crop] of top.entries()) {
       s.font(8);
       s.ink(INK.text);
-      s.doc.text(s.safe(crop.name), s.margin + labelW - 6, s.y + 7, { align: 'right' });
+      s.doc.text(cropLines[index].length === 1 ? cropLines[index][0] : cropLines[index], s.margin + labelW - 6, s.y + 7, { align: 'right', lineHeightFactor: 1.32 });
       const bw = (crop.kg / maxKg) * trackW;
       s.fill(GROUP_INK[crop.group]);
       s.doc.roundedRect(trackX, s.y, Math.max(1, bw), 9, 2, 2, 'F');
       s.font(7.5, true);
       s.ink(INK.muted);
       s.doc.text(s.safe(`${crop.kg.toFixed(1)} kg`), trackX + bw + 5, s.y + 7);
-      s.y += 15;
+      s.y += native ? Math.max(15, cropLines[index].length * 10.56 + 2) : 15;
     }
     s.y += 6;
   }
-  panel(s, {
-    bg: INK.panelGrey,
-    body: [
-      'Chart note: the workload chart counts planned jobs, not hours - a plot of maize and a bed of lettuce each count as one. '
-        + 'Crop-cycle benchmark weights are shown by crop only; no monthly kg or Rand is inferred.',
-      ...(coverage.unknownYieldCrops.length
-        ? [`Excluded from the kg total and crop-volume bars because no verified kg/m² benchmark is available: ${coverage.unknownYieldCrops.join(', ')}.`]
-        : []),
-    ],
-  });
+  const chartNote = [
+    copy('Chart note: the workload chart counts planned jobs, not hours - a plot of maize and a bed of lettuce each count as one. Crop-cycle benchmark weights are shown by crop only; no monthly kg or Rand is inferred.'),
+    ...(coverage.unknownYieldCrops.length
+      ? [copy('Excluded from the kg total and crop-volume bars because no verified kg/m² benchmark is available: {crops}.', { crops: coverage.unknownYieldCrops.join(', ') })]
+      : []),
+  ];
+  if (native) reserve(panelHeight(s, chartNote, false, false));
+  panel(s, { bg: INK.panelGrey, body: chartNote });
 }
 
 // ── 3. Land occupancy calendar ──────────────────────────────────────────────
 
 function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows: CalendarRow[]): void {
+  const native = isNativePdfLanguage(s.language);
+  const copy = (source: string, values?: Record<string, string | number>) => cropExportText(source, s.language, values);
   const start = input.now ?? new Date();
   const end = new Date(start.getFullYear(), start.getMonth() + 11, 1);
   const months = rollingMonths(nowMonth);
   const conflicts = new Set(benchmarkAreaConflictDetails(input.plantings, input.beds, nowMonth).map((record) => record.bedId));
   const labelW = 204;
   const colW = (s.contentWidth - labelW) / 12;
-  const headH = 30;
+  s.font(native ? 8 : 9.5, true);
+  const monthLines = months.map(month => native ? s.doc.splitTextToSize(s.safe(monthShort(month, s.language)), colW - 4) as string[] : [monthShort(month)]);
+  const headH = native ? Math.max(30, Math.max(...monthLines.map(lines => lines.length)) * 10 + 15) : 30;
   const rowH = 34;
   const bedHeadH = 27;
   const growingInk = [127, 174, 110];
@@ -983,9 +1138,9 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
 
   const drawHead = (continued = false) => {
     masthead(s, 'Production plan');
-    pageTitle(s, continued ? 'Bed calendar - continued' : 'Bed calendar',
-      `Growing plan: ${monthShort(nowMonth)} ${start.getFullYear()} - ${monthShort(end.getMonth() + 1)} ${end.getFullYear()}`);
-    s.paragraph('Read across to see what occupies each bed. Each line is one planting, not a measured strip of land.',
+    pageTitle(s, copy(continued ? 'Bed calendar - continued' : 'Bed calendar'),
+      copy('Growing plan: {start} - {end}', { start: `${monthShort(nowMonth, s.language)} ${start.getFullYear()}`, end: `${monthShort(end.getMonth() + 1, s.language)} ${end.getFullYear()}` }));
+    s.paragraph(copy('Read across to see what occupies each bed. Each line is one planting, not a measured strip of land.'),
       { size: 9.5, ink: INK.muted, gap: 6 });
     const legend = [
       { ink: growingInk, label: 'Bed reserved / growing', width: 174 },
@@ -993,29 +1148,35 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
       { ink: INK.muted, label: 'Finish a cover crop', width: 154 },
     ];
     let lx = s.margin;
+    let legendH = 13;
     for (const item of legend) {
+      const width = native ? s.contentWidth / legend.length : item.width;
       s.fill(item.ink);
       s.doc.roundedRect(lx, s.y - 8, 17, 9, 2, 2, 'F');
       s.font(9);
       s.ink(INK.text);
-      s.doc.text(s.safe(item.label), lx + 23, s.y);
-      lx += item.width;
+      const lines = native ? s.doc.splitTextToSize(s.safe(copy(item.label)), width - 29) as string[] : [s.safe(item.label)];
+      s.doc.text(lines.length === 1 ? lines[0] : lines, lx + 23, s.y, { lineHeightFactor: 1.25 });
+      if (native) legendH = Math.max(legendH, lines.length * 11.25 + 2);
+      lx += width;
     }
-    s.y += 13;
-    s.paragraph(`Tray crops reserve the bed from their first readiness month. Follow the monthly jobs. An arrow means the crop continues after ${monthShort(end.getMonth() + 1)} ${end.getFullYear()}.`,
+    s.y += legendH;
+    s.paragraph(copy('Tray crops reserve the bed from their first readiness month. Follow the monthly jobs. An arrow means the crop continues after {month} {year}.', { month: monthShort(end.getMonth() + 1, s.language), year: end.getFullYear() }),
       { size: 8.5, ink: INK.muted, gap: 8 });
     s.fill(INK.green);
     s.doc.rect(s.margin, s.y, s.contentWidth, headH, 'F');
     s.font(9.5, true);
     s.ink(INK.white);
-    s.doc.text('CROP / SHARE OF BED', s.margin + 8, s.y + 18);
+    const cropHeading = s.safe(copy('CROP / SHARE OF BED'));
+    const cropHeadingLines = native ? s.doc.splitTextToSize(cropHeading, labelW - 16) as string[] : [cropHeading];
+    s.doc.text(cropHeadingLines.length === 1 ? cropHeadingLines[0] : cropHeadingLines, s.margin + 8, s.y + (native ? 12 : 18), { lineHeightFactor: 1.1 });
     months.forEach((m, i) => {
       const date = new Date(start.getFullYear(), start.getMonth() + i, 1);
       const x = s.margin + labelW + i * colW + colW / 2;
-      s.font(9.5, true);
-      s.doc.text(s.safe(monthShort(m)), x, s.y + 12, { align: 'center' });
+      s.font(native ? 8 : 9.5, true);
+      s.doc.text(monthLines[i].length === 1 ? s.safe(monthLines[i][0]) : monthLines[i], x, s.y + 12, { align: 'center', lineHeightFactor: 1.25 });
       s.font(7.5);
-      s.doc.text(String(date.getFullYear()), x, s.y + 24, { align: 'center' });
+      s.doc.text(String(date.getFullYear()), x, s.y + headH - 6, { align: 'center' });
     });
     s.y += headH;
   };
@@ -1029,7 +1190,7 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
     s.font(11, true);
     s.ink(conflict ? INK.terracotta : INK.green);
     const area = s.safe(`${numberLabel(row.areaM2)} m²`);
-    const suffix = `${continued ? ' - continued' : ''}${conflict ? ' - CHECK SPACE: crop shares conflict' : ''}`;
+    const suffix = `${continued ? copy(' - continued') : ''}${conflict ? copy(' - CHECK SPACE: crop shares conflict') : ''}`;
     const room = s.contentWidth - s.doc.getTextWidth(area) - 28;
     s.doc.text(truncateToWidth(s.doc, s.safe(row.label + suffix), room), s.margin + 8, s.y + 18);
     s.font(10);
@@ -1046,9 +1207,23 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
     const varietyLinesFor = (planting: Planting) => {
       s.font(8.5);
       return planting.variety?.trim()
-        ? s.doc.splitTextToSize(s.safe(`Variety: ${planting.variety.trim()}`), labelW - 44) as string[] : [];
+        ? s.doc.splitTextToSize(s.safe(copy('Variety: {variety}', { variety: planting.variety.trim() })), labelW - 44) as string[] : [];
     };
-    const firstLaneHeight = rowH + (lanes[0] ? varietyLinesFor(lanes[0]).length * 11 : 0);
+    const detailFor = (planting: Planting, entryShare: string) => {
+      const crop = cropByKey(planting.cropKey)!;
+      const fraction = planting.areaFraction ?? 1;
+      const share = !Number.isFinite(fraction) || fraction <= 0 ? copy('Invalid share')
+        : fraction === 1 ? copy('Whole area') : fraction > 1 ? copy('{share}% area', { share: numberLabel(fraction * 100) }) : copy('{share} area', { share: entryShare });
+      const [bedStart] = plantingBedEntryOffsets(planting, nowMonth, 12);
+      const sowOffset = bedStart - (crop.transplant ? TRANSPLANT_BED_RESERVED_FROM_MONTHS : 0);
+      const sowDate = new Date(start.getFullYear(), start.getMonth() + sowOffset, 1);
+      const detail = copy('{share} - sow {month} {year}', { share, month: monthShort(planting.sowMonth, s.language), year: sowDate.getFullYear() });
+      s.font(8.5);
+      return { bedStart, lines: native ? s.doc.splitTextToSize(s.safe(detail), labelW - 44) as string[] : [truncateToWidth(s.doc, s.safe(detail), labelW - 44)] };
+    };
+    const firstEntry = lanes[0] && row.cells.flat().find(entry => entry.plantingId === lanes[0].id);
+    const firstDetail = firstEntry ? detailFor(lanes[0], firstEntry.share) : undefined;
+    const firstLaneHeight = rowH + (firstDetail ? (firstDetail.lines.length - 1) * 11 : 0) + (lanes[0] ? varietyLinesFor(lanes[0]).length * 11 : 0);
     if (!s.fits(bedHeadH + firstLaneHeight)) newCalendarPage();
     drawBedHead(row);
 
@@ -1070,12 +1245,14 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
       drawGridRow();
       s.font(9.5);
       s.ink(INK.muted);
-      s.doc.text('No dated crop reserved here', s.margin + 8, s.y + 21);
+      s.doc.text(copy('No dated crop reserved here'), s.margin + 8, s.y + 21);
       s.y += rowH;
     }
     for (const planting of lanes) {
       const varietyLines = varietyLinesFor(planting);
-      const laneH = rowH + varietyLines.length * 11;
+      const calendarEntry = row.cells.flat().find(entry => entry.plantingId === planting.id)!;
+      const detail = detailFor(planting, calendarEntry.share);
+      const laneH = rowH + (detail.lines.length - 1) * 11 + varietyLines.length * 11;
       if (!s.fits(laneH)) { newCalendarPage(); drawBedHead(row, true); }
       drawGridRow(laneH);
       const crop = cropByKey(planting.cropKey)!;
@@ -1087,16 +1264,9 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
       s.doc.text(truncateToWidth(s.doc, s.safe(crop.name), labelW - 44), s.margin + 36, s.y + 14);
       s.font(8.5);
       s.ink(INK.muted);
-      const fraction = planting.areaFraction ?? 1;
-      const share = !Number.isFinite(fraction) || fraction <= 0 ? 'Invalid share'
-        : fraction === 1 ? 'Whole area' : fraction > 1 ? `${numberLabel(fraction * 100)}% area` : `${entry.share} area`;
-      const [bedStart] = plantingBedEntryOffsets(planting, nowMonth, 12);
-      const sowOffset = bedStart - (crop.transplant ? TRANSPLANT_BED_RESERVED_FROM_MONTHS : 0);
-      const sowDate = new Date(start.getFullYear(), start.getMonth() + sowOffset, 1);
-      const detail = `${share} - sow ${monthShort(planting.sowMonth)} ${sowDate.getFullYear()}`;
-      s.doc.text(truncateToWidth(s.doc, s.safe(detail), labelW - 44), s.margin + 36, s.y + 27);
-      if (varietyLines.length) s.doc.text(varietyLines, s.margin + 36, s.y + 38, { lineHeightFactor: 11 / 8.5 });
-      const continues = bedStart + occupiedMonthsForPlanting(planting).length > 12;
+      s.doc.text(detail.lines.length === 1 ? detail.lines[0] : detail.lines, s.margin + 36, s.y + 27, { lineHeightFactor: 11 / 8.5 });
+      if (varietyLines.length) s.doc.text(varietyLines, s.margin + 36, s.y + 27 + detail.lines.length * 11, { lineHeightFactor: 11 / 8.5 });
+      const continues = detail.bedStart + occupiedMonthsForPlanting(planting).length > 12;
 
       // Paint adjacent phase cells as one bar. Its dates come directly from the same
       // occupancy entries used by the app's source model, including clipped existing crops.
@@ -1113,7 +1283,9 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
         if (phase.harvesting) {
           s.font(8, true);
           s.ink(coverEnd ? INK.white : INK.text);
-          s.doc.text(coverEnd ? 'Finish' : 'Pick', x + width / 2, s.y + 20, { align: 'center' });
+          const phaseLabel = s.safe(copy(coverEnd ? 'Finish' : 'Pick'));
+          if (native && s.doc.getTextWidth(phaseLabel) > width - 6) s.font(Math.max(5.5, 8 * (width - 6) / s.doc.getTextWidth(phaseLabel)), true);
+          s.doc.text(phaseLabel, x + width / 2, s.y + 20, { align: 'center' });
         }
         if (last === 11 && continues) {
           s.fill(phase.harvesting && !coverEnd ? INK.text : INK.white);
@@ -1125,7 +1297,7 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
     }
     s.y += 8;
   }
-  if (!rows.length) s.paragraph('No beds or staple plots are mapped. Fruit, berries and animal food sources are listed in the picture calendar.',
+  if (!rows.length) s.paragraph(copy('No beds or staple plots are mapped. Fruit, berries and animal food sources are listed in the picture calendar.'),
     { size: 10, ink: INK.muted });
 }
 
@@ -1271,6 +1443,8 @@ function drawIconOrCode(s: Sheet, entry: { iconKey: string; code: string }, x: n
 
 function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: number): void {
   const resolved = resolveAvailability(input, nowMonth);
+  const native = isNativePdfLanguage(s.language);
+  const copy = (source: string, values?: Record<string, string | number>) => cropExportText(source, s.language, values);
   const axis = monthAxisSlots(nowMonth, now.getFullYear(), 12);
   const last = axis[11];
   const dated = resolved.yearMode === 'fromToday';
@@ -1282,41 +1456,59 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
   const minimumRowHeight = input.pageFormat === 'a2' ? 32 : 36;
   const bandHeaderHeight = input.pageFormat === 'a2' ? 20 : 24;
   const bandGap = input.pageFormat === 'a2' ? 4 : 8;
-  const planningLabel = (e: AvailabilityCell) => e.planning?.label.startsWith('Regional reference:') ? 'Regional season' : e.planning?.label.replace('Assumed variety:', 'Plan:') ?? '';
+  const planningLabel = (e: AvailabilityCell) => {
+    if (e.planning?.calendarLabel) return e.planning.calendarLabel;
+    const label = e.planning?.label ?? '';
+    if (label.startsWith('Regional reference:')) return copy('Regional season');
+    if (native && label.startsWith('Assumed variety:')) return copy('Plan: {variety}', { variety: label.slice('Assumed variety:'.length).trimStart() });
+    return label.replace('Assumed variety:', 'Plan:');
+  };
   const heading = () => {
     masthead(s, 'Picture calendar');
     pageTitle(s, input.meta.planTitle,
-      dated ? `${monthShort(nowMonth)} ${now.getFullYear()} - ${monthShort(last.month)} ${last.year}` : 'Repeat-year template',
-      dated ? 'Fruit, nuts and berries: solid marks are local dates. Outlined marks: references when established, not food promised this year.'
-        : 'This repeats the annual planting cycle. It is not a forecast for this first year.');
-    s.paragraph(`${input.meta.locationLine || input.meta.siteLine} - ${input.meta.climateLine || 'Climate not set'}`, { size: 10, ink: INK.green, gap: 8 });
+      dated ? `${monthShort(nowMonth, s.language)} ${now.getFullYear()} - ${monthShort(last.month, s.language)} ${last.year}` : copy('Repeat-year template'),
+      dated ? copy('Fruit, nuts and berries: solid marks are local dates. Outlined marks: references when established, not food promised this year.')
+        : copy('This repeats the annual planting cycle. It is not a forecast for this first year.'));
+    s.paragraph(`${input.meta.locationLine || input.meta.siteLine} - ${input.meta.climateLine || copy('Climate not set')}`, { size: 10, ink: INK.green, gap: 8 });
   };
   const monthHead = () => {
     s.fill(INK.green);
-    s.doc.rect(s.margin, s.y, s.contentWidth, 32, 'F');
+    s.font(10, true);
+    const sourceLines = native ? s.doc.splitTextToSize(s.safe(copy('CROP / FOOD SOURCE')), labelW - 16) as string[] : ['CROP / FOOD SOURCE'];
+    s.font(8, true);
+    const monthLines = axis.map(slot => native ? s.doc.splitTextToSize(s.safe(monthShort(slot.month, s.language)), colW - 4) as string[] : [monthShort(slot.month)]);
+    const height = native ? Math.max(32, sourceLines.length * 12 + 12, Math.max(...monthLines.map(lines => lines.length)) * 10 + (dated ? 21 : 12)) : 32;
+    s.doc.rect(s.margin, s.y, s.contentWidth, height, 'F');
     s.font(10, true); s.ink(INK.white);
-    s.doc.text('CROP / FOOD SOURCE', s.margin + 8, s.y + 20);
+    s.doc.text(sourceLines, s.margin + 8, s.y + (native ? 16 : 20), { lineHeightFactor: 1.2 });
     axis.forEach((slot, i) => {
       const x = s.margin + labelW + (i + 0.5) * colW;
       s.font(8, true);
-      s.doc.text(monthShort(slot.month), x, s.y + 13, { align: 'center' });
+      s.doc.text(monthLines[i], x, s.y + 13, { align: 'center', lineHeightFactor: 1.25 });
       if (dated) {
         s.font(6.5);
-        s.doc.text(slot.isNow ? 'NOW' : String(slot.year), x, s.y + 24, { align: 'center' });
+        s.doc.text(slot.isNow ? copy('NOW') : String(slot.year), x, s.y + (native ? height - 8 : 24), { align: 'center' });
       }
     });
-    s.y += 32;
+    s.y += height;
+  };
+  const bandHeading = (band: AvailabilityBand, continued = false) => {
+    const title = copy(band.title);
+    s.font(10.5, true);
+    const lines = native ? s.doc.splitTextToSize(s.safe(continued ? copy('{title} (continued)', { title }) : title), s.contentWidth - 16) as string[] : [s.safe(`${band.title}${continued ? ' (continued)' : ''}`)];
+    return { lines, height: native ? Math.max(bandHeaderHeight, 11 + lines.length * 13 + (band.key === 'forest' ? 12 : 0)) : bandHeaderHeight };
   };
   const bandHead = (band: AvailabilityBand, continued = false) => {
+    const { lines, height } = bandHeading(band, continued);
     s.fill(mixWithWhite(band.rgb, 0.16));
-    s.doc.rect(s.margin, s.y, s.contentWidth, bandHeaderHeight, 'F');
+    s.doc.rect(s.margin, s.y, s.contentWidth, height, 'F');
     s.font(10.5, true); s.ink(INK.text);
-    s.doc.text(s.safe(`${band.title}${continued ? ' (continued)' : ''}`), s.margin + 8, s.y + 16);
+    s.doc.text(lines, s.margin + 8, s.y + 16, { lineHeightFactor: 13 / 10.5 });
     if (band.key === 'forest') {
       s.font(7.5); s.ink(INK.green);
-      s.doc.text('When established', s.width - s.margin - 8, s.y + 16, { align: 'right' });
+      s.doc.text(s.safe(copy('When established')), s.width - s.margin - 8, s.y + (native ? height - 6 : 16), { align: 'right' });
     }
-    s.y += bandHeaderHeight;
+    s.y += height;
   };
   heading(); monthHead();
   const freshPageCapacity = s.bottom - s.y;
@@ -1328,9 +1520,9 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
     const rows = [...entries.values()].sort((a, b) => a.label.localeCompare(b.label));
     if (!rows.length) {
       s.font(10);
-      const note = band.emptyNote ?? 'No picking months marked yet.';
+      const note = copy(band.emptyNote ?? 'No picking months marked yet.');
       const noteLines = s.doc.splitTextToSize(s.safe(note), s.contentWidth) as string[];
-      if (!s.fits(36 + noteLines.length * 14 + 10)) { s.page('portrait'); heading(); monthHead(); }
+      if (!s.fits((native ? bandHeading(band).height + 12 : 36) + noteLines.length * 14 + 10)) { s.page('portrait'); heading(); monthHead(); }
       bandHead(band);
       s.y += 12;
       s.paragraph(note, { size: 10, ink: INK.muted, gap: 10 });
@@ -1343,16 +1535,20 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
       const planLabel = planningLabel(e);
       s.font(8);
       const planLines = planLabel ? s.doc.splitTextToSize(s.safe(planLabel), labelW - 39) as string[] : [];
-      const rowH = Math.max(minimumRowHeight, label.length * 12 + (e.planning ? planLines.length * 10 + 12 : monthsUnknown ? 24 : 10));
-      return {e,monthsUnknown,label,planLines,rowH};
+      const unknownLines = native && monthsUnknown && !e.planning ? s.doc.splitTextToSize(s.safe(copy('Months to confirm')), labelW - 39) as string[] : ['Months to confirm'];
+      const note = e.ageNote ?? copy(band.key === 'animals' ? 'Confirm stock and production dates' : 'Dates to confirm · see plant ages and food sources');
+      const noMarks = !band.cells.some(cell => cell.some(entry => entry.iconKey === e.iconKey)) && !band.planningCells?.some(cell => cell.some(entry => entry.iconKey === e.iconKey));
+      const noteLines = native && noMarks ? s.doc.splitTextToSize(s.safe(note), s.contentWidth - labelW - 16) as string[] : [s.safe(note)];
+      const rowH = Math.max(minimumRowHeight, label.length * 12 + (e.planning ? planLines.length * 10 + 12 : monthsUnknown ? (native ? unknownLines.length * 11 + 14 : 24) : 10), native && noMarks ? noteLines.length * 10 + 12 : 0);
+      return {e,monthsUnknown,label,planLines,unknownLines,noteLines,rowH};
     });
-    const bandHeight = measuredRows.reduce((height,row) => height + row.rowH, bandHeaderHeight + bandGap);
+    const bandHeight = measuredRows.reduce((height,row) => height + row.rowH, bandHeading(band).height + bandGap);
     // A busy mixed-food calendar left the final fish row alone on a new page. Keep the
     // whole section together when it fits a fresh page; long sections still paginate.
-    const required = bandHeight <= freshPageCapacity ? bandHeight : bandHeaderHeight + measuredRows[0].rowH;
+    const required = bandHeight <= freshPageCapacity ? bandHeight : bandHeading(band).height + measuredRows[0].rowH;
     if (!s.fits(required)) { s.page('portrait'); heading(); monthHead(); }
     bandHead(band);
-    for (const [rowIndex, {e,monthsUnknown,label,planLines,rowH}] of measuredRows.entries()) {
+    for (const [rowIndex, {e,monthsUnknown,label,planLines,unknownLines,noteLines,rowH}] of measuredRows.entries()) {
       if (!s.fits(rowH)) { s.page('portrait'); heading(); monthHead(); bandHead(band, true); }
       if (rowIndex % 2 === 0) { s.fill([249, 250, 246]); s.doc.rect(s.margin, s.y, s.contentWidth, rowH, 'F'); }
       if (dated) { s.fill([244, 239, 218]); s.doc.rect(s.margin + labelW, s.y, colW, rowH, 'F'); }
@@ -1364,7 +1560,7 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
         s.doc.text(planLines, s.margin + 34, s.y + label.length * 12 + 16, { lineHeightFactor: 1.25 });
       } else if (monthsUnknown) {
         s.font(8.5); s.ink(INK.muted);
-        s.doc.text('Months to confirm', s.margin + 34, s.y + label.length * 12 + 18);
+        s.doc.text(unknownLines, s.margin + 34, s.y + label.length * 12 + 18, { lineHeightFactor: 11 / 8.5 });
       }
       // One outline per contiguous season lets the eye read a span of months. Twelve little
       // dashed boxes made the fruit page look like a collection of unrelated appointments.
@@ -1397,7 +1593,7 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
       });
       if (!marks.some(Boolean)) {
         s.font(8); s.ink(INK.muted);
-        s.doc.text(s.safe(e.ageNote ?? (band.key === 'animals' ? 'Confirm stock and production dates' : 'Dates to confirm · see plant ages and food sources')), s.margin + labelW + 8, s.y + rowH / 2 + 3);
+        s.doc.text(noteLines, s.margin + labelW + 8, s.y + rowH / 2 + 3 - (native ? (noteLines.length - 1) * 5 : 0), { lineHeightFactor: 1.25 });
       }
       s.stroke(INK.hair);
       s.doc.line(s.margin, s.y + rowH, s.width - s.margin, s.y + rowH);
@@ -1405,14 +1601,17 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
     }
     s.y += bandGap;
   }
-  const calendarNote = 'Outlined bands are planning references when established; they do not enter food totals or picking jobs. Blank months have no picking window marked. Recorded planting ages keep young plants out of early reference months. Check plant ages and Food sources to check in the app. Gold rows require each crop’s storage conditions; check the full plan or app. Red space figures mean the plan needs more growing space than is mapped.';
+  const calendarNote = copy('Outlined bands are planning references when established; they do not enter food totals or picking jobs. Blank months have no picking window marked. Recorded planting ages keep young plants out of early reference months. Check plant ages and Food sources to check in the app. Gold rows require each crop’s storage conditions; check the full plan or app. Red space figures mean the plan needs more growing space than is mapped.');
   s.font(10);
   const calendarNoteLines = s.doc.splitTextToSize(s.safe(calendarNote), s.contentWidth) as string[];
-  if (!s.fits(56 + calendarNoteLines.length * 14 + 8)) { s.page('portrait'); heading(); monthHead(); }
+  s.font(10, true);
+  const spaceLines = native ? s.doc.splitTextToSize(s.safe(copy('Growing space used')), labelW - 16) as string[] : ['Growing space used'];
+  const spaceHeight = native ? Math.max(44, 12 + spaceLines.length * 12) : 44;
+  if (!s.fits(spaceHeight + 12 + calendarNoteLines.length * 14 + 8)) { s.page('portrait'); heading(); monthHead(); }
   s.fill(INK.panelGrey);
-  s.doc.rect(s.margin, s.y, s.contentWidth, 44, 'F');
+  s.doc.rect(s.margin, s.y, s.contentWidth, spaceHeight, 'F');
   s.font(10, true); s.ink(INK.text);
-  s.doc.text('Growing space used', s.margin + 8, s.y + 20);
+  s.doc.text(spaceLines, s.margin + 8, s.y + (native ? 16 : 20), { lineHeightFactor: 1.2 });
   resolved.utilization.slice(0, 12).forEach((v, i) => {
     const x = s.margin + labelW + i * colW;
     const value = Number.isFinite(v) ? Math.max(0, v) : 0;
@@ -1421,7 +1620,7 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
     s.fill(INK.hair); s.doc.rect(x + 5, s.y + 25, colW - 10, 6, 'F');
     if (value > 0) { s.fill(value > 1.001 ? [179, 58, 58] : INK.green); s.doc.rect(x + 5, s.y + 25, (colW - 10) * Math.min(1, value), 6, 'F'); }
   });
-  s.y += 56;
+  s.y += spaceHeight + 12;
   s.paragraph(calendarNote, { size: 10, ink: INK.muted, gap: 8 });
 
   // The wall copy names unknown sources on the calendar itself. Keep research appendices
@@ -1429,75 +1628,95 @@ function drawAvailability(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth
   if (input.availabilityDetails === false) return;
 
   const undated = includedUndatedSources(input.availability);
+  const refs = [...new Map((input.availability?.includeTrees === false ? [] : input.availability?.forestPlanning?.flat() ?? []).filter(e => e.planning).map(e => [e.iconKey, e])).values()];
+  const pending = settleOnceRows(input.plantings, now.getFullYear(), nowMonth)
+    .filter((p) => p.awaitingSowingConfirmation);
+  const storage = [...new Set(input.plantings.map((p) => p.cropKey))].map(cropByKey)
+    .filter((c) => c && c.storageMonths && c.storageConditions);
+  s.font(9.5);
+  const tailHeight = 18 + [planAssuranceText(ASSURANCE_ONE_LINE, s.language), copy(SUCCESSION_TIMING_GUIDANCE)]
+    .reduce((height, text) => height + (s.doc.splitTextToSize(s.safe(text), s.contentWidth) as string[]).length * 9.5 * 1.4, 0);
   if (undated.length) {
     s.page('portrait'); masthead(s, 'On your map');
-    pageTitle(s, input.meta.planTitle, 'Food sources to check',
-      'These are on your design. Their picking or production months still need checking on site.');
-    for (const e of undated) {
+    pageTitle(s, input.meta.planTitle, copy('Food sources to check'),
+      copy('These are on your design. Their picking or production months still need checking on site.'));
+    for (const [index, e] of undated.entries()) {
       s.font(10.5);
       const lines = s.doc.splitTextToSize(s.safe(e.detail), s.contentWidth - 60) as string[];
-      const h = Math.max(64, 32 + lines.length * 14);
-      if (s.need(h + 10)) { masthead(s, 'On your map'); pageTitle(s, input.meta.planTitle, 'Food sources to check (continued)'); }
+      s.font(12, true);
+      const titles = native ? s.doc.splitTextToSize(s.safe(e.label), s.contentWidth - 60) as string[] : [s.safe(e.label)];
+      const extra = native ? (titles.length - 1) * 15 : 0;
+      const h = Math.max(64, 32 + extra + lines.length * 14);
+      // Longer native details left the timing caution alone on a headerless page.
+      // Keep the last source card with both complete cautions when this is the final section.
+      const reserveTail = native && index === undated.length - 1 && !refs.length && !pending.length && !storage.length;
+      if (s.need(h + 10 + (reserveTail ? tailHeight : 0))) { masthead(s, 'On your map'); pageTitle(s, input.meta.planTitle, copy('Food sources to check (continued)')); }
       s.fill(INK.panelGreen); s.doc.roundedRect(s.margin, s.y, s.contentWidth, h, 5, 5, 'F');
       drawIconOrCode(s, { ...e, code: fallbackCode(e.label) }, s.margin + 10, s.y + 12, 32, input.icons);
-      s.font(12, true); s.ink(INK.green); s.doc.text(s.safe(e.label), s.margin + 52, s.y + 20);
-      s.font(10.5); s.ink(INK.text); s.doc.text(lines, s.margin + 52, s.y + 38, { lineHeightFactor: 1.33 });
+      s.font(12, true); s.ink(INK.green); s.doc.text(titles, s.margin + 52, s.y + 20, { lineHeightFactor: 1.25 });
+      s.font(10.5); s.ink(INK.text); s.doc.text(lines, s.margin + 52, s.y + 38 + extra, { lineHeightFactor: 1.33 });
       s.y += h + 10;
     }
   }
-  const refs = [...new Map((input.availability?.includeTrees === false ? [] : input.availability?.forestPlanning?.flat() ?? []).filter(e => e.planning).map(e => [e.iconKey, e])).values()];
   if (refs.length) {
     s.page('portrait'); masthead(s, 'Season references');
-    pageTitle(s, input.meta.planTitle, 'Why these months are marked', 'References describe established plants. Confirm local dates; new plants need time to produce.');
+    pageTitle(s, input.meta.planTitle, copy('Why these months are marked'), copy('References describe established plants. Confirm local dates; new plants need time to produce.'));
     for (const entry of refs) {
-      const lines = [`${entry.label} - ${entry.planning!.label}`, entry.planning!.basis, ...(entry.planning!.source ? [`Source: ${entry.planning!.source.label}`] : [])];
+      const lines = [`${entry.label} - ${entry.planning!.label}`, entry.planning!.basis, ...(entry.planning!.source ? [copy('Source: {source}', { source: entry.planning!.source.label })] : [])];
       s.font(9);
       const height = lines.reduce((total, line) => total + (s.doc.splitTextToSize(s.safe(line), s.contentWidth) as string[]).length * 13 + 5, 0);
-      if (s.need(height + 12)) { masthead(s, 'Season references'); pageTitle(s, input.meta.planTitle, 'Season references (continued)'); }
+      if (s.need(height + 12)) { masthead(s, 'Season references'); pageTitle(s, input.meta.planTitle, copy('Season references (continued)')); }
       for (const [index, line] of lines.entries()) s.paragraph(line, { size: 9, bold: index === 0, ink: index === 2 ? INK.teal : INK.text, gap: 5 });
       if (entry.planning!.source) s.doc.link(s.margin, s.y - 18, s.contentWidth, 16, { url: entry.planning!.source.url });
       s.y += 10;
     }
   }
-  const pending = settleOnceRows(input.plantings, now.getFullYear(), nowMonth)
-    .filter((p) => p.awaitingSowingConfirmation);
   if (pending.length) {
     const body = [
-      'These earlier sowings are not confirmed. They are left out of the food calendar and jobs. In the app, confirm what was planted or mark it as skipped.',
-      ...pending.map((p) => `${cropByKey(p.cropKey)?.name ?? p.cropKey} - ${input.beds.find((b) => b.id === p.bedId)?.label ?? p.bedId} - scheduled ${p.once}`),
+      copy('These earlier sowings are not confirmed. They are left out of the food calendar and jobs. In the app, confirm what was planted or mark it as skipped.'),
+      ...pending.map((p) => copy('{crop} - {bed} - scheduled {date}', { crop: cropByKey(p.cropKey)?.name ?? p.cropKey, bed: input.beds.find((b) => b.id === p.bedId)?.label ?? p.bedId, date: p.once ?? '' })),
     ];
     if (s.need(panelHeight(s, body, true, true) + 12)) masthead(s, 'Sowings to confirm');
-    s.y += panel(s, { title: 'Did these sowings happen?', body, bg: INK.panelCream, accent: INK.gold }) + 12;
+    s.y += panel(s, { title: copy('Did these sowings happen?'), body, bg: INK.panelCream, accent: INK.gold }) + 12;
   }
-  const storage = [...new Set(input.plantings.map((p) => p.cropKey))].map(cropByKey)
-    .filter((c) => c && c.storageMonths && c.storageConditions);
   if (storage.length) {
     s.page('portrait'); masthead(s, 'Keeping food');
-    pageTitle(s, input.meta.planTitle, 'Before using stored food',
-      'The storage row applies only when these sourced conditions are met. Check the food before using it.');
+    pageTitle(s, input.meta.planTitle, copy('Before using stored food'),
+      copy('The storage row applies only when these sourced conditions are met. Check the food before using it.'));
     for (const crop of storage) {
       if (!crop) continue;
       s.font(10.5);
-      const lines = s.doc.splitTextToSize(s.safe(crop.storageConditions ?? ''), s.contentWidth - 26) as string[];
-      const h = 48 + lines.length * 14;
-      if (s.need(h + 10)) { masthead(s, 'Keeping food'); pageTitle(s, input.meta.planTitle, 'Stored food (continued)'); }
+      // The bundled font omitted ≤, turning a maximum moisture into an exact value on paper.
+      // Native drafts spell the comparison out; preserve it in legacy English with ASCII.
+      const condition = copy(crop.storageConditions ?? '').replace(/≤/g, '<=');
+      const lines = s.doc.splitTextToSize(s.safe(condition), s.contentWidth - 26) as string[];
+      s.font(12, true);
+      const storageTitle = copy('{crop} - sourced storage window: {months} months', { crop: crop.name, months: crop.storageMonths! });
+      const titles = native ? s.doc.splitTextToSize(s.safe(storageTitle), s.contentWidth - 26) as string[] : [s.safe(storageTitle)];
+      const extra = native ? (titles.length - 1) * 15 : 0;
+      const h = 48 + extra + lines.length * 14;
+      if (s.need(h + 10)) { masthead(s, 'Keeping food'); pageTitle(s, input.meta.planTitle, copy('Stored food (continued)')); }
       s.fill(INK.panelCream); s.doc.roundedRect(s.margin, s.y, s.contentWidth, h, 5, 5, 'F');
       s.font(12, true); s.ink(INK.brown);
-      s.doc.text(s.safe(`${crop.name} - sourced storage window: ${crop.storageMonths} months`), s.margin + 12, s.y + 20);
+      s.doc.text(titles, s.margin + 12, s.y + 20, { lineHeightFactor: 1.25 });
       s.font(10.5); s.ink(INK.text);
-      s.doc.text(lines, s.margin + 12, s.y + 39, { lineHeightFactor: 1.33 });
+      s.doc.text(lines, s.margin + 12, s.y + 39 + extra, { lineHeightFactor: 1.33 });
       if (crop.storageSourceUrl) {
         s.font(8.5); s.ink(INK.green);
-        s.doc.textWithLink('Source guide', s.margin + 12, s.y + h - 9, { url: crop.storageSourceUrl });
+        s.doc.textWithLink(s.safe(copy('Source guide')), s.margin + 12, s.y + h - 9, { url: crop.storageSourceUrl });
       }
       s.y += h + 10;
     }
   }
   // The reference copy carries the full assurance panel on its dashboard. The
   // field copy keeps the shared caution and the accepted plan's own warnings.
+  if (native && !s.fits(tailHeight)) {
+    s.page('portrait'); masthead(s, 'Picture calendar');
+    pageTitle(s, input.meta.planTitle, planAssuranceText(ASSURANCE_TITLE, s.language));
+  }
   s.y += 4;
-  s.paragraph(ASSURANCE_ONE_LINE, { size: 9.5, ink: INK.muted, gap: 6 });
-  s.paragraph(SUCCESSION_TIMING_GUIDANCE, { size: 9.5, ink: INK.muted, gap: 8 });
+  s.paragraph(planAssuranceText(ASSURANCE_ONE_LINE, s.language), { size: 9.5, ink: INK.muted, gap: 6 });
+  s.paragraph(copy(SUCCESSION_TIMING_GUIDANCE), { size: 9.5, ink: INK.muted, gap: 8 });
   if (!(input.sections ?? ALL_SECTIONS).includes('dashboard')) drawPlanNotes(s, input);
 }
 
@@ -1885,11 +2104,12 @@ ${t.kg ? projectedKgLabel(t.kg) : t.knownKg[1] > 0 ? `${projectedKgLabel(t.known
  * print off the bottom of the first.
  */
 function drawTaskSummary(s: Sheet, input: CropPlanPdfInput, nowMonth: number): void {
+  const copy = (source: string) => cropExportText(source, s.language);
   masthead(s, 'Task summary');
   // No standfirst, for the same reason drawCalendar has none: the whole
   // point of this page is fitting the year on one sheet, and an
   // introduction is exactly the two or three lines that would cost it.
-  pageTitle(s, 'Task summary', 'Tasks by month');
+  pageTitle(s, copy('Task summary'), copy('Tasks by month'));
 
   // Same 12-month window as the calendar this page sits behind (rollingMonths
   // / drawCalendar): buildTaskMonths does not cap monthsAway, and a slow
@@ -1902,27 +2122,28 @@ function drawTaskSummary(s: Sheet, input: CropPlanPdfInput, nowMonth: number): v
   const months = Array.from({ length: 12 }, (_, monthsAway) => ({
     month: ((nowMonth - 1 + monthsAway) % 12) + 1,
     lines: [
-      ...(taskMonths.find((m) => m.monthsAway === monthsAway)?.tasks.map(taskPhrase) ?? []),
-      ...picking[monthsAway].map(treePickingPhrase),
+      ...(taskMonths.find((m) => m.monthsAway === monthsAway)?.tasks.map(task => taskPhrase(task, s.language)) ?? []),
+      ...picking[monthsAway].map(line => treePickingPhrase(line, s.language)),
     ],
   })).filter((m) => m.lines.length > 0);
 
   if (!months.length) {
-    s.paragraph('No plantings yet, so there is nothing to print here.', { size: 9.5, ink: INK.muted });
+    s.paragraph(copy('No plantings yet, so there is nothing to print here.'), { size: 9.5, ink: INK.muted });
     return;
   }
   if (picking.some((slot) => slot.length > 0)) {
-    s.paragraph('"Pick" lines use locally confirmed months for established, productive trees.', { size: 7.5, ink: INK.muted });
+    s.paragraph(copy('"Pick" lines use locally confirmed months for established, productive trees.'), { size: 7.5, ink: INK.muted });
   }
 
-  const monthColW = 34;
+  s.font(7.5, true);
+  const monthColW = isNativePdfLanguage(s.language) ? Math.max(34, ...months.map(group => s.doc.getTextWidth(s.safe(monthShort(group.month, s.language))) + 12)) : 34;
   const textColW = s.contentWidth - monthColW;
 
   const continued = () => {
     masthead(s, 'Task summary');
     s.font(11, true);
     s.ink(INK.text);
-    s.doc.text(s.safe('Tasks by month (continued)'), s.margin, s.y);
+    s.doc.text(s.safe(copy('Tasks by month (continued)')), s.margin, s.y);
     s.y += 16;
   };
 
@@ -1941,7 +2162,7 @@ function drawTaskSummary(s: Sheet, input: CropPlanPdfInput, nowMonth: number): v
         s.doc.line(s.margin, s.y - 2, s.margin + s.contentWidth, s.y - 2);
         s.font(7.5, true);
         s.ink(INK.green);
-        s.doc.text(s.safe(monthShort(group.month)), s.margin, s.y + 7);
+        s.doc.text(s.safe(monthShort(group.month, s.language)), s.margin, s.y + 7);
       }
 
       s.font(7.5);
@@ -1971,24 +2192,48 @@ function table(
   const totalW = columns.reduce((a, c) => a + c.width, 0);
   const scale = s.contentWidth / totalW;
   const widths = columns.map((c) => c.width * scale);
-  const headH = 22;
+  const native = isNativePdfLanguage(s.language);
   const size = opts.size ?? 8;
   const leading = size * 1.32;
+  const headSize = Math.max(7.5, size - 0.5);
+  s.font(headSize, true);
+  // Only authored column headings are localized here. Row values arrive presentation-ready.
+  const headers = columns.map((column, index) => native
+    ? s.doc.splitTextToSize(s.safe(cropExportText(column.header, s.language)), widths[index] - 16) as string[]
+    : [s.safe(column.header)]);
+  const headH = native ? Math.max(22, Math.max(...headers.map(lines => lines.length)) * headSize * 1.2 + 12) : 22;
+  const repeatTitle = () => {
+    if (opts.band) masthead(s, opts.band);
+    if (opts.title) {
+      s.font(11, true); s.ink(INK.text);
+      const title = cropExportText('{title} (continued)', s.language, { title: cropExportText(opts.title, s.language) });
+      const lines = native ? s.doc.splitTextToSize(s.safe(title), s.contentWidth) as string[] : [s.safe(title)];
+      s.doc.text(lines.length === 1 ? lines[0] : lines, s.margin, s.y, { lineHeightFactor: 1.2 });
+      s.y += 14 + (lines.length - 1) * 13.2;
+    }
+  };
 
   const drawHead = () => {
     s.fill(INK.green);
     s.doc.rect(s.margin, s.y, s.contentWidth, headH, 'F');
-    s.font(Math.max(7.5, size - 0.5), true);
+    s.font(headSize, true);
     s.ink(INK.white);
     let x = s.margin;
     columns.forEach((c, i) => {
       const tx = c.align === 'right' ? x + widths[i] - 8 : x + 8;
-      s.doc.text(s.safe(c.header), tx, s.y + 13, { align: c.align === 'right' ? 'right' : 'left' });
+      s.doc.text(headers[i].length === 1 ? headers[i][0] : headers[i], tx, s.y + 13, { align: c.align === 'right' ? 'right' : 'left', lineHeightFactor: 1.2 });
       x += widths[i];
     });
     s.y += headH;
   };
 
+  if (native && rows.length) {
+    const firstH = Math.max(...columns.map((column, i) => {
+      s.font(size, opts.groupKey !== undefined && i === 0);
+      return (s.doc.splitTextToSize(s.safe(rows[0][column.key] ?? ''), widths[i] - 16) as string[]).length * leading + 12;
+    }), 18);
+    if (s.need(headH + firstH + 24)) repeatTitle();
+  }
   drawHead();
   let zebra = false;
   let lastGroup: string | undefined;
@@ -2008,13 +2253,7 @@ function table(
     let prepared = prepare();
 
     if (s.need(prepared.height + 24)) {
-      if (opts.band) masthead(s, opts.band);
-      if (opts.title) {
-        s.font(11, true);
-        s.ink(INK.text);
-        s.doc.text(s.safe(`${opts.title} (continued)`), s.margin, s.y);
-        s.y += 14;
-      }
+      repeatTitle();
       drawHead();
       lastGroup = undefined;
       // A continuation repeats its area label, so its height must include that label.
@@ -2051,29 +2290,30 @@ function table(
 // ── 4. Full plan and buying schedule ────────────────────────────────────────
 
 function drawFullPlan(s: Sheet, input: CropPlanPdfInput): void {
+  const copy = (source: string, values: Record<string, string | number> = {}) => cropExportText(source, s.language, values);
   masthead(s, 'Full plan');
-  pageTitle(s, 'Full plan', 'Bed-by-bed plan',
-    'Each line is one planting. Yield is a conservative benchmark comparison where a verified kg/m² entry exists; "Not verified" is never treated as 0kg.');
+  pageTitle(s, copy('Full plan'), copy('Bed-by-bed plan'),
+    copy('Each line is one planting. Yield is a conservative benchmark comparison where a verified kg/m² entry exists; "Not verified" is never treated as 0kg.'));
 
   const mildFrostSite = input.meta.rainPattern === 'mild-frost';
-  const rows = buildPlanTableRows(input.plantings, input.beds, mildFrostSite).map((r) => ({
+  const rows = buildPlanTableRows(input.plantings, input.beds, mildFrostSite, s.language).map((r) => ({
     area: r.area,
     // A one-time starter has to say so on its own line. Without it the sheet a
     // farmer carries into the field reads a first-season bridge sowing as a
     // standing annual crop. The cell wraps rather than truncating, so the row
     // simply grows to fit.
-    crop: r.once ? `${r.crop} (first season only)` : r.crop,
+    crop: r.once ? copy('{crop} (first season only)', { crop: r.crop }) : r.crop,
     share: r.share,
     establish: r.establish,
     field: r.intoField,
     // A caveat is a WARNING, not a sourced frost date — appended onto the harvest
     // cell (which auto-wraps) rather than given its own column.
     harvest: r.frostCaveat ? `${r.harvest} — ${r.frostCaveat}` : r.harvest,
-    yield: r.awaitingSowingConfirmation ? 'Confirm sowing' : benchmarkYieldLabel(r.yieldKg),
+    yield: r.awaitingSowingConfirmation ? copy('Confirm sowing') : benchmarkYieldLabel(r.yieldKg, s.language),
     group: r.area,
   }));
 
-  table(s, [
+  const columns: Column[] = [
     { key: 'area', header: 'Area', width: 70 },
     { key: 'crop', header: 'Crop', width: 130 },
     { key: 'share', header: 'Space', width: 46 },
@@ -2081,55 +2321,69 @@ function drawFullPlan(s: Sheet, input: CropPlanPdfInput): void {
     { key: 'field', header: 'Into field', width: 90 },
     { key: 'harvest', header: 'Harvest', width: 76 },
     { key: 'yield', header: 'Benchmark', width: 58, align: 'right' },
-  ], rows, { band: 'Full plan', title: 'Bed-by-bed plan', groupKey: 'group' });
+  ];
+  const tableSize = 8;
+  if (isNativePdfLanguage(s.language)) {
+    s.font(tableSize);
+    const valueWordWidth = Math.max(...['Not verified', 'No food yield', 'Confirm sowing']
+      .flatMap(source => copy(source).split(/\s+/)).map(word => s.doc.getTextWidth(s.safe(word))));
+    s.font(Math.max(7.5, tableSize - 0.5), true);
+    const headingWordWidth = Math.max(...copy('Benchmark').split(/\s+/).map(word => s.doc.getTextWidth(s.safe(word))));
+    const physicalWidth = Math.max(valueWordWidth, headingWordWidth) + 18;
+    const otherWeights = columns.slice(0, -1).reduce((sum, column) => sum + column.width, 0);
+    // A final letter on its own made the unknown-yield label harder to read.
+    // Reserve complete label words without changing the yield or shortening its warning.
+    columns.at(-1)!.width = Math.max(columns.at(-1)!.width, physicalWidth * otherWeights / (s.contentWidth - physicalWidth));
+  }
+  table(s, columns, rows, { band: 'Full plan', title: 'Bed-by-bed plan', groupKey: 'group', size: tableSize });
 }
 
 function drawBuying(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: number): void {
+  const copy = (source: string, values?: Record<string, string | number>) => cropExportText(source, s.language, values);
   masthead(s, 'Inputs');
-  pageTitle(s, 'Inputs', 'Seed and seedling buying schedule',
-    'Find the month, then the crop and bed. Check the seed quantity and sowing method before buying.');
+  pageTitle(s, copy('Inputs'), copy('Seed and seedling buying schedule'),
+    copy('Find the month, then the crop and bed. Check the seed quantity and sowing method before buying.'));
 
   const h = panel(s, {
-    title: 'The buying rule',
+    title: copy('The buying rule'),
     accent: INK.gold,
     bg: INK.panelCream,
     body: [
-      'Source direct-sown or tray seed before the named sowing month; the source does not provide a universal procurement lead time. Ready-grown seedlings are listed at the start of the field-readiness window; buy them only when the bed and seedlings are ready. Living corms, slips, cloves and seed potatoes are listed close to planting. For a tray crop, choose either packet seed for the nursery or ready-grown seedlings - not both.',
-      'A published field seed rate gives a weight range for the mapped area. Confirm the sowing method with the supplier; no germination or loss allowance is added. For crops without a published seed rate, field spacing supports only an approximate FINAL stand. It does not prove a seed-buying quantity: '
-      + 'use the packet\'s crop-specific sowing rate and germination guidance. Living-material ranges are approximate field positions from mapped area and published spacing, not guaranteed order quantities or loss allowances; supplier and crop-specific guidance may change what to purchase.',
+      copy('Source direct-sown or tray seed before the named sowing month; the source does not provide a universal procurement lead time. Ready-grown seedlings are listed at the start of the field-readiness window; buy them only when the bed and seedlings are ready. Living corms, slips, cloves and seed potatoes are listed close to planting. For a tray crop, choose either packet seed for the nursery or ready-grown seedlings - not both.'),
+      copy("A published field seed rate gives a weight range for the mapped area. Confirm the sowing method with the supplier; no germination or loss allowance is added. For crops without a published seed rate, field spacing supports only an approximate FINAL stand. It does not prove a seed-buying quantity: use the packet's crop-specific sowing rate and germination guidance. Living-material ranges are approximate field positions from mapped area and published spacing, not guaranteed order quantities or loss allowances; supplier and crop-specific guidance may change what to purchase."),
     ],
   });
   s.y += h + 14;
 
-  const schedule = buildBuyingSchedule(input.plantings, input.beds, nowMonth);
+  const schedule = buildBuyingSchedule(input.plantings, input.beds, nowMonth, s.language);
   const rows: Record<string, string>[] = [];
   for (const month of schedule) {
     for (const item of month.items) {
       rows.push({
-        buy: monthYearLabel(month.month, now),
+        buy: monthYearLabel(month.month, now, s.language),
         crop: item.cropName,
         qty: item.quantityStatus === 'sourced-weight-range' && item.countRange
-          ? weightRangeLabel(item.countRange)
+          ? weightRangeLabel(item.countRange, s.language)
           : item.quantityStatus === 'spacing-confirmation-required'
-          ? 'Confirm spacing first'
+          ? copy('Confirm spacing first')
           : item.quantityStatus === 'packet-rate-required'
-            ? 'Packet rate needed'
+            ? copy('Packet rate needed')
             : item.quantityStatus === 'counted-piece-range' && item.countRange
-              ? `~${positionRangeLabel(item.countRange)} ${item.unit} positions`
+              ? copy('~{positions} {unit} positions', { positions: positionRangeLabel(item.countRange), unit: copy(item.unit) })
               : item.count === null
-                ? 'Confirm quantity'
-                : `~${numberLabel(item.count)} ${item.unit} positions`,
+                ? copy('Confirm quantity')
+                : copy('~{positions} {unit} positions', { positions: numberLabel(item.count), unit: copy(item.unit) }),
         method: item.quantityStatus === 'sourced-weight-range'
-          ? 'Published field seed rate; confirm sowing method'
+          ? copy('Published field seed rate; confirm sowing method')
           : item.quantityStatus === 'spacing-confirmation-required'
-          ? 'Local row layout needed'
+          ? copy('Local row layout needed')
           : !item.transplant && item.unit !== 'seeds'
-          ? 'Living pieces; confirm loss allowance'
-          : item.transplant ? `Ready seedlings; own seed before ${monthShort(item.sowMonth)} nursery` : `Direct sow; ~${positionRangeLabel(item.finalPlantPositionsRange)} final positions`,
-        forWhat: compactPlaces(item.bedLabels),
+          ? copy('Living pieces; confirm loss allowance')
+          : item.transplant ? copy('Ready seedlings; own seed before {month} nursery', { month: monthShort(item.sowMonth, s.language) }) : copy('Direct sow; ~{positions} final positions', { positions: positionRangeLabel(item.finalPlantPositionsRange) }),
+        forWhat: compactPlaces(item.bedLabels, s.language),
         when: item.transplant
-          ? `Source own seed before ${monthShort(item.sowMonth)}; nursery ${monthShort(item.sowMonth)}; check/transplant ${monthShort(item.bedMonth)}-${monthShort(item.bedMonthLatest)}`
-          : `Sow ${monthShort(item.sowMonth)}`,
+          ? copy('Source own seed before {sow}; nursery {nursery}; check/transplant {first}-{last}', { sow: monthShort(item.sowMonth, s.language), nursery: monthShort(item.sowMonth, s.language), first: monthShort(item.bedMonth, s.language), last: monthShort(item.bedMonthLatest, s.language) })
+          : copy('Sow {month}', { month: monthShort(item.sowMonth, s.language) }),
         group: String(month.month),
       });
     }
@@ -2148,9 +2402,9 @@ function drawBuying(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: numb
   for (const item of rated.values()) {
     const crop = cropByKey(item.cropKey);
     if (!crop?.seedRateKgPerHaRange) continue;
-    const body = [`Published field rate: ${positionRangeLabel(crop.seedRateKgPerHaRange)} kg/ha. The buying range uses the mapped area; no germination allowance is added.`, crop.fieldSpacingInstruction ?? crop.note];
+    const body = [copy('Published field rate: {rate} kg/ha. The buying range uses the mapped area; no germination allowance is added.', { rate: positionRangeLabel(crop.seedRateKgPerHaRange) }), copy(crop.fieldSpacingInstruction ?? crop.note)];
     if (s.need(panelHeight(s, body, true, true) + 12)) masthead(s, 'Seed-rate checks');
-    s.y += panel(s, { title: `${crop.name} - check the sowing method`, body, bg: INK.panelCream, accent: INK.gold }) + 12;
+    s.y += panel(s, { title: copy('{crop} - check the sowing method', { crop: crop.name }), body, bg: INK.panelCream, accent: INK.gold }) + 12;
   }
 }
 
@@ -2310,46 +2564,53 @@ function drawFieldSheets(
   s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: number,
   startPage: (o: 'portrait' | 'landscape') => void,
 ): void {
+  const copy = (source: string, values: Record<string, string | number> = {}) => cropExportText(source, s.language, values);
+  const native = isNativePdfLanguage(s.language);
   for (const [monthOffset, month] of rollingMonths(nowMonth).entries()) {
-    const sheet = buildFieldSheet(month, input.tasks, now, input.plantings, input.beds);
+    const sheet = buildFieldSheet(month, input.tasks, now, input.plantings, input.beds, s.language);
     const extraSections: FieldSheetSection[] = [];
     const forest = [...new Map((input.availability?.forest?.[monthOffset] ?? []).map((entry) => [entry.iconKey, entry])).values()];
     const animals = [...new Map((input.availability?.animals?.[monthOffset] ?? []).map((entry) => [entry.iconKey, entry])).values()];
     if (forest.length || animals.length) extraSections.push({
-      title: 'Fruit, berries and animal products - record',
-      note: 'These are the same locally confirmed months as the picture calendar. Check readiness and record what actually happens; no quantity is promised.',
+      title: copy('Fruit, berries and animal products - record'),
+      note: copy('These are the same locally confirmed months as the picture calendar. Check readiness and record what actually happens; no quantity is promised.'),
       rows: [
-        ...forest.map((entry) => ({ place: 'Fruit / berries', work: `Pick ${entry.label} when ready; record actual harvest and where it went.` })),
-        ...animals.map((entry) => ({ place: 'Animals', work: `${entry.label}: record actual production, household use, sales and losses.` })),
+        ...forest.map((entry) => ({ place: copy('Fruit / berries'), work: copy('Pick {name} when ready; record actual harvest and where it went.', { name: entry.label }) })),
+        ...animals.map((entry) => ({ place: copy('Animals'), work: copy('{name}: record actual production, household use, sales and losses.', { name: entry.label }) })),
       ],
     });
     const undated = monthOffset === 0 ? includedUndatedSources(input.availability) : [];
     if (undated.length) extraSections.push({
-      title: 'Care and establishment - dates to confirm',
-      note: 'Undated reminders, not scheduled harvests. Check local care and readiness before establishment; record dates when known.',
-      rows: undated.map((entry) => ({ place: isAnimalAvailabilityKey(entry.iconKey) ? 'Animal housing' : 'Mapped plants', work: `${entry.label}: ${entry.detail}` })),
+      title: copy('Care and establishment - dates to confirm'),
+      note: copy('Undated reminders, not scheduled harvests. Check local care and readiness before establishment; record dates when known.'),
+      rows: undated.map((entry) => ({ place: copy(isAnimalAvailabilityKey(entry.iconKey) ? 'Animal housing' : 'Mapped plants'), work: `${entry.label}: ${entry.detail}` })),
     });
     const sections = [...sheet.sections, ...extraSections];
     if (!sections.length) continue;
 
     startPage('portrait');
     masthead(s, 'Field sheet');
-    pageTitle(s, '', `${sheet.monthLabel} field sheet`,
-      `${input.meta.planTitle} - tick each job off as it is done.`);
+    const title = copy('{month} field sheet', { month: sheet.monthLabel });
+    pageTitle(s, '', title, copy('{plan} - tick each job off as it is done.', { plan: input.meta.planTitle }));
 
     s.font(9.5, true); s.ink(INK.green);
     const addedRows = extraSections.reduce((count, section) => count + section.rows.length, 0);
-    s.doc.text(s.safe(`${sheet.workRows + addedRows} jobs - ${sheet.plantingFocus} sowing / planting - ${sheet.harvestFocus + forest.length + animals.length} harvest / recording`), s.margin, s.y);
-    s.y += 18;
+    const stats = copy('{jobs} jobs - {planting} sowing / planting - {harvest} harvest / recording', {
+      jobs: sheet.workRows + addedRows, planting: sheet.plantingFocus, harvest: sheet.harvestFocus + forest.length + animals.length,
+    });
+    if (native) s.paragraph(stats, { size: 9.5, bold: true, ink: INK.green, gap: 6 });
+    else { s.doc.text(s.safe(stats), s.margin, s.y); s.y += 18; }
     if (!(input.sections ?? ALL_SECTIONS).includes('availability')) {
-      s.paragraph(SUCCESSION_TIMING_GUIDANCE, { size: 9, ink: INK.muted, gap: 8 });
+      s.paragraph(copy(SUCCESSION_TIMING_GUIDANCE), { size: 9, ink: INK.muted, gap: 8 });
     }
 
     // Column geometry: tick | place | work | date-and-note. The tick column has
     // to clear the word DONE in the header, not just the checkbox under it.
-    const cTick = 38;
+    s.font(9, true);
+    const cTick = native ? Math.max(38, Math.min(80, s.doc.getTextWidth(s.safe(copy('DONE'))) + 14)) : 38;
     const cPlace = 82;
-    const cNote = 80;
+    const noteWordWidths = copy('DATE / NOTE').split(/\s+/).map(word => s.doc.getTextWidth(s.safe(word)));
+    const cNote = native ? Math.max(80, Math.min(110, Math.max(...noteWordWidths) + 14)) : 80;
     const cWork = s.contentWidth - cTick - cPlace - cNote;
 
     // Repeated at the top of every continuation page: a sheet of ticks with no
@@ -2358,29 +2619,43 @@ function drawFieldSheets(
       masthead(s, 'Field sheet');
       s.font(11, true);
       s.ink(INK.text);
-      s.doc.text(s.safe(`${sheet.monthLabel} field sheet (continued)`), s.margin, s.y);
-      s.y += 16;
+      const wording = copy('{title} (continued)', { title });
+      const lines = native ? s.doc.splitTextToSize(s.safe(wording), s.contentWidth) as string[] : [s.safe(wording)];
+      s.doc.text(lines.length === 1 ? lines[0] : lines, s.margin, s.y, { lineHeightFactor: 1.2 });
+      s.y += 16 + (lines.length - 1) * 13.2;
     };
+    const widths = [cTick, cPlace, cWork, cNote];
+    s.font(9, true);
+    const headerLines = ['DONE', 'PLACE', 'WORK TO COMPLETE', 'DATE / NOTE'].map((label, i) => native
+      ? s.doc.splitTextToSize(s.safe(copy(label)), widths[i] - 8) as string[] : [s.safe(label)]);
+    const headerH = native ? Math.max(18, Math.max(...headerLines.map(lines => lines.length)) * 11 + 8) : 18;
     const headRow = () => {
       s.fill(INK.green);
-      s.doc.rect(s.margin, s.y, s.contentWidth, 18, 'F');
-      s.font(9, true);
-      s.ink(INK.white);
-      s.doc.text(s.safe('DONE'), s.margin + 4, s.y + 12);
-      s.doc.text(s.safe('PLACE'), s.margin + cTick + 4, s.y + 12);
-      s.doc.text(s.safe('WORK TO COMPLETE'), s.margin + cTick + cPlace + 4, s.y + 12);
-      s.doc.text(s.safe('DATE / NOTE'), s.margin + cTick + cPlace + cWork + 4, s.y + 12);
-      s.y += 18;
+      s.doc.rect(s.margin, s.y, s.contentWidth, headerH, 'F');
+      s.font(9, true); s.ink(INK.white);
+      let x = s.margin;
+      headerLines.forEach((lines, i) => {
+        s.doc.text(lines.length === 1 ? lines[0] : lines, x + 4, s.y + 12, { lineHeightFactor: 11 / 9 });
+        x += widths[i];
+      });
+      s.y += headerH;
     };
     headRow();
 
     for (const section of sections) {
+      const sectionLines = (repeat: boolean) => {
+        const wording = repeat ? copy('{title} (continued)', { title: section.title }) : section.title;
+        s.font(10.5, true);
+        return native ? s.doc.splitTextToSize(s.safe(wording), s.contentWidth - 12) as string[] : [s.safe(wording)];
+      };
+      const sectionHeight = (repeat: boolean) => Math.max(24, sectionLines(repeat).length * 13 + 11);
       const sectionHead = (repeat = false) => {
+        const lines = sectionLines(repeat), height = sectionHeight(repeat);
         s.fill(INK.panelGreen);
-        s.doc.rect(s.margin, s.y, s.contentWidth, 24, 'F');
+        s.doc.rect(s.margin, s.y, s.contentWidth, height, 'F');
         s.font(10.5, true); s.ink(INK.green);
-        s.doc.text(s.safe(`${section.title}${repeat ? ' (continued)' : ''}`), s.margin + 6, s.y + 16);
-        s.y += 24;
+        s.doc.text(lines.length === 1 ? lines[0] : lines, s.margin + 6, s.y + 16, { lineHeightFactor: 13 / 10.5 });
+        s.y += height;
       };
       const measureRow = (row: { place: string; work: string }) => {
         s.font(10.5);
@@ -2395,7 +2670,7 @@ function drawFieldSheets(
       const firstH = section.rows[0] ? measureRow(section.rows[0]).height : 0;
       // A heading must travel with its guidance and first job; a row alone on a
       // continuation page also needs the work category to remain understandable.
-      if (s.need(24 + noteH + firstH)) { continued(); headRow(); }
+      if (s.need(sectionHeight(false) + noteH + (native ? Math.min(firstH, 62) : firstH))) { continued(); headRow(); }
       sectionHead();
       if (noteLines.length) {
         s.font(9.5); s.ink(INK.muted);
@@ -2404,48 +2679,94 @@ function drawFieldSheets(
       }
       for (const row of section.rows) {
         const measured = measureRow(row);
-        if (s.need(measured.height)) { continued(); headRow(); sectionHead(true); }
-        s.stroke(INK.muted); s.doc.setLineWidth(0.8);
-        s.doc.rect(s.margin + 6, s.y + 9, 12, 12, 'S');
-        s.font(10.5, true); s.ink(INK.text);
-        s.doc.text(measured.place, s.margin + cTick + 5, s.y + 17, { lineHeightFactor: 1.33 });
-        s.font(10.5);
-        s.doc.text(measured.work, s.margin + cTick + cPlace + 6, s.y + 17, { lineHeightFactor: 1.33 });
-        s.stroke(INK.hair); s.doc.setLineWidth(0.5);
-        s.doc.line(s.margin, s.y + measured.height, s.margin + s.contentWidth, s.y + measured.height);
-        s.doc.line(s.margin + cTick + cPlace + cWork, s.y, s.margin + cTick + cPlace + cWork, s.y + measured.height);
-        s.y += measured.height;
+        if (s.need(native ? Math.min(measured.height, 62) : measured.height)) { continued(); headRow(); sectionHead(true); }
+        let offset = 0;
+        do {
+          const capacity = native ? Math.max(1, Math.floor((s.bottom - s.y - 14) / 14)) : Math.max(measured.work.length, measured.place.length);
+          const work = measured.work.slice(offset, offset + capacity);
+          // A carried sheet must still name its bed when a long job continues.
+          // Repeating that context adds no second job or checkbox.
+          const place = native && offset > 0 && measured.place.length <= capacity
+            ? measured.place : measured.place.slice(offset, offset + capacity);
+          const height = native ? Math.max(34, Math.max(work.length, place.length) * 14 + 14) : measured.height;
+          if (offset === 0) {
+            s.stroke(INK.muted); s.doc.setLineWidth(0.8);
+            s.doc.rect(s.margin + 6, s.y + 9, 12, 12, 'S');
+          }
+          s.font(10.5, true); s.ink(INK.text);
+          if (place.length) s.doc.text(place, s.margin + cTick + 5, s.y + 17, { lineHeightFactor: 1.33 });
+          s.font(10.5);
+          if (work.length) s.doc.text(work, s.margin + cTick + cPlace + 6, s.y + 17, { lineHeightFactor: 1.33 });
+          s.stroke(INK.hair); s.doc.setLineWidth(0.5);
+          s.doc.line(s.margin, s.y + height, s.margin + s.contentWidth, s.y + height);
+          s.doc.line(s.margin + cTick + cPlace + cWork, s.y, s.margin + cTick + cPlace + cWork, s.y + height);
+          s.y += height;
+          offset += capacity;
+          if (offset < Math.max(measured.work.length, measured.place.length)) { s.page('portrait'); continued(); headRow(); sectionHead(true); }
+        } while (offset < Math.max(measured.work.length, measured.place.length));
       }
     }
   }
 }
 
 function drawHarvestRecord(s: Sheet, input: CropPlanPdfInput): void {
+  const copy = (source: string) => cropExportText(source, s.language);
+  const native = isNativePdfLanguage(s.language);
+  let recordBand = 'Field record', recordTitle = 'Monthly harvest and field record';
+  const monthLine = 'Write the month: ____________________   Team: ____________________';
+  const continued = () => {
+    masthead(s, recordBand);
+    pageTitle(s, copy('Plan versus reality'), cropExportText('{title} (continued)', s.language, { title: copy(recordTitle) }), copy(monthLine));
+  };
+  const measureHeading = (source: string) => {
+    s.font(10, true);
+    const lines = native ? s.doc.splitTextToSize(s.safe(copy(source)), s.contentWidth) as string[] : [s.safe(source)];
+    return { lines, height: 10 + (lines.length - 1) * 13 };
+  };
+  const heading = (source: string, following = 0) => {
+    const { lines, height } = measureHeading(source);
+    if (native && s.need(height + following)) continued();
+    s.font(10, true); s.ink(INK.text);
+    s.doc.text(lines.length === 1 ? lines[0] : lines, s.margin, s.y, { lineHeightFactor: 1.3 });
+    s.y += height;
+  };
   masthead(s, 'Field record');
-  pageTitle(s, 'Plan versus reality', 'Monthly harvest and field record',
-    'Write the month: ____________________   Team: ____________________');
+  pageTitle(s, copy('Plan versus reality'), copy(recordTitle), copy(monthLine));
 
   const h = panel(s, {
-    title: 'Write down what actually happened',
+    title: copy('Write down what actually happened'),
     accent: INK.green,
     bg: INK.panelGreen,
-    body: ['Record the date, crop, bed and actual harvest weight. Write how much was used, kept, shared or lost. These records help you check the next plan.'],
+    body: [copy('Record the date, crop, bed and actual harvest weight. Write how much was used, kept, shared or lost. These records help you check the next plan.')],
   });
   s.y += h + 16;
 
-  const blankRows = (cols: Column[], count: number, rowH: number) => {
+  const blankRows = (cols: Column[], count: number, rowH: number, label?: string, following = 0) => {
     const totalW = cols.reduce((a, c) => a + c.width, 0);
     const widths = cols.map((c) => (c.width / totalW) * s.contentWidth);
-    s.fill(INK.green);
-    s.doc.rect(s.margin, s.y, s.contentWidth, 18, 'F');
     s.font(7.5, true);
-    s.ink(INK.white);
+    const headers = cols.map((c, i) => native
+      ? s.doc.splitTextToSize(s.safe(copy(c.header)), widths[i] - 12) as string[] : [s.safe(c.header)]);
+    const headerH = native ? Math.max(18, Math.max(...headers.map(lines => lines.length)) * 9.5 + 8) : 18;
+    // Keep a blank entry table together; a farmer must see the unit above every amount.
+    // Only native labels need the extra height; default English retains its original pages.
+    if (native) {
+      s.font(10, true);
+      const labelH = label ? measureHeading(label).height : 0;
+      if (s.need(labelH + headerH + count * rowH + 14 + following)) continued();
+    }
+    if (label) heading(label);
+    s.fill(INK.green);
+    s.doc.rect(s.margin, s.y, s.contentWidth, headerH, 'F');
+    s.font(7.5, true); s.ink(INK.white);
     let x = s.margin;
-    cols.forEach((c, i) => { s.doc.text(s.safe(c.header), x + 6, s.y + 12); x += widths[i]; });
-    s.y += 18;
+    headers.forEach((lines, i) => {
+      s.doc.text(lines.length === 1 ? lines[0] : lines, x + 6, s.y + 12, { lineHeightFactor: 9.5 / 7.5 });
+      x += widths[i];
+    });
+    s.y += headerH;
     for (let r = 0; r < count; r++) {
-      s.stroke(INK.rule);
-      s.doc.setLineWidth(0.4);
+      s.stroke(INK.rule); s.doc.setLineWidth(0.4);
       s.doc.rect(s.margin, s.y, s.contentWidth, rowH, 'S');
       let cx = s.margin;
       for (let i = 0; i < widths.length - 1; i++) {
@@ -2457,8 +2778,6 @@ function drawHarvestRecord(s: Sheet, input: CropPlanPdfInput): void {
     s.y += 14;
   };
 
-  s.font(10, true); s.ink(INK.text);
-  s.doc.text(s.safe('Harvest record'), s.margin, s.y); s.y += 10;
   blankRows([
     { key: 'a', header: 'Date', width: 48 },
     { key: 'b', header: 'Crop / bed', width: 132 },
@@ -2467,19 +2786,19 @@ function drawHarvestRecord(s: Sheet, input: CropPlanPdfInput): void {
     { key: 'e', header: 'Stored kg', width: 62 },
     { key: 'f', header: 'Sold/shared kg', width: 92 },
     { key: 'g', header: 'Lost kg', width: 56 },
-  ], 10, 29);
+  ], 10, 29, 'Harvest record');
 
   // Eggs and honey need the same actual-record trail as vegetables. Keeping the
   // unit beside every amount prevents a counted egg from becoming a kilogram.
   s.page('portrait');
-  masthead(s, 'Production record');
-  pageTitle(s, 'Plan versus reality', 'Fruit, eggs, honey and other production',
-    'Write the month: ____________________   Team: ____________________');
+  recordBand = 'Production record'; recordTitle = 'Fruit, eggs, honey and other production';
+  masthead(s, recordBand);
+  pageTitle(s, copy('Plan versus reality'), copy(recordTitle), copy(monthLine));
   const productionNote = panel(s, {
-    title: 'Use the unit you actually measured',
+    title: copy('Use the unit you actually measured'),
     accent: INK.green,
     bg: INK.panelGreen,
-    body: ['Write the food and its source: tree, coop, hive or bed. Use kg for weighed food, eggs for counted eggs, or jars, bunches or items. Record jar size in the source column. Keep all amounts on one row in the same unit.'],
+    body: [copy('Write the food and its source: tree, coop, hive or bed. Use kg for weighed food, eggs for counted eggs, or jars, bunches or items. Record jar size in the source column. Keep all amounts on one row in the same unit.')],
   });
   s.y += productionNote + 16;
   blankRows([
@@ -2492,8 +2811,7 @@ function drawHarvestRecord(s: Sheet, input: CropPlanPdfInput): void {
     { key: 'lost', header: 'Lost', width: 50 },
   ], 10, 29);
 
-  s.font(10, true); s.ink(INK.text);
-  s.doc.text(s.safe('Weekly observation'), s.margin, s.y); s.y += 10;
+  // Observations and the decision they inform belong on the same carried sheet.
   blankRows([
     { key: 'w', header: 'Week', width: 40 },
     { key: 'r', header: 'Rainfall', width: 70 },
@@ -2501,16 +2819,15 @@ function drawHarvestRecord(s: Sheet, input: CropPlanPdfInput): void {
     { key: 'p', header: 'Pests / disease', width: 90 },
     { key: 'o', header: 'What we observed', width: 120 },
     { key: 'c', header: 'What we changed', width: 120 },
-  ], 4, 27);
+  ], 4, 27, 'Weekly observation', native ? measureHeading('Decision for next month').height + 80 : 0);
 
-  s.font(10, true); s.ink(INK.text);
-  s.doc.text(s.safe('Decision for next month'), s.margin, s.y); s.y += 10;
+  heading('Decision for next month', 80);
   s.fill(INK.panelCream);
   s.doc.rect(s.margin, s.y, s.contentWidth, 54, 'F');
   s.y += 62;
   s.font(8.5);
   s.ink(INK.muted);
-  s.doc.text(s.safe('Observe. Adjust. Write it down.'), s.margin, s.y);
+  s.doc.text(s.safe(copy('Observe. Adjust. Write it down.')), s.margin, s.y);
 }
 
 // ── Assembly ────────────────────────────────────────────────────────────────
@@ -2584,11 +2901,11 @@ export function drawCropPlanPages(doc: Doc, input: CropPlanPdfInput, append = fa
  * day — without it, a popup-blocked download silently offers the same
  * suggested name as a much longer file with nothing to tell them apart.
  */
-export function cropPlanPdfFilename(planTitle?: string, date = new Date(), kind?: string): string {
-  const slug = (planTitle ?? 'plan')
-    .normalize('NFKD')
-    .replace(/[̀-ͯ]/g, '')
-    .replace(/[^A-Za-z0-9]+/g, '-')
+export function cropPlanPdfFilename(planTitle?: string, date = new Date(), kind?: string, language = 'en'): string {
+  const native = isNativePdfLanguage(language);
+  const title = (planTitle ?? 'plan').normalize(native ? 'NFC' : 'NFKD');
+  const slug = (native ? title : title.replace(/[̀-ͯ]/g, ''))
+    .replace(native ? /[^\p{L}\p{N}\p{M}]+/gu : /[^A-Za-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '')
     .slice(0, 40) || 'plan';
   const stamp = date.toISOString().slice(0, 10);

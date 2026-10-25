@@ -1,0 +1,857 @@
+{
+  "sourceSha": "dc9ade0cc9a208de55c7d0cccc6393f79257769d",
+  "cases": [
+    {
+      "id": "dated",
+      "input": {
+        "beds": [
+          {
+            "id": "synthetic-bed-3",
+            "label": "Original Ṱanḓa {count} $& 3",
+            "areaM2": 6,
+            "kind": "plot"
+          },
+          {
+            "id": "synthetic-bed-7",
+            "label": "Original Ṱanḓa {count} $& 7",
+            "areaM2": 6,
+            "kind": "plot"
+          },
+          {
+            "id": "synthetic-bed-8",
+            "label": "Original Ṱanḓa {count} $& 8",
+            "areaM2": 6,
+            "kind": "bed"
+          },
+          {
+            "id": "synthetic-bed-26",
+            "label": "Original Ṱanḓa {count} $& 26",
+            "areaM2": 6,
+            "kind": "bed"
+          }
+        ],
+        "plantings": [
+          {
+            "id": "synthetic-planting-3",
+            "bedId": "synthetic-bed-3",
+            "cropKey": "butternut",
+            "sowMonth": 4
+          },
+          {
+            "id": "synthetic-planting-7",
+            "bedId": "synthetic-bed-7",
+            "cropKey": "cabbage",
+            "sowMonth": 8
+          },
+          {
+            "id": "synthetic-planting-8",
+            "bedId": "synthetic-bed-8",
+            "cropKey": "carrots",
+            "sowMonth": 9
+          },
+          {
+            "id": "synthetic-planting-26",
+            "bedId": "synthetic-bed-26",
+            "cropKey": "oats",
+            "sowMonth": 3
+          }
+        ],
+        "tasks": [
+          {
+            "id": "synthetic-planting-3:prep",
+            "plantingId": "synthetic-planting-3",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 3",
+            "cropName": "Butternut",
+            "cropKey": "butternut",
+            "icon": "🧡",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          {
+            "id": "synthetic-planting-3:sow",
+            "plantingId": "synthetic-planting-3",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 4,
+            "bedLabel": "Original Ṱanḓa {count} $& 3",
+            "cropName": "Butternut",
+            "cropKey": "butternut",
+            "icon": "🧡",
+            "action": "sow"
+          },
+          {
+            "id": "synthetic-planting-3:harvest",
+            "plantingId": "synthetic-planting-3",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": 4,
+            "month": 20,
+            "bedLabel": "Original Ṱanḓa {count} $& 3",
+            "cropName": "Butternut",
+            "cropKey": "butternut",
+            "icon": "🧡",
+            "action": "harvest"
+          },
+          {
+            "id": "synthetic-planting-3:harvest:1",
+            "plantingId": "synthetic-planting-3",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 21,
+            "bedLabel": "Original Ṱanḓa {count} $& 3",
+            "cropName": "Butternut",
+            "cropKey": "butternut",
+            "icon": "🧡",
+            "action": "harvest"
+          },
+          {
+            "id": "synthetic-planting-7:prep",
+            "plantingId": "synthetic-planting-7",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 8,
+            "bedLabel": "Original Ṱanḓa {count} $& 7",
+            "cropName": "Cabbage",
+            "cropKey": "cabbage",
+            "icon": "🥬",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          {
+            "id": "synthetic-planting-7:sow",
+            "plantingId": "synthetic-planting-7",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 8,
+            "bedLabel": "Original Ṱanḓa {count} $& 7",
+            "cropName": "Cabbage",
+            "cropKey": "cabbage",
+            "icon": "🥬",
+            "action": "sow"
+          },
+          {
+            "id": "synthetic-planting-7:transplant",
+            "plantingId": "synthetic-planting-7",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 1,
+            "month": 9,
+            "bedLabel": "Original Ṱanḓa {count} $& 7",
+            "cropName": "Cabbage",
+            "cropKey": "cabbage",
+            "icon": "🥬",
+            "action": "transplant"
+          },
+          {
+            "id": "synthetic-planting-7:harvest",
+            "plantingId": "synthetic-planting-7",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 7,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 7",
+            "cropName": "Cabbage",
+            "cropKey": "cabbage",
+            "icon": "🥬",
+            "action": "harvest"
+          },
+          {
+            "id": "synthetic-planting-8:prep",
+            "plantingId": "synthetic-planting-8",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 8,
+            "bedLabel": "Original Ṱanḓa {count} $& 8",
+            "cropName": "Carrots",
+            "cropKey": "carrots",
+            "icon": "🥕",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          {
+            "id": "synthetic-planting-8:sow",
+            "plantingId": "synthetic-planting-8",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 9,
+            "bedLabel": "Original Ṱanḓa {count} $& 8",
+            "cropName": "Carrots",
+            "cropKey": "carrots",
+            "icon": "🥕",
+            "action": "sow"
+          },
+          {
+            "id": "synthetic-planting-8:harvest",
+            "plantingId": "synthetic-planting-8",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": 4,
+            "month": 1,
+            "bedLabel": "Original Ṱanḓa {count} $& 8",
+            "cropName": "Carrots",
+            "cropKey": "carrots",
+            "icon": "🥕",
+            "action": "harvest"
+          },
+          {
+            "id": "synthetic-planting-26:prep",
+            "plantingId": "synthetic-planting-26",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 2,
+            "bedLabel": "Original Ṱanḓa {count} $& 26",
+            "cropName": "Oats (winter cover crop)",
+            "cropKey": "oats",
+            "icon": "🌾",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          {
+            "id": "synthetic-planting-26:sow",
+            "plantingId": "synthetic-planting-26",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 26",
+            "cropName": "Oats (winter cover crop)",
+            "cropKey": "oats",
+            "icon": "🌾",
+            "action": "sow"
+          },
+          {
+            "id": "synthetic-planting-26:terminate-cover",
+            "plantingId": "synthetic-planting-26",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": 6,
+            "month": 21,
+            "bedLabel": "Original Ṱanḓa {count} $& 26",
+            "cropName": "Oats (winter cover crop)",
+            "cropKey": "oats",
+            "icon": "🌾",
+            "action": "terminate-cover"
+          }
+        ],
+        "now": "2026-10-22T08:00:00.000Z",
+        "sections": [
+          "availability"
+        ],
+        "meta": {
+          "planTitle": "Original Ṱanḓa {count} $&",
+          "siteLine": "Original source site",
+          "locationLine": "Original source location",
+          "climateLine": "Original source climate",
+          "bedsSummary": "Original saved area summary",
+          "dateLabel": "22 October 2026",
+          "estimatedKgPerYear": null,
+          "lossPercent": 25
+        },
+        "availability": {
+          "forest": [
+            [
+              {
+                "iconKey": "tree:recorded",
+                "label": "Original Ṱanḓa {count} $& fruit"
+              }
+            ],
+            [
+              {
+                "iconKey": "tree:recorded",
+                "label": "Original Ṱanḓa {count} $& fruit"
+              }
+            ],
+            [],
+            [],
+            [
+              {
+                "iconKey": "tree:recorded",
+                "label": "Original Ṱanḓa {count} $& fruit"
+              }
+            ],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "forestPlanning": [
+            [
+              {
+                "iconKey": "tree:reference",
+                "label": "Original regional fruit",
+                "planning": {
+                  "label": "Regional reference: original source",
+                  "basis": "Original recorded reference basis",
+                  "source": {
+                    "label": "Original citation",
+                    "url": "https://example.com/reference"
+                  }
+                }
+              }
+            ],
+            [
+              {
+                "iconKey": "tree:reference",
+                "label": "Original regional fruit",
+                "planning": {
+                  "label": "Regional reference: original source",
+                  "basis": "Original recorded reference basis",
+                  "source": {
+                    "label": "Original citation",
+                    "url": "https://example.com/reference"
+                  }
+                }
+              }
+            ],
+            [],
+            [],
+            [
+              {
+                "iconKey": "tree:reference",
+                "label": "Original regional fruit",
+                "planning": {
+                  "label": "Regional reference: original source",
+                  "basis": "Original recorded reference basis",
+                  "source": {
+                    "label": "Original citation",
+                    "url": "https://example.com/reference"
+                  }
+                }
+              }
+            ],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "animals": [
+            [
+              {
+                "iconKey": "animal:recorded",
+                "label": "Original animal product"
+              }
+            ],
+            [
+              {
+                "iconKey": "animal:recorded",
+                "label": "Original animal product"
+              }
+            ],
+            [],
+            [],
+            [
+              {
+                "iconKey": "animal:recorded",
+                "label": "Original animal product"
+              }
+            ],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "undated": [
+            {
+              "iconKey": "tree:unknown",
+              "label": "Original unknown {count} $&",
+              "detail": "Original private detail {count} $& 17",
+              "ageNote": "Original private age note {count} $& 23"
+            },
+            {
+              "iconKey": "housing:unknown",
+              "label": "Original undated housing",
+              "detail": "Original housing detail 7"
+            }
+          ],
+          "utilization": [
+            0,
+            0.5,
+            1,
+            1.25,
+            0,
+            0,
+            0.6,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "repeat",
+      "input": {
+        "beds": [
+          {
+            "id": "synthetic-bed-3",
+            "label": "Original Ṱanḓa {count} $& 3",
+            "areaM2": 6,
+            "kind": "plot"
+          },
+          {
+            "id": "synthetic-bed-7",
+            "label": "Original Ṱanḓa {count} $& 7",
+            "areaM2": 6,
+            "kind": "plot"
+          },
+          {
+            "id": "synthetic-bed-8",
+            "label": "Original Ṱanḓa {count} $& 8",
+            "areaM2": 6,
+            "kind": "bed"
+          },
+          {
+            "id": "synthetic-bed-26",
+            "label": "Original Ṱanḓa {count} $& 26",
+            "areaM2": 6,
+            "kind": "bed"
+          }
+        ],
+        "plantings": [
+          {
+            "id": "synthetic-planting-3",
+            "bedId": "synthetic-bed-3",
+            "cropKey": "butternut",
+            "sowMonth": 4
+          },
+          {
+            "id": "synthetic-planting-7",
+            "bedId": "synthetic-bed-7",
+            "cropKey": "cabbage",
+            "sowMonth": 8
+          },
+          {
+            "id": "synthetic-planting-8",
+            "bedId": "synthetic-bed-8",
+            "cropKey": "carrots",
+            "sowMonth": 9
+          },
+          {
+            "id": "synthetic-planting-26",
+            "bedId": "synthetic-bed-26",
+            "cropKey": "oats",
+            "sowMonth": 3
+          }
+        ],
+        "tasks": [
+          {
+            "id": "synthetic-planting-3:prep",
+            "plantingId": "synthetic-planting-3",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 3",
+            "cropName": "Butternut",
+            "cropKey": "butternut",
+            "icon": "🧡",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          {
+            "id": "synthetic-planting-3:sow",
+            "plantingId": "synthetic-planting-3",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 4,
+            "bedLabel": "Original Ṱanḓa {count} $& 3",
+            "cropName": "Butternut",
+            "cropKey": "butternut",
+            "icon": "🧡",
+            "action": "sow"
+          },
+          {
+            "id": "synthetic-planting-3:harvest",
+            "plantingId": "synthetic-planting-3",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": 4,
+            "month": 20,
+            "bedLabel": "Original Ṱanḓa {count} $& 3",
+            "cropName": "Butternut",
+            "cropKey": "butternut",
+            "icon": "🧡",
+            "action": "harvest"
+          },
+          {
+            "id": "synthetic-planting-3:harvest:1",
+            "plantingId": "synthetic-planting-3",
+            "cohortSowMonth": 4,
+            "cohortExisting": false,
+            "cohortMonthOffset": 5,
+            "month": 21,
+            "bedLabel": "Original Ṱanḓa {count} $& 3",
+            "cropName": "Butternut",
+            "cropKey": "butternut",
+            "icon": "🧡",
+            "action": "harvest"
+          },
+          {
+            "id": "synthetic-planting-7:prep",
+            "plantingId": "synthetic-planting-7",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 8,
+            "bedLabel": "Original Ṱanḓa {count} $& 7",
+            "cropName": "Cabbage",
+            "cropKey": "cabbage",
+            "icon": "🥬",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments"
+          },
+          {
+            "id": "synthetic-planting-7:sow",
+            "plantingId": "synthetic-planting-7",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 8,
+            "bedLabel": "Original Ṱanḓa {count} $& 7",
+            "cropName": "Cabbage",
+            "cropKey": "cabbage",
+            "icon": "🥬",
+            "action": "sow"
+          },
+          {
+            "id": "synthetic-planting-7:transplant",
+            "plantingId": "synthetic-planting-7",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 1,
+            "month": 9,
+            "bedLabel": "Original Ṱanḓa {count} $& 7",
+            "cropName": "Cabbage",
+            "cropKey": "cabbage",
+            "icon": "🥬",
+            "action": "transplant"
+          },
+          {
+            "id": "synthetic-planting-7:harvest",
+            "plantingId": "synthetic-planting-7",
+            "cohortSowMonth": 8,
+            "cohortExisting": false,
+            "cohortMonthOffset": 7,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 7",
+            "cropName": "Cabbage",
+            "cropKey": "cabbage",
+            "icon": "🥬",
+            "action": "harvest"
+          },
+          {
+            "id": "synthetic-planting-8:prep",
+            "plantingId": "synthetic-planting-8",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 8,
+            "bedLabel": "Original Ṱanḓa {count} $& 8",
+            "cropName": "Carrots",
+            "cropKey": "carrots",
+            "icon": "🥕",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          {
+            "id": "synthetic-planting-8:sow",
+            "plantingId": "synthetic-planting-8",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 9,
+            "bedLabel": "Original Ṱanḓa {count} $& 8",
+            "cropName": "Carrots",
+            "cropKey": "carrots",
+            "icon": "🥕",
+            "action": "sow"
+          },
+          {
+            "id": "synthetic-planting-8:harvest",
+            "plantingId": "synthetic-planting-8",
+            "cohortSowMonth": 9,
+            "cohortExisting": false,
+            "cohortMonthOffset": 4,
+            "month": 1,
+            "bedLabel": "Original Ṱanḓa {count} $& 8",
+            "cropName": "Carrots",
+            "cropKey": "carrots",
+            "icon": "🥕",
+            "action": "harvest"
+          },
+          {
+            "id": "synthetic-planting-26:prep",
+            "plantingId": "synthetic-planting-26",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": -1,
+            "month": 2,
+            "bedLabel": "Original Ṱanḓa {count} $& 26",
+            "cropName": "Oats (winter cover crop)",
+            "cropKey": "oats",
+            "icon": "🌾",
+            "action": "prep",
+            "prepText": "assess soil and drainage; use a soil test or local advice before adding amendments"
+          },
+          {
+            "id": "synthetic-planting-26:sow",
+            "plantingId": "synthetic-planting-26",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": 0,
+            "month": 3,
+            "bedLabel": "Original Ṱanḓa {count} $& 26",
+            "cropName": "Oats (winter cover crop)",
+            "cropKey": "oats",
+            "icon": "🌾",
+            "action": "sow"
+          },
+          {
+            "id": "synthetic-planting-26:terminate-cover",
+            "plantingId": "synthetic-planting-26",
+            "cohortSowMonth": 3,
+            "cohortExisting": false,
+            "cohortMonthOffset": 6,
+            "month": 21,
+            "bedLabel": "Original Ṱanḓa {count} $& 26",
+            "cropName": "Oats (winter cover crop)",
+            "cropKey": "oats",
+            "icon": "🌾",
+            "action": "terminate-cover"
+          }
+        ],
+        "now": "2026-10-22T08:00:00.000Z",
+        "sections": [
+          "availability"
+        ],
+        "meta": {
+          "planTitle": "Original Ṱanḓa {count} $&",
+          "siteLine": "Original source site",
+          "locationLine": "Original source location",
+          "climateLine": "Original source climate",
+          "bedsSummary": "Original saved area summary",
+          "dateLabel": "22 October 2026",
+          "estimatedKgPerYear": null,
+          "lossPercent": 25
+        },
+        "availabilityDetails": false,
+        "availability": {
+          "forest": [
+            [
+              {
+                "iconKey": "tree:recorded",
+                "label": "Original Ṱanḓa {count} $& fruit"
+              }
+            ],
+            [
+              {
+                "iconKey": "tree:recorded",
+                "label": "Original Ṱanḓa {count} $& fruit"
+              }
+            ],
+            [],
+            [],
+            [
+              {
+                "iconKey": "tree:recorded",
+                "label": "Original Ṱanḓa {count} $& fruit"
+              }
+            ],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "forestPlanning": [
+            [
+              {
+                "iconKey": "tree:reference",
+                "label": "Original regional fruit",
+                "planning": {
+                  "label": "Regional reference: original source",
+                  "basis": "Original recorded reference basis",
+                  "source": {
+                    "label": "Original citation",
+                    "url": "https://example.com/reference"
+                  }
+                }
+              }
+            ],
+            [
+              {
+                "iconKey": "tree:reference",
+                "label": "Original regional fruit",
+                "planning": {
+                  "label": "Regional reference: original source",
+                  "basis": "Original recorded reference basis",
+                  "source": {
+                    "label": "Original citation",
+                    "url": "https://example.com/reference"
+                  }
+                }
+              }
+            ],
+            [],
+            [],
+            [
+              {
+                "iconKey": "tree:reference",
+                "label": "Original regional fruit",
+                "planning": {
+                  "label": "Regional reference: original source",
+                  "basis": "Original recorded reference basis",
+                  "source": {
+                    "label": "Original citation",
+                    "url": "https://example.com/reference"
+                  }
+                }
+              }
+            ],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "animals": [
+            [
+              {
+                "iconKey": "animal:recorded",
+                "label": "Original animal product"
+              }
+            ],
+            [
+              {
+                "iconKey": "animal:recorded",
+                "label": "Original animal product"
+              }
+            ],
+            [],
+            [],
+            [
+              {
+                "iconKey": "animal:recorded",
+                "label": "Original animal product"
+              }
+            ],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "undated": [
+            {
+              "iconKey": "tree:unknown",
+              "label": "Original unknown {count} $&",
+              "detail": "Original private detail {count} $& 17",
+              "ageNote": "Original private age note {count} $& 23"
+            },
+            {
+              "iconKey": "housing:unknown",
+              "label": "Original undated housing",
+              "detail": "Original housing detail 7"
+            }
+          ],
+          "utilization": [
+            0,
+            0.5,
+            1,
+            1.25,
+            0,
+            0,
+            0.6,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yearMode": "established"
+        }
+      }
+    },
+    {
+      "id": "hidden",
+      "input": {
+        "beds": [
+          {
+            "id": "synthetic-bed-3",
+            "label": "Original Ṱanḓa {count} $& 3",
+            "areaM2": 6,
+            "kind": "plot"
+          },
+          {
+            "id": "synthetic-bed-7",
+            "label": "Original Ṱanḓa {count} $& 7",
+            "areaM2": 6,
+            "kind": "plot"
+          },
+          {
+            "id": "synthetic-bed-8",
+            "label": "Original Ṱanḓa {count} $& 8",
+            "areaM2": 6,
+            "kind": "bed"
+          },
+          {
+            "id": "synthetic-bed-26",
+            "label": "Original Ṱanḓa {count} $& 26",
+            "areaM2": 6,
+            "kind": "bed"
+          }
+        ],
+        "plantings": [],
+        "tasks": [],
+        "now": "2026-10-22T08:00:00.000Z",
+        "sections": [
+          "availability"
+        ],
+        "meta": {
+          "planTitle": "Original Ṱanḓa {count} $&",
+          "siteLine": "Original source site",
+          "locationLine": "Original source location",
+          "climateLine": "Original source climate",
+          "bedsSummary": "Original saved area summary",
+          "dateLabel": "22 October 2026",
+          "estimatedKgPerYear": null,
+          "lossPercent": 25
+        },
+        "availabilityDetails": false,
+        "availability": {
+          "includeTrees": false,
+          "includeAnimals": false
+        }
+      }
+    }
+  ]
+}

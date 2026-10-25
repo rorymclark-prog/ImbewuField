@@ -1,0 +1,3504 @@
+{
+  "sourceSha": "dc9ade0cc9a208de55c7d0cccc6393f79257769d",
+  "cases": [
+    {
+      "id": "generated-availability",
+      "options": {
+        "now": "2026-10-01T08:00:00.000Z",
+        "yearMode": "fromToday",
+        "veg": [],
+        "utilization": [],
+        "treeGroups": [
+          {
+            "harvest": {
+              "speciesId": "citrus-limon",
+              "name": "Lemon",
+              "product": "fruit",
+              "windows": [
+                {
+                  "region": "KZN (hot low-lying areas, e.g. Nkwaleni, Mkhuze vs. cooler KZN Midlands)",
+                  "months": [
+                    2,
+                    3,
+                    5,
+                    6,
+                    7
+                  ],
+                  "source": {
+                    "quote": "Lemons – Grow well in warmer areas.  Adaptable to different areas.  HU 1100 to 1500. Main crop in hotter areas produced in February to March, while crop in cooler areas produced during May to July.",
+                    "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+                    "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes)",
+                    "page": 11
+                  }
+                },
+                {
+                  "region": "South Africa (general; main areas Eastern Cape, Limpopo, Western Cape)",
+                  "months": [
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9
+                  ],
+                  "source": {
+                    "quote": "Eureka lemons can have as much as three fruit sets. This means that at the same time there can be as much as three lots of fruit on a tree that are at different stages of maturity. Because of this characteristic, trees can produce marketable fruit from as early as February in hotter areas, and to as late as mid-September in cooler regions.",
+                    "url": "https://www.crw.org.za/home/document-home/learning-aids-and-resources/ca-citrus-av-series-learning-material/citrus-planting-management/5808-ca-av-series-cpm-lm-m02-citrus-types-and-cultivars-1/file",
+                    "doc": "Citrus Growers' Association / Citrus Academy — 'Citrus Planting Management 2: Citrus Types and Cultivars' Learner Guide (1st edition), Citrus Resource Warehouse (crw.org.za)",
+                    "page": 10
+                  }
+                }
+              ],
+              "yearsToFirstCrop": {
+                "value": [
+                  3,
+                  3
+                ],
+                "source": {
+                  "quote": "First crop (years) [...] 3",
+                  "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+                  "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes) — Citrus Yields table",
+                  "page": 11
+                },
+                "note": "KZN citrus guide; first crop means initial fruit, not full production. The same table gives an expected orchard lifespan of 23 years."
+              },
+              "yearsToFullBearing": null,
+              "yieldKgPerTree": {
+                "value": [
+                  79,
+                  131
+                ],
+                "source": {
+                  "quote": "Lemons [...] Potential production: Mature trees (tons/ha) [...] 65 [...] Likely production [...] 50 [...] Conservative production [...] 40",
+                  "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+                  "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes) — Citrus Yields table",
+                  "page": 11
+                },
+                "note": "Calculated orchard-average equivalent using the KZN guide's likely production of 50 t/ha and midpoint planting spacings: cool KZN Midlands, 5.75 x 2.75 m, about 79 kg/tree; hot areas, 7.5 x 3.5 m, about 131 kg/tree. Calculation: 50,000 kg/ha x m²/tree / 10,000 m²/ha. These values are derived, not measured individual-tree yields. The spread reflects spacing, not varieties or a production-by-age curve. Confirm local orchard yield and actual spacing before using this reference."
+              },
+              "chillUnits": null,
+              "pollination": null
+            },
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "harvest": {
+              "speciesId": "mangifera-indica",
+              "name": "Mango",
+              "product": "fruit",
+              "windows": [
+                {
+                  "region": "South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area)",
+                  "months": [
+                    11,
+                    12,
+                    1,
+                    2,
+                    3
+                  ],
+                  "source": {
+                    "quote": "The mango season in South Africa normally begins in November and ends around late March thus making it the shortest season compared to other subtropical fruits such as avocadoes which stretch from February to November as well as litchis which stretch from November to late April (FPEF, 2024).",
+                    "url": "https://www.namc.co.za/wp-content/uploads/2024/11/SA-Fruit-Trade-Flow-Report-Issue-56-December-2024-submission.pdf",
+                    "doc": "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF 2024)",
+                    "page": 3
+                  }
+                }
+              ],
+              "yearsToFirstCrop": {
+                "value": [
+                  3,
+                  4
+                ],
+                "source": {
+                  "quote": "after 3 or 4 years",
+                  "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+                  "doc": "KZN DARD, Fruit and Nut Production in KZN, Mango bearing age; printed p.16",
+                  "page": 20
+                },
+                "note": "Grafted mango stock in the KZN guide generally begins bearing after 3–4 years. Context is frost-free tropical/warm subtropical production with low humidity at flowering, including dry Zululand, Valley Bushveld and Lowveld. The text distinguishes grafted stock from seed-raised Peach/Sabre; do not apply this age to an unrecorded seedling or infer yearly kg."
+              },
+              "yearsToFullBearing": null,
+              "yieldKgPerTree": null,
+              "chillUnits": null,
+              "pollination": null,
+              "supplementaryReferences": [
+                {
+                  "title": "Grafted mango establishment — regional guide",
+                  "source": {
+                    "quote": "after 3 or 4 years",
+                    "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+                    "doc": "KZN DARD, Fruit and Nut Production in KZN, Mango bearing age; printed p.16",
+                    "page": 20
+                  },
+                  "note": "Grafted stock generally first bears around 3–4 years and may remain productive 20 years or longer under the guide conditions. Seed-raised trees are a separate planting-material case. Frost, wet spring flowering conditions, cultivar and field establishment must be checked; longevity is not an age-yield curve."
+                }
+              ]
+            },
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "harvest": {
+              "speciesId": "musa-acuminata-aaa-group",
+              "name": "Banana",
+              "product": "fruit (bunch of bananas)",
+              "windows": [],
+              "yearsToFirstCrop": {
+                "value": [
+                  1.0833333333333333,
+                  1.6666666666666667
+                ],
+                "source": {
+                  "quote": "time ranges from 13 to 20 months",
+                  "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+                  "doc": "KZN DARD, Fruit and Nut Production in KZN, Bearing age",
+                  "page": 8
+                },
+                "note": "KZN DARD explicitly states the planting-to-harvest and harvest-to-harvest range. Converted months to years (13/12 to 20/12). This is not a dated forecast or an annual all-month harvest window."
+              },
+              "yearsToFullBearing": null,
+              "yieldKgPerTree": null,
+              "chillUnits": null,
+              "pollination": {
+                "value": "self-fertile",
+                "source": {
+                  "quote": "parthenocarpic seedless fruits that develop in the absence of pollination ... the ability to produce a fruit in the absence of pollination",
+                  "url": "https://www.promusa.org/Domestication+of+the+banana",
+                  "doc": "ProMusa (Bioversity International-affiliated global banana knowledge platform), 'Domestication of the banana'",
+                  "page": null
+                },
+                "note": "Not South Africa-specific, but this is a fixed genetic trait of the edible triploid (AAA group) Cavendish/Williams/Dwarf Cavendish clones grown in SA, not something that varies by region: these cultivars are parthenocarpic and set seedless fruit without any pollination at all (stronger than ordinary self-fertility). 'self-fertile' is the closest available enum value; strictly no pollen transfer of any kind (self or cross) is required for fruit set."
+              },
+              "supplementaryReferences": [
+                {
+                  "title": "Annual plantation output",
+                  "source": {
+                    "quote": "Yields (t/ha/annum) Conservative : 20 to 25 Average : 25 to 30 Good : 40+",
+                    "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+                    "doc": "KZN DARD, Fruit and Nut Production in KZN (2006), Bananas: Yields",
+                    "page": 9
+                  },
+                  "note": "KZN plantation reference per year: conservative 20–25 t/ha, average 25–30 t/ha, good 40+ t/ha. This is annual area production; it is not the weight of one bunch or a measured age-yield curve for three plants in a banana circle."
+                },
+                {
+                  "title": "Cultivar, planting and crop cycle",
+                  "source": {
+                    "quote": "Plant to harvest, or harvest to harvest, time ranges from 13 to 20 months, depending mainly on prevailing temperatures and cultivar. ... ‘Williams’ ... (1 800-2000 plants/ha) ... ‘Grand Nain’ ... (2 200 plants/ha) ... ‘Chinese Cavendish’ ... (2 500 plants/ha)",
+                    "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+                    "doc": "KZN DARD, Fruit and Nut Production in KZN (2006), Bananas: Bearing age and Spacing",
+                    "page": 8
+                  },
+                  "note": "The KZN guide gives 13–20 months for both the first planting-to-harvest cycle and subsequent harvest-to-harvest cycles. It lists different commercial densities for Williams, Grand Nain and Chinese Cavendish. A banana circle counts as three planted bananas here; replacement followers are stages of those mats, not extra mapped trees or guaranteed year-round supply."
+                }
+              ],
+              "householdFoodStatus": "confirmed-food"
+            },
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "harvest": {
+              "speciesId": "persea-americana",
+              "name": "Avocado",
+              "product": "fruit",
+              "windows": [
+                {
+                  "region": "South Africa (general, SAAGA industry overview)",
+                  "months": [
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                  ],
+                  "source": {
+                    "quote": "the South African avocado season extended from February to October, but with new plantings at higher elevations and more southerly latitudes harvesting now takes place from February in the to mid-January.",
+                    "url": "https://avocado.co.za/sa-avocado-industry-overview/",
+                    "doc": "SA Avocado Industry Overview – South African Avocado Growers' Association (SAAGA)",
+                    "page": null
+                  }
+                },
+                {
+                  "region": "South Africa - warm subtropical regions (Hass cultivar)",
+                  "months": [
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                  ],
+                  "source": {
+                    "quote": "Hass ... Flowering and harvesting months ... Warm regions ... Flowering: July - September ... Harvesting: June - October",
+                    "url": "http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf",
+                    "doc": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops)",
+                    "page": 5
+                  }
+                },
+                {
+                  "region": "South Africa - cool subtropical regions (Hass cultivar)",
+                  "months": [
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                  ],
+                  "source": {
+                    "quote": "Hass ... Cool regions ... Flowering: August - October ... Harvesting: August - December",
+                    "url": "http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf",
+                    "doc": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops)",
+                    "page": 5
+                  }
+                }
+              ],
+              "yearsToFirstCrop": {
+                "value": [
+                  2,
+                  3
+                ],
+                "source": {
+                  "quote": "Hass was the most precocious cultivar, with bearing starting in the second season, and reaching 10 t ha-1 by year three.",
+                  "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf",
+                  "doc": "Wolstenholme, Kaiser & Palmer, 'Yield Potential of Intensively Managed Avocados in the Natal Midlands — The Early Bearing Years', South African Avocado Growers' Association Yearbook 1991, 14:15-18",
+                  "page": 6
+                },
+                "note": "Bruyns Hill, Natal Midlands bioclimatic group 2; irrigated Hass on clonal Duke 7 rootstock, 7 x 7 m (200 trees/ha), planted 1982–1984. The paper reports Hass starting in its second season and Fuerte in its third. The two-to-three-year reference describes those trial cultivars, not every avocado or nursery starting age."
+              },
+              "yearsToFullBearing": {
+                "value": [
+                  6,
+                  8
+                ],
+                "source": {
+                  "quote": "Hass was the most precocious and consistent bearer, averaging over 15 t ha-1 and reaching an average of 20 t ha-1 by the sixth year. Thereafter, an average yield of about 22,5 t ha-1 appears to be sustainable.",
+                  "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf",
+                  "doc": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18",
+                  "page": 7
+                },
+                "note": "In this irrigated, intensively managed Natal Midlands trial, Hass reached about 20 t/ha at age 6 and orchards approached maximum sustainable average yield by age 8. This is a trial-specific bearing reference; there is no national plateau or automatically interpolated age-yield curve."
+              },
+              "yieldKgPerTree": {
+                "value": [
+                  100,
+                  112.5
+                ],
+                "source": {
+                  "quote": "reaching an average of 20 t ha-1 by the sixth year. Thereafter, an average yield of about 22,5 t ha-1 appears to be sustainable ... At a spacing of 7 x 7 m (200 trees per ha)",
+                  "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf",
+                  "doc": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18",
+                  "page": 7
+                },
+                "note": "Same-trial arithmetic at the initial 200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree at age 6; sustainable average 22,500 kg/ha / 200 = 112.5 kg/tree. At age 3, 10,000 kg/ha / 200 = 50 kg/tree equivalent. These are average-equivalent reference values for the named Hass/Duke 7 orchard conditions, not measured individual-tree yields or default production for a different density, cultivar, climate or management. Intermediate ages are not inferred."
+              },
+              "chillUnits": null,
+              "pollination": {
+                "value": "partly-self-fertile",
+                "source": {
+                  "quote": "Hass, an A-type flowerer, tended to be out of phase with Fuerte and Rinton on a seasonal yield basis ... favourable temperatures at fruit-set (especially in B flowering type cultivars such as Fuerte) can result in heavy cropping",
+                  "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf",
+                  "doc": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18",
+                  "page": 6
+                },
+                "note": "SA source confirms avocado's type A / type B protogynous dichogamous flowering system (temporal separation of male and female phases within a single tree) rather than stating self-fertility directly. Supporting SA quote on the practical effect: DAFF/ARC 'Cultivation of Avocados' guide lists for Fuerte (a Type B cultivar) 'Comments: fruit set increased by a pollinator' (http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf, p.5), i.e. trees do set fruit alone (self-fertile) but cross-pollination with the opposite flower type improves fruit set — hence 'partly-self-fertile' rather than 'self-fertile' or 'needs-cross-pollinator'."
+              },
+              "supplementaryReferences": [
+                {
+                  "title": "Hass age benchmarks — irrigated Natal Midlands trial",
+                  "source": {
+                    "quote": "10 t ha-1 by year three",
+                    "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf",
+                    "doc": "Wolstenholme, Kaiser & Palmer (1991), SAAGA Yearbook 14:15–18; reflowed PDF",
+                    "page": 6
+                  },
+                  "note": "Hass on Duke 7, initially 200 trees/ha at Bruyns Hill (Natal Midlands bioclimatic group 2), with intensive irrigation and nutrition. Age 3: 10,000 kg/ha; age 6: 20,000 kg/ha; sustainable average about 22,500 kg/ha. Same-study density permits equivalents of 50 kg/tree at age 3 and 100 kg/tree at age 6; there is no reference for every intermediate age. These orchard benchmarks are conditional on good resources, comparable climate and timely orchard management, including Phytophthora control and thinning; do not auto-fill farm quantities."
+                }
+              ]
+            },
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "harvest": {
+              "speciesId": "strychnos-spinosa",
+              "name": "Spiny monkey orange",
+              "product": "fruit",
+              "windows": [],
+              "yearsToFirstCrop": {
+                "value": [
+                  3,
+                  5
+                ],
+                "source": {
+                  "quote": "Presently, Strychnos spinosa can be propagated via seeds, grafting, or budding, with the production of fruit starting 3–5 years after planting",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8703348/",
+                  "doc": "Undervalued Spiny Monkey Orange (Strychnos spinosa Lam.): An Indigenous Fruit for Sustainable Food-Nutrition and Economic Prosperity (peer-reviewed review, PMC8703348)",
+                  "page": null
+                },
+                "note": "The review attributes this 3–5-year age to Avakoudjo et al.'s study in Benin, West Africa, rather than a South African bearing trial. Propagation method and local conditions must be confirmed before using it at a South African site; it is not a locally validated age or a yield-by-age curve."
+              },
+              "yearsToFullBearing": null,
+              "yieldKgPerTree": {
+                "value": [
+                  40,
+                  100
+                ],
+                "source": {
+                  "quote": "Fruit weighs between 145 and 383 g, while about 300–700 fruits (40–100 kg) can be produced per tree stand.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8703348/",
+                  "doc": "Undervalued Spiny Monkey Orange (Strychnos spinosa Lam.): An Indigenous Fruit for Sustainable Food-Nutrition and Economic Prosperity (peer-reviewed review, PMC8703348)",
+                  "page": null
+                },
+                "note": "The review reports 40–100 kg per tree stand without an annual period, mature age, matched cultivar or South African field conditions. Retain the original per-plant weight as context only: do not relabel it kg/year, spread it across months or treat it as a farm forecast."
+              },
+              "chillUnits": null,
+              "pollination": null,
+              "supplementaryReferences": [
+                {
+                  "title": "Harvest interval with unverified South African geography",
+                  "source": {
+                    "quote": "Strychnos spinosa is a seasonal fruit tree that is harvested between August and December",
+                    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8703348/",
+                    "doc": "Omotayo & Aremu (2021), Undervalued Spiny Monkey Orange, section 3",
+                    "page": null
+                  },
+                  "note": "The review states August–December but does not identify a locality for that interval. Related monkey-orange literature discusses this interval in Zimbabwe and more than one Strychnos species; it does not establish a South African spinosa picking calendar. The former South Africa (general) window is withheld. Record the farm's own ripe-pulp months; seeds and unripe pulp are not ordinary food."
+                },
+                {
+                  "title": "Geography of the review's bearing-age citation",
+                  "source": {
+                    "quote": "A participatory rural appraisal study was undertaken across three climatic zones in Benin.",
+                    "url": "https://link.springer.com/article/10.1007/s12231-019-09481-0",
+                    "doc": "Avakoudjo et al. (2020), Local Knowledge, Uses, and Factors Determining the Use of Strychnos spinosa Organs in Benin (West Africa), abstract",
+                    "page": null
+                  },
+                  "note": "The 2021 review cites this Benin study for its 3–5-year bearing-age statement. The cited source's geography is West Africa, not a South African orchard. Retain the review's numeric statement with this condition; no local annual yield curve is supplied."
+                }
+              ]
+            },
+            "existing": 1,
+            "proposed": 2
+          }
+        ],
+        "treeSeasons": {
+          "acca-sellowiana": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "aloidendron-dichotomum": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "ananas-comosus": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "aponogeton-distachyos": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "aspalathus-linearis": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "asystasia-gangetica-subsp-micrantha": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "barringtonia-racemosa": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "basella-alba": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "berchemia-discolor": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "boscia-albitrunca": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "cajanus-cajan": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "carica-papaya": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "carissa-bispinosa": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "carissa-haematocarpa": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "carissa-macrocarpa": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "carpobrotus-deliciosus": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "carpobrotus-edulis": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "carya-illinoinensis": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "centella-asiatica": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "ceratonia-siliqua": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "citrullus-lanatus-landrace-var-citroides": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "citrus-limon": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "citrus-reticulata": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "coffea-arabica": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "coleus-esculentus": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "cyclopia-genistoides": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "cydonia-oblonga": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "cynara-cardunculus-var-scolymus": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "diospyros-lycioides": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "dovyalis-afra": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "ehretia-rigida": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "englerophytum-magalismontanum": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "euclea-pseudebenus": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "euclea-undulata": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "ficus-carica": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "ficus-cordata": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "ficus-sur": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "fragaria-x-ananassa": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "garcinia-livingstonei": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "grewia-flava": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "grewia-occidentalis": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "grewia-robusta": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "harpephyllum-caffrum": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "lablab-purpureus": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "litchi-chinensis": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "lupinus-angustifolius": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "lycium-cinereum": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "lycium-ferocissimum": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "macadamia-integrifolia": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "malus-domestica": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "mangifera-indica": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "mesembryanthemum-crystallinum": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "mimusops-afra": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "mimusops-zeyheri": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "momordica-balsamina": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "morella-cordifolia": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "moringa-oleifera": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "morus-nigra": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "musa-acuminata-aaa-group": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "olea-europaea-subsp-africana": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "olea-europaea-subsp-europaea": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "osteospermum-moniliferum": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "pappea-capensis": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "passiflora-edulis": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "persea-americana": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "phoenix-dactylifera": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "phoenix-reclinata": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "physalis-peruviana": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "pistacia-vera": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "portulacaria-afra": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "prunus-armeniaca": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "prunus-avium": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "prunus-dulcis": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "prunus-persica": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "prunus-salicina": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "psidium-guajava": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "punica-granatum": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "pyrus-communis": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "rhamnus-prinoides": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "rhoicissus-digitata": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "rhoicissus-tomentosa": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "rhoicissus-tridentata": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "rubus-idaeus": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "salvia-rosmarinus": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "schotia-afra-var-afra": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "sclerocarya-birrea-subsp-caffra": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "searsia-lancea-rhus-lancea": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "searsia-lucida": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "searsia-natalensis": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "searsia-undulata": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "sideroxylon-inerme": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "strychnos-spinosa": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "syzygium-cordatum": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "tetragonia-decumbens": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "tetragonia-fruticosa": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "trachyandra-ciliata": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "trema-orientalis": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "tulbaghia-violacea": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "vaccinium-corymbosum": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "vangueria-infausta": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "vitis-vinifera": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "zingiber-officinale": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          },
+          "ziziphus-mucronata": {
+            "months": [],
+            "bearing": false,
+            "production": [
+              {
+                "status": "existing",
+                "plants": 1,
+                "planted": "2026-10",
+                "yields": []
+              },
+              {
+                "status": "proposed",
+                "plants": 2,
+                "planted": "2027-10",
+                "yields": []
+              }
+            ]
+          }
+        },
+        "unidentifiedPlants": [
+          {
+            "defId": "tree_pear",
+            "label": "Pear Tree",
+            "existing": 0,
+            "proposed": 1
+          }
+        ],
+        "animalGroups": [
+          {
+            "housing": "chicken",
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "housing": "goat",
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "housing": "bee",
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "housing": "rabbit",
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "housing": "duck",
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "housing": "pig",
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "housing": "kraal",
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "housing": "pond",
+            "existing": 1,
+            "proposed": 2
+          }
+        ],
+        "planning": {
+          "months": [
+            10,
+            11,
+            12,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "dates": [
+            {
+              "month": 10,
+              "year": 2026
+            },
+            {
+              "month": 11,
+              "year": 2026
+            },
+            {
+              "month": 12,
+              "year": 2026
+            },
+            {
+              "month": 1,
+              "year": 2027
+            },
+            {
+              "month": 2,
+              "year": 2027
+            },
+            {
+              "month": 3,
+              "year": 2027
+            },
+            {
+              "month": 4,
+              "year": 2027
+            },
+            {
+              "month": 5,
+              "year": 2027
+            },
+            {
+              "month": 6,
+              "year": 2027
+            },
+            {
+              "month": 7,
+              "year": 2027
+            },
+            {
+              "month": 8,
+              "year": 2027
+            },
+            {
+              "month": 9,
+              "year": 2027
+            }
+          ],
+          "trees": [
+            {
+              "speciesId": "citrus-limon",
+              "name": "Lemon",
+              "existing": 1,
+              "proposed": 2,
+              "season": {
+                "label": "Regional reference: lemon main crop",
+                "months": [
+                  2,
+                  3
+                ],
+                "basis": "KZN (hot low-lying areas, e.g. Nkwaleni, Mkhuze vs. cooler KZN Midlands). Hot and cool main crops remain separate; smaller additional crops are not marked. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                "source": {
+                  "label": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes), p. 11",
+                  "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+                }
+              }
+            },
+            {
+              "speciesId": "mangifera-indica",
+              "name": "Mango",
+              "existing": 1,
+              "proposed": 2,
+              "season": {
+                "label": "Regional reference: Mango",
+                "months": [
+                  11,
+                  12,
+                  1,
+                  2,
+                  3
+                ],
+                "basis": "South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area). Regional industry season, not a Tommy Atkins-only harvest window. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                "source": {
+                  "label": "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF 2024), p. 3",
+                  "url": "https://www.namc.co.za/wp-content/uploads/2024/11/SA-Fruit-Trade-Flow-Report-Issue-56-December-2024-submission.pdf"
+                }
+              }
+            },
+            {
+              "speciesId": "persea-americana",
+              "name": "Avocado",
+              "existing": 1,
+              "proposed": 2,
+              "season": {
+                "label": "Assumed variety: Hass",
+                "months": [
+                  6,
+                  7,
+                  8,
+                  9,
+                  10
+                ],
+                "basis": "South Africa - warm subtropical regions (Hass cultivar). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                "source": {
+                  "label": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops), p. 5",
+                  "url": "http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf"
+                }
+              }
+            }
+          ]
+        },
+        "animalChoices": {
+          "bee": "bees",
+          "chicken": "chicken-layer",
+          "goat": "goat-dairy"
+        }
+      },
+      "input": {
+        "beds": [],
+        "plantings": [],
+        "tasks": [],
+        "now": "2026-10-22T08:00:00.000Z",
+        "sections": [
+          "availability"
+        ],
+        "meta": {
+          "planTitle": "Original Ṱanḓa {count} $&",
+          "siteLine": "Original source site",
+          "locationLine": "Original source location",
+          "climateLine": "Original source climate",
+          "bedsSummary": "Original saved area summary",
+          "dateLabel": "22 October 2026",
+          "estimatedKgPerYear": null,
+          "lossPercent": 25
+        },
+        "availability": {
+          "yearMode": "fromToday",
+          "veg": [],
+          "utilization": [],
+          "includeTrees": true,
+          "includeAnimals": true,
+          "forestPlanning": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "undated": [
+            {
+              "iconKey": "tree:citrus-limon",
+              "label": "Lemon",
+              "ageNote": "Growing · first-crop ref 2029–2030",
+              "detail": "Plants on map: 1 existing; 2 proposed. Growing · first-crop ref 2029–2030. Picking months and fruit-bearing plants need local confirmation."
+            },
+            {
+              "iconKey": "tree:mangifera-indica",
+              "label": "Mango",
+              "ageNote": "Growing · first-crop ref 2029–2031",
+              "detail": "Plants on map: 1 existing; 2 proposed. Growing · first-crop ref 2029–2031. Picking months and fruit-bearing plants need local confirmation."
+            },
+            {
+              "iconKey": "tree:musa-acuminata-aaa-group",
+              "label": "Banana",
+              "ageNote": "Growing · first-crop ref 2027–2029",
+              "detail": "Plants on map: 1 existing; 2 proposed. Growing · first-crop ref 2027–2029. Picking months and fruit-bearing plants need local confirmation."
+            },
+            {
+              "iconKey": "tree:persea-americana",
+              "label": "Avocado",
+              "ageNote": "Growing · first-crop ref 2028–2030",
+              "detail": "Plants on map: 1 existing; 2 proposed. Growing · first-crop ref 2028–2030. Picking months and fruit-bearing plants need local confirmation."
+            },
+            {
+              "iconKey": "tree:strychnos-spinosa",
+              "label": "Spiny monkey orange",
+              "ageNote": "Growing · first-crop ref 2029–2032",
+              "detail": "Plants on map: 1 existing; 2 proposed. Growing · first-crop ref 2029–2032. Picking months and fruit-bearing plants need local confirmation."
+            },
+            {
+              "iconKey": "element:tree_pear",
+              "label": "Pear Tree",
+              "detail": "0 existing; 1 proposed on your map. Choose its species in the design, then confirm picking months locally."
+            },
+            {
+              "iconKey": "animal:chicken-layer",
+              "label": "Coops / chicken tractors — eggs",
+              "detail": "Structures on map: 1 existing; 2 proposed. Structure counts do not show animal numbers. Confirm production months for this farm before expecting this product."
+            },
+            {
+              "iconKey": "animal:goat-dairy",
+              "label": "Goat pens — milk",
+              "detail": "Structures on map: 1 existing; 2 proposed. Structure counts do not show animal numbers. Confirm production months for this farm before expecting this product."
+            },
+            {
+              "iconKey": "animal:bees",
+              "label": "Hives — honey",
+              "detail": "Structures on map: 1 existing; 2 proposed. Structure counts do not show animal numbers. Honey flows depend on local plants and rain, so no months are marked."
+            },
+            {
+              "iconKey": "housing:rabbit",
+              "label": "Hutches",
+              "detail": "Structures on map: 1 existing; 2 proposed. Structure counts do not show animal numbers. Choose what they are kept for. No product or production dates assumed."
+            },
+            {
+              "iconKey": "housing:duck",
+              "label": "Duck ponds",
+              "detail": "Structures on map: 1 existing; 2 proposed. Structure counts do not show animal numbers. Choose what they are kept for. No product or production dates assumed."
+            },
+            {
+              "iconKey": "housing:pig",
+              "label": "Pig pens",
+              "detail": "Structures on map: 1 existing; 2 proposed. Structure counts do not show animal numbers. Choose what they are kept for. No product or production dates assumed."
+            },
+            {
+              "iconKey": "housing:kraal",
+              "label": "Kraals",
+              "detail": "Structures on map: 1 existing; 2 proposed. Structure counts do not show animal numbers. Choose what they are kept for. No product or production dates assumed."
+            },
+            {
+              "iconKey": "housing:pond",
+              "label": "Small ponds",
+              "detail": "Structures on map: 1 existing; 2 proposed. Structure counts do not show animal numbers. Choose what they are kept for. No product or production dates assumed."
+            }
+          ]
+        }
+      },
+      "zones": [
+        "subtropical-coast"
+      ],
+      "marks": []
+    },
+    {
+      "id": "generated-reference",
+      "options": {
+        "now": "2026-10-01T08:00:00.000Z",
+        "yearMode": "fromToday",
+        "veg": [],
+        "utilization": [],
+        "treeGroups": [
+          {
+            "harvest": {
+              "speciesId": "citrus-limon",
+              "name": "Lemon",
+              "product": "fruit",
+              "windows": [
+                {
+                  "region": "KZN (hot low-lying areas, e.g. Nkwaleni, Mkhuze vs. cooler KZN Midlands)",
+                  "months": [
+                    2,
+                    3,
+                    5,
+                    6,
+                    7
+                  ],
+                  "source": {
+                    "quote": "Lemons – Grow well in warmer areas.  Adaptable to different areas.  HU 1100 to 1500. Main crop in hotter areas produced in February to March, while crop in cooler areas produced during May to July.",
+                    "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+                    "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes)",
+                    "page": 11
+                  }
+                },
+                {
+                  "region": "South Africa (general; main areas Eastern Cape, Limpopo, Western Cape)",
+                  "months": [
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9
+                  ],
+                  "source": {
+                    "quote": "Eureka lemons can have as much as three fruit sets. This means that at the same time there can be as much as three lots of fruit on a tree that are at different stages of maturity. Because of this characteristic, trees can produce marketable fruit from as early as February in hotter areas, and to as late as mid-September in cooler regions.",
+                    "url": "https://www.crw.org.za/home/document-home/learning-aids-and-resources/ca-citrus-av-series-learning-material/citrus-planting-management/5808-ca-av-series-cpm-lm-m02-citrus-types-and-cultivars-1/file",
+                    "doc": "Citrus Growers' Association / Citrus Academy — 'Citrus Planting Management 2: Citrus Types and Cultivars' Learner Guide (1st edition), Citrus Resource Warehouse (crw.org.za)",
+                    "page": 10
+                  }
+                }
+              ],
+              "yearsToFirstCrop": {
+                "value": [
+                  3,
+                  3
+                ],
+                "source": {
+                  "quote": "First crop (years) [...] 3",
+                  "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+                  "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes) — Citrus Yields table",
+                  "page": 11
+                },
+                "note": "KZN citrus guide; first crop means initial fruit, not full production. The same table gives an expected orchard lifespan of 23 years."
+              },
+              "yearsToFullBearing": null,
+              "yieldKgPerTree": {
+                "value": [
+                  79,
+                  131
+                ],
+                "source": {
+                  "quote": "Lemons [...] Potential production: Mature trees (tons/ha) [...] 65 [...] Likely production [...] 50 [...] Conservative production [...] 40",
+                  "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+                  "doc": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes) — Citrus Yields table",
+                  "page": 11
+                },
+                "note": "Calculated orchard-average equivalent using the KZN guide's likely production of 50 t/ha and midpoint planting spacings: cool KZN Midlands, 5.75 x 2.75 m, about 79 kg/tree; hot areas, 7.5 x 3.5 m, about 131 kg/tree. Calculation: 50,000 kg/ha x m²/tree / 10,000 m²/ha. These values are derived, not measured individual-tree yields. The spread reflects spacing, not varieties or a production-by-age curve. Confirm local orchard yield and actual spacing before using this reference."
+              },
+              "chillUnits": null,
+              "pollination": null
+            },
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "harvest": {
+              "speciesId": "mangifera-indica",
+              "name": "Mango",
+              "product": "fruit",
+              "windows": [
+                {
+                  "region": "South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area)",
+                  "months": [
+                    11,
+                    12,
+                    1,
+                    2,
+                    3
+                  ],
+                  "source": {
+                    "quote": "The mango season in South Africa normally begins in November and ends around late March thus making it the shortest season compared to other subtropical fruits such as avocadoes which stretch from February to November as well as litchis which stretch from November to late April (FPEF, 2024).",
+                    "url": "https://www.namc.co.za/wp-content/uploads/2024/11/SA-Fruit-Trade-Flow-Report-Issue-56-December-2024-submission.pdf",
+                    "doc": "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF 2024)",
+                    "page": 3
+                  }
+                }
+              ],
+              "yearsToFirstCrop": {
+                "value": [
+                  3,
+                  4
+                ],
+                "source": {
+                  "quote": "after 3 or 4 years",
+                  "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+                  "doc": "KZN DARD, Fruit and Nut Production in KZN, Mango bearing age; printed p.16",
+                  "page": 20
+                },
+                "note": "Grafted mango stock in the KZN guide generally begins bearing after 3–4 years. Context is frost-free tropical/warm subtropical production with low humidity at flowering, including dry Zululand, Valley Bushveld and Lowveld. The text distinguishes grafted stock from seed-raised Peach/Sabre; do not apply this age to an unrecorded seedling or infer yearly kg."
+              },
+              "yearsToFullBearing": null,
+              "yieldKgPerTree": null,
+              "chillUnits": null,
+              "pollination": null,
+              "supplementaryReferences": [
+                {
+                  "title": "Grafted mango establishment — regional guide",
+                  "source": {
+                    "quote": "after 3 or 4 years",
+                    "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+                    "doc": "KZN DARD, Fruit and Nut Production in KZN, Mango bearing age; printed p.16",
+                    "page": 20
+                  },
+                  "note": "Grafted stock generally first bears around 3–4 years and may remain productive 20 years or longer under the guide conditions. Seed-raised trees are a separate planting-material case. Frost, wet spring flowering conditions, cultivar and field establishment must be checked; longevity is not an age-yield curve."
+                }
+              ]
+            },
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "harvest": {
+              "speciesId": "musa-acuminata-aaa-group",
+              "name": "Banana",
+              "product": "fruit (bunch of bananas)",
+              "windows": [],
+              "yearsToFirstCrop": {
+                "value": [
+                  1.0833333333333333,
+                  1.6666666666666667
+                ],
+                "source": {
+                  "quote": "time ranges from 13 to 20 months",
+                  "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+                  "doc": "KZN DARD, Fruit and Nut Production in KZN, Bearing age",
+                  "page": 8
+                },
+                "note": "KZN DARD explicitly states the planting-to-harvest and harvest-to-harvest range. Converted months to years (13/12 to 20/12). This is not a dated forecast or an annual all-month harvest window."
+              },
+              "yearsToFullBearing": null,
+              "yieldKgPerTree": null,
+              "chillUnits": null,
+              "pollination": {
+                "value": "self-fertile",
+                "source": {
+                  "quote": "parthenocarpic seedless fruits that develop in the absence of pollination ... the ability to produce a fruit in the absence of pollination",
+                  "url": "https://www.promusa.org/Domestication+of+the+banana",
+                  "doc": "ProMusa (Bioversity International-affiliated global banana knowledge platform), 'Domestication of the banana'",
+                  "page": null
+                },
+                "note": "Not South Africa-specific, but this is a fixed genetic trait of the edible triploid (AAA group) Cavendish/Williams/Dwarf Cavendish clones grown in SA, not something that varies by region: these cultivars are parthenocarpic and set seedless fruit without any pollination at all (stronger than ordinary self-fertility). 'self-fertile' is the closest available enum value; strictly no pollen transfer of any kind (self or cross) is required for fruit set."
+              },
+              "supplementaryReferences": [
+                {
+                  "title": "Annual plantation output",
+                  "source": {
+                    "quote": "Yields (t/ha/annum) Conservative : 20 to 25 Average : 25 to 30 Good : 40+",
+                    "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+                    "doc": "KZN DARD, Fruit and Nut Production in KZN (2006), Bananas: Yields",
+                    "page": 9
+                  },
+                  "note": "KZN plantation reference per year: conservative 20–25 t/ha, average 25–30 t/ha, good 40+ t/ha. This is annual area production; it is not the weight of one bunch or a measured age-yield curve for three plants in a banana circle."
+                },
+                {
+                  "title": "Cultivar, planting and crop cycle",
+                  "source": {
+                    "quote": "Plant to harvest, or harvest to harvest, time ranges from 13 to 20 months, depending mainly on prevailing temperatures and cultivar. ... ‘Williams’ ... (1 800-2000 plants/ha) ... ‘Grand Nain’ ... (2 200 plants/ha) ... ‘Chinese Cavendish’ ... (2 500 plants/ha)",
+                    "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf",
+                    "doc": "KZN DARD, Fruit and Nut Production in KZN (2006), Bananas: Bearing age and Spacing",
+                    "page": 8
+                  },
+                  "note": "The KZN guide gives 13–20 months for both the first planting-to-harvest cycle and subsequent harvest-to-harvest cycles. It lists different commercial densities for Williams, Grand Nain and Chinese Cavendish. A banana circle counts as three planted bananas here; replacement followers are stages of those mats, not extra mapped trees or guaranteed year-round supply."
+                }
+              ],
+              "householdFoodStatus": "confirmed-food"
+            },
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "harvest": {
+              "speciesId": "persea-americana",
+              "name": "Avocado",
+              "product": "fruit",
+              "windows": [
+                {
+                  "region": "South Africa (general, SAAGA industry overview)",
+                  "months": [
+                    2,
+                    3,
+                    4,
+                    5,
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                  ],
+                  "source": {
+                    "quote": "the South African avocado season extended from February to October, but with new plantings at higher elevations and more southerly latitudes harvesting now takes place from February in the to mid-January.",
+                    "url": "https://avocado.co.za/sa-avocado-industry-overview/",
+                    "doc": "SA Avocado Industry Overview – South African Avocado Growers' Association (SAAGA)",
+                    "page": null
+                  }
+                },
+                {
+                  "region": "South Africa - warm subtropical regions (Hass cultivar)",
+                  "months": [
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                  ],
+                  "source": {
+                    "quote": "Hass ... Flowering and harvesting months ... Warm regions ... Flowering: July - September ... Harvesting: June - October",
+                    "url": "http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf",
+                    "doc": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops)",
+                    "page": 5
+                  }
+                },
+                {
+                  "region": "South Africa - cool subtropical regions (Hass cultivar)",
+                  "months": [
+                    8,
+                    9,
+                    10,
+                    11,
+                    12
+                  ],
+                  "source": {
+                    "quote": "Hass ... Cool regions ... Flowering: August - October ... Harvesting: August - December",
+                    "url": "http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf",
+                    "doc": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops)",
+                    "page": 5
+                  }
+                }
+              ],
+              "yearsToFirstCrop": {
+                "value": [
+                  2,
+                  3
+                ],
+                "source": {
+                  "quote": "Hass was the most precocious cultivar, with bearing starting in the second season, and reaching 10 t ha-1 by year three.",
+                  "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf",
+                  "doc": "Wolstenholme, Kaiser & Palmer, 'Yield Potential of Intensively Managed Avocados in the Natal Midlands — The Early Bearing Years', South African Avocado Growers' Association Yearbook 1991, 14:15-18",
+                  "page": 6
+                },
+                "note": "Bruyns Hill, Natal Midlands bioclimatic group 2; irrigated Hass on clonal Duke 7 rootstock, 7 x 7 m (200 trees/ha), planted 1982–1984. The paper reports Hass starting in its second season and Fuerte in its third. The two-to-three-year reference describes those trial cultivars, not every avocado or nursery starting age."
+              },
+              "yearsToFullBearing": {
+                "value": [
+                  6,
+                  8
+                ],
+                "source": {
+                  "quote": "Hass was the most precocious and consistent bearer, averaging over 15 t ha-1 and reaching an average of 20 t ha-1 by the sixth year. Thereafter, an average yield of about 22,5 t ha-1 appears to be sustainable.",
+                  "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf",
+                  "doc": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18",
+                  "page": 7
+                },
+                "note": "In this irrigated, intensively managed Natal Midlands trial, Hass reached about 20 t/ha at age 6 and orchards approached maximum sustainable average yield by age 8. This is a trial-specific bearing reference; there is no national plateau or automatically interpolated age-yield curve."
+              },
+              "yieldKgPerTree": {
+                "value": [
+                  100,
+                  112.5
+                ],
+                "source": {
+                  "quote": "reaching an average of 20 t ha-1 by the sixth year. Thereafter, an average yield of about 22,5 t ha-1 appears to be sustainable ... At a spacing of 7 x 7 m (200 trees per ha)",
+                  "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf",
+                  "doc": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18",
+                  "page": 7
+                },
+                "note": "Same-trial arithmetic at the initial 200 trees/ha: 20,000 kg/ha / 200 = 100 kg/tree at age 6; sustainable average 22,500 kg/ha / 200 = 112.5 kg/tree. At age 3, 10,000 kg/ha / 200 = 50 kg/tree equivalent. These are average-equivalent reference values for the named Hass/Duke 7 orchard conditions, not measured individual-tree yields or default production for a different density, cultivar, climate or management. Intermediate ages are not inferred."
+              },
+              "chillUnits": null,
+              "pollination": {
+                "value": "partly-self-fertile",
+                "source": {
+                  "quote": "Hass, an A-type flowerer, tended to be out of phase with Fuerte and Rinton on a seasonal yield basis ... favourable temperatures at fruit-set (especially in B flowering type cultivars such as Fuerte) can result in heavy cropping",
+                  "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf",
+                  "doc": "Wolstenholme, Kaiser & Palmer, SAAGA Yearbook 1991, 14:15-18",
+                  "page": 6
+                },
+                "note": "SA source confirms avocado's type A / type B protogynous dichogamous flowering system (temporal separation of male and female phases within a single tree) rather than stating self-fertility directly. Supporting SA quote on the practical effect: DAFF/ARC 'Cultivation of Avocados' guide lists for Fuerte (a Type B cultivar) 'Comments: fruit set increased by a pollinator' (http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf, p.5), i.e. trees do set fruit alone (self-fertile) but cross-pollination with the opposite flower type improves fruit set — hence 'partly-self-fertile' rather than 'self-fertile' or 'needs-cross-pollinator'."
+              },
+              "supplementaryReferences": [
+                {
+                  "title": "Hass age benchmarks — irrigated Natal Midlands trial",
+                  "source": {
+                    "quote": "10 t ha-1 by year three",
+                    "url": "https://www.avocadosource.com/Journals/SAAGA/SAAGA_1991/SAAGA_1991_PG_15-18.pdf",
+                    "doc": "Wolstenholme, Kaiser & Palmer (1991), SAAGA Yearbook 14:15–18; reflowed PDF",
+                    "page": 6
+                  },
+                  "note": "Hass on Duke 7, initially 200 trees/ha at Bruyns Hill (Natal Midlands bioclimatic group 2), with intensive irrigation and nutrition. Age 3: 10,000 kg/ha; age 6: 20,000 kg/ha; sustainable average about 22,500 kg/ha. Same-study density permits equivalents of 50 kg/tree at age 3 and 100 kg/tree at age 6; there is no reference for every intermediate age. These orchard benchmarks are conditional on good resources, comparable climate and timely orchard management, including Phytophthora control and thinning; do not auto-fill farm quantities."
+                }
+              ]
+            },
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "harvest": {
+              "speciesId": "strychnos-spinosa",
+              "name": "Spiny monkey orange",
+              "product": "fruit",
+              "windows": [],
+              "yearsToFirstCrop": {
+                "value": [
+                  3,
+                  5
+                ],
+                "source": {
+                  "quote": "Presently, Strychnos spinosa can be propagated via seeds, grafting, or budding, with the production of fruit starting 3–5 years after planting",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8703348/",
+                  "doc": "Undervalued Spiny Monkey Orange (Strychnos spinosa Lam.): An Indigenous Fruit for Sustainable Food-Nutrition and Economic Prosperity (peer-reviewed review, PMC8703348)",
+                  "page": null
+                },
+                "note": "The review attributes this 3–5-year age to Avakoudjo et al.'s study in Benin, West Africa, rather than a South African bearing trial. Propagation method and local conditions must be confirmed before using it at a South African site; it is not a locally validated age or a yield-by-age curve."
+              },
+              "yearsToFullBearing": null,
+              "yieldKgPerTree": {
+                "value": [
+                  40,
+                  100
+                ],
+                "source": {
+                  "quote": "Fruit weighs between 145 and 383 g, while about 300–700 fruits (40–100 kg) can be produced per tree stand.",
+                  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8703348/",
+                  "doc": "Undervalued Spiny Monkey Orange (Strychnos spinosa Lam.): An Indigenous Fruit for Sustainable Food-Nutrition and Economic Prosperity (peer-reviewed review, PMC8703348)",
+                  "page": null
+                },
+                "note": "The review reports 40–100 kg per tree stand without an annual period, mature age, matched cultivar or South African field conditions. Retain the original per-plant weight as context only: do not relabel it kg/year, spread it across months or treat it as a farm forecast."
+              },
+              "chillUnits": null,
+              "pollination": null,
+              "supplementaryReferences": [
+                {
+                  "title": "Harvest interval with unverified South African geography",
+                  "source": {
+                    "quote": "Strychnos spinosa is a seasonal fruit tree that is harvested between August and December",
+                    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8703348/",
+                    "doc": "Omotayo & Aremu (2021), Undervalued Spiny Monkey Orange, section 3",
+                    "page": null
+                  },
+                  "note": "The review states August–December but does not identify a locality for that interval. Related monkey-orange literature discusses this interval in Zimbabwe and more than one Strychnos species; it does not establish a South African spinosa picking calendar. The former South Africa (general) window is withheld. Record the farm's own ripe-pulp months; seeds and unripe pulp are not ordinary food."
+                },
+                {
+                  "title": "Geography of the review's bearing-age citation",
+                  "source": {
+                    "quote": "A participatory rural appraisal study was undertaken across three climatic zones in Benin.",
+                    "url": "https://link.springer.com/article/10.1007/s12231-019-09481-0",
+                    "doc": "Avakoudjo et al. (2020), Local Knowledge, Uses, and Factors Determining the Use of Strychnos spinosa Organs in Benin (West Africa), abstract",
+                    "page": null
+                  },
+                  "note": "The 2021 review cites this Benin study for its 3–5-year bearing-age statement. The cited source's geography is West Africa, not a South African orchard. Retain the review's numeric statement with this condition; no local annual yield curve is supplied."
+                }
+              ]
+            },
+            "existing": 1,
+            "proposed": 2
+          }
+        ],
+        "treeSeasons": {},
+        "unidentifiedPlants": [
+          {
+            "defId": "tree_pear",
+            "label": "Pear Tree",
+            "existing": 0,
+            "proposed": 1
+          }
+        ],
+        "animalGroups": [
+          {
+            "housing": "chicken",
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "housing": "goat",
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "housing": "bee",
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "housing": "rabbit",
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "housing": "duck",
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "housing": "pig",
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "housing": "kraal",
+            "existing": 1,
+            "proposed": 2
+          },
+          {
+            "housing": "pond",
+            "existing": 1,
+            "proposed": 2
+          }
+        ],
+        "planning": {
+          "months": [
+            10,
+            11,
+            12,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "dates": [
+            {
+              "month": 10,
+              "year": 2026
+            },
+            {
+              "month": 11,
+              "year": 2026
+            },
+            {
+              "month": 12,
+              "year": 2026
+            },
+            {
+              "month": 1,
+              "year": 2027
+            },
+            {
+              "month": 2,
+              "year": 2027
+            },
+            {
+              "month": 3,
+              "year": 2027
+            },
+            {
+              "month": 4,
+              "year": 2027
+            },
+            {
+              "month": 5,
+              "year": 2027
+            },
+            {
+              "month": 6,
+              "year": 2027
+            },
+            {
+              "month": 7,
+              "year": 2027
+            },
+            {
+              "month": 8,
+              "year": 2027
+            },
+            {
+              "month": 9,
+              "year": 2027
+            }
+          ],
+          "trees": [
+            {
+              "speciesId": "citrus-limon",
+              "name": "Lemon",
+              "existing": 1,
+              "proposed": 2,
+              "season": {
+                "label": "Regional reference: lemon main crop",
+                "months": [
+                  2,
+                  3
+                ],
+                "basis": "KZN (hot low-lying areas, e.g. Nkwaleni, Mkhuze vs. cooler KZN Midlands). Hot and cool main crops remain separate; smaller additional crops are not marked. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                "source": {
+                  "label": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes), p. 11",
+                  "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+                }
+              }
+            },
+            {
+              "speciesId": "mangifera-indica",
+              "name": "Mango",
+              "existing": 1,
+              "proposed": 2,
+              "season": {
+                "label": "Regional reference: Mango",
+                "months": [
+                  11,
+                  12,
+                  1,
+                  2,
+                  3
+                ],
+                "basis": "South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area). Regional industry season, not a Tommy Atkins-only harvest window. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                "source": {
+                  "label": "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF 2024), p. 3",
+                  "url": "https://www.namc.co.za/wp-content/uploads/2024/11/SA-Fruit-Trade-Flow-Report-Issue-56-December-2024-submission.pdf"
+                }
+              }
+            },
+            {
+              "speciesId": "persea-americana",
+              "name": "Avocado",
+              "existing": 1,
+              "proposed": 2,
+              "season": {
+                "label": "Assumed variety: Hass",
+                "months": [
+                  6,
+                  7,
+                  8,
+                  9,
+                  10
+                ],
+                "basis": "South Africa - warm subtropical regions (Hass cultivar). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                "source": {
+                  "label": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops), p. 5",
+                  "url": "http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf"
+                }
+              }
+            }
+          ]
+        },
+        "animalChoices": {
+          "bee": "bees",
+          "chicken": "chicken-layer",
+          "goat": "goat-dairy"
+        }
+      },
+      "input": {
+        "beds": [],
+        "plantings": [],
+        "tasks": [],
+        "now": "2026-10-22T08:00:00.000Z",
+        "sections": [
+          "availability"
+        ],
+        "meta": {
+          "planTitle": "Original Ṱanḓa {count} $&",
+          "siteLine": "Original source site",
+          "locationLine": "Original source location",
+          "climateLine": "Original source climate",
+          "bedsSummary": "Original saved area summary",
+          "dateLabel": "22 October 2026",
+          "estimatedKgPerYear": null,
+          "lossPercent": 25
+        },
+        "availability": {
+          "yearMode": "fromToday",
+          "veg": [],
+          "utilization": [],
+          "includeTrees": true,
+          "includeAnimals": true,
+          "forestPlanning": [
+            [
+              {
+                "iconKey": "tree:persea-americana",
+                "label": "Avocado",
+                "planning": {
+                  "label": "Assumed variety: Hass",
+                  "months": [
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                  ],
+                  "basis": "South Africa - warm subtropical regions (Hass cultivar). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                  "source": {
+                    "label": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops), p. 5",
+                    "url": "http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf"
+                  }
+                }
+              }
+            ],
+            [
+              {
+                "iconKey": "tree:mangifera-indica",
+                "label": "Mango",
+                "planning": {
+                  "label": "Regional reference: Mango",
+                  "months": [
+                    11,
+                    12,
+                    1,
+                    2,
+                    3
+                  ],
+                  "basis": "South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area). Regional industry season, not a Tommy Atkins-only harvest window. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                  "source": {
+                    "label": "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF 2024), p. 3",
+                    "url": "https://www.namc.co.za/wp-content/uploads/2024/11/SA-Fruit-Trade-Flow-Report-Issue-56-December-2024-submission.pdf"
+                  }
+                }
+              }
+            ],
+            [
+              {
+                "iconKey": "tree:mangifera-indica",
+                "label": "Mango",
+                "planning": {
+                  "label": "Regional reference: Mango",
+                  "months": [
+                    11,
+                    12,
+                    1,
+                    2,
+                    3
+                  ],
+                  "basis": "South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area). Regional industry season, not a Tommy Atkins-only harvest window. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                  "source": {
+                    "label": "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF 2024), p. 3",
+                    "url": "https://www.namc.co.za/wp-content/uploads/2024/11/SA-Fruit-Trade-Flow-Report-Issue-56-December-2024-submission.pdf"
+                  }
+                }
+              }
+            ],
+            [
+              {
+                "iconKey": "tree:mangifera-indica",
+                "label": "Mango",
+                "planning": {
+                  "label": "Regional reference: Mango",
+                  "months": [
+                    11,
+                    12,
+                    1,
+                    2,
+                    3
+                  ],
+                  "basis": "South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area). Regional industry season, not a Tommy Atkins-only harvest window. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                  "source": {
+                    "label": "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF 2024), p. 3",
+                    "url": "https://www.namc.co.za/wp-content/uploads/2024/11/SA-Fruit-Trade-Flow-Report-Issue-56-December-2024-submission.pdf"
+                  }
+                }
+              }
+            ],
+            [
+              {
+                "iconKey": "tree:citrus-limon",
+                "label": "Lemon",
+                "planning": {
+                  "label": "Regional reference: lemon main crop",
+                  "months": [
+                    2,
+                    3
+                  ],
+                  "basis": "KZN (hot low-lying areas, e.g. Nkwaleni, Mkhuze vs. cooler KZN Midlands). Hot and cool main crops remain separate; smaller additional crops are not marked. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                  "source": {
+                    "label": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes), p. 11",
+                    "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+                  }
+                }
+              },
+              {
+                "iconKey": "tree:mangifera-indica",
+                "label": "Mango",
+                "planning": {
+                  "label": "Regional reference: Mango",
+                  "months": [
+                    11,
+                    12,
+                    1,
+                    2,
+                    3
+                  ],
+                  "basis": "South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area). Regional industry season, not a Tommy Atkins-only harvest window. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                  "source": {
+                    "label": "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF 2024), p. 3",
+                    "url": "https://www.namc.co.za/wp-content/uploads/2024/11/SA-Fruit-Trade-Flow-Report-Issue-56-December-2024-submission.pdf"
+                  }
+                }
+              }
+            ],
+            [
+              {
+                "iconKey": "tree:citrus-limon",
+                "label": "Lemon",
+                "planning": {
+                  "label": "Regional reference: lemon main crop",
+                  "months": [
+                    2,
+                    3
+                  ],
+                  "basis": "KZN (hot low-lying areas, e.g. Nkwaleni, Mkhuze vs. cooler KZN Midlands). Hot and cool main crops remain separate; smaller additional crops are not marked. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                  "source": {
+                    "label": "KwaZulu-Natal Department of Agriculture and Rural Development, 'Fruit and Nut Production in KZN' (Horticultural Advisory Notes), p. 11",
+                    "url": "https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/Fruit%20and%20%20Nut%20Production%20in%20KZN.pdf"
+                  }
+                }
+              },
+              {
+                "iconKey": "tree:mangifera-indica",
+                "label": "Mango",
+                "planning": {
+                  "label": "Regional reference: Mango",
+                  "months": [
+                    11,
+                    12,
+                    1,
+                    2,
+                    3
+                  ],
+                  "basis": "South Africa (general; Limpopo + Mpumalanga = 96% of SA mango area). Regional industry season, not a Tommy Atkins-only harvest window. Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                  "source": {
+                    "label": "National Agricultural Marketing Council (NAMC), South African Fruit Trade Flow Report, Issue 56, December 2024 (citing FPEF 2024), p. 3",
+                    "url": "https://www.namc.co.za/wp-content/uploads/2024/11/SA-Fruit-Trade-Flow-Report-Issue-56-December-2024-submission.pdf"
+                  }
+                }
+              }
+            ],
+            [],
+            [],
+            [
+              {
+                "iconKey": "tree:persea-americana",
+                "label": "Avocado",
+                "planning": {
+                  "label": "Assumed variety: Hass",
+                  "months": [
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                  ],
+                  "basis": "South Africa - warm subtropical regions (Hass cultivar). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                  "source": {
+                    "label": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops), p. 5",
+                    "url": "http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf"
+                  }
+                }
+              }
+            ],
+            [
+              {
+                "iconKey": "tree:persea-americana",
+                "label": "Avocado",
+                "planning": {
+                  "label": "Assumed variety: Hass",
+                  "months": [
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                  ],
+                  "basis": "South Africa - warm subtropical regions (Hass cultivar). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                  "source": {
+                    "label": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops), p. 5",
+                    "url": "http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf"
+                  }
+                }
+              }
+            ],
+            [
+              {
+                "iconKey": "tree:persea-americana",
+                "label": "Avocado",
+                "planning": {
+                  "label": "Assumed variety: Hass",
+                  "months": [
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                  ],
+                  "basis": "South Africa - warm subtropical regions (Hass cultivar). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                  "source": {
+                    "label": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops), p. 5",
+                    "url": "http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf"
+                  }
+                }
+              }
+            ],
+            [
+              {
+                "iconKey": "tree:persea-americana",
+                "label": "Avocado",
+                "planning": {
+                  "label": "Assumed variety: Hass",
+                  "months": [
+                    6,
+                    7,
+                    8,
+                    9,
+                    10
+                  ],
+                  "basis": "South Africa - warm subtropical regions (Hass cultivar). Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+                  "source": {
+                    "label": "Directorate Communication: Cultivation of Avocados (South African Dept. of Agriculture / ARC-Institute for Tropical and Subtropical Crops), p. 5",
+                    "url": "http://www.avocadosource.com/international/south_africa_papers/cultivation_of_avocados.pdf"
+                  }
+                }
+              }
+            ]
+          ],
+          "undated": [
+            {
+              "iconKey": "tree:citrus-limon",
+              "label": "Lemon",
+              "detail": "Plants on map: 1 existing; 2 proposed. Picking months and fruit-bearing plants need local confirmation."
+            },
+            {
+              "iconKey": "tree:mangifera-indica",
+              "label": "Mango",
+              "detail": "Plants on map: 1 existing; 2 proposed. Picking months and fruit-bearing plants need local confirmation."
+            },
+            {
+              "iconKey": "tree:musa-acuminata-aaa-group",
+              "label": "Banana",
+              "detail": "Plants on map: 1 existing; 2 proposed. Picking months and fruit-bearing plants need local confirmation."
+            },
+            {
+              "iconKey": "tree:persea-americana",
+              "label": "Avocado",
+              "detail": "Plants on map: 1 existing; 2 proposed. Picking months and fruit-bearing plants need local confirmation."
+            },
+            {
+              "iconKey": "tree:strychnos-spinosa",
+              "label": "Spiny monkey orange",
+              "detail": "Plants on map: 1 existing; 2 proposed. Picking months and fruit-bearing plants need local confirmation."
+            },
+            {
+              "iconKey": "element:tree_pear",
+              "label": "Pear Tree",
+              "detail": "0 existing; 1 proposed on your map. Choose its species in the design, then confirm picking months locally."
+            },
+            {
+              "iconKey": "animal:chicken-layer",
+              "label": "Coops / chicken tractors — eggs",
+              "detail": "Structures on map: 1 existing; 2 proposed. Structure counts do not show animal numbers. Confirm production months for this farm before expecting this product."
+            },
+            {
+              "iconKey": "animal:goat-dairy",
+              "label": "Goat pens — milk",
+              "detail": "Structures on map: 1 existing; 2 proposed. Structure counts do not show animal numbers. Confirm production months for this farm before expecting this product."
+            },
+            {
+              "iconKey": "animal:bees",
+              "label": "Hives — honey",
+              "detail": "Structures on map: 1 existing; 2 proposed. Structure counts do not show animal numbers. Honey flows depend on local plants and rain, so no months are marked."
+            },
+            {
+              "iconKey": "housing:rabbit",
+              "label": "Hutches",
+              "detail": "Structures on map: 1 existing; 2 proposed. Structure counts do not show animal numbers. Choose what they are kept for. No product or production dates assumed."
+            },
+            {
+              "iconKey": "housing:duck",
+              "label": "Duck ponds",
+              "detail": "Structures on map: 1 existing; 2 proposed. Structure counts do not show animal numbers. Choose what they are kept for. No product or production dates assumed."
+            },
+            {
+              "iconKey": "housing:pig",
+              "label": "Pig pens",
+              "detail": "Structures on map: 1 existing; 2 proposed. Structure counts do not show animal numbers. Choose what they are kept for. No product or production dates assumed."
+            },
+            {
+              "iconKey": "housing:kraal",
+              "label": "Kraals",
+              "detail": "Structures on map: 1 existing; 2 proposed. Structure counts do not show animal numbers. Choose what they are kept for. No product or production dates assumed."
+            },
+            {
+              "iconKey": "housing:pond",
+              "label": "Small ponds",
+              "detail": "Structures on map: 1 existing; 2 proposed. Structure counts do not show animal numbers. Choose what they are kept for. No product or production dates assumed."
+            }
+          ]
+        }
+      },
+      "zones": [
+        "subtropical-coast"
+      ],
+      "marks": [
+        {
+          "x": 192,
+          "width": 26.439999999999998,
+          "dash": [
+            3,
+            2
+          ]
+        },
+        {
+          "x": 435.52,
+          "width": 117.75999999999999,
+          "dash": [
+            3,
+            2
+          ]
+        },
+        {
+          "x": 313.76,
+          "width": 56.879999999999995,
+          "dash": [
+            3,
+            2
+          ]
+        },
+        {
+          "x": 222.44,
+          "width": 148.2,
+          "dash": [
+            3,
+            2
+          ]
+        }
+      ]
+    }
+  ]
+}

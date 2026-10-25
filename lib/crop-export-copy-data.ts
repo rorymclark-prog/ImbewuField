@@ -1,0 +1,3481 @@
+// Unreviewed drafts bound to the original crop-export sources.
+export const CROP_EXPORT_COPY = [
+  {
+    "english": "plant spacing {row}cm each way",
+    "zu": "izikhala zezitshalo zibe ngu-{row}cm nhlangothi zonke",
+    "st": "sebaka pakeng tsa dimela e be {row}cm mahlakoreng ohle",
+    "ts": "mpfhuka wa swimila wa {row}cm matlhelo hinkwawo",
+    "ve": "vhukati ha zwimela hu vhe {row}cm kha masia oṱhe"
+  },
+  {
+    "english": "rows {row}cm apart",
+    "zu": "imigqa iqhelelane ngo-{row}cm",
+    "st": "mela e arohane ka {row}cm",
+    "ts": "mintila yi hambana hi {row}cm",
+    "ve": "mitalo i fhambane nga {row}cm"
+  },
+  {
+    "english": "{inRow}cm apart in the row",
+    "zu": "izitshalo ziqhelelane ngo-{inRow}cm emgqeni",
+    "st": "{inRow}cm pakeng tsa dimela moleng",
+    "ts": "{inRow}cm ku hambana eka ntila",
+    "ve": "{inRow}cm vhukati ha zwimela kha mutalo"
+  },
+  {
+    "english": "sow {depth}cm deep",
+    "zu": "hlwanyela ekujuleni okungu-{depth}cm",
+    "st": "jala botebong ba {depth}cm",
+    "ts": "byala hi vuenti bya {depth}cm",
+    "ve": "zwalani kha vhudzivha ha {depth}cm"
+  },
+  {
+    "english": "start in a tray",
+    "zu": "qala ethreyini",
+    "st": "qala ka tereing",
+    "ts": "sungula ethireyini",
+    "ve": "thomani kha thireyi"
+  },
+  {
+    "english": "start in a tray, {depth}cm deep",
+    "zu": "qala ethreyini, ekujuleni okungu-{depth}cm",
+    "st": "qala ka tereing, botebong ba {depth}cm",
+    "ts": "sungula ethireyini, hi vuenti bya {depth}cm",
+    "ve": "thomani kha thireyi, kha vhudzivha ha {depth}cm"
+  },
+  {
+    "english": "assess soil and drainage before preparing ground for",
+    "zu": "hlola umhlabathi nokuphuma kwamanzi ngaphambi kokulungisela indawo",
+    "st": "lekola mobu le phallo ya metsi pele o lokisa sebaka bakeng sa",
+    "ts": "kambela misava ni ku khuluka ka mati u nga si lulamisa ndhawu ya",
+    "ve": "sedzulusani mavu na u elela ha maḓi phanḓa ha u lugisa fhethu ha"
+  },
+  {
+    "english": "sow",
+    "zu": "hlwanyela",
+    "st": "jala",
+    "ts": "byala",
+    "ve": "zwalani"
+  },
+  {
+    "english": "check seedlings; transplant when ready",
+    "zu": "hlola izithombo; zitshale kwenye indawo lapho sezilungile",
+    "st": "hlahloba dipeo tse metseng; di fallisetse tshimong ha di se di loketse",
+    "ts": "kambela swimilana; swi byale kun'wana loko swi lulamile",
+    "ve": "sedzulusani zwimelana; zwi sudzuluseleni tsimuni musi zwo no lugela"
+  },
+  {
+    "english": "water in & mulch",
+    "zu": "nisela ngemva kokutshala bese wendlala i-mulch",
+    "st": "nosetsa kamora ho jala mme o kwahele mobu ka mulch",
+    "ts": "cheleta endzhaku ka ku byala u tlhela u funengeta misava hi mulch",
+    "ve": "sheledzani nga murahu ha u ṱavha ni fukedze mavu nga mulch"
+  },
+  {
+    "english": "harvest",
+    "zu": "vuna",
+    "st": "kotula",
+    "ts": "tshovela",
+    "ve": "kaṋani"
+  },
+  {
+    "english": "cut or roll down",
+    "zu": "sika noma ugobe phansi",
+    "st": "kgaola kapa o pitikise fatshe",
+    "ts": "tsema kumbe u peta ehansi",
+    "ve": "tsemani kana ni petise fhasi"
+  },
+  {
+    "english": "weed around",
+    "zu": "susa ukhula eduze",
+    "st": "lehola ho potoloha",
+    "ts": "hlakulela ku rhendzela",
+    "ve": "ṱahulani u mona na"
+  },
+  {
+    "english": "weed & check for pests around",
+    "zu": "susa ukhula bese uhlola izinambuzane eduze",
+    "st": "lehola mme o hlahlobe dikokonyana ho potoloha",
+    "ts": "hlakulela u tlhela u kambela switsotswana ku rhendzela",
+    "ve": "ṱahulani ni sedzuluse zwikhokhonono u mona na"
+  },
+  {
+    "english": "Prep ground",
+    "zu": "Lungisa indawo",
+    "st": "Lokisa sebaka",
+    "ts": "Lulamisa ndhawu",
+    "ve": "Lugisani fhethu"
+  },
+  {
+    "english": "Sow",
+    "zu": "Hlwanyela",
+    "st": "Jala",
+    "ts": "Byala",
+    "ve": "Zwalani"
+  },
+  {
+    "english": "Check / transplant",
+    "zu": "Hlola / tshala kwenye indawo",
+    "st": "Hlahloba / fallisetsa tshimong",
+    "ts": "Kambela / byala kun'wana",
+    "ve": "Sedzulusani / sudzuluselani tsimuni"
+  },
+  {
+    "english": "Water in & mulch",
+    "zu": "Nisela ngemva kokutshala bese wendlala i-mulch",
+    "st": "Nosetsa kamora ho jala mme o kwahele mobu ka mulch",
+    "ts": "Cheleta endzhaku ka ku byala u tlhela u funengeta misava hi mulch",
+    "ve": "Sheledzani nga murahu ha u ṱavha ni fukedze mavu nga mulch"
+  },
+  {
+    "english": "Harvest",
+    "zu": "Vuna",
+    "st": "Kotula",
+    "ts": "Tshovela",
+    "ve": "Kaṋani"
+  },
+  {
+    "english": "Cut or roll down",
+    "zu": "Sika noma ugobe phansi",
+    "st": "Kgaola kapa o pitikise fatshe",
+    "ts": "Tsema kumbe u peta ehansi",
+    "ve": "Tsemani kana ni petise fhasi"
+  },
+  {
+    "english": "Weed",
+    "zu": "Susa ukhula",
+    "st": "Lehola",
+    "ts": "Hlakulela",
+    "ve": "Ṱahulani"
+  },
+  {
+    "english": "Weed & check for pests",
+    "zu": "Susa ukhula bese uhlola izinambuzane",
+    "st": "Lehola mme o hlahlobe dikokonyana",
+    "ts": "Hlakulela u tlhela u kambela switsotswana",
+    "ve": "Ṱahulani ni sedzuluse zwikhokhonono"
+  },
+  {
+    "english": "assess soil and drainage; use a soil test or local advice before cultivating or adding amendments",
+    "zu": "hlola umhlabathi nokuphuma kwamanzi; sebenzisa ukuhlolwa komhlabathi noma iseluleko sendawo ngaphambi kokulima noma ukufaka izinto zokulungisa umhlabathi",
+    "st": "lekola mobu le phallo ya metsi; sebedisa teko ya mobu kapa keletso ya lehae pele o lema kapa o kenya dintho tse ntlafatsang mobu",
+    "ts": "kambela misava ni ku khuluka ka mati; tirhisa nkambelo wa misava kumbe switsundzuxo swa ndhawu u nga si rima kumbe ku engetela swilo swo antswisa misava",
+    "ve": "sedzulusani mavu na u elela ha maḓi; shumisani ndingo ya mavu kana ngeletshedzo ya henefho phanḓa ha u lima kana u engedza zwishumiswa zwa u khwinisa mavu"
+  },
+  {
+    "english": "assess soil and drainage; use a soil test or local advice before adding amendments",
+    "zu": "hlola umhlabathi nokuphuma kwamanzi; sebenzisa ukuhlolwa komhlabathi noma iseluleko sendawo ngaphambi kokufaka izinto zokulungisa umhlabathi",
+    "st": "lekola mobu le phallo ya metsi; sebedisa teko ya mobu kapa keletso ya lehae pele o kenya dintho tse ntlafatsang mobu",
+    "ts": "kambela misava ni ku khuluka ka mati; tirhisa nkambelo wa misava kumbe switsundzuxo swa ndhawu u nga si engetela swilo swo antswisa misava",
+    "ve": "sedzulusani mavu na u elela ha maḓi; shumisani ndingo ya mavu kana ngeletshedzo ya henefho phanḓa ha u engedza zwishumiswa zwa u khwinisa mavu"
+  },
+  {
+    "english": "{instruction} for",
+    "zu": "{instruction} ukuze ulungiselele",
+    "st": "{instruction} bakeng sa",
+    "ts": "{instruction} ya",
+    "ve": "{instruction} zwa"
+  },
+  {
+    "english": "Prep {bed} for {crop}",
+    "zu": "Lungisa {bed} ukuze kutshalwe {crop}",
+    "st": "Lokisa {bed} bakeng sa {crop}",
+    "ts": "Lulamisa {bed} ya {crop}",
+    "ve": "Lugisani {bed} ya {crop}"
+  },
+  {
+    "english": "nothing due",
+    "zu": "akukho umsebenzi okufanele wenziwe",
+    "st": "ha ho mosebetsi o lokelang ho etswa",
+    "ts": "ku hava leswi faneleke ku endliwa",
+    "ve": "a hu na mushumo une wa tea u itwa"
+  },
+  {
+    "english": "spacing not recorded",
+    "zu": "izikhala azibhalwanga",
+    "st": "sebaka pakeng tsa dimela ha se a rekotwa",
+    "ts": "mpfhuka a wu rhekhodiwanga",
+    "ve": "vhukati ha zwimela a ho ngo rekhodiwa"
+  },
+  {
+    "english": "{row} cm each way",
+    "zu": "{row} cm nhlangothi zonke",
+    "st": "{row} cm mahlakoreng ohle",
+    "ts": "{row} cm matlhelo hinkwawo",
+    "ve": "{row} cm kha masia oṱhe"
+  },
+  {
+    "english": "rows {row} cm apart, {inRow} cm in the row",
+    "zu": "imigqa iqhelelane ngo-{row} cm, izitshalo ziqhelelane ngo-{inRow} cm emgqeni",
+    "st": "mela e arohane ka {row} cm, {inRow} cm pakeng tsa dimela moleng",
+    "ts": "mintila yi hambana hi {row} cm, {inRow} cm eka ntila",
+    "ve": "mitalo i fhambane nga {row} cm, {inRow} cm vhukati ha zwimela kha mutalo"
+  },
+  {
+    "english": "{depth} cm deep",
+    "zu": "ukujula okungu-{depth} cm",
+    "st": "botebong ba {depth} cm",
+    "ts": "hi vuenti bya {depth} cm",
+    "ve": "kha vhudzivha ha {depth} cm"
+  },
+  {
+    "english": "sow {depth} cm deep",
+    "zu": "hlwanyela ekujuleni okungu-{depth} cm",
+    "st": "jala botebong ba {depth} cm",
+    "ts": "byala hi vuenti bya {depth} cm",
+    "ve": "zwalani kha vhudzivha ha {depth} cm"
+  },
+  {
+    "english": "rows {row}cm apart · {inRow}cm apart in the row",
+    "zu": "imigqa iqhelelane ngo-{row}cm · izitshalo ziqhelelane ngo-{inRow}cm emgqeni",
+    "st": "mela e arohane ka {row}cm · {inRow}cm pakeng tsa dimela moleng",
+    "ts": "mintila yi hambana hi {row}cm · {inRow}cm ku hambana eka ntila",
+    "ve": "mitalo i fhambane nga {row}cm · {inRow}cm vhukati ha zwimela kha mutalo"
+  },
+  {
+    "english": "drill at 70kg seed/ha, or broadcast at 105–140kg/ha; terminate before the next summer staple crop",
+    "zu": "hlwanyela ngemigqa ngesilinganiso esingu-70kg/ha yembewu, noma usakaze ngo-105–140kg/ha; qeda lesi sitshalo ngaphambi kwesitshalo sokudla okuyisisekelo sasehlobo esilandelayo",
+    "st": "jala ka mela ka 70kg/ha ya peo, kapa o hasanye ka 105–140kg/ha; fedisa sejalo sena pele ho sejalo se latelang sa motheo sa lehlabula",
+    "ts": "byala hi mintila hi 70kg/ha ya mbewu, kumbe u hangalasa hi 105–140kg/ha; herisa xibyariwa lexi ku nga si byariwa xibyariwa lexikulu xa swakudya xa ximumu lexi landzelaka",
+    "ve": "zwalani nga mitalo nga 70kg/ha ya mbeu, kana ni hashe nga 105–140kg/ha; fhedzisani tshiliṅwa itshi phanḓa ha tshiliṅwa tsha zwiḽiwa zwa mutheo tsha tshilimo tshi tevhelaho"
+  },
+  {
+    "english": "broadcast at 20kg/ha (Red cultivar) to 40-50kg/ha (Black cultivar); terminate at large biomass, before the next crop",
+    "zu": "sakaza ngo-20kg/ha (Red cultivar) kuya ku-40-50kg/ha (Black cultivar); qeda lapho ubuningi bezitshalo sebukhulu, ngaphambi kwesitshalo esilandelayo",
+    "st": "hasanya ka 20kg/ha (Red cultivar) ho isa ho 40-50kg/ha (Black cultivar); fedisa ha sejalo se na le bongata bo boholo ba makgasi le dikutu, pele ho sejalo se latelang",
+    "ts": "hangalasa hi 20kg/ha (Red cultivar) ku fika eka 40-50kg/ha (Black cultivar); herisa loko ku ri ni biomass yo tala, ku nga si byariwa xibyariwa lexi landzelaka",
+    "ve": "hashani nga 20kg/ha (Red cultivar) u swika kha 40-50kg/ha (Black cultivar); fhedzisani musi hu na vhunzhi ha zwipiḓa zwa tshimela, phanḓa ha tshiliṅwa tshi tevhelaho"
+  },
+  {
+    "english": "broadcast at 12-15kg/ha alone, or 4-7kg/ha in a pasture mixture; terminate before the next crop",
+    "zu": "sakaza ngo-12-15kg/ha uma kutshalwa sodwa, noma ngo-4-7kg/ha uma sixutshwe nezitshalo zedlelo; qeda ngaphambi kwesitshalo esilandelayo",
+    "st": "hasanya ka 12-15kg/ha ha se jalwa se le seng, kapa 4-7kg/ha motswakong wa lekgulo; fedisa pele ho sejalo se latelang",
+    "ts": "hangalasa hi 12-15kg/ha loko xi byariwa xi ri xoxe, kumbe 4-7kg/ha eka nkatsakanyo wa madyelo; herisa ku nga si byariwa xibyariwa lexi landzelaka",
+    "ve": "hashani nga 12-15kg/ha musi tshi tshoṱhe, kana 4-7kg/ha kha muvango wa pfulo; fhedzisani phanḓa ha tshiliṅwa tshi tevhelaho"
+  },
+  {
+    "english": "broadcast at up to 4kg/ha, or drill in rows up to 90cm apart at 2kg/ha; terminate at full flowering, before the next crop",
+    "zu": "sakaza kuze kufike ku-4kg/ha, noma uhlwanyele ngemigqa eqhelelane kuze kufike ku-90cm ngo-2kg/ha; qeda lapho sekuqhakaze ngokuphelele, ngaphambi kwesitshalo esilandelayo",
+    "st": "hasanya ho fihla ho 4kg/ha, kapa jala ka mela e arohaneng ho fihla ho 90cm ka 2kg/ha; fedisa ha dipalesa di butse ka botlalo, pele ho sejalo se latelang",
+    "ts": "hangalasa ku fika eka 4kg/ha, kumbe u byala hi mintila leyi hambaneke ku fika eka 90cm hi 2kg/ha; herisa loko xi humese swiluva hi ku helela, ku nga si byariwa xibyariwa lexi landzelaka",
+    "ve": "hashani u swika kha 4kg/ha, kana ni zwale nga mitalo i fhambanaho u swika kha 90cm nga 2kg/ha; fhedzisani musi maluvha o no vula nga vhuḓalo, phanḓa ha tshiliṅwa tshi tevhelaho"
+  },
+  {
+    "english": "Move the tray seedlings into {bed} — {instruction}.",
+    "zu": "Hambisa izithombo ezisethreyini uzitshale ku-{bed} — {instruction}.",
+    "st": "Fallisetsa dipeo tse metseng ka tereing ho {bed} — {instruction}.",
+    "ts": "Susa swimilana ethireyini u swi byala eka {bed} — {instruction}.",
+    "ve": "Sudzuluselani zwimelana zwa thireyini kha {bed} — {instruction}."
+  },
+  {
+    "english": "Any time during {month} is fine — this plan works in whole months, so the date on this entry is a marker for the month, not the exact day.",
+    "zu": "Nganoma yisiphi isikhathi phakathi no-{month} kulungile — lolu hlelo lusebenza ngezinyanga ezigcwele, ngakho usuku olukulokhu okufakiwe luwuphawu lwenyanga, hhayi usuku oluqondile.",
+    "st": "Nako efe kapa efe nakong ya {month} e lokile — moralo ona o sebetsa ka dikgwedi tse felletseng, kahoo letsatsi le ngotsweng mona le tshwaya kgwedi, ha se letsatsi le tobileng.",
+    "ts": "Nkarhi wun'wana ni wun'wana eka {month} wu lulamile — pulani leyi yi tirhisa tin'hweti leti heleleke, kutani siku ra leswi tsariweke laha i mfungho wa n'hweti, a hi siku leri kongomeke.",
+    "ve": "Tshifhinga tshiṅwe na tshiṅwe kha {month} tsho luga — pulane iyi i shuma nga miṅwedzi yo fhelelaho, zwenezwo datumu ya mafhungo aya ndi tswayo ya ṅwedzi, a si ḓuvha ḽo livhaho."
+  },
+  {
+    "english": "From your ImbewuField crop plan.",
+    "zu": "Kusuka ohlelweni lwakho lwezitshalo lwe-ImbewuField.",
+    "st": "Ho tswa moralong wa hao wa dijalo wa ImbewuField.",
+    "ts": "Swi huma eka pulani ya wena ya swibyariwa ya ImbewuField.",
+    "ve": "Zwi bva kha pulane yaṋu ya zwiliṅwa ya ImbewuField."
+  },
+  {
+    "english": "ImbewuField crop plan",
+    "zu": "Uhlelo lwezitshalo lwe-ImbewuField",
+    "st": "Moralo wa dijalo wa ImbewuField",
+    "ts": "Pulani ya swibyariwa ya ImbewuField",
+    "ve": "Pulane ya zwiliṅwa ya ImbewuField"
+  },
+  {
+    "english": "Ground prep, sowing, transplanting, weeding and harvest for this crop plan.",
+    "zu": "Ukulungisa indawo, ukuhlwanyela, ukutshala kwenye indawo, ukususa ukhula nokuvuna kwalolu hlelo lwezitshalo.",
+    "st": "Ho lokisa sebaka, ho jala, ho fallisetsa dimela tshimong, ho lehola le ho kotula bakeng sa moralo ona wa dijalo.",
+    "ts": "Ku lulamisa ndhawu, ku byala, ku byala swimilana kun'wana, ku hlakulela ni ku tshovela ka pulani leyi ya swibyariwa.",
+    "ve": "U lugisa fhethu, u zwala, u sudzulusela zwimelana tsimuni, u ṱahula na u kaṋa kha pulane iyi ya zwiliṅwa."
+  },
+  {
+    "english": "Production plan",
+    "zu": "Uhlelo lokukhiqiza",
+    "st": "Moralo wa tlhahiso",
+    "ts": "Pulani ya vuhumelerisi",
+    "ve": "Pulane ya vhubveledzi"
+  },
+  {
+    "english": "Bed calendar",
+    "zu": "Ikhalenda lemibhede",
+    "st": "Khalendara ya dibethe",
+    "ts": "Khalendara ya mibedo",
+    "ve": "Khaḽenda ya mibete"
+  },
+  {
+    "english": "Bed calendar - continued",
+    "zu": "Ikhalenda lemibhede - liyaqhubeka",
+    "st": "Khalendara ya dibethe - e tswela pele",
+    "ts": "Khalendara ya mibedo - ya ha ya mahlweni",
+    "ve": "Khaḽenda ya mibete - i khou bvela phanḓa"
+  },
+  {
+    "english": "Growing plan: {start} - {end}",
+    "zu": "Uhlelo lokutshala: {start} - {end}",
+    "st": "Moralo wa ho lema: {start} - {end}",
+    "ts": "Pulani ya ku byala: {start} - {end}",
+    "ve": "Pulane ya u ṱavha: {start} - {end}"
+  },
+  {
+    "english": "Read across to see what occupies each bed. Each line is one planting, not a measured strip of land.",
+    "zu": "Funda usuka kolunye uhlangothi uye kolunye ukuze ubone ukuthi yini esembhedeni ngamunye. Umugqa ngamunye uwukutshalwa okukodwa, hhayi isiqeshana somhlaba esilinganisiwe.",
+    "st": "Bala ho tloha lehlakoreng le leng ho ya ho le leng ho bona se leng betheng ka nngwe. Mola ka mong ke ho lema hanngwe, ha se sekotwana sa mobu se lekantsweng.",
+    "ts": "Hlaya ku ya etlhelo ku vona leswi nga eka mubedo wun'wana ni wun'wana. Ntila wun'wana ni wun'wana i ku byala kun'we, a hi xiphemu xa misava lexi pimiweke.",
+    "ve": "Vhalani u buḓekanya uri ni vhone zwi re kha mubete muṅwe na muṅwe. Mutalo muṅwe na muṅwe ndi u ṱavha huthihi, a si tshipiḓa tsha mavu tsho pimiwaho."
+  },
+  {
+    "english": "Bed reserved / growing",
+    "zu": "Umbhede ubekelwe / kuyakhula",
+    "st": "Bethe e behetswe / ho a hola",
+    "ts": "Mubedo wu vekeriwile / swa kula",
+    "ve": "Mubete wo vhetshelwa / zwi khou aluwa"
+  },
+  {
+    "english": "Pick fresh food",
+    "zu": "Kha ukudla okusha",
+    "st": "Kga dijo tse foreshe",
+    "ts": "Kha swakudya leswintshwa",
+    "ve": "Kaṋani zwiḽiwa zwiswa"
+  },
+  {
+    "english": "Finish a cover crop",
+    "zu": "Qeda isitshalo esimboza umhlabathi",
+    "st": "Fedisa sejalo se kwahelang mobu",
+    "ts": "Herisa xibyariwa xo funengeta misava",
+    "ve": "Fhedzisani tshiliṅwa tsha u fukedza mavu"
+  },
+  {
+    "english": "Tray crops reserve the bed from their first readiness month. Follow the monthly jobs. An arrow means the crop continues after {month} {year}.",
+    "zu": "Izitshalo eziqalwe ethreyini zibekelwa umbhede kusukela enyangeni yokuqala ezingalungela ngayo. Landela imisebenzi yenyanga. Umcibisholo usho ukuthi isitshalo siyaqhubeka ngemva kuka-{month} {year}.",
+    "st": "Dijalo tse qadileng tereing di behelwa bethe ho tloha kgweding ya pele eo di ka lokelang ho falliswa ka yona. Latela mesebetsi ya kgwedi. Motsu o bolela hore sejalo se tswela pele kamora {month} {year}.",
+    "ts": "Swibyariwa swa tireyi swi vekeriwa mubedo ku sukela eka n'hweti yo sungula leyi swi nga lulamelaka ku byariwa ha yona. Landzela mintirho ya n'hweti. Nseve wu vula leswaku xibyariwa xi ya mahlweni endzhaku ka {month} {year}.",
+    "ve": "Zwiliṅwa zwa thireyi zwi vhetshelwa mubete u bva kha ṅwedzi wa u thoma une zwa nga lugela u sudzuluselwa ngawo. Tevhedzani mishumo ya ṅwedzi. Musevhe u amba uri tshiliṅwa tshi bvela phanḓa nga murahu ha {month} {year}."
+  },
+  {
+    "english": "CROP / SHARE OF BED",
+    "zu": "ISITSHALO / INGXENYE YOMBEDE",
+    "st": "SEJALO / KAROLO YA BETHE",
+    "ts": "XIBYARIWA / XIPHEMU XA MUBEDO",
+    "ve": "TSHILIṄWA / TSHIPIḒA TSHA MUBETE"
+  },
+  {
+    "english": " - continued",
+    "zu": " - kuyaqhubeka",
+    "st": " - ho tswela pele",
+    "ts": " - swi ya mahlweni",
+    "ve": " - zwi khou bvela phanḓa"
+  },
+  {
+    "english": " - CHECK SPACE: crop shares conflict",
+    "zu": " - HLOLA INDAWO: izingxenye zezitshalo ziyashayisana",
+    "st": " - HLAHLOBA SEBAKA: dikarolo tsa dijalo di a thulana",
+    "ts": " - KAMBELA NDHAWU: swiphemu swa swibyariwa swa kanetana",
+    "ve": " - SEDZULUSANI FHETHU: zwipiḓa zwa zwiliṅwa zwi a khakhedzana"
+  },
+  {
+    "english": "Variety: {variety}",
+    "zu": "Uhlobo: {variety}",
+    "st": "Mofuta: {variety}",
+    "ts": "Muxaka: {variety}",
+    "ve": "Lushaka: {variety}"
+  },
+  {
+    "english": "No dated crop reserved here",
+    "zu": "Akukho sitshalo esinosuku esibekelwe lapha",
+    "st": "Ha ho sejalo se nang le letsatsi se behetsweng mona",
+    "ts": "A ku na xibyariwa lexi vekeriweke nkarhi laha",
+    "ve": "A hu na tshiliṅwa tsho vhetshelwaho tshifhinga fhano"
+  },
+  {
+    "english": "Invalid share",
+    "zu": "Ingxenye ayivumelekile",
+    "st": "Karolo ha e a nepahala",
+    "ts": "Xiphemu a xi amukeleki",
+    "ve": "Tshipiḓa a tsho ngo tea"
+  },
+  {
+    "english": "Whole area",
+    "zu": "Indawo yonke",
+    "st": "Sebaka sohle",
+    "ts": "Ndhawu hinkwaro",
+    "ve": "Fhethu hoṱhe"
+  },
+  {
+    "english": "{share}% area",
+    "zu": "{share}% wendawo",
+    "st": "{share}% ya sebaka",
+    "ts": "{share}% ya ndhawu",
+    "ve": "{share}% ya fhethu"
+  },
+  {
+    "english": "{share} area",
+    "zu": "{share} wendawo",
+    "st": "{share} ya sebaka",
+    "ts": "{share} ya ndhawu",
+    "ve": "{share} ya fhethu"
+  },
+  {
+    "english": "{share} - sow {month} {year}",
+    "zu": "{share} - hlwanyela ngo-{month} {year}",
+    "st": "{share} - jala ka {month} {year}",
+    "ts": "{share} - byala hi {month} {year}",
+    "ve": "{share} - zwalani nga {month} {year}"
+  },
+  {
+    "english": "Finish",
+    "zu": "Qeda",
+    "st": "Fedisa",
+    "ts": "Herisa",
+    "ve": "Fhedzisani"
+  },
+  {
+    "english": "Pick",
+    "zu": "Kha",
+    "st": "Kga",
+    "ts": "Kha",
+    "ve": "Kaṋani"
+  },
+  {
+    "english": "No beds or staple plots are mapped. Fruit, berries and animal food sources are listed in the picture calendar.",
+    "zu": "Ayikho imibhede noma iziza zezitshalo zokudla okuyisisekelo ezisebalazweni. Izithelo, amajikijolo nemithombo yokudla yezilwane kubhalwe ekhalendeni lezithombe.",
+    "st": "Ha ho dibethe kapa masimo a dijalo tsa motheo a tshwailweng mmapeng. Ditholwana, menokotshwai le mehlodi ya dijo tsa diphoofolo di thathamisitswe khalendareng ya ditshwantsho.",
+    "ts": "A ku na mibedo kumbe masimu ya swibyariwa swa swakudya swa nkoka leswi nga emepeni. Mihandzu, tibere ni swihlovo swa swakudya swa swiharhi swi xaxametiwile eka khalendara ya swifaniso.",
+    "ve": "A hu na mibete kana zwitentsi zwa zwiliṅwa zwa zwiḽiwa zwa mutheo zwo swaiwaho kha mapa. Mitshelo, mitshelwana na zwiko zwa zwiḽiwa zwa zwipuka zwo ṅwalwa kha khaḽenda ya zwifanyiso."
+  },
+  {
+    "english": "Task summary",
+    "zu": "Isifinyezo semisebenzi",
+    "st": "Kakaretso ya mesebetsi",
+    "ts": "Nkatsakanyo wa mintirho",
+    "ve": "Manweledzo a mishumo"
+  },
+  {
+    "english": "Tasks by month",
+    "zu": "Imisebenzi ngenyanga",
+    "st": "Mesebetsi ka kgwedi",
+    "ts": "Mintirho hi n'hweti",
+    "ve": "Mishumo nga ṅwedzi"
+  },
+  {
+    "english": "Tasks by month (continued)",
+    "zu": "Imisebenzi ngenyanga (iyaqhubeka)",
+    "st": "Mesebetsi ka kgwedi (e tswela pele)",
+    "ts": "Mintirho hi n'hweti (ya ha ya mahlweni)",
+    "ve": "Mishumo nga ṅwedzi (i khou bvela phanḓa)"
+  },
+  {
+    "english": "No plantings yet, so there is nothing to print here.",
+    "zu": "Akukakatshalwa lutho, ngakho akukho okungaphrintwa lapha.",
+    "st": "Ha ho letho le jetsweng, kahoo ha ho letho le ka hatiswang mona.",
+    "ts": "A ku si byariwa, kutani ku hava leswi nga kandziyisiwaka laha.",
+    "ve": "A hu athu u ṱavhiwa tshithu, zwenezwo a hu na tshine tsha nga ganḓiswa fhano."
+  },
+  {
+    "english": "\"Pick\" lines use locally confirmed months for established, productive trees.",
+    "zu": "Imigqa ethi \"Kha\" isebenzisa izinyanga eziqinisekisiwe endaweni zezihlahla esezimile nezithelayo.",
+    "st": "Mela ya \"Kga\" e sebedisa dikgwedi tse netefaditsweng sebakeng sena bakeng sa difate tse seng di tsitsitse ebile di beha.",
+    "ts": "Mintila ya \"Kha\" yi tirhisa tin'hweti leti tiyisisiweke endhawini ya mirhi leyi se yi dzimeke naswona yi humesaka mihandzu.",
+    "ve": "Mitalo ya \"Kaṋani\" i shumisa miṅwedzi yo khwaṱhisedzwaho henefho ya miri yo no dzia ine ya aṋwa."
+  },
+  {
+    "english": "Pick {name} ({trees}) — confirmed local months {months}",
+    "zu": "Kha {name} ({trees}) — izinyanga eziqinisekisiwe endaweni {months}",
+    "st": "Kga {name} ({trees}) — dikgwedi tse netefaditsweng sebakeng sena {months}",
+    "ts": "Kha {name} ({trees}) — tin'hweti leti tiyisisiweke endhawini {months}",
+    "ve": "Kaṋani {name} ({trees}) — miṅwedzi yo khwaṱhisedzwaho henefho {months}"
+  },
+  {
+    "english": "All year",
+    "zu": "Unyaka wonke",
+    "st": "Selemo sohle",
+    "ts": "Lembe hinkwaro",
+    "ve": "Ṅwaha woṱhe"
+  },
+  {
+    "english": "Take this plan with you",
+    "zu": "Hamba nalolu hlelo",
+    "st": "Nka moralo ona o tsamaye le wona",
+    "ts": "Famba ni pulani leyi",
+    "ve": "Ṱuwani na pulane iyi"
+  },
+  {
+    "english": "Building…",
+    "zu": "Kwakhiwa…",
+    "st": "E a ahuwa…",
+    "ts": "Ya ha akiwa…",
+    "ve": "I khou fhaṱiwa…"
+  },
+  {
+    "english": "Add tasks to calendar",
+    "zu": "Engeza imisebenzi ekhalendeni",
+    "st": "Kenya mesebetsi khalendareng",
+    "ts": "Engetela mintirho eka khalendara",
+    "ve": "Engedzani mishumo kha khaḽenda"
+  },
+  {
+    "english": "Add {count} tasks to calendar",
+    "zu": "Engeza imisebenzi engu-{count} ekhalendeni",
+    "st": "Kenya mesebetsi e {count} khalendareng",
+    "ts": "Engetela mintirho ya {count} eka khalendara",
+    "ve": "Engedzani mishumo ya {count} kha khaḽenda"
+  },
+  {
+    "english": "Share the plan (PDF)",
+    "zu": "Yabelana ngohlelo (PDF)",
+    "st": "Arolelana moralo (PDF)",
+    "ts": "Avelana pulani (PDF)",
+    "ve": "Kovhani pulane (PDF)"
+  },
+  {
+    "english": "Download the plan (PDF)",
+    "zu": "Landa uhlelo (PDF)",
+    "st": "Jarolla moralo (PDF)",
+    "ts": "Kopa pulani (PDF)",
+    "ve": "Dzhenisani pulane (PDF)"
+  },
+  {
+    "english": "Calendar & jobs",
+    "zu": "Ikhalenda nemisebenzi",
+    "st": "Khalendara le mesebetsi",
+    "ts": "Khalendara ni mintirho",
+    "ve": "Khaḽenda na mishumo"
+  },
+  {
+    "english": "open it to print",
+    "zu": "yivule ukuze uphrinte",
+    "st": "e bule hore o e hatise",
+    "ts": "yi pfule leswaku u yi kandziyisa",
+    "ve": "i vuleni uri ni i ganḓise"
+  },
+  {
+    "english": "save it to this device",
+    "zu": "yigcine kule divayisi",
+    "st": "e boloke sesebedisweng sena",
+    "ts": "yi hlayise eka xitirhisiwa lexi",
+    "ve": "i vhulungeni kha tshishumiswa itshi"
+  },
+  {
+    "english": "send it somewhere",
+    "zu": "yithumele kwenye indawo",
+    "st": "e romele sebakeng se seng",
+    "ts": "yi rhumele kun'wana",
+    "ve": "i rumeleni huṅwe fhethu"
+  },
+  {
+    "english": "Files are made on this device. Download a copy to use away from the app.",
+    "zu": "Amafayela enziwa kule divayisi. Landa ikhophi ozoyisebenzisa ungekho ku-app.",
+    "st": "Difaele di etswa sesebedisweng sena. Jarolla kopi hore o e sebedise kantle ho app.",
+    "ts": "Tifayili ti endliwa eka xitirhisiwa lexi. Kopa khopi leswaku u yi tirhisa u ri ehandle ka app.",
+    "ve": "Faela dzi itwa kha tshishumiswa itshi. Dzhenisani khophi uri ni i shumise ni si kha app."
+  },
+  {
+    "english": "Your plan includes vegetables, fruit, nuts, berries and animal products from your map.",
+    "zu": "Uhlelo lwakho luhlanganisa imifino, izithelo, amantongomane, amajikijolo nemikhiqizo yezilwane esebalazweni lakho.",
+    "st": "Moralo wa hao o kenyelletsa meroho, ditholwana, matokomane, menokotshwai le dihlahiswa tsa diphoofolo tse mmapeng wa hao.",
+    "ts": "Pulani ya wena yi katsa matsavu, mihandzu, timanga, tibere ni swikumiwa swa swiharhi leswi nga emepeni wa wena.",
+    "ve": "Pulane yaṋu i katela miroho, mitshelo, nḓuhu, mitshelwana na zwibveledzwa zwa zwipuka zwi re kha mapa waṋu."
+  },
+  {
+    "english": "Calendar translations await language and local farming review. PDF labels and instructions are not fully translated yet.",
+    "zu": "Ukuhumusha kwekhalenda kusalinde ukuhlolwa kolimi nolwazi lwezolimo lwendawo. Amalebula nemiyalelo yama-PDF akukahunyushwa ngokuphelele.",
+    "st": "Diphetolelo tsa khalendara di sa emetse tlhahlobo ya puo le temo ya lehae. Dileibole le ditaelo tsa PDF ha di so fetolelwe ka botlalo.",
+    "ts": "Vuhundzuluxi bya khalendara bya ha rindzele ku kambisisiwa ka ririmi ni vurimi bya ndhawu. Tilebulu ni swiletelo swa PDF a swi si hundzuluxiwa hi ku helela.",
+    "ve": "Ṱhalutshedzelo dza khaḽenda dzi kha ḓi lindela tsedzuluso ya luambo na vhulimi ha henefho. Zwiga na ndaela dza PDF a zwi athu u ṱalutshedzelwa nga vhuḓalo."
+  },
+  {
+    "english": "Add some crops first — there are no tasks to export yet",
+    "zu": "Qala ngokungeza izitshalo — ayikho imisebenzi ongayikhipha okwamanje",
+    "st": "Kenya dijalo pele — ha ho mesebetsi e ka romelwang faeleng hajoale",
+    "ts": "Rhanga u engetela swibyariwa — a ku si va ni mintirho yo yi humesa eka fayili",
+    "ve": "Thomani nga u engedza zwiliṅwa — a hu athu u vha na mishumo ya u i bvisa kha faela"
+  },
+  {
+    "english": "Every task of the year as a calendar file",
+    "zu": "Yonke imisebenzi yonyaka njengefayela lekhalenda",
+    "st": "Mesebetsi yohle ya selemo e le faele ya khalendara",
+    "ts": "Mintirho hinkwaro ya lembe yi ri fayili ya khalendara",
+    "ve": "Mishumo yoṱhe ya ṅwaha sa faela ya khaḽenda"
+  },
+  {
+    "english": "Download the selected plan sections shown below",
+    "zu": "Landa izingxenye zohlelo ezikhethiwe eziboniswe ngezansi",
+    "st": "Jarolla dikarolo tsa moralo tse kgethilweng tse bontshitsweng ka tlase",
+    "ts": "Kopa swiyenge swa pulani leswi hlawuriweke leswi kombisiweke laha hansi",
+    "ve": "Dzhenisani zwipiḓa zwa pulane zwo nangwaho zwo sumbedzwaho afho fhasi"
+  },
+  {
+    "english": "See each crop growing in its bed over the months, pictures of what to pick, what to buy and monthly jobs",
+    "zu": "Bona isitshalo ngasinye sikhula embhedeni waso ngezinyanga, izithombe zalokho ongakukha, lokho ongakuthenga nemisebenzi yenyanga",
+    "st": "Bona sejalo ka seng se hola betheng ya sona dikgweding, ditshwantsho tsa se ka kgwang, se lokelang ho rekwa le mesebetsi ya kgwedi",
+    "ts": "Vona xibyariwa xin'wana ni xin'wana xi kula emubedweni wa xona eka tin'hweti, swifaniso swa leswi nga khiwaka, leswi faneleke ku xaviwa ni mintirho ya n'hweti",
+    "ve": "Vhonani tshiliṅwa tshiṅwe na tshiṅwe tshi tshi khou aluwa kha mubete watsho kha miṅwedzi, zwifanyiso zwa zwine zwa nga kaṋiwa, zwine zwa tea u rengwa na mishumo ya ṅwedzi"
+  },
+  {
+    "english": "Crops growing in each bed, pictures of what to pick and monthly jobs — for pinning on a wall",
+    "zu": "Izitshalo ezikhula embhedeni ngamunye, izithombe zalokho ongakukha nemisebenzi yenyanga — okokuchoma odongeni",
+    "st": "Dijalo tse holang betheng ka nngwe, ditshwantsho tsa se ka kgwang le mesebetsi ya kgwedi — bakeng sa ho fanyeha leboteng",
+    "ts": "Swibyariwa leswi kulaka eka mubedo wun'wana ni wun'wana, swifaniso swa leswi nga khiwaka ni mintirho ya n'hweti — leswaku swi hayekiwa ekhumbini",
+    "ve": "Zwiliṅwa zwi aluwaho kha mubete muṅwe na muṅwe, zwifanyiso zwa zwine zwa nga kaṋiwa na mishumo ya ṅwedzi — zwa u nembeledza kha luvhondo"
+  },
+  {
+    "english": "Calendar paper size",
+    "zu": "Usayizi wephepha lekhalenda",
+    "st": "Boholo ba pampiri ya khalendara",
+    "ts": "Sayizi ya phepha ra khalendara",
+    "ve": "Saizi ya bammbiri ḽa khaḽenda"
+  },
+  {
+    "english": "Paper size — pick A3 or A2 for a wall-sized print",
+    "zu": "Usayizi wephepha — khetha i-A3 noma i-A2 ukuze uphrinte okokulengisa odongeni",
+    "st": "Boholo ba pampiri — kgetha A3 kapa A2 bakeng sa kgatiso ya leboteng",
+    "ts": "Sayizi ya phepha — hlawula A3 kumbe A2 leswaku u kandziyisa swa ku hayeka ekhumbini",
+    "ve": "Saizi ya bammbiri — nangani A3 kana A2 u ganḓisa tsha u nembeledza kha luvhondo"
+  },
+  {
+    "english": "Or:",
+    "zu": "Noma:",
+    "st": "Kapa:",
+    "ts": "Kumbe:",
+    "ve": "Kana:"
+  },
+  {
+    "english": "Future harvest PDF",
+    "zu": "I-PDF yesivuno sesikhathi esizayo",
+    "st": "PDF ya kotulo ya nakong e tlang",
+    "ts": "PDF ya ntshovelo wa nkarhi lowu taka",
+    "ve": "PDF ya khaṋo ya tshifhingani tshi ḓaho"
+  },
+  {
+    "english": "Detailed reference PDF",
+    "zu": "I-PDF yemininingwane yokubhekisela",
+    "st": "PDF ya tshupiso e qaqileng",
+    "ts": "PDF ya nkombiso wa vuxokoxoko",
+    "ve": "PDF ya tshiko tsha zwidodombedzwa"
+  },
+  {
+    "english": "What each file contains",
+    "zu": "Okuqukethwe yifayela ngalinye",
+    "st": "Se ka hara faele ka nngwe",
+    "ts": "Leswi nga eka fayili yin'wana ni yin'wana",
+    "ve": "Zwi re kha faela iṅwe na iṅwe"
+  },
+  {
+    "english": "The calendar file works with Google Calendar and Apple Calendar. Tasks land as whole-day entries on the first of their month — this plan works in months, not exact days — with a reminder three days before.",
+    "zu": "Ifayela lekhalenda lisebenza ne-Google Calendar ne-Apple Calendar. Imisebenzi ivela njengezinto zosuku lonke ngosuku lokuqala lwenyanga yayo — lolu hlelo lusebenza ngezinyanga, hhayi ngezinsuku eziqondile — nesikhumbuzi ezinsukwini ezintathu ngaphambi kwalokho.",
+    "st": "Faele ya khalendara e sebetsa le Google Calendar le Apple Calendar. Mesebetsi e hlaha e le diketsahalo tsa letsatsi lohle letsatsing la pele la kgwedi ya yona — moralo ona o sebetsa ka dikgwedi, eseng matsatsi a tobileng — ka kgopotso matsatsi a mararo pele ho moo.",
+    "ts": "Fayili ya khalendara yi tirha na Google Calendar ni Apple Calendar. Mintirho yi nghena yi ri swiendlakalo swa siku hinkwaro eka siku ro sungula ra n'hweti ya yona — pulani leyi yi tirhisa tin'hweti, a hi masiku lama kongomeke — ni xitsundzuxo masiku manharhu ku nga si fika nkarhi wolowo.",
+    "ve": "Faela ya khaḽenda i shuma na Google Calendar na Apple Calendar. Mishumo i dzheniswa sa mafhungo a ḓuvha ḽoṱhe nga ḓuvha ḽa u thoma ḽa ṅwedzi wayo — pulane iyi i shuma nga miṅwedzi, hu si maḓuvha o livhaho — na khumbudzo maḓuvha mararu phanḓa."
+  },
+  {
+    "english": "The printed plan shows each crop growing in its bed across the months, like the app, plus pictures of what you can pick.",
+    "zu": "Uhlelo oluprintiwe lubonisa isitshalo ngasinye sikhula embhedeni waso ngezinyanga, njenge-app, kanye nezithombe zalokho ongakukha.",
+    "st": "Moralo o hatisitsweng o bontsha sejalo ka seng se hola betheng ya sona dikgweding, jwaloka app, le ditshwantsho tsa se ka kgwang.",
+    "ts": "Pulani leyi kandziyisiweke yi komba xibyariwa xin'wana ni xin'wana xi kula emubedweni wa xona eka tin'hweti, ku fana ni app, ni swifaniso swa leswi u nga swi khaka.",
+    "ve": "Pulane yo ganḓiswaho i sumbedza tshiliṅwa tshiṅwe na tshiṅwe tshi tshi khou aluwa kha mubete watsho kha miṅwedzi, u fana na app, na zwifanyiso zwa zwine na nga kaṋa."
+  },
+  {
+    "english": "It also has what to buy, monthly tick-off jobs and a harvest record.",
+    "zu": "Iqukethe nalokho okufanele kuthengwe, imisebenzi yenyanga ongayimaka uma isiqediwe nerekhodi lesivuno.",
+    "st": "E boetse e na le se lokelang ho rekwa, mesebetsi ya kgwedi e tshwauwang ha e phethilwe le rekoto ya kotulo.",
+    "ts": "Yi tlhela yi va ni leswi faneleke ku xaviwa, mintirho ya n'hweti yo fungha loko yi endliwile ni rhekhodo ya ntshovelo.",
+    "ve": "I dovha ya vha na zwine zwa tea u rengwa, mishumo ya ṅwedzi ya u swaya musi yo itwa na rekhodo ya khaṋo."
+  },
+  {
+    "english": "Picking dates for trees and animals must be confirmed locally; plants and housing with unknown dates stay listed on the plan. The separate Future harvest PDF has the ten-year graph and age groups. Calendar & jobs gives concise wall sheets in your chosen paper size. Record animal numbers and care checks in the site survey; confirm production months in this plan. The detailed reference includes the full bed-by-bed plan, benchmarks, buying lists, guidance, monthly field sheets and harvest records.",
+    "zu": "Izikhathi zokukha ezihlahleni nokuthola imikhiqizo yezilwane kufanele ziqinisekiswe endaweni; izitshalo nezindlu zezilwane ezinezinsuku ezingaziwa zihlala zibhalwe ohlelweni. I-PDF yesivuno sesikhathi esizayo ehlukile inegrafu yeminyaka eyishumi namaqembu obudala. Ikhalenda nemisebenzi kunikeza amaphepha odonga afingqiwe ngosayizi wephepha owukhethile. Bhala izinombolo zezilwane nokuhlolwa kokunakekelwa kwazo ocwaningweni lwendawo; qinisekisa izinyanga zokukhiqiza kulolu hlelo. Imininingwane yokubhekisela ihlanganisa uhlelo oluphelele lombhede ngamunye, izilinganiso zokubhekisela, izinhlu zokuthenga, iziqondiso, amaphepha emisebenzi enyanga namarekhodi esivuno.",
+    "st": "Matsatsi a ho kga difateng le ho fumana dihlahiswa tsa diphoofolo a tlameha ho netefatswa sebakeng sena; dimela le matlo a diphoofolo a nang le matsatsi a sa tsejweng a dula a thathamisitswe moralong. PDF e arohaneng ya kotulo ya nakong e tlang e na le kerafo ya dilemo tse leshome le dihlopha tsa dilemo. Khalendara le mesebetsi e fana ka maqephe a makgutshwane a leboteng ka boholo ba pampiri boo o bo kgethileng. Ngola palo ya diphoofolo le tlhahlobo ya tlhokomelo phuputsong ya sebaka; netefatsa dikgwedi tsa tlhahiso moralong ona. Tshupiso e qaqileng e kenyelletsa moralo o felletseng wa bethe ka nngwe, ditekanyetso tsa tshupiso, manane a ho reka, tataiso, maqephe a kgwedi a tshimong le direkoto tsa kotulo.",
+    "ts": "Masiku ya ku kha emirhini ni ku kuma swikumiwa swa swiharhi ma fanele ku tiyisisiwa endhawini; swimila ni tindlu ta swiharhi leswi nga ni masiku lama nga tivekiki swi tshamaka swi xaxametiwile eka pulani. PDF ya ntshovelo wa nkarhi lowu taka leyi hambaneke yi ni girafu ya khume ra malembe ni mintlawa ya vukhale. Khalendara ni mintirho yi nyika maphepha yo koma ya ku hayeka ekhumbini hi sayizi ya phepha leyi u yi hlawuleke. Rhekhoda nhlayo ya swiharhi ni ku kambela nhlayiso eka vulavisisi bya ndhawu; tiyisisa tin'hweti ta vuhumelerisi eka pulani leyi. Nkombiso wa vuxokoxoko wu katsa pulani leyi heleleke ya mubedo wun'wana ni wun'wana, swipimo swa nkombiso, minxaxamelo ya ku xava, swiletelo, maphepha ya masimu ya n'hweti ni tirhekhodo ta ntshovelo.",
+    "ve": "Maḓuvha a u kaṋa kha miri na u wana zwibveledzwa zwa zwipuka a tea u khwaṱhisedzwa henefho; zwimela na nnḓu dza zwipuka zwi re na maḓuvha a sa ḓivhei zwi dzula zwo ṅwalwa kha pulane. PDF yo fhambanaho ya khaṋo ya tshifhingani tshi ḓaho i na girafu ya miṅwaha ya fumi na zwigwada zwa vhukale. Khaḽenda na mishumo zwi ṋea mashatari mapfufhi a u nembeledza kha luvhondo nga saizi ya bammbiri ye na nanga. Rekhodani tshivhalo tsha zwipuka na tsedzuluso dza ndondolo kha ṱhoḓisiso ya fhethu; khwaṱhisedzani miṅwedzi ya vhubveledzi kha pulane iyi. Tshiko tsha zwidodombedzwa tshi katela pulane yo fhelelaho ya mubete muṅwe na muṅwe, zwipimo zwa tshiko, mutevhe wa u renga, ngeletshedzo, mashatari a ṅwedzi a tsimuni na rekhodo dza khaṋo."
+  },
+  {
+    "english": "Selected booklet sections: {sections}.",
+    "zu": "Izingxenye zebhukwana ezikhethiwe: {sections}.",
+    "st": "Dikarolo tsa bukana tse kgethilweng: {sections}.",
+    "ts": "Swiyenge swa xibukwana leswi hlawuriweke: {sections}.",
+    "ve": "Zwipiḓa zwa bugwana zwo nangwaho: {sections}."
+  },
+  {
+    "english": "bed calendar",
+    "zu": "ikhalenda lemibhede",
+    "st": "khalendara ya dibethe",
+    "ts": "khalendara ya mibedo",
+    "ve": "khaḽenda ya mibete"
+  },
+  {
+    "english": "food calendar",
+    "zu": "ikhalenda lokudla",
+    "st": "khalendara ya dijo",
+    "ts": "khalendara ya swakudya",
+    "ve": "khaḽenda ya zwiḽiwa"
+  },
+  {
+    "english": "food and growing-space graphs",
+    "zu": "amagrafu okudla nendawo yokutshala",
+    "st": "dikerafo tsa dijo le sebaka sa ho lema",
+    "ts": "tigirafu ta swakudya ni ndhawu yo byala",
+    "ve": "girafu dza zwiḽiwa na fhethu ha u ṱavha"
+  },
+  {
+    "english": "future harvest",
+    "zu": "isivuno sesikhathi esizayo",
+    "st": "kotulo ya nakong e tlang",
+    "ts": "ntshovelo wa nkarhi lowu taka",
+    "ve": "khaṋo ya tshifhingani tshi ḓaho"
+  },
+  {
+    "english": "monthly jobs",
+    "zu": "imisebenzi yenyanga",
+    "st": "mesebetsi ya kgwedi",
+    "ts": "mintirho ya n'hweti",
+    "ve": "mishumo ya ṅwedzi"
+  },
+  {
+    "english": "overview",
+    "zu": "ukubuka konke",
+    "st": "kakaretso",
+    "ts": "nkatsakanyo",
+    "ve": "manweledzo"
+  },
+  {
+    "english": "benchmarks",
+    "zu": "izilinganiso zokubhekisela",
+    "st": "ditekanyetso tsa tshupiso",
+    "ts": "swipimo swa nkombiso",
+    "ve": "zwipimo zwa tshiko"
+  },
+  {
+    "english": "guidance",
+    "zu": "iziqondiso",
+    "st": "tataiso",
+    "ts": "swiletelo",
+    "ve": "ngeletshedzo"
+  },
+  {
+    "english": "planting plan",
+    "zu": "uhlelo lokutshala",
+    "st": "moralo wa ho lema",
+    "ts": "pulani ya ku byala",
+    "ve": "pulane ya u ṱavha"
+  },
+  {
+    "english": "buying lists",
+    "zu": "izinhlu zokuthenga",
+    "st": "manane a ho reka",
+    "ts": "minxaxamelo ya ku xava",
+    "ve": "mutevhe wa u renga"
+  },
+  {
+    "english": "field sheets",
+    "zu": "amaphepha emisebenzi yasensimini",
+    "st": "maqephe a tshimong",
+    "ts": "maphepha ya masimu",
+    "ve": "mashatari a tsimuni"
+  },
+  {
+    "english": "harvest records",
+    "zu": "amarekhodi esivuno",
+    "st": "direkoto tsa kotulo",
+    "ts": "tirhekhodo ta ntshovelo",
+    "ve": "rekhodo dza khaṋo"
+  },
+  {
+    "english": "ImbewuField production plan",
+    "zu": "Uhlelo lokukhiqiza lwe-ImbewuField",
+    "st": "Moralo wa tlhahiso wa ImbewuField",
+    "ts": "Pulani ya vuhumelerisi ya ImbewuField",
+    "ve": "Pulane ya vhubveledzi ya ImbewuField"
+  },
+  {
+    "english": "Sharing cancelled — no file was sent.",
+    "zu": "Ukwabelana kukhanseliwe — alikho ifayela elithunyelwe.",
+    "st": "Ho arolelana ho hlakotswe — ha ho faele e rometsweng.",
+    "ts": "Ku avelana ku khanseriwile — a ku rhumeriwanga fayili.",
+    "ve": "U kovhana ho khanselwa — a hu na faela yo rumelwaho."
+  },
+  {
+    "english": "Shared {count} tasks — open the file to add them to your calendar.",
+    "zu": "Kwabelwane ngemisebenzi engu-{count} — vula ifayela ukuze uyengeze ekhalendeni lakho.",
+    "st": "Ho arolelanwe mesebetsi e {count} — bula faele ho e kenya khalendareng ya hao.",
+    "ts": "Ku avelaniwile mintirho ya {count} — pfula fayili leswaku u yi engetela eka khalendara ya wena.",
+    "ve": "Ho kovhanwa mishumo ya {count} — vulani faela uri ni i engedze kha khaḽenda yaṋu."
+  },
+  {
+    "english": "Downloaded {count} tasks — open the .ics file to add them to your calendar.",
+    "zu": "Kulandwe imisebenzi engu-{count} — vula ifayela le-.ics ukuze uyengeze ekhalendeni lakho.",
+    "st": "Ho jarollotswe mesebetsi e {count} — bula faele ya .ics ho e kenya khalendareng ya hao.",
+    "ts": "Ku kopiwile mintirho ya {count} — pfula fayili ya .ics leswaku u yi engetela eka khalendara ya wena.",
+    "ve": "Ho dzheniswa mishumo ya {count} — vulani faela ya .ics uri ni i engedze kha khaḽenda yaṋu."
+  },
+  {
+    "english": "Could not build the calendar file. Please try again.",
+    "zu": "Ifayela lekhalenda alikwazanga ukwakhiwa. Sicela uzame futhi.",
+    "st": "Faele ya khalendara ha e a kgona ho ahuwa. Ka kopo leka hape.",
+    "ts": "A swi kotekanga ku aka fayili ya khalendara. Ringeta nakambe.",
+    "ve": "A zwo ngo konadzea u fhaṱa faela ya khaḽenda. Lingedzani hafhu."
+  },
+  {
+    "english": "Could not build the PDF. Please try again.",
+    "zu": "I-PDF ayikwazanga ukwakhiwa. Sicela uzame futhi.",
+    "st": "PDF ha e a kgona ho ahuwa. Ka kopo leka hape.",
+    "ts": "A swi kotekanga ku aka PDF. Ringeta nakambe.",
+    "ve": "A zwo ngo konadzea u fhaṱa PDF. Lingedzani hafhu."
+  },
+  {
+    "english": "Plan saved to your downloads — open it to print.",
+    "zu": "Uhlelo lugcinwe kokulandiwe — luvule ukuze uluprinte.",
+    "st": "Moralo o bolokilwe ho tse jarollotsweng — o bule hore o o hatise.",
+    "ts": "Pulani yi hlayisiwile eka leswi kopiwaka — yi pfule leswaku u yi kandziyisa.",
+    "ve": "Pulane yo vhulungwa kha zwo dzheniswaho — i vuleni uri ni i ganḓise."
+  },
+  {
+    "english": "Opened in a new tab — use your browser's Print button there.",
+    "zu": "Kuvulwe kuthebhu entsha — sebenzisa inkinobho ethi Print yesiphequluli sakho lapho.",
+    "st": "E butswe thebong e ntjha — sebedisa konopo ya Print ya sebatli sa hao moo.",
+    "ts": "Yi pfuriwile eka thebhu leyintshwa — tirhisa buti ya Print ya burawuzara ya wena kwalaho.",
+    "ve": "Yo vulwa kha thebu ntswa — shumisani gunubu ya Print ya burauza yaṋu henefho."
+  },
+  {
+    "english": "Plan shared — save it to your files or send it on.",
+    "zu": "Uhlelo lwabelwe — lugcine emafayeleni akho noma uludlulisele phambili.",
+    "st": "Moralo o arolelanwe — o boloke difaeleng tsa hao kapa o o fetisetse pele.",
+    "ts": "Pulani yi averiwile — yi hlayise eka tifayili ta wena kumbe u yi rhumela eka van'wana.",
+    "ve": "Pulane yo kovhiwa — i vhulungeni kha faela dzaṋu kana ni i rumele phanḓa."
+  },
+  {
+    "english": "Plan shared.",
+    "zu": "Uhlelo lwabelwe.",
+    "st": "Moralo o arolelanwe.",
+    "ts": "Pulani yi averiwile.",
+    "ve": "Pulane yo kovhiwa."
+  },
+  {
+    "english": "Sharing was unavailable — the plan was saved to your downloads.",
+    "zu": "Ukwabelana bekungatholakali — uhlelo lugcinwe kokulandiwe.",
+    "st": "Ho arolelana ho ne ho sa fumanehe — moralo o bolokilwe ho tse jarollotsweng.",
+    "ts": "Ku avelana a ku nga kumeki — pulani yi hlayisiwile eka leswi kopiwaka.",
+    "ve": "U kovhana a ho ngo vha hone — pulane yo vhulungwa kha zwo dzheniswaho."
+  },
+  {
+    "english": "The new tab was blocked — open the downloaded plan to print.",
+    "zu": "Ithebhu entsha ivinjiwe — vula uhlelo olulandiwe ukuze uluprinte.",
+    "st": "Thebo e ntjha e thibetswe — bula moralo o jarollotsweng hore o o hatise.",
+    "ts": "Thebhu leyintshwa yi siveriwile — pfula pulani leyi kopiwaka leswaku u yi kandziyisa.",
+    "ve": "Thebu ntswa yo thivhelwa — vulani pulane yo dzheniswaho uri ni i ganḓise."
+  },
+  {
+    "english": "Detailed reference saved to your downloads.",
+    "zu": "Imininingwane yokubhekisela igcinwe kokulandiwe.",
+    "st": "Tshupiso e qaqileng e bolokilwe ho tse jarollotsweng.",
+    "ts": "Nkombiso wa vuxokoxoko wu hlayisiwile eka leswi kopiwaka.",
+    "ve": "Tshiko tsha zwidodombedzwa tsho vhulungwa kha zwo dzheniswaho."
+  },
+  {
+    "english": "Future harvest PDF saved to your downloads.",
+    "zu": "I-PDF yesivuno sesikhathi esizayo igcinwe kokulandiwe.",
+    "st": "PDF ya kotulo ya nakong e tlang e bolokilwe ho tse jarollotsweng.",
+    "ts": "PDF ya ntshovelo wa nkarhi lowu taka yi hlayisiwile eka leswi kopiwaka.",
+    "ve": "PDF ya khaṋo ya tshifhingani tshi ḓaho yo vhulungwa kha zwo dzheniswaho."
+  },
+  {
+    "english": "The new tab was blocked — open the downloaded calendar to print.",
+    "zu": "Ithebhu entsha ivinjiwe — vula ikhalenda elilandiwe ukuze uliprinte.",
+    "st": "Thebo e ntjha e thibetswe — bula khalendara e jarollotsweng hore o e hatise.",
+    "ts": "Thebhu leyintshwa yi siveriwile — pfula khalendara leyi kopiwaka leswaku u yi kandziyisa.",
+    "ve": "Thebu ntswa yo thivhelwa — vulani khaḽenda yo dzheniswaho uri ni i ganḓise."
+  },
+  {
+    "english": "Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed.",
+    "zu": "Ngokuvamile amasonto angu-4–6 uma kufudumele; uma kubanda kungathatha isikhathi esiphindwe cishe kabili (amasonto angu-8–12). Qala ukuhlola kusukela enyangeni yokuqala ezingalungela ngayo, bese utshala kwenye indawo lapho izithombo nombhede sekulungile. Ikhalenda lemibhede lisebenzisa inyanga ephakathi njengosuku lokuhlela lokutshala kwenye indawo; buyekeza ukutshala uma izithombo zibambezelekile.",
+    "st": "Hangata ke dibeke tse 4–6 ha ho futhumetse; ha ho bata ho ka nka nako e ka bang habedi (dibeke tse 8–12). Qala ho hlahloba ho tloha kgweding ya pele eo dimela di ka lokelang ka yona, mme o di fallisetse tshimong ha dimela le bethe di se di loketse. Khalendara ya dibethe e sebedisa kgwedi e bohareng e le nako ya ho fallisetsa tshimong bakeng sa moralo; ntjhafatsa ho lema haeba dimela di diehile.",
+    "ts": "Hi ntolovelo i mavhiki ya 4–6 loko ku kufumela; loko ku titimela swi nga teka nkarhi lowu phindhiweke kwalomu ka kambirhi (mavhiki ya 8–12). Sungula ku kambela ku sukela eka n'hweti yo sungula leyi swimilana swi nga lulamelaka ha yona, kutani u swi byala kun'wana loko swimilana ni mubedo swi lulamile. Khalendara ya mibedo yi tirhisa n'hweti ya le xikarhini ku hlela ku byala swimilana kun'wana; pfuxeta ku byala loko swimilana swi hlwerile.",
+    "ve": "Kanzhi ndi vhege dza 4–6 musi hu tshi dudela; musi hu tshi rothola zwi nga dzhia tshifhinga tshi ṱoḓaho u vha kavhili (vhege dza 8–12). Thomani u sedzulusa u bva kha ṅwedzi wa u thoma une zwimelana zwa nga lugela ngawo, ni zwi sudzulusele tsimuni musi zwimelana na mubete zwo lugela. Khaḽenda ya mibete i shumisa ṅwedzi wa vhukati sa tshifhinga tsha u pulana u sudzulusela tsimuni; khwinisani u ṱavha arali zwimelana zwo lenga."
+  },
+  {
+    "english": "Published optimum-condition maturity endpoints are planning slots, not promises. Before any successor is sown or transplanted, confirm the previous crop is finished and the bed is actually clear; crops may mature later.",
+    "zu": "Izikhathi zokuvuthwa ezishicilelwe zezimo ezifanele ziyizikhala zokuhlela, hhayi izithembiso. Ngaphambi kokuhlwanyela noma ukutshala isitshalo esilandelayo kwenye indawo, qinisekisa ukuthi esangaphambili sesiqediwe nombhede awusenalutho ngempela; izitshalo zingavuthwa kamuva.",
+    "st": "Dinako tsa ho butshwa tse phatlaladitsweng bakeng sa maemo a matle ka ho fetisisa ke dibaka tsa ho rera, ha se ditshepiso. Pele o jala kapa o fallisetsa sejalo se latelang tshimong, netefatsa hore sejalo sa pele se fedile mme bethe e hlile e hlwekile; dijalo di ka butshwa hamorao.",
+    "ts": "Minkarhi ya ku wupfa leyi kandziyisiweke ya swiyimo leswinene ngopfu i tindhawu ta ku hlela, a hi switshembiso. Loko xibyariwa lexi landzelaka xi nga si byariwa kumbe ku susiwa xi byariwa kun'wana, tiyisisa leswaku xibyariwa xa khale xi herile ni leswaku mubedo a wu na xona hakunene; swibyariwa swi nga wupfa endzhaku ka nkarhi.",
+    "ve": "Mafhelelo a u vhibva o ganḓiswaho a zwiimo zwavhuḓi vhukuma ndi zwikhala zwa u pulana, a si mafulufhedziso. Phanḓa ha u zwala kana u sudzulusela tshiliṅwa tshi tevhelaho tsimuni, khwaṱhisedzani uri tshiliṅwa tsho fhiraho tsho fhela na uri mubete a u na tshiliṅwa itsho zwa vhukuma; zwiliṅwa zwi nga vhibva nga murahu ha tshifhinga."
+  },
+  {
+    "english": "Source {weight} before sowing in {month}. This is the mapped area multiplied by the published {rate} kg/ha field-rate range. {instruction} Confirm the sowing method and cultivar with the supplier; no germination allowance is added.",
+    "zu": "Thola {weight} ngaphambi kokuhlwanyela ngo-{month}. Lokhu yindawo esebalazweni ephindwe ngesilinganiso sokuhlwanyela sasensimini esishicilelwe esingu-{rate} kg/ha. {instruction} Qinisekisa indlela yokuhlwanyela nohlobo lwe-cultivar nomthengisi; akufakwanga umkhawulo wokubhekelela ukuhluma.",
+    "st": "Fumana {weight} pele o jala ka {month}. Sena ke sebaka se mmapeng se atisitsweng ka tekanyo ya ho jala tshimong ya {rate} kg/ha e phatlaladitsweng. {instruction} Netefatsa mokgwa wa ho jala le cultivar le mofani; ha ho keketso ya ho dumella ho mela e kentsweng.",
+    "ts": "Kuma {weight} u nga si byala hi {month}. Leyi i ndhawu leyi nga emepeni leyi andzisiweke hi mpimo wa ku byala ensin'wini wa {rate} kg/ha lowu kandziyisiweke. {instruction} Tiyisisa ndlela ya ku byala ni cultivar ni muphakeri; a ku engeteriwanga mpimo wo pfumelela ku mila.",
+    "ve": "Wanani {weight} phanḓa ha u zwala nga {month}. Itshi ndi tshikhala tshi re kha mapa tsho andiswaho nga tshikalo tsha u zwala tsimuni tsha {rate} kg/ha tsho ganḓiswaho. {instruction} Khwaṱhisedzani maitele a u zwala na cultivar na murengisi; a hu na nyengedzo ya u katela u mela yo engedzwaho."
+  },
+  {
+    "english": "Confirm the local row layout before deciding how many are needed.",
+    "zu": "Qinisekisa ukuhlelwa kwemigqa kwendawo ngaphambi kokunquma ukuthi kudingeka ezingaki.",
+    "st": "Netefatsa tlhophiso ya mela ya lehae pele o etsa qeto ya hore ho hlokahala tse kae.",
+    "ts": "Tiyisisa ku hleriwa ka mintila ya ndhawu u nga si teka xiboho xa leswaku ku laveka swingani.",
+    "ve": "Khwaṱhisedzani nzudzanyo ya mitalo ya henefho phanḓa ha u dzhia tsheo ya uri hu ṱoḓea zwingana."
+  },
+  {
+    "english": "The mapped area holds about {positions} plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop.",
+    "zu": "Indawo esebalazweni ithatha izitshalo ezingaba ngu-{positions} ngezikhala ezisetshenziswa yilolu hlelo. Leli akulona i-oda lezithombo eliqinisekisiwe futhi alibhekeli izitshalo ezingabambi; buza umthengisi wakho ukuthi weluleka ukuthini ngalesi sitshalo.",
+    "st": "Sebaka se mmapeng se nka dimela tse ka bang {positions} ka dikgeo tse sebediswang moralong ona. Sena ha se odara e netefaditsweng ya dimela tse nyane ebile ha se dumelle dimela tse sa tshwareng; botsa mofani wa hao hore o eletsa eng bakeng sa sejalo sena.",
+    "ts": "Ndhawu leyi nga emepeni yi teka kwalomu ka {positions} wa swimila hi mipfhuka leyi pulani leyi yi yi tirhisaka. Leyi a hi oda ya swimilana leyi tiyisisiweke naswona a yi pfumeleli swimila leswi nga khomiki; vutisa muphakeri wa wena leswi a swi tsundzuxaka hi xibyariwa lexi.",
+    "ve": "Tshikhala tshi re kha mapa tshi fara zwimela zwi ṱoḓaho u vha {positions} nga vhukati vhune pulane iyi ya vhu shumisa. Iyi a si oda yo khwaṱhisedzwaho ya zwimelana nahone a i kateli zwimela zwi sa khomi; vhudzisani murengisi waṋu zwine a zwi eletshedza nga tshiliṅwa itshi."
+  },
+  {
+    "english": "Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is {window}. {quantity}",
+    "zu": "Uthenga izithombo esezikhulisiwe? Zithole kuphela lapho umbhede nezithombo sekulungile; isikhathi sokuhlela singu-{window}. {quantity}",
+    "st": "O reka dimela tse nyane tse seng di hodisitswe? Di fumane feela ha bethe le dimela di se di loketse; nako ya moralo ke {window}. {quantity}",
+    "ts": "U xava swimilana leswi se swi kurisiweke? Swi kume ntsena loko mubedo ni swimilana swi lulamile; nkarhi wa ku hlela i {window}. {quantity}",
+    "ve": "Ni khou renga zwimelana zwo no alusiwaho? Zwi waneni fhedzi musi mubete na zwimelana zwo lugela; tshifhinga tsha u pulana ndi {window}. {quantity}"
+  },
+  {
+    "english": "This one-time starter's tray-sowing month ({month}) has passed, so buying ready-grown seedlings is the remaining route.",
+    "zu": "Inyanga yokuhlwanyela ethreyini ({month}) yalesi siqalo sesikhathi esisodwa isidlulile, ngakho ukuthenga izithombo esezikhulisiwe yiyona ndlela esele.",
+    "st": "Kgwedi ya ho jala tereing ({month}) ya qalo ena ya hang feela e fetile, kahoo ho reka dimela tse seng di hodisitswe ke tsela e setseng.",
+    "ts": "N'hweti yo byala ethireyini ({month}) ya masungulo lawa ya kan'we ntsena yi hundzile, kutani ku xava swimilana leswi se swi kurisiweke hi yona ndlela leyi saleke.",
+    "ve": "Ṅwedzi wa u zwala kha thireyi ({month}) wa mathomo aya a luthihi wo fhira, zwenezwo u renga zwimelana zwo no alusiwaho ndi yone nḓila yo salaho."
+  },
+  {
+    "english": "Raising your own instead? Source packet seed before the {month} tray-sowing month, use its tray-sowing rate, and sow trays in {month}.",
+    "zu": "Uzozikhulisela ezakho esikhundleni salokho? Thola imbewu yephakethe ngaphambi kwenyanga yokuhlwanyela ethreyini engu-{month}, sebenzisa isilinganiso sayo sokuhlwanyela ethreyini, bese uhlwanyela amathreyi ngo-{month}.",
+    "st": "O ikgodisetsa tsa hao ho e na le hoo? Fumana peo ya pakete pele ho kgwedi ya ho jala tereing ya {month}, sebedisa tekanyo ya yona ya ho jala tereing, mme o jale diterei ka {month}.",
+    "ts": "U kurisa swa wena ematshan'weni ya swona? Kuma mbewu ya phakete ku nga si fika n'hweti ya {month} yo byala ethireyini, tirhisa mpimo wa yona wo byala ethireyini, kutani u byala tireyi hi {month}.",
+    "ve": "Ni khou alusa zwaṋu vhudzuloni hazwo? Wanani mbeu ya phakhethe phanḓa ha ṅwedzi wa {month} wa u zwala kha thireyi, shumisani tshikalo tshayo tsha u zwala kha thireyi, ni zwale thireyi nga {month}."
+  },
+  {
+    "english": "Confirm a locally appropriate row layout before buying planting material; the catalog does not have both verified spacing axes needed for an exact quantity. Plan to establish it in {month}.",
+    "zu": "Qinisekisa ukuhlelwa kwemigqa okufanele indawo ngaphambi kokuthenga izinto zokutshala; ikhathalogi ayinazo zombili izilinganiso zezikhala eziqinisekisiwe ezidingekayo ukuze kutholakale ubuningi obuqondile. Hlela ukuyitshala ngo-{month}.",
+    "st": "Netefatsa tlhophiso ya mela e loketseng sebaka sena pele o reka thepa ya ho lema; khathaloko ha e na mahlakore a mabedi a dikgeo a netefaditsweng a hlokahalang bakeng sa bongata bo nepahetseng. Rera ho e lema ka {month}.",
+    "ts": "Tiyisisa ku hleriwa ka mintila loku faneleke endhawini u nga si xava swo byala; khathaloko a yi na matlhelo hamambirhi ya mipfhuka lama tiyisisiweke lama lavekaka eka nhlayo leyi kongomeke. Hlela ku xi sungula hi {month}.",
+    "ve": "Khwaṱhisedzani nzudzanyo ya mitalo yo teaho henefho phanḓa ha u renga zwishumiswa zwa u ṱavha; khathalogo a i na masia oṱhe mavhili a vhukati o khwaṱhisedzwaho a ṱoḓeaho kha vhunzhi ho livhaho. Pulanani u tshi ṱavha nga {month}."
+  },
+  {
+    "english": "Living planting material — the mapped area holds about {positions} {unit} at the spacings this plan uses. This is not a guaranteed buy quantity and it allows nothing for material that does not take; ask the supplier what they advise for this crop. Get it close to planting in {month}, then follow the supplier's or your local handling advice. No general storage advice is assumed here.",
+    "zu": "Izinto zokutshala eziphilayo — indawo esebalazweni ithatha cishe {positions} {unit} ngezikhala ezisetshenziswa yilolu hlelo. Lokhu akulona inani lokuthenga eliqinisekisiwe futhi akubhekeli izinto ezingabambi; buza umthengisi ukuthi weluleka ukuthini ngalesi sitshalo. Kuthole sekuseduze nokutshala ngo-{month}, bese ulandela iseluleko somthengisi noma sendawo sokukuphatha. Akucatshangwa iseluleko esivamile sokugcina lapha.",
+    "st": "Thepa e phelang ya ho lema — sebaka se mmapeng se nka hoo e ka bang {positions} {unit} ka dikgeo tse sebediswang moralong ona. Sena ha se bongata ba ho reka bo netefaditsweng ebile ha se dumelle thepa e sa tshwareng; botsa mofani hore o eletsa eng bakeng sa sejalo sena. E fumane haufi le nako ya ho lema ka {month}, ebe o latela keletso ya mofani kapa ya lehae ya ho e hlokomela. Ha ho keletso e akaretsang ya ho boloka e nahanwang mona.",
+    "ts": "Swilo leswi hanyaka swo byala — ndhawu leyi nga emepeni yi teka kwalomu ka {positions} {unit} hi mipfhuka leyi pulani leyi yi yi tirhisaka. Leyi a hi nhlayo yo xava leyi tiyisisiweke naswona a yi pfumeleli swilo leswi nga khomiki; vutisa muphakeri leswi a swi tsundzuxaka hi xibyariwa lexi. Swi kume kusuhi ni nkarhi wo byala hi {month}, kutani u landzela switsundzuxo swa muphakeri kumbe swa ndhawu swo swi khoma. A ku tekiwi switsundzuxo swo angarhela swa ku hlayisa laha.",
+    "ve": "Zwishumiswa zwi tshilaho zwa u ṱavha — tshikhala tshi re kha mapa tshi fara zwi ṱoḓaho u vha {positions} {unit} nga vhukati vhune pulane iyi ya vhu shumisa. Uhu a si vhunzhi ho khwaṱhisedzwaho ha u renga nahone a vhu kateli zwishumiswa zwi sa khomi; vhudzisani murengisi zwine a zwi eletshedza nga tshiliṅwa itshi. Zwi waneni tsini na u ṱavha nga {month}, ni kone u tevhedza ngeletshedzo ya murengisi kana ya henefho ya u zwi fara. A hu humbulelwi ngeletshedzo yo angaredzaho ya u zwi vhulunga fhano."
+  },
+  {
+    "english": "Source packet seed before the {month} sowing month. Sow straight into the ground in {month} for about {positions} plants at the spacings this plan uses. Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy.",
+    "zu": "Thola imbewu yephakethe ngaphambi kwenyanga yokuhlwanyela engu-{month}. Hlwanyela ngqo emhlabathini ngo-{month} ukuze uthole izitshalo ezingaba ngu-{positions} ngezikhala ezisetshenziswa yilolu hlelo. Sebenzisa isilinganiso sokuhlwanyela ngqo nesiqondiso sokuhluma esiqondene nalesi sitshalo esisephaketheni; izikhala zasensimini zodwa azikwazi ukukutshela ukuthi uthenge imbewu engakanani.",
+    "st": "Fumana peo ya pakete pele ho kgwedi ya ho jala ya {month}. Jala ka kotloloho mobung ka {month} bakeng sa dimela tse ka bang {positions} ka dikgeo tse sebediswang moralong ona. Sebedisa tekanyo ya ho jala ka kotloloho le tataiso ya ho mela e tobileng sejalo sena e paketeng; dikgeo tsa tshimong feela di ke ke tsa o bolella hore o reke peo e kae.",
+    "ts": "Kuma mbewu ya phakete ku nga si fika n'hweti ya {month} yo byala. Byala hi ku kongoma emisaveni hi {month} leswaku ku va ni kwalomu ka {positions} wa swimila hi mipfhuka leyi pulani leyi yi yi tirhisaka. Tirhisa mpimo wa ku byala hi ku kongoma ni swiletelo swa ku mila leswi kongomaka xibyariwa lexi leswi nga eka phakete; mipfhuka ya le nsin'wini ntsena a yi nge ku byeli leswaku u fanele u xava mbewu yo fikela kwihi.",
+    "ve": "Wanani mbeu ya phakhethe phanḓa ha ṅwedzi wa {month} wa u zwala. Zwalani nga ho livhaho mavuni nga {month} uri hu vhe na zwimela zwi ṱoḓaho u vha {positions} nga vhukati vhune pulane iyi ya vhu shumisa. Shumisani tshikalo tsha u zwala nga ho livhaho na ngeletshedzo ya u mela ya tshiliṅwa itshi zwi re kha phakhethe; vhukati ha zwimela tsimuni vhu vhuṱhe a vhu koni u ni vhudza uri ni renge mbeu nngafhani."
+  },
+  {
+    "english": "seeds",
+    "zu": "imbewu",
+    "st": "dipeo",
+    "ts": "mbewu",
+    "ve": "mbeu"
+  },
+  {
+    "english": "seedlings",
+    "zu": "izithombo",
+    "st": "dimela tse nyane",
+    "ts": "swimilana",
+    "ve": "zwimelana"
+  },
+  {
+    "english": "kg seed",
+    "zu": "kg yembewu",
+    "st": "kg ya peo",
+    "ts": "kg ya mbewu",
+    "ve": "kg ya mbeu"
+  },
+  {
+    "english": "cloves",
+    "zu": "ama-clove",
+    "st": "dikarolwana tsa konofolo",
+    "ts": "swiphemu swa garlic",
+    "ve": "zwipiḓa zwa garlic"
+  },
+  {
+    "english": "slips",
+    "zu": "amahlumela okusika",
+    "st": "mahlomela a ho lema",
+    "ts": "swirhabyana swo byala",
+    "ve": "matavhi a u ṱavha"
+  },
+  {
+    "english": "corms",
+    "zu": "ama-corm",
+    "st": "dikutu tse ruruhileng tse ka tlasa mobu",
+    "ts": "swikondo leswi rhurhumukeke swa le hansi ka misava",
+    "ve": "zwikondo zwo zwimbaho zwa fhasi ha mavu"
+  },
+  {
+    "english": "seed potatoes",
+    "zu": "amazambane embewu",
+    "st": "ditapole tsa peo",
+    "ts": "mazambhala ya mbewu",
+    "ve": "maḓabula a mbeu"
+  },
+  {
+    "english": "Inputs",
+    "zu": "Okudingekayo",
+    "st": "Dintho tse hlokahalang",
+    "ts": "Swilo leswi lavekaka",
+    "ve": "Zwishumiswa zwi ṱoḓeaho"
+  },
+  {
+    "english": "Seed and seedling buying schedule",
+    "zu": "Uhlelo lokuthenga imbewu nezithombo",
+    "st": "Lenaneo la ho reka peo le dimela tse nyane",
+    "ts": "Nongonoko wa ku xava mbewu ni swimilana",
+    "ve": "Mbekanyamushumo ya u renga mbeu na zwimelana"
+  },
+  {
+    "english": "Find the month, then the crop and bed. Check the seed quantity and sowing method before buying.",
+    "zu": "Thola inyanga, bese isitshalo nombhede. Hlola ubuningi bembewu nendlela yokuhlwanyela ngaphambi kokuthenga.",
+    "st": "Fumana kgwedi, ebe sejalo le bethe. Hlahloba bongata ba peo le mokgwa wa ho jala pele o reka.",
+    "ts": "Kuma n'hweti, kutani u kuma xibyariwa ni mubedo. Kambela nhlayo ya mbewu ni ndlela ya ku byala u nga si xava.",
+    "ve": "Wanani ṅwedzi, ni kone u wana tshiliṅwa na mubete. Sedzulusani vhunzhi ha mbeu na maitele a u zwala phanḓa ha u renga."
+  },
+  {
+    "english": "The buying rule",
+    "zu": "Umthetho wokuthenga",
+    "st": "Molao wa ho reka",
+    "ts": "Nawu wa ku xava",
+    "ve": "Mulayo wa u renga"
+  },
+  {
+    "english": "Source direct-sown or tray seed before the named sowing month; the source does not provide a universal procurement lead time. Ready-grown seedlings are listed at the start of the field-readiness window; buy them only when the bed and seedlings are ready. Living corms, slips, cloves and seed potatoes are listed close to planting. For a tray crop, choose either packet seed for the nursery or ready-grown seedlings - not both.",
+    "zu": "Thola imbewu yokuhlwanyela ngqo noma eyamathreyi ngaphambi kwenyanga yokuhlwanyela eshiwo; umthombo awunikezi isikhathi esisodwa sokuthola imbewu kusengaphambili esisebenza kukho konke. Izithombo esezikhulisiwe zibhalwe ekuqaleni kwesikhathi sokulungela insimu; zithenge kuphela lapho umbhede nezithombo sekulungile. Ama-corm, amahlumela okusika, ama-clove namazambane embewu aphilayo kubhalwe eduze kwesikhathi sokutshala. Uma kuqalwa ethreyini, khetha imbewu yephakethe yendawo yezithombo noma izithombo esezikhulisiwe - hhayi kokubili.",
+    "st": "Fumana peo ya ho jala ka kotloloho kapa ka diterei pele ho kgwedi ya ho jala e boletsweng; mohlodi ha o fane ka nako e le nngwe ya ho reka pele e sebetsang ho tsohle. Dimela tse nyane tse seng di hodisitswe di thathamisitswe qalong ya nako ya ho lokelwa ke tshimo; di reke feela ha bethe le dimela di se di loketse. Dikutu tse ruruhileng, mahlomela, dikarolwana tsa konofolo le ditapole tsa peo tse phelang di thathamisitswe haufi le nako ya ho lema. Bakeng sa sejalo sa tereing, kgetha peo ya pakete bakeng sa sebaka sa ho hodisa dimela kapa dimela tse seng di hodisitswe - eseng ka bobedi.",
+    "ts": "Kuma mbewu yo byala hi ku kongoma kumbe ya tireyi ku nga si fika n'hweti yo byala leyi boxiweke; xihlovo a xi nyiki nkarhi wun'we wa ku xava ka ha ri na nkarhi lowu tirhaka eka swibyariwa hinkwaswo. Swimilana leswi se swi kurisiweke swi xaxametiwile eku sunguleni ka nkarhi lowu swi nga lulamelaka nsimu; swi xave ntsena loko mubedo ni swimilana swi lulamile. Swikondo leswi rhurhumukeke swa le hansi ka misava, swirhabyana, swiphemu swa garlic ni mazambhala ya mbewu leswi hanyaka swi xaxametiwile kusuhi ni nkarhi wo byala. Eka xibyariwa xa tireyi, hlawula mbewu ya phakete ya ndhawu yo kurisa swimilana kumbe swimilana leswi se swi kurisiweke - ku nga ri havumbirhi.",
+    "ve": "Wanani mbeu ya u zwala nga ho livhaho kana ya thireyi phanḓa ha ṅwedzi wa u zwala wo bulwaho; tshiko a tshi ṋei tshifhinga tshithihi tsha u renga hu tshee na tshifhinga tshine tsha shuma kha zwiliṅwa zwoṱhe. Zwimelana zwo no alusiwaho zwo ṅwalwa mathomoni a tshifhinga tsha u lugela tsimu; zwi rengeni fhedzi musi mubete na zwimelana zwo lugela. Zwikondo zwo zwimbaho zwa fhasi ha mavu, matavhi, zwipiḓa zwa garlic na maḓabula a mbeu zwi tshilaho zwo ṅwalwa tsini na u ṱavha. Kha tshiliṅwa tsha thireyi, nangani mbeu ya phakhethe ya fhethu ha zwimelana kana zwimelana zwo no alusiwaho - hu si zwoṱhe zwivhili."
+  },
+  {
+    "english": "A published field seed rate gives a weight range for the mapped area. Confirm the sowing method with the supplier; no germination or loss allowance is added. For crops without a published seed rate, field spacing supports only an approximate FINAL stand. It does not prove a seed-buying quantity: use the packet's crop-specific sowing rate and germination guidance. Living-material ranges are approximate field positions from mapped area and published spacing, not guaranteed order quantities or loss allowances; supplier and crop-specific guidance may change what to purchase.",
+    "zu": "Isilinganiso sembewu yasensimini esishicilelwe sinikeza ibanga lesisindo lendawo esebalazweni. Qinisekisa indlela yokuhlwanyela nomthengisi; akufakwanga umkhawulo wokubhekelela ukuhluma noma ukulahleka. Ezitshalweni ezingenaso isilinganiso sembewu esishicilelwe, izikhala zasensimini zisekela kuphela isilinganiso sezitshalo ZOKUGCINA. Azifakazeli ubuningi bembewu okufanele ithengwe: sebenzisa isilinganiso sokuhlwanyela nesiqondiso sokuhluma esiqondene nalesi sitshalo esisephaketheni. Amabanga ezinto eziphilayo ayizindawo ezilinganiselwe zasensimini ezisuselwa endaweni esebalazweni nasezikhaleni ezishicilelwe, hhayi ama-oda aqinisekisiwe noma imikhawulo yokulahleka; iseluleko somthengisi nesiqondene nesitshalo singashintsha okufanele kuthengwe.",
+    "st": "Tekanyo ya peo ya tshimong e phatlaladitsweng e fana ka sebaka sa boima bakeng sa sebaka se mmapeng. Netefatsa mokgwa wa ho jala le mofani; ha ho keketso ya ho dumella ho mela kapa tahlehelo e kentsweng. Bakeng sa dijalo tse se nang tekanyo ya peo e phatlaladitsweng, dikgeo tsa tshimong di tshehetsa feela palo e hakanyeditsweng ya dimela tsa HO QETELA. Ha di netefatse bongata ba peo e lokelang ho rekwa: sebedisa tekanyo ya ho jala le tataiso ya ho mela e tobileng sejalo e paketeng. Bongata bo pakeng tsa meedi ba thepa e phelang ke maemo a hakanyeditsweng a tshimong a tswang sebakeng se mmapeng le dikgeong tse phatlaladitsweng, ha se bongata ba odara bo netefaditsweng kapa dikeketso tsa tahlehelo; keletso ya mofani le e tobileng sejalo e ka fetola se lokelang ho rekwa.",
+    "ts": "Mpimo wa mbewu ya nsimu lowu kandziyisiweke wu nyika mpimo wa ntiko wa ndhawu leyi nga emepeni. Tiyisisa ndlela yo byala ni muphakeri; a ku engeteriwanga mpimo wa ku mila kumbe wa ku lahlekeriwa. Eka swibyariwa leswi nga riki na mpimo wa mbewu lowu kandziyisiweke, mipfhuka ya nsimu yi seketela ntsena nhlayo leyi ringanyetiweke ya swimila swa le MAKUMU. A yi tiyisisi nhlayo ya mbewu yo xava: tirhisa mpimo wo byala ni swiletelo swa ku mila leswi kongomaka xibyariwa leswi nga eka phakete. Mipimo ya swilo leswi hanyaka i tindhawu ta nsimu leti ringanyetiweke hi ndhawu ya mepe ni mipfhuka leyi kandziyisiweke, a hi nhlayo ya oda leyi tiyisisiweke kumbe mipimo yo pfumelela ku lahlekeriwa; switsundzuxo swa muphakeri ni swa xibyariwa swi nga cinca leswi faneleke ku xaviwa.",
+    "ve": "Tshikalo tsha mbeu ya tsimuni tsho ganḓiswaho tshi ṋea vhukati ha tshileme kha tshikhala tshi re kha mapa. Khwaṱhisedzani maitele a u zwala na murengisi; a hu na nyengedzo ya u mela kana ya u xelelwa yo engedzwaho. Kha zwiliṅwa zwi si na tshikalo tsha mbeu tsho ganḓiswaho, vhukati ha zwimela tsimuni vhu tikedza fhedzi tshivhalo tsho anganywaho tsha zwimela zwa MAFHELELONI. A zwi khwaṱhisedzi vhunzhi ha mbeu ya u renga: shumisani tshikalo tsha u zwala na ngeletshedzo ya u mela ya tshiliṅwa zwi re kha phakhethe. Mipimo ya zwishumiswa zwi tshilaho ndi fhethu ha tsimuni ho anganywaho nga tshikhala tshi re kha mapa na vhukati ha zwimela ho ganḓiswaho, hu si oda dzo khwaṱhisedzwaho kana nyengedzo dza u xelelwa; ngeletshedzo ya murengisi na ya tshiliṅwa i nga shandula zwine zwa tea u rengwa."
+  },
+  {
+    "english": "Confirm spacing first",
+    "zu": "Qinisekisa izikhala kuqala",
+    "st": "Netefatsa dikgeo pele",
+    "ts": "Rhanga u tiyisisa mipfhuka",
+    "ve": "Thomani nga u khwaṱhisedza vhukati ha zwimela"
+  },
+  {
+    "english": "Packet rate needed",
+    "zu": "Kudingeka isilinganiso sephakethe",
+    "st": "Ho hlokahala tekanyo ya pakete",
+    "ts": "Ku laveka mpimo wa phakete",
+    "ve": "Hu ṱoḓea tshikalo tsha phakhethe"
+  },
+  {
+    "english": "Confirm quantity",
+    "zu": "Qinisekisa ubuningi",
+    "st": "Netefatsa bongata",
+    "ts": "Tiyisisa nhlayo",
+    "ve": "Khwaṱhisedzani vhunzhi"
+  },
+  {
+    "english": "~{positions} {unit} positions",
+    "zu": "izindawo ezingaba ngu-{positions} {unit}",
+    "st": "maemo a ka bang {positions} {unit}",
+    "ts": "tindhawu ta kwalomu ka {positions} {unit}",
+    "ve": "fhethu hu ṱoḓaho u vha {positions} {unit}"
+  },
+  {
+    "english": "Published field seed rate; confirm sowing method",
+    "zu": "Isilinganiso sembewu yasensimini esishicilelwe; qinisekisa indlela yokuhlwanyela",
+    "st": "Tekanyo ya peo ya tshimong e phatlaladitsweng; netefatsa mokgwa wa ho jala",
+    "ts": "Mpimo wa mbewu ya nsimu lowu kandziyisiweke; tiyisisa ndlela yo byala",
+    "ve": "Tshikalo tsha mbeu ya tsimuni tsho ganḓiswaho; khwaṱhisedzani maitele a u zwala"
+  },
+  {
+    "english": "Local row layout needed",
+    "zu": "Kudingeka ukuhlelwa kwemigqa kwendawo",
+    "st": "Ho hlokahala tlhophiso ya mela ya lehae",
+    "ts": "Ku laveka ku hleriwa ka mintila ya ndhawu",
+    "ve": "Hu ṱoḓea nzudzanyo ya mitalo ya henefho"
+  },
+  {
+    "english": "Living pieces; confirm loss allowance",
+    "zu": "Izingxenye eziphilayo; qinisekisa umkhawulo wokulahleka",
+    "st": "Dikarolo tse phelang; netefatsa keketso ya tahlehelo",
+    "ts": "Swiphemu leswi hanyaka; tiyisisa mpimo wo pfumelela ku lahlekeriwa",
+    "ve": "Zwipiḓa zwi tshilaho; khwaṱhisedzani nyengedzo ya u xelelwa"
+  },
+  {
+    "english": "Ready seedlings; own seed before {month} nursery",
+    "zu": "Izithombo ezilungile; imbewu yakho ngaphambi kwendawo yezithombo ngo-{month}",
+    "st": "Dimela tse nyane tse loketseng; peo ya hao pele ho ho jala tereing ka {month}",
+    "ts": "Swimilana leswi lulameke; mbewu ya wena ku nga si sunguriwa tireyi hi {month}",
+    "ve": "Zwimelana zwo lugelaho; mbeu yaṋu phanḓa ha u thoma thireyi nga {month}"
+  },
+  {
+    "english": "Direct sow; ~{positions} final positions",
+    "zu": "Hlwanyela ngqo; izindawo zokugcina ezingaba ngu-{positions}",
+    "st": "Jala ka kotloloho; maemo a ho qetela a ka bang {positions}",
+    "ts": "Byala hi ku kongoma; tindhawu ta le makumu ta kwalomu ka {positions}",
+    "ve": "Zwalani nga ho livhaho; fhethu ha mafheleloni hu ṱoḓaho u vha {positions}"
+  },
+  {
+    "english": "Source own seed before {sow}; nursery {nursery}; check/transplant {first}-{last}",
+    "zu": "Thola imbewu yakho ngaphambi kuka-{sow}; indawo yezithombo ngo-{nursery}; hlola/tshala kwenye indawo ngo-{first}-{last}",
+    "st": "Fumana peo ya hao pele ho {sow}; ho jala tereing ka {nursery}; hlahloba/fallisetsa tshimong ka {first}-{last}",
+    "ts": "Kuma mbewu ya wena ku nga si fika {sow}; tireyi hi {nursery}; kambela/byala kun'wana hi {first}-{last}",
+    "ve": "Wanani mbeu yaṋu phanḓa ha {sow}; thireyi nga {nursery}; sedzulusani/sudzuluselani tsimuni nga {first}-{last}"
+  },
+  {
+    "english": "Sow {month}",
+    "zu": "Hlwanyela ngo-{month}",
+    "st": "Jala ka {month}",
+    "ts": "Byala hi {month}",
+    "ve": "Zwalani nga {month}"
+  },
+  {
+    "english": "Source/check",
+    "zu": "Thola / hlola",
+    "st": "Fumana / hlahloba",
+    "ts": "Kuma / kambela",
+    "ve": "Wanani / sedzulusani"
+  },
+  {
+    "english": "Crop",
+    "zu": "Isitshalo",
+    "st": "Sejalo",
+    "ts": "Xibyariwa",
+    "ve": "Tshiliṅwa",
+    "sourceKey": "reportUiCrop",
+    "sourceAuthority": "REPORT_DOCUMENT_COPY"
+  },
+  {
+    "english": "Quantity",
+    "zu": "Ubuningi",
+    "st": "Bongata",
+    "ts": "Nhlayo",
+    "ve": "Vhunzhi",
+    "sourceAuthority": "REPORT_DOCUMENT_COPY"
+  },
+  {
+    "english": "Method",
+    "zu": "Indlela",
+    "st": "Mokgwa",
+    "ts": "Ndlela",
+    "ve": "Maitele"
+  },
+  {
+    "english": "For",
+    "zu": "Okwa",
+    "st": "Bakeng sa",
+    "ts": "Swa",
+    "ve": "Zwa"
+  },
+  {
+    "english": "Planting timeline",
+    "zu": "Izikhathi zokutshala",
+    "st": "Dinako tsa ho lema",
+    "ts": "Minkarhi yo byala",
+    "ve": "Zwifhinga zwa u ṱavha"
+  },
+  {
+    "english": "Published field rate: {rate} kg/ha. The buying range uses the mapped area; no germination allowance is added.",
+    "zu": "Isilinganiso sasensimini esishicilelwe: {rate} kg/ha. Ibanga lokuthenga lisebenzisa indawo esebalazweni; akufakwanga umkhawulo wokubhekelela ukuhluma.",
+    "st": "Tekanyo ya tshimong e phatlaladitsweng: {rate} kg/ha. Bongata bo pakeng tsa meedi ba ho reka bo sebedisa sebaka se mmapeng; ha ho keketso ya ho dumella ho mela e kentsweng.",
+    "ts": "Mpimo wa nsimu lowu kandziyisiweke: {rate} kg/ha. Mpimo wo xava wu tirhisa ndhawu leyi nga emepeni; a ku engeteriwanga mpimo wo pfumelela ku mila.",
+    "ve": "Tshikalo tsha tsimuni tsho ganḓiswaho: {rate} kg/ha. Vhukati ha vhunzhi ha u renga vhu shumisa tshikhala tshi re kha mapa; a hu na nyengedzo ya u mela yo engedzwaho."
+  },
+  {
+    "english": "Seed-rate checks",
+    "zu": "Ukuhlola isilinganiso sembewu",
+    "st": "Ditlhahlobo tsa tekanyo ya peo",
+    "ts": "Ku kambela mpimo wa mbewu",
+    "ve": "Tsedzuluso dza tshikalo tsha mbeu"
+  },
+  {
+    "english": "{crop} - check the sowing method",
+    "zu": "{crop} - hlola indlela yokuhlwanyela",
+    "st": "{crop} - hlahloba mokgwa wa ho jala",
+    "ts": "{crop} - kambela ndlela yo byala",
+    "ve": "{crop} - sedzulusani maitele a u zwala"
+  },
+  {
+    "english": "{title} (continued)",
+    "zu": "{title} (kuyaqhubeka)",
+    "st": "{title} (e tswela pele)",
+    "ts": "{title} (swi ya mahlweni)",
+    "ve": "{title} (zwi khou bvela phanḓa)"
+  },
+  {
+    "english": "Cucurbitaceae family, same as pumpkin, butternut, cucumber and watermelon — avoid repeating this family in the same bed. Frost-tender vine crop; no Western Cape sowing calendar was found even though it is a known WC crop, so treat that as a local-confirmation item.",
+    "zu": "Umndeni we-Cucurbitaceae, ofana no-pumpkin, butternut, cucumber kanye no-watermelon — gwema ukuphinda lo mndeni embhedeni ofanayo. Yisitshalo esinabayo esizwela isithwathwa; alitholakalanga ikhalenda lokuhlwanyela lase-Western Cape nakuba kuyisitshalo esaziwayo e-WC, ngakho kubheke njengento okufanele iqinisekiswe endaweni.",
+    "st": "Lelapa la Cucurbitaceae, jwaloka pumpkin, butternut, cucumber le watermelon — qoba ho pheta lelapa lena betheng e le nngwe. Ke sejalo se namang se tshabang serame; ha ho khalendara ya ho jala ya Western Cape e fumanweng le hoja e le sejalo se tsejwang sa WC, kahoo se nke e le ntho e hlokang netefatso ya lehae.",
+    "ts": "Ndyangu wa Cucurbitaceae, ku fana na pumpkin, butternut, cucumber na watermelon — papalata ku phindha ndyangu lowu eka mubedo wun'we. I xibyariwa lexi navaka lexi nga tiyiseliki gwitsi; a ku kumekanga khalendara yo byala ya Western Cape hambiloko xi ri xibyariwa lexi tivekaka xa WC, kutani xi teke xi ri lexi faneleke ku tiyisisiwa endhawini.",
+    "ve": "Muṱa wa Cucurbitaceae, u fana na pumpkin, butternut, cucumber na watermelon — iledzani u dovha muṱa uyu kha mubete muthihi. Ndi tshiliṅwa tshi kokovhaho tshi sa konḓeleli murotholo; a hu ngo wanala khaḽenda ya u zwala ya Western Cape naho tshi tshiliṅwa tshi ḓivheaho tsha WC, zwenezwo tshi dzhieni sa tshi ṱoḓaho khwaṱhisedzo ya henefho."
+  },
+  {
+    "english": "{amount} {unit} seed",
+    "zu": "{amount} {unit} yembewu",
+    "st": "{amount} {unit} ya peo",
+    "ts": "{amount} {unit} ya mbewu",
+    "ve": "{amount} {unit} ya mbeu"
+  },
+  {
+    "english": "A biennial herb grown as an annual for its leaves. Apiaceae family, same as carrots — avoid repeating that family in the same bed too often.",
+    "zu": "Yikhambi eliphila iminyaka emibili kodwa elitshalwa unyaka owodwa ngenxa yamaqabunga alo. Umndeni we-Apiaceae, ofana no-carrots — gwema ukuphinda lo mndeni embhedeni ofanayo kaningi kakhulu.",
+    "st": "Ke setlama se phelang dilemo tse pedi empa se lengwa selemo se le seng bakeng sa makgasi a sona. Lelapa la Apiaceae, jwaloka carrots — qoba ho pheta lelapa leo betheng e le nngwe kgafetsa haholo.",
+    "ts": "I ximilana xa nun'hwelo xa malembembirhi lexi byariwaka lembe rin'we ntsena leswaku ku tirhisiwa matluka ya xona. Ndyangu wa Apiaceae, ku fana na carrots — papalata ku phindha ndyangu wolowo eka mubedo wun'we nkarhi ni nkarhi.",
+    "ve": "Ndi tshimela tsha nun'hwelo tshi tshilaho miṅwaha mivhili fhedzi tshi ṱavhelwaho ṅwaha muthihi u wana maṱari atsho. Muṱa wa Apiaceae, u fana na carrots — iledzani u dovha muṱa wonoyo kha mubete muthihi lunzhi nga maanḓa."
+  },
+  {
+    "english": "A drought-tolerant grain crop, more heat- and dry-tolerant than maize. A December sowing is left off this catalog's planner because the resulting May harvest would run into frost — still workable with local frost protection, just not auto-scheduled here. No named SA cultivars were found.",
+    "zu": "Yisitshalo sokusanhlamvu esibekezelela isomiso, esibekezelela ukushisa nokoma ngaphezu kwe-maize. Ukuhlwanyela ngo-Disemba akufakwanga kumhleli wale khathalogi ngoba isivuno esilandelayo sango-Meyi singahlangana nesithwathwa — kusengenzeka ngokuvikelwa endaweni esithwathweni, kodwa akuhlelwa ngokuzenzakalelayo lapha. Azitholakalanga izinhlobo ze-cultivar zase-SA ezibizwe ngamagama.",
+    "st": "Ke sejalo sa mabele se mamellang komello, se mamellang mocheso le komello ho feta maize. Ho jala ka Tshitwe ho siilwe moralong wa khathaloko ena hobane kotulo e tlang ka Motsheanong e ka kopana le serame — ho ntse ho ka etswa ka tshireletso ya lehae kgahlanong le serame, empa ha ho hlophiswe ka boiketsetso mona. Ha ho di-cultivar tsa SA tse bitsitsweng ka mabitso tse fumanweng.",
+    "ts": "I xibyariwa xa mavele lexi tiyiselaka dyandza, lexi tiyiselaka ku hisa ni ku oma ku hundza maize. Ku byala hi N'wendzamhala a ku katsiwanga eka muhleri wa khathaloko leyi hikuva ntshovelo lowu landzelaka hi Mudyaxihi wu nga hlangana ni gwitsi — swa ha koteka hi ku sirhelela eka gwitsi endhawini, ntsena a swi hleriwi hi ku tirha hi swoxe laha. A ku kumekanga ti-cultivar ta SA leti boxiweke hi mavito.",
+    "ve": "Ndi tshiliṅwa tsha thoro tshi konḓelelaho gomelelo, tshi konḓelelaho mufhiso na u oma u fhira maize. U zwala nga Nyendavhusiku a ho ngo katelwa kha mupulani wa khathalogo iyi ngauri khaṋo i tevhelaho nga Shundunthule i nga ṱangana na murotholo — zwi kha ḓi konadzea nga tsireledzo ya murotholo ya henefho, fhedzi a zwi dzudzanyiwi nga zwone zwiṋe fhano. A hu ngo wanala dzi-cultivar dza SA dzo bulwaho nga madzina."
+  },
+  {
+    "english": "A fast-cropping Cucurbitaceae vine picked young and often — same rotation family as pumpkin, gem-squash, cucumber and watermelon. Frost-tender; no Western Cape calendar sourced.",
+    "zu": "Yisitshalo esinabayo se-Cucurbitaceae esivunwa ngokushesha, sisencane futhi kaningi — umndeni ofanayo wokushintshanisa izitshalo no-pumpkin, gem-squash, cucumber kanye no-watermelon. Sizwela isithwathwa; alitholakalanga ikhalenda elinomthombo lase-Western Cape.",
+    "st": "Ke sejalo se namang sa Cucurbitaceae se kotulwang kapele, se sa le senyane le kgafetsa — lelapa le le leng la phapanyetsano ya dijalo le pumpkin, gem-squash, cucumber le watermelon. Se tshaba serame; ha ho khalendara ya Western Cape e nang le mohlodi e fumanweng.",
+    "ts": "I xibyariwa lexi navaka xa Cucurbitaceae lexi tshoveriwaka hi ku hatlisa, xa ha ri xitsongo ni nkarhi ni nkarhi — ndyangu wun'we wa ku cincana ka swibyariwa ni pumpkin, gem-squash, cucumber na watermelon. A xi tiyiseli gwitsi; a ku kumekanga khalendara ya Western Cape leyi nga ni xihlovo.",
+    "ve": "Ndi tshiliṅwa tshi kokovhaho tsha Cucurbitaceae tshi kaṋiwaho nga u ṱavhanya, tshi tshee tshiṱuku nahone lunzhi — muṱa muthihi wa u tshintshana ha zwiliṅwa na pumpkin, gem-squash, cucumber na watermelon. A tshi konḓeleli murotholo; a hu ngo wanala khaḽenda ya Western Cape i re na tshiko."
+  },
+  {
+    "english": "Cucurbitaceae melon vine. A January sowing is left off this catalog's planner because the resulting harvest would run into frost — still workable with local frost protection, just not auto-scheduled here.",
+    "zu": "Yisitshalo se-melon esinabayo somndeni we-Cucurbitaceae. Ukuhlwanyela ngo-Januwari akufakwanga kumhleli wale khathalogi ngoba isivuno esilandelayo singahlangana nesithwathwa — kusengenzeka ngokuvikelwa endaweni esithwathweni, kodwa akuhlelwa ngokuzenzakalelayo lapha.",
+    "st": "Ke sejalo se namang sa melon sa lelapa la Cucurbitaceae. Ho jala ka Pherekgong ho siilwe moralong wa khathaloko ena hobane kotulo e tlang e ka kopana le serame — ho ntse ho ka etswa ka tshireletso ya lehae kgahlanong le serame, empa ha ho hlophiswe ka boiketsetso mona.",
+    "ts": "I xibyariwa lexi navaka xa melon xa ndyangu wa Cucurbitaceae. Ku byala hi Sunguti a ku katsiwanga eka muhleri wa khathaloko leyi hikuva ntshovelo lowu landzelaka wu nga hlangana ni gwitsi — swa ha koteka hi ku sirhelela eka gwitsi endhawini, ntsena a swi hleriwi hi ku tirha hi swoxe laha.",
+    "ve": "Ndi tshiliṅwa tshi kokovhaho tsha melon tsha muṱa wa Cucurbitaceae. U zwala nga Phando a ho ngo katelwa kha mupulani wa khathalogo iyi ngauri khaṋo i tevhelaho i nga ṱangana na murotholo — zwi kha ḓi konadzea nga tsireledzo ya murotholo ya henefho, fhedzi a zwi dzudzanyiwi nga zwone zwiṋe fhano."
+  },
+  {
+    "english": "Grown and eaten as a fresh vegetable, unlike field maize — the dossier's own food-group is fruiting vegetable, not staple grain, so it is kept there rather than lumped with maize despite the shared species. Tender to frost like maize.",
+    "zu": "Itshalwa futhi idliwe njengemifino emisha, ngokungafani ne-maize yasensimini — iqembu lokudla elisembikweni womthombo uqobo liyimifino ethelayo, hhayi okusanhlamvu kokudla okuyisisekelo, ngakho igcinwa kulelo qembu kunokuba ihlanganiswe ne-maize nakuba kuwuhlobo lwe-species olufanayo. Izwela isithwathwa njenge-maize.",
+    "st": "E lengwa le ho jewa e le meroho e foreshe, ho fapana le maize wa tshimong — sehlopha sa dijo sa tlaleho ya mohlodi ka boyona ke meroho e behang ditholwana, eseng mabele a motheo, kahoo e dula moo ho e na le ho kopanngwa le maize leha e le species e le nngwe. E tshaba serame jwaloka maize.",
+    "ts": "Xi byariwa ni ku dyiwa xi ri matsavu lamantshwa, ku hambana ni maize wa nsimu — ntlawa wa swakudya wa dosiye hi yoxe i matsavu lama humesaka mihandzu, a hi mavele ya swakudya swa nkoka, kutani xi hlayisiwa kwalaho ematshan'weni yo xi hlanganisa na maize hambiloko swi ri species yin'we. A xi tiyiseli gwitsi ku fana na maize.",
+    "ve": "Tshi ṱavhiwa na u ḽiwa sa miroho miswa, u fhambana na maize ya tsimuni — tshigwada tsha zwiḽiwa tsha dosiye nga tshayo ndi miroho i aṋwaho, hu si thoro dza zwiḽiwa zwa mutheo, zwenezwo tshi vhewa henefho nṱhani ha u ṱanganywa na maize naho zwi species nthihi. A tshi konḓeleli murotholo u fana na maize."
+  },
+  {
+    "english": "A dual-purpose legume: young leaves (imifino) can be picked from three to four weeks after sowing, and dry grain follows later. No yield figure is given because the only South African trial found disagreed twenty-fold between its two sites. No named SA cultivars were found.",
+    "zu": "Yisitshalo sohlobo lwemidumba esisetshenziswa ngezindlela ezimbili: amaqabunga asemancane (imifino) angakhiwa kusukela emasontweni angu-3 kuya ku-4 ngemva kokuhlwanyela, bese okusanhlamvu okomile kulandela kamuva. Akunikezwa inani lesivuno ngoba ukuhlola okuwukuphela kwakho kwaseNingizimu Afrika okwatholakala kwaba nemiphumela ehluke izikhathi ezingu-20 phakathi kwezindawo zako ezingu-2. Azitholakalanga izinhlobo ze-cultivar zase-SA ezibizwe ngamagama.",
+    "st": "Ke sejalo sa lelapa la dinawa se nang le mesebetsi e mmedi: makgasi a manyane (imifino) a ka kgwa ho tloha dibekeng tse 3 ho isa ho tse 4 kamora ho jala, mme mabele a omileng a latela hamorao. Ha ho palo ya kotulo e fanweng hobane teko e le nngwe feela ya Afrika Borwa e fumanweng e ne e na le diphetho tse fapaneng makgetlo a 20 pakeng tsa dibaka tsa yona tse 2. Ha ho di-cultivar tsa SA tse bitsitsweng ka mabitso tse fumanweng.",
+    "ts": "I xibyariwa xa ndyangu wa tinyawa lexi nga ni mitirho mimbirhi: matluka lamatsongo (imifino) ma nga khiwa ku sukela eka mavhiki ya 3 ku fika eka 4 endzhaku ko byala, kutani mavele yo oma ma landzela endzhaku. A ku nyikiwi nhlayo ya ntshovelo hikuva ndzavisiso wa Afrika-Dzonga wun'we ntsena lowu kumiweke wu ve ni mivuyelo leyi hambaneke hi ku andzisiwa ka 20 eka tindhawu ta wona ta 2. A ku kumekanga ti-cultivar ta SA leti boxiweke hi mavito.",
+    "ve": "Ndi tshiliṅwa tsha muṱa wa ṋawa tshi re na mishumo mivhili: maṱari maṱuku (imifino) a nga kaṋiwa u bva kha vhege dza 3 u swika kha 4 nga murahu ha u zwala, thoro dzo oma dza tevhela nga murahu. A hu ṋeiwi tshivhalo tsha khaṋo ngauri ndingo nthihi fhedzi ya Afurika Tshipembe yo wanalaho yo vha na mvelelo dzo fhambanaho nga u andisa nga 20 vhukati ha fhethu hayo ha 2. A hu ngo wanala dzi-cultivar dza SA dzo bulwaho nga madzina.",
+    "sourceWordNumbers": [
+      "three",
+      "four",
+      "twenty",
+      "two"
+    ]
+  },
+  {
+    "english": "A very fast root crop, ready in three to four weeks — good for filling gaps between slower crops. No published yield figure was found, so it stays manual and will not drive auto-suggest ranking. Brassicaceae family, same as cabbage and turnip.",
+    "zu": "Yisitshalo sezimpande esishesha kakhulu, esilunga emasontweni angu-3 kuya ku-4 — silungele ukugcwalisa izikhala phakathi kwezitshalo ezihamba kancane. Akutholakalanga inani lesivuno elishicilelwe, ngakho sihlala sikhethwa ngesandla futhi ngeke sisetshenziselwe ukuhlelwa kwezinhlelo eziphakanyiswa ngokuzenzakalelayo. Umndeni we-Brassicaceae, ofana no-cabbage no-turnip.",
+    "st": "Ke sejalo sa metso se potlakang haholo, se loketseng ka dibeke tse 3 ho isa ho tse 4 — se loketse ho tlatsa dikgeo pakeng tsa dijalo tse diehang. Ha ho palo ya kotulo e phatlaladitsweng e fumanweng, kahoo se dula se kgethwa ka letsoho mme se ke ke sa laola tatellano ya ditlhahiso tsa boiketsetso. Lelapa la Brassicaceae, jwaloka cabbage le turnip.",
+    "ts": "I xibyariwa xa timitsu lexi hatlisaka ngopfu, lexi lulamaka hi mavhiki ya 3 ku fika eka 4 — xi kahle eka ku tata swivandla leswi nga phakathi ka swibyariwa leswi hlwelaka. A ku kumekanga nhlayo ya ntshovelo leyi kandziyisiweke, kutani xi tshamaka xi hlawuriwa hi voko naswona a xi nge lawuli ku hleriwa ka swibumabumelo swa ku tirha hi swoxe. Ndyangu wa Brassicaceae, ku fana na cabbage na turnip.",
+    "ve": "Ndi tshiliṅwa tsha midzi tshi ṱavhanyaho vhukuma, tshi lugelaho kha vhege dza 3 u swika kha 4 — tsho tea u ḓadza zwikhala vhukati ha zwiliṅwa zwi lengaho. A hu ngo wanala tshivhalo tsha khaṋo tsho ganḓiswaho, zwenezwo tshi dzula tshi tshi nangwa nga tshanḓa nahone a tshi nga langi mutevhe wa themendelo dza u ḓiitela. Muṱa wa Brassicaceae, u fana na cabbage na turnip.",
+    "sourceWordNumbers": [
+      "three",
+      "four"
+    ]
+  },
+  {
+    "english": "Prepare for the next planting",
+    "zu": "Lungiselela ukutshala okulandelayo",
+    "st": "Lokisetsa ho lema ho latelang",
+    "ts": "Lulamisa ku byala loku landzelaka",
+    "ve": "Lugiselelani u ṱavha hu tevhelaho"
+  },
+  {
+    "english": "Nursery - raise seedlings",
+    "zu": "Indawo yezithombo - khulisa izithombo",
+    "st": "Sebaka sa dipeo - hodisa dimela tse nyane",
+    "ts": "Ndhawu ya swimilana - kurisa swimilana",
+    "ve": "Fhethu ha zwimelana - alusani zwimelana"
+  },
+  {
+    "english": "Direct sowing and planting",
+    "zu": "Ukuhlwanyela ngqo nokutshala",
+    "st": "Ho jala ka kotloloho le ho lema",
+    "ts": "Ku byala hi ku kongoma ni ku simeka",
+    "ve": "U zwala nga ho livhaho na u ṱavha"
+  },
+  {
+    "english": "Harvest and record",
+    "zu": "Vuna bese ubhala phansi",
+    "st": "Kotula mme o rekote",
+    "ts": "Tshovela u tlhela u rhekhoda",
+    "ve": "Kaṋani ni rekhode"
+  },
+  {
+    "english": "End the cover crop",
+    "zu": "Qeda isitshalo sokumboza umhlabathi",
+    "st": "Fedisa sejalo se kwahelang mobu",
+    "ts": "Herisa xibyariwa xo funengeta misava",
+    "ve": "Fhedzisani tshiliṅwa tsha u fukedza mavu"
+  },
+  {
+    "english": "Maintenance",
+    "zu": "Ukunakekela",
+    "st": "Tlhokomelo",
+    "ts": "Nhlayiso",
+    "ve": "Ndondolo"
+  },
+  {
+    "english": "Nursery",
+    "zu": "Indawo yezithombo",
+    "st": "Sebaka sa ho hodisa dimela",
+    "ts": "Ndhawu ya swimilana",
+    "ve": "Fhethu ha zwimelana"
+  },
+  {
+    "english": "whole plot",
+    "zu": "insimu yonke",
+    "st": "tshimo yohle",
+    "ts": "nsimu hinkwaro",
+    "ve": "tsimu yoṱhe"
+  },
+  {
+    "english": "whole bed",
+    "zu": "umbhede wonke",
+    "st": "bethe yohle",
+    "ts": "mubedo hinkwaro",
+    "ve": "mubete woṱhe"
+  },
+  {
+    "english": "half the bed",
+    "zu": "uhhafu wombhede",
+    "st": "halofo ya bethe",
+    "ts": "hafu ya mubedo",
+    "ve": "hafu ya mubete"
+  },
+  {
+    "english": "a third of the bed",
+    "zu": "ingxenye yesithathu yombhede",
+    "st": "karolo e le nngwe ho tse tharo tsa bethe",
+    "ts": "xiphemu xin’we xa swinharhu swa mubedo",
+    "ve": "tshipiḓa tshithihi kha zwiraru zwa mubete"
+  },
+  {
+    "english": "a quarter of the bed",
+    "zu": "ingxenye yesine yombhede",
+    "st": "kotara ya bethe",
+    "ts": "kotara ya mubedo",
+    "ve": "kotara ya mubete"
+  },
+  {
+    "english": "{share}% of the bed",
+    "zu": "{share}% wombhede",
+    "st": "{share}% ya bethe",
+    "ts": "{share}% ya mubedo",
+    "ve": "{share}% ya mubete"
+  },
+  {
+    "english": "Start checking in {first}; transplant when ready, within the planning window through {last}.",
+    "zu": "Qala ukuhlola ngo-{first}; tshala kwenye indawo lapho izithombo sezilungile, phakathi kwesikhathi sokuhlela kuze kube ngu-{last}.",
+    "st": "Qala ho hlahloba ka {first}; fallisetsa dimela tshimong ha di loketse, nakong e rerilweng ho fihlela ka {last}.",
+    "ts": "Sungula ku kambela hi {first}; simeka swimilana loko swi lulamile, eka nkarhi lowu pulani yi wu vekeke ku fika eka {last}.",
+    "ve": "Thomani u sedzulusa nga {first}; sudzuluselani zwimelana tsimuni musi zwo lugela, kha tshifhinga tsha pulane u swika nga {last}."
+  },
+  {
+    "english": "Record kilograms and where it went.",
+    "zu": "Bhala amakhilogremu nokuthi isivuno siye kuphi.",
+    "st": "Rekota dikilogerama le moo kotulo e ileng teng.",
+    "ts": "Rhekhoda tikhilogireme ni laha ntshovelo wu yeke kona.",
+    "ve": "Rekhodani dzikhilogiramu na he khaṋo ya ya hone."
+  },
+  {
+    "english": "{crop} for {places}",
+    "zu": "{crop} yezindawo ezithi {places}",
+    "st": "{crop} bakeng sa {places}",
+    "ts": "{crop} ya {places}",
+    "ve": "{crop} ya {places}"
+  },
+  {
+    "english": "{first} and {last}",
+    "zu": "{first} kanye no-{last}",
+    "st": "{first} le {last}",
+    "ts": "{first} na {last}",
+    "ve": "{first} na {last}"
+  },
+  {
+    "english": "Raise and label trays for {crops}.",
+    "zu": "Khulisa bese ufaka amalebula emathreyini e-{crops}.",
+    "st": "Hodisa mme o tshwaye diterei tsa {crops}.",
+    "ts": "Kurisa u tlhela u lebula tireyi ta {crops}.",
+    "ve": "Alusani ni ṅwale madzina kha thireyi dza {crops}."
+  },
+  {
+    "english": "Prepare the ground for {crops}.",
+    "zu": "Lungisela umhlabathi i-{crops}.",
+    "st": "Lokisa mobu bakeng sa {crops}.",
+    "ts": "Lulamisa misava ya {crops}.",
+    "ve": "Lugiselani mavu {crops}."
+  },
+  {
+    "english": "Harvest {crops}.",
+    "zu": "Vuna i-{crops}.",
+    "st": "Kotula {crops}.",
+    "ts": "Tshovela {crops}.",
+    "ve": "Kaṋani {crops}."
+  },
+  {
+    "english": "Cut or roll down {crops} before the next crop.",
+    "zu": "Sika noma ugobe phansi i-{crops} ngaphambi kwesitshalo esilandelayo.",
+    "st": "Kgaola kapa o pitikise fatshe {crops} pele ho sejalo se latelang.",
+    "ts": "Tsema kumbe u peta ehansi {crops} ku nga si fika xibyariwa lexi landzelaka.",
+    "ve": "Tsemani kana ni petise fhasi {crops} phanḓa ha tshiliṅwa tshi tevhelaho."
+  },
+  {
+    "english": "Weed and check for pests around {crops}.",
+    "zu": "Susa ukhula bese uhlola izinambuzane eduze kwe-{crops}.",
+    "st": "Lehola mme o hlahlobe dikokonyana ho potoloha {crops}.",
+    "ts": "Hlakulela u tlhela u kambela switsotswana ku rhendzela {crops}.",
+    "ve": "Ṱahulani ni sedzuluse zwikhokhonono u mona na {crops}."
+  },
+  {
+    "english": "Sow {crops}.",
+    "zu": "Hlwanyela i-{crops}.",
+    "st": "Jala {crops}.",
+    "ts": "Byala {crops}.",
+    "ve": "Zwalani {crops}."
+  },
+  {
+    "english": "Plant {crops}.",
+    "zu": "Tshala i-{crops}.",
+    "st": "Lema {crops}.",
+    "ts": "Simeka {crops}.",
+    "ve": "Ṱavhani {crops}."
+  },
+  {
+    "english": "From this month, transplant {crops} when seedlings and the bed are ready.",
+    "zu": "Kusukela kule nyanga, tshala i-{crops} kwenye indawo lapho izithombo nombhede sekulungile.",
+    "st": "Ho tloha kgweding ena, fallisetsa {crops} tshimong ha dimela tse nyane le bethe di loketse.",
+    "ts": "Ku sukela eka n’hweti leyi, simeka {crops} loko swimilana ni mubedo swi lulamile.",
+    "ve": "U bva kha ṅwedzi uno, sudzuluselani {crops} tsimuni musi zwimelana na mubete zwo lugela."
+  },
+  {
+    "english": "Water, mulch and check they take.",
+    "zu": "Nisela, wendlale i-mulch bese uhlola ukuthi izithombo ziyamila.",
+    "st": "Nosetsa, kwahela mobu ka mulch mme o hlahlobe hore dimela di tshware.",
+    "ts": "Cheleta, funengeta misava hi mulch u tlhela u kambela leswaku swimilana swa khomelela.",
+    "ve": "Sheledzani, fukedzani mavu nga mulch ni sedzuluse uri zwimelana zwi khou fara."
+  },
+  {
+    "english": "Water and mulch.",
+    "zu": "Nisela bese wendlala i-mulch.",
+    "st": "Nosetsa mme o kwahele mobu ka mulch.",
+    "ts": "Cheleta u tlhela u funengeta misava hi mulch.",
+    "ve": "Sheledzani ni fukedze mavu nga mulch."
+  },
+  {
+    "english": "Where a bed follows another crop, confirm it is finished and cleared before preparing it.",
+    "zu": "Lapho umbhede ulandela esinye isitshalo, qinisekisa ukuthi leso sitshalo sesiqediwe futhi sesisusiwe ngaphambi kokulungisa umbhede.",
+    "st": "Moo bethe e latelang sejalo se seng, netefatsa hore sejalo se qetilwe mme se tlositswe pele o lokisa bethe.",
+    "ts": "Laha mubedo wu landzelaka xibyariwa xin’wana, tiyisisa leswaku xibyariwa xi herile naswona xi susiwile u nga si lulamisa mubedo.",
+    "ve": "Hune mubete wa tevhela tshiṅwe tshiliṅwa, khwaṱhisedzani uri tshiliṅwa tsho fhela na uri tsho bviswa phanḓa ha u lugisa mubete."
+  },
+  {
+    "english": "Beds {numbers}",
+    "zu": "Imibhede {numbers}",
+    "st": "Dibethe {numbers}",
+    "ts": "Mibedo {numbers}",
+    "ve": "Mibete {numbers}"
+  },
+  {
+    "english": "Plots {numbers}",
+    "zu": "Izinsimu {numbers}",
+    "st": "Ditshimo {numbers}",
+    "ts": "Tinsimu {numbers}",
+    "ve": "Tsimu {numbers}"
+  },
+  {
+    "english": "Field sheet",
+    "zu": "Ishidi lomsebenzi wasensimini",
+    "st": "Leqephe la mosebetsi wa tshimo",
+    "ts": "Phepha ra mintirho ya nsimu",
+    "ve": "Bammbiri ḽa mishumo ya tsimuni"
+  },
+  {
+    "english": "{month} field sheet",
+    "zu": "Ishidi lomsebenzi wasensimini lika-{month}",
+    "st": "Leqephe la mosebetsi wa tshimo la {month}",
+    "ts": "Phepha ra mintirho ya nsimu ra {month}",
+    "ve": "Bammbiri ḽa mishumo ya tsimuni ḽa {month}"
+  },
+  {
+    "english": "{plan} - tick each job off as it is done.",
+    "zu": "{plan} - faka uphawu emsebenzini ngamunye uma usuqediwe.",
+    "st": "{plan} - tshwaya mosebetsi ka mong ha o qetilwe.",
+    "ts": "{plan} - fungha ntirho wun’wana ni wun’wana loko wu herile.",
+    "ve": "{plan} - swayani mushumo muṅwe na muṅwe musi wo no fhela."
+  },
+  {
+    "english": "{jobs} jobs - {planting} sowing / planting - {harvest} harvest / recording",
+    "zu": "Imisebenzi engu-{jobs} - ukuhlwanyela / ukutshala okungu-{planting} - ukuvuna / ukubhala okungu-{harvest}",
+    "st": "Mesebetsi e {jobs} - ho jala / ho lema ho {planting} - ho kotula / ho rekota ho {harvest}",
+    "ts": "Mintirho ya {jobs} - ku byala / ku simeka ka {planting} - ku tshovela / ku rhekhoda ka {harvest}",
+    "ve": "Mishumo ya {jobs} - u zwala / u ṱavha ha {planting} - u kaṋa / u rekhoda ha {harvest}"
+  },
+  {
+    "english": "DONE",
+    "zu": "SEKUQEDIWE",
+    "st": "O QETILWE",
+    "ts": "SWI HERILE",
+    "ve": "ZWO FHELA"
+  },
+  {
+    "english": "PLACE",
+    "zu": "INDAWO",
+    "st": "SEBAKA",
+    "ts": "NDHAWU",
+    "ve": "FHETHU"
+  },
+  {
+    "english": "WORK TO COMPLETE",
+    "zu": "UMSEBENZI OKUFANELE UQEDWE",
+    "st": "MOSEBETSI O LOKELANG HO QETWA",
+    "ts": "NTIRHO LOWU FANELEKE KU HETIWA",
+    "ve": "MUSHUMO UNE WA TEA U FHEDZWA"
+  },
+  {
+    "english": "DATE / NOTE",
+    "zu": "USUKU / OKUBHALIWE",
+    "st": "LETSATSI / TLHOKOMEDISO",
+    "ts": "SIKU / NKATSAKANYO",
+    "ve": "DATUMU / ZWIṄWALWA"
+  },
+  {
+    "english": "Fruit, berries and animal products - record",
+    "zu": "Izithelo, amajikijolo nemikhiqizo yezilwane - bhala phansi",
+    "st": "Ditholwana, menokotshwai le dihlahiswa tsa diphoofolo - rekota",
+    "ts": "Mihandzu, tiberry ni swikumiwa swa swifuwo - rhekhoda",
+    "ve": "Mitshelo, maberi na zwibveledzwa zwa zwifuwo - rekhodani"
+  },
+  {
+    "english": "These are the same locally confirmed months as the picture calendar. Check readiness and record what actually happens; no quantity is promised.",
+    "zu": "Lezi yizinyanga ezifanayo eziqinisekiswe endaweni njengasekhalendeni lezithombe. Hlola ukulungela bese ubhala okwenzeka ngempela; abukho ubuningi obuthenjisiwe.",
+    "st": "Tsena ke tsona dikgwedi tse netefaditsweng sebakeng sa heno tse khalendareng ya ditshwantsho. Hlahloba ho loka mme o rekote se hlileng se etsahalang; ha ho bongata bo tshepisitsweng.",
+    "ts": "Leti i tin’hweti leti fanaka leti tiyisisiweke endhawini leti nga eka khalendara ya swifaniso. Kambela ku lulama u tlhela u rhekhoda leswi humelelaka hakunene; a ku tshepisiwi nhlayo.",
+    "ve": "I miṅwedzi yeneyo yo khwaṱhisedzwaho henefho ine ya vha kha khaḽenda ya zwifanyiso. Sedzulusani u lugela ni rekhode zwine zwa itea vhukuma; a hu na vhunzhi ho fulufhedziswaho."
+  },
+  {
+    "english": "Fruit / berries",
+    "zu": "Izithelo / amajikijolo",
+    "st": "Ditholwana / menokotshwai",
+    "ts": "Mihandzu / tiberry",
+    "ve": "Mitshelo / maberi"
+  },
+  {
+    "english": "Animals",
+    "zu": "Izilwane",
+    "st": "Diphoofolo",
+    "ts": "Swifuwo",
+    "ve": "Zwifuwo"
+  },
+  {
+    "english": "Pick {name} when ready; record actual harvest and where it went.",
+    "zu": "Vuna i-{name} lapho isilungile; bhala isivuno sangempela nokuthi siye kuphi.",
+    "st": "Kotula {name} ha e loketse; rekota kotulo ya sebele le moo e ileng teng.",
+    "ts": "Tshovela {name} loko swi lulamile; rhekhoda ntshovelo wa xiviri ni laha wu yeke kona.",
+    "ve": "Kaṋani {name} musi yo lugela; rekhodani khaṋo ya vhukuma na he ya ya hone."
+  },
+  {
+    "english": "{name}: record actual production, household use, sales and losses.",
+    "zu": "{name}: bhala umkhiqizo wangempela, okusetshenziswe ekhaya, okuthengisiwe nokulahlekile.",
+    "st": "{name}: rekota tlhahiso ya sebele, tshebediso ya lelapa, thekiso le tahlehelo.",
+    "ts": "{name}: rhekhoda vuhumelerisi bya xiviri, leswi tirhisiweke ekaya, leswi xavisiweke ni leswi lahlekeke.",
+    "ve": "{name}: rekhodani zwibveledzwa zwa vhukuma, zwo shumiswaho muṱani, zwo rengiswaho na zwo xelaho."
+  },
+  {
+    "english": "Care and establishment - dates to confirm",
+    "zu": "Ukunakekela nokuqala ukutshala - izinsuku okufanele ziqinisekiswe",
+    "st": "Tlhokomelo le ho qala ho lema - matsatsi a lokelang ho netefatswa",
+    "ts": "Nhlayiso ni ku sungula ku byala - masiku lama faneleke ku tiyisisiwa",
+    "ve": "Ndondolo na u thoma u ṱavha - datumu dzine dza tea u khwaṱhisedzwa"
+  },
+  {
+    "english": "Undated reminders, not scheduled harvests. Check local care and readiness before establishment; record dates when known.",
+    "zu": "Izikhumbuzi ezingenazinsuku, hhayi ukuvuna okuhleliwe. Hlola ukunakekelwa nokulungela kwendawo ngaphambi kokuqala ukutshala; bhala izinsuku uma sezaziwa.",
+    "st": "Dikgopotso tse se nang matsatsi, eseng kotulo e rerilweng. Hlahloba tlhokomelo le ho loka ha sebaka pele o qala ho lema; rekota matsatsi ha a tsejwa.",
+    "ts": "Switsundzuxo leswi nga riki na masiku, a hi mintshovelo leyi vekeriweke nkarhi. Kambela nhlayiso wa ndhawu ni ku lulama u nga si sungula ku byala; rhekhoda masiku loko ma tiveka.",
+    "ve": "Khumbudzo dzi si na datumu, hu si khaṋo dzo dzudzanywaho. Sedzulusani ndondolo ya henefho na u lugela phanḓa ha u thoma u ṱavha; rekhodani datumu musi dzi tshi ḓivhea."
+  },
+  {
+    "english": "Animal housing",
+    "zu": "Izindawo zokuhlala izilwane",
+    "st": "Matlo a diphoofolo",
+    "ts": "Tindlu ta swifuwo",
+    "ve": "Madulo a zwifuwo"
+  },
+  {
+    "english": "Mapped plants",
+    "zu": "Izitshalo ezisebalazweni",
+    "st": "Dimela tse mmapeng",
+    "ts": "Swimila leswi nga emepeni",
+    "ve": "Zwimela zwi re kha mapa"
+  },
+  {
+    "english": "Field record",
+    "zu": "Irekhodi lasensimini",
+    "st": "Rekoto ya tshimo",
+    "ts": "Rhekhodo ya nsimu",
+    "ve": "Rekhodo ya tsimuni"
+  },
+  {
+    "english": "Plan versus reality",
+    "zu": "Uhlelo uma luqhathaniswa nokwenzekile",
+    "st": "Moralo ha o bapiswa le se etsahetseng",
+    "ts": "Pulani loko yi pimanisiwa ni leswi humeleleke",
+    "ve": "Pulane i tshi vhambedzwa na zwe zwa itea"
+  },
+  {
+    "english": "Monthly harvest and field record",
+    "zu": "Irekhodi lenyanga lokuvuna nensimu",
+    "st": "Rekoto ya kgwedi ya kotulo le tshimo",
+    "ts": "Rhekhodo ya n’hweti ya ntshovelo ni nsimu",
+    "ve": "Rekhodo ya ṅwedzi ya khaṋo na tsimu"
+  },
+  {
+    "english": "Write the month: ____________________   Team: ____________________",
+    "zu": "Bhala inyanga: ____________________   Ithimba: ____________________",
+    "st": "Ngola kgwedi: ____________________   Sehlopha: ____________________",
+    "ts": "Tsala n’hweti: ____________________   Ntlawa: ____________________",
+    "ve": "Ṅwalani ṅwedzi: ____________________   Tshigwada: ____________________"
+  },
+  {
+    "english": "Write down what actually happened",
+    "zu": "Bhala okwenzeke ngempela",
+    "st": "Ngola se hlileng se etsahetseng",
+    "ts": "Tsala leswi humeleleke hakunene",
+    "ve": "Ṅwalani zwe zwa itea vhukuma"
+  },
+  {
+    "english": "Record the date, crop, bed and actual harvest weight. Write how much was used, kept, shared or lost. These records help you check the next plan.",
+    "zu": "Bhala usuku, isitshalo, umbhede nesisindo sangempela sesivuno. Bhala ukuthi kungakanani okusetshenzisiwe, okugciniwe, okwabelwe abanye noma okulahlekile. Lawa marekhodi akusiza uhlole uhlelo olulandelayo.",
+    "st": "Rekota letsatsi, sejalo, bethe le boima ba kotulo ya sebele. Ngola hore ho sebedisitswe, ho bolokilwe, ho arolelanwe kapa ho lahlehile bokae. Direkoto tsena di o thusa ho hlahloba moralo o latelang.",
+    "ts": "Rhekhoda siku, xibyariwa, mubedo ni ntiko wa ntshovelo wa xiviri. Tsala leswaku ku tirhisiwe, ku hlayisiwile, ku averiwile van’wana kumbe ku lahlekile swo fikela kwihi. Tirhekhodo leti ti ku pfuna ku kambela pulani leyi landzelaka.",
+    "ve": "Rekhodani datumu, tshiliṅwa, mubete na tshileme tsha khaṋo ya vhukuma. Ṅwalani uri ho shumiswa, ho vhulungwa, ho kovhekanywa kana ho xela zwi ngafhani. Rekhodo idzi dzi ni thusa u sedzulusa pulane i tevhelaho."
+  },
+  {
+    "english": "Harvest record",
+    "zu": "Irekhodi lokuvuna",
+    "st": "Rekoto ya kotulo",
+    "ts": "Rhekhodo ya ntshovelo",
+    "ve": "Rekhodo ya khaṋo"
+  },
+  {
+    "english": "Date",
+    "zu": "Usuku",
+    "st": "Letsatsi",
+    "ts": "Siku",
+    "ve": "Datumu"
+  },
+  {
+    "english": "Crop / bed",
+    "zu": "Isitshalo / umbhede",
+    "st": "Sejalo / bethe",
+    "ts": "Xibyariwa / mubedo",
+    "ve": "Tshiliṅwa / mubete"
+  },
+  {
+    "english": "Picked kg",
+    "zu": "Okuvuniwe kg",
+    "st": "Ho kotutsweng kg",
+    "ts": "Swo tshoveriwa kg",
+    "ve": "Zwo kaṋwaho kg"
+  },
+  {
+    "english": "Used kg",
+    "zu": "Okusetshenzisiwe kg",
+    "st": "Ho sebedisitsweng kg",
+    "ts": "Swo tirhisiwa kg",
+    "ve": "Zwo shumiswaho kg"
+  },
+  {
+    "english": "Stored kg",
+    "zu": "Okugciniwe kg",
+    "st": "Ho bolokilweng kg",
+    "ts": "Swo hlayisiwa kg",
+    "ve": "Zwo vhulungwaho kg"
+  },
+  {
+    "english": "Sold/shared kg",
+    "zu": "Okuthengisiwe/okwabiwe kg",
+    "st": "Ho rekisitsweng/ho arolelanweng kg",
+    "ts": "Swo xavisiwa/averiwa kg",
+    "ve": "Zwo rengiswaho/kovhekanywaho kg"
+  },
+  {
+    "english": "Lost kg",
+    "zu": "Okulahlekile kg",
+    "st": "Ho lahlehileng kg",
+    "ts": "Swo lahleka kg",
+    "ve": "Zwo xelaho kg"
+  },
+  {
+    "english": "Production record",
+    "zu": "Irekhodi lomkhiqizo",
+    "st": "Rekoto ya tlhahiso",
+    "ts": "Rhekhodo ya vuhumelerisi",
+    "ve": "Rekhodo ya zwibveledzwa"
+  },
+  {
+    "english": "Fruit, eggs, honey and other production",
+    "zu": "Izithelo, amaqanda, uju neminye imikhiqizo",
+    "st": "Ditholwana, mahe, mahe a dinotshi le tlhahiso e nngwe",
+    "ts": "Mihandzu, matandza, vulombe ni vuhumelerisi byin’wana",
+    "ve": "Mitshelo, makumba, mutoli na zwiṅwe zwibveledzwa"
+  },
+  {
+    "english": "Use the unit you actually measured",
+    "zu": "Sebenzisa iyunithi olinganise ngayo ngempela",
+    "st": "Sebedisa yuniti eo o hlileng o lekantseng ka yona",
+    "ts": "Tirhisa yuniti leyi u pimeke ha yona hakunene",
+    "ve": "Shumisani yuniti ye na kala ngayo vhukuma"
+  },
+  {
+    "english": "Write the food and its source: tree, coop, hive or bed. Use kg for weighed food, eggs for counted eggs, or jars, bunches or items. Record jar size in the source column. Keep all amounts on one row in the same unit.",
+    "zu": "Bhala ukudla nomthombo wakho: isihlahla, ihhoko lezinkukhu, isidleke sezinyosi noma umbhede. Sebenzisa i-kg uma ukudla kukaliwe ngesisindo, amaqanda uma kubalwe amaqanda, noma izimbiza, izixha noma izinto. Bhala usayizi wembiza kukholomu yomthombo. Gcina wonke amanani asemgqeni owodwa ekuyunithi efanayo.",
+    "st": "Ngola dijo le mohlodi wa tsona: sefate, hoko ya dikgoho, motshitshi wa dinotshi kapa bethe. Sebedisa kg bakeng sa dijo tse lekantsweng ka boima, mahe bakeng sa mahe a balilweng, kapa dinkgo, dingata kapa dintho. Rekota boholo ba nkgo kholomong ya mohlodi. Boloka bongata bohle moleng o le mong ka yuniti e tshwanang.",
+    "ts": "Tsala swakudya ni xihlovo xa swona: murhi, yindlu ya tihuku, xihahlu xa tinyoxi kumbe mubedo. Tirhisa kg eka swakudya leswi pimiweke hi ntiko, matandza eka matandza lama hlayiweke, kumbe tijara, tinyandza kumbe swilo. Rhekhoda sayizi ya jara eka kholomo ya xihlovo. Tirhisa yuniti yin’we eka nhlayo yin’wana ni yin’wana leyi nga eka ntila wun’we.",
+    "ve": "Ṅwalani zwiḽiwa na tshiko tshazwo: muri, hoko ya khuhu, ḓulu ḽa ṋotshi kana mubete. Shumisani kg kha zwiḽiwa zwo kalwaho nga tshileme, makumba kha makumba o vhaliwaho, kana dzidzhege, zwivhofho kana zwithu. Rekhodani saizi ya dzhege kha khoḽomu ya tshiko. Vheani zwivhalo zwoṱhe zwi re kha mutalo muthihi kha yuniti nthihi."
+  },
+  {
+    "english": "Food / source",
+    "zu": "Ukudla / umthombo",
+    "st": "Dijo / mohlodi",
+    "ts": "Swakudya / xihlovo",
+    "ve": "Zwiḽiwa / tshiko"
+  },
+  {
+    "english": "Collected",
+    "zu": "Okuqoqiwe",
+    "st": "Ho bokelletsweng",
+    "ts": "Swo hlengeletiwa",
+    "ve": "Zwo kuvhanganywaho"
+  },
+  {
+    "english": "Unit",
+    "zu": "Iyunithi",
+    "st": "Yuniti",
+    "ts": "Yuniti",
+    "ve": "Yuniti"
+  },
+  {
+    "english": "Used",
+    "zu": "Okusetshenzisiwe",
+    "st": "Ho sebedisitsweng",
+    "ts": "Swo tirhisiwa",
+    "ve": "Zwo shumiswaho"
+  },
+  {
+    "english": "Sold/shared",
+    "zu": "Okuthengisiwe/okwabiwe",
+    "st": "Ho rekisitsweng/ho arolelanweng",
+    "ts": "Swo xavisiwa/averiwa",
+    "ve": "Zwo rengiswaho/kovhekanywaho"
+  },
+  {
+    "english": "Lost",
+    "zu": "Okulahlekile",
+    "st": "Ho lahlehileng",
+    "ts": "Swo lahleka",
+    "ve": "Zwo xelaho"
+  },
+  {
+    "english": "Weekly observation",
+    "zu": "Okubonwe ngesonto",
+    "st": "Se bonweng bekeng",
+    "ts": "Leswi xiyisisiweke hi vhiki",
+    "ve": "Zwo sedzuluswaho nga vhege"
+  },
+  {
+    "english": "Week",
+    "zu": "Isonto",
+    "st": "Beke",
+    "ts": "Vhiki",
+    "ve": "Vhege"
+  },
+  {
+    "english": "Rainfall",
+    "zu": "Imvula",
+    "st": "Pula",
+    "ts": "Mpfula",
+    "ve": "Mvula"
+  },
+  {
+    "english": "Irrigation",
+    "zu": "Ukunisela",
+    "st": "Nosetso",
+    "ts": "Ku cheleta",
+    "ve": "U sheledza"
+  },
+  {
+    "english": "Pests / disease",
+    "zu": "Izinambuzane / izifo",
+    "st": "Dikokonyana / mafu",
+    "ts": "Switsotswana / mavabyi",
+    "ve": "Zwikhokhonono / malwadze"
+  },
+  {
+    "english": "What we observed",
+    "zu": "Esikubonile",
+    "st": "Seo re se boneng",
+    "ts": "Leswi hi swi xiyisiseke",
+    "ve": "Zwe ra zwi sedzulusa"
+  },
+  {
+    "english": "What we changed",
+    "zu": "Esikushintshile",
+    "st": "Seo re se fetotseng",
+    "ts": "Leswi hi swi cinceke",
+    "ve": "Zwe ra zwi shandula"
+  },
+  {
+    "english": "Decision for next month",
+    "zu": "Isinqumo senyanga elandelayo",
+    "st": "Qeto ya kgwedi e latelang",
+    "ts": "Xiboho xa n’hweti leyi landzelaka",
+    "ve": "Tsheo ya ṅwedzi u tevhelaho"
+  },
+  {
+    "english": "Observe. Adjust. Write it down.",
+    "zu": "Bheka. Lungisa. Bhala phansi.",
+    "st": "Sheba. Lokisa. Ngola fatshe.",
+    "ts": "Xiyisisa. Cinca leswi faneleke. Tsala.",
+    "ve": "Sedzulusani. Khwinisani. Ṅwalani fhasi."
+  },
+  {
+    "english": "Confirm {date} sowing",
+    "zu": "Qinisekisa ukuhlwanyela kwango-{date}",
+    "st": "Netefatsa ho jala ha {date}",
+    "ts": "Tiyisisa ku byala ka {date}",
+    "ve": "Khwaṱhisedzani u zwala ha {date}"
+  },
+  {
+    "english": "Confirm dated sowing",
+    "zu": "Qinisekisa ukuhlwanyela okunosuku olurekhodiwe",
+    "st": "Netefatsa ho jala ho nang le letsatsi le rekotilweng",
+    "ts": "Tiyisisa ku byala loku nga ni siku leri rhekhodiweke",
+    "ve": "Khwaṱhisedzani u zwala hu re na datumu yo rekhodiwaho"
+  },
+  {
+    "english": "Nursery {month}",
+    "zu": "Indawo yezithombo {month}",
+    "st": "Sebaka sa ho hodisa dimela {month}",
+    "ts": "Ndhawu ya swimilana {month}",
+    "ve": "Fhethu ha zwimelana {month}"
+  },
+  {
+    "english": "Plant {unit} {month}",
+    "zu": "Tshala {unit} ngo-{month}",
+    "st": "Lema {unit} ka {month}",
+    "ts": "Simeka {unit} hi {month}",
+    "ve": "Ṱavhani {unit} nga {month}"
+  },
+  {
+    "english": "Direct sow {month}",
+    "zu": "Hlwanyela ngqo ngo-{month}",
+    "st": "Jala ka kotloloho ka {month}",
+    "ts": "Byala hi ku kongoma hi {month}",
+    "ve": "Zwalani nga ho livhaho nga {month}"
+  },
+  {
+    "english": "Full",
+    "zu": "Konke",
+    "st": "Yohle",
+    "ts": "Hinkwaro",
+    "ve": "Woṱhe"
+  },
+  {
+    "english": "Not confirmed",
+    "zu": "Akukaqinisekiswa",
+    "st": "Ha ho eso netefatswe",
+    "ts": "A swi si tiyisisiwa",
+    "ve": "A zwi athu u khwaṱhisedzwa"
+  },
+  {
+    "english": "Check {first}-{last}; transplant when ready",
+    "zu": "Hlola ngo-{first}-{last}; tshala kwenye indawo lapho izithombo sezilungile",
+    "st": "Hlahloba ka {first}-{last}; fallisetsa dimela tshimong ha di loketse",
+    "ts": "Kambela hi {first}-{last}; simeka swimilana loko swi lulamile",
+    "ve": "Sedzulusani nga {first}-{last}; sudzuluselani zwimelana tsimuni musi zwo lugela"
+  },
+  {
+    "english": "Direct",
+    "zu": "Ngqo",
+    "st": "Ka kotloloho",
+    "ts": "Hi ku kongoma",
+    "ve": "Nga ho livhaho"
+  },
+  {
+    "english": "Confirm sowing",
+    "zu": "Qinisekisa ukuhlwanyela",
+    "st": "Netefatsa ho jala",
+    "ts": "Tiyisisa ku byala",
+    "ve": "Khwaṱhisedzani u zwala"
+  },
+  {
+    "english": "Confirm locally",
+    "zu": "Qinisekisa endaweni",
+    "st": "Netefatsa sebakeng sa heno",
+    "ts": "Tiyisisa endhawini",
+    "ve": "Khwaṱhisedzani henefho"
+  },
+  {
+    "english": "Frost-tender: finish picking before the first frost or cover on clear, still nights.",
+    "zu": "Siyalimala ngenxa yesithwathwa: qeda ukuvuna ngaphambi kwesithwathwa sokuqala noma usimboze ebusuku obungenamafu nobungenamoya.",
+    "st": "Se senngwa ke serame: qeta ho kotula pele ho serame sa pele kapa o se kwahele masiu a hlakileng a se nang moya.",
+    "ts": "Xi onhiwa hi gwitsi: heta ku tshovela ku nga si fika gwitsi ro sungula kumbe u xi funengeta hi vusiku byo tenga byo pfumala moya.",
+    "ve": "Tshi huvhadzwa nga murotholo: fhedzani u kaṋa phanḓa ha murotholo wa u thoma kana ni tshi fukedze nga vhusiku vhu si na makole vhu si na muya."
+  },
+  {
+    "english": "Not verified",
+    "zu": "Akukaqinisekiswa",
+    "st": "Ha e eso netefatswe",
+    "ts": "A swi si tiyisisiwa",
+    "ve": "A zwi athu u khwaṱhisedzwa"
+  },
+  {
+    "english": "No food yield",
+    "zu": "Akukho sivuno sokudla",
+    "st": "Ha ho kotulo ya dijo",
+    "ts": "A ku na ntshovelo wa swakudya",
+    "ve": "A hu na khaṋo ya zwiḽiwa"
+  },
+  {
+    "english": "Full plan",
+    "zu": "Uhlelo oluphelele",
+    "st": "Moralo o felletseng",
+    "ts": "Pulani leyi heleleke",
+    "ve": "Pulane yo fhelelaho"
+  },
+  {
+    "english": "Bed-by-bed plan",
+    "zu": "Uhlelo lombhede ngamunye",
+    "st": "Moralo wa bethe ka nngwe",
+    "ts": "Pulani ya mubedo wun’wana ni wun’wana",
+    "ve": "Pulane ya mubete muṅwe na muṅwe"
+  },
+  {
+    "english": "Each line is one planting. Yield is a conservative benchmark comparison where a verified kg/m² entry exists; \"Not verified\" is never treated as 0kg.",
+    "zu": "Umugqa ngamunye uwukutshalwa okukodwa. Isivuno siyisiqhathaniso esilinganiselwe ngokuqapha lapho kukhona inani le-kg/m² eliqinisekisiwe; \"Akukaqinisekiswa\" akuphathwa nanini njengo-0kg.",
+    "st": "Mola ka mong ke ho lema ho le hong. Kotulo ke papiso ya tekanyo e hlokolosi moo ho nang le rekoto ya kg/m² e netefaditsweng; \"Ha e eso netefatswe\" ha e nkuwe e le 0kg.",
+    "ts": "Ntila wun’wana ni wun’wana i ku byala kun’we. Ntshovelo i mpimaniso wa mpimo wa vukheta laha ku nga ni nhlayo ya kg/m² leyi tiyisisiweke; \"A swi si tiyisisiwa\" a swi tekiwi swi ri 0kg.",
+    "ve": "Mutalo muṅwe na muṅwe ndi u ṱavha huthihi. Khaṋo ndi mbambedzo ya tshikalo tsha vhuronwane hune ha vha na tshivhalo tsha kg/m² tsho khwaṱhisedzwaho; \"A zwi athu u khwaṱhisedzwa\" a zwi dzhiiwi sa 0kg."
+  },
+  {
+    "english": "{crop} (first season only)",
+    "zu": "{crop} (isizini yokuqala kuphela)",
+    "st": "{crop} (sehla sa pele feela)",
+    "ts": "{crop} (nguva yo sungula ntsena)",
+    "ve": "{crop} (khalaṅwaha ya u thoma fhedzi)"
+  },
+  {
+    "english": "Area",
+    "zu": "Indawo",
+    "st": "Sebaka",
+    "ts": "Ndhawu",
+    "ve": "Fhethu"
+  },
+  {
+    "english": "Space",
+    "zu": "Isikhala",
+    "st": "Sebaka",
+    "ts": "Ndhawu",
+    "ve": "Tshikhala"
+  },
+  {
+    "english": "Establish",
+    "zu": "Qala ukutshala",
+    "st": "Qala ho lema",
+    "ts": "Sungula ku byala",
+    "ve": "Thomani u ṱavha"
+  },
+  {
+    "english": "Into field",
+    "zu": "Ukuyisa ensimini",
+    "st": "Ho isa tshimong",
+    "ts": "Ku ya ensin’wini",
+    "ve": "U ya tsimuni"
+  },
+  {
+    "english": "Benchmark",
+    "zu": "Isilinganiso sokuqhathanisa",
+    "st": "Tekanyo ya papiso",
+    "ts": "Mpimo wo pimanisa",
+    "ve": "Tshikalo tsha u vhambedza"
+  },
+  {
+    "english": "growing space",
+    "zu": "indawo yokukhulisa izitshalo",
+    "st": "sebaka sa ho lema",
+    "ts": "ndhawu yo byala",
+    "ve": "tshikhala tsha u ṱavha"
+  },
+  {
+    "english": "{count} bed",
+    "zu": "umbhede ongu-{count}",
+    "st": "bethe e {count}",
+    "ts": "mubedo wa {count}",
+    "ve": "mubete wa {count}"
+  },
+  {
+    "english": "{count} beds",
+    "zu": "imibhede engu-{count}",
+    "st": "dibethe tse {count}",
+    "ts": "mibedo ya {count}",
+    "ve": "mibete ya {count}"
+  },
+  {
+    "english": "{count} staple plot",
+    "zu": "insimu yesitshalo esiyisisekelo engu-{count}",
+    "st": "tshimo e {count} ya dijalo tsa motheo",
+    "ts": "nsimu ya {count} ya swakudya swa nkoka",
+    "ve": "tsimu ya {count} ya zwiḽiwa zwa mutheo"
+  },
+  {
+    "english": "{count} staple plots",
+    "zu": "izinsimu zezitshalo eziyisisekelo ezingu-{count}",
+    "st": "ditshimo tse {count} tsa dijalo tsa motheo",
+    "ts": "tinsimu ta {count} ta swakudya swa nkoka",
+    "ve": "tsimu dza {count} dza zwiḽiwa zwa mutheo"
+  },
+  {
+    "english": "Not shown",
+    "zu": "Akuboniswa",
+    "st": "Ha e bontshwe",
+    "ts": "A swi kombisiwi",
+    "ve": "A zwi sumbedzwi"
+  },
+  {
+    "english": "benchmark total blocked",
+    "zu": "isamba sesilinganiso sokuqhathanisa sivinjiwe",
+    "st": "kakaretso ya tekanyo ya papiso e thibetswe",
+    "ts": "nhlayo ya mpimo wo pimanisa yi siveriwile",
+    "ve": "tshivhalo tsha tshikalo tsha u vhambedza tsho thivhelwa"
+  },
+  {
+    "english": "known benchmark total",
+    "zu": "isamba sesilinganiso sokuqhathanisa esaziwayo",
+    "st": "kakaretso e tsejwang ya tekanyo ya papiso",
+    "ts": "nhlayo leyi tivekaka ya mpimo wo pimanisa",
+    "ve": "tshivhalo tshi ḓivheaho tsha tshikalo tsha u vhambedza"
+  },
+  {
+    "english": "resolve overlapping shares in {places}",
+    "zu": "lungisa izabelo ezigqagqene ku-{places}",
+    "st": "lokisa dikarolo tse kopanang ho {places}",
+    "ts": "lulamisa swiphemu leswi khomanaka eka {places}",
+    "ve": "lugisani zwipiḓa zwi dzhianelaho kha {places}"
+  },
+  {
+    "english": "verified kg/m² crop entries only",
+    "zu": "amanani ezitshalo e-kg/m² aqinisekisiwe kuphela",
+    "st": "direkoto tsa dijalo tsa kg/m² tse netefaditsweng feela",
+    "ts": "tinhlayo ta swibyariwa ta kg/m² leti tiyisisiweke ntsena",
+    "ve": "zwivhalo zwa zwiliṅwa zwa kg/m² zwo khwaṱhisedzwaho fhedzi"
+  },
+  {
+    "english": "no verified kg/m² crop entry",
+    "zu": "alikho inani lesitshalo le-kg/m² eliqinisekisiwe",
+    "st": "ha ho rekoto ya sejalo ya kg/m² e netefaditsweng",
+    "ts": "a ku na nhlayo ya xibyariwa ya kg/m² leyi tiyisisiweke",
+    "ve": "a hu na tshivhalo tsha tshiliṅwa tsha kg/m² tsho khwaṱhisedzwaho"
+  },
+  {
+    "english": "benchmark density blocked",
+    "zu": "ukuminyana kwesilinganiso sokuqhathanisa kuvinjiwe",
+    "st": "tekanyo ya papiso ka sebaka e thibetswe",
+    "ts": "mpimo wo pimanisa hi ndhawu wu siveriwile",
+    "ve": "tshikalo tsha u vhambedza nga tshikhala tsho thivhelwa"
+  },
+  {
+    "english": "benchmark density",
+    "zu": "ukuminyana kwesilinganiso sokuqhathanisa",
+    "st": "tekanyo ya papiso ka sebaka",
+    "ts": "mpimo wo pimanisa hi ndhawu",
+    "ve": "tshikalo tsha u vhambedza nga tshikhala"
+  },
+  {
+    "english": "blocked with the total above until shares are resolved",
+    "zu": "kuvinjwe kanye nesamba esingenhla kuze kulungiswe izabelo",
+    "st": "e thibetswe le kakaretso e ka hodimo ho fihlela dikarolo di lokiswa",
+    "ts": "swi siveriwile ni nhlayo leyi nga ehenhla ku fikela loko swiphemu swi lulamisiwile",
+    "ve": "zwo thivhelwa na tshivhalo tshi re afho nṱha u swika zwipiḓa zwi tshi lugiswa"
+  },
+  {
+    "english": "known total ÷ whole growing area, to compare plans",
+    "zu": "isamba esaziwayo ÷ yonke indawo yokukhulisa, ukuze uqhathanise izinhlelo",
+    "st": "kakaretso e tsejwang ÷ sebaka sohle sa ho lema, ho bapisa meralo",
+    "ts": "nhlayo leyi tivekaka ÷ ndhawu yo byala hinkwaro, ku pimanisa tipulani",
+    "ve": "tshivhalo tshi ḓivheaho ÷ tshikhala tshoṱhe tsha u ṱavha, u vhambedza pulane"
+  },
+  {
+    "english": "known total after {loss}% loss",
+    "zu": "isamba esaziwayo ngemva kokulahleka okungu-{loss}%",
+    "st": "kakaretso e tsejwang kamora tahlehelo ya {loss}%",
+    "ts": "nhlayo leyi tivekaka endzhaku ka ku lahlekeriwa ka {loss}%",
+    "ve": "tshivhalo tshi ḓivheaho nga murahu ha u xelelwa ha {loss}%"
+  },
+  {
+    "english": "uses the loss allowance you confirmed",
+    "zu": "kusebenzisa umkhawulo wokulahleka owuqinisekisile",
+    "st": "e sebedisa tekanyo ya tahlehelo eo o e netefaditseng",
+    "ts": "swi tirhisa mpimo wa ku lahlekeriwa lowu u wu tiyisiseke",
+    "ve": "zwi shumisa tshikalo tsha u xelelwa tshe na tshi khwaṱhisedza"
+  },
+  {
+    "english": "Not calculated",
+    "zu": "Akubaliwe",
+    "st": "Ha e balwe",
+    "ts": "A swi hlayelwanga",
+    "ve": "A zwi athu u vhalelwa"
+  },
+  {
+    "english": "loss-adjusted total",
+    "zu": "isamba esilungiswe ngokulahleka",
+    "st": "kakaretso e lokisitsweng ka tahlehelo",
+    "ts": "nhlayo leyi lulamisiweke hi ku lahlekeriwa",
+    "ve": "tshivhalo tsho lugiswaho nga u xelelwa"
+  },
+  {
+    "english": "confirm a loss allowance from actual records",
+    "zu": "qinisekisa umkhawulo wokulahleka ngamarekhodi angempela",
+    "st": "netefatsa tekanyo ya tahlehelo ka direkoto tsa sebele",
+    "ts": "tiyisisa mpimo wa ku lahlekeriwa hi tirhekhodo ta xiviri",
+    "ve": "khwaṱhisedzani tshikalo tsha u xelelwa nga rekhodo dza vhukuma"
+  },
+  {
+    "english": "fresh-picking months",
+    "zu": "izinyanga zokuvuna okusha",
+    "st": "dikgwedi tsa ho kotula tse foreshe",
+    "ts": "tin’hweti to tshovela swakudya leswintshwa",
+    "ve": "miṅwedzi ya u kaṋa zwiḽiwa zwiswa"
+  },
+  {
+    "english": "timing windows only; no monthly kg inferred",
+    "zu": "izikhathi zokuvuna kuphela; akucatshangwa ama-kg enyanga",
+    "st": "dinako tsa kotulo feela; ha ho kg tsa kgwedi tse hakanyetswang",
+    "ts": "minkarhi yo tshovela ntsena; a ku ringanyetiwi kg ta n’hweti",
+    "ve": "zwifhinga zwa u kaṋa fhedzi; a hu anganyelwi kg dza ṅwedzi"
+  },
+  {
+    "english": "{places} has overlapping or invalid planting shares, so every kg and value subtotal is withheld.",
+    "zu": "{places}: izabelo zokutshala zigqagqene noma azivumelekile, ngakho zonke izamba ezincane zama-kg nezenani lemali aziboniswa.",
+    "st": "{places}: dikarolo tsa ho lema di a kopana kapa ha di a nepahala, kahoo dikakaretso tsohle tsa kg le tsa boleng ba tjhelete ha di bontshwe.",
+    "ts": "{places}: swiphemu swo byala swa khomana kumbe a swi tirhi, kutani tinhlayo hinkwato ta kg ni ta nkoka wa mali a ti kombisiwi.",
+    "ve": "{places}: zwipiḓa zwa u ṱavha zwi a dzhianela kana a zwo ngo tea, zwenezwo zwivhalo zwoṱhe zwa kg na zwa ndeme ya tshelede a zwi sumbedzwi."
+  },
+  {
+    "english": "{places} have overlapping or invalid planting shares, so every kg and value subtotal is withheld.",
+    "zu": "{places}: izabelo zokutshala zigqagqene noma azivumelekile, ngakho zonke izamba ezincane zama-kg nezenani lemali aziboniswa.",
+    "st": "{places}: dikarolo tsa ho lema di a kopana kapa ha di a nepahala, kahoo dikakaretso tsohle tsa kg le tsa boleng ba tjhelete ha di bontshwe.",
+    "ts": "{places}: swiphemu swo byala swa khomana kumbe a swi tirhi, kutani tinhlayo hinkwato ta kg ni ta nkoka wa mali a ti kombisiwi.",
+    "ve": "{places}: zwipiḓa zwa u ṱavha zwi a dzhianela kana a zwo ngo tea, zwenezwo zwivhalo zwoṱhe zwa kg na zwa ndeme ya tshelede a zwi sumbedzwi."
+  },
+  {
+    "english": "{crop} has the largest known benchmark volume at {kg} kg.",
+    "zu": "{crop} sinesilinganiso sevolumu esaziwayo esikhulu kunazo zonke, esingu-{kg} kg.",
+    "st": "{crop} e na le bongata bo boholo ka ho fetisisa bo tsejwang ba tekanyo ya papiso, e leng {kg} kg.",
+    "ts": "{crop} xi ni nhlayo leyikulu swinene leyi tivekaka ya mpimo wo pimanisa ya {kg} kg.",
+    "ve": "{crop} tshi na tshivhalo tshihulwane tshine tsha ḓivhea tsha tshikalo tsha u vhambedza tsha {kg} kg."
+  },
+  {
+    "english": "{crop} follows in the benchmark comparison at {kg} kg.",
+    "zu": "{crop} siyalandela ekuqhathanisweni kwesilinganiso, ngo-{kg} kg.",
+    "st": "{crop} e latela papisong ya tekanyo ka {kg} kg.",
+    "ts": "{crop} xi landzela eka mpimaniso wa mpimo hi {kg} kg.",
+    "ve": "{crop} tshi a tevhela kha mbambedzo ya tshikalo nga {kg} kg."
+  },
+  {
+    "english": "{crops} has no verified kg/m² benchmark and is excluded from every kg total, not counted as 0kg.",
+    "zu": "{crops}: asikho isilinganiso se-kg/m² esiqinisekisiwe, ngakho akufakwa kunoma yisiphi isamba sama-kg futhi akubalwa njengo-0kg.",
+    "st": "{crops}: ha ho tekanyo ya kg/m² e netefaditsweng, kahoo ha e kenngwe kakaretsong efe kapa efe ya kg mme ha e balwe e le 0kg.",
+    "ts": "{crops}: a ku na mpimo wa kg/m² lowu tiyisisiweke, kutani a swi katsiwanga eka nhlayo yin’wana ni yin’wana ya kg naswona a swi hlayiwi swi ri 0kg.",
+    "ve": "{crops}: a hu na tshikalo tsha kg/m² tsho khwaṱhisedzwaho, zwenezwo a zwi katelwi kha tshivhalo tshiṅwe na tshiṅwe tsha kg nahone a zwi vhalwi sa 0kg."
+  },
+  {
+    "english": "{crops} have no verified kg/m² benchmark and are excluded from every kg total, not counted as 0kg.",
+    "zu": "{crops}: asikho isilinganiso se-kg/m² esiqinisekisiwe, ngakho akufakwa kunoma yisiphi isamba sama-kg futhi akubalwa njengo-0kg.",
+    "st": "{crops}: ha ho tekanyo ya kg/m² e netefaditsweng, kahoo ha di kenngwe kakaretsong efe kapa efe ya kg mme ha di balwe e le 0kg.",
+    "ts": "{crops}: a ku na mpimo wa kg/m² lowu tiyisisiweke, kutani a swi katsiwanga eka nhlayo yin’wana ni yin’wana ya kg naswona a swi hlayiwi swi ri 0kg.",
+    "ve": "{crops}: a hu na tshikalo tsha kg/m² tsho khwaṱhisedzwaho, zwenezwo a zwi katelwi kha tshivhalo tshiṅwe na tshiṅwe tsha kg nahone a zwi vhalwi sa 0kg."
+  },
+  {
+    "english": "No crop in this plan has a verified kg/m² food-yield benchmark, so no kilogram comparison is shown.",
+    "zu": "Asikho isitshalo kulolu hlelo esinesilinganiso sesivuno sokudla se-kg/m² esiqinisekisiwe, ngakho akukho kuqhathaniswa kwamakhilogremu okuboniswa.",
+    "st": "Ha ho sejalo moralong ona se nang le tekanyo ya kotulo ya dijo ya kg/m² e netefaditsweng, kahoo ha ho papiso ya dikilogerama e bontshwang.",
+    "ts": "A ku na xibyariwa eka pulani leyi lexi nga ni mpimo wa ntshovelo wa swakudya wa kg/m² lowu tiyisisiweke, kutani a ku kombisiwi mpimaniso wa tikhilogireme.",
+    "ve": "A hu na tshiliṅwa kha pulane iyi tshi re na tshikalo tsha khaṋo ya zwiḽiwa tsha kg/m² tsho khwaṱhisedzwaho, zwenezwo a hu sumbedzwi mbambedzo ya dzikhilogiramu."
+  },
+  {
+    "english": "{months} carry the most planned jobs — counted as jobs, not hours.",
+    "zu": "{months} zinemisebenzi ehleliwe eminingi kunazo zonke — kubalwa imisebenzi, hhayi amahora.",
+    "st": "{months} di na le mesebetsi e rerilweng e mengata ka ho fetisisa — e balwa e le mesebetsi, eseng dihora.",
+    "ts": "{months} ti ni mintirho leyi kunguhatiweke yo tala swinene — yi hlayiwa yi ri mintirho, ku nga ri tiawara.",
+    "ve": "{months} dzi na mishumo yo dzudzanywaho minzhi u fhira yoṱhe — i vhalwa sa mishumo, hu si awara."
+  },
+  {
+    "english": "{count} bed-month of the year have no crop in the ground.",
+    "zu": "Inyanga yombhede engu-{count} yonyaka ayinasitshalo emhlabathini.",
+    "st": "Kgwedi ya bethe e {count} ya selemo ha e na sejalo mobung.",
+    "ts": "N’hweti ya mubedo ya {count} ya lembe a yi na xibyariwa emavuni.",
+    "ve": "Ṅwedzi wa mubete wa {count} wa ṅwaha a u na tshiliṅwa mavuni."
+  },
+  {
+    "english": "{count} bed-months of the year have no crop in the ground.",
+    "zu": "Izinyanga zemibhede ezingu-{count} zonyaka azinasitshalo emhlabathini.",
+    "st": "Dikgwedi tsa dibethe tse {count} tsa selemo ha di na sejalo mobung.",
+    "ts": "Tin’hweti ta mibedo ta {count} ta lembe a ti na xibyariwa emavuni.",
+    "ve": "Miṅwedzi ya mibete ya {count} ya ṅwaha a i na tshiliṅwa mavuni."
+  },
+  {
+    "english": "Resolve the planting shares in {places} before using any crop benchmark or value scenario.",
+    "zu": "Lungisa izabelo zokutshala ku-{places} ngaphambi kokusebenzisa noma yisiphi isilinganiso sesitshalo noma isimo senani lemali.",
+    "st": "Lokisa dikarolo tsa ho lema ho {places} pele o sebedisa tekanyo efe kapa efe ya sejalo kapa boemo ba boleng ba tjhelete.",
+    "ts": "Lulamisa swiphemu swo byala eka {places} u nga si tirhisa mpimo wihi kumbe wihi wa xibyariwa kumbe xiyimo xa nkoka wa mali.",
+    "ve": "Lugisani zwipiḓa zwa u ṱavha kha {places} phanḓa ha u shumisa tshikalo tshiṅwe na tshiṅwe tsha tshiliṅwa kana tshiimo tsha ndeme ya tshelede."
+  },
+  {
+    "english": "Compare the {crop} benchmark with actual harvest records before planning storage or sales.",
+    "zu": "Qhathanisa isilinganiso se-{crop} namarekhodi esivuno sangempela ngaphambi kokuhlela ukugcina noma ukuthengisa.",
+    "st": "Bapisa tekanyo ya {crop} le direkoto tsa kotulo ya sebele pele o rera polokelo kapa thekiso.",
+    "ts": "Pimanisa mpimo wa {crop} ni tirhekhodo ta ntshovelo wa xiviri u nga si kunguhata ku hlayisa kumbe ku xavisa.",
+    "ve": "Vhambedzani tshikalo tsha {crop} na rekhodo dza khaṋo ya vhukuma phanḓa ha u dzudzanya u vhulunga kana u rengisa."
+  },
+  {
+    "english": "Check actual household demand and recorded harvests; the benchmark comparison is not a meal or surplus guarantee.",
+    "zu": "Hlola izidingo zangempela zasekhaya nezivuno ezirekhodiwe; ukuqhathaniswa kwesilinganiso akusona isiqinisekiso sokudla noma sensalela.",
+    "st": "Hlahloba tlhoko ya sebele ya lelapa le kotulo e rekotilweng; papiso ya tekanyo ha se tiisetso ya dijo kapa masalla.",
+    "ts": "Kambela xilaveko xa xiviri xa muti ni mintshovelo leyi rhekhodiweke; mpimaniso wa mpimo a hi xitiyisekiso xa swakudya kumbe leswi salaka.",
+    "ve": "Sedzulusani ṱhoḓea dza vhukuma dza muṱa na khaṋo dzo rekhodiwaho; mbambedzo ya tshikalo a si khwaṱhisedzo ya zwiḽiwa kana zwo salaho."
+  },
+  {
+    "english": "Check who is available before the {first}-{last} job peak, and time the work against real hours.",
+    "zu": "Hlola ukuthi ubani otholakalayo ngaphambi kwesikhathi semisebenzi eminingi sango-{first}-{last}, bese ukala umsebenzi ngamahora angempela.",
+    "st": "Hlahloba hore ke mang ya fumanehang pele ho nako ya mesebetsi e mengata ya {first}-{last}, mme o lekanye mosebetsi ka dihora tsa sebele.",
+    "ts": "Kambela leswaku i mani loyi a kumekaka ku nga si fika nkarhi wa mintirho yo tala wa {first}-{last}, u tlhela u pima nkarhi wa mintirho hi tiawara ta xiviri.",
+    "ve": "Sedzulusani uri ndi nnyi a re hone phanḓa ha tshifhinga tsha mishumo minzhi tsha {first}-{last}, ni kale tshifhinga tsha mushumo nga awara dza vhukuma."
+  },
+  {
+    "english": "Confirm a loss allowance from actual records before calculating a usable total.",
+    "zu": "Qinisekisa umkhawulo wokulahleka ngamarekhodi angempela ngaphambi kokubala isamba esingasetshenziswa.",
+    "st": "Netefatsa tekanyo ya tahlehelo ka direkoto tsa sebele pele o bala kakaretso e ka sebediswang.",
+    "ts": "Tiyisisa mpimo wa ku lahlekeriwa hi tirhekhodo ta xiviri u nga si hlayela nhlayo leyi nga tirhisiwaka.",
+    "ve": "Khwaṱhisedzani tshikalo tsha u xelelwa nga rekhodo dza vhukuma phanḓa ha u vhalela tshivhalo tshi shumiseaho."
+  },
+  {
+    "english": "A PRACTICAL PLAN FOR THE GARDEN TEAM",
+    "zu": "UHLELO OLUSEBENZISEKAYO LWETHIMBA LENGADI",
+    "st": "MORALO O SEBETSEHANG BAKENG SA SEHLOPHA SA TSHIMO",
+    "ts": "PULANI LEYI TIRHISEKAKA YA NTLAWA WA NSIMU",
+    "ve": "PULANE I SHUMISEAHO YA TSHIGWADA TSHA TSIMU"
+  },
+  {
+    "english": "Production plan - {plan}",
+    "zu": "Uhlelo lokukhiqiza - {plan}",
+    "st": "Moralo wa tlhahiso - {plan}",
+    "ts": "Pulani ya vuhumelerisi - {plan}",
+    "ve": "Pulane ya zwibveledzwa - {plan}"
+  },
+  {
+    "english": "{start} to {end}",
+    "zu": "{start} kuya ku-{end}",
+    "st": "{start} ho isa ho {end}",
+    "ts": "{start} ku fika eka {end}",
+    "ve": "{start} u swika kha {end}"
+  },
+  {
+    "english": "LOCATION",
+    "zu": "INDAWO",
+    "st": "SEBAKA",
+    "ts": "NDHAWU",
+    "ve": "FHETHU"
+  },
+  {
+    "english": "CLIMATE",
+    "zu": "ISIMO SEZULU",
+    "st": "BOEMO BA LEHODIMO",
+    "ts": "MAXELO",
+    "ve": "KIḼIMA"
+  },
+  {
+    "english": "PLAN PERIOD",
+    "zu": "ISIKHATHI SOHLELO",
+    "st": "NAKO YA MORALO",
+    "ts": "NKARHI WA PULANI",
+    "ve": "TSHIFHINGA TSHA PULANE"
+  },
+  {
+    "english": "GENERATED",
+    "zu": "KWENZIWE",
+    "st": "E ENTSWE",
+    "ts": "YI ENDLIWILE",
+    "ve": "YO ITWA"
+  },
+  {
+    "english": "Not set",
+    "zu": "Akukamiswa",
+    "st": "Ha ho eso behwe",
+    "ts": "A swi si vekiwile",
+    "ve": "A zwi athu u vhewa"
+  },
+  {
+    "english": "A crop plan should reduce uncertainty. It should show the garden team what to prepare, plant, harvest and buy - without making them decode the system behind it.",
+    "zu": "Uhlelo lwezitshalo kufanele lunciphise ukungaqiniseki. Kufanele lubonise ithimba lengadi ukuthi yini okufanele liyilungiselele, liyitshale, liyivune futhi liyithenge - ngaphandle kokuba lichaze uhlelo olusemuva kwakho.",
+    "st": "Moralo wa dijalo o lokela ho fokotsa ho se tiisehe. O lokela ho bontsha sehlopha sa tshimo seo se lokelang ho se lokisa, ho se lema, ho se kotula le ho se reka - ntle le hore se qale ka ho manolla tsamaiso e ka mora ona.",
+    "ts": "Pulani ya swibyariwa yi fanele ku hunguta ku nga tiyiseki. Yi fanele ku komba ntlawa wa nsimu leswi faneleke ku lulamisiwa, ku byariwa, ku tshoveriwa ni ku xaviwa - ku nga laveki leswaku wu rhanga hi ku twisisa sisiteme leyi nga endzhaku ka yona.",
+    "ve": "Pulane ya zwiliṅwa i tea u fhungudza u sa vha na vhuṱanzi. I tea u sumbedza tshigwada tsha tsimu zwine tsha tea u lugisa, u ṱavha, u kaṋa na u renga - zwi sa ṱoḓi uri tshi thome nga u ṱalutshedza sisiteme i re murahu hayo."
+  },
+  {
+    "english": "PLAN SIGNALS",
+    "zu": "OKUKHONJISWA UHLELO",
+    "st": "SEO MORALO O SE BONTSHANG",
+    "ts": "LESWI PULANI YI SWI KOMBISAKA",
+    "ve": "ZWINE PULANE YA ZWI SUMBEDZA"
+  },
+  {
+    "english": "DECISIONS TO MAKE",
+    "zu": "IZINQUMO OKUFANELE ZENZIWE",
+    "st": "DIQETO TSE LOKELANG HO ETSWA",
+    "ts": "SWIBOHO LESWI FANELEKE KU TEKIWA",
+    "ve": "TSHEO DZINE DZA TEA U DZHIIWA"
+  },
+  {
+    "english": "No kilogram or value total is shown because {places} has overlapping or invalid planting shares.",
+    "zu": "Asikho isamba samakhilogremu noma senani lemali esiboniswa ngoba ku-{places} kunezabelo zokutshala ezigqagqene noma ezingavumelekile.",
+    "st": "Ha ho kakaretso ya dikilogerama kapa boleng ba tjhelete e bontshwang hobane {places} e na le dikarolo tsa ho lema tse kopanang kapa tse sa nepahalang.",
+    "ts": "A ku kombisiwi nhlayo ya tikhilogireme kumbe ya nkoka wa mali hikuva {places} yi ni swiphemu swo byala leswi khomanaka kumbe leswi nga tirhiki.",
+    "ve": "A hu sumbedzwi tshivhalo tsha dzikhilogiramu kana ndeme ya tshelede ngauri {places} hu na zwipiḓa zwa u ṱavha zwi dzhianelaho kana zwi songo teaho."
+  },
+  {
+    "english": "No kilogram or value total is shown because {places} have overlapping or invalid planting shares.",
+    "zu": "Asikho isamba samakhilogremu noma senani lemali esiboniswa ngoba ku-{places} kunezabelo zokutshala ezigqagqene noma ezingavumelekile.",
+    "st": "Ha ho kakaretso ya dikilogerama kapa boleng ba tjhelete e bontshwang hobane {places} di na le dikarolo tsa ho lema tse kopanang kapa tse sa nepahalang.",
+    "ts": "A ku kombisiwi nhlayo ya tikhilogireme kumbe ya nkoka wa mali hikuva {places} ti ni swiphemu swo byala leswi khomanaka kumbe leswi nga tirhiki.",
+    "ve": "A hu sumbedzwi tshivhalo tsha dzikhilogiramu kana ndeme ya tshelede ngauri {places} hu na zwipiḓa zwa u ṱavha zwi dzhianelaho kana zwi songo teaho."
+  },
+  {
+    "english": "Resolve the bed layout instead of guessing which crop loses growing area.",
+    "zu": "Lungisa ukuhlelwa kombhede esikhundleni sokuqagela ukuthi yisiphi isitshalo esilahlekelwa yindawo yokukhula.",
+    "st": "Lokisa tlhophiso ya bethe ho e na le ho hakanya hore ke sejalo sefe se lahlehelwang ke sebaka sa ho hola.",
+    "ts": "Lulamisa ku hleriwa ka mubedo ematshan’weni yo ringanyeta leswaku i xibyariwa xihi lexi lahlekeriwaka hi ndhawu yo kula.",
+    "ve": "Lugisani nzudzanyo ya mubete nṱhani ha u humbulela uri ndi tshiliṅwa tshifhio tshi xelelwaho nga tshikhala tsha u aluwa."
+  },
+  {
+    "english": "Only crops with a verified kg/m² entry are added to the conservative commercial benchmark comparison. Known total {gross} kg; {net} kg after the {loss}% loss allowance you confirmed.",
+    "zu": "Izitshalo ezinenani le-kg/m² eliqinisekisiwe kuphela ezifakwa ekuqhathanisweni kwesilinganiso sokuhweba esiqaphile. Isamba esaziwayo singu-{gross} kg; ngu-{net} kg ngemva komkhawulo wokulahleka okungu-{loss}% owuqinisekisile.",
+    "st": "Ke dijalo tse nang le rekoto ya kg/m² e netefaditsweng feela tse kenngwang papisong ya tekanyo ya kgwebo e hlokolosi. Kakaretso e tsejwang ke {gross} kg; {net} kg kamora tekanyo ya tahlehelo ya {loss}% eo o e netefaditseng.",
+    "ts": "I swibyariwa leswi nga ni nhlayo ya kg/m² leyi tiyisisiweke ntsena leswi katsiwaka eka mpimaniso wa mpimo wa mabindzu wa vukheta. Nhlayo leyi tivekaka i {gross} kg; {net} kg endzhaku ka mpimo wa ku lahlekeriwa wa {loss}% lowu u wu tiyisiseke.",
+    "ve": "Ndi zwiliṅwa zwi re na tshivhalo tsha kg/m² tsho khwaṱhisedzwaho fhedzi zwine zwa katelwa kha mbambedzo ya tshikalo tsha vhuvhambadzi tsha vhuronwane. Tshivhalo tshi ḓivheaho ndi {gross} kg; {net} kg nga murahu ha tshikalo tsha u xelelwa tsha {loss}% tshe na tshi khwaṱhisedza."
+  },
+  {
+    "english": "Only crops with a verified kg/m² entry are added to the conservative commercial benchmark comparison. Known total {gross} kg; no loss-adjusted total is calculated until an allowance is confirmed.",
+    "zu": "Izitshalo ezinenani le-kg/m² eliqinisekisiwe kuphela ezifakwa ekuqhathanisweni kwesilinganiso sokuhweba esiqaphile. Isamba esaziwayo singu-{gross} kg; asikho isamba esilungiswe ngokulahleka esibalwayo kuze kuqinisekiswe umkhawulo.",
+    "st": "Ke dijalo tse nang le rekoto ya kg/m² e netefaditsweng feela tse kenngwang papisong ya tekanyo ya kgwebo e hlokolosi. Kakaretso e tsejwang ke {gross} kg; ha ho kakaretso e lokisitsweng ka tahlehelo e balwang ho fihlela tekanyo e netefatswa.",
+    "ts": "I swibyariwa leswi nga ni nhlayo ya kg/m² leyi tiyisisiweke ntsena leswi katsiwaka eka mpimaniso wa mpimo wa mabindzu wa vukheta. Nhlayo leyi tivekaka i {gross} kg; a ku hlayelwi nhlayo leyi lulamisiweke hi ku lahlekeriwa ku fikela loko mpimo wu tiyisisiwa.",
+    "ve": "Ndi zwiliṅwa zwi re na tshivhalo tsha kg/m² tsho khwaṱhisedzwaho fhedzi zwine zwa katelwa kha mbambedzo ya tshikalo tsha vhuvhambadzi tsha vhuronwane. Tshivhalo tshi ḓivheaho ndi {gross} kg; a hu vhalelwi tshivhalo tsho lugiswaho nga u xelelwa u swika tshikalo tshi tshi khwaṱhisedzwa."
+  },
+  {
+    "english": "This is a benchmark comparison, not a household or farm-yield guarantee. Record actual harvests and losses on the monthly record sheet.",
+    "zu": "Lokhu ukuqhathaniswa kwesilinganiso, hhayi isiqinisekiso sesivuno sasekhaya noma sasepulazini. Bhala izivuno nokulahleka kwangempela eshidini lerekhodi lenyanga.",
+    "st": "Ena ke papiso ya tekanyo, ha se tiisetso ya kotulo ya lelapa kapa polasi. Rekota kotulo le tahlehelo ya sebele leqepheng la rekoto ya kgwedi.",
+    "ts": "Lowu i mpimaniso wa mpimo, a hi xitiyisekiso xa ntshovelo wa muti kumbe purasi. Rhekhoda mintshovelo ni ku lahlekeriwa ka xiviri eka phepha ra rhekhodo ya n’hweti.",
+    "ve": "Iyi ndi mbambedzo ya tshikalo, a si khwaṱhisedzo ya khaṋo ya muṱa kana bulasi. Rekhodani khaṋo na u xelelwa ha vhukuma kha bammbiri ḽa rekhodo ya ṅwedzi."
+  },
+  {
+    "english": "No kilogram total is shown because this plan has no crop with a verified kg/m² food-yield benchmark.",
+    "zu": "Asikho isamba samakhilogremu esiboniswa ngoba lolu hlelo alunaso isitshalo esinesilinganiso sesivuno sokudla se-kg/m² esiqinisekisiwe.",
+    "st": "Ha ho kakaretso ya dikilogerama e bontshwang hobane moralo ona ha o na sejalo se nang le tekanyo ya kotulo ya dijo ya kg/m² e netefaditsweng.",
+    "ts": "A ku kombisiwi nhlayo ya tikhilogireme hikuva pulani leyi a yi na xibyariwa lexi nga ni mpimo wa ntshovelo wa swakudya wa kg/m² lowu tiyisisiweke.",
+    "ve": "A hu sumbedzwi tshivhalo tsha dzikhilogiramu ngauri pulane iyi a i na tshiliṅwa tshi re na tshikalo tsha khaṋo ya zwiḽiwa tsha kg/m² tsho khwaṱhisedzwaho."
+  },
+  {
+    "english": "An unavailable benchmark is not a 0kg harvest. Record actual harvests on the monthly record sheet.",
+    "zu": "Isilinganiso esingatholakali asisona isivuno esingu-0kg. Bhala izivuno zangempela eshidini lerekhodi lenyanga.",
+    "st": "Tekanyo e sa fumaneheng ha se kotulo ya 0kg. Rekota kotulo ya sebele leqepheng la rekoto ya kgwedi.",
+    "ts": "Mpimo lowu nga kumekiki a hi ntshovelo wa 0kg. Rhekhoda mintshovelo ya xiviri eka phepha ra rhekhodo ya n’hweti.",
+    "ve": "Tshikalo tshi sa wanali a si khaṋo ya 0kg. Rekhodani khaṋo ya vhukuma kha bammbiri ḽa rekhodo ya ṅwedzi."
+  },
+  {
+    "english": "{crops} is excluded from every kilogram total, not counted as 0kg.",
+    "zu": "{crops} akufakwa kunoma yisiphi isamba samakhilogremu, akubalwa njengo-0kg.",
+    "st": "{crops} ha e kenngwe kakaretsong efe kapa efe ya dikilogerama, ha e balwe e le 0kg.",
+    "ts": "{crops} a swi katsiwanga eka nhlayo yin’wana ni yin’wana ya tikhilogireme, a swi hlayiwi swi ri 0kg.",
+    "ve": "{crops} a zwi katelwi kha tshivhalo tshiṅwe na tshiṅwe tsha dzikhilogiramu, a zwi vhalwi sa 0kg."
+  },
+  {
+    "english": "{crops} are excluded from every kilogram total, not counted as 0kg.",
+    "zu": "{crops} akufakwa kunoma yisiphi isamba samakhilogremu, akubalwa njengo-0kg.",
+    "st": "{crops} ha di kenngwe kakaretsong efe kapa efe ya dikilogerama, ha di balwe e le 0kg.",
+    "ts": "{crops} a swi katsiwanga eka nhlayo yin’wana ni yin’wana ya tikhilogireme, a swi hlayiwi swi ri 0kg.",
+    "ve": "{crops} a zwi katelwi kha tshivhalo tshiṅwe na tshiṅwe tsha dzikhilogiramu, a zwi vhalwi sa 0kg."
+  },
+  {
+    "english": "How the totals are calculated",
+    "zu": "Indlela izamba ezibalwa ngayo",
+    "st": "Kamoo dikakaretso di balwang kateng",
+    "ts": "Ndlela leyi tinhlayo ti hlayelwaka ha yona",
+    "ve": "Nḓila ine zwivhalo zwa vhalelwa ngayo"
+  },
+  {
+    "english": "This comparison covers planned new bed-crop cycles. It is not a whole-farm production forecast. Read the monthly growing and food calendars for timing.",
+    "zu": "Lokhu kuqhathaniswa kuhlanganisa imijikelezo emisha ehleliwe yezitshalo zemibhede. Akusona isibikezelo somkhiqizo wepulazi lonke. Funda amakhalenda enyanga okukhulisa izitshalo nawokudla ukuze ubone izikhathi.",
+    "st": "Papiso ena e akaretsa medikoloho e metjha e rerilweng ya dijalo tsa dibethe. Ha se ponelopele ya tlhahiso ya polasi yohle. Bala dikhalendara tsa kgwedi tsa ho lema le dijo bakeng sa dinako.",
+    "ts": "Mpimaniso lowu wu katsa mindzhendzheleko leyintshwa leyi kunguhatiweke ya swibyariwa swa mibedo. A hi ku bvumba vuhumelerisi bya purasi hinkwaro. Hlaya tikhalendara ta n’hweti ta ku byala ni ta swakudya leswaku u vona minkarhi.",
+    "ve": "Mbambedzo iyi i katela mutevhe miswa yo dzudzanywaho ya zwiliṅwa zwa mibete. A si u bvumba zwibveledzwa zwa bulasi ḽoṱhe. Vhalani khaḽenda dza ṅwedzi dza u ṱavha na zwiḽiwa uri ni vhone zwifhinga."
+  },
+  {
+    "english": "Planned crop comparison",
+    "zu": "Ukuqhathaniswa kwezitshalo ezihleliwe",
+    "st": "Papiso ya dijalo tse rerilweng",
+    "ts": "Mpimaniso wa swibyariwa leswi kunguhatiweke",
+    "ve": "Mbambedzo ya zwiliṅwa zwo dzudzanywaho"
+  },
+  {
+    "english": "WHAT TO WATCH",
+    "zu": "OKUFANELE UKUQAPHELE",
+    "st": "SEO O LOKELANG HO SE HLOKOMELA",
+    "ts": "LESWI FANELEKE KU LANGUTIWA",
+    "ve": "ZWINE NA TEA U ṰHOGOMELA"
+  },
+  {
+    "english": "CHOICES THIS PLAN MADE",
+    "zu": "IZINTO EZIKHETHWE YILOLU HLELO",
+    "st": "DIKGETHO TSE ENTSWENG KE MORALO ONA",
+    "ts": "LESWI HLAWURIWEKE HI PULANI LEYI",
+    "ve": "ZWINE PULANE IYI YA ZWI NANGA"
+  },
+  {
+    "english": "GROUND WITH NO NEW SOWING",
+    "zu": "UMHLABATHI ONGANA KUHLWANYELA OKUSHA",
+    "st": "MOBU O SE NANG HO JALA HO HOTJHA",
+    "ts": "MISAVA LEYI NGA RIKI NA KU BYALA LOKUNTSWHA",
+    "ve": "MAVU A SI NA U ZWALA HUSWA"
+  },
+  {
+    "english": "HOW THIS PLAN WAS MADE",
+    "zu": "INDLELA LOKHU KUHLELWA OKWENZIWE NGAYO",
+    "st": "KAMOO MORALO ONA O ENTSWENG KATENG",
+    "ts": "NDLELA LEYI PULANI LEYI YI ENDLIWEKE HA YONA",
+    "ve": "NḒILA YE PULANE IYI YA ITWA NGAYO"
+  },
+  {
+    "english": "From the plan suggested in {date}. Anything changed by hand since is not described here.",
+    "zu": "Kusukela ohlelweni oluphakanyiswe ngo-{date}. Okushintshwe ngesandla ngemva kwalokho akuchazwa lapha.",
+    "st": "Ho tswa moralong o sisintsweng ka {date}. Eng kapa eng e fetotsweng ka letsoho kamora moo ha e hlaloswe mona.",
+    "ts": "Swi huma eka pulani leyi ringanyetiweke hi {date}. Lexi cinciweke hi voko endzhaku ka nkarhi wolowo a xi hlamuseriwi laha.",
+    "ve": "Zwi bva kha pulane yo themendelwaho nga {date}. Zwo shandulwaho nga tshanḓa nga murahu a zwi ṱalutshedzwi hafha."
+  },
+  {
+    "english": "From the suggested plan that was accepted. Anything changed by hand since is not described here.",
+    "zu": "Kusukela ohlelweni oluphakanyisiwe olwamukelwe. Okushintshwe ngesandla ngemva kwalokho akuchazwa lapha.",
+    "st": "Ho tswa moralong o sisintsweng o ileng wa amohelwa. Eng kapa eng e fetotsweng ka letsoho kamora moo ha e hlaloswe mona.",
+    "ts": "Swi huma eka pulani leyi ringanyetiweke leyi amukeriweke. Lexi cinciweke hi voko endzhaku ka nkarhi wolowo a xi hlamuseriwi laha.",
+    "ve": "Zwi bva kha pulane yo themendelwaho ye ya ṱanganedzwa. Zwo shandulwaho nga tshanḓa nga murahu a zwi ṱalutshedzwi hafha."
+  },
+  {
+    "english": "How this plan was put together",
+    "zu": "Indlela lolu hlelo oluhlanganiswe ngayo",
+    "st": "Kamoo moralo ona o hlophisitsweng kateng",
+    "ts": "Ndlela leyi pulani leyi yi hlanganisiweke ha yona",
+    "ve": "Nḓila ye pulane iyi ya kuvhanganywa ngayo"
+  },
+  {
+    "english": "Manager view",
+    "zu": "Okubukwa umphathi",
+    "st": "Pono ya motsamaisi",
+    "ts": "Leswi langutiwaka hi mufambisi",
+    "ve": "Zwine mulanguli a zwi vhona"
+  },
+  {
+    "english": "The year in numbers",
+    "zu": "Unyaka ngezinombolo",
+    "st": "Selemo ka dipalo",
+    "ts": "Lembe hi tinhlayo",
+    "ve": "Ṅwaha nga zwivhalo"
+  },
+  {
+    "english": "Use this page to compare benchmark timing with labour, kitchen demand, storage and mentoring visits before the work reaches the field.",
+    "zu": "Sebenzisa leli khasi ukuqhathanisa izikhathi zesilinganiso nomsebenzi, izidingo zasekhishini, ukugcina nokuvakashela komeluleki ngaphambi kokuba umsebenzi ufike ensimini.",
+    "st": "Sebedisa leqephe lena ho bapisa dinako tsa tekanyo le mosebetsi, tlhoko ya kichine, polokelo le ketelo ya baeletsi pele mosebetsi o fihla tshimong.",
+    "ts": "Tirhisa phepha leri ku pimanisa minkarhi ya mpimo ni vatirhi, xilaveko xa khixi, ku hlayisa ni maendzo ya vatsundzuxi ku nga si sungula mintirho ensin’wini.",
+    "ve": "Shumisani siaṱari iḽi u vhambedza zwifhinga zwa tshikalo na vhashumi, ṱhoḓea dza khishini, u vhulunga na madalo a vhaeletshedzi phanḓa ha musi mushumo u tshi ya tsimuni."
+  },
+  {
+    "english": "No kilogram figure is shown because {places} has overlapping or invalid planting shares. Resolve the layout before using a benchmark.",
+    "zu": "Alikho inani lamakhilogremu eliboniswa ngoba ku-{places} kunezabelo zokutshala ezigqagqene noma ezingavumelekile. Lungisa ukuhlelwa ngaphambi kokusebenzisa isilinganiso.",
+    "st": "Ha ho palo ya dikilogerama e bontshwang hobane {places} e na le dikarolo tsa ho lema tse kopanang kapa tse sa nepahalang. Lokisa tlhophiso pele o sebedisa tekanyo.",
+    "ts": "A ku kombisiwi nhlayo ya tikhilogireme hikuva {places} yi ni swiphemu swo byala leswi khomanaka kumbe leswi nga tirhiki. Lulamisa ku hleriwa u nga si tirhisa mpimo.",
+    "ve": "A hu sumbedzwi tshivhalo tsha dzikhilogiramu ngauri {places} hu na zwipiḓa zwa u ṱavha zwi dzhianelaho kana zwi songo teaho. Lugisani nzudzanyo phanḓa ha u shumisa tshikalo."
+  },
+  {
+    "english": "No kilogram figure is shown because {places} have overlapping or invalid planting shares. Resolve the layout before using a benchmark.",
+    "zu": "Alikho inani lamakhilogremu eliboniswa ngoba ku-{places} kunezabelo zokutshala ezigqagqene noma ezingavumelekile. Lungisa ukuhlelwa ngaphambi kokusebenzisa isilinganiso.",
+    "st": "Ha ho palo ya dikilogerama e bontshwang hobane {places} di na le dikarolo tsa ho lema tse kopanang kapa tse sa nepahalang. Lokisa tlhophiso pele o sebedisa tekanyo.",
+    "ts": "A ku kombisiwi nhlayo ya tikhilogireme hikuva {places} ti ni swiphemu swo byala leswi khomanaka kumbe leswi nga tirhiki. Lulamisa ku hleriwa u nga si tirhisa mpimo.",
+    "ve": "A hu sumbedzwi tshivhalo tsha dzikhilogiramu ngauri {places} hu na zwipiḓa zwa u ṱavha zwi dzhianelaho kana zwi songo teaho. Lugisani nzudzanyo phanḓa ha u shumisa tshikalo."
+  },
+  {
+    "english": "The {kg} kg figure is a sum of crop-cycle benchmarks. It is not divided into months because the source does not provide a within-window picking curve.",
+    "zu": "Inani elingu-{kg} kg liyisamba sezilinganiso zemijikelezo yezitshalo. Alihlukaniswa ngezinyanga ngoba umthombo awunikezi ukuthi ukuvuna kusakazeka kanjani ngaphakathi kwesikhathi sokuvuna.",
+    "st": "Palo ya {kg} kg ke kakaretso ya ditekanyo tsa medikoloho ya dijalo. Ha e arolwe ka dikgwedi hobane mohlodi ha o fane ka mokgwa oo kotulo e phatlalalang ka wona nakong ya ho kotula.",
+    "ts": "Nhlayo ya {kg} kg i nhlayo ya mimpimo ya mindzhendzheleko ya swibyariwa. A yi avanyisiwi hi tin’hweti hikuva xihlovo a xi nyiki ndlela leyi ntshovelo wu aviwaka ha yona endzeni ka nkarhi wo tshovela.",
+    "ve": "Tshivhalo tsha {kg} kg ndi tshivhalo tsha zwikalo zwa mutevhe ya zwiliṅwa. A tshi khethekanywi nga miṅwedzi ngauri tshiko a tshi ṋei nḓila ine khaṋo ya phatlalala ngayo kha tshifhinga tsha u kaṋa."
+  },
+  {
+    "english": "No kilogram comparison is available because none of this plan's food crops has a verified kg/m² benchmark. An unavailable benchmark is not a 0kg harvest.",
+    "zu": "Akukho kuqhathaniswa kwamakhilogremu okutholakalayo ngoba asikho isitshalo sokudla kulolu hlelo esinesilinganiso se-kg/m² esiqinisekisiwe. Isilinganiso esingatholakali asisona isivuno esingu-0kg.",
+    "st": "Ha ho papiso ya dikilogerama e fumanehang hobane ha ho sejalo sa dijo moralong ona se nang le tekanyo ya kg/m² e netefaditsweng. Tekanyo e sa fumaneheng ha se kotulo ya 0kg.",
+    "ts": "A ku na mpimaniso wa tikhilogireme lowu kumekaka hikuva a ku na xibyariwa xa swakudya xa pulani leyi lexi nga ni mpimo wa kg/m² lowu tiyisisiweke. Mpimo lowu nga kumekiki a hi ntshovelo wa 0kg.",
+    "ve": "A hu na mbambedzo ya dzikhilogiramu i wanalaho ngauri a hu na tshiliṅwa tsha zwiḽiwa kha pulane iyi tshi re na tshikalo tsha kg/m² tsho khwaṱhisedzwaho. Tshikalo tshi sa wanali a si khaṋo ya 0kg."
+  },
+  {
+    "english": "{months} of 12 months also have food from store, from {count} crop with a sourced shelf life ({crops}). Each shelf life assumes particular storage conditions for that crop and does not hold without them.",
+    "zu": "Izinyanga ezingu-{months} kwezingu-12 nazo zinokudla okuvela kokugciniwe, okuvela esitshalweni esingu-{count} esinesikhathi sokugcina esinomthombo ({crops}). Isikhathi ngasinye sokugcina sincike ezimweni ezithile zokugcina leso sitshalo futhi asisebenzi ngaphandle kwazo.",
+    "st": "Dikgwedi tse {months} ho tse 12 di boetse di na le dijo tse bolokilweng, tse tswang ho sejalo se {count} se nang le nako ya polokelo e tswang mohloding ({crops}). Nako ka nngwe ya polokelo e nka hore ho na le maemo a itseng a polokelo bakeng sa sejalo seo mme ha e sebetse ntle le ona.",
+    "ts": "Tin’hweti ta {months} eka 12 ti tlhela ti va ni swakudya leswi humaka evuhlayiselweni, leswi humaka eka xibyariwa xa {count} lexi nga ni nkarhi wo hlayisa lowu sekeriweke eka xihlovo ({crops}). Nkarhi wun’wana ni wun’wana wo hlayisa wu lava maemo yo karhi ya ku hlayisa xibyariwa xexo naswona a wu tirhi loko ma nga ri kona.",
+    "ve": "Miṅwedzi ya {months} kha 12 i dovha ya vha na zwiḽiwa zwi bvaho vhuvhulungeloni, zwi bvaho kha tshiliṅwa tsha {count} tshi re na tshifhinga tsha u vhulunga tshi re na tshiko ({crops}). Tshifhinga tshiṅwe na tshiṅwe tsha u vhulunga tshi ṱoḓa nyimele dzo tiwaho dza u vhulunga tshiliṅwa itsho nahone a tshi shumi dzi si hone."
+  },
+  {
+    "english": "{months} of 12 months also have food from store, from {count} crops with a sourced shelf life ({crops}). Each shelf life assumes particular storage conditions for that crop and does not hold without them.",
+    "zu": "Izinyanga ezingu-{months} kwezingu-12 nazo zinokudla okuvela kokugciniwe, okuvela ezitshalweni ezingu-{count} ezinesikhathi sokugcina esinomthombo ({crops}). Isikhathi ngasinye sokugcina sincike ezimweni ezithile zokugcina leso sitshalo futhi asisebenzi ngaphandle kwazo.",
+    "st": "Dikgwedi tse {months} ho tse 12 di boetse di na le dijo tse bolokilweng, tse tswang dijalong tse {count} tse nang le nako ya polokelo e tswang mohloding ({crops}). Nako ka nngwe ya polokelo e nka hore ho na le maemo a itseng a polokelo bakeng sa sejalo seo mme ha e sebetse ntle le ona.",
+    "ts": "Tin’hweti ta {months} eka 12 ti tlhela ti va ni swakudya leswi humaka evuhlayiselweni, leswi humaka eka swibyariwa swa {count} leswi nga ni nkarhi wo hlayisa lowu sekeriweke eka xihlovo ({crops}). Nkarhi wun’wana ni wun’wana wo hlayisa wu lava maemo yo karhi ya ku hlayisa xibyariwa xexo naswona a wu tirhi loko ma nga ri kona.",
+    "ve": "Miṅwedzi ya {months} kha 12 i dovha ya vha na zwiḽiwa zwi bvaho vhuvhulungeloni, zwi bvaho kha zwiliṅwa zwa {count} zwi re na tshifhinga tsha u vhulunga tshi re na tshiko ({crops}). Tshifhinga tshiṅwe na tshiṅwe tsha u vhulunga tshi ṱoḓa nyimele dzo tiwaho dza u vhulunga tshiliṅwa itsho nahone a tshi shumi dzi si hone."
+  },
+  {
+    "english": "CROP-CYCLE BENCHMARK ONLY",
+    "zu": "ISILINGANISO SOMJIKELEZO WESITSHALO KUPHELA",
+    "st": "TEKANYO YA MODIKOLOHO WA SEJALO FEELA",
+    "ts": "MPIMO WA NDZHENDZHELEKO WA XIBYARIWA NTSENA",
+    "ve": "TSHIKALO TSHA MUTEVHE WA TSHILIṄWA FHEDZI"
+  },
+  {
+    "english": "{months} of 12 months have at least one verified fresh-picking window; that is timing, not monthly kilograms.",
+    "zu": "Izinyanga ezingu-{months} kwezingu-12 zinesikhathi okungenani esisodwa esiqinisekisiwe sokuvuna okusha; lokho kuyisikhathi, hhayi amakhilogremu enyanga.",
+    "st": "Dikgwedi tse {months} ho tse 12 di na le bonyane nako e le nngwe e netefaditsweng ya ho kotula tse foreshe; seo ke nako, eseng dikilogerama tsa kgwedi.",
+    "ts": "Tin’hweti ta {months} eka 12 ti ni nkarhi wun’we kumbe ku tlurisa lowu tiyisisiweke wo tshovela swakudya leswintshwa; wolowo i nkarhi, a hi tikhilogireme ta n’hweti.",
+    "ve": "Miṅwedzi ya {months} kha 12 i na tshifhinga tshithihi kana u fhira tsho khwaṱhisedzwaho tsha u kaṋa zwiḽiwa zwiswa; itsho ndi tshifhinga, hu si dzikhilogiramu dza ṅwedzi."
+  },
+  {
+    "english": "Workload by month",
+    "zu": "Umsebenzi ngenyanga",
+    "st": "Mesebetsi ka kgwedi",
+    "ts": "Mintirho hi n’hweti",
+    "ve": "Mushumo nga miṅwedzi"
+  },
+  {
+    "english": "jobs planned",
+    "zu": "imisebenzi ehleliwe",
+    "st": "mesebetsi e rerilweng",
+    "ts": "mintirho leyi kunguhatiweke",
+    "ve": "mishumo yo dzudzanywaho"
+  },
+  {
+    "english": "Largest crops by known benchmark volume",
+    "zu": "Izitshalo ezinkulu ngokwevolumu yesilinganiso esaziwayo",
+    "st": "Dijalo tse kgolo ka bongata ba tekanyo e tsejwang",
+    "ts": "Swibyariwa leswikulu hi nhlayo ya mpimo lowu tivekaka",
+    "ve": "Zwiliṅwa zwihulwane nga tshivhalo tsha tshikalo tshi ḓivheaho"
+  },
+  {
+    "english": "Chart note: the workload chart counts planned jobs, not hours - a plot of maize and a bed of lettuce each count as one. Crop-cycle benchmark weights are shown by crop only; no monthly kg or Rand is inferred.",
+    "zu": "Inothi leshadi: ishadi lomsebenzi libala imisebenzi ehleliwe, hhayi amahora - insimu ye-maize nombhede we-lettuce kubalwa njengomsebenzi owodwa ngakunye. Izisindo zezilinganiso zemijikelezo yezitshalo ziboniswa ngesitshalo kuphela; akucatshangwa ama-kg noma i-Rand yenyanga.",
+    "st": "Tlhokomeliso ya tjhate: tjhate ya mesebetsi e bala mesebetsi e rerilweng, eseng dihora - tshimo ya maize le bethe ya lettuce e nngwe le e nngwe e balwa e le mosebetsi o le mong. Boima ba ditekanyo tsa medikoloho ya dijalo bo bontshwa ka sejalo feela; ha ho kg kapa Rand tsa kgwedi tse hakanyetswang.",
+    "ts": "Nhlamuselo ya chati: chati ya mintirho yi hlayela mintirho leyi kunguhatiweke, ku nga ri tiawara - nsimu ya maize ni mubedo wa lettuce ha yin’we yi hlayiwa yi ri ntirho wun’we. Mintiko ya mimpimo ya mindzhendzheleko ya swibyariwa yi kombisiwa hi xibyariwa ntsena; a ku ringanyetiwi kg kumbe Rand ya n’hweti.",
+    "ve": "Notsi ya tshati: tshati ya mishumo i vhalela mishumo yo dzudzanywaho, hu si awara - tsimu ya maize na mubete wa lettuce zwiṅwe na zwiṅwe zwi vhalwa sa mushumo muthihi. Zwileme zwa zwikalo zwa mutevhe ya zwiliṅwa zwi sumbedzwa nga tshiliṅwa fhedzi; a hu anganyelwi kg kana Rand dza ṅwedzi."
+  },
+  {
+    "english": "Excluded from the kg total and crop-volume bars because no verified kg/m² benchmark is available: {crops}.",
+    "zu": "Akufakwa esambeni sama-kg nasemigqeni yevolumu yezitshalo ngoba asikho isilinganiso se-kg/m² esiqinisekisiwe esitholakalayo: {crops}.",
+    "st": "Ha di kenngwe kakaretsong ya kg le dibareng tsa bongata ba dijalo hobane ha ho tekanyo ya kg/m² e netefaditsweng e fumanehang: {crops}.",
+    "ts": "A swi katsiwanga eka nhlayo ya kg ni tibara ta nhlayo ya swibyariwa hikuva a ku na mpimo wa kg/m² lowu tiyisisiweke: {crops}.",
+    "ve": "A zwi katelwi kha tshivhalo tsha kg na mabara a tshivhalo tsha zwiliṅwa ngauri a hu na tshikalo tsha kg/m² tsho khwaṱhisedzwaho: {crops}."
+  },
+  {
+    "english": "Picture calendar",
+    "zu": "Ikhalenda lezithombe",
+    "st": "Khalendara ya ditshwantsho",
+    "ts": "Khalendara ya swifaniso",
+    "ve": "Khalenda ya zwifanyiso"
+  },
+  {
+    "english": "Repeat-year template",
+    "zu": "Isifanekiso sonyaka ophindayo",
+    "st": "Mohlala wa selemo se iphetang",
+    "ts": "Xikombiso xa lembe leri phindhaka",
+    "ve": "Tshikombiso tsha ṅwaha une wa dovholola"
+  },
+  {
+    "english": "Fresh veg",
+    "zu": "Imifino emisha",
+    "st": "Meroho e metjha",
+    "ts": "Miroho yo basa",
+    "ve": "Miroho miswa"
+  },
+  {
+    "english": "Stored veg",
+    "zu": "Imifino egciniwe",
+    "st": "Meroho e bolokilweng",
+    "ts": "Miroho leyi hlayisiweke",
+    "ve": "Miroho yo vhulungwaho"
+  },
+  {
+    "english": "Staple crops",
+    "zu": "Izitshalo zokudla okuyisisekelo",
+    "st": "Dijalo tsa dijo tsa motheo",
+    "ts": "Swibyariwa swa swakudya swa nkoka",
+    "ve": "Zwiliṅwa zwa zwiḽiwa zwa ndeme"
+  },
+  {
+    "english": "Stored staples",
+    "zu": "Ukudla okuyisisekelo okugciniwe",
+    "st": "Dijo tsa motheo tse bolokilweng",
+    "ts": "Swakudya swa nkoka leswi hlayisiweke",
+    "ve": "Zwiḽiwa zwa ndeme zwo vhulungwaho"
+  },
+  {
+    "english": "Food forest - fruit, nuts & berries and other foods",
+    "zu": "Ihlathi lokudla - izithelo, amantongomane namajikijolo nokunye ukudla",
+    "st": "Moru wa dijo - ditholwana, matokomane le menokotshwai le dijo tse ding",
+    "ts": "Khwati ra swakudya - mihandzu, timanga ni tiberry ni swakudya swin’wana",
+    "ve": "Ḓaka ḽa zwiḽiwa - mitshelo, nḓuhu na berries na zwiṅwe zwiḽiwa"
+  },
+  {
+    "english": "Animal products",
+    "zu": "Imikhiqizo yezilwane",
+    "st": "Dihlahiswa tsa diphoofolo",
+    "ts": "Swikumiwa swa swifuwo",
+    "ve": "Zwibveledzwa zwa zwifuwo"
+  },
+  {
+    "english": "No staple picking months marked yet.",
+    "zu": "Azikamakwa izinyanga zokuvuna ukudla okuyisisekelo.",
+    "st": "Ha ho dikgwedi tsa kotulo ya dijo tsa motheo tse tshwailweng.",
+    "ts": "A ku si funghiwa tin’hweti to tshovela swakudya swa nkoka.",
+    "ve": "A hu athu swaiwa miṅwedzi ya u kaṋa zwiḽiwa zwa ndeme."
+  },
+  {
+    "english": "No picking months marked yet.",
+    "zu": "Azikamakwa izinyanga zokuvuna.",
+    "st": "Ha ho dikgwedi tsa kotulo tse tshwailweng.",
+    "ts": "A ku si funghiwa tin’hweti to tshovela.",
+    "ve": "A hu athu swaiwa miṅwedzi ya u kaṋa."
+  },
+  {
+    "english": "Hidden for this print. Show fruit, nuts and berries in the app to include them.",
+    "zu": "Kufihliwe kulokhu okuphrintiwe. Veza izithelo, amantongomane namajikijolo ohlelweni ukuze kufakwe.",
+    "st": "Di patilwe kgatisong ena. Bontsha ditholwana, matokomane le menokotshwai ho app hore di kenngwe.",
+    "ts": "Swi fihliwile eka nkandziyiso lowu. Kombisa mihandzu, timanga ni tiberry eka app leswaku swi katsiwa.",
+    "ve": "Zwo dzumbiwa kha uyu mugandiso. Sumbedzani mitshelo, nḓuhu na berries kha app uri zwi katelwe."
+  },
+  {
+    "english": "No confirmed picking months shown. Check fruit, nuts and berries on your map in the app.",
+    "zu": "Azikho izinyanga zokuvuna eziqinisekisiwe ezibonisiwe. Hlola izithelo, amantongomane namajikijolo ebalazweni lakho ohlelweni.",
+    "st": "Ha ho dikgwedi tsa kotulo tse netefaditsweng tse bontshitsweng. Hlahloba ditholwana, matokomane le menokotshwai mmapeng wa hao ho app.",
+    "ts": "A ku kombisiwanga tin’hweti to tshovela leti tiyisisiweke. Kambela mihandzu, timanga ni tiberry eka mepe wa wena eka app.",
+    "ve": "A hu na miṅwedzi yo khwaṱhisedzwaho ya u kaṋa yo sumbedzwaho. Sedzulusani mitshelo, nḓuhu na berries kha mapa waṋu kha app."
+  },
+  {
+    "english": "Hidden for this print. Show animal products in the app to include them.",
+    "zu": "Kufihliwe kulokhu okuphrintiwe. Veza imikhiqizo yezilwane ohlelweni ukuze ifakwe.",
+    "st": "Di patilwe kgatisong ena. Bontsha dihlahiswa tsa diphoofolo ho app hore di kenngwe.",
+    "ts": "Swi fihliwile eka nkandziyiso lowu. Kombisa swikumiwa swa swifuwo eka app leswaku swi katsiwa.",
+    "ve": "Zwo dzumbiwa kha uyu mugandiso. Sumbedzani zwibveledzwa zwa zwifuwo kha app uri zwi katelwe."
+  },
+  {
+    "english": "No confirmed production months shown. Check animal products and housing on your map in the app.",
+    "zu": "Azikho izinyanga zokukhiqiza eziqinisekisiwe ezibonisiwe. Hlola imikhiqizo yezilwane nezindawo zazo ebalazweni lakho ohlelweni.",
+    "st": "Ha ho dikgwedi tsa tlhahiso tse netefaditsweng tse bontshitsweng. Hlahloba dihlahiswa tsa diphoofolo le matlo a tsona mmapeng wa hao ho app.",
+    "ts": "A ku kombisiwanga tin’hweti ta vuhumelerisi leti tiyisisiweke. Kambela swikumiwa swa swifuwo ni tindlu ta swona eka mepe wa wena eka app.",
+    "ve": "A hu na miṅwedzi yo khwaṱhisedzwaho ya mveledzo yo sumbedzwaho. Sedzulusani zwibveledzwa zwa zwifuwo na madzulo azwo kha mapa waṋu kha app."
+  },
+  {
+    "english": "Regional season",
+    "zu": "Isikhathi sesifunda",
+    "st": "Nako ya sebaka",
+    "ts": "Nguva ya xifundzha",
+    "ve": "Khalaṅwaha ya dzingu"
+  },
+  {
+    "english": "Plan: {variety}",
+    "zu": "Uhlelo: {variety}",
+    "st": "Moralo: {variety}",
+    "ts": "Kunguhata: {variety}",
+    "ve": "Pulane: {variety}"
+  },
+  {
+    "english": "CROP / FOOD SOURCE",
+    "zu": "ISITSHALO / UMTHOMBO WOKUDLA",
+    "st": "SEJALO / MOHLODI WA DIJO",
+    "ts": "XIBYARIWA / XIHLOVO XA SWAKUDYA",
+    "ve": "TSHILIṄWA / TSHIKO TSHA ZWIḼIWA"
+  },
+  {
+    "english": "NOW",
+    "zu": "MANJE",
+    "st": "JWALE",
+    "ts": "SWESWI",
+    "ve": "ZWINO"
+  },
+  {
+    "english": "When established",
+    "zu": "Lapho sekumile kahle",
+    "st": "Ha di se di tsitsitse",
+    "ts": "Loko swi mile swi tiya",
+    "ve": "Musi zwo no khwaṱha"
+  },
+  {
+    "english": "Months to confirm",
+    "zu": "Izinyanga ezidinga ukuqinisekiswa",
+    "st": "Dikgwedi tse hlokang netefatso",
+    "ts": "Tin’hweti leti faneleke ku tiyisisiwa",
+    "ve": "Miṅwedzi ine ya fanela u khwaṱhisedzwa"
+  },
+  {
+    "english": "Confirm stock and production dates",
+    "zu": "Qinisekisa izilwane ezikhona nezinsuku zokukhiqiza",
+    "st": "Netefatsa diphoofolo tse teng le matsatsi a tlhahiso",
+    "ts": "Tiyisisa swifuwo leswi nga kona ni masiku ya vuhumelerisi",
+    "ve": "Khwaṱhisedzani zwifuwo zwi re hone na maḓuvha a mveledzo"
+  },
+  {
+    "english": "Dates to confirm · see plant ages and food sources",
+    "zu": "Izinsuku ezidinga ukuqinisekiswa · bheka ubudala bezitshalo nemithombo yokudla",
+    "st": "Matsatsi a hlokang netefatso · sheba dilemo tsa dimela le mehlodi ya dijo",
+    "ts": "Masiku lama faneleke ku tiyisisiwa · vona vukhale bya swimila ni swihlovo swa swakudya",
+    "ve": "Maḓuvha ane a fanela u khwaṱhisedzwa · sedzani miṅwaha ya zwimela na zwiko zwa zwiḽiwa"
+  },
+  {
+    "english": "Growing space used",
+    "zu": "Indawo yokutshala esetshenzisiwe",
+    "st": "Sebaka sa temo se sebedisitsweng",
+    "ts": "Ndhawu yo byala leyi tirhisiweke",
+    "ve": "Fhethu ha u lima ho shumiswaho"
+  },
+  {
+    "english": "Climate not set",
+    "zu": "Isimo sezulu asikasethwa",
+    "st": "Boemo ba lehodimo ha bo eso behwe",
+    "ts": "Maxelo a ma si vekiwa",
+    "ve": "Tshikhalo tsha mutsho a tshi athu vhewa"
+  },
+  {
+    "english": "On your map",
+    "zu": "Ebalazweni lakho",
+    "st": "Mmapeng wa hao",
+    "ts": "Eka mepe wa wena",
+    "ve": "Kha mapa waṋu"
+  },
+  {
+    "english": "Food sources to check",
+    "zu": "Imithombo yokudla edinga ukuhlolwa",
+    "st": "Mehlodi ya dijo e hlokang ho hlahlojwa",
+    "ts": "Swihlovo swa swakudya leswi faneleke ku kamberiwa",
+    "ve": "Zwiko zwa zwiḽiwa zwine zwa fanela u sedzuluswa"
+  },
+  {
+    "english": "Food sources to check (continued)",
+    "zu": "Imithombo yokudla edinga ukuhlolwa (kuyaqhubeka)",
+    "st": "Mehlodi ya dijo e hlokang ho hlahlojwa (e tswela pele)",
+    "ts": "Swihlovo swa swakudya leswi faneleke ku kamberiwa (swi ya mahlweni)",
+    "ve": "Zwiko zwa zwiḽiwa zwine zwa fanela u sedzuluswa (zwi khou bvela phanḓa)"
+  },
+  {
+    "english": "These are on your design. Their picking or production months still need checking on site.",
+    "zu": "Lokhu kusemdwebeni wakho. Izinyanga zazo zokuvuna noma zokukhiqiza zisadinga ukuhlolwa endaweni.",
+    "st": "Tsena di teng moralong wa hao. Dikgwedi tsa tsona tsa kotulo kapa tlhahiso di ntse di hloka ho hlahlojwa sebakeng.",
+    "ts": "Leswi swi le ka dizayini ya wena. Tin’hweti ta swona to tshovela kumbe vuhumelerisi ta ha fanele ku kamberiwa endhawini.",
+    "ve": "Izwi zwi kha dizaini yaṋu. Miṅwedzi yazwo ya u kaṋa kana mveledzo i kha ḓi fanela u sedzuluswa fhethu."
+  },
+  {
+    "english": "Season references",
+    "zu": "Izinkomba zezikhathi zonyaka",
+    "st": "Mehlodi ya dinako tsa selemo",
+    "ts": "Swikombo swa tinguva",
+    "ve": "Zwiko zwa khalaṅwaha"
+  },
+  {
+    "english": "Why these months are marked",
+    "zu": "Kungani lezi zinyanga zimakiwe",
+    "st": "Hobaneng dikgwedi tsena di tshwailwe",
+    "ts": "Leswi endleke leswaku tin’hweti leti ti funghiwa",
+    "ve": "Ndi ngani iyi miṅwedzi yo swaiwa"
+  },
+  {
+    "english": "References describe established plants. Confirm local dates; new plants need time to produce.",
+    "zu": "Izinkomba zichaza izitshalo esezimile kahle. Qinisekisa izinsuku zendawo; izitshalo ezintsha zidinga isikhathi ngaphambi kokukhiqiza.",
+    "st": "Mehlodi e hlalosa dimela tse seng di tsitsitse. Netefatsa matsatsi a sebaka; dimela tse ntjha di hloka nako pele di hlahisa.",
+    "ts": "Swikombo swi hlamusela swimila leswi mileke swi tiya. Tiyisisa masiku ya ndhawu; swimila leswintshwa swi lava nkarhi wo humesa swakudya.",
+    "ve": "Zwiko zwi ṱalusa zwimela zwo no khwaṱhaho. Khwaṱhisedzani maḓuvha a henefho; zwimela zwiswa zwi ṱoḓa tshifhinga tsha u bveledza."
+  },
+  {
+    "english": "Season references (continued)",
+    "zu": "Izinkomba zezikhathi zonyaka (kuyaqhubeka)",
+    "st": "Mehlodi ya dinako tsa selemo (e tswela pele)",
+    "ts": "Swikombo swa tinguva (swi ya mahlweni)",
+    "ve": "Zwiko zwa khalaṅwaha (zwi khou bvela phanḓa)"
+  },
+  {
+    "english": "Source: {source}",
+    "zu": "Umthombo: {source}",
+    "st": "Mohlodi: {source}",
+    "ts": "Xihlovo: {source}",
+    "ve": "Tshiko: {source}"
+  },
+  {
+    "english": "These earlier sowings are not confirmed. They are left out of the food calendar and jobs. In the app, confirm what was planted or mark it as skipped.",
+    "zu": "Lokhu kuhlwanyela kwangaphambili akuqinisekisiwe. Akufakwa ekhalendeni lokudla nasemisebenzini. Ohlelweni, qinisekisa okutshalwe noma umake ukuthi kweqiwe.",
+    "st": "Dijalo tsena tsa pejana ha di netefatswe. Ha di kenngwe khalendareng ya dijo le mesebetsing. Ho app, netefatsa se jetsweng kapa o tshwaye hore se tlotsoe.",
+    "ts": "Ku byala loku ka khale a ku tiyisisiwanga. A ku katsiwi eka khalendara ya swakudya ni mintirho. Eka app, tiyisisa leswi byariweke kumbe fungha leswaku swi tluriwile.",
+    "ve": "U zwala uhu ha kale a ho ngo khwaṱhisedzwa. A hu katelwi kha khalenda ya zwiḽiwa na mishumo. Kha app, khwaṱhisedzani zwe zwa ṱavhiwa kana ni swae uri zwo pfukiwa."
+  },
+  {
+    "english": "{crop} - {bed} - scheduled {date}",
+    "zu": "{crop} - {bed} - bekuhlelelwe {date}",
+    "st": "{crop} - {bed} - ho reretswe {date}",
+    "ts": "{crop} - {bed} - ku kunguhatiwe {date}",
+    "ve": "{crop} - {bed} - zwo dzudzanyelwa {date}"
+  },
+  {
+    "english": "Sowings to confirm",
+    "zu": "Ukuhlwanyela okudinga ukuqinisekiswa",
+    "st": "Dijalo tse hlokang netefatso",
+    "ts": "Ku byala loku faneleke ku tiyisisiwa",
+    "ve": "U zwala hune ha fanela u khwaṱhisedzwa"
+  },
+  {
+    "english": "Did these sowings happen?",
+    "zu": "Ingabe lokhu kuhlwanyela kwenzeka?",
+    "st": "Na dijalo tsena di jetswe?",
+    "ts": "Xana ku byala loku ku humelerile?",
+    "ve": "Naa u zwala uhu ho itea?"
+  },
+  {
+    "english": "Keeping food",
+    "zu": "Ukugcina ukudla",
+    "st": "Ho boloka dijo",
+    "ts": "Ku hlayisa swakudya",
+    "ve": "U vhulunga zwiḽiwa"
+  },
+  {
+    "english": "Before using stored food",
+    "zu": "Ngaphambi kokusebenzisa ukudla okugciniwe",
+    "st": "Pele o sebedisa dijo tse bolokilweng",
+    "ts": "Loko u nga si tirhisa swakudya leswi hlayisiweke",
+    "ve": "Phanḓa ha u shumisa zwiḽiwa zwo vhulungwaho"
+  },
+  {
+    "english": "The storage row applies only when these sourced conditions are met. Check the food before using it.",
+    "zu": "Umugqa wokugcina usebenza kuphela uma le mibandela evela emithonjeni ihlangatshezwana nayo. Hlola ukudla ngaphambi kokukusebenzisa.",
+    "st": "Mola wa poloko o sebetsa feela ha maemo ana a tswang mehloding a fihlellwa. Hlahloba dijo pele o di sebedisa.",
+    "ts": "Ntila wa vuhlayiselo wu tirha ntsena loko swiyimo leswi humaka eswihlobyeni swi fikeleriwile. Kambela swakudya u nga si swi tirhisa.",
+    "ve": "Mutalo wa u vhulunga u shuma fhedzi musi nyimele idzi dzi bvaho kha zwiko dzo swikelelwa. Sedzulusani zwiḽiwa phanḓa ha u zwi shumisa."
+  },
+  {
+    "english": "Stored food (continued)",
+    "zu": "Ukudla okugciniwe (kuyaqhubeka)",
+    "st": "Dijo tse bolokilweng (e tswela pele)",
+    "ts": "Swakudya leswi hlayisiweke (swi ya mahlweni)",
+    "ve": "Zwiḽiwa zwo vhulungwaho (zwi khou bvela phanḓa)"
+  },
+  {
+    "english": "{crop} - sourced storage window: {months} months",
+    "zu": "{crop} - isikhathi sokugcina esivela emthonjeni: izinyanga {months}",
+    "st": "{crop} - nako ya poloko e tswang mohloding: dikgwedi {months}",
+    "ts": "{crop} - nkarhi wa vuhlayiselo lowu humaka exihlobyeni: tin’hweti ta {months}",
+    "ve": "{crop} - tshifhinga tsha u vhulunga tshi bvaho kha tshiko: miṅwedzi ya {months}"
+  },
+  {
+    "english": "Source guide",
+    "zu": "Umhlahlandlela womthombo",
+    "st": "Tataiso ya mohlodi",
+    "ts": "Nkongomiso wa xihlovo",
+    "ve": "Nyendedzi ya tshiko"
+  },
+  {
+    "english": "Fruit, nuts and berries: solid marks are local dates. Outlined marks: references when established, not food promised this year.",
+    "zu": "Izithelo, amantongomane namajikijolo: amamaki agcwele ayizinsuku zendawo. Amamaki ohlaka: izinkomba lapho sekumile kahle, hhayi ukudla okuthenjisiwe kulo nyaka.",
+    "st": "Ditholwana, matokomane le menokotshwai: matshwao a tletseng ke matsatsi a sebaka. Matshwao a nang le mola wa kantle: mehlodi ha dimela di se di tsitsitse, eseng dijo tse tshepisitsweng selemong sena.",
+    "ts": "Mihandzu, timanga ni tiberry: mimfungho leyi tatiweke i masiku ya ndhawu. Mimfungho ya rimba: swikombo loko swimila swi mile swi tiya, ku nga ri swakudya leswi tshembisiweke lembe leri.",
+    "ve": "Mitshelo, nḓuhu na berries: tswayo dzo ḓalaho ndi maḓuvha a henefho. Tswayo dza luhura: zwiko musi zwimela zwo no khwaṱha, hu si zwiḽiwa zwo fulufhedziswaho uno ṅwaha."
+  },
+  {
+    "english": "This repeats the annual planting cycle. It is not a forecast for this first year.",
+    "zu": "Lokhu kuphinda umjikelezo wokutshala wonyaka. Akusona isibikezelo salo nyaka wokuqala.",
+    "st": "Sena se pheta potoloho ya temo ya selemo. Ha se ponelopele ya selemo sena sa pele.",
+    "ts": "Leswi swi phindha ndzhendzheleko wo byala wa lembe. A hi vuprofeta bya lembe leri ro sungula.",
+    "ve": "Izwi zwi dovholola mutevhe wa u ṱavha wa ṅwaha. A si mbonelopele ya uno ṅwaha wa u thoma."
+  },
+  {
+    "english": "Outlined bands are planning references when established; they do not enter food totals or picking jobs. Blank months have no picking window marked. Recorded planting ages keep young plants out of early reference months. Check plant ages and Food sources to check in the app. Gold rows require each crop’s storage conditions; check the full plan or app. Red space figures mean the plan needs more growing space than is mapped.",
+    "zu": "Imigqa yohlaka iyizinkomba zokuhlela lapho izitshalo sezimile kahle; ayifakwa esambeni sokudla noma emisebenzini yokuvuna. Izinyanga ezingenalutho azinazo izikhathi zokuvuna ezimakiwe. Ubudala bezitshalo oburekhodiwe bugcina izitshalo ezincane zingafakwa ezinyangeni zokuqala zezinkomba. Hlola ubudala bezitshalo neMithombo yokudla edinga ukuhlolwa ohlelweni. Imigqa yegolide idinga imibandela yokugcina yesitshalo ngasinye; hlola uhlelo oluphelele noma i-app. Izibalo zendawo ezibomvu zisho ukuthi uhlelo ludinga indawo yokutshala engaphezu kweyasebalazweni.",
+    "st": "Dibanta tsa mola wa kantle ke mehlodi ya moralo ha dimela di se di tsitsitse; ha di kenngwe dikakaretsong tsa dijo kapa mesebetsing ya kotulo. Dikgwedi tse se nang letho ha di na nako ya kotulo e tshwailweng. Dilemo tsa ho lema tse rekotilweng di thibela dimela tse nyane ho kenngwa dikgweding tsa pele tsa mehlodi. Hlahloba dilemo tsa dimela le Mehlodi ya dijo e hlokang ho hlahlojwa ho app. Mela ya kgauta e hloka maemo a poloko a sejalo ka seng; hlahloba moralo o felletseng kapa app. Dipalo tse kgubedu tsa sebaka di bolela hore moralo o hloka sebaka sa temo se fetang se mmapeng.",
+    "ts": "Tibendi ta rimba i swikombo swo kunguhata loko swimila swi mile swi tiya; a swi katsiwi eka tinhlayo ta swakudya kumbe mintirho yo tshovela. Tin’hweti leti nga riki na swilo a ti na nkarhi wo tshovela lowu funghiweke. Vukhale bya swimila lowu rhekhodiweke byi sivela swimila leswitsongo ku katsiwa eka tin’hweti ta le ku sunguleni ta swikombo. Kambela vukhale bya swimila ni Swihlovo swa swakudya leswi faneleke ku kamberiwa eka app. Mintila ya nsuku yi lava swiyimo swa vuhlayiselo swa xibyariwa xin’wana ni xin’wana; kambela pulani leyi heleleke kumbe app. Tinhlayo to tshwuka ta ndhawu ti vula leswaku pulani yi lava ndhawu yo byala yo tala ku hundza leyi nga eka mepe.",
+    "ve": "Mabande a luhura ndi zwiko zwa u pulana musi zwimela zwo no khwaṱha; a zwi katelwi kha tshivhalo tsha zwiḽiwa kana mishumo ya u kaṋa. Miṅwedzi i si na tshithu a i na tshifhinga tsha u kaṋa tsho swaiwaho. Miṅwaha ya zwimela yo rekhodiwaho i thivhela zwimela zwiṱuku u katelwa kha miṅwedzi ya u thoma ya zwiko. Sedzulusani miṅwaha ya zwimela na Zwiko zwa zwiḽiwa zwine zwa fanela u sedzuluswa kha app. Mitalo ya musuku i ṱoḓa nyimele dza u vhulunga dza tshiliṅwa tshiṅwe na tshiṅwe; sedzulusani pulane yo fhelelaho kana app. Mbalo tswuku dza fhethu dzi amba uri pulane i ṱoḓa fhethu ha u lima hunzhi u fhira hu re kha mapa."
+  },
+  {
+    "english": "Shelled grain dried to ≤14% moisture, kept in a clean sealed container or silo with active weevil/larger-grain-borer control.",
+    "zu": "Izinhlamvu ezikhishiwe emakhobeni zomiswe zibe nomswakama ongu-14% noma ngaphansi, zigcinwe esitsheni esihlanzekile esivaliwe noma esilweni, kulawulwa ngokuqhubekayo izimbungulu zezinhlamvu ne-larger-grain-borer.",
+    "st": "Dithollo tse ntshitsweng di omisitswe ho mongobo wa 14% kapa ka tlase, di bolokilwe setshelong se hlwekileng se kwetsweng kapa saelong, ho ntse ho laolwa dikokwanyana tsa dithollo le larger-grain-borer.",
+    "ts": "Tindzoho leti susiweke emakaveni ti omisiwile ku fika eka ndzhongho wa 14% kumbe ehansi, ti hlayisiwa eka xibye lexi baseke lexi pfariweke kumbe silo, ku ri ni vulawuri bya swifufunhunu swa tindzoho ni larger-grain-borer.",
+    "ve": "Thoro dzo bviswaho kha makwati dzo omiswa u swika kha muṋando wa 14% kana fhasi, dzo vhulungwa kha tshifaredzi tsho kunaho tsho valiwaho kana silo, hu tshi khou langulwa zwikhokhonono zwa thoro na larger-grain-borer."
+  },
+  {
+    "english": "Fully dried grain (12-15% moisture), clean sealed containers, cool and dry, with bruchid/weevil control (e.g. edible-oil admix at 5ml/kg, or storage in-pod).",
+    "zu": "Izinhlamvu ezomiswe ngokuphelele (umswakama ongu-12-15%), izitsha ezihlanzekile ezivaliwe, endaweni epholile neyomile, kulawulwa izimbungulu ze-bruchid/weevil (isibonelo ukuxuba amafutha adliwayo ngo-5ml/kg, noma ukugcina zisemakhobeni).",
+    "st": "Dithollo tse omisitsweng ka botlalo (mongobo wa 12-15%), ditshelo tse hlwekileng tse kwetsweng, sebakeng se phodileng se ommeng, ka taolo ya bruchid/weevil (mohlala ho tswaka oli e jewang ka 5ml/kg, kapa ho boloka di le ka hara makgapetla).",
+    "ts": "Tindzoho leti omisiweke hi ku helela (ndzhongho wa 12-15%), swibye leswi baseke leswi pfariweke, laha ku titimelaka ni ku oma, ku ri ni vulawuri bya bruchid/weevil (xikombiso ku hlanganisa mafurha lama dyiwaka hi 5ml/kg, kumbe ku hlayisa ti ri emarhambyini ya tona).",
+    "ve": "Thoro dzo omiswaho tshoṱhe (muṋando wa 12-15%), zwifaredzi zwo kunaho zwo valiwaho, fhethu hu rotholelaho ho omaho, hu na ndangulo ya bruchid/weevil (sa tsumbo u ṱanganyisa mapfura a u ḽa nga 5ml/kg, kana u vhulunga dzi kha makwati)."
+  },
+  {
+    "english": "Mature hard-rind fruit, cured, clean, dry, undamaged, kept ventilated at 10-15°C/50-70% RH.",
+    "zu": "Izithelo ezivuthiwe ezinesikhumba esiqinile, ezelashwe ngokomiswa, ezihlanzekile, ezomile, ezingalimele, zigcinwe endaweni engenisa umoya ngo-10-15°C/50-70% RH.",
+    "st": "Ditholwana tse butswitseng tse nang le lekgapetla le thata, tse omisitsweng ho tiisa lekgapetla, tse hlwekileng, tse ommeng, tse sa senyehang, di bolokilwe moo ho kenang moya ka 10-15°C/50-70% RH.",
+    "ts": "Mihandzu leyi wupfeke leyi nga ni nhlonge yo tiya, leyi omisiweke ku tiyisa nhlonge, leyi baseke, leyi omeke, leyi nga onhakangiki, yi hlayisiwa laha ku nghenaka moya eka 10-15°C/50-70% RH.",
+    "ve": "Mitshelo yo vhibvaho i re na lukanda lwo khwaṱhaho, yo omiswa u khwaṱhisa lukanda, yo kunaho, yo omaho, i songo tshinyadzwaho, yo vhulungwa fhethu hu no dzhenwa nga muya kha 10-15°C/50-70% RH."
+  },
+  {
+    "english": "Mature, cured (hardened-skin) fruit, undamaged, kept ventilated at 10-15°C/50-70% RH.",
+    "zu": "Izithelo ezivuthiwe, ezelashwe ngokomiswa (isikhumba esiqinisiwe), ezingalimele, zigcinwe endaweni engenisa umoya ngo-10-15°C/50-70% RH.",
+    "st": "Ditholwana tse butswitseng, tse omisitsweng ho tiisa lekgapetla, tse sa senyehang, di bolokilwe moo ho kenang moya ka 10-15°C/50-70% RH.",
+    "ts": "Mihandzu leyi wupfeke, leyi omisiweke ku tiyisa nhlonge, leyi nga onhakangiki, yi hlayisiwa laha ku nghenaka moya eka 10-15°C/50-70% RH.",
+    "ve": "Mitshelo yo vhibvaho, yo omiswa u khwaṱhisa lukanda, i songo tshinyadzwaho, yo vhulungwa fhethu hu no dzhenwa nga muya kha 10-15°C/50-70% RH."
+  },
+  {
+    "english": "Field-dried (cured, necks fully dry) bulbs held at ambient temperature in well-ventilated trays/racks.",
+    "zu": "Ama-bulb omiswe ensimini (elashwe ngokomiswa, izintamo zome ngokuphelele), agcinwe ezingeni lokushisa lendawo emathreyini/emarakhini angenisa umoya kahle.",
+    "st": "Ditleloubu tse omisitsweng tshimong (ho tiisa letlalo, melala e omme ka botlalo), di bolokilwe motjhesong wa sebaka ditereing/dirakeng tse nang le moya o kenang hantle.",
+    "ts": "Tibulb leti omisiweke ensinwini (ku tiyisa nhlonge, tinhana ti omile hi ku helela), ti hlayisiwa eka mahiselo ya ndhawu etithireyini/etirakeni leti nghenaka moya kahle.",
+    "ve": "Mabulu o omiswaho tsimuni (u khwaṱhisa lukanda, mitsinga yo oma tshoṱhe), o vhulungwa kha mufhiso wa fhethu kha thireyi/raka dzine dza dzhenwa nga muya zwavhuḓi."
+  },
+  {
+    "english": "Only mature, undamaged roots; cured 30-32°C/85-90% RH for 4-7 days, then stored with minimal handling as cool as achievable (source optimum 13°C) at ~85-90% RH. The sweet potato weevil (Cylas spp.) is the main storage threat.",
+    "zu": "Izimpande ezivuthiwe nezingalimele kuphela; zelashwe ngo-30-32°C/85-90% RH izinsuku ezingu-4-7, bese zigcinwa zingaphathwa kakhulu, endaweni ephole kakhulu ngangokunokwenzeka (umthombo uthi okungcono kungu-13°C) ku-~85-90% RH. I-sweet potato weevil (Cylas spp.) iyingozi enkulu yokugcina.",
+    "st": "Ke metso e butswitseng e sa senyehang feela; e phekotswe ka 30-32°C/85-90% RH matsatsi a 4-7, ebe e bolokwa e tshwarwa hanyenyane kamoo ho ka kgonehang, sebakeng se phodileng ka ho fetisisa se ka fumanehang (mohlodi o re se loketseng ke 13°C) ka ~85-90% RH. Sweet potato weevil (Cylas spp.) ke kotsi e kgolo polokong.",
+    "ts": "Ku va timitsu leti wupfeke leti nga onhakangiki ntsena; ti tshunguriwa eka 30-32°C/85-90% RH masiku ya 4-7, kutani ti hlayisiwa ti khomiwa katsongo swinene, laha ku titimelaka swinene ku ya hi leswi kotekaka (xihlovo xi vula leswaku ku antswa eka 13°C) eka ~85-90% RH. Sweet potato weevil (Cylas spp.) i khombo lerikulu ra vuhlayiselo.",
+    "ve": "Midzi yo vhibvaho i songo tshinyadzwaho fhedzi; i lafhiwa kha 30-32°C/85-90% RH lwa maḓuvha a 4-7, ya kona i vhulungwe i tshi farwa zwiṱuku nga hune zwa konadzea ngaho, fhethu hu rotholelaho vhukuma nga hune zwa konadzea ngaho (tshiko tshi ri hune ha vha khwine ndi 13°C) kha ~85-90% RH. Sweet potato weevil (Cylas spp.) ndi khombo khulwane ya u vhulunga."
+  },
+  {
+    "english": "Cured 15-20°C/85-90% RH for 5-10 days, then kept dark and naturally ventilated averaging ~15°C or cooler, no sprout inhibitor.",
+    "zu": "Kwelashwe ngo-15-20°C/85-90% RH izinsuku ezingu-5-10, bese kugcinwa ebumnyameni kungene umoya ngokwemvelo ngesilinganiso esingu-~15°C noma ngaphansi, kungasetshenziswa isivimbeli sokuhluma.",
+    "st": "Di phekotswe ka 15-20°C/85-90% RH matsatsi a 5-10, ebe di bolokwa lefifing moo ho kenang moya ka tlhaho ka karolelano ya ~15°C kapa ka tlase, ho se na sethibela ho mela.",
+    "ts": "Swi tshunguriwa eka 15-20°C/85-90% RH masiku ya 5-10, kutani swi hlayisiwa emunyameni laha moya wu nghenaka hi ntumbuluko hi avhareji ya ~15°C kumbe ku titimela ku tlurisa, ku nga ri na xitirhisiwa xo sivela ku hluka.",
+    "ve": "Zwi lafhiwa kha 15-20°C/85-90% RH lwa maḓuvha a 5-10, zwa kona zwi vhulungwe swiswini hu tshi dzhenwa nga muya nga mvelo kha phimo ya ~15°C kana hu rotholelaho u fhira afho, hu si na tshithivheli tsha u mela."
+  },
+  {
+    "english": "Cool, dry, well-ventilated storage at ambient 25-30°C — traditionally heaped corms under shade or covered with straw/plantain leaves.",
+    "zu": "Kugcinwe endaweni epholile, eyomile, engenisa umoya kahle ezingeni lokushisa lendawo elingu-25-30°C - ngokwesiko kunqwatshelaniswa ama-corm emthunzini noma ambozwe ngotshani/ngamaqabunga e-plantain.",
+    "st": "Poloko e phodileng, e ommeng, e nang le moya o kenang hantle motjhesong wa sebaka wa 25-30°C - ka setso di-corm di bokellwa moriting kapa di kwahelwa ka jwang/mahlaku a plantain.",
+    "ts": "Vuhlayiselo byo titimela, byo oma, byo nghena moya kahle eka mahiselo ya ndhawu ya 25-30°C - hi ndhavuko ti-corm ti hlengeletiwa endzhutini kumbe ti funengetiwa hi byanyi/matluka ya plantain.",
+    "ve": "U vhulunga fhethu hu rotholelaho, ho omaho, hu no dzhenwa nga muya zwavhuḓi kha mufhiso wa fhethu wa 25-30°C - nga mvelele ma-corm a kuvhanganywa murunzini kana a fukedzwa nga hatsi/maṱari a plantain."
+  },
+  {
+    "english": "Unshelled (in-shell) pods dried to in-shell moisture ~10% or less, stored in gunny bags, mud bins, baskets or a ventilated dry room, protected from pests and damp.",
+    "zu": "Amakhoba angakakhishwa (asamagobolondo) omiswe abe nomswakama ongaba ngu-~10% noma ngaphansi egobolondweni, agcinwe ezikhwameni zegunny, ezitsheni zodaka, kobhasikidi noma egumbini elomile elingenisa umoya, avikelwe ezinambuzaneni nasemswakameni.",
+    "st": "Makgapetla a sa ntshwa (a ntse a le dikgetleng) a omisitswe ho mongobo wa ka hara kgetla wa ~10% kapa ka tlase, a bolokilwe mekotleng ya gunny, dipolokelong tsa seretse, dibasketeng kapa phaposing e ommeng e kenang moya, a sireleditswe ho dikokwanyana le mongobo.",
+    "ts": "Marhambi lama nga susiwangiki makamba (ma ha ri emakambeni) ma omisiwile ku fika eka ndzhongho wa le ndzeni ka kamba wa ~10% kumbe ehansi, ma hlayisiwa eminkwameni ya gunny, eswibyeni swa misava, emibasikitini kumbe ekamareni ro oma leri nghenaka moya, ma sirheleriwile eka switsotswana ni ndzhongho.",
+    "ve": "Makwati a songo bviswaho (a kha ganda) o omiswa u swika kha muṋando wa nga ngomu ha ganda wa ~10% kana fhasi, o vhulungwa kha masaga a gunny, zwifaredzi zwa mavu, manngi kana kamara yo omaho i dzhenwaho nga muya, o tsireledzwa kha zwikhokhonono na muṋando."
+  },
+  {
+    "english": "Well-cured bulbs (dried several weeks, dark/dry/ventilated), then kept unrefrigerated in a cool, dry, dark, well-ventilated place (e.g. mesh bags).",
+    "zu": "Ama-bulb elashwe kahle ngokomiswa (omiswe amasonto ambalwa, ebumnyameni/omile/angenisa umoya), bese egcinwa ngaphandle kwesiqandisi endaweni epholile, eyomile, emnyama, engenisa umoya kahle (isibonelo ezikhwameni zenetha).",
+    "st": "Ditleloubu tse omisitsweng hantle ho tiisa letlalo (di omisitswe dibeke tse mmalwa, lefifing/di omme/ho kena moya), ebe di bolokwa ntle le sehatsetsi sebakeng se phodileng, se ommeng, se lefifi, se nang le moya o kenang hantle (mohlala mekotleng ya letlowa).",
+    "ts": "Tibulb leti omisiweke kahle ku tiyisa nhlonge (ti omisiwile mavhiki yo hlayanyana, emunyameni/ti omile/ku nghena moya), kutani ti hlayisiwa ehandle ka firiji laha ku titimelaka, ku omeke, ku nga ni munyama, ku nghenaka moya kahle (xikombiso eminkwameni ya nete).",
+    "ve": "Mabulu o omiswaho zwavhuḓi u khwaṱhisa lukanda (o omiswa vhege dzi si gathi, swiswini/o oma/hu dzhenwa nga muya), a kona a vhulungwe hu si kha tshirothodzi fhethu hu rotholelaho, ho omaho, ha swiswi, hu no dzhenwa nga muya zwavhuḓi (sa tsumbo kha masaga a nete)."
+  },
+  {
+    "english": "{existing} existing",
+    "zu": "{existing} okukhona",
+    "st": "{existing} tse teng",
+    "ts": "{existing} leswi nga kona",
+    "ve": "{existing} zwi re hone"
+  },
+  {
+    "english": "{existing} existing; {proposed} proposed",
+    "zu": "{existing} okukhona; {proposed} okuhleliwe",
+    "st": "{existing} tse teng; {proposed} tse rerilweng",
+    "ts": "{existing} leswi nga kona; {proposed} leswi kunguhatiweke",
+    "ve": "{existing} zwi re hone; {proposed} zwo dzudzanywaho"
+  },
+  {
+    "english": "Plants on map: {counts}. {age}{season}{reference}",
+    "zu": "Izitshalo ebalazweni: {counts}. {age}{season}{reference}",
+    "st": "Dimela tse mmapeng: {counts}. {age}{season}{reference}",
+    "ts": "Swimila eka mepe: {counts}. {age}{season}{reference}",
+    "ve": "Zwimela kha mapa: {counts}. {age}{season}{reference}"
+  },
+  {
+    "english": "Local months: {months}. Proposed plants are not a current harvest.",
+    "zu": "Izinyanga zendawo: {months}. Izitshalo ezihleliwe azisona isivuno samanje.",
+    "st": "Dikgwedi tsa sebaka: {months}. Dimela tse rerilweng ha se kotulo ya hona jwale.",
+    "ts": "Tin’hweti ta ndhawu: {months}. Swimila leswi kunguhatiweke a hi ntshovelo wa sweswi.",
+    "ve": "Miṅwedzi ya henefho: {months}. Zwimela zwo dzudzanywaho a si khaṋo ya zwino."
+  },
+  {
+    "english": "Picking months and fruit-bearing plants need local confirmation.",
+    "zu": "Izinyanga zokuvuna nezitshalo ezithela izithelo zidinga ukuqinisekiswa endaweni.",
+    "st": "Dikgwedi tsa kotulo le dimela tse behang ditholwana di hloka netefatso sebakeng.",
+    "ts": "Tin’hweti to tshovela ni swimila leswi tswalaka mihandzu swi fanele ku tiyisisiwa endhawini.",
+    "ve": "Miṅwedzi ya u kaṋa na zwimela zwine zwa aṋwa mitshelo zwi fanela u khwaṱhisedzwa henefho."
+  },
+  {
+    "english": "No harvest reference is available in this plan; only local observations can supply picking months.",
+    "zu": "Akukho sikhombo sesivuno kulolu hlelo; ukubhekwa kwendawo kuphela okunganikeza izinyanga zokuvuna.",
+    "st": "Ha ho mohlodi wa kotulo o fumanehang moralong ona; ke tse bonweng sebakeng feela tse ka fanang ka dikgwedi tsa kotulo.",
+    "ts": "A ku na xikombo xa ntshovelo eka pulani leyi; ku langutisisa ka ndhawu ntsena ku nga nyikaka tin’hweti to tshovela.",
+    "ve": "A hu na tshiko tsha khaṋo kha iyi pulane; zwe zwa vhonwa henefho fhedzi ndi zwone zwine zwa nga ṋea miṅwedzi ya u kaṋa."
+  },
+  {
+    "english": "{counts} on your map. {check}",
+    "zu": "{counts} ebalazweni lakho. {check}",
+    "st": "{counts} mmapeng wa hao. {check}",
+    "ts": "{counts} eka mepe wa wena. {check}",
+    "ve": "{counts} kha mapa waṋu. {check}"
+  },
+  {
+    "english": "No harvest reference is available in this plan. Picking months are not recorded.",
+    "zu": "Akukho sikhombo sesivuno kulolu hlelo. Izinyanga zokuvuna azirekhodiwe.",
+    "st": "Ha ho mohlodi wa kotulo o fumanehang moralong ona. Dikgwedi tsa kotulo ha di rekotwe.",
+    "ts": "A ku na xikombo xa ntshovelo eka pulani leyi. Tin’hweti to tshovela a ti rhekhodiwanga.",
+    "ve": "A hu na tshiko tsha khaṋo kha iyi pulane. Miṅwedzi ya u kaṋa a yo ngo rekhodiwa."
+  },
+  {
+    "english": "Choose its species in the design, then confirm picking months locally.",
+    "zu": "Khetha uhlobo lwaso emdwebeni, bese uqinisekisa izinyanga zokuvuna endaweni.",
+    "st": "Kgetha mofuta wa sona moralong, ebe o netefatsa dikgwedi tsa kotulo sebakeng.",
+    "ts": "Hlawula muxaka wa xona eka dizayini, kutani u tiyisisa tin’hweti to tshovela endhawini.",
+    "ve": "Nangani lushaka lwatsho kha dizaini, ni kone u khwaṱhisedza miṅwedzi ya u kaṋa henefho."
+  },
+  {
+    "english": "Structures on map: {counts}. Structure counts do not show animal numbers. {check}",
+    "zu": "Izakhiwo ebalazweni: {counts}. Izibalo zezakhiwo azibonisi inani lezilwane. {check}",
+    "st": "Meaho e mmapeng: {counts}. Dipalo tsa meaho ha di bontshe dipalo tsa diphoofolo. {check}",
+    "ts": "Miako eka mepe: {counts}. Tinhlayo ta miako a ti kombisi tinhlayo ta swifuwo. {check}",
+    "ve": "Zwifhaṱo kha mapa: {counts}. Mbalo dza zwifhaṱo a dzi sumbedzi mbalo dza zwifuwo. {check}"
+  },
+  {
+    "english": "Proposed housing has no animals yet.",
+    "zu": "Indawo yezilwane ehleliwe ayikabi nazo izilwane.",
+    "st": "Matlo a diphoofolo a rerilweng ha a eso be le diphoofolo.",
+    "ts": "Tindlu ta swifuwo leti kunguhatiweke a ti si va ni swifuwo.",
+    "ve": "Madzulo a zwifuwo o dzudzanywaho a a athu vha na zwifuwo."
+  },
+  {
+    "english": "Confirm production months for this farm before expecting this product.",
+    "zu": "Qinisekisa izinyanga zokukhiqiza zaleli pulazi ngaphambi kokulindela lo mkhiqizo.",
+    "st": "Netefatsa dikgwedi tsa tlhahiso tsa polasi ena pele o lebella sehlahiswa sena.",
+    "ts": "Tiyisisa tin’hweti ta vuhumelerisi bya purasi leri u nga si langutela xikumiwa lexi.",
+    "ve": "Khwaṱhisedzani miṅwedzi ya mveledzo ya iḽi bulasi phanḓa ha u lavhelela itshi tshibveledzwa."
+  },
+  {
+    "english": "Choose what they are kept for. No product or production dates assumed.",
+    "zu": "Khetha ukuthi zigcinelweni. Akucatshangwa mkhiqizo noma izinsuku zokukhiqiza.",
+    "st": "Kgetha hore di ruellwa eng. Ha ho sehlahiswa kapa matsatsi a tlhahiso a hakanyetswang.",
+    "ts": "Hlawula leswi swi fuyeriwaka swona. A ku ringanyetiwi xikumiwa kumbe masiku ya vuhumelerisi.",
+    "ve": "Nangani zwine zwa fuwelwa zwone. A hu anganyelwi tshibveledzwa kana maḓuvha a mveledzo."
+  },
+  {
+    "english": "Honey flows depend on local plants and rain, so no months are marked.",
+    "zu": "Ukutholakala koju kuncike ezitshalweni nasemvuleni yendawo, ngakho azikho izinyanga ezimakiwe.",
+    "st": "Dinako tsa ho fumana mahe a dinotshi di itshetlehile ka dimela le pula ya sebaka, kahoo ha ho dikgwedi tse tshwailweng.",
+    "ts": "Nguva ya vuhumelerisi bya vulombe yi ya hi swimila ni mpfula ya ndhawu, kutani a ku na tin’hweti leti funghiweke.",
+    "ve": "Zwifhinga zwa u wana mutoli zwi ya nga zwimela na mvula ya henefho, ngauralo a hu na miṅwedzi yo swaiwaho."
+  },
+  {
+    "english": "Existing catalogue restriction flag: NEMBA {flag}. Legal status needs checking; kept as mapped inventory without planting advice or production dates.",
+    "zu": "Ifulegi elikhona lomkhawulo wekhathalogi: NEMBA {flag}. Isimo somthetho sidinga ukuhlolwa; kugcinwe njengempahla esebalazweni ngaphandle kweseluleko sokutshala noma izinsuku zokukhiqiza.",
+    "st": "Letshwao le teng la thibelo khathalokong: NEMBA {flag}. Boemo ba molao bo hloka ho hlahlojwa; di bolokwa e le lenane la tse mmapeng ntle le keletso ya ho lema kapa matsatsi a tlhahiso.",
+    "ts": "Mfungho lowu nga kona wa xipimelo xa khathalogu: NEMBA {flag}. Xiyimo xa nawu xi fanele ku kamberiwa; swi hlayisiwa swi ri nxaxamelo wa leswi nga eka mepe ku nga ri na xitsundzuxo xo byala kumbe masiku ya vuhumelerisi.",
+    "ve": "Tswayo i re hone ya thivhelo ya khathaḽogo: NEMBA {flag}. Tshiimo tsha mulayo tshi fanela u sedzuluswa; zwi vhulungwa sa mutevhe wa zwi re kha mapa hu si na nyeletshedzo ya u ṱavha kana maḓuvha a mveledzo."
+  },
+  {
+    "english": "Coops / chicken tractors",
+    "zu": "Amahhoko / amahhoko ezinkukhu ahambayo",
+    "st": "Masaka / masaka a dikgoho a tsamaiswang",
+    "ts": "Swihoko / swihoko swa tihuku leswi fambisiwaka",
+    "ve": "Zwitumba / zwitumba zwa khuhu zwi tshimbidzwaho"
+  },
+  {
+    "english": "Hives",
+    "zu": "Izidleke zezinyosi",
+    "st": "Matlo a dinotshi",
+    "ts": "Swisaka swa tinyoxi",
+    "ve": "Miḓi ya ṋotshi"
+  },
+  {
+    "english": "Goat pens",
+    "zu": "Izibaya zezimbuzi",
+    "st": "Masaka a dipodi",
+    "ts": "Swivala swa timbuti",
+    "ve": "Madanga a mbudzi"
+  },
+  {
+    "english": "Hutches",
+    "zu": "Amahhoko onogwaja",
+    "st": "Masaka a mebutlanyana",
+    "ts": "Swihoko swa mimpfundla",
+    "ve": "Zwitumba zwa mivhuḓa"
+  },
+  {
+    "english": "Duck ponds",
+    "zu": "Amachibi amadada",
+    "st": "Matamo a matata",
+    "ts": "Mativa ya masekwa",
+    "ve": "Matavha a masekwa"
+  },
+  {
+    "english": "Pig pens",
+    "zu": "Izibaya zezingulube",
+    "st": "Masaka a dikolobe",
+    "ts": "Swivala swa tinguluve",
+    "ve": "Madanga a nguluvhe"
+  },
+  {
+    "english": "Kraals",
+    "zu": "Izibaya",
+    "st": "Masaka",
+    "ts": "Swivala",
+    "ve": "Madanga"
+  },
+  {
+    "english": "Small ponds",
+    "zu": "Amachibi amancane",
+    "st": "Matamo a manyane",
+    "ts": "Mativa lamatsongo",
+    "ve": "Matavha maṱuku"
+  },
+  {
+    "english": "Eggs",
+    "zu": "Amaqanda",
+    "st": "Mahe",
+    "ts": "Matandza",
+    "ve": "Makumba"
+  },
+  {
+    "english": "Meat",
+    "zu": "Inyama",
+    "st": "Nama",
+    "ts": "Nyama",
+    "ve": "Ṋama"
+  },
+  {
+    "english": "Milk",
+    "zu": "Ubisi",
+    "st": "Lebese",
+    "ts": "Masi",
+    "ve": "Mafhi"
+  },
+  {
+    "english": "Honey",
+    "zu": "Uju",
+    "st": "Mahe a dinotshi",
+    "ts": "Vulombe",
+    "ve": "Mutoli"
+  },
+  {
+    "english": "Fish",
+    "zu": "Inhlanzi",
+    "st": "Tlhapi",
+    "ts": "Nhlampfi",
+    "ve": "Khovhe"
+  },
+  {
+    "english": "Wool",
+    "zu": "Uboya",
+    "st": "Boya",
+    "ts": "Voya",
+    "ve": "Vhukuse"
+  },
+  {
+    "english": "Food use needs review",
+    "zu": "Ukusetshenziswa njengokudla kudinga ukubuyekezwa",
+    "st": "Tshebediso ya dijo e hloka tlhahlobo",
+    "ts": "Ku tirhisa tani hi swakudya swi fanele ku kambisisiwa",
+    "ve": "U shumisa sa zwiḽiwa hu fanela u sedzuluswa"
+  },
+  {
+    "english": "Not planted yet · see future harvest",
+    "zu": "Akukatshalwa · bheka isivuno esizayo",
+    "st": "Ha di eso jalwe · sheba kotulo ya kamoso",
+    "ts": "A swi si byariwa · vona ntshovelo wa nkarhi lowu taka",
+    "ve": "A zwi athu ṱavhiwa · sedzani khaṋo ya tshifhinga tshi ḓaho"
+  },
+  {
+    "english": "Growing · first-crop ref {from}{to}",
+    "zu": "Kusakhula · isikhombo sesivuno sokuqala {from}{to}",
+    "st": "Di a hola · mohlodi wa kotulo ya pele {from}{to}",
+    "ts": "Swa ha kula · xikombo xa ntshovelo wo sungula {from}{to}",
+    "ve": "Zwi khou hula · tshiko tsha khaṋo ya u thoma {from}{to}"
+  },
+  {
+    "english": "Age schedule: no crop planned now",
+    "zu": "Uhlelo lobudala: asikho isivuno esihleliwe manje",
+    "st": "Lenane la dilemo: ha ho kotulo e rerilweng hona jwale",
+    "ts": "Nongonoko wa vukhale: a ku na ntshovelo lowu kunguhatiweke sweswi",
+    "ve": "Mbekanyamushumo ya miṅwaha: a hu na khaṋo yo dzudzanywaho zwino"
+  },
+  {
+    "english": "Regional reference: {name}",
+    "zu": "Isikhombo sesifunda: {name}",
+    "st": "Mohlodi wa sebaka: {name}",
+    "ts": "Xikombo xa xifundzha: {name}",
+    "ve": "Tshiko tsha dzingu: {name}"
+  },
+  {
+    "english": "Assumed variety: Hass",
+    "zu": "Uhlobo olucatshangiwe: Hass",
+    "st": "Mofuta o hakanyeditsweng: Hass",
+    "ts": "Muxaka lowu ringanyetiweke: Hass",
+    "ve": "Lushaka lwo anganyelwaho: Hass"
+  },
+  {
+    "english": "Assumed variety: Mauritius",
+    "zu": "Uhlobo olucatshangiwe: Mauritius",
+    "st": "Mofuta o hakanyeditsweng: Mauritius",
+    "ts": "Muxaka lowu ringanyetiweke: Mauritius",
+    "ve": "Lushaka lwo anganyelwaho: Mauritius"
+  },
+  {
+    "english": "Assumed variety: Earligold (chilling needs checking)",
+    "zu": "Uhlobo olucatshangiwe: Earligold (amakhaza adingekayo afanele ukuhlolwa)",
+    "st": "Mofuta o hakanyeditsweng: Earligold (serame se hlokahalang se hloka ho hlahlojwa)",
+    "ts": "Muxaka lowu ringanyetiweke: Earligold (swilaveko swa xirhami swi fanele ku kamberiwa)",
+    "ve": "Lushaka lwo anganyelwaho: Earligold (ṱhoḓea dza phepho dzi fanela u sedzuluswa)"
+  },
+  {
+    "english": "Assumed variety: Granny Smith (chilling and pollen source need checking)",
+    "zu": "Uhlobo olucatshangiwe: Granny Smith (amakhaza adingekayo nomthombo wempova kufanele kuhlolwe)",
+    "st": "Mofuta o hakanyeditsweng: Granny Smith (serame le mohlodi wa peo ya palesa di hloka ho hlahlojwa)",
+    "ts": "Muxaka lowu ringanyetiweke: Granny Smith (xirhami ni xihlovo xa pollen swi fanele ku kamberiwa)",
+    "ve": "Lushaka lwo anganyelwaho: Granny Smith (phepho na tshiko tsha pollen zwi fanela u sedzuluswa)"
+  },
+  {
+    "english": "Assumed variety: African Delight",
+    "zu": "Uhlobo olucatshangiwe: African Delight",
+    "st": "Mofuta o hakanyeditsweng: African Delight",
+    "ts": "Muxaka lowu ringanyetiweke: African Delight",
+    "ve": "Lushaka lwo anganyelwaho: African Delight"
+  },
+  {
+    "english": "Regional reference: lemon main crop",
+    "zu": "Isikhombo sesifunda: isivuno esiyinhloko se-lemon",
+    "st": "Mohlodi wa sebaka: kotulo e kgolo ya lemon",
+    "ts": "Xikombo xa xifundzha: ntshovelo lowukulu wa lemon",
+    "ve": "Tshiko tsha dzingu: khaṋo khulwane ya lemon"
+  },
+  {
+    "english": "Regional reference: outdoor strawberry",
+    "zu": "Isikhombo sesifunda: strawberry etshalwe ngaphandle",
+    "st": "Mohlodi wa sebaka: strawberry e lenngweng kantle",
+    "ts": "Xikombo xa xifundzha: strawberry leyi byariweke ehandle",
+    "ve": "Tshiko tsha dzingu: strawberry yo ṱavhiwaho nnḓa"
+  },
+  {
+    "english": "Regional reference: frost-free strawberry",
+    "zu": "Isikhombo sesifunda: strawberry engenasithwathwa",
+    "st": "Mohlodi wa sebaka: strawberry e se nang serame sa lehlwa",
+    "ts": "Xikombo xa xifundzha: strawberry leyi nga riki na gwitsi",
+    "ve": "Tshiko tsha dzingu: strawberry i si na luvhame"
+  },
+  {
+    "english": "Regional reference: light-frost strawberry",
+    "zu": "Isikhombo sesifunda: strawberry enesithwathwa esincane",
+    "st": "Mohlodi wa sebaka: strawberry e nang le serame sa lehlwa se bobebe",
+    "ts": "Xikombo xa xifundzha: strawberry leyi nga ni gwitsi ritsongo",
+    "ve": "Tshiko tsha dzingu: strawberry i re na luvhame luṱuku"
+  },
+  {
+    "english": "Regional reference: pecan nuts",
+    "zu": "Isikhombo sesifunda: amantongomane e-pecan",
+    "st": "Mohlodi wa sebaka: matokomane a pecan",
+    "ts": "Xikombo xa xifundzha: timanga ta pecan",
+    "ve": "Tshiko tsha dzingu: nḓuhu dza pecan"
+  },
+  {
+    "english": "{region}. {note}Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.",
+    "zu": "{region}. {note}Isikhombo sokuhlela lapho sekumile kahle; qinisekisa izinsuku zokuvuna zendawo. Akuthenjiswa inani lokudla noma isivuno sonyaka wokuqala.",
+    "st": "{region}. {note}Mohlodi wa moralo ha dimela di se di tsitsitse; netefatsa matsatsi a kotulo sebakeng. Ha ho bongata ba dijo kapa kotulo ya selemo sa pele e tshepisitsweng.",
+    "ts": "{region}. {note}Xikombo xo kunguhata loko swi mile swi tiya; tiyisisa masiku yo tshovela ya ndhawu. A ku na nhlayo ya swakudya kumbe ntshovelo wa lembe ro sungula lowu tshembisiweke.",
+    "ve": "{region}. {note}Tshiko tsha u pulana musi zwo no khwaṱha; khwaṱhisedzani maḓuvha a u kaṋa a henefho. A hu na tshivhalo tsha zwiḽiwa kana khaṋo ya ṅwaha wa u thoma zwo fulufhedziswaho."
+  },
+  {
+    "english": "Hot and cool main crops remain separate; smaller additional crops are not marked.",
+    "zu": "Izivuno eziyinhloko zezindawo ezishisayo nezipholile zigcinwa zihlukene; izivuno ezengeziwe ezincane azimakwa.",
+    "st": "Dikotulo tse kgolo tsa dibaka tse tjhesang le tse phodileng di dula di arohane; dikotulo tse ding tse nyane ha di tshwaiwe.",
+    "ts": "Mintshovelo leyikulu ya tindhawu to hisa ni to titimela yi hambana; mintshovelo leyitsongo leyi engetelekeke a yi funghiwi.",
+    "ve": "Khaṋo khulwane dza fhethu hu fhisaho na hu rotholelaho dzi dzula dzo fhambana; khaṋo ṱhukhu dzo engedzwaho a dzi swaiwi."
+  },
+  {
+    "english": "Reference first pick, not the whole harvest duration.",
+    "zu": "Isikhombo sokuvuna kokuqala, hhayi sonke isikhathi sesivuno.",
+    "st": "Mohlodi wa kotulo ya pele, eseng nako yohle ya kotulo.",
+    "ts": "Xikombo xa ku tshovela ko sungula, ku nga ri nkarhi hinkwawo wa ntshovelo.",
+    "ve": "Tshiko tsha u kaṋa ha u thoma, hu si tshifhinga tshoṱhe tsha khaṋo."
+  },
+  {
+    "english": "Elgin first-pick reference, not the whole harvest duration. No other apple cultivar months are joined to it.",
+    "zu": "Isikhombo sokuvuna kokuqala sase-Elgin, hhayi sonke isikhathi sesivuno. Azihlanganiswa naso izinyanga zezinye izinhlobo ze-apple.",
+    "st": "Mohlodi wa kotulo ya pele wa Elgin, eseng nako yohle ya kotulo. Ha ho dikgwedi tsa mefuta e meng ya apple tse kopanngwang le wona.",
+    "ts": "Xikombo xa ku tshovela ko sungula xa Elgin, ku nga ri nkarhi hinkwawo wa ntshovelo. A ku hlanganisiwi tin’hweti ta mixaka yin’wana ya apple eka xona.",
+    "ve": "Tshiko tsha u kaṋa ha u thoma tsha Elgin, hu si tshifhinga tshoṱhe tsha khaṋo. A hu ṱanganyiswi miṅwedzi ya dziṅwe tshaka dza apple kha tshone."
+  },
+  {
+    "english": "Reference first pick; confirm chilling and compatible pollinator.",
+    "zu": "Isikhombo sokuvuna kokuqala; qinisekisa amakhaza adingekayo nesitshalo esifanele sempova.",
+    "st": "Mohlodi wa kotulo ya pele; netefatsa serame se hlokahalang le semela se fanang ka peo ya palesa se dumellanang.",
+    "ts": "Xikombo xa ku tshovela ko sungula; tiyisisa xirhami ni ximilana lexi fambisanaka xo nyikela pollen.",
+    "ve": "Tshiko tsha u kaṋa ha u thoma; khwaṱhisedzani phepho na tshimela tshi tshimbidzanaho tsha u ṋea pollen."
+  },
+  {
+    "english": "KZN outdoor reference, not the Transvaal tunnel season.",
+    "zu": "Isikhombo sangaphandle sase-KZN, hhayi isikhathi semihubhe yase-Transvaal.",
+    "st": "Mohlodi wa temo ya kantle wa KZN, eseng nako ya ditanele tsa Transvaal.",
+    "ts": "Xikombo xa le handle xa KZN, ku nga ri nguva ya tithanele ta Transvaal.",
+    "ve": "Tshiko tsha nnḓa tsha KZN, hu si khalaṅwaha ya thaneḽe dza Transvaal."
+  },
+  {
+    "english": "Assumes light frost; check severity locally.",
+    "zu": "Kucatshangwa isithwathwa esincane; hlola ubukhulu baso endaweni.",
+    "st": "Ho hakanyetswa serame sa lehlwa se bobebe; hlahloba matla a sona sebakeng.",
+    "ts": "Ku ringanyetiwa gwitsi ritsongo; kambela ku tika ka rona endhawini.",
+    "ve": "Hu anganyelwa luvhame luṱuku; sedzulusani vhuhulu halwo henefho."
+  },
+  {
+    "english": "Irrigated production reference; confirm cultivar, pollination, summer heat and water capacity.",
+    "zu": "Isikhombo sokukhiqiza okuniselwa; qinisekisa uhlobo, impova, ukushisa kwasehlobo namandla amanzi.",
+    "st": "Mohlodi wa tlhahiso e nosetswang; netefatsa mofuta, ho fetisa peo ya palesa, motjheso wa lehlabula le bokgoni ba metsi.",
+    "ts": "Xikombo xa vuhumelerisi byo cheletiwa; tiyisisa muxaka, ku rhurhisa pollen, ku hisa ka ximumu ni vuswikoti bya mati.",
+    "ve": "Tshiko tsha mveledzo ya u sheledza; khwaṱhisedzani lushaka, u tshimbidza pollen, mufhiso wa tshilimo na vhukoni ha maḓi."
+  },
+  {
+    "english": "KZN regional reference; cultivar-specific local timing remains unknown.",
+    "zu": "Isikhombo sesifunda sase-KZN; isikhathi sendawo esiqondene nohlobo sisengaziwa.",
+    "st": "Mohlodi wa sebaka wa KZN; nako ya sebaka e tobileng mofuta o itseng e ntse e sa tsejwe.",
+    "ts": "Xikombo xa xifundzha xa KZN; nkarhi wa ndhawu wa muxaka wo karhi wa ha nga tiveki.",
+    "ve": "Tshiko tsha dzingu tsha KZN; tshifhinga tsha henefho tsha lushaka lwo khetheaho a tshi athu ḓivhea."
+  },
+  {
+    "english": "Regional nut-in-shell season; individual cultivar maturity still needs checking.",
+    "zu": "Isikhathi sesifunda samantongomane asemagobolondweni; ukuvuthwa kohlobo ngalunye kusadinga ukuhlolwa.",
+    "st": "Nako ya sebaka ya matokomane a leng dikgetleng; ho butswa ha mofuta ka mong ho ntse ho hloka ho hlahlojwa.",
+    "ts": "Nguva ya xifundzha ya timanga leti nga emakambeni; ku wupfa ka muxaka wun’wana ni wun’wana ka ha fanele ku kamberiwa.",
+    "ve": "Khalaṅwaha ya dzingu ya nḓuhu dzi re kha maganda; u vhibva ha lushaka luṅwe na luṅwe hu kha ḓi fanela u sedzuluswa."
+  },
+  {
+    "english": "Regional industry season, not a Tommy Atkins-only harvest window.",
+    "zu": "Isikhathi semboni sesifunda, hhayi isikhathi sesivuno se-Tommy Atkins kuphela.",
+    "st": "Nako ya indasteri ya sebaka, eseng nako ya kotulo ya Tommy Atkins feela.",
+    "ts": "Nguva ya indasitiri ya xifundzha, ku nga ri nkarhi wa ntshovelo wa Tommy Atkins ntsena.",
+    "ve": "Khalaṅwaha ya nḓowetshumo ya dzingu, hu si tshifhinga tsha khaṋo ya Tommy Atkins fhedzi."
+  },
+  {
+    "english": "Cool subtropical KZN reference; heavier and secondary crops only.",
+    "zu": "Isikhombo sezindawo ezifudumele ezipholile zase-KZN; izivuno ezinkulu nezesibili kuphela.",
+    "st": "Mohlodi wa KZN wa sebaka sa subtropical se phodileng; dikotulo tse boima le tsa bobedi feela.",
+    "ts": "Xikombo xa KZN xa ndhawu ya subtropical yo titimela; mintshovelo leyikulu ni ya vumbirhi ntsena.",
+    "ve": "Tshiko tsha KZN tsha fhethu ha subtropical hu rotholelaho; khaṋo khulwane na dza vhuvhili fhedzi."
+  },
+  {
+    "english": "Spring-bearing system only; do not use this for autumn-bearing Heritage or Autumn Bliss.",
+    "zu": "Uhlelo oluthela entwasahlobo kuphela; ungalusebenzisi ku-Heritage noma ku-Autumn Bliss ethela ekwindla.",
+    "st": "Ke mokgwa o behang nakong ya selemo feela; o se ke wa o sebedisa bakeng sa Heritage kapa Autumn Bliss tse behang hwetla.",
+    "ts": "I maendlelo yo tswala hi ximun’wana ntsena; u nga ma tirhisi eka Heritage kumbe Autumn Bliss leti tswalaka hi xixikana.",
+    "ve": "Ndi sisiṱeme ya u aṋwa nga luṱavula fhedzi; ni songo i shumisa kha Heritage kana Autumn Bliss dzine dza aṋwa nga tshifhefho."
+  },
+  {
+    "english": "Hex River/Wolseley trial reference; confirm cultivar, chilling and acidic soil.",
+    "zu": "Isikhombo socwaningo sase-Hex River/Wolseley; qinisekisa uhlobo, amakhaza adingekayo nomhlabathi one-asidi.",
+    "st": "Mohlodi wa teko wa Hex River/Wolseley; netefatsa mofuta, serame se hlokahalang le mobu o nang le asiti.",
+    "ts": "Xikombo xa ndzingo xa Hex River/Wolseley; tiyisisa muxaka, xirhami ni misava ya asidi.",
+    "ve": "Tshiko tsha ndingo tsha Hex River/Wolseley; khwaṱhisedzani lushaka, phepho na mavu a asidi."
+  },
+  {
+    "english": "Breede River main-crop reference; cultivar and local dates still need checking.",
+    "zu": "Isikhombo sesivuno esiyinhloko sase-Breede River; uhlobo nezinsuku zendawo kusadinga ukuhlolwa.",
+    "st": "Mohlodi wa kotulo e kgolo wa Breede River; mofuta le matsatsi a sebaka di ntse di hloka ho hlahlojwa.",
+    "ts": "Xikombo xa ntshovelo lowukulu xa Breede River; muxaka ni masiku ya ndhawu swa ha fanele ku kamberiwa.",
+    "ve": "Tshiko tsha khaṋo khulwane tsha Breede River; lushaka na maḓuvha a henefho zwi kha ḓi fanela u sedzuluswa."
+  },
+  {
+    "english": "Satsuma group reference; other soft-citrus varieties have different seasons.",
+    "zu": "Isikhombo seqembu le-Satsuma; ezinye izinhlobo ze-soft-citrus zinezikhathi ezihlukile.",
+    "st": "Mohlodi wa sehlopha sa Satsuma; mefuta e meng ya soft-citrus e na le dinako tse fapaneng.",
+    "ts": "Xikombo xa ntlawa wa Satsuma; mixaka yin’wana ya soft-citrus yi ni tinguva to hambana.",
+    "ve": "Tshiko tsha tshigwada tsha Satsuma; dziṅwe tshaka dza soft-citrus dzi na khalaṅwaha dzo fhambanaho."
+  },
+  {
+    "english": "SA industry reference, not a Wonderful-only window.",
+    "zu": "Isikhombo semboni yase-SA, hhayi isikhathi se-Wonderful kuphela.",
+    "st": "Mohlodi wa indasteri ya SA, eseng nako ya Wonderful feela.",
+    "ts": "Xikombo xa indasitiri ya SA, ku nga ri nkarhi wa Wonderful ntsena.",
+    "ve": "Tshiko tsha nḓowetshumo ya SA, hu si tshifhinga tsha Wonderful fhedzi."
+  },
+  {
+    "english": "Frost-free forest reference; confirm a fruiting female and pollen source.",
+    "zu": "Isikhombo sehlathi elingenasithwathwa; qinisekisa isitshalo esiyinsikazi esithelayo nomthombo wempova.",
+    "st": "Mohlodi wa moru o se nang serame sa lehlwa; netefatsa semela sa tshehadi se behang le mohlodi wa peo ya palesa.",
+    "ts": "Xikombo xa khwati leri nga riki na gwitsi; tiyisisa ximilana xa xisati lexi tswalaka ni xihlovo xa pollen.",
+    "ve": "Tshiko tsha ḓaka ḽi si na luvhame; khwaṱhisedzani tshimela tsha tshisadzi tshi aṋwaho na tshiko tsha pollen."
+  },
+  {
+    "english": "Summer-rain reference; check frost protection of young plants.",
+    "zu": "Isikhombo semvula yasehlobo; hlola ukuvikelwa kwezitshalo ezincane esithwathweni.",
+    "st": "Mohlodi wa pula ya lehlabula; hlahloba tshireletso ya dimela tse nyane kgahlanong le serame sa lehlwa.",
+    "ts": "Xikombo xa mpfula ya ximumu; kambela nsirhelelo wa swimila leswitsongo eka gwitsi.",
+    "ve": "Tshiko tsha mvula ya tshilimo; sedzulusani tsireledzo ya zwimela zwiṱuku kha luvhame."
+  },
+  {
+    "english": "Broad SANBI fruiting reference; local season may be shorter.",
+    "zu": "Isikhombo esibanzi sokuthela se-SANBI; isikhathi sendawo singaba sifushane.",
+    "st": "Mohlodi o pharaletseng wa SANBI wa ho beha; nako ya sebaka e ka ba kgutshwane.",
+    "ts": "Xikombo xo anama xa SANBI xa ku tswala; nguva ya ndhawu yi nga va yo koma.",
+    "ve": "Tshiko tsho ṱanḓavhuwaho tsha SANBI tsha u aṋwa; khalaṅwaha ya henefho i nga vha pfufhi."
+  },
+  {
+    "english": "Fruit, not flowering; check moisture and fruiting female stock.",
+    "zu": "Izithelo, hhayi ukuqhakaza; hlola umswakama nezitshalo eziyinsikazi ezithelayo.",
+    "st": "Ditholwana, eseng ho thunya; hlahloba mongobo le dimela tsa tshehadi tse behang.",
+    "ts": "Mihandzu, ku nga ri ku rhumbuka; kambela ndzhongho ni swimila swa xisati leswi tswalaka.",
+    "ve": "Mitshelo, hu si u ṱuma maluvha; sedzulusani muṋando na zwimela zwa tshisadzi zwi aṋwaho."
+  },
+  {
+    "english": "Ripe fruit only; tuberous roots are poisonous.",
+    "zu": "Izithelo ezivuthiwe kuphela; izimpande ezinezilimo eziyizigaxa zinobuthi.",
+    "st": "Ke ditholwana tse butswitseng feela; metso e metenya ya polokelo e na le tjhefo.",
+    "ts": "I mihandzu leyi wupfeke ntsena; timitsu leti kuleke ta vuhlayiselo ti ni chefu.",
+    "ve": "Ndi mitshelo yo vhibvaho fhedzi; midzi yo kukumalaho ya u vhulunga i na mulimo."
+  },
+  {
+    "english": "Fruit reference, not a separate kernel season; check fruiting female stock.",
+    "zu": "Isikhombo sezithelo, hhayi isikhathi esihlukile sezinhlamvu zangaphakathi; hlola izitshalo eziyinsikazi ezithelayo.",
+    "st": "Mohlodi wa ditholwana, eseng nako e arohaneng ya thollo e ka hare; hlahloba dimela tsa tshehadi tse behang.",
+    "ts": "Xikombo xa mihandzu, ku nga ri nguva leyi hambaneke ya timbilu ta tindzoho; kambela swimila swa xisati leswi tswalaka.",
+    "ve": "Tshiko tsha mitshelo, hu si khalaṅwaha yo fhambanaho ya mbilwana dza mbeu; sedzulusani zwimela zwa tshisadzi zwi aṋwaho."
+  },
+  {
+    "english": "Ripe pulp only; seeds and unripe fruit are toxic.",
+    "zu": "Inyama yesithelo evuthiwe kuphela; imbewu nezithelo ezingakavuthwa zinobuthi.",
+    "st": "Ke nama ya tholwana e butswitseng feela; dipeo le ditholwana tse sa butswang di na le tjhefo.",
+    "ts": "I nyama ya muhandzu leyi wupfeke ntsena; timbewu ni mihandzu leyi nga wupfangiki swi ni chefu.",
+    "ve": "Ndi ṋama ya mutshelo yo vhibvaho fhedzi; mbeu na mitshelo i songo vhibvaho zwi na mulimo."
+  },
+  {
+    "english": "Moist-position reference; fruit dates are not honey-flow dates.",
+    "zu": "Isikhombo sendawo enomswakama; izinsuku zezithelo akuzona izinsuku zokutholakala koju.",
+    "st": "Mohlodi wa sebaka se mongobo; matsatsi a ditholwana ha se matsatsi a tlhahiso ya mahe a dinotshi.",
+    "ts": "Xikombo xa ndhawu ya ndzhongho; masiku ya mihandzu a hi masiku ya vuhumelerisi bya vulombe.",
+    "ve": "Tshiko tsha fhethu ha muṋando; maḓuvha a mitshelo a si maḓuvha a u wana mutoli."
+  },
+  {
+    "english": "Northern production-region reference, not the national November–May union.",
+    "zu": "Isikhombo sesifunda sokukhiqiza sasenyakatho, hhayi ukuhlanganiswa kukaNovemba–Meyi kuzwelonke.",
+    "st": "Mohlodi wa sebaka sa tlhahiso sa leboya, eseng kopanyo ya naha ya Pudungwana–Motsheanong.",
+    "ts": "Xikombo xa xifundzha xa vuhumelerisi xa le n’walungwini, ku nga ri ku hlanganisiwa ka Hukuri–Mudyaxihi ka tiko.",
+    "ve": "Tshiko tsha dzingu ḽa mveledzo ḽa devhula, hu si u ṱanganyiswa ha Lara–Shundunthule ha lushaka."
+  }
+] as const;

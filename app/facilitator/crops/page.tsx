@@ -1498,7 +1498,7 @@ function FacilitatorCropsPageInner() {
   );
   // The bed calendar's own food-forest and animal rows: the whole design, proposed kept apart
   // (lib/calendar-produce.ts), over the same rolling columns as the beds above them.
-  const planningTrees = useMemo(() => planningTreeSeasons(canvasTrees, growingZones, siteSurvey?.productionConditions, treeSeasons), [canvasTrees, growingZones, siteSurvey, treeSeasons]);
+  const planningTrees = useMemo(() => planningTreeSeasons(canvasTrees, growingZones, siteSurvey?.productionConditions, treeSeasons, lang), [canvasTrees, growingZones, siteSurvey, treeSeasons, lang]);
   const calendarProduce = useMemo(
     () => calendarProduceByMonth(canvasTrees, canvasAnimals, animalChoices, monthOrder, treeSeasons, animalSeasons, planningTrees, monthAxis),
     [canvasTrees, canvasAnimals, animalChoices, monthOrder, treeSeasons, animalSeasons, planningTrees, monthAxis],
@@ -1571,12 +1571,13 @@ function FacilitatorCropsPageInner() {
   // The printed "Food availability" page: the first twelve columns of the chart above, with the
   // tree and animal rows only when the farmer has them switched on there.
   const printAvailability = useMemo(() => printableAvailability({
+    language: lang,
     now: new Date(currentYear, currentMonth - 1, 1),
     yearMode: 'fromToday', veg: buildFoodAvailability(plantings, beds, currentMonth, 12), utilization: buildFieldUtilizationByMonth(plantings, beds, currentMonth, 12),
     trees: buildTreeAvailability(canvasTrees, monthOrder, true, treeSeasons), animals: buildAnimalAvailability(canvasAnimals, animalChoices, monthOrder, true, animalSeasons), includeTrees, includeAnimals,
     treeGroups: canvasTrees, unidentifiedPlants, treeSeasons, animalGroups: canvasAnimals, animalChoices, animalSeasons,
     planning: { months: monthOrder, trees: planningTrees, dates: monthAxis },
-  }), [plantings, beds, currentYear, currentMonth, monthOrder, monthAxis, canvasTrees, treeSeasons, canvasAnimals, animalChoices, animalSeasons, includeTrees, includeAnimals, unidentifiedPlants, planningTrees]);
+  }), [plantings, beds, currentYear, currentMonth, monthOrder, monthAxis, canvasTrees, treeSeasons, canvasAnimals, animalChoices, animalSeasons, includeTrees, includeAnimals, unidentifiedPlants, planningTrees, lang]);
 
   // Cover-page facts for the printed plan and the calendar's name. Built from
   // the same values the header and the bed-check strip already show, so the

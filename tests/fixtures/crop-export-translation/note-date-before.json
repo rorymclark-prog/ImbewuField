@@ -1,0 +1,103 @@
+{
+  "sourceSha": "dc9ade0cc9a208de55c7d0cccc6393f79257769d",
+  "originalFileSha256": "298e33c87629934d6de100f738c0f799375777f5b80ab02184bfa4ae20a1f9d0",
+  "originalDateFunction": "export function planNotesDateLabel(planNotesAt: number): string {\n  return new Date(planNotesAt).toLocaleDateString('en-ZA', { month: 'long', year: 'numeric' });\n}",
+  "rows": [
+    {
+      "stamp": 1768478400000,
+      "english": "January 2026"
+    },
+    {
+      "stamp": 1771156800000,
+      "english": "February 2026"
+    },
+    {
+      "stamp": 1773576000000,
+      "english": "March 2026"
+    },
+    {
+      "stamp": 1776254400000,
+      "english": "April 2026"
+    },
+    {
+      "stamp": 1778846400000,
+      "english": "May 2026"
+    },
+    {
+      "stamp": 1781524800000,
+      "english": "June 2026"
+    },
+    {
+      "stamp": 1784116800000,
+      "english": "July 2026"
+    },
+    {
+      "stamp": 1786795200000,
+      "english": "August 2026"
+    },
+    {
+      "stamp": 1789473600000,
+      "english": "September 2026"
+    },
+    {
+      "stamp": 1792065600000,
+      "english": "October 2026"
+    },
+    {
+      "stamp": 1794744000000,
+      "english": "November 2026"
+    },
+    {
+      "stamp": 1797336000000,
+      "english": "December 2026"
+    },
+    {
+      "stamp": 1800014400000,
+      "english": "January 2027"
+    },
+    {
+      "stamp": 1802692800000,
+      "english": "February 2027"
+    },
+    {
+      "stamp": 1805112000000,
+      "english": "March 2027"
+    },
+    {
+      "stamp": 1807790400000,
+      "english": "April 2027"
+    },
+    {
+      "stamp": 1810382400000,
+      "english": "May 2027"
+    },
+    {
+      "stamp": 1813060800000,
+      "english": "June 2027"
+    },
+    {
+      "stamp": 1815652800000,
+      "english": "July 2027"
+    },
+    {
+      "stamp": 1818331200000,
+      "english": "August 2027"
+    },
+    {
+      "stamp": 1821009600000,
+      "english": "September 2027"
+    },
+    {
+      "stamp": 1823601600000,
+      "english": "October 2027"
+    },
+    {
+      "stamp": 1826280000000,
+      "english": "November 2027"
+    },
+    {
+      "stamp": 1828872000000,
+      "english": "December 2027"
+    }
+  ]
+}

@@ -3,6 +3,7 @@
 import { bananaCirclesIn, firstCropAgeLabel, formatMonthSpan, formatRange, isHouseholdFoodHarvest, placedTreeGroups, type PlacedPlant, type PlacedTreeGroup, type TreeSeasonChoices, confirmedTreeMonths, type HarvestWindow } from './perennial-harvest';
 import { enterprisesForHousing, HOUSING_LABEL, placedAnimalGroups, type HousingKind, type PlacedAnimalGroup } from './animal-enterprises';
 import { recordsMonthLong } from './records-months';
+import { cropExportText, isCropExportDraftLanguage } from './crop-export-copy';
 import type { GrowingZoneId } from './growing-zones';
 import type { SiteProductionConditions } from './site-survey';
 import type { ProductionGuideItem } from './crop-export-schedule';
@@ -1086,13 +1087,15 @@ export interface ExpectedSeason {
   label: string;
   months: number[];
   basis: string;
+  /** Short native display label; source season gates never depend on translated wording. */
+  calendarLabel?: string;
   source?: Reference;
 }
 const WARM: GrowingZoneId[] = ['lowveld-bushveld', 'subtropical-coast'];
 const COOL: GrowingZoneId[] = ['highveld', 'midlands-mistbelt', 'western-cape', 'southern-cape', 'high-mountain', 'karoo-arid'];
 
 /** Only one applicable source window: never the union of all varieties/regions. */
-export function assumedProductSeason(group: PlacedTreeGroup, zones: readonly GrowingZoneId[], conditions?: SiteProductionConditions): ExpectedSeason | undefined {
+export function assumedProductSeason(group: PlacedTreeGroup, zones: readonly GrowingZoneId[], conditions?: SiteProductionConditions, language = 'en'): ExpectedSeason | undefined {
   if (!isHouseholdFoodHarvest(group.harvest)) return undefined;
   const id = group.harvest.speciesId;
   const frostSensitive = ['persea-americana', 'carica-papaya', 'musa-acuminata-aaa-group', 'macadamia-integrifolia', 'mangifera-indica', 'litchi-chinensis', 'sclerocarya-birrea-subsp-caffra'];
@@ -1100,8 +1103,12 @@ export function assumedProductSeason(group: PlacedTreeGroup, zones: readonly Gro
   const allIn = (allowed: readonly GrowingZoneId[]) => zones.every(zone => allowed.includes(zone));
   const warm = allIn(WARM);
   const result = (window: HarvestWindow | undefined, label: string, note = '', months?: number[]): ExpectedSeason | undefined => window ? {
-    label, months: [...(months ?? window.months)],
-    basis: `${window.region}. ${note ? `${note} ` : ''}Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.`,
+    label: isCropExportDraftLanguage(language) && label.startsWith('Regional reference:') && cropExportText(label, language) === label
+      ? cropExportText('Regional reference: {name}', language, { name: label.slice('Regional reference:'.length).trimStart() })
+      : cropExportText(label, language),
+    months: [...(months ?? window.months)],
+    ...(isCropExportDraftLanguage(language) ? { calendarLabel: label.startsWith('Regional reference:') ? cropExportText('Regional season', language) : cropExportText(label, language) } : {}),
+    basis: cropExportText('{region}. {note}Planning reference when established; confirm local picking dates. No food quantity or first-year crop promised.', language, { region: window.region, note: note ? `${cropExportText(note, language)} ` : '' }),
     source: { label: `${window.source.doc}${window.source.page ? `, p. ${window.source.page}` : ''}`, url: window.source.url },
   } : undefined;
   const windows = group.harvest.windows;
@@ -1160,10 +1167,10 @@ export interface PlanningTreeSeason {
 }
 
 /** Confirmed months replace the reference entirely; extra reference months cannot leak in. */
-export function planningTreeSeasons(groups: readonly PlacedTreeGroup[], zones: readonly GrowingZoneId[], conditions?: SiteProductionConditions, confirmed: TreeSeasonChoices = {}): PlanningTreeSeason[] {
+export function planningTreeSeasons(groups: readonly PlacedTreeGroup[], zones: readonly GrowingZoneId[], conditions?: SiteProductionConditions, confirmed: TreeSeasonChoices = {}, language = 'en'): PlanningTreeSeason[] {
   return groups.flatMap(group => {
     if (confirmedTreeMonths(group.harvest, confirmed).length) return [];
-    const season = assumedProductSeason(group, zones, conditions);
+    const season = assumedProductSeason(group, zones, conditions, language);
     return season ? [{ speciesId: group.harvest.speciesId, name: group.harvest.name, existing: group.existing, proposed: group.proposed, season }] : [];
   });
 }
@@ -1182,7 +1189,7 @@ export function buildProductGuidance(context: ProductGuideContext, zones: readon
   const foodForest = context.trees.map(group => {
     const h = group.harvest;
     const profile = PRODUCT_PROFILES[h.speciesId] ?? (h.productionGuidance ? { ...h.productionGuidance, sources: [] } : undefined);
-    const season = assumedProductSeason(group, zones, conditions);
+    const season = assumedProductSeason(group, zones, conditions, language);
     const lines = [
       t('{existing} existing; {proposed} proposed. Products: {products}.',{existing:group.existing,proposed:group.proposed,products:t(profile?.products ?? h.product).replace(/\.$/,'')}),
       ...(!isHouseholdFoodHarvest(h) ? [h.householdFoodStatus === 'not-food' ? 'Food-use review: kept as mapped inventory; the verified product is not household food. No ordinary food availability or production is assumed.' : 'Food-use review: confirm identity, edible part and appropriate preparation with a qualified local adviser before including this plant as household food. Held out of ordinary food totals and picking jobs.'] : []),

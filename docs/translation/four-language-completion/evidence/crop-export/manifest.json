@@ -1,0 +1,73 @@
+{
+  "scope": "Synthetic records; actual PDFs/rendered text and isolated export-control UI. Main crop page browser/language-switch coverage remains required. Draft language quality is unreviewed.",
+  "files": [
+    {
+      "file": "buying-rendering.json",
+      "sha256": "43e8bc3e3a8e8c3a2db9d8519eec60e431e7e2c35e69ddd0fbd424cba509d5cd"
+    },
+    {
+      "file": "field-rendering.json",
+      "sha256": "37e971efeb28e4379478d18f71e67e7588a587bfed979ccf3391fd613977eedb"
+    },
+    {
+      "file": "wall-rendering.json",
+      "sha256": "5480bf1b5c2632190dd4946c5f851afdfcb88df47eed5089540943d65cc243dd"
+    },
+    {
+      "file": "record-rendering.json",
+      "sha256": "ca438da850ae45e6352daebe11b15be1883a2ef25f75e33323e6a63b9a759b05"
+    },
+    {
+      "file": "plan-rendering.json",
+      "sha256": "cf4395450b1d520b3439a7dc2deb3d0e9cc4c49d386df31046fa31d353008013"
+    },
+    {
+      "file": "dashboard-rendering.json",
+      "sha256": "8325b46fb3e51bae57003167411b4af24675bc9bfe7a69899e3a9a11e8d63765"
+    },
+    {
+      "file": "numbers-rendering.json",
+      "sha256": "0ad4b25cd7a52b61987a55367e5469e4b0a0c7850164a7c644a161f2d2479689"
+    },
+    {
+      "file": "availability-rendering.json",
+      "sha256": "69d08f5dfafadbcacdb61388e07f8952ec59874c86f546f4ddc5b7ebda6bd604"
+    },
+    {
+      "file": "storage-rendering.json",
+      "sha256": "dcfb3e261a5f2e0ff380bf42f3e528469459ccd1a40cff8e164ab4065622b634"
+    },
+    {
+      "file": "storage-extraction.json",
+      "sha256": "8ced68419acd3430b94d98053c2cf16ebbb2813d2f1be17e337790182524c2f0"
+    },
+    {
+      "file": "generated-availability-rendering.json",
+      "sha256": "eb0701a6e19b6aa74891d6bbee239d5efb82d1eb48cdcb02b4d886889189180b"
+    },
+    {
+      "file": "generated-reference-rendering.json",
+      "sha256": "08b5516f8334576f7bbbd0f3a805b7b359f7e9eb6375b6daed596c1dc8c401e0"
+    },
+    {
+      "file": "generated-availability-extraction.json",
+      "sha256": "8ed2b0b9679ef81040e48f0aca6c88644bc36f088309fc23c193afdcff221693"
+    },
+    {
+      "file": "generated-availability-cautions.json",
+      "sha256": "3ba5b1a4c568437677d1cd151d1ebc7194dabefc89ba748c667ffcc1fe69141e"
+    },
+    {
+      "file": "ui-visual-final.json",
+      "sha256": "74122ab12731194874b795501c2ad9f5b662d17ec247d16da53f7f9bdddcbd82"
+    },
+    {
+      "file": "ui-runtime-final.json",
+      "sha256": "345a7698fe01283bf9b485b3064638b8d7c40cdd7337d6204d06f475b3da3e58"
+    },
+    {
+      "file": "required-checks.json",
+      "sha256": "cf2e8e94fecb09e5b2cc41d9f615df406fc704b333d3a9cedca400d6455d8a66"
+    }
+  ]
+}

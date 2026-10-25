@@ -117,3 +117,6 @@ export function recordsSeasonLabel(language:string,value:string):string {
   const months=recordsMonthRangeIndices(value);
   return months.length?`${recordsMonthShort(language,months[0]+1)}–${recordsMonthShort(language,months[months.length-1]+1)}`:value;
 }
+
+// Other date formatters need the same supported-language gate as these month words.
+export { hasMonthNames as hasRecordsMonthNames };
