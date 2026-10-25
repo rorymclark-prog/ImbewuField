@@ -1,0 +1,57 @@
+Browser tab: 2, Title: "127.0.0.1:4272/ve.html", URL: "http://127.0.0.1:4272/ve.html".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~1 AXWebArea 127.0.0.1:4272/ve.html
+~		11 text Ṱhalutshedzelo idzi dza ndangulo a dzi athu u sedzwa nga muthu a ambaho luambo nga nḓila yavhuḓi. Miṅwe miṅwalo ya tshikirini i kha ḓi shumisa Luisimane. U bva kha miri yaṋu
+~		13 text Zwifhinga zwa Afrika Tshipembe zwi bvaho kha zwiko, madzingu oṱhe o ṱangana — miri yaṋu i nga thoma kana ya fhedza ṅwedzi phanḓa kana nga murahu.
+~		14 text A hu na zwine zwa tea u itwa zwino.
+~		15 container Miṅwedzi ya tshati ya zwiliṅwa, sudzulusani nga thungo u i ṱanganya na khalenda ya u ṱavha
+~				44 button U bva kha miri yaṋu
+~				47 button Zwifhinga zwa Afrika Tshipembe zwi bvaho kha zwiko, madzingu oṱhe o ṱangana — miri yaṋu i nga thoma kana ya fhedza ṅwedzi phanḓa kana nga murahu.
+~				50 button A hu na zwine zwa tea u itwa zwino.
+~				53 button Hayani
+~				56 button Humelani kha pulane
+~				59 button Shandukelani kha pulane ya vhubveledzi ya muṅwe muolo
+~				62 button Pulane dzoṱhe dza vhubveledzi
+~				65 button Pulane ya vhubveledzi
+~				68 button Zwimela na nnḓu dza zwifuwo zwi bvaho kha mapa waṋu
+~				71 button Sedzani mibedu na zwitandana zwine pulane iyi ya shumisa — mbalo, vhuhulwane na hune zwa bva hone
+~				74 button Gudani
+~				77 button Pulane ya vhubveledzi i khou dzheniswa…
+~				80 button Ni khou dzudzanya fhethu hufhio?
+~				83 button Fhelisani
+~				86 button A hu athu u vha na miolo yo vhulungwaho. Olani mibedu yaṋu kha Design Studio nahone i ḓo vhonala fhano.
+~				89 button miolo yo vhulungwaho. Muṅwe na muṅwe wo oliwa nga hune wa vha ngaho fhasi.
+~				92 button Kana shumisani muolo wo no vuleaho kha tshishumiswa itshi
+~				95 button Vheani mibedu ya vhukuma kha ḽiga ḽa U ṱavha
+~				98 button u i tshintsha.
+~				101 button Bveledzani themendelo ya pulane nga yoṱhe
+~				104 button Humisani tshanduko ya u fhedza kha pulane iyi
+~				107 button Humisani
+~				110 button Bvisani zwoṱhe zwo ṱavhiwaho kha pulane iyi
+~				113 button Mubedu
+~				116 button Engedzani tshiliṅwa
+~				119 button Miṅwe mibedu yo avhelwa kavhili nga tshifhinga tshithihi
+~				122 button Mishumo
+~				125 button Kovhekanyani mishumo
+~				128 button U sedza phanḓa
+~				131 button A hu athu u ṱavhiwa — kwanyani + crop kha mubedu u re nṱha.
+~				134 button Nga tshiliṅwa
+~				137 button Nga mubedu
+~				140 button A hu athu u ṱavhiwa tshithu.
+~				143 button A hu athu u oliwa mibedu
+~				146 button Thomani nga u vhea mibedu ya miroho kha ḽiga ḽa U ṱavha — ni kone u vhuya fhano u dzudzanya zwine zwa ḓo dzheniswa khayo.
+~				149 button Miṅwedzi ya tshati ya zwiliṅwa, sudzulusani nga thungo u i ṱanganya na khalenda ya u ṱavha
+~				152 button Valani
+~				155 button Ṱoḓani zwiliṅwa…
+~				158 button Bvisani kha zwi funwaho
+~				161 button Engedzani kha zwi funwaho
+~				164 button Humelani kha mutevhe
+~				167 button Vhulungani tshanduko
+~				170 button Engedzani sa tshi re hone
+~				173 button Engedzani kha mubedu
+~				176 button Bvisani tshiliṅwa
+~				179 button Shandukisani
+~				182 button Bvisani
+~				185 button Humelani murahu
+~				188 button Laṱani
+The focused UI element is 1 AXWebArea 127.0.0.1:4272/ve.html

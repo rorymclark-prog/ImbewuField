@@ -1,0 +1,2459 @@
+{
+  "scope": "8isolated SSR/browser cases:actual TreePickingList, empty TaskList and CropMonthViewport plus49control-copy gallery buttons perlanguage/size.360x800phone and1280defaultdesktop. System fonts and current-main compiled common CSS. NOT the actual full production route, modal interaction, selected design, edits or account flow. English picking instruction visibly remains in the tree component and is a next wiring gap.",
+  "cases": [
+    {
+      "language": "zu",
+      "size": "phone",
+      "buttons": [
+        {
+          "client": 141,
+          "scroll": 141,
+          "text": "Ezihlahleni zakho",
+          "width": 142.5234375
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Izikhathi zaseNingizimu Afrika ezicashunwe emithonjeni, zonke izifunda ndawonye — izihlahla zakho zingaqala noma ziphele ngenyanga ngaphambili noma ngemuva.",
+          "width": 303
+        },
+        {
+          "client": 298,
+          "scroll": 298,
+          "text": "Akukho okumele kwenziwe okwamanje.",
+          "width": 299.9140625
+        },
+        {
+          "client": 63,
+          "scroll": 63,
+          "text": "Ikhaya",
+          "width": 65.140625
+        },
+        {
+          "client": 160,
+          "scroll": 160,
+          "text": "Buyela ekwakhiweni",
+          "width": 162.078125
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Shintshela ohlelweni lokukhiqiza lomunye umklamo",
+          "width": 303
+        },
+        {
+          "client": 211,
+          "scroll": 211,
+          "text": "Zonke izinhlelo zokukhiqiza",
+          "width": 212.7734375
+        },
+        {
+          "client": 145,
+          "scroll": 145,
+          "text": "Uhlelo lokukhiqiza",
+          "width": 146.9609375
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Izitshalo nezindlu zezilwane ezisemephini yakho",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Hlola imibhede namapuloti asetshenziswa yilolu hlelo — inani, ubukhulu nomthombo",
+          "width": 303
+        },
+        {
+          "client": 61,
+          "scroll": 61,
+          "text": "Funda",
+          "width": 63.3671875
+        },
+        {
+          "client": 244,
+          "scroll": 244,
+          "text": "Kulayishwa uhlelo lokukhiqiza…",
+          "width": 245.6796875
+        },
+        {
+          "client": 144,
+          "scroll": 144,
+          "text": "Uhlela siphi isiza?",
+          "width": 146.0625
+        },
+        {
+          "client": 83,
+          "scroll": 83,
+          "text": "Khansela",
+          "width": 84.71875
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Azikho izakhiwo ezilondoloziwe okwamanje. Dweba imibhede yakho ku-Design Studio; izovela lapha.",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "imiklamo elondoloziwe. Ngayinye iboniswa njengoba injalo emhlabeni.",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Noma sebenzisa umklamo ovuliwe kule divayisi",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Faka imibhede yangempela esigabeni sokuTshala",
+          "width": 303
+        },
+        {
+          "client": 157,
+          "scroll": 157,
+          "text": "ukuze uwushintshe.",
+          "width": 158.53125
+        },
+        {
+          "client": 292,
+          "scroll": 292,
+          "text": "Phakamisa uhlelo ngokuzenzakalelayo",
+          "width": 293.734375
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Buyisela emuva ushintsho lokugcina kulolu hlelo",
+          "width": 303
+        },
+        {
+          "client": 129,
+          "scroll": 129,
+          "text": "Buyisela emuva",
+          "width": 130.9453125
+        },
+        {
+          "client": 269,
+          "scroll": 269,
+          "text": "Susa konke okutshalwe kulolu hlelo",
+          "width": 270.6015625
+        },
+        {
+          "client": 85,
+          "scroll": 85,
+          "text": "Umbhede",
+          "width": 87.375
+        },
+        {
+          "client": 119,
+          "scroll": 119,
+          "text": "Engeza isilimo",
+          "width": 121.15625
+        },
+        {
+          "client": 252,
+          "scroll": 252,
+          "text": "Eminye imibhede ibhukhwe kabili",
+          "width": 253.6796875
+        },
+        {
+          "client": 92,
+          "scroll": 92,
+          "text": "Imisebenzi",
+          "width": 94.4765625
+        },
+        {
+          "client": 186,
+          "scroll": 186,
+          "text": "Yabelana ngemisebenzi",
+          "width": 187.6015625
+        },
+        {
+          "client": 114,
+          "scroll": 114,
+          "text": "Okulandelayo",
+          "width": 115.84375
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Akukho okutshalwe okwamanje — cindezela + crop embhedeni ongenhla.",
+          "width": 303
+        },
+        {
+          "client": 86,
+          "scroll": 86,
+          "text": "Ngesilimo",
+          "width": 88.2421875
+        },
+        {
+          "client": 103,
+          "scroll": 103,
+          "text": "Ngombhede",
+          "width": 105.171875
+        },
+        {
+          "client": 244,
+          "scroll": 244,
+          "text": "Akukho okutshalwe okwamanje.",
+          "width": 245.6796875
+        },
+        {
+          "client": 293,
+          "scroll": 293,
+          "text": "Ayikho imibhede eklanyiwe okwamanje",
+          "width": 295.1875
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Qala ngokubeka imibhede yemifino esigabeni sokuTshala — bese ubuya lapha uzohlela okuzotshalwa kuyo.",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Izinyanga zeshadi lezitshalo; skrola ukuze zihambisane nekhalenda lokutshala",
+          "width": 303
+        },
+        {
+          "client": 47,
+          "scroll": 47,
+          "text": "Vala",
+          "width": 48.8359375
+        },
+        {
+          "client": 140,
+          "scroll": 140,
+          "text": "Sesha izitshalo…",
+          "width": 141.6171875
+        },
+        {
+          "client": 167,
+          "scroll": 167,
+          "text": "Susa ezintandokazini",
+          "width": 169.2109375
+        },
+        {
+          "client": 185,
+          "scroll": 185,
+          "text": "Engeza ezintandokazini",
+          "width": 187.0078125
+        },
+        {
+          "client": 118,
+          "scroll": 118,
+          "text": "Buyela ohlwini",
+          "width": 120.28125
+        },
+        {
+          "client": 286,
+          "scroll": 286,
+          "text": "Londoloza izinguquko / Save changes",
+          "width": 287.53125
+        },
+        {
+          "client": 239,
+          "scroll": 239,
+          "text": "Engeza njengokukhona kakade",
+          "width": 241.2890625
+        },
+        {
+          "client": 154,
+          "scroll": 154,
+          "text": "Engeza embhedeni",
+          "width": 155.8828125
+        },
+        {
+          "client": 210,
+          "scroll": 210,
+          "text": "Susa isilimo / Remove crop",
+          "width": 211.84375
+        },
+        {
+          "client": 52,
+          "scroll": 52,
+          "text": "Hlela",
+          "width": 54.4609375
+        },
+        {
+          "client": 125,
+          "scroll": 125,
+          "text": "Susa / Remove",
+          "width": 127.3828125
+        },
+        {
+          "client": 65,
+          "scroll": 65,
+          "text": "Buyela",
+          "width": 66.921875
+        },
+        {
+          "client": 123,
+          "scroll": 123,
+          "text": "Lahla / Discard",
+          "width": 124.71875
+        }
+      ],
+      "document": 357,
+      "privateName": true,
+      "region": "Izinyanga zeshadi lezitshalo; skrola ukuze zihambisane nekhalenda lokutshala",
+      "viewport": 360
+    },
+    {
+      "language": "st",
+      "size": "phone",
+      "buttons": [
+        {
+          "client": 192,
+          "scroll": 192,
+          "text": "Ho tswa difateng tsa hao",
+          "width": 194.109375
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Dinako tsa Afrika Borwa tse tswang mehloding, dibaka tsohle di kopantswe — difate tsa hao di ka qala kapa tsa qeta kgwedi pele kapa morao.",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Ha ho mosebetsi o lokelang ho etswa jwale.",
+          "width": 303
+        },
+        {
+          "client": 60,
+          "scroll": 60,
+          "text": "Lehae",
+          "width": 62.4921875
+        },
+        {
+          "client": 145,
+          "scroll": 145,
+          "text": "Kgutlela moralong",
+          "width": 146.96875
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Fetohela polaneng ya tlhahiso ya moralo o mong",
+          "width": 303
+        },
+        {
+          "client": 212,
+          "scroll": 212,
+          "text": "Dipolane tsohle tsa tlhahiso",
+          "width": 213.6796875
+        },
+        {
+          "client": 149,
+          "scroll": 149,
+          "text": "Moralo wa tlhahiso",
+          "width": 151.3984375
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Dimela le matlo a diphoofolo tse tswang mmapeng wa hao",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Hlahloba mealo le ditsha tse sebediswang ke polane ena — palo, boholo le moo di tswang teng",
+          "width": 303
+        },
+        {
+          "client": 56,
+          "scroll": 56,
+          "text": "Ithute",
+          "width": 58.03125
+        },
+        {
+          "client": 258,
+          "scroll": 258,
+          "text": "Polane ya tlhahiso e a kenngwa…",
+          "width": 259.9375
+        },
+        {
+          "client": 161,
+          "scroll": 161,
+          "text": "O rera sebaka sefe?",
+          "width": 162.96875
+        },
+        {
+          "client": 69,
+          "scroll": 69,
+          "text": "Hlakola",
+          "width": 71.359375
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Ha ho meralo e bolokilweng. Taka mealo ya hao ho Design Studio, mme e tla hlaha mona.",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "meralo e bolokilweng. O mong le o mong o takilwe kamoo o leng kateng fatshe.",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Kapa sebedisa moralo o seng o butswe sesebedisweng sena",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Beha mealo ya nnete mohatong wa Ho lema",
+          "width": 303
+        },
+        {
+          "client": 150,
+          "scroll": 150,
+          "text": "ho e nkela sebaka.",
+          "width": 152.3203125
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Hlahisa tlhahiso ya polane ka boiketsetso",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Kgutlisa phetoho ya ho qetela polaneng ena",
+          "width": 303
+        },
+        {
+          "client": 73,
+          "scroll": 73,
+          "text": "Kgutlisa",
+          "width": 74.921875
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Tlosa tsohle tse lenngweng polaneng ena",
+          "width": 303
+        },
+        {
+          "client": 60,
+          "scroll": 60,
+          "text": "Moalo",
+          "width": 61.578125
+        },
+        {
+          "client": 108,
+          "scroll": 108,
+          "text": "Kenya sejalo",
+          "width": 109.6171875
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Mealo e meng e abetswe habedi ka nako e le nngwe",
+          "width": 303
+        },
+        {
+          "client": 89,
+          "scroll": 89,
+          "text": "Mesebetsi",
+          "width": 90.921875
+        },
+        {
+          "client": 161,
+          "scroll": 161,
+          "text": "Arolelana mesebetsi",
+          "width": 162.96875
+        },
+        {
+          "client": 119,
+          "scroll": 119,
+          "text": "Ho sheba pele",
+          "width": 121.1875
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Ha ho dijalo tse jetsweng — tlanya + crop moalong o ka hodimo.",
+          "width": 303
+        },
+        {
+          "client": 82,
+          "scroll": 82,
+          "text": "Ka sejalo",
+          "width": 83.8203125
+        },
+        {
+          "client": 84,
+          "scroll": 84,
+          "text": "Ka moalo",
+          "width": 85.59375
+        },
+        {
+          "client": 187,
+          "scroll": 187,
+          "text": "Ha ho letho le jetsweng.",
+          "width": 188.7734375
+        },
+        {
+          "client": 188,
+          "scroll": 188,
+          "text": "Ha ho mealo e ralilweng",
+          "width": 189.6484375
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Qala ka ho beha mealo ya meroho mohatong wa Ho lema — ebe o kgutlela mona ho rera tse tla kena ho yona.",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Dikgwedi tsa tjhate ya dijalo, tsamaisetsa ka thoko ho di bapisa le khalendara ya ho lema",
+          "width": 303
+        },
+        {
+          "client": 60,
+          "scroll": 60,
+          "text": "Kwala",
+          "width": 61.578125
+        },
+        {
+          "client": 110,
+          "scroll": 110,
+          "text": "Batla dijalo…",
+          "width": 112.2734375
+        },
+        {
+          "client": 165,
+          "scroll": 165,
+          "text": "Tlosa ho tse ratwang",
+          "width": 166.5234375
+        },
+        {
+          "client": 171,
+          "scroll": 171,
+          "text": "Kenya ho tse ratwang",
+          "width": 172.765625
+        },
+        {
+          "client": 144,
+          "scroll": 144,
+          "text": "Kgutlela lenaneng",
+          "width": 146.109375
+        },
+        {
+          "client": 140,
+          "scroll": 140,
+          "text": "Boloka diphetoho",
+          "width": 141.65625
+        },
+        {
+          "client": 226,
+          "scroll": 226,
+          "text": "Kenya e le se seng se le teng",
+          "width": 227.921875
+        },
+        {
+          "client": 127,
+          "scroll": 127,
+          "text": "Kenya moalong",
+          "width": 129.1875
+        },
+        {
+          "client": 101,
+          "scroll": 101,
+          "text": "Tlosa sejalo",
+          "width": 103.375
+        },
+        {
+          "client": 60,
+          "scroll": 60,
+          "text": "Fetola",
+          "width": 62.46875
+        },
+        {
+          "client": 55,
+          "scroll": 55,
+          "text": "Tlosa",
+          "width": 57.125
+        },
+        {
+          "client": 124,
+          "scroll": 124,
+          "text": "Kgutlela morao",
+          "width": 125.6171875
+        },
+        {
+          "client": 55,
+          "scroll": 55,
+          "text": "Lahla",
+          "width": 57.1484375
+        }
+      ],
+      "document": 357,
+      "privateName": true,
+      "region": "Dikgwedi tsa tjhate ya dijalo, tsamaisetsa ka thoko ho di bapisa le khalendara ya ho lema",
+      "viewport": 360
+    },
+    {
+      "language": "ts",
+      "size": "phone",
+      "buttons": [
+        {
+          "client": 207,
+          "scroll": 207,
+          "text": "Ku suka eka mirhi ya wena",
+          "width": 209.203125
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Minkarhi ya Afrika-Dzonga leyi humaka eswihlobyeni, tindhawu hinkwato ti hlanganisiwile — mirhi ya wena yi nga sungula kumbe yi heta n’hweti ku nga si fika kumbe endzhaku ka nkarhi lowu.",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "A ku na leswi faneleke ku endliwa sweswi.",
+          "width": 303
+        },
+        {
+          "client": 60,
+          "scroll": 60,
+          "text": "Ekaya",
+          "width": 62.46875
+        },
+        {
+          "client": 149,
+          "scroll": 149,
+          "text": "Tlhelela eka pulani",
+          "width": 151.421875
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Cincela eka pulani ya vuhumelerisi ya dizayini yin’wana",
+          "width": 303
+        },
+        {
+          "client": 251,
+          "scroll": 251,
+          "text": "Tipulani hinkwato ta vuhumelerisi",
+          "width": 253.078125
+        },
+        {
+          "client": 176,
+          "scroll": 176,
+          "text": "Pulani ya vuhumelerisi",
+          "width": 178.078125
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Swimila ni tindlu ta swifuwo leswi humaka eka mepe wa wena",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Kambela mibedo ni switandi leswi pulani leyi yi swi tirhisaka — nhlayo, vukulu ni laha swi humaka kona",
+          "width": 303
+        },
+        {
+          "client": 79,
+          "scroll": 79,
+          "text": "Dyondza",
+          "width": 81.1484375
+        },
+        {
+          "client": 269,
+          "scroll": 269,
+          "text": "Ku layicha pulani ya vuhumelerisi…",
+          "width": 270.5703125
+        },
+        {
+          "client": 205,
+          "scroll": 205,
+          "text": "U kunguhata ndhawu yihi?",
+          "width": 206.578125
+        },
+        {
+          "client": 83,
+          "scroll": 83,
+          "text": "Khansela",
+          "width": 84.71875
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "A ku na tidizayini leti hlayisiweke. Dirowa mibedo ya wena eka Design Studio kutani yi ta humelela laha.",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "tidizayini leti hlayisiweke. Yin’wana ni yin’wana yi dirowiwe hi laha yi nga ha kona ehansi.",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Kumbe tirhisa dizayini leyi se yi pfulekeke eka xitirhisiwa lexi",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Veka mibedo ya xiviri eka goza ra Ku byala",
+          "width": 303
+        },
+        {
+          "client": 86,
+          "scroll": 86,
+          "text": "ku yi siva.",
+          "width": 88.2421875
+        },
+        {
+          "client": 263,
+          "scroll": 263,
+          "text": "Ringanyeta pulani hi ku tiendlekela",
+          "width": 265.28125
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Tlherisela endzhaku ku cinca ko hetelela eka pulani leyi",
+          "width": 303
+        },
+        {
+          "client": 159,
+          "scroll": 159,
+          "text": "Tlherisela endzhaku",
+          "width": 161.1953125
+        },
+        {
+          "client": 294,
+          "scroll": 294,
+          "text": "Susa ku byala hinkwako eka pulani leyi",
+          "width": 295.5
+        },
+        {
+          "client": 74,
+          "scroll": 74,
+          "text": "Mubedo",
+          "width": 75.8203125
+        },
+        {
+          "client": 150,
+          "scroll": 150,
+          "text": "Engetela xibyariwa",
+          "width": 152.296875
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Mibedo yin’wana yi averiwe kambirhi hi nkarhi wun’we",
+          "width": 303
+        },
+        {
+          "client": 73,
+          "scroll": 73,
+          "text": "Mintirho",
+          "width": 74.90625
+        },
+        {
+          "client": 135,
+          "scroll": 135,
+          "text": "Avelana mintirho",
+          "width": 136.8828125
+        },
+        {
+          "client": 157,
+          "scroll": 157,
+          "text": "Ku languta phambili",
+          "width": 158.5390625
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "A ku na leswi byariweke — khumba + crop eka mubedo lowu nga ehenhla.",
+          "width": 303
+        },
+        {
+          "client": 102,
+          "scroll": 102,
+          "text": "Hi xibyariwa",
+          "width": 104.2421875
+        },
+        {
+          "client": 93,
+          "scroll": 93,
+          "text": "Hi mubedo",
+          "width": 95.375
+        },
+        {
+          "client": 179,
+          "scroll": 179,
+          "text": "A ku na lexi byariweke.",
+          "width": 180.75
+        },
+        {
+          "client": 238,
+          "scroll": 238,
+          "text": "A ku na mibedo leyi dirowiweke",
+          "width": 240.3359375
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Rhanga hi ku veka mibedo ya matsavu eka goza ra Ku byala — kutani u vuya laha u kunguhata leswi nga ta nghena eka yona.",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Tin’hweti ta chati ya swibyariwa, fambisa hi tlhelo leswaku ti fambelana ni khalendara yo byala",
+          "width": 303
+        },
+        {
+          "client": 52,
+          "scroll": 52,
+          "text": "Pfala",
+          "width": 54.46875
+        },
+        {
+          "client": 149,
+          "scroll": 149,
+          "text": "Lava swibyariwa…",
+          "width": 151.3828125
+        },
+        {
+          "client": 217,
+          "scroll": 217,
+          "text": "Susa eka leswi rhandziwaka",
+          "width": 218.9921875
+        },
+        {
+          "client": 244,
+          "scroll": 244,
+          "text": "Engetela eka leswi rhandziwaka",
+          "width": 245.6875
+        },
+        {
+          "client": 184,
+          "scroll": 184,
+          "text": "Tlhelela eka nxaxamelo",
+          "width": 186.09375
+        },
+        {
+          "client": 132,
+          "scroll": 132,
+          "text": "Hlayisa ku cinca",
+          "width": 133.6015625
+        },
+        {
+          "client": 262,
+          "scroll": 262,
+          "text": "Engetela tani hi lexi se xi nga kona",
+          "width": 264.3828125
+        },
+        {
+          "client": 172,
+          "scroll": 172,
+          "text": "Engetela eka mubedo",
+          "width": 173.671875
+        },
+        {
+          "client": 124,
+          "scroll": 124,
+          "text": "Susa xibyariwa",
+          "width": 125.6015625
+        },
+        {
+          "client": 52,
+          "scroll": 52,
+          "text": "Hlela",
+          "width": 54.4609375
+        },
+        {
+          "client": 52,
+          "scroll": 52,
+          "text": "Susa",
+          "width": 54.46875
+        },
+        {
+          "client": 146,
+          "scroll": 146,
+          "text": "Tlhelela endzhaku",
+          "width": 147.8671875
+        },
+        {
+          "client": 55,
+          "scroll": 55,
+          "text": "Lahla",
+          "width": 57.1484375
+        }
+      ],
+      "document": 357,
+      "privateName": true,
+      "region": "Tin’hweti ta chati ya swibyariwa, fambisa hi tlhelo leswaku ti fambelana ni khalendara yo byala",
+      "viewport": 360
+    },
+    {
+      "language": "ve",
+      "size": "phone",
+      "buttons": [
+        {
+          "client": 157,
+          "scroll": 157,
+          "text": "U bva kha miri yaṋu",
+          "width": 159.390625
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Zwifhinga zwa Afrika Tshipembe zwi bvaho kha zwiko, madzingu oṱhe o ṱangana — miri yaṋu i nga thoma kana ya fhedza ṅwedzi phanḓa kana nga murahu.",
+          "width": 303
+        },
+        {
+          "client": 271,
+          "scroll": 271,
+          "text": "A hu na zwine zwa tea u itwa zwino.",
+          "width": 273.25
+        },
+        {
+          "client": 66,
+          "scroll": 66,
+          "text": "Hayani",
+          "width": 67.8046875
+        },
+        {
+          "client": 166,
+          "scroll": 166,
+          "text": "Humelani kha pulane",
+          "width": 168.3203125
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Shandukelani kha pulane ya vhubveledzi ya muṅwe muolo",
+          "width": 303
+        },
+        {
+          "client": 237,
+          "scroll": 237,
+          "text": "Pulane dzoṱhe dza vhubveledzi",
+          "width": 239.4921875
+        },
+        {
+          "client": 176,
+          "scroll": 176,
+          "text": "Pulane ya vhubveledzi",
+          "width": 178.109375
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Zwimela na nnḓu dza zwifuwo zwi bvaho kha mapa waṋu",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Sedzani mibedu na zwitandana zwine pulane iyi ya shumisa — mbalo, vhuhulwane na hune zwa bva hone",
+          "width": 303
+        },
+        {
+          "client": 68,
+          "scroll": 68,
+          "text": "Gudani",
+          "width": 69.59375
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Pulane ya vhubveledzi i khou dzheniswa…",
+          "width": 303
+        },
+        {
+          "client": 258,
+          "scroll": 258,
+          "text": "Ni khou dzudzanya fhethu hufhio?",
+          "width": 259.953125
+        },
+        {
+          "client": 80,
+          "scroll": 80,
+          "text": "Fhelisani",
+          "width": 82.03125
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "A hu athu u vha na miolo yo vhulungwaho. Olani mibedu yaṋu kha Design Studio nahone i ḓo vhonala fhano.",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "miolo yo vhulungwaho. Muṅwe na muṅwe wo oliwa nga hune wa vha ngaho fhasi.",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Kana shumisani muolo wo no vuleaho kha tshishumiswa itshi",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Vheani mibedu ya vhukuma kha ḽiga ḽa U ṱavha",
+          "width": 303
+        },
+        {
+          "client": 106,
+          "scroll": 106,
+          "text": "u i tshintsha.",
+          "width": 107.828125
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Bveledzani themendelo ya pulane nga yoṱhe",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Humisani tshanduko ya u fhedza kha pulane iyi",
+          "width": 303
+        },
+        {
+          "client": 83,
+          "scroll": 83,
+          "text": "Humisani",
+          "width": 84.6875
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Bvisani zwoṱhe zwo ṱavhiwaho kha pulane iyi",
+          "width": 303
+        },
+        {
+          "client": 74,
+          "scroll": 74,
+          "text": "Mubedu",
+          "width": 75.8203125
+        },
+        {
+          "client": 157,
+          "scroll": 157,
+          "text": "Engedzani tshiliṅwa",
+          "width": 159.421875
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Miṅwe mibedu yo avhelwa kavhili nga tshifhinga tshithihi",
+          "width": 303
+        },
+        {
+          "client": 81,
+          "scroll": 81,
+          "text": "Mishumo",
+          "width": 82.90625
+        },
+        {
+          "client": 186,
+          "scroll": 186,
+          "text": "Kovhekanyani mishumo",
+          "width": 187.8671875
+        },
+        {
+          "client": 133,
+          "scroll": 133,
+          "text": "U sedza phanḓa",
+          "width": 134.53125
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "A hu athu u ṱavhiwa — kwanyani + crop kha mubedu u re nṱha.",
+          "width": 303
+        },
+        {
+          "client": 111,
+          "scroll": 111,
+          "text": "Nga tshiliṅwa",
+          "width": 113.15625
+        },
+        {
+          "client": 108,
+          "scroll": 108,
+          "text": "Nga mubedu",
+          "width": 109.6171875
+        },
+        {
+          "client": 212,
+          "scroll": 212,
+          "text": "A hu athu u ṱavhiwa tshithu.",
+          "width": 213.6875
+        },
+        {
+          "client": 195,
+          "scroll": 195,
+          "text": "A hu athu u oliwa mibedu",
+          "width": 196.7890625
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Thomani nga u vhea mibedu ya miroho kha ḽiga ḽa U ṱavha — ni kone u vhuya fhano u dzudzanya zwine zwa ḓo dzheniswa khayo.",
+          "width": 303
+        },
+        {
+          "client": 301,
+          "scroll": 301,
+          "text": "Miṅwedzi ya tshati ya zwiliṅwa, sudzulusani nga thungo u i ṱanganya na khalenda ya u ṱavha",
+          "width": 303
+        },
+        {
+          "client": 59,
+          "scroll": 59,
+          "text": "Valani",
+          "width": 61.2890625
+        },
+        {
+          "client": 145,
+          "scroll": 145,
+          "text": "Ṱoḓani zwiliṅwa…",
+          "width": 146.9375
+        },
+        {
+          "client": 190,
+          "scroll": 190,
+          "text": "Bvisani kha zwi funwaho",
+          "width": 192.3125
+        },
+        {
+          "client": 214,
+          "scroll": 214,
+          "text": "Engedzani kha zwi funwaho",
+          "width": 216.3515625
+        },
+        {
+          "client": 180,
+          "scroll": 180,
+          "text": "Humelani kha mutevhe",
+          "width": 181.640625
+        },
+        {
+          "client": 174,
+          "scroll": 174,
+          "text": "Vhulungani tshanduko",
+          "width": 176.3515625
+        },
+        {
+          "client": 201,
+          "scroll": 201,
+          "text": "Engedzani sa tshi re hone",
+          "width": 203.015625
+        },
+        {
+          "client": 184,
+          "scroll": 184,
+          "text": "Engedzani kha mubedu",
+          "width": 186.125
+        },
+        {
+          "client": 133,
+          "scroll": 133,
+          "text": "Bvisani tshiliṅwa",
+          "width": 135.3828125
+        },
+        {
+          "client": 112,
+          "scroll": 112,
+          "text": "Shandukisani",
+          "width": 114.0703125
+        },
+        {
+          "client": 68,
+          "scroll": 68,
+          "text": "Bvisani",
+          "width": 69.578125
+        },
+        {
+          "client": 142,
+          "scroll": 142,
+          "text": "Humelani murahu",
+          "width": 144.28125
+        },
+        {
+          "client": 60,
+          "scroll": 60,
+          "text": "Laṱani",
+          "width": 61.59375
+        }
+      ],
+      "document": 357,
+      "privateName": true,
+      "region": "Miṅwedzi ya tshati ya zwiliṅwa, sudzulusani nga thungo u i ṱanganya na khalenda ya u ṱavha",
+      "viewport": 360
+    },
+    {
+      "language": "zu",
+      "size": "default-desktop",
+      "buttons": [
+        {
+          "client": 141,
+          "scroll": 141,
+          "text": "Ezihlahleni zakho",
+          "width": 142.5234375
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Izikhathi zaseNingizimu Afrika ezicashunwe emithonjeni, zonke izifunda ndawonye — izihlahla zakho zingaqala noma ziphele ngenyanga ngaphambili noma ngemuva.",
+          "width": 386
+        },
+        {
+          "client": 298,
+          "scroll": 298,
+          "text": "Akukho okumele kwenziwe okwamanje.",
+          "width": 299.9140625
+        },
+        {
+          "client": 63,
+          "scroll": 63,
+          "text": "Ikhaya",
+          "width": 65.140625
+        },
+        {
+          "client": 160,
+          "scroll": 160,
+          "text": "Buyela ekwakhiweni",
+          "width": 162.078125
+        },
+        {
+          "client": 380,
+          "scroll": 380,
+          "text": "Shintshela ohlelweni lokukhiqiza lomunye umklamo",
+          "width": 381.75
+        },
+        {
+          "client": 211,
+          "scroll": 211,
+          "text": "Zonke izinhlelo zokukhiqiza",
+          "width": 212.7734375
+        },
+        {
+          "client": 145,
+          "scroll": 145,
+          "text": "Uhlelo lokukhiqiza",
+          "width": 146.9609375
+        },
+        {
+          "client": 358,
+          "scroll": 358,
+          "text": "Izitshalo nezindlu zezilwane ezisemephini yakho",
+          "width": 360.4140625
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Hlola imibhede namapuloti asetshenziswa yilolu hlelo — inani, ubukhulu nomthombo",
+          "width": 386
+        },
+        {
+          "client": 61,
+          "scroll": 61,
+          "text": "Funda",
+          "width": 63.3671875
+        },
+        {
+          "client": 244,
+          "scroll": 244,
+          "text": "Kulayishwa uhlelo lokukhiqiza…",
+          "width": 245.6796875
+        },
+        {
+          "client": 144,
+          "scroll": 144,
+          "text": "Uhlela siphi isiza?",
+          "width": 146.0625
+        },
+        {
+          "client": 83,
+          "scroll": 83,
+          "text": "Khansela",
+          "width": 84.71875
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Azikho izakhiwo ezilondoloziwe okwamanje. Dweba imibhede yakho ku-Design Studio; izovela lapha.",
+          "width": 386
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "imiklamo elondoloziwe. Ngayinye iboniswa njengoba injalo emhlabeni.",
+          "width": 386
+        },
+        {
+          "client": 353,
+          "scroll": 353,
+          "text": "Noma sebenzisa umklamo ovuliwe kule divayisi",
+          "width": 355.03125
+        },
+        {
+          "client": 370,
+          "scroll": 370,
+          "text": "Faka imibhede yangempela esigabeni sokuTshala",
+          "width": 372
+        },
+        {
+          "client": 157,
+          "scroll": 157,
+          "text": "ukuze uwushintshe.",
+          "width": 158.53125
+        },
+        {
+          "client": 292,
+          "scroll": 292,
+          "text": "Phakamisa uhlelo ngokuzenzakalelayo",
+          "width": 293.734375
+        },
+        {
+          "client": 358,
+          "scroll": 358,
+          "text": "Buyisela emuva ushintsho lokugcina kulolu hlelo",
+          "width": 360.4296875
+        },
+        {
+          "client": 129,
+          "scroll": 129,
+          "text": "Buyisela emuva",
+          "width": 130.9453125
+        },
+        {
+          "client": 269,
+          "scroll": 269,
+          "text": "Susa konke okutshalwe kulolu hlelo",
+          "width": 270.6015625
+        },
+        {
+          "client": 85,
+          "scroll": 85,
+          "text": "Umbhede",
+          "width": 87.375
+        },
+        {
+          "client": 119,
+          "scroll": 119,
+          "text": "Engeza isilimo",
+          "width": 121.15625
+        },
+        {
+          "client": 252,
+          "scroll": 252,
+          "text": "Eminye imibhede ibhukhwe kabili",
+          "width": 253.6796875
+        },
+        {
+          "client": 92,
+          "scroll": 92,
+          "text": "Imisebenzi",
+          "width": 94.4765625
+        },
+        {
+          "client": 186,
+          "scroll": 186,
+          "text": "Yabelana ngemisebenzi",
+          "width": 187.6015625
+        },
+        {
+          "client": 114,
+          "scroll": 114,
+          "text": "Okulandelayo",
+          "width": 115.84375
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Akukho okutshalwe okwamanje — cindezela + crop embhedeni ongenhla.",
+          "width": 386
+        },
+        {
+          "client": 86,
+          "scroll": 86,
+          "text": "Ngesilimo",
+          "width": 88.2421875
+        },
+        {
+          "client": 103,
+          "scroll": 103,
+          "text": "Ngombhede",
+          "width": 105.171875
+        },
+        {
+          "client": 244,
+          "scroll": 244,
+          "text": "Akukho okutshalwe okwamanje.",
+          "width": 245.6796875
+        },
+        {
+          "client": 293,
+          "scroll": 293,
+          "text": "Ayikho imibhede eklanyiwe okwamanje",
+          "width": 295.1875
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Qala ngokubeka imibhede yemifino esigabeni sokuTshala — bese ubuya lapha uzohlela okuzotshalwa kuyo.",
+          "width": 386
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Izinyanga zeshadi lezitshalo; skrola ukuze zihambisane nekhalenda lokutshala",
+          "width": 386
+        },
+        {
+          "client": 47,
+          "scroll": 47,
+          "text": "Vala",
+          "width": 48.8359375
+        },
+        {
+          "client": 140,
+          "scroll": 140,
+          "text": "Sesha izitshalo…",
+          "width": 141.6171875
+        },
+        {
+          "client": 167,
+          "scroll": 167,
+          "text": "Susa ezintandokazini",
+          "width": 169.2109375
+        },
+        {
+          "client": 185,
+          "scroll": 185,
+          "text": "Engeza ezintandokazini",
+          "width": 187.0078125
+        },
+        {
+          "client": 118,
+          "scroll": 118,
+          "text": "Buyela ohlwini",
+          "width": 120.28125
+        },
+        {
+          "client": 286,
+          "scroll": 286,
+          "text": "Londoloza izinguquko / Save changes",
+          "width": 287.53125
+        },
+        {
+          "client": 239,
+          "scroll": 239,
+          "text": "Engeza njengokukhona kakade",
+          "width": 241.2890625
+        },
+        {
+          "client": 154,
+          "scroll": 154,
+          "text": "Engeza embhedeni",
+          "width": 155.8828125
+        },
+        {
+          "client": 210,
+          "scroll": 210,
+          "text": "Susa isilimo / Remove crop",
+          "width": 211.84375
+        },
+        {
+          "client": 52,
+          "scroll": 52,
+          "text": "Hlela",
+          "width": 54.4609375
+        },
+        {
+          "client": 125,
+          "scroll": 125,
+          "text": "Susa / Remove",
+          "width": 127.3828125
+        },
+        {
+          "client": 65,
+          "scroll": 65,
+          "text": "Buyela",
+          "width": 66.921875
+        },
+        {
+          "client": 123,
+          "scroll": 123,
+          "text": "Lahla / Discard",
+          "width": 124.71875
+        }
+      ],
+      "document": 1277,
+      "privateName": true,
+      "region": "Izinyanga zeshadi lezitshalo; skrola ukuze zihambisane nekhalenda lokutshala",
+      "viewport": 1280
+    },
+    {
+      "language": "st",
+      "size": "default-desktop",
+      "buttons": [
+        {
+          "client": 192,
+          "scroll": 192,
+          "text": "Ho tswa difateng tsa hao",
+          "width": 194.109375
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Dinako tsa Afrika Borwa tse tswang mehloding, dibaka tsohle di kopantswe — difate tsa hao di ka qala kapa tsa qeta kgwedi pele kapa morao.",
+          "width": 386
+        },
+        {
+          "client": 327,
+          "scroll": 327,
+          "text": "Ha ho mosebetsi o lokelang ho etswa jwale.",
+          "width": 329.2890625
+        },
+        {
+          "client": 60,
+          "scroll": 60,
+          "text": "Lehae",
+          "width": 62.4921875
+        },
+        {
+          "client": 145,
+          "scroll": 145,
+          "text": "Kgutlela moralong",
+          "width": 146.96875
+        },
+        {
+          "client": 362,
+          "scroll": 362,
+          "text": "Fetohela polaneng ya tlhahiso ya moralo o mong",
+          "width": 364
+        },
+        {
+          "client": 212,
+          "scroll": 212,
+          "text": "Dipolane tsohle tsa tlhahiso",
+          "width": 213.6796875
+        },
+        {
+          "client": 149,
+          "scroll": 149,
+          "text": "Moralo wa tlhahiso",
+          "width": 151.3984375
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Dimela le matlo a diphoofolo tse tswang mmapeng wa hao",
+          "width": 386
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Hlahloba mealo le ditsha tse sebediswang ke polane ena — palo, boholo le moo di tswang teng",
+          "width": 386
+        },
+        {
+          "client": 56,
+          "scroll": 56,
+          "text": "Ithute",
+          "width": 58.03125
+        },
+        {
+          "client": 258,
+          "scroll": 258,
+          "text": "Polane ya tlhahiso e a kenngwa…",
+          "width": 259.9375
+        },
+        {
+          "client": 161,
+          "scroll": 161,
+          "text": "O rera sebaka sefe?",
+          "width": 162.96875
+        },
+        {
+          "client": 69,
+          "scroll": 69,
+          "text": "Hlakola",
+          "width": 71.359375
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Ha ho meralo e bolokilweng. Taka mealo ya hao ho Design Studio, mme e tla hlaha mona.",
+          "width": 386
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "meralo e bolokilweng. O mong le o mong o takilwe kamoo o leng kateng fatshe.",
+          "width": 386
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Kapa sebedisa moralo o seng o butswe sesebedisweng sena",
+          "width": 386
+        },
+        {
+          "client": 332,
+          "scroll": 332,
+          "text": "Beha mealo ya nnete mohatong wa Ho lema",
+          "width": 333.75
+        },
+        {
+          "client": 150,
+          "scroll": 150,
+          "text": "ho e nkela sebaka.",
+          "width": 152.3203125
+        },
+        {
+          "client": 310,
+          "scroll": 310,
+          "text": "Hlahisa tlhahiso ya polane ka boiketsetso",
+          "width": 311.515625
+        },
+        {
+          "client": 328,
+          "scroll": 328,
+          "text": "Kgutlisa phetoho ya ho qetela polaneng ena",
+          "width": 330.2578125
+        },
+        {
+          "client": 73,
+          "scroll": 73,
+          "text": "Kgutlisa",
+          "width": 74.921875
+        },
+        {
+          "client": 311,
+          "scroll": 311,
+          "text": "Tlosa tsohle tse lenngweng polaneng ena",
+          "width": 313.328125
+        },
+        {
+          "client": 60,
+          "scroll": 60,
+          "text": "Moalo",
+          "width": 61.578125
+        },
+        {
+          "client": 108,
+          "scroll": 108,
+          "text": "Kenya sejalo",
+          "width": 109.6171875
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Mealo e meng e abetswe habedi ka nako e le nngwe",
+          "width": 386
+        },
+        {
+          "client": 89,
+          "scroll": 89,
+          "text": "Mesebetsi",
+          "width": 90.921875
+        },
+        {
+          "client": 161,
+          "scroll": 161,
+          "text": "Arolelana mesebetsi",
+          "width": 162.96875
+        },
+        {
+          "client": 119,
+          "scroll": 119,
+          "text": "Ho sheba pele",
+          "width": 121.1875
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Ha ho dijalo tse jetsweng — tlanya + crop moalong o ka hodimo.",
+          "width": 386
+        },
+        {
+          "client": 82,
+          "scroll": 82,
+          "text": "Ka sejalo",
+          "width": 83.8203125
+        },
+        {
+          "client": 84,
+          "scroll": 84,
+          "text": "Ka moalo",
+          "width": 85.59375
+        },
+        {
+          "client": 187,
+          "scroll": 187,
+          "text": "Ha ho letho le jetsweng.",
+          "width": 188.7734375
+        },
+        {
+          "client": 188,
+          "scroll": 188,
+          "text": "Ha ho mealo e ralilweng",
+          "width": 189.6484375
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Qala ka ho beha mealo ya meroho mohatong wa Ho lema — ebe o kgutlela mona ho rera tse tla kena ho yona.",
+          "width": 386
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Dikgwedi tsa tjhate ya dijalo, tsamaisetsa ka thoko ho di bapisa le khalendara ya ho lema",
+          "width": 386
+        },
+        {
+          "client": 60,
+          "scroll": 60,
+          "text": "Kwala",
+          "width": 61.578125
+        },
+        {
+          "client": 110,
+          "scroll": 110,
+          "text": "Batla dijalo…",
+          "width": 112.2734375
+        },
+        {
+          "client": 165,
+          "scroll": 165,
+          "text": "Tlosa ho tse ratwang",
+          "width": 166.5234375
+        },
+        {
+          "client": 171,
+          "scroll": 171,
+          "text": "Kenya ho tse ratwang",
+          "width": 172.765625
+        },
+        {
+          "client": 144,
+          "scroll": 144,
+          "text": "Kgutlela lenaneng",
+          "width": 146.109375
+        },
+        {
+          "client": 140,
+          "scroll": 140,
+          "text": "Boloka diphetoho",
+          "width": 141.65625
+        },
+        {
+          "client": 226,
+          "scroll": 226,
+          "text": "Kenya e le se seng se le teng",
+          "width": 227.921875
+        },
+        {
+          "client": 127,
+          "scroll": 127,
+          "text": "Kenya moalong",
+          "width": 129.1875
+        },
+        {
+          "client": 101,
+          "scroll": 101,
+          "text": "Tlosa sejalo",
+          "width": 103.375
+        },
+        {
+          "client": 60,
+          "scroll": 60,
+          "text": "Fetola",
+          "width": 62.46875
+        },
+        {
+          "client": 55,
+          "scroll": 55,
+          "text": "Tlosa",
+          "width": 57.125
+        },
+        {
+          "client": 124,
+          "scroll": 124,
+          "text": "Kgutlela morao",
+          "width": 125.6171875
+        },
+        {
+          "client": 55,
+          "scroll": 55,
+          "text": "Lahla",
+          "width": 57.1484375
+        }
+      ],
+      "document": 1277,
+      "privateName": true,
+      "region": "Dikgwedi tsa tjhate ya dijalo, tsamaisetsa ka thoko ho di bapisa le khalendara ya ho lema",
+      "viewport": 1280
+    },
+    {
+      "language": "ts",
+      "size": "default-desktop",
+      "buttons": [
+        {
+          "client": 207,
+          "scroll": 207,
+          "text": "Ku suka eka mirhi ya wena",
+          "width": 209.203125
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Minkarhi ya Afrika-Dzonga leyi humaka eswihlobyeni, tindhawu hinkwato ti hlanganisiwile — mirhi ya wena yi nga sungula kumbe yi heta n’hweti ku nga si fika kumbe endzhaku ka nkarhi lowu.",
+          "width": 386
+        },
+        {
+          "client": 315,
+          "scroll": 315,
+          "text": "A ku na leswi faneleke ku endliwa sweswi.",
+          "width": 316.8203125
+        },
+        {
+          "client": 60,
+          "scroll": 60,
+          "text": "Ekaya",
+          "width": 62.46875
+        },
+        {
+          "client": 149,
+          "scroll": 149,
+          "text": "Tlhelela eka pulani",
+          "width": 151.421875
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Cincela eka pulani ya vuhumelerisi ya dizayini yin’wana",
+          "width": 386
+        },
+        {
+          "client": 251,
+          "scroll": 251,
+          "text": "Tipulani hinkwato ta vuhumelerisi",
+          "width": 253.078125
+        },
+        {
+          "client": 176,
+          "scroll": 176,
+          "text": "Pulani ya vuhumelerisi",
+          "width": 178.078125
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Swimila ni tindlu ta swifuwo leswi humaka eka mepe wa wena",
+          "width": 386
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Kambela mibedo ni switandi leswi pulani leyi yi swi tirhisaka — nhlayo, vukulu ni laha swi humaka kona",
+          "width": 386
+        },
+        {
+          "client": 79,
+          "scroll": 79,
+          "text": "Dyondza",
+          "width": 81.1484375
+        },
+        {
+          "client": 269,
+          "scroll": 269,
+          "text": "Ku layicha pulani ya vuhumelerisi…",
+          "width": 270.5703125
+        },
+        {
+          "client": 205,
+          "scroll": 205,
+          "text": "U kunguhata ndhawu yihi?",
+          "width": 206.578125
+        },
+        {
+          "client": 83,
+          "scroll": 83,
+          "text": "Khansela",
+          "width": 84.71875
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "A ku na tidizayini leti hlayisiweke. Dirowa mibedo ya wena eka Design Studio kutani yi ta humelela laha.",
+          "width": 386
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "tidizayini leti hlayisiweke. Yin’wana ni yin’wana yi dirowiwe hi laha yi nga ha kona ehansi.",
+          "width": 386
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Kumbe tirhisa dizayini leyi se yi pfulekeke eka xitirhisiwa lexi",
+          "width": 386
+        },
+        {
+          "client": 321,
+          "scroll": 321,
+          "text": "Veka mibedo ya xiviri eka goza ra Ku byala",
+          "width": 323.0546875
+        },
+        {
+          "client": 86,
+          "scroll": 86,
+          "text": "ku yi siva.",
+          "width": 88.2421875
+        },
+        {
+          "client": 263,
+          "scroll": 263,
+          "text": "Ringanyeta pulani hi ku tiendlekela",
+          "width": 265.28125
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Tlherisela endzhaku ku cinca ko hetelela eka pulani leyi",
+          "width": 386
+        },
+        {
+          "client": 159,
+          "scroll": 159,
+          "text": "Tlherisela endzhaku",
+          "width": 161.1953125
+        },
+        {
+          "client": 294,
+          "scroll": 294,
+          "text": "Susa ku byala hinkwako eka pulani leyi",
+          "width": 295.5
+        },
+        {
+          "client": 74,
+          "scroll": 74,
+          "text": "Mubedo",
+          "width": 75.8203125
+        },
+        {
+          "client": 150,
+          "scroll": 150,
+          "text": "Engetela xibyariwa",
+          "width": 152.296875
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Mibedo yin’wana yi averiwe kambirhi hi nkarhi wun’we",
+          "width": 386
+        },
+        {
+          "client": 73,
+          "scroll": 73,
+          "text": "Mintirho",
+          "width": 74.90625
+        },
+        {
+          "client": 135,
+          "scroll": 135,
+          "text": "Avelana mintirho",
+          "width": 136.8828125
+        },
+        {
+          "client": 157,
+          "scroll": 157,
+          "text": "Ku languta phambili",
+          "width": 158.5390625
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "A ku na leswi byariweke — khumba + crop eka mubedo lowu nga ehenhla.",
+          "width": 386
+        },
+        {
+          "client": 102,
+          "scroll": 102,
+          "text": "Hi xibyariwa",
+          "width": 104.2421875
+        },
+        {
+          "client": 93,
+          "scroll": 93,
+          "text": "Hi mubedo",
+          "width": 95.375
+        },
+        {
+          "client": 179,
+          "scroll": 179,
+          "text": "A ku na lexi byariweke.",
+          "width": 180.75
+        },
+        {
+          "client": 238,
+          "scroll": 238,
+          "text": "A ku na mibedo leyi dirowiweke",
+          "width": 240.3359375
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Rhanga hi ku veka mibedo ya matsavu eka goza ra Ku byala — kutani u vuya laha u kunguhata leswi nga ta nghena eka yona.",
+          "width": 386
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Tin’hweti ta chati ya swibyariwa, fambisa hi tlhelo leswaku ti fambelana ni khalendara yo byala",
+          "width": 386
+        },
+        {
+          "client": 52,
+          "scroll": 52,
+          "text": "Pfala",
+          "width": 54.46875
+        },
+        {
+          "client": 149,
+          "scroll": 149,
+          "text": "Lava swibyariwa…",
+          "width": 151.3828125
+        },
+        {
+          "client": 217,
+          "scroll": 217,
+          "text": "Susa eka leswi rhandziwaka",
+          "width": 218.9921875
+        },
+        {
+          "client": 244,
+          "scroll": 244,
+          "text": "Engetela eka leswi rhandziwaka",
+          "width": 245.6875
+        },
+        {
+          "client": 184,
+          "scroll": 184,
+          "text": "Tlhelela eka nxaxamelo",
+          "width": 186.09375
+        },
+        {
+          "client": 132,
+          "scroll": 132,
+          "text": "Hlayisa ku cinca",
+          "width": 133.6015625
+        },
+        {
+          "client": 262,
+          "scroll": 262,
+          "text": "Engetela tani hi lexi se xi nga kona",
+          "width": 264.3828125
+        },
+        {
+          "client": 172,
+          "scroll": 172,
+          "text": "Engetela eka mubedo",
+          "width": 173.671875
+        },
+        {
+          "client": 124,
+          "scroll": 124,
+          "text": "Susa xibyariwa",
+          "width": 125.6015625
+        },
+        {
+          "client": 52,
+          "scroll": 52,
+          "text": "Hlela",
+          "width": 54.4609375
+        },
+        {
+          "client": 52,
+          "scroll": 52,
+          "text": "Susa",
+          "width": 54.46875
+        },
+        {
+          "client": 146,
+          "scroll": 146,
+          "text": "Tlhelela endzhaku",
+          "width": 147.8671875
+        },
+        {
+          "client": 55,
+          "scroll": 55,
+          "text": "Lahla",
+          "width": 57.1484375
+        }
+      ],
+      "document": 1277,
+      "privateName": true,
+      "region": "Tin’hweti ta chati ya swibyariwa, fambisa hi tlhelo leswaku ti fambelana ni khalendara yo byala",
+      "viewport": 1280
+    },
+    {
+      "language": "ve",
+      "size": "default-desktop",
+      "buttons": [
+        {
+          "client": 157,
+          "scroll": 157,
+          "text": "U bva kha miri yaṋu",
+          "width": 159.390625
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Zwifhinga zwa Afrika Tshipembe zwi bvaho kha zwiko, madzingu oṱhe o ṱangana — miri yaṋu i nga thoma kana ya fhedza ṅwedzi phanḓa kana nga murahu.",
+          "width": 386
+        },
+        {
+          "client": 271,
+          "scroll": 271,
+          "text": "A hu na zwine zwa tea u itwa zwino.",
+          "width": 273.25
+        },
+        {
+          "client": 66,
+          "scroll": 66,
+          "text": "Hayani",
+          "width": 67.8046875
+        },
+        {
+          "client": 166,
+          "scroll": 166,
+          "text": "Humelani kha pulane",
+          "width": 168.3203125
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Shandukelani kha pulane ya vhubveledzi ya muṅwe muolo",
+          "width": 386
+        },
+        {
+          "client": 237,
+          "scroll": 237,
+          "text": "Pulane dzoṱhe dza vhubveledzi",
+          "width": 239.4921875
+        },
+        {
+          "client": 176,
+          "scroll": 176,
+          "text": "Pulane ya vhubveledzi",
+          "width": 178.109375
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Zwimela na nnḓu dza zwifuwo zwi bvaho kha mapa waṋu",
+          "width": 386
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Sedzani mibedu na zwitandana zwine pulane iyi ya shumisa — mbalo, vhuhulwane na hune zwa bva hone",
+          "width": 386
+        },
+        {
+          "client": 68,
+          "scroll": 68,
+          "text": "Gudani",
+          "width": 69.59375
+        },
+        {
+          "client": 319,
+          "scroll": 319,
+          "text": "Pulane ya vhubveledzi i khou dzheniswa…",
+          "width": 321.296875
+        },
+        {
+          "client": 258,
+          "scroll": 258,
+          "text": "Ni khou dzudzanya fhethu hufhio?",
+          "width": 259.953125
+        },
+        {
+          "client": 80,
+          "scroll": 80,
+          "text": "Fhelisani",
+          "width": 82.03125
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "A hu athu u vha na miolo yo vhulungwaho. Olani mibedu yaṋu kha Design Studio nahone i ḓo vhonala fhano.",
+          "width": 386
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "miolo yo vhulungwaho. Muṅwe na muṅwe wo oliwa nga hune wa vha ngaho fhasi.",
+          "width": 386
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Kana shumisani muolo wo no vuleaho kha tshishumiswa itshi",
+          "width": 386
+        },
+        {
+          "client": 350,
+          "scroll": 350,
+          "text": "Vheani mibedu ya vhukuma kha ḽiga ḽa U ṱavha",
+          "width": 351.53125
+        },
+        {
+          "client": 106,
+          "scroll": 106,
+          "text": "u i tshintsha.",
+          "width": 107.828125
+        },
+        {
+          "client": 331,
+          "scroll": 331,
+          "text": "Bveledzani themendelo ya pulane nga yoṱhe",
+          "width": 332.8984375
+        },
+        {
+          "client": 350,
+          "scroll": 350,
+          "text": "Humisani tshanduko ya u fhedza kha pulane iyi",
+          "width": 352.4296875
+        },
+        {
+          "client": 83,
+          "scroll": 83,
+          "text": "Humisani",
+          "width": 84.6875
+        },
+        {
+          "client": 334,
+          "scroll": 334,
+          "text": "Bvisani zwoṱhe zwo ṱavhiwaho kha pulane iyi",
+          "width": 336.3984375
+        },
+        {
+          "client": 74,
+          "scroll": 74,
+          "text": "Mubedu",
+          "width": 75.8203125
+        },
+        {
+          "client": 157,
+          "scroll": 157,
+          "text": "Engedzani tshiliṅwa",
+          "width": 159.421875
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Miṅwe mibedu yo avhelwa kavhili nga tshifhinga tshithihi",
+          "width": 386
+        },
+        {
+          "client": 81,
+          "scroll": 81,
+          "text": "Mishumo",
+          "width": 82.90625
+        },
+        {
+          "client": 186,
+          "scroll": 186,
+          "text": "Kovhekanyani mishumo",
+          "width": 187.8671875
+        },
+        {
+          "client": 133,
+          "scroll": 133,
+          "text": "U sedza phanḓa",
+          "width": 134.53125
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "A hu athu u ṱavhiwa — kwanyani + crop kha mubedu u re nṱha.",
+          "width": 386
+        },
+        {
+          "client": 111,
+          "scroll": 111,
+          "text": "Nga tshiliṅwa",
+          "width": 113.15625
+        },
+        {
+          "client": 108,
+          "scroll": 108,
+          "text": "Nga mubedu",
+          "width": 109.6171875
+        },
+        {
+          "client": 212,
+          "scroll": 212,
+          "text": "A hu athu u ṱavhiwa tshithu.",
+          "width": 213.6875
+        },
+        {
+          "client": 195,
+          "scroll": 195,
+          "text": "A hu athu u oliwa mibedu",
+          "width": 196.7890625
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Thomani nga u vhea mibedu ya miroho kha ḽiga ḽa U ṱavha — ni kone u vhuya fhano u dzudzanya zwine zwa ḓo dzheniswa khayo.",
+          "width": 386
+        },
+        {
+          "client": 384,
+          "scroll": 384,
+          "text": "Miṅwedzi ya tshati ya zwiliṅwa, sudzulusani nga thungo u i ṱanganya na khalenda ya u ṱavha",
+          "width": 386
+        },
+        {
+          "client": 59,
+          "scroll": 59,
+          "text": "Valani",
+          "width": 61.2890625
+        },
+        {
+          "client": 145,
+          "scroll": 145,
+          "text": "Ṱoḓani zwiliṅwa…",
+          "width": 146.9375
+        },
+        {
+          "client": 190,
+          "scroll": 190,
+          "text": "Bvisani kha zwi funwaho",
+          "width": 192.3125
+        },
+        {
+          "client": 214,
+          "scroll": 214,
+          "text": "Engedzani kha zwi funwaho",
+          "width": 216.3515625
+        },
+        {
+          "client": 180,
+          "scroll": 180,
+          "text": "Humelani kha mutevhe",
+          "width": 181.640625
+        },
+        {
+          "client": 174,
+          "scroll": 174,
+          "text": "Vhulungani tshanduko",
+          "width": 176.3515625
+        },
+        {
+          "client": 201,
+          "scroll": 201,
+          "text": "Engedzani sa tshi re hone",
+          "width": 203.015625
+        },
+        {
+          "client": 184,
+          "scroll": 184,
+          "text": "Engedzani kha mubedu",
+          "width": 186.125
+        },
+        {
+          "client": 133,
+          "scroll": 133,
+          "text": "Bvisani tshiliṅwa",
+          "width": 135.3828125
+        },
+        {
+          "client": 112,
+          "scroll": 112,
+          "text": "Shandukisani",
+          "width": 114.0703125
+        },
+        {
+          "client": 68,
+          "scroll": 68,
+          "text": "Bvisani",
+          "width": 69.578125
+        },
+        {
+          "client": 142,
+          "scroll": 142,
+          "text": "Humelani murahu",
+          "width": 144.28125
+        },
+        {
+          "client": 60,
+          "scroll": 60,
+          "text": "Laṱani",
+          "width": 61.59375
+        }
+      ],
+      "document": 1277,
+      "privateName": true,
+      "region": "Miṅwedzi ya tshati ya zwiliṅwa, sudzulusani nga thungo u i ṱanganya na khalenda ya u ṱavha",
+      "viewport": 1280
+    }
+  ],
+  "visualInspection": "Inspected all8screenshots. Complete source-season qualifier wraps within the actual tree card. No observed phone/desktop collision; all392gallery labels match their registered rows and no button or document overflow detected. Native glyphs visible. No fluent-language approval.",
+  "assets": {
+    "crop-controls-ts-phone.png": "b017ae2c4f7f2daf8a23f6873b48bb6d7eb731ea931ce2313c8d04a4e717dd66",
+    "crop-controls-ts-desktop.png": "2630bb9e3867ff82135926dab6b4d51fc4c295378ea3d842c6cfba6bc960a899",
+    "crop-controls-st-desktop-ax.txt": "602b25eef8f56af594d7bd23d0c969830f4a80c3eaacd7712e5fe8b4af636987",
+    "crop-controls-st-phone.png": "4b594e9b74bc7aed4b86561ce0160fd7c82587a934e0e151e1d6c425b9437236",
+    "crop-controls-ts-desktop-ax.txt": "b482ad63f4b81f9a01608b1e3cb62c6056abaf1bc4924af7e8c1d1ca6fb07648",
+    "crop-controls-ve-desktop-ax.txt": "875038387a661937dff921293ee11aff2353aca9439793c933c70901f0b8cf32",
+    "crop-controls-zu-desktop-ax.txt": "9fd81bef8f8680b17d95dff19c01d3b07e2d0af056e528a80e8f0ca3e4607e94",
+    "crop-controls-ve-phone.png": "b915edbfa69b269d70e72b1e3e7abf7d63e87d6c30344f653f9a345c4ae535c1",
+    "crop-controls-ts-phone-ax.txt": "b482ad63f4b81f9a01608b1e3cb62c6056abaf1bc4924af7e8c1d1ca6fb07648",
+    "crop-controls-st-phone-ax.txt": "602b25eef8f56af594d7bd23d0c969830f4a80c3eaacd7712e5fe8b4af636987",
+    "crop-controls-zu-phone.png": "6311f91f514c341d6821e594992f88902aef9887d3c6378bde137a9be6ca2ebb",
+    "crop-controls-zu-phone-ax.txt": "75f4637fe42821c641d0d17fea091f40ea1835870b3ae43070f5543874d49178",
+    "crop-controls-ve-phone-ax.txt": "875038387a661937dff921293ee11aff2353aca9439793c933c70901f0b8cf32",
+    "crop-controls-st-desktop.png": "0e6dbc7cec088ac9274b8089892014295872e66099b60d74c5754148445d99aa",
+    "crop-controls-zu-desktop.png": "4267372a198d12a2176e73eb1ab1f6aae094840984fe88f3b48d0050358ad40c",
+    "crop-controls-ve-desktop.png": "835d83d231721f1e01011a9c20b4a5558c221497b2c50944edfe71f096e11e59"
+  },
+  "verification": "Current typecheck clean; initial focused run78pass1fail exposed older whole-page presentation expectation. Exact declared restoration retains all prior producer/model assertions; corrected79pass0fail. No full run started for this crop-screen branch.",
+  "remaining": "2dynamic control templates;259hardcoded JSX fragments/14literal accessible attributes need classification; generated task/tree language forwarding, names/dates/export metadata, actual full route and modal QA, translated release note and ordered full checks still required.",
+  "axWhitespace": "Readable AX snapshots trim trailing line whitespace only; button text/attributes and metrics remain in the original case objects. Historical control-only gallery proof, superseded for task/picker/month flows by crop-screen-tasks."
+}

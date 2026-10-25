@@ -21,6 +21,7 @@ import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
 import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
+import { cropExportText } from '@/lib/crop-export-copy';
 import ProductionAvailabilityGraphs from '@/components/crops/ProductionAvailabilityGraphs';
 import ProductionRecordsEditor from '@/components/crops/ProductionRecordsEditor';
 import ProductionGuideCard from '@/components/crops/ProductionGuideCard';
@@ -94,7 +95,7 @@ import { PRICE_SNAPSHOT_MONTHS } from '@/components/prices/CropPriceGuide.format
 import type { BuyingMonth } from '@/lib/crop-export-schedule';
 import {
   buildBuyingSchedule, buildProductionGuide, MONTH_NAMES, positionRangeLabel, sowingInstruction, SUCCESSION_TIMING_GUIDANCE,
-  taskSentence, groupTasksByAction, TRANSPLANT_NURSERY_GUIDANCE, weightRangeLabel,
+  taskSentence, taskDetail, monthShort, groupTasksByAction, TRANSPLANT_NURSERY_GUIDANCE, weightRangeLabel,
 } from '@/lib/crop-export-schedule';
 
 /** Same ticked tiles and exact crops, ignoring order. */
@@ -107,7 +108,7 @@ const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium'
 // This route has sourced crop timing, climate, price and task claims mixed with
 // ordinary controls. Only pass interface labels through this helper; keep the
 // source-backed farming copy in its original English until it is reviewed.
-const cropUi = (lang: string, english: string, isiZulu: string) => lang === 'zu' ? isiZulu : english;
+const cropUi = (lang: string, english: string, isiZulu: string, values: Record<string, string | number> = {}) => cropExportText(lang === 'zu' ? isiZulu : english, lang === 'zu' ? 'en' : lang, values);
 
 // The rolling timeline shows this many months ahead from today (column 0),
 // scrollable. TWO FULL YEARS as of 2026-08-05 (Rory: "the last month i feel
@@ -225,7 +226,7 @@ function TreePickingList({ lines }: { lines: TreePickingLine[] }) {
       </div>
       <div className="space-y-0.5 mt-1">
         {lines.map((line) => (
-          <div key={line.speciesId} className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45 }}>{treePickingPhrase(line)}</div>
+          <div key={line.speciesId} className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45 }}>{treePickingPhrase(line, lang)}</div>
         ))}
       </div>
       <div className="font-sans mt-1" style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>
@@ -253,17 +254,24 @@ function TaskList({ tasks }: { tasks: CropTask[] }) {
           && group.crops.every((c) => c.detail === group.crops[0].detail)
           ? group.crops[0].detail
           : null;
+        // Group and share instructions by the original source wording. Native
+        // display must not merge two different jobs just because drafts coincide.
+        const localizedDetail = (row: typeof group.crops[number]) => {
+          const source = tasks.find(task => row.taskIds.includes(task.id) && task.action === group.action
+            && task.cropKey === row.cropKey && taskDetail(task) === row.detail);
+          return source ? taskDetail(source, lang) : row.detail;
+        };
         return (
           <div key={group.action} className="rounded-xl" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', padding: '7px 9px' }}>
             <div className="flex items-baseline gap-1.5">
               {(() => { const ActionIcon = TASK_ACTION_ICON[group.action]; return <ActionIcon size={14} aria-hidden style={{ flexShrink: 0 }} />; })()}
-              <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{group.label}</span>
-              <span className="font-mono" style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>
-                {group.jobCount} {group.jobCount === 1 ? 'job' : 'jobs'}
+              <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{cropExportText(group.label, lang)}</span>
+              <span className="font-mono" style={{ fontSize: 10.5, color: 'var(--text-muted)', ...(['zu', 'st', 'ts', 've'].includes(lang) ? { whiteSpace: 'nowrap', flexShrink: 0 } : {}) }}>
+                {cropExportText(group.jobCount === 1 ? '{count} job' : '{count} jobs', lang, { count: group.jobCount })}
               </span>
             </div>
             {shared && (
-              <div className="font-sans mb-1.5" style={{ fontSize: 11.5, color: 'var(--text-secondary)', lineHeight: 1.4 }}>{shared}</div>
+              <div className="font-sans mb-1.5" style={{ fontSize: 11.5, color: 'var(--text-secondary)', lineHeight: 1.4 }}>{localizedDetail(group.crops[0])}</div>
             )}
             <div className={shared ? 'space-y-1' : 'space-y-1.5 mt-1'}>
               {group.crops.map((row) => (
@@ -283,7 +291,7 @@ function TaskList({ tasks }: { tasks: CropTask[] }) {
                     ))}
                   </div>
                   {!shared && row.detail && (
-                    <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)', lineHeight: 1.4, marginTop: 1 }}>{row.detail}</div>
+                    <div className="font-sans" style={{ fontSize: 11.5, color: 'var(--text-secondary)', lineHeight: 1.4, marginTop: 1 }}>{localizedDetail(row)}</div>
                   )}
                 </div>
               ))}
@@ -390,10 +398,11 @@ function fractionLabel(f: number): string {
 
 /** Trees = started as a seedling and transplanted, Sprout = sown direct from seed. */
 function SeedBadge({ transplant, large }: { transplant: boolean; large?: boolean }) {
+  const { lang } = useLanguage();
   const Icon = transplant ? Trees : Sprout;
   return (
     <span
-      title={transplant ? 'Started as a seedling, then transplanted' : 'Sown direct from seed'}
+      title={cropExportText(transplant ? 'Started as a seedling, then transplanted' : 'Sown direct from seed', lang)}
       style={{ display: 'inline-flex', alignItems: 'center' }}
     >
       <Icon size={large ? 14 : 12} aria-hidden />
@@ -1659,8 +1668,8 @@ function FacilitatorCropsPageInner() {
   }
 
   function shareTasks() {
-    const picking = (i: number) => (treePicking[i] ?? []).map((line) => `\n  ${treePickingPhrase(line)}`).join('');
-    const text = `🌱 Production plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}${picking(0)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}${picking(1)}`;
+    const picking = (i: number) => (treePicking[i] ?? []).map((line) => `\n  ${treePickingPhrase(line, lang)}`).join('');
+    const text = `🌱 ${cropExportText('Production plan tasks', lang)}\n${monthShort(currentMonth, lang)}: ${taskSentence(currentTasks, lang)}${picking(0)}\n${monthShort(nextMonth, lang)}: ${taskSentence(nextTasks, lang)}${picking(1)}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   }
 
@@ -1882,9 +1891,11 @@ function FacilitatorCropsPageInner() {
         Vegetables and staples · Fruit, nuts &amp; berries · Animal products. Housing is listed. Use the site survey for animal numbers and care checks.
       </div>
 
-      {lang === 'zu' && (
-        <div role="note" className="flex-shrink-0 px-3 md:px-5 py-2" style={{ background: 'rgba(192,122,30,0.08)', borderBottom: '1px solid rgba(154,96,24,0.3)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.45 }}>
-          <strong>IsiZulu draft · Isaziso senguqulo yesiZulu esalungiswa.</strong> This interface draft has not been reviewed by a fluent isiZulu speaker. Crop names, planting times, climate and price assumptions, and task instructions remain in English pending source and local farming review. Amagama ezitshalo, izikhathi zokutshala, isimo sezulu, amanani nemiyalelo yemisebenzi kuseNgisini kuze kubuyekezwe imithombo nolwazi lwezolimo lwendawo.
+      {['zu', 'st', 'ts', 've'].includes(lang) && (
+        <div role="note" className="flex-shrink-0 px-3 md:px-5 py-2" style={{ background: 'rgba(192,122,30,0.08)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.45 }}>
+          <strong lang={lang}>{cropExportText('Draft control translations', lang)}</strong>{' '}
+          <span lang={lang}>{cropExportText('These control translations have not been reviewed by a fluent speaker. Some screen text still uses English.', lang)}</span>
+          <details><summary lang="en">English source</summary><p lang="en">These control translations have not been reviewed by a fluent speaker. Some screen text still uses English.</p></details>
         </div>
       )}
 
@@ -2919,8 +2930,8 @@ function MonthAvailabilityDetail({
   return (
     <div className="rounded-xl p-3 mt-3" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
       <div className="flex items-start justify-between gap-2 mb-1.5">
-        <div className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{monthLabel(month)}</div>
-        <button onClick={onClose} aria-label={cropUi(lang, `Close ${monthLabel(month)} detail`, `Vala imininingwane ka-${monthLabel(month)}`)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0 }}>
+        <div className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{monthShort(month, lang)}</div>
+        <button onClick={onClose} aria-label={cropUi(lang, 'Close {month} detail', 'Vala imininingwane ka-{month}', { month: monthShort(month, lang) })} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', padding: 0 }}>
           <X size={14} />
         </button>
       </div>
@@ -2929,11 +2940,11 @@ function MonthAvailabilityDetail({
           other crop this panel knows nothing — it must not claim the pantry
           is empty, only that it has nothing sourced to report. */}
       {items.length === 0 && (
-        <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>Nothing is scheduled for picking in the beds, and nothing with a sourced shelf life is still in store.</div>
+        <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{cropExportText("Nothing is scheduled for picking in the beds, and nothing with a sourced shelf life is still in store.", lang)}</div>
       )}
       {trees.length > 0 && (
         <div className="mb-2 mt-1.5">
-          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>From your trees (local picking months)</div>
+          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{cropExportText("From your trees (local picking months)", lang)}</div>
           {trees.map((tree) => {
             const harvest = treeGroups.find((g) => g.harvest.speciesId === tree.speciesId)?.harvest;
             const first = harvest?.yearsToFirstCrop;
@@ -2952,7 +2963,7 @@ function MonthAvailabilityDetail({
       )}
       {animals.length > 0 && (
         <div className="mb-2 mt-1.5">
-          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>From your animals (local production months)</div>
+          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{cropExportText("From your animals (local production months)", lang)}</div>
           {animals.map((a) => {
             const e = ANIMAL_ENTERPRISES[a.enterpriseId];
             const Icon = PRODUCT_ICON[a.product];
@@ -2971,7 +2982,7 @@ function MonthAvailabilityDetail({
       )}
       {fresh.length > 0 && (
         <div className="mb-2">
-          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>Ready to pick</div>
+          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{cropExportText("Ready to pick", lang)}</div>
           {fresh.map((item) => (
             <div key={item.cropKey} className="font-sans flex items-center gap-1.5" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
               <CropIcon cropKey={item.cropKey} icon={item.icon} size={13} /> {item.name}
@@ -2981,7 +2992,7 @@ function MonthAvailabilityDetail({
       )}
       {stored.length > 0 && (
         <div>
-          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>From store</div>
+          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: 'var(--text-muted)', letterSpacing: '0.08em' }}>{cropExportText("From store", lang)}</div>
           {stored.map((item) => {
             const crop = cropByKey(item.cropKey);
             return (
@@ -4622,7 +4633,7 @@ function CropPickerModal({
               />
             </div>
             <p className="font-sans mb-2" style={{ fontSize: 11, color: 'var(--text-muted)', lineHeight: 1.4 }}>
-              Twelve dots = Jan to Dec. Green marks the months you can sow that crop in this site's rainfall pattern.
+              {cropExportText("Twelve dots = Jan to Dec. Green marks the months you can sow that crop in this site's rainfall pattern.", lang)}
             </p>
             <div className="space-y-1">
               {filtered.map((c) => {
@@ -4644,7 +4655,7 @@ function CropPickerModal({
                         <div className="flex items-center gap-1.5">
                           <span className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{c.name}</span>
                           <SeedBadge transplant={!!c.transplant} />
-                          {isSpaceHungry(c) && <span title="Space-hungry — wants its own bed" style={{ display: 'inline-flex', alignItems: 'center' }}><Ruler size={12} aria-hidden /></span>}
+                          {isSpaceHungry(c) && <span title={cropExportText("Space-hungry — wants its own bed", lang)} style={{ display: 'inline-flex', alignItems: 'center' }}><Ruler size={12} aria-hidden /></span>}
                         </div>
                         <div className="flex gap-0.5 mt-1">
                           {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => (
@@ -4664,7 +4675,7 @@ function CropPickerModal({
                 );
               })}
               {filtered.length === 0 && (
-                <div className="font-sans text-center py-6" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{cropUi(lang, `No crops match “${search}”.`, `Azikho izitshalo ezihambisana nokuthi “${search}”.`)}</div>
+                <div className="font-sans text-center py-6" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{cropUi(lang, 'No crops match “{search}”.', 'Azikho izitshalo ezihambisana nokuthi “{search}”.', { search })}</div>
               )}
             </div>
           </div>

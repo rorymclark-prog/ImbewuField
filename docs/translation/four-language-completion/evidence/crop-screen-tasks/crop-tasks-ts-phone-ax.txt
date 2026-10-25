@@ -1,0 +1,48 @@
+Browser tab: 3, Title: "Isolated task and dynamic control verification", URL: "http://127.0.0.1:4273/".
+1 AXWebArea Isolated task and dynamic control verification, URL: 127.0.0.1:4273/
+	2 container
+		3 heading Isolated actual crop components, Value: 1
+			4 text Isolated actual crop components
+		5 text Synthetic tasks and names; system fonts. No account, saved records or message sending. Picker list/search only; full production route and selected-crop detail form are not verified.
+		6 container
+			7 text Verification language
+			8 pop up button (collapsed, settable) Description: Verification language, Value: ts, Secondary Actions: Expand
+				9 menu
+					10 en
+					11 zu
+					12 st
+					13 (selected) ts
+					14 ve
+		15 container
+			16 text Verification state
+			17 pop up button (collapsed, settable) Description: Verification state, Value: tasks, Secondary Actions: Expand
+				18 menu
+					19 (selected) tasks
+					20 prep
+					21 sow
+					22 transplant
+					23 harvest
+					24 empty
+					25 picker
+					26 month
+		27 text Vuhundzuluxeri bya swilawuri leswi a byi si kamberiwa hi munhu loyi a tivaka ririmi kahle. Matsalwa man’wana ya xikirini ma ha tirhisa Xinghezi. Lulamisa ndhawu 4 mintirho PRIVATE crop carrots {count} $& PRIVATE second bed
+		46 text kambela misava ni ku khuluka ka mati; tirhisa nkambelo wa misava kumbe switsundzuxo swa ndhawu u nga si engetela swilo swo antswisa misava
+		47 text PRIVATE crop tomatoes {count} $& PRIVATE second bed
+		48 text kambela misava ni ku khuluka ka mati; tirhisa nkambelo wa misava kumbe switsundzuxo swa ndhawu u nga si engetela swilo swo antswisa misava
+		49 text PRIVATE crop green-beans {count} $& PRIVATE bed {count} $&
+		50 text kambela misava ni ku khuluka ka mati; tirhisa nkambelo wa misava kumbe switsundzuxo swa ndhawu u nga si engetela swilo swo antswisa misava
+		51 text PRIVATE crop green-beans {count} $& PRIVATE plot
+		52 text kambela misava ni ku khuluka ka mati; tirhisa nkambelo wa misava kumbe switsundzuxo swa ndhawu u nga si rima kumbe ku engetela swilo swo antswisa misava
+		53 text Byala 4 mintirho PRIVATE crop carrots {count} $& PRIVATE second bed
+		54 text mintila yi hambana hi 20–40cm · 2–5cm ku hambana eka ntila · byala hi vuenti bya 1–2.5cm
+		55 text PRIVATE crop tomatoes {count} $& PRIVATE second bed
+		56 text sungula ethireyini, hi vuenti bya 1cm
+		57 text PRIVATE crop green-beans {count} $& PRIVATE bed {count} $& PRIVATE plot
+		58 text mintila yi hambana hi 45–60cm · 4–7cm ku hambana eka ntila · byala hi vuenti bya 2–5cm
+		59 text Kambela / byala kun'wana 1 ntiro PRIVATE crop tomatoes {count} $& PRIVATE second bed
+		60 text mintila yi hambana hi 90–120cm · 30–60cm ku hambana eka ntila
+		61 text Tshovela 6 mintirho PRIVATE crop green-beans {count} $& PRIVATE bed {count} $& PRIVATE plot PRIVATE crop carrots {count} $& PRIVATE second bed PRIVATE crop tomatoes {count} $& PRIVATE second bed Ku suka eka mirhi ya wena
+		44 text Kha PRIVATE fruit {month} $& (0) — tin'hweti leti tiyisisiweke endhawini N'we–Sung
+		45 text Minkarhi ya Afrika-Dzonga leyi humaka eswihlobyeni, tindhawu hinkwato ti hlanganisiwile — mirhi ya wena yi nga sungula kumbe yi heta n’hweti ku nga si fika kumbe endzhaku ka nkarhi lowu.
+
+The focused UI element is 1 AXWebArea Isolated task and dynamic control verification, URL: 127.0.0.1:4273/

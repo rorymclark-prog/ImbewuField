@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Crop task panels now use unreviewed translations in four languages.": "Amaphaneli emisebenzi yezitshalo manje anokuhumusha okungakabuyekezwa ngezilimi ezine.",
+  "Crop search and month controls have more unreviewed translation drafts.": "Ukusesha izitshalo nezinkinobho zezinyanga kunokuhumusha okwengeziwe okusenguhlaka okungakabuyekezwa.",
+  "Review crop task drafts": "Buyekeza imisebenzi yezitshalo esenguhlaka",
+  "Open tasks, crop search and a month detail. Check the English source before acting.": "Vula imisebenzi, ukusesha izitshalo nemininingwane yenyanga. Hlola umthombo wesiNgisi ngaphambi kokwenza.",
   "More crop guidance now has unreviewed translations in four languages.": "Ezinye iziqondiso zezitshalo manje zinokuhumusha okungakabuyekezwa ngezilimi ezine.",
   "Food-use cautions and trial figures stay with their source.": "Izixwayiso zokusetshenziswa njengokudla nezibalo zocwaningo zihlala nomthombo wazo.",
   "Review crop guidance drafts": "Buyekeza iziqondiso zezitshalo ezisenguhlaka",

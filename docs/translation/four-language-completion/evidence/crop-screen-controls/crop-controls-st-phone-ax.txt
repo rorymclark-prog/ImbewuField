@@ -1,0 +1,57 @@
+Browser tab: 2, Title: "127.0.0.1:4272/st.html", URL: "http://127.0.0.1:4272/st.html".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~1 AXWebArea 127.0.0.1:4272/st.html
+~		11 text Diphetolelo tsena tsa ditaolo ha di eso hlahlojwe ke motho ya buang puo hantle. Mongolo o mong wa skrine o ntse o le ka Senyesemane. Ho tswa difateng tsa hao
+~		13 text Dinako tsa Afrika Borwa tse tswang mehloding, dibaka tsohle di kopantswe — difate tsa hao di ka qala kapa tsa qeta kgwedi pele kapa morao.
+~		14 text Ha ho mosebetsi o lokelang ho etswa jwale.
+~		15 container Dikgwedi tsa tjhate ya dijalo, tsamaisetsa ka thoko ho di bapisa le khalendara ya ho lema
+~				44 button Ho tswa difateng tsa hao
+~				47 button Dinako tsa Afrika Borwa tse tswang mehloding, dibaka tsohle di kopantswe — difate tsa hao di ka qala kapa tsa qeta kgwedi pele kapa morao.
+~				50 button Ha ho mosebetsi o lokelang ho etswa jwale.
+~				53 button Lehae
+~				56 button Kgutlela moralong
+~				59 button Fetohela polaneng ya tlhahiso ya moralo o mong
+~				62 button Dipolane tsohle tsa tlhahiso
+~				65 button Moralo wa tlhahiso
+~				68 button Dimela le matlo a diphoofolo tse tswang mmapeng wa hao
+~				71 button Hlahloba mealo le ditsha tse sebediswang ke polane ena — palo, boholo le moo di tswang teng
+~				74 button Ithute
+~				77 button Polane ya tlhahiso e a kenngwa…
+~				80 button O rera sebaka sefe?
+~				83 button Hlakola
+~				86 button Ha ho meralo e bolokilweng. Taka mealo ya hao ho Design Studio, mme e tla hlaha mona.
+~				89 button meralo e bolokilweng. O mong le o mong o takilwe kamoo o leng kateng fatshe.
+~				92 button Kapa sebedisa moralo o seng o butswe sesebedisweng sena
+~				95 button Beha mealo ya nnete mohatong wa Ho lema
+~				98 button ho e nkela sebaka.
+~				101 button Hlahisa tlhahiso ya polane ka boiketsetso
+~				104 button Kgutlisa phetoho ya ho qetela polaneng ena
+~				107 button Kgutlisa
+~				110 button Tlosa tsohle tse lenngweng polaneng ena
+~				113 button Moalo
+~				116 button Kenya sejalo
+~				119 button Mealo e meng e abetswe habedi ka nako e le nngwe
+~				122 button Mesebetsi
+~				125 button Arolelana mesebetsi
+~				128 button Ho sheba pele
+~				131 button Ha ho dijalo tse jetsweng — tlanya + crop moalong o ka hodimo.
+~				134 button Ka sejalo
+~				137 button Ka moalo
+~				140 button Ha ho letho le jetsweng.
+~				143 button Ha ho mealo e ralilweng
+~				146 button Qala ka ho beha mealo ya meroho mohatong wa Ho lema — ebe o kgutlela mona ho rera tse tla kena ho yona.
+~				149 button Dikgwedi tsa tjhate ya dijalo, tsamaisetsa ka thoko ho di bapisa le khalendara ya ho lema
+~				152 button Kwala
+~				155 button Batla dijalo…
+~				158 button Tlosa ho tse ratwang
+~				161 button Kenya ho tse ratwang
+~				164 button Kgutlela lenaneng
+~				167 button Boloka diphetoho
+~				170 button Kenya e le se seng se le teng
+~				173 button Kenya moalong
+~				176 button Tlosa sejalo
+~				179 button Fetola
+~				182 button Tlosa
+~				185 button Kgutlela morao
+~				188 button Lahla
+The focused UI element is 1 AXWebArea 127.0.0.1:4272/st.html

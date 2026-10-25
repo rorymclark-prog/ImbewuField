@@ -1,0 +1,1103 @@
+{
+  "status": "IN PROGRESS: Unreviewed source-bound control drafts. Crop screens and whole app unfinished.",
+  "sourceCount": 65,
+  "newRegistryRows": 64,
+  "rows": [
+    {
+      "english": "From your trees",
+      "zu": "Ezihlahleni zakho",
+      "st": "Ho tswa difateng tsa hao",
+      "ts": "Ku suka eka mirhi ya wena",
+      "ve": "U bva kha miri yaṋu",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Sourced South African seasons, all regions together — your own trees may start or finish a month either side.",
+      "zu": "Izikhathi zaseNingizimu Afrika ezicashunwe emithonjeni, zonke izifunda ndawonye — izihlahla zakho zingaqala noma ziphele ngenyanga ngaphambili noma ngemuva.",
+      "st": "Dinako tsa Afrika Borwa tse tswang mehloding, dibaka tsohle di kopantswe — difate tsa hao di ka qala kapa tsa qeta kgwedi pele kapa morao.",
+      "ts": "Minkarhi ya Afrika-Dzonga leyi humaka eswihlobyeni, tindhawu hinkwato ti hlanganisiwile — mirhi ya wena yi nga sungula kumbe yi heta n’hweti ku nga si fika kumbe endzhaku ka nkarhi lowu.",
+      "ve": "Zwifhinga zwa Afrika Tshipembe zwi bvaho kha zwiko, madzingu oṱhe o ṱangana — miri yaṋu i nga thoma kana ya fhedza ṅwedzi phanḓa kana nga murahu.",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Nothing due.",
+      "zu": "Akukho okumele kwenziwe okwamanje.",
+      "st": "Ha ho mosebetsi o lokelang ho etswa jwale.",
+      "ts": "A ku na leswi faneleke ku endliwa sweswi.",
+      "ve": "A hu na zwine zwa tea u itwa zwino.",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Home",
+      "zu": "Ikhaya",
+      "st": "Lehae",
+      "ts": "Ekaya",
+      "ve": "Hayani",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Back to design",
+      "zu": "Buyela ekwakhiweni",
+      "st": "Kgutlela moralong",
+      "ts": "Tlhelela eka pulani",
+      "ve": "Humelani kha pulane",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Switch to a different design's production plan",
+      "zu": "Shintshela ohlelweni lokukhiqiza lomunye umklamo",
+      "st": "Fetohela polaneng ya tlhahiso ya moralo o mong",
+      "ts": "Cincela eka pulani ya vuhumelerisi ya dizayini yin’wana",
+      "ve": "Shandukelani kha pulane ya vhubveledzi ya muṅwe muolo",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "All production plans",
+      "zu": "Zonke izinhlelo zokukhiqiza",
+      "st": "Dipolane tsohle tsa tlhahiso",
+      "ts": "Tipulani hinkwato ta vuhumelerisi",
+      "ve": "Pulane dzoṱhe dza vhubveledzi",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Production plan",
+      "zu": "Uhlelo lokukhiqiza",
+      "st": "Moralo wa tlhahiso",
+      "ts": "Pulani ya vuhumelerisi",
+      "ve": "Pulane ya vhubveledzi"
+    },
+    {
+      "english": "Plants and housing from your map",
+      "zu": "Izitshalo nezindlu zezilwane ezisemephini yakho",
+      "st": "Dimela le matlo a diphoofolo tse tswang mmapeng wa hao",
+      "ts": "Swimila ni tindlu ta swifuwo leswi humaka eka mepe wa wena",
+      "ve": "Zwimela na nnḓu dza zwifuwo zwi bvaho kha mapa waṋu",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Check the beds and plots this plan is using — count, sizes and where they came from",
+      "zu": "Hlola imibhede namapuloti asetshenziswa yilolu hlelo — inani, ubukhulu nomthombo",
+      "st": "Hlahloba mealo le ditsha tse sebediswang ke polane ena — palo, boholo le moo di tswang teng",
+      "ts": "Kambela mibedo ni switandi leswi pulani leyi yi swi tirhisaka — nhlayo, vukulu ni laha swi humaka kona",
+      "ve": "Sedzani mibedu na zwitandana zwine pulane iyi ya shumisa — mbalo, vhuhulwane na hune zwa bva hone",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Learn",
+      "zu": "Funda",
+      "st": "Ithute",
+      "ts": "Dyondza",
+      "ve": "Gudani",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Loading production plan…",
+      "zu": "Kulayishwa uhlelo lokukhiqiza…",
+      "st": "Polane ya tlhahiso e a kenngwa…",
+      "ts": "Ku layicha pulani ya vuhumelerisi…",
+      "ve": "Pulane ya vhubveledzi i khou dzheniswa…",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Which site are you planning?",
+      "zu": "Uhlela siphi isiza?",
+      "st": "O rera sebaka sefe?",
+      "ts": "U kunguhata ndhawu yihi?",
+      "ve": "Ni khou dzudzanya fhethu hufhio?",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Cancel",
+      "zu": "Khansela",
+      "st": "Hlakola",
+      "ts": "Khansela",
+      "ve": "Fhelisani",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "No saved designs yet. Draw your beds in the Design Studio and this is where they will appear.",
+      "zu": "Azikho izakhiwo ezilondoloziwe okwamanje. Dweba imibhede yakho ku-Design Studio; izovela lapha.",
+      "st": "Ha ho meralo e bolokilweng. Taka mealo ya hao ho Design Studio, mme e tla hlaha mona.",
+      "ts": "A ku na tidizayini leti hlayisiweke. Dirowa mibedo ya wena eka Design Studio kutani yi ta humelela laha.",
+      "ve": "A hu athu u vha na miolo yo vhulungwaho. Olani mibedu yaṋu kha Design Studio nahone i ḓo vhonala fhano.",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "saved designs. Each one is drawn as it sits on the ground.",
+      "zu": "imiklamo elondoloziwe. Ngayinye iboniswa njengoba injalo emhlabeni.",
+      "st": "meralo e bolokilweng. O mong le o mong o takilwe kamoo o leng kateng fatshe.",
+      "ts": "tidizayini leti hlayisiweke. Yin’wana ni yin’wana yi dirowiwe hi laha yi nga ha kona ehansi.",
+      "ve": "miolo yo vhulungwaho. Muṅwe na muṅwe wo oliwa nga hune wa vha ngaho fhasi.",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Or use the design already open on this device",
+      "zu": "Noma sebenzisa umklamo ovuliwe kule divayisi",
+      "st": "Kapa sebedisa moralo o seng o butswe sesebedisweng sena",
+      "ts": "Kumbe tirhisa dizayini leyi se yi pfulekeke eka xitirhisiwa lexi",
+      "ve": "Kana shumisani muolo wo no vuleaho kha tshishumiswa itshi",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Place real beds on the Planting step",
+      "zu": "Faka imibhede yangempela esigabeni sokuTshala",
+      "st": "Beha mealo ya nnete mohatong wa Ho lema",
+      "ts": "Veka mibedo ya xiviri eka goza ra Ku byala",
+      "ve": "Vheani mibedu ya vhukuma kha ḽiga ḽa U ṱavha",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "to replace it.",
+      "zu": "ukuze uwushintshe.",
+      "st": "ho e nkela sebaka.",
+      "ts": "ku yi siva.",
+      "ve": "u i tshintsha.",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Auto-suggest a plan",
+      "zu": "Phakamisa uhlelo ngokuzenzakalelayo",
+      "st": "Hlahisa tlhahiso ya polane ka boiketsetso",
+      "ts": "Ringanyeta pulani hi ku tiendlekela",
+      "ve": "Bveledzani themendelo ya pulane nga yoṱhe",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Undo the last change to this plan",
+      "zu": "Buyisela emuva ushintsho lokugcina kulolu hlelo",
+      "st": "Kgutlisa phetoho ya ho qetela polaneng ena",
+      "ts": "Tlherisela endzhaku ku cinca ko hetelela eka pulani leyi",
+      "ve": "Humisani tshanduko ya u fhedza kha pulane iyi",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Undo",
+      "zu": "Buyisela emuva",
+      "st": "Kgutlisa",
+      "ts": "Tlherisela endzhaku",
+      "ve": "Humisani",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Clear every planting from this plan",
+      "zu": "Susa konke okutshalwe kulolu hlelo",
+      "st": "Tlosa tsohle tse lenngweng polaneng ena",
+      "ts": "Susa ku byala hinkwako eka pulani leyi",
+      "ve": "Bvisani zwoṱhe zwo ṱavhiwaho kha pulane iyi",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Bed",
+      "zu": "Umbhede",
+      "st": "Moalo",
+      "ts": "Mubedo",
+      "ve": "Mubedu",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Add a crop",
+      "zu": "Engeza isilimo",
+      "st": "Kenya sejalo",
+      "ts": "Engetela xibyariwa",
+      "ve": "Engedzani tshiliṅwa",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Some beds are double-booked",
+      "zu": "Eminye imibhede ibhukhwe kabili",
+      "st": "Mealo e meng e abetswe habedi ka nako e le nngwe",
+      "ts": "Mibedo yin’wana yi averiwe kambirhi hi nkarhi wun’we",
+      "ve": "Miṅwe mibedu yo avhelwa kavhili nga tshifhinga tshithihi",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Tasks",
+      "zu": "Imisebenzi",
+      "st": "Mesebetsi",
+      "ts": "Mintirho",
+      "ve": "Mishumo",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Share tasks",
+      "zu": "Yabelana ngemisebenzi",
+      "st": "Arolelana mesebetsi",
+      "ts": "Avelana mintirho",
+      "ve": "Kovhekanyani mishumo",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Looking ahead",
+      "zu": "Okulandelayo",
+      "st": "Ho sheba pele",
+      "ts": "Ku languta phambili",
+      "ve": "U sedza phanḓa",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "No plantings yet — tap + crop on a bed above.",
+      "zu": "Akukho okutshalwe okwamanje — cindezela + crop embhedeni ongenhla.",
+      "st": "Ha ho dijalo tse jetsweng — tlanya + crop moalong o ka hodimo.",
+      "ts": "A ku na leswi byariweke — khumba + crop eka mubedo lowu nga ehenhla.",
+      "ve": "A hu athu u ṱavhiwa — kwanyani + crop kha mubedu u re nṱha.",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "By crop",
+      "zu": "Ngesilimo",
+      "st": "Ka sejalo",
+      "ts": "Hi xibyariwa",
+      "ve": "Nga tshiliṅwa",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "By bed",
+      "zu": "Ngombhede",
+      "st": "Ka moalo",
+      "ts": "Hi mubedo",
+      "ve": "Nga mubedu",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Nothing planted yet.",
+      "zu": "Akukho okutshalwe okwamanje.",
+      "st": "Ha ho letho le jetsweng.",
+      "ts": "A ku na lexi byariweke.",
+      "ve": "A hu athu u ṱavhiwa tshithu.",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "No beds designed yet",
+      "zu": "Ayikho imibhede eklanyiwe okwamanje",
+      "st": "Ha ho mealo e ralilweng",
+      "ts": "A ku na mibedo leyi dirowiweke",
+      "ve": "A hu athu u oliwa mibedu",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Place veg beds on the Planting step first — then come back here to plan what goes in them.",
+      "zu": "Qala ngokubeka imibhede yemifino esigabeni sokuTshala — bese ubuya lapha uzohlela okuzotshalwa kuyo.",
+      "st": "Qala ka ho beha mealo ya meroho mohatong wa Ho lema — ebe o kgutlela mona ho rera tse tla kena ho yona.",
+      "ts": "Rhanga hi ku veka mibedo ya matsavu eka goza ra Ku byala — kutani u vuya laha u kunguhata leswi nga ta nghena eka yona.",
+      "ve": "Thomani nga u vhea mibedu ya miroho kha ḽiga ḽa U ṱavha — ni kone u vhuya fhano u dzudzanya zwine zwa ḓo dzheniswa khayo.",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Crop chart months, scroll to match the planting calendar",
+      "zu": "Izinyanga zeshadi lezitshalo; skrola ukuze zihambisane nekhalenda lokutshala",
+      "st": "Dikgwedi tsa tjhate ya dijalo, tsamaisetsa ka thoko ho di bapisa le khalendara ya ho lema",
+      "ts": "Tin’hweti ta chati ya swibyariwa, fambisa hi tlhelo leswaku ti fambelana ni khalendara yo byala",
+      "ve": "Miṅwedzi ya tshati ya zwiliṅwa, sudzulusani nga thungo u i ṱanganya na khalenda ya u ṱavha",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Close",
+      "zu": "Vala",
+      "st": "Kwala",
+      "ts": "Pfala",
+      "ve": "Valani",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Search crops…",
+      "zu": "Sesha izitshalo…",
+      "st": "Batla dijalo…",
+      "ts": "Lava swibyariwa…",
+      "ve": "Ṱoḓani zwiliṅwa…",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Remove from favourites",
+      "zu": "Susa ezintandokazini",
+      "st": "Tlosa ho tse ratwang",
+      "ts": "Susa eka leswi rhandziwaka",
+      "ve": "Bvisani kha zwi funwaho",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Add to favourites",
+      "zu": "Engeza ezintandokazini",
+      "st": "Kenya ho tse ratwang",
+      "ts": "Engetela eka leswi rhandziwaka",
+      "ve": "Engedzani kha zwi funwaho",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Back to list",
+      "zu": "Buyela ohlwini",
+      "st": "Kgutlela lenaneng",
+      "ts": "Tlhelela eka nxaxamelo",
+      "ve": "Humelani kha mutevhe",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Save changes",
+      "zu": "Londoloza izinguquko / Save changes",
+      "st": "Boloka diphetoho",
+      "ts": "Hlayisa ku cinca",
+      "ve": "Vhulungani tshanduko",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Add as existing",
+      "zu": "Engeza njengokukhona kakade",
+      "st": "Kenya e le se seng se le teng",
+      "ts": "Engetela tani hi lexi se xi nga kona",
+      "ve": "Engedzani sa tshi re hone",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Add to bed",
+      "zu": "Engeza embhedeni",
+      "st": "Kenya moalong",
+      "ts": "Engetela eka mubedo",
+      "ve": "Engedzani kha mubedu",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Remove crop",
+      "zu": "Susa isilimo / Remove crop",
+      "st": "Tlosa sejalo",
+      "ts": "Susa xibyariwa",
+      "ve": "Bvisani tshiliṅwa",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Edit",
+      "zu": "Hlela",
+      "st": "Fetola",
+      "ts": "Hlela",
+      "ve": "Shandukisani",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Remove",
+      "zu": "Susa / Remove",
+      "st": "Tlosa",
+      "ts": "Susa",
+      "ve": "Bvisani",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Back",
+      "zu": "Buyela",
+      "st": "Kgutlela morao",
+      "ts": "Tlhelela endzhaku",
+      "ve": "Humelani murahu",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Discard",
+      "zu": "Lahla / Discard",
+      "st": "Lahla",
+      "ts": "Lahla",
+      "ve": "Laṱani",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Draft control translations",
+      "zu": "Ukuhumusha kwezinkinobho okusenguhlaka",
+      "st": "Meralo ya diphetolelo tsa ditaolo",
+      "ts": "Vuhundzuluxeri bya swilawuri byo ka byi nga si kamberiwa",
+      "ve": "Ṱhalutshedzelo dza ndangulo dzi sa athu u khwaṱhisedzwa",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "These control translations have not been reviewed by a fluent speaker. Some screen text still uses English.",
+      "zu": "Lokhu kuhumusha kwezinkinobho akukakabuyekezwa umuntu olukhuluma kahle ulimi. Omunye umbhalo wesikrini usasebenzisa isiNgisi.",
+      "st": "Diphetolelo tsena tsa ditaolo ha di eso hlahlojwe ke motho ya buang puo hantle. Mongolo o mong wa skrine o ntse o le ka Senyesemane.",
+      "ts": "Vuhundzuluxeri bya swilawuri leswi a byi si kamberiwa hi munhu loyi a tivaka ririmi kahle. Matsalwa man’wana ya xikirini ma ha tirhisa Xinghezi.",
+      "ve": "Ṱhalutshedzelo idzi dza ndangulo a dzi athu u sedzwa nga muthu a ambaho luambo nga nḓila yavhuḓi. Miṅwe miṅwalo ya tshikirini i kha ḓi shumisa Luisimane.",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "{count} job",
+      "zu": "{count} umsebenzi",
+      "st": "{count} mosebetsi",
+      "ts": "{count} ntiro",
+      "ve": "{count} mushumo",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "{count} jobs",
+      "zu": "{count} imisebenzi",
+      "st": "{count} mesebetsi",
+      "ts": "{count} mintirho",
+      "ve": "{count} mishumo",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Close {month} detail",
+      "zu": "Vala imininingwane ka-{month}",
+      "st": "Kwala dintlha tsa {month}",
+      "ts": "Pfala vuxokoxoko bya {month}",
+      "ve": "Valani zwidodombedzwa zwa {month}",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "No crops match “{search}”.",
+      "zu": "Azikho izitshalo ezihambisana nokuthi “{search}”.",
+      "st": "Ha ho dijalo tse tsamaellanang le “{search}”.",
+      "ts": "A ku na swibyariwa leswi fambelanaka na “{search}”.",
+      "ve": "A hu na zwiliṅwa zwi tshimbilelanaho na “{search}”.",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Production plan tasks",
+      "zu": "Imisebenzi yohlelo lokukhiqiza",
+      "st": "Mesebetsi ya moralo wa tlhahiso",
+      "ts": "Mintirho ya pulani ya vuhumelerisi",
+      "ve": "Mishumo ya pulane ya vhubveledzi",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Started as a seedling, then transplanted",
+      "zu": "Kuqale kuyisithombo, kwase kutshalwa endaweni entsha",
+      "st": "Se qadile e le sethopo, sa nto fallisetswa sebakeng se seng",
+      "ts": "Xi sungule tani hi ximilana lexitsongo, kutani xi rhurhiseriwa endhawini yin’wana",
+      "ve": "Tsho thoma tshi tshimilana tshiṱuku, tsha kona u pfuluselwa kha huṅwe fhethu",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Sown direct from seed",
+      "zu": "Kuhlwanyelwe ngqo ngembewu",
+      "st": "Se jetswe ka kotloloho ka peo",
+      "ts": "Xi byariwe hi mbewu hi ku kongoma",
+      "ve": "Tsho zwalwa nga mbeu nga ho livhaho",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Twelve dots = Jan to Dec. Green marks the months you can sow that crop in this site's rainfall pattern.",
+      "zu": "Amachashazi ayishumi nambili = Januwari kuya kuDisemba. Okuluhlaza kukhombisa izinyanga ongahlwanyela ngazo leso silimo ngokuhamba kwemvula kwalesi siza.",
+      "st": "Matheba a leshome le metso e mmedi = Pherekgong ho isa Tshitwe. Botala bo tshwaya dikgwedi tseo o ka jalang sejalo seo ho tsona ho latela mokgwa wa dipula sebakeng sena.",
+      "ts": "Mathonsi ya khumembirhi = Sunguti ku ya N'wendzamhala. Rihlaza ri fungha tin’hweti leti u nga byalaka xibyariwa xexo ha tona hi ku ya hi fambelo ra mpfula ra ndhawu leyi.",
+      "ve": "Zwithoma zwa fumimbili = Phando u swika Nyendavhusiku. Mudala u sumbedza miṅwedzi ine na nga zwala tshiliṅwa tshenetsho khayo u ya nga maitele a mvula a fhethu afha.",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Space-hungry — wants its own bed",
+      "zu": "Sidinga indawo enkulu — sidinga umbhede waso",
+      "st": "Se hloka sebaka se seholo — se batla moalo wa sona",
+      "ts": "Xi lava ndhawu leyikulu — xi lava mubedo wa xona",
+      "ve": "Tshi ṱoḓa tshikhala tshihulwane — tshi ṱoḓa mubedu watsho",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Nothing is scheduled for picking in the beds, and nothing with a sourced shelf life is still in store.",
+      "zu": "Akukho okuhlelelwe ukukhiwa emibhedeni, futhi akukho okunobude besikhathi sokugcina obusekelwe emthonjeni okusagciniwe.",
+      "st": "Ha ho letho le reretsweng ho kgwa meallong, mme ha ho letho le nang le nako ya ho bolokwa e tswang mohloding le ntseng le bolokilwe.",
+      "ts": "A ku na lexi kunguhatiweke ku khiwa emibedweni, naswona a ku na lexi nga ni nkarhi wo hlayisiwa lowu humaka eka xihlovo lexi ha riki evuhlayiselweni.",
+      "ve": "A hu na zwo dzudzanywaho u kaṋiwa mibeduni, nahone a hu na zwi re na tshifhinga tsha u vhulunga tshi bvaho kha tshiko zwine zwa kha ḓi vha vhuvhulungeloni.",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "From your trees (local picking months)",
+      "zu": "Ezihlahleni zakho (izinyanga zendawo zokukha)",
+      "st": "Ho tswa difateng tsa hao (dikgwedi tsa lehae tsa ho kga)",
+      "ts": "Ku suka eka mirhi ya wena (tin’hweti ta laha kaya to kha)",
+      "ve": "U bva kha miri yaṋu (miṅwedzi ya henefho ya u kaṋa)",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "From your animals (local production months)",
+      "zu": "Ezilwaneni zakho (izinyanga zendawo zokukhiqiza)",
+      "st": "Ho tswa diphoofolong tsa hao (dikgwedi tsa lehae tsa tlhahiso)",
+      "ts": "Ku suka eka swifuwo swa wena (tin’hweti ta laha kaya ta vuhumelerisi)",
+      "ve": "U bva kha zwifuwo zwaṋu (miṅwedzi ya henefho ya vhubveledzi)",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "Ready to pick",
+      "zu": "Kulungele ukukhiwa",
+      "st": "Di loketse ho kgwa",
+      "ts": "Swi lunghekele ku khiwa",
+      "ve": "Zwo no lugela u kaṋiwa",
+      "generatedScope": "crop-screen-control"
+    },
+    {
+      "english": "From store",
+      "zu": "Okugciniwe",
+      "st": "Tse bolokilweng",
+      "ts": "Leswi hlayisiweke",
+      "ve": "Zwo vhulungwaho",
+      "generatedScope": "crop-screen-control"
+    }
+  ],
+  "sourceBindings": [
+    {
+      "line": 224,
+      "english": "From your trees",
+      "zu": "Ezihlahleni zakho",
+      "source": "cropUi(lang, 'From your trees', 'Ezihlahleni zakho')"
+    },
+    {
+      "line": 232,
+      "english": "Sourced South African seasons, all regions together — your own trees may start or finish a month either side.",
+      "zu": "Izikhathi zaseNingizimu Afrika ezicashunwe emithonjeni, zonke izifunda ndawonye — izihlahla zakho zingaqala noma ziphele ngenyanga ngaphambili noma ngemuva.",
+      "source": "cropUi(lang, 'Sourced South African seasons, all regions together — your own trees may start or finish a month either side.', 'Izikhathi zaseNingizimu Afrika ezicashunwe emithonjeni, zonke izifunda ndawonye — izihlahla zakho zingaqala noma ziphele ngenyanga ngaphambili noma ngemuva.')"
+    },
+    {
+      "line": 242,
+      "english": "Nothing due.",
+      "zu": "Akukho okumele kwenziwe okwamanje.",
+      "source": "cropUi(lang, 'Nothing due.', 'Akukho okumele kwenziwe okwamanje.')"
+    },
+    {
+      "line": 1780,
+      "english": "Home",
+      "zu": "Ikhaya",
+      "source": "cropUi(lang, 'Home', 'Ikhaya')"
+    },
+    {
+      "line": 1781,
+      "english": "Home",
+      "zu": "Ikhaya",
+      "source": "cropUi(lang, 'Home', 'Ikhaya')"
+    },
+    {
+      "line": 1790,
+      "english": "Back to design",
+      "zu": "Buyela ekwakhiweni",
+      "source": "cropUi(lang, 'Back to design', 'Buyela ekwakhiweni')"
+    },
+    {
+      "line": 1794,
+      "english": "Back to design",
+      "zu": "Umklamo",
+      "source": "cropUi(lang, 'Back to design', 'Umklamo')"
+    },
+    {
+      "line": 1802,
+      "english": "Switch to a different design's production plan",
+      "zu": "Shintshela ohlelweni lokukhiqiza lomunye umklamo",
+      "source": "cropUi(lang, \"Switch to a different design's production plan\", 'Shintshela ohlelweni lokukhiqiza lomunye umklamo')"
+    },
+    {
+      "line": 1804,
+      "english": "All production plans",
+      "zu": "Zonke izinhlelo zokukhiqiza",
+      "source": "cropUi(lang, 'All production plans', 'Zonke izinhlelo zokukhiqiza')"
+    },
+    {
+      "line": 1815,
+      "english": "Switch to a different design's production plan",
+      "zu": "Shintshela ohlelweni lokukhiqiza lomunye umklamo",
+      "source": "cropUi(lang, \"Switch to a different design's production plan\", 'Shintshela ohlelweni lokukhiqiza lomunye umklamo')"
+    },
+    {
+      "line": 1817,
+      "english": "All production plans",
+      "zu": "Zonke izinhlelo zokukhiqiza",
+      "source": "cropUi(lang, 'All production plans', 'Zonke izinhlelo zokukhiqiza')"
+    },
+    {
+      "line": 1828,
+      "english": "Production plan",
+      "zu": "Uhlelo lokukhiqiza",
+      "source": "cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')"
+    },
+    {
+      "line": 1835,
+      "english": "Production plan",
+      "zu": "Uhlelo lokukhiqiza",
+      "source": "cropUi(lang, 'Production plan', 'Uhlelo lokukhiqiza')"
+    },
+    {
+      "line": 1837,
+      "english": "Plants and housing from your map",
+      "zu": "Izitshalo nezindlu zezilwane ezisemephini yakho",
+      "source": "cropUi(lang, 'Plants and housing from your map', 'Izitshalo nezindlu zezilwane ezisemephini yakho')"
+    },
+    {
+      "line": 1846,
+      "english": "Check the beds and plots this plan is using — count, sizes and where they came from",
+      "zu": "Hlola imibhede namapuloti asetshenziswa yilolu hlelo — inani, ubukhulu nomthombo",
+      "source": "cropUi(lang, 'Check the beds and plots this plan is using — count, sizes and where they came from', 'Hlola imibhede namapuloti asetshenziswa yilolu hlelo — inani, ubukhulu nomthombo')"
+    },
+    {
+      "line": 1857,
+      "english": "Learn",
+      "zu": "Funda",
+      "source": "cropUi(lang, 'Learn', 'Funda')"
+    },
+    {
+      "line": 1922,
+      "english": "Loading production plan…",
+      "zu": "Kulayishwa uhlelo lokukhiqiza…",
+      "source": "cropUi(lang, 'Loading production plan…', 'Kulayishwa uhlelo lokukhiqiza…')"
+    },
+    {
+      "line": 1928,
+      "english": "Which site are you planning?",
+      "zu": "Uhlela siphi isiza?",
+      "source": "cropUi(lang, 'Which site are you planning?', 'Uhlela siphi isiza?')"
+    },
+    {
+      "line": 1932,
+      "english": "Cancel",
+      "zu": "Khansela",
+      "source": "cropUi(lang, 'Cancel', 'Khansela')"
+    },
+    {
+      "line": 1945,
+      "english": "No saved designs yet. Draw your beds in the Design Studio and this is where they will appear.",
+      "zu": "Azikho izakhiwo ezilondoloziwe okwamanje. Dweba imibhede yakho ku-Design Studio; izovela lapha.",
+      "source": "cropUi(lang, 'No saved designs yet. Draw your beds in the Design Studio and this is where they will appear.', 'Azikho izakhiwo ezilondoloziwe okwamanje. Dweba imibhede yakho ku-Design Studio; izovela lapha.')"
+    },
+    {
+      "line": 1948,
+      "english": "saved designs. Each one is drawn as it sits on the ground.",
+      "zu": "imiklamo elondoloziwe. Ngayinye iboniswa njengoba injalo emhlabeni.",
+      "source": "cropUi(lang, 'saved designs. Each one is drawn as it sits on the ground.', 'imiklamo elondoloziwe. Ngayinye iboniswa njengoba injalo emhlabeni.')"
+    },
+    {
+      "line": 1986,
+      "english": "Or use the design already open on this device",
+      "zu": "Noma sebenzisa umklamo ovuliwe kule divayisi",
+      "source": "cropUi(lang, 'Or use the design already open on this device', 'Noma sebenzisa umklamo ovuliwe kule divayisi')"
+    },
+    {
+      "line": 2000,
+      "english": "Place real beds on the Planting step",
+      "zu": "Faka imibhede yangempela esigabeni sokuTshala",
+      "source": "cropUi(lang, 'Place real beds on the Planting step', 'Faka imibhede yangempela esigabeni sokuTshala')"
+    },
+    {
+      "line": 2000,
+      "english": "to replace it.",
+      "zu": "ukuze uwushintshe.",
+      "source": "cropUi(lang, 'to replace it.', 'ukuze uwushintshe.')"
+    },
+    {
+      "line": 2036,
+      "english": "Auto-suggest a plan",
+      "zu": "Phakamisa uhlelo ngokuzenzakalelayo",
+      "source": "cropUi(lang, 'Auto-suggest a plan', 'Phakamisa uhlelo ngokuzenzakalelayo')"
+    },
+    {
+      "line": 2043,
+      "english": "Undo the last change to this plan",
+      "zu": "Buyisela emuva ushintsho lokugcina kulolu hlelo",
+      "source": "cropUi(lang, 'Undo the last change to this plan', 'Buyisela emuva ushintsho lokugcina kulolu hlelo')"
+    },
+    {
+      "line": 2045,
+      "english": "Undo",
+      "zu": "Buyisela emuva",
+      "source": "cropUi(lang, 'Undo', 'Buyisela emuva')"
+    },
+    {
+      "line": 2053,
+      "english": "Clear every planting from this plan",
+      "zu": "Susa konke okutshalwe kulolu hlelo",
+      "source": "cropUi(lang, 'Clear every planting from this plan', 'Susa konke okutshalwe kulolu hlelo')"
+    },
+    {
+      "line": 2108,
+      "english": "Bed",
+      "zu": "Umbhede",
+      "source": "cropUi(lang, 'Bed', 'Umbhede')"
+    },
+    {
+      "line": 2244,
+      "english": "Add a crop",
+      "zu": "Engeza isilimo",
+      "source": "cropUi(lang, 'Add a crop', 'Engeza isilimo')"
+    },
+    {
+      "line": 2257,
+      "english": "Some beds are double-booked",
+      "zu": "Eminye imibhede ibhukhwe kabili",
+      "source": "cropUi(lang, 'Some beds are double-booked', 'Eminye imibhede ibhukhwe kabili')"
+    },
+    {
+      "line": 2361,
+      "english": "Tasks",
+      "zu": "Imisebenzi",
+      "source": "cropUi(lang, 'Tasks', 'Imisebenzi')"
+    },
+    {
+      "line": 2382,
+      "english": "Share tasks",
+      "zu": "Yabelana ngemisebenzi",
+      "source": "cropUi(lang, 'Share tasks', 'Yabelana ngemisebenzi')"
+    },
+    {
+      "line": 2390,
+      "english": "Looking ahead",
+      "zu": "Okulandelayo",
+      "source": "cropUi(lang, 'Looking ahead', 'Okulandelayo')"
+    },
+    {
+      "line": 2412,
+      "english": "No plantings yet — tap + crop on a bed above.",
+      "zu": "Akukho okutshalwe okwamanje — cindezela + crop embhedeni ongenhla.",
+      "source": "cropUi(lang, 'No plantings yet — tap + crop on a bed above.', 'Akukho okutshalwe okwamanje — cindezela + crop embhedeni ongenhla.')"
+    },
+    {
+      "line": 2434,
+      "english": "By crop",
+      "zu": "Ngesilimo",
+      "source": "cropUi(lang, 'By crop', 'Ngesilimo')"
+    },
+    {
+      "line": 2434,
+      "english": "By bed",
+      "zu": "Ngombhede",
+      "source": "cropUi(lang, 'By bed', 'Ngombhede')"
+    },
+    {
+      "line": 2561,
+      "english": "Nothing planted yet.",
+      "zu": "Akukho okutshalwe okwamanje.",
+      "source": "cropUi(lang, 'Nothing planted yet.', 'Akukho okutshalwe okwamanje.')"
+    },
+    {
+      "line": 2578,
+      "english": "Nothing planted yet.",
+      "zu": "Akukho okutshalwe okwamanje.",
+      "source": "cropUi(lang, 'Nothing planted yet.', 'Akukho okutshalwe okwamanje.')"
+    },
+    {
+      "line": 2841,
+      "english": "No beds designed yet",
+      "zu": "Ayikho imibhede eklanyiwe okwamanje",
+      "source": "cropUi(lang, 'No beds designed yet', 'Ayikho imibhede eklanyiwe okwamanje')"
+    },
+    {
+      "line": 2843,
+      "english": "Place veg beds on the Planting step first — then come back here to plan what goes in them.",
+      "zu": "Qala ngokubeka imibhede yemifino esigabeni sokuTshala — bese ubuya lapha uzohlela okuzotshalwa kuyo.",
+      "source": "cropUi(lang, 'Place veg beds on the Planting step first — then come back here to plan what goes in them.', 'Qala ngokubeka imibhede yemifino esigabeni sokuTshala — bese ubuya lapha uzohlela okuzotshalwa kuyo.')"
+    },
+    {
+      "line": 2850,
+      "english": "Back to design",
+      "zu": "Buyela ekwakhiweni",
+      "source": "cropUi(lang, 'Back to design', 'Buyela ekwakhiweni')"
+    },
+    {
+      "line": 2923,
+      "english": null,
+      "zu": null,
+      "source": "cropUi(lang, `Close ${monthLabel(month)} detail`, `Vala imininingwane ka-${monthLabel(month)}`)"
+    },
+    {
+      "line": 3111,
+      "english": "Crop chart months, scroll to match the planting calendar",
+      "zu": "Izinyanga zeshadi lezitshalo; skrola ukuze zihambisane nekhalenda lokutshala",
+      "source": "cropUi(lang, 'Crop chart months, scroll to match the planting calendar', 'Izinyanga zeshadi lezitshalo; skrola ukuze zihambisane nekhalenda lokutshala')"
+    },
+    {
+      "line": 4604,
+      "english": "Add a crop",
+      "zu": "Engeza isilimo",
+      "source": "cropUi(lang, 'Add a crop', 'Engeza isilimo')"
+    },
+    {
+      "line": 4606,
+      "english": "Close",
+      "zu": "Vala",
+      "source": "cropUi(lang, 'Close', 'Vala')"
+    },
+    {
+      "line": 4619,
+      "english": "Search crops…",
+      "zu": "Sesha izitshalo…",
+      "source": "cropUi(lang, 'Search crops…', 'Sesha izitshalo…')"
+    },
+    {
+      "line": 4658,
+      "english": "Remove from favourites",
+      "zu": "Susa ezintandokazini",
+      "source": "cropUi(lang, 'Remove from favourites', 'Susa ezintandokazini')"
+    },
+    {
+      "line": 4658,
+      "english": "Add to favourites",
+      "zu": "Engeza ezintandokazini",
+      "source": "cropUi(lang, 'Add to favourites', 'Engeza ezintandokazini')"
+    },
+    {
+      "line": 4667,
+      "english": null,
+      "zu": null,
+      "source": "cropUi(lang, `No crops match “${search}”.`, `Azikho izitshalo ezihambisana nokuthi “${search}”.`)"
+    },
+    {
+      "line": 4675,
+      "english": "Back to list",
+      "zu": "Buyela ohlwini",
+      "source": "cropUi(lang, 'Back to list', 'Buyela ohlwini')"
+    },
+    {
+      "line": 4860,
+      "english": "Save changes",
+      "zu": "Londoloza izinguquko / Save changes",
+      "source": "cropUi(lang, 'Save changes', 'Londoloza izinguquko / Save changes')"
+    },
+    {
+      "line": 4860,
+      "english": "Add as existing",
+      "zu": "Engeza njengokukhona kakade",
+      "source": "cropUi(lang, 'Add as existing', 'Engeza njengokukhona kakade')"
+    },
+    {
+      "line": 4860,
+      "english": "Add to bed",
+      "zu": "Engeza embhedeni",
+      "source": "cropUi(lang, 'Add to bed', 'Engeza embhedeni')"
+    },
+    {
+      "line": 4904,
+      "english": "Close",
+      "zu": "Vala",
+      "source": "cropUi(lang, 'Close', 'Vala')"
+    },
+    {
+      "line": 4950,
+      "english": "Cancel",
+      "zu": "Khansela",
+      "source": "cropUi(lang, 'Cancel', 'Khansela')"
+    },
+    {
+      "line": 4957,
+      "english": "Remove crop",
+      "zu": "Susa isilimo / Remove crop",
+      "source": "cropUi(lang, 'Remove crop', 'Susa isilimo / Remove crop')"
+    },
+    {
+      "line": 4968,
+      "english": "Edit",
+      "zu": "Hlela",
+      "source": "cropUi(lang, 'Edit', 'Hlela')"
+    },
+    {
+      "line": 4975,
+      "english": "Remove",
+      "zu": "Susa / Remove",
+      "source": "cropUi(lang, 'Remove', 'Susa / Remove')"
+    },
+    {
+      "line": 5064,
+      "english": "Close",
+      "zu": "Vala",
+      "source": "cropUi(lang, 'Close', 'Vala')"
+    },
+    {
+      "line": 5504,
+      "english": "Back",
+      "zu": "Buyela",
+      "source": "cropUi(lang, 'Back', 'Buyela')"
+    },
+    {
+      "line": 5512,
+      "english": "Discard",
+      "zu": "Lahla / Discard",
+      "source": "cropUi(lang, 'Discard', 'Lahla / Discard')"
+    }
+  ],
+  "reusedCanonicalRows": [
+    {
+      "english": "Production plan",
+      "zu": "Uhlelo lokukhiqiza",
+      "st": "Moralo wa tlhahiso",
+      "ts": "Pulani ya vuhumelerisi",
+      "ve": "Pulane ya vhubveledzi"
+    }
+  ],
+  "sourceSha256": "0448e482021de196fbaae454155a88e9cdf6adef4ef57e6fb942d1b13c58df28",
+  "sourceChanges": {
+    "helperBefore": "const cropUi = (lang: string, english: string, isiZulu: string) => lang === 'zu' ? isiZulu : english;",
+    "helperAfter": "const cropUi = (lang: string, english: string, isiZulu: string, values: Record<string, string | number> = {}) => cropExportText(lang === 'zu' ? isiZulu : english, lang === 'zu' ? 'en' : lang, values);",
+    "notice": "      {['zu', 'st', 'ts', 've'].includes(lang) && (\n        <div role=\"note\" className=\"flex-shrink-0 px-3 md:px-5 py-2\" style={{ background: 'rgba(192,122,30,0.08)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.45 }}>\n          <strong lang={lang}>{cropExportText('Draft control translations', lang)}</strong>{' '}\n          <span lang={lang}>{cropExportText('These control translations have not been reviewed by a fluent speaker. Some screen text still uses English.', lang)}</span>\n          <details><summary lang=\"en\">English source</summary><p lang=\"en\">These control translations have not been reviewed by a fluent speaker. Some screen text still uses English.</p></details>\n        </div>\n      )}\n\n",
+    "replacedNotice": "      {lang === 'zu' && (\n        <div role=\"note\" className=\"flex-shrink-0 px-3 md:px-5 py-2\" style={{ background: 'rgba(192,122,30,0.08)', borderBottom: '1px solid rgba(154,96,24,0.3)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.45 }}>\n          <strong>IsiZulu draft · Isaziso senguqulo yesiZulu esalungiswa.</strong> This interface draft has not been reviewed by a fluent isiZulu speaker. Crop names, planting times, climate and price assumptions, and task instructions remain in English pending source and local farming review. Amagama ezitshalo, izikhathi zokutshala, isimo sezulu, amanani nemiyalelo yemisebenzi kuseNgisini kuze kubuyekezwe imithombo nolwazi lwezolimo lwendawo.\n        </div>\n      )}\n\n",
+    "pageReplacements": [
+      {
+        "before": "taskSentence, groupTasksByAction, TRANSPLANT_NURSERY_GUIDANCE, weightRangeLabel,",
+        "after": "taskSentence, taskDetail, monthShort, groupTasksByAction, TRANSPLANT_NURSERY_GUIDANCE, weightRangeLabel,"
+      },
+      {
+        "before": "{treePickingPhrase(line)}</div>",
+        "after": "{treePickingPhrase(line, lang)}</div>"
+      },
+      {
+        "before": "          ? group.crops[0].detail\n          : null;\n        return (",
+        "after": "          ? group.crops[0].detail\n          : null;\n        // Group and share instructions by the original source wording. Native\n        // display must not merge two different jobs just because drafts coincide.\n        const localizedDetail = (row: typeof group.crops[number]) => {\n          const source = tasks.find(task => row.taskIds.includes(task.id) && task.action === group.action\n            && task.cropKey === row.cropKey && taskDetail(task) === row.detail);\n          return source ? taskDetail(source, lang) : row.detail;\n        };\n        return ("
+      },
+      {
+        "before": "{group.label}</span>",
+        "after": "{cropExportText(group.label, lang)}</span>"
+      },
+      {
+        "before": "{group.jobCount} {group.jobCount === 1 ? 'job' : 'jobs'}",
+        "after": "{cropExportText(group.jobCount === 1 ? '{count} job' : '{count} jobs', lang, { count: group.jobCount })}"
+      },
+      {
+        "before": "lineHeight: 1.4 }}>{shared}</div>",
+        "after": "lineHeight: 1.4 }}>{localizedDetail(group.crops[0])}</div>"
+      },
+      {
+        "before": "marginTop: 1 }}>{row.detail}</div>",
+        "after": "marginTop: 1 }}>{localizedDetail(row)}</div>"
+      },
+      {
+        "before": "cropUi(lang, `Close ${monthLabel(month)} detail`, `Vala imininingwane ka-${monthLabel(month)}`)",
+        "after": "cropUi(lang, 'Close {month} detail', 'Vala imininingwane ka-{month}', { month: monthShort(month, lang) })"
+      },
+      {
+        "before": "cropUi(lang, `No crops match “${search}”.`, `Azikho izitshalo ezihambisana nokuthi “${search}”.`)",
+        "after": "cropUi(lang, 'No crops match “{search}”.', 'Azikho izitshalo ezihambisana nokuthi “{search}”.', { search })"
+      },
+      {
+        "before": "const picking = (i: number) => (treePicking[i] ?? []).map((line) => `\\n  ${treePickingPhrase(line)}`).join('');",
+        "after": "const picking = (i: number) => (treePicking[i] ?? []).map((line) => `\\n  ${treePickingPhrase(line, lang)}`).join('');"
+      },
+      {
+        "before": "const text = `🌱 Production plan tasks\\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}${picking(0)}\\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}${picking(1)}`;",
+        "after": "const text = `🌱 ${cropExportText('Production plan tasks', lang)}\\n${monthShort(currentMonth, lang)}: ${taskSentence(currentTasks, lang)}${picking(0)}\\n${monthShort(nextMonth, lang)}: ${taskSentence(nextTasks, lang)}${picking(1)}`;"
+      },
+      {
+        "before": "function SeedBadge({ transplant, large }: { transplant: boolean; large?: boolean }) {\n  const Icon =",
+        "after": "function SeedBadge({ transplant, large }: { transplant: boolean; large?: boolean }) {\n  const { lang } = useLanguage();\n  const Icon ="
+      },
+      {
+        "before": "title={transplant ? 'Started as a seedling, then transplanted' : 'Sown direct from seed'}",
+        "after": "title={cropExportText(transplant ? 'Started as a seedling, then transplanted' : 'Sown direct from seed', lang)}"
+      },
+      {
+        "before": "              Twelve dots = Jan to Dec. Green marks the months you can sow that crop in this site's rainfall pattern.",
+        "after": "              {cropExportText(\"Twelve dots = Jan to Dec. Green marks the months you can sow that crop in this site's rainfall pattern.\", lang)}"
+      },
+      {
+        "before": "title=\"Space-hungry — wants its own bed\"",
+        "after": "title={cropExportText(\"Space-hungry — wants its own bed\", lang)}"
+      },
+      {
+        "before": "<div className=\"font-display font-semibold\" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{monthLabel(month)}</div>",
+        "after": "<div className=\"font-display font-semibold\" style={{ fontSize: 13, color: 'var(--text-primary)' }}>{monthShort(month, lang)}</div>"
+      },
+      {
+        "before": "<span className=\"font-mono\" style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>",
+        "after": "<span className=\"font-mono\" style={{ fontSize: 10.5, color: 'var(--text-muted)', ...(['zu', 'st', 'ts', 've'].includes(lang) ? { whiteSpace: 'nowrap', flexShrink: 0 } : {}) }}>"
+      },
+      {
+        "before": ">Nothing is scheduled for picking in the beds, and nothing with a sourced shelf life is still in store.</div>",
+        "after": ">{cropExportText(\"Nothing is scheduled for picking in the beds, and nothing with a sourced shelf life is still in store.\", lang)}</div>"
+      },
+      {
+        "before": ">From your trees (local picking months)</div>",
+        "after": ">{cropExportText(\"From your trees (local picking months)\", lang)}</div>"
+      },
+      {
+        "before": ">From your animals (local production months)</div>",
+        "after": ">{cropExportText(\"From your animals (local production months)\", lang)}</div>"
+      },
+      {
+        "before": ">Ready to pick</div>",
+        "after": ">{cropExportText(\"Ready to pick\", lang)}</div>"
+      },
+      {
+        "before": ">From store</div>",
+        "after": ">{cropExportText(\"From store\", lang)}</div>"
+      }
+    ]
+  },
+  "scope": "The49distinct literal source pairs already passed through cropUi. Existing English/isiZulu argument wording stays exact, including context-specific Zulu variants. Two dynamic cropUi expressions remain English in st/ts/ve and require template work. All259hardcoded JSX fragments and14literal accessible attributes are inventory candidates requiring source/runtime classification, not claimed translated.",
+  "verification": "Aligned above PR1111/9f34866f. Current Node24 typecheck clean and229focused checks pass across9affected files, including inherited guidance/projection and release-copy checks.44actual isolated interactive browser cases retain484full task-clause occurrences,46source catalogue identities, literal queries, native labels and allcurrentcounter heights15.75px.16current screenshots plus the measured before failure inspected. Required full run pending; no full-route or whole-app completion claim.",
+  "reviewJournal": [
+    {
+      "before": {
+        "english": "Production plan",
+        "zu": "Uhlelo lokukhiqiza",
+        "st": "Polane ya tlhahiso",
+        "ts": "Pulani ya vuhumelerisi",
+        "ve": "Pulane ya vhubveledzi",
+        "generatedScope": "crop-screen-control"
+      },
+      "after": {
+        "english": "Production plan",
+        "zu": "Uhlelo lokukhiqiza",
+        "st": "Moralo wa tlhahiso",
+        "ts": "Pulani ya vuhumelerisi",
+        "ve": "Pulane ya vhubveledzi"
+      },
+      "reason": "Reuse the established canonical row; do not create a second translation for the same authored source. Original contextual Zulu call arguments still win in the UI helper."
+    },
+    {
+      "reason": "Older generated-wording guard was scoped to prior producer edits and correctly failed on newly authorized control presentation. Added exact helper/import/notice restoration before its original whole-page assertion; retained independent producer-wiring difference and all original comparisons. New whole-page mutation negative check still rejects unrelated changes.",
+      "initialFocused": {
+        "pass": 78,
+        "fail": 1
+      },
+      "correctedFocused": {
+        "pass": 79,
+        "fail": 0
+      }
+    },
+    {
+      "reason": "Synthetic fixture initially used the wrong plot-field name; corrected setup to the real PlanBed kind:plot schema and existing400m² test plot. No assertion removed."
+    },
+    {
+      "reason": "Actual SeedBadge renderer required its Sprout binding and recursive renderer return type; fixed isolated test scope. No application bug was inferred."
+    },
+    {
+      "reason": "The first raw-HTML close-label assertion rejected correctly escaped Xitsonga apostrophe. Compare rendered attribute text and retain a wrong-month negative with the visibleDecemberheading intact."
+    },
+    {
+      "reason": "Recovery source copies under output were accidentally included by TypeScript. Renamed9backup source files to.ts.txt/.tsx.txt and verified every original recovery hash; no application source, tests or tsconfig changed to suppress diagnostics."
+    }
+  ],
+  "browserEvidence": "docs/translation/four-language-completion/evidence/crop-screen-tasks/verification.json",
+  "taskPresentation": {
+    "status": "Unreviewed; pending current verification.",
+    "grouping": "Original groupTasksByAction and English shared-detail comparison remain unchanged; localize only the displayed task label/count/how-to, using original task identity and source-detail match.",
+    "sharedText": "Shared-task URL is tested with mocked window.open only; never send real tasks or open WhatsApp in verification. Existing English default stays exact. Native title, task clauses, picking and month labels use their canonical authorities.",
+    "dynamic": "The2original dynamic source sentences are now full templates, interpolating raw search values once and using canonical short month labels. Zulu month labels now native intentionally.49literal oldEnglish/Zu arguments stay exact.",
+    "notice": "Replaced the obsolete Zulu assertion that all tasks remain English with the same honest four-language unreviewed-controls note; original notice retained in sourceChanges.replacedNotice.",
+    "remaining": "Other crop text, metadata, accepted notes, animal/recording/picker/detail flows and whole application remain unfinished.",
+    "counterWrap": "Actual360px Ve panel had one31.5px counter versus15.75px peers. Native-only nowrap/flexShrink0 keeps number+noun together; all current native counters measured15.75px. Realbefore fails peer-height rule. English styles remain exact."
+  },
+  "pickerListPresentation": "Native source-bound sowing-dot explanation and seed/space accessible titles; crop names, verified-timing filter, month identities, favourites and state callbacks remain unchanged. Selected-crop detail form remains unfinished. Month-detail visible and accessible headings share canonical short month identity.",
+  "monthStaticPresentation": "Five whole original labels/empty-state clauses translated; empty beds and sourced shelf-life storage remain distinct. Tree/animal source reference bodies and storage instructions still require remaining locale wiring. No pantry record, month selection, source number or model changed.",
+  "releasePairs": [
+    {
+      "english": "Crop task panels now use unreviewed translations in four languages.",
+      "zu": "Amaphaneli emisebenzi yezitshalo manje anokuhumusha okungakabuyekezwa ngezilimi ezine.",
+      "st": "Diphanele tsa mesebetsi ya dijalo jwale di sebedisa diphetolelo tse eso hlahlojwe ka dipuo tse nne.",
+      "ts": "Tiphanele ta mintirho ya swibyariwa sweswi ti tirhisa vuhundzuluxeri bya tindzimi ta mune byo ka byi nga si kamberiwa.",
+      "ve": "Phanele dza mishumo ya zwiliṅwa zwino dzi shumisa ṱhalutshedzelo dzi sa athu u sedzwa nga nyambo nṋa."
+    },
+    {
+      "english": "Crop search and month controls have more unreviewed translation drafts.",
+      "zu": "Ukusesha izitshalo nezinkinobho zezinyanga kunokuhumusha okwengeziwe okusenguhlaka okungakabuyekezwa.",
+      "st": "Patlo ya dijalo le ditaolo tsa dikgwedi di na le meralo e meng ya diphetolelo tse eso hlahlojwe.",
+      "ts": "Ku lava swibyariwa ni swilawuri swa tin’hweti swi ni vuhundzuluxeri byin’wana byo ka byi nga si kamberiwa.",
+      "ve": "U ṱoḓa zwiliṅwa na ndangulo dza miṅwedzi zwi na dziṅwe ṱhalutshedzelo dzi sa athu u sedzwa."
+    },
+    {
+      "english": "Review crop task drafts",
+      "zu": "Buyekeza imisebenzi yezitshalo esenguhlaka",
+      "st": "Hlahloba meralo ya mesebetsi ya dijalo",
+      "ts": "Kambela matsalwa ya mintirho ya swibyariwa lama nga si kamberiwa",
+      "ve": "Sedzani mishumo ya zwiliṅwa i sa athu u khwaṱhisedzwa"
+    },
+    {
+      "english": "Open tasks, crop search and a month detail. Check the English source before acting.",
+      "zu": "Vula imisebenzi, ukusesha izitshalo nemininingwane yenyanga. Hlola umthombo wesiNgisi ngaphambi kokwenza.",
+      "st": "Bula mesebetsi, patlo ya dijalo le dintlha tsa kgwedi. Hlahloba mohlodi wa Senyesemane pele o nka kgato.",
+      "ts": "Pfula mintirho, ku lava swibyariwa ni vuxokoxoko bya n’hweti. Kambela xihlovo xa Xinghezi u nga si teka goza.",
+      "ve": "Vulani mishumo, u ṱoḓa zwiliṅwa na zwidodombedzwa zwa ṅwedzi. Sedzani tshiko tsha Luisimane musi ni sa athu u dzhia vhukando."
+    }
+  ],
+  "parentAlignment": {
+    "base": "9f34866fa14ebd216cbe8c513bf70962d60534ba",
+    "pr": 1111,
+    "backup": "output/verification/crop-screens-parent-alignment",
+    "preservedResearchRows": 48,
+    "preservedUiRows": 64,
+    "combinedRegistry": 1119,
+    "status": "Both batches preserved:48research rows+64UI rows on1007base=1119unique sources. All non-shared UI working bytes retained. Aligned typecheck and229affected checks pass; required full run pending."
+  },
+  "remainingSourceInventory": "output/crop-screen-qa/remaining-source-inventory.json"
+}

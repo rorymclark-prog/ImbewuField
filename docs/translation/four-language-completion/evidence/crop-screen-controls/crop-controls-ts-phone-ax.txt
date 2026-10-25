@@ -1,0 +1,56 @@
+Browser tab: 2, Title: "127.0.0.1:4272/ts.html", URL: "http://127.0.0.1:4272/ts.html".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~1 AXWebArea 127.0.0.1:4272/ts.html
+~		11 text Vuhundzuluxeri bya swilawuri leswi a byi si kamberiwa hi munhu loyi a tivaka ririmi kahle. Matsalwa man’wana ya xikirini ma ha tirhisa Xinghezi. Ku suka eka mirhi ya wena
+~		13 text Minkarhi ya Afrika-Dzonga leyi humaka eswihlobyeni, tindhawu hinkwato ti hlanganisiwile — mirhi ya wena yi nga sungula kumbe yi heta n’hweti ku nga si fika kumbe endzhaku ka nkarhi lowu.
+~		14 text A ku na leswi faneleke ku endliwa sweswi.
+~		15 container Tin’hweti ta chati ya swibyariwa, fambisa hi tlhelo leswaku ti fambelana ni khalendara yo byala
+~				44 button Ku suka eka mirhi ya wena
+~				47 button Minkarhi ya Afrika-Dzonga leyi humaka eswihlobyeni, tindhawu hinkwato ti hlanganisiwile — mirhi ya wena yi nga sungula kumbe yi heta n’hweti ku nga si fika kumbe endzhaku ka nkarhi lowu.
+~				50 button A ku na leswi faneleke ku endliwa sweswi.
+~				53 button Ekaya
+~				56 button Tlhelela eka pulani
+~				59 button Cincela eka pulani ya vuhumelerisi ya dizayini yin’wana
+~				62 button Tipulani hinkwato ta vuhumelerisi
+~				65 button Pulani ya vuhumelerisi
+~				68 button Swimila ni tindlu ta swifuwo leswi humaka eka mepe wa wena
+~				71 button Kambela mibedo ni switandi leswi pulani leyi yi swi tirhisaka — nhlayo, vukulu ni laha swi humaka kona
+~				74 button Dyondza
+~				77 button Ku layicha pulani ya vuhumelerisi…
+~				80 button U kunguhata ndhawu yihi?
+~				83 button Khansela
+~				86 button A ku na tidizayini leti hlayisiweke. Dirowa mibedo ya wena eka Design Studio kutani yi ta humelela laha.
+~				89 button tidizayini leti hlayisiweke. Yin’wana ni yin’wana yi dirowiwe hi laha yi nga ha kona ehansi.
+~				92 button Kumbe tirhisa dizayini leyi se yi pfulekeke eka xitirhisiwa lexi
+~				95 button Veka mibedo ya xiviri eka goza ra Ku byala
+~				98 button ku yi siva.
+~				101 button Ringanyeta pulani hi ku tiendlekela
+~				104 button Tlherisela endzhaku ku cinca ko hetelela eka pulani leyi
+~				107 button Tlherisela endzhaku
+~				110 button Susa ku byala hinkwako eka pulani leyi
+~				113 button Mubedo
+~				116 button Engetela xibyariwa
+~				119 button Mibedo yin’wana yi averiwe kambirhi hi nkarhi wun’we
+~				122 button Mintirho
+~				125 button Avelana mintirho
+~				128 button Ku languta phambili
+~				131 button A ku na leswi byariweke — khumba + crop eka mubedo lowu nga ehenhla.
+~				134 button Hi xibyariwa
+~				137 button Hi mubedo
+~				140 button A ku na lexi byariweke.
+~				143 button A ku na mibedo leyi dirowiweke
+~				146 button Rhanga hi ku veka mibedo ya matsavu eka goza ra Ku byala — kutani u vuya laha u kunguhata leswi nga ta nghena eka yona.
+~				149 button Tin’hweti ta chati ya swibyariwa, fambisa hi tlhelo leswaku ti fambelana ni khalendara yo byala
+~				152 button Pfala
+~				155 button Lava swibyariwa…
+~				158 button Susa eka leswi rhandziwaka
+~				161 button Engetela eka leswi rhandziwaka
+~				164 button Tlhelela eka nxaxamelo
+~				167 button Hlayisa ku cinca
+~				170 button Engetela tani hi lexi se xi nga kona
+~				173 button Engetela eka mubedo
+~				176 button Susa xibyariwa
+~				179 button Hlela
+~				182 button Susa
+~				185 button Tlhelela endzhaku
+The focused UI element is 1 AXWebArea 127.0.0.1:4272/ts.html

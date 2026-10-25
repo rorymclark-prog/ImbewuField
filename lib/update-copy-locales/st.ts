@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Crop task panels now use unreviewed translations in four languages.": "Diphanele tsa mesebetsi ya dijalo jwale di sebedisa diphetolelo tse eso hlahlojwe ka dipuo tse nne.",
+  "Crop search and month controls have more unreviewed translation drafts.": "Patlo ya dijalo le ditaolo tsa dikgwedi di na le meralo e meng ya diphetolelo tse eso hlahlojwe.",
+  "Review crop task drafts": "Hlahloba meralo ya mesebetsi ya dijalo",
+  "Open tasks, crop search and a month detail. Check the English source before acting.": "Bula mesebetsi, patlo ya dijalo le dintlha tsa kgwedi. Hlahloba mohlodi wa Senyesemane pele o nka kgato.",
   "More crop guidance now has unreviewed translations in four languages.": "Tataiso e nngwe ya dijalo jwale e na le diphetolelo tse eso hlahlojwe ka dipuo tse nne.",
   "Food-use cautions and trial figures stay with their source.": "Ditemoso tsa tshebediso ya dijo le dipalo tsa diteko di sala le mohlodi wa tsona.",
   "Review crop guidance drafts": "Hlahloba meralo ya tataiso ya dijalo",
