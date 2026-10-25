@@ -1,5 +1,5 @@
 {
-  "status": "IN PROGRESS: 1007 source drafts; guidance and whole app unfinished; language unreviewed.",
+  "status": "IN PROGRESS: 1055 source drafts; guidance and whole app unfinished; language unreviewed.",
   "sourceSha": "dc9ade0cc9a208de55c7d0cccc6393f79257769d",
   "sourceBaseline": "output/crop-pdf-qa/baseline.json (immutable17files)",
   "instructionEnglishBaseline": "output/crop-pdf-qa/instruction-english-baseline.json: original49cataloguecrops/166tasks beforeedits",
@@ -7410,6 +7410,390 @@
       "ts": "Swakudya i berry leyi vupfeke. Ku humelela ka mihandzu ku sukela hi Nyenyenyani ni maluva/mihandzu leswi vaka kona hi nkarhi wun’we a swi veki nkarhi lowu heleleke wo kha leyi vupfeke.",
       "ve": "Zwiḽiwa ndi mutshelo wa berry wo vhibvaho. U vhonala ha mitshelo u bva nga Luhuhi na maluvha/mitshelo zwi re hone nga tshifhinga tshithihi a zwi khwaṱhisedzi tshifhinga tsho fhelelaho tsha u kaṋa yo vhibvaho.",
       "generatedScope": "product-guidance"
+    },
+    {
+      "english": "unopened flower heads",
+      "zu": "amakhanda ezimbali angakavuleki",
+      "st": "dihlooho tsa dipalesa tse eso bulehe",
+      "ts": "tinhloko ta swiluva leswi nga si pfuleka",
+      "ve": "ṱhoho dza maluvha dzi sa athu u vulea",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Choose a cool growing season and fertile, well-drained soil. Heat reduces bud quality and freezing can damage buds.",
+      "zu": "Khetha isikhathi sokukhula esipholile nenhlabathi evundile edonsa amanzi kahle. Ukushisa kwehlisa ikhwalithi yamahlumela ezimbali, kanti ukubanda okuqandisa kungawalimaza.",
+      "st": "Kgetha nako e phodileng ya kgolo le mobu o nonneng o ntshang metsi hantle. Mocheso o fokotsa boleng ba dithunthung, mme ho hatsela ho ka di senya.",
+      "ts": "Hlawula nguva yo kula leyi nga ni ku hola ni misava yo nona leyi humesaka mati kahle. Ku hisa ku hunguta nkoka wa swiluva leswi nga si pfuleka, kasi ku gwitsirisa ku nga swi onha.",
+      "ve": "Nangani tshifhinga tsha u aluwa tshi rotholelaho na mavu o nonaho a bvisaho maḓi zwavhuḓi. Mufhiso u fhungudza ndeme ya maluvha a sa athu u vulea, ngeno u ganda nga phepho zwi tshi nga a tshinya.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record edible unopened heads by planting batch; do not use open-flower months as picking months.",
+      "zu": "Rekhoda amakhanda adliwayo angakavuleki ngeqembu ngalinye lokutshala; ungasebenzisi izinyanga zezimbali esezivulekile njengezinyanga zokukha.",
+      "st": "Ngola dihlooho tse jewang tse eso bulehe ka sehlopha se seng le se seng se jetsweng; o se ke wa sebedisa dikgwedi tsa dipalesa tse bulehileng e le dikgwedi tsa ho kga.",
+      "ts": "Rhekhoda tinhloko leti dyiwaka leti nga si pfuleka hi ntlawa wun’wana ni wun’wana wa ku byala; u nga tirhisi tin’hweti ta swiluva leswi pfulekeke tani hi tin’hweti to kha.",
+      "ve": "Rekhodani ṱhoho dzi ḽeaho dzi sa athu u vulea nga tshigwada tshiṅwe na tshiṅwe tsho ṱavhiwaho; ni songo shumisa miṅwedzi ya maluvha o vuleaho sa miṅwedzi ya u kaṋa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask a local grower or nursery which cultivar and annual/perennial system suits the site. No verified regional cultivar/food kg benchmark is assigned.",
+      "zu": "Buza umlimi wendawo noma inkulisa ukuthi iyiphi i-cultivar nohlelo lwesitshalo somjikelezo wonyaka noma esiphila iminyaka eminingi olufanele indawo. Akunikezwanga i-cultivar yesifunda noma ibhentshimakhi ye-kg yokudla eqinisekisiwe.",
+      "st": "Botsa molemi wa lehae kapa sebaka sa ho hodisa dimela hore ke cultivar efe le mokgwa ofe wa semela sa selemo se le seng kapa se phelang dilemo tse ngata o loketseng sebaka. Ha ho cultivar ya sebaka kapa tekanyetso ya kg ya dijo e netefaditsweng e abetsweng.",
+      "ts": "Vutisa murimi wa laha kaya kumbe ndhawu yo kurisa swimila leswaku hi yihi cultivar ni fambiselo ra ximilana xa lembe rin’we kumbe xa malembenyingi leswi fanelaka ndhawu. A ku averiwanga cultivar ya xifundzha kumbe mpimo wa kg wa swakudya lowu tiyisisiweke.",
+      "ve": "Vhudzisani mulimi wa henefho kana fhethu ha u alusa zwimela uri ndi cultivar ifhio na maitele afhio a tshimela tsha ṅwaha muthihi kana tshi tshilaho miṅwaha minzhi a teaho fhethu. A hu na cultivar ya dzingu kana mpimo wa kg ya zwiḽiwa wo khwaṱhisedzwaho wo ṋewaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Edible unopened head and harvest stage",
+      "zu": "Ikhanda elidliwayo elingakavuleki nesigaba sokuvuna",
+      "st": "Hlooho e jewang e eso bulehe le mokgahlelo wa kotulo",
+      "ts": "Nhloko leyi dyiwaka leyi nga si pfuleka ni xiyimo xa ntshovelo",
+      "ve": "Ṱhoho i ḽeaho i sa athu u vulea na ḽiga ḽa khaṋo",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Harvest full-sized heads while bracts remain closed; fleshy bract bases and receptacle are the food part. Annual transplanted crops and perennial crowns are different production systems. Month wording has northern-hemisphere/state context and is not assigned to a South African region.",
+      "zu": "Vuna amakhanda asefinyelele ubukhulu bawo ephelele lapho ama-bracts esavaliwe; izisekelo ezinenyama zama-bracts nesizinda esiphethe imbali (receptacle) ziyingxenye edliwayo. Izitshalo zomjikelezo wonyaka ezithuthelwe endaweni entsha nezisekelo zezitshalo eziphila iminyaka eminingi (perennial crowns) ziyizinhlelo zokukhiqiza ezihlukene. Amagama ezinyanga anomongo wengxenye esenyakatho yoMhlaba/wesifundazwe somthombo (state) futhi awabelwanga isifunda saseNingizimu Afrika.",
+      "st": "Kotula dihlooho tse fihletseng boholo bo felletseng ha makgasi a potapotileng hlooho ya palesa (bracts) a ntse a kwetswe; metheo ya tsona e nang le nama le setulo sa palesa (receptacle) ke karolo e jewang. Dijalo tsa selemo se le seng tse falliseditsweng sebakeng se seng le metheo ya dimela tse phelang dilemo tse ngata (perennial crowns) ke mekgwa e fapaneng ya tlhahiso. Puo ya dikgwedi e na le maemo a karolo e ka leboya ya lefatshe/sebaka sa puso sa mohlodi (state) mme ha e abelwe sebaka sa Afrika Borwa.",
+      "ts": "Tshovela tinhloko leti fikeke eka vukulu bya tona hinkwabyo loko matluka lama rhendzelaka nhloko ya xiluva (bracts) ma ha pfalekile; masungulo ya wona lama nga ni nyama ni laha xiluva xi tshamaka kona (receptacle) hi swona swiphemu leswi dyiwaka. Swibyariwa swa lembe rin’we leswi rhurhiseriweke endhawini yin’wana ni masungulo ya swimila swa malembenyingi (perennial crowns) i mafambiselo yo hambana ya vuhumelerisi. Marito ya tin’hweti ma ni xiyimo xa hafu ya le n’walungwini ya Misava/xifundzha xa xihlovo (state) naswona a ma averiwanga xifundzha xa Afrika-Dzonga.",
+      "ve": "Kaṋani ṱhoho dzo fhelelaho nga vhuhulwane ngeno maṱari a monaho ṱhoho ya luvha (bracts) a tshe o valea; zwisekelo zwao zwi re na ṋama na fhethu hune luvha ḽa dzula hone (receptacle) ndi tshipiḓa tshi ḽeaho. Zwiliṅwa zwa ṅwaha muthihi zwo pfuluselwaho kha huṅwe fhethu na zwisekelo zwa zwimela zwi tshilaho miṅwaha minzhi (perennial crowns) ndi maitele o fhambanaho a vhubveledzi. Maipfi a miṅwedzi a na nyimele ya hafu ya devhula ya Ḽifhasi/vundu ḽa tshiko (state) nahone ha ngo ṋetshedzwa kha dzingu ḽa Afrika Tshipembe.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Annual transplant duration",
+      "zu": "Isikhathi sezitshalo zonyaka ezithuthelwe endaweni entsha",
+      "st": "Nako ya dijalo tsa selemo se le seng tse falliseditsweng sebakeng se seng",
+      "ts": "Nkarhi wa swibyariwa swa lembe rin’we leswi rhurhiseriweke endhawini yin’wana",
+      "ve": "Tshifhinga tsha zwiliṅwa zwa ṅwaha muthihi zwo pfuluselwaho kha huṅwe fhethu",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Source says time from transplanting annual crops to maturity varies 4–6 months. This is a planting-cycle reference, not generic age to first crop for perennial crowns.",
+      "zu": "Umthombo uthi isikhathi sokusuka ekuthuthelweni kwezitshalo zomjikelezo wonyaka endaweni entsha kuze zifinyelele ekuvuthweni (maturity) siyahlukahluka ngezinyanga eziyi-4–6. Lesi yisibonelo somjikelezo wokutshala, hhayi ubudala obujwayelekile besivuno sokuqala sezisekelo zezitshalo eziphila iminyaka eminingi (perennial crowns).",
+      "st": "Mohlodi o re nako ya ho tloha ho fallisetsa dijalo tsa selemo se le seng sebakeng se seng ho fihlela di fihlela kgolo e felletseng (maturity) e fapana ka dikgwedi tse 4–6. Ena ke tshupiso ya potoloho ya ho lema, eseng dilemo tse akaretsang tsa kotulo ya pele bakeng sa metheo ya dimela tse phelang dilemo tse ngata (perennial crowns).",
+      "ts": "Xihlovo xi vula leswaku nkarhi wo suka eku rhurhiseleni ka swibyariwa swa lembe rin’we endhawini yin’wana ku fika eka ku kula loku heleleke (maturity) wu hambana hi tin’hweti ta 4–6. Lexi i xikombo xa ndzhendzheleko wo byala, ku nga ri vukhale byo angarhela bya ntshovelo wo sungula wa masungulo ya swimila swa malembenyingi (perennial crowns).",
+      "ve": "Tshiko tshi ri tshifhinga tsha u bva kha u pfulusela zwiliṅwa zwa ṅwaha muthihi kha huṅwe fhethu u swika zwi tshi aluwa zwo fhelelaho (maturity) tshi fhambana nga miṅwedzi ya 4–6. Hetshi ndi tshikombo tsha mutevhe wa u ṱavha, hu si miṅwaha yo angaredzwaho ya khaṋo ya u thoma kha zwisekelo zwa zwimela zwi tshilaho miṅwaha minzhi (perennial crowns).",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Fig output by cultivar and leaf age — comparative Citrusdal trial",
+      "zu": "Isivuno samakhiwane nge-cultivar nobudala beminyaka yokukhula (leaf age) — ucwaningo oluqhathanisayo lwaseCitrusdal",
+      "st": "Tlhahiso ya difeiye ka cultivar le dilemo tsa kgolo (leaf age) — teko ya papiso ya Citrusdal",
+      "ts": "Vuhumelerisi bya makuwa hi cultivar ni vukhale bya ku kula (leaf age) — ndzingo wo pimanisa wa Citrusdal",
+      "ve": "Vhubveledzi ha mahuyu nga cultivar na miṅwaha ya u aluwa (leaf age) — ndingo ya mbambedzo ya Citrusdal",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "ARC Infruitec Citrusdal, 1990. 10th leaf: Kadota 23.5, White Genoa 22.6, Calimyrna 16.5 kg/tree/year. 7th leaf: Tena 12.1, Black Mission 6.8, Conadria 3.5, Ephesus 20.6, Excell 15.2, Deanna 59.0, Kadota 24.3 kg/tree/year. The source calls these comparative, not absolute. Different cultivars and orchard groups do not establish a universal age-yield ramp.",
+      "zu": "ARC Infruitec Citrusdal, 1990. Unyaka we-10 wokukhula (leaf): Kadota 23.5, White Genoa 22.6, Calimyrna 16.5 kg/tree/year. Unyaka we-7 wokukhula (leaf): Tena 12.1, Black Mission 6.8, Conadria 3.5, Ephesus 20.6, Excell 15.2, Deanna 59.0, Kadota 24.3 kg/tree/year. Umthombo uthi lokhu kuyizibalo zokuqhathanisa, hhayi amanani aphelele asebenza njalo. Izinhlobo zama-cultivar namaqembu ezinsimu zezihlahla ezahlukene akusunguli ijika elilodwa elisebenza kuzo zonke izihlahla lobudala nesivuno.",
+      "st": "ARC Infruitec Citrusdal, 1990. Selemo sa 10 sa kgolo (leaf): Kadota 23.5, White Genoa 22.6, Calimyrna 16.5 kg/tree/year. Selemo sa 7 sa kgolo (leaf): Tena 12.1, Black Mission 6.8, Conadria 3.5, Ephesus 20.6, Excell 15.2, Deanna 59.0, Kadota 24.3 kg/tree/year. Mohlodi o re tsena ke tsa papiso, eseng dipalo tse phethahetseng tse sebetsang kamehla. Di-cultivar le dihlopha tsa masimo a difate tse fapaneng ha di thehe mothinya o le mong wa dilemo le kotulo bakeng sa tsohle.",
+      "ts": "ARC Infruitec Citrusdal, 1990. Lembe ra 10 ra ku kula (leaf): Kadota 23.5, White Genoa 22.6, Calimyrna 16.5 kg/tree/year. Lembe ra 7 ra ku kula (leaf): Tena 12.1, Black Mission 6.8, Conadria 3.5, Ephesus 20.6, Excell 15.2, Deanna 59.0, Kadota 24.3 kg/tree/year. Xihlovo xi vula leswaku leswi i swa ku pimanisa, ku nga ri nhlayo leyi tirhaka hi ku helela minkarhi hikwato. Ti-cultivar ni mintlawa ya masimu ya mirhi yo hambana a swi vumbi girafu yin’we ya vukhale ni ntshovelo leyi tirhaka eka hinkwayo.",
+      "ve": "ARC Infruitec Citrusdal, 1990. Ṅwaha wa 10 wa u aluwa (leaf): Kadota 23.5, White Genoa 22.6, Calimyrna 16.5 kg/tree/year. Ṅwaha wa 7 wa u aluwa (leaf): Tena 12.1, Black Mission 6.8, Conadria 3.5, Ephesus 20.6, Excell 15.2, Deanna 59.0, Kadota 24.3 kg/tree/year. Tshiko tshi ri hezwi ndi zwa mbambedzo, hu si mbalo dzine dza shuma nga ho fhelelaho misi yoṱhe. Dzi-cultivar na zwigwada zwa masimu a miri zwi sa fani a zwi vhumbei girafu nthihi ya miṅwaha na khaṋo i shumaho kha yoṱhe.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "figs — human food use not yet verified",
+      "zu": "amakhiwane — ukusetshenziswa njengokudla kwabantu akukakaqinisekiswa",
+      "st": "difeiye — tshebediso ya dijo tsa batho ha e eso netefatswe",
+      "ts": "makuwa — ku tirhisiwa tani hi swakudya swa vanhu a swi si tiyisisiwa",
+      "ve": "mahuyu — u shumiswa sa zwiḽiwa zwa vhathu a zwi athu u khwaṱhisedzwa",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Retain as an identified arid-landscape tree; verify the intended human food use with a qualified local adviser.",
+      "zu": "Sigcine njengesihlahla esihlonzwe kahle sendawo eyomile; qinisekisa ukusetshenziswa okuhlosiwe njengokudla kwabantu nomeluleki wendawo oqeqeshiwe.",
+      "st": "Se boloke e le sefate se hlwauweng sa naha e omeletseng; netefatsa tshebediso e rerilweng ya dijo tsa batho le moeletsi wa lehae ya tshwanelehang.",
+      "ts": "Xi hlayise tani hi murhi lowu tivekaka wa ndhawu yo oma; tiyisisa ku tirhisiwa loku kunguhatiweke ka swakudya swa vanhu ni mutsundzuxi wa laha kaya loyi a faneleke.",
+      "ve": "Tshi vhulungeni sa muri wo ṱalulwaho wa fhethu ho omaho; khwaṱhisedzani u shumiswa ho dzudzanywaho sa zwiḽiwa zwa vhathu na mueletshedzi wa henefho o teaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Allow for slow growth, frost sensitivity and roots that exploit rock crevices.",
+      "zu": "Lindela ukukhula kancane, ukuzwela isithwathwa nezimpande ezisebenzisa imifantu yamadwala.",
+      "st": "Lebella kgolo e diehang, ho angwa habonolo ke serame se etsang leqhwa le metso e sebedisang mapetso a mafika.",
+      "ts": "Langutela ku kula hi ku nonoka, ku hlaseriwa hi frost ni timitsu leti tirhisaka maphorho ya maribye.",
+      "ve": "Dzhielani nṱha u aluwa nga u ongolowa, u kwamiwa nga maḍaḓa na midzi i shumisaho mitwe ya matombo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Request correctly identified, locally suitable nursery material. Do not purchase on an assumed common-fig crop forecast.",
+      "zu": "Cela izitshalo zenkulisa ezihlonzwe kahle nezifanele indawo. Ungathengi ngokuthembela esilinganisweni sesivuno samakhiwane ajwayelekile esicatshangiwe.",
+      "st": "Kopa dimela tsa sebaka sa ho hodisa dimela tse hlwauweng ka nepo tse loketseng lehae. O se ke wa reka o itshetlehile ka ponelopele e nahannweng ya kotulo ya feiye e tlwaelehileng.",
+      "ts": "Kombela swimila swa ndhawu yo swi kurisa leswi tivekaka kahle ni ku fanela laha kaya. U nga xavi hi ku tshemba nhlayo ya ntshovelo wa makuwa lama tolovelekeke leyi ehleketeleriweke.",
+      "ve": "Humbelani zwimela zwa fhethu ha u zwi alusa zwo ṱalulwaho zwavhuḓi zwi teaho henefho. Ni songo renga no ḓitika nga mbonelaphanḓa yo humbulelwaho ya khaṋo ya muhuyu wo ḓoweleaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ecology is not a verified human-food product",
+      "zu": "Ulwazi lwemvelo aluqinisekisi umkhiqizo wokudla kwabantu",
+      "st": "Tsebo ya tikoloho ha se sehlahiswa se netefaditsweng sa dijo tsa batho",
+      "ts": "Vutivi bya mbango a hi xibveledzwa lexi tiyisisiweke xa swakudya swa vanhu",
+      "ve": "Nḓivho ya mvelo a si tshibveledzwa tsho khwaṱhisedzwaho tsha zwiḽiwa zwa vhathu",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The account documents fruit eaten by wildlife and cultivation/bark uses, but does not establish human fruit edibility. It names the species-specific fig wasp Platyscapa desertorum; Ficus carica ages and yields cannot be transferred.",
+      "zu": "Umbhalo uqopha izithelo ezidliwa yizilwane zasendle nokusetshenziswa kokutshala/kwamagxolo, kodwa awuqinisekisi ukuthi abantu bangazidla izithelo. Ubiza umnyovu wamakhiwane oqondene nalolu hlobo ngokuthi Platyscapa desertorum; ubudala nezivuno ze-Ficus carica akukwazi ukudluliselwa kulolu hlobo.",
+      "st": "Tlaleho e ngola ditholwana tse jewang ke diphoofolo tse hlaha le tshebediso ya ho hodisa/makgapetla, empa ha e netefatse hore ditholwana di ka jewa ke batho. E bolela bobi ba feiye bo ikgethileng ho mofuta ona, Platyscapa desertorum; dilemo le dikotulo tsa Ficus carica di ke ke tsa fetisetswa ho ona.",
+      "ts": "Xihlovo xi rhekhoda mihandzu leyi dyiwaka hi swiharhi swa nhova ni ku kurisiwa/ku tirhisiwa ka mahanti, kambe a xi tiyisisi leswaku mihandzu yi dyiwa hi vanhu. Xi boxa mimpfi ya makuwa ya species leyi ntsena (fig wasp), Platyscapa desertorum; vukhale ni ntshovelo wa Ficus carica a swi nge hundziseriwi eka yona.",
+      "ve": "Mafhungo a rekhoda mitshelo i ḽiwaho nga zwipuka zwa ḓaka na u shumiswa ha u alusa/maganda, fhedzi ha khwaṱhisedzi uri mitshelo i a ḽiwa nga vhathu. A bula ḽibu ḽa mahuyu ḽo khetheaho kha lushaka ulu (fig wasp), Platyscapa desertorum; miṅwaha na khaṋo dza Ficus carica a zwi koni u fhiriselwa kha ulu lushaka.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "ripe figs",
+      "zu": "amakhiwane avuthiwe",
+      "st": "difeiye tse butswitseng",
+      "ts": "makuwa lama vupfeke",
+      "ve": "mahuyu o vhibvaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "This large tree requires substantial space away from buildings, paving, sewer lines and walls because SANBI reports aggressive roots.",
+      "zu": "Lesi sihlahla esikhulu sidinga indawo eningi kude nezakhiwo, indawo egandayiwe, amapayipi endle nezindonga ngoba i-SANBI ibika izimpande ezinolaka.",
+      "st": "Sefate sena se seholo se hloka sebaka se seholo hole le meaho, dibaka tse katilweng, diphaephe tsa dikgwerekgwere le mabota hobane SANBI e tlaleha metso e atang ka matla.",
+      "ts": "Murhi lowu lowukulu wu lava ndhawu leyikulu ekule ni miako, tindhawu leti endliweke magondzo yo tiya, tiphayiphi ta nkululo ni makhumbi hikuva SANBI yi vika timitsu leti hangalakaka hi nguvu.",
+      "ve": "Muri uyu muhulwane u ṱoḓa tshikhala tshihulwane kule na zwifhaṱo, fhethu ho phevhiwaho, phaiphi dza tshampungane na mbondo ngauri SANBI i vhiga midzi i hangalalaho nga maanḓa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The source limits it to frost-free areas with moderate rainfall.",
+      "zu": "Umthombo usikhawulela ezindaweni ezingenasithwathwa ezinemvula emaphakathi.",
+      "st": "Mohlodi o se lekanyetsa dibakeng tse se nang serame se etsang leqhwa tse nang le pula e mahareng.",
+      "ts": "Xihlovo xi wu pimanyeta eka tindhawu leti nga riki na frost leti nga ni mpfula ya le xiringanisweni.",
+      "ve": "Tshiko tshi u fhedzisela kha fhethu hu si na maḍaḓa hu re na mvula ya vhukati.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm Ficus sur and the space available before buying. No numeric bearing age or household kg was verified.",
+      "zu": "Qinisekisa i-Ficus sur nendawo ekhona ngaphambi kokuthenga. Abukho ubudala bokuthela noma i-kg yokudla yasekhaya enamanani eqinisekisiwe.",
+      "st": "Netefatsa Ficus sur le sebaka se fumanehang pele o reka. Ha ho dilemo tsa ho beha ditholwana kapa kg ya lelapa e netefaditsweng ka dipalo.",
+      "ts": "Tiyisisa Ficus sur ni ndhawu leyi kumekaka u nga si xava. A ku tiyisisiwanga vukhale byo tswala mihandzu kumbe kg wa le kaya hi tinhlayo.",
+      "ve": "Khwaṱhisedzani Ficus sur na tshikhala tshi re hone musi ni sa athu u renga. A hu na miṅwaha ya u aṋwa kana kg dza muḓi dzo khwaṱhisedzwaho nga mbalo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "These are the source's signs for figs eaten by local people. Broad September–March fig production is not the same as ripe picking.",
+      "zu": "Lezi yizimpawu zomthombo zamakhiwane adliwa ngabantu bendawo. Ukukhiqizwa kwamakhiwane okubanzi ngoSepthemba–Mashi akufani nokukha okuvuthiwe.",
+      "st": "Tsena ke matshwao a mohlodi a difeiye tse jewang ke batho ba lehae. Tlhahiso e pharaletseng ya difeiye ka Leotshe–Hlakubele ha e tshwane le ho kga tse butswitseng.",
+      "ts": "Leswi i swikombiso swa xihlovo swa makuwa lama dyiwaka hi vanhu va laha kaya. Ku humesa makuwa hi nkarhi wo anama wa Ndzhati–Nyenyankulu a swi fani ni ku kha lama vupfeke.",
+      "ve": "Hezwi ndi zwiga zwa tshiko zwa mahuyu a ḽiwaho nga vhathu vha henefho. Vhubveledzi ho angalalaho ha mahuyu nga Khubvumedzi–Ṱhafamuhwe a hu fani na u kaṋa o vhibvaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Use sun and well-drained soil. SANBI records dry bushveld, sandy-soil preference and frost hardiness; avoid over-watering established plants.",
+      "zu": "Sebenzisa indawo enelanga nenhlabathi edonsa amanzi kahle. I-SANBI iqopha ihlathi elomile, ukuthanda inhlabathi eyisihlabathi nokumelana nesithwathwa; gwema ukunisela kakhulu izitshalo esezimile kahle.",
+      "st": "Sebedisa letsatsi le mobu o ntshang metsi hantle. SANBI e tlaleha moru o ommeng, ho rata mobu wa lehlabathe le ho mamella serame se etsang leqhwa; qoba ho nosetsa dimela tse seng di tsitsitse haholo.",
+      "ts": "Tirhisa dyambu ni misava leyi humesaka mati kahle. SANBI yi rhekhoda nhova yo oma, ku tsakela misava ya sava ni ku tiyisela frost; papalata ku cheleta ngopfu swimila leswi se swi simekeke.",
+      "ve": "Shumisani ḓuvha na mavu a bvisaho maḓi zwavhuḓi. SANBI i rekhoda ḓaka ḽo omaho, u takalela mavu a muṱavha na u konḓelela maḍaḓa; iledzani u sheledza nga maanḓa zwimela zwo no dziaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask for Grewia flava and confirm local provenance. No named food cultivar or fruit kg was verified.",
+      "zu": "Cela i-Grewia flava futhi uqinisekise umsuka wendawo. Ayikho i-cultivar yokudla ebizwe ngegama noma i-kg yezithelo eqinisekisiwe.",
+      "st": "Kopa Grewia flava mme o netefatse tshimoloho ya lehae. Ha ho cultivar ya dijo e boletsweng ka lebitso kapa kg ya ditholwana e netefaditsweng.",
+      "ts": "Kombela Grewia flava kutani u tiyisisa masungulo ya laha kaya. A ku tiyisisiwanga cultivar ya swakudya leyi boxiweke hi vito kumbe kg wa mihandzu.",
+      "ve": "Humbelani Grewia flava nahone ni khwaṱhisedze vhubvo ha henefho. A hu na cultivar ya zwiḽiwa yo bulwaho nga dzina kana kg ya mitshelo yo khwaṱhisedzwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Dried-fruit flour is a documented traditional end use, not a supplied safe storage duration. October–March is flowering.",
+      "zu": "Ufulawa wezithelo ezomisiwe ungukusetshenziswa kwendabuko okubhaliwe, hhayi isikhathi sokugcina ngokuphepha esinikeziwe. Okthoba–Mashi kuyisikhathi sokuqhakaza.",
+      "st": "Phofo ya ditholwana tse omisitsweng ke tshebediso ya ho qetela ya setso e ngotsweng, eseng nako e fanweng ya ho boloka ka polokeho. Mphalane–Hlakubele ke nako ya ho thunya.",
+      "ts": "Flawa ya mihandzu leyi omisiweke i ku tirhisiwa ka ndhavuko loku rhekhodiweke, ku nga ri nkarhi lowu nyikiweke wo hlayisa hi ku hlayiseka. Nhlangula–Nyenyankulu i nkarhi wo rhumbuka.",
+      "ve": "Fulauru ya mitshelo yo omiswaho ndi u shumiswa ha sialala ho rekhodiwaho, hu si tshifhinga tsho ṋewaho tsha u vhulunga nga u tsireledzea. Tshimedzi–Ṱhafamuhwe ndi tshifhinga tsha u ṱuma maluvha.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "edible fruit",
+      "zu": "izithelo ezidliwayo",
+      "st": "ditholwana tse jewang",
+      "ts": "mihandzu leyi dyiwaka",
+      "ve": "mitshelo i ḽeaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "SANBI records it in arid Karoo and Eastern Cape scrub, with frost and drought tolerance. It can grow in sun or semi-shade.",
+      "zu": "I-SANBI isiqopha emahlathini amancane aseKaroo eyomile nase-Eastern Cape, simelana nesithwathwa nesomiso. Singakhula elangeni noma emthunzini omncane.",
+      "st": "SANBI e se tlaleha dihlahleng tsa Karoo e omeletseng le Eastern Cape, se mamella serame se etsang leqhwa le komello. Se ka hola letsatsing kapa moriting o sa fellang.",
+      "ts": "SANBI yi xi rhekhoda eka swihlahla swa Karoo yo oma ni Eastern Cape, xi tiyisela frost ni dyandza. Xi nga kula edyambyini kumbe endzhutini lowu nga helelangiki.",
+      "ve": "SANBI i tshi rekhoda kha zwiṱaka zwa Karoo ho omaho na Eastern Cape, tshi tshi konḓelela maḍaḓa na gomelelo. Tshi nga aluwa ḓuvhani kana kha murunzi u sa fheleliho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask for Grewia robusta, not the unrelated Grevillea robusta. The checked source gives no named fruit cultivar.",
+      "zu": "Cela i-Grewia robusta, hhayi i-Grevillea robusta engahlobene nayo. Umthombo ohloliwe awunikezi i-cultivar yezithelo ebizwe ngegama.",
+      "st": "Kopa Grewia robusta, eseng Grevillea robusta e sa amaneng le yona. Mohlodi o hlahlobilweng ha o fane ka cultivar ya ditholwana e boletsweng ka lebitso.",
+      "ts": "Kombela Grewia robusta, ku nga ri Grevillea robusta leyi nga riki na vuxaka na yona. Xihlovo lexi kambisisiweke a xi nyiki cultivar ya mihandzu leyi boxiweke hi vito.",
+      "ve": "Humbelani Grewia robusta, hu si Grevillea robusta i si na vhushaka nayo. Tshiko tsho sedzwaho a tshi ṋei cultivar ya mitshelo yo bulwaho nga dzina.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "This exact Grewia species is recorded as food. August–December is flowering and cannot be copied into fruit-picking cells.",
+      "zu": "Lolu hlobo oluqondile lwe-Grewia luqoshwe njengokudla. Agasti–Disemba kuyisikhathi sokuqhakaza futhi akunakukopishelwa kumaseli okukha izithelo.",
+      "st": "Mofuta ona o nepahetseng wa Grewia o ngotswe e le dijo. Phata–Tshitwe ke nako ya ho thunya mme e ke ke ya kopisetswa diseleng tsa ho kga ditholwana.",
+      "ts": "Species leyi kongomeke ya Grewia yi rhekhodiwe tani hi swakudya. Mhawuri–N'wendzamhala i nkarhi wo rhumbuka naswona a wu nge kopiweliwi eka tisele to kha mihandzu.",
+      "ve": "Lushaka ulu lwo teaho lwa Grewia lwo rekhodiwa sa zwiḽiwa. Ṱhangule–Nyendavhusiku ndi tshifhinga tsha u ṱuma maluvha nahone a tshi koni u kopiwa kha zwikhala zwa u kaṋa mitshelo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "food grain, immature pods or cooked leaves; forage biomass is separate",
+      "zu": "izinhlamvu zokudla, ama-pod (izikhwama zembewu) ezingakavuthwa noma amaqabunga aphekiwe; ubuningi bezitshalo zokudla kwemfuyo buhlukile",
+      "st": "dithollo tsa dijo, diphotlwa tse eso butswe kapa makgasi a phehilweng; bongata ba dimela tsa furu bo arohane",
+      "ts": "mbewu ya swakudya, tinyawa leti nga si vupfa kumbe matluka lama swekiweke; ntalo wa swimila swa furu wu hambanile",
+      "ve": "thoro dza zwiḽiwa, maganda a mbeu a sa athu u vhibva kana maṱari o bikwaho; vhuleme ha zwimela zwa furu ho fhambana",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Choose the intended food part and appropriate preparation; confirm the actual food type with a local adviser. Food and fodder harvests are different operations.",
+      "zu": "Khetha ingxenye yokudla ehlosiwe nendlela efanele yokuyilungisa; qinisekisa uhlobo lokudla lwangempela nomeluleki wendawo. Ukuvuna ukudla kwabantu nokudla kwemfuyo kuyimisebenzi ehlukene.",
+      "st": "Kgetha karolo ya dijo e rerilweng le boitokiso bo loketseng; netefatsa mofuta wa nnete wa dijo le moeletsi wa lehae. Kotulo ya dijo tsa batho le furu ke mesebetsi e fapaneng.",
+      "ts": "Hlawula xiphemu xa swakudya lexi kunguhatiweke ni ku lunghiselela loku faneleke; tiyisisa muxaka wa xiviri wa swakudya ni mutsundzuxi wa laha kaya. Ku tshovela swakudya swa vanhu ni furu i mintirho yo hambana.",
+      "ve": "Nangani tshipiḓa tsha zwiḽiwa tsho dzudzanywaho na u lugiselela ho teaho; khwaṱhisedzani lushaka lwa vhukuma lwa zwiḽiwa na mueletshedzi wa henefho. U kaṋa zwiḽiwa zwa vhathu na furu ndi mishumo yo fhambanaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The existing 2–6 t/ha research figure is forage/green-manure dry matter, not beans for people. Late forage Rongai cannot inherit an early grain accession’s timing or yield.",
+      "zu": "Inani locwaningo elikhona elingu-2–6 t/ha liyinto eyomile yokudla kwemfuyo/yomanyolo oluhlaza, hhayi ubhontshisi wabantu. I-Rongai yokudla kwemfuyo ephuza ukuvuthwa ayinakuthatha isikhathi noma isivuno sohlobo lwezinhlamvu locwaningo oluvuthwa kusenesikhathi (accession).",
+      "st": "Palo ya dipatlisiso e teng ya 2–6 t/ha ke ntho e ommeng ya furu/manyolo o motala, eseng dinawa tsa batho. Rongai ya furu e butswang morao e ke ke ya nka nako kapa kotulo ya mofuta wa dithollo wa teko o butswang kapele (accession).",
+      "ts": "Nhlayo ya ndzavisiso leyi nga kona ya 2–6 t/ha i swilo leswi omeke swa furu/manyoro ya rihlaza, ku nga ri tinyawa ta vanhu. Rongai ya furu leyi vupfaka endzhaku a yi nge teki nkarhi kumbe ntshovelo wa muxaka wa mbewu wa ndzingo lowu vupfaka hi ku hatlisa (accession).",
+      "ve": "Mbalo ya ṱhoḓisiso i re hone ya 2–6 t/ha ndi zwimela zwo omaho zwa furu/manyoro madala, hu si ṋawa dza vhathu. Rongai ya furu i vhibvaho nga murahu a i koni u dzhia tshifhinga kana khaṋo ya lushaka lwa thoro lwa ndingo lu vhibvaho nga u ṱavhanya (accession).",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Obtain identified material for the intended food or forage purpose. Availability and eating quality of early trial accessions are unverified; record the purchased type and actual sowing and picking dates.",
+      "zu": "Thola izitshalo ezihlonziwe zenhloso yokudla kwabantu noma kwemfuyo ehlosiwe. Ukutholakala nekhwalithi yokudliwa kwezinhlobo zocwaningo ezivuthwa kusenesikhathi (accessions) akuqinisekisiwe; rekhoda uhlobo oluthengiwe nezinsuku zangempela zokuhlwanyela nokukha.",
+      "st": "Fumana dimela tse hlwauweng bakeng sa morero o rerilweng wa dijo kapa furu. Ho fumaneha le boleng ba ho jewa ha mefuta ya teko e butswang kapele (accessions) ha di netefatswe; ngola mofuta o rekilweng le matsatsi a nnete a ho jala le ho kga.",
+      "ts": "Kuma swimila leswi tivekaka swa xikongomelo xa swakudya kumbe furu lexi kunguhatiweke. Ku kumeka ni nkoka wo dyiwa wa tinxaka ta ndzingo leti vupfaka hi ku hatlisa (accessions) a swi tiyisisiwanga; rhekhoda muxaka lowu xaviweke ni masiku ya xiviri yo byala ni ku kha.",
+      "ve": "Wanani zwimela zwo ṱalulwaho zwa tshipikwa tsho dzudzanywaho tsha zwiḽiwa kana furu. U wanala na ndeme ya u ḽiwa zwa tshaka dza ndingo dzi vhibvaho nga u ṱavhanya (accessions) a zwo ngo khwaṱhisedzwa; rekhodani lushaka lwo rengwaho na datumu dza vhukuma dza u zwala na u kaṋa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "SA accession maturity and grain trial",
+      "zu": "Ucwaningo lwaseNingizimu Afrika lokuvuthwa kwezinhlobo (accessions) nezinhlamvu",
+      "st": "Teko ya Afrika Borwa ya ho butswa ha mefuta (accessions) le dithollo",
+      "ts": "Ndzingo wa Afrika-Dzonga wa ku vupfa ka tinxaka (accessions) ni mbewu",
+      "ve": "Ndingo ya Afrika Tshipembe ya u vhibva ha tshaka (accessions) na thoro",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Dalmada near Polokwane, 2002/03; sown 10 December on clay loam with 297 mm rain plus 178 mm irrigation. Paired physiological maturity days after planting / grain kg/ha: CPI 52552 99.3 / 576.2; CPI 60795 99.0 / 570.5; CQ 3620 99.0 / 574.2; Rongai black 197.0 / 2.6, brown 197.0 / 3.3, white 197.0 / 7.4. Tables visually checked. Maturity means 90% brown pods; biomass Table 4 is separate. The authors require farmer evaluation of eating qualities, so trial accessions are not verified food purchase recommendations.",
+      "zu": "Dalmada eduze kwasePolokwane, 2002/03; kwahlwanyelwa ngo-10 Disemba enhlabathini eyingxube yobumba nesihlabathi esincane (clay loam) nemvula engu-297 mm kanye nokunisela okungu-178 mm. Amabhangqa ezinsuku zokufinyelela ekuvuthweni kwesitshalo (physiological maturity) ngemuva kokutshala / izinhlamvu kg/ha: CPI 52552 99.3 / 576.2; CPI 60795 99.0 / 570.5; CQ 3620 99.0 / 574.2; Rongai black (omnyama) 197.0 / 2.6, brown (onsundu) 197.0 / 3.3, white (omhlophe) 197.0 / 7.4. Amathebula ahlolwe ngokubukwa. Ukuvuthwa kusho ama-pod (izikhwama zembewu) ezinsundu ezingu-90%; ubuningi bezitshalo kuThebula 4 buhlukile. Ababhali badinga ukuhlolwa kwekhwalithi yokudliwa ngabalimi, ngakho izinhlobo zocwaningo azizona izincomo zokuthenga ukudla eziqinisekisiwe.",
+      "st": "Dalmada haufi le Polokwane, 2002/03; ho jetswe ka 10 Tshitwe mobung wa clay loam ka pula ya 297 mm le nosetso ya 178 mm. Dipara tsa matsatsi a ho fihlela kgolo e felletseng ya semela (physiological maturity) ka mora ho lema / dithollo kg/ha: CPI 52552 99.3 / 576.2; CPI 60795 99.0 / 570.5; CQ 3620 99.0 / 574.2; Rongai black (e ntsho) 197.0 / 2.6, brown (e sootho) 197.0 / 3.3, white (e tshweu) 197.0 / 7.4. Ditafola di hlahlobilwe ka mahlo. Ho butswa ho bolela diphotlwa tse sootho tse 90%; bongata ba dimela ho Tafola 4 bo arohane. Bangodi ba hloka hore balemi ba lekole boleng ba ho jewa, kahoo mefuta ya teko ha se dikgothaletso tse netefaditsweng tsa ho reka dijo.",
+      "ts": "Dalmada ekusuhi na Polokwane, 2002/03; ku byariwe hi 10 N'wendzamhala eka misava ya clay loam hi mpfula ya 297 mm ni ku cheleta ka 178 mm. Tiphere ta masiku ya ku vupfa ka ximilana (physiological maturity) endzhaku ko byala / mbewu kg/ha: CPI 52552 99.3 / 576.2; CPI 60795 99.0 / 570.5; CQ 3620 99.0 / 574.2; Rongai black (ya ntima) 197.0 / 2.6, brown (ya buraweni) 197.0 / 3.3, white (yo basa) 197.0 / 7.4. Matafula ma kamberiwile hi mahlo. Ku vupfa ku vula tinyawa ta buraweni ta 90%; ntalo wa swimila eka Tafula 4 wu hambanile. Vatsari va lava leswaku varimi va kambela nkoka wo dyiwa, hikokwalaho tinxaka ta ndzingo a hi switsundzuxo leswi tiyisisiweke swo xava swakudya.",
+      "ve": "Dalmada tsini na Polokwane, 2002/03; ho zwalwa nga 10 Nyendavhusiku kha mavu a clay loam hu na mvula ya 297 mm na tsheledzo ya 178 mm. Phere dza maḓuvha a u vhibva ha tshimela (physiological maturity) nga murahu ha u ṱavha / thoro kg/ha: CPI 52552 99.3 / 576.2; CPI 60795 99.0 / 570.5; CQ 3620 99.0 / 574.2; Rongai black (ntswu) 197.0 / 2.6, brown (ya buraweni) 197.0 / 3.3, white (tshena) 197.0 / 7.4. Thebuḽu dzo sedzwa nga maṱo. U vhibva zwi amba maganda a mbeu a buraweni a 90%; vhuleme ha zwimela kha Thebuḽu 4 ho fhambana. Vhaṅwali vha ṱoḓa uri vhalimi vha sedze ndeme ya u ḽiwa, ngauralo tshaka dza ndingo a si themendelo dzo khwaṱhisedzwaho dza u renga zwiḽiwa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Litchi output at age 14 — single-season cultivar trial",
+      "zu": "Isivuno se-litchi sineminyaka engu-14 — ucwaningo lwe-cultivar lwesizini eyodwa",
+      "st": "Tlhahiso ya litchi e le dilemo tse 14 — teko ya cultivar ya sehla se le seng",
+      "ts": "Vuhumelerisi bya litchi eka vukhale bya 14 — ndzingo wa cultivar wa nguva yin’we",
+      "ve": "Vhubveledzi ha litchi i na miṅwaha ya 14 — ndingo ya cultivar ya khalaṅwaha nthihi",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "1994/95 total kg/tree at age 14: HLH Mauritius 87.87, Red McLean 30.58, Fay Zee Siu 27.92. Marketable weights are respectively 77.87, 28.42 and 23.38 kg/tree. One season and varying management, canopy and cultivar prevent a universal annual curve or copying total into saleable kg. The authors explicitly caution yield comparisons. The separate KZN guide gives conservative 2,000, average 3,000–5,000 and good 6,000+ kg/ha, not per-age kg/tree.",
+      "zu": "Ingqikithi ye-kg/tree ngo-1994/95 eminyakeni engu-14: HLH Mauritius 87.87, Red McLean 30.58, Fay Zee Siu 27.92. Izisindo ezifanele ukudayiswa ngokulandelana zingu-77.87, 28.42 no-23.38 kg/tree. Isizini eyodwa nokuhluka kokuphatha, umqhele wesihlahla ne-cultivar kuvimbela ijika lonyaka elilodwa elisebenza kubo bonke noma ukukopisha ingqikithi ibe yi-kg edayisekayo. Ababhali baxwayisa ngokusobala ngokuqhathanisa izivuno. Umhlahlandlela ohlukile we-KZN unikeza okulinganiselwe 2,000, okumaphakathi 3,000–5,000 nokuhle 6,000+ kg/ha, hhayi i-kg/tree ngokweminyaka yobudala.",
+      "st": "Kg/tree kaofela ka 1994/95 dilemong tse 14: HLH Mauritius 87.87, Red McLean 30.58, Fay Zee Siu 27.92. Boima bo ka rekiswang ka tatellano ke 77.87, 28.42 le 23.38 kg/tree. Sehla se le seng le phapang ya taolo, makala le makgasi a sefate (canopy) le cultivar di thibela mothinya wa selemo o sebetsang ho tsohle kapa ho kopitsa kakaretso ho kg e ka rekiswang. Bangodi ba lemosa ka ho toba ka dipapiso tsa kotulo. Tataiso e arohaneng ya KZN e fana ka tekanyo e hlokolosi ya 2,000, e mahareng ya 3,000–5,000 le e ntle ya 6,000+ kg/ha, eseng kg/tree ka dilemo.",
+      "ts": "Kg/tree hinkwato ta 1994/95 eka vukhale bya 14: HLH Mauritius 87.87, Red McLean 30.58, Fay Zee Siu 27.92. Mitiko leyi xavisekaka hi ku landzelelana i 77.87, 28.42 na 23.38 kg/tree. Nguva yin’we ni ku hambana ka malawulelo, marhavi ni matluka ya murhi (canopy) ni cultivar swi sivela girafu ya lembe leyi tirhaka eka hinkwato kumbe ku kopa nhlayo hinkwato eka kg leyi xavisekaka. Vatsari va lemukisa hi ku kongoma hi ku pimanisa ntshovelo. Nkongomiso lowu hambaneke wa KZN wu nyika mpimo wa vukheta wa 2,000, wa le xiringanisweni wa 3,000–5,000 ni lowunene wa 6,000+ kg/ha, ku nga ri kg/tree hi vukhale.",
+      "ve": "Kg/tree yoṱhe ya 1994/95 hu na miṅwaha ya 14: HLH Mauritius 87.87, Red McLean 30.58, Fay Zee Siu 27.92. Zwileme zwi rengiseaho nga mutevhe ndi 77.87, 28.42 na 23.38 kg/tree. Khalaṅwaha nthihi na u fhambana ha ndangulo, maṱavhi na maṱari a muri (canopy) na cultivar zwi thivhela girafu ya ṅwaha i shumaho kha zwoṱhe kana u kopa mbalo yoṱhe kha kg i rengiseaho. Vhaṅwali vha sevha nga ho livhaho nga mbambedzo dza khaṋo. Nyendedzi yo fhambanaho ya KZN i ṋea mpimo wa vhuronwane wa 2,000, wa vhukati wa 3,000–5,000 na wavhuḓi wa 6,000+ kg/ha, hu si kg/tree nga miṅwaha.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "seed/grain; household food requires confirmed food-qualified sweet material and preparation",
+      "zu": "imbewu/izinhlamvu; ukudla kwasekhaya kudinga izinto zohlobo olumnandi (sweet) oluqinisekisiwe njengolufanele ukudliwa nokulungiswa okufanele",
+      "st": "peo/dithollo; dijo tsa lelapa di hloka mofuta o monate o netefaditsweng hore o loketse dijo le boitokiso",
+      "ts": "mbewu; swakudya swa le kaya swi lava muxaka wo tsokombela lowu tiyisisiweke leswaku wu faneleka ku dyiwa ni ku lunghiselela",
+      "ve": "mbeu/thoro; zwiḽiwa zwa muḓi zwi ṱoḓa lushaka lu ḓifhaho lwo khwaṱhisedzwaho uri lwo tea zwiḽiwa na u lugiselela",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm sweet versus bitter material and food versus feed purpose before including this planting in household food.",
+      "zu": "Qinisekisa uhlobo olumnandi (sweet) noma olubabayo nenhloso yokudla kwabantu noma kwemfuyo ngaphambi kokufaka lokhu kutshala ekudleni kwasekhaya.",
+      "st": "Netefatsa mofuta o monate kapa o babang le morero wa dijo tsa batho kapa tsa diphoofolo pele o kenyelletsa sejalo sena dijong tsa lelapa.",
+      "ts": "Tiyisisa muxaka wo tsokombela kumbe wo bava ni xikongomelo xa swakudya swa vanhu kumbe swa swifuwo u nga si katsa ku byala loku eka swakudya swa le kaya.",
+      "ve": "Khwaṱhisedzani lushaka lu ḓifhaho kana lu vhavhaho na tshipikwa tsha zwiḽiwa zwa vhathu kana zwa zwifuwo musi ni sa athu u katela u ṱavha uku kha zwiḽiwa zwa muḓi.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Keep narrow-leaf recommendations separate from white lupin. Generic grain and green-manure research does not supply edible kg or a plant age curve.",
+      "zu": "Gcina izincomo zohlobo olunamaqabunga amancane zihlukile kwezohlobo lwe-white lupin. Ucwaningo olujwayelekile lwezinhlamvu nomanyolo oluhlaza alunikezi i-kg edliwayo noma ijika lobudala besitshalo.",
+      "st": "Boloka dikgothaletso tsa mofuta o nang le makgasi a masesane di arohane le tsa white lupin. Dipatlisiso tse akaretsang tsa dithollo le manyolo o motala ha di fane ka kg e jewang kapa mothinya wa dilemo tsa semela.",
+      "ts": "Hlayisa switsundzuxo swa muxaka wa matluka yo lala swi hambanile ni swa white lupin. Ndzavisiso wo angarhela wa mbewu ni manyoro ya rihlaza a wu nyiki kg leyi dyiwaka kumbe girafu ya vukhale bya ximilana.",
+      "ve": "Vhulungani themendelo dza lushaka lwa maṱari masekene dzo fhambana na dza white lupin. Ṱhoḓisiso dzo angaredzwaho dza thoro na manyoro madala a dzi ṋei kg i ḽeaho kana girafu ya miṅwaha ya tshimela.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask the supplier about identified sweet narrow-leaf material and whether it is qualified for the intended food use. Current Mandellup/Lila-Baer options are supplier context, not calibrated local food-yield predictions.",
+      "zu": "Buza umhlinzeki ngezinto zohlobo olumnandi (sweet) olunamaqabunga amancane oluhlonziwe nokuthi lufanelekile yini ukusetshenziswa njengokudla okuhlosiwe. Izinhlobo zamanje ze-Mandellup/Lila-Baer zingumongo womphakeli, hhayi izibikezelo ezilinganiselwe zesivuno sokudla sendawo.",
+      "st": "Botsa mofani ka mofuta o hlwauweng o monate o nang le makgasi a masesane le hore na o loketse tshebediso e rerilweng ya dijo. Dikgetho tsa jwale tsa Mandellup/Lila-Baer ke maemo a mofani, eseng diponelopele tse lekantsweng tsa kotulo ya dijo tsa lehae.",
+      "ts": "Vutisa muphakeri hi muxaka wo tsokombela wa matluka yo lala lowu tivekaka ni leswaku wu faneleka ku tirhisiwa tani hi swakudya leswi kunguhatiweke. Tinxaka ta sweswi ta Mandellup/Lila-Baer i vuxokoxoko bya muphakeri, ku nga ri ku bvumba ka ntshovelo wa swakudya swa laha kaya loku pimiweke.",
+      "ve": "Vhudzisani muṋetshedzi nga lushaka lu ḓifhaho lwa maṱari masekene lwo ṱalulwaho na uri lwo tea u shumiswa sa zwiḽiwa zwo dzudzanywaho. Tshaka dza zwino dza Mandellup/Lila-Baer ndi mafhungo a muṋetshedzi, hu si mbonelaphanḓa dzo kalwaho dza khaṋo ya zwiḽiwa zwa henefho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "SA sweet narrow-leaf field grain and harvest",
+      "zu": "Izinhlamvu nokuvuna kwasensimini kwaseNingizimu Afrika kohlobo olumnandi (sweet) olunamaqabunga amancane",
+      "st": "Dithollo tsa tshimo le kotulo ya Afrika Borwa ya mofuta o monate o nang le makgasi a masesane",
+      "ts": "Mbewu ya le nsin'wini ni ntshovelo wa Afrika-Dzonga wa muxaka wo tsokombela wa matluka yo lala",
+      "ve": "Thoro na khaṋo ya tsimuni ya Afrika Tshipembe ya lushaka lu ḓifhaho lwa maṱari masekene",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Southern Cape 2003 rotation trial, sweet narrow-leaf Tanjil. Actual sowing / harvested grain kg/ha across camps: Riversdale 15 April / 2401–2529; Swellendam 12 May / 1003–1289; Tygerhoek 24 April / 2584–3058. Swellendam bracketed 1407–1704 figures estimate harvest losses, not weighed harvest. Riversdale’s 29 October harvest is an observed date, not generic maturity or a current-cultivar picking window. Feed-laboratory grain analysis does not certify household edible production.",
+      "zu": "Ucwaningo lokushintshanisa izitshalo lwaseSouthern Cape luka-2003, uhlobo olunoshukela olunamaqabunga amancane i-Tanjil. Ukuhlwanyela kwangempela / izinhlamvu ezivuniwe kg/ha emasimini ahlukene: Riversdale 15 Ephreli / 2401–2529; Swellendam 12 Meyi / 1003–1289; Tygerhoek 24 Ephreli / 2584–3058. Amanani aseSwellendam akubakaki angu-1407–1704 alinganisela okulahlekile ekuvuneni, hhayi isivuno esikaliwe. Ukuvuna kwaseRiversdale ngo-29 Okthoba kuwusuku oluqashelwe, hhayi isikhathi esijwayelekile sokuvuthwa noma izinyanga zokukha ze-cultivar yamanje. Ukuhlaziywa kwezinhlamvu elabhorethri yokudla kwemfuyo akuqinisekisi ukukhiqizwa kokudla okudliwayo kwasekhaya.",
+      "st": "Teko ya ho tjhentjhana ha dijalo ya Southern Cape ya 2003, Tanjil e monate ya makgasi a masesane. Ho jala ha nnete / dithollo tse kotutsweng kg/ha masimong a fapaneng: Riversdale 15 Mmesa / 2401–2529; Swellendam 12 Motsheanong / 1003–1289; Tygerhoek 24 Mmesa / 2584–3058. Dipalo tsa Swellendam tse ka masakaneng tsa 1407–1704 di hakanya tahlehelo ya kotulo, eseng kotulo e lekantsweng ka boima. Kotulo ya Riversdale ka 29 Mphalane ke letsatsi le hlokometsoeng, eseng nako e akaretsang ya ho butswa kapa nako ya ho kga ya cultivar ya jwale. Tlhahlobo ya dithollo laboratoring ya dijo tsa diphoofolo ha e netefatse tlhahiso ya dijo tse jewang tsa lelapa.",
+      "ts": "Ndzingo wo cincanisa swibyariwa wa Southern Cape wa 2003, Tanjil yo tsokombela ya matluka yo lala. Ku byala ka xiviri / mbewu leyi tshoveriweke kg/ha eka masimu yo hambana: Riversdale 15 Dzivamisoko / 2401–2529; Swellendam 12 Mudyaxihi / 1003–1289; Tygerhoek 24 Dzivamisoko / 2584–3058. Tinhlayo ta Swellendam leti nga eka swikhomela ta 1407–1704 ti pimanyeta leswi lahlekeke eka ntshovelo, ku nga ri ntshovelo lowu pimiweke hi ntiko. Ntshovelo wa Riversdale hi 29 Nhlangula i siku leri xiyiwaka, ku nga ri nkarhi wo angarhela wa ku vupfa kumbe nkarhi wo kha wa cultivar ya sweswi. Ku kambela mbewu eka laboratori ya swakudya swa swifuwo a swi tiyisisi vuhumelerisi bya swakudya leswi dyiwaka swa le kaya.",
+      "ve": "Ndingo ya u tshintshana zwiliṅwa ya Southern Cape ya 2003, Tanjil i ḓifhaho ya maṱari masekene. U zwala ha vhukuma / thoro dzo kaṋiwaho kg/ha kha masimu o fhambanaho: Riversdale 15 Lambamai / 2401–2529; Swellendam 12 Shundunthule / 1003–1289; Tygerhoek 24 Lambamai / 2584–3058. Mbalo dza Swellendam dzi re kha zwitanganyi dza 1407–1704 dzi anganyela ndozwo dza khaṋo, hu si khaṋo yo kalwaho nga tshileme. Khaṋo ya Riversdale nga 29 Tshimedzi ndi datumu yo vhonwaho, hu si tshifhinga tsho angaredzwaho tsha u vhibva kana tshifhinga tsha u kaṋa tsha cultivar ya zwino. U sedza thoro kha ḽaborathori ya zwiḽiwa zwa zwifuwo a zwi khwaṱhisedzi vhubveledzi ha zwiḽiwa zwi ḽeaho zwa muḓi.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Current supplier cultivar discussion",
+      "zu": "Ingxoxo yamanje yama-cultivar yomphakeli",
+      "st": "Puisano ya jwale ya mofani ka di-cultivar",
+      "ts": "Mbulavurisano wa sweswi wa muphakeri wa ti-cultivar",
+      "ve": "Nyambedzano ya zwino ya muṋetshedzi nga dzi-cultivar",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Supplier lists Mandellup and Lila-Baer, April–May planting, feed and green-manure uses. Its whole-SA region claim is not an independently verified climate-by-climate food trial. Tanjil’s earlier field amounts and dates are not transferred to these cultivars.",
+      "zu": "Umphakeli ubala i-Mandellup ne-Lila-Baer, ukutshala ngo-Ephreli–Meyi, nokusetshenziswa njengokudla kwemfuyo nomanyolo oluhlaza. Isimangalo sakhe sokufaneleka kulo lonke elaseNingizimu Afrika asiwona ucwaningo lokudla oluqinisekiswe ngokuzimela esimweni sezulu ngasinye. Amanani nezinsuku zangaphambili zasensimini ze-Tanjil azidluliselwa kulawa ma-cultivar.",
+      "st": "Mofani o thathamisa Mandellup le Lila-Baer, ho lema ka Mmesa–Motsheanong le tshebediso ya dijo tsa diphoofolo le manyolo o motala. Polelo ya hae ya sebaka sa Afrika Borwa kaofela ha se teko ya dijo e netefaditsweng ka boikemelo bakeng sa boemo bo bong le bo bong ba lehodimo. Dipalo le matsatsi a pele a tshimo tsa Tanjil ha di fetisetswe ho di-cultivar tsena.",
+      "ts": "Muphakeri u xaxameta Mandellup na Lila-Baer, ku byala hi Dzivamisoko–Mudyaxihi ni ku tirhisiwa tani hi swakudya swa swifuwo ni manyoro ya rihlaza. Xiviko xa yena xa ndhawu ya Afrika-Dzonga hinkwaro a hi ndzingo wa swakudya lowu tiyisisiweke hi ku tiyimela eka maxelo man’wana ni man’wana. Tinhlayo ni masiku ya khale ya le nsin'wini ya Tanjil a swi hundziseriwi eka ti-cultivar leti.",
+      "ve": "Muṋetshedzi u bula Mandellup na Lila-Baer, u ṱavha nga Lambamai–Shundunthule na u shumiswa sa zwiḽiwa zwa zwifuwo na manyoro madala. Zwine a amba nga dzingu ḽa Afrika Tshipembe ḽoṱhe a si ndingo ya zwiḽiwa yo khwaṱhisedzwaho nga yoṱhe kha nyimele iṅwe na iṅwe ya kilima. Mbalo na datumu dza kale dza tsimuni dza Tanjil a dzi fhiriselwi kha dzi-cultivar idzi.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Narrow-leaf sweet and bitter types differ",
+      "zu": "Izinhlobo ezinamaqabunga amancane ezimnandi (sweet) nezibabayo ziyahluka",
+      "st": "Mefuta ya makgasi a masesane e monate le e babang e fapane",
+      "ts": "Tinxaka ta matluka yo lala to tsokombela ni to bava ta hambana",
+      "ve": "Tshaka dza maṱari masekene dzi ḓifhaho na dzi vhavhaho dzo fhambana",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The narrow-leaf species includes sweet low-alkaloid and bitter high-alkaloid types. Its botanical identity alone does not qualify the seed as household food. White-lupin advice belongs to a different species; old availability statements are not treated as current facts.",
+      "zu": "Lolu hlobo olunamaqabunga amancane luhlanganisa izinhlobo ezimnandi (sweet) ezine-alkaloid ephansi nezibabayo ezine-alkaloid ephezulu. Ukuhlonzwa kwalo ngokwesayensi yezitshalo kuphela akuqinisekisi ukuthi imbewu ifanele ukudla kwasekhaya. Izeluleko ze-white lupin zingezohlobo oluhlukile; amazwi amadala ngokutholakala awathathwa njengamaqiniso amanje.",
+      "st": "Mofuta wa makgasi a masesane o kenyelletsa mefuta e monate e nang le alkaloid e tlase le e babang e nang le alkaloid e hodimo. Ho tsejwa ha wona ka botaniki feela ha ho netefatse hore peo e loketse dijo tsa lelapa. Keletso ya white lupin ke ya mofuta o mong; dipolelo tsa kgale tsa ho fumaneha ha di nkuwe e le dintlha tsa jwale.",
+      "ts": "Species ya matluka yo lala yi katsa tinxaka to tsokombela ta alkaloid ya le hansi ni to bava ta alkaloid ya le henhla. Ku tiveka ka yona ka botaniki ntsena a swi tiyisisi leswaku mbewu yi faneleka tani hi swakudya swa le kaya. Switsundzuxo swa white lupin i swa species yo hambana; swiviko swa khale swa ku kumeka a swi tekiwi tani hi timhaka ta sweswi.",
+      "ve": "Lushaka lwa maṱari masekene lu katela tshaka dzi ḓifhaho dza alkaloid ya fhasi na dzi vhavhaho dza alkaloid ya nṱha. U ṱalulwa halwo nga zwa zwimela fhedzi a zwi khwaṱhisedzi uri mbeu yo tea zwiḽiwa zwa muḓi. Ngeletshedzo ya white lupin ndi ya luṅwe lushaka; mafhungo a kale a u wanala ha dzhiiwi sa ngoho ya zwino.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Food qualification and preparation",
+      "zu": "Ukufaneleka njengokudla nokulungiswa",
+      "st": "Ho tshwaneleha e le dijo le boitokiso",
+      "ts": "Ku faneleka tani hi swakudya ni ku lunghiselela",
+      "ve": "U tea zwiḽiwa na u lugiselela",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The primary food-risk assessment cannot supply a generally validated household debittering method. Use food-qualified seed/product and appropriate preparation confirmed with a qualified adviser; this is a product-care reference, not South African legislation or a home-processing recipe.",
+      "zu": "Ukuhlolwa komthombo oyinhloko kwengozi yokudla akunikezi indlela eqinisekiswe ngokujwayelekile yokukhipha ukubaba ekhaya. Sebenzisa imbewu/umkhiqizo ofanele ukudliwa nokulungiswa okufanele okuqinisekiswe nomeluleki oqeqeshiwe; lokhu kuyisikhombo sokunakekelwa komkhiqizo, hhayi umthetho waseNingizimu Afrika noma indlela yokucubungula ekhaya.",
+      "st": "Tekolo ya mantlha ya kotsi ya dijo e ke ke ya fana ka mokgwa o netefaditsweng ka kakaretso wa ho tlosa ho baba lapeng. Sebedisa peo/sehlahiswa se tshwanelehang e le dijo le boitokiso bo loketseng bo netefaditsweng le moeletsi ya tshwanelehang; ena ke tshupiso ya tlhokomelo ya sehlahiswa, eseng molao wa Afrika Borwa kapa risepe ya ho lokisa lapeng.",
+      "ts": "Nkambisiso wa xihlovo xa nkoka wa khombo ya swakudya a wu nge nyiki ndlela leyi tiyisisiweke hi ku angarhela yo susa ku bava ekaya. Tirhisa mbewu/xibveledzwa lexi faneleke ku dyiwa ni ku lunghiselela loku faneleke loku tiyisisiweke ni mutsundzuxi loyi a faneleke; lexi i xikombo xo khathalela xibveledzwa, ku nga ri nawu wa Afrika-Dzonga kumbe rhisipi yo lulamisa ekaya.",
+      "ve": "Tsenguluso ya u thoma ya khombo ya zwiḽiwa a i koni u ṋea nḓila yo khwaṱhisedzwaho nga u angaredza ya u bvisa u vhavha muḓini. Shumisani mbeu/tshibveledzwa tsho teaho zwiḽiwa na u lugiselela ho teaho ho khwaṱhisedzwaho na mueletshedzi o teaho; hetshi ndi tshikombo tsha ndondolo ya tshibveledzwa, hu si mulayo wa Afrika Tshipembe kana risipi ya u lugisa muḓini.",
+      "generatedScope": "product-guidance"
     }
   ],
   "preservation": "Default English, private and recorded values, task/event identities, dates, source figures/units, source URLs and farming gates retain immutable original comparisons. No species facts or saved geometry changed; new language remains unreviewed.",
@@ -7774,7 +8158,7 @@
     ]
   },
   "deliveryScope": "Calendar, field, buying, task, plan/dashboard summaries, ICS and generated food-calendar presentation:495 sources. Separate graph/projection/guidance descendants continue production work. This changes the picture; PLAN_VERSION is unchanged. Whole-app goal remains active.",
-  "sourceCount": 1007,
+  "sourceCount": 1055,
   "initialFullSuite": {
     "files": 563,
     "passed": 5770,
