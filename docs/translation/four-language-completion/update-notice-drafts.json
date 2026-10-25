@@ -1356,6 +1356,34 @@
       "st": "Tsebiso ya ntlafatso le nalane ya moraorao di sebedisa puo ya hao. Dintlha tsa kgale di ntse di na le mongolo wa pele wa Senyesemane ha diphetolelo tsa tsona di ntse di phethwa.",
       "ts": "Xitiviso xa mpfuxeto ni matimu ya sweswinyana swi tirhisa ririmi ra wena. Tirhekhodo ta khale ta ha ri ni tsalwa ro sungula ra Xinghezi loko vuhundzuluxi bya tona byi ri karhi byi hetisiwa.",
       "ve": "Nḓivhadzo ya khwiniso na ḓivhazwakale ya zwenezwino zwi shumisa luambo lwaṋu. Rekhodo dza kale dzi kha ḓi vha na maṅwalwa a u thoma a English musi ṱhalutshedzelo dzadzo dzi tshi kha ḓi fhedziswa."
+    },
+    {
+      "english": "More crop guidance now has unreviewed translations in four languages.",
+      "zu": "Ezinye iziqondiso zezitshalo manje zinokuhumusha okungakabuyekezwa ngezilimi ezine.",
+      "st": "Tataiso e nngwe ya dijalo jwale e na le diphetolelo tse eso hlahlojwe ka dipuo tse nne.",
+      "ts": "Nkongomiso wun’wana wa swibyariwa sweswi wu ni vuhundzuluxeri bya tindzimi ta mune byo ka byi nga si kamberiwa.",
+      "ve": "Dziṅwe nyendedzi dza zwiliṅwa zwino dzi na ṱhalutshedzelo dzi sa athu u sedzwa nga nyambo nṋa."
+    },
+    {
+      "english": "Food-use cautions and trial figures stay with their source.",
+      "zu": "Izixwayiso zokusetshenziswa njengokudla nezibalo zocwaningo zihlala nomthombo wazo.",
+      "st": "Ditemoso tsa tshebediso ya dijo le dipalo tsa diteko di sala le mohlodi wa tsona.",
+      "ts": "Switsundzuxo swa ku tirhisa tani hi swakudya ni tinhlayo ta ndzingo swi sala ni xihlovo xa swona.",
+      "ve": "Tsevho dza u shumisa sa zwiḽiwa na mbalo dza ndingo zwi dzula na tshiko tshazwo."
+    },
+    {
+      "english": "Review crop guidance drafts",
+      "zu": "Buyekeza iziqondiso zezitshalo ezisenguhlaka",
+      "st": "Hlahloba meralo ya tataiso ya dijalo",
+      "ts": "Kambela matsalwa ya nkongomiso wa swibyariwa lama nga si kamberiwa",
+      "ve": "Sedzani nyendedzi dza zwiliṅwa dzi sa athu u khwaṱhisedzwa"
+    },
+    {
+      "english": "Read the full source cautions in the guidance PDF. Translations still need review.",
+      "zu": "Funda izixwayiso eziphelele zomthombo ku-PDF yeziqondiso. Ukuhumusha kusadinga ukubuyekezwa.",
+      "st": "Bala ditemoso tsohle tsa mohlodi ho PDF ya tataiso. Diphetolelo di ntse di hloka tlhahlobo.",
+      "ts": "Hlaya switsundzuxo hinkwato swa xihlovo eka PDF ya nkongomiso. Vuhundzuluxeri bya ha lava ku kamberiwa.",
+      "ve": "Vhalani tsevho dzo fhelelaho dza tshiko kha PDF ya nyendedzi. Ṱhalutshedzelo dzi kha ḓi ṱoḓa u sedzwa."
     }
   ],
   "historyBefore": [

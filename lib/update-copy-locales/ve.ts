@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "More crop guidance now has unreviewed translations in four languages.": "Dziṅwe nyendedzi dza zwiliṅwa zwino dzi na ṱhalutshedzelo dzi sa athu u sedzwa nga nyambo nṋa.",
+  "Food-use cautions and trial figures stay with their source.": "Tsevho dza u shumisa sa zwiḽiwa na mbalo dza ndingo zwi dzula na tshiko tshazwo.",
+  "Review crop guidance drafts": "Sedzani nyendedzi dza zwiliṅwa dzi sa athu u khwaṱhisedzwa",
+  "Read the full source cautions in the guidance PDF. Translations still need review.": "Vhalani tsevho dzo fhelelaho dza tshiko kha PDF ya nyendedzi. Ṱhalutshedzelo dzi kha ḓi ṱoḓa u sedzwa.",
   "Farm guidance PDFs now include more unreviewed translation drafts.": "Dzi-PDF dza nyeletshedzo ya bulasi zwino dzi katela miṅwe mvetamveto ya ṱhalutshedzelo i sa athu u sedzuluswa.",
   "Some farm guidance and crop screens still use English.": "Iṅwe nyeletshedzo ya bulasi na zwikirini zwa zwiliṅwa zwi kha ḓi shumisa Luisimane.",
   "Check draft farm guidance": "Ṱolani mvetamveto ya nyeletshedzo ya bulasi",

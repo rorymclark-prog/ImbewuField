@@ -1,0 +1,320 @@
+{
+  "scope": "Actual full source guidance in all four languages:48new original fields across9representative species, including unopened heads, held human-food use, flowering versus picking, paired trial figures, forage versus food, marketable versus total weights, losses versus weighed harvest and food qualification/preparation limits. Source identities and original citations retained. Whole app unfinished; drafts unreviewed.",
+  "rows": [
+    {
+      "file": "en-after-normal.pdf",
+      "pages": 5,
+      "wordBounds": 1662,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 0,
+      "pixelHashes": [
+        "7c7574a7496df1c5891c835af654b1eade5e6c2783f5069717111119059a6b8f",
+        "372b00a436b1c99ee17b267be137c206cb08c68f5ce12d99ce97087abb01f7a6",
+        "273e5ea045962e15205fb922f90bdcf618a8118578d22cd2547b00ed321ba55f",
+        "da97dd9e20cf0eff25ca73a5df46b16a95a6783e83dd2ff5d3a443a4b94301c5",
+        "c4dff5c6342670b7c6b02d4d175f917df7271ca8c675e43d873c697e8626de91"
+      ]
+    },
+    {
+      "file": "en-after-unknown-records.pdf",
+      "pages": 3,
+      "wordBounds": 832,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 0,
+      "pixelHashes": [
+        "4c23a16d523feda95c6569d885ae44398e937a81a7d3d5fe85f4ff30e9a8b45c",
+        "583f34c91535a0fbe17e2918dd760753133be9ea9c31cdde8dbf501e78278e4b",
+        "26b8e49bf356951820945a6eb51742117135b4e3ca634da646b223dbae945d6c"
+      ]
+    },
+    {
+      "file": "st-human-food-hold-and-flowering.pdf",
+      "pages": 3,
+      "wordBounds": 1472,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 58,
+      "pixelHashes": [
+        "6dff96115aca2f468ee7719f39d2640e8fc715c303edfb6d296d0d0bc7fdadae",
+        "e43fb3bbc32d960a83de7f40ad2c4ee4d467eb5acacbb1d759186c3de8806e1d",
+        "1267387bd2d3b055e1017ae8dde76f90ca46ef5a1f91c766c7727f6a4c10a31f"
+      ]
+    },
+    {
+      "file": "st-paired-trials-and-food-qualification.pdf",
+      "pages": 5,
+      "wordBounds": 2382,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 57,
+      "pixelHashes": [
+        "6dff96115aca2f468ee7719f39d2640e8fc715c303edfb6d296d0d0bc7fdadae",
+        "d3fb277e199c26a4ffdb6906f99e38ba83b9f93768c196dede404f75dafaf7bf",
+        "b8097a0317da42eba17b49a5f7eac1fcd7e6525b42f192faea865700e8f49c8d",
+        "cdc45ee417283fd4d64e8b16425dafcbddc425f4abc53bb583e32ef0f34c4cf5",
+        "f1cd2c2655c00ccec999a8b02c9f865e5df1499e24d58e219859bb9c2e90cd67"
+      ]
+    },
+    {
+      "file": "st-unopened-heads-and-comparative-figs.pdf",
+      "pages": 3,
+      "wordBounds": 1393,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 44,
+      "pixelHashes": [
+        "6dff96115aca2f468ee7719f39d2640e8fc715c303edfb6d296d0d0bc7fdadae",
+        "ed0705fbdc883702a93f4ae52f5fc341635cd6d4fa37e7aea7194d7d2d4a5dd4",
+        "1d6caf16e57a1c1b283d19288d2f2e75a3877627dd7fa25d7580c0aa5bed0171"
+      ]
+    },
+    {
+      "file": "ts-human-food-hold-and-flowering.pdf",
+      "pages": 3,
+      "wordBounds": 1487,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 58,
+      "pixelHashes": [
+        "52d992dc43fbeecf9e08e1bfd2fbc7221858529836b5191179b560d25035274f",
+        "e366c1c74bfbc49f4e19f2c6251b68003bcc102ca31ddc586ee3caa45078d9d2",
+        "61ba2a802d0d691cec0056702a7acf1744348da018138b7f03034d62e0b12085"
+      ]
+    },
+    {
+      "file": "ts-paired-trials-and-food-qualification.pdf",
+      "pages": 5,
+      "wordBounds": 2412,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 57,
+      "pixelHashes": [
+        "52d992dc43fbeecf9e08e1bfd2fbc7221858529836b5191179b560d25035274f",
+        "e16ce233d2a24de22b89a7e76344563eb51c8f33fe85efbf21536328c8931fc7",
+        "0e64cf8a15683b701954cff23fde2901cf2751aee9e5ccf68ef0174cbe547711",
+        "022a150e91423fe5e467634917e9697e9793154adf9f95c6f99a1ccae591df9c",
+        "5fef39efcbdfece96d36ccce8dd875a560c34202a012128676056f8288d5e77b"
+      ]
+    },
+    {
+      "file": "ts-unopened-heads-and-comparative-figs.pdf",
+      "pages": 3,
+      "wordBounds": 1385,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 44,
+      "pixelHashes": [
+        "52d992dc43fbeecf9e08e1bfd2fbc7221858529836b5191179b560d25035274f",
+        "9c24c32316b4ab9a91143cf272bcb636c1b51ada3ae9b8e882390021a7deafb1",
+        "aa96958352599fdd03284cc60bd6fe934070f7ad85c8f68cae70ffae32e378e0"
+      ]
+    },
+    {
+      "file": "ve-human-food-hold-and-flowering.pdf",
+      "pages": 3,
+      "wordBounds": 1565,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 58,
+      "pixelHashes": [
+        "75fce1d7a171005120a8f234a86fb11b37c137d449df13f284450116c974f4e4",
+        "4d3571118aa5790e4d2228729f5eb49c531a1bcdfccf8854fb3854686ad1184c",
+        "9db20663628cb4d43777c5168e37dce09e71b221882a2b654ff019ecee045369"
+      ]
+    },
+    {
+      "file": "ve-paired-trials-and-food-qualification.pdf",
+      "pages": 5,
+      "wordBounds": 2508,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 57,
+      "pixelHashes": [
+        "75fce1d7a171005120a8f234a86fb11b37c137d449df13f284450116c974f4e4",
+        "313aded608c2e7cb50adb0b5ac55a2a1c4ac235d006918d688cab2d3284d87ca",
+        "8c96599239f8d8d961d415f6a548872435f641a32a87809c35bbf8a6a72c470f",
+        "5a898454c42a91d4622f9078b8511ec5d4125fe8beb4ff4eb8debe80e0ac2016",
+        "6c406a3c8d4eb0c01fc9f69543ac2dbc29c60567d3ff84a324ba852f6bfba4ae"
+      ]
+    },
+    {
+      "file": "ve-unopened-heads-and-comparative-figs.pdf",
+      "pages": 3,
+      "wordBounds": 1461,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 44,
+      "pixelHashes": [
+        "75fce1d7a171005120a8f234a86fb11b37c137d449df13f284450116c974f4e4",
+        "e8de2a03b72e47320594dc8e708f08fcce4e37900c2bb73c4193188180340875",
+        "dc3bdbbdd269b570b82680a71994c85ea507b1f9eaa89871cff4f6d3ef9d5665"
+      ]
+    },
+    {
+      "file": "zu-human-food-hold-and-flowering.pdf",
+      "pages": 3,
+      "wordBounds": 874,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 58,
+      "pixelHashes": [
+        "d997d456bc3f286b0c2fe5fe8081a93ac2b121a222567f10a892e55a091de79b",
+        "58915485df35317016b476f5d700bf61245b9f0f32bcd5d14373ef83357ef364",
+        "e4c198da6f7ff6f691d820ff31234cdbebaabc050119820a8187554d9cffa796"
+      ]
+    },
+    {
+      "file": "zu-paired-trials-and-food-qualification.pdf",
+      "pages": 5,
+      "wordBounds": 1561,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 57,
+      "pixelHashes": [
+        "d997d456bc3f286b0c2fe5fe8081a93ac2b121a222567f10a892e55a091de79b",
+        "b065113597cfc816dbe18e712c2e8fe25e57f49977976cc124d3690817df4d43",
+        "6aa96f69b672adb6f0e933d7a69e50f5d356c8a09dae62ddf83404ad2cdd0e64",
+        "be4b0082fd4283f49e5d58611505060f9927fbd1847b91d58d08f00226f6ee25",
+        "f5fd75fe2eb1043c9626d01e32574e4247a0414c12f3bc84808143481965e26a"
+      ]
+    },
+    {
+      "file": "zu-unopened-heads-and-comparative-figs.pdf",
+      "pages": 3,
+      "wordBounds": 877,
+      "clipped": [],
+      "parserErrors": "",
+      "fullSourceClauses": 44,
+      "pixelHashes": [
+        "d997d456bc3f286b0c2fe5fe8081a93ac2b121a222567f10a892e55a091de79b",
+        "805c0fa6f3c985a0d38b60e0093e2d6206c587906d601354254757f95164089f",
+        "828ddb0c5e0b9fb226eb896351e488a28bbc4aa21861cbb3f092039efb008351"
+      ]
+    }
+  ],
+  "english": {
+    "normal": {
+      "samePixels": true,
+      "sameText": true
+    },
+    "unknown-records": {
+      "samePixels": true,
+      "sameText": true
+    }
+  },
+  "visualInspection": "Inspected all12native contact sheets and enlarged Stlupin p4, Tslablab p2, Veheld-food p2 and Zuartichoke p2. No observed page-furniture collision or clipping. Long source conditions and original publication identities remain. No fluent-language approval or whole-app runtime claim.",
+  "nativePageCautions": {
+    "rows": [
+      {
+        "file": "zu-unopened-heads-and-comparative-figs",
+        "pages": 3,
+        "fullCautions": true
+      },
+      {
+        "file": "zu-human-food-hold-and-flowering",
+        "pages": 3,
+        "fullCautions": true
+      },
+      {
+        "file": "zu-paired-trials-and-food-qualification",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "st-unopened-heads-and-comparative-figs",
+        "pages": 3,
+        "fullCautions": true
+      },
+      {
+        "file": "st-human-food-hold-and-flowering",
+        "pages": 3,
+        "fullCautions": true
+      },
+      {
+        "file": "st-paired-trials-and-food-qualification",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-unopened-heads-and-comparative-figs",
+        "pages": 3,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-human-food-hold-and-flowering",
+        "pages": 3,
+        "fullCautions": true
+      },
+      {
+        "file": "ts-paired-trials-and-food-qualification",
+        "pages": 5,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-unopened-heads-and-comparative-figs",
+        "pages": 3,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-human-food-hold-and-flowering",
+        "pages": 3,
+        "fullCautions": true
+      },
+      {
+        "file": "ve-paired-trials-and-food-qualification",
+        "pages": 5,
+        "fullCautions": true
+      }
+    ]
+  },
+  "newClauseOccurrences": 192,
+  "focusedChecks": {
+    "passed": 141,
+    "failed": 0,
+    "files": 8,
+    "typecheckExit": 0,
+    "fullRequiredRun": "Pending for this batch; inherited full success is not a new-batch pass."
+  },
+  "remainingSourceInventory": {
+    "fields": 801,
+    "prose": 390,
+    "pureProvenanceNames": 3,
+    "wholeAppComplete": false
+  },
+  "assets": {
+    "ve-human-food-hold-and-flowering.pdf": "2ed30960495c39ac3201fbc156e82d413eb5c95bde489a08be5ec58a6b6e45f2",
+    "zu-paired-trials-and-food-qualification.pdf": "3a0debb2318908c0652f8e084500b393a4517cad0cb39de2252830ea7afbf4ca",
+    "st-paired-trials-and-food-qualification-enlarged-page-4.png": "6d7eed7f01cbddbca4ce7d70b5a94f898b555f0446323f6c5fa4d783e2e35db6",
+    "ve-paired-trials-and-food-qualification.pdf": "37eb02a6f33feefe7456bc9dc0fb65d1f3b5ef1a0c1187da9a2e994c22dd41bd",
+    "st-unopened-heads-and-comparative-figs-contact.png": "099abce672a96615661039b82898fa8d0d3e2ad166eb4f68e6b3f10d22bfec2b",
+    "ve-human-food-hold-and-flowering-enlarged-page-2.png": "ff313d3eb380b89691519fccbab0057c375cea18f892a9b323b7cd30dfbb4a65",
+    "zu-unopened-heads-and-comparative-figs.pdf": "4f72c1f2048ace9657ed4de0a8e621d5e0e46f5cf3171a3a6ecfb5f90de6ac33",
+    "ve-unopened-heads-and-comparative-figs.pdf": "658486d972f9d90d62b7c8c6945edcc1e8d03c6620f2731fc46bf80a3d9597ea",
+    "ts-human-food-hold-and-flowering.pdf": "e443ff4a9c17cfd14a0018ce4b0c094bf6f611910b1b7e17f6971a50abc77297",
+    "ve-unopened-heads-and-comparative-figs-contact.png": "6a7ce677aa0ee3e29c2a5ebb0991c022a6441b4bf3dee87f36f196bde8644eef",
+    "zu-human-food-hold-and-flowering.pdf": "4b0a53b59791c42f33be2a785510abf5ad6e30736ecc0991f22b15cfd114bf5f",
+    "zu-unopened-heads-and-comparative-figs-contact.png": "b71787fafdfeac82983d03ffd41ef09bb2c1a2511af8a4e5f48cd46b55b14f83",
+    "ts-human-food-hold-and-flowering-contact.png": "00a83ccfe57603d20b1f86301328609383313a901daa15520b171a0654f5af73",
+    "en-after-unknown-records.pdf": "e1d09bedda72dca9f1e800d862670dfc4d74b811cb088af54a112c468b1a7a68",
+    "en-after-normal.pdf": "e895072969dcddea415d2e64897caf99023de3034110e33072abe8db6f2f92c5",
+    "ve-paired-trials-and-food-qualification-contact.png": "5662aa23d8bd8742b2225f91503c9e9692a66716eacca6a3aa575516a8b85757",
+    "ts-paired-trials-and-food-qualification.pdf": "a58f680c7da1d36467494a0e58646b9cc12a86a7f189842bc9c4499f308935a7",
+    "st-human-food-hold-and-flowering.pdf": "31e90b27c5cb601e499e0a4c933dbf69f01cc37325d314236287d0eab7cd2bba",
+    "ts-paired-trials-and-food-qualification-enlarged-page-2.png": "4023ee0ac9de63d8988a113b706cd15b7c7b70d9e1a3a33c1ace50cc23314bfd",
+    "en-after-normal-contact.png": "d44d130d6c1fb54eb998afc8ee851700894e333fd80930a09bf5e7158556ee7d",
+    "ts-paired-trials-and-food-qualification-contact.png": "c7ec7b441388111026b6f1ecd05091b3720b9875d4adc846cc1c89495ace0c1e",
+    "ve-human-food-hold-and-flowering-contact.png": "79e8b1a9af50b9341124c77a751f1bd7d5d96715f8840033c6ba5cff3438c742",
+    "zu-human-food-hold-and-flowering-contact.png": "abb9163b71d8e2881b6f531570466a94089d94e49a8065b983584ed28c0f50e8",
+    "st-paired-trials-and-food-qualification.pdf": "817f46962fe41876d514c0f313d15a58750032ba41f503597f28a70735a9acc7",
+    "st-unopened-heads-and-comparative-figs.pdf": "21ca8bcdb08d461b396cb6a9f9eabb8398f8b40958a2c1e8ad33fe48cda2f172",
+    "zu-paired-trials-and-food-qualification-contact.png": "a64c729657ce48a81a9b5f132aeac63e38bf7e5b48f6c62a8f3867eccf8a2971",
+    "ts-unopened-heads-and-comparative-figs-contact.png": "fcd29b43f0a88a15ecc5ce6f18948cbc08a64d16e57718617eee0d11e9a16c1b",
+    "st-human-food-hold-and-flowering-contact.png": "3215a75bd9c606a3d355179b830ce0c876ebf3518d56c3330ec393f27697161a",
+    "st-paired-trials-and-food-qualification-contact.png": "863e096e019e544250d09399b0eed65ef50bcfbe7186b7246a961230a07a914b",
+    "en-after-unknown-records-contact.png": "5bc621c3d837268b71a5d67af80472f7e113b22e54c302f12314ebcccd5faa6e",
+    "zu-unopened-heads-and-comparative-figs-enlarged-page-2.png": "aa0783dcde9d8a85b5961264d113f9cca13fff183991b73b05a03c320fad4fa3",
+    "ts-unopened-heads-and-comparative-figs.pdf": "8d0a8244d6a59aef1f83a692812ccb3b0abe99193d4fe20b029fc9332448e600"
+  }
+}
