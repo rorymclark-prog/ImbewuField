@@ -32,6 +32,7 @@ import {
   HARD_FROST_COLDEST_MONTH_C,
   LIGHT_FROST_COLDEST_MONTH_C,
 } from '@/lib/koppen-global';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 
 export type GrowingZoneId =
   | 'highveld'
@@ -72,6 +73,26 @@ export function growingZoneLabel(zones: readonly GrowingZoneId[]): string {
   const names = zones.map((z) => GROWING_ZONES[z].name);
   if (names.length <= 1) return names[0] ?? '';
   return `${names.slice(0, -1).join(', ')} or ${names[names.length - 1]}`;
+}
+
+/**
+ * A zone name or a joined area label ("Highveld or Midlands / Mistbelt") for the screen. Regional
+ * proper names (Highveld, Western Cape …) are kept as people say them; the descriptive ones and
+ * the word "or" are translated for an isiXhosa reader. Everyone else gets the label unchanged.
+ */
+export function growingAreaText(lang: string, area: string): string {
+  if (lang !== 'xh') return area;
+  const fixed = inlineText(lang, area);
+  if (fixed !== area) return fixed;
+  const or = area.lastIndexOf(' or ');
+  const names = (or > 0 ? [...area.slice(0, or).split(', '), area.slice(or + 4)] : [area]).map((name) => inlineText(lang, name));
+  if (names.length <= 1) return names[0] ?? '';
+  return inlineTemplate(lang, '{names} or {last}', null, { names: names.slice(0, -1).join(', '), last: names[names.length - 1] });
+}
+
+/** growingZoneLabel for the screen. */
+export function growingZoneLabelText(zones: readonly GrowingZoneId[], lang: string): string {
+  return growingAreaText(lang, growingZoneLabel(zones));
 }
 
 /** Share of the year's rain falling Oct-Mar (southern hemisphere) — koppen-global's summer half. */

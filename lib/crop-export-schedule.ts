@@ -26,6 +26,8 @@ import type { SiteSurvey } from '@/lib/site-survey';
 import { productionNeedsReview } from '@/lib/site-survey';
 import { cropVarietyRecord, varietiesForSite, type VarietySource } from '@/lib/crop-varieties';
 import { growingZoneLabel, type GrowingZoneId } from '@/lib/growing-zones';
+import { inlineBuilt } from '@/lib/xh-inline-match';
+import { HOUSING_LABEL } from '@/lib/animal-enterprises';
 import { observedFrostConflictsForPlanting } from '@/lib/crop-autosuggest';
 import {
   bedEntryMonth,
@@ -746,4 +748,45 @@ export function buildProductionGuide(survey: SiteSurvey | null, plantings: reado
     ], sources: links }];
   });
   return { area: zones.length ? growingZoneLabel(zones) : 'Growing area not resolved', siteObservations, recordedProduction, cropChoices, ...(products ? buildProductGuidance(products, zones, conditions) : {}) };
+}
+
+// ── The same guide, read in isiXhosa ────────────────────────────────────────────────────
+//
+// buildProductionGuide's English is shared with the printed plan and the tests, so it is not
+// translated where it is built. The screen asks productionGuideText for each title and line
+// instead: a fixed sentence is looked up by its exact English, and a sentence that carries a
+// value (a month list, a recorded variety, a quantity) is matched against the template below and
+// filled again with the same value. English readers, and anything that matches nothing, get the
+// English back.
+const GUIDE_TEMPLATES = [
+  'Frost has been observed here in {months}. Check frost-tender crops against these observations.',
+  'Frost has been observed here; months not recorded. Check frost-tender crops against these observations.',
+  'Sun: {state}.',
+  'Drainage: {state}. Soil-test results and crop-specific needs still need checking.',
+  'Farmer-reported annual total for {year}: {qty}.',
+  'Farmer-reported annual total - reporting year not recorded: {qty}.',
+  'Household use: {used}. Sold: {sold}.',
+  'Reported harvest months: {months}. These are survey observations, not a new production forecast.',
+  'Recorded variety: {variety}.',
+  'Research shortlist for similar climates: {list}.',
+  'Buying advice: {text}',
+  '{housing}: choose the product',
+] as const;
+
+export function productionGuideText(lang: string, english: string): string {
+  const translated = inlineBuilt(lang, english, GUIDE_TEMPLATES, (name, captured) => {
+    // Fixed phrases inside a value ("not recorded", "full sun reported"); names and numbers stay.
+    if (name === 'qty' || name === 'used' || name === 'sold') {
+      return captured.endsWith(' (unit not recorded)')
+        ? captured.slice(0, -'(unit not recorded)'.length) + inlineBuilt(lang, '(unit not recorded)', [])
+        : inlineBuilt(lang, captured, []);
+    }
+    if (name === 'state' || name === 'months' || name === 'variety' || name === 'text' || name === 'housing') return inlineBuilt(lang, captured, []);
+    return captured;
+  });
+  if (translated !== english || lang !== 'xh') return translated;
+  // "Chickens: Laying hens (commercial)" — the structure's name is drafted, the enterprise name is kept.
+  const colon = english.indexOf(': ');
+  const head = colon > 0 ? english.slice(0, colon) : '';
+  return head && (Object.values(HOUSING_LABEL) as string[]).includes(head) ? `${inlineBuilt(lang, head, [])}${english.slice(colon)}` : english;
 }

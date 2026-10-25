@@ -40,7 +40,7 @@ export default function ReportCropPlan({ crop, siteName, includeWorking, onInclu
   const calendar = s ? reportSowingCalendar(s) : null;
   const symbol = (cell: { sow: boolean; transplant: boolean }) => `${cell.sow ? 'S' : ''}${cell.sow && cell.transplant ? ' / ' : ''}${cell.transplant ? 'T' : ''}`;
   const title = (cell: { sow: boolean; transplant: boolean }) => [cell.sow ? tr('Sow seed', 'Hlwanyela imbewu') : '', cell.transplant ? tr('Check seedlings; transplant when ready', 'Hlola izithombo; tshala uma sezilungile') : ''].filter(Boolean).join('; ');
-  return <section className={styles.section} aria-label="Sowing calendar">
+  return <section className={styles.section} aria-label={inlineText(language, 'Sowing calendar')}>
     <h2>{tr('Seasonal sowing calendar', 'Ikhalenda lokuhlwanyela lezinkathi zonyaka')}</h2>
     <p className={styles.note}>{s ? `${tr('Saved plan', 'Uhlelo olugciniwe')} · ${new Date(s.capturedAt).toLocaleDateString('en-ZA')}` : tr('This older report has a crop summary without dated planting records.', 'Lo mbiko omdala unesifinyezo sezitshalo ngaphandle kwamarekhodi anezinsuku.')}</p>
     {changed && <p className={styles.notice}>{tr('The current crop plan has changed. This calendar keeps the plan saved with this report.', 'Uhlelo lwamanje lushintshile. Leli khalenda ligcina uhlelo olwalugcinwe nalo mbiko.')}</p>}

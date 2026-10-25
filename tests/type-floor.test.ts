@@ -92,6 +92,8 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  // Fixed English on server-rendered pages (teach-the-teachers, /partners) that follows the language; renders text only.
+  'components/InlineText.tsx': 'isiXhosa inline text wrapper; renders only the text it is given, no type of its own',
   // Added with wave 15 (code-10): the exchange, community, contact and prices captions.
   'app/community/messages/[threadId]/page.tsx': 'wave 15 code-10: the community message thread; no sub-12px type',
   'app/community/page.tsx': 'wave 15 code-10: the community board; no sub-12px type',

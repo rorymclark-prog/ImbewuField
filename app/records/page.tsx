@@ -55,6 +55,7 @@ import { countsWithScope, loadIncludePerennials, DEFAULT_INCLUDE_PERENNIALS } fr
 import { produceDisplayName } from '@/lib/perennial-produce';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useLanguage, translate } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { activeAccountUid } from '@/lib/account-local-storage';
 import {
   EXPENSE_RECEIPT_ACCEPT, expenseReceiptScope, receiptScopeIsCurrent,
@@ -892,7 +893,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          {isIn && <div className="col-span-2"><RecordQuantityFields idPrefix={alwaysOpen ? 'ledger-modal-sale' : 'ledger-sale'} label="Quantity sold" quantity={form.quantity} unit={form.unit} onQuantityChange={(quantity) => setForm((f) => ({ ...f, quantity }))} onUnitChange={(unit) => setForm((f) => ({ ...f, unit }))} /></div>}
+          {isIn && <div className="col-span-2"><RecordQuantityFields idPrefix={alwaysOpen ? 'ledger-modal-sale' : 'ledger-sale'} label={inlineText(lang, 'Quantity sold')} quantity={form.quantity} unit={form.unit} onQuantityChange={(quantity) => setForm((f) => ({ ...f, quantity }))} onUnitChange={(unit) => setForm((f) => ({ ...f, unit }))} /></div>}
           <div className="col-span-2">
             <label htmlFor={`${idPrefix}-price`} className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>{recordsText(lang, 'Amount (R)', 'Inani (R)')}</label>
             <input id={`${idPrefix}-price`} type="number" placeholder="0.00" step="0.01" min="0"

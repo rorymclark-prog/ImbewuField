@@ -18,6 +18,7 @@ import {
   translatedDesignStepLabel,
 } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { STEP_ORDER, LessonPanel } from './DesignWizard';
 import SpeakButton from '@/components/SpeakButton';
 import TankCalculator from './TankCalculator';
@@ -236,8 +237,8 @@ export default function StepGuide({
           <button
             type="button"
             onClick={onHide}
-            title="Hide the step guide — bring it back with “hidden” next to the handle"
-            aria-label="Hide the step guide"
+            title={inlineText(lang, 'Hide the step guide — bring it back with “hidden” next to the handle')}
+            aria-label={inlineText(lang, 'Hide the step guide')}
             style={{
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
               width: 26, height: 26, flexShrink: 0,

@@ -33,7 +33,7 @@ import MiniPlanPlate from '@/components/MiniPlanPlate';
 import { planValue } from '@/lib/plan-value';
 import { miniPlanFromCanvas, miniPlanFromFacilitator, type MiniPlan } from '@/lib/mini-plan';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
-import { bananaCirclesIn, buildTreeAvailability, confirmedTreeMonths, formatMonthSpan, formatRange, isHouseholdFoodHarvest, loadTreeSeasonChoices, placedTreeGroups, saveTreeSeasonChoices, sourcedSeasonMonths, treePickingByMonth, treePickingPhrase, unidentifiedPlantGroups, type PlacedTreeGroup, type TreeAvailabilityItem, type TreePickingLine, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
+import { bananaCirclesIn, buildTreeAvailability, confirmedTreeMonths, formatMonthSpan, formatRange, isHouseholdFoodHarvest, loadTreeSeasonChoices, placedTreeGroups, saveTreeSeasonChoices, sourcedSeasonMonths, treePickingByMonth, treePickingPhrase, treePickingPhraseText, unidentifiedPlantGroups, type PlacedTreeGroup, type TreeAvailabilityItem, type TreePickingLine, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
 import { DEFAULT_INCLUDE_PERENNIALS, loadIncludePerennials, saveIncludePerennials } from '@/lib/produce-scope';
 import { ANIMAL_ENTERPRISES, ANIMAL_LABEL, animalReferenceQualifier, formatAmountRange, DEFAULT_INCLUDE_ANIMALS, PRODUCT_LABEL, buildAnimalAvailability, loadAnimalSeasonChoices, loadEnterpriseChoices, loadIncludeAnimals, placedAnimalGroups, poultryGuidance, saveAnimalSeasonChoices, saveEnterpriseChoices, saveIncludeAnimals, sourcedProductMonths, type AnimalAvailabilityItem, type AnimalKind, type AnimalSeasonChoices, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
 import AnimalEnterprisesCard, { PRODUCT_ICON } from '@/components/crops/AnimalEnterprisesCard';
@@ -226,7 +226,7 @@ function TreePickingList({ lines }: { lines: TreePickingLine[] }) {
       </div>
       <div className="space-y-0.5 mt-1">
         {lines.map((line) => (
-          <div key={line.speciesId} className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45 }}>{treePickingPhrase(line)}</div>
+          <div key={line.speciesId} className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45 }}>{treePickingPhraseText(line, lang)}</div>
         ))}
       </div>
       <div className="font-sans mt-1" style={{ fontSize: 10.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>

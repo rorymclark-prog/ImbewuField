@@ -20,7 +20,7 @@ function sourceFiles(dir: string, out: string[] = []): string[] {
   for (const name of readdirSync(dir)) {
     const path = join(dir, name);
     if (statSync(path).isDirectory()) { if (name !== 'locales' && name !== 'node_modules') sourceFiles(path, out); }
-    else if (/\.(tsx?|mjs)$/.test(name)) out.push(path);
+    else if (/\.(tsx?|mjs|json)$/.test(name)) out.push(path); // JSON course data (e.g. lib/course-finance-project.json) is shown through the same lookups
   }
   return out;
 }

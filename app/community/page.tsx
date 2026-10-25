@@ -494,7 +494,7 @@ function NewBoardPostForm({ myAreaText, simple, onPosted, onCancel }: { myAreaTe
       <div>
         {photoUrl ? (
           <div style={{ position: 'relative', width: 80, height: 80 }}>
-            <img data-photo-preview src={photoUrl} alt="Selected photo preview" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 10 }} />
+            <img data-photo-preview src={photoUrl} alt={inlineText(lang, 'Selected photo preview')} style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 10 }} />
             <button onClick={() => setPhotoUrl(null)} aria-label={copyCommunity('Remove photo', lang)} style={{ position: 'absolute', top: 2, right: 2, background: 'rgba(0,0,0,0.55)', border: 'none', borderRadius: '50%', width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
               <X size={12} color="#fff" />
             </button>

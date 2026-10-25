@@ -139,7 +139,11 @@ test('existing October and November pickings cannot be contradicted by a separat
     if (ts.isJsxElement(node) && node.openingElement.attributes.properties.some(property =>
       ts.isJsxAttribute(property) && property.name.getText(foodCard) === 'className'
         && property.initializer?.getText(foodCard).includes('font-display'))) {
-      headingLabels.push(node.children.filter(ts.isJsxText).map(child => child.text.trim()).join(''));
+      // A heading may be plain JSX text or an isiXhosa-aware call: {ui('Year of food')} / {inlineText(lang, 'Year of food')}.
+      const literalOf = (expression: ts.Expression): string => ts.isCallExpression(expression)
+        ? expression.arguments.filter(ts.isStringLiteralLike).map(argument => argument.text).slice(-1).join('') : '';
+      headingLabels.push(node.children.map(child => ts.isJsxText(child) ? child.text.trim()
+        : ts.isJsxExpression(child) && child.expression ? literalOf(child.expression) : '').join(''));
     }
     ts.forEachChild(node, findHeadings);
   };

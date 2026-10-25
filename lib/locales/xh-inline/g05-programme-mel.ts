@@ -207,7 +207,6 @@ const drafts: Record<string, string> = {
   "Harvest logged": "Isivuno esirekhodiweyo",
   "Recorded sales": "Intengiso erekhodiweyo",
   "Cohorts": "Amaqela",
-  "The controls here are in isiXhosa. The analysis text, tables and PDF details are still in English. Names and evidence are kept as recorded.": "Izilawuli zalapha zisesiXhosa. Umbhalo wohlalutyo, iitafile neenkcukacha ze-PDF zisesesiNgesini. Amagama nobungqina zigcinwa njengoko zirekhodiwe.",
   "English source:": "Umthombo wesiNgesi:",
   "No reported measure yet": "Akukabikho mlinganiselo ubikiweyo",
   "Not yet recorded": "Akukarekhodwa",

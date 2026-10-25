@@ -8,8 +8,8 @@ import CourseSyllabus from '@/components/studies/CourseSyllabus';
 import FullToolsOnly from '@/components/studies/FullToolsOnly';
 import { FinanceZuText, FinanceZuCourseNotice } from '@/components/studies/FinanceZu';
 import styles from '@/components/studies/FinanceCourse.module.css';
-import ArrowLabel from '@/components/studies/ArrowLabel';
 import StudyHeader from '@/components/studies/StudyHeader';
+import Tx, { TxArrow, TxImg } from '@/components/studies/Tx';
 
 export const metadata = { title: 'Farm Finance — ImbewuField teaching preview', robots: { index: false, follow: false } };
 
@@ -19,20 +19,20 @@ export default function FarmFinancePage() {
     <main className={styles.main}>
       <section className={styles.hero}>
         <div className={styles.heroText}>
-          <p className={styles.eyebrow}>Farm Finance · English teaching preview</p>
-          <h1>Understand the money.{' '}<br />Plan the next season.</h1>
-          <p>From your first farm record to a checked business plan. Read, work through examples and practise with a notebook, calculator and the app.</p>
-          <p><strong>8 units · 24 lessons</strong> · Take this course on its own, or alongside permaculture.</p>
-          <div className={styles.actions}><OfflinePageLink className={styles.primary} href="/student/finance/f1-1"><ArrowLabel>Start with farm and household money</ArrowLabel></OfflinePageLink><a href="#syllabus">See every lesson</a></div>
+          <p className={styles.eyebrow}><Tx en="Farm Finance · English teaching preview" /></p>
+          <h1><Tx en="Understand the money." />{' '}<br /><Tx en="Plan the next season." /></h1>
+          <p><Tx en="From your first farm record to a checked business plan. Read, work through examples and practise with a notebook, calculator and the app." /></p>
+          <p><strong><Tx en="8 units · 24 lessons" /></strong> · <Tx en="Take this course on its own, or alongside permaculture." /></p>
+          <div className={styles.actions}><OfflinePageLink className={styles.primary} href="/student/finance/f1-1"><TxArrow en="Start with farm and household money" /></OfflinePageLink><a href="#syllabus"><Tx en="See every lesson" /></a></div>
         </div>
-        <img src="/studies-guides/expense-record.jpg" alt="Illustrated homestead record-keeping scene with a grower, notebook and source documents" width={1672} height={941} />
+        <TxImg src="/studies-guides/expense-record.jpg" alt="Illustrated homestead record-keeping scene with a grower, notebook and source documents" width={1672} height={941} />
       </section>
-      <aside className={`${styles.notice} ${styles.projectNotice}`}><p><strong>Teaching preview.</strong> Content review, learner trials and final assessment remain in preparation.</p><details><summary>More<ChevronDown className={styles.chevron} size={20} aria-hidden="true" /></summary><p>English lesson drafts and worked practice are available. Content review, learner trials, narration, translation and final assessment remain in preparation.</p></details><FinanceZuCourseNotice /></aside>
+      <aside className={`${styles.notice} ${styles.projectNotice}`}><p><strong><Tx en="Teaching preview." /></strong> <Tx en="Content review, learner trials and final assessment remain in preparation." /></p><details><summary><Tx en="More" /><ChevronDown className={styles.chevron} size={20} aria-hidden="true" /></summary><p><Tx en="English lesson drafts and worked practice are available. Content review, learner trials, narration, translation and final assessment remain in preparation." /></p></details><FinanceZuCourseNotice /></aside>
       <FinanceReadingChecklist lessonIds={FINANCE_LESSONS.map(e => e.lesson.id)} />
       <section className={styles.section}>
-        <h2>Learn by doing</h2>
-        <p>Each unit has a plain-language explanation, worked examples and practice to discuss with a facilitator or learning partner. Use the supplied practice figures; keep your household and customer details private.</p>
-        <p>The figures are invented classroom examples, not local prices, promised earnings or recommendations for your farm. Each unit supplies its own case and opening balances.</p>
+        <h2><Tx en="Learn by doing" /></h2>
+        <p><Tx en="Each unit has a plain-language explanation, worked examples and practice to discuss with a facilitator or learning partner. Use the supplied practice figures; keep your household and customer details private." /></p>
+        <p><Tx en="The figures are invented classroom examples, not local prices, promised earnings or recommendations for your farm. Each unit supplies its own case and opening balances." /></p>
       </section>
       <CourseSyllabus
         id="syllabus"
@@ -48,20 +48,20 @@ export default function FarmFinancePage() {
           start: (unit.number - 1) * 3 + 1,
         }))}
         basePath="/student/finance"
-        eyebrowPrefix="Unit"
-        continueEyebrow="Continue here"
-        seeAllLabel="See all units"
+        eyebrowPrefix={<Tx en="Unit" />}
+        continueEyebrow={<Tx en="Continue here" />}
+        seeAllLabel={<Tx en="See all units" />}
       />
       <FullToolsOnly>
         <section className={styles.section}>
-          <h2>A proposed ten-day course</h2>
+          <h2><Tx en="A proposed ten-day course" /></h2>
           <div className={styles.dayList}>
-            <div><h3>Days 1–8</h3><p>One unit each day, mixing explanation, guided practice and an independent attempt.</p></div>
-            <div><h3>Days 9–10</h3><p>A supported project, then practical assessment, feedback and another attempt where needed.</p></div>
+            <div><h3><Tx en="Days 1–8" /></h3><p><Tx en="One unit each day, mixing explanation, guided practice and an independent attempt." /></p></div>
+            <div><h3><Tx en="Days 9–10" /></h3><p><Tx en="A supported project, then practical assessment, feedback and another attempt where needed." /></p></div>
           </div>
-          <p>Plan around four to five teaching hours per day, excluding breaks. This is an estimate to test with learners; translation, device sharing and additional practice may need more time.</p>
-          <p>Self-paced learners can take the lessons at their own pace. A connected project now offers a supported case, an independent attempt and a fresh retry. Practitioner review and final assessed-course integration remain in preparation. Reading this preview does not award a qualification.</p>
-          <div className={styles.actions}><OfflinePageLink className={styles.primary} href="/student/finance/project/guided"><ArrowLabel>Open the practical project</ArrowLabel></OfflinePageLink></div>
+          <p><Tx en="Plan around four to five teaching hours per day, excluding breaks. This is an estimate to test with learners; translation, device sharing and additional practice may need more time." /></p>
+          <p><Tx en="Self-paced learners can take the lessons at their own pace. A connected project now offers a supported case, an independent attempt and a fresh retry. Practitioner review and final assessed-course integration remain in preparation. Reading this preview does not award a qualification." /></p>
+          <div className={styles.actions}><OfflinePageLink className={styles.primary} href="/student/finance/project/guided"><TxArrow en="Open the practical project" /></OfflinePageLink></div>
         </section>
       </FullToolsOnly>
       <PathwayOfflineDownload pathwayId="finance" />

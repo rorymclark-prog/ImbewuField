@@ -4,7 +4,8 @@ import {
   WifiOff, Languages, Users, Camera, Smartphone, Mail, Building2, ArrowRight,
 } from 'lucide-react';
 import BackButton from '@/components/BackButton';
-import Screenshot from '@/components/partners/Screenshot';
+import Screenshot, { QrCode } from '@/components/partners/Screenshot';
+import T from '@/components/InlineText';
 
 // Public showcase page for NGOs and funders — "the place an organisation lands to see what the
 // app does and get it onto phones" (Rory, briefing this page). Deliberately outside the signed-in
@@ -170,7 +171,7 @@ export default function PartnersPage() {
           href="#get-app"
           className="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-sans font-semibold text-[var(--on-forest)] bg-forest hover:bg-forest-light transition-colors"
         >
-          Get the app
+          <T en="Get the app" />
         </a>
       </div>
 
@@ -178,25 +179,25 @@ export default function PartnersPage() {
         {/* ── Hero ─────────────────────────────────────────────────────────── */}
         <section className="px-5 sm:px-8 lg:px-10 pt-14 pb-16 sm:pt-20 sm:pb-20">
           <div className="max-w-3xl mx-auto text-center">
-            <SectionEyebrow>For NGOs &amp; funded farming programmes</SectionEyebrow>
+            <SectionEyebrow><T en="For NGOs & funded farming programmes" /></SectionEyebrow>
             <h1 className="mt-4 [text-wrap:balance] font-display font-semibold text-[32px] leading-[1.15] sm:text-[44px] sm:leading-[1.12] tracking-[-0.02em] text-[var(--text-primary)]">
-              The field operating system for funded smallholder and community‑farming programmes
+              <T en="The field operating system for funded smallholder and community‑farming programmes" />
             </h1>
             <p className="mt-5 font-display text-[19px] sm:text-[21px] leading-[1.5] text-[var(--text-secondary)]">
-              Farm design, seasonal planning, practical learning, mentor oversight and funder-ready evidence &mdash; all in one app.
+              <T en="Farm design, seasonal planning, practical learning, mentor oversight and funder-ready evidence — all in one app." />
             </p>
             <div className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
               <a
                 href="#get-app"
                 className="inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-[15px] font-sans font-semibold text-[var(--on-forest)] bg-forest hover:bg-forest-light transition-colors w-full sm:w-auto justify-center"
               >
-                Get the app <ArrowRight size={16} />
+                <T en="Get the app" /> <ArrowRight size={16} />
               </a>
               <a
                 href="#features"
                 className="inline-flex items-center gap-2 rounded-full px-6 py-3.5 text-[15px] font-sans font-semibold text-[var(--color-forest-800)] border-2 border-[var(--color-forest-800)] hover:bg-forest hover:text-[var(--on-forest)] transition-colors w-full sm:w-auto justify-center"
               >
-                See what it does
+                <T en="See what it does" />
               </a>
             </div>
 
@@ -208,7 +209,7 @@ export default function PartnersPage() {
                   className="rounded-full px-3.5 py-1.5 text-[13px] font-sans font-semibold text-[var(--text-secondary)] bg-[var(--bg-1)] border"
                   style={{ borderColor: 'var(--border)' }}
                 >
-                  {s}
+                  <T en={s} />
                 </span>
               ))}
             </div>
@@ -219,9 +220,9 @@ export default function PartnersPage() {
         <section id="features" className="px-5 sm:px-8 lg:px-10 py-14 sm:py-20 bg-[var(--bg-1)] border-t border-b" style={{ borderColor: 'var(--border)' }}>
           <div className="max-w-5xl mx-auto">
             <div className="max-w-2xl">
-              <SectionEyebrow>What it does</SectionEyebrow>
+              <SectionEyebrow><T en="What it does" /></SectionEyebrow>
               <h2 className="mt-3 font-display font-semibold text-[26px] sm:text-[32px] leading-[1.2] tracking-[-0.02em] text-[var(--text-primary)]">
-                The tools a funded farming programme runs on
+                <T en="The tools a funded farming programme runs on" />
               </h2>
             </div>
             <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -234,8 +235,8 @@ export default function PartnersPage() {
                   <div className="flex items-center justify-center rounded-xl w-10 h-10 flex-shrink-0" style={{ background: 'rgba(31,77,43,0.10)' }}>
                     <Icon size={19} strokeWidth={1.7} className="text-[var(--color-forest-800)]" />
                   </div>
-                  <h3 className="font-display font-semibold text-[16px] leading-snug text-[var(--text-primary)]">{title}</h3>
-                  <p className="text-[14px] leading-relaxed text-[var(--text-secondary)]">{body}</p>
+                  <h3 className="font-display font-semibold text-[16px] leading-snug text-[var(--text-primary)]"><T en={title} /></h3>
+                  <p className="text-[14px] leading-relaxed text-[var(--text-secondary)]"><T en={body} /></p>
                 </div>
               ))}
             </div>
@@ -246,9 +247,9 @@ export default function PartnersPage() {
         <section id="screenshots" className="px-5 sm:px-8 lg:px-10 py-14 sm:py-20">
           <div className="max-w-5xl mx-auto">
             <div className="max-w-2xl mx-auto text-center">
-              <SectionEyebrow>Inside the app</SectionEyebrow>
+              <SectionEyebrow><T en="Inside the app" /></SectionEyebrow>
               <h2 className="mt-3 font-display font-semibold text-[26px] sm:text-[32px] leading-[1.2] tracking-[-0.02em] text-[var(--text-primary)]">
-                The claims above, on screen
+                <T en="The claims above, on screen" />
               </h2>
             </div>
 
@@ -268,12 +269,12 @@ export default function PartnersPage() {
         <section id="funders" className="px-5 sm:px-8 lg:px-10 py-14 sm:py-20" style={{ background: 'rgba(31,77,43,0.06)' }}>
           <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-10 lg:gap-14 items-start">
             <div>
-              <SectionEyebrow>For funders &amp; NGOs</SectionEyebrow>
+              <SectionEyebrow><T en="For funders & NGOs" /></SectionEyebrow>
               <h2 className="mt-3 font-display font-semibold text-[26px] sm:text-[32px] leading-[1.2] tracking-[-0.02em] text-[var(--text-primary)]">
-                Evidence without an enumerator visit
+                <T en="Evidence without an enumerator visit" />
               </h2>
               <p className="mt-4 text-[15px] leading-relaxed text-[var(--text-secondary)]">
-                Every farmer&rsquo;s record rolls up automatically. Mentors see every farm in the programme from one screen; NGO and funder accounts see production, sales, training completion and photographic evidence for every gardener &mdash; without a field visit to collect it.
+                <T en="Every farmer’s record rolls up automatically. Mentors see every farm in the programme from one screen; NGO and funder accounts see production, sales, training completion and photographic evidence for every gardener — without a field visit to collect it." />
               </p>
             </div>
             <div className="flex flex-col gap-5">
@@ -287,8 +288,8 @@ export default function PartnersPage() {
                     <Icon size={19} strokeWidth={1.7} className="text-[var(--color-forest-800)]" />
                   </div>
                   <div>
-                    <h3 className="font-display font-semibold text-[16px] leading-snug text-[var(--text-primary)]">{title}</h3>
-                    <p className="mt-1 text-[14px] leading-relaxed text-[var(--text-secondary)]">{body}</p>
+                    <h3 className="font-display font-semibold text-[16px] leading-snug text-[var(--text-primary)]"><T en={title} /></h3>
+                    <p className="mt-1 text-[14px] leading-relaxed text-[var(--text-secondary)]"><T en={body} /></p>
                   </div>
                 </div>
               ))}
@@ -301,13 +302,13 @@ export default function PartnersPage() {
           <div className="max-w-5xl mx-auto">
             <div className="max-w-2xl">
               <span className="block text-[13px] font-sans font-semibold uppercase tracking-[0.14em]" style={{ color: '#9FD4AE' }}>
-                Get the app
+                <T en="Get the app" />
               </span>
               <h2 className="mt-3 font-display font-semibold text-[26px] sm:text-[32px] leading-[1.2] tracking-[-0.02em] text-[var(--on-forest)]">
-                On your phone in under a minute
+                <T en="On your phone in under a minute" />
               </h2>
               <p className="mt-4 text-[15px] leading-relaxed" style={{ color: '#D9E8DC' }}>
-                ImbewuField is a Progressive Web App &mdash; no app store, no download size. Open it once and add it to the home screen, and it opens like any other app from then on.
+                <T en="ImbewuField is a Progressive Web App — no app store, no download size. Open it once and add it to the home screen, and it opens like any other app from then on." />
               </p>
             </div>
 
@@ -320,12 +321,12 @@ export default function PartnersPage() {
                   className="inline-flex items-center gap-2.5 rounded-full px-7 py-4 text-[16px] font-sans font-semibold bg-card text-forest hover:bg-white transition-colors"
                 >
                   <Smartphone size={18} />
-                  Open imbewufield.vercel.app
+                  <T en="Open imbewufield.vercel.app" />
                 </a>
 
                 <div className="mt-9">
                   <h3 className="font-display font-semibold text-[15px]" style={{ color: '#9FD4AE' }}>
-                    On Android (Chrome)
+                    <T en="On Android (Chrome)" />
                   </h3>
                   <ol className="mt-3 flex flex-col gap-2.5">
                     {[
@@ -339,27 +340,20 @@ export default function PartnersPage() {
                         >
                           {i + 1}
                         </span>
-                        {step}
+                        <T en={step} />
                       </li>
                     ))}
                   </ol>
                   <p className="mt-4 text-[13px]" style={{ color: '#9FD4AE' }}>
-                    On iPhone: open the link in Safari, tap Share, then &ldquo;Add to Home Screen&rdquo;.
+                    <T en="On iPhone: open the link in Safari, tap Share, then “Add to Home Screen”." />
                   </p>
                 </div>
               </div>
 
               <div className="flex flex-col items-center gap-3 rounded-2xl p-6 bg-card">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src="/marketing/qr-imbewufield.svg"
-                  alt="QR code linking to imbewufield.vercel.app"
-                  width={168}
-                  height={168}
-                  className="w-[168px] h-[168px]"
-                />
+                <QrCode />
                 <span className="text-[13px] font-sans font-semibold text-center text-ink-muted">
-                  Scan to open ImbewuField
+                  <T en="Scan to open ImbewuField" />
                 </span>
               </div>
             </div>
@@ -369,12 +363,12 @@ export default function PartnersPage() {
         {/* ── Contact ──────────────────────────────────────────────────────── */}
         <section id="contact" className="px-5 sm:px-8 lg:px-10 py-14 sm:py-16">
           <div className="max-w-2xl mx-auto text-center">
-            <SectionEyebrow>Contact</SectionEyebrow>
+            <SectionEyebrow><T en="Contact" /></SectionEyebrow>
             <h2 className="mt-3 font-display font-semibold text-[24px] sm:text-[28px] leading-[1.2] tracking-[-0.02em] text-[var(--text-primary)]">
-              Talk to us about a programme
+              <T en="Talk to us about a programme" />
             </h2>
             <p className="mt-4 text-[15px] leading-relaxed text-[var(--text-secondary)]">
-              ImbewuField is built and maintained by Imbewu Yoshintso NPC. For partnership, funding or pilot enquiries, get in touch directly.
+              <T en="ImbewuField is built and maintained by Imbewu Yoshintso NPC. For partnership, funding or pilot enquiries, get in touch directly." />
             </p>
             <div className="mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
               <a

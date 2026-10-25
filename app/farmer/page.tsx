@@ -760,7 +760,7 @@ function HomeInner() {
           <div
             onPointerDown={startPanelResize}
             className="hidden lg:flex items-center justify-center flex-shrink-0 group"
-            title="Drag to resize the panel"
+            title={inlineText(lang, 'Drag to resize the panel')}
             style={{ width: 8, cursor: 'col-resize', background: 'var(--bg-1)', borderLeft: '1px solid var(--border)' }}
           >
             <div style={{ width: 3, height: 36, borderRadius: 3, background: 'rgba(92,80,64,0.25)' }} className="group-hover:bg-stone-400 transition-colors" />

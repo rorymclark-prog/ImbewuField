@@ -174,10 +174,11 @@ test('/student/design and /student/finance collapse their syllabus grid to the n
 
 test('/student/design and /student/finance hide their sources/further-reading lists and the ten-day plan in Simple', () => {
   // w20: the disclosures use the shared <Summary> (with its open/closed arrow) in place of <summary>.
-  assert.match(DESIGN_SOURCE, /<FullToolsOnly><details><Summary>Sources behind the pathway<\/Summary>/);
-  assert.match(DESIGN_LESSON_SOURCE, /<FullToolsOnly><details><Summary>Sources and further reading<\/Summary>/);
-  assert.match(FINANCE_SOURCE, /<FullToolsOnly>\s*<section className=\{styles\.section\}>\s*<h2>A proposed ten-day course<\/h2>/);
-  assert.match(FINANCE_LESSON_SOURCE, /<FullToolsOnly><section className=\{`\$\{styles\.section\} \$\{styles\.sourceLinks\}`\}><details><Summary>Sources and further reading<\/Summary>/);
+  // The summary text may be wrapped in <Tx en="…" /> so isiXhosa readers get a draft; the English is unchanged.
+  assert.match(DESIGN_SOURCE, /<FullToolsOnly><details><Summary>(?:<Tx en=")?Sources behind the pathway(?:" \/>)?<\/Summary>/);
+  assert.match(DESIGN_LESSON_SOURCE, /<FullToolsOnly><details><Summary>(?:<Tx en=")?Sources and further reading(?:" \/>)?<\/Summary>/);
+  assert.match(FINANCE_SOURCE, /<FullToolsOnly>\s*<section className=\{styles\.section\}>\s*<h2>(?:<Tx en=")?A proposed ten-day course(?:" \/>)?<\/h2>/);
+  assert.match(FINANCE_LESSON_SOURCE, /<FullToolsOnly><section className=\{`\$\{styles\.section\} \$\{styles\.sourceLinks\}`\}><details><Summary>(?:<Tx en=")?Sources and further reading(?:" \/>)?<\/Summary>/);
   // Kept in both modes: the lesson reading, the isiZulu-draft disclosure banner, the app-guide links.
   assert.match(DESIGN_SOURCE, /<DesignDraftNotice \/>/);
   assert.match(FINANCE_SOURCE, /<FinanceReadingChecklist/);

@@ -2,12 +2,21 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { formatPackSize } from '@/lib/offline-pack';
+import { useLanguage } from '@/lib/i18n';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import { CACHE_CHANGED_EVENT, downloadPack, offlineSupported, packStatus, requestPersistence, type DownloadProgress } from '@/lib/offline-cache';
 import { fieldPageDownloads } from '@/lib/field-page-downloads';
 import { studiesPathwayPack, type StudiesPathwayId } from '@/lib/studies-pathway-pack';
 import styles from './FinanceCourse.module.css';
 
 export default function PathwayOfflineDownload({ pathwayId }: { pathwayId: StudiesPathwayId }) {
+  const { lang } = useLanguage();
+  const tx = (english: string) => inlineText(lang, english);
+  // Messages are kept as English in state; they are translated where they are shown.
+  const say = (message: string) => {
+    const failed = message.match(/^(\d+) files could not be saved\. Reconnect and choose Finish download; saved files will be reused\.$/);
+    return failed ? inlineTemplate(lang, '{n} files could not be saved. Reconnect and choose Finish download; saved files will be reused.', null, { n: failed[1] }) : tx(message);
+  };
   const pathway = useMemo(() => studiesPathwayPack(pathwayId), [pathwayId]);
   const [media, setMedia] = useState<DownloadProgress | null>(null);
   const [pagesReady, setPagesReady] = useState(false);
@@ -94,22 +103,22 @@ export default function PathwayOfflineDownload({ pathwayId }: { pathwayId: Studi
   const partial = Boolean(media?.done) || pagesReady;
 
   return <section className={`${styles.section} no-print`} aria-labelledby={`${pathway.id}-offline-title`}>
-    <h2 id={`${pathway.id}-offline-title`}>Take this reading pathway home</h2>
-    <p>Save every English reading page, its pictures and printable practice materials while you have signal.</p>
-    <p>Pictures and practice materials: {formatPackSize(pathway.pack.bytes)}. The pages and files needed to open them are downloaded too.</p>
-    {!supported ? <p>This browser cannot save the full pathway for offline use. You can print the written pages.</p> : <>
+    <h2 id={`${pathway.id}-offline-title`}>{tx('Take this reading pathway home')}</h2>
+    <p>{tx('Save every English reading page, its pictures and printable practice materials while you have signal.')}</p>
+    <p>{inlineTemplate(lang, 'Pictures and practice materials: {size}. The pages and files needed to open them are downloaded too.', null, { size: formatPackSize(pathway.pack.bytes) })}</p>
+    {!supported ? <p>{tx('This browser cannot save the full pathway for offline use. You can print the written pages.')}</p> : <>
       <div role="status" aria-live="polite">
-        {complete && !busy ? <p><strong>{pathway.title} is saved on this device.</strong> Before leaving signal, switch your connection off and reopen a lesson.</p> : <p>{message || (partial ? 'Part of this pathway is saved. Finish the download before leaving signal.' : 'This pathway is not yet saved for offline use.')}</p>}
+        {complete && !busy ? <p><strong>{inlineTemplate(lang, '{title} is saved on this device.', null, { title: tx(pathway.title) })}</strong> {tx('Before leaving signal, switch your connection off and reopen a lesson.')}</p> : <p>{say(message || (partial ? 'Part of this pathway is saved. Finish the download before leaving signal.' : 'This pathway is not yet saved for offline use.'))}</p>}
       </div>
       <div className={styles.actions}>
-        {!busy && !complete && <button type="button" onClick={() => void start()} disabled={!media}>{partial ? 'Finish download' : 'Download this pathway'}</button>}
-        {stage === 'media' && <button type="button" onClick={() => operation.current?.abort()}>Stop download</button>}
-        {!busy && <button type="button" onClick={() => void refresh()}>Check saved pathway</button>}
+        {!busy && !complete && <button type="button" onClick={() => void start()} disabled={!media}>{partial ? tx('Finish download') : tx('Download this pathway')}</button>}
+        {stage === 'media' && <button type="button" onClick={() => operation.current?.abort()}>{tx('Stop download')}</button>}
+        {!busy && <button type="button" onClick={() => void refresh()}>{tx('Check saved pathway')}</button>}
       </div>
-      {busy && <p>{stage === 'media' ? 'Saving pictures and practice materials…' : 'Preparing reading pages…'}</p>}
-      {error && <p role="alert">{error}</p>}
-      {complete && mayClear && <p>The phone may clear downloads when space is low. Check again before leaving signal.</p>}
+      {busy && <p>{stage === 'media' ? tx('Saving pictures and practice materials…') : tx('Preparing reading pages…')}</p>}
+      {error && <p role="alert">{say(error)}</p>}
+      {complete && mayClear && <p>{tx('The phone may clear downloads when space is low. Check again before leaving signal.')}</p>}
     </>}
-    <p>This saves this pathway’s teaching pages only. Download app guides and other pathways separately; external source links need a connection. It does not back up your account, answers, app records or live maps.</p>
+    <p>{tx('This saves this pathway’s teaching pages only. Download app guides and other pathways separately; external source links need a connection. It does not back up your account, answers, app records or live maps.')}</p>
   </section>;
 }

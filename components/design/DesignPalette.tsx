@@ -120,6 +120,7 @@ import {
 } from '@/lib/design-layer-membership';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { uiVersion, DEFAULT_UI_VERSION, UI_VERSION_EVENT } from '@/lib/ui-version';
 import LessonLink from './LessonLink';
 import {
@@ -566,7 +567,7 @@ export default function DesignPalette({
   onBottomStopChange,
   simple = false,
 }: DesignPaletteProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [hintDefId, setHintDefId] = useState<string | null>(null);
   // The tip line closes itself, and can be closed by hand (Rory: "we should be able to close this
   // and it should disappear after 4 seconds or however long you think?").
@@ -1654,7 +1655,7 @@ export default function DesignPalette({
                       onClick={() => setLayersFloating((floating) => !floating)}
                       style={{ border: '1px solid rgba(31,77,43,0.25)', background: PAPER, color: GREEN, borderRadius: 7, padding: '3px 7px', fontSize: 10.5, fontWeight: 700, cursor: 'pointer' }}
                     >
-                      {layersFloating ? 'Dock' : 'Float'}
+                      {layersFloating ? inlineText(lang, 'Dock') : inlineText(lang, 'Float')}
                     </button>
                   )}
                   {([[t('designPaletteAllOn'), true], [t('designPaletteAllOff'), false]] as const).map(([label, val]) => (
@@ -1990,7 +1991,7 @@ export default function DesignPalette({
                         >
                           {elementChildren.length === 0 && (
                             <p style={{ margin: 0, padding: '7px 4px 6px', color: '#776F63', fontSize: 10.5, lineHeight: 1.3 }}>
-                              No individual elements to show here yet.
+                              {inlineText(lang, 'No individual elements to show here yet.')}
                             </p>
                           )}
                           {elementChildren.map((child) => {
@@ -2151,7 +2152,7 @@ export default function DesignPalette({
                       layersFloatDrag.current = { dx: event.clientX - x, dy: event.clientY - y };
                       setLayersFloatPos({ x, y });
                     }}
-                    title="Drag Layers panel"
+                    title={inlineText(lang, 'Drag Layers panel')}
                     style={{ flexBasis: '100%', marginTop: -2, padding: '3px 0', textAlign: 'center', color: '#7C725E', cursor: 'grab', touchAction: 'none', fontSize: 13, lineHeight: 1 }}
                   >
                     ⠿
@@ -2166,7 +2167,7 @@ export default function DesignPalette({
                      no drag handle at all, not just a dead one. */
                   <div
                     role="separator"
-                    aria-label="Drag to resize the Layers panel"
+                    aria-label={inlineText(lang, 'Drag to resize the Layers panel')}
                     onPointerDown={(event) => beginDesktopResize('layers', event)}
                     style={{
                       position: 'absolute', top: 0, bottom: 0, left: -7,
@@ -2228,14 +2229,14 @@ export default function DesignPalette({
           <button
             type="button"
             onClick={() => setChipsFloating(false)}
-            title="Dock the palette back into the panel"
-            aria-label="Dock the element palette"
+            title={inlineText(lang, 'Dock the palette back into the panel')}
+            aria-label={inlineText(lang, 'Dock the element palette')}
             style={{
               border: '1px solid rgba(0,0,0,0.12)', background: PAPER, color: '#6B6355',
               borderRadius: 8, padding: '3px 8px', fontSize: 11, fontWeight: 600, cursor: 'pointer',
             }}
           >
-            Dock
+            {inlineText(lang, 'Dock')}
           </button>
         </div>
         {/* flex + minHeight:0 so this actually scrolls inside the clamped panel rather than
@@ -3234,7 +3235,7 @@ export default function DesignPalette({
       {desktopAside && workspaceMode !== 'tray' && onDesktopPanelWidthChange && (
         <div
           role="separator"
-          aria-label="Drag to resize the Elements panel"
+          aria-label={inlineText(lang, 'Drag to resize the Elements panel')}
           onPointerDown={(event) => beginDesktopResize('elements', event)}
           style={{
             /* Straddles the edge like the Layers handle — 7px in, 7px out —

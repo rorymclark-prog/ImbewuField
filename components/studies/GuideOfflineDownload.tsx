@@ -3,12 +3,21 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { AppGuide } from '@/lib/course-app-guides';
 import { formatPackSize } from '@/lib/offline-pack';
+import { useLanguage } from '@/lib/i18n';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import { CACHE_CHANGED_EVENT, downloadPack, offlineSupported, packStatus, removePack, requestPersistence, type DownloadProgress } from '@/lib/offline-cache';
 import { fieldPageDownloads } from '@/lib/field-page-downloads';
 import styles from './AppGuide.module.css';
 import { guidePackWithScreens } from './guide-screens';
 
 export default function GuideOfflineDownload({ guide }: { guide: AppGuide }) {
+  const { lang } = useLanguage();
+  const tx = (english: string) => inlineText(lang, english);
+  // Messages are kept as English in state; they are translated where they are shown.
+  const say = (message: string) => {
+    const failed = message.match(/^(\d+) files could not be saved\. Reconnect and choose Finish download; saved files will be reused\.$/);
+    return failed ? inlineTemplate(lang, '{n} files could not be saved. Reconnect and choose Finish download; saved files will be reused.', null, { n: failed[1] }) : tx(message);
+  };
   const pack = useMemo(() => guidePackWithScreens(guide.id), [guide.id]);
   const [media, setMedia] = useState<DownloadProgress | null>(null);
   const [savedBytes, setSavedBytes] = useState(0);
@@ -95,23 +104,23 @@ export default function GuideOfflineDownload({ guide }: { guide: AppGuide }) {
   const busy = stage !== 'idle';
   const partial = Boolean(media?.done);
   return <section className={`${styles.offline} no-print`} aria-labelledby="guide-offline-title">
-    <h2 id="guide-offline-title">Take this guide home</h2>
-    <p>Save the written steps, screen pictures and English recordings while you have signal.</p>
-    <p className={styles.small}>Recordings and pictures: {formatPackSize(pack.bytes)}. Files needed to open the guide are downloaded too.</p>
-    {!supported ? <p>This browser cannot save the full guide for offline use. You can print the written steps.</p> : <>
+    <h2 id="guide-offline-title">{tx('Take this guide home')}</h2>
+    <p>{tx('Save the written steps, screen pictures and English recordings while you have signal.')}</p>
+    <p className={styles.small}>{inlineTemplate(lang, 'Recordings and pictures: {size}. Files needed to open the guide are downloaded too.', null, { size: formatPackSize(pack.bytes) })}</p>
+    {!supported ? <p>{tx('This browser cannot save the full guide for offline use. You can print the written steps.')}</p> : <>
       <div role="status" aria-live="polite">
-        {complete && !busy ? <p><strong>Guide saved on this device.</strong> Before leaving signal, switch your connection off, reopen this guide and try a recording.</p> : <p>{message || (partial ? 'Part of this guide is saved. Finish the download before leaving signal.' : 'This guide is not yet saved for offline use.')}</p>}
+        {complete && !busy ? <p><strong>{tx('Guide saved on this device.')}</strong> {tx('Before leaving signal, switch your connection off, reopen this guide and try a recording.')}</p> : <p>{say(message || (partial ? 'Part of this guide is saved. Finish the download before leaving signal.' : 'This guide is not yet saved for offline use.'))}</p>}
       </div>
       <div className={styles.actions}>
-        {!busy && !complete && <button type="button" onClick={() => void start()} disabled={!media}>{partial ? 'Finish download' : 'Download this guide'}</button>}
-        {stage === 'media' && <button type="button" onClick={() => operation.current?.abort()}>Stop download</button>}
-        {!busy && media && media.done > 1 && <button type="button" onClick={() => void removeRecordings()}>Remove this guide’s recordings</button>}
-        {!busy && <button type="button" onClick={() => void refresh()}>Check saved guide</button>}
+        {!busy && !complete && <button type="button" onClick={() => void start()} disabled={!media}>{partial ? tx('Finish download') : tx('Download this guide')}</button>}
+        {stage === 'media' && <button type="button" onClick={() => operation.current?.abort()}>{tx('Stop download')}</button>}
+        {!busy && media && media.done > 1 && <button type="button" onClick={() => void removeRecordings()}>{tx('Remove this guide’s recordings')}</button>}
+        {!busy && <button type="button" onClick={() => void refresh()}>{tx('Check saved guide')}</button>}
       </div>
-      {busy && <p>{formatPackSize(savedBytes)} of {formatPackSize(pack.bytes)} of recordings and pictures saved.</p>}
-      {error && <p role="alert">{error}</p>}
-      {complete && mayClear && <p>The phone may clear downloads when space is low. Check again before leaving signal.</p>}
+      {busy && <p>{inlineTemplate(lang, '{saved} of {total} of recordings and pictures saved.', null, { saved: formatPackSize(savedBytes), total: formatPackSize(pack.bytes) })}</p>}
+      {error && <p role="alert">{say(error)}</p>}
+      {complete && mayClear && <p>{tx('The phone may clear downloads when space is low. Check again before leaving signal.')}</p>}
     </>}
-    <p className={styles.small}>This saves the guide and its pictures, not the sample farm or every app tool. Removing recordings keeps the written page and pictures.</p>
+    <p className={styles.small}>{tx('This saves the guide and its pictures, not the sample farm or every app tool. Removing recordings keeps the written page and pictures.')}</p>
   </section>;
 }

@@ -2,6 +2,8 @@
 
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useLanguage } from '@/lib/i18n';
+import { inlineTemplate, inlineText } from '@/lib/xh-inline';
 
 const RiveProgressSprout = dynamic(() => import('./RiveProgressSprout'), { ssr: false });
 
@@ -12,6 +14,7 @@ export default function ProgressSprout({ completedSteps, totalSteps, progressPct
   progressPct?: number;
   interactive?: boolean;
 }) {
+  const { lang } = useLanguage();
   const stage = Math.max(0, Math.min(5, Math.floor(completedSteps)));
   const stemTop = [44, 40, 34, 28, 23, 18][stage];
   const [motionAllowed, setMotionAllowed] = useState(false);
@@ -87,7 +90,7 @@ export default function ProgressSprout({ completedSteps, totalSteps, progressPct
           <button
             type="button"
             className="imf-progress-sprout-hit"
-            aria-label="About your farm plan sprout"
+            aria-label={inlineText(lang, 'About your farm plan sprout')}
             aria-describedby={tipId}
             aria-expanded={pinned}
             aria-controls={tipId}
@@ -108,11 +111,11 @@ export default function ProgressSprout({ completedSteps, totalSteps, progressPct
             <span className="imf-progress-sprout-help" aria-hidden="true">?</span>
           </button>
           <span id={tipId} className="imf-progress-sprout-tip" role="tooltip">
-            <strong>Your farm plan sprout</strong>
-            <span>It grows as you find your land, trace its boundary, survey it, design it and plan crops.</span>
+            <strong>{inlineText(lang, 'Your farm plan sprout')}</strong>
+            <span>{inlineText(lang, 'It grows as you find your land, trace its boundary, survey it, design it and plan crops.')}</span>
             {totalSteps != null && progressPct != null && (
               <span className="imf-progress-sprout-tip-status">
-                {completedSteps} of {totalSteps} steps done · {progressPct}% complete
+                {inlineTemplate(lang, '{done} of {total} steps done · {pct}% complete', null, { done: completedSteps, total: totalSteps, pct: progressPct })}
               </span>
             )}
           </span>

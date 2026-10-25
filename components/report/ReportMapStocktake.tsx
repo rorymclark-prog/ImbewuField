@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { StoredSheetMeta } from '@/lib/sheet-store';
 import { REPORT_MAP_TYPES, groupReportMaps, loadSiteMapReview, saveSiteMapReview, emptyMapReview, type SiteMapReview, type MapReview } from '@/lib/report-map-selection';
 import { inlineText } from '@/lib/xh-inline';
+import { useLanguage } from '@/lib/i18n';
 import styles from './ReportMapStocktake.module.css';
 
 export default function ReportMapStocktake({ maps, selectedIds, siteId, scope, designUrl, onSelect, onOpen, language = 'en', busy = false }: {
@@ -89,6 +90,7 @@ async function makePreview(image: string): Promise<string> {
   } finally { img.src = ''; }
 }
 export function ReportMapPreview({ map, scope, loadImage, onOpen }: { map: StoredSheetMeta; scope: string; loadImage: (id: string) => Promise<string | null>; onOpen: () => void }) {
+  const { lang } = useLanguage();
   const ref = useRef<HTMLButtonElement>(null);
   const [visible, setVisible] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
@@ -111,7 +113,7 @@ export function ReportMapPreview({ map, scope, loadImage, onOpen }: { map: Store
     return () => { cancelled = true; };
   }, [map.id, scope, visible, loadImage]);
   return <button ref={ref} className={styles.preview} onClick={onOpen}>
-    {preview || map.thumb ? <img src={preview ?? map.thumb} alt={map.label} /> : <span className={styles.placeholder}>Open map</span>}
+    {preview || map.thumb ? <img src={preview ?? map.thumb} alt={map.label} /> : <span className={styles.placeholder}>{inlineText(lang, 'Open map')}</span>}
     <span>{map.label}</span>
   </button>;
 }

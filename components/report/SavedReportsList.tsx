@@ -32,6 +32,7 @@
 import { useState } from 'react';
 import { FileText, Trash2, ChevronRight, ChevronLeft } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { deleteReport, groupReportsBySite, type SavedReport } from '@/lib/saved-reports';
 import { resolveColor, type SavedPlace } from '@/lib/saved-places';
 import { formatXhosaDate } from '@/lib/xh-dates';
@@ -197,7 +198,7 @@ export default function SavedReportsList({
                   </button>
                   <button
                     onClick={() => onDeleted?.(deleteReport(r.id))}
-                    title="Delete"
+                    title={inlineText(lang, 'Delete')}
                     className="px-2 py-1.5 flex-shrink-0 flex items-center"
                     style={{ color: 'var(--text-secondary)' }}
                   >
