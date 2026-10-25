@@ -86,3 +86,46 @@ drift and whitespace checks accompany this correction. #1099 is unchanged and
 its running CI remains applicable. #1101 receives fresh final CI after the single
 finished correction push. No new field evidence, actual sales, paid narrative,
 visual layout change, species, farming figures or geometry is claimed.
+
+## Wave 22 integration after completed CI
+
+The four full CI runs on the preceding integrated sources completed successfully.
+For #1099 at `0a08ccc57`, push/PR runs `40192436366` / `40192439093` each
+report **5,563 tests: 5,562 pass, zero fail, one existing TODO**. For #1101 at
+`4b88d5559`, runs `40197264764` / `40197269927` each report **5,573 tests:
+5,572 pass, zero fail, one existing TODO**. Typecheck and all rules jobs pass.
+The TODO remains the pre-existing shape-sync-loss scenario, not a report failure.
+
+The completion audit then found #1099 conflicting after main advanced to
+`cfb75437c` (wave 22). Only progress history, the audit index and release entries
+conflicted; both histories and both sets of release messages/tours are retained.
+The report archive's wave-22 spacing change merges normally with its saved
+purpose/origin metadata. Reviewed main code and tests are carried without hand
+rewrites. The prior successful runs certify their recorded heads; the refreshed
+review heads need their own CI. Read the final PR bodies and issue #35 handover
+for the terminal results, without creating another documentation-only CI cycle.
+
+Report generation, captured facts, annual products, map rendering, farmer data
+and the original six-report collection retain their prior implementation and
+verification scope. No new narrative, field visit, species, figures, geometry or
+PLAN_VERSION changes are introduced by this reconciliation.
+
+On the refreshed #1099 tree, typecheck is clean and **315 focused report,
+survey, production, readability, release and waves 19–22 checks pass, zero fail**.
+Whitespace is clean. Full CI and the combined preview are checked after the one
+finished push; previous rendered report/PDF evidence retains its scope.
+
+### Refreshed stacked branch
+
+#1101 now carries prerequisite `61b110d47` and main `cfb75437c`. Its manual
+conflicts are confined to this audit, the index, progress and release entries.
+Both market/soil notes and the wave-22 messages/tours are retained. The core
+survey/report modules remain byte-for-byte unchanged from `4b88d5559`; the
+commercial-intent correction and captured market/soil evidence remain intact.
+Typecheck is clean; **323 focused checks pass, zero fail**; whitespace is clean.
+The release stamp points to the reachable integration commit before the single
+finished branch push. Check the final CI and preview on these new heads. The
+older full runs above remain immutable checkpoints, not evidence of the new
+combined tree. Record the final results in the PR/issue handover without another
+repository documentation-only push. Existing field/language/device and newly
+generated narrative limits still apply.

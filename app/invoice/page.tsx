@@ -260,7 +260,16 @@ export default function InvoicePage() {
 
   // The issue date of the document on screen. Held in state, not recomputed on render: a saved
   // invoice reopened next week must still show the day it was issued.
-  const [issuedISO, setIssuedISO] = useState(() => new Date().toISOString());
+  // w22-02: the page is prerendered, so `new Date()` during render froze the BUILD day into the
+  // HTML ("Issued 24 October", max="2026-10-24") and threw React #425 on any later day, or where
+  // the server's UTC day is not the farmer's. Both start empty and take today after mount.
+  const [issuedISO, setIssuedISO] = useState('');
+  const [today, setToday] = useState('');
+  useEffect(() => {
+    const now = new Date().toISOString();
+    setToday(now);
+    setIssuedISO(prev => prev || now);
+  }, []);
   const [termsDays, setTermsDays] = useState<number | null>(null);
   const [reference, setReference] = useState('');
   const [entryKind, setEntryKind] = useState<InvoiceEntryKind>('new');
@@ -389,8 +398,9 @@ export default function InvoicePage() {
   const total = items.filter(it => it.desc.trim()).reduce((s, it) => s + it.qty * it.price, 0);
   const linkedSale = sourceSaleId ? recordedSales.find(sale => sale.id === sourceSaleId) : undefined;
   const financialsLocked = Boolean(sourceSaleId);
-  const entryError = invoiceEntryError({ entryKind, paperReference, dateISO: issuedISO, status: paymentStatus || 'unpaid', paidAt: paymentISO });
-  const valid = !saving && paymentStatus !== '' && !entryError && recordBasis !== ''
+  // Until `today` is known the date is not wrong, just not chosen yet: no date message in the server HTML.
+  const entryError = today ? invoiceEntryError({ entryKind, paperReference, dateISO: issuedISO, status: paymentStatus || 'unpaid', paidAt: paymentISO }) : null;
+  const valid = !saving && today !== '' && paymentStatus !== '' && !entryError && recordBasis !== ''
     && (recordBasis !== 'existing' || Boolean(sourceSaleId))
     && billTo.trim() !== '' && items.some((it) => it.desc.trim() !== '' && it.qty > 0);
   const invoiceNo = `#${String(currentNo).padStart(4, '0')}`;
@@ -877,7 +887,7 @@ export default function InvoicePage() {
               )}
               <label className="block">
                 <FieldLabel>{entryKind === 'paper-copy' ? ui('Date on the original paper invoice') : ui('Invoice issue date')}</FieldLabel>
-                <input type="date" aria-label={ui('Invoice issue date')} value={invoiceDateInput(issuedISO)} max={invoiceDateInput(new Date().toISOString())}
+                <input type="date" aria-label={ui('Invoice issue date')} value={invoiceDateInput(issuedISO)} max={today ? invoiceDateInput(today) : undefined}
                   readOnly={Boolean(currentId)} onChange={event => setIssuedISO(invoiceDateFromInput(event.target.value, issuedISO) ?? '')}
                   className="w-full min-h-11 rounded-xl px-3 text-sm" style={FIELD} />
               </label>
@@ -893,7 +903,7 @@ export default function InvoicePage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <label className="block min-w-0">
                     <FieldLabel>{ui('Payment received on')}</FieldLabel>
-                    <input type="date" aria-label={ui('Payment received date')} value={invoiceDateInput(paymentISO)} max={invoiceDateInput(new Date().toISOString())} readOnly={financialsLocked}
+                    <input type="date" aria-label={ui('Payment received date')} value={invoiceDateInput(paymentISO)} max={today ? invoiceDateInput(today) : undefined} readOnly={financialsLocked}
                       onChange={event => setPaymentISO(invoiceDateFromInput(event.target.value, paymentISO) ?? '')}
                       className="w-full min-h-11 rounded-xl px-3 text-sm" style={FIELD} />
                   </label>
