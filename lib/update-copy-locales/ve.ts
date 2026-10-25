@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Review animal care drafts": "Sedzulusani mishumo ya ndondolo ya zwipuka",
+  "Choose an animal enterprise. Review care notes and open the English source.": "Nangani bindu ḽa zwipuka. Sedzulusani notsi dza ndondolo ni vule tshiko tsha Luisimane.",
+  "Animal care notes now have unreviewed translations in four languages.": "Notsi dza ndondolo ya zwipuka zwino dzi na ṱhalutshedzelo dza nyambo nṋa dzi sa athu sedzuluswaho.",
+  "Original care limits and source references stay available for checking.": "Mikano ya u thoma ya ndondolo na zwiko zwa mafhungo zwi kha ḓi wanala uri zwi sedzuluswe.",
   "Some saved plan notes now have unreviewed translations in four languages.": "Dziṅwe notsi dza pulane dzo vhulungwaho zwino dzi na ṱhalutshedzelo dza nyambo nṋa dzi sa athu sedzuluswaho.",
   "Original notes stay available; untranslated notes still use English.": "Notsi dza u thoma dzi dzula dzi tshi wanala; dzi sa athu ṱalutshedzelwaho dzi kha ḓi vha nga Luisimane.",
   "Crop task panels now use unreviewed translations in four languages.": "Phanele dza mishumo ya zwiliṅwa zwino dzi shumisa ṱhalutshedzelo dzi sa athu u sedzwa nga nyambo nṋa.",

@@ -1,0 +1,1648 @@
+{
+  "scope": "Actual crop-plan PDF renderer with complete original product-guide items from all15selectedenterprise contexts, grouped into2synthetic multi-enterprise review documents in each language. All44unique new welfare fields are present across both cases, with original guides, citations, legal/production source text and no assumed livestock counts. The production/account route and fluent-language approval are not verified. FourEnglish control documents compare the immutable original English guide outputs with current default output; renderer and model modules remain byte-exact.",
+  "rows": [
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "language": "zu",
+      "version": "after",
+      "pages": 16,
+      "wordBounds": 6202,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 158,
+      "completeWelfareClauses": 28,
+      "pixelHashes": [
+        "d997d456bc3f286b0c2fe5fe8081a93ac2b121a222567f10a892e55a091de79b",
+        "fe84a79f2cd25308278132efc185d7e1b920c76165eeff6215abc7509896f462",
+        "f8f6049cb1efa29c03eb6923c2aa71bfd6401342f48ffdd922d775f79e50460c",
+        "b1b95220cacf1cf3c1712a9419034608017245ef2434247e1b9bb27dcbc6e3f7",
+        "3e2754cb4666f00fa5b21d88b375c011c671bf96b44843b3f1e585e4ba90dd66",
+        "d33b4a0981e4d1df47363d865ad25cb6322e42b69d0fb11ad939afa79679b9a9",
+        "ea364b43afb09cd2e17527b9bc53dff57b459972f64403b816edeff61eb1e1f6",
+        "da8ebf188cf3ce5d3e43f008bb8a6b23cb8c90e59ef14bde8c0c26a1415a5279",
+        "10816735bbe840ea51ea6baa459c0e9dec53c221ce868c69db9354eb05d7a8cb",
+        "2a16897ef65878dc7b5d9976c1a99ba4073d08fd7695120a756222acf0f2fff2",
+        "9ecd47fc5bbfa26869513e996b61a0ed708657f153d1fbedef4777049eb32b8b",
+        "66d5d7b529e39614c2ab15e758f4e9830d010a7196624be322b9223c05f34699",
+        "8762c13b36b6e3fc5bccc321e36fa599297445c47789fcc0da20720e9c9b3e58",
+        "584ee034ff7d16be827228b9680f162ed2e6fa6ead45554d9e26113be75ee3cb",
+        "37fe05057de527f879fd4e94bf33742c381f689302d5685a4f122300a8c51a8b",
+        "17ea4b923514580d05382514eb8cca3b359dbe8f612c2cf61a1a3cb3095421a6"
+      ],
+      "PDFSha256": "f5a4140dbcfdcdcf0670d26d913c254b19bfbac2d0d2a5ca6d9fda8963269a8c"
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "language": "zu",
+      "version": "after",
+      "pages": 15,
+      "wordBounds": 5531,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 136,
+      "completeWelfareClauses": 16,
+      "pixelHashes": [
+        "d997d456bc3f286b0c2fe5fe8081a93ac2b121a222567f10a892e55a091de79b",
+        "2ebf0e381a1521d7f8806880fa72bddee62bde616c617cb3f3bd9424855732a7",
+        "b03bf2dadd264b122885310e6d7ef830dc942b2f0cdf2fc9931c6222f6009ea7",
+        "100711e65d4e09fb9c376b2289a42f686db7c8be4d286415df9b81c846f52be4",
+        "d32f0ff6eae91b4602128537331e5fee34136be67050b850f9797ff0828fb292",
+        "15018097e928777534d8e4cda1a4cac5856498bdd7de66888fae85a6b278b2e6",
+        "d10c4bc356b3672d0af284a0c11909293e2b9ab59f7b6c3cea451b36149460b6",
+        "e9917d10aeb86ed3a839f1110d2ea814ffe3eda47e72ab282618d1ad23b9d227",
+        "c82c40a592591c3ca54227f1b19032a5aa5c0fed56be87b314c028c79fab8b5d",
+        "6918c92f1bfcb6e1ee3ded1790932fc69180e1ad26b4a5c0fd664e80ade346e3",
+        "3a5a2e97d7dceb3d6c21cc6e46191befd00742b5fbb36e93c2152363534b9643",
+        "37997fae95e73973d57adf7ce82221224dd3dc799f616c925416cb6bab4362eb",
+        "3fa372c8719b425eefde6fdd492867fb73257c528605dab1fc6a0b4db1faccfd",
+        "c2e90a223495161ba7f78218cb0560d828a18f0b42ebca751e7d7267aa2015bf",
+        "47b8d94ed2fc3461c6c11863f9dffb106da2e199501327c5d48fcec36e0f22bc"
+      ],
+      "PDFSha256": "9843c295c2f7aedad1c0ebc64cd4ee38ac6986ac87e2814d0f9d85590fb062b8"
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "language": "st",
+      "version": "after",
+      "pages": 16,
+      "wordBounds": 7748,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 158,
+      "completeWelfareClauses": 28,
+      "pixelHashes": [
+        "6dff96115aca2f468ee7719f39d2640e8fc715c303edfb6d296d0d0bc7fdadae",
+        "0fd5400be32e242b4bb8339177d06d0781a0f08155bd51a61bbe35f7068735bf",
+        "9db1753a61d0aaba6c12bd8727040a475503458c0f965b2f065e52e196d96a84",
+        "90354bb20032dbf439a50acd2ca3bfa79b71d992989cb4a817cbba750a5d5b9c",
+        "cbe430613566799ea5c083c9f21aceb8238be66f57e5d60bcfbc7d7a792b3dbe",
+        "0aeb50ad4c3a210c4afd36e75bc10522f0f7af6c0ae331b4fba895edae88b951",
+        "bb071df1242a665ecb6f13479edd2938c970a2ae688a43de5d3b2be6d9b9ecf3",
+        "c424e62c00f828a79f16a6a18a48a1a52f06ca50c7613d7e72889ee3e17ac0d6",
+        "fe834e1d8fbcec7dd74f53ce332a7f9392cb1db191e7d1ab928a9e3c04acf196",
+        "d39718f0358f04231f796ef6ec552fbf033d86f1663b34aad22a3735e273a0af",
+        "c102dce5290667dd3519e631cbd28799f1e73f3ce6d3d7f1d30d8315ff55357a",
+        "71645cc5c2e33d1ca32f3376a7ca95c800ad523f63134f70eb36ea6f8aa77388",
+        "a24fc269a52d0fa5c0d591b2261fdbd596d3374de2e6aad16e63f2c07d147179",
+        "51596060e6e33151fd69df378b452453bc7b523d64cff76b7496cfea8680d7cf",
+        "233c95e5a24e5d221e195c19fedae1965e9ed6f281db7e306faaf44eb7cb9592",
+        "5d502eabebb1dca258e44473fcacb095d3fe18c70c18153e1b15ab28ae997081"
+      ],
+      "PDFSha256": "127f93f7666bcda356bb4dce7d45d3696a1887f4c4f83aad08948124814e77a0"
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "language": "st",
+      "version": "after",
+      "pages": 15,
+      "wordBounds": 6873,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 136,
+      "completeWelfareClauses": 16,
+      "pixelHashes": [
+        "6dff96115aca2f468ee7719f39d2640e8fc715c303edfb6d296d0d0bc7fdadae",
+        "642f827bef5a1129ea3d770c65ee90ceba27b8fddb21cba7000f6b3d25db4c89",
+        "8dbbfd710a1844117e4b782bb5790b96d79816036d17caca5b631a80bda9ffa3",
+        "d887e5f911dbb3137ae7792fe61f153836078a8b0cf6d9ec56a6686a1a1a4ef7",
+        "6761eef0951990a69a537b52a517bf0f530c249060aa0c4e32623d82ef4bad17",
+        "e44fc7619bdc84bd3b119e723ddecd060ff29abd50d4eacfe0d73abdd7289b8f",
+        "00b22cf6d2791c84aa1217042a21e6344ff0df18edfc9dc093cea5a91fc0c376",
+        "19d2c478b49a5a16d7bb51a7792fe196be6e921c0c63e2130f51d81a1cc2ad70",
+        "ca75bb8ca465e50c74d0ad6a1af80a146627f56c27f5ace1c8bbc1bc198dc0e9",
+        "cb94cd47846c34da33fc5d39bd1206da6cc473445d1082896698b97b58018e64",
+        "562a10f9eaf55bf194cfc923c52deb34b1bdb6927b8880432b4af70b5fef5159",
+        "acf7b4ae356efefad5c09f24a3dc9c762affe8c384a0a2ee9974adbc87ea0678",
+        "976104ca89d11d3e672e3d6e42d3fa564f6787a966ddad432808ed75fa191157",
+        "8e3f453df625bdce1caabf3003514b1036083d6dcc9c6b4c3b542ad767f1cc9c",
+        "cee936275d210a4ce79d34cdc5741f649100bdff0fa0be844579c62e220f925c"
+      ],
+      "PDFSha256": "b1486334cb6899e9a9f44f2e0d1215c5eb07741ae11e5d37f56f954fde12ae99"
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "language": "ts",
+      "version": "after",
+      "pages": 17,
+      "wordBounds": 7944,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 158,
+      "completeWelfareClauses": 28,
+      "pixelHashes": [
+        "52d992dc43fbeecf9e08e1bfd2fbc7221858529836b5191179b560d25035274f",
+        "df2e46a72c5c6e6916cc5e1fc093aeaf2f4902d166b1c71cff50a6490840554e",
+        "f6b4732145c807d8fb40d35c912cc042bc101489553f15fdf0dc44ca81fde76e",
+        "71141bc4146f7cd7f4310adc5f231332170c4c98a588e2767fea410181e982b0",
+        "7e77d85eeb7d348e81627ea282aeff2682c6ddcf4f1244a0e769ef508109fe38",
+        "412c279e0f496a202b7b8290f17748f8ee0850f3ed017056fb19f645529ad4b5",
+        "6dc8204d34f750f149cd7a068a20861d9ca91a5e2176004db6b351c75c94f2a7",
+        "3df5f59b494afb72e72eaa6cd6de0e82b3991bee43338b4131c73f3e58893c30",
+        "bb6ff444619fc42253e81eff7144be55c05b996c14b6f1cf47a9901d1d4fc66e",
+        "efecea7da5d94ef49f65b2e66bf4635b653a3a841e8cda331655ebbecfa678ac",
+        "d177e95952abe5c2b50f14b1b2d94a1a0b7fd0a2f785df82090f370063c0e63c",
+        "5abb55b6f1e1bad7bd291b9cc08e005847c9c8ac8cdca8ce87a93cbfd3a7692a",
+        "a64e2d5530e55f689fd888418ff1aa10fe0bb804bfa2b95ecea70aad544f3452",
+        "76a6924022117bd481cef7961ae7f264cdc6cf7c67efc106e0d2c0c276cc78ab",
+        "bac562aa09921d39826a6a2b3976f6166713d2f8c35f815133f0422858589923",
+        "4d84d713cd9d30866f0c1c3568ab510f0e9fcbf064b678d81d386b901af59301",
+        "8c10080af649c6dc636e53e16cf715c83d7ca98179d0a213a4131c03f7fe3935"
+      ],
+      "PDFSha256": "e856cce2cc3a635aafda842caefbc6a29d26470490271b9b2603aa11984c5faa"
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "language": "ts",
+      "version": "after",
+      "pages": 15,
+      "wordBounds": 6929,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 136,
+      "completeWelfareClauses": 16,
+      "pixelHashes": [
+        "52d992dc43fbeecf9e08e1bfd2fbc7221858529836b5191179b560d25035274f",
+        "41ba9ed7d71de1af8fa3fdf975623fe5c4b5d7d64836da6900c140e1c8e257f7",
+        "5a4a29040c08230aba65230c1bcda5285921edd3bedd054c75fd363960ac9657",
+        "742ff1c42997e6651034c9738d3a44db07376d066d39792aae6f3196514316f6",
+        "e5997b56852b59acfa01e200bfb8ddae55615767e340fe5fbad783ba8192c670",
+        "0242e6e3a01c1911ba64c0a1936b4a648f85f7f5ad26326c237e379f51482c2f",
+        "63dbf93b9669fb1d04ce71be2bd9d3c8f355d8cc2de9cc804ddcac0b215d4910",
+        "314a7638b7a6961629d46a5e17ab768a7525ff21e3e7f8cff5fd9c21ef852313",
+        "98eeab943aad5a39a244f5aff55ab79cc59a514de01718fd7e94999953f7d712",
+        "a1f5230c67a2777d1782baf759742511af8bb23041fb90ad55b2723cafd792f3",
+        "006b0ffb1dbc4c77274abda6799828d3dbe999d35a833fa23e0327a0dece0ed4",
+        "fce66e12edd05057be7b18fd6642723eb30d9d9b0a5c9408a8a913cfcb9058a6",
+        "d3a0c30b26fa3bc3ec13397bd288d306b535c39ab62fe296f81f9712efeccf64",
+        "241ff87ffab3caa23554651b375bf31e9dd5959966e9bfb471db6f2534d7078f",
+        "5a8d9130ac3e880f92eb72c3f4910d5bf3a1dbb0565ddaee82a2c9ff6b02a29d"
+      ],
+      "PDFSha256": "9b0aca2808c8bce65446bcc312a3592a6a39cb3e63cddb6a97d73acd917f6dbe"
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "language": "ve",
+      "version": "after",
+      "pages": 17,
+      "wordBounds": 8178,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 158,
+      "completeWelfareClauses": 28,
+      "pixelHashes": [
+        "75fce1d7a171005120a8f234a86fb11b37c137d449df13f284450116c974f4e4",
+        "d2e5806f828d931de983b03b9e16dc49220a3c6136e3012d5e9fc5d7329b400c",
+        "786a57dbadb1dd4b7de3094d1a7ab67fa377b1ba210f9fcb1a39cab4ea29d64a",
+        "c376d311c7de39d6d697a2b67d9f8000b1caf24f002b0c62c03b7d1469591ca3",
+        "ff3e32e9fb9558e5d4fb90f27286664121736d645ac15c3b767ff81a2a9c742f",
+        "bbd585537c3e9ba778611142e7c683d06c539c9deab2b7165ad617cb072c63da",
+        "414acf94524fd468352b6b1d4189b8e8f04fae20d93365a4c36bad480587668b",
+        "e6256a7ce8673c73a7cc56193c0a3be420c6f60075fb3f7ced4c8045753e2b68",
+        "45055afb7f0e9a7497d32b8182c72afd9b8c027735030e69ec46220806a6f6b5",
+        "f06518346dd584a60088f1f3b5894c47b01e23f9cc358f7b8a9de5ef37d23a5b",
+        "df75968a139c249203bd2aa81c10a20ff8843df33e8700c9489243bf290f178b",
+        "717591e4fa284aec2f26c85a33132e64abe69764dfc989691695f810331b569b",
+        "11492c78791711856ab18cc603d03a308ffe673eddeaca5a2c344922ca6bdbb4",
+        "2eba28cf8ec8366317cb335abade3f9f45bf917657ad3fca3b7780682e9e844f",
+        "c107aef012c31d229820e2db15b61168026c62c1fc8d284d7e58c071f4566cfa",
+        "56b77083462251e693b35af76da427d08defbce6ef06777532db11bef869be14",
+        "30539f2f15a4b3a344625bbe6edfb8c19ec4385e868adf38c013e46de3f28f72"
+      ],
+      "PDFSha256": "d307419d5982ef495b03ca20400e162a743c8854f4bf21e53e92f7b00ec26abd"
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "language": "ve",
+      "version": "after",
+      "pages": 15,
+      "wordBounds": 7111,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 136,
+      "completeWelfareClauses": 16,
+      "pixelHashes": [
+        "75fce1d7a171005120a8f234a86fb11b37c137d449df13f284450116c974f4e4",
+        "613df71772181b275866cc055fe2d8e902c3d3c124fa6c77580dea8e7d740549",
+        "dc72e2367fa1bf2e1bdcc4f31912ec399db98b09f5e8b7d66ef078d67f22fb15",
+        "d45798e87a207c252e14399f854f787ff526ff7b85f80ee0ead2c080888d7cdb",
+        "c83446a9624defc8a57602b08b670590052a5961153acf47f78cf14690743c73",
+        "ae1f216cdcde83f0a1efefc31ad3da93767b1188c9d882adf995dde268f2af98",
+        "3038a2689bc8421b284255162f97e9874c8d842e82b512c750a70fa42d0f4fe9",
+        "b74883ca85e8b98bf011085e653e8ce733aacfd886d8dd5628242ae2df65cbf1",
+        "bea68d16c134d68e282a3abd31c17a00a24a2c2c591a256bcd7b24529289d127",
+        "b45b3cdaf3852ae3870fe20a3e9b0518c38ed164de7b39ca0505ebee847688cf",
+        "dc0fdcfd65f5723725652c4f91a5740cd2eb1ad76c7411cdc89fb78ea62e0e9e",
+        "be3eb89beb37dee26fb5b4f133644fdf6fee70c504633124eddd2f876fe9e219",
+        "a012e3173aeced057c3d82a7354451c98f1e8bef4004613f4f79969c343e8af6",
+        "a723eaf595cc3efe12673a7f753488880c7477b47ca76250a3afc21e261e2fd8",
+        "b35fe0a34b0d29d44bb807e77a53fb3c4297a76f261c8c9e4f5e02d47ce1138d"
+      ],
+      "PDFSha256": "b4ef755836883330ae85adff0e4fb833a95c520d682a7aeefcbbddfb45036d4f"
+    },
+    {
+      "file": "en-before-bees-cattle-poultry-fish.pdf",
+      "language": "en",
+      "version": "before",
+      "pages": 13,
+      "wordBounds": 6093,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 0,
+      "completeWelfareClauses": 0,
+      "pixelHashes": [
+        "22c3c81d4a18c949bdcc9a7d779a614bab6f51d880188b8fec5e1dd4a2382d5d",
+        "e8fe1529e6cc0bfa3ff884b0e2ca95c1eae8cb9c9b3a8339f24437c7cb330b6a",
+        "0e1bf9b06d28d4d370523b19d777d08ed467c51d71ede5a3ac82757dcd30e649",
+        "dddc47e1a08ed5d38da0f665a63c8572453d470617c569618ffc9ac43643be59",
+        "bbd7adeaaa5b951c150b6d9e866aa499b1646c0c9a52ba31eaf1167433ae4f2d",
+        "6924ef7b1bc9c25b3b4f5acc5455757e1e83ad7a45a1500c3966ef7301face8e",
+        "c4f32049121882e28d331f2e0da305e264bf8272e9d4f9c8355dee6b256960e6",
+        "fd52f1004314ed765ae92fafb3de14b47d249e4d336b70e68315daa3ad7cf587",
+        "439567b8f5da0d0df83ce093189dc877136505180218f917952c35817db018a9",
+        "2dabf0bdeab8c54828ddac13c2943b95ec4380ecf7f2172d85f02c01e6ff0ce3",
+        "0e87cba8ceb9949842f137344e44aeb5eb6de2a206d75acd214bedd6bcd5ecd5",
+        "e7a7afbd19af3201d9f80a95a08835df33d158f3c4148c46e04ce865faa3645d",
+        "ca9c4dea09021ea11117cc32b5b9a17348ec7a0b8a012342f1d947635baa5ab4"
+      ],
+      "PDFSha256": "6a49c1d380fa8c8f18ba28a4dcf73ef261e0912d8dbfcb3b636b6bae9d7caf4c"
+    },
+    {
+      "file": "en-after-bees-cattle-poultry-fish.pdf",
+      "language": "en",
+      "version": "after",
+      "pages": 13,
+      "wordBounds": 6093,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 0,
+      "completeWelfareClauses": 0,
+      "pixelHashes": [
+        "22c3c81d4a18c949bdcc9a7d779a614bab6f51d880188b8fec5e1dd4a2382d5d",
+        "e8fe1529e6cc0bfa3ff884b0e2ca95c1eae8cb9c9b3a8339f24437c7cb330b6a",
+        "0e1bf9b06d28d4d370523b19d777d08ed467c51d71ede5a3ac82757dcd30e649",
+        "dddc47e1a08ed5d38da0f665a63c8572453d470617c569618ffc9ac43643be59",
+        "bbd7adeaaa5b951c150b6d9e866aa499b1646c0c9a52ba31eaf1167433ae4f2d",
+        "6924ef7b1bc9c25b3b4f5acc5455757e1e83ad7a45a1500c3966ef7301face8e",
+        "c4f32049121882e28d331f2e0da305e264bf8272e9d4f9c8355dee6b256960e6",
+        "fd52f1004314ed765ae92fafb3de14b47d249e4d336b70e68315daa3ad7cf587",
+        "439567b8f5da0d0df83ce093189dc877136505180218f917952c35817db018a9",
+        "2dabf0bdeab8c54828ddac13c2943b95ec4380ecf7f2172d85f02c01e6ff0ce3",
+        "0e87cba8ceb9949842f137344e44aeb5eb6de2a206d75acd214bedd6bcd5ecd5",
+        "e7a7afbd19af3201d9f80a95a08835df33d158f3c4148c46e04ce865faa3645d",
+        "ca9c4dea09021ea11117cc32b5b9a17348ec7a0b8a012342f1d947635baa5ab4"
+      ],
+      "PDFSha256": "6fea9cb8e7751dc6f383496f575f5cd79e95b4f33140ee491b01f64ad5c61c90"
+    },
+    {
+      "file": "en-before-goats-pigs-rabbits-sheep.pdf",
+      "language": "en",
+      "version": "before",
+      "pages": 11,
+      "wordBounds": 5356,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 0,
+      "completeWelfareClauses": 0,
+      "pixelHashes": [
+        "22c3c81d4a18c949bdcc9a7d779a614bab6f51d880188b8fec5e1dd4a2382d5d",
+        "6bf8450c947fa7317b4d451fd1a89f70597290df2e4bc4b818358a54966b2cf7",
+        "1e7a04d75515f6161001192407e937de4911aedc2622e06dd490cd56ad64b4fb",
+        "7731a282bf39052353692f88dded9618891079df0008ac68abcf209af7cc7a22",
+        "de54fb226b1f1d45522d4b3c4a76fa74144fa6366408c2c3e1c34e2a1a354d97",
+        "5d491cfaeaaaf0c74abfbb3f40ec0aa51e616718bb6d5fa4e20114d40fdab81c",
+        "237df2e358e74931eea76fbcfeba34dad9534218eaca6c9ad5038cbafe045773",
+        "c8b84d329316e2530a50de2081a403873aa0182f6a4843ab757a7ddd589cd2f3",
+        "372bb5d355d23b6529a488fbbfd3aeeb27142b587555bd210ab08160c7d2c3fd",
+        "e01e34406c3eb18b2dec6ceaf7e1784bc6f48a4aeb861dd8247f7e1dee8720a3",
+        "ea04ef8132c30d20b4c76c00d176601f04b3614fb7be48b28c5af1976a5ecec3"
+      ],
+      "PDFSha256": "edf726b63a7ae28879cc68536c2b9a8a23f84d36bcb8dedc05c61f2490b0ab56"
+    },
+    {
+      "file": "en-after-goats-pigs-rabbits-sheep.pdf",
+      "language": "en",
+      "version": "after",
+      "pages": 11,
+      "wordBounds": 5356,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 0,
+      "completeWelfareClauses": 0,
+      "pixelHashes": [
+        "22c3c81d4a18c949bdcc9a7d779a614bab6f51d880188b8fec5e1dd4a2382d5d",
+        "6bf8450c947fa7317b4d451fd1a89f70597290df2e4bc4b818358a54966b2cf7",
+        "1e7a04d75515f6161001192407e937de4911aedc2622e06dd490cd56ad64b4fb",
+        "7731a282bf39052353692f88dded9618891079df0008ac68abcf209af7cc7a22",
+        "de54fb226b1f1d45522d4b3c4a76fa74144fa6366408c2c3e1c34e2a1a354d97",
+        "5d491cfaeaaaf0c74abfbb3f40ec0aa51e616718bb6d5fa4e20114d40fdab81c",
+        "237df2e358e74931eea76fbcfeba34dad9534218eaca6c9ad5038cbafe045773",
+        "c8b84d329316e2530a50de2081a403873aa0182f6a4843ab757a7ddd589cd2f3",
+        "372bb5d355d23b6529a488fbbfd3aeeb27142b587555bd210ab08160c7d2c3fd",
+        "e01e34406c3eb18b2dec6ceaf7e1784bc6f48a4aeb861dd8247f7e1dee8720a3",
+        "ea04ef8132c30d20b4c76c00d176601f04b3614fb7be48b28c5af1976a5ecec3"
+      ],
+      "PDFSha256": "f06f963dfbc230ff532cd9a2332df85ac37520d12103e05f6fadb50b0a444bd6"
+    }
+  ],
+  "comparisons": [
+    {
+      "case": "bees-cattle-poultry-fish",
+      "sameText": true,
+      "samePixels": true
+    },
+    {
+      "case": "goats-pigs-rabbits-sheep",
+      "sameText": true,
+      "samePixels": true
+    }
+  ],
+  "totalPDFs": 12,
+  "totalPages": 174,
+  "totalWordBounds": 79414,
+  "completeGuideClauses": 1176,
+  "completeWelfareClauses": 176,
+  "visualInspection": "All8native full contact sheets inspected for page layout;4Tshivenda pages enlarged for broiler ventilation, duck disease warning, goat season/feed warning and pig stage-specific transport limits. Contact overview is not fluent-language approval. English controls retain identical pixels/text.",
+  "wholeCareOnSinglePage": 176,
+  "carePageLocations": [
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Beka izidleke zezinyosi kude nezindawo zokudlala, unikeze amanzi ahlanzekile futhi usebenzise indawo eyomile. Cela umfuyi wezinyosi obhalisiwe ahlole ukubekwa okuphephile kwendawo ngaphambi kokwengeza isidleke.",
+      "pages": [
+        2
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Hlola iqoqo ngalinye lezinyosi njalo ukuze uthole izimpawu zesifo sezinyosi okufanele sibikwe kanye nokutheleleka nge-Cape-bee (Capensis).",
+      "pages": [
+        2
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Beka futhi uvikele izidleke ekwebiweni nasekucekelweni phansi, okungenye yezinselelo ezinkulu kakhulu kubafuyi bezinyosi baseNingizimu Afrika.",
+      "pages": [
+        2
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Izibaya zezinkomo akufanele zigcwale ngokweqile: kufanele kube nendawo eyanele yaphansi ukuze zonke izilwane zilale ngesikhathi esisodwa.",
+      "pages": [
+        4,
+        6
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Ngesikhathi zithuthwa, inkomo ngayinye kufanele ibe nendawo yaphansi okungenani engu-1.4 m² ukuze ukulayishwa kungabi kuminyene kakhulu noma kube nesikhala esikhulu kakhulu.",
+      "pages": [
+        4
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Izinkomo akufanele zithuthwe amahora angaphezu kwangu-18 zingakehliswa zinikezwe ukudla, amanzi nendawo yokukhosela.",
+      "pages": [
+        4,
+        6
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Kuyicala ukulambisa, ukunikeza ukudla okunganele, noma ukunqabela izinkomo amanzi noma ukudla.",
+      "pages": [
+        4
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Izinkomazi akufanele zilayishwe ukuze zithuthwe uma amabele azo egcwele ubisi avuvukala.",
+      "pages": [
+        6
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Kuyicala ukulambisa, ukunikeza ukudla okunganele, noma ukunqabela inkomazi yobisi amanzi noma ukudla.",
+      "pages": [
+        6
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Izinkomazi ezisemadlelweni noma ezinkanjini ezivulekile zidinga umthunzi: izakhiwo zomthunzi kufanele zinikeze okungenani u-4 kuya ku-5 m² womthunzi ngenkomazi ngayinye.",
+      "pages": [
+        6
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Izinkukhu zenyama ezigcinwa phansi endlini: kungabi ngaphezu kuka-40 kg wesisindo sezinkukhu ngemitha eyisikwele ngayinye.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Amatshwele asanda kuchanyuselwa kufanele anikwe ukudla engakapheli amahora angu-24 echanyuselwe.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Amatshwele asanda kuchanyuselwa kufanele akwazi ukuthola amanzi engakapheli amahora angu-24 echanyuselwe, futhi ngokushesha kakhulu uma kushisa.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Amanzi ahlanzekile nokudla okufanele kuhlale kutholakala, ukuze izinkukhu zingalambi futhi zingomi.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Izindlu zezinkukhu zenyama zidinga ukungena nokugeleza komoya okungenani okungamamitha ayi-cubic angu-5 ngehora ngekhilogremu ngayinye yesisindo sezinkukhu ezisendlini.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Ekufuyeni izinkukhu zenyama ezihamba ngaphandle, inani eligcinwa ngaphakathi akufanele lidlule izinkukhu ezingu-15 ngemitha eyisikwele yendawo yaphansi.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Ezinhlelweni zasemakhaya zokufuya endaweni evulekile, izinkukhu kufanele zizifunele amanzi nokudla.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Izinkukhu zasemakhaya ezizifunela ukudla zikhula kancane kunezinkukhu ezifuywa ngokuhweba futhi zisengozini enkulu yezifo, izilokazane eziphila kuzo nezilwane ezizizingelayo.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Ocwaningweni lwaseLimpopo naseKwaZulu-Natal, abalimi abangu-94.9% babefaka izinkukhu zabo ezindlini ebusuku.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Lokho izikhukhukazi ezizihambelayo ezazikuthola ngokuzifunela ukudla kwakwanele ukugcina umzimba nokukhula, kodwa kunganele ukuzalela amaqanda: amaprotheni kuzo zonke izinkathi zonyaka, i-calcium ne-phosphorus ebusika.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Ezinhlelweni zokufuya okuvumela ukuhamba ngaphandle, izikhukhukazi kufanele zithole indawo yangaphandle okungenani amahora angu-8 ngosuku emini.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Lapho kusetshenziswa amabhokisi ezidleke ahlukene, kube okungenani nesidleke esisodwa ngezikhukhukazi ezingu-8.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Izikhukhukazi zidinga okungenani amahora angu-8 obumnyama obungaphazanyiswa kuwo wonke umjikelezo wamahora angu-24 ukuze ziphumule kahle.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Ukugcinwa phansi endlini kudinga okokwandlalela okungenani engxenyeni eyodwa kwezintathu (33%) yendawo yaphansi.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Indawo yangaphandle yokuzihambela akufanele igcwale ngokweqile: kungabi ngaphezu kwezinkukhu ezingu-5 ngemitha eyisikwele yendawo.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Kuyicala ukunqabela idada ukudla noma amanzi, noma ukuligcina endaweni engenayo indawo eyanele, umoya owanele, ukukhanya noma indawo yokukhosela ekushiseni nasemakhazeni.",
+      "pages": [
+        14
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Bheka emihlambini ukufa okungazelelwe, izimpaphe ezimahliphihliphi, ukuvuvukala kwezicubu ezilenga ngaphansi koqhwaku noma amagekle, noma ukwehla okungazelelwe kokuzalela amaqanda - lezi yizimpawu zomkhuhlane wezinyoni futhi kufanele zibikwe ngokushesha.",
+      "pages": [
+        14
+      ]
+    },
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Gcina amadada kude nezinyoni zasendle namanzi noma ukudla okuvulekile okuzidonsayo, futhi ulawule ukungena kwezivakashi ezindlini zamadada, ukuze unciphise ingozi yomkhuhlane wezinyoni.",
+      "pages": [
+        14
+      ]
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Kuyicala ukugcina imbuzi endaweni enendawo enganele, umoya onganele, ukukhanya okunganele noma indawo yokukhosela enganele ekushiseni, emakhazeni noma esimweni sezulu, noma ukuyivalela noma ukuyibopha ngendlela eyibangela ukuhlupheka okungadingekile.",
+      "pages": [
+        2,
+        4,
+        6
+      ]
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Kuyicala ukulambisa, ukunikeza ukudla okunganele, noma ukunqabela imbuzi amanzi noma ukudla.",
+      "pages": [
+        2,
+        4,
+        6
+      ]
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Umnikazi akufanele avumele imbuzi ihlale ingcolile noma inezilokazane eziphila kuyo, futhi kufanele ayitholele ukwelashwa ngudokotela wezilwane noma okunye ukwelashwa uma igula, ilimele noma inesifo lapho ekwazi.",
+      "pages": [
+        2,
+        4,
+        6
+      ]
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Ukushoda kokudla ebusika emadlelweni omphakathi otshani obumuncu (sourveld) kuyingozi eyaziwayo enhlalakahleni nasekukhiqizeni: izinsikazi ezizala ekwindla kufanele zondle amazinyane ebusika, kanti ezizala entwasahlobo zithola ukudla okunganele lapho ukukhulelwa sekusekupheleni, ngakho ukwengeza ukudla ebusika kubalulekile.",
+      "pages": [
+        4
+      ]
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Uma izingulube zithuthwa ngamaloli, ikhodi yaseNingizimu Afrika yokuphatha nokuthutha izilwane incoma u-0.3 m² nge-porker, u-0.4 m² nge-baconer no-0.8 m² ngengulube endala ngayinye.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Kuyicala ukugcina ingulube endaweni enendawo enganele, umoya onganele, ukukhanya okunganele noma indawo yokukhosela enganele ekushiseni, emakhazeni noma esimweni sezulu, noma ukuyivalela noma ukuyibopha ngendlela eyibangela ukuhlupheka okungadingekile.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Kuyicala ukulambisa, ukunikeza ukudla okunganele, noma ukunqabela ingulube amanzi noma ukudla.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Ngesikhathi sokushisa okukhulu, izindlu zezingulube zidinga ukungena nokugeleza komoya okungcono nokuncishiswa kwenani lezingulube endaweni, kanti izingulube zangaphandle zidinga umthunzi nendawo yokukhosela.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Kuyicala ukunqabela unogwaja ukudla noma amanzi, noma ukuwugcina endaweni engenayo indawo eyanele, umoya owanele, ukukhanya noma indawo yokukhosela ekushiseni nasemakhazeni.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Nikeza onogwaja abazalisayo indawo yaphansi yendlu engaba ngu-0.48-0.70 m2 ngamunye, ukuphakama kube ngu-50-60 cm, kungabi ikheji eliminyene.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Izimvu akufanele ziminyaniswe esibayeni: okungenani u-0.56 wamamitha ayisikwele wendawo yaphansi ngemvu ngayinye ukuze sonke isilwane sikwazi ukulala.",
+      "pages": [
+        12,
+        14
+      ]
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Izinduku zikagesi ezithusayo, izinduku noma izikhonkwane zokugqugquzela akufanele zisetshenziswe ezimvini.",
+      "pages": [
+        12,
+        14
+      ]
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Izimvu eziqhutshwa ngezinyawo akufanele zihanjiswe ibanga elingaphezu kuka-20 km ngosuku olulodwa (u-25 km uthathwa njengokweqile).",
+      "pages": [
+        12,
+        14
+      ]
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Imfuyo kufanele inikwe amanzi nokudla ngokushesha lapho ifika enkanjini yasebusuku noma lapho eya khona ekugcineni.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Izimvu ezilimele, ezikhubazekile noma eziyizimpumputhe kufanele zibekwe phambili ekuhlatshweni, noma zihlatshwe ngokuphuthumayo, ukuze kuvinjelwe ubuhlungu noma ukuhlupheka okwengeziwe.",
+      "pages": [
+        12,
+        14
+      ]
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Kufanele kube nohlelo lokwelapha utwayi lwezimvu (sheep scab): lesi sifo sinezindleko eziphezulu zomnotho nenhlalakahle yezilwane.",
+      "pages": [
+        14
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Beha matlo a dinotshi hole le mabala a ho bapala, fana ka metsi a hlwekileng mme o sebedise sebaka se ommeng. Kopa morui wa dinotshi ya ngodisitsweng ho hlahloba ho bewa ho bolokehileng sebakeng sa heno pele o eketsa ntlo ya dinotshi.",
+      "pages": [
+        2
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Hlahloba sehlopha ka seng sa dinotshi kgafetsa bakeng sa matshwao a lefu la dinotshi le tlamehang ho tlalehwa le tshwaetso ya Cape-bee (Capensis).",
+      "pages": [
+        2
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Beha le ho sireletsa matlo a dinotshi kgahlanong le boshodu le tshenyo ya ka boomo, e leng e nngwe ya diphephetso tse kgolo ka ho fetisisa ho barui ba dinotshi ba Afrika Borwa.",
+      "pages": [
+        2
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Masaka a dikgomo ha a tshwanela ho tlala haholo: ho tshwanetse ho ba le sebaka se lekaneng sa fatshe hore phoofolo e nngwe le e nngwe e robale ka nako e le nngwe.",
+      "pages": [
+        4,
+        6
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Nakong ya dipalangwang, kgomo ka nngwe e tshwanetse ho ba le bonyane 1.4 m² ya sebaka sa fatshe hore ho laiswa ho se ke ha petetsana haholo kapa ha ba le sebaka se seholo haholo.",
+      "pages": [
+        4
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Dikgomo ha di a tshwanela ho tsamaiswa dihora tse fetang 18 di sa theolwe mme tsa fuwa dijo, metsi le bodulo bo di sireletsang.",
+      "pages": [
+        4,
+        6
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Ke tlolo ya molao ho bolaisa dikgomo tlala, ho di fepa hanyane haholo, kapa ho di hanela metsi kapa dijo.",
+      "pages": [
+        4
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Dikgomo tse tshehadi ha di a tshwanela ho laiswa bakeng sa dipalangwang haeba matswele a tsona a ruruhile ka lebese.",
+      "pages": [
+        6
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Ke tlolo ya molao ho bolaisa kgomo ya lebese tlala, ho e fepa hanyane haholo, kapa ho e hanela metsi kapa dijo.",
+      "pages": [
+        6
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Dikgomo tse tshehadi makgulong kapa dikampong tse bulehileng di hloka moriti: meaho ya moriti e tshwanetse ho fana ka bonyane 4 ho isa ho 5 m² ya moriti ka kgomo.",
+      "pages": [
+        6
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Dikgoho tsa nama tse dulang fatshe ka tlung: boima ba dikgoho bo se ke ba feta 40 kg ka mithara ya sekwere.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Madinyane a dikgoho a sa tswa qhotswa a tshwanetse ho fuwa dijo nakong ya dihora tse 24 ka mora ho qhotswa.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Madinyane a dikgoho a sa tswa qhotswa a tshwanetse ho fumana metsi nakong ya dihora tse 24 ka mora ho qhotswa, kapele ho feta moo ha ho tjhesa.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Metsi a hlwekileng le dijo tse nepahetseng di dule di fumaneha, hore dikgoho di se ke tsa lapa kapa tsa nyorwa.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Matlo a dikgoho tsa nama a hloka tekanyo ya moya o kenang le o phallang ya bonyane dimithara tse 5 tsa khubiki ka hora bakeng sa khilograma ka nngwe ya boima ba dikgoho tse ka tlung.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Tlhahisong ya dikgoho tsa nama tse itsamaelang kantle, palo e bolokwang ka tlung ha e a tshwanela ho feta dikgoho tse 15 ka mithara ya sekwere ya fatshe.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Mekgweng ya metseng ya ho rua sebakeng se seholo se bulehileng, dikgoho di tshwanetse ho ipatlela metsi le dijo.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Dikgoho tsa metseng tse ipatlelang dijo di hola butle ho feta tse ruwang kgwebong mme di kotsing e kgolo ya mafu, dikokwana-hloko tse phelang ho tsona le dibatana.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Phuputsong ya Limpopo le KwaZulu-Natal, 94.9% ya balemi ba ne ba kenya dikgoho tsa bona ka matlung bosiu.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Dijo tseo dikgoho tse tshehadi tse itsamaelang di neng di ipatlela tsona di ne di lekana ho hlokomela mmele le kgolo empa di sa lekane bakeng sa ho behela mahe: protheine dihleng tsohle, calcium le phosphorus mariha.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Mekgweng ya ho rua e dumellang ho itsamaela kantle, dikgoho tse tshehadi di tshwanetse ho fumana sebaka sa kantle bonyane dihora tse 8 ka letsatsi ha ho kganya.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Moo ho sebediswang mabokose a dihlaha ka bonngwe, ho be le bonyane sehlaha se le seng bakeng sa dikgoho tse tshehadi tse 8.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Dikgoho tse tshehadi di hloka bonyane dihora tse 8 tsa lefifi le sa kgaotsweng potolohong e nngwe le e nngwe ya dihora tse 24 hore di phomole hantle.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Ho rua fatshe ka tlung ho hloka dintho tsa ho ala bonyane karolong e le nngwe ho tse tharo (33%) ya fatshe.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Sebaka sa kantle sa ho itsamaela ha se a tshwanela ho tlala haholo: ho se be le dikgoho tse fetang 5 ka mithara ya sekwere ya sebaka seo.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Ke tlolo ya molao ho hanela letata dijo kapa metsi, kapa ho le boloka moo ho se nang sebaka se lekaneng, moya o lekaneng, kganya kapa tshireletso mochesong le serameng.",
+      "pages": [
+        14
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Sheba mehlapeng ho shwa ha tshohanyetso, masiba a hlakorileng, ho ruruha ha dinama tse leketlang tlasa molomo kapa dikama tsa hloohong, kapa ho theoha ha tshohanyetso ha tlhahiso ya mahe - ana ke matshwao a mokakallane wa dinonyana mme a tshwanetse ho tlalehwa hang-hang.",
+      "pages": [
+        14
+      ]
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Boloka matata hole le dinonyana tse hlaha le metsi kapa dijo tse pepeneneng tse di hohelang, mme o laole ho kena ha baeti matlong a matata, ho fokotsa kotsi ya mokakallane wa dinonyana.",
+      "pages": [
+        14
+      ]
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Ke tlolo ya molao ho boloka podi moo sebaka, moya, kganya kapa tshireletso mochesong, serameng kapa maemong a lehodimo di sa lekaneng, kapa ho e kwalla kapa ho e tlama ka tsela e bakang mahlomola a sa hlokahaleng.",
+      "pages": [
+        2,
+        4,
+        6
+      ]
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Ke tlolo ya molao ho bolaisa podi tlala, ho e fepa hanyane haholo, kapa ho e hanela metsi kapa dijo.",
+      "pages": [
+        2,
+        4,
+        6
+      ]
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Mong a se ke a tlohela podi e le ditshila kapa e tletse dikokwana-hloko tse phelang ho yona, mme o tshwanetse ho batlela phoofolo e kulang, e lemetseng kapa e tshwerweng ke lefu kalafo ya ngaka ya diphoofolo kapa kalafo e nngwe ha a kgona.",
+      "pages": [
+        2,
+        4,
+        6
+      ]
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Kgaello ya dijo mariha makgulong a kopanelo a sourveld ke kotsi e tsejwang ya boiketlo le tlhahiso: dipodi tse tshehadi tse tswalang ka hwetla di tshwanetse ho fepa madinyane mariha, mme tse tswalang ka selemo di haellwa ke phepo qetellong ya bokhachane, kahoo ho tlatsetsa dijo mariha ho bohlokwa.",
+      "pages": [
+        4
+      ]
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Ha dikolobe di tsamaiswa ka diteraka, khoutu ya Afrika Borwa ya ho tshwara le ho tsamaisa diphoofolo e kgothaletsa 0.3 m² ka porker, 0.4 m² ka baconer le 0.8 m² ka kolobe e kgolo.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Ke tlolo ya molao ho boloka kolobe moo sebaka, moya, kganya kapa tshireletso mochesong, serameng kapa maemong a lehodimo di sa lekaneng, kapa ho e kwalla kapa ho e tlama ka tsela e bakang mahlomola a sa hlokahaleng.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Ke tlolo ya molao ho bolaisa kolobe tlala, ho e fepa hanyane haholo, kapa ho e hanela metsi kapa dijo.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Nakong ya maqhubu a motjheso, matlo a dikolobe a hloka moya o kenang le o phallang hantle ho feta le palo e tlase ya dikolobe sebakeng, mme dikolobe tsa kantle di hloka moriti le bodulo bo di sireletsang.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Ke tlolo ya molao ho hanela mmutla dijo kapa metsi, kapa ho o boloka moo ho se nang sebaka se lekaneng, moya o lekaneng, kganya kapa tshireletso mochesong le serameng.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Fa mebutla ya ho ikatisa sebaka sa fatshe sa ntlo se ka bang 0.48-0.70 m2 ka nngwe, se be bolelele ba 50-60 cm, eseng lesaka le petetsaneng.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Dinku ha di a tshwanela ho petetswa masakeng: bonyane dimithara tse 0.56 tsa sekwere tsa fatshe ka nku hore phoofolo e nngwe le e nngwe e kgone ho robala.",
+      "pages": [
+        12,
+        14
+      ]
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Dithupa tsa motlakase tse hlabang, dithupa kapa dintho tse hlabang tsa ho kganna diphoofolo ha di a tshwanela ho sebediswa dinkung.",
+      "pages": [
+        12,
+        14
+      ]
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Dinku tse kgannwang ka maoto ha di a tshwanela ho tsamaiswa ho feta 20 km ka letsatsi le le leng (25 km e nkuwa e le ho fetelletsa).",
+      "pages": [
+        12,
+        14
+      ]
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Diphoofolo tsa polasi di tshwanetse ho fuwa metsi le dijo hang ha di fihla kampong ya bosiu kapa moo di yang teng qetellong.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Dinku tse lemetseng, tse holofetseng kapa tse foufetseng di tshwanetse ho etellwa pele ha ho hlajwa, kapa ho hlajwa ka tshohanyetso, ho thibela bohloko kapa mahlomola a eketsehileng.",
+      "pages": [
+        12,
+        14
+      ]
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Ho tshwanetse ho ba le moralo wa kalafo ya lefu la letlalo la dinku (sheep scab): lefu lena le na le ditjeho tse kgolo moruong le boiketlong ba diphoofolo.",
+      "pages": [
+        14
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Veka tindlu ta tinyoxi ekule ni tindhawu to tlangela, nyika mati yo tenga naswona tirhisa ndhawu yo oma. Kombela mufuwi wa tinyoxi loyi a tsarisiweke ku kambela ku vekiwa loku hlayisekeke ka laha u nga si engetela yindlu ya tinyoxi.",
+      "pages": [
+        2
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Kambela ntlawa wun’wana ni wun’wana wa tinyoxi nkarhi na nkarhi ku kuma swikombiso swa vuvabyi bya tinyoxi leswi faneleke ku vikiwa ni ku tluleriwa hi Cape-bee (Capensis).",
+      "pages": [
+        2
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Veka ni ku sirhelela tindlu ta tinyoxi eka ku yiviwa ni ku onhiwa hi vomu, leswi nga xin’wana xa swiphiqo leswikulu leswi langutaneke ni vafuwi va tinyoxi va Afrika-Dzonga.",
+      "pages": [
+        2
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Masaka ya tihomu a ya fanelanga ku tala ku tlurisa: ku fanele ku va ni ndhawu leyi eneleke ehansi leswaku xifuwo xin’wana ni xin’wana xi etlela hi nkarhi wun’we.",
+      "pages": [
+        4,
+        6
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Hi nkarhi wo fambisiwa, homu yin’wana ni yin’wana yi fanele ku va ni kwalomu ka 1.4 m² ya ndhawu ehansi leswaku ku layicha ku nga yi phusumeti ngopfu kumbe ku siya ndhawu yo anama ngopfu.",
+      "pages": [
+        4
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Tihomu a ti fanelanga ku fambisiwa nkarhi wo hundza 18 wa tiawara ti nga si rhelerisiwa ti nyikiwa swakudya, mati ni vutumbelo.",
+      "pages": [
+        4,
+        6
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "I nandzu ku dlaya tihomu hi ndlala, ku ti nyika swakudya leswi nga enelangiki, kumbe ku ti tsona mati kumbe swakudya.",
+      "pages": [
+        4
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Tihomu ta xisati a ti fanelanga ku layichiwa leswaku ti fambisiwa loko matswele ya tona ya pfimbile hi masi.",
+      "pages": [
+        6
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "I nandzu ku dlaya homu ya masi hi ndlala, ku yi nyika swakudya leswi nga enelangiki, kumbe ku yi tsona mati kumbe swakudya.",
+      "pages": [
+        6
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Tihomu ta xisati emadyelweni kumbe etinkampeni leti pfulekeke ti lava ndzhuti: swivumbeko swa ndzhuti swi fanele ku nyika kwalomu ka 4 ku fika eka 5 m² ya ndzhuti hi homu.",
+      "pages": [
+        6
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Tihuku ta nyama leti tshamaka ehansi endlwini: ku nga vi ni ntiko wa tihuku wo hundza 40 kg hi mitara ya xikwere.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Swiciwana leswi nga ha ku tlhotlhoriwaka swi fanele ku nyikiwa swakudya ku nga si hundza 24 wa tiawara endzhaku ka ku tlhotlhoriwa.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Swiciwana leswi nga ha ku tlhotlhoriwaka swi fanele ku kota ku kuma mati ku nga si hundza 24 wa tiawara endzhaku ka ku tlhotlhoriwa, hi ku hatlisa ku tlurisa loko ku hisa.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Mati yo tenga ni swakudya leswi faneleke swi fanele ku va kona minkarhi hinkwayo, leswaku tihuku ti nga vi ni ndlala ni torha.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Tindlu ta tihuku ta nyama ti lava mpimo wa ku nghena ni ku famba ka moya wa kwalomu ka 5 wa timitara ta khubiki hi awara eka khilogiramu yin’wana ni yin’wana ya ntiko wa tihuku leti nga endlwini.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Eka ku fuwa tihuku ta nyama leti fambafambaka ehandle, nhlayo leyi tshamaka endzeni a yi fanelanga ku hundza 15 wa tihuku hi mitara ya xikwere ya ndhawu ya le hansi.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Eka maendlelo ya le migangeni yo fuwa endhawini yo anama leyi pfulekeke, tihuku ti fanele ku tihlotela mati ni swakudya.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Tihuku ta le migangeni leti tihlotelaka swakudya ti kula hi ku nonoka ku tlurisa leti fuyiwaka hi mabindzu naswona ti le khombyeni lerikulu ra mavabyi, swivumbiwa leswi hanyaka hi ku tswonga miri wa tona (parasites) ni swiharhi leswi ti hlaselaka.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Eka ndzavisiso wa Limpopo na KwaZulu-Natal, 94.9% ya varimi a va nghenisa tihuku ta vona etindlwini nivusiku.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Leswi tihuku ta xisati leti tifambafambelaka a ti swi kuma hi ku tihlotela swakudya a swi enela ku hlayisa miri ni ku kula kambe swi nga eneli ku tshikela: phurotheyini eka tinguva hinkwato, calcium na phosphorus hi xixika.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Eka maendlelo yo fuwa lama pfumelelaka ku fambafamba ehandle, tihuku ta xisati ti fanele ku kota ku ya endhawini ya le handle ku ringana kwalomu ka 8 wa tiawara hi siku ku ri nhlikanhi.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Laha ku tirhisiwaka mabokisi ya swisaka swa xin’we-xin’we, ku fanele ku va ni kwalomu ka xisaka xin’we eka 8 wa tihuku ta xisati.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Tihuku ta xisati ti lava kwalomu ka 8 wa tiawara ta munyama lowu nga kavanyetiwiki eka ndzhendzeleko wun’wana ni wun’wana wa 24 wa tiawara leswaku ti wisa kahle.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Ku tshamisa ehansi endlwini swi lava swo andlala eka kwalomu ka xiphemu xin’we xa swinharhu (33%) xa ndhawu ya le hansi.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Ndhawu ya le handle yo fambafamba a yi fanelanga ku tala ku tlurisa: ku nga vi ni tihuku to hundza 5 hi mitara ya xikwere ya ndhawu yoleyo.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "I nandzu ku tsona sekwa swakudya kumbe mati, kumbe ku xi hlayisa laha ku nga riki na ndhawu leyi eneleke, moya lowu eneleke, ku vonakala kumbe vutumbelo eka ku hisa ni xirhami.",
+      "pages": [
+        14
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Languta mitlhambi ku vona ku fa ka xitshuketa, tinsiva leti phaphamaleke, ku pfimba ka swiphemu swa nyama leswi lengalengaka ehansi ka nomo kumbe swa le nhlokweni, kumbe ku hunguteka ka ku tshikela hi xitshuketa - leswi i swikombiso swa mukhuhlwana wa tinyenyana naswona swi fanele ku vikiwa hi ku hatlisa.",
+      "pages": [
+        14
+      ]
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Hlayisa masekwa ekule ni tinyenyana ta nhova ni mati kumbe swakudya leswi nga funengetiwangiki leswi ti kokaka, naswona lawula ku nghena ka vaendzi etindlwini ta masekwa, ku hunguta khombo ra mukhuhlwana wa tinyenyana.",
+      "pages": [
+        14
+      ]
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "I nandzu ku hlayisa mbuti laha ndhawu, moya, ku vonakala kumbe vutumbelo eka ku hisa, xirhami kumbe maxelo swi nga enelangiki, kumbe ku yi pfalela kumbe ku yi boha hi ndlela leyi vangaka ku xaniseka loku nga lavekiki.",
+      "pages": [
+        2,
+        4,
+        6
+      ]
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "I nandzu ku dlaya mbuti hi ndlala, ku yi nyika swakudya leswi nga enelangiki, kumbe ku yi tsona mati kumbe swakudya.",
+      "pages": [
+        2,
+        4,
+        6
+      ]
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "N’winyi a nga fanelanga ku tshika mbuti yi ri ni thyaka kumbe yi tele hi swivumbiwa leswi hanyaka hi ku tswonga miri wa yona (parasites), naswona u fanele ku kumela xifuwo lexi vabyaka, lexi vavisekeke kumbe lexi nga ni vuvabyi vutshunguri bya dokodela wa swifuwo kumbe vutshunguri byin’wana loko a kota.",
+      "pages": [
+        2,
+        4,
+        6
+      ]
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Ku kayivela ka swakudya hi xixika emadyelweni ya mani na mani ya sourveld i khombo leri tivekaka eka nhlayiseko ni vuhumelerisi: timbuti ta xisati leti tswalaka hi xixikana ti fanele ku phamela swimbutani hi xixika, kasi leti tswalaka hi ximun’wana ti pfumala swakudya leswi faneleke loko ku biha emirini ku ri ekusuhi ni ku hela, kutani ku engetela swakudya hi xixika i swa nkoka.",
+      "pages": [
+        4
+      ]
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Loko tinguluve ti fambisiwa hi tilori, khodi ya Afrika-Dzonga ya ku khoma ni ku fambisa swifuwo yi ringanyeta 0.3 m² hi porker, 0.4 m² hi baconer ni 0.8 m² hi nguluve yin’wana ni yin’wana leyikulu.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "I nandzu ku hlayisa nguluve laha ndhawu, moya, ku vonakala kumbe vutumbelo eka ku hisa, xirhami kumbe maxelo swi nga enelangiki, kumbe ku yi pfalela kumbe ku yi boha hi ndlela leyi vangaka ku xaniseka loku nga lavekiki.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "I nandzu ku dlaya nguluve hi ndlala, ku yi nyika swakudya leswi nga enelangiki, kumbe ku yi tsona mati kumbe swakudya.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Hi nkarhi wa ku hisa swinene, tindlu ta tinguluve ti lava ku nghena ni ku famba ka moya loku antswaka ni nhlayo leyi hungutiweke ya tinguluve endhawini, naswona tinguluve ta le handle ti lava ndzhuti ni vutumbelo.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "I nandzu ku tsona mpfundla swakudya kumbe mati, kumbe ku wu hlayisa laha ku nga riki na ndhawu leyi eneleke, moya lowu eneleke, ku vonakala kumbe vutumbelo eka ku hisa ni xirhami.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Nyika mimpfundla yo tswalisa kwalomu ka 0.48-0.70 m2 ya ndhawu ehansi ka yindlu hi wun’we, ku tlakuka ku va 50-60 cm, ku nga ri kheji leri phusumetaka.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Tinyimpfu a ti fanelanga ku phusumetiwa esakeni: kwalomu ka 0.56 wa timitara ta xikwere ta ndhawu ya le hansi hi nyimpfu leswaku xifuwo xin’wana ni xin’wana xi kota ku etlela.",
+      "pages": [
+        12,
+        14
+      ]
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Switlhavi swa gezi, tinhonga kumbe switlhavi swo susumeta a swi fanelanga ku tirhisiwa eka tinyimpfu.",
+      "pages": [
+        12,
+        14
+      ]
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Tinyimpfu leti fambisiwaka hi milenge a ti fanelanga ku fambisiwa ku hundza 20 km hi siku rin’we (25 km yi tekiwa yi ri ku tlurisa).",
+      "pages": [
+        12,
+        14
+      ]
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Swifuwo swi fanele ku nyikiwa mati ni swakudya hi ku hatlisa loko swi fika enkampeni ya vusiku kumbe emakumu ya laha swi yaka kona.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Tinyimpfu leti vavisekeke, leti lamaleke kumbe leti nga voniki ti fanele ku rhangisiwa eku tlhaviweni, kumbe ti tlhaviwa hi xihatla, ku sivela ku vava kumbe ku xaniseka loku engetelekeke.",
+      "pages": [
+        12,
+        14
+      ]
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Ku fanele ku va ni pulani yo tshungula vuvabyi bya nhlonge ya tinyimpfu (sheep scab): vuvabyi byi ni ntsengo wa le henhla eka ikhonomi ni nhlayiseko bya swifuwo.",
+      "pages": [
+        14
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Veani miṱa ya ṋotshi kule na fhethu ha u tambela, ni ṋee maḓi o kunaho nahone ni shumise fhethu ho omaho. Humbelani mufuwi wa ṋotshi o ḓiṅwalisaho a sedzuluse u vhewa ho tsireledzeaho ha henefho phanḓa ha u engedza muṱa wa ṋotshi.",
+      "pages": [
+        2
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Sedzulusani tshigwada tshiṅwe na tshiṅwe tsha ṋotshi tshifhinga tshoṱhe u vhona tsumbo dza vhulwadze ha ṋotshi vhune ha tea u vhigiwa na u kavhiwa nga Cape-bee (Capensis).",
+      "pages": [
+        2
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Veani ni tsireledze miṱa ya ṋotshi kha vhuvhava na u tshinywa nga khole, zwine zwa vha iṅwe ya khaedu khulwane kha vhafuwi vha ṋotshi vha Afrika Tshipembe.",
+      "pages": [
+        2
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Zwitanga zwa kholomo a zwo ngo tea u ḓala u fhirisa: hu tea u vha na tshikhala tsho eḓanaho fhasi uri tshipuka tshiṅwe na tshiṅwe tshi kone u eḓela nga tshifhinga tshithihi.",
+      "pages": [
+        4,
+        6
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Nga tshifhinga tsha u endedzwa, kholomo iṅwe na iṅwe i tea u vha na tshikhala tsha fhasi tshi si ho fhasi ha 1.4 m² uri u laḓa zwi songo tsikeledza nga maanḓa kana u sia tshikhala tshihulwane nga maanḓa.",
+      "pages": [
+        4
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Kholomo a dzo ngo tea u endedzwa tshifhinga tshi fhiraho awara dza 18 dzi sa athu u tsitswa dza ṋewa zwiḽiwa, maḓi na vhudzumbamo.",
+      "pages": [
+        4,
+        6
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Ndi mulandu u tambudza kholomo nga nḓala, u dzi ṋea zwiḽiwa zwi sa eḓani, kana u dzi dzima maḓi kana zwiḽiwa.",
+      "pages": [
+        4
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Kholomo dza tsadzi a dzo ngo tea u laḓiwa uri dzi endedzwe arali maḓamu adzo o ḓala mafhi a vho mboḓa.",
+      "pages": [
+        6
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Ndi mulandu u tambudza kholomo ya mafhi nga nḓala, u i ṋea zwiḽiwa zwi sa eḓani, kana u i dzima maḓi kana zwiḽiwa.",
+      "pages": [
+        6
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Kholomo dza tsadzi dzi re mafuloni kana gammbeni dzo vuleaho dzi ṱoḓa murunzi: zwifhaṱo zwa murunzi zwi tea u ṋea murunzi u si ho fhasi ha 4 u swika kha 5 m² nga kholomo.",
+      "pages": [
+        6
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Khuhu dza ṋama dzi dzulaho fhasi nḓuni: tshileme tsha khuhu tshi songo fhira 40 kg nga mitara ya tshikwea.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Zwikukwana zwi kha ḓi bva u thothonya zwi tea u ṋewa zwiḽiwa hu sa athu u fhira awara dza 24 zwi tshi bva u thothonya.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Zwikukwana zwi kha ḓi bva u thothonya zwi tea u kona u wana maḓi hu sa athu u fhira awara dza 24 zwi tshi bva u thothonya, nga u ṱavhanya u fhira zwenezwo musi hu tshi fhisa.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Maḓi o kunaho na zwiḽiwa zwo teaho zwi dzule zwi hone, uri khuhu dzi si vhe na nḓala na ḓora.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Nnḓu dza khuhu dza ṋama dzi ṱoḓa mpimo wa u dzhena na u tshimbila ha muya u si ho fhasi ha mitara dza khubiki dza 5 nga awara kha khilogireme iṅwe na iṅwe ya tshileme tsha khuhu dzi re nḓuni.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Kha u fuwa khuhu dza ṋama dzi tshimbilaho nnḓa, tshivhalo tshi dzulaho nḓuni a tsho ngo tea u fhira khuhu dza 15 nga mitara ya tshikwea ya vhupo ha fhasi.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Kha maitele a mahayani a u fuwa fhethu ho vuleaho hu hulwane, khuhu dzi tea u ḓiwanela maḓi na zwiḽiwa.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Khuhu dza mahayani dzi ḓiṱoḓelaho zwiḽiwa dzi aluwa nga u ongolowa u fhira dzi fuwaho kha mabindu nahone dzi khomboni khulwane ya malwadze, zwilumi zwi dzulaho khadzo na zwipuka zwi dzi ḽaho.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Kha ṱhoḓisiso ya Limpopo na KwaZulu-Natal, 94.9% ya vhalimi vho vha vha tshi dzhenisa khuhu dzavho nḓuni vhusiku.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Zwe khuhu dza tsadzi dzi ḓitshimbilelaho dza vha dzi tshi ḓiwanela sa zwiḽiwa zwo vha zwi tshi eḓana u tshidza muvhili na u aluwa, fhedzi zwi sa eḓani u kudzela makumba: phurotheini kha khalaṅwaha dzoṱhe, calcium na phosphorus vhuria.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Kha maitele a u fuwa a tendelaho u tshimbila nnḓa, khuhu dza tsadzi dzi tea u kona u ya fhethu ha nnḓa tshifhinga tshi si ho fhasi ha awara dza 8 nga ḓuvha hu masiari.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Hune ha shumiswa mabogisi a zwiṱaha zwa khuhu nga tshithihi, hu vhe na tshiṱaha tshithihi kana u fhira kha khuhu dza tsadzi dza 8.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Khuhu dza tsadzi dzi ṱoḓa tshifhinga tshi si ho fhasi ha awara dza 8 dza swiswi ḽi sa ṱhukhuwi kha mutevhe muṅwe na muṅwe wa awara dza 24 uri dzi awele zwavhuḓi.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "U dzudza fhasi nḓuni zwi ṱoḓa zwa u andadza kha tshipiḓa tshithihi kha zwiraru (33%) tsha vhupo ha fhasi kana u fhira.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Fhethu ha nnḓa ha u tshimbila a ho ngo tea u ḓala nga maanḓa: khuhu dzi songo fhira 5 nga mitara ya tshikwea ya fhethu afho.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Ndi mulandu u dzima sekwa zwiḽiwa kana maḓi, kana u ḽi vhea hune ha shaya tshikhala tsho eḓanaho, muya wo eḓanaho, tshedza kana vhudzumbamo kha mufhiso na phepho.",
+      "pages": [
+        14
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Sedzani miṱambi u vhona u fa nga khathihi, mithenga yo ṱhilinganyaho, u zwimba ha zwiṋama zwo nembelelaho fhasi ha mulomo kana kha ṱhoho, kana u fhungudzea ha makumba nga khathihi - hezwi ndi tsumbo dza mugunyuso wa zwiṋoni nahone dzi tea u vhigiwa nga u ṱavhanya.",
+      "pages": [
+        14
+      ]
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "clause": "Veani masekwa kule na zwiṋoni zwa ḓaka na maḓi kana zwiḽiwa zwo vuleaho zwi zwi kokodzaho, ni lange u dzhena ha vhaeni nḓuni dza masekwa, u fhungudza khombo ya mugunyuso wa zwiṋoni.",
+      "pages": [
+        14
+      ]
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Ndi mulandu u vhea mbudzi hune tshikhala, muya, tshedza kana vhudzumbamo kha mufhiso, phepho kana mutsho zwa sa eḓane, kana u i valela kana u i vhofha nga nḓila i vhangaho u tambula hu sa ṱoḓei.",
+      "pages": [
+        2,
+        4,
+        6
+      ]
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Ndi mulandu u tambudza mbudzi nga nḓala, u i ṋea zwiḽiwa zwi sa eḓani, kana u i dzima maḓi kana zwiḽiwa.",
+      "pages": [
+        2,
+        4,
+        6
+      ]
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Muṋe ha ngo tea u litsha mbudzi yo tshikafhala kana yo ḓala zwilumi zwi dzulaho khayo, nahone u tea u ṱoḓela tshipuka tshi lwalaho, tsho huvhalaho kana tshi re na vhulwadze dzilafho ḽa dokotela wa zwipuka kana ḽiṅwe dzilafho musi a tshi kona.",
+      "pages": [
+        2,
+        4,
+        6
+      ]
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "U ṱahela ha zwiḽiwa vhuria mafuloni a tshitshavha a sourveld ndi khombo i ḓivheaho kha mutakalo na vhubveledzi: mbudzi dza tsadzi dzi bebaho tshifhefho dzi tea u mamisa zwibudzana vhuria, ngeno dzi bebaho luṱavula dzi tshi shaya pfushi kha magumo a u ḓihwala, ngauralo zwiḽiwa zwa u engedza vhuria ndi zwa ndeme.",
+      "pages": [
+        4
+      ]
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Musi nguluvhe dzi tshi endedzwa nga ṱhiraka, khoudu ya Afrika Tshipembe ya u fara na u endedza zwipuka i themendela 0.3 m² nga porker, 0.4 m² nga baconer na 0.8 m² nga nguluvhe iṅwe na iṅwe yo no aluwaho.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Ndi mulandu u vhea nguluvhe hune tshikhala, muya, tshedza kana vhudzumbamo kha mufhiso, phepho kana mutsho zwa sa eḓane, kana u i valela kana u i vhofha nga nḓila i vhangaho u tambula hu sa ṱoḓei.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Ndi mulandu u tambudza nguluvhe nga nḓala, u i ṋea zwiḽiwa zwi sa eḓani, kana u i dzima maḓi kana zwiḽiwa.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Nga zwifhinga zwa mufhiso muhulu, nnḓu dza nguluvhe dzi ṱoḓa u dzhena na u tshimbila ha muya hu khwine na tshivhalo tsho fhungudzwaho tsha nguluvhe fhethu huthihi, nahone nguluvhe dza nnḓa dzi ṱoḓa murunzi na vhudzumbamo.",
+      "pages": [
+        8
+      ]
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Ndi mulandu u dzima muvhuḓa zwiḽiwa kana maḓi, kana u u vhea hune ha shaya tshikhala tsho eḓanaho, muya wo eḓanaho, tshedza kana vhudzumbamo kha mufhiso na phepho.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Ṋeani mivhuḓa ya u bebisa tshikhala tsha fhasi ha nnḓu tshi ṱoḓaho u vha 0.48-0.70 m2 nga muthihi, vhulapfu vhu vhe 50-60 cm, hu si kheidzhi yo tsikeledzeaho.",
+      "pages": [
+        10
+      ]
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Nngu a dzo ngo tea u tsikeledzwa zwitangani: tshikhala tsha fhasi tshi si ho fhasi ha mitara dza tshikwea dza 0.56 nga nngu uri tshipuka tshiṅwe na tshiṅwe tshi kone u eḓela.",
+      "pages": [
+        12,
+        14
+      ]
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Zwibaya zwa muḓagasi, ṱhamu kana zwibaya zwa u khada a zwo ngo tea u shumiswa kha nngu.",
+      "pages": [
+        12,
+        14
+      ]
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Nngu dzi khadzwaho nga milenzhe a dzo ngo tea u endedzwa u fhira 20 km nga ḓuvha ḽithihi (25 km i dzhiiwa i nnzhi u fhirisa).",
+      "pages": [
+        12,
+        14
+      ]
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Zwe zwa fuwiwa zwi tea u ṋewa maḓi na zwiḽiwa nga u ṱavhanya musi zwi tshi swika gammbeni ya vhusiku kana fhethu ha magumo hune zwa khou ya hone.",
+      "pages": [
+        12
+      ]
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Nngu dzo huvhalaho, dzo holefhalaho kana dzi sa vhoni dzi tea u rangiswa kha u ṱhavhiwa, kana dza ṱhavhiwa nga shishi, u thivhela vhuṱungu kana u tambula ho engedzeaho.",
+      "pages": [
+        12,
+        14
+      ]
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "clause": "Hu tea u vha na pulane ya u lafha vhulwadze ha lukanda lwa nngu (sheep scab): vhulwadze uhu vhu na tshinyalelo khulwane kha ikonomi na mutakalo wa zwipuka.",
+      "pages": [
+        14
+      ]
+    }
+  ]
+}
