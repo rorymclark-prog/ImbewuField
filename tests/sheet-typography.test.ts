@@ -103,10 +103,13 @@ test('the phasing schedule sizes its type from its own column, not the changing 
   assert.ok(start >= 0 && end > start, 'phasing type-size block exists');
   const block = SOURCE.slice(start, end);
 
-  assert.match(block, /fsHeader = Math\.round\(lgW \*/);
-  assert.match(block, /fsSection = Math\.round\(lgW \*/);
-  assert.match(block, /fsBody = Math\.round\(lgW \*/);
-  assert.match(block, /titleFont = .*Math\.round\(lgW \*/);
+  // The column now shares spare width between larger type and fewer wrapped lines. Its type
+  // scale still comes from the panel placement; the map/sheet width must never own these sizes.
+  assert.match(SOURCE, /typeW: placement\.typeWidth/);
+  assert.match(block, /fsHeader = Math\.round\(typeW \*/);
+  assert.match(block, /fsSection = Math\.round\(typeW \*/);
+  assert.match(block, /fsBody = Math\.round\(typeW \*/);
+  assert.match(block, /titleFont = .*Math\.round\(typeW \*/);
   assert.doesNotMatch(block, /Math\.round\((?:W|mapW) \*/);
 });
 

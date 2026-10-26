@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 October 2026', changes: [
+    'New map legends use spare margin space for larger, clearer lettering.',
+    'Paper base maps show each building you traced, with separate building names.',
+    'Saved maps stay available; create new drawings to see these improvements.',
+  ] },
   { when: '26 October 2026', sha: 'd38b5ea4b', changes: [
     'All nine map sheets use the same legend box, fonts and spacing.',
     'New drawings keep the legend on the right; your saved maps stay available.',

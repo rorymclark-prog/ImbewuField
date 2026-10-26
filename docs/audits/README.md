@@ -6,6 +6,8 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Site survey: start here
 
+Latest readability follow-up: [Wider readable legends and plain-paper buildings — 26 October 2026](2026-10-26/map-readable-legend-buildings-codex.md).
+
 Latest legend follow-up: [Consistent legend panels across all nine sheets — 26 October 2026](2026-10-26/map-legend-consistency-codex.md).
 
 Latest map follow-up: [Ubhejane map recovery and current exact-sheet delivery — 26 October 2026](2026-10-26/ubhejane-map-recovery-codex.md).
@@ -65,6 +67,8 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [Wider readable legends and plain-paper buildings — 26 October 2026](2026-10-26/map-readable-legend-buildings-codex.md).
 
 - [Consistent legend panels across all nine sheets — 26 October 2026](2026-10-26/map-legend-consistency-codex.md).
 

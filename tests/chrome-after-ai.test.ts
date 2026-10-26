@@ -9,7 +9,7 @@ import {
   paidPolishNeedsChromePass,
 } from '@/lib/sheet-chrome-pass';
 import { AI_INPUT_WIDTH } from '@/lib/sheet-scale';
-import { calculateStyleSheetSize } from '@/lib/reference-presentation';
+import { calculateSheetLegendPlacement, calculateStyleSheetSize } from '@/lib/reference-presentation';
 import { fullTreatmentProtectPolicy } from '@/lib/locked-polish-flow';
 import { SHEET_RENDER_RECIPE, savedSheetFreshness } from '@/lib/sheet-render-recipe';
 
@@ -206,8 +206,17 @@ test('a full masterplan has one grouped inventory, not leader labels repeated in
     '\n// ── Persistence',
   );
   assert.match(composer, /includeLabelGutters\?: boolean/);
-  assert.match(composer, /options\.includeLabelGutters === false \? 0 : sheetGutterWidth\(mapW\)/,
-    'the masterplan must reclaim the physical margin width, not merely leave it blank');
+  // The margin decision now lives with the shared placement arithmetic. Check both the wiring
+  // and its actual result; pinning the old inline ternary would reject that one-authority move
+  // while still being unable to notice a helper that left the unwanted margins in place.
+  assert.match(composer, /calculateSheetLegendPlacement\(calculateStyleSheetSize\(mapW, H\)/);
+  assert.match(composer, /includeLabelGutters: options\.includeLabelGutters/);
+  assert.match(composer, /const gutter = placement\.mapX/);
+  const size = calculateStyleSheetSize(2200, 2400);
+  const compact = calculateSheetLegendPlacement(size, { includeLabelGutters: false });
+  assert.equal(compact.mapX, 0, 'the masterplan must reclaim its physical left margin');
+  assert.equal(compact.legendX, size.mapW, 'the key follows the actual map, not an empty right margin');
+  assert.ok(compact.W < size.W, 'unused leader margins must not survive as blank paper');
 
   const pass = functionBody(
     'async function composeSheetChromeOverMapArt(',

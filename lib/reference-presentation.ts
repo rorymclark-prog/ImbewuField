@@ -66,6 +66,25 @@ export function calculateStyleSheetSize(mapW: number, mapH: number): StyleSheetS
   };
 }
 
+/**
+ * Exact maps use in-map labels, so their empty right leader gutter can belong to the key.
+ * Keep the map's scale and the full sheet envelope: wider lettering must not cost measured ground.
+ * Illustrated sheets with actual margin leaders retain their complete label band.
+ */
+export function calculateSheetLegendPlacement(
+  size: StyleSheetSize,
+  options: { includeLabelGutters?: boolean; hasRightGutterLabels?: boolean } = {},
+) {
+  const mapX = options.includeLabelGutters === false ? 0 : size.gutter;
+  const labelled = mapX > 0 && options.hasRightGutterLabels === true;
+  const legendX = mapX + size.mapW + (labelled ? size.gutter : 0);
+  const legendWidth = size.legendWidth + (labelled ? 0 : size.gutter);
+  // Use most of the reclaimed width for fewer wrapped lines. Scaling type by its full width
+  // increase made Phasing lose its final hold point even after all optional bullets were shed.
+  const typeWidth = Math.min(legendWidth, Math.round(size.legendWidth * 1.2));
+  return { mapX, legendX, legendWidth, typeWidth, W: legendX + legendWidth, H: size.H };
+}
+
 interface BoundaryBounds {
   minX: number;
   maxX: number;

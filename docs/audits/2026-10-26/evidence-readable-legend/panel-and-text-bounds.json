@@ -1,0 +1,227 @@
+{
+  "scope": "Existing public fictional layout; no real-site geometry or field evidence. The #1131 source and revised source were rendered in the same browser for pixel comparison.",
+  "geometry": "JSON state/frame/references unchanged after each renderer; no saved-record write.",
+  "maps": [
+    {
+      "sheet": 1,
+      "width": 3462,
+      "height": 2448,
+      "panelX": 2549,
+      "panelWidth": 913,
+      "previousPanelX": 2842,
+      "previousPanelWidth": 620,
+      "legendTextDraws": 11,
+      "maxTextRight": 3270.0738525390625,
+      "maxTextBottom": 2340.298896789551,
+      "contentRight": 3362,
+      "contentBottom": 2348,
+      "fontDeclarations": [
+        "600 33px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 37px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 60px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "800 58px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "italic 600 27px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif"
+      ]
+    },
+    {
+      "sheet": 2,
+      "width": 3462,
+      "height": 2448,
+      "panelX": 2549,
+      "panelWidth": 913,
+      "previousPanelX": 2842,
+      "previousPanelWidth": 620,
+      "legendTextDraws": 25,
+      "maxTextRight": 3341.2813110351562,
+      "maxTextBottom": 2305.5574264526367,
+      "contentRight": 3362,
+      "contentBottom": 2348,
+      "fontDeclarations": [
+        "600 19px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 33px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 37px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 60px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "800 37px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "800 58px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif"
+      ],
+      "mapPixelDifferenceBounds": null
+    },
+    {
+      "sheet": 3,
+      "width": 3462,
+      "height": 2448,
+      "panelX": 2549,
+      "panelWidth": 913,
+      "previousPanelX": 2842,
+      "previousPanelWidth": 620,
+      "legendTextDraws": 15,
+      "maxTextRight": 3351.4765625,
+      "maxTextBottom": 2340.298896789551,
+      "contentRight": 3362,
+      "contentBottom": 2348,
+      "fontDeclarations": [
+        "600 33px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 37px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 60px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "800 58px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "italic 600 27px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif"
+      ],
+      "mapPixelDifferenceBounds": null
+    },
+    {
+      "sheet": 4,
+      "width": 3462,
+      "height": 2448,
+      "panelX": 2549,
+      "panelWidth": 913,
+      "previousPanelX": 2842,
+      "previousPanelWidth": 620,
+      "legendTextDraws": 18,
+      "maxTextRight": 3352.3944702148438,
+      "maxTextBottom": 2340.298896789551,
+      "contentRight": 3362,
+      "contentBottom": 2348,
+      "fontDeclarations": [
+        "600 33px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 37px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 60px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "800 53px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "800 58px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "italic 600 27px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif"
+      ],
+      "mapPixelDifferenceBounds": null
+    },
+    {
+      "sheet": 5,
+      "width": 3462,
+      "height": 2448,
+      "panelX": 2549,
+      "panelWidth": 913,
+      "previousPanelX": 2842,
+      "previousPanelWidth": 620,
+      "legendTextDraws": 15,
+      "maxTextRight": 3358.8787841796875,
+      "maxTextBottom": 2340.298896789551,
+      "contentRight": 3362,
+      "contentBottom": 2348,
+      "fontDeclarations": [
+        "600 33px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 37px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 60px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "800 53px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "800 58px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "italic 600 27px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif"
+      ],
+      "mapPixelDifferenceBounds": null
+    },
+    {
+      "sheet": 6,
+      "width": 3462,
+      "height": 2448,
+      "panelX": 2549,
+      "panelWidth": 913,
+      "previousPanelX": 2842,
+      "previousPanelWidth": 620,
+      "legendTextDraws": 17,
+      "maxTextRight": 3352.853515625,
+      "maxTextBottom": 2340.298896789551,
+      "contentRight": 3362,
+      "contentBottom": 2348,
+      "fontDeclarations": [
+        "600 33px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 37px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 60px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "800 53px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "800 58px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "italic 600 27px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif"
+      ],
+      "mapPixelDifferenceBounds": null
+    },
+    {
+      "sheet": 7,
+      "width": 3462,
+      "height": 2448,
+      "panelX": 2549,
+      "panelWidth": 913,
+      "previousPanelX": 2842,
+      "previousPanelWidth": 620,
+      "legendTextDraws": 13,
+      "maxTextRight": 3326.45703125,
+      "maxTextBottom": 2340.298896789551,
+      "contentRight": 3362,
+      "contentBottom": 2348,
+      "fontDeclarations": [
+        "600 33px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 37px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 60px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "800 53px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "800 58px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "italic 600 27px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif"
+      ],
+      "mapPixelDifferenceBounds": null
+    },
+    {
+      "sheet": 8,
+      "width": 3462,
+      "height": 2448,
+      "panelX": 2549,
+      "panelWidth": 913,
+      "previousPanelX": 2842,
+      "previousPanelWidth": 620,
+      "legendTextDraws": 28,
+      "maxTextRight": 3352.3944702148438,
+      "maxTextBottom": 2340.298896789551,
+      "contentRight": 3362,
+      "contentBottom": 2348,
+      "fontDeclarations": [
+        "600 33px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 37px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 60px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "800 53px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "800 58px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "italic 600 27px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif"
+      ],
+      "mapPixelDifferenceBounds": null
+    },
+    {
+      "sheet": 9,
+      "width": 3462,
+      "height": 2448,
+      "panelX": 2549,
+      "panelWidth": 913,
+      "previousPanelX": 2842,
+      "previousPanelWidth": 620,
+      "legendTextDraws": 47,
+      "maxTextRight": 3361.1170654296875,
+      "maxTextBottom": 2222.6396484375,
+      "contentRight": 3362,
+      "contentBottom": 2348,
+      "fontDeclarations": [
+        "500 33px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 33px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "600 37px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "800 37px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "800 58px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "bold 35px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "italic 600 33px \"Public Sans\", system-ui, sans-serif, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif"
+      ],
+      "mapPixelDifferenceBounds": [
+        212,
+        622,
+        2211,
+        2403
+      ],
+      "phasingNonFurnitureChangedPixels": 33,
+      "phasingPixelScope": "The north arrow moves to clear the wider key; 33 other edge pixels differ. No byte-identical Phasing claim. Input geometry and map dimensions remain unchanged.",
+      "holdPointStarts": [
+        "Hold Point A: Boundary pegs, marked",
+        "Hold Point B: Pressure and leak test the main",
+        "Hold Point C: Levels re-checked along every",
+        "Hold Point D: Run the drip at working",
+        "Hold Point E: Water tested and reaching",
+        "Hold Point F: Every earlier hold point signed"
+      ]
+    }
+  ],
+  "limit": "Optional Phasing task bullets retain the existing fit policy; this is not the full underlying work schedule."
+}

@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 import { authoritativeHouseFootprints, sameFootprint } from '../lib/house-footprints.ts';
-import { groundContentRingsForSheet } from '../lib/glossy-filters.ts';
+import { existingSiteGroundRings, groundContentRingsForSheet } from '../lib/glossy-filters.ts';
 import type { ZoneShape } from '../lib/design-canvas.ts';
 
 const square = (x: number, y: number, w: number): Array<[number, number]> => [
@@ -165,4 +165,26 @@ test('with no map house, every drawn building is named', () => {
     'all',
   );
   assert.deepEqual(rings.map((r) => r.id), ['a', 'b']);
+});
+
+test('the existing-site map keeps a classroom beside the promoted main building', () => {
+  const main = square(0.2, 0.2, 0.12);
+  const classroom = square(0.6, 0.3, 0.1);
+  const rings = existingSiteGroundRings(
+    { zones: [
+      zone({ id: 'main', feature: 'house', name: 'Main building', points: main }),
+      zone({ id: 'classroom', feature: 'house', name: 'Classroom', points: classroom }),
+    ] },
+    { house: main, driveway: [] },
+  );
+  assert.deepEqual(rings.map((r) => r.id), ['classroom'],
+    'only the building already named by the main-map pass is redundant');
+});
+
+test('a traced boundary is listed once as a line, not again as a ground surface', () => {
+  const rings = existingSiteGroundRings(
+    { zones: [zone({ id: 'boundary', feature: 'boundary', points: square(0.1, 0.1, 0.8) })] },
+    { house: [], driveway: [] },
+  );
+  assert.deepEqual(rings, [], 'the dedicated boundary line owns its key; the ground pass never fills it');
 });

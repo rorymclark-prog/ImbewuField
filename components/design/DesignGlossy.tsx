@@ -157,6 +157,8 @@ import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE, type SheetSpec, type SheetRou
 import {
   calculateBoundaryPresentationLayout,
   calculatePhasingSheetSize,
+  calculateSheetLegendPlacement,
+  calculateStyleSheetSize,
   paperSheetCanvas,
   styleSheetLegendWidth,
 } from '@/lib/reference-presentation';
@@ -6993,6 +6995,14 @@ export async function buildBlueprintBaseMap(
       )
     : undefined;
   if (sourceStructures) ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
+  else {
+    // The ground pass omits buildings/access that the source-cutout pass promises to draw. On
+    // plain paper there is no source cutout: without this fallback the classroom had a label
+    // and a legend row pointing to empty paper. Reuse the same footprints and roof symbols as
+    // the design sheets, including buildings beyond the promoted main-map house.
+    drawBlueprintDriveway(ctx, renderRefLayers, px, py, pxPerM, false, !renderFrame.satDataUrl);
+    drawPaperRoofs(ctx, renderState, renderRefLayers, px, py, pxPerM);
+  }
   drawBlueprintBoundary(ctx, renderRefLayers.boundary, px, py, W, renderState, renderFrame);
   // Existing placed items are discrete site facts, so they sit above the traced ground and locked
   // source structures as symbols/footprints rather than becoming another zone wash.
@@ -9237,12 +9247,13 @@ function phasingSheetSize(
  * calculation says it is prints with the schedule half over the map. */
 function phasingPanelRect(size: ReturnType<typeof calculatePhasingSheetSize>) {
   const pad = Math.round(size.mapW * 0.02);
-  const lgW = size.legendWidth;
-  const mapX = size.gutter;
-  const lgX = mapX + size.mapW + size.gutter;
+  const placement = calculateSheetLegendPlacement(size);
+  const lgW = placement.legendWidth;
+  const mapX = placement.mapX;
+  const lgX = placement.legendX;
   const lgY = 0;
   const lgBottom = size.H;
-  return { pad, lgW, lgX, lgY, lgBottom, mapX };
+  return { pad, lgW, lgX, lgY, lgBottom, mapX, typeW: placement.typeWidth };
 }
 
 // Draws every EXACT-content layer of the Phasing sheet that is not the schedule panel itself:
@@ -9522,7 +9533,7 @@ export async function buildImplementationMap(
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
   const pxPerM = mapW / (renderFrame.imgW * renderFrame.mPerPx);
-  const { pad, lgW, lgX, lgY, lgBottom, mapX } = phasingPanelRect(size);
+  const { pad, lgW, lgX, lgY, lgBottom, mapX, typeW } = phasingPanelRect(size);
 
   // 1. Satellite + scrim, inset into the map column so the label gutters stay paper.
   ctx.fillStyle = '#FBF6EC';
@@ -9560,14 +9571,14 @@ export async function buildImplementationMap(
   ctx.rect(innerX, panel.inset, innerW, panelBottom - panel.inset);
   ctx.clip();
 
-  const fsHeader = Math.round(lgW * SHEET_LEGEND_TYPE.title);
-  const fsSection = Math.round(lgW * SHEET_LEGEND_TYPE.section);
-  const fsBody = Math.round(lgW * SHEET_LEGEND_TYPE.detail);
+  const fsHeader = Math.round(typeW * SHEET_LEGEND_TYPE.title);
+  const fsSection = Math.round(typeW * SHEET_LEGEND_TYPE.section);
+  const fsBody = Math.round(typeW * SHEET_LEGEND_TYPE.detail);
   const lineH = Math.round(fsBody * 1.34);
   const blockGap = Math.round(lineH * 0.55);
   const headerFont = `800 ${fsHeader}px ${REFERENCE_LABEL_FONT}`;
   const sectionFont = `800 ${fsSection}px ${SHEET_BODY_FONT}`;
-  const titleFont = `800 ${Math.round(lgW * SHEET_LEGEND_TYPE.section)}px ${SHEET_BODY_FONT}`;
+  const titleFont = `800 ${Math.round(typeW * SHEET_LEGEND_TYPE.section)}px ${SHEET_BODY_FONT}`;
   const bodyFont = `500 ${fsBody}px ${SHEET_BODY_FONT}`;
   const weekFont = `600 ${fsBody}px ${SHEET_BODY_FONT}`;
   const holdFont = `italic 600 ${fsBody}px ${SHEET_BODY_FONT}`;
@@ -9655,7 +9666,7 @@ export async function buildImplementationMap(
   }
   y += Math.round(lgW * 0.006);
   ctx.fillStyle = '#6B6355';
-  ctx.font = `600 ${Math.round(lgW * SHEET_LEGEND_TYPE.style)}px ${SHEET_BODY_FONT}`;
+  ctx.font = `600 ${Math.round(typeW * SHEET_LEGEND_TYPE.style)}px ${SHEET_BODY_FONT}`;
   ctx.fillText('Reference Blueprint', innerX, y);
   y += Math.round(lgW * SHEET_LEGEND_TYPE.style);
   ctx.fillStyle = '#8A8172';
@@ -10395,15 +10406,19 @@ async function composeStyleSheet(
   } = {},
 ): Promise<string> {
   const map = await loadImage(mapDataUrl);
-  // Most sheets are [gutter][map][gutter][legend]. A full masterplan is [map][legend]: its grouped
-  // legend plus compact map codes are the complete inventory, so side leaders only waste map area.
-  // `W` remains "everything left of the legend panel", keeping the panel geometry unchanged.
+  // Empty leader bands become readable legend space; a genuine margin-label layout retains them.
+  // The compact masterplan shares that wider key without adding duplicate leader gutters.
   const mapW = map.width;
   const H = map.height;
-  const gutter = options.includeLabelGutters === false ? 0 : sheetGutterWidth(mapW);
-  const W = mapW + gutter * 2;
-  const legendW = styleSheetLegendWidth(W);
-  const outW = W + legendW;
+  const placement = calculateSheetLegendPlacement(calculateStyleSheetSize(mapW, H), {
+    includeLabelGutters: options.includeLabelGutters,
+    hasRightGutterLabels: Boolean(options.gutterLayout?.rows.some((row) => row.side === 'right')),
+  });
+  const gutter = placement.mapX;
+  const W = placement.legendX;
+  const legendW = placement.legendWidth;
+  const typeW = placement.typeWidth;
+  const outW = placement.W;
   const canvas = document.createElement('canvas');
   canvas.width = outW;
   canvas.height = H;
@@ -10433,7 +10448,7 @@ async function composeStyleSheet(
   ctx.textBaseline = 'alphabetic';
   let y = panel.titleBaseline;
   ctx.fillStyle = '#20190F';
-  const titleSize = Math.round(legendW * SHEET_LEGEND_TYPE.title);
+  const titleSize = Math.round(typeW * SHEET_LEGEND_TYPE.title);
   ctx.font = `800 ${titleSize}px ${REFERENCE_LABEL_FONT}`;
   const titleWords = `${options.sheetNumber ?? SHEET_NO[filter]} — ${layerLabel.toUpperCase()}`.split(/\s+/);
   const titleLines: string[] = [];
@@ -10454,7 +10469,7 @@ async function composeStyleSheet(
   }
   y += Math.round(legendW * 0.006);
   ctx.fillStyle = '#6B6355';
-  ctx.font = `600 ${Math.round(legendW * SHEET_LEGEND_TYPE.style)}px ${SHEET_BODY_FONT}`;
+  ctx.font = `600 ${Math.round(typeW * SHEET_LEGEND_TYPE.style)}px ${SHEET_BODY_FONT}`;
   const styleWords = styleLabel.split(/\s+/);
   const styleLines: string[] = [];
   let styleLine = '';
@@ -10474,7 +10489,7 @@ async function composeStyleSheet(
     y += styleLineH;
   }
   ctx.fillStyle = '#8A8172';
-  ctx.font = `600 ${Math.round(legendW * SHEET_LEGEND_TYPE.detail)}px ${SHEET_BODY_FONT}`;
+  ctx.font = `600 ${Math.round(typeW * SHEET_LEGEND_TYPE.detail)}px ${SHEET_BODY_FONT}`;
   ctx.fillText(placeName ?? 'Your design', lx, y);
   y += Math.round(legendW * 0.035);
   ctx.strokeStyle = 'rgba(11,18,11,0.25)';
@@ -10495,7 +10510,7 @@ async function composeStyleSheet(
     ...(options.extraLegendRows ?? []),
   ];
   const legendTop = y + Math.round(legendW * 0.03);
-  const footerFs = options.footerText ? Math.max(9, Math.round(legendW * 0.025)) : Math.round(legendW * 0.036);
+  const footerFs = options.footerText ? Math.max(9, Math.round(typeW * 0.025)) : Math.round(typeW * 0.036);
   const footerLineH = Math.max(11, Math.round(footerFs * 1.28));
   const footerBoxPad = options.footerBox ? Math.max(6, Math.round(legendW * 0.024)) : 0;
   const footerTextX = lx + footerBoxPad;
@@ -10503,7 +10518,7 @@ async function composeStyleSheet(
   const wrapFooterText = (value: string): string[] => {
     ctx.font = options.footerHeading
       ? `600 ${footerFs}px ${SHEET_BODY_FONT}`
-      : `italic 500 ${footerFs}px ${SHEET_BODY_FONT}`;
+      : `italic 600 ${footerFs}px ${SHEET_BODY_FONT}`;
     // A NEWLINE IS A HARD BREAK, NOT A SPACE.
     //
     // This wrapped on /\s+/, which treats "\n" as whitespace like any other. The Water sheet's
@@ -10545,17 +10560,23 @@ async function composeStyleSheet(
   // satDataUrl is the same condition drawBlueprintBase uses to lay paper instead of a photo, so the
   // credit and the picture can never disagree.
   const attributionLine = frame.satDataUrl ? basemapAttribution() : '';
+  const defaultFooterLines = wrapFooterText([
+    exactGeometry
+      ? 'Exact plan — geometry and counts\ncome from your saved design.\nNo unsaved features added.'
+      : 'Illustrated render — boundary, labels\nand elements are exact; artwork is\nindicative. Confirm on site.',
+    attributionLine,
+  ].filter(Boolean).join('\n'));
   const footerBlockH = customFooterLines.length
     ? customFooterLines.length * footerLineH
       + footerHeadingH
       + Math.round(legendW * 0.035)
       + footerBoxPad * 2
-    : Math.round(legendW * (attributionLine ? 0.2 : 0.16));
+    : defaultFooterLines.length * footerLineH;
   const panelBottom = H - panelInset;
   const footerTop = panelBottom - pad - footerBlockH;
   const availableRowsH = Math.max(1, footerTop - legendTop);
   const contentW = maxX - lx;
-  const normalFs = legendRowFontSize(legendW, availableRowsH, rows.length);
+  const normalFs = legendRowFontSize(typeW, availableRowsH, rows.length);
   const baseSw = Math.round(legendW * 0.064);
   const columnGap = Math.max(10, Math.round(legendW * 0.025));
   const singleColumnTextGap = Math.round(legendW * 0.03);
@@ -10756,7 +10777,7 @@ async function composeStyleSheet(
   // Searching per column count fixes both symptoms at once, and they were always one bug: the
   // space that became gaps is the space the type should have grown into. Fewest columns wins on a
   // tie, so a sparse legend still stays a single readable list.
-  const growthCeiling = legendMaxFontSize(legendW);
+  const growthCeiling = legendMaxFontSize(typeW);
   const fitForColumns = (columnCount: number): number => fitLegendFontSize(
     (fontSize) => {
       const candidate = planColumns(columnCount, fontSize);
@@ -10917,35 +10938,14 @@ async function composeStyleSheet(
       ctx.fillText(line, footerTextX, footerY);
       footerY += footerLineH;
     }
-  } else if (exactGeometry) {
-    ctx.font = `italic 600 ${Math.round(legendW * 0.036)}px ${SHEET_BODY_FONT}`;
-    // A fourth line does not fit BELOW the third — appending one put the Esri credit through the
-    // bottom of the panel, half-clipped, on the first render that used it. The block is LIFTED
-    // instead, so whatever its line count, it still ends on the baseline the three-line version
-    // ended on. footerBlockH already reserved the extra height above (0.16 -> 0.2 of legendW), so
-    // the legend rows above have the clearance for it.
-    const lift = attributionLine ? Math.round(legendW * 0.045) : 0;
-    ctx.fillText('Exact plan — geometry and counts', lx, H - pad - Math.round(legendW * 0.05) - lift);
-    ctx.fillText('come from your saved design.', lx, H - pad - Math.round(legendW * 0.005) - lift);
-    ctx.fillText('No unsaved features added.', lx, H - pad + Math.round(legendW * 0.04) - lift);
-    // Esri's imagery must be credited wherever it is shown — a licence term, not a courtesy. Only
-    // drawn when the live provider is actually Esri; on Mapbox attributionLine is '' and lift is 0,
-    // so nothing on the sheet moves at all.
-    if (attributionLine) {
-      ctx.fillText(attributionLine, lx, H - pad + Math.round(legendW * 0.04));
-    }
   } else {
-    ctx.font = `italic 600 ${Math.round(legendW * 0.036)}px ${SHEET_BODY_FONT}`;
-    ctx.fillText('Illustrated render — boundary, labels', lx, H - pad - Math.round(legendW * 0.05));
-    ctx.fillText('and elements are exact; artwork is', lx, H - pad - Math.round(legendW * 0.005));
-    ctx.fillText('indicative. Confirm on site.', lx, H - pad + Math.round(legendW * 0.04));
-    // AN ILLUSTRATED SHEET IS BUILT ON THE SAME PHOTOGRAPH. The credit was first added only to the
-    // exact branch, which reads as reasonable until you follow where the imagery goes: satDataUrl
-    // is the underlay handed to the AI hybrid and full-treatment passes, so the illustrated sheets
-    // are DERIVED from Esri's imagery too — and those are the ones a farmer pays for. Crediting the
-    // free sheet and not the paid one would leave the obligation unmet exactly where it matters.
-    if (attributionLine) {
-      ctx.fillText(attributionLine, lx, H - pad + Math.round(legendW * 0.085));
+    // Measure the complete footer, including imagery credit, inside the shared content box.
+    // The old third baseline was below the panel inset once the legend became wider.
+    ctx.font = `italic 600 ${footerFs}px ${SHEET_BODY_FONT}`;
+    let footerY = footerTop + footerFs;
+    for (const line of defaultFooterLines) {
+      ctx.fillText(line, lx, footerY);
+      footerY += footerLineH;
     }
   }
 

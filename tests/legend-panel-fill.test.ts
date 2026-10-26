@@ -362,10 +362,14 @@ test('Phasing keeps the shared title and detail type roles instead of its tiny p
   assert.match(phasing, /drawSheetLegendPanel\(ctx, lgX, lgW, lgBottom - lgY\)/);
   assert.match(shared, /drawSheetLegendPanel\(ctx, W, legendW, H\)/);
   assert.doesNotMatch(shared, /benchmarkPanel/, 'a map category must not opt out of the shared frame');
-  assert.match(phasing, /fsHeader = Math\.round\(lgW \* SHEET_LEGEND_TYPE\.title\)/);
-  assert.match(phasing, /fsBody = Math\.round\(lgW \* SHEET_LEGEND_TYPE\.detail\)/);
-  assert.match(shared, /titleSize = Math\.round\(legendW \* SHEET_LEGEND_TYPE\.title\)/);
-  assert.match(shared, /legendW \* SHEET_LEGEND_TYPE\.detail/);
+  // Type uses the shared placement's restrained scale: some reclaimed width belongs to fewer
+  // wrapped lines, rather than making the schedule so large that its final hold point vanishes.
+  assert.match(phasing, /typeW.*= phasingPanelRect\(size\)/);
+  assert.match(phasing, /fsHeader = Math\.round\(typeW \* SHEET_LEGEND_TYPE\.title\)/);
+  assert.match(phasing, /fsBody = Math\.round\(typeW \* SHEET_LEGEND_TYPE\.detail\)/);
+  assert.match(shared, /const typeW = placement\.typeWidth/);
+  assert.match(shared, /titleSize = Math\.round\(typeW \* SHEET_LEGEND_TYPE\.title\)/);
+  assert.match(shared, /typeW \* SHEET_LEGEND_TYPE\.detail/);
 });
 
 
