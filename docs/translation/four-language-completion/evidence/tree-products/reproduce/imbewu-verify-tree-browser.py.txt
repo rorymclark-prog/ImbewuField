@@ -1,0 +1,18 @@
+from pathlib import Path
+import json,gzip,html,collections,hashlib
+r=Path.cwd();q=Path('/private/tmp/imbewu-tree-product-browser-proof');p=json.loads((r/'docs/translation/four-language-completion/tree-product-drafts.json').read_text());before=json.loads(gzip.decompress((r/'tests/fixtures/tree-product-translation/before.json.gz').read_bytes()));source=next(r for r in before['rows']if r['id']=='trees-subtropical-coast');ids=[id for b in p['sourceBindings']for id in b['identities']];rows=[x for lang in ['zu','st','ts','ve']for x in json.loads((q/(lang+'-phone.json')).read_text())];bindings={id:(p['rows'][i],b)for i,b in enumerate(p['sourceBindings'])for id in b['identities']};checked=0
+for kind,group in [('phone',rows),('desktop',json.loads((q/'desktop.json').read_text())),('englishPhone',json.loads((q/'english-phone.json').read_text()))]:
+ pairs=collections.defaultdict(dict)
+ for item in group:
+  s=item['state'];assert not item['overflow'],(kind,s['id'],item['overflow']);assert item['open'];assert not s['events'];pairs[(s['id'],s['language'])][s['version']]=item
+  i=next(i for i,g in enumerate(source['context']['trees'])if g['harvest']['speciesId']==s['id']);expected=dict(source['context']);expected['trees']=[source['context']['trees'][i]];expected['animals']=[];assert s['context']==expected,'rendering cannot mutate the full supplied context'
+ for(id,lang),pair in pairs.items():
+  assert set(pair)=={'before','after'};a,b=pair['before'],pair['after'];original=source['outputs'][lang]['foodForest'][next(i for i,g in enumerate(source['context']['trees'])if g['harvest']['speciesId']==id)];assert a['state']['guide']['foodForest']==[original]
+  new=json.loads(json.dumps(original));oldline=original['lines'][0];row=bindings[id][0]
+  if lang in ['zu','st','ts','ve']:
+   oldproduct=row['english'].rstrip('.');native=row[lang].rstrip('.');assert oldline.count(oldproduct)==1;(new['lines']).__setitem__(0,oldline.replace(oldproduct,native));checked+=1
+  assert b['state']['guide']['foodForest']==[new]
+  oldhtml=html.escape(oldline,quote=False);newhtml=html.escape(new['lines'][0],quote=False);assert a['html'].count(oldhtml)==1
+  assert a['html'].replace(oldhtml,newhtml)==b['html'],'whole actual component markup differs only by its complete product description'
+assert len(rows)==176;assert len({(r['state']['id'],r['state']['language'])for r in rows})==88
+result={'phoneStates':len(rows),'phoneBindings':88,'desktopStates':16,'englishPhoneStates':8,'checkedNativePairs':checked,'allExpanded':True,'measuredHorizontalOverflows':0,'callbackEvents':0,'wholeMarkup':'Before/after differs only through the complete declared product-description line. Original English/unsupported whole markup stays exact. All provided contexts remain exact.','limits':'Isolated actual component and complete generated guides; no full account route, backend writes, fluent review or whole-app completion. Initial closed-only isiZulu capture retained separately and excluded from expanded counts.'};(q/'verification.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');print(result)

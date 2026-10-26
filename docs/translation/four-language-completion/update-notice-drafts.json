@@ -1538,6 +1538,34 @@
       "st": "Bula ntlha ya molao ya pele ya Senyesemane mme o hlahlobe letsatsi la mohlodi le maemo a tumello.",
       "ts": "Pfula notsi ya nawu ya Xinghezi xo sungula kutani u kambela siku ra xihlovo ni swipimelo swa mpfumelelo.",
       "ve": "Vulani notsi ya mulayo ya Luisimane ya u thoma ni ṱole datumu ya tshiko na nyimele dza thendelo."
+    },
+    {
+      "english": "Tree product descriptions now have four-language translation drafts.",
+      "zu": "Izincazelo zemikhiqizo yezihlahla manje zinemibhalo yokuhumusha ngezilimi ezine.",
+      "st": "Ditlhaloso tsa dihlahiswa tsa difate jwale di na le diphetolelo tsa pele tsa dipuo tse nne.",
+      "ts": "Tinhlamuselo ta swikumiwa swa mirhi sweswi ti ni swikiro swa vuhundzuluxeri bya tindzimi ta mune.",
+      "ve": "Ṱhalutshedzo dza zwibveledzwa zwa miri zwino dzi na mvetamveto ya ṱhalutshedzo nga nyambo nṋa."
+    },
+    {
+      "english": "Food-use cautions and processing distinctions stay in the descriptions.",
+      "zu": "Izixwayiso zokusetshenziswa njengokudla nomehluko wokucutshungulwa kuhlala ezincazelweni.",
+      "st": "Ditemoso tsa tshebediso e le dijo le diphapang tsa ho sebetswa di dula ditlhalosong.",
+      "ts": "Switsundzuxo swa ku tirhisiwa tani hi swakudya ni ku hambana ka malulamiselo swi sala eka tinhlamuselo.",
+      "ve": "Nyeletshedzo dza u shumiswa sa zwiḽiwa na phambano dza u shuma zwi dzula kha ṱhalutshedzo."
+    },
+    {
+      "english": "Review tree product drafts",
+      "zu": "Buyekeza imibhalo yemikhiqizo yezihlahla",
+      "st": "Hlahloba dingolwa tsa pele tsa dihlahiswa tsa difate",
+      "ts": "Kambisisa swikiro swa swikumiwa swa mirhi",
+      "ve": "Sedzulusani mvetamveto ya zwibveledzwa zwa miri"
+    },
+    {
+      "english": "Read product descriptions and check the original English before acting.",
+      "zu": "Funda izincazelo zemikhiqizo bese uhlola isiNgisi sokuqala ngaphambi kokwenza.",
+      "st": "Bala ditlhaloso tsa dihlahiswa mme o hlahlobe Senyesemane sa pele pele o etsa.",
+      "ts": "Hlaya tinhlamuselo ta swikumiwa kutani u kambela Xinghezi xo sungula u nga si endla.",
+      "ve": "Vhalani ṱhalutshedzo dza zwibveledzwa ni ṱole Luisimane lwa u thoma musi ni sa athu ita."
     }
   ],
   "historyBefore": [

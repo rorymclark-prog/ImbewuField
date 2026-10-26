@@ -1,0 +1,47 @@
+{
+  "startedAt": "2026-10-26T04:43:31.996892+00:00",
+  "commands": [
+    {
+      "name": "typecheck",
+      "command": [
+        "npx",
+        "tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "focused",
+      "command": [
+        "node",
+        "--import",
+        "./tests/register-alias.mjs",
+        "--test",
+        "tests/tree-product-localization.test.ts",
+        "tests/guidance-localization.test.ts",
+        "tests/product-profile-localization.test.ts",
+        "tests/animal-legal-localization.test.ts",
+        "tests/animal-reference-localization.test.ts",
+        "tests/animal-control-localization.test.ts",
+        "tests/animal-welfare-localization.test.ts",
+        "tests/update-notices-localization.test.ts",
+        "tests/update-tour.test.ts",
+        "tests/release-notes-gate.test.ts",
+        "tests/canvas-labels.test.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "scope": "Affected full-source and guide/PDF/localization and release checks; not the full required suite.",
+  "endedAt": "2026-10-26T04:43:55.620012+00:00",
+  "status": "passed"
+}

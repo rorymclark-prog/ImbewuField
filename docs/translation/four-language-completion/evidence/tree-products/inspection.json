@@ -1,0 +1,279 @@
+{
+  "scope": "Actual crop-plan PDF renderer with complete original guide items for all22 typed product bindings /21 descriptions. Two synthetic review documents per language; four default English before/after controls. No production route or fluent-speaker approval.",
+  "rows": [
+    {
+      "file": "zu-after-products-a.pdf",
+      "language": "zu",
+      "version": "after",
+      "pages": 9,
+      "wordBounds": 2862,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 126,
+      "completeProductFieldOccurrences": 11,
+      "pixelHashes": [
+        "d997d456bc3f286b0c2fe5fe8081a93ac2b121a222567f10a892e55a091de79b",
+        "66d5c2a5144dedee71a76a5d728805e27a670d5b13f80c88fa7cb8dee512c576",
+        "e33c48a8bd19fe2ee2a5d54e2cfa7507618ce1b9e0bf71f031f868c415c9aab2",
+        "8e248d8f6c17183f846e7f94775447335133992d1b95de37f7a545aa29f1e32f",
+        "681e4ee8efb2632215c1935bafa5d973b70337b49851467ec244ae3b828a00fb",
+        "049ade82a3f0e7900f84db02f57afd10797343f0bf0c40b476ecf3072c3d93e3",
+        "45a6e7ba7e66c2f31e043a06f40c62dd3779378b5d7ab00376dfc65ca5efa31d",
+        "9df8c01133ab02f1aa0db9d0f55c3504b9e54da0568b4916d1b012b74b1e788c",
+        "9d6dd7d37c7ca79aa1966dd309037877c6bb6800a80f7183c4f7b25e1ee5ac02"
+      ],
+      "PDFSha256": "b51fc8b58aa5fb7dc3be378341147c29c5c3391ee499691f49b0fb0c36a40d23"
+    },
+    {
+      "file": "zu-after-products-b.pdf",
+      "language": "zu",
+      "version": "after",
+      "pages": 7,
+      "wordBounds": 2236,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 118,
+      "completeProductFieldOccurrences": 11,
+      "pixelHashes": [
+        "d997d456bc3f286b0c2fe5fe8081a93ac2b121a222567f10a892e55a091de79b",
+        "e0786ae6bd064bf33a3bdf73662358b12a5e43ce491e8123ff733a1d7d55a4ae",
+        "fb1b7275bacb016323ac8a187de3f982aafba05cb2d341beadbf13ffb934cdeb",
+        "26f7fcf5b601878386447fd015bea66e9bc09af1c8597f02c82a61e0a22b5e40",
+        "f51ea6862acedd4c635341fa71a7098c3979cd532c910f60ee15f753fe171bed",
+        "cdfab381f4364c2c7283fa1c498eeb03186907af99f4b7a8afcb71d9ef30bc0c",
+        "78a91652ad9ac5b752287228c60882e8c13a7bed21cf3bf027c9a9dd1ad72f87"
+      ],
+      "PDFSha256": "6e10a4b53a8f52f9e849af6b7f5626bc8b09cc4dea3203b982549129a1798eaf"
+    },
+    {
+      "file": "st-after-products-a.pdf",
+      "language": "st",
+      "version": "after",
+      "pages": 9,
+      "wordBounds": 3886,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 126,
+      "completeProductFieldOccurrences": 11,
+      "pixelHashes": [
+        "6dff96115aca2f468ee7719f39d2640e8fc715c303edfb6d296d0d0bc7fdadae",
+        "e4c769ac7105606ed33d2d1cda9efe272169543afadadc9288365b50db2ba239",
+        "e55b834cdacb4002f6c1a393c4864dc6d03993b56822e94303285c6a41806823",
+        "95a89c0b1b345dfad00cc2108cd31bdfc8e8972019328f0685a8dd99d37e622c",
+        "6b5d5865a795f24e0af0cd6a6453072febe2c0fe5ed73380e42ecd6b6340c859",
+        "3224f2d83250fdeff5384c10f05d04a9e5c64b5e0db14fbe94c8e3598ebddc82",
+        "29ea3d9f4d09d0faa6c21583c8c311168005905fbad0b2a42c1096e87d84b0bb",
+        "092f2981fd588a2333cba9090af7b9c6f6e0d621f8a0de8d0f2c6225b5b598df",
+        "932bc4a35da6432d78c19474ad0a406272701881eef2628ac06ea33eca5f3518"
+      ],
+      "PDFSha256": "c2ca11a0c2619152869ba87583b503b417b178ef6edab295efb255a0d0e218b9"
+    },
+    {
+      "file": "st-after-products-b.pdf",
+      "language": "st",
+      "version": "after",
+      "pages": 7,
+      "wordBounds": 3012,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 118,
+      "completeProductFieldOccurrences": 11,
+      "pixelHashes": [
+        "6dff96115aca2f468ee7719f39d2640e8fc715c303edfb6d296d0d0bc7fdadae",
+        "9caf2f5bf60b396aa7d8bf1ee6502417171dfc29ad97575976e13bc48b0be97e",
+        "ea058949b97a27401e6945d038fb97af2f1e3dfbb9b9f88aa9043569768bba1b",
+        "e2624e759ca4e51d8a26ec9fcd481f15b3240157435cb2ffada5e9237d8813cc",
+        "9afe6b13d44af7a10bc6cc4a301d48d60903498beba88d18b5175dc22612278f",
+        "e26260b9bd56cb2a67e14b7b4fc15142589510c57d6b6875e085ba465fe1f024",
+        "3d1cc1faae8339a02b1d45de5b62f7d8e0555ae688b75da359db48f48238f6ff"
+      ],
+      "PDFSha256": "599eef4845f01495d47b8546651013c9a19692da898062fd43665db6495f02e1"
+    },
+    {
+      "file": "ts-after-products-a.pdf",
+      "language": "ts",
+      "version": "after",
+      "pages": 9,
+      "wordBounds": 3934,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 126,
+      "completeProductFieldOccurrences": 11,
+      "pixelHashes": [
+        "52d992dc43fbeecf9e08e1bfd2fbc7221858529836b5191179b560d25035274f",
+        "e03b78c7640ea7eb50ca5cc674e0a8bb098131b8bbab7f1da333501b5efa8564",
+        "c8b838f61a05ec602c94df37049aa3c160bab81cf968392aa40d63637a578f49",
+        "35859cf729e28fd06f51db684e0b31388c96cd656a868c9709d90b3f672fe6e9",
+        "38154204de53b5629bf6f07db63b6984270c3607e17f3f9435d1426e4d6598da",
+        "df10a5aed4cd8848b7b837f1bf38a3faa7c8448be23f4c2a829ecddd5aa2387d",
+        "794e2f34cd38b9b3cd6e5de4d6cc08dabd31a6a35de2524e9844a57849da1cf1",
+        "8c95c7dd3f29d3da92263f455b8f45bd50a1cf713a955ae8a1b898da14c0bdd4",
+        "dae7e72b0b3855d494a51758c461e6e936ce18a25dc052267439669f5ba33a0f"
+      ],
+      "PDFSha256": "c8804bbeba62faa3532eb52f580e384d9258cf3df660be8f5c742cb64dfda9fd"
+    },
+    {
+      "file": "ts-after-products-b.pdf",
+      "language": "ts",
+      "version": "after",
+      "pages": 7,
+      "wordBounds": 3048,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 118,
+      "completeProductFieldOccurrences": 11,
+      "pixelHashes": [
+        "52d992dc43fbeecf9e08e1bfd2fbc7221858529836b5191179b560d25035274f",
+        "fe7eba6824cc4c42107fbf714183df25633b5b976c2e388f927a4ee8c4a66af4",
+        "153d783a1502133e9b1b390ff15059f505226fb2dc712de6213a7c2c293efdd7",
+        "e4891824b617b5d3526f98cfbd1c3a2744540fc221b8da9c4b8216c3e9100ba5",
+        "1b2cb2d82ffaa2342bfe25d8f65983a9859fce26dd42c74b548bd428ab29e3a1",
+        "956abf0e40d2787bcc495770bbe192be6c92d7f792274d5df025d3c4bb6a66c8",
+        "98aeeaa145126476f29c9c8dfc85c46090bb60c6bd2093da796e6c1d0b7e6472"
+      ],
+      "PDFSha256": "d1df95e47e7a3fc8f4134edbd9deb7e82b7d7d1a442f86b1a0a373ddd103fba3"
+    },
+    {
+      "file": "ve-after-products-a.pdf",
+      "language": "ve",
+      "version": "after",
+      "pages": 9,
+      "wordBounds": 4125,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 126,
+      "completeProductFieldOccurrences": 11,
+      "pixelHashes": [
+        "75fce1d7a171005120a8f234a86fb11b37c137d449df13f284450116c974f4e4",
+        "35771f9a938d978b5e671a306c0520d4c345aa453059448c4ab12a98b10edea3",
+        "2da21ff0ab6450c37356cdc9a7d9ab9e45d03359b1d36dbfc6f0bdb587758c60",
+        "63dbbef9b3bdbf42c2827a67d8211ead2fea29585492b93a5892d73684deb86e",
+        "3658e8269eb094e79a27afbab35389a89c0449fe46c69a2c8aa2481a9cc606ef",
+        "11c35cdf538144dbafbeaf38c3102112d94a50f5e7749d5c3e592fe05253d6fa",
+        "e7c536317db1116d5f986b2b4c85a744aef31e92cbd3a6724569af435523aee0",
+        "abffd36e61d79a1a18feeb8444ed1f7536a1b04736ab5a3d2c4bf173b93d9862",
+        "cd545cb2fd828ee64d68909a49cffa9b72f5e84d72a7e39a1c92c075c7878100"
+      ],
+      "PDFSha256": "56b08fda50dc6e4daa4ae38bd299df9d2a138321a82cd8d12b91c05c53f2880a"
+    },
+    {
+      "file": "ve-after-products-b.pdf",
+      "language": "ve",
+      "version": "after",
+      "pages": 7,
+      "wordBounds": 3228,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 118,
+      "completeProductFieldOccurrences": 11,
+      "pixelHashes": [
+        "75fce1d7a171005120a8f234a86fb11b37c137d449df13f284450116c974f4e4",
+        "be10bf9f564de4b13e497d278efebb194bacea03cc1f2a9a3312ff0d95ddcbcb",
+        "bb72aa2469203ac41a803dada7b563e299fc650fec0cdd49a7c450405c501524",
+        "beb2f274bf4a2f19b847a683502f675df412d681a48857953f0822c111ddf428",
+        "2b7d0e16d7a3023d79afc3a3a9d6f5198fa1805ecd11459174a52c476e4dbd58",
+        "9cf95c408081205df883877b766ef853790d9c040ee8d72688f484b99f372f51",
+        "d057371865d1ca5eaf3d57636e7762ab2ad814b9e9b8c6c8e040c55e5378d6ae"
+      ],
+      "PDFSha256": "d347c40d8d886f2c4ac4e02e1b23555922d02441a60a7a367aac71cb7a262251"
+    },
+    {
+      "file": "en-before-products-a.pdf",
+      "language": "en",
+      "version": "before",
+      "pages": 7,
+      "wordBounds": 2789,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 0,
+      "completeProductFieldOccurrences": 0,
+      "pixelHashes": [
+        "22c3c81d4a18c949bdcc9a7d779a614bab6f51d880188b8fec5e1dd4a2382d5d",
+        "20419e90defa4f8550a2d6d5a78d04827ec74ca2d2dad4073ba96c5fa9690bb8",
+        "d0784857651a2b7d2d7341b1f2dc726a746d2068caa4edbb0b3947f6ab8e68d7",
+        "60b5d19bd3dfc924b2d452d003e7a02cf6878053fe132f25c5a35251ee44f842",
+        "2782e4a5ac7859238e88c82703372a7c55ee52f44c6d9e2f9ec514aba166e3b1",
+        "1c31642a833301c3af5fc627362270224f7ea65364f8e3579a955c9c4f7cec11",
+        "c461b1be10bcbfb462a8fe829c1f075b3417385c4c2573e7f532689d48e4cd93"
+      ],
+      "PDFSha256": "cec54404ad0e479e0b444e747e249e17884778d16ff9b9a0ed15589b2ce1b3b8"
+    },
+    {
+      "file": "en-after-products-a.pdf",
+      "language": "en",
+      "version": "after",
+      "pages": 7,
+      "wordBounds": 2789,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 0,
+      "completeProductFieldOccurrences": 0,
+      "pixelHashes": [
+        "22c3c81d4a18c949bdcc9a7d779a614bab6f51d880188b8fec5e1dd4a2382d5d",
+        "20419e90defa4f8550a2d6d5a78d04827ec74ca2d2dad4073ba96c5fa9690bb8",
+        "d0784857651a2b7d2d7341b1f2dc726a746d2068caa4edbb0b3947f6ab8e68d7",
+        "60b5d19bd3dfc924b2d452d003e7a02cf6878053fe132f25c5a35251ee44f842",
+        "2782e4a5ac7859238e88c82703372a7c55ee52f44c6d9e2f9ec514aba166e3b1",
+        "1c31642a833301c3af5fc627362270224f7ea65364f8e3579a955c9c4f7cec11",
+        "c461b1be10bcbfb462a8fe829c1f075b3417385c4c2573e7f532689d48e4cd93"
+      ],
+      "PDFSha256": "dcfb01f4928f240e703bf496fb9dace0ecd9d50354a407d6932ab136fab0a764"
+    },
+    {
+      "file": "en-before-products-b.pdf",
+      "language": "en",
+      "version": "before",
+      "pages": 5,
+      "wordBounds": 2156,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 0,
+      "completeProductFieldOccurrences": 0,
+      "pixelHashes": [
+        "22c3c81d4a18c949bdcc9a7d779a614bab6f51d880188b8fec5e1dd4a2382d5d",
+        "2f45df93ec6e035ec6ac449fa5c989868e640f1f189cc4d9290f49285a9125d6",
+        "508f43c4a8d044870e9b5c54b2b3b0fd3a770b3cea6a8d83238da18ae20c9e22",
+        "0c76093065e10dadaefd13344f5c6959ac91ce6cf132e5ebdd99eb2970f25270",
+        "f2aacad72e9931d5ac9d2c58426b91b2b4b2b35faff15e27c2b6529801ef22a9"
+      ],
+      "PDFSha256": "cadecd7c69203589d0885d7893c69280b177d28bd4623118305f3a61f635f6c2"
+    },
+    {
+      "file": "en-after-products-b.pdf",
+      "language": "en",
+      "version": "after",
+      "pages": 5,
+      "wordBounds": 2156,
+      "clipped": [],
+      "parserErrors": "",
+      "completeGuideClauses": 0,
+      "completeProductFieldOccurrences": 0,
+      "pixelHashes": [
+        "22c3c81d4a18c949bdcc9a7d779a614bab6f51d880188b8fec5e1dd4a2382d5d",
+        "2f45df93ec6e035ec6ac449fa5c989868e640f1f189cc4d9290f49285a9125d6",
+        "508f43c4a8d044870e9b5c54b2b3b0fd3a770b3cea6a8d83238da18ae20c9e22",
+        "0c76093065e10dadaefd13344f5c6959ac91ce6cf132e5ebdd99eb2970f25270",
+        "f2aacad72e9931d5ac9d2c58426b91b2b4b2b35faff15e27c2b6529801ef22a9"
+      ],
+      "PDFSha256": "27c4d5f762b48d218f826ac60d0cdb394fc777e63c31021426ce9d508294e393"
+    }
+  ],
+  "comparisons": [
+    {
+      "case": "products-a",
+      "sameText": true,
+      "samePixels": true
+    },
+    {
+      "case": "products-b",
+      "sameText": true,
+      "samePixels": true
+    }
+  ],
+  "totalPDFs": 12,
+  "totalPages": 88,
+  "totalWordBounds": 36221,
+  "completeGuideClauses": 976,
+  "completeProductFieldOccurrences": 88,
+  "visualInspection": "All8nativecontacts and8enlargedactual pages inspected: roots-excluded onpage2all4langs; gingerfresh/dried onpage6zu/st/ts andpage7ve. No overlap or cut-off observed. Long source notes remain partly English and preserve original whole fields. Visual inspection is not fluent-language or agricultural approval."
+}

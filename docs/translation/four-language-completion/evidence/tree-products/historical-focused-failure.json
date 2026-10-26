@@ -1,0 +1,51 @@
+{
+  "startedAt": "2026-10-26T04:54:56.952052+00:00",
+  "commands": [
+    {
+      "name": "typecheck",
+      "command": [
+        "npx",
+        "tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "focused",
+      "command": [
+        "node",
+        "--import",
+        "./tests/register-alias.mjs",
+        "--test",
+        "tests/animal-control-localization.test.ts",
+        "tests/animal-welfare-localization.test.ts",
+        "tests/guidance-localization.test.ts",
+        "tests/plan-note-localization.test.ts",
+        "tests/crop-screen-localization.test.ts",
+        "tests/crop-export-instruction-localization.test.ts",
+        "tests/update-notices-localization.test.ts",
+        "tests/update-tour.test.ts",
+        "tests/animal-enterprises.test.ts",
+        "tests/product-profile-localization.test.ts",
+        "tests/first-crop-localization.test.ts",
+        "tests/product-yield-localization.test.ts",
+        "tests/animal-legal-localization.test.ts",
+        "tests/tree-product-localization.test.ts",
+        "tests/release-notes-gate.test.ts",
+        "tests/canvas-labels.test.ts"
+      ],
+      "exitCode": 1
+    }
+  ],
+  "scope": "Affected full-source and guide/PDF/localization and release checks; not the full required suite.",
+  "endedAt": "2026-10-26T04:55:24.366515+00:00",
+  "status": "failed",
+  "result": {
+    "tests": 213,
+    "pass": 212,
+    "fail": 1,
+    "cause": "Existing instruction registry assertion required complete crop-export-drafts.json rows to equal CROP_EXPORT_COPY. New21 runtime rows were missing in that review packet.",
+    "repair": "Append only the same21 rows to the full review packet; keep all assertions. All parent rows remain unchanged.",
+    "verification": "Repair run pending while package was created; final-focused-checks.json and verification.json supersede this historical attempt."
+  }
+}

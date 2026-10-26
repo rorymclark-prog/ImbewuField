@@ -1,0 +1,382 @@
+[
+  {
+    "file": "README.md",
+    "bytes": 3622,
+    "sha256": "23bae38de504b850096fa53786f68b34f46939936cf1ed6fe5ddfa94ddaad2e5"
+  },
+  {
+    "file": "browser/desktop-specialist-contact.png",
+    "bytes": 1115745,
+    "sha256": "955fb77782109c2e82916c520f6d660301272f5be251c88f5985a0c2daffcb2e"
+  },
+  {
+    "file": "browser/desktop.json.gz",
+    "bytes": 7476,
+    "sha256": "f45e59b2b29320ac719acd8c3417edda8d2366134e5e966a2432a1c9b2e7a204"
+  },
+  {
+    "file": "browser/english-phone.json.gz",
+    "bytes": 4213,
+    "sha256": "89e733308f9fce49c86ca01e9a740e11b83dde6ceb846b4e4f0a2600b0a8f88f"
+  },
+  {
+    "file": "browser/initial-zu-closed-phone.json.gz",
+    "bytes": 34086,
+    "sha256": "f55f021217c0df76f0978605f6ee524fe673deaeb124e6da60bde27674e60e45"
+  },
+  {
+    "file": "browser/language-switches.json.gz",
+    "bytes": 4981,
+    "sha256": "d17866e06ceacf2d67e30bda289b411f35bf328b52984041bfab309192d253de"
+  },
+  {
+    "file": "browser/phone-contact.png",
+    "bytes": 1241351,
+    "sha256": "2da8338a610d712f2105d9dff78ee303ca8aa5b0f76dc38d0549f121464d1d7f"
+  },
+  {
+    "file": "browser/phone-representative.json.gz",
+    "bytes": 5585,
+    "sha256": "8ace2e8503a1645fb873bdbbd32dbd20b5d66bdef03e445f71908439e758ec2f"
+  },
+  {
+    "file": "browser/source-manifest.json",
+    "bytes": 514,
+    "sha256": "175d4b701286549633f97e3d633ce96ac58704bccbc3ec147e4f937bdfd9e0b8"
+  },
+  {
+    "file": "browser/st-momordica-balsamina-desktop.png",
+    "bytes": 88617,
+    "sha256": "56db376addd7503614ad412f3357c5f767e41361a45fbfe9ef8880acd323f7fe"
+  },
+  {
+    "file": "browser/st-phone.json.gz",
+    "bytes": 35716,
+    "sha256": "d0bf1400d4e5ab76d0b68e5d803e6b16077e9f466d0ac39afb769b90a6216008"
+  },
+  {
+    "file": "browser/st-rhoicissus-tridentata-phone.png",
+    "bytes": 54795,
+    "sha256": "6399a89d1c314e112ee116a654b696ad2cf01dfcb24a095f3579705781937b62"
+  },
+  {
+    "file": "browser/st-zingiber-officinale-desktop.png",
+    "bytes": 110376,
+    "sha256": "3c72e0ecdf4cee54a81dccb3667e2bd6983cdeb18ad03b5a1e96663c5a8c4aaa"
+  },
+  {
+    "file": "browser/st-zingiber-officinale-phone.png",
+    "bytes": 63987,
+    "sha256": "aa5745ec525c64339244b1e03995340528e37ea39e08a23cec6f4f8a1672860a"
+  },
+  {
+    "file": "browser/ts-momordica-balsamina-desktop.png",
+    "bytes": 92679,
+    "sha256": "9116f23936536c74f2f09430b3208f41350108f94061de8f5a8d4e91ba5ff954"
+  },
+  {
+    "file": "browser/ts-phone.json.gz",
+    "bytes": 36052,
+    "sha256": "678251250722b4bbda6a0a23e9bb2cc304022e2850131ec5b32cef27947d935d"
+  },
+  {
+    "file": "browser/ts-rhoicissus-tridentata-phone.png",
+    "bytes": 57669,
+    "sha256": "0423495c18ec2c63865b83c22afaac510838b062db206e4d94061c282754cb24"
+  },
+  {
+    "file": "browser/ts-zingiber-officinale-desktop.png",
+    "bytes": 112772,
+    "sha256": "6069dd653e64be795e7dff3e901bb2c2241ead051ded254a50d24ff5702e5a17"
+  },
+  {
+    "file": "browser/ts-zingiber-officinale-phone.png",
+    "bytes": 64530,
+    "sha256": "e0101dd20429bba67c121b332f619bad8a4c1eb6e41721bc631abb6628984d13"
+  },
+  {
+    "file": "browser/ve-momordica-balsamina-desktop.png",
+    "bytes": 91682,
+    "sha256": "fef68b0725f508b990ec369df89f62931435da951036e5557bf343c94cc299ce"
+  },
+  {
+    "file": "browser/ve-phone.json.gz",
+    "bytes": 35978,
+    "sha256": "196ed64b9920219e7b9782aa06f2efcd014a25e0dec50695dd4b0da81332cb78"
+  },
+  {
+    "file": "browser/ve-rhoicissus-tridentata-phone.png",
+    "bytes": 56345,
+    "sha256": "77db8818db349326a0515d5a364d6ebe0043d7558d7a4fb43a867e80d46a53c7"
+  },
+  {
+    "file": "browser/ve-zingiber-officinale-desktop.png",
+    "bytes": 112343,
+    "sha256": "6eec516a69bd818aa8131af97caecd3b99e79a6db8f3a81e95fe9f26cf1ce836"
+  },
+  {
+    "file": "browser/ve-zingiber-officinale-phone.png",
+    "bytes": 65076,
+    "sha256": "2b3fafb1567d5db1c7211a7f90baa5e6fd59c126c7aad8e2d3ca15850df2c145"
+  },
+  {
+    "file": "browser/verification.json",
+    "bytes": 1045,
+    "sha256": "c1ed3243b6c21da7f2c798a1f87d4cbf5a41a873576e2e6c762f6bf813369d78"
+  },
+  {
+    "file": "browser/zu-momordica-balsamina-desktop.png",
+    "bytes": 90357,
+    "sha256": "fdc5e224215e7a6683f0705e75a6ece9a2b46d98796c9b669efddc10c38fc810"
+  },
+  {
+    "file": "browser/zu-phone.json.gz",
+    "bytes": 35976,
+    "sha256": "975ba496dca77b17188673dd2b040b29d48aee24d0ba61b0e86c52063428bd47"
+  },
+  {
+    "file": "browser/zu-rhoicissus-tridentata-phone.png",
+    "bytes": 55171,
+    "sha256": "80a2f3197c67b557025a0918658779d4895ddfa89bdbc1b5d7e707622106cf65"
+  },
+  {
+    "file": "browser/zu-zingiber-officinale-desktop.png",
+    "bytes": 111388,
+    "sha256": "175b34da75fa1de5148d41f21527a0794f9678029287ffe81451325ac25862eb"
+  },
+  {
+    "file": "browser/zu-zingiber-officinale-phone.png",
+    "bytes": 64382,
+    "sha256": "d099f7c2d0f385f596bc3e3131d98a92418bbc1f04def5d66fe244594599d092"
+  },
+  {
+    "file": "final-focused-checks.json",
+    "bytes": 1544,
+    "sha256": "49f22c1273cdf002a8c6f428c1139cb00372fd2416c62044b2d8816b0a54fd43"
+  },
+  {
+    "file": "generation.json.gz",
+    "bytes": 48766,
+    "sha256": "c3f3fe57e928aea0c0b7a9593d74ac1dc3c748d321bd96d0dd4953fbad82f6b7"
+  },
+  {
+    "file": "historical-focused-failure.json",
+    "bytes": 1889,
+    "sha256": "042ee0556fee25cf3421115ff5b5d4e1ad4528cdc985d61c36f74c4d9d990ccc"
+  },
+  {
+    "file": "initial-focused-checks.json",
+    "bytes": 1239,
+    "sha256": "1f8a629dfff34a486ddc6976f4a7554ab889ee4893eab020985e75260abdb0c3"
+  },
+  {
+    "file": "inspection.json",
+    "bytes": 12346,
+    "sha256": "824271cfab8d192390393340af25fe276632076914244ea9c5f45c057ae5b3a3"
+  },
+  {
+    "file": "pdf/en-after-products-a-contact.png",
+    "bytes": 760256,
+    "sha256": "a30845c385f855b036530f9f0c6ec957994f88f66b5d34bc3ed533c2ac4c5600"
+  },
+  {
+    "file": "pdf/en-after-products-a.pdf",
+    "bytes": 52677,
+    "sha256": "dcfb01f4928f240e703bf496fb9dace0ecd9d50354a407d6932ab136fab0a764"
+  },
+  {
+    "file": "pdf/en-after-products-b-contact.png",
+    "bytes": 600232,
+    "sha256": "df2ba316811f47c96257548c2554b1e7607014c67c01f598123256f9bdd43ff7"
+  },
+  {
+    "file": "pdf/en-after-products-b.pdf",
+    "bytes": 42240,
+    "sha256": "27c4d5f762b48d218f826ac60d0cdb394fc777e63c31021426ce9d508294e393"
+  },
+  {
+    "file": "pdf/en-before-products-a-contact.png",
+    "bytes": 760256,
+    "sha256": "a30845c385f855b036530f9f0c6ec957994f88f66b5d34bc3ed533c2ac4c5600"
+  },
+  {
+    "file": "pdf/en-before-products-a.pdf",
+    "bytes": 52677,
+    "sha256": "cec54404ad0e479e0b444e747e249e17884778d16ff9b9a0ed15589b2ce1b3b8"
+  },
+  {
+    "file": "pdf/en-before-products-b-contact.png",
+    "bytes": 600232,
+    "sha256": "df2ba316811f47c96257548c2554b1e7607014c67c01f598123256f9bdd43ff7"
+  },
+  {
+    "file": "pdf/en-before-products-b.pdf",
+    "bytes": 42240,
+    "sha256": "cadecd7c69203589d0885d7893c69280b177d28bd4623118305f3a61f635f6c2"
+  },
+  {
+    "file": "pdf/st-after-products-a-contact.png",
+    "bytes": 978418,
+    "sha256": "47d28e2c7498b80ecaa843a07b85498acf7fbf58471c1c343bead02ab33e3957"
+  },
+  {
+    "file": "pdf/st-after-products-a.pdf",
+    "bytes": 315163,
+    "sha256": "c2ca11a0c2619152869ba87583b503b417b178ef6edab295efb255a0d0e218b9"
+  },
+  {
+    "file": "pdf/st-after-products-b-contact.png",
+    "bytes": 760192,
+    "sha256": "bf6d05956e1d341c717f9b1410d550945e40d7d58b3363b41376bcad2d90d4cc"
+  },
+  {
+    "file": "pdf/st-after-products-b.pdf",
+    "bytes": 286352,
+    "sha256": "599eef4845f01495d47b8546651013c9a19692da898062fd43665db6495f02e1"
+  },
+  {
+    "file": "pdf/st-fresh-dried-ginger-p6.png",
+    "bytes": 251991,
+    "sha256": "2ed82773eff881d7f6b4984f7bc94500d5f8d2738682ac6158691105493fcec2"
+  },
+  {
+    "file": "pdf/st-roots-excluded-p2.png",
+    "bytes": 228369,
+    "sha256": "d1d92f5a4de7f440dfb6420c5ca714a079c99fa93a76f80bec32976d871c4996"
+  },
+  {
+    "file": "pdf/ts-after-products-a-contact.png",
+    "bytes": 1023274,
+    "sha256": "eac7d1686568aaaeae06f3f0b5403a45260c4f287e31752ff375f662f2ffa73b"
+  },
+  {
+    "file": "pdf/ts-after-products-a.pdf",
+    "bytes": 320086,
+    "sha256": "c8804bbeba62faa3532eb52f580e384d9258cf3df660be8f5c742cb64dfda9fd"
+  },
+  {
+    "file": "pdf/ts-after-products-b-contact.png",
+    "bytes": 817551,
+    "sha256": "74f68f68b87a9b6a8d70a3140f9783b11cbd3cb8baebc4e712ab5e6cc80922e2"
+  },
+  {
+    "file": "pdf/ts-after-products-b.pdf",
+    "bytes": 290619,
+    "sha256": "d1df95e47e7a3fc8f4134edbd9deb7e82b7d7d1a442f86b1a0a373ddd103fba3"
+  },
+  {
+    "file": "pdf/ts-fresh-dried-ginger-p6.png",
+    "bytes": 267520,
+    "sha256": "2a66f7df7db587d870e1ac19a46e736f30f32ee6d81a414027d22128dc1c9337"
+  },
+  {
+    "file": "pdf/ts-roots-excluded-p2.png",
+    "bytes": 250176,
+    "sha256": "575cd6ceee5550bb93be1a1d733a8f90cb5af8051b929bfd26dd57f0e6cc6407"
+  },
+  {
+    "file": "pdf/ve-after-products-a-contact.png",
+    "bytes": 1051251,
+    "sha256": "0c9a4a7e14db5f7bb2b78973ae3541bfc54efbf382b4d749319233a221b09dfc"
+  },
+  {
+    "file": "pdf/ve-after-products-a.pdf",
+    "bytes": 322895,
+    "sha256": "56b08fda50dc6e4daa4ae38bd299df9d2a138321a82cd8d12b91c05c53f2880a"
+  },
+  {
+    "file": "pdf/ve-after-products-b-contact.png",
+    "bytes": 805513,
+    "sha256": "fe5180210048563ae5882b0fc0487f6829db6e2ca5d0a46118a1961561394124"
+  },
+  {
+    "file": "pdf/ve-after-products-b.pdf",
+    "bytes": 293101,
+    "sha256": "d347c40d8d886f2c4ac4e02e1b23555922d02441a60a7a367aac71cb7a262251"
+  },
+  {
+    "file": "pdf/ve-fresh-dried-ginger-p7.png",
+    "bytes": 230997,
+    "sha256": "af99e508710e8a1433ed45dc7d6b0bfa2a27d5b3d27847e8ea005233849fb8b4"
+  },
+  {
+    "file": "pdf/ve-roots-excluded-p2.png",
+    "bytes": 247650,
+    "sha256": "acc44b06f818d4b3c0dc342f9685d8e4cc7c5d5ab8c8a62a79c17798fedbaffe"
+  },
+  {
+    "file": "pdf/zu-after-products-a-contact.png",
+    "bytes": 989814,
+    "sha256": "3a8d20ee8ba9e17a7b538dd2dde5a347ed59c1d4997cfc607c17f31561751bc3"
+  },
+  {
+    "file": "pdf/zu-after-products-a.pdf",
+    "bytes": 313926,
+    "sha256": "b51fc8b58aa5fb7dc3be378341147c29c5c3391ee499691f49b0fb0c36a40d23"
+  },
+  {
+    "file": "pdf/zu-after-products-b-contact.png",
+    "bytes": 776795,
+    "sha256": "c094de70f390d0cc9f465a964e89314eea16c92387010cf551026153b3af8aef"
+  },
+  {
+    "file": "pdf/zu-after-products-b.pdf",
+    "bytes": 286527,
+    "sha256": "6e10a4b53a8f52f9e849af6b7f5626bc8b09cc4dea3203b982549129a1798eaf"
+  },
+  {
+    "file": "pdf/zu-fresh-dried-ginger-p6.png",
+    "bytes": 260675,
+    "sha256": "7b4feff98a69287f6de20e7708ec4b4b26721cd5f96eda1c6154d4b88456076e"
+  },
+  {
+    "file": "pdf/zu-roots-excluded-p2.png",
+    "bytes": 238532,
+    "sha256": "3baa6d44a09e762369f18cc011aba9e7bf31077ab26aa4fca1773a7af6f80db2"
+  },
+  {
+    "file": "priority-pages.json",
+    "bytes": 1283,
+    "sha256": "8731f405efd4d335c22cf509bb83f9b65d5c741de2b3fd9b1dbc3aa5eedd8081"
+  },
+  {
+    "file": "remaining-guidance-inventory.json",
+    "bytes": 86660,
+    "sha256": "fa777c7129efe5c87d914adb81b1dcf024bdb1dc14d7bbf5f6fccc6971fb8993"
+  },
+  {
+    "file": "reproduce/build-browser.mjs.txt",
+    "bytes": 4846,
+    "sha256": "38db8d9ed1632ba6ff8d0f8d631fcc890b739de904220087562305cc621aa663"
+  },
+  {
+    "file": "reproduce/capture-before.mjs.txt",
+    "bytes": 2177,
+    "sha256": "bebb4902913213e29ff03292dc477d31fe77de7bc47e76a7bcc9aef2b88f568d"
+  },
+  {
+    "file": "reproduce/imbewu-inspect-tree-product-pdfs.py.txt",
+    "bytes": 4942,
+    "sha256": "4c9013972079775a1bf619baace414f797a9a75aad946c6bf9ca2074b0a6cd31"
+  },
+  {
+    "file": "reproduce/imbewu-verify-tree-browser.py.txt",
+    "bytes": 3097,
+    "sha256": "2b19bbf162f72729cac90397177d73c596e0f47603c617fceffc89d86705ffa4"
+  },
+  {
+    "file": "reproduce/inventory-guidance.mjs.txt",
+    "bytes": 2709,
+    "sha256": "07144d8cf1f3a4a5f48dfd10d0ea01935b53d2e108381a09f56bf3f7a90af5aa"
+  },
+  {
+    "file": "reproduce/render-guides.mjs.txt",
+    "bytes": 2919,
+    "sha256": "9580b77285203a0b729b7987169c7d30fdca46cb07e9fd7d28bb3274d0e9eed3"
+  },
+  {
+    "file": "verification.json",
+    "bytes": 2554,
+    "sha256": "57ba9c09a42b5b02600ab7b84804bc732e5ce697fbdbf2db16fa9cbe0929b257"
+  }
+]
