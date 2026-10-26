@@ -38,7 +38,7 @@ export const EX = {
   fillInk: '#20190F',
   fillBlue: '#235E86',
   /** Destructive. */
-  red: 'var(--danger)',
+  red: 'var(--orange)', // w24-03: --danger is a :root constant (#B83A18, 3.24:1 on dark); --orange is #B83A18 in earth light and #E07850 in dark
 } as const;
 
 /** Offers read green, wants read blue — the same mapping the shipped board uses. */

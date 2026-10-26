@@ -1159,7 +1159,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
               Same one tap, no page load: Picked is a tab in this book now. */}
           <button type="button" onClick={onLogHarvest}
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold"
-            style={{ background: 'rgba(35,94,134,0.10)', border: '1px solid rgba(35,94,134,0.25)', color: 'var(--color-water)', fontSize: 14, cursor: 'pointer' }}>
+            style={{ background: 'rgba(35,94,134,0.05)', border: '1px solid rgba(35,94,134,0.25)', color: 'var(--blue)', fontSize: 14, cursor: 'pointer' }}>
             <Sprout size={15} />{recordsText(lang, 'Log harvest', 'Rekhoda isivuno')}
           </button>
           <button onClick={onAddEntry}
