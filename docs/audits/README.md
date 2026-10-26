@@ -62,6 +62,7 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Wave 23 rendered re-capture of the live build 98c8a22 and the new report workspaces: w23-01 to w23-07, the isiZulu Home date regression fixed first — 26 October 2026](2026-10-26/wave-23-recapture-claude.md).
 - [Wave 22 rendered re-capture of the live build 8d2e1a9: w22-01 to w22-10, hydration errors on /home and /invoice, Lima clearance, weather card — 25 October 2026](2026-10-25/wave-22-recapture-claude.md).
 - [Wave 21 rendered re-capture of the wave 20 build in isiZulu: w21-01 to w21-11, ten fixed, one handed to Codex — 24 October 2026](2026-10-24/wave-21-recapture-claude.md).
 - [Wave 20 integration close-out: five tracks folded onto the wave 19 branch with main, w20-01 to w20-46 implemented, w19 partials closed with them — 24 October 2026](2026-10-24/wave-20-integration-claude.md).
