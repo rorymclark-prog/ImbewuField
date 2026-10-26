@@ -958,8 +958,16 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
   }
 
   out.push('');
-  // A farmer's line breaks or Markdown cannot create extra report headings or table rows.
-  out.push('## Local market evidence', '', ...marketEvidenceLines(facts?.marketEvidence).flatMap(line => [line.replace(/[\\`*_{}\[\]<>#|]/g, '\\$&').replace(/[\r\n]+/g, ' '), '']));
+  // A farmer's line breaks or Markdown cannot create extra report headings or table rows. The fixed
+  // labels follow the report language like the rest of this header; the farmer's notes, source and
+  // date stay exactly as recorded, and the prompt keeps marketEvidenceLines' English.
+  const market = normaliseMarketEvidence(facts?.marketEvidence);
+  out.push('## ' + t('Local market evidence'), '', ...[
+    t('Local market notes (farmer-reported): {notes}', { notes: market?.notes ?? t('Not recorded') }),
+    t('Market source as reported: {source}', { source: market?.source ?? t('Not recorded') }),
+    t('Market observation / discussion date: {date}', { date: market?.observedOn ?? t('Not recorded; the survey save date is not an observation date') }),
+    t('These notes are not independently verified demand, a current price or a purchase commitment. Confirm buyer, product, quantity, unit, price, transport and date before planning sales.'),
+  ].flatMap(line => [line.replace(/[\\`*_{}\[\]<>#|]/g, '\\$&').replace(/[\r\n]+/g, ' '), '']));
   return out.join('\n');
 }
 

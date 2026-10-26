@@ -554,6 +554,69 @@
       "st": "Se latetswe ke molemi ho Studio sa moralo (dintlha tse {count})",
       "ts": "Swi landzelerisiwe hi murimi eka Xitudiyo xa dizayini (tiphoyinti ta {count})",
       "ve": "Ho tevhedzelwa nga mulimi kha Studio ya nyolo (phoindi dza {count})"
+    },
+    {
+      "english": "Not measured; arrange a soil test",
+      "zu": "Akukalwanga; hlela ukuhlolwa komhlabathi",
+      "st": "Ha e a lekanyetswa; hlophisa teko ya mobu",
+      "ts": "A swi pimiwanga; lunghiselela ku kamberiwa ka misava",
+      "ve": "A zwo ngo eletshedzwa; dzudzanyani ndingo ya mavu"
+    },
+    {
+      "english": "No laboratory result or SoilGrids source recorded",
+      "zu": "Akukho miphumela yaselabhorethri noma umthombo we-SoilGrids orekhodiwe",
+      "st": "Ha ho na sephetho sa laboratori kapa mohlodi wa SoilGrids o ngodisitsweng",
+      "ts": "A ku na mbuyelo wa laboratori kumbe xihlovo xa SoilGrids lexi rhekhodiweke",
+      "ve": "A hu na mvelelo ya laborathori kana tshisima tsha SoilGrids tsho rekhodiwaho"
+    },
+    {
+      "english": "Local market evidence",
+      "zu": "Ubufakazi bemakethe yendawo",
+      "st": "Bopaki ba mmaraka wa lehae",
+      "ts": "Vumbhoni bya makete wa laha kaya",
+      "ve": "Vhuṱanzi ha makete wa henefho"
+    },
+    {
+      "english": "Local market notes (farmer-reported): {notes}",
+      "zu": "Amanothi emakethe yendawo (abikwe ngumlimi): {notes}",
+      "st": "Dintlha tsa mmaraka wa lehae (tse tlalehilweng ke sehwai): {notes}",
+      "ts": "Tinotsi ta makete wa laha kaya (leti vikiweke hi murimi): {notes}",
+      "ve": "Notsi dza makete wa henefho (dzo vhigwaho nga murimi): {notes}"
+    },
+    {
+      "english": "Market source as reported: {source}",
+      "zu": "Umthombo wemakethe njengoba ubikiwe: {source}",
+      "st": "Mohlodi wa mmaraka jwalo ka ha o tlalehilwe: {source}",
+      "ts": "Xihlovo xa makete hilaha xi vikiweke hakona: {source}",
+      "ve": "Tshisima tsha makete sa zwe tsha vhigwa: {source}"
+    },
+    {
+      "english": "Market observation / discussion date: {date}",
+      "zu": "Usuku lokubona noma lokuxoxa ngemakethe: {date}",
+      "st": "Letsatsi la ho bona kapa ho buisana ka mmaraka: {date}",
+      "ts": "Siku ro languta kumbe ku burisana hi makete: {date}",
+      "ve": "Ḓuvha ḽa u vhona kana u haseledza nga ha makete: {date}"
+    },
+    {
+      "english": "Not recorded",
+      "zu": "Akurekhodiwe",
+      "st": "Ha e a ngodiswa",
+      "ts": "A swi rhekhodiwanga",
+      "ve": "A zwo ngo rekhodiwa"
+    },
+    {
+      "english": "Not recorded; the survey save date is not an observation date",
+      "zu": "Akurekhodiwe; usuku lokugcina uhlolo akulona usuku lokubona",
+      "st": "Ha e a ngodiswa; letsatsi la ho boloka phuputso hase letsatsi la ho bona",
+      "ts": "A swi rhekhodiwanga; siku ro hlayisa ndzavisiso a hi siku ro languta",
+      "ve": "A zwo ngo rekhodiwa; ḓuvha ḽa u vhulunga ṱhoḓisiso a si ḓuvha ḽa u vhona"
+    },
+    {
+      "english": "These notes are not independently verified demand, a current price or a purchase commitment. Confirm buyer, product, quantity, unit, price, transport and date before planning sales.",
+      "zu": "Lawa manothi awakona ukufunwa okuqinisekiswe ngokuzimela, inani lamanje noma isibopho sokuthenga. Qinisekisa umthengi, umkhiqizo, inani, iyunithi, intengo, ukuthutha nosuku ngaphambi kokuhlela ukuthengisa.",
+      "st": "Dintlha tsena hase tlhoko e netefaditsweng ka boikemelo, theko ya jwale kapa boitlamo ba ho reka. Netefatsa moreki, sehlahiswa, bongata, yuniti, theko, dipalangwang le letsatsi pele o rera ho rekisa.",
+      "ts": "Tinotsi leti a hi xilaveko lexi tiyisisiweke hi ku tiyimela, nxavo wa sweswi kumbe xitshembiso xa ku xava. Tiyisisa muxavi, xikumiwa, nhlayo, yuniti, nxavo, vutleketli ni siku u nga si kunguhata ku xavisa.",
+      "ve": "Notsi idzi a si ṱhoḓea yo khwaṱhisedzwaho nga u ḓiimisa, mutengo wa zwino kana vhuḓiimiseli ha u renga. Khwaṱhisedzani murengi, tshibveledzwa, vhunzhi, yuniti, mutengo, vhuendi na ḓuvha musi ni sa athu u dzudzanya u rengisa."
     }
   ],
   "seasons": [
