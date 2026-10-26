@@ -8,7 +8,8 @@ const sample = read('components/SampleExperience.module.css');
 
 test('w18-01: /samples header and tab bar sit outside the padded scroller', () => {
   const page = read('app/samples/page.tsx');
-  assert.match(page, /<main className=\{styles\.shell\}><AppHeader/);
+  // The four-language track tags the whole page with its language; the shell is unchanged.
+  assert.match(page, /<main (?:lang=\{lang\} )?className=\{styles\.shell\}><AppHeader/);
   assert.match(page, /styles\.root} \$\{styles\.scroller/);
   assert.doesNotMatch(page, /padding:20 \}/);
   assert.match(mel, /\.shell \{[^}]*height:100dvh/);

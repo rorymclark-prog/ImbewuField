@@ -1084,8 +1084,8 @@
       "line": 79,
       "fn": "ui",
       "args": [
-        "'Browse 18 gardens →'",
-        "'Hlola izingadi ezingu-18 →'"
+        "'Browse 18 gardens'",
+        "'Hlola izingadi ezingu-18'"
       ]
     },
     {
@@ -1147,8 +1147,8 @@
       "line": 81,
       "fn": "ui",
       "args": [
-        "'Open the complete example →'",
-        "'Vula isibonelo esiphelele →'"
+        "'Open the complete example'",
+        "'Vula isibonelo esiphelele'"
       ]
     },
     {
@@ -2785,9 +2785,9 @@
         ]
       },
       {
-        "english": "Browse 18 gardens →",
+        "english": "Browse 18 gardens",
         "zuluVariants": [
-          "Hlola izingadi ezingu-18 →"
+          "Hlola izingadi ezingu-18"
         ],
         "callers": [
           {
@@ -2883,9 +2883,9 @@
         ]
       },
       {
-        "english": "Open the complete example →",
+        "english": "Open the complete example",
         "zuluVariants": [
-          "Vula isibonelo esiphelele →"
+          "Vula isibonelo esiphelele"
         ],
         "callers": [
           {
@@ -3261,10 +3261,10 @@
         "ve": "Miḓi, masimu a vhubindudzi, khiretshi, zwikolo na ngade dza tshitshavha. Nangani nthihi u vhona mveledziso yayo, vhashelamulenzhe na muvhigo."
       },
       {
-        "english": "Browse 18 gardens →",
-        "st": "Sheba dirapa tse 18 →",
-        "ts": "Languta swirhapa swa 18 →",
-        "ve": "Sedzani ngade dza 18 →"
+        "english": "Browse 18 gardens",
+        "st": "Sheba dirapa tse 18",
+        "ts": "Languta swirhapa swa 18",
+        "ve": "Sedzani ngade dza 18"
       },
       {
         "english": "Editable farm workspace · Ubhejane",
@@ -3303,10 +3303,10 @@
         "ve": "Bulasi ḽa khumbulelo kha fhethu hu dudelaho ha KZN ḽi re na miroho, zwilimwa zwa zwiḽiwa zwa ndeme, mitshelo, “nuts”, mitshelo miṱuku ya maberi, makumba, mafhi, mutoli na khovhe. Sedzani khalanḓara yaḽo ya ṅwedzi muṅwe na muṅwe, miri miṱuku na pulane ine ya nga gandiswa. Zwi sumbedzwa nga English."
       },
       {
-        "english": "Open the complete example →",
-        "st": "Bula mohlala o felletseng →",
-        "ts": "Pfula xikombiso lexi heleleke →",
-        "ve": "Vulani tsumbo yo fhelelaho →"
+        "english": "Open the complete example",
+        "st": "Bula mohlala o felletseng",
+        "ts": "Pfula xikombiso lexi heleleke",
+        "ve": "Vulani tsumbo yo fhelelaho"
       },
       {
         "english": "Reset tour records",
