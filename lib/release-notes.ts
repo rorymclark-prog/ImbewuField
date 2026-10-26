@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '26 October 2026', sha: '5aaffffeb', changes: [
+  { when: '26 October 2026', sha: '6069e0207', changes: [
     'Survey and reports now show crops, food-forest and animal products through the year.',
     'Choose Site potential or Complete site plan, then the detail you need.',
     'Record plan adds a scaled map with symbols and a legend. Download or save it without AI.',
