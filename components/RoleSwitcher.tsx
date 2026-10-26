@@ -46,7 +46,7 @@ export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { 
           return (
             <span key={r.key} className={base} style={style} title={ui('Coming soon', 'Iyeza maduze')} aria-label={ui('{label} (coming soon)', '{label} (iyeza maduze)', {label:t(r.labelKey)})}>
               <r.Icon size={16} />
-              <span className={inMenu ? undefined : 'hidden md:inline'}>{t(r.labelKey)}</span>
+              <span data-header-label className={inMenu ? undefined : 'hidden md:inline'}>{t(r.labelKey)}</span>
             </span>
           );
         }
@@ -62,7 +62,7 @@ export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { 
             title={isAliasMatch ? ui('Design map is the Mentor toolkit', 'Imephu yomklamo iyithuluzi lomeluleki') : undefined}
           >
             <r.Icon size={16} />
-            <span className={inMenu ? undefined : 'hidden md:inline'}>{t(r.labelKey)}</span>
+            <span data-header-label className={inMenu ? undefined : 'hidden md:inline'}>{t(r.labelKey)}</span>
           </Link>
         );
       })}

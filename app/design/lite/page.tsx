@@ -36,13 +36,13 @@ function LiteInner() {
       href={href}
       style={{
         display: 'block', padding: '14px 16px', borderRadius: 14, textDecoration: 'none',
-        background: primary ? 'linear-gradient(135deg, #1F4D2B, #2D6B3C)' : 'var(--bg-1)',
-        border: primary ? '1px solid rgba(31,77,43,0.6)' : '1px solid var(--border)',
-        color: primary ? 'var(--on-forest)' : 'var(--text-primary)',
+        background: primary ? 'var(--color-forest-800)' : 'var(--bg-1)',
+        border: primary ? '1px solid var(--color-forest-800)' : '1px solid var(--border)',
+        color: primary ? 'var(--on-forest-800)' : 'var(--text-primary)',
       }}
     >
       <span style={{ display: 'block', fontWeight: 700, fontSize: 15 }}>{label}</span>
-      <span style={{ display: 'block', fontSize: 12.5, marginTop: 2, color: primary ? 'rgba(255,255,255,0.85)' : 'var(--text-secondary)' }}>
+      <span style={{ display: 'block', fontSize: 12.5, marginTop: 2, color: primary ? 'var(--on-forest-800)' : 'var(--text-secondary)', opacity: primary ? 0.9 : 1 }}>
         {sub}
       </span>
     </a>
@@ -50,18 +50,18 @@ function LiteInner() {
 
   const title = fromFarmer ? 'Your farm is safe' : 'Your design is safe';
   const body = fromFarmer
-    ? 'The map page kept closing on this phone, so we brought you here instead of letting it crash again. Your places, reports and details are exactly as you left them.'
+    ? 'The map page kept closing on this device, so we brought you here instead of letting it crash again. Your places, reports and details are exactly as you left them.'
     : lightDied
-      ? 'Even the light designer could not stay open on this phone right now. Nothing is lost — everything you drew and every measurement is safe. Freeing memory (close other apps and tabs) gives the next try its best chance.'
-      : 'The full designer kept closing on this phone, so we brought you here instead of letting it crash again. Everything you drew and every measurement is exactly as you left it.';
+      ? 'Even the light designer could not stay open on this device right now. Nothing is lost — everything you drew and every measurement is safe. Freeing memory (close other apps and tabs) gives the next try its best chance.'
+      : 'The full designer kept closing on this device, so we brought you here instead of letting it crash again. Everything you drew and every measurement is exactly as you left it.';
 
-  const designLight = link(`/design${coords}${amp}safe=1&full=1`, 'Open the designer, light', 'Your whole design without the background photo — easiest on this phone', !fromFarmer);
-  const designFull = link(`/design${coords}${amp}full=1`, 'Open the full designer', 'Everything including the photo — needs a phone with more free memory');
+  const designLight = link(`/design${coords}${amp}safe=1&full=1`, 'Open the designer, light', 'Your whole design without the background photo — easiest on this device', !fromFarmer);
+  const designFull = link(`/design${coords}${amp}full=1`, 'Open the full designer', 'Everything including the photo — needs more free memory on this device');
   const farmerMap = link(`/farmer${coords}${amp}full=1`, 'Back to the map', 'Your farm, places and details panel', fromFarmer);
   const reports = link('/farmer?panel=Reports&full=1', 'My reports', 'Saved reports, photos and evidence');
 
   return (
-    <main style={{ minHeight: '100dvh', background: 'var(--bg-0)', padding: '28px 20px', fontFamily: 'var(--font-sans)' }}>
+    <main style={{ minHeight: '100dvh', background: 'var(--bg-0)', padding: 'calc(env(safe-area-inset-top, 0px) + 72px) 20px 28px', fontFamily: 'var(--font-sans)' }}>
       <div style={{ maxWidth: 460, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 12 }}>
         <div style={{ padding: '16px 18px', borderRadius: 16, background: 'var(--warn-soft)', border: '1px solid color-mix(in srgb, var(--warn) 35%, transparent)' }}>
           <h1 style={{ margin: 0, fontWeight: 700, fontSize: 17, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>
@@ -88,7 +88,7 @@ function LiteInner() {
           </>
         )}
 
-        <div style={{ fontSize: 11.5, color: 'var(--text-muted)', textAlign: 'center', marginTop: 8 }}>
+        <div style={{ fontSize: 12, color: 'var(--text-muted)', textAlign: 'center', marginTop: 8 }}>
           Closing other tabs and apps frees memory for the full experience.
         </div>
       </div>

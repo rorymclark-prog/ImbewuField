@@ -59,7 +59,7 @@ import {
   type NetworkSortKey,
 } from '@/lib/network';
 import { DEMO_NETWORK_NOTICE } from '@/lib/network-demo';
-import type { GardenStatus } from '@/lib/db/types';
+import { NETWORK_STATUS_COLOR } from '@/components/network/status-colors';
 
 const NetworkMap = dynamic(() => import('@/components/network/NetworkMap'), {
   ssr: false,
@@ -85,13 +85,9 @@ const INK_SOFT = 'var(--text-secondary)';
 const INK_MUTED = 'var(--text-muted)';
 const LINE = 'var(--border)';
 const PAPER = 'var(--bg-1)';
-const ATTENTION = '#C0531E';
+const ATTENTION = 'var(--orange)';
 
-const STATUS_COLOR: Record<GardenStatus, string> = {
-  thriving: '#1F4D2B',
-  establishing: '#9E5C08',
-  support: '#C0531E',
-};
+const STATUS_COLOR = NETWORK_STATUS_COLOR;
 
 const DASH = '—';
 function group(n: number): string {
@@ -193,7 +189,7 @@ export default function NetworkPage() {
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       {/* ── Header ── */}
       <AppHeader
-        title={tr('Network · funder portfolio', 'Inethiwekhi · uhlelo lwabaxhasi')}
+        title={tr('Network', 'Inethiwekhi')}
         right={
           <>
             {/* The org picker only appears for a caller entitled to more than one org — a
@@ -205,7 +201,7 @@ export default function NetworkPage() {
                 onChange={(e) => portfolio.setOrgId(e.target.value)}
                 className="font-sans"
                 style={{
-                  fontSize: 11.5, color: INK, background: PAPER, border: `1px solid ${LINE}`,
+                  fontSize: 12, color: INK, background: PAPER, border: `1px solid ${LINE}`,
                   borderRadius: 8, padding: '4px 8px', maxWidth: 190, marginRight: 4,
                 }}
               >
@@ -228,10 +224,16 @@ export default function NetworkPage() {
                 // track what the rows actually are. Leaving it on real data would be
                 // the same failure in the other direction: a funder discounting real
                 // programme results as a mock-up.
-                className="font-sans font-semibold"
+                //
+                // w20-38: in the header only from sm up; below sm the same label sits as a
+                // full-width strip under the header (still on first paint, never hidden), so it
+                // stops pushing the title down to "N" and Settings off-screen.
+                // w21-03: from xl, not sm. Beside the lg desktop nav the isiZulu pill pushed
+                // Settings 39px past a 1024px viewport; below xl the strip carries it.
+                className="font-sans font-semibold whitespace-nowrap shrink-0 hidden xl:inline-block"
                 style={{
                   fontSize: 12,
-                  color: '#9E5C08',
+                  color: 'var(--gold-dim)',
                   background: 'rgba(158,92,8,0.10)',
                   border: '1px solid rgba(158,92,8,0.30)',
                   borderRadius: 999,
@@ -248,7 +250,15 @@ export default function NetworkPage() {
       {/* nav-17: AppHeader's title is a <span>; keep a real h1 for the page since the old
           header's h1 is gone. The stat strip right below already repeats "Sites" etc, so this
           stays visually quiet (matches the previous text-xs treatment). */}
-      <h1 className="sr-only">{tr('Network · funder portfolio', 'Inethiwekhi · uhlelo lwabaxhasi')}</h1>
+      <h1 className="sr-only">{tr('Network', 'Inethiwekhi')}</h1>
+      {portfolio.isDemo && (
+        <div
+          className="xl:hidden flex-shrink-0 px-3 py-1.5 font-sans font-semibold"
+          style={{ fontSize: 12, color: 'var(--gold-dim)', background: 'color-mix(in srgb, var(--gold) 12%, var(--bg-1))', borderBottom: `1px solid ${LINE}` }}
+        >
+          {tr('Programme portfolio', 'Iphothifoliyo yohlelo')}
+        </div>
+      )}
 
       {/* An authorised read that failed says so. It must not render as an empty portfolio:
           "no farmers" and "we could not find out" look identical on a dashboard and mean
@@ -259,8 +269,8 @@ export default function NetworkPage() {
           className="flex-shrink-0 flex items-center gap-2 px-3 md:px-4 py-2"
           style={{ background: 'rgba(158,92,8,0.08)', borderBottom: `1px solid ${LINE}` }}
         >
-          <AlertTriangle size={13} style={{ color: '#9E5C08', flexShrink: 0 }} />
-          <span className="font-sans" style={{ fontSize: 11.5, color: '#7A4A06' }}>
+          <AlertTriangle size={13} style={{ color: 'var(--gold-dim)', flexShrink: 0 }} />
+          <span className="font-sans" style={{ fontSize: 12, color: 'var(--gold-dim)' }}>
             {portfolio.error === 'No organisation is linked to this account yet.'
               ? tr(portfolio.error, 'Ayikho inhlangano exhunyiwe kule akhawunti okwamanje.')
               : portfolio.error === 'Could not reach the portfolio service.'
@@ -271,7 +281,7 @@ export default function NetworkPage() {
             onClick={portfolio.reload}
             className="font-sans font-semibold"
             style={{
-              fontSize: 11, color: '#7A4A06', background: 'transparent',
+              fontSize: 12, color: 'var(--gold-dim)', background: 'transparent',
               border: '1px solid rgba(158,92,8,0.35)', borderRadius: 7,
               padding: '2px 9px', cursor: 'pointer', marginLeft: 'auto', flexShrink: 0,
             }}
@@ -284,7 +294,7 @@ export default function NetworkPage() {
       {portfolio.loading && !portfolio.error && (
         <div
           className="flex-shrink-0 px-3 md:px-4 py-1.5 font-sans"
-          style={{ fontSize: 11, color: INK_MUTED, background: PAPER, borderBottom: `1px solid ${LINE}` }}
+          style={{ fontSize: 12, color: INK_MUTED, background: PAPER, borderBottom: `1px solid ${LINE}` }}
         >
           {tr('Loading the portfolio…', 'Kulayishwa uhlelo…')}
         </div>
@@ -292,7 +302,7 @@ export default function NetworkPage() {
 
       {isZulu && (
         <p role="note" className="flex-shrink-0 px-3 md:px-4 py-1.5 font-sans"
-          style={{ fontSize: 11, color: INK_SOFT, background: PAPER, borderBottom: `1px solid ${LINE}` }}>
+          style={{ fontSize: 12, color: INK_SOFT, background: PAPER, borderBottom: `1px solid ${LINE}` }}>
           Imephu nemininingwane yomlimi ewindini layo kusaboniswa ngesiNgisi.
         </p>
       )}
@@ -306,16 +316,16 @@ export default function NetworkPage() {
             cut 'Needs attention' off at a phone's right edge. It now wraps onto a second row
             below sm, rather than clipping silently; md+ keeps the original single-row strip,
             which already has the width for it. */}
-        <div className="flex flex-wrap sm:flex-nowrap items-stretch gap-y-1.5 sm:overflow-x-auto px-3 md:px-4">
+        <div className="grid grid-cols-2 gap-x-4 gap-y-1 py-1 sm:flex sm:flex-nowrap items-stretch sm:gap-0 sm:py-0 sm:overflow-x-auto px-3 md:px-4">
           {stats.map((s) => (
             <div
               key={s.label}
-              className="flex flex-col justify-center flex-shrink-0"
+              // w18-32: a 2-up grid on phone with no per-cell divider (they left orphan right
+              // borders on the wrapped rows); the divider and spacing return at sm+.
+              className="flex flex-col justify-center min-w-0 sm:flex-shrink-0 sm:min-w-[92px] sm:border-r sm:mr-4 sm:pr-4"
               style={{
-                padding: '9px 16px 9px 0',
-                marginRight: 16,
-                borderRight: `1px solid ${LINE}`,
-                minWidth: 92,
+                paddingBlock: 9,
+                borderColor: LINE,
               }}
             >
               <span
@@ -437,7 +447,7 @@ export default function NetworkPage() {
                     aria-pressed={on}
                     className="font-sans font-semibold"
                     style={{
-                      fontSize: 11,
+                      fontSize: 12,
                       borderRadius: 999,
                       padding: '3.5px 9px',
                       cursor: 'pointer',
@@ -464,12 +474,12 @@ export default function NetworkPage() {
                   aria-pressed={sort === key}
                   className="font-sans font-semibold"
                   style={{
-                    fontSize: 11,
+                    fontSize: 12,
                     borderRadius: 999,
                     padding: '3px 8px',
                     cursor: 'pointer',
                     background: sort === key ? 'rgba(31,77,43,0.12)' : 'transparent',
-                    color: sort === key ? '#1F4D2B' : INK_MUTED,
+                    color: sort === key ? 'var(--color-forest-800)' : INK_MUTED,
                     border: `1px solid ${sort === key ? 'rgba(31,77,43,0.35)' : LINE}`,
                   }}
                 >
@@ -504,7 +514,7 @@ export default function NetworkPage() {
                   style={{
                     display: 'block',
                     background: on ? PAPER : 'transparent',
-                    border: `1px solid ${on ? '#1F4D2B' : 'transparent'}`,
+                    border: `1px solid ${on ? 'var(--color-forest-800)' : 'transparent'}`,
                     borderRadius: 10,
                     padding: '8px 9px',
                     marginBottom: 3,
@@ -513,37 +523,42 @@ export default function NetworkPage() {
                 >
                   <div className="flex items-center gap-2">
                     {farmer.photoUrl && <img data-photo-preview src={farmer.photoUrl} alt="" width={44} height={44} style={{ borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }} />}
-                    <span
-                      style={{
-                        width: 9,
-                        height: 9,
-                        borderRadius: '50%',
-                        background: STATUS_COLOR[farmer.status],
-                        flexShrink: 0,
-                      }}
-                    />
-                    <span
-                      className="font-display font-semibold"
-                      style={{ fontSize: 13.5, color: INK, flex: 1, minWidth: 0 }}
-                    >
-                      {farmer.name}
-                    </span>
-                    {flags.length > 0 && (
-                      <AlertTriangle size={12} style={{ color: ATTENTION, flexShrink: 0 }} />
-                    )}
-                  </div>
-                  <div
-                    className="font-sans"
-                    style={{ fontSize: 11, color: INK_MUTED, marginTop: 1, paddingLeft: 17 }}
-                  >
-                    {farmer.siteName} · {farmer.district}
-                  </div>
-                  <div
-                    className="font-sans"
-                    style={{ fontSize: 11, color: INK_SOFT, marginTop: 2, paddingLeft: 17 }}
-                  >
-                    {statKg(metrics.producedKg)} · {statZar(metrics.incomeZar)} ·{' '}
-                    {group(farmer.plotSizeM2)} m²
+                    <div className="flex flex-col min-w-0 flex-1">
+                      <div className="flex items-center gap-2">
+                        <span
+                          style={{
+                            width: 9,
+                            height: 9,
+                            borderRadius: '50%',
+                            background: STATUS_COLOR[farmer.status],
+                            boxShadow: `0 0 0 1.5px ${LINE}`,
+                            flexShrink: 0,
+                          }}
+                        />
+                        <span
+                          className="font-display font-semibold"
+                          style={{ fontSize: 13.5, color: INK, flex: 1, minWidth: 0 }}
+                        >
+                          {farmer.name}
+                        </span>
+                        {flags.length > 0 && (
+                          <AlertTriangle size={12} style={{ color: ATTENTION, flexShrink: 0 }} />
+                        )}
+                      </div>
+                      <div
+                        className="font-sans"
+                        style={{ fontSize: 12, color: INK_MUTED, marginTop: 1, paddingLeft: 17 }}
+                      >
+                        {farmer.siteName} · {farmer.district}
+                      </div>
+                      <div
+                        className="font-sans"
+                        style={{ fontSize: 12, color: INK_SOFT, marginTop: 2, paddingLeft: 17 }}
+                      >
+                        {statKg(metrics.producedKg)} · {statZar(metrics.incomeZar)} ·{' '}
+                        {group(farmer.plotSizeM2)} m²
+                      </div>
+                    </div>
                   </div>
                 </button>
               );

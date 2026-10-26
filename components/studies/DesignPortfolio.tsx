@@ -9,6 +9,8 @@ import OfflinePageLink from './OfflinePageLink';
 import DesignDraftCopy from './DesignDraftCopy';
 import styles from './FinanceCourse.module.css';
 import folder from './DesignPortfolio.module.css';
+import ArrowLabel from './ArrowLabel';
+import Summary from './Summary';
 
 type Draft = { key: string; answers: PortfolioAnswers; baseline: string | null; loadError: boolean; dirty: boolean };
 
@@ -128,7 +130,7 @@ export default function DesignPortfolio() {
     {PORTFOLIO_STAGES.map((stage, index) => <section className={`${styles.section} ${folder.stage}`} id={`folder-${stage.id}`} key={stage.id}>
       <p className={styles.eyebrow}><DesignDraftCopy en={`Stage ${index + 1} · Your design evidence`} zu={`Isigaba ${index + 1} · Ubufakazi bomklamo wakho`} /></p>
       <h2><DesignDraftCopy en={stage.title} zu={STAGE_ZU[stage.id].title} /></h2><p><DesignDraftCopy en={stage.purpose} zu={STAGE_ZU[stage.id].purpose} /></p>
-      <details className={folder.example}><summary><DesignDraftCopy en="Discuss the busy-yard example" zu="Xoxani ngesibonelo segceke elimatasa" /></summary><p>{stage.example}</p></details>
+      <details className={folder.example}><Summary><DesignDraftCopy en="Discuss the busy-yard example" zu="Xoxani ngesibonelo segceke elimatasa" /></Summary><p>{stage.example}</p></details>
       {stage.fields.map(field => <div className={styles.answerField} key={field.id}>
         <label htmlFor={`portfolio-${field.id}`}><strong><DesignDraftCopy en={field.label} zu={FIELD_ZU[field.id].label} /></strong></label>
         <span id={`help-${field.id}`}><DesignDraftCopy en={field.prompt} zu={FIELD_ZU[field.id].prompt} /></span>
@@ -137,7 +139,7 @@ export default function DesignPortfolio() {
         <p className={folder.printAnswer}>{answers[field.id] || <DesignDraftCopy en="[Not yet recorded]" zu="[Akukarekhodwa]" />}</p>
       </div>)}
       <aside className={folder.review}><h3><DesignDraftCopy en="Review the reasoning together" zu="Buyekeza indlela yokucabanga ndawonye" /></h3><p>{stage.review}</p><p>Discuss what is supported, what needs more evidence and the next attempt. Record feedback and changes in stage 6.</p></aside>
-      <div className={styles.actions}><button type="button" disabled={!ready || draft.loadError} onClick={save}><DesignDraftCopy en="Save folder after this stage" zu="Londoloza ifolda ngemva kwalesi sigaba" /></button><OfflinePageLink href={`/student/design/${stage.lesson}`}><DesignDraftCopy en="Revisit this stage’s lessons →" zu="Buyekeza izifundo zalesi sigaba →" /></OfflinePageLink>{stage.id === 'd4' && <OfflinePageLink href="/student/guides/design">Design Studio guide →</OfflinePageLink>}{stage.id === 'd5' && <OfflinePageLink href="/student/finance">Farm Finance →</OfflinePageLink>}</div><p className={folder.saveNote}>{ready ? statusCopy(message) : statusCopy('Opening your design folder…')}</p>
+      <div className={styles.actions}><button type="button" disabled={!ready || draft.loadError} onClick={save}><DesignDraftCopy en="Save folder after this stage" zu="Londoloza ifolda ngemva kwalesi sigaba" /></button><OfflinePageLink href={`/student/design/${stage.lesson}`}><DesignDraftCopy en="Revisit this stage’s lessons →" zu="Buyekeza izifundo zalesi sigaba →" /></OfflinePageLink>{stage.id === 'd4' && <OfflinePageLink href="/student/guides/design"><ArrowLabel>Design Studio guide</ArrowLabel></OfflinePageLink>}{stage.id === 'd5' && <OfflinePageLink href="/student/finance"><ArrowLabel>Farm Finance</ArrowLabel></OfflinePageLink>}</div><p className={folder.saveNote}>{ready ? statusCopy(message) : statusCopy('Opening your design folder…')}</p>
     </section>)}
     <section className={styles.section}><h2><DesignDraftCopy en="Bring the folder and the actual plan" zu="Letha ifolda nohlelo lwangempela" /></h2><p>A reviewer needs the evidence notes, drawings and your explanation together. Check that each reference names the right revision. Explain an alternative you rejected, a decision still on hold and what could make you revise the plan.</p><p><DesignDraftCopy en="This page does not grade your answers or approve a design. Your facilitator reviews what you can explain and demonstrate, then helps identify the next attempt." zu="Leli khasi aliwabeki amamaki ezimpendulweni zakho futhi alivumi umklamo. Umgqugquzeli uhlola lokho ongakuchaza nokukubonisa, bese esiza ekutholeni umzamo olandelayo." /></p></section>
     <div className={folder.saveBar}>

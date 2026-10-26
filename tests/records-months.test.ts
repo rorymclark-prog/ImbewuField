@@ -84,8 +84,9 @@ test('wiring: the money book, charts, harvest list and saved-invoice list use th
   assert.match(read('components/FinanceGraphs.tsx'), /recordsMonthYear\(lang, selected\.month, selected\.year\)/);
   assert.match(read('components/ComingUpHarvests.tsx'), /recordsMonthLong\(lang, h\.endMonth\)/);
   assert.match(read('app/invoice/page.tsx'), /recordsDate\(lang, new Date\(inv\.dateISO\), true\)/);
-  // The invoice a buyer receives, the PDF and the CSV export stay on their own English dates.
-  for (const printed of ['lib/invoice-document.ts', 'lib/invoice-entry.ts']) {
+  // The CSV export stays on its own English dates. w18-41: the invoice document now builds its
+  // isiZulu dates from the month table (the platform zu-ZA locale fell back to US-order English).
+  for (const printed of ['lib/invoice-entry.ts']) {
     assert.doesNotMatch(read(printed), /records-months/, `${printed} must not use regional month names`);
   }
   assert.match(read('app/records/page.tsx'), /const csvLang = \(lang: string\) => \(lang === 'zu' \? 'zu' : 'en'\);/);

@@ -202,7 +202,7 @@ export default function MessageThreadPage() {
             onChange={(e) => {if(!reportBusy)setReportReason(e.target.value.slice(0,300));}}
             placeholder={t('communityReportReasonPlaceholder')}
             rows={2}
-            className="w-full rounded-xl px-3 py-2.5 font-sans"
+            className="w-full rounded-xl px-3 py-2.5 font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
             style={{ fontSize: 13.5, background: 'var(--bg-1)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)', outline: 'none', resize: 'none', marginBottom: 8 }}
           />
           <button
@@ -232,8 +232,8 @@ export default function MessageThreadPage() {
                   lang="" className="font-sans"
                   style={{
                     fontSize: 14, lineHeight: 1.5, padding: '9px 13px', borderRadius: 16,
-                    background: mine ? 'var(--brand)' : 'var(--bg-1)',
-                    color: mine ? 'var(--on-forest)' : 'var(--text-primary)',
+                    background: mine ? 'var(--color-forest-800)' : 'var(--bg-1)',
+                    color: mine ? 'var(--on-forest-800)' : 'var(--text-primary)',
                     border: mine ? 'none' : '1px solid var(--border)',
                     borderBottomRightRadius: mine ? 4 : 16,
                     borderBottomLeftRadius: mine ? 16 : 4,
@@ -287,7 +287,7 @@ export default function MessageThreadPage() {
           onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
           placeholder={t('communityMessageInputPlaceholder')}
           aria-label={t('communityMessageInputPlaceholder')}
-          className="flex-1 min-w-0 rounded-full px-4 py-2.5 font-sans"
+          className="flex-1 min-w-0 rounded-full px-4 py-2.5 font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
           style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border-strong)', color: 'var(--text-primary)', outline: 'none' }}
         />
         <button

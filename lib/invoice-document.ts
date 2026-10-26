@@ -15,6 +15,7 @@
  * one renderer is caught by `tests/invoice-document.test.ts`.
  */
 
+import { recordsMonthLong, recordsMonthShort } from './records-months';
 import type { InvoiceItem, InvoiceStatus, PaymentMethod } from './invoices';
 
 /** Where the app actually lives. `fieldproof.vercel.app` is retired and resolves nowhere. */
@@ -56,13 +57,18 @@ export function formatQuantity(n: number): string {
 function longDate(iso: string, language?: string): string | null {
   const ms = Date.parse(iso);
   if (!Number.isFinite(ms)) return null;
-  return new Date(ms).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  const d = new Date(ms);
+  // w18-41: isiZulu dates come from the app's month table ('23 Okthoba 2026'); the platform locale falls back to US-order English.
+  if (language === 'zu') return `${d.getDate()} ${recordsMonthLong('zu', d.getMonth() + 1)} ${d.getFullYear()}`;
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
 function shortDate(iso: string, language?: string): string | null {
   const ms = Date.parse(iso);
   if (!Number.isFinite(ms)) return null;
-  return new Date(ms).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  const d = new Date(ms);
+  if (language === 'zu') return `${d.getDate()} ${recordsMonthShort('zu', d.getMonth() + 1)} ${d.getFullYear()}`;
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
 /** Trim, drop blanks, and split a freeform address on newlines or commas. */

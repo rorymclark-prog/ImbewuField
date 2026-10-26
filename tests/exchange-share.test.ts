@@ -84,7 +84,7 @@ test('a lot price divides out for a per-item read, and quantity above zero is wr
     qty: 180.5,
     unit: 'kg',
   }));
-  assert.ok(text.includes('Price: R1300 for the lot'));
+  assert.ok(text.includes('Price: R1 300 for the lot'));
   assert.ok(text.includes('Quantity: 180.5 kg'));
 });
 

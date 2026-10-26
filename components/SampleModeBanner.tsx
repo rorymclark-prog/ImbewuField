@@ -33,6 +33,6 @@ export default function SampleModeBanner() {
   // /pitch), so this fixed top-right pill landed on top of that page's own top-right "Get the
   // app" button, in both its desktop header and its phone header. Same fix as /pitch: a public
   // showcase page has nothing to tour anyway, so suppress the pill rather than offset it.
-  if (!active || pathname.startsWith('/pitch') || pathname.startsWith('/partners') || hasMenu) return null;
+  if (!active || pathname.startsWith('/pitch') || pathname.startsWith('/partners') || pathname.startsWith('/login') || hasMenu) return null;
   return <Link className="no-print" href="/samples" lang={lang} aria-label={sampleWorkspaceText(lang, 'Tour — choose a view', 'Uhambo — khetha indawo yokusebenza')} style={{position:'fixed',top:'calc(env(safe-area-inset-top, 0px) + 8px)',right:12,zIndex:40,minHeight:44,display:'inline-flex',alignItems:'center',padding:'0 12px',borderRadius:24,background:'var(--bg-1)',border:'1px solid var(--border)',color:'var(--color-harvest)',fontSize:12,fontWeight:700}}>{t('tourPill')}</Link>;
 }

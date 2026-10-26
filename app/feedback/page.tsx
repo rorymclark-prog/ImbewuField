@@ -13,7 +13,7 @@ import styles from '@/components/SampleExperience.module.css';
 
 type Ticket={id:string;title:string;kind:string;details:string;createdAt:string;role:string;sample:boolean;path:string};
 export default function FeedbackPage(){
-  const {user,role}=useAuth();const {lang}=useLanguage();const simple=useAppLevel()==='simple';const [kind,setKind]=useState<'bug'|'feature'>('bug'),[title,setTitle]=useState(''),[details,setDetails]=useState(''),[path,setPath]=useState('/'),[agree,setAgree]=useState(false),[busy,setBusy]=useState(false),[receipt,setReceipt]=useState(''),[error,setError]=useState(''),[tickets,setTickets]=useState<Ticket[]|null>(null);
+  const {user,role}=useAuth();const {lang}=useLanguage();const simple=useAppLevel()==='simple';const [kind,setKind]=useState<'bug'|'feature'>('bug'),[title,setTitle]=useState(''),[details,setDetails]=useState(''),[path,setPath]=useState(''),[agree,setAgree]=useState(false),[busy,setBusy]=useState(false),[receipt,setReceipt]=useState(''),[error,setError]=useState(''),[tickets,setTickets]=useState<Ticket[]|null>(null);
   const label=(en:string,zu:string)=>lang==='zu'?zu:en;
   // Keep exact English visible for decisions about sending personal information.
   const paired=(en:string,zu:string)=>lang==='zu'?`${zu} / ${en}`:en;
@@ -21,13 +21,13 @@ export default function FeedbackPage(){
   // Simple has no separate Title field, so the single "Tell us" box drives both — the title is
   // just the start of what was typed, silently kept valid for validFeedback's 3-char floor.
   function tellUs(value:string){setDetails(value);setTitle(value.trim().slice(0,160)||'Feedback');setId('');}
-  function input():FeedbackInput{const key=id||crypto.randomUUID();if(!id)setId(key);return {id:key,kind,title,details,path,sample:isSampleMode()};}
+  function input():FeedbackInput{const key=id||crypto.randomUUID();if(!id)setId(key);return {id:key,kind,title,details,path:path.trim()||'/',sample:isSampleMode()};}
   async function send(){if(!user||!agree||busy||receipt)return;const data=input();if(!validFeedback(data)){setError(paired('Add a title, details and a page path without a query or personal information.','Faka isihloko, imininingwane nendlela yekhasi engenawo umbuzo noma imininingwane yomuntu siqu.'));return;}setBusy(true);setError('');try{
     const response=await fetch('/api/product-feedback',{method:'POST',headers:{...await paidApiHeaders(user),'Content-Type':'application/json'},body:JSON.stringify(data)});const result=await response.json();if(!response.ok||!result.saved)throw Error(result.error||'Delivery not confirmed.');setReceipt(result.reference);
   }catch(e){setError((e as Error).message);}finally{setBusy(false);}}
   async function inbox(){setBusy(true);setError('');try{const response=await fetch('/api/product-feedback',{headers:await paidApiHeaders(user)});const result=await response.json();if(!response.ok)throw Error(result.error);setTickets(result.tickets);}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
-  return <main className={styles.page}><div className={styles.wrap}>
-    <AppHeader backFallback="/account" title={label('Feedback','Impendulo')} />
+  return <main className={styles.page}>
+    <AppHeader backFallback="/account" title={label('Feedback','Impendulo')} /><div className={styles.content}><div className={`${styles.wrap} ${styles.narrow}`}>
     <h1>{label('Report a bug or suggest a feature','Bika inkinga noma phakamisa isici esisha')}</h1>
     {lang==='zu'&&<p role="note">UMBHALO WESIZULU USALUHLAKA — Le nguqulo ayikabuyekezwa umuntu okhuluma kahle isiZulu. / ISIZULU DRAFT — This translation has not been reviewed by a fluent isiZulu speaker.</p>}
     {/* ux-03/nav-04: was developer-addressed phrasing on a farmer-facing screen — rewritten to
@@ -45,7 +45,7 @@ export default function FeedbackPage(){
       <label>{label('Title','Isihloko')}<input required minLength={3} maxLength={160} value={title} onChange={e=>{setTitle(e.target.value);setId('');}}/></label>
       <label>{kind==='bug'?label('What did you do, what happened, and what did you expect?','Wenzeni, kwenzekeni, futhi ubulindeleni?'):label('What would you like to do, and why would it help?','Ufuna ukwenzani, futhi kungasiza ngani?')}<textarea required minLength={10} maxLength={4000} value={details} onChange={e=>{setDetails(e.target.value);setId('');}}/></label>
       </>}
-      <label>{label('App page (optional)','Ikhasi lohlelo (ungalikhetha)')}<input value={path} maxLength={200} placeholder="/mentor" onChange={e=>{setPath(e.target.value||'/');setId('');}}/></label>
+      <label>{label('Which screen? (optional)','Yikuphi ikhasi? (ungalikhetha)')}<input value={path} maxLength={200} placeholder={label('e.g. Today, Map','isib. Namuhla, Imephu')} onChange={e=>{setPath(e.target.value);setId('');}}/></label>
       {/* ux-03/nav-04: was developer-addressed phrasing on a farmer-facing screen — rewritten
           below to speak plainly about what gets sent and who it goes to. */}
       <p className={styles.meta}>{paired('Only this form, your name and your role are sent. No screenshot, GPS position or farm record is attached automatically.','Kuthunyelwa leli fomu kuphela, igama lakho nendima yakho. Akunamathiselwa isithombe sesikrini, indawo ye-GPS noma irekhodi lepulazi ngokuzenzakalelayo.')}</p>
@@ -66,5 +66,5 @@ export default function FeedbackPage(){
         <h2>{t.title}</h2><p style={{whiteSpace:'pre-wrap'}}>{t.details}</p><p>{label('Page:','Ikhasi:')} {t.path}</p>
       </article>)}
     </section>}
-  </div></main>;
+  </div></div></main>;
 }

@@ -206,7 +206,7 @@ export default function VisionPage() {
             <Link
               href="/home"
               className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold text-sm transition-all"
-              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', textDecoration: 'none' }}
+              style={{ background: 'var(--color-forest-800)', color: 'var(--bg-1)', textDecoration: 'none' }}
             >
               {t('Back to my dashboard', 'Buyela kwideshibhodi yami')}
             </Link>
@@ -233,17 +233,17 @@ export default function VisionPage() {
             rather than forcing a two-up grid split across steps that depend on each other; the
             shared readingWidth token (960px) still gives it real desktop width instead of a
             stretched phone column. */}
-        <div className={`${workspace.workspace} ${workspace.readingWidth} px-4 md:px-8 py-5 md:py-8 space-y-5`} style={{ paddingBottom: 'var(--lima-fab-clearance, 88px)' }}>
+        <div className={`${workspace.workspace} ${workspace.formWidth} px-4 md:px-8 py-5 md:py-8 space-y-5`} style={{ paddingBottom: 'var(--lima-fab-clearance, 88px)' }}>
 
           {/* code-13: AppHeader's title is a <span>, not a heading — this page needs its own
               real <h1> now that the old text-xs chip is gone. */}
-          <h1 className="font-display" style={{ fontSize: 20, fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>
+          <h1 className="font-display text-center" style={{ fontSize: 'clamp(20px, 2vw, 28px)', fontWeight: 600, color: 'var(--text-primary)', margin: 0 }}>
             Lima Vision
           </h1>
 
           {/* Mode toggle */}
           <div
-            className="flex rounded-2xl p-1 gap-1"
+            className="grid grid-cols-2 rounded-2xl p-1 gap-1 w-fit mx-auto max-w-full"
             style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}
           >
             {([
@@ -256,10 +256,10 @@ export default function VisionPage() {
                   key={v}
                   onClick={() => switchMode(v)}
                   aria-pressed={on}
-                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold transition-all"
+                  className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-sans font-semibold whitespace-nowrap transition-all"
                   style={{
-                    background: on ? '#1F4D2B' : 'transparent',
-                    color: on ? 'var(--on-forest)' : '#5C5040',
+                    background: on ? 'var(--color-forest-800)' : 'transparent',
+                    color: on ? 'var(--on-forest-800)' : 'var(--text-secondary)',
                     border: 'none',
                     cursor: 'pointer',
                   }}
@@ -271,6 +271,14 @@ export default function VisionPage() {
             })}
           </div>
 
+          {/* desk-13: capture and result sit side by side at md+ (one column on phone). */}
+          {/* w18-52: the second column only holds the result, so before one exists the capture
+              column is a single centred ~720px column instead of half a blank page. */}
+          <div
+            className={result && !loading ? workspace.twoColumns : undefined}
+            style={result && !loading ? undefined : { maxWidth: 720, marginInline: 'auto' }}
+          >
+          <div className="space-y-5">
           {/* Capture card */}
           <div>
             <input
@@ -300,6 +308,8 @@ export default function VisionPage() {
                 <img
                   src={preview}
                   alt={t('Selected photo', 'Isithombe esikhethiwe')}
+                  width={800}
+                  height={260}
                   className="w-full object-cover"
                   // code-20: a fixed height (not maxHeight, which only caps a size the browser
                   // cannot know before decode) reserves this box before the photo loads, so the
@@ -330,14 +340,14 @@ export default function VisionPage() {
               onClick={askLima}
               className="w-full flex items-center justify-center gap-2.5 py-3.5 rounded-2xl text-sm font-display font-semibold"
               style={{
-                background: '#1F4D2B',
-                color: 'var(--on-forest)',
+                background: 'var(--color-forest-800)',
+                color: 'var(--on-forest-800)',
                 border: 'none',
                 cursor: 'pointer',
               }}
             >
               <LimaSprout size={18} />
-              <span style={{ color: 'var(--on-forest)' }}>{t('Ask Lima', 'Buza uLima')}</span>
+              <span style={{ color: 'var(--on-forest-800)' }}>{t('Ask Lima', 'Buza uLima')}</span>
             </button>
           )}
 
@@ -371,11 +381,13 @@ export default function VisionPage() {
             </div>
           )}
 
+          </div>
+          <div className="space-y-5">
           {/* Result card */}
           {result && !loading && (
             <div
               className="rounded-2xl overflow-hidden"
-              style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderLeft: '3px solid #1F4D2B' }}
+              style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderLeft: '3px solid var(--color-forest-800)' }}
             >
               <div className="px-4 pt-4 pb-3">
                 {/* Header row */}
@@ -398,16 +410,16 @@ export default function VisionPage() {
                 {cropResult && mode === 'crop' && (
                   <div className="space-y-3">
                     <div>
-                      <div className="font-display font-bold text-2xl leading-tight" style={{ color: 'var(--color-forest-800)', letterSpacing: '-0.02em' }}>
+                      <div className="font-display font-bold text-2xl md:text-4xl leading-tight" style={{ color: 'var(--color-forest-800)', letterSpacing: '-0.02em' }}>
                         {cropResult.crop}
                       </div>
-                      <div className="font-sans text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>
+                      <div className="font-sans text-sm md:text-base mt-1" style={{ color: 'var(--text-secondary)' }}>
                         ~{cropResult.estimatedKg} kg &nbsp;&middot;&nbsp; ~{cropResult.weeksToHarvest} {zu ? cropResult.weeksToHarvest === 1 ? 'isonto' : 'amaviki' : cropResult.weeksToHarvest === 1 ? 'week' : 'weeks'} {t('to harvest', 'kuze kuvunwe')}
                       </div>
                     </div>
                     {(!simple || showDetail) && <ConfidencePill level={cropResult.confidence} zu={zu} />}
                     {zu && <p className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
-                    <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                    <p className="font-sans text-sm md:text-base leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                       {cropResult.note}
                     </p>
                     {simple && !showDetail && (
@@ -427,13 +439,13 @@ export default function VisionPage() {
                 {weighResult && mode === 'weigh' && (
                   <div className="space-y-3">
                     <div>
-                      <div className="font-display font-bold text-2xl leading-tight" style={{ color: 'var(--color-forest-800)', letterSpacing: '-0.02em' }}>
+                      <div className="font-display font-bold text-2xl md:text-4xl leading-tight" style={{ color: 'var(--color-forest-800)', letterSpacing: '-0.02em' }}>
                         ~{weighResult.estimatedKg} kg
                       </div>
                     </div>
                     {(!simple || showDetail) && <ConfidencePill level={weighResult.confidence} zu={zu} />}
                     {zu && <p className="font-sans text-xs" style={{ color: 'var(--text-muted)' }}>Impendulo ye-AI engezansi ingesiNgisi.</p>}
-                    <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--text-primary)' }}>
+                    <p className="font-sans text-sm md:text-base leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                       {weighResult.note}
                     </p>
                     {simple && !showDetail && (
@@ -493,6 +505,8 @@ export default function VisionPage() {
               {t('Try another photo', 'Zama ngesinye isithombe')}
             </button>
           )}
+          </div>
+          </div>
 
         </div>
       </main>

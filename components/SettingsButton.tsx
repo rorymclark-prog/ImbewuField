@@ -21,7 +21,7 @@ export default function SettingsButton({ showLabel = false }: { showLabel?: bool
         onClick={() => setOpen(true)}
         aria-label={t('settingsButtonAriaLabel')}
         title={t('settingsButtonLabel')}
-        className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display transition-all"
+        className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-sans transition-all"
         style={{
           // Tokens, not the '#FFFEFA'/'#E2D8C4'/'#20190F' this used to carry: dropped into a
           // dozen-plus page headers, so it stayed a bright light pill in dark mode — the button
@@ -35,7 +35,7 @@ export default function SettingsButton({ showLabel = false }: { showLabel?: bool
         }}
       >
         <Settings size={13} strokeWidth={1.7} />
-        <span className={showLabel ? undefined : 'hidden sm:inline'}>{t('settingsButtonLabel')}</span>
+        <span data-header-label className={showLabel ? undefined : 'hidden sm:inline'}>{t('settingsButtonLabel')}</span>
       </button>
       {open && createPortal(<div style={{ position: 'relative', zIndex: 90 }}><ThemePanel open={open} onClose={() => setOpen(false)} /></div>, document.body)}
     </>

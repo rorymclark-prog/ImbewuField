@@ -61,6 +61,7 @@ import {
 import { CATEGORY_LABEL, EX, ZU_CATEGORY_LABEL, exchangeText } from './theme';
 import { getCropArt } from '@/lib/crop-art';
 import { useLanguage } from '@/lib/i18n';
+import { produceLabel } from '@/lib/produce-label';
 import { ExchangeDraftNotice, ExchangeSourceCopy } from './ExchangeCopy';
 
 const SORT_LABEL: Record<ListingSort, string> = {
@@ -211,14 +212,14 @@ export default function ExchangeBoard() {
         style={{ background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.28)', padding: '10px 12px' }}
       >
         <CircleAlert size={14} strokeWidth={2} style={{ color: EX.amber, marginTop: 1, flexShrink: 0 }} />
-        <p className="font-sans" style={{ fontSize: 11.5, color: EX.amberText, lineHeight: 1.5, margin: 0 }}>
+        <p className="font-sans" style={{ fontSize: 12, color: EX.amberText, lineHeight: 1.5, margin: 0 }}>
           {zu ? <ExchangeSourceCopy en={`${DEMO_EXCHANGE.notice} Anything you post is saved on this device only.`} zu="Lo mbukiso ubonisa izikhangiso ezivela kunethiwekhi yabalimi. Lezi zikhangiso azithengiswa lapha. Okufakayo kugcinwa kule divayisi kuphela." /> : <>{DEMO_EXCHANGE.notice} Anything you post is saved on this device only.</>}
         </p>
       </div>
       <ExchangeDraftNotice />
 
       {/* Counts */}
-      <div className="flex items-center gap-4 flex-wrap">
+      <div className="grid grid-cols-3 gap-x-3 gap-y-2 sm:flex sm:items-center sm:gap-4 sm:flex-wrap">
         <Stat value={summary.total} label={summary.total === 1 ? tx('listing', 'isikhangiso') : tx('listings', 'izikhangiso')} />
         <Stat value={summary.offers} label={tx('offering', 'ezihlinzekwayo')} />
         <Stat value={summary.wants} label={tx('wanted', 'ezifunwayo')} />
@@ -242,7 +243,7 @@ export default function ExchangeBoard() {
               onChange={(e) => setQuery(e.target.value)}
               placeholder={tx('Search crop, town or farmer', 'Funa isitshalo, idolobha noma umlimi')}
               aria-label={tx('Search listings', 'Funa izikhangiso')}
-              className="rounded-xl font-sans"
+              className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 rounded-xl font-sans"
               style={{
                 width: '100%',
                 padding: '10px 12px 10px 34px',
@@ -257,12 +258,12 @@ export default function ExchangeBoard() {
         )}
         <button
           onClick={() => { setShowForm((v) => !v); setShowGuide(false); }}
-          className="flex items-center gap-1.5 font-display font-semibold rounded-xl"
+          className={`flex items-center gap-1.5 font-sans font-semibold rounded-xl${simple ? ' flex-1 md:flex-none' : ''}`}
           style={{
-            flex: simple ? 1 : undefined,
             justifyContent: simple ? 'center' : undefined,
-            background: showForm ? 'transparent' : EX.green,
-            color: showForm ? EX.muted : 'var(--on-forest)',
+            minHeight: 44,
+            background: showForm ? 'transparent' : 'var(--color-forest-800)',
+            color: showForm ? EX.muted : 'var(--on-forest-800)',
             border: showForm ? `1px solid ${EX.inputBorder}` : 'none',
             cursor: 'pointer',
             padding: '10px 14px',
@@ -298,9 +299,9 @@ export default function ExchangeBoard() {
               borderRadius: 10,
               fontSize: 12.5,
               cursor: 'pointer',
-              background: kind === value ? EX.ink : EX.chip,
-              color: kind === value ? 'var(--on-forest)' : EX.muted,
-              border: `1px solid ${kind === value ? EX.ink : EX.border}`,
+              background: kind === value ? 'var(--color-forest-800)' : EX.chip,
+              color: kind === value ? 'var(--on-forest-800)' : EX.muted,
+              border: `1px solid ${kind === value ? 'var(--color-forest-800)' : EX.border}`,
             }}
           >
             {label}
@@ -333,11 +334,11 @@ export default function ExchangeBoard() {
               onClick={() => setCropKeys((v) => toggle(v, c.cropKey))}
             >
               {getCropArt(c.cropKey) ? (
-                <img className="produce-art" src={getCropArt(c.cropKey)} alt="" aria-hidden style={{ width: 13, height: 13, objectFit: 'contain', verticalAlign: '-2px' }} />
+                <img className="produce-art produce-art--inline" src={getCropArt(c.cropKey)} alt="" aria-hidden style={{ width: 13, height: 13, objectFit: 'contain', verticalAlign: '-2px' }} />
               ) : (
                 c.icon
               )}{' '}
-              {c.name} <span style={{ opacity: 0.65 }}>{c.count}</span>
+              {produceLabel(c.cropKey, lang)} <span style={{ opacity: 0.65 }}>{c.count}</span>
             </Chip>
           ))}
         </ChipRow>
@@ -397,7 +398,7 @@ export default function ExchangeBoard() {
         {!origin && (
           <p
             className="font-sans"
-            style={{ fontSize: 11.5, color: sort === 'nearest' ? EX.amberText : EX.faint, margin: 0, lineHeight: 1.45 }}
+            style={{ fontSize: 12, color: sort === 'nearest' ? EX.amberText : EX.faint, margin: 0, lineHeight: 1.45 }}
           >
             {sort === 'nearest'
               ? tx('Sorting by distance needs a starting point — choose a town above, or save your site on the map.', 'Ukuhlela ngebanga kudinga indawo yokuqala — khetha idolobha ngenhla noma ugcine indawo yakho kumephu.')
@@ -475,7 +476,7 @@ export default function ExchangeBoard() {
               style={{ background: 'var(--bg-2)', padding: '8px 10px' }}
             >
               <Info size={12} strokeWidth={1.9} style={{ color: EX.muted, marginTop: 1.5, flexShrink: 0 }} />
-              <span className="font-sans" style={{ fontSize: 11.5, color: EX.muted, lineHeight: 1.45 }}>
+              <span className="font-sans" style={{ fontSize: 12, color: EX.muted, lineHeight: 1.45 }}>
                 {zu ? <ExchangeSourceCopy en="No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your mentor or group — or use Share to hand a listing on yourself." zu="Okwamanje alikho ithuluzi lokuxhumana nomunye umlimi ngalolu hlelo lokusebenza. Bhala igama nendawo ekhadini bese uhlela ngokusebenzisa umholi wakho noma iqembu — noma usebenzise u-Yabelana ukudlulisela isikhangiso wena." /> : 'No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your mentor or group — or use Share to hand a listing on yourself.'}
               </span>
             </div>
@@ -529,7 +530,7 @@ export default function ExchangeBoard() {
 
 function Stat({ value, label, icon }: { value: number; label: string; icon?: boolean }) {
   return (
-    <div className="flex items-baseline gap-1.5">
+    <div className="flex items-baseline gap-x-1.5 flex-wrap min-w-0">
       {icon && <Users size={12} strokeWidth={2} style={{ color: EX.faint, alignSelf: 'center' }} />}
       <span className="font-display font-bold" style={{ fontSize: 17, color: EX.ink }}>{value}</span>
       <span className="font-sans" style={{ fontSize: 12, color: EX.faint }}>{label}</span>
@@ -542,7 +543,7 @@ function ChipRow({ label, children }: { label: string; children: React.ReactNode
     <div>
       <div
         className="font-sans uppercase"
-        style={{ fontSize: 10, letterSpacing: '0.12em', color: EX.faint, marginBottom: 6 }}
+        style={{ fontSize: 12, letterSpacing: '0.12em', color: EX.faint, marginBottom: 6 }}
       >
         {label}
       </div>
@@ -569,12 +570,15 @@ function Chip({
       aria-pressed={on}
       className="font-sans font-semibold"
       style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 4,
         padding: '6px 11px',
         borderRadius: 100,
         fontSize: 12,
         cursor: disabled ? 'default' : 'pointer',
         opacity: disabled ? 0.4 : 1,
-        background: on ? EX.green : EX.chip,
+        background: on ? EX.fill : EX.chip,
         color: on ? 'var(--on-forest)' : EX.muted,
         border: `1px solid ${on ? EX.green : EX.border}`,
         whiteSpace: 'nowrap',

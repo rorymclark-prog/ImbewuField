@@ -71,12 +71,12 @@ export default function NearbyMap({ people, onOpenProfile }: Props) {
           >
             <div style={{ minWidth: 160, padding: 2 }}><button type="button" aria-label={t('profileClose')} onClick={closePopup} style={{display:'flex',marginLeft:'auto',alignItems:'center',justifyContent:'center',width:44,height:44,border:'none',background:'transparent',color:'var(--text)',cursor:'pointer'}}><X size={18} aria-hidden/></button>
               <div lang="" className="font-display font-semibold" style={{ fontSize: 13, color: 'var(--text)' }}>{active.display_name}</div>
-              <div lang="" className="font-sans" style={{ fontSize: 11, color: 'var(--text-2)', marginTop: 2 }}>{active.area_text}</div>
+              <div lang="" className="font-sans" style={{ fontSize: 12, color: 'var(--text-2)', marginTop: 2 }}>{active.area_text}</div>
               <button
                 onClick={() => onOpenProfile(active.uid)}
                 className="font-sans font-semibold"
                 style={{
-                  minHeight:44, marginTop: 8, background: 'var(--brand)', color: 'var(--on-forest)', border: 'none',
+                  minHeight:44, marginTop: 8, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: 'none',
                   borderRadius: 100, padding: '5px 12px', fontSize: 12, cursor: 'pointer',
                 }}
               >

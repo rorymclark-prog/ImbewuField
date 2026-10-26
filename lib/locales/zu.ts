@@ -1656,6 +1656,8 @@ const dict: Dict = {
   offlineReadinessLimit: 'Lokhu kuhlola kuqinisekisa amafayela okuqalisa kuphela. Akuqinisekisi izithombe zemephu ezintsha, zonke izithombe zemibiko, noma wonke amathuluzi ongawakhetha.',
   offlineSavedEntriesTitle: 'Okufakiwe okugciniwe okulinde ukuthunyelwa',
   offlineSavedEntriesDescription: 'Ukuvakasha okuqediwe, amarejista okuqeqesha, amasignesha, impendulo, izithombe, okubhekwe engadini nezimpendulo zokuhlola kungalinda lapha. Ukuvumelanisa kwenzeka uma uhlelo luvuliwe futhi uxhumano lubuya.',
+  // w20-06: unreviewed isiZulu draft (farmer/student variant of the line above).
+  offlineSavedEntriesDescriptionFarmer: 'Amanothi ejenali, amarekhodi nezithombo kulinda lapha kuze kube nesignali. Ayathunyelwa ngokwawo uma uhlelo lusivuliwe futhi usubuyele ku-inthanethi.',
   offlineSyncNow: 'Vumelanisa manje',
   offlineQueueEmpty: 'Akukho okufakiwe kulayini womsebenzi wasensimini. Incwadi yemali inesistimu yayo yokuvumelanisa.',
   offlineNeedsReview: 'Kudinga ukubuyekezwa — ukugcinwa kuseva akuqinisekisiwe',
@@ -1767,6 +1769,8 @@ const dict: Dict = {
   journalWeightsLiveElsewhere: 'Izisindo zesivuno nokuthengiswa kubhalwa kokuthi Amarekhodi Ami.',
   journalOpenRecords: 'Vula Amarekhodi Ami',
   limaWhoIs: 'Lima, umsizi wakho wokutshala',
+  // w20-08: unreviewed isiZulu draft (role-neutral label for staff Home).
+  limaWhoIsStaff: 'Lima, umsizi wakho',
   limaAskButton: 'Cela usizo',
   limaPhotoButton: 'Isithombe',
   popiaGoalPickOne: 'Khetha okukodwa ukuze uqhubeke',
@@ -1828,6 +1832,20 @@ const dict: Dict = {
   homeMainSiteLabel: "Eyinhloko",
   homeUpcomingTasks: "Imisebenzi ezayo",
   homeTaskBoardViewPlan: "Buka uhlelo lokukhiqiza",
+  // w20-02: unreviewed isiZulu drafts for the Home task board (lib/task-board.ts templates); {crop}
+  // is already the isiZulu crop name from produceLabel(). Not first-language reviewed.
+  taskVerbPrep: "Lungisa umbhede we-{crop}",
+  taskVerbSow: "Hlanyela {crop}",
+  taskVerbTransplant: "Hambisa {crop}",
+  taskVerbMulch: "Nisela futhi umboze nge-mulch {crop}",
+  taskVerbHarvest: "Vuna {crop}",
+  taskVerbTerminateCover: "Sika noma ugoqe phansi {crop}",
+  taskVerbWeedEarly: "Hlakula ezungeze {crop}",
+  taskVerbWeedMid: "Hlakula futhi uhlole {crop}",
+  taskBedLabel: "Umbhede {n}",
+  taskDueThisMonth: "Kufanele kwenziwe kulenyanga",
+  taskDueNextMonth: "Kufanele kwenziwe inyanga ezayo",
+  taskDueInMonths: "Kufanele kwenziwe ezinyangeni ezingu-{n}",
   communityTagline: "Umlimi kumlimi",
   communityTabNearby: "Eduze",
   communityTabBoard: "Ibhodi",

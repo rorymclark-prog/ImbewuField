@@ -6,8 +6,8 @@ import Link from 'next/link';
  * The ImbewuField wordmark + icon. Clickable — always returns to the landing hub.
  * Uses the almanac design system: Lima sprout SVG, solid #1F4D2B container, #20190F ink.
  */
-// icon prop accepted for legacy callers (RolePlaceholder) but unused — BrandLogo always shows the Lima sprout
-export default function BrandLogo({ icon: _icon }: { icon?: string } = {}) {
+// nav-17: the wordmark is a <span> inside the home link, never a heading — each page owns its single h1.
+export default function BrandLogo() {
   return (
     <Link
       href="/"

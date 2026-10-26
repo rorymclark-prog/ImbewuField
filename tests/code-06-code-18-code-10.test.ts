@@ -18,13 +18,15 @@ import test from 'node:test';
 
 const source = (rel: string) => readFileSync(new URL(rel, import.meta.url), 'utf8');
 
-test('code-18: ProfileSheet draws initials in var(--on-forest), not Leaf', () => {
+test('code-18: ProfileSheet draws initials in var(--on-forest-800), not Leaf', () => {
   const src = source('../components/ProfileSheet.tsx');
   assert.doesNotMatch(src, /#A8D88A/i, 'Leaf must not be used as text colour anywhere in this file');
   const fnAt = src.indexOf('function InitialsAvatar');
   assert.ok(fnAt > 0);
   const fn = src.slice(fnAt, fnAt + 1300);
-  assert.match(fn, /color: 'var\(--on-forest\)'/, 'the initials span must use the themed on-forest token');
+  // Wave 16 (dark-forest): the avatar sits on --color-forest-800, which turns light in the dark themes,
+  // so its text takes the matching --on-forest-800 pair rather than the always-light --on-forest.
+  assert.match(fn, /color: 'var\(--on-forest-800\)'/, 'the initials span must use the themed on-forest token');
 });
 
 test('code-06: ProfileSheet toggle/counter ternaries route through theme tokens, not hex literals', () => {

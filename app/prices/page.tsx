@@ -8,6 +8,7 @@ import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import LessonLink from '@/components/design/LessonLink';
 import TabBar from '@/components/TabBar';
+import AppHeader from '@/components/layout/AppHeader';
 import { CropPriceDetail } from '@/components/prices/CropPriceGuide';
 import { pricedCropList } from '@/components/prices/CropPriceGuide.format';
 import MenuButton from '@/components/MenuButton';
@@ -15,7 +16,6 @@ import { loadCropPriceOverrides, type CropPrice } from '@/lib/crop-prices';
 import { loadCropPlan } from '@/lib/crop-plan';
 import { getCropArt } from '@/lib/crop-art';
 import { translate, useLanguage } from '@/lib/i18n';
-import { APP_HEADER_INSET } from '@/lib/app-header';
 import { useAppLevel } from '@/lib/app-level';
 import LanguageDraftNote from '@/components/LanguageDraftNote';
 
@@ -60,24 +60,16 @@ export default function PricesPage() {
   const selected = crops.find((crop) => crop.key === selectedKey) ?? null;
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+    <div className="flex flex-col overflow-hidden h-[100dvh] lg:h-auto lg:min-h-[100dvh] lg:overflow-visible" style={{ background: 'var(--bg-0)' }}>
       {/* Header — the in-header BackButton keeps the global floating back pill away; see
           components/BackButton.tsx and tests/back-control.test.ts. */}
-      <header
-        className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3"
-        style={{ ...APP_HEADER_INSET, background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}
-      >
-        <MenuButton />
-        <BackButton fallback="/home" />
-        <BrandLogo />
-        <div className="w-px h-5" style={{ background: 'var(--color-border)' }} />
-        <h1 className="text-xs font-display truncate min-w-0 m-0" style={{ color: 'var(--color-muted-strong)' }}>{t('pricesFarmGateTitle')}</h1>
-        <div className="flex-1" />
-        {!simple && <LessonLink id="prices:overview" label={t('pricesLearn')} />}
-        <SettingsButton />
-      </header>
+      <AppHeader
+        title={t('pricesFarmGateTitle')}
+        right={<>{!simple && <LessonLink id="prices:overview" label={t('pricesLearn')} />}</>}
+      />
 
-      <main className={`flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6 ${workspace.workspace}`}>
+      <main className={`flex-1 overflow-y-auto lg:overflow-visible px-4 py-5 sm:px-6 sm:py-6 ${workspace.workspace}`}>
+        <h1 className="t-h1 m-0 mb-3" style={{ color: 'var(--text-primary)' }}>{t('pricesFarmGateTitle')}</h1>
         <div className="mb-3"><LanguageDraftNote lang={lang} scope="prices" /></div>
         <style jsx global>{`
           .imf-price-crop { transition: transform 180ms cubic-bezier(.16,1,.3,1), box-shadow 180ms ease, border-color 180ms ease; }
@@ -153,7 +145,7 @@ export default function PricesPage() {
         </div>
       </main>
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

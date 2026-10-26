@@ -52,7 +52,7 @@ test('the Planting Calendar has a translated door in Farm Tools for every target
   const enBlockStart = i18n.indexOf('const T_en: Dict = {');
   const enBlockEnd = i18n.indexOf('\n};', enBlockStart);
   const enBlock = i18n.slice(enBlockStart, enBlockEnd);
-  assert.match(enBlock, /navPlantingCalendar: 'Planting Calendar'/,
+  assert.match(enBlock, /navPlantingCalendar: 'Planting calendar'/,
     'navPlantingCalendar must exist in the en block for the fallback to have something to fall back to');
 
   const zu = read('../lib/locales/zu.ts');

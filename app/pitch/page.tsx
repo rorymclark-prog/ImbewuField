@@ -24,6 +24,7 @@
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { enterSampleMode } from '@/lib/sample-mode';
 
 const DECK_W = 1280;
@@ -211,8 +212,10 @@ export default function PitchPage() {
   }, [idx]);
 
   useEffect(() => {
+    // w18-51: the slide counter and prev/next buttons live in the bottom band, so the deck is
+    // fitted to the viewport above it (the .pitch-stage padding-bottom below matches).
     const fit = () =>
-      setScale(Math.min((window.innerWidth - 24) / DECK_W, (window.innerHeight - 24) / DECK_H));
+      setScale(Math.min((window.innerWidth - 24) / DECK_W, (window.innerHeight - 24 - 96) / DECK_H));
     fit();
     window.addEventListener('resize', fit);
     return () => window.removeEventListener('resize', fit);
@@ -627,7 +630,7 @@ export default function PitchPage() {
         >
           Save / print as PDF
         </button>
-        <a href="/partners" style={{ fontSize: 13, color: 'rgba(242,238,225,0.7)', textDecoration: 'underline' }}>
+        <a href="/partners" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 13, color: 'rgba(242,238,225,0.7)', textDecoration: 'underline' }}>
           Or read the programme overview instead →
         </a>
       </div>
@@ -651,20 +654,20 @@ export default function PitchPage() {
         ))}
       </div>
 
-      <div className="pitch-ui counter" aria-live="polite">
-        {idx + 1} / {SLIDE_COUNT}
-      </div>
       <div className="pitch-ui navbtns">
         <button type="button" aria-label="Previous slide" onClick={() => go(-1)} disabled={idx === 0}>
-          ‹ Back
+          <ChevronLeft size={16} aria-hidden="true" /> Back
         </button>
+        <span className="counter" aria-live="polite">
+          {idx + 1} / {SLIDE_COUNT}
+        </span>
         <button
           type="button"
           aria-label="Next slide"
           onClick={() => go(1)}
           disabled={idx === SLIDE_COUNT - 1}
         >
-          Next ›
+          Next <ChevronRight size={16} aria-hidden="true" />
         </button>
       </div>
       <div className="pitch-ui hints">ImbewuField&ensp;·&ensp;← → move · F fullscreen · P print / PDF</div>
@@ -696,6 +699,8 @@ export default function PitchPage() {
              1280×720 size, placing the scaled slide beyond the visible viewport. */
           grid-template-columns: minmax(0, 1fr);
           grid-template-rows: minmax(0, 1fr);
+          padding-bottom: 96px;
+          box-sizing: border-box;
           overflow: hidden;
           z-index: 40;
         }
@@ -990,9 +995,9 @@ export default function PitchPage() {
           user-select: none;
         }
         .counter {
-          right: 22px;
-          bottom: 64px;
           font-variant-numeric: tabular-nums;
+          white-space: nowrap;
+          padding: 0 6px;
         }
         .hints {
           left: 22px;
@@ -1008,9 +1013,13 @@ export default function PitchPage() {
           right: 18px;
           bottom: 18px;
           display: flex;
+          align-items: center;
           gap: 8px;
         }
         .navbtns button {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
           appearance: none;
           border: 1px solid rgba(242, 238, 225, 0.35);
           background: rgba(12, 26, 17, 0.6);

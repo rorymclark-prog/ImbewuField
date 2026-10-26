@@ -1,13 +1,13 @@
 .card {
-  --stop-ink: #27583b;
-  --stop-tint: #e8f1e8;
+  --stop-ink: var(--emerald);
+  --stop-tint: color-mix(in srgb, var(--emerald) 14%, var(--bg-1));
   position: relative;
   display: flex;
   flex-direction: column;
   transition: border-color .15s ease, box-shadow .15s ease;
 }
-.card[data-tone='1'] { --stop-ink: #285f74; --stop-tint: #e7f0f4; }
-.card[data-tone='2'] { --stop-ink: #865614; --stop-tint: #f8efdf; }
+.card[data-tone='1'] { --stop-ink: var(--blue); --stop-tint: color-mix(in srgb, var(--blue) 14%, var(--bg-1)); }
+.card[data-tone='2'] { --stop-ink: var(--gold-dim); --stop-tint: color-mix(in srgb, var(--gold) 14%, var(--bg-1)); }
 .card[data-current='true'] { border-color: var(--stop-ink); }
 .card:has(.open:not(:disabled)):hover { border-color: var(--stop-ink); box-shadow: 0 4px 16px #18342112; }
 .top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }

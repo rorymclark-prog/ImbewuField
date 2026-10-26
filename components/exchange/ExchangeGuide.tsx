@@ -79,11 +79,11 @@ export default function ExchangeGuide({
 
       <div
         className="rounded-xl"
-        style={{ background: 'rgba(226,216,196,0.38)', padding: '14px 16px', marginBottom: 16 }}
+        style={{ background: 'color-mix(in srgb, var(--bg-2) 70%, transparent)', padding: '14px 16px', marginBottom: 16 }}
       >
         <div
           className="font-sans uppercase"
-          style={{ fontSize: 10, letterSpacing: '0.12em', color: EX.faint, marginBottom: 8 }}
+          style={{ fontSize: 12, letterSpacing: '0.12em', color: EX.faint, marginBottom: 8 }}
         >
           {tx('Posting your first listing', 'Ukufaka isikhangiso sakho sokuqala')}
         </div>
@@ -92,7 +92,7 @@ export default function ExchangeGuide({
             <li key={step} className="flex items-start gap-2.5">
               <span
                 className="font-sans font-bold flex items-center justify-center rounded-full flex-shrink-0"
-                style={{ width: 18, height: 18, fontSize: 10.5, background: EX.green, color: EX.card, marginTop: 1 }}
+                style={{ width: 18, height: 18, fontSize: 12, background: EX.green, color: EX.card, marginTop: 1 }}
               >
                 {i + 1}
               </span>
@@ -104,12 +104,12 @@ export default function ExchangeGuide({
 
       <button
         onClick={onPost}
-        className="font-display font-semibold rounded-xl"
+        className="font-sans font-semibold rounded-xl"
         style={{
           width: '100%',
           padding: '11px',
           fontSize: 14,
-          background: EX.green,
+          background: EX.fill,
           color: 'var(--on-forest)',
           border: 'none',
           cursor: 'pointer',
@@ -120,7 +120,7 @@ export default function ExchangeGuide({
 
       <div className="flex items-start gap-2" style={{ marginTop: 14 }}>
         <Package size={13} strokeWidth={1.8} style={{ color: EX.faint, marginTop: 2, flexShrink: 0 }} />
-        <p className="font-sans" style={{ fontSize: 11.5, lineHeight: 1.5, color: EX.faint, margin: 0 }}>
+        <p className="font-sans" style={{ fontSize: 12, lineHeight: 1.5, color: EX.faint, margin: 0 }}>
           {zu ? <ExchangeSourceCopy en="A listing you post is saved on this phone only. It is not sent to other farmers, and nobody else can see it yet." zu="Isikhangiso osifakayo sigcinwa kule foni kuphela. Asithunyelwa kwabanye abalimi futhi akekho omunye ongakwazi ukusibona okwamanje." /> : 'A listing you post is saved on this phone only. It is not sent to other farmers, and nobody else can see it yet — see “What this preview does not do” at the bottom of the board.'}
         </p>
       </div>
@@ -135,12 +135,12 @@ export default function ExchangeGuide({
   // nothing else on the screen to reach past.
   if (simple && variant === 'intro') {
     return (
-      <div className="rounded-2xl" style={{ background: EX.card, border: `1px solid ${EX.border}` }}>
+      <div className="rounded-2xl" style={{ background: 'transparent', border: `1px solid ${EX.border}` }}>
         <button
           type="button"
           onClick={() => setExpanded((v) => !v)}
           aria-expanded={expanded}
-          className="flex items-center gap-2.5 font-display font-semibold"
+          className="flex items-center gap-2.5 font-sans font-semibold"
           style={{
             width: '100%',
             minHeight: 44,
@@ -149,8 +149,8 @@ export default function ExchangeGuide({
             border: 'none',
             textAlign: 'left',
             cursor: 'pointer',
-            fontSize: 14,
-            color: EX.ink,
+            fontSize: 13,
+            color: EX.muted,
           }}
         >
           <Handshake size={18} strokeWidth={1.7} style={{ color: EX.green, flexShrink: 0 }} />

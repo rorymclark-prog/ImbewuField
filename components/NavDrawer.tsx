@@ -129,7 +129,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
     {
       label: isZulu ? 'I-akhawunti (Account)' : t('tabAccount'),
       items: [
-        { href: '/account', Icon: User, label: ui('My Account', 'I-akhawunti yami') },
+        { href: '/account', Icon: User, label: ui('My account', 'I-akhawunti yami') },
         { href: '/offline', Icon: ClipboardList, label: ui('Offline and sync', 'Akukho-inthanethi nokuvumelanisa') },
         { href: '/samples', Icon: Sprout, label: ui('Practice views', 'Izikrini zokuzilolonga') },
         { href: '/samples/gardens', Icon: Sprout, label: ui('Browse gardens', 'Bheka izingadi') },

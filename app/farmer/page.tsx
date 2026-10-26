@@ -13,9 +13,9 @@ import DataPanel from '@/components/DataPanel';
 import { useAppConfirm } from '@/components/AppConfirm';
 import TabBar from '@/components/TabBar';
 import LangSwitcher from '@/components/LangSwitcher';
-import RoleSwitcher from '@/components/RoleSwitcher';
 import AccountButton from '@/components/AccountButton';
 import BrandLogo from '@/components/BrandLogo';
+import DesktopPrimaryNav from '@/components/layout/DesktopPrimaryNav';
 import ThemePanel from '@/components/ThemePanel';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
@@ -329,11 +329,11 @@ function HomeInner() {
     if (!siteId || siteParamHandled.current === siteId) return;
     siteParamHandled.current = siteId;
     const p = loadPlaces().find((pl) => pl.id === siteId);
-    if (!p) { setError('This saved site is no longer available. Return to Site reports and choose another site.'); return; }
+    if (!p) { setError(t('savedSiteUnavailable')); return; }
     handlePlaceSelect({ name: p.name, id: p.id });
     handleLocationSelect(p.lat, p.lon);
-    const t = setTimeout(() => setJumpTo({ lat: p.lat, lon: p.lon }), 800);
-    return () => clearTimeout(t);
+    const jumpTimer = setTimeout(() => setJumpTo({ lat: p.lat, lon: p.lon }), 800);
+    return () => clearTimeout(jumpTimer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchKey, authLoading]);
 
@@ -561,7 +561,8 @@ function HomeInner() {
         {/* Heights/sizes scale down on wide screens — phone px must not be reused
             on desktop (handoff §0). Mobile keeps the comfortable 60px bar. */}
         <header
-          className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-3 overflow-hidden"
+          // w21-02: the gap stays 8px until lg; at md the 12px gap pushed the isiZulu bar 7px past a 768px viewport.
+          className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 lg:gap-3 overflow-hidden"
           style={{
             height: 60,
             background: 'var(--bg-1)',
@@ -573,12 +574,15 @@ function HomeInner() {
           <MenuButton /><BackButton fallback="/home" />
 
           <BrandLogo />
+          <h1 className="sr-only">{t('tabMap')}</h1>
 
           <div className="w-px h-5 flex-shrink-0 hidden md:block" style={{ background: 'var(--border)', opacity: 0.5 }} />
-          <span className="hidden md:block font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{t('tagline')}</span>
+          <span className="hidden 2xl:block font-sans whitespace-nowrap" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{t('tagline')}</span>
+          {/* TabBar steps aside at lg+ (hideAtDesktop below), so the four destinations move up here. */}
+          <DesktopPrimaryNav />
           <div className="flex-1" />
 
-          <span className="flex-shrink-0"><LessonLink id="map:overview" label="Learn" /></span>
+          <span className="flex-shrink-0"><LessonLink id="map:overview" label={lang === 'zu' ? 'Funda' : 'Learn'} /></span>
 
           {/* ONE design door — Design Studio (canonical /design surface; Zones + the AI suggest
               live here). Now visible ON MOBILE too: farmers on phones could not find the zones
@@ -615,16 +619,16 @@ function HomeInner() {
               Build {buildInfo.sha}
             </div>
           )}
-          <div className="hidden md:flex"><RoleSwitcher current="farmer" /></div>
-          <div className="hidden md:block"><LangSwitcher /></div>
-          <div className="hidden md:block"><AccountButton /></div>
-
-          {error && (
-            <span className="text-xs px-3 py-1 rounded-full font-sans flex-shrink-0 flex items-center"
-                  style={{ background: 'rgba(212,110,66,0.12)', border: '1px solid rgba(212,110,66,0.35)', color: 'var(--orange)' }}>
-              <AlertTriangle size={13} className="inline mr-1" /> {error}
-            </span>
-          )}
+          {/* The five-role switcher (~570px) used to sit here from md up. With Learn, Design studio,
+              language, account and Settings beside it, the bar was ~1,590px of content in a 1,280px
+              header, so Settings was clipped off the right edge at every laptop width. It already
+              lives in the burger drawer (NavDrawer renders the inMenu switcher), so the header
+              keeps the four primary destinations instead. */}
+          {/* xl+ only: from md to lg these two pushed Settings off the bar (768px) and clipped the
+              primary links (1024px). The language picker is the first section of the
+              Appearance panel behind Settings (ThemePanel), and My account is in the burger drawer. */}
+          <div className="hidden xl:block"><LangSwitcher /></div>
+          <div className="hidden xl:block"><AccountButton /></div>
 
           <button
             onClick={() => setSettingsOpen(true)}
@@ -633,7 +637,7 @@ function HomeInner() {
             className="hidden md:flex flex-shrink-0 items-center justify-center rounded-lg transition-all"
             style={{
               width: 40, height: 40,
-              background: 'rgba(226,216,196,0.35)',
+              background: 'color-mix(in srgb, var(--border) 35%, transparent)',
               border: '1px solid var(--border)',
               color: 'var(--text-secondary)',
               cursor: 'pointer',
@@ -642,6 +646,15 @@ function HomeInner() {
             <Settings size={18} />
           </button>
         </header>
+
+        {/* w19-02: the error used to be a flex-shrink-0 chip inside the overflow-hidden header,
+            clipped and pushing Settings off-screen. A full-width banner under the header instead. */}
+        {error && (
+          <div role="alert" className="flex items-start gap-2 px-3 md:px-5 py-2 font-sans"
+               style={{ background: 'var(--bg-2)', color: 'var(--text-primary)', borderBottom: '1px solid var(--border)', fontSize: 14 }}>
+            <AlertTriangle size={16} aria-hidden className="flex-shrink-0 mt-0.5" /> <span>{error}</span>
+          </div>
+        )}
 
         {reportSiteFlow && !showReport && <div style={{padding:'12px 20px',background:'var(--bg-1)',borderBottom:'1px solid var(--border)',fontSize:14}}>
           <strong>{searchParams.get('reportSite') === 'new' ? (lang === 'zu' ? 'Khetha indawo yombiko wakho' : 'Choose a site for your report') : (lang === 'zu' ? 'Kuvulwa umbiko wendawo yakho' : 'Opening your site report')}</strong>
@@ -914,7 +927,7 @@ function HomeInner() {
           </div>
         </div>
 
-        <TabBar />
+        <TabBar hideAtDesktop />
       </div>
 
       <ProfileSheet

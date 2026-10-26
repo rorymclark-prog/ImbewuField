@@ -14,7 +14,7 @@ export function ReceiptPaper({ expense }: { expense: Pick<ExpenseLog, 'id' | 'it
   const { lang } = useLanguage();
   const text = (en: string, zu: string) => lang === 'zu' ? zu : recordsFill(lang, en);
   const clean = (value: string) => value.replace(/^Sample\s*[—–-]\s*/i, '');
-  return <article style={{ margin: '16px auto', maxWidth: 360, padding: '28px 24px', background: '#FFFCF2', color: '#302C24', boxShadow: '0 6px 24px #00000018', borderTop: '5px solid #AC926A', fontFamily: 'var(--font-mono), monospace', lineHeight: 1.65 }}>
+  return <article style={{ margin: '16px auto', maxWidth: 360, padding: '28px 24px', background: '#FFFCF2', color: '#302C24', boxShadow: '0 6px 24px #00000018', borderTop: '5px solid #AC926A', fontFamily: 'var(--font-sans), sans-serif', lineHeight: 1.65 }}>
     <Receipt size={27} style={{ margin: '0 auto 10px', color: '#6F7656' }} />
     <h3 style={{ fontSize: 18, textAlign: 'center', fontWeight: 700 }}>{clean(expense.supplier || text('Farm inputs', 'Izinto zasepulazini'))}</h3>
     <p style={{ textAlign: 'center', fontSize: 12, marginBottom: 20 }}>{text('PURCHASE RECEIPT', 'IRISIDI LOKUTHENGA')}</p>

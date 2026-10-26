@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import { f1Positions, type F1Card, type F1Practice } from '@/lib/finance-f1-timeline';
 import styles from './FinanceF1Timeline.module.css';
+import ArrowLabel from './ArrowLabel';
 
 const rand = (cents: number) => new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR' }).format(cents / 100);
 
@@ -48,8 +49,8 @@ export default function FinanceF1Timeline({ practice }: { practice: F1Practice }
       </div>
     </div>
     <div className={styles.controls}>
-      <button type="button" onClick={() => moveTo(index - 1)} disabled={index === 0}>← Previous card</button>
-      <button type="button" onClick={() => moveTo(index + 1)} disabled={index === positions.length - 1}>Next card →</button>
+      <button type="button" onClick={() => moveTo(index - 1)} disabled={index === 0}><ArrowLabel dir="back">Previous card</ArrowLabel></button>
+      <button type="button" onClick={() => moveTo(index + 1)} disabled={index === positions.length - 1}><ArrowLabel>Next card</ArrowLabel></button>
     </div>
     <p className={styles.caution}>These records do not show full profit. Use your own source documents for a real farm.</p>
   </section>;

@@ -10,7 +10,8 @@ import { readFileSync } from 'node:fs';
 
 const STUDENT_SOURCE = readFileSync(new URL('../app/student/page.tsx', import.meta.url), 'utf8');
 const OFFLINE_DOWNLOAD_SOURCE = readFileSync(new URL('../components/course/OfflineDownload.tsx', import.meta.url), 'utf8');
-const COURSE_MODULES_SOURCE = readFileSync(new URL('../lib/course-modules.ts', import.meta.url), 'utf8');
+const CATEGORY_TEXT_SOURCE = readFileSync(new URL('../lib/category-text-colors.ts', import.meta.url), 'utf8');
+const GLOBALS_CSS_SOURCE = readFileSync(new URL('../app/globals.css', import.meta.url), 'utf8');
 const COURSE_GATING_SOURCE = readFileSync(new URL('../lib/course-gating.ts', import.meta.url), 'utf8');
 const COURSE_ASSIGNMENTS_SOURCE = readFileSync(new URL('../lib/course-assignments.ts', import.meta.url), 'utf8');
 const DESIGN_SOURCE = readFileSync(new URL('../app/student/design/page.tsx', import.meta.url), 'utf8');
@@ -113,7 +114,7 @@ test('Simple labels each companion link clearly, with its one-line description a
 
 test('the companion link labels are real i18n keys, placed next to their related preview strings', () => {
   assert.match(I18N_SOURCE, /studentDesignPreviewSimpleLabel: 'Design course',/);
-  assert.match(I18N_SOURCE, /studentFinancePreviewSimpleLabel: 'Farm Finance course',/);
+  assert.match(I18N_SOURCE, /studentFinancePreviewSimpleLabel: 'Farm finance course',/);
 });
 
 test('ochre is never painted as readable text: the due-soon tone and the category text-colour variant', () => {
@@ -121,7 +122,8 @@ test('ochre is never painted as readable text: the due-soon tone and the categor
   // text-safe ochre value (#7A4408), now theme-token-based so it keeps 4.5:1 contrast in dark mode
   // too instead of staying the fixed earth-light hex.
   assert.match(STUDENT_SOURCE, /'due-soon':\s*\{ fg: 'var\(--gold-dim\)'/, 'ASSIGNMENT_TONE due-soon.fg must be the text-safe ochre');
-  assert.match(COURSE_MODULES_SOURCE, /CATEGORY_TEXT_COLORS[\s\S]*?design: "#7A4408"/, 'CATEGORY_TEXT_COLORS.design must be the text-safe ochre');
+  assert.match(CATEGORY_TEXT_SOURCE, /CATEGORY_TEXT_COLORS[\s\S]*?design:\s*"var\(--cat-design-text\)"/, 'CATEGORY_TEXT_COLORS.design must be the text-safe ochre token');
+  assert.match(GLOBALS_CSS_SOURCE, /--cat-design-text: #7A4408;/, 'the earth-light design text token keeps the text-safe ochre');
   // Every site that paints the category colour as text (not a fill/border/icon) must use the
   // text-safe variant, not the raw CATEGORY_COLORS/`color` fill value.
   assert.match(STUDENT_SOURCE, /style=\{\{ color: textColor \}\}>\{t\('studentKeyPoints'\)\}/);
@@ -171,10 +173,11 @@ test('/student/design and /student/finance collapse their syllabus grid to the n
 });
 
 test('/student/design and /student/finance hide their sources/further-reading lists and the ten-day plan in Simple', () => {
-  assert.match(DESIGN_SOURCE, /<FullToolsOnly><details><summary>Sources behind the pathway<\/summary>/);
-  assert.match(DESIGN_LESSON_SOURCE, /<FullToolsOnly><details><summary>Sources and further reading<\/summary>/);
+  // w20: the disclosures use the shared <Summary> (with its open/closed arrow) in place of <summary>.
+  assert.match(DESIGN_SOURCE, /<FullToolsOnly><details><Summary>Sources behind the pathway<\/Summary>/);
+  assert.match(DESIGN_LESSON_SOURCE, /<FullToolsOnly><details><Summary>Sources and further reading<\/Summary>/);
   assert.match(FINANCE_SOURCE, /<FullToolsOnly>\s*<section className=\{styles\.section\}>\s*<h2>A proposed ten-day course<\/h2>/);
-  assert.match(FINANCE_LESSON_SOURCE, /<FullToolsOnly><section className=\{`\$\{styles\.section\} \$\{styles\.sourceLinks\}`\}><details><summary>Sources and further reading<\/summary>/);
+  assert.match(FINANCE_LESSON_SOURCE, /<FullToolsOnly><section className=\{`\$\{styles\.section\} \$\{styles\.sourceLinks\}`\}><details><Summary>Sources and further reading<\/Summary>/);
   // Kept in both modes: the lesson reading, the isiZulu-draft disclosure banner, the app-guide links.
   assert.match(DESIGN_SOURCE, /<DesignDraftNotice \/>/);
   assert.match(FINANCE_SOURCE, /<FinanceReadingChecklist/);

@@ -29,7 +29,8 @@ test('mentor, ngo and funder share one staff tab shape: Home, Dashboard, Network
     const roleBlock = staffBlock.slice(roleAt, staffBlock.indexOf(']', roleAt));
     assert.match(roleBlock, /href: '\/home'/, `${role}'s first tab is not Home`);
     assert.match(roleBlock, /key: 'tabDashboard'/, `${role} has no Dashboard tab — a mentor/ngo/funder's own dashboard must be a tab, not absent (sdesk-05)`);
-    assert.match(roleBlock, /href: '\/network'/, `${role} is missing the Network tab`);
+    // w18-27: /network refuses mentors, so the mentor's third tab is Assessments instead.
+    assert.match(roleBlock, role === 'mentor' ? /href: '\/assessments'/ : /href: '\/network'/, `${role} is missing its third tab`);
     assert.match(roleBlock, /href: '\/account'/, `${role} is missing the Account tab`);
   }
 });

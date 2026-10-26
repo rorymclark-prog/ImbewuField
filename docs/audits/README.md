@@ -6,7 +6,9 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Site survey: start here
 
-1. [Current continuation record — 2 October 2026](2026-10-02/site-survey-continuation.md).
+Latest implementation: [Survey draft recovery and signed-in Ubhejane check — 22 October 2026](2026-10-22/survey-draft-recovery-codex.md).
+
+1. [Previous continuation record — 2 October 2026](2026-10-02/site-survey-continuation.md).
 2. [Original illustrated survey and report audit — 20 September](../SITE-SURVEY-AUDIT-2026-09-20.md).
 3. [isiZulu survey review packet — 25 September](../studies-review-2026-09-20/SITE-SURVEY-ISIZULU-AGY-REVIEW-PACKET-2026-09-25.md).
 
@@ -59,6 +61,33 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [Wave 21 rendered re-capture of the wave 20 build in isiZulu: w21-01 to w21-11, ten fixed, one handed to Codex — 24 October 2026](2026-10-24/wave-21-recapture-claude.md).
+- [Wave 20 integration close-out: five tracks folded onto the wave 19 branch with main, w20-01 to w20-46 implemented, w19 partials closed with them — 24 October 2026](2026-10-24/wave-20-integration-claude.md).
+
+- [Wave 20 rendered re-capture and visual review of the wave 19 build: new IDs w20-01 to w20-46 across five tracks, w19 partials carried — 23 October 2026](2026-10-23/wave-20-recapture-claude.md).
+
+- [Wave 19 integration close-out: five tracks folded, w19-01 to w19-42 implemented, w18 partials closed with them — 23 October 2026](2026-10-23/wave-19-integration-claude.md).
+
+- [Wave 19 rendered re-capture and visual review of the wave 18 build: new IDs w19-01 to w19-42 across five tracks, w18 partials carried — 23 October 2026](2026-10-23/wave-19-recapture-claude.md).
+
+- [Wave 18 integration close-out: eight tracks folded, w18-01 to w18-59 implemented, w17-08 closed — 23 October 2026](2026-10-23/wave-18-integration-claude.md).
+
+- [Wave 18 rendered re-capture and visual review of the wave 17 build: new IDs w18-01 to w18-59 across eight tracks, w17-08 partial — 23 October 2026](2026-10-23/wave-18-recapture-claude.md).
+
+- [Wave 17 integration close-out: three tracks folded, w17-01 to w17-08 dispositioned, focus and on-forest guards tightened — 23 October 2026](2026-10-23/wave-17-integration-claude.md).
+
+- [Wave 17 rendered re-capture of the wave 16 build: new IDs w17-01 to w17-08, /farmer w17-04 fixed — 23 October 2026](2026-10-23/wave-17-recapture-claude.md).
+
+- [Wave 16 integration close-out: five tracks folded, 16 IDs dispositioned, /farmer w16-07 finished — 23 October 2026](2026-10-23/wave-16-integration-claude.md).
+
+- [Wave 16 rendered re-capture of the wave 15 build: new IDs w16-01 to w16-11 — 22 October 2026](2026-10-22/wave-16-recapture-claude.md).
+
+- [Wave 15 integration close-out: five tracks folded, 21 assigned IDs dispositioned, w15-04 opened — 22 October 2026](2026-10-22/wave-15-integration-claude.md).
+
+- [Wave 15 rendered re-capture of the wave 14 build: 50 of 54 rows verified, 3 regressions fixed — 22 October 2026](2026-10-22/wave-15-recapture-claude.md).
+
+- [Survey draft recovery and signed-in Ubhejane check — 22 October 2026](2026-10-22/survey-draft-recovery-codex.md).
 
 - [Wave 14 integration close-out: 166 findings dispositioned, five tracks folded — 17 October 2026](2026-10-17/wave-14-integration-claude.md).
 

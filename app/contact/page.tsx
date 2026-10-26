@@ -4,7 +4,7 @@ import workspace from '@/components/layout/Workspace.module.css';
 
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { MessageCircle, Phone, Mail, Users, Building2, Send, CheckCircle, MailOpen, ChevronDown, ChevronUp } from 'lucide-react';
+import { MessageCircle, Phone, Mail, Users, Building2, Send, CheckCircle, MailOpen, ChevronDown, ChevronUp, Plus } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
@@ -374,15 +374,15 @@ export default function ContactPage() {
                       aria-pressed={recipient === value}
                       className={`flex items-center gap-3 rounded-xl p-3 text-left ${motion.recipient}`}
                       style={{
-                        background: recipient === value ? 'color-mix(in srgb, var(--color-forest-800) 8%, transparent)' : 'var(--bg-1)',
-                        border: `1px solid ${recipient === value ? 'color-mix(in srgb, var(--color-forest-800) 35%, transparent)' : 'var(--border)'}`,
+                        background: recipient === value ? 'color-mix(in srgb, var(--color-forest-800) 8%, var(--bg-1))' : 'var(--bg-1)',
+                        border: recipient === value ? '1.5px solid var(--color-forest-800)' : '1px solid var(--border)',
                         cursor: orgLocked ? 'default' : 'pointer',
                         opacity: orgLocked ? 0.55 : 1,
                       }}
                     >
                       <div className={motion.recipientIcon} style={{
                         width: 34, height: 34, borderRadius: 9, flexShrink: 0,
-                        background: recipient === value ? 'color-mix(in srgb, var(--color-forest-800) 12%, transparent)' : 'rgba(32,25,15,0.05)',
+                        background: recipient === value ? 'color-mix(in srgb, var(--color-forest-800) 12%, transparent)' : 'var(--bg-2)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                       }}>
                         <Icon size={16} style={{ color: recipient === value ? 'var(--color-forest-800)' : 'var(--text-secondary)' }} strokeWidth={1.6} />
@@ -434,9 +434,9 @@ export default function ContactPage() {
                   type="button"
                   onClick={() => setShowSubject(true)}
                   className="font-sans font-semibold text-left"
-                  style={{ fontSize: 13, color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
+                  style={{ fontSize: 13, color: 'var(--color-forest-800)', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0, minHeight: 44 }}
                 >
-                  + {ui('Add a subject', 'Engeza isihloko')}
+                  <span className="inline-flex items-center gap-1"><Plus size={14} aria-hidden="true" />{ui('Add a subject', 'Engeza isihloko')}</span>
                 </button>
               )}
 
@@ -465,21 +465,21 @@ export default function ContactPage() {
               )}
 
               {!isLive && (
-                <p className="font-sans rounded-xl px-3 py-2.5" style={{ fontSize: 12.5, color: 'var(--text-muted)', background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+                <p className="font-sans m-0" style={{ fontSize: 13, lineHeight: 1.5, color: 'var(--text-secondary)', borderLeft: '3px solid var(--border-strong, var(--border))', padding: '4px 0 4px 12px' }}>
                   {/* ux-03/nav-04: was developer vocabulary ("backend", "Firebase") on a
                       farmer-facing screen — rewritten in plain words below. */}
-                  {ui('Practice version: your message is kept on this phone and is not sent yet.', 'Inguqulo yokuzilolonga: umlayezo wakho ugcinwa kule foni futhi awukathunyelwa.')}
+                  {ui('Practice version: your message is kept on this device and is not sent yet.', 'Inguqulo yokuzilolonga: umlayezo wakho ugcinwa kule foni futhi awukathunyelwa.')}
                 </p>
               )}
 
               <button
                 type="submit"
                 disabled={sending || !body.trim()}
-                className={`flex items-center justify-center gap-2 font-display font-semibold rounded-xl ${motion.send}`}
+                className={`flex items-center justify-center gap-2 font-sans font-semibold rounded-xl ${motion.send}`}
                 style={{
-                  background: body.trim() ? 'var(--color-forest-800)' : 'rgba(32,25,15,0.1)',
+                  background: body.trim() ? 'var(--color-forest-800)' : 'var(--bg-2)',
                   color: body.trim() ? 'var(--color-canvas)' : 'var(--text-muted)',
-                  border: 'none', cursor: body.trim() ? 'pointer' : 'default',
+                  border: body.trim() ? '1px solid transparent' : '1px solid var(--border)', cursor: body.trim() ? 'pointer' : 'default',
                   padding: '13px 20px', fontSize: 15,
                   transition: 'background 0.15s',
                 }}

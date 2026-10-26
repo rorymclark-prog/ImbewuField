@@ -175,7 +175,7 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
         <HeroEntranceStyle />
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
-            <Overline>{firstName ? t('homeGreeting').replace('{name}', firstName) : text.title}</Overline>
+            {firstName && <Overline>{t('homeGreeting').replace('{name}', firstName)}</Overline>}
             <h2 className="u-display-sm" style={{ color: 'var(--on-forest)', marginBottom: 6 }}>
               {text.title}
             </h2>
@@ -383,7 +383,7 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
             </div>
             <span
               className="imf-hero-next-arrow flex items-center justify-center flex-shrink-0"
-              style={{ width: 40, height: 40, borderRadius: 999, background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}
+              style={{ width: 40, height: 40, borderRadius: 999, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }}
             >
               <ChevronRight size={20} strokeWidth={2} />
             </span>

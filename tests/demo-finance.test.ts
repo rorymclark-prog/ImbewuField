@@ -207,7 +207,8 @@ test('the finances page offers its sample through sample mode, never by writing 
     'the sample offer must not be hidden once the farmer has logged anything');
 
   // A signed-in farmer inside sample mode must never see her own name over demo books.
-  assert.match(page, /name=\{sampling \? 'Ubhejane Creche'/,
+  // (w20-26 restored the accent in the demo farm's name: lib/demo-farm.ts says "Crèche".)
+  assert.match(page, /name=\{sampling \? 'Ubhejane Crèche'/,
     "the sheet's farm name must follow sample mode, not the signed-in user");
 });
 

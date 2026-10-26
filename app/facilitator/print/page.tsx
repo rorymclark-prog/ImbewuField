@@ -13,6 +13,7 @@
 // which pages to print (e.g. just the Water map). Pure client-side,
 // read-only — never writes back to the design.
 
+import { useRegisterBackControl } from '@/components/BackControl';
 import { numberLabel } from '@/lib/format-figures';
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { ArrowLeft, Pencil, Printer, Droplets, ChevronDown } from 'lucide-react';
@@ -313,7 +314,7 @@ function PlanSvg({ itemPts, linePts, sectorPts, toDraw, scale, pxPerM, drawW, dr
       <g transform={`translate(${drawW - 18}, 14)`}>
         <line x1={0} y1={10} x2={0} y2={-6} stroke="#161311" strokeWidth={1} />
         <polygon points="0,-9 -3,-2 3,-2" fill="#161311" />
-        <text x={0} y={19} fontSize={6} textAnchor="middle" fill="#161311" fontWeight="bold">N ↑</text>
+        <text x={0} y={19} fontSize={6} textAnchor="middle" fill="#161311" fontWeight="bold">N</text>
       </g>
 
       {/* scale bar */}
@@ -363,9 +364,14 @@ function SheetScaler({ children }: { children: React.ReactNode }) {
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
+  // w15-01: measure an outer box that is never zoomed. Measuring the zoomed box itself fed the
+  // zoom back into its own clientWidth (390px at zoom 0.35 reads as 1123px), so the zoom
+  // flip-flopped between 1 and the fit value and the page ended up 297mm wide on a phone.
   return (
-    <div ref={wrapRef} className="sheetScaler" style={{ zoom }}>
-      {children}
+    <div ref={wrapRef}>
+      <div className="sheetScaler" style={{ zoom }}>
+        {children}
+      </div>
     </div>
   );
 }
@@ -373,6 +379,8 @@ function SheetScaler({ children }: { children: React.ReactNode }) {
 type PageKey = 'full' | LayerId;
 
 export default function FacilitatorPrintPage() {
+  // w16-10: this page has its own Back controls in every state — the floating pill stands down.
+  useRegisterBackControl();
   const simple = useAppLevel() === 'simple';
   // Simple: the per-layer page checkboxes and the cost tables are collapsed behind this, leaving
   // one "Print my plan" action that prints the full design sheet. All tools is unaffected —
@@ -669,12 +677,12 @@ export default function FacilitatorPrintPage() {
   }, [computed]);
 
   if (state === undefined) {
-    return <div style={{ padding: 40, fontFamily: 'sans-serif', color: '#5C5040' }}>Loading…</div>;
+    return <div style={{ padding: 40, fontFamily: 'var(--font-sans), sans-serif', color: '#5C5040' }}>Loading…</div>;
   }
 
   if (state === null) {
     return (
-      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, fontFamily: 'sans-serif', color: '#5C5040', background: '#E4DCC6' }}>
+      <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, fontFamily: 'var(--font-sans), sans-serif', color: '#5C5040', background: '#E4DCC6' }}>
         <div style={{ fontSize: 15 }}>No design on this device yet.</div>
         <button
           onClick={() => history.back()}
@@ -723,7 +731,7 @@ export default function FacilitatorPrintPage() {
         }
       `}</style>
 
-      <div className="print-toolbar" style={{ position: 'sticky', top: 0, zIndex: 10, display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', padding: sample ? '10px 100px 10px 16px' : '10px 16px', background: '#1F4D2B', color: '#fff', fontFamily: 'sans-serif' }}>
+      <div className="print-toolbar" style={{ position: 'sticky', top: 0, zIndex: 10, display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap', padding: sample ? '10px 100px 10px 16px' : '10px 16px', background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', fontFamily: 'var(--font-sans), sans-serif' }}>
         <button
           onClick={() => history.back()}
           style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 12px', borderRadius: 6, border: '1px solid rgba(255,255,255,0.4)', background: 'transparent', color: '#fff', cursor: 'pointer', fontSize: 13 }}

@@ -59,7 +59,7 @@ export default function Onboarding() {
             all. The one screen where she is asked to choose must ask before it offers the exit.
             The button below is labelled in the picked language, so it answers as she chooses. */}
         <div className="mb-1 flex items-center gap-2">
-          <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
+          <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>
             {tp('pickLang')}
           </div>
           <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />

@@ -79,8 +79,10 @@ test("app/account/page.tsx does not reintroduce the stale card hex '#FBF6EC'", (
 test('every converted file actually uses the new --on-forest token, not just a bare removal', () => {
   for (const relativePath of RELATIVE_PATHS) {
     const src = readFileSync(fileURLToPath(new URL(`../${relativePath}`, import.meta.url)), 'utf8');
-    assert.match(src, /var\(--on-forest\)/,
-      `${relativePath} should use var(--on-forest) at least once — it was one of the files converted`);
+    // --on-forest-800 is the same cream token's dark-safe twin (text on a forest-800 fill); wave 17
+    // moved every /student use onto it, which still counts as converted rather than a bare removal.
+    assert.match(src, /var\(--on-forest(-800)?\)/,
+      `${relativePath} should use var(--on-forest) or var(--on-forest-800) at least once — it was one of the files converted`);
   }
 });
 

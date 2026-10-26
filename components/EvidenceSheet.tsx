@@ -162,7 +162,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
               {(() => { const GroupIcon = EVIDENCE_GROUP_ICON[group.key] ?? FileText; return <GroupIcon size={18} />; })()}
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ font: '600 17px Newsreader, Georgia, serif', color: 'var(--text-primary)' }}>{groupLabel}</div>
+              <div style={{ font: '600 17px var(--font-display), Georgia, serif', color: 'var(--text-primary)' }}>{groupLabel}</div>
               <div style={{ font: '400 13px/1.4 var(--font-sans), sans-serif', color: 'var(--text-secondary)', marginTop: 1 }}>{groupDesc}</div>
             </div>
             <button onClick={onClose} aria-label={t('evidenceSheetClose')} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--text-secondary)', minWidth: 44, minHeight: 44, display: 'grid', placeItems: 'center' }}>
@@ -207,12 +207,12 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
             onClick={() => fileInputRef.current?.click()}
             disabled={uploading}
             style={{
-              flex: 1, background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', borderRadius: 11,
+              flex: 1, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: 'none', borderRadius: 11,
               padding: '12px 10px', font: '600 13px/1 var(--font-sans), sans-serif',
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, cursor: 'pointer',
             }}
           >
-            <Camera size={20} color="var(--on-forest)" />
+            <Camera size={20} color="var(--on-forest-800)" />
             {t('evidenceSheetTakePhoto')}
           </button>
           <button
@@ -344,7 +344,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
                   {editingField === f.key ? (
                     <div style={{ display: 'flex', gap: 8, alignItems: 'center', background: 'var(--bg-1)', border: `1.5px solid ${group.color}`, borderRadius: 11, padding: '10px 13px' }}>
                       <span style={{ font: '400 13px/1 var(--font-sans), sans-serif', color: 'var(--text-secondary)', flex: 1 }}>{f.label}</span>
-                      <input
+                      <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                         autoFocus
                         type="text"
                         inputMode="decimal"
@@ -382,13 +382,13 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
           <div style={{ margin: '16px 16px 0', background: 'var(--color-forest-800)', borderRadius: 13, padding: '14px 15px', display: 'flex', gap: 11, alignItems: 'flex-start' }}>
             <div style={{ width: 30, height: 30, borderRadius: '50%', background: 'var(--color-forest-700)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
               {/* Lima sprout glyph */}
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--on-forest)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--on-forest-800)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 21V11" /><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" /><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
               </svg>
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ font: '400 13px/1.45 Newsreader, Georgia, serif', color: 'var(--on-forest)', fontStyle: 'italic' }}>{limaTip}</div>
-              <div style={{ font: '400 12px/1 var(--font-sans), sans-serif', color: 'color-mix(in srgb, var(--on-forest) 70%, transparent)', marginTop: 5 }}>
+              <div style={{ font: '400 13px/1.45 var(--font-display), Georgia, serif', color: 'var(--on-forest-800)', fontStyle: 'italic' }}>{limaTip}</div>
+              <div style={{ font: '400 12px/1 var(--font-sans), sans-serif', color: 'color-mix(in srgb, var(--on-forest-800) 70%, transparent)', marginTop: 5 }}>
                 {isLab ? t('evidenceSheetLimaLabNote') : t('evidenceSheetLimaDefaultNote')}
               </div>
             </div>

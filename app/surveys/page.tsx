@@ -632,7 +632,7 @@ function FarmerSurveyCard({
           <div className="text-xs font-sans mt-0.5" style={{ color: 'var(--text-secondary)' }}>
             {localUi('From', 'Kuvela ku', lang)} {survey.org_name}
             {/* Simple hides the question-count metadata — a farmer answering does not need it. */}
-            {!simple && <>&middot; {survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 && lang !== 'zu' ? 's' : ''}</>}
+            {!simple && <>{' · '}{survey.questions.length} {localUi('question', 'umbuzo', lang)}{survey.questions.length !== 1 && lang !== 'zu' ? 's' : ''}</>}
           </div>
         </div>
         {submitted ? (
@@ -795,14 +795,14 @@ export default function SurveysPage() {
   }
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
+    <div className="flex flex-col overflow-hidden h-[100dvh] lg:h-auto lg:min-h-0 lg:overflow-visible" style={{ background: 'var(--bg-0)' }}>
       <AppHeader
         title={localUi('Surveys', 'Izinhlolovo', lang)}
-        right={<LessonLink id="surveys:overview" label={localUi('Learn', 'Funda', lang)} />}
+        right={<LessonLink id="surveys:overview" tone="chip" label={localUi('Learn', 'Funda', lang)} />}
       />
 
       {/* code-14: no max-width at all, so content ran edge to edge at 1280px. */}
-      <main className={`flex-1 overflow-y-auto px-4 md:px-6 py-4 space-y-4 ${workspace.workspace}`} style={{ paddingBottom: 80 }}>
+      <main className={`flex-1 overflow-y-auto lg:flex-none lg:overflow-visible px-4 md:px-6 py-4 space-y-4 ${workspace.workspace}`} style={{ paddingBottom: 'var(--lima-fab-clearance, 96px)' }}>
 
         {lang === 'zu' && (
           <p role="note" className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
@@ -814,7 +814,7 @@ export default function SurveysPage() {
 
         {/* Section heading */}
         <div className="flex items-center gap-2.5">
-          <ClipboardList size={16} style={{ color: 'var(--color-forest-800)' }} strokeWidth={1.7} />
+          <ClipboardList size={24} className="shrink-0" style={{ color: 'var(--color-forest-800)' }} strokeWidth={1.7} aria-hidden="true" />
           <h1 className="t-h1 font-display" style={{ color: 'var(--text-primary)' }}>
             {isStaff ? localUi('Survey builder', 'Ukwakha inhlolovo', lang) : canAnswer ? localUi('Available surveys', 'Izinhlolovo ezitholakalayo', lang) : localUi('Surveys', 'Izinhlolovo', lang)}
           </h1>
@@ -901,11 +901,6 @@ export default function SurveysPage() {
           </div>
         )}
 
-        {!isLive && (
-          <p className="text-center text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
-            {localUi('Sample data', 'Idatha yesibonelo', lang)}
-          </p>
-        )}
       </main>
 
       <TabBar hideAtDesktop />

@@ -14,7 +14,7 @@ const GOLD = '#C07A1E';
 const FOREST = '#1F4D2B';
 const INK = '#20190F';
 const MUTED = '#5C5040';
-const BORDER = '#E2D8C4';
+const BORDER = 'var(--border)';
 const DANGER = '#C0531E';
 
 export default function SiteManageMenu({ place }: { place: SavedPlace }) {
@@ -114,7 +114,7 @@ export default function SiteManageMenu({ place }: { place: SavedPlace }) {
 
           {mode === 'rename' && (
             <div style={{ padding: 6 }}>
-              <input
+              <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                 value={name}
                 autoFocus
                 onChange={(e) => setName(e.target.value)}

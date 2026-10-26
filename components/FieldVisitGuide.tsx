@@ -9,12 +9,12 @@ export default function FieldVisitGuide({ actProgramme }: { actProgramme: boolea
     <p>Walk the garden together. Look, ask and practise.</p>
     <ol className={styles.guide}>
       {[
-        { title: 'Garden & water', detail: 'Check beds, water access, repairs and crop protection.', Icon: Droplets, tone: '#e5f0f5', ink: '#245f78' },
-        { title: 'Soil & seedlings', detail: 'Look at soil cover, compost, seedlings and the next planting.', Icon: Sprout, tone: '#edf2df', ink: '#466326' },
-        { title: 'Harvest & food access', detail: 'Separate what is eaten or shared, sold and stored.', Icon: ShoppingBasket, tone: '#fbefdb', ink: '#845614' },
-        { title: 'Learning & next action', detail: 'Watch a practical skill. Agree an action, owner and date.', Icon: GraduationCap, tone: '#eeeaf5', ink: '#62507b' },
+        { title: 'Garden & water', detail: 'Check beds, water access, repairs and crop protection.', Icon: Droplets, tone: 'blue', ink: 'var(--blue)' },
+        { title: 'Soil & seedlings', detail: 'Look at soil cover, compost, seedlings and the next planting.', Icon: Sprout, tone: 'emerald', ink: 'var(--emerald)' },
+        { title: 'Harvest & food access', detail: 'Separate what is eaten or shared, sold and stored.', Icon: ShoppingBasket, tone: 'gold', ink: 'var(--gold-dim)' },
+        { title: 'Learning & next action', detail: 'Watch a practical skill. Agree an action, owner and date.', Icon: GraduationCap, tone: 'violet', ink: 'var(--violet)' },
       ].map(({ title, detail, Icon, tone, ink }, index) => <li key={title}>
-        <span className={styles.guideIcon} style={{ background: tone, color: ink }} aria-hidden="true"><Icon size={32} strokeWidth={1.65}/></span>
+        <span className={styles.guideIcon} style={{ background: `color-mix(in srgb, var(--${tone}) 12%, var(--bg-1))`, color: ink }} aria-hidden="true"><Icon size={32} strokeWidth={1.65}/></span>
         <div><strong><span className={styles.stepNumber}>{index + 1}</span>{title}</strong><p>{detail}</p></div>
       </li>)}
     </ol>

@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { ensureWave16Current, wave16SourceBefore } from './wave-16-history-checks.ts';
 
 // Wave 14 (17 Oct 2026, study track: code-11 / ux-01 / desk-06 / zu-04 / code-20 + the integrator's
 // adoption of the shared language note): the Studies page swaps its three hand-built headers for the
@@ -43,10 +44,13 @@ export function ensureWave14StudyCurrent(): void {
     return s ? [file, s.dev, s.ino, s.size, s.mtimeNs, s.ctimeNs].join(':') : file + ':absent';
   }).join('|');
   if (signature === lastSuccessfulSignature) return;
+  // The newer wave 16 layer sits on this one: its owned sources are checked and projected to
+  // their exact wave 15 bytes before this layer's byte-exact pins run.
+  ensureWave16Current();
   for (const [file, row] of Object.entries(files)) {
     const before = read(row.beforePath);
     assert.equal(sha(before), row.beforeSha256, file + ': wave 14 predecessor fixture may not change');
-    const live = read(file);
+    const live = wave16SourceBefore(file, read(file));
     assert.equal(live.length, row.afterBytes, file + ': complete live wave 14 successor size');
     assert.equal(sha(live), row.afterSha256, file + ': complete live wave 14 successor, including every unlisted byte');
     const a = before.toString(), b = live.toString();
@@ -71,6 +75,7 @@ export function wave14StudySourceBefore<T extends string | Uint8Array>(file: str
   const row = files[file];
   if (!row) return supplied;
   ensureWave14StudyCurrent();
+  supplied = wave16SourceBefore(file, supplied);
   if (sha(supplied) !== row.afterSha256) return supplied;
   const before = beforeFiles.get(file)!;
   return (typeof supplied === 'string' ? before.toString() : Buffer.from(before)) as T;

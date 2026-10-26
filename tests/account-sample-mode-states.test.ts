@@ -45,3 +45,10 @@ test('the no-backend / timed-out fallback offers a sign-in action rather than no
   const lastReturnAt = page.lastIndexOf("{copy('Sign in', 'Ngena ngemvume')}");
   assert.ok(lastReturnAt > 0, 'the sign-in fallback button text is gone');
 });
+
+test('w15-03: the loading, tour and sign-in states still give the page a heading', () => {
+  const page = readFileSync('app/account/page.tsx', 'utf8');
+  const shell = page.slice(page.indexOf('function AccountShellHeader'), page.indexOf('const ROLE_LABELS'));
+  assert.match(shell, /<h1 className="sr-only">\{copy\('Account', 'I-akhawunti'\)\}<\/h1>/,
+    'AppHeader renders its title as a span, so without this /account has no h1 in sample mode');
+});

@@ -233,7 +233,7 @@ export default function CommunityProfilePage() {
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
               placeholder={t('communityDisplayNamePlaceholder')}
-              className="w-full rounded-xl px-3 py-2.5 font-sans"
+              className="w-full rounded-xl px-3 py-2.5 font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
               style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', outline: 'none' }}
             />
           </div>
@@ -248,7 +248,7 @@ export default function CommunityProfilePage() {
               value={areaText}
               onChange={(e) => setAreaText(e.target.value)}
               placeholder={t('communityAreaPlaceholder')}
-              className="w-full rounded-xl px-3 py-2.5 font-sans"
+              className="w-full rounded-xl px-3 py-2.5 font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
               style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', outline: 'none' }}
             />
             <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>{paired('communityAreaHint')}</div>
@@ -264,7 +264,7 @@ export default function CommunityProfilePage() {
               onChange={(e) => setBio(e.target.value.slice(0, 240))}
               placeholder={t('communityBioPlaceholder')}
               rows={3}
-              className="w-full rounded-xl px-3 py-2.5 font-sans"
+              className="w-full rounded-xl px-3 py-2.5 font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
               style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', outline: 'none', resize: 'none', lineHeight: 1.5 }}
             />
           </div>

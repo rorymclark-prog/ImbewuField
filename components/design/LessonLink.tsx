@@ -13,7 +13,7 @@ import { getLesson } from '@/lib/lesson-registry';
 import { useLanguage } from '@/lib/i18n';
 import { LessonPanel } from './LessonPanel';
 
-const GREEN = '#1F4D2B';
+const GREEN = 'var(--color-forest-800)'; // text, icon and border on the page ground: follows the theme (leaf in dark)
 
 export default function LessonLink({
   id,
@@ -38,11 +38,12 @@ export default function LessonLink({
           minHeight: 44,
           padding: '4px 10px',
           borderRadius: 999,
-          border: tone === 'menu' ? '1px solid var(--border)' : `1px solid ${GREEN}`,
-          background: 'transparent',
-          color: tone === 'menu' ? 'var(--text-primary)' : GREEN,
+          // w20-24: 'chip' matches the header Settings pill (bg-1 fill, hairline border, primary ink).
+          border: '1px solid var(--border)',
+          background: tone === 'chip' ? 'var(--bg-1)' : 'transparent',
+          color: 'var(--text-primary)',
           fontSize: 12,
-          fontWeight: 700,
+          fontWeight: tone === 'chip' ? 500 : 700,
           cursor: 'pointer',
         }
       : {

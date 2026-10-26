@@ -10,6 +10,7 @@ import {
 } from '@/lib/exchange';
 import ShareListingButton from './ShareListingButton';
 import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL, ZU_CATEGORY_LABEL, ZU_KIND_LABEL, ZU_MONTH_LABEL } from './theme';
+import { produceLabel } from '@/lib/produce-label';
 import { getCropArt } from '@/lib/crop-art';
 import { useLanguage } from '@/lib/i18n';
 
@@ -92,39 +93,43 @@ export default function ListingCard({
       }}
     >
       {/* Kind · category · crop · posted */}
-      <div className="flex items-center gap-2 flex-wrap" style={{ marginBottom: 8 }}>
+      {/* w19-06: two fixed columns (identity | status), so "Sample · 1d ago" always sits top-right
+          instead of landing on a different wrapped line on each card. */}
+      <div className="grid items-start gap-x-2" style={{ gridTemplateColumns: 'minmax(min-content, 1fr) auto', marginBottom: 8 }}>
+        <div className="flex items-center gap-2 flex-wrap min-w-0">
         <span
-          className="font-sans font-bold uppercase"
+          className="font-sans font-bold uppercase shrink-0"
           style={{
-            fontSize: 10,
+            fontSize: 12,
             padding: '3px 9px',
             borderRadius: 100,
             background: KIND_COLOR[listing.kind],
-            color: 'var(--on-forest)',
+            color: 'var(--bg-1)',
             letterSpacing: '0.05em',
           }}
         >
           {zu ? ZU_KIND_LABEL[listing.kind] : KIND_LABEL[listing.kind]}
         </span>
-        <span className="font-sans" style={{ fontSize: 11.5, color: EX.faint }}>
+        <span className="font-sans" style={{ fontSize: 12, color: EX.faint }}>
           {zu ? ZU_CATEGORY_LABEL[listing.category] : CATEGORY_LABEL[listing.category]}
         </span>
         {crop && (
-          <span className="font-sans" style={{ fontSize: 11.5, color: EX.muted, display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+          <span className="font-sans" style={{ fontSize: 12, color: EX.muted, display: 'inline-flex', alignItems: 'center', gap: 3 }}>
             {getCropArt(listing.cropKey ?? '') ? (
-              <img className="produce-art" src={getCropArt(listing.cropKey ?? '')} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain' }} />
+              <img className="produce-art produce-art--inline" src={getCropArt(listing.cropKey ?? '')} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain' }} />
             ) : (
               <span>{crop.icon}</span>
             )}{' '}
-            {crop.name}
+            {produceLabel(listing.cropKey ?? '', lang)}
           </span>
         )}
-        <div style={{ flex: 1, minWidth: 8 }} />
+        </div>
+        <div className="flex flex-col items-end gap-1">
         {mine && (
           <span
             className="font-sans font-semibold"
             style={{
-              fontSize: 10,
+              fontSize: 12,
               padding: '2px 7px',
               borderRadius: 100,
               background: 'rgba(31,77,43,0.1)',
@@ -139,7 +144,7 @@ export default function ListingCard({
           <span
             className="font-sans font-semibold"
             style={{
-              fontSize: 10,
+              fontSize: 12,
               padding: '2px 7px',
               borderRadius: 100,
               background: 'rgba(192,122,30,0.12)',
@@ -151,8 +156,9 @@ export default function ListingCard({
           </span>
         )}
         {posted && (
-        <span className="font-sans" style={{ fontSize: 11, color: EX.faint }}>{posted}</span>
+        <span className="font-sans" style={{ fontSize: 12, color: EX.faint, whiteSpace: 'nowrap' }}>{posted}</span>
         )}
+        </div>
       </div>
 
       <h3 className="font-display font-semibold" style={{ fontSize: 15, color: EX.ink, margin: '0 0 4px' }}>
@@ -169,7 +175,7 @@ export default function ListingCard({
         {qty && (
           <span
             className="font-sans font-semibold rounded-lg"
-            style={{ fontSize: 12.5, padding: '4px 10px', background: 'rgba(226,216,196,0.55)', color: EX.ink }}
+            style={{ fontSize: 12.5, padding: '4px 10px', background: 'var(--bg-2)', color: EX.ink }}
           >
             {qty}
           </span>

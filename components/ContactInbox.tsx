@@ -262,7 +262,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                   >
                     {msg.from_name ?? (lang === 'zu' ? 'Umthumeli ongaziwa' : 'Unknown sender')}
                   </span>
-                  <span className="font-sans flex-shrink-0" style={{ fontSize: 11, color: 'var(--text-muted)' }}>
+                  <span className="font-sans flex-shrink-0" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
                     {formatDate(msg.created_at, lang)}
                   </span>
                 </div>
@@ -287,7 +287,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                 <div className="font-sans text-xs pt-2 pb-3" style={{ color: 'var(--text-muted)' }}>
                   {lang === 'zu' ? 'Ithunyelwe ku: ' : 'Sent to: '}<span style={{ textTransform: 'capitalize' }}>{msg.recipient}</span>
                   {msg.status === 'replied' && (
-                    <span className="ml-2 px-1.5 py-0.5 rounded font-sans" style={{ fontSize: 11, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.2)' }}>
+                    <span className="ml-2 px-1.5 py-0.5 rounded font-sans" style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.2)' }}>
                       {lang === 'zu' ? 'kuphenduliwe' : 'replied'}
                     </span>
                   )}
@@ -318,7 +318,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                     className="mt-2 flex items-center gap-1.5 font-display font-semibold text-xs px-4 py-2 rounded-xl"
                     style={{
                       background: replyText[msg.id]?.trim() ? 'var(--color-forest-800)' : 'rgba(32,25,15,0.08)',
-                      color: replyText[msg.id]?.trim() ? 'var(--on-forest)' : 'var(--text-muted)',
+                      color: replyText[msg.id]?.trim() ? 'var(--on-forest-800, var(--on-forest))' : 'var(--text-muted)',
                       border: 'none', cursor: replyText[msg.id]?.trim() ? 'pointer' : 'default',
                     }}
                   >

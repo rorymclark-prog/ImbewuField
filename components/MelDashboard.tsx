@@ -28,7 +28,7 @@ type Analysis = ReturnType<typeof analyseAssessment> & { comments: { question: s
 export function MelMetrics({ metrics, zu = false }: { metrics: MelMetric[]; zu?: boolean }) {
   return <div className={styles.grid}>{metrics.map(m => <div className={styles.metric} key={m.id}>
     <strong>{zu ? <SurveyZuluDraftPair english={m.en}>{m.zu}</SurveyZuluDraftPair> : m.en}</strong>
-    {m.suppressed ? <p className={styles.muted}>{zu ? <SurveyZuluDraftPair english="Withheld to protect a small group.">Kugodliwe ukuvikela iqembu elincane.</SurveyZuluDraftPair> : 'Withheld to protect a small group.'}</p> : <>
+    {m.suppressed ? <p className={styles.muted}>{zu ? <SurveyZuluDraftPair english="Withheld to protect a small group.">Kugodliwe ukuvikela iqembu elincane.</SurveyZuluDraftPair> : 'Withheld to protect a small group.'}</p> : m.n === 0 ? <p className={styles.muted}>{zu ? <SurveyZuluDraftPair english="No answers yet">Azikabikho izimpendulo okwamanje</SurveyZuluDraftPair> : 'No answers yet'}</p> : <>
       <p className={styles.muted}>{m.n} {zu ? <SurveyZuluDraftPair english="answered">baphendulile</SurveyZuluDraftPair> : 'answered'} · {m.missing} {zu ? <SurveyZuluDraftPair english="skipped">beqile</SurveyZuluDraftPair> : 'skipped'}</p>
       {m.mean !== undefined && <p>{zu ? <SurveyZuluDraftPair english="Average">Isilinganiso</SurveyZuluDraftPair> : 'Average'}: <strong>{numberLabel(m.mean, 2)}</strong></p>}
       {m.choices?.map(o => <div key={o.value}><div className={styles.row}><span>{zu ? <SurveyZuluDraftPair english={o.en}>{o.zu}</SurveyZuluDraftPair> : o.en}</span><strong>{o.count}</strong></div><div className={styles.bar}><span style={{ width: `${m.n ? 100 * o.count / m.n : 0}%` }} /></div></div>)}

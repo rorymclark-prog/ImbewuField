@@ -19,7 +19,7 @@ import type { SalesLog, ProductionLog, ExpenseLog, ExpenseCategory } from '@/lib
 import { loadInvoices, paymentMethodLabel, type SavedInvoice } from '@/lib/invoices';
 // A sample R12.50 cost appeared as R13 here while its receipt kept the cents.
 // The ledger must use the same exact-money formatter as the buyer's document.
-import { formatInvoiceZar as fmtZAR } from '@/lib/invoice-document';
+import { formatInvoiceZar } from '@/lib/invoice-document';
 import {
   isSampleMode, enterSampleMode,
   getSandboxSales, addSandboxSale, updateSandboxSale, deleteSandboxSale,
@@ -28,6 +28,7 @@ import {
 } from '@/lib/sample-mode';
 import HarvestReconciliation from '@/components/HarvestReconciliation';
 import BrandLogo from '@/components/BrandLogo';
+import DesktopPrimaryNav from '@/components/layout/DesktopPrimaryNav';
 import LanguageDraftNote from '@/components/LanguageDraftNote';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
@@ -66,6 +67,11 @@ import { recordQuantity, recordUnit, recordQuantityPayload, recordWeightKg, quan
 import { parseDecimalInput } from '@/lib/decimal-input';
 import { recordsFill, recordsPaired, recordsTemplate, recordsQuantityLabel, isRecordsRegionalLang, recordsDraftNotice } from '@/lib/records-regional-drafts';
 import { recordsDate } from '@/lib/records-months';
+
+// w19-12: on screen the thousands separator is a no-break space so "R8 175,00" never splits
+// across lines. lib/invoice-document.ts keeps the plain space because jsPDF's core fonts
+// cannot encode U+00A0 and the same formatter feeds the PDF.
+const fmtZAR = (n: number): string => formatInvoiceZar(n).replace(/ /g, '\u00A0');
 
 /* ── One book, three tabs, and the charts as a view inside it ────────────────
  *
@@ -160,7 +166,7 @@ function Skeleton({ className = '', style }: { className?: string; style?: React
   return (
     <div
       className={`animate-pulse rounded-lg ${className}`}
-      style={{ background: 'rgba(226,216,196,0.55)', ...style }}
+      style={{ background: 'color-mix(in srgb, var(--border) 55%, transparent)', ...style }}
     />
   );
 }
@@ -264,12 +270,12 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
           ) : (
             <>
               <p
-                className="font-display font-bold text-sm leading-tight"
+                className="font-display font-bold text-sm leading-tight whitespace-nowrap"
                 style={{ color: 'var(--color-ink)' }}
               >
                 {card.value}
               </p>
-              <p className="font-mono text-xs leading-tight" style={{ color: 'var(--color-muted-strong)' }}>
+              <p className="text-xs leading-tight break-words hyphens-auto min-w-0" style={{ color: 'var(--color-muted-strong)' }}>
                 {card.label}
               </p>
             </>
@@ -321,7 +327,7 @@ function SimpleMoneySummary({ series, lang }: { series: FinanceSeries; lang: str
           { moneyIn: fmtZAR(series.totalInZar), moneyOut: fmtZAR(series.totalOutZar) },
         )}
       </p>
-      <p className="font-sans text-xs mt-2" style={{ color: 'var(--color-muted)' }}>
+      <p className="font-sans text-xs mt-2" style={{ color: 'var(--text-secondary)' }}>
         {recordsText(lang, 'Only what you have written down.', 'Yilokho kuphela osukubhalile.')}
       </p>
     </div>
@@ -427,7 +433,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
         style={{ borderBottom: '1px solid var(--color-border)' }}
       >
         <Receipt size={14} style={{ color: 'var(--color-muted-strong)' }} />
-        <span className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--color-muted-strong)' }}>
+        <span className="text-xs uppercase tracking-wider" style={{ color: 'var(--color-muted-strong)' }}>
           {heading}
         </span>
       </div>
@@ -458,7 +464,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
                   {item.title}
                 </p>
                 {item.subtitle && (
-                  <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--color-muted)' }}>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                     {item.subtitle}
                   </p>
                 )}
@@ -466,12 +472,12 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
               </div>
               <div className="flex-shrink-0 text-right">
                 <p
-                  className="text-sm font-display font-semibold"
+                  className="text-sm font-display font-semibold whitespace-nowrap"
                   style={{ color: item.positive ? 'var(--record-positive)' : 'var(--record-negative)' }}
                 >
                   {item.positive ? '+' : '-'}{fmtZAR(item.amount)}
                 </p>
-                <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--color-muted)' }}>
+                <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                   {fmtDate(item.iso, lang)}
                 </p>
               </div>
@@ -799,7 +805,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
           </p>
         ) : (
           /* Money in / out toggle */
-          <div className="flex rounded-xl p-0.5 gap-0.5" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid var(--color-border)' }}>
+          <div className="flex rounded-xl p-0.5 gap-0.5" style={{ background: 'color-mix(in srgb, var(--border) 50%, transparent)', border: '1px solid var(--color-border)' }}>
             {([['in', recordsText(lang, 'Money in', 'Imali engenayo')], ['out', recordsText(lang, 'Money out', 'Imali ephumayo')]] as const).map(([k, label]) => (
               <button key={k} type="button" disabled={form.loading} onClick={() => { clearReceiptDraft(); setKind(k); setForm((f) => ({ ...f, error: '' })); }}
                 className="flex-1 py-1.5 rounded-lg font-sans font-semibold transition-all"
@@ -865,13 +871,13 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         {!isIn && (
           <div>
             <label htmlFor={`${idPrefix}-expense-crop`} className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
-              {recordsText(lang, 'Crop this cost was for', 'Isitshalo lezi zindleko ebezingezaso')} <span className="normal-case" style={{ color: 'var(--color-muted)' }}>({recordsText(lang, 'optional', 'uma uthanda')})</span>
+              {recordsText(lang, 'Crop this cost was for', 'Isitshalo lezi zindleko ebezingezaso')} <span className="normal-case" style={{ color: 'var(--text-secondary)' }}>({recordsText(lang, 'optional', 'uma uthanda')})</span>
             </label>
             <input id={`${idPrefix}-expense-crop`} type="text" placeholder={recordsText(lang, 'Leave blank if it served the whole garden', 'Shiya kungenalutho uma bekusetshenziselwa ingadi yonke')}
               value={form.expenseCrop} onChange={(e) => setForm((f) => ({ ...f, expenseCrop: e.target.value }))}
-              className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
+              className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
               style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-border)', color: 'var(--color-ink)' }} />
-            <p className="text-xs font-sans mt-1" style={{ color: 'var(--color-muted)' }}>{recordsInstruction(lang, 'Only tag a crop when this cost was just for that crop.', 'Faka isitshalo kuphela uma lezi zindleko bekuqondene naso sodwa.')}</p>
+            <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-secondary)' }}>{recordsInstruction(lang, 'Only tag a crop when this cost was just for that crop.', 'Faka isitshalo kuphela uma lezi zindleko bekuqondene naso sodwa.')}</p>
           </div>
         )}
 
@@ -881,7 +887,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
           </label>
           <input id={`${idPrefix}-crop`} type="text" placeholder={recordsText(lang, isIn ? 'e.g. Spinach' : 'e.g. Seedlings', isIn ? 'isb. Isipinashi' : 'isb. Izithombo')}
             value={form.crop} onChange={(e) => setForm((f) => ({ ...f, crop: e.target.value }))}
-            className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
+            className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
             style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-border)', color: 'var(--color-ink)' }} />
         </div>
 
@@ -891,7 +897,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
             <label htmlFor={`${idPrefix}-price`} className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>{recordsText(lang, 'Amount (R)', 'Inani (R)')}</label>
             <input id={`${idPrefix}-price`} type="number" placeholder="0.00" step="0.01" min="0"
               value={form.price} onChange={(e) => setForm((f) => ({ ...f, price: e.target.value }))}
-              className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
+              className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
               style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-border)', color: 'var(--color-ink)' }} />
           </div>
         </div>
@@ -899,11 +905,11 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         <div>
           <label htmlFor={`${idPrefix}-buyer`} className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
             {recordsText(lang, isIn ? 'Buyer' : 'Supplier', isIn ? 'Umthengi' : 'Umhlinzeki')}
-            <span className="ml-1 normal-case" style={{ color: 'var(--color-muted)' }}>({recordsText(lang, 'optional', 'uma uthanda')})</span>
+            <span className="ml-1 normal-case" style={{ color: 'var(--text-secondary)' }}>({recordsText(lang, 'optional', 'uma uthanda')})</span>
           </label>
           <input id={`${idPrefix}-buyer`} type="text" placeholder={recordsText(lang, isIn ? 'e.g. Local market' : 'e.g. Agri Co-op', isIn ? 'isb. Imakethe yendawo' : 'isb. Inhlangano yezolimo')}
             value={form.buyer} onChange={(e) => setForm((f) => ({ ...f, buyer: e.target.value }))}
-            className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
+            className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
             style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-border)', color: 'var(--color-ink)' }} />
         </div>
 
@@ -911,7 +917,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         {!isIn && (
           <div>
             <label id={`${idPrefix}-category-label`} className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
-              {recordsText(lang, 'Category', 'Isigaba')} <span className="normal-case" style={{ color: 'var(--color-muted)' }}>({recordsText(lang, 'optional', 'uma uthanda')})</span>
+              {recordsText(lang, 'Category', 'Isigaba')} <span className="normal-case" style={{ color: 'var(--text-secondary)' }}>({recordsText(lang, 'optional', 'uma uthanda')})</span>
             </label>
             <div role="group" aria-labelledby={`${idPrefix}-category-label`} className="flex flex-wrap gap-1.5">
               {EXPENSE_CATEGORIES.map((c) => (
@@ -1119,7 +1125,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
       {/* Title bar */}
       <div className="flex items-end justify-between gap-4 mb-5 flex-wrap">
         <div>
-          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.14em' }}>{name}</div>
+          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-secondary)', letterSpacing: '0.14em' }}>{name}</div>
           <h2 className="font-display font-semibold" style={{ fontSize: 30, color: 'var(--color-ink)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>{recordsText(lang, 'Financial sheet', 'Ishidi lezimali')}</h2>
         </div>
         <div className="flex items-center gap-2">
@@ -1131,7 +1137,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
               <Sparkles size={15} />{recordsText(lang, 'Try My Records', 'Zama Amarekhodi Ami')}
             </button>
           )}
-          <div className="flex rounded-lg p-0.5 gap-0.5" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid var(--color-border)' }}>
+          <div className="flex rounded-lg p-0.5 gap-0.5" style={{ background: 'color-mix(in srgb, var(--border) 50%, transparent)', border: '1px solid var(--color-border)' }}>
             {(['month', 'season', 'year'] as Period[]).map((p) => (
               <button key={p} onClick={() => setPeriod(p)} aria-pressed={period === p}
                 className="px-3 py-1.5 rounded-md font-sans font-semibold capitalize transition-all"
@@ -1142,10 +1148,10 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
           </div>
           <button onClick={exportCsv} disabled={rows.length === 0}
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold transition-all"
-            style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: rows.length ? 'var(--color-ink)' : 'var(--color-muted)', fontSize: 14, cursor: rows.length ? 'pointer' : 'not-allowed' }}>
+            style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: rows.length ? 'var(--color-ink)' : 'var(--text-secondary)', fontSize: 14, cursor: rows.length ? 'pointer' : 'not-allowed' }}>
             <Download size={15} />{recordsText(lang, 'Export', 'Khipha')}
           </button>
-          <Link href="/invoice" className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold" style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--record-negative)', fontSize: 14, textDecoration: 'none' }}>
+          <Link href="/invoice" className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', fontSize: 14, textDecoration: 'none' }}>
             <FileText size={15} />{recordsText(lang, 'New invoice', 'I-invoyisi entsha')}
           </Link>
           {/* Was a Link to /records back when the harvest form lived behind a different door.
@@ -1167,7 +1173,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
       <div className="grid grid-cols-4 gap-4 mb-5">
         {stats.map((s) => (
           <div key={s.label} className="rounded-2xl px-5 py-4" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{s.label}</div>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--text-secondary)', letterSpacing: '0.1em' }}>{s.label}</div>
             <div className="t-hero mt-1" style={{ color: s.color }}>{loading ? '…' : s.value}</div>
           </div>
         ))}
@@ -1187,14 +1193,14 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
             <tr style={{ borderBottom: '1px solid var(--color-border)' }}>
           {[recordsText(lang, 'Date', 'Usuku'), recordsText(lang, 'Description', 'Incazelo'), recordsText(lang, 'Qty', 'Inani'), recordsText(lang, 'In', 'Ingenayo'), recordsText(lang, 'Source', 'Umthombo'), recordsText(lang, 'Out', 'Ephumayo')].map((h, i) => (
                 <th key={h} className="font-sans uppercase tracking-wider px-5 py-3"
-                  style={{ fontSize: 12, color: 'var(--color-muted)', textAlign: i === 3 || i === 5 ? 'right' : 'left', letterSpacing: '0.08em', fontWeight: 700 }}>{h}</th>
+                  style={{ fontSize: 12, color: 'var(--text-secondary)', textAlign: i === 3 || i === 5 ? 'right' : 'left', letterSpacing: '0.08em', fontWeight: 700 }}>{h}</th>
               ))}
               <th style={{ width: 40 }} />
             </tr>
           </thead>
           <tbody>
             {rows.length === 0 ? (
-              <tr><td colSpan={7} className="px-5 py-10 text-center font-sans" style={{ fontSize: 14, color: 'var(--color-muted)' }}>
+              <tr><td colSpan={7} className="px-5 py-10 text-center font-sans" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
           {recordsText(lang, `No entries for this ${period}. Use the New-entry button, the Invoice tool, or your phone — everything shows here.`, `Akukho okufakiwe kwale ${period === 'month' ? 'nyanga' : period === 'season' ? 'sizini' : 'minyaka'}. Sebenzisa inkinobho yokufaka okusha, ithuluzi lama-invoyisi noma ifoni yakho — konke kubonakala lapha.`)} {recordsInstruction(lang, DUPLICATE_LEDGER_FOOTER, 'Imigqa yezitshalo kuma-invoyisi akhokhiwe ingena encwadini yokuthengisa ngokuzenzakalelayo futhi ibalwa kanye. Ungayifaki futhi.')}
               </td></tr>
             ) : rows.map((r, i) => (
@@ -1211,7 +1217,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
                 </td>
                 <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: 'var(--color-muted-strong)', whiteSpace: 'nowrap' }}>{r.qty}</td>
                 <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: 'var(--record-positive)', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.inAmt != null ? fmtZAR(r.inAmt) : '—'}</td>
-                <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: 'var(--color-muted)' }}>{r.source}</td>
+                <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: 'var(--text-secondary)' }}>{r.source}</td>
                 <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: 'var(--record-negative)', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.outAmt != null ? fmtZAR(r.outAmt) : '—'}</td>
                 <td className="pr-4 py-3">
                   {(r.kind === 'sale' || r.kind === 'expense') && (
@@ -1235,7 +1241,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
           </tbody>
         </table>
       </div>
-      <p className="font-sans mt-3" style={{ fontSize: 12, color: 'var(--color-muted)' }}>
+      <p className="font-sans mt-3" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
         {recordsInstruction(lang, 'Synced with your phone', 'Ivumelanisiwe nefoni yakho')} · {rows.length} {recordsText(lang, rows.length === 1 ? 'entry' : 'entries', 'okufakiwe')} {recordsText(lang, period, period === 'month' ? 'kule nyanga' : period === 'season' ? 'kule sizini' : 'kulo nyaka')}. {recordsInstruction(lang, 'Add or edit sales and costs here, or with the New-entry button on your phone.', 'Faka noma uhlele ukudayisa nezindleko lapha, noma usebenzise inkinobho yokufaka okusha efonini yakho.')}
       </p>
     </div>
@@ -1286,9 +1292,9 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
                 </p>
               </div>
               <div className="grid grid-cols-3 gap-2">
-                <div><p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Yield', 'Isivuno')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>{crop.hasHarvest ? metricNumber(crop.yieldKgPerM2, 'kg/m²', lang) : recordsText(lang, 'No harvest logged', 'Asikho isivuno esirekhodiwe')}</p></div>
-                <div><p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Turnover', 'Imali yokudayisa')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--blue)' }}>{crop.hasSale ? metricNumber(crop.turnoverZarPerM2, 'R/m²', lang) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
-                <div><p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Price', 'Inani')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--gold)' }}>{crop.hasSale ? metricNumber(crop.priceZarPerKg, 'R/kg', lang) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
+                <div><p className="text-xs uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Yield', 'Isivuno')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>{crop.hasHarvest ? metricNumber(crop.yieldKgPerM2, 'kg/m²', lang) : recordsText(lang, 'No harvest logged', 'Asikho isivuno esirekhodiwe')}</p></div>
+                <div><p className="text-xs uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Turnover', 'Imali yokudayisa')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--blue)' }}>{crop.hasSale ? metricNumber(crop.turnoverZarPerM2, 'R/m²', lang) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
+                <div><p className="text-xs uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Price', 'Inani')}</p><p className="text-sm font-display font-semibold" style={{ color: 'var(--gold)' }}>{crop.hasSale ? metricNumber(crop.priceZarPerKg, 'R/kg', lang) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}</p></div>
               </div>
               <p className="text-xs font-sans mt-2" style={{ color: 'var(--text-secondary)' }}>
                 {crop.hasTaggedCost
@@ -1309,7 +1315,7 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
            achieved numbers off the farmer's own logs, which is why they need no sourcing. */
         <div className="px-4 py-3" style={{ borderTop: '1px solid var(--border)' }}>
           <div className="flex items-baseline justify-between gap-3">
-            <p className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Orchard & food forest', 'Ingadi yezihlahla nezithelo')}</p>
+            <p className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Orchard & food forest', 'Ingadi yezihlahla nezithelo')}</p>
             <p className="text-xs font-sans" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'picked & sold, not per m²', 'kuvunyiwe kwadayiswa, akubalwa nge-m²')}</p>
           </div>
           {metrics.perennialCrops.map((row) => (
@@ -1317,19 +1323,19 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
               <p className="text-sm font-display font-semibold" style={{ color: 'var(--text-primary)' }}>{row.cropName}</p>
               <div className="grid grid-cols-3 gap-2 mt-1">
                 <div>
-                  <p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Picked', 'Okuvunyiwe')}</p>
+                  <p className="text-xs uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Picked', 'Okuvunyiwe')}</p>
                   <p className="text-sm font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>
                     {row.hasHarvest ? metricNumber(row.harvestedKg, 'kg', lang) : recordsText(lang, 'No harvest logged', 'Asikho isivuno esirekhodiwe')}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Sold for', 'Kudayiswe ngo')}</p>
+                  <p className="text-xs uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Sold for', 'Kudayiswe ngo')}</p>
                   <p className="text-sm font-display font-semibold" style={{ color: 'var(--blue)' }}>
                     {row.hasSale ? fmtZAR(row.turnoverZar) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-mono uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Price', 'Inani')}</p>
+                  <p className="text-xs uppercase" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Price', 'Inani')}</p>
                   <p className="text-sm font-display font-semibold" style={{ color: 'var(--gold)' }}>
                     {row.priceZarPerKg !== null ? metricNumber(row.priceZarPerKg, 'R/kg', lang) : recordsText(lang, 'No sales logged', 'Akukho okudayisiwe okurekhodiwe')}
                   </p>
@@ -1351,7 +1357,7 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
         </div>
       )}
       <div className="px-4 py-3" style={{ background: 'var(--bg-1)', borderTop: '1px solid var(--border)' }}>
-        <p className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Garden gross margin', 'Imali yengadi esele ngaphambi kokunye')}</p>
+        <p className="text-xs uppercase tracking-wider" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, 'Garden gross margin', 'Imali yengadi esele ngaphambi kokunye')}</p>
         {metrics.gardenMargins.length === 0 ? (
           <p className="text-xs font-sans mt-1" style={{ color: 'var(--text-secondary)' }}>{recordsText(lang, `No sales or costs logged for this ${period}.`, `Akukho okudayisiwe noma izindleko ezirekhodiwe zale ${period === 'month' ? 'nyanga' : period === 'season' ? 'sizini' : 'minyaka'}.`)}</p>
         ) : metrics.gardenMargins.map((margin) => (
@@ -1603,14 +1609,16 @@ export default function RecordsPage() {
             label simply steps aside — the same pattern the funder and NGO headers use. */}
         <div className="w-px h-5 hidden sm:block" style={{ background: 'var(--color-border)' }} />
         <h1 className="text-xs font-display truncate min-w-0 m-0 sr-only sm:not-sr-only sm:block" style={{ color: 'var(--color-muted-strong)' }}>{t('myRecordsTitle')}</h1>
+        {/* TabBar steps aside at lg+ (hideAtDesktop below), so the four destinations move up here. */}
+        <DesktopPrimaryNav />
         <div className="flex-1" />
         {/* 'finances:overview', which is the id lib/lesson-registry.ts actually holds. The old
             /records header asked for 'finance:overview' — no such lesson — so Learn opened onto
             nothing on the one screen a farmer most needs explained. */}
         <LessonLink id="finances:overview" label={recordsText(lang, 'Learn', 'Funda')} />
         <Link href="/invoice"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
-          style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--record-negative)', textDecoration: 'none' }}>
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-sans font-semibold"
+          style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', textDecoration: 'none' }}>
           <FileText size={13} />{recordsText(lang, 'Invoice', 'I-invoyisi')}
         </Link>
         <SettingsButton />
@@ -1642,7 +1650,7 @@ export default function RecordsPage() {
                 that only appears on one page of the book does not answer it — she would have to
                 remember which page. Sold, spent and picked stay on screen whichever tab is open.
                 Hidden on lg only because the desktop sheet prints its own, wider stat row. */}
-            <div className="lg:hidden">
+            <div className={tab === 'picked' ? undefined : 'lg:hidden'}>
               <SummaryCards
                 sales={sales}
                 production={production}
@@ -1749,8 +1757,9 @@ export default function RecordsPage() {
                 // ledger below instead. Picked has no desktop ledger substitute yet (its
                 // harvest-entry form has no FinancialSheet equivalent), so it still shows
                 // here at every width.
-                className={`rounded-2xl${tab === 'sold' ? ' lg:hidden' : ''}`}
-                style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
+                // w19-11: plain wrapper (the MyRecords Card inside is the one surface) and
+                // full width like the other tabs, no half-empty desktop.
+                className={tab === 'sold' ? 'lg:hidden' : undefined}
               >
                 <MyRecords section={tab} onChanged={loadData} />
               </div>
@@ -1832,7 +1841,7 @@ export default function RecordsPage() {
                   production={production}
                   expenses={expenses}
                   invoices={invoices}
-                  name={sampling ? 'Ubhejane Creche' : (user ? (user.displayName ?? recordsText(lang, 'My farm', 'Ipulazi lami')) : recordsText(lang, 'My farm', 'Ipulazi lami'))}
+                  name={sampling ? 'Ubhejane Crèche' : (user ? (user.displayName ?? recordsText(lang, 'My farm', 'Ipulazi lami')) : recordsText(lang, 'My farm', 'Ipulazi lami'))}
                   loading={dataLoading}
                   period={period}
                   setPeriod={setPeriod}
@@ -1927,7 +1936,7 @@ export default function RecordsPage() {
                     onClick={() => exportLedgerCsv(buildLedgerRows(sales, expenses, production, invoices, 'month', new Date(), csvLang(lang)), 'month', csvLang(lang))}
                     disabled={!hasAnyData}
                     className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold transition-all"
-                    style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: hasAnyData ? 'var(--color-ink)' : 'var(--color-muted)', cursor: hasAnyData ? 'pointer' : 'not-allowed' }}
+                    style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: hasAnyData ? 'var(--color-ink)' : 'var(--text-secondary)', cursor: hasAnyData ? 'pointer' : 'not-allowed' }}
                   >
                     <Download size={15} />{recordsText(lang, 'Export this month (CSV)', 'Khipha okwale nyanga (CSV)')}
                   </button>
@@ -1960,7 +1969,7 @@ export default function RecordsPage() {
           made. */}
       <LimaBar />
 
-      <TabBar />
+      <TabBar hideAtDesktop />
     </div>
   );
 }

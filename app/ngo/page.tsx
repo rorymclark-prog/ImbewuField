@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import { BarChart3, Sprout, Inbox } from 'lucide-react';
+import { Sprout, Inbox, Map, ClipboardList, Eye, FileText, LayoutDashboard, MapPin, TrendingUp, Users } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -15,7 +15,6 @@ import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import ContactInbox from '@/components/ContactInbox';
 import LessonLink from '@/components/design/LessonLink';
-import { useProductTour } from '@/components/ProductTourProvider';
 import type { UserRole } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n-context';
 import { useAppLevel } from '@/lib/app-level';
@@ -74,10 +73,6 @@ export default function NgoPage() {
   const [view, setView] = useState<NgoView>('cohort');
   const [msgUnread, setMsgUnread] = useState(0);
   const simple = useAppLevel() === 'simple';
-  // staff-10: when a product tour is already running, MenuButton floats its own 'Tour N/total'
-  // pill, so this static text link duplicated that entry point. Hide it only while a tour is
-  // actually active; it is still the way to start one the rest of the time.
-  const tour = useProductTour();
 
   useEffect(() => {
     // Sample mode has no user by design; bouncing it to /login would make the
@@ -106,7 +101,7 @@ export default function NgoPage() {
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       <AppHeader
-        title={tr(lang, 'Organisation · programme overview', 'Inhlangano · ukubuka konke kohlelo')}
+        title={tr(lang, 'Organisation', 'Inhlangano')}
         backFallback="/"
         right={<>
           {/* Conditional for the same reason as /funder: this dashboard reads real gardens and
@@ -121,35 +116,36 @@ export default function NgoPage() {
           {!simple && (
             <Link
               href="/network"
-              className="text-xs font-display hidden sm:block"
-              style={{ color: 'var(--color-forest-800)', textDecoration: 'none', marginRight: 4 }}
+              aria-label={tr(lang, 'Portfolio map', 'Imephu yohlelo')}
+              className="hidden sm:inline-flex lg:hidden items-center gap-1.5 px-3 text-sm font-sans font-semibold whitespace-nowrap rounded-full"
+              style={{ minHeight: 44, color: 'var(--text-primary)', border: '1px solid var(--border)', textDecoration: 'none' }}
             >
-              {tr(lang, 'Portfolio map →', 'Imephu yohlelo →')}
+              <Map size={16} aria-hidden="true" />
+              <span data-header-label>{tr(lang, 'Portfolio map', 'Imephu yohlelo')}</span>
             </Link>
           )}
           <LessonLink id="ngo:overview" label={tr(lang, 'Learn', 'Funda')} />
-          {!tour?.active && <Link href="/tour" className="shrink-0 text-sm font-semibold">{tr(lang, 'Take a tour', 'Buka uhambo')}</Link>}
           <RoleSwitcher current="ngo" />
         </>}
       />
 
       <DashboardTabs>
         {(simple ? [
-          { key: 'cohort',   label: tr(lang, 'Cohort', 'Iqembu'),   icon: BarChart3, badge: 0 },
+          { key: 'cohort',   label: tr(lang, 'Cohort', 'Iqembu'),   icon: Users, badge: 0 },
           { key: 'gardens',  label: tr(lang, 'Gardens', 'Izingadi'), icon: Sprout,    badge: 0 },
           { key: 'messages', label: tr(lang, 'Messages', 'Imiyalezo'), icon: Inbox,     badge: msgUnread },
-          { key: 'reports', label: tr(lang, 'Reports', 'Imibiko'), icon: BarChart3, badge: 0 },
-          { key: 'training', label: tr(lang, 'Training', 'Ukuqeqeshwa'), icon: BarChart3, badge: 0 },
+          { key: 'reports', label: tr(lang, 'Reports', 'Imibiko'), icon: FileText, badge: 0 },
+          { key: 'training', label: tr(lang, 'Training', 'Ukuqeqeshwa'), icon: TrendingUp, badge: 0 },
         ] as const : [
-          { key: 'access', label: tr(lang, 'Control centre', 'Isikhungo sokulawula'), icon: BarChart3, badge: 0 },
-          { key: 'evidence', label: tr(lang, 'Training & progress', 'Ukuqeqeshwa nenqubekelaphambili'), icon: BarChart3, badge: 0 },
-          { key: 'reports', label: tr(lang, 'Reports', 'Imibiko'), icon: BarChart3, badge: 0 },
-          { key: 'cohort',   label: tr(lang, 'Cohort', 'Iqembu'),   icon: BarChart3, badge: 0 },
+          { key: 'access', label: tr(lang, 'Control centre', 'Isikhungo sokulawula'), icon: LayoutDashboard, badge: 0 },
+          { key: 'evidence', label: tr(lang, 'Training & progress', 'Ukuqeqeshwa nenqubekelaphambili'), icon: TrendingUp, badge: 0 },
+          { key: 'reports', label: tr(lang, 'Reports', 'Imibiko'), icon: FileText, badge: 0 },
+          { key: 'cohort',   label: tr(lang, 'Cohort', 'Iqembu'),   icon: Users, badge: 0 },
           { key: 'gardens',  label: tr(lang, 'Gardens', 'Izingadi'), icon: Sprout,    badge: 0 },
           { key: 'messages', label: tr(lang, 'Messages', 'Imiyalezo'), icon: Inbox,     badge: msgUnread },
-          { key: 'assessments', label: tr(lang, 'Assessments', 'Ukuhlola'), icon: BarChart3, badge: 0 },
-          { key: 'area', label: tr(lang, 'Production area', 'Indawo yokukhiqiza'), icon: BarChart3, badge: 0 },
-          { key: 'funder-preview', label: tr(lang, 'Funder summary preview', 'Ukubuka kafushane kwabaxhasi'), icon: BarChart3, badge: 0 },
+          { key: 'assessments', label: tr(lang, 'Assessments', 'Ukuhlola'), icon: ClipboardList, badge: 0 },
+          { key: 'area', label: tr(lang, 'Production area', 'Indawo yokukhiqiza'), icon: MapPin, badge: 0 },
+          { key: 'funder-preview', label: tr(lang, 'Funder summary preview', 'Ukubuka kafushane kwabaxhasi'), icon: Eye, badge: 0 },
         ] as const).map(({ key, label, icon: Icon, badge }) => (
           <button
             key={key}
@@ -164,19 +160,19 @@ export default function NgoPage() {
               minHeight: 44,
               border: 'none',
               cursor: 'pointer',
-              color: view === key ? 'var(--color-forest-800)' : 'var(--text-muted)',
+              color: view === key ? 'var(--color-forest-800)' : 'var(--text-secondary)',
               borderBottom: view === key ? '2px solid var(--color-forest-800)' : '2px solid transparent',
               marginBottom: -1,
             }}
           >
-            <Icon size={13} />
+            <Icon size={16} aria-hidden="true" />
             {label}
             {badge != null && badge > 0 && (
               <span className="flex items-center justify-center rounded-full font-display tabular-nums"
                 // Was fontSize 9, under the 12px micro-label floor and genuinely hard to read on a
                 // laptop. Raised with the pill grown to match, since a 12px digit does not fit a
                 // 16px circle.
-                style={{ minWidth: 19, height: 19, fontSize: 12, padding: '0 5px', background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>
+                style={{ minWidth: 19, height: 19, fontSize: 12, padding: '0 5px', background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))' }}>
                 {badge}
               </span>
             )}
@@ -195,7 +191,7 @@ export default function NgoPage() {
         <div className="flex-1 flex flex-col overflow-hidden">
           {/* code-13: the only heading on this page used to be the 13px header chip in AppHeader
               (a <span>, not a heading) — a real, properly-sized h1 on the default tab. */}
-          <h1 className="t-h1 font-display px-4 pt-3" style={{ color: 'var(--text-primary)' }}>
+          <h1 className="t-h1 font-display px-3 md:px-5 pt-3" style={{ color: 'var(--text-primary)' }}>
             {tr(lang, 'Organisation dashboard', 'Ibhodi lenhlangano')}
           </h1>
           <MelDashboard compact />
@@ -213,7 +209,7 @@ export default function NgoPage() {
         </div>
       )}
       {view === 'access' && <div className="flex-1 min-h-0 flex overflow-hidden"><OrganisationControlCentre /></div>}
-      {view === 'reports' && <div className="flex-1 min-h-0 flex overflow-hidden"><ProgrammeReports /></div>}
+      {view === 'reports' && <div className="flex-1 min-h-0 flex overflow-hidden"><ProgrammeReports onOpenProgress={() => setView('evidence')} onOpenCohort={() => setView('cohort')} /></div>}
       {view === 'area' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden"><ProductionAreas /></div>}
       {view === 'assessments' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden"><MelDashboard /></div>}
       {view === 'funder-preview' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden"><div className="flex-1 overflow-y-auto"><FunderAssessments /><ProductionAreas publishedOnly /></div></div>}

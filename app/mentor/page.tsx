@@ -4,7 +4,7 @@ import { samplePortrait } from '@/lib/sample-media';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Loader2, GraduationCap, Inbox, Home, UserPlus, X, CalendarClock, AlertTriangle, PauseCircle, PlayCircle } from 'lucide-react';
+import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Loader2, GraduationCap, Inbox, Home, UserPlus, X, CalendarClock, AlertTriangle, PauseCircle, PlayCircle, MapPin } from 'lucide-react';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useLanguage } from '@/lib/i18n-context';
 import { useAuth } from '@/lib/auth';
@@ -18,6 +18,7 @@ import {
   getAssignmentsForProfiles, assignModule, unassignModule,
 } from '@/lib/db/queries';
 import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS } from '@/lib/course-modules';
+import { CATEGORY_TEXT_COLORS } from '@/lib/category-text-colors';
 import type { Profile, CourseProgress, UserRole } from '@/lib/db/types';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
@@ -229,7 +230,7 @@ function TraineeCard({
               </p>
               <button onClick={() => onEnrol(trainee.id)} disabled={busy}
                 className="flex items-center gap-2 text-xs font-display font-semibold px-3 py-2 rounded-xl"
-                style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', cursor: busy ? 'wait' : 'pointer', opacity: busy ? 0.6 : 1 }}>
+                style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', border: 'none', cursor: busy ? 'wait' : 'pointer', opacity: busy ? 0.6 : 1 }}>
                 {busy ? <Loader2 size={13} className="animate-spin" /> : <UserPlus size={13} />}
                 {tr(lang, 'Enrol on the course', 'Mbhalise esifundweni')}
               </button>
@@ -321,7 +322,7 @@ function TraineeCard({
                     {mod.title}
                   </span>
                   <span className="text-xs font-display tabular-nums px-1.5 py-0.5 rounded flex-shrink-0"
-                    style={{ background: CATEGORY_COLORS[mod.category] + '15', color: CATEGORY_COLORS[mod.category] }}>
+                    style={{ background: CATEGORY_COLORS[mod.category] + '15', color: CATEGORY_TEXT_COLORS[mod.category] }}>
                     {mod.durationMins}m
                   </span>
                   {enrollment && (assignment ? (
@@ -579,7 +580,7 @@ export default function MentorPage() {
             <button
               onClick={() => router.push(role==='funder'?'/funder':'/home')}
               className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold text-sm transition-all"
-              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}
+              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))' }}
             >
               <Home size={15} />
               {role==='funder' ? tr(lang, 'Open funder workspace', 'Vula indawo yabaxhasi') : tr(lang, 'Back to my home', 'Buyela ekhasini lami lasekhaya')}
@@ -624,9 +625,9 @@ export default function MentorPage() {
       {/* Tab strip */}
       <DashboardTabs>
         {([
-          { key: 'field', label: tr(lang, 'Fieldwork', 'Umsebenzi wasensimini'), icon: Users, badge: 0 },
+          { key: 'field', label: tr(lang, 'Fieldwork', 'Umsebenzi wasensimini'), icon: MapPin, badge: 0 },
           { key: 'evidence', label: tr(lang, 'Training', 'Ukuqeqeshwa'), icon: BookOpen, badge: 0 },
-          { key: 'trainees', label: tr(lang, 'Learning', 'Ukufunda'), icon: Users,  badge: 0 },
+          { key: 'trainees', label: tr(lang, 'Learning', 'Ukufunda'), icon: GraduationCap, badge: 0 },
           { key: 'messages', label: tr(lang, 'Messages', 'Imiyalezo'), icon: Inbox, badge: msgUnread },
         ] as const).map(({ key, label, icon: Icon, badge }) => (
           <button
@@ -635,9 +636,10 @@ export default function MentorPage() {
             onClick={() => { setView(key); setVisitPerson(''); if (key === 'trainees') void load(); }}
             aria-label={label}
             aria-pressed={view === key}
-            className="flex items-center gap-1.5 py-2.5 px-3 font-display text-xs font-semibold relative"
+            className="flex items-center gap-1.5 py-2.5 px-3 font-sans text-sm font-semibold relative shrink-0 whitespace-nowrap"
             style={{
               background: 'transparent',
+              minHeight: 44,
               border: 'none',
               cursor: 'pointer',
               color: view === key ? 'var(--color-forest-800)' : 'var(--text-secondary)',
@@ -645,13 +647,13 @@ export default function MentorPage() {
               marginBottom: -1,
             }}
           >
-            <Icon size={13} />
+            <Icon size={16} aria-hidden="true" />
             {label}
             {badge != null && badge > 0 && (
               <span className="flex items-center justify-center rounded-full font-display tabular-nums"
                 // Same fix already applied to this exact badge on /ngo: fontSize 9 was under the
                 // 12px micro-label floor; the pill grows to 19px to fit a 12px digit.
-                style={{ minWidth: 19, height: 19, fontSize: 12, padding: '0 5px', background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>
+                style={{ minWidth: 19, height: 19, fontSize: 12, padding: '0 5px', background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))' }}>
                 {badge}
               </span>
             )}
@@ -713,7 +715,7 @@ export default function MentorPage() {
             <div className="flex flex-wrap gap-1.5">
               {COURSE_MODULES.map((m) => (
                 <span key={m.id} className="text-xs font-sans px-2 py-0.5 rounded-full"
-                  style={{ background: CATEGORY_COLORS[m.category] + '15', color: CATEGORY_COLORS[m.category], border: `1px solid ${CATEGORY_COLORS[m.category]}30` }}>
+                  style={{ background: CATEGORY_COLORS[m.category] + '15', color: CATEGORY_TEXT_COLORS[m.category], border: `1px solid ${CATEGORY_COLORS[m.category]}30` }}>
                   {m.title}
                 </span>
               ))}

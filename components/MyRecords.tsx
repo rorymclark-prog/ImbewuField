@@ -144,8 +144,8 @@ function Card({
       className={`rounded-xl p-4 transition-all duration-200 glass glass-hover ${className}`}
       style={
         accent
-          ? { background: 'var(--color-surface)', color: 'var(--color-ink)', borderLeftWidth: 2, borderLeftColor: accent, borderLeftStyle: 'solid' }
-          : { background: 'var(--color-surface)', color: 'var(--color-ink)' }
+          ? { background: 'var(--bg-1)', color: 'var(--text-primary)', borderLeftWidth: 2, borderLeftColor: accent, borderLeftStyle: 'solid' }
+          : { background: 'var(--bg-1)', color: 'var(--text-primary)' }
       }
     >
       {children}
@@ -179,7 +179,7 @@ function Input(props: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <input
       {...props}
-      className={`dark-input w-full rounded-lg px-3 py-2 text-sm font-display outline-none transition-all ${props.className ?? ''}`}
+      className={`dark-input w-full rounded-lg px-3 py-2 text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] transition-all ${props.className ?? ''}`}
       style={{
         background: 'var(--bg-1)',
         border: '1px solid var(--border)',
@@ -230,7 +230,7 @@ function SubmitBtn({
 }
 
 function Divider() {
-  return <div className="h-px my-4" style={{ background: '#E2D8C4' }} />;
+  return <div className="h-px my-4" style={{ background: 'var(--border)' }} />;
 }
 
 /* ── Format helpers ──────────────────────────────────────────────────────── */
@@ -265,13 +265,13 @@ function SignInPrompt() {
         >
           {t('myRecordsSignInTitle')}
         </p>
-        <p className="font-display text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+        <p className="font-display text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
           {t('myRecordsSignInBody')}
         </p>
       </div>
       <a
         href="/login"
-        className="px-5 py-2 rounded-xl text-sm font-display font-semibold transition-all flex items-center gap-1.5"
+        className="px-5 py-2 rounded-xl text-sm font-sans font-semibold transition-all flex items-center gap-1.5"
         style={{
           background: 'rgba(31,77,43,0.14)',
           border: '1px solid rgba(31,77,43,0.35)',
@@ -388,7 +388,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
   }
 
   return (
-    <Card accent="#1F4D2B">
+    <Card accent="#1F4D2B" className="md:max-w-xl">
       <SectionLabel>{t('myRecordsLogProductionHeader')}</SectionLabel>
       <form onSubmit={handleSubmit} className="space-y-3 u-form-column">
         {sampleProducePhoto(form.crop) && <figure className="flex items-center gap-3"><img src={sampleProducePhoto(form.crop)!} alt={form.crop} width={56} height={56} style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover' }} /><figcaption className="text-xs">{recordsUi(lang, 'AI-generated crop reference · add your own harvest photo below.', 'Isithombe sesitshalo esenziwe nge-AI · faka esakho isithombe sesivuno ngezansi.')}</figcaption></figure>}
@@ -421,7 +421,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
                   });
                   if (fileRef.current) fileRef.current.value = '';
                 }}
-                className="absolute top-1 right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs font-mono"
+                className="absolute top-1 right-1 w-6 h-6 rounded-full flex items-center justify-center text-xs"
                 style={{ background: 'rgba(31,25,15,0.12)', color: 'var(--text-primary)' }}
               >
                 <X size={14} />
@@ -429,7 +429,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
             </div>
           )}
           <label
-            className="flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg text-xs font-display transition-all"
+            className="flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg text-xs font-sans transition-all"
             style={{
               background: 'var(--bg-1)',
               border: '1px dashed var(--border)',
@@ -449,7 +449,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           </label>
         </div>
         {form.error && (
-          <p className="text-xs font-mono" style={{ color: 'var(--danger)' }}>
+          <p className="text-xs" style={{ color: 'var(--danger)' }}>
             {recordsPaired(lang, form.error)}
           </p>
         )}
@@ -540,7 +540,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
   }
 
   return (
-    <Card accent="#9E5C08">
+    <Card accent="#9E5C08" className="md:max-w-xl">
       <SectionLabel>{t('myRecordsLogSaleHeader')}</SectionLabel>
       <form onSubmit={handleSubmit} className="space-y-3 u-form-column">
         <div>
@@ -613,7 +613,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
           </div>
         </div>
         {form.error && (
-          <p className="text-xs font-mono" style={{ color: 'var(--danger)' }}>
+          <p className="text-xs" style={{ color: 'var(--danger)' }}>
             {recordsPaired(lang, form.error)}
           </p>
         )}
@@ -679,7 +679,7 @@ function OrchardNote({ kg, names, t, money = false }: {
 }) {
   const figure = kg % 1 === 0 ? String(kg) : kg.toFixed(1);
   return (
-    <p className="font-sans mt-2" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }}>
+    <p className="font-sans mt-2" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
       {t(money ? 'recordsOrchardOutNoteMoney' : 'recordsOrchardOutNote')
         .replace('{kg}', figure)
         .replace('{names}', names.join(', '))}
@@ -735,7 +735,7 @@ function HarvestCropPicture({ name }: { name: string }) {
   if (photo) return <img src={photo} alt={`${lookup} · ${recordsFill(lang, 'AI-generated reference')}`} title={recordsFill(lang, 'AI-generated crop reference, not harvest evidence')} width={40} height={40} style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 8 }} data-photo-preview="true" />;
   const { key } = cropIdentityOf(lookup, harvestArtAliases);
   return key && getCropArt(key)
-    ? <CropIcon cropKey={key} icon="🌱" size={32} />
+    ? <CropIcon cropKey={key} icon="" size={32} />
     : <Leaf size={18} style={{ color: 'var(--color-forest-800)' }} />;
 }
 
@@ -746,7 +746,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
   if (items.length === 0) {
     if (isSampleMode()) {
       return (
-        <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
+        <p className="text-xs text-center py-4" style={{ color: 'var(--text-secondary)' }}>
           {t('myRecordsNoHarvests')}
         </p>
       );
@@ -768,7 +768,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
             <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: 'var(--text-primary)' }}>
               {recordsFill(lang, EXAMPLE_PRODUCTION.crop)}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>{recordsFill(lang, EXAMPLE_PRODUCTION.dateLabel)}</p>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>{recordsFill(lang, EXAMPLE_PRODUCTION.dateLabel)}</p>
           </div>
           <div className="text-sm font-display font-semibold flex-shrink-0" style={{ color: 'var(--color-forest-800)' }}>
             {EXAMPLE_PRODUCTION.kg} kg
@@ -813,7 +813,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
             >
               {harvestCropLabel(item.crop, lang)}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
               {fmtDate(item.logged_at, lang)}
             </p>
           </div>
@@ -836,7 +836,7 @@ function SalesList({ items }: { items: SalesLog[] }) {
   if (items.length === 0) {
     if (isSampleMode()) {
       return (
-        <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
+        <p className="text-xs text-center py-4" style={{ color: 'var(--text-secondary)' }}>
           {t('myRecordsNoSales')}
         </p>
       );
@@ -857,9 +857,9 @@ function SalesList({ items }: { items: SalesLog[] }) {
           <div className="flex-1 min-w-0">
             <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: 'var(--text-primary)' }}>
               {recordsFill(lang, EXAMPLE_SALE.crop)}
-              <span className="font-normal" style={{ color: 'var(--text-muted)' }}> → {recordsFill(lang, EXAMPLE_SALE.buyer)}</span>
+              <span className="font-normal" style={{ color: 'var(--text-secondary)' }}> → {recordsFill(lang, EXAMPLE_SALE.buyer)}</span>
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
               {EXAMPLE_SALE.kg} kg &nbsp;·&nbsp; {recordsFill(lang, EXAMPLE_SALE.dateLabel)}
             </p>
           </div>
@@ -895,12 +895,12 @@ function SalesList({ items }: { items: SalesLog[] }) {
             >
               {harvestCropLabel(item.crop, lang)}
               {item.buyer ? (
-                <span className="font-normal" style={{ color: 'var(--text-muted)' }}>
+                <span className="font-normal" style={{ color: 'var(--text-secondary)' }}>
                   {' '}→ {item.buyer}
                 </span>
               ) : null}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
               {recordsQuantityLabel(item, lang)} &nbsp;·&nbsp; {fmtDate(item.sold_at, lang)}
             </p>
             {item.invoice_id && loadInvoices().some((invoice) => invoice.id === item.invoice_id) && <Link href={`/invoice?view=${encodeURIComponent(item.invoice_id)}`} aria-label={`${recordsUi(lang, 'View invoice for', 'Buka i-invoyisi ka')} ${item.crop}`} style={{ display: 'inline-flex', gap: 6, alignItems: 'center', minHeight: 44, fontSize: 12, color: '#315939' }}><Eye size={16} />{recordsUi(lang, 'Invoice', 'I-invoyisi')} #{loadInvoices().find((invoice) => invoice.id === item.invoice_id)?.no} · {recordsUi(lang, 'View', 'Buka')}</Link>}
@@ -924,7 +924,7 @@ function SharedDesignsList({ items }: { items: Design[] }) {
   const { t } = useRecordsT();
   if (items.length === 0) {
     return (
-      <p className="text-xs font-mono text-center py-4" style={{ color: 'var(--text-muted)' }}>
+      <p className="text-xs text-center py-4" style={{ color: 'var(--text-secondary)' }}>
         {t('myRecordsNoDesigns')}
       </p>
     );
@@ -953,7 +953,7 @@ function SharedDesignsList({ items }: { items: Design[] }) {
             >
               {design.title || t('myRecordsUntitledDesign')}
             </p>
-            <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
               {t('myRecordsSharedPrefix')} {fmtDate(design.created_at)}
             </p>
           </div>
@@ -1054,14 +1054,14 @@ function CreditPackCard({
         </p>
       ) : (
         <>
-        <div className="grid grid-cols-3 gap-2 my-3">
+        <div className="grid grid-cols-1 min-[420px]:grid-cols-3 gap-2 my-3">
           {[[recordsUi(lang, 'Income', 'Imali engenayo'), money(totals.income)], [recordsUi(lang, 'Costs', 'Izindleko'), money(totals.spent)], [recordsUi(lang, 'Harvested', 'Okuvunyiwe'), <RecordQuantitySummary key="picked" compact totals={quantityTotals(production)} />]].map(([label, value], index) => (
             <div key={index} className="rounded-xl p-3" style={{ background: 'var(--bg-1)', color: 'var(--text-primary)' }}>
-              <span className="block font-sans text-xs">{label}</span><strong className="block font-display text-lg mt-1">{value}</strong>
+              <span className="block font-sans text-xs">{label}</span><strong className="block font-display text-lg mt-1 whitespace-nowrap tabular-nums">{value}</strong>
             </div>
           ))}
         </div>
-        <button type="button" onClick={() => setPreviewOpen(v => !v)} aria-expanded={previewOpen} className="w-full rounded-xl px-4 py-3 mb-2 font-sans text-sm font-semibold" style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>{recordsUi(lang, previewOpen ? 'Close summary' : 'View summary', previewOpen ? 'Vala isifinyezo' : 'Buka isifinyezo')}</button>
+        <button type="button" onClick={() => setPreviewOpen(v => !v)} aria-expanded={previewOpen} className="w-full rounded-xl px-4 py-3 mb-2 font-sans text-sm font-semibold" style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }}>{recordsUi(lang, previewOpen ? 'Close summary' : 'View summary', previewOpen ? 'Vala isifinyezo' : 'Buka isifinyezo')}</button>
         {previewOpen && <div className="overflow-x-auto mb-3">
           <table className="w-full text-sm font-sans" style={{ color: 'var(--color-ink)' }}>
             <caption className="text-left py-2 font-semibold">{recordsUi(lang, 'Monthly income and costs', 'Imali engenayo nezindleko zenyanga')}</caption>
@@ -1073,7 +1073,7 @@ function CreditPackCard({
           type="button"
           onClick={() => { void handleExport(); }}
           disabled={loading}
-          className="w-full py-2 rounded-xl text-xs font-display font-semibold flex items-center justify-center gap-2 transition-all"
+          className="w-full py-2 rounded-xl text-xs font-sans font-semibold flex items-center justify-center gap-2 transition-all"
           style={{
             // zu-11: a fixed rgba(46,107,58,…) tint stayed dark-green in every theme while
             // var(--color-forest-700) (the text colour) flipped to a pale green in the dark
@@ -1100,7 +1100,7 @@ function CreditPackCard({
       )}
 
       {error && (
-        <p className="text-xs font-mono mt-2" style={{ color: 'var(--danger)' }}>
+        <p className="text-xs mt-2" style={{ color: 'var(--danger)' }}>
           {recordsPaired(lang, error)}
         </p>
       )}
@@ -1293,7 +1293,7 @@ export default function MyRecords({
   }
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="space-y-4">
 
       {/* ── Section header ────────────────────────────
              Only on the one-scroll view. Inside the book the tab strip directly above already
@@ -1309,7 +1309,7 @@ export default function MyRecords({
             >
               {t('myRecordsTitle')}
             </h2>
-            <p className="font-display text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+            <p className="font-display text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
               {t('myRecordsSubtitle')}
             </p>
           </div>
@@ -1377,7 +1377,7 @@ export default function MyRecords({
                 <div className="font-display font-bold" style={{ fontSize: 22, color: 'var(--color-forest-800)', lineHeight: 1 }}>
                   <RecordQuantitySummary totals={pickedQuantities} />
                 </div>
-                <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                   {t('myRecordsTotalHarvested')}{topCrop ? ` · ${recordsTemplate(lang, 'Top by weight: {crop}', null, { crop: topCrop[0] })}` : ''}
                 </div>
                 <OrchardSwitch
@@ -1387,12 +1387,12 @@ export default function MyRecords({
                 />
               </div>
               {recent.length > 0 && <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
-                <polyline points={pts} fill="none" stroke="rgba(31,77,43,0.25)" strokeWidth="1.5" strokeLinejoin="round" />
-                <polyline points={pts} fill="none" stroke="#1F4D2B" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="3 2" />
+                <polyline points={pts} fill="none" stroke="var(--color-forest-800)" strokeOpacity={0.3} strokeWidth="1.5" strokeLinejoin="round" />
+                <polyline points={pts} fill="none" stroke="var(--color-forest-800)" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="3 2" />
                 {recent.map((p, i) => {
                   const x = (i / Math.max(recent.length - 1, 1)) * W;
                   const y = H - ((p.kg ?? 0) / maxKg) * H;
-                  return <circle key={i} cx={x} cy={y} r="2.5" fill="#1F4D2B" />;
+                  return <circle key={i} cx={x} cy={y} r="2.5" fill="var(--color-forest-800)" />;
                 })}
               </svg>}
             </div>
@@ -1465,18 +1465,18 @@ export default function MyRecords({
                 <div className="font-display font-bold" style={{ fontSize: 22, color: 'var(--gold)', lineHeight: 1 }}>
                   R{totalRev % 1 === 0 ? totalRev : totalRev.toFixed(2)}
                 </div>
-                <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                <div className="font-sans text-xs mt-0.5" style={{ color: 'var(--text-secondary)' }}>
                   {t('myRecordsTotalRevenue')}
                 </div>
-                <div className="font-sans mt-2" style={{ color: 'var(--text-muted)' }}><RecordQuantitySummary compact totals={soldQuantities} /></div>
+                <div className="font-sans mt-2" style={{ color: 'var(--text-secondary)' }}><RecordQuantitySummary compact totals={soldQuantities} /></div>
               </div>
               <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
-                <polyline points={pts} fill="none" stroke="rgba(192,122,30,0.25)" strokeWidth="1.5" strokeLinejoin="round" />
-                <polyline points={pts} fill="none" stroke="#C07A1E" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="3 2" />
+                <polyline points={pts} fill="none" stroke="color-mix(in srgb, var(--gold) 30%, var(--bg-1))" strokeWidth="1.5" strokeLinejoin="round" />
+                <polyline points={pts} fill="none" stroke="var(--gold)" strokeWidth="1.5" strokeLinejoin="round" strokeDasharray="3 2" />
                 {recent.map((p, i) => {
                   const x = (i / Math.max(recent.length - 1, 1)) * W;
                   const y = H - ((p.amount ?? 0) / maxAmt) * H;
-                  return <circle key={i} cx={x} cy={y} r="2.5" fill="#C07A1E" />;
+                  return <circle key={i} cx={x} cy={y} r="2.5" fill="var(--gold)" />;
                 })}
               </svg>
             </div>

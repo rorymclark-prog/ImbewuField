@@ -24,7 +24,7 @@ export default function AtlasPage() {
   const {lang}=useLanguage();
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
-      <AppHeader title="Atlas · global garden explorer" />
+      <AppHeader title="Atlas" />
       {/* nav-17: AppHeader's title is a <span>, not a heading — keep a real (if visually
           hidden) h1 now that the old header's own h1 is gone; the map fills the screen and
           has no room for a visible heading above it. */}

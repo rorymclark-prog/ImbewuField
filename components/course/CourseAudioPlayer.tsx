@@ -215,7 +215,7 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
   const progressPct = duration > 0 ? Math.min(100, (elapsed / duration) * 100) : 0;
 
   return (
-    <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${HAIRLINE}`, background: '#FFFEFA' }}>
+    <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${HAIRLINE}`, background: 'var(--bg-1)' }}>
       <div className="flex flex-wrap items-center gap-2 px-3.5 py-2.5" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
         <Volume2 size={14} style={{ color: GREEN, flexShrink: 0 }} />
         <span className="font-display text-xs font-semibold uppercase tracking-wide" style={{ color: '#5C5040' }}>

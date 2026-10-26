@@ -46,18 +46,20 @@ export default function RainfallChart({ rainfall }: Props) {
     return translated[value] ?? value;
   };
 
+  // w21-07: the text classes here used muted/secondary/blue utility names Tailwind never defined,
+  // so every label inherited the panel colour; they now read the theme tokens directly.
   return (
     <div>
       <div className={`mb-3 ${isZulu ? 'flex flex-col items-start gap-1' : 'flex items-center justify-between'}`}>
         <div>
-          <span className="text-xs font-mono text-text-muted uppercase tracking-wider">
+          <span className="text-xs text-[var(--text-muted)] uppercase tracking-wider">
             {text('Monthly rainfall (mm)', 'Imvula yenyanga (mm) · Monthly rainfall (mm)')}
           </span>
-          {isZulu && <div className="text-xs font-mono text-text-muted">Uhlaka lwesiZulu olungakabuyekezwa · Unreviewed isiZulu draft</div>}
+          {isZulu && <div className="text-xs text-[var(--text-muted)]">Uhlaka lwesiZulu olungakabuyekezwa · Unreviewed isiZulu draft</div>}
         </div>
-        <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs font-mono">
-          <span className="text-accent-blue">{isZulu ? `${rainfall.annual} mm/ngonyaka · mm/yr` : `${rainfall.annual}mm/yr`}</span>
-          <span className="text-text-muted">{pattern}</span>
+        <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs">
+          <span className="text-[var(--blue)]">{isZulu ? `${rainfall.annual} mm/ngonyaka · mm/yr` : `${rainfall.annual}mm/yr`}</span>
+          <span className="text-[var(--text-muted)]">{pattern}</span>
         </div>
       </div>
 
@@ -81,9 +83,9 @@ export default function RainfallChart({ rainfall }: Props) {
               if (!active || !payload?.length) return null;
               const d = payload[0].payload;
               return (
-                <div className="bg-bg-3 border border-border px-2 py-1 rounded text-xs font-mono">
-                  <span className="text-text-secondary">{d.full}: </span>
-                  <span className="text-accent-blue">{d.mm}mm</span>
+                <div className="bg-bg-3 border border-border px-2 py-1 rounded text-xs font-display tabular-nums">
+                  <span className="text-[var(--text-secondary)]">{d.full}: </span>
+                  <span className="text-[var(--blue)]">{d.mm}mm</span>
                 </div>
               );
             }}
@@ -101,9 +103,9 @@ export default function RainfallChart({ rainfall }: Props) {
         </BarChart>
       </ResponsiveContainer>
 
-      <div className={`${isZulu ? 'flex flex-col gap-1' : 'flex flex-wrap justify-between gap-x-3 gap-y-1'} mt-2 text-xs font-mono text-text-muted`}>
-        <span>{text('Wet season:', 'Isikhathi semvula · Wet season:')} <span className="text-text-secondary">{seasonValue(rainfall.wetSeason)}</span></span>
-        <span>{text('Dry season:', 'Isikhathi esomile · Dry season:')} <span className="text-text-secondary">{seasonValue(rainfall.drySeason)}</span></span>
+      <div className={`${isZulu ? 'flex flex-col gap-1' : 'flex flex-wrap justify-between gap-x-3 gap-y-1'} mt-2 text-xs text-[var(--text-muted)]`}>
+        <span>{text('Wet season:', 'Isikhathi semvula · Wet season:')} <span className="text-[var(--text-secondary)]">{seasonValue(rainfall.wetSeason)}</span></span>
+        <span>{text('Dry season:', 'Isikhathi esomile · Dry season:')} <span className="text-[var(--text-secondary)]">{seasonValue(rainfall.drySeason)}</span></span>
       </div>
     </div>
   );

@@ -37,6 +37,11 @@ function groupNotesByDay(notes: typeof RELEASE_NOTES): DayGroup[] {
   }
   return groups;
 }
+// Long internal lines read shorter as their first sentence (split at the first '. ').
+function firstSentence(line: string): string {
+  const i = line.indexOf('. ');
+  return i > 0 ? line.slice(0, i + 1) : line;
+}
 const RECENT_DAYS_SIMPLE = 3;
 const RECENT_DAYS_ALL = 5;
 
@@ -48,7 +53,7 @@ export default function UpdatesPage() {
   const dayGroups = groupNotesByDay(RELEASE_NOTES);
   const recentDays = simple ? RECENT_DAYS_SIMPLE : RECENT_DAYS_ALL;
   const hasOlder = dayGroups.length > recentDays;
-  const visibleDays = showAll && !simple ? dayGroups : dayGroups.slice(0, recentDays);
+  const visibleDays = showAll ? dayGroups : dayGroups.slice(0, recentDays);
 
   return (
     <div lang={lang} className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
@@ -58,7 +63,7 @@ export default function UpdatesPage() {
         <div className="mx-auto max-w-2xl px-4 py-6">
           {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own
               real <h1> now that the old header's h1 is gone. */}
-          <h1 className="text-sm font-display font-semibold m-0 mb-4" style={{ color: 'var(--text-primary)' }}>
+          <h1 className="t-h1 m-0 mb-4" style={{ color: 'var(--text-primary)' }}>
             {t('navWhatsNew')}
           </h1>
           <p className="text-xs mb-6" style={{ color: 'var(--text-secondary)' }}>
@@ -66,7 +71,7 @@ export default function UpdatesPage() {
           </p>
           <button type="button" onClick={() => window.dispatchEvent(new Event(OPEN_UPDATE_GUIDE_EVENT))}
             className="mb-6 px-4 rounded-lg font-semibold"
-            style={{ minHeight: 44, background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}>
+            style={{ minHeight: 44, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }}>
             {t('updatesGuideAction')}
           </button>
 
@@ -75,7 +80,7 @@ export default function UpdatesPage() {
           {visibleDays.map((day,groupIndex) => (
             <section key={`${groupIndex}-${day.when}`} className="mb-7">
               <div className="flex items-baseline gap-2 mb-2">
-                <h2 className="text-base font-display font-semibold" style={{ color: 'var(--color-forest-800)' }}>
+                <h2 className="t-h2" style={{ color: 'var(--color-forest-800)' }}>
                   <span lang={updateDateLabel(day.when,lang)===day.when?'en':lang}>{updateDateLabel(day.when,lang)}</span>
                 </h2>
               </div>
@@ -83,19 +88,20 @@ export default function UpdatesPage() {
                 {day.changes.map((line, i) => (
                   <li key={`${day.when}-${i}`} className="flex gap-2 text-[13px] leading-snug" style={{ color: 'var(--text-primary)' }}>
                     <span aria-hidden style={{ color: 'var(--color-forest-800)' }}>•</span>
-                    <span><UpdateCopyText source={line} lang={lang} copy={nativeCopy.copy} sourceLabel={t('offlineSourceLabel')}/></span>
+                    {/* Drafts are keyed by the whole note, so a translated language shows the whole line. */}
+                    <span>{isUpdateCopyLanguage(lang) ? <UpdateCopyText source={line} lang={lang} copy={nativeCopy.copy} sourceLabel={t('offlineSourceLabel')}/> : firstSentence(line)}</span>
                   </li>
                 ))}
               </ul>
             </section>
           ))}
 
-          {!simple && hasOlder && (
+          {hasOlder && (
             <button
               type="button"
               onClick={() => setShowAll((v) => !v)}
               className="mb-6 px-4 rounded-lg font-semibold"
-              style={{ minHeight: 44, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}
+              style={{ minHeight: 44, background: 'transparent', border: '1.5px solid var(--color-forest-800)', color: 'var(--color-forest-800)' }}
             >
               {showAll ? t('updatesShowFewer') : t('updatesShowOlder')}
             </button>

@@ -55,7 +55,10 @@ test('every screen with a header can open the menu', () => {
     if (EXEMPT.has(rel)) continue;
     const src = readFileSync(file, 'utf8');
     const headers = count(src, /<header\b/g);
-    if (headers === 0) continue;
+    // components/layout/AppHeader always draws its own MenuButton, so a screen built on it is a
+    // header screen that already keeps the promise; it still counts towards the scan's reach.
+    const shared = count(src, /<AppHeader\b/g);
+    if (headers + shared === 0) continue;
     checked++;
     const buttons = count(src, /<MenuButton\b/g);
     if (buttons < headers) missing.push(`${rel} — ${headers} header(s), ${buttons} MenuButton(s)`);

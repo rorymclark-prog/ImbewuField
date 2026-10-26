@@ -33,14 +33,13 @@ function findPages(dir: string, out: string[] = []): string[] {
 
 // Routes this track does not own and cannot add a layout.tsx title to without stepping into
 // another track's territory: app/cropplan/page.tsx and app/facilitator/crops/page.tsx belong to
-// the crop/production planner (Codex-owned, explicitly off limits this wave); app/facilitator/
-// print/page.tsx reads the same facilitator design-canvas state and sits in the same area.
+// the crop/production planner (Codex-owned, explicitly off limits this wave). app/facilitator/
+// print/page.tsx left this list in wave 15 (nav-16) with its own 'Printable plan' layout title.
 // Tracked here, not silently skipped — a route leaving this list without gaining a real title
 // should fail the test like any other regression.
 const OUT_OF_SCOPE_THIS_WAVE = new Set([
   'cropplan/page.tsx',
   'facilitator/crops/page.tsx',
-  'facilitator/print/page.tsx',
 ]);
 
 test('every app route can produce a page title distinct from the root default', () => {
@@ -65,4 +64,18 @@ test('every app route can produce a page title distinct from the root default', 
     if (!hasLayoutTitle) failures.push(relPath);
   }
   assert.deepEqual(failures, [], 'these routes have neither their own metadata nor a layout.tsx title, so every tab shows the same root <title>');
+});
+
+// w16-11: /manual and its sub-routes use the same 'Page name — ImbewuField' shape as every other
+// route, not '·' separators.
+test('manual route titles use the em-dash ImbewuField suffix', () => {
+  const layout = readFileSync(join(APP_ROOT, 'manual/layout.tsx'), 'utf8');
+  assert.match(layout, /title: 'Permaculture manual — ImbewuField'/);
+  for (const rel of ['manual/[lang]/page.tsx', 'manual/[lang]/[slug]/page.tsx']) {
+    const src = readFileSync(join(APP_ROOT, rel), 'utf8');
+    const m = src.match(/generateMetadata[\s\S]*?title: (`[^`]*`)/);
+    assert.ok(m, `${rel} must set a title in generateMetadata`);
+    assert.ok(!m[1].includes('·'), `${rel} title still uses '·': ${m[1]}`);
+    assert.ok(m[1].endsWith(' — ImbewuField`'), `${rel} title must end with ' — ImbewuField': ${m[1]}`);
+  }
 });

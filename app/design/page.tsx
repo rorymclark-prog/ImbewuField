@@ -7,12 +7,13 @@
 
 import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type Dispatch, type SetStateAction } from 'react';
 import Link from 'next/link';
+import AppHeader from '@/components/layout/AppHeader';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
-import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock, AlertTriangle, Droplets } from 'lucide-react';
+import { ArrowLeft, ArrowRight, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock, AlertTriangle, Droplets } from 'lucide-react';
 import { CRASH_LOOP_SETTLE_MS, designSafeMode, exitSafeMode, lastCrashPhase, markPageSettled, noteCrashPhase } from '@/lib/crash-loop';
 import { clearPulseCookie } from '@/lib/server-rescue';
-import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
+import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
 import { useAppConfirm } from '@/components/AppConfirm';
 import { translatedDesignStepLabel } from '@/lib/design-studio-i18n';
 
@@ -211,7 +212,7 @@ const STEP_BTN: CSSProperties = {
   background: '#FFFDF7',
   color: '#7A4408',
   cursor: 'pointer',
-  fontSize: 10,
+  fontSize: 11,
   lineHeight: 1,
   padding: 0,
   touchAction: 'none',
@@ -507,26 +508,26 @@ function EmptyState() {
     try { setPlaces(loadPlaces()); } catch { /* localStorage unavailable */ }
   }, []);
   return (
+    <div style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column', background: 'var(--bg-0)' }}>
+    {/* w20-23: the shared AppHeader replaces the picker's own Compass-and-title header. */}
+    <AppHeader title={isZulu ? 'Isitudiyo Sokuklama' : 'Design Studio'} backFallback="/home" />
     <div
       style={{
-        minHeight: '100dvh',
+        flex: 1,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         gap: 16,
         padding: 24,
-        background: PAPER,
         color: DARK,
         textAlign: 'center',
       }}
     >
-      <Compass size={40} color={GREEN} />
-      {/* nav-17: /design had no h1 at all while this empty-site state was showing. One visible
-          h1 matching the nav label ("Design studio"), small so it doesn't compete with the
-          instructional copy below. */}
-      <h1 style={{ fontSize: 13, fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: GREEN, margin: 0 }}>
-        {isZulu ? 'Isitudiyo Sokuklama' : 'Design studio'}
+      {/* nav-17: /design had no h1 at all while this empty-site state was showing. Since w20-23
+          the AppHeader above shows the title, so this h1 is for screen readers only. */}
+      <h1 className="sr-only">
+        {isZulu ? 'Isitudiyo Sokuklama' : 'Design Studio'}
       </h1>
       {places.length > 0 ? (
         <>
@@ -552,16 +553,16 @@ function EmptyState() {
                   textAlign: 'left',
                 }}
               >
-                <MapPin size={18} color={resolveColor(p)} style={{ flexShrink: 0 }} />
+                <MapPin size={18} color="var(--emerald)" style={{ flexShrink: 0 }} />
                 <span style={{ flex: 1, minWidth: 0 }}>
                   <span style={{ display: 'block', fontWeight: 600, fontSize: 14, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {p.name}
                   </span>
                   {p.biome && (
-                    <span style={{ display: 'block', fontSize: 11.5, color: 'var(--text-muted)' }}>{p.biome}</span>
+                    <span style={{ display: 'block', fontSize: 12, color: 'var(--text-muted)' }}>{p.biome}</span>
                   )}
                 </span>
-                <span style={{ fontSize: 12, color: GREEN, fontWeight: 600, flexShrink: 0 }}>{isZulu ? 'Klama →' : 'Design →'}</span>
+                <span style={{ fontSize: 12, color: 'var(--color-forest-800)', fontWeight: 600, flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: 4 }}>{isZulu ? 'Klama' : 'Design'}<ArrowRight size={14} aria-hidden="true" /></span>
               </Link>
             ))}
           </div>
@@ -583,8 +584,8 @@ function EmptyState() {
           padding: '12px 20px',
           minHeight: 44,
           borderRadius: 999,
-          background: GREEN,
-          color: 'var(--on-forest)',
+          background: 'var(--color-forest-800)',
+          color: 'var(--on-forest-800)',
           fontWeight: 600,
           textDecoration: 'none',
         }}
@@ -592,6 +593,7 @@ function EmptyState() {
         <ArrowLeft size={18} />
         {isZulu ? 'Buyela kumephu' : 'Back to map'}
       </Link>
+    </div>
     </div>
   );
 }
@@ -3160,7 +3162,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               border: '1px solid rgba(31,77,43,0.2)',
               background: 'rgba(31,77,43,0.04)',
               color: GREEN,
-              fontSize: 11,
+              fontSize: 12,
               fontWeight: 800,
               letterSpacing: 0.2,
               whiteSpace: 'nowrap',
@@ -3446,7 +3448,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                   minWidth: 54, minHeight: 34, padding: '4px 9px', borderRadius: 8,
                   border: 'none', background: workspaceMode === layout ? GREEN : 'transparent',
                   color: workspaceMode === layout ? PAPER : GREEN, cursor: 'pointer',
-                  fontSize: 11, fontWeight: 800, textTransform: 'capitalize',
+                  fontSize: 12, fontWeight: 800, textTransform: 'capitalize',
                 }}
               >
                 {layout === 'docked' ? 'Dock' : layout === 'floating' ? 'Float' : 'Tray'}
@@ -3747,7 +3749,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                         {glyph}
                       </button>
                     ))}
-                    <span style={{ fontSize: 11, opacity: 0.75, minWidth: 34, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
+                    <span style={{ fontSize: 12, opacity: 0.75, minWidth: 34, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
                       {(liveAlign.rotationDeg ?? 0).toFixed(1)}°
                     </span>
                   </span>
@@ -3789,12 +3791,12 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                       onBlur={commitAlign}
                       style={{ width: 96 }}
                     />
-                    <span style={{ fontSize: 11, opacity: 0.75, minWidth: 38, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
+                    <span style={{ fontSize: 12, opacity: 0.75, minWidth: 38, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
                       {Math.round((liveAlign.scale ?? 1) * 100)}%
                     </span>
                   </span>
                   <label style={{ display: 'inline-flex', alignItems: 'center', gap: 5, flexShrink: 0 }} title={tr('Fade your photo to see the satellite underneath while you line them up', 'Fiphaza isithombe sakho ukuze ubone esesathelayithi ngaphansi ngesikhathi usiqondanisa')}>
-                    <span style={{ fontSize: 11, opacity: 0.75 }}>{tr('See through', 'Bona okungaphansi')}</span>
+                    <span style={{ fontSize: 12, opacity: 0.75 }}>{tr('See through', 'Bona okungaphansi')}</span>
                     <input
                       type="range"
                       min={0.1}
@@ -3812,7 +3814,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                       type="button"
                       onClick={resetBaseAlign}
                       title="Put the photo back where it was imported — square, in place, fully opaque"
-                      style={{ border: 'none', background: 'transparent', color: DARK, opacity: 0.65, fontWeight: 600, cursor: 'pointer', fontSize: 11.5, padding: '4px 4px' }}
+                      style={{ border: 'none', background: 'transparent', color: DARK, opacity: 0.65, fontWeight: 600, cursor: 'pointer', fontSize: 12, padding: '4px 4px' }}
                     >
                       Reset
                     </button>
@@ -3932,7 +3934,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             <span><span style={{ fontWeight: 800 }}>{tr('Drip all beds', 'Faka imigqa yokunisela kuyo yonke imibhede')}</span> — {tr('one line down the centre of each', 'umugqa owodwa phakathi nendawo embhedeni ngamunye')}</span>
           </button>
           {dripNote && (
-            <span style={{ fontSize: 11.5, color: DARK, opacity: 0.75, flex: 1, minWidth: 0 }}>{dripNote}</span>
+            <span style={{ fontSize: 12, color: DARK, opacity: 0.75, flex: 1, minWidth: 0 }}>{dripNote}</span>
           )}
         </div>
       )}
@@ -4040,7 +4042,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                     background: 'transparent',
                     border: 'none',
                     color: '#8A7C63',
-                    fontSize: 11.5,
+                    fontSize: 12,
                     fontWeight: 600,
                     cursor: 'pointer',
                     flexShrink: 0,

@@ -37,6 +37,28 @@ const ROUTES = [
   'app/exchange/page.tsx',
   'app/prices/page.tsx',
   'app/vision/page.tsx',
+  // code-11 (wave 15): MyRecords' 🌱 fallback prop and BrandLogo's ✦ icon prop are gone.
+  'components/MyRecords.tsx',
+  'components/BrandLogo.tsx',
+  // code-11 (wave 16): the remaining tick glyphs / emoji fallbacks became Lucide icons.
+  'app/ngo/page.tsx',
+  'app/funder/page.tsx',
+  'app/student/page.tsx',
+  'app/updates/page.tsx',
+  'components/NgoDashboard.tsx',
+  'components/ReportView.tsx',
+  'components/design/DesignCanvas.tsx',
+  'components/report/CompletionScore.tsx',
+  'components/report/ReportChapterGraphics.tsx',
+  'components/report/ReportCropPlan.tsx',
+  'components/report/ReportMapStocktake.tsx',
+  'components/report/ReportPreparation.tsx',
+  'components/report/ReportReadingGuide.tsx',
+  'components/report/ReportVersionDetails.tsx',
+  'components/report/ReportVisualOverview.tsx',
+  'components/report/SavedReportsList.tsx',
+  'components/report/SidewaysScroller.tsx',
+  'components/report/SiteCropPlanPreview.tsx',
 ];
 
 /**

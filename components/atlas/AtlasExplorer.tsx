@@ -161,7 +161,7 @@ export default function AtlasExplorer() {
                   }} />
                   <div style={{
                     position: 'absolute', inset: 3, borderRadius: '50%',
-                    background: 'var(--color-forest-800)', border: '2px solid var(--on-forest)',
+                    background: 'var(--color-forest-800)', border: '2px solid var(--on-forest-800, var(--on-forest))',
                     boxShadow: '0 2px 8px rgba(0,0,0,0.35)',
                   }} />
                 </div>
@@ -191,14 +191,14 @@ export default function AtlasExplorer() {
               height: isZulu ? 56 : 42, boxShadow: '0 4px 16px rgba(32,25,15,0.12)',
             }}
           >
-            <div className="flex items-center gap-2 min-w-0">
+            <div className="flex flex-1 w-full items-center gap-2 min-w-0">
               <Search size={15} style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
               <input
                 value={query}
                 onChange={(e) => { setQuery(e.target.value); fetchSuggestions(e.target.value); }}
                 placeholder={isZulu ? 'Sesha noma kuphi eMhlabeni…' : 'Search anywhere on Earth…'}
                 aria-label={isZulu ? 'Sesha noma kuphi eMhlabeni… / Search anywhere on Earth…' : 'Search anywhere on Earth…'}
-                className="flex-1 font-sans bg-transparent outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
+                className="flex-1 w-full min-w-0 font-sans bg-transparent outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
                 style={{ minWidth: 0, fontSize: 13.5, color: 'var(--text-primary)', border: 'none' }}
               />
               {query && (
@@ -238,18 +238,18 @@ export default function AtlasExplorer() {
         {/* First-run hint */}
         {mapSupported && state.status === 'idle' && (
           <div
-            className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex items-center gap-2 px-4 py-2.5"
+            className="absolute bottom-6 inset-x-4 mx-auto w-fit max-w-[calc(100%-96px)] z-10 flex items-center gap-2 px-4 py-2.5"
             style={{
               // dark-03/staff-12: a hardcoded near-white fill stayed a bright card in dark mode,
               // under this span's own var(--text-muted) — pale-on-dark's own pale colour — which
               // made the English caption underneath effectively invisible (pale beige on white).
               background: 'color-mix(in srgb, var(--bg-1) 94%, transparent)', border: '1px solid var(--border)',
               borderRadius: 14, boxShadow: '0 4px 16px rgba(32,25,15,0.14)',
-              maxWidth: 'calc(100% - 24px)', textAlign: 'center',
+              textAlign: 'center',
             }}
           >
-            <Earth size={15} style={{ color: 'var(--color-forest-800)' }} />
-            <span className="font-display" style={{ fontSize: 13.5, color: 'var(--text-primary)' }}>
+            <Earth size={15} className="shrink-0" style={{ color: 'var(--color-forest-800)' }} />
+            <span className="font-sans" style={{ fontSize: 13.5, color: 'var(--text-primary)' }}>
               {isZulu ? (
                 <>
                   <span className="block">Thinta noma kuphi emhlabeni ukuze ubone isimo sezulu, imvula nomhlabathi.</span>
@@ -310,7 +310,7 @@ export default function AtlasExplorer() {
                   onClick={() => selectPoint(state.lat, state.lon, state.placeName)}
                   className="font-display font-semibold"
                   style={{
-                    background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', borderRadius: 999,
+                    background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', border: 'none', borderRadius: 999,
                     padding: '8px 18px', fontSize: 13, cursor: 'pointer',
                   }}
                 >

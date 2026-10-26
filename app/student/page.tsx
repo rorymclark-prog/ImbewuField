@@ -14,7 +14,8 @@ import {
   myCourseProgress, setCourseProgress, myAssignments,
   myCourseSubmissions, submitCourseModule, uploadCourseSubmissionFile,
 } from '@/lib/db/queries';
-import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, CATEGORY_TEXT_COLORS, LESSON_INDEX, type ModuleCategory, type Lesson } from '@/lib/course-modules';
+import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS, LESSON_INDEX, type ModuleCategory, type Lesson } from '@/lib/course-modules';
+import { CATEGORY_TEXT_COLORS } from '@/lib/category-text-colors';
 import LimaBar from '@/components/LimaBar';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
@@ -251,7 +252,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
       >
         {hasInfographic
           ? <img src={lesson.infographicUrl} alt="" loading="lazy" width={112} height={75} className={styles.lessonArt} />
-          : <BookOpen size={24} style={{ color, flexShrink: 0 }} />}
+          : <BookOpen size={24} style={{ color: textColor, flexShrink: 0 }} />}
         <span className="flex-1 min-w-0">
           <span className={`font-display ${styles.lessonTitle}`}>{lessonContent.title}</span>
           <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
@@ -317,7 +318,7 @@ function LessonPanel({ lesson, color, textColor, moduleId, lang, autoOpen, onJum
                   className="w-full flex items-center gap-3 rounded-xl px-4 py-3 text-left"
                   style={{ border: `1px solid ${color}33`, background: `${color}0C` }}
                 >
-                  <PlayCircle size={18} style={{ color, flexShrink: 0 }} />
+                  <PlayCircle size={18} style={{ color: textColor, flexShrink: 0 }} />
                   <span className="flex-1">
                     <span className="block font-sans text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
                       {t(silentDeckEntry ? 'studentViewSilentSlides' : 'studentWatchAndListen')}
@@ -786,7 +787,7 @@ export default function StudentPage() {
             <button
               onClick={() => router.push('/home')}
               className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold text-sm transition-all"
-              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)' }}
+              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800)' }}
             >
               <Home size={15} />
               {t('studentBackHome')}
@@ -1151,7 +1152,7 @@ export default function StudentPage() {
                           // Regional readiness labels are longer; keep every word inside the phone card.
                           className="text-xs font-sans font-semibold px-2 py-0.5 rounded-full flex-shrink-0 max-w-full whitespace-normal"
                           style={contentComplete
-                            ? { background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: '1px solid var(--color-forest-800)' }
+                            ? { background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: '1px solid var(--color-forest-800)' }
                             : { background: 'rgba(32,25,15,0.05)', color: 'var(--text-muted)', border: '1px solid var(--border)' }}
                         >
                         {readiness?.text === 'Fully built'
@@ -1235,7 +1236,7 @@ export default function StudentPage() {
                     style={{
                       background: done ? 'rgba(31,77,43,0.08)' : 'var(--color-forest-800)',
                       border: done ? '1px solid rgba(31,77,43,0.2)' : 'none',
-                      color: done ? 'var(--color-forest-800)' : 'var(--on-forest)',
+                      color: done ? 'var(--color-forest-800)' : 'var(--on-forest-800)',
                       cursor: isToggling ? 'wait' : 'pointer',
                       opacity: isToggling ? 0.6 : 1,
                     }}
@@ -1335,14 +1336,14 @@ export default function StudentPage() {
                       className="w-full flex items-center gap-2 px-3.5 py-2.5 mt-3 rounded-xl transition-colors"
                       style={{ background: `${color}0C`, border: `1px solid ${color}25` }}
                     >
-                      <ClipboardList size={13} style={{ color, flexShrink: 0 }} />
+                      <ClipboardList size={13} style={{ color: textColor, flexShrink: 0 }} />
                       <span className="flex-1 text-left font-sans text-xs font-semibold" style={{ color: textColor }}>
                         {submission ? t('studentSubmittedResubmit') : t('studentSubmitModule')}
                       </span>
-                      {submission && <CheckCircle size={13} style={{ color, flexShrink: 0 }} />}
+                      {submission && <CheckCircle size={13} style={{ color: textColor, flexShrink: 0 }} />}
                       {submissionOpen
-                        ? <ChevronUp size={12} style={{ color, flexShrink: 0 }} />
-                        : <ChevronDown size={12} style={{ color, flexShrink: 0 }} />}
+                        ? <ChevronUp size={12} style={{ color: textColor, flexShrink: 0 }} />
+                        : <ChevronDown size={12} style={{ color: textColor, flexShrink: 0 }} />}
                     </button>
                     {submissionOpen && (
                       <div className="mt-2">
@@ -1386,7 +1387,7 @@ export default function StudentPage() {
           {capstoneUnlocked && (
             <Link href="/design"
               className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl font-sans font-semibold text-sm transition-all"
-              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', textDecoration: 'none' }}>
+              style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', textDecoration: 'none' }}>
               {t('studentOpenDesignStudio')}
             </Link>
           )}

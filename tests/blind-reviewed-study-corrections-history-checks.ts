@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { wave16OwnsSource, wave16SourceBefore } from './wave-16-history-checks.ts';
 import { ensureSlidesWebpCurrent, withSlidesWebpCheckedScope, slidesWebpListingBefore, slidesWebpOwnsSource, slidesWebpRetiredBefore, slidesWebpSourceBefore, slidesWebpHistoryReadFileSync } from './slides-webp-history-checks.ts';
 
 // A dated test may inspect a predecessor only after the complete new layer has
@@ -13,7 +14,8 @@ const sha = (v: string | Uint8Array) => createHash('sha256').update(v).digest('h
 const read = (file: string) => readFileSync(resolve(root, file));
 // The 14 Oct 2026 WebP media-format layer is newer than this one: live sources it owns
 // are validated there and projected to their exact predecessor before these checks.
-const readLive = (file: string) => slidesWebpSourceBefore(file, read(file));
+// Wave 16 (22 Oct 2026) is newer still and projects its own sources first.
+const readLive = (file: string) => slidesWebpSourceBefore(file, wave16SourceBefore(file, read(file)));
 const beforePath = (file: string) => folder + 'before/' + file + (file.endsWith('.ts') ? '.txt' : '');
 const proofBytes = read(folder + 'source-layer-proof.json');
 assert.equal(sha(proofBytes), 'b7a07b624a469f315a33442503177056b3c07c3c18be5d69c60caf1df47a863a', 'immutable bounded correction proof');
@@ -148,7 +150,7 @@ function ensureHistoricalReadCurrent(): void {
 
 export function blindReviewedSourceBefore(file: string, supplied: string | Uint8Array): string | Uint8Array {
   // Older owners hand over the live tree; move it behind the newer WebP layer first.
-  supplied = slidesWebpSourceBefore(file, supplied);
+  supplied = slidesWebpSourceBefore(file, wave16SourceBefore(file, supplied));
   const row = proof.files[file];
   if (!row) return supplied;
   ensureHistoricalReadCurrent();
@@ -190,6 +192,13 @@ export const readBlindReviewedHistoryFile: typeof readFileSync = ((...args: any[
   if (typeof args[0] === 'number') return value;
   const suppliedPath = args[0] instanceof URL ? fileURLToPath(args[0]) : String(args[0]);
   const file = resolve(root, suppliedPath).slice(root.length).replace(/^\//,'');
+  // Wave 16 sources the WebP layer does not own: project them to their exact wave 15 bytes first.
+  if (wave16OwnsSource(file) && !slidesWebpOwnsSource(file)) {
+    const projected = wave16SourceBefore(file, Buffer.from(value));
+    const encoding = typeof args[1] === 'string' ? args[1] : args[1]?.encoding;
+    const before = typeof value === 'string' ? projected.toString(encoding) : projected;
+    return proof.files[file] ? blindReviewedSourceBefore(file, before) : before;
+  }
   if (slidesWebpOwnsSource(file)) {
     const before = slidesWebpSourceBefore(file, Buffer.from(value));
     const projected = proof.files[file] ? blindReviewedSourceBefore(file, before) : before;

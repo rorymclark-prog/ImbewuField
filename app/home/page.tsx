@@ -16,6 +16,7 @@ import {
   Leaf,
   CalendarDays,
   ClipboardList,
+  FileText,
   Camera,
   MessageCircle,
   Wheat,
@@ -31,6 +32,8 @@ import { useTourInvitation } from '@/components/TourDiscovery';
 import ThemePanel from '@/components/ThemePanel';
 import LimaBar from '@/components/LimaBar';
 import TabBar from '@/components/TabBar';
+import AppHeader from '@/components/layout/AppHeader';
+import DesktopPrimaryNav from '@/components/layout/DesktopPrimaryNav';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import HomeHeroCard from '@/components/home/HomeHeroCard';
@@ -204,7 +207,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
         <span className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.12em' }}>
           {t('homeUpcomingTasks')}
         </span>
-        <Link href="/facilitator/crops" className="flex items-center gap-1 font-display" style={{ fontSize: 12, color: 'var(--color-forest-800)', textDecoration: 'none' }}>
+        <Link href="/facilitator/crops" className="flex items-center gap-1 font-display" style={{ fontSize: 12, color: 'var(--color-forest-800)', textDecoration: 'none', minHeight: 44 }}>
           {t('homeTaskBoardViewPlan')}<ChevronRight size={13} />
         </Link>
       </div>
@@ -218,7 +221,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
             <button
               onClick={() => onToggle(task.id)}
               aria-label={t(task.completed ? 'homeTaskMarkNotDone' : 'homeTaskMarkDone')}
-              className={task.completed ? 'imf-task-check' : undefined}
+              className={`relative before:absolute before:-inset-3 before:content-[''] ${task.completed ? 'imf-task-check' : ''}`}
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: 'var(--color-forest-800)', flexShrink: 0 }}
             >
               {task.completed ? <CheckCircle2 size={20} strokeWidth={1.8} /> : <Circle size={20} strokeWidth={1.8} />}
@@ -238,6 +241,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
             <button
               onClick={() => downloadTaskIcs(task)}
               aria-label={t('homeTaskAddCalendar')}
+              className="relative before:absolute before:-inset-[13px] before:content-['']"
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: 'var(--color-muted)', flexShrink: 0 }}
             >
               <CalendarPlus size={18} strokeWidth={1.6} />
@@ -309,7 +313,7 @@ function FarmPlanCard({ places, mainSite, staffRole = null }: { places: SavedPla
       </div>
       <span
         className="home-next-step-arrow flex items-center justify-center flex-shrink-0"
-        style={{ width: 42, height: 42, borderRadius: 999, background: 'var(--color-forest-800)', color: 'var(--on-forest)', boxShadow: '0 3px 10px rgba(31,77,43,0.22)' }}
+        style={{ width: 42, height: 42, borderRadius: 999, background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', boxShadow: '0 3px 10px rgba(31,77,43,0.22)' }}
       >
         <ChevronRight size={20} strokeWidth={2} />
       </span>
@@ -412,17 +416,22 @@ function HomeLandingInner() {
   // SIMPLE LEAVES THE TILE OUT. The tab bar under every screen already opens the same book under
   // the same name, so on Simple's Home "My Records" appears once, as the tab.
   const QUICK_ACTIONS = [
-    { href: '/student',           Icon: GraduationCap, art: undefined as string | undefined, label: t('homeQuickStudy'),       desc: t('homeQuickStudyDesc'),       color: 'var(--color-water)', bg: 'rgba(35,94,134,0.10)' },
-    { href: '/contact',           Icon: MessageCircle, art: undefined as string | undefined, label: t('homeQuickContact'),     desc: t('homeQuickContactDesc'),     color: '#5A7A3A', bg: 'rgba(90,122,58,0.10)' },
-    // These four carry real illustrated art (public/home-icons/) instead of a Lucide glyph —
-    // same "art field with an Icon fallback" pattern as def.art in DesignPalette.tsx and
-    // getCropArt() on the Prices/Exchange pages. Icon stays wired as the fallback if the art
-    // path is ever wrong, never dead-code.
-    { href: '/journal',           Icon: Leaf,          art: '/home-icons/journal.png',      label: t('homeQuickJournal'),     desc: t('homeQuickJournalDesc'),     color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
-    { href: '/facilitator/crops', Icon: CalendarDays,  art: '/home-icons/crop-planner.png', label: t('homeQuickCropPlanner'), desc: t('homeQuickCropPlannerDesc'), color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
-    { href: '/records',           Icon: Wheat,         art: '/home-icons/my-records.png',   label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
-    { href: '/prices',            Icon: Tag,           art: '/home-icons/prices.png',       label: t('homePricesLabel'), desc: t('homePricesDescription'), color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
+    { href: '/student',           Icon: GraduationCap, label: t('homeQuickStudy'),       desc: t('homeQuickStudyDesc'),       color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
+    { href: '/contact',           Icon: MessageCircle, label: t('homeQuickContact'),     desc: t('homeQuickContactDesc'),     color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
+    // w18-45: every tile uses a Lucide icon in the same themed emerald chip (the painted PNG art
+    // did not follow the theme and made Study/Contact look like a different style).
+    { href: '/journal',           Icon: Leaf,          label: t('homeQuickJournal'),     desc: t('homeQuickJournalDesc'),     color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
+    { href: '/facilitator/crops', Icon: CalendarDays,  label: t('homeQuickCropPlanner'), desc: t('homeQuickCropPlannerDesc'), color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
+    { href: '/records',           Icon: Wheat,         label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
+    { href: '/prices',            Icon: Tag,           label: t('homePricesLabel'), desc: t('homePricesDescription'), color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
   ];
+  const STAFF_LINKS = !staffRole ? [] : [
+    // w19-09: the role dashboard link is gone — the hero CTA and the Dashboard tab already go there.
+    // isiZulu descriptions are not drafted: lang zu shows the English line until a reviewed one exists.
+    { href: '/assessments', Icon: ClipboardList, label: t('navAssessments'), desc: 'Check how farms and learners are doing' },
+    { href: '/reports', Icon: FileText, label: t('siteReportOverline'), desc: 'Site analysis reports you can open or share' },
+    { href: '/network', Icon: Users, label: t('navNetwork'), desc: 'Farmers, mentors and partners near you' },
+  ].filter(({ href }) => canSeeNavLink(navigationRole, href) && canSeeWorkspaceLink(navigationRole, href));
   const quickActions = simple ? QUICK_ACTIONS.filter((q) => q.href !== '/records') : QUICK_ACTIONS;
 
   return (
@@ -430,14 +439,22 @@ function HomeLandingInner() {
       className="h-[100dvh] flex flex-col font-sans overflow-hidden"
       style={{ background: 'var(--bg-0)', color: 'var(--color-ink)' }}
     >
+      {/* w19-09: staff roles get the shared AppHeader (brand, Back, Settings, desktop nav) instead of
+          the phone-only bar; the h1 moves into the page body below. */}
+      {staffRole && (
+        <AppHeader
+          title={getDayDate(lang)}
+          right={<LessonLink id="home:overview" label={t('homeLearnAction')} />}
+        />
+      )}
       {/* ── Header ── */}
-      <header
+      {!staffRole && <header
         className="flex-shrink-0 flex items-center gap-3 px-4"
         style={{ height: 56, borderBottom: '1px solid var(--color-border)' }}
       >
         <MenuButton />{!simple && <BackButton fallback="/home" />}
 
-        <div className="flex flex-col justify-center flex-1">
+        <div className="flex flex-col justify-center min-w-0">
           <span className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-harvest)', letterSpacing: '0.12em', lineHeight: 1 }}>
             {getDayDate(lang)}
           </span>
@@ -453,6 +470,9 @@ function HomeLandingInner() {
             {firstName ? t('homeGreeting').replace('{name}', firstName) : t('tabHome')}
           </h1>
         </div>
+        {/* TabBar steps aside at lg+ (hideAtDesktop below), so the four destinations move up here. */}
+        <DesktopPrimaryNav />
+        <div className="flex-1" />
 
         <LessonLink id="home:overview" label={t('homeLearnAction')} />
         <button
@@ -463,13 +483,14 @@ function HomeLandingInner() {
         >
           <Settings size={16} strokeWidth={1.6} />
         </button>
-      </header>
+      </header>}
 
       <style jsx global>{`
         /* Home scrolls vertically; flex shrinking used to squash the tour's 209px card to
            35px on shorter windows, leaving only a thin strip of its garden photo visible. */
         .home-scroll-content > * { flex-shrink: 0; }
         @keyframes imfQuickEnter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .home-quick-grid > .home-quick-link:last-child:nth-child(odd) { grid-column: span 2; }
         .home-quick-link { animation: imfQuickEnter 360ms cubic-bezier(0.16,1,0.3,1) both; transition: transform 180ms cubic-bezier(0.16,1,0.3,1), box-shadow 180ms ease, border-color 180ms ease; }
         .home-quick-link:nth-child(2) { animation-delay: 45ms; }
         .home-quick-link:nth-child(3) { animation-delay: 90ms; }
@@ -530,6 +551,7 @@ function HomeLandingInner() {
           .home-quick-grid {
             grid-template-columns: repeat(6, minmax(0, 1fr));
           }
+          .home-quick-grid > .home-quick-link:last-child:nth-child(odd) { grid-column: auto; }
           .home-quick-grid.is-simple {
             grid-template-columns: repeat(5, minmax(0, 1fr));
           }
@@ -538,6 +560,12 @@ function HomeLandingInner() {
 
       {/* ── Main content ── */}
       <main className="home-scroll-content flex-1 overflow-y-auto flex flex-col px-4 py-6 max-w-5xl mx-auto w-full gap-6">
+
+        {staffRole && (
+          <h1 className="t-h1 m-0" style={{ color: 'var(--text-primary)' }}>
+            {firstName ? t('homeGreeting').replace('{name}', firstName) : t('tabHome')}
+          </h1>
+        )}
 
         <LanguageDraftNote lang={lang} scope="home" />
 
@@ -569,25 +597,45 @@ function HomeLandingInner() {
           )}
         </section>
 
+        {/* w18-46: staff Home used to end at the hero. A short card of their real pages; each
+            link passes the same role gates as the drawer, so a role is never offered a refusal. */}
+        {staffRole && (
+          <nav aria-label={t('homeDashboards')} className="rounded-2xl overflow-hidden" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
+            {STAFF_LINKS.map((l, i) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="home-quick-link flex items-center gap-3 px-4"
+                style={{ minHeight: 56, textDecoration: 'none', borderTop: i ? '1px solid var(--border)' : 'none' }}
+              >
+                <span className="flex items-center justify-center rounded-xl flex-shrink-0" style={{ width: 40, height: 40, color: 'var(--emerald)', background: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' }}>
+                  <l.Icon size={20} strokeWidth={1.6} aria-hidden />
+                </span>
+                <span className="flex-1 min-w-0 font-display font-semibold" style={{ fontSize: 15, color: 'var(--text-primary)' }}>
+                  {l.label}
+                  <span className="block font-sans font-normal" style={{ fontSize: 13, color: 'var(--text-secondary)', marginTop: 1 }}>{l.desc}</span>
+                </span>
+                <ChevronRight size={16} strokeWidth={1.6} aria-hidden style={{ color: 'var(--text-muted)', flexShrink: 0 }} />
+              </Link>
+            ))}
+          </nav>
+        )}
+
         {/* ── Quick actions ── */}
-        {!staffRole && <div className={`home-quick-grid grid grid-cols-3 gap-3${simple ? ' is-simple' : ''}`}>
+        {!staffRole && <div className={`home-quick-grid grid grid-cols-2 gap-3${simple ? ' is-simple' : ''}`}>
           {quickActions.map((q) => (
             <Link
               key={q.href}
               href={q.href}
               className="home-quick-link flex flex-col items-center gap-2 p-3 rounded-2xl text-center"
-              style={{ textDecoration: 'none', background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
+              style={{ textDecoration: 'none', background: 'var(--bg-1)', border: '1px solid var(--border)' }}
             >
               <div className="flex items-center justify-center rounded-xl" style={{ width: 44, height: 44, background: q.bg, color: q.color }}>
-                {q.art ? (
-                  <img src={q.art} alt="" aria-hidden style={{ width: 38, height: 38, objectFit: 'contain' }} />
-                ) : (
-                  <q.Icon size={20} strokeWidth={1.6} />
-                )}
+                <q.Icon size={22} strokeWidth={1.6} aria-hidden />
               </div>
               <div>
-                <div className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--color-ink)', lineHeight: 1.2 }}>{q.label}</div>
-                <div className="font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', marginTop: 1 }}>{q.desc}</div>
+                <div className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--text-primary)', lineHeight: 1.2 }}>{q.label}</div>
+                <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 1 }}>{q.desc}</div>
               </div>
             </Link>
           ))}
@@ -617,6 +665,8 @@ function HomeLandingInner() {
             src="/home-images/sample-farm-landscape.webp"
             alt=""
             aria-hidden="true"
+            width={720}
+            height={405}
             loading="lazy"
             decoding="async"
             style={{
@@ -655,7 +705,7 @@ function HomeLandingInner() {
         {!staffRole && <section>
           <button
             onClick={() => setRolesOpen((o) => !o)}
-            className="w-full flex items-center justify-between"
+            className="w-full flex flex-col items-start gap-1 text-left sm:flex-row sm:items-center sm:justify-between"
             aria-expanded={rolesOpen}
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '2px 2px' }}
           >
@@ -726,8 +776,8 @@ function HomeLandingInner() {
         </footer>
       </main>
 
-      <LimaBar />
-      <TabBar />
+      <LimaBar staff={Boolean(staffRole)} />
+      <TabBar hideAtDesktop />
       <ThemePanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </div>
   );

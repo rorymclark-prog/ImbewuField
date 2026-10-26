@@ -32,6 +32,10 @@ export const NO_FLOATING_BACK: ReadonlySet<string> = new Set([
   // viewport, and has its own Back/Next controls — a floating back button over a slide
   // would be a second, wrong navigation system.
   '/pitch',
+  // /samples/production draws its own "More examples" back link in its hero nav (it is a
+  // standalone print-style page, not an AppHeader screen), so the floating pill doubled it
+  // and overlapped the hero.
+  '/samples/production',
 ]);
 
 /** Whether the floating fallback may render for this path. */

@@ -73,7 +73,7 @@ function SkillChip({
         fontSize: 13.5,
         cursor: 'pointer',
         background: on ? 'var(--color-forest-800)' : 'color-mix(in srgb, var(--border) 50%, transparent)',
-        color: on ? 'var(--on-forest)' : 'var(--text-muted)',
+        color: on ? 'var(--on-forest-800)' : 'var(--text-muted)',
         border: `1px solid ${on ? 'var(--color-forest-800)' : 'var(--border)'}`,
       }}
     >
@@ -176,7 +176,7 @@ function InitialsAvatar({ name, size = 80 }: { name: string | null; size?: numbe
           token already used for white text on a forest fill elsewhere in this file. */}
       <span
         className="font-display font-semibold"
-        style={{ fontSize: size * 0.35, color: 'var(--on-forest)', lineHeight: 1 }}
+        style={{ fontSize: size * 0.35, color: 'var(--on-forest-800)', lineHeight: 1 }}
       >
         {initials}
       </span>
@@ -458,7 +458,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
               value={fullName}
               onChange={e => setFullName(e.target.value)}
               placeholder={t('profileFullNamePlaceholder')}
-              className="w-full font-sans"
+              className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 w-full font-sans"
               style={{
                 padding: '10px 14px',
                 borderRadius: 11,
@@ -520,7 +520,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
               onChange={e => setBio(e.target.value.slice(0, 200))}
               placeholder={t('profileBioPlaceholder')}
               rows={3}
-              className="w-full font-sans"
+              className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1 w-full font-sans"
               style={{
                 padding: '10px 14px',
                 borderRadius: 11,

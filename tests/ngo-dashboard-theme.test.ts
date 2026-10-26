@@ -35,8 +35,10 @@ test('app/ngo/page.tsx role-gate card, header title and tabs follow the theme', 
   for (const hex of ['#FFFEFA', '#E2D8C4', '#20190F', '#506158', '#5C5040', '#1F4D2B', '#F7F2E9']) {
     assert.ok(!src.includes(hex), `${hex} should be gone from app/ngo/page.tsx`);
   }
-  assert.match(src, /color:\s*'var\(--color-forest-800\)'/);
-  assert.match(src, /background:\s*'var\(--color-forest-800\)',\s*color:\s*'var\(--on-forest\)'/);
+  // Wave 18 (w18-29) dropped the header link that carried this; the active tab still does.
+  assert.match(src, /color:\s*view === key \? 'var\(--color-forest-800\)'/);
+  // Wave 16 (w16-01): the badge text moved to --on-forest-800, light in every theme column.
+  assert.match(src, /background:\s*'var\(--color-forest-800\)',\s*color:\s*'var\(--on-forest-800(?:, var\(--on-forest\))?\)'/);
 });
 
 test('components/NgoDashboard.tsx surfaces and text follow the theme outside the deliberate swatch exceptions', () => {

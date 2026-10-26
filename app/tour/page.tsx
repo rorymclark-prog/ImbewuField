@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, Sprout, Map, BookOpen, ReceiptText, Users, Building2, BarChart3, FileText, MessageCircle, type LucideIcon } from 'lucide-react';
+import { ArrowRight, Sprout, Map, BookOpen, ReceiptText, Users, Building2, BarChart3, FileText, MessageCircle, type LucideIcon } from 'lucide-react';
 import AppHeader from '@/components/layout/AppHeader';
 import TabBar from '@/components/TabBar';
 import { useProductTour } from '@/components/ProductTourProvider';
@@ -50,7 +50,7 @@ export default function TourPage() {
         <div className={styles.controls}>{tour?.active ? <button className={styles.primary} onClick={tour.open}>{tourUi('continue', `Continue tour · stop ${tour.current+1}`, { current: tour.current + 1 })}</button> : <button className={styles.primary} onClick={tour?.start} disabled={!tour?.ready}>{!tour?.ready ? tourUi('loading', 'Getting the tour ready…') : tried ? tourUi('tryAgain', 'Try the tour again') : tourUi('start', 'Start the 15-minute tour')}</button>}
         <Link href="/samples/gardens">{tourUi('browseGardens', 'Browse the gardens')}</Link></div>
       </div>
-      <figure><img src="/demo/harvest.webp" alt={ui('Illustrated example of a garden harvest', 'Umdwebo wesibonelo sesivuno sengadi')}/><figcaption>{ui('Garden harvest · AI-generated illustration', 'Isivuno sengadi · umdwebo owenziwe nge-AI')}</figcaption></figure>
+      <figure><img src="/demo/harvest.webp" width={512} height={512} loading="lazy" alt={ui('Illustrated example of a garden harvest', 'Umdwebo wesibonelo sesivuno sengadi')}/><figcaption>{ui('Garden harvest · AI-generated illustration', 'Isivuno sengadi · umdwebo owenziwe nge-AI')}</figcaption></figure>
     </section>
     {tour?.error && <p role="alert" lang={productTourError(tour.error,lang)===tour.error?'':lang}>{productTourError(tour.error, lang)}{['zu','st','ts','ve'].includes(lang)&&productTourError(tour.error,lang)!==tour.error&&<small lang="en" style={{display:'block',fontSize:12}}><span lang={lang}>{t('offlineSourceLabel')}: </span>{tour.error}</small>}</p>}
     <p className={styles.notice}>{ui('Try the app with prepared records. Your own project stays unchanged.', 'Zama uhlelo ngamarekhodi alungisiwe. Iphrojekthi yakho ayishintshi.')}</p>
@@ -70,7 +70,7 @@ export default function TourPage() {
         <h2><button type="button" className={cards.open} data-tour-stop={step.id} aria-label={tourUi('stopAria', `Open stop ${index + 1}: ${step.title}`, { current: index + 1, title: copy.title })} aria-describedby={`tour-${step.id}-description`} aria-current={current ? 'step' : undefined} disabled={!allowed || pendingStop !== null} onClick={()=>openStop(index)}>{copy.title}</button></h2>
         <p id={`tour-${step.id}-description`} className={cards.description}>{copy.task}</p>
         {['zu','st','ts','ve'].includes(lang)&&<details className={cards.source}><summary>{t('languageDraftNoticeEnglishToggle')}</summary><div lang="en"><strong>{step.title}</strong><p>{step.task}</p></div></details>}
-        <span className={cards.action} aria-hidden="true">{pendingStop === index ? tourUi('opening', 'Opening…') : !tour?.ready ? tourUi('gettingReady', 'Getting ready…') : allowed ? ui('Open stop', 'Vula indawo') : tourUi('unavailable', 'Unavailable for this account')}{allowed && <ArrowUpRight size={18}/>}</span>
+        <span className={cards.action} aria-hidden="true">{pendingStop === index ? tourUi('opening', 'Opening…') : !tour?.ready ? tourUi('gettingReady', 'Getting ready…') : allowed ? ui('Open stop', 'Vula indawo') : tourUi('unavailable', 'Unavailable for this account')}{allowed && <ArrowRight size={16}/>}</span>
       </article>;
     })}</div>
     <div className={styles.controls}><Link href="/samples/farm">{ui('Full farm evidence pack', 'Iphakethe eligcwele lobufakazi bepulazi')}</Link><Link href="/samples">{ui('All role workspaces', 'Zonke izindawo zokusebenza')}</Link><Link href="/feedback">{ui('Feature requests & programme customisation', 'Izicelo zezici nokwenza uhlelo lufaneleke')}</Link></div>

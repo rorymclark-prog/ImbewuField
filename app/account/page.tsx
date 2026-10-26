@@ -30,8 +30,15 @@ import { useSampleRole } from '@/lib/use-role-navigation';
 // three drifting copies, since every captured frame for /account across phone and desktop,
 // light and dark, used to show only a faint sprout on an empty page with no way to tell
 // loading, broken and "this is the practice version" apart.
+// w15-03: AppHeader's title is a <span>, so these three states had no <h1> at all (every
+// sample-mode /account frame in the wave 15 capture). The visible header already says
+// "Account"; the heading is for screen readers, as on /community.
 function AccountShellHeader({ copy, lang }: { copy: AccountCopy; lang:string }) {
-  return <><AppHeader title={copy('Account', 'I-akhawunti')} /><div className="px-4 pt-2"><LanguageDraftNote lang={lang} scope="account" /></div></>;
+  return <>
+    <AppHeader title={copy('Account', 'I-akhawunti')} />
+    <h1 className="sr-only">{copy('Account', 'I-akhawunti')}</h1>
+    <div className="px-4 pt-2"><LanguageDraftNote lang={lang} scope="account" /></div>
+  </>;
 }
 
 function Row({ icon: Icon, label, value,valueLang='' }: { icon: LucideIcon; label: string; value: string | null;valueLang?:string }) {
@@ -204,7 +211,7 @@ export default function AccountPage() {
           <AccountShellHeader copy={copy} lang={lang} />
           <div className="flex-1 flex flex-col items-center justify-center gap-3 px-6 text-center">
             <Sprout size={32} style={{ color: 'var(--color-forest-800)', opacity: 0.4 }} />
-            <p className="text-sm font-display" style={{ color: 'var(--text-secondary)' }}>{copy('Loading your account…', 'Kulayishwa i-akhawunti yakho…')}</p>
+            <p className="text-sm font-sans" style={{ color: 'var(--text-secondary)' }}>{copy('Loading your account…', 'Kulayishwa i-akhawunti yakho…')}</p>
           </div>
           <TabBar hideAtDesktop />
         </div>
@@ -213,23 +220,23 @@ export default function AccountPage() {
     if (samplePreview) {
       const sandbox = getSandboxProfile();
       const sandboxRoleLabel = sandbox.role ? accountRoleName(sandbox.role,copy) : null;
-      const sandboxLangLabel = APP_LANGS.find((l) => l.code === sandbox.language)?.native ?? sandbox.language;
+      const sandboxLangLabel = APP_LANGS.find((l) => l.code === lang)?.native ?? lang; // w18-40: the language in use, not the stored sandbox value
       return (
         <div lang={lang} className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
           <AccountShellHeader copy={copy} lang={lang} />
           <div className="flex-1 overflow-y-auto">
-            <div className={`${workspace.workspace} ${workspace.formWidth} px-4 py-6 sm:px-6`}>
+            <div className={`${workspace.workspace} px-4 py-6 sm:px-6`} style={{ maxWidth: 640 }}>
               <section className="min-w-0 space-y-5" aria-label={copy('Tour account', 'I-akhawunti yohambo')}>
                 <div className="rounded-2xl p-5 flex items-center gap-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
                   <div className="flex items-center justify-center rounded-full font-display font-bold flex-shrink-0"
-                    style={{ width: 64, height: 64, fontSize: 28, background: 'linear-gradient(135deg, var(--color-forest-800), var(--color-forest-700))', color: 'var(--on-forest)' }}>
+                    style={{ width: 64, height: 64, fontSize: 28, background: 'linear-gradient(135deg, var(--color-forest-800), var(--color-forest-700))', color: 'var(--on-forest-800, var(--on-forest))' }}>
                     <Sprout size={28} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="font-display font-semibold text-lg leading-tight truncate" style={{ color: 'var(--text-primary)' }}>{sandbox.full_name ?? copy('Tour account', 'I-akhawunti yohambo')}</div>
                     {sandboxRoleLabel && (
-                      <div className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-xs font-display"
-                        style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.15)', color: 'var(--color-forest-800)' }}>
+                      <div className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-xs font-sans"
+                        style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--color-forest-800)' }}>
                         <Sprout size={11} />{sandboxRoleLabel}
                       </div>
                     )}
@@ -240,9 +247,9 @@ export default function AccountPage() {
                   <Row icon={Globe} label={copy('Language', 'Ulimi')} value={sandboxLangLabel} />
                 </div>
                 <button onClick={() => setSettingsOpen(true)}
-                  className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
+                  className="w-full flex lg:hidden items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-sans"
                   style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer', textAlign: 'left' }}>
-                  <span>{copy('Appearance & language', 'Ukubukeka nolimi')}</span>
+                  <span>{copy('Appearance', 'Ukubukeka')}</span>
                   <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />
                 </button>
                 <div className="rounded-2xl px-4 py-4 space-y-3" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
@@ -251,12 +258,12 @@ export default function AccountPage() {
                   </p>
                   <div className="flex gap-2 flex-wrap">
                     <button onClick={() => router.push('/login')}
-                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-display font-semibold"
-                      style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', cursor: 'pointer' }}>
+                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-sans font-semibold"
+                      style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', border: 'none', cursor: 'pointer' }}>
                       {copy('Sign in', 'Ngena ngemvume')}
                     </button>
                     <button onClick={() => { exitSampleMode(); router.push('/home'); }}
-                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-display"
+                      className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-sans"
                       style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}>
                       {copy('Exit tour', 'Phuma ohambo')}
                     </button>
@@ -279,12 +286,12 @@ export default function AccountPage() {
         <AccountShellHeader copy={copy} lang={lang} />
         <div className="flex-1 flex flex-col items-center justify-center gap-4 px-6 text-center">
           <Sprout size={32} style={{ color: 'var(--color-forest-800)', opacity: 0.4 }} />
-          <p className="text-sm font-display" style={{ color: 'var(--text-secondary)' }}>
+          <p className="text-sm font-sans" style={{ color: 'var(--text-secondary)' }}>
             {authSlow ? copy('Still loading… you can sign in instead.', 'Kusalayishwa… ungangena ngemvume esikhundleni.') : copy('Sign in to manage your account.', 'Ngena ngemvume ukuze uphathe i-akhawunti yakho.')}
           </p>
           <button onClick={() => router.push('/login')}
-            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-display font-semibold"
-            style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', cursor: 'pointer' }}>
+            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-sans font-semibold"
+            style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', border: 'none', cursor: 'pointer' }}>
             {copy('Sign in', 'Ngena ngemvume')}
           </button>
         </div>
@@ -318,7 +325,7 @@ export default function AccountPage() {
           <div className="rounded-2xl p-5 flex items-center gap-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
             <div className="relative flex-shrink-0">
               {profile?.photo_url ? (
-                <img data-photo-preview src={profile.photo_url} alt={displayName ?? copy('Avatar','Isithombe somsebenzisi')}
+                <img data-photo-preview src={profile.photo_url} alt={displayName ?? copy('Avatar','Isithombe somsebenzisi')} width={64} height={64}
                   className="rounded-full object-cover"
                   style={{ width: 64, height: 64 }} />
               ) : (
@@ -343,15 +350,15 @@ export default function AccountPage() {
                 <div className="text-xs font-sans mt-1" style={{ color: 'var(--danger)' }}><AccountErrorText source={photoError}/></div>
               )}
               {roleLabel && (
-                <div className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-xs font-display"
-                  style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.15)', color: 'var(--color-forest-800)' }}>
+                <div className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-xs font-sans"
+                  style={{ background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--color-forest-800)' }}>
                   <Sprout size={11} />{roleLabel}
                 </div>
               )}
             </div>
             {!editing && (
               <button onClick={() => setEditing(true)} title={copy('Edit profile', 'Hlela iphrofayela')}
-                className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-display"
+                className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-sans"
                 style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.15)', color: 'var(--color-forest-800)', cursor: 'pointer' }}>
                 <Pencil size={12} />{copy('Edit', 'Hlela')}
               </button>
@@ -367,7 +374,7 @@ export default function AccountPage() {
                 <div className="text-xs font-sans mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Full name', 'Amagama aphelele')}</div>
                 <input value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                   placeholder={copy('Your full name', 'Amagama akho aphelele')}
-                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
+                  className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
                   style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
               </label>
 
@@ -376,7 +383,7 @@ export default function AccountPage() {
                 <input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                   placeholder="+27 ..."
                   type="tel"
-                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
+                  className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
                   style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
               </label>
 
@@ -388,7 +395,7 @@ export default function AccountPage() {
                 <div className="text-xs font-sans mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Business name', 'Igama lebhizinisi')} <span style={{ opacity: 0.7 }}>{copy('(heads your invoices)', '(livela kuma-invoice akho)')}</span></div>
                 <input value={form.farmName} onChange={(e) => setForm((f) => ({ ...f, farmName: e.target.value }))}
                   placeholder={copy('e.g. Ubhejane Creche', 'isib. Ubhejane Creche')}
-                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
+                  className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5"
                   style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
                 <div className="text-xs font-sans mt-1" style={{ color: 'var(--text-muted)' }}>
                   {copy('Leave this empty to invoice under your own name instead.', 'Shiya lokhu kungenalutho ukuze i-invoice isebenzise igama lakho.')}
@@ -405,7 +412,7 @@ export default function AccountPage() {
                     style={{ width: 56, height: 56, background: 'var(--input-bg)', border: '1px solid var(--border)' }}>
                     {profile?.farm_logo
                       /* eslint-disable-next-line @next/next/no-img-element -- farmer-supplied data URL */
-                      ? <img src={profile.farm_logo} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                      ? <img src={profile.farm_logo} alt="" width={64} height={64} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                       : <ImageIcon size={20} style={{ color: '#C3B79E' }} />}
                   </div>
                   <div className="flex flex-col gap-1.5 min-w-0">
@@ -434,7 +441,7 @@ export default function AccountPage() {
               <label className="block">
                 <div className="text-xs font-sans mb-1" style={{ color: 'var(--text-muted)' }}>{copy('Language', 'Ulimi')}</div>
                 <select value={form.language} onChange={(e) => setForm((f) => ({ ...f, language: e.target.value }))}
-                  className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 appearance-none"
+                  className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 appearance-none"
                   style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text-primary)' }}>
                   {APP_LANGS.map((l) => <option key={l.code} value={l.code}>{l.native}</option>)}
                 </select>
@@ -448,12 +455,12 @@ export default function AccountPage() {
 
               <div className="flex gap-2 pt-1">
                 <button onClick={saveProfile} disabled={saving} aria-busy={saving}
-                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold"
-                  style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', cursor: saving ? 'wait' : 'pointer', opacity: saving ? 0.7 : 1 }}>
+                  className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-sans font-semibold"
+                  style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', border: 'none', cursor: saving ? 'wait' : 'pointer', opacity: saving ? 0.7 : 1 }}>
                   <Check size={14} />{saving ? copy('Saving...', 'Kuyalondolozwa...') : copy('Save', 'Londoloza')}
                 </button>
                 <button onClick={() => setEditing(false)} disabled={saving}
-                  className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-display"
+                  className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-sans"
                   style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}>
                   <X size={14} />{copy('Cancel', 'Khansela')}
                 </button>
@@ -476,7 +483,7 @@ export default function AccountPage() {
               collapsed. All tools renders it open with no toggle, exactly as before. */}
           {simple && (
             <button onClick={() => setMoreOpen((o) => !o)} aria-expanded={moreOpen}
-              className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
+              className="w-full flex lg:hidden items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-sans"
               style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer', textAlign: 'left' }}>
               <span>{copy('More account settings', 'Ezinye izilungiselelo ze-akhawunti')}</span>
               {moreOpen ? <ChevronUp size={16} style={{ color: 'var(--text-muted)' }} /> : <ChevronDown size={16} style={{ color: 'var(--text-muted)' }} />}
@@ -497,7 +504,7 @@ export default function AccountPage() {
           {/* Change password */}
           {(!simple || moreOpen) && (!changingPw ? (
             <button onClick={() => setChangingPw(true)}
-              className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
+              className="w-full flex lg:hidden items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-sans"
               style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer', textAlign: 'left' }}>
               <span className="flex items-center gap-2"><Lock size={14} style={{ color: 'var(--text-muted)' }} />{copy('Change password', 'Shintsha iphasiwedi')}</span>
               <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />
@@ -507,7 +514,7 @@ export default function AccountPage() {
               <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'var(--text-muted)' }}>{copy('Change password', 'Shintsha iphasiwedi')}</div>
 
               {pwSuccess ? (
-                <div className="flex items-center gap-2 py-2 text-sm font-display" style={{ color: 'var(--color-forest-800)' }}>
+                <div className="flex items-center gap-2 py-2 text-sm font-sans" style={{ color: 'var(--color-forest-800)' }}>
                   <Check size={14} />{copy('Password updated successfully.', 'Iphasiwedi ibuyekeziwe.')}
                 </div>
               ) : (
@@ -520,7 +527,7 @@ export default function AccountPage() {
                         placeholder={field === 'current' ? copy('Current password', 'Iphasiwedi yamanje') : field === 'next' ? copy('New password', 'Iphasiwedi entsha') : copy('Confirm new password', 'Qinisekisa iphasiwedi entsha')}
                         value={pwForm[field]}
                         onChange={(e) => { setPwForm((f) => ({ ...f, [field]: e.target.value })); setPwError(null); }}
-                        className="w-full text-sm font-display outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 pr-10"
+                        className="w-full text-sm font-sans outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded-xl px-3 py-2.5 pr-10"
                         style={{ background: 'var(--input-bg)', border: '1px solid var(--border)', color: 'var(--text-primary)' }} />
                       {field === 'current' && (
                         <button type="button" onClick={() => setShowPw((s) => !s)}
@@ -535,12 +542,12 @@ export default function AccountPage() {
                   {pwError && <p role="alert" className="text-xs font-sans" style={{ color: 'var(--orange)' }}><AccountErrorText source={pwError}/></p>}
                   <div className="flex gap-2 pt-1">
                     <button onClick={handleChangePw} disabled={pwSaving || !pwForm.current || !pwForm.next || !pwForm.confirm}
-                      className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold"
-                      style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest)', border: 'none', cursor: pwSaving ? 'wait' : 'pointer', opacity: (pwSaving || !pwForm.current || !pwForm.next) ? 0.6 : 1 }}>
+                      className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-sans font-semibold"
+                      style={{ background: 'var(--color-forest-800)', color: 'var(--on-forest-800, var(--on-forest))', border: 'none', cursor: pwSaving ? 'wait' : 'pointer', opacity: (pwSaving || !pwForm.current || !pwForm.next) ? 0.6 : 1 }}>
                       <Lock size={13} />{pwSaving ? copy('Updating...', 'Kuyabuyekezwa...') : copy('Update password', 'Buyekeza iphasiwedi')}
                     </button>
                     <button onClick={() => { setChangingPw(false); setPwForm({ current: '', next: '', confirm: '' }); setPwError(null); }}
-                      className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-display"
+                      className="flex items-center justify-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-sans"
                       style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)', cursor: 'pointer' }}>
                       <X size={14} />{copy('Cancel', 'Khansela')}
                     </button>
@@ -555,7 +562,7 @@ export default function AccountPage() {
               it as a second, always-visible entry point exactly as before. */}
           {(!simple || moreOpen) && (
             <button onClick={() => setSettingsOpen(true)}
-              className="w-full flex items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-display"
+              className="w-full flex lg:hidden items-center justify-between px-4 py-3.5 rounded-2xl text-sm font-sans"
               style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', cursor: 'pointer', textAlign: 'left' }}>
               <span>{copy('Appearance & language', 'Ukubukeka nolimi')}</span>
               <ChevronRight size={16} style={{ color: 'var(--text-muted)' }} />
@@ -564,7 +571,7 @@ export default function AccountPage() {
 
           {/* Sign out — always plain and reachable in both modes. */}
           <button onClick={handleSignOut} disabled={signingOut}
-            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-display font-semibold transition-all"
+            className="w-full flex items-center justify-center gap-2 py-3.5 rounded-2xl text-sm font-sans font-semibold transition-all"
             style={{ background: signingOut ? 'var(--bg-2)' : 'var(--danger-soft)', border: '1px solid color-mix(in srgb, var(--danger) 25%, transparent)', color: signingOut ? 'var(--text-muted)' : 'var(--danger)', cursor: signingOut ? 'wait' : 'pointer' }}>
             <LogOut size={15} />
             {signingOut ? copy('Signing out...', 'Kuyaphuma...') : copy('Sign out', 'Phuma')}
