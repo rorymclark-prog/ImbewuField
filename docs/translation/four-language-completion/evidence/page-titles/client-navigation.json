@@ -1,0 +1,26 @@
+[
+  {
+    "lang": "zu",
+    "forward": "Buka uhambo lokufundisa \u2014 ImbewuField",
+    "back": "Amacebo nosizo \u2014 ImbewuField",
+    "sameDocument": true
+  },
+  {
+    "lang": "st",
+    "forward": "Etela app ka tataiso \u2014 ImbewuField",
+    "back": "Dikeletso le thuso \u2014 ImbewuField",
+    "sameDocument": true
+  },
+  {
+    "lang": "ts",
+    "forward": "Valanga app hi ku kongomisiwa \u2014 ImbewuField",
+    "back": "Switsundzuxo ni mpfuno \u2014 ImbewuField",
+    "sameDocument": true
+  },
+  {
+    "lang": "ve",
+    "forward": "Dalelani app nga vhulivhisi \u2014 ImbewuField",
+    "back": "Ngeletshedzo na thuso \u2014 ImbewuField",
+    "sameDocument": true
+  }
+]

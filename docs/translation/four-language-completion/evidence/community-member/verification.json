@@ -1,0 +1,2574 @@
+{
+  "sourceHead": "a1f931dbd434bc1b2177892d9b509a6a520bd67a",
+  "languages": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "browserStates": 112,
+  "realSignedOutRedirectStates": 8,
+  "isolatedActualComponentStates": 104,
+  "scrolledReadingLines": 1338,
+  "extraPhoneFieldCaptures": 12,
+  "minimumEnabledActionOrAlertContrast": 5.743226234744965,
+  "negativeContrastControl": {
+    "current": 8.740130483228853,
+    "previousPair": 1.8293848280095046,
+    "threshold": 4.5,
+    "originalPairRejected": true,
+    "scope": "Disposable browser fixture only; restored source is never changed."
+  },
+  "unchangedServiceHashes": {
+    "lib/db/community-queries.ts": "e926e09d4c8fc719a59b5d434d63cf7d71472fba6b8ccdcc775b0619aef9a10e",
+    "lib/community/flag.ts": "0d0361a64a6ae05451ed0e29fbee6f5d2a3eb771bef6b02385c35b7d9f0dc188",
+    "lib/i18n.tsx": "82fbab03fde3745bffee4465c986484af090884825f36ff2358156a19a764b37"
+  },
+  "cases": [
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "actual-guest",
+      "loginRedirect": true
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-normal",
+      "lines": 12,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Thumela umyalezo",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Bika",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-simple",
+      "lines": 11,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Okwengeziwe",
+          "ratio": 7.092218913126115
+        },
+        {
+          "text": "Thumela umyalezo",
+          "ratio": 8.740130483228853
+        }
+      ],
+      "photoCount": 1
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-expanded",
+      "lines": 13,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Okuncane",
+          "ratio": 7.092218913126115
+        },
+        {
+          "text": "Thumela umyalezo",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Bika",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-report",
+      "lines": 16,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Thumela umyalezo",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Bika",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Thumela umbiko",
+          "ratio": 5.743226234744965
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-report-error",
+      "lines": 21,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Thumela umyalezo",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Bika",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Thumela umbiko",
+          "ratio": 5.743226234744965
+        },
+        {
+          "text": "Kuhluleke ukuthumela umbiko \u2014 hlola uxhumano lwakho bese uzama futhi.Umbhalo wokuqala wesiNgisi: Couldn't send the report \u2014 check your connection and try again.",
+          "ratio": 16.691798991760034
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-report-sent",
+      "lines": 16,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Thumela umyalezo",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Bika",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-messaging",
+      "lines": 12,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Bika",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-message-error",
+      "lines": 17,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Thumela umyalezo",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Bika",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Kuhluleke ukuvula ingxoxo \u2014 hlola uxhumano lwakho bese uzama futhi.Umbhalo wokuqala wesiNgisi: Couldn't open the conversation \u2014 check your connection and try again.",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-loading",
+      "lines": 7,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-load-error",
+      "lines": 12,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Akukwazanga ukulayisha le phrofayela. Hlola uxhumano lwakho bese uzama futhi.Umbhalo wokuqala wesiNgisi: Could not load this profile. Check your connection and try again.",
+          "ratio": 16.691798991760034
+        },
+        {
+          "text": "Zama futhi",
+          "ratio": 8.740130483228853
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-unavailable",
+      "lines": 10,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-own",
+      "lines": 10,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-report-error-dark",
+      "lines": 21,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 6.086467630589121
+        },
+        {
+          "text": "Thumela umyalezo",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Bika",
+          "ratio": 15.65485250966091
+        },
+        {
+          "text": "Thumela umbiko",
+          "ratio": 5.743226234744965
+        },
+        {
+          "text": "Kuhluleke ukuthumela umbiko \u2014 hlola uxhumano lwakho bese uzama futhi.Umbhalo wokuqala wesiNgisi: Couldn't send the report \u2014 check your connection and try again.",
+          "ratio": 14.743636600860503
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "actual-guest",
+      "loginRedirect": true
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-normal",
+      "lines": 11,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Thumela umyalezo",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Bika",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-simple",
+      "lines": 10,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Okwengeziwe",
+          "ratio": 7.092218913126115
+        },
+        {
+          "text": "Thumela umyalezo",
+          "ratio": 8.740130483228853
+        }
+      ],
+      "photoCount": 1
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-expanded",
+      "lines": 12,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Okuncane",
+          "ratio": 7.092218913126115
+        },
+        {
+          "text": "Thumela umyalezo",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Bika",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-report",
+      "lines": 15,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Thumela umyalezo",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Bika",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Thumela umbiko",
+          "ratio": 5.743226234744965
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-report-error",
+      "lines": 18,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Thumela umyalezo",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Bika",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Thumela umbiko",
+          "ratio": 5.743226234744965
+        },
+        {
+          "text": "Kuhluleke ukuthumela umbiko \u2014 hlola uxhumano lwakho bese uzama futhi.Umbhalo wokuqala wesiNgisi: Couldn't send the report \u2014 check your connection and try again.",
+          "ratio": 16.691798991760034
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-report-sent",
+      "lines": 15,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Thumela umyalezo",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Bika",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-messaging",
+      "lines": 11,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Bika",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-message-error",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Thumela umyalezo",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Bika",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Kuhluleke ukuvula ingxoxo \u2014 hlola uxhumano lwakho bese uzama futhi.Umbhalo wokuqala wesiNgisi: Couldn't open the conversation \u2014 check your connection and try again.",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-loading",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-load-error",
+      "lines": 9,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Akukwazanga ukulayisha le phrofayela. Hlola uxhumano lwakho bese uzama futhi.Umbhalo wokuqala wesiNgisi: Could not load this profile. Check your connection and try again.",
+          "ratio": 16.691798991760034
+        },
+        {
+          "text": "Zama futhi",
+          "ratio": 8.740130483228853
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-unavailable",
+      "lines": 8,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-own",
+      "lines": 9,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-report-error-dark",
+      "lines": 18,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 6.086467630589121
+        },
+        {
+          "text": "Thumela umyalezo",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Bika",
+          "ratio": 15.65485250966091
+        },
+        {
+          "text": "Thumela umbiko",
+          "ratio": 5.743226234744965
+        },
+        {
+          "text": "Kuhluleke ukuthumela umbiko \u2014 hlola uxhumano lwakho bese uzama futhi.Umbhalo wokuqala wesiNgisi: Couldn't send the report \u2014 check your connection and try again.",
+          "ratio": 14.743636600860503
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "actual-guest",
+      "loginRedirect": true
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-normal",
+      "lines": 12,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Romela molaetsa",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Tlaleha",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-simple",
+      "lines": 11,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Tse ding",
+          "ratio": 7.092218913126115
+        },
+        {
+          "text": "Romela molaetsa",
+          "ratio": 8.740130483228853
+        }
+      ],
+      "photoCount": 1
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-expanded",
+      "lines": 13,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Tse fokolang",
+          "ratio": 7.092218913126115
+        },
+        {
+          "text": "Romela molaetsa",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Tlaleha",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-report",
+      "lines": 16,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Romela molaetsa",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Tlaleha",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Romela tlaleho",
+          "ratio": 5.743226234744965
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-report-error",
+      "lines": 21,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Romela molaetsa",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Tlaleha",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Romela tlaleho",
+          "ratio": 5.743226234744965
+        },
+        {
+          "text": "Ha ho a kgoneha ho romela tlaleho \u2014 hlahloba kgokahano ya hao mme o leke hape.Mongolo wa pele wa Senyesemane: Couldn't send the report \u2014 check your connection and try again.",
+          "ratio": 16.691798991760034
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-report-sent",
+      "lines": 16,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Romela molaetsa",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Tlaleha",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-messaging",
+      "lines": 12,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Tlaleha",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-message-error",
+      "lines": 17,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Romela molaetsa",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Tlaleha",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Ha ho a kgoneha ho bula moqoqo \u2014 hlahloba kgokahano ya hao mme o leke hape.Mongolo wa pele wa Senyesemane: Couldn't open the conversation \u2014 check your connection and try again.",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-loading",
+      "lines": 7,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-load-error",
+      "lines": 13,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Ha ho a kgoneha ho kenya profaele ena. Hlahloba kgokahano ya hao mme o leke hape.Mongolo wa pele wa Senyesemane: Could not load this profile. Check your connection and try again.",
+          "ratio": 16.691798991760034
+        },
+        {
+          "text": "Leka hape",
+          "ratio": 8.740130483228853
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-unavailable",
+      "lines": 10,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-own",
+      "lines": 10,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-report-error-dark",
+      "lines": 21,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 6.086467630589121
+        },
+        {
+          "text": "Romela molaetsa",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Tlaleha",
+          "ratio": 15.65485250966091
+        },
+        {
+          "text": "Romela tlaleho",
+          "ratio": 5.743226234744965
+        },
+        {
+          "text": "Ha ho a kgoneha ho romela tlaleho \u2014 hlahloba kgokahano ya hao mme o leke hape.Mongolo wa pele wa Senyesemane: Couldn't send the report \u2014 check your connection and try again.",
+          "ratio": 14.743636600860503
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "actual-guest",
+      "loginRedirect": true
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-normal",
+      "lines": 11,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Romela molaetsa",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Tlaleha",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-simple",
+      "lines": 10,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Tse ding",
+          "ratio": 7.092218913126115
+        },
+        {
+          "text": "Romela molaetsa",
+          "ratio": 8.740130483228853
+        }
+      ],
+      "photoCount": 1
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-expanded",
+      "lines": 12,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Tse fokolang",
+          "ratio": 7.092218913126115
+        },
+        {
+          "text": "Romela molaetsa",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Tlaleha",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-report",
+      "lines": 15,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Romela molaetsa",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Tlaleha",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Romela tlaleho",
+          "ratio": 5.743226234744965
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-report-error",
+      "lines": 18,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Romela molaetsa",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Tlaleha",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Romela tlaleho",
+          "ratio": 5.743226234744965
+        },
+        {
+          "text": "Ha ho a kgoneha ho romela tlaleho \u2014 hlahloba kgokahano ya hao mme o leke hape.Mongolo wa pele wa Senyesemane: Couldn't send the report \u2014 check your connection and try again.",
+          "ratio": 16.691798991760034
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-report-sent",
+      "lines": 15,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Romela molaetsa",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Tlaleha",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-messaging",
+      "lines": 11,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Tlaleha",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-message-error",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Romela molaetsa",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Tlaleha",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Ha ho a kgoneha ho bula moqoqo \u2014 hlahloba kgokahano ya hao mme o leke hape.Mongolo wa pele wa Senyesemane: Couldn't open the conversation \u2014 check your connection and try again.",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-loading",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-load-error",
+      "lines": 9,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Ha ho a kgoneha ho kenya profaele ena. Hlahloba kgokahano ya hao mme o leke hape.Mongolo wa pele wa Senyesemane: Could not load this profile. Check your connection and try again.",
+          "ratio": 16.691798991760034
+        },
+        {
+          "text": "Leka hape",
+          "ratio": 8.740130483228853
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-unavailable",
+      "lines": 8,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-own",
+      "lines": 9,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-report-error-dark",
+      "lines": 18,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Senyesemane",
+          "ratio": 6.086467630589121
+        },
+        {
+          "text": "Romela molaetsa",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Tlaleha",
+          "ratio": 15.65485250966091
+        },
+        {
+          "text": "Romela tlaleho",
+          "ratio": 5.743226234744965
+        },
+        {
+          "text": "Ha ho a kgoneha ho romela tlaleho \u2014 hlahloba kgokahano ya hao mme o leke hape.Mongolo wa pele wa Senyesemane: Couldn't send the report \u2014 check your connection and try again.",
+          "ratio": 14.743636600860503
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "actual-guest",
+      "loginRedirect": true
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-normal",
+      "lines": 12,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rhumela rungula",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vika",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-simple",
+      "lines": 11,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Swin\u2019wana",
+          "ratio": 7.092218913126115
+        },
+        {
+          "text": "Rhumela rungula",
+          "ratio": 8.740130483228853
+        }
+      ],
+      "photoCount": 1
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-expanded",
+      "lines": 13,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Switsongo",
+          "ratio": 7.092218913126115
+        },
+        {
+          "text": "Rhumela rungula",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vika",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-report",
+      "lines": 16,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rhumela rungula",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vika",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Rhumela xiviko",
+          "ratio": 5.743226234744965
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-report-error",
+      "lines": 21,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rhumela rungula",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vika",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Rhumela xiviko",
+          "ratio": 5.743226234744965
+        },
+        {
+          "text": "A swi kotekanga ku rhumela xiviko \u2014 kambela vuhlanganisi bya wena kutani u ringeta nakambe.Tsalwa ro sungula ra Xinghezi: Couldn't send the report \u2014 check your connection and try again.",
+          "ratio": 16.691798991760034
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-report-sent",
+      "lines": 16,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rhumela rungula",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vika",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-messaging",
+      "lines": 12,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Vika",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-message-error",
+      "lines": 17,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rhumela rungula",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vika",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "A swi kotekanga ku pfula mbulavurisano \u2014 kambela vuhlanganisi bya wena kutani u ringeta nakambe.Tsalwa ro sungula ra Xinghezi: Couldn't open the conversation \u2014 check your connection and try again.",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-loading",
+      "lines": 7,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-load-error",
+      "lines": 13,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "A swi kotekanga ku layicha phurofayili leyi. Kambela vuhlanganisi bya wena kutani u ringeta nakambe.Tsalwa ro sungula ra Xinghezi: Could not load this profile. Check your connection and try again.",
+          "ratio": 16.691798991760034
+        },
+        {
+          "text": "Ringeta nakambe",
+          "ratio": 8.740130483228853
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-unavailable",
+      "lines": 10,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-own",
+      "lines": 10,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-report-error-dark",
+      "lines": 21,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 6.086467630589121
+        },
+        {
+          "text": "Rhumela rungula",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vika",
+          "ratio": 15.65485250966091
+        },
+        {
+          "text": "Rhumela xiviko",
+          "ratio": 5.743226234744965
+        },
+        {
+          "text": "A swi kotekanga ku rhumela xiviko \u2014 kambela vuhlanganisi bya wena kutani u ringeta nakambe.Tsalwa ro sungula ra Xinghezi: Couldn't send the report \u2014 check your connection and try again.",
+          "ratio": 14.743636600860503
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "actual-guest",
+      "loginRedirect": true
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-normal",
+      "lines": 11,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rhumela rungula",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vika",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-simple",
+      "lines": 10,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Swin\u2019wana",
+          "ratio": 7.092218913126115
+        },
+        {
+          "text": "Rhumela rungula",
+          "ratio": 8.740130483228853
+        }
+      ],
+      "photoCount": 1
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-expanded",
+      "lines": 12,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Switsongo",
+          "ratio": 7.092218913126115
+        },
+        {
+          "text": "Rhumela rungula",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vika",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-report",
+      "lines": 15,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rhumela rungula",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vika",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Rhumela xiviko",
+          "ratio": 5.743226234744965
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-report-error",
+      "lines": 18,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rhumela rungula",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vika",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Rhumela xiviko",
+          "ratio": 5.743226234744965
+        },
+        {
+          "text": "A swi kotekanga ku rhumela xiviko \u2014 kambela vuhlanganisi bya wena kutani u ringeta nakambe.Tsalwa ro sungula ra Xinghezi: Couldn't send the report \u2014 check your connection and try again.",
+          "ratio": 16.691798991760034
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-report-sent",
+      "lines": 15,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rhumela rungula",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vika",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-messaging",
+      "lines": 11,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Vika",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-message-error",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rhumela rungula",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vika",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "A swi kotekanga ku pfula mbulavurisano \u2014 kambela vuhlanganisi bya wena kutani u ringeta nakambe.Tsalwa ro sungula ra Xinghezi: Couldn't open the conversation \u2014 check your connection and try again.",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-loading",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-load-error",
+      "lines": 9,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "A swi kotekanga ku layicha phurofayili leyi. Kambela vuhlanganisi bya wena kutani u ringeta nakambe.Tsalwa ro sungula ra Xinghezi: Could not load this profile. Check your connection and try again.",
+          "ratio": 16.691798991760034
+        },
+        {
+          "text": "Ringeta nakambe",
+          "ratio": 8.740130483228853
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-unavailable",
+      "lines": 8,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-own",
+      "lines": 9,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-report-error-dark",
+      "lines": 18,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Xinghezi",
+          "ratio": 6.086467630589121
+        },
+        {
+          "text": "Rhumela rungula",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vika",
+          "ratio": 15.65485250966091
+        },
+        {
+          "text": "Rhumela xiviko",
+          "ratio": 5.743226234744965
+        },
+        {
+          "text": "A swi kotekanga ku rhumela xiviko \u2014 kambela vuhlanganisi bya wena kutani u ringeta nakambe.Tsalwa ro sungula ra Xinghezi: Couldn't send the report \u2014 check your connection and try again.",
+          "ratio": 14.743636600860503
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "actual-guest",
+      "loginRedirect": true
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-normal",
+      "lines": 12,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rumelani mulaedza",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vhigani",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-simple",
+      "lines": 11,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Zwi\u1e45we",
+          "ratio": 7.092218913126115
+        },
+        {
+          "text": "Rumelani mulaedza",
+          "ratio": 8.740130483228853
+        }
+      ],
+      "photoCount": 1
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-expanded",
+      "lines": 13,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Zwi\u1e71uku",
+          "ratio": 7.092218913126115
+        },
+        {
+          "text": "Rumelani mulaedza",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vhigani",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-report",
+      "lines": 16,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rumelani mulaedza",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vhigani",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Rumelani muvhigo",
+          "ratio": 5.743226234744965
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-report-error",
+      "lines": 21,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rumelani mulaedza",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vhigani",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Rumelani muvhigo",
+          "ratio": 5.743226234744965
+        },
+        {
+          "text": "A zwo ngo konadzea u rumela muvhigo \u2014 \u1e71olani vhu\u1e71umani ha\u1e4bu ni lingedze hafhu.Ma\u1e45walwa a u thoma a English: Couldn't send the report \u2014 check your connection and try again.",
+          "ratio": 16.691798991760034
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-report-sent",
+      "lines": 16,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rumelani mulaedza",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vhigani",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-messaging",
+      "lines": 12,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Vhigani",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-message-error",
+      "lines": 17,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rumelani mulaedza",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vhigani",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "A zwo ngo konadzea u vula nyambedzano \u2014 \u1e71olani vhu\u1e71umani ha\u1e4bu ni lingedze hafhu.Ma\u1e45walwa a u thoma a English: Couldn't open the conversation \u2014 check your connection and try again.",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-loading",
+      "lines": 7,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-load-error",
+      "lines": 12,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "A zwo ngo konadzea u laisa phurofai\u1e3di iyi. \u1e70olani vhu\u1e71umani ha\u1e4bu ni lingedze hafhu.Ma\u1e45walwa a u thoma a English: Could not load this profile. Check your connection and try again.",
+          "ratio": 16.691798991760034
+        },
+        {
+          "text": "Lingedzani hafhu",
+          "ratio": 8.740130483228853
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-unavailable",
+      "lines": 10,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-own",
+      "lines": 10,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-report-error-dark",
+      "lines": 21,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 6.086467630589121
+        },
+        {
+          "text": "Rumelani mulaedza",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vhigani",
+          "ratio": 15.65485250966091
+        },
+        {
+          "text": "Rumelani muvhigo",
+          "ratio": 5.743226234744965
+        },
+        {
+          "text": "A zwo ngo konadzea u rumela muvhigo \u2014 \u1e71olani vhu\u1e71umani ha\u1e4bu ni lingedze hafhu.Ma\u1e45walwa a u thoma a English: Couldn't send the report \u2014 check your connection and try again.",
+          "ratio": 14.743636600860503
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "actual-guest",
+      "loginRedirect": true
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-normal",
+      "lines": 11,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rumelani mulaedza",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vhigani",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-simple",
+      "lines": 10,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Zwi\u1e45we",
+          "ratio": 7.092218913126115
+        },
+        {
+          "text": "Rumelani mulaedza",
+          "ratio": 8.740130483228853
+        }
+      ],
+      "photoCount": 1
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-expanded",
+      "lines": 12,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Zwi\u1e71uku",
+          "ratio": 7.092218913126115
+        },
+        {
+          "text": "Rumelani mulaedza",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vhigani",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-report",
+      "lines": 15,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rumelani mulaedza",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vhigani",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Rumelani muvhigo",
+          "ratio": 5.743226234744965
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-report-error",
+      "lines": 18,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rumelani mulaedza",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vhigani",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "Rumelani muvhigo",
+          "ratio": 5.743226234744965
+        },
+        {
+          "text": "A zwo ngo konadzea u rumela muvhigo \u2014 \u1e71olani vhu\u1e71umani ha\u1e4bu ni lingedze hafhu.Ma\u1e45walwa a u thoma a English: Couldn't send the report \u2014 check your connection and try again.",
+          "ratio": 16.691798991760034
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-report-sent",
+      "lines": 15,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rumelani mulaedza",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vhigani",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-messaging",
+      "lines": 11,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Vhigani",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-message-error",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Rumelani mulaedza",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vhigani",
+          "ratio": 12.314028956741739
+        },
+        {
+          "text": "A zwo ngo konadzea u vula nyambedzano \u2014 \u1e71olani vhu\u1e71umani ha\u1e4bu ni lingedze hafhu.Ma\u1e45walwa a u thoma a English: Couldn't open the conversation \u2014 check your connection and try again.",
+          "ratio": 12.314028956741739
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-loading",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-load-error",
+      "lines": 9,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "A zwo ngo konadzea u laisa phurofai\u1e3di iyi. \u1e70olani vhu\u1e71umani ha\u1e4bu ni lingedze hafhu.Ma\u1e45walwa a u thoma a English: Could not load this profile. Check your connection and try again.",
+          "ratio": 16.691798991760034
+        },
+        {
+          "text": "Lingedzani hafhu",
+          "ratio": 8.740130483228853
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-unavailable",
+      "lines": 8,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 0
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-own",
+      "lines": 9,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 7.341818944692099
+        }
+      ],
+      "photoCount": 3
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-report-error-dark",
+      "lines": 18,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "English",
+          "ratio": 6.086467630589121
+        },
+        {
+          "text": "Rumelani mulaedza",
+          "ratio": 8.740130483228853
+        },
+        {
+          "text": "Vhigani",
+          "ratio": 15.65485250966091
+        },
+        {
+          "text": "Rumelani muvhigo",
+          "ratio": 5.743226234744965
+        },
+        {
+          "text": "A zwo ngo konadzea u rumela muvhigo \u2014 \u1e71olani vhu\u1e71umani ha\u1e4bu ni lingedze hafhu.Ma\u1e45walwa a u thoma a English: Couldn't send the report \u2014 check your connection and try again.",
+          "ratio": 14.743636600860503
+        }
+      ],
+      "photoCount": 3
+    }
+  ],
+  "limitations": "Unreviewed AI drafts, with no fluent-speaker or moderation-meaning approval. Real guest contexts use synthetic onboarding/consent preconditions and the documented browser-only community preview flag. Signed-in fixtures render actual component/hooks with original source CSS, isolated reads/thread/report services, code-native QA photos and stub header/navigation. No live Firebase writes, device location, real moderation, consent-flow or signed-in E2E claim. Farmer content is unchanged and marked unknown-language. No PLAN_VERSION change or production merge."
+}

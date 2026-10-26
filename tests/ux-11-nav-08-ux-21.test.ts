@@ -1,3 +1,5 @@
+import { actualPracticeUi, practiceNodeText } from './tour-practice-renderers.ts';
+import { sampleWorkspaceText } from '../lib/sample-tour-localization.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
@@ -51,17 +53,24 @@ test('nav-08: the /samples header link no longer says "Account" while the headin
   assert.doesNotMatch(samples, /<Link href="\/account">\{ui\('Account', 'I-akhawunti'\)\}<\/Link>/);
   // The header's back control is AppHeader's BackButton, falling back to /account — named by
   // where it goes — and the header title now says the same thing as the page's own heading.
-  assert.match(samples, /<AppHeader backFallback="\/account" title=\{ui\('Choose a view', 'Khetha indawo yokusebenza'\)\} \/>/);
+  assert.match(samples, /<AppHeader backFallback="\/account" title=\{ui\('Choose a view', 'Khetha indawo yokusebenza'\)\}\s*\/>/);
   assert.doesNotMatch(samples, /<Link href="\/account">/, 'no second, differently-worded account link may sit in the header');
 });
 
-test('nav-08: the duplicate "Choose your workspace" heading is no longer an <h2>, and the View-index chip row is gone', () => {
-  assert.doesNotMatch(samples, /<h2>\{lang === 'st' \? <PairedDraft lang=\{lang\} pair=\{SESOTHO_SAMPLE_CHOOSER_DRAFT\.sectionHeading\}/, 'must not still be a second <h2>');
-  // The regional-draft wiring these translation tests pin must still render and pair correctly —
-  // only the *tag* changed, not the field.
-  assert.match(samples, /<PairedDraft lang=\{lang\} pair=\{SESOTHO_SAMPLE_CHOOSER_DRAFT\.sectionHeading\}/, 'the Sesotho draft wiring must still be rendered somewhere');
-  assert.match(samples, /<PairedDraft lang=\{lang\} pair=\{TSHIVENDA_SAMPLE_CHOOSER_DRAFT\.sectionHeading\}/, 'the Tshivenda draft wiring must still be rendered somewhere');
-  assert.doesNotMatch(samples, /View index/, 'the chip row duplicating the role cards below must be gone');
+// Checking references to the old partial tables prevented completing held fields.
+// The rendered hierarchy and paired section label are the actual navigation contract.
+test('nav-08: every draft chooser retains one page heading and a paired workspace label outside h2', async () => {
+  for (const lang of ['zu', 'st', 'ts', 've'] as const) {
+    const h = await actualPracticeUi(lang);
+    try {
+      assert.equal(h.renderer.root.findAllByType('h1').length, 1);
+      const label = sampleWorkspaceText(lang, 'Choose your workspace', 'Khetha indawo yakho yokusebenza');
+      assert.ok(h.text().includes(label));
+      assert.ok(h.renderer.root.findAllByProps({ lang: 'en' }).some(n => practiceNodeText(n).includes('Choose your workspace')));
+      assert.ok(h.renderer.root.findAllByType('h2').every(n => !practiceNodeText(n).includes(label)));
+      assert.ok(!h.text().includes('View index'));
+    } finally { await h.dispose(); }
+  }
 });
 
 test('ux-21/nav-10: samples/farm hides the native file input behind a styled button', () => {

@@ -1,0 +1,265 @@
+{
+  "sourceSha": "de65fbe6819eb46584318c478a6538c8fc11408e",
+  "status": "Unreviewed AI drafts. No fluent-speaker approval is claimed.",
+  "entries": [
+    {
+      "english": "Permaculture Site Report",
+      "zu": "Umbiko wendawo ye-permaculture",
+      "st": "Tlaleho ya sebaka sa permaculture",
+      "ts": "Xiviko xa ndhawu xa permaculture",
+      "ve": "Muvhigo wa fhethu wa permaculture"
+    },
+    {
+      "english": "Permaculture Site Report — {name}",
+      "zu": "Umbiko wendawo ye-permaculture — {name}",
+      "st": "Tlaleho ya sebaka sa permaculture — {name}",
+      "ts": "Xiviko xa ndhawu xa permaculture — {name}",
+      "ve": "Muvhigo wa fhethu wa permaculture — {name}"
+    },
+    {
+      "english": "Issued {date}",
+      "zu": "Ukhishwe ngo-{date}",
+      "st": "E ntshitswe ka {date}",
+      "ts": "Xi humesiwe hi {date}",
+      "ve": "Wo bviswa nga {date}"
+    },
+    {
+      "english": "Document control",
+      "zu": "Imininingwane yedokhumenti",
+      "st": "Taolo ya tokomane",
+      "ts": "Vulawuri bya tsalwa",
+      "ve": "Ndangulo ya ḽiṅwalwa"
+    },
+    {
+      "english": "Field",
+      "zu": "Inkambu",
+      "st": "Karolo",
+      "ts": "Xiyenge",
+      "ve": "Tshipiḓa"
+    },
+    {
+      "english": "Detail",
+      "zu": "Imininingwane",
+      "st": "Dintlha",
+      "ts": "Vuxokoxoko",
+      "ve": "Zwidodombedzwa"
+    },
+    {
+      "english": "Reference",
+      "zu": "Inombolo yenkomba",
+      "st": "Nomoro ya tshupiso",
+      "ts": "Nomboro ya nkombiso",
+      "ve": "Nomboro ya u sumba"
+    },
+    {
+      "english": "Site",
+      "zu": "Indawo",
+      "st": "Sebaka",
+      "ts": "Ndhawu",
+      "ve": "Fhethu"
+    },
+    {
+      "english": "Issued",
+      "zu": "Ukhishwe nini",
+      "st": "E ntshitswe neng",
+      "ts": "Xi humesiwe rini",
+      "ve": "Wo bviswa lini"
+    },
+    {
+      "english": "Revision",
+      "zu": "Inguqulo",
+      "st": "Mofuta",
+      "ts": "Ndzulamiso",
+      "ve": "Mvusuludzo"
+    },
+    {
+      "english": "1 — first issue",
+      "zu": "1 — ukukhishwa kokuqala",
+      "st": "1 — e ntshitsweng lekgetlo la pele",
+      "ts": "1 — ku humesiwa ko sungula",
+      "ve": "1 — u bviswa lwa u thoma"
+    },
+    {
+      "english": "Basis of issue",
+      "zu": "Isisekelo sokukhishwa",
+      "st": "Motheo wa ho ntsha",
+      "ts": "Xisekelo xa ku humesa",
+      "ve": "Mutheo wa u bvisa"
+    },
+    {
+      "english": "Prepared by",
+      "zu": "Ulungiswe ngu-",
+      "st": "E lokisitswe ke",
+      "ts": "Xi lulamisiwe hi",
+      "ve": "Wo lugiswa nga"
+    },
+    {
+      "english": "Status",
+      "zu": "Isimo",
+      "st": "Boemo",
+      "ts": "Xiyimo",
+      "ve": "Vhuimo"
+    },
+    {
+      "english": "Not named by the farmer",
+      "zu": "Ayikabizwa ngegama umlimi",
+      "st": "Ha e so rehelwe ke molemi",
+      "ts": "A yi si thyiwa hi murimi",
+      "ve": "A hu athu u rehiwa nga mulimi"
+    },
+    {
+      "english": "{length} report, {count} section requested",
+      "zu": "Umbiko wohlobo {length}, kucelwe isigaba esingu-{count}",
+      "st": "Tlaleho ya mofuta wa {length}, ho kopilwe karolo e {count}",
+      "ts": "Xiviko xa muxaka wa {length}, ku komberiwe xiyenge xa {count}",
+      "ve": "Muvhigo wa lushaka lwa {length}, ho humbelwa tshipiḓa tsha {count}"
+    },
+    {
+      "english": "{length} report, {count} sections requested",
+      "zu": "Umbiko wohlobo {length}, kucelwe izigaba ezingu-{count}",
+      "st": "Tlaleho ya mofuta wa {length}, ho kopilwe dikarolo tse {count}",
+      "ts": "Xiviko xa muxaka wa {length}, ku komberiwe swiyenge swa {count}",
+      "ve": "Muvhigo wa lushaka lwa {length}, ho humbelwa zwipiḓa zwa {count}"
+    },
+    {
+      "english": "For the farmer's use and discussion. Not a professional engineering, agronomic or financial certification.",
+      "zu": "Owokusetshenziswa nokuxoxwa ngumlimi. Awusona isitifiketi sochwepheshe sobunjiniyela, sezolimo noma sezezimali.",
+      "st": "Bakeng sa tshebediso le puisano ya molemi. Ha se setifikeiti sa setsebi sa boenjineri, temo kapa ditjhelete.",
+      "ts": "Wu endleriwe ku tirhisiwa ni ku kanerisana hi murimi. A hi xitifikheti xa xiphurofexinali xa vuinjhiniyere, swa vurimi kumbe swa timali.",
+      "ve": "Ndi wa u shumiswa na u ambiwa nga mulimi. A si ṱhanziela ya phurofeshinaḽa ya vhuinzhiniere, vhulimi kana masheleni."
+    },
+    {
+      "english": "This report describes one site on one date. Where a figure was measured, the table beside it names what measured it; where the app had no data, the report says so rather than filling the gap.",
+      "zu": "Lo mbiko uchaza indawo eyodwa ngosuku olulodwa. Lapho isibalo silinganisiwe, ithebula eliseduze lisichaza ukuthi silinganiswe ngani; lapho i-app ingenayo idatha, umbiko ukusho lokho kunokugcwalisa isikhala.",
+      "st": "Tlaleho ena e hlalosa sebaka se le seng ka letsatsi le le leng. Moo palo e lekantsweng, tafole e haufi le yona e bolela se e lekantseng; moo app e se nang data, tlaleho e bolela seo ho e na le ho tlatsa sekgeo.",
+      "ts": "Xiviko lexi xi hlamusela ndhawu yin'we hi siku rin'we. Laha nhlayo yi pimiweke, tafula leri nga ekusuhi na yona ri vula lexi yi pimeke; laha app yi nga riki na data, xiviko xi vula tano ematshan'weni yo tata xivandla.",
+      "ve": "Muvhigo uyu u ṱalusa fhethu huthihi nga ḓuvha ḽithihi. He nomboro ya pimiwa, thebulu i re tsini nayo i bula tsho i pimaho; he app ya vha i si na data, muvhigo u bula zwenezwo nṱhani ha u ḓadza tshikhala."
+    },
+    {
+      "english": "ImbewuField, from this site's location and public environmental data",
+      "zu": "ImbewuField, kusetshenziswa indawo yale ndawo nedatha yomphakathi yemvelo",
+      "st": "ImbewuField, ho tswa moo sebaka sena se leng teng le dateng ya tikoloho ya setjhaba",
+      "ts": "ImbewuField, hi ndhawu leyi ndhawu leyi yi nga eka yona ni data ya mbango ya mani na mani",
+      "ve": "ImbewuField, ho shumiswa vhuimo ha fhethu afha na data ya mupo ya nnyi na nnyi"
+    },
+    {
+      "english": "ImbewuField, from the farmer's own {sources}",
+      "zu": "ImbewuField, kusetshenziswa lokhu komlimi: {sources}",
+      "st": "ImbewuField, ho tswa ho tse latelang tsa molemi: {sources}",
+      "ts": "ImbewuField, hi leswi landzelaka swa murimi: {sources}",
+      "ve": "ImbewuField, ho shumiswa zwi tevhelaho zwa mulimi: {sources}"
+    },
+    {
+      "english": "map",
+      "zu": "imephu",
+      "st": "mmapa",
+      "ts": "mepe",
+      "ve": "mapa"
+    },
+    {
+      "english": "survey",
+      "zu": "inhlolovo",
+      "st": "phuputso",
+      "ts": "nkambisiso",
+      "ve": "ṱhoḓisiso"
+    },
+    {
+      "english": "crop plan",
+      "zu": "uhlelo lwezitshalo",
+      "st": "moralo wa dijalo",
+      "ts": "pulani ya swibyariwa",
+      "ve": "pulane ya zwiliṅwa"
+    },
+    {
+      "english": "and",
+      "zu": "kanye",
+      "st": "le",
+      "ts": "ni",
+      "ve": "na"
+    },
+    {
+      "english": "Brief advice",
+      "zu": "Izeluleko ezimfushane",
+      "st": "Keletso e kgutshwane",
+      "ts": "Switsundzuxo swo koma",
+      "ve": "Nyeletshedzo pfufhi"
+    },
+    {
+      "english": "Standard",
+      "zu": "Okujwayelekile",
+      "st": "E tlwaelehileng",
+      "ts": "Ya ntolovelo",
+      "ve": "Yo ḓoweleaho"
+    },
+    {
+      "english": "Comprehensive",
+      "zu": "Okuphelele",
+      "st": "E akaretsang tsohle",
+      "ts": "Leswi heleleke",
+      "ve": "Wo fhelelaho"
+    },
+    {
+      "english": "Draft translation: not yet reviewed by a fluent speaker. Check the English source before acting.",
+      "zu": "Ukuhumusha okusabuyekezwa: akukahlolwa ngumuntu olwazi kahle lolu limi. Hlola umbhalo wesiNgisi ngaphambi kokwenza okushiwoyo.",
+      "st": "Phetolelo ya moralo: ha e so hlahlojwe ke motho ya tsebang puo hantle. Hlahloba mohlodi wa Senyesemane pele o etsa se bolelwang.",
+      "ts": "Vuhundzuluxi bya xitsalwana: a byi si kambisisiwa hi munhu la tivaka ririmi kahle. Kambisisa xihlovo xa Xinghezi u nga si endla leswi vuriwaka.",
+      "ve": "Ṱhalutshedzelo ya mvetamveto: a i athu u sedzwa nga muthu a ambaho luambo zwavhuḓi. Sedzani tshiko tsha Luisimane phanḓa ha u tevhedza zwine zwa ambiwa."
+    },
+    {
+      "english": "Contents",
+      "zu": "Okuqukethwe",
+      "st": "Dikahare",
+      "ts": "Leswi nga endzeni",
+      "ve": "Zwi re ngomu"
+    },
+    {
+      "english": "Figures",
+      "zu": "Imifanekiso",
+      "st": "Ditshwantsho",
+      "ts": "Swifaniso",
+      "ve": "Zwifanyiso"
+    },
+    {
+      "english": "Figure not captioned",
+      "zu": "Umfanekiso awunayo incazelo",
+      "st": "Setshwantsho ha se na tlhaloso",
+      "ts": "Xifaniso a xi na nhlamuselo",
+      "ve": "Tshifanyiso a tshi na ṱhaluso"
+    },
+    {
+      "english": "Figure {number} — {caption}",
+      "zu": "Umfanekiso {number} — {caption}",
+      "st": "Setshwantsho {number} — {caption}",
+      "ts": "Xifaniso {number} — {caption}",
+      "ve": "Tshifanyiso {number} — {caption}"
+    },
+    {
+      "english": "Site at a Glance",
+      "zu": "Indawo kafushane",
+      "st": "Sebaka ka bokgutshwane",
+      "ts": "Ndhawu hi ku komisa",
+      "ve": "Fhethu nga u pfufhifhadza"
+    },
+    {
+      "english": "This section may be incomplete: the model reached its output limit.",
+      "zu": "Lesi sigaba singase singapheleli: imodeli ifinyelele emkhawulweni wayo wokubhala.",
+      "st": "Karolo ena e ka nna ya se fele: mohlala o fihlile moeding wa seo o ka se hlahisang.",
+      "ts": "Xiyenge lexi xi nga va xi nga helelanga: modele yi fikelele mpimo wa leswi yi nga swi humesaka.",
+      "ve": "Tshipiḓa itshi tshi nga vha tshi songo fhelelela: modele yo swika kha mukano wa zwine ya nga zwi bvisa."
+    },
+    {
+      "english": "This section could not be safely generated because it named a listed invasive plant. Please regenerate the report.",
+      "zu": "Lesi sigaba asikwazanga ukukhiqizwa ngokuphepha ngoba sibize isitshalo esihlaselayo esisohlwini. Sicela uphinde ukhiqize umbiko.",
+      "st": "Karolo ena ha e a ka ya hlahiswa ka polokeho hobane e boletse semela se hlaselang se leng lenaneng. Ka kopo hlahisa tlaleho hape.",
+      "ts": "Xiyenge lexi a xi kotanga ku endliwa hi ndlela leyi hlayisekeke hikuva xi vule ximilana lexi hlaselaka lexi nga eka nxaxamelo. Hi kombela u endla xiviko nakambe.",
+      "ve": "Tshipiḓa itshi a tsho ngo kona u bveledzwa nga nḓila yo tsireledzeaho ngauri tsho bula tshimela tshi phaḓalalaho tshi tshi tshinya tshi re kha mutevhe. Ri humbela uri ni dovhe ni bveledze muvhigo."
+    },
+    {
+      "english": "A section could not be generated — please regenerate the report.",
+      "zu": "Kukhona isigaba esingakwazanga ukukhiqizwa — sicela uphinde ukhiqize umbiko.",
+      "st": "Karolo e itseng ha e a ka ya hlahiswa — ka kopo hlahisa tlaleho hape.",
+      "ts": "Xiyenge xin'wana a xi kotanga ku endliwa — hi kombela u endla xiviko nakambe.",
+      "ve": "Tshipiḓa tshiṅwe a tsho ngo kona u bveledzwa — ri humbela uri ni dovhe ni bveledze muvhigo."
+    }
+  ]
+}

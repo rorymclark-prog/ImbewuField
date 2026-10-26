@@ -1,3 +1,6 @@
+import { reportDocumentText, REPORT_DOCUMENT_LANGUAGES, reportRecordedSourceLabel } from './report-localisation';
+import { recordsSeasonLabel } from './records-months';
+import { reportVisualText, reportElementDisplayName, reportRouteShortName } from './report-visuals';
 import { cleanChoices, type HousingKind } from './animal-enterprises';
 import type { PlacedPlant } from './perennial-harvest';
 // ── The farm's own measured facts, as report input ───────────────────────────────────────────
@@ -27,7 +30,7 @@ import type { PlacedPlant } from './perennial-harvest';
 // with no traced roof was given someone else's roof and a rainwater yield computed from it.
 
 import { normaliseReportCropSnapshot, type ReportCropSnapshot } from './report-crop-plan';
-import { ASSURANCE_PARAGRAPHS, ASSURANCE_TITLE } from '@/lib/plan-assurance';
+import { ASSURANCE_TITLE, planAssuranceText, planAssuranceParagraphs } from '@/lib/plan-assurance';
 import { WATER_SHEET_ROOF_RUNOFF_COEFFICIENT, roofHarvestLitres } from '@/lib/roof-runoff';
 
 // ── Types ─────────────────────────────────────────────────────────────────────────────────────
@@ -73,6 +76,9 @@ export interface FactBed {
 
 export interface FactTank {
   name: string;
+  /** Optional original catalogue identity for display translation only. A legacy or custom name
+   * must never be matched to a product or capacity by its words. */
+  defId?: string;
   count: number;
   /** Litres stated by the catalog name. NULL means the size is genuinely unknown — never guessed. */
   statedLitres: number | null;
@@ -421,7 +427,8 @@ export function normaliseReportSiteFacts(value: unknown): ReportSiteFacts | null
       const count = num(item.count, { min: 1, max: 10000 });
       if (!name || count === null) return null;
       const stated = num(item.statedLitres, { min: 1, max: 1e7 });
-      return { name, count: Math.round(count), statedLitres: stated, status: status(item.status) };
+      const defId = text(item.defId, 40);
+      return { name, count: Math.round(count), statedLitres: stated, status: status(item.status), ...(defId ? { defId } : {}) };
     });
     const point = (item: unknown): FactWaterPoint | null => {
       if (!isRec(item)) return null;
@@ -828,14 +835,20 @@ const SOIL_SOURCE_LABEL: Record<string, string> = {
  * source column says which. Rows whose datum is missing are omitted entirely; what is missing is
  * then stated once, on purpose, in the last row.
  */
-export function buildReportHeaderMarkdown(input: ReportHeaderInput): string {
+export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'): string {
+  const t=(source:string,values?:Record<string,string|number>)=>reportDocumentText(source,language,values);
+  const pointCategory=(category:string)=>{
+    if(!REPORT_DOCUMENT_LANGUAGES.includes(language as typeof REPORT_DOCUMENT_LANGUAGES[number]))return category;
+    const labels:Readonly<Record<string,string>>={Dam:'dam',Pond:'pond',Borehole:'borehole',Spring:'spring',Well:'well',Tank:'tank'};
+    return Object.hasOwn(labels,category)?t(labels[category]):category;
+  };
   const { facts } = input;
   const out: string[] = [];
 
   if (!input.omitTitle) {
     const title = facts?.farmName
-      ? `# Site Report — ${facts.farmName}`
-      : '# Permaculture Site Report';
+      ? `# ${t('Site Report — {name}',{name:facts.farmName})}`
+      : `# ${t('Permaculture Site Report')}`;
     out.push(title);
     const standfirstParts = [
       input.vegUnit ? `${input.vegUnit} (${input.biomeName})` : input.biomeName,
@@ -847,98 +860,101 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput): string {
     out.push(standfirstParts.join(' · '));
     out.push('');
   }
-  out.push('## Site at a Glance');
+  out.push(`## ${t('Site at a Glance')}`);
   out.push('');
-  out.push('Nothing in this table was written by the report generator. Each figure is either measured off this farm\'s own map or read from the data source named beside it.');
+  out.push(t("Nothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it."));
   out.push('');
-  out.push('| Measure | Value | Where it comes from |');
+  out.push(`| ${t('Measure')} | ${t('Value')} | ${t('Where it comes from')} |`);
   out.push('|---------|-------|---------------------|');
 
-  const row = (measure: string, value: string, source: string) => out.push(`| ${measure} | ${value} | ${source} |`);
+  const row = (measure: string, value: string, source: string) => out.push(`| ${t(measure)} | ${value} | ${source} |`);
 
-  if (facts?.farmName) row('Site', facts.farmName, 'Named by the farmer');
+  if (facts?.farmName) row('Site', facts.farmName, t('Named by the farmer'));
 
   const boundary = facts?.boundary;
   if (boundary) {
     const ha = boundary.areaM2 / 10000;
     row(
       'Property boundary',
-      `${m2(boundary.areaM2)} (${ha.toFixed(ha < 1 ? 3 : 2)} ha)${boundary.perimeterM ? `, ${metres(boundary.perimeterM)} perimeter` : ''}`,
-      boundary.source,
+      `${m2(boundary.areaM2)} (${ha.toFixed(ha < 1 ? 3 : 2)} ha)${boundary.perimeterM ? `, ${metres(boundary.perimeterM)} ${t('perimeter')}` : ''}`,
+      reportRecordedSourceLabel(boundary.source,language),
     );
   } else if (input.siteAreaM2 && input.siteAreaM2 > 0) {
     row(
       'Mapped site area',
-      `${m2(input.siteAreaM2)}${input.sitePerimeterM ? `, ${metres(input.sitePerimeterM)} perimeter` : ''}`,
-      'Sum of every shape drawn on the map (not a single traced boundary)',
+      `${m2(input.siteAreaM2)}${input.sitePerimeterM ? `, ${metres(input.sitePerimeterM)} ${t('perimeter')}` : ''}`,
+      t('Sum of every shape drawn on the map (not a single traced boundary)'),
     );
   } else {
-    row('Property boundary', 'Not traced', 'Nothing drawn on the map yet');
+    row('Property boundary', t('Not traced'), t('Nothing drawn on the map yet'));
   }
 
   const d = facts?.design;
   if (d && d.growingAreaM2 > 0) {
     const parts: string[] = [];
-    if (d.bedCount) parts.push(`${d.bedCount} bed${d.bedCount === 1 ? '' : 's'} ${m2(d.bedAreaM2)}`);
-    if (d.plotCount) parts.push(`${d.plotCount} staple plot${d.plotCount === 1 ? '' : 's'} ${m2(d.plotAreaM2)}`);
-    row('Growing area drawn', `${m2(d.growingAreaM2)} — ${parts.join(' + ')}`, 'Measured off the farmer\'s plan');
+    if (d.bedCount) parts.push(t(d.bedCount===1?'{count} bed {area}':'{count} beds {area}',{count:d.bedCount,area:m2(d.bedAreaM2)}));
+    if (d.plotCount) parts.push(t(d.plotCount===1?'{count} staple plot {area}':'{count} staple plots {area}',{count:d.plotCount,area:m2(d.plotAreaM2)}));
+    row('Growing area drawn', `${m2(d.growingAreaM2)} — ${parts.join(' + ')}`, t('Measured off the farmer\'s plan'));
   }
   const trees = d?.elements.filter((g) => g.category === 'growing') ?? [];
   if (trees.length) {
     const total = trees.reduce((sum, g) => sum + g.count, 0);
-    row('Trees and perennials placed', `${total} — ${trees.map((g) => `${g.name} x${g.count}`).join(', ')}`, 'Placed by the farmer in the Design Studio');
+    row('Trees and perennials placed', `${total} — ${trees.map((g) => `${g.name} x${g.count}`).join(', ')}`, t('Placed by the farmer in the Design Studio'));
   }
   const structures = d?.elements.filter((g) => g.category === 'structure' || g.category === 'animal' || g.category === 'access') ?? [];
   if (structures.length) {
-    row('Structures placed', structures.map((g) => `${g.name} x${g.count}`).join(', '), 'Placed by the farmer in the Design Studio');
+    row('Structures placed', structures.map((g) => `${reportElementDisplayName(g.name,g.defId,language)} x${g.count}`).join(', '), t('Placed by the farmer in the Design Studio'));
   }
   if (d?.routes.length) {
-    row('Earthworks and routes', d.routes.map((r) => `${r.label.replace(/ \(.*\)$/, '')} ${metres(r.totalLengthM)}`).join(' · '), 'Measured off the traced lines');
+    row('Earthworks and routes', d.routes.map((r) => `${reportRouteShortName(r.label,r.kind,language)} ${metres(r.totalLengthM)}`).join(' · '), t('Measured off the traced lines'));
   }
   if (d?.zones.length) {
-    row('Permaculture zones drawn', d.zones.map((z) => `Zone ${z.zone} ${m2(z.areaM2)}`).join(' · '), 'Rings drawn by the farmer');
+    row('Permaculture zones drawn', d.zones.map((z) => t('Zone {zone} {area}',{zone:z.zone,area:m2(z.areaM2)})).join(' · '), t('Rings drawn by the farmer'));
   }
 
   const water = facts?.water;
   if (water?.tanks.length) {
-    const stated = water.statedStorageLitres > 0 ? litres(water.statedStorageLitres) : 'capacity not stated';
+    const stated = water.statedStorageLitres > 0 ? litres(water.statedStorageLitres) : t('capacity not stated');
     const proposedOnly = water.tanks.every((t) => t.status === 'proposed');
-    row('Water storage on the plan', `${stated} — ${water.tanks.map((t) => `${t.name} x${t.count}`).join(', ')}${proposedOnly ? ' (drawn as proposed)' : ''}`, 'Design Studio');
+    const value=`${stated} — ${water.tanks.map((tank) => `${reportElementDisplayName(tank.name,tank.defId,language)} x${tank.count}`).join(', ')}`;
+    row('Water storage on the plan', proposedOnly?t('{value} (drawn as proposed)',{value}):value, t('Design Studio'));
   }
   if (water?.mapPoints.length) {
-    row('Water points recorded', water.mapPoints.map((p) => `${p.name}${p.category && p.category !== 'Other' ? ` [${p.category}]` : ''}`).join(' · '), 'Pinned on the map by the farmer');
+    row('Water points recorded', water.mapPoints.map((p) => `${p.name}${p.category && p.category !== 'Other' ? ` [${pointCategory(p.category)}]` : ''}`).join(' · '), t('Pinned on the map by the farmer'));
   }
   if (facts?.roof && facts.roof.areaM2 > 0) {
     const harvest = Math.round(roofHarvestLitres(facts.roof.areaM2, input.rainfallMm, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT));
-    row('Roof catchment traced', `${m2(facts.roof.areaM2)} → ${litres(harvest)}/yr at ${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} runoff`, facts.roof.source);
+    row('Roof catchment traced', t('{area} → {harvest}/yr at {coefficient} runoff',{area:m2(facts.roof.areaM2),harvest:litres(harvest),coefficient:WATER_SHEET_ROOF_RUNOFF_COEFFICIENT}), reportRecordedSourceLabel(facts.roof.source,language));
   } else {
-    row('Roof catchment', 'Not traced or measured', 'No roof outline on the map');
+    row('Roof catchment', t('Not traced or measured'), t('No roof outline on the map'));
   }
   if (facts?.crop) {
-    row('Crop plan entered', `${facts.crop.plantingCount} plantings, ${facts.crop.crops.length} crops, across ${facts.crop.bedsPlanted} beds/plots`, 'Entered by the farmer in the crop planner');
+    row('Crop plan entered', t('{plantings} plantings, {crops} crops, across {beds} beds/plots',{plantings:facts.crop.plantingCount,crops:facts.crop.crops.length,beds:facts.crop.bedsPlanted}), t('Entered by the farmer in the crop planner'));
   }
   if (facts?.measurements?.scaleFactor !== undefined) {
-    row('Farmer\'s scale correction', `${facts.measurements.scaleFactor}x applied to every area and length above`, 'Measured on site by the farmer');
+    row('Farmer\'s scale correction', t('{factor}x applied to every area and length above',{factor:facts.measurements.scaleFactor}), t('Measured on site by the farmer'));
   }
   if (facts?.measurements?.localWindFrom) {
-    row('Wind observed on site', `From the ${facts.measurements.localWindFrom}${facts.measurements.localWindStrongestFrom ? `, strongest from the ${facts.measurements.localWindStrongestFrom}` : ''}`, 'Farmer\'s own observation');
+    row('Wind observed on site', t('From the {direction}',{direction:facts.measurements.localWindFrom})+(facts.measurements.localWindStrongestFrom?t(', strongest from the {direction}',{direction:facts.measurements.localWindStrongestFrom}):''), t('Farmer\'s own observation'));
   }
 
-  row('Annual rainfall', `${input.rainfallMm} mm — wet ${input.wetSeason}, dry ${input.drySeason}`, input.rainfallSource === 'nasa-power' ? 'NASA POWER' : input.rainfallSource === 'open-meteo' ? 'Open-Meteo' : 'Climate data service');
+  row('Annual rainfall', t('{rainfall} mm — wet {wet}, dry {dry}',{rainfall:input.rainfallMm,wet:recordsSeasonLabel(language,input.wetSeason),dry:recordsSeasonLabel(language,input.drySeason)}), input.rainfallSource === 'nasa-power' ? 'NASA POWER' : input.rainfallSource === 'open-meteo' ? 'Open-Meteo' : t('Climate data service'));
   if (input.vegUnit) row('Natural vegetation', input.vegUnit, 'SANBI 2018 National Vegetation Map');
-  if (input.bruLabel) row('Agro-ecological zone', `Closest to ${input.bruLabel}`, 'KZN DARD bioresource units — a best-effort climate match, not a verified classification');
+  if (input.bruLabel) row('Agro-ecological zone', t('Closest to {label}',{label:input.bruLabel}), t('KZN DARD bioresource units — a best-effort climate match, not a verified classification'));
   // Location responses also carry generic placeholders. The narrative and short guide already
   // reject them; printing them in this deterministic header would undo that safeguard.
   if (input.soilSource === 'lab' || input.soilSource === 'soilgrids') {
-    row('Soil (0-30 cm)', `pH ${input.soilPh} · ${input.soilOrganicCarbon}% organic carbon · ${input.soilTexture}`, SOIL_SOURCE_LABEL[input.soilSource]);
+    // A known model class can use the diagram's existing draft; uploaded laboratory wording stays raw.
+    const soilTexture=input.soilSource==='lab'||typeof input.soilTexture!=='string'?String(input.soilTexture):reportVisualText(input.soilTexture,language);
+    row('Soil (0-30 cm)', t('pH {ph} · {carbon}% organic carbon · {texture}',{ph:input.soilPh,carbon:input.soilOrganicCarbon,texture:soilTexture}), t(SOIL_SOURCE_LABEL[input.soilSource]));
   } else {
-    row('Soil (0-30 cm)', 'Not measured; arrange a soil test', 'No laboratory result or SoilGrids source recorded');
+    row('Soil (0-30 cm)', t('Not measured; arrange a soil test'), t('No laboratory result or SoilGrids source recorded'));
   }
-  row('Elevation, slope, aspect', `${input.elevationM} m · ${input.slopeDeg}° · faces ${input.aspectLabel}`, 'SRTM elevation model');
+  row('Elevation, slope, aspect', t('{elevation} m · {slope}° · faces {aspect}',{elevation:input.elevationM,slope:input.slopeDeg,aspect:input.aspectLabel}), t('SRTM elevation model'));
 
   const absent = absentWaterBodies(facts, input.hasMapWaterPolygons);
   if (absent.length) {
-    row('Not on this site', `No ${absent.join(', no ')}`, 'Nothing of the kind drawn or recorded');
+    row('Not on this site', absent.map((body,index)=>t(index===0?'No {body}':'no {body}',{body:t(body)})).join(', '), t('Nothing of the kind drawn or recorded'));
   }
 
   out.push('');
@@ -954,6 +970,6 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput): string {
  * most likely to be handed to a funder or an extension officer — carried none of it. A generated
  * document that drops its caveats is worse than one that never had them.
  */
-export function assuranceMarkdown(): string {
-  return [`## ${ASSURANCE_TITLE}`, '', ...ASSURANCE_PARAGRAPHS.flatMap((p) => [p, ''])].join('\n');
+export function assuranceMarkdown(language='en',context?:{soilSource?:string|null}): string {
+  return [`## ${planAssuranceText(ASSURANCE_TITLE,language)}`, '', ...planAssuranceParagraphs(language,context).flatMap((p) => [p, ''])].join('\n');
 }

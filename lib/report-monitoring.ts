@@ -1,3 +1,4 @@
+import { reportDocumentText } from './report-localisation';
 /**
  * report-monitoring.ts — the monitoring & evaluation plan.
  *
@@ -38,26 +39,27 @@ export interface MonitoringRow {
   recordedIn: string;
 }
 
-export function buildMonitoringPlan(facts: ReportSiteFacts | null | undefined): MonitoringRow[] {
+export function buildMonitoringPlan(facts: ReportSiteFacts | null | undefined, language = 'en'): MonitoringRow[] {
+  const t=(source:string,values?:Record<string,string|number>)=>reportDocumentText(source,language,values);
   const rows: MonitoringRow[] = [];
   const design = facts?.design;
 
   rows.push({
-    indicator: 'Harvest by crop',
-    question: 'Is the land actually producing food, and which crops carry it?',
-    baseline: 'The report does not read harvest logs; record the starting period before support, or label a later baseline as retrospective',
-    method: 'Weigh each pick and log it against the crop',
-    frequency: 'Every harvest',
-    recordedIn: 'Harvest log',
+    indicator: t('Harvest by crop'),
+    question: t('Is the land actually producing food, and which crops carry it?'),
+    baseline: t('The report does not read harvest logs; record the starting period before support, or label a later baseline as retrospective'),
+    method: t('Weigh each pick and log it against the crop'),
+    frequency: t('Every harvest'),
+    recordedIn: t('Harvest log'),
   });
 
   rows.push({
-    indicator: 'Sold vs kept',
-    question: 'How much of the harvest was sold, and how much fed the household?',
-    baseline: 'Set by the first full month of both logs',
-    method: 'Log sales, home use, donations, losses and stored stock separately. Harvest minus sales is not household consumption.',
-    frequency: 'Every sale',
-    recordedIn: 'Sales ledger',
+    indicator: t('Sold vs kept'),
+    question: t('How much of the harvest was sold, and how much fed the household?'),
+    baseline: t('Set by the first full month of both logs'),
+    method: t('Log sales, home use, donations, losses and stored stock separately. Harvest minus sales is not household consumption.'),
+    frequency: t('Every sale'),
+    recordedIn: t('Sales ledger'),
   });
 
   // Beds are 'growing' too, and a bed is not a tree — counting one as a perennial to be checked
@@ -68,35 +70,35 @@ export function buildMonitoringPlan(facts: ReportSiteFacts | null | undefined): 
   ) ?? [];
   const treeTotal = trees.reduce((sum, g) => sum + g.count, 0);
   rows.push({
-    indicator: 'Tree and perennial survival',
-    question: 'Are the perennials that were planted still alive a year later?',
+    indicator: t('Tree and perennial survival'),
+    question: t('Are the perennials that were planted still alive a year later?'),
     baseline: treeTotal > 0
-      ? `${treeTotal} placed on the plan${trees.length ? ` (${trees.map((g) => `${g.name} x${g.count}`).join(', ')})` : ''}`
-      : 'No trees placed on the plan yet',
-    method: 'First verify how many were actually planted and when. Count living plants against that planting cohort, not proposed map items; record replacements separately.',
-    frequency: 'Every six months, and after any drought or fire',
-    recordedIn: 'Field journal',
+      ? t('{count} placed on the plan{names}',{count:treeTotal,names:trees.length ? ` (${trees.map((g) => `${g.name} x${g.count}`).join(', ')})` : ''})
+      : t('No trees placed on the plan yet'),
+    method: t('First verify how many were actually planted and when. Count living plants against that planting cohort, not proposed map items; record replacements separately.'),
+    frequency: t('Every six months, and after any drought or fire'),
+    recordedIn: t('Field journal'),
   });
 
   rows.push({
-    indicator: 'Ground cover',
-    question: 'Is bare soil shrinking or spreading?',
-    baseline: 'Photograph the fixed points before any work starts',
-    method: 'Photograph the same three marked spots, from the same standing position, facing the same way',
-    frequency: 'Once a season, four times a year',
-    recordedIn: 'Field journal photographs',
+    indicator: t('Ground cover'),
+    question: t('Is bare soil shrinking or spreading?'),
+    baseline: t('Photograph the fixed points before any work starts'),
+    method: t('Photograph the same three marked spots, from the same standing position, facing the same way'),
+    frequency: t('Once a season, four times a year'),
+    recordedIn: t('Field journal photographs'),
   });
 
   const storage = facts?.water?.statedStorageLitres ?? 0;
   rows.push({
-    indicator: 'Stored water',
-    question: 'Does the stored water last through the dry months?',
+    indicator: t('Stored water'),
+    question: t('Does the stored water last through the dry months?'),
     baseline: storage > 0
-      ? `${groupDigits(storage)} L of tank capacity on the plan`
-      : 'No tank capacity stated on the plan yet',
-    method: 'Read the tank level on the same day each month and write down the date and the level',
-    frequency: 'Monthly',
-    recordedIn: 'Field journal',
+      ? t('{litres} L of tank capacity on the plan',{litres:groupDigits(storage)})
+      : t('No tank capacity stated on the plan yet'),
+    method: t('Read the tank level on the same day each month and write down the date and the level'),
+    frequency: t('Monthly'),
+    recordedIn: t('Field journal'),
   });
 
   if (design && design.growingAreaM2 > 0) {
@@ -107,32 +109,33 @@ export function buildMonitoringPlan(facts: ReportSiteFacts | null | undefined): 
     // printed "1 bed and plot" (there is no bed), and a farm with beds and no plots printed
     // "beds and plots" (there are no plots). The other two places already got this right.
     const parts: string[] = [];
-    if (design.bedCount > 0) parts.push(`${design.bedCount} bed${design.bedCount === 1 ? '' : 's'}`);
-    if (design.plotCount > 0) parts.push(`${design.plotCount} plot${design.plotCount === 1 ? '' : 's'}`);
+    if (design.bedCount > 0) parts.push(t(design.bedCount===1?'{count} bed':'{count} beds',{count:design.bedCount}));
+    if (design.plotCount > 0) parts.push(t(design.plotCount===1?'{count} plot':'{count} plots',{count:design.plotCount}));
     rows.push({
-      indicator: 'Growing area in use',
-      question: 'How much of the drawn growing area is actually planted?',
-      baseline: `${groupDigits(design.growingAreaM2)} m² drawn across ${parts.join(' and ')}`,
-      method: 'Measure the physical beds carrying a crop, counting each once. A saved crop plan is planned use, not confirmation of actual planting.',
-      frequency: 'Monthly',
-      recordedIn: 'Crop planner',
+      indicator: t('Growing area in use'),
+      question: t('How much of the drawn growing area is actually planted?'),
+      baseline: t('{area} m² drawn across {parts}',{area:groupDigits(design.growingAreaM2),parts:parts.join(t(' and '))}),
+      method: t('Measure the physical beds carrying a crop, counting each once. A saved crop plan is planned use, not confirmation of actual planting.'),
+      frequency: t('Monthly'),
+      recordedIn: t('Crop planner'),
     });
   }
 
   return rows;
 }
 
-export function monitoringMarkdown(rows: MonitoringRow[]): string {
-  const out: string[] = ['## Monitoring & Evaluation Plan', ''];
-  out.push('Each indicator below is one this app can record, on a screen that already exists. An indicator nobody can capture is not a plan — it is a wish, and it is why most monitoring tables are empty a year later.');
+export function monitoringMarkdown(rows: MonitoringRow[], language = 'en'): string {
+  const t=(source:string,values?:Record<string,string|number>)=>reportDocumentText(source,language,values);
+  const out: string[] = [`## ${t('Monitoring & Evaluation Plan')}`, ''];
+  out.push(t('Each indicator below is one this app can record, on a screen that already exists. An indicator nobody can capture is not a plan — it is a wish, and it is why most monitoring tables are empty a year later.'));
   out.push('');
-  out.push('| Indicator | What it answers | Baseline | How to measure | How often | Recorded in |');
+  out.push(`| ${t('Indicator')} | ${t('What it answers')} | ${t('Baseline')} | ${t('How to measure')} | ${t('How often')} | ${t('Recorded in')} |`);
   out.push('|-----------|-----------------|----------|----------------|-----------|-------------|');
   for (const r of rows) {
     out.push(`| ${r.indicator} | ${r.question} | ${r.baseline} | ${r.method} | ${r.frequency} | ${r.recordedIn} |`);
   }
   out.push('');
-  out.push('Take baseline readings before support starts. Label any later or recalled starting figures clearly; compare matching periods and do not attribute every change to the project.');
+  out.push(t('Take baseline readings before support starts. Label any later or recalled starting figures clearly; compare matching periods and do not attribute every change to the project.'));
   out.push('');
   return out.join('\n');
 }

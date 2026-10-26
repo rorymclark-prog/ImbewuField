@@ -1,0 +1,178 @@
+[
+  {
+    "lang": "zu",
+    "size": "phone",
+    "mode": "password",
+    "field": {
+      "x": 33,
+      "y": 466.421875,
+      "width": 321,
+      "height": 43
+    }
+  },
+  {
+    "lang": "zu",
+    "size": "phone",
+    "mode": "edit",
+    "field": {
+      "x": 33,
+      "y": 763.4765625,
+      "width": 321,
+      "height": 43
+    }
+  },
+  {
+    "lang": "zu",
+    "size": "desktop",
+    "mode": "password",
+    "field": {
+      "x": 747.5,
+      "y": 712.0703125,
+      "width": 506,
+      "height": 43
+    }
+  },
+  {
+    "lang": "zu",
+    "size": "desktop",
+    "mode": "edit",
+    "field": {
+      "x": 185,
+      "y": 714.9921875,
+      "width": 506,
+      "height": 43
+    }
+  },
+  {
+    "lang": "st",
+    "size": "phone",
+    "mode": "password",
+    "field": {
+      "x": 33,
+      "y": 466.8203125,
+      "width": 321,
+      "height": 43
+    }
+  },
+  {
+    "lang": "st",
+    "size": "phone",
+    "mode": "edit",
+    "field": {
+      "x": 33,
+      "y": 776.8203125,
+      "width": 321,
+      "height": 43
+    }
+  },
+  {
+    "lang": "st",
+    "size": "desktop",
+    "mode": "password",
+    "field": {
+      "x": 747.5,
+      "y": 712.0703125,
+      "width": 506,
+      "height": 43
+    }
+  },
+  {
+    "lang": "st",
+    "size": "desktop",
+    "mode": "edit",
+    "field": {
+      "x": 185,
+      "y": 714.9921875,
+      "width": 506,
+      "height": 43
+    }
+  },
+  {
+    "lang": "ts",
+    "size": "phone",
+    "mode": "password",
+    "field": {
+      "x": 33,
+      "y": 466.421875,
+      "width": 321,
+      "height": 43
+    }
+  },
+  {
+    "lang": "ts",
+    "size": "phone",
+    "mode": "edit",
+    "field": {
+      "x": 33,
+      "y": 763.4765625,
+      "width": 321,
+      "height": 43
+    }
+  },
+  {
+    "lang": "ts",
+    "size": "desktop",
+    "mode": "password",
+    "field": {
+      "x": 747.5,
+      "y": 712.0703125,
+      "width": 506,
+      "height": 43
+    }
+  },
+  {
+    "lang": "ts",
+    "size": "desktop",
+    "mode": "edit",
+    "field": {
+      "x": 185,
+      "y": 714.9921875,
+      "width": 506,
+      "height": 43
+    }
+  },
+  {
+    "lang": "ve",
+    "size": "phone",
+    "mode": "password",
+    "field": {
+      "x": 33,
+      "y": 466.421875,
+      "width": 321,
+      "height": 43
+    }
+  },
+  {
+    "lang": "ve",
+    "size": "phone",
+    "mode": "edit",
+    "field": {
+      "x": 33,
+      "y": 763.4765625,
+      "width": 321,
+      "height": 43
+    }
+  },
+  {
+    "lang": "ve",
+    "size": "desktop",
+    "mode": "password",
+    "field": {
+      "x": 747.5,
+      "y": 712.0703125,
+      "width": 506,
+      "height": 43
+    }
+  },
+  {
+    "lang": "ve",
+    "size": "desktop",
+    "mode": "edit",
+    "field": {
+      "x": 185,
+      "y": 733.8359375,
+      "width": 506,
+      "height": 43
+    }
+  }
+]

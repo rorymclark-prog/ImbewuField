@@ -37,8 +37,7 @@ import { buildCoverMarkdown } from '@/lib/report-cover';
 import { buildMonitoringPlan, monitoringMarkdown } from '@/lib/report-monitoring';
 import { buildRiskRegister, riskRegisterMarkdown } from '@/lib/report-risk';
 import { assembleReportDocument } from '@/lib/report-assemble';
-import { zuluReportMatter } from '@/lib/report-localisation';
-import { reportSummaryPages } from '@/lib/report-summary';
+import { zuluReportClosingNotes, savedCropPlanMarkdown, reportHeadingLookup, reportHeadingPrompt, reportDocumentText, reportUiDate } from '@/lib/report-localisation';
 import {
   normaliseSiteAnalysisImages,
   siteImagesPromptBlock,
@@ -229,6 +228,7 @@ export async function POST(req: NextRequest) {
 
   const langCode = language ?? 'en';
   const langName = LANGUAGES[langCode] ?? 'English';
+  const headingLookup = await reportHeadingLookup(langCode);
   const isSimple = tone === 'simple';
   const reportLength = length ?? 'standard';
 
@@ -254,7 +254,7 @@ export async function POST(req: NextRequest) {
       : `\n\n📏 LENGTH — STANDARD: A focused, practical report. Cover each section usefully but stay concise — keep tables small and explanations tight.`;
 
   const d = locationData;
-  const purchasingGuidance = productPurchasingMarkdown({ ...productContextFromItems(facts?.productionItems ?? []), animalChoices: facts?.productionEnterpriseChoices }, growingZonesForClimate(d.climate.monthlyTemp, d.rainfall.monthly, d.lat), surveyData?.productionConditions);
+  const purchasingGuidance = productPurchasingMarkdown({ ...productContextFromItems(facts?.productionItems ?? []), animalChoices: facts?.productionEnterpriseChoices }, growingZonesForClimate(d.climate.monthlyTemp, d.rainfall.monthly, d.lat), surveyData?.productionConditions,langCode);
   // ONE ANSWER TO "WHAT GROWS HERE" — see lib/site-ecology.ts. Before this, sections took the
   // site's name from whichever lookup was nearest: the coarse biome polygon (d.biome.name) or the
   // precise SANBI vegetation unit (d.vegetation). They disagree near boundaries, and one exported
@@ -334,7 +334,7 @@ Treat this as an upper bound on the property, not a measured boundary — shapes
   const siteAreaForCalcM2 = boundaryFact?.areaM2 ?? siteData?.areaM2 ?? null;
   const siteAreaSourceNote = boundaryFact ? 'traced boundary' : 'sum of all drawn shapes — an upper bound';
 
-  const buildPrompt = (sections: string[], withTitle: boolean) => `You are an expert permaculture designer creating a permaculture site report for a small-scale farmer in South Africa. Name REAL species suited to the site, give practical actions, and use the actual site data. No generic permaculture theory. Crop suitability belongs in Suitable Plants for This Site; other chapters refer to the saved crop plan and avoid repeating species lists or sowing calendars. Never assume indigenous plants are automatically low-water or appropriate to this site.${languageInstruction}${toneInstruction}${lengthInstruction}
+  const buildPrompt = (sections: string[], withTitle: boolean) => reportHeadingPrompt(`You are an expert permaculture designer creating a permaculture site report for a small-scale farmer in South Africa. Name REAL species suited to the site, give practical actions, and use the actual site data. No generic permaculture theory. Crop suitability belongs in Suitable Plants for This Site; other chapters refer to the saved crop plan and avoid repeating species lists or sowing calendars. Never assume indigenous plants are automatically low-water or appropriate to this site.${languageInstruction}${toneInstruction}${lengthInstruction}
 
 ${siteReportPurposeInstruction(reportPurpose)}
 
@@ -403,7 +403,7 @@ ${withTitle ? `The document title, its subheading and a "Site at a Glance" table
 
 Generate ONLY the sections listed here, in this order: ${sections.join(', ')}
 
-Use this markdown structure for each section. ${langCode === 'en' ? 'Copy the headings exactly.' : `Translate ALL headings, subheadings, table headings, bullets and explanations into ${langName}. The English template headings below identify topics only; do not copy them into a monolingual report. Keep scientific names and source identifiers unchanged.`}
+Use this markdown structure for each section. ${langCode === 'en' ? 'Copy the headings exactly.' : headingLookup ? `Copy each ## section heading below exactly. English names in the requested-topic list are topic identifiers. Translate all subheadings, table headings, bullets and explanations into ${langName}. Keep scientific names and source identifiers unchanged.` : `Translate ALL headings, subheadings, table headings, bullets and explanations into ${langName}. The English template headings below identify topics only; do not copy them into a monolingual report. Keep scientific names and source identifiers unchanged.`}
 
 ${sections.includes('Executive Summary') ? `## Executive Summary
 [3–5 sentences. Most critical site characteristics, biggest opportunity, biggest constraint, and the single most important first action. Be specific — name the slope and rainfall with their source. Mention soil pH only if laboratory or SoilGrids data was supplied, with its source; never use a placeholder.${facts ? ` A "Site at a Glance" table of this farm's measured figures has ALREADY been printed above this section, so do not repeat it as a table — instead write about ${[facts.farmName ?? 'this site', facts.design ? `its ${facts.design.growingAreaM2} m² of drawn growing area` : null, facts.water && facts.water.statedStorageLitres > 0 ? `its ${facts.water.statedStorageLitres.toLocaleString()} L of planned tank storage` : null].filter(Boolean).join(', ')} by name and by number.` : ''}]
@@ -636,7 +636,7 @@ The 5 highest-impact actions for this specific site, in order of importance:
 
 ` : ''}
 
-Be direct. Use actual numbers from the data above. Every recommendation must be justified by something specific about this site.`;
+Be direct. Use actual numbers from the data above. Every recommendation must be justified by something specific about this site.`, sections, langCode, headingLookup);
 
   // Generating all sections in ONE streaming call is too slow to finish inside
   // the function's maxDuration window (~26 words/s → a 20-section comprehensive
@@ -737,13 +737,13 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
         if (listedPlantMentions(text).length > 0) continue;
         const cutShort = msg.stop_reason === 'max_tokens';
         batchResults[idx] = text + (cutShort
-          ? '\n\n_[This section may be incomplete: the model reached its output limit.]_\n'
+          ? `\n\n_[${reportDocumentText('This section may be incomplete: the model reached its output limit.',langCode)}]_\n`
           : '');
         return;
       }
-      batchResults[idx] = '\n\n_[This section could not be safely generated because it named a listed invasive plant. Please regenerate the report.]_\n';
+      batchResults[idx] = `\n\n_[${reportDocumentText('This section could not be safely generated because it named a listed invasive plant. Please regenerate the report.',langCode)}]_\n`;
     } catch {
-      batchResults[idx] = '\n\n_[A section could not be generated — please regenerate the report.]_\n';
+      batchResults[idx] = `\n\n_[${reportDocumentText('A section could not be generated — please regenerate the report.',langCode)}]_\n`;
     }
   };
 
@@ -778,7 +778,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   // reason — the crop-plan PDF has carried it since the agronomic review, and the site report, the
   // document most likely to be handed to a funder or an extension officer, carried none of it.
   const now = new Date();
-  const dateLabel = now.toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' });
+  const dateLabel = headingLookup?reportUiDate(langCode,now.toISOString(),false):now.toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' });
 
   const header = buildReportHeaderMarkdown({
     facts,
@@ -805,7 +805,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     siteAreaM2: siteData?.areaM2,
     sitePerimeterM: siteData?.perimeterM,
     hasMapWaterPolygons: Boolean(waterData),
-  });
+  },langCode);
 
   // ── The consulting-document furniture ────────────────────────────────────────
   //
@@ -830,9 +830,9 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
       survey: Boolean(surveyData),
       cropPlan: Boolean(facts?.crop),
     },
-  });
+  },langCode);
 
-  const boq = buildBillOfQuantities(facts);
+  const boq = buildBillOfQuantities(facts,langCode);
   const risks = buildRiskRegister({
     facts,
     rainfallMm: d.rainfall.annual,
@@ -840,21 +840,21 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     minTempC: d.climate.minTemp,
     soilSource: d.soil.soilSource,
     unpricedBoqLines: boq.unpricedCount,
-  });
+  },langCode);
 
-  const zuluMatter = langCode === 'zu' ? zuluReportMatter(facts, d, boq, risks, now.toISOString().slice(0, 10)) : null;
+  const zuluClosing = langCode === 'zu' ? zuluReportClosingNotes(facts, d) : null;
   const assembled = assembleReportDocument({
     language: langCode,
-    cover: zuluMatter?.cover ?? cover,
-    glance: zuluMatter?.glance ?? header,
+    cover,
+    glance: header,
     body: batchResults,
-    backMatter: zuluMatter?.backMatter ?? [
-      `## Saved crop plan\n\n${reportSummaryPages(facts, d, 5)[1].lines.join('\n\n')}`,
+    backMatter: [
+      savedCropPlanMarkdown(facts,d,langCode),
       ...(purchasingGuidance ? [purchasingGuidance] : []),
-      billOfQuantitiesMarkdown(boq),
-      monitoringMarkdown(buildMonitoringPlan(facts)),
-      riskRegisterMarkdown(risks),
-      assuranceMarkdown(),
+      billOfQuantitiesMarkdown(boq,langCode),
+      monitoringMarkdown(buildMonitoringPlan(facts,langCode),langCode)+(zuluClosing?`\n\n${zuluClosing.monitoringNote}`:''),
+      riskRegisterMarkdown(risks,langCode)+(zuluClosing?`\n\n${zuluClosing.riskNote}`:''),
+      assuranceMarkdown(langCode,{soilSource:d.soil.soilSource}),
     ],
   });
 
