@@ -35,3 +35,7 @@ The previous record completed faithful drafts of the original 55 notes and kept 
 ## Next continuation
 
 Freeze the final source/evidence checkpoint and run Node24 typecheck, the full registered suite and whitespace checks in that order. Read the actual terminal result; never restart a live run because of elapsed time. Then add new delivery proof, push the finished branch once, open/attach the stacked draft PR and read both exact-head CI jobs. Keep the whole-app goal active for remaining translation, integration, media and review work.
+
+## Verified local delivery continuation
+
+The ordered full run at6247d4a1e completed with typecheck0,5,864pass0fail1existingTODO/5,865total572files,diff0. All1,756 frozen inputs remain exact. [Delivery proof](../../translation/four-language-completion/evidence/animal-legal/DELIVERY.md) supersedes full-suite-pending language above. Final-head CI, integration and fluent/current-permission approval remain pending.
