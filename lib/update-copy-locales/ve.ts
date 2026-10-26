@@ -134,5 +134,6 @@ const copy:UpdateCopy={
   "Home and Invoice open faster and no longer redraw the day after an update.": "Hayani na Invoisi zwi vhuliwa nga u ṱavhanya, nahone a zwi tsha ṅwalwa hafhu ḓuvha lo tevhelaho nga murahu ha khwiniso.",
   "On a computer the Lima button sits bottom-right and no longer hides buttons.": "Kha khomphuthara bathoni ya Lima i dzula fhasi tshanḓani tsha vhuḓi, nahone a i tsha fhimba bathoni.",
   "The weather card reads in isiZulu (as a draft) and stays clear in dark mode.": "Khadi ya mutsho i vhalea nga isiZulu (sa mvetamveto) nahone i dzula i tshi vhonala kha mbonalo ya swiswi.",
+  "Home shows today's date in isiZulu again instead of placeholder words.": "Hayani hu sumbedza ḓuvha ḽa ṋamusi nga isiZulu hafhu nṱhani ha maipfi a tshifhinganyana.",
 };
 export default copy;

@@ -134,5 +134,6 @@ const copy:UpdateCopy={
   "Home and Invoice open faster and no longer redraw the day after an update.": "Qalong le Invoice di bulwa kapele, mme ha di sa tshwantshwa botjha letsatsi le latelang kamora ntlafatso.",
   "On a computer the Lima button sits bottom-right and no longer hides buttons.": "Ho khomphutha konopo ya Lima e dula tlase ka letsohong le letona, mme ha e sa patela dikonopo.",
   "The weather card reads in isiZulu (as a draft) and stays clear in dark mode.": "Karete ya boemo ba leholimo e baleha ka isiZulu (e le moralo), mme e sala e hlakile mokgweng o lefifi.",
+  "Home shows today's date in isiZulu again instead of placeholder words.": "Lehae le bontsha letsatsi la kajeno ka isiZulu hape sebakeng sa mantswe a nakwana.",
 };
 export default copy;

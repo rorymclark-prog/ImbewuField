@@ -1615,6 +1615,13 @@
       "st": "Karete ya boemo ba leholimo e baleha ka isiZulu (e le moralo), mme e sala e hlakile mokgweng o lefifi.",
       "ts": "Khadi ra maxelo ya tilo ri hlayeka hi isiZulu (tanihi xikombiso), naswona ri sala ri twisiseka eka mawonekelo ya munyama.",
       "ve": "Khadi ya mutsho i vhalea nga isiZulu (sa mvetamveto) nahone i dzula i tshi vhonala kha mbonalo ya swiswi."
+    },
+    {
+      "english": "Home shows today's date in isiZulu again instead of placeholder words.",
+      "zu": "Ikhaya libonisa usuku lwanamuhla ngesiZulu futhi esikhundleni samagama esikhashana.",
+      "st": "Lehae le bontsha letsatsi la kajeno ka isiZulu hape sebakeng sa mantswe a nakwana.",
+      "ts": "Kaya yi kombisa siku ra namuntlha hi isiZulu nakambe ematshan'wini ya marito ya nkarhinyana.",
+      "ve": "Hayani hu sumbedza ḓuvha ḽa ṋamusi nga isiZulu hafhu nṱhani ha maipfi a tshifhinganyana."
     }
   ],
   "historyBefore": [

@@ -326,9 +326,13 @@ function HomeLandingInner() {
   // w22-01: /home is prerendered at build time, so a date computed during render baked the build
   // day into the HTML ("Saturday" on a Sunday visit). Every visit on a later day — and any visit
   // where the server's UTC day differs from the farmer's — threw React #425 and re-rendered the
-  // whole page in the browser. The date is the visitor's, so it is computed after mount.
-  const [dayDate, setDayDate] = useState('');
-  useEffect(() => { setDayDate(getDayDate(lang)); }, [lang]);
+  // whole page in the browser. The date is the visitor's, so it is only computed after mount.
+  // w23-01: computed during render once mounted, not frozen in an effect. The isiZulu dictionary
+  // loads lazily; an effect keyed on [lang] ran before it landed, translate() fell back to the
+  // key, and the header read "HOMEWEEKDAYWED · 28 HOMEMONTHOCT" until the language changed.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  const dayDate = mounted ? getDayDate(lang) : '';
   const router = useRouter();
   const { navigationRole, sample: roleSample } = useRoleNavigation();
   const showTourInvitation = useTourInvitation();

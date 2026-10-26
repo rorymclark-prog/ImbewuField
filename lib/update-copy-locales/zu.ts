@@ -134,5 +134,6 @@ const copy:UpdateCopy={
   "Home and Invoice open faster and no longer redraw the day after an update.": "Ikhaya ne-Invoyisi zivula ngokushesha futhi azisadwebi kabusha ngosuku olulandela isibuyekezo.",
   "On a computer the Lima button sits bottom-right and no longer hides buttons.": "Kukhompyutha inkinobho ka-Lima ihlala phansi ngakwesokudla futhi ayisafihli izinkinobho.",
   "The weather card reads in isiZulu (as a draft) and stays clear in dark mode.": "Ikhadi lesimo sezulu lifundeka nangesiZulu (njengohlaka) futhi lihlala licacile kwimodi emnyama.",
+  "Home shows today's date in isiZulu again instead of placeholder words.": "Ikhaya libonisa usuku lwanamuhla ngesiZulu futhi esikhundleni samagama esikhashana.",
 };
 export default copy;
