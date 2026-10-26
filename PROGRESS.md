@@ -82,6 +82,11 @@ and isiZulu output are unchanged.
   - Repairs included profit "unknown" read as "known", a supervision warning reversed, poison warnings
     garbled, and fermenting rendered as boiling.
 - **`/student` app-guide cards:** now in isiXhosa; the `xh-studies` byte-pin layer is updated.
+- **26 Oct:**
+  - **Main's new role report screens (g32):** isiXhosa controls and notices.
+  - **Farmer's farm report (g34):** builds in isiXhosa through `buildFarmReport({ language: 'xh' })`, on screen and in the PDF. It uses the money book's wording, keeps every amount and date the same as the English, and keeps the file name in English.
+  - **Crop catalogue advice (g33):** 63 notes, shown at render. `lib/crop-catalog.ts` is unchanged.
+  - **Gaps (g35):** the 8 strings that were wired for isiXhosa but had no draft.
 - **Still English:**
   - Crop and species names, catalogue notes and custom bed labels.
   - The site-survey chicken block and the calendar advice holds, both deliberately held until review.
