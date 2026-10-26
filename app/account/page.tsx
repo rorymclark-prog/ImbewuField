@@ -220,7 +220,7 @@ export default function AccountPage() {
     if (samplePreview) {
       const sandbox = getSandboxProfile();
       const sandboxRoleLabel = sandbox.role ? accountRoleName(sandbox.role,copy) : null;
-      const sandboxLangLabel = APP_LANGS.find((l) => l.code === lang)?.native ?? lang; // w18-40: the language in use, not the stored sandbox value
+      const sandboxLangLabel = APP_LANGS.find((l) => l.code === lang)?.label ?? lang; // w18-40: the language in use, not the stored sandbox value
       return (
         <div lang={lang} className="flex flex-col" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
           <AccountShellHeader copy={copy} lang={lang} />
