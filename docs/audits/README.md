@@ -16,7 +16,7 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
-Latest tree/picking/guide UI continuation:[26October2026](2026-10-26/tree-guide-control-drafts.md).69unreviewed UI sources;actual phone/desktop/calendar checks and214affected tests pass;full suite pending.
+Latest tree/picking/guide UI continuation:[26October2026](2026-10-26/tree-guide-control-drafts.md).69unreviewed UI sources;actual phone/desktop/calendar checks and214affected tests pass;ordered full suite5,880pass0fail1existingTODO.
 
 Latest care/nursery translation continuation:[26October2026](2026-10-26/tree-care-nursery-drafts.md).91 complete clauses applied as unreviewed drafts; printed visual inspection complete; ordered full suite passed5,873tests0fail1existingTODO.
 

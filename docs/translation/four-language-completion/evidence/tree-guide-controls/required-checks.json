@@ -1,0 +1,56 @@
+{
+  "fullRun": {
+    "startedAt": "2026-10-26T07:52:12.920134+00:00",
+    "pid": 69470,
+    "base": "4b2ab249d59ca0748802289d06b3d66a82b42e25",
+    "branch": "codex/four-language-tree-guide-controls",
+    "tmpdir": "/private/tmp/imbewufield-tree-guide-control-checks-20261026-tagvikjq",
+    "frozenInputs": 1803,
+    "registeredTestFiles": 575,
+    "commands": [
+      {
+        "name": "typecheck",
+        "command": [
+          "npx",
+          "tsc",
+          "--noEmit"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "test",
+        "command": [
+          "npm",
+          "test"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "diff",
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "status": "passed",
+    "current": "diff",
+    "endedAt": "2026-10-26T08:53:16.758318+00:00",
+    "changedFrozenInputs": []
+  },
+  "result": {
+    "tests": 5881,
+    "pass": 5880,
+    "fail": 0,
+    "existingTodo": 1,
+    "registeredTestFiles": 575
+  },
+  "sourceCheckpoint": "4b2ab249d59ca0748802289d06b3d66a82b42e25",
+  "deliveryFrozenInputsChecked": 1803,
+  "changedFrozenInputsAtDelivery": [],
+  "originalRuntimeArtifactHashesVerified": 80,
+  "historicalRun": "Earlier43338 deliberately stopped130 to remove prohibited test-output logs before inputs changed;not counted as a pass. Current ordered run41261 passed from corrected4b2ab249.",
+  "review": "Unreviewed drafts;no fluent/agricultural/current-main/full-account/production/whole-app completion."
+}
