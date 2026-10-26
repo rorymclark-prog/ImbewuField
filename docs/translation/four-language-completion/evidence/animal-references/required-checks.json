@@ -1,0 +1,112 @@
+{
+  "at": "2026-10-26T04:29:51.219636+00:00",
+  "sourceCheckpoint": "244b0fabfbc0114baf05fd241ff6f56934c7a480",
+  "fullOrderedLocalRun": {
+    "startedAt": "2026-10-26T02:56:51.392932+00:00",
+    "pid": 80653,
+    "base": "244b0fabfbc0114baf05fd241ff6f56934c7a480",
+    "branch": "codex/four-language-animal-references",
+    "tmpdir": "/private/tmp/imbewufield-animal-reference-checks-20261026-1963km5u",
+    "frozenInputs": 1731,
+    "registeredTestFiles": 571,
+    "commands": [
+      {
+        "name": "typecheck",
+        "command": [
+          "npx",
+          "tsc",
+          "--noEmit"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "test",
+        "command": [
+          "npm",
+          "test"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "diff",
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "status": "passed",
+    "current": "diff",
+    "endedAt": "2026-10-26T04:03:42.215653+00:00",
+    "changedFrozenInputs": [],
+    "pass": 5857,
+    "fail": 0,
+    "total": 5858,
+    "existingTODO": 1,
+    "TODOReason": "Pre-existing shape-sync-loss concurrent whole-collection write; no assertion removed or disabled.",
+    "durationMs": 4005704.853
+  },
+  "frozenInputsDuringRun": 1731,
+  "currentByteExactInputs": 1730,
+  "postFullRunDelta": {
+    "file": "lib/release-notes.ts",
+    "scope": "Only gate-compatible SHA property quoting. Entire runtime release-note array (624 entries) deep-equal before/after.",
+    "semanticProof": "release-note-value-equivalence.json",
+    "currentReleaseGate": "passed, one unnoted user-facing implementation commit tolerated by existing rule."
+  },
+  "postFullTypecheckReleaseTestsGateWhitespace": {
+    "startedAt": "2026-10-26T04:24:27.877725+00:00",
+    "scope": "Post-full-run syntax-only release metadata change, not a repeated full suite.",
+    "commands": [
+      {
+        "name": "typecheck",
+        "command": [
+          "npx",
+          "tsc",
+          "--noEmit"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "release-tests",
+        "command": [
+          "node",
+          "--import",
+          "./tests/register-alias.mjs",
+          "--test",
+          "tests/update-notices-localization.test.ts",
+          "tests/update-tour.test.ts",
+          "tests/release-notes-gate.test.ts",
+          "tests/canvas-labels.test.ts"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "notes",
+        "command": [
+          "npm",
+          "run",
+          "notes:pending"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "diff",
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "endedAt": "2026-10-26T04:24:35.580891+00:00",
+    "pass": 51,
+    "fail": 0,
+    "tests": 51
+  },
+  "CI": "Pending exact final-head jobs after push. Do not claim green CI yet.",
+  "releaseLimits": "Source translation drafts remain unreviewed. No merge/deployment; full account/production route and whole-app completion unverified."
+}
