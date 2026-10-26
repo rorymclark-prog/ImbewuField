@@ -41,6 +41,12 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 October 2026', sha: 'a1b07580', changes: [
+    'Menus, the tour, reports and Community now have draft Sesotho, Xitsonga and Tshivenda.',
+    'These drafts are unreviewed; the English source stays one tap away.',
+  ], tour: [{ title: 'Open the menu in your language', where: 'Home → Settings', href: '/home',
+    detail: 'Choose a draft language in Settings, then open the menu and the tour.',
+  }] },
   { when: '24 October 2026', sha: '0858cf13', changes: [
     'Exchange crop chips and the Home task board now read in isiZulu as well.',
     'Records, invoices and the farm data panel use one green and plain, readable controls.',
