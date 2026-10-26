@@ -1,6 +1,7 @@
 'use client';
 
 import { activeAccountLocalStorageKey, activeAccountUid } from './account-local-storage';
+import { UserFacingError } from './user-facing-error';
 
 // Keep the camera original in IndexedDB: a resized thumbnail can make a till total
 // unreadable, and base64 photographs quickly exhaust localStorage on a shared phone.
@@ -62,24 +63,24 @@ export function receiptScopeIsCurrent(scope: string | null): scope is string {
 }
 
 function requireCurrentScope(scope: string | null): asserts scope is string {
-  if (!receiptScopeIsCurrent(scope)) throw new Error('Your account or workspace changed. Reopen this cost before saving its receipt.');
+  if (!receiptScopeIsCurrent(scope)) throw new UserFacingError('Your account or workspace changed. Reopen this cost before saving its receipt.');
 }
 
 function receiptKey(scope: string, expenseId: string): string {
-  if (!expenseId) throw new Error('Save the receipt with an expense.');
+  if (!expenseId) throw new UserFacingError('Save the receipt with an expense.');
   return `${scope}::expense::${encodeURIComponent(expenseId)}`;
 }
 
 export async function validateExpenseReceipt(file: Blob): Promise<void> {
   if (!file.size || file.size > EXPENSE_RECEIPT_MAX_BYTES || !EXPENSE_RECEIPT_ACCEPT.split(',').includes(file.type)) {
-    throw new Error('Choose a JPG, PNG or WebP photo up to 10 MB. Keep the original readable.');
+    throw new UserFacingError('Choose a JPG, PNG or WebP photo up to 10 MB. Keep the original readable.');
   }
   const bytes = new Uint8Array(await file.slice(0, 12).arrayBuffer());
   const header = String.fromCharCode(...bytes);
   const valid = file.type === 'image/jpeg' ? bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff
     : file.type === 'image/png' ? bytes[0] === 0x89 && header.slice(1, 8) === 'PNG\r\n\x1a\n'
     : header.startsWith('RIFF') && header.slice(8, 12) === 'WEBP';
-  if (!valid) throw new Error('This file is not a readable JPG, PNG or WebP photo. Choose another image.');
+  if (!valid) throw new UserFacingError('This file is not a readable JPG, PNG or WebP photo. Choose another image.');
 }
 
 function storageError(): Error {
@@ -206,7 +207,7 @@ export async function saveExpenseWithReceipt(options: {
   }
   if (change) {
     try { await settleReceipt(change, true); }
-    catch { throw new Error('The cost was saved, but its receipt could not be confirmed on this device. Keep the photo and retry this cost.'); }
+    catch { throw new UserFacingError('The cost was saved, but its receipt could not be confirmed on this device. Keep the photo and retry this cost.'); }
     announceChange();
   }
 }

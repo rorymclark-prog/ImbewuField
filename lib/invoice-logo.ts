@@ -10,6 +10,7 @@
  * white square looks wrong on a tinted letterhead. When it does not, JPEG on white is
  * several times smaller for the same picture.
  */
+import { UserFacingError } from './user-facing-error';
 
 /** Longest edge, in pixels. 320 covers the 52px screen slot and the 44pt PDF square at
  *  well past retina density; beyond that only the payload grows. */
@@ -39,17 +40,17 @@ function hasTransparency(ctx: CanvasRenderingContext2D, w: number, h: number): b
 export function resizeLogoForStorage(file: File, maxPx = LOGO_MAX_PX, maxBytes = LOGO_MAX_BYTES): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onerror = () => reject(new Error('Could not read that file.'));
+    reader.onerror = () => reject(new UserFacingError('Could not read that file.'));
     reader.onload = (e) => {
       const img = new Image();
-      img.onerror = () => reject(new Error('That file is not an image we can read.'));
+      img.onerror = () => reject(new UserFacingError('That file is not an image we can read.'));
       img.onload = () => {
         const ratio = Math.min(maxPx / img.width, maxPx / img.height, 1);
         const canvas = document.createElement('canvas');
         canvas.width = Math.max(1, Math.round(img.width * ratio));
         canvas.height = Math.max(1, Math.round(img.height * ratio));
         const ctx = canvas.getContext('2d');
-        if (!ctx) { reject(new Error('Could not process that image.')); return; }
+        if (!ctx) { reject(new UserFacingError('Could not process that image.')); return; }
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
         const transparent = hasTransparency(ctx, canvas.width, canvas.height);
@@ -68,7 +69,7 @@ export function resizeLogoForStorage(file: File, maxPx = LOGO_MAX_PX, maxBytes =
             flatCtx.drawImage(canvas, 0, 0);
             jpegCanvas = flat;
             out = flat.toDataURL('image/jpeg', 0.85);
-          } else { reject(new Error('Could not process that image.')); return; }
+          } else { reject(new UserFacingError('Could not process that image.')); return; }
         }
 
         // The evidence report also uses this bounded encoder for 640px photos. A
@@ -93,7 +94,7 @@ export function resizeLogoForStorage(file: File, maxPx = LOGO_MAX_PX, maxBytes =
           out = jpegCanvas.toDataURL('image/jpeg', 0.75);
         }
         if (out.length > maxBytes) {
-          reject(new Error('That image is too big to store. Try a smaller or simpler picture.'));
+          reject(new UserFacingError('That image is too big to store. Try a smaller or simpler picture.'));
           return;
         }
         resolve(out);

@@ -9,6 +9,7 @@ import {
   isQuickNumberField,
 } from './evidence-catalogue';
 import { activeAccountLocalStorageKey } from './account-local-storage';
+import { UserFacingError } from './user-facing-error';
 
 export interface EvidenceItem {
   id: string;
@@ -282,10 +283,10 @@ export function getGroupCount(siteId: string, groupKey: string): number {
 export function resizeForStorage(file: File, maxPx = 400): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onerror = () => reject(new Error('Could not read file'));
+    reader.onerror = () => reject(new UserFacingError('Could not read file'));
     reader.onload = (e) => {
       const img = new Image();
-      img.onerror = () => reject(new Error('Could not decode image'));
+      img.onerror = () => reject(new UserFacingError('Could not decode image'));
       img.onload = () => {
         const ratio = Math.min(maxPx / img.width, maxPx / img.height, 1);
         const canvas = document.createElement('canvas');
