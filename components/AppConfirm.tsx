@@ -1,5 +1,6 @@
 'use client';
 
+import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { translate,useLanguage } from '@/lib/i18n';
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 
@@ -66,7 +67,8 @@ interface Pending {
 export default function AppConfirmProvider({ children }: { children: React.ReactNode }) {
   const {t,lang}=useLanguage();
   const [pending, setPending] = useState<Pending | null>(null);
-  const cancelRef = useRef<HTMLButtonElement | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(!!pending, dialogRef);
 
   const ask = useCallback<AskFn>((opts) => {
     return new Promise<boolean>((resolve) => {
@@ -87,13 +89,12 @@ export default function AppConfirmProvider({ children }: { children: React.React
     });
   }, []);
 
-  // Escape = decline, same as the backdrop. Focus starts on the decline button:
-  // a stray Enter on a destructive question must not destroy anything.
+  // Escape = decline, same as the backdrop. Focus starts on the decline button (data-autofocus,
+  // moved there by useDialogFocus): a stray Enter on a destructive question must not destroy anything.
   useEffect(() => {
     if (!pending) return undefined;
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') settle(false); };
     window.addEventListener('keydown', onKey);
-    cancelRef.current?.focus();
     return () => window.removeEventListener('keydown', onKey);
   }, [pending, settle]);
 
@@ -113,6 +114,7 @@ export default function AppConfirmProvider({ children }: { children: React.React
           }}
         >
           <div
+            ref={dialogRef}
             role="alertdialog"
             lang={pending.opts.language}
             aria-modal="true"
@@ -139,7 +141,7 @@ export default function AppConfirmProvider({ children }: { children: React.React
             {pending.opts.englishSource&&<small lang="en" style={{display:'block',fontSize:12,lineHeight:1.4,marginTop:8}}><span lang={pending.opts.language??lang}>{translate(pending.opts.language??lang,'offlineSourceLabel')}: </span>{pending.opts.englishSource.message}</small>}
             <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 16, flexWrap: 'wrap' }}>
               <button
-                ref={cancelRef}
+                data-autofocus=""
                 aria-label={pending.opts.cancelLabel ?? t('cancelBtn')}
                 onClick={() => settle(false)}
                 className="font-display font-semibold rounded-xl"

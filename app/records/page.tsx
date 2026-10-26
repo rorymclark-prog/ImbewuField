@@ -1,5 +1,6 @@
 'use client';
 
+import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { suspectedDuplicateIncomeIds, DUPLICATE_ROW_NOTE, DUPLICATE_LEDGER_FOOTER } from '@/lib/duplicate-income';
 import Link from 'next/link';
@@ -1425,6 +1426,8 @@ export default function RecordsPage() {
   const [actionError, setActionError] = useState('');
   const [editing, setEditing] = useState<EditTarget>(null);
   const [desktopEntryOpen, setDesktopEntryOpen] = useState(false);
+  const desktopEntryRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(desktopEntryOpen, desktopEntryRef);
   const [desktopEntrySaving, setDesktopEntrySaving] = useState(false);
   /**
    * WHETHER THE DEVICE IS ONLINE. An empty ledger and an unreachable one rendered identically —
@@ -1870,6 +1873,7 @@ export default function RecordsPage() {
                     only while open so every dismissal starts the next entry fresh. */}
                 {desktopEntryOpen && (
                   <div
+                    ref={desktopEntryRef}
                     className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto px-4 py-10"
                     style={{ background: 'rgba(32,25,15,0.45)' }}
                     role="dialog" aria-modal="true" aria-label={recordsText(lang, 'Record an entry', 'Rekhoda okufakiwe')}
