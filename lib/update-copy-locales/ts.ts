@@ -139,5 +139,10 @@ const copy:UpdateCopy={
   "Visit, training and programme reports compare recorded delivery across periods.": "Swiviko swa ku endzela, vuleteri ni pulogirama swi pimanisa leswi endliweke leswi rhekhodiweke hi minkarhi.",
   "MEL reports compare dated readings and include agreed donor indicator details.": "Swiviko swa MEL swi pimanisa leswi hlayiweke leswi ni masiku, naswona swi katsa vuxokoxoko bya swikombiso swa vafani leswi pfumeleriweke.",
   "Donor evidence, missing records and current snapshots stay clear in every PDF.": "Vumbhoni bya vafani, tirhekhodo leti kayivelaka ni swifaniso swa sweswi swi sala swi twisiseka eka PDF yin'wana ni yin'wana.",
+  "The menu, field-visit form and crop prices are easy to read in dark mode.": "Menyu, fomo yo endzela nsimu ni minxavo ya swirimiwa swi olova ku hlayiwa eka modi ya munyama.",
+  "Messages, the exchange form and Records links are clearer, in light and dark.": "Marungula, fomo ya ku cincana ni swihlanganisi swa Tirhekhodo swi le rivaleni ku tlula, eku vonakaleni ni le munyameni.",
+  "Lima no longer covers the last buttons of a manual chapter.": "Lima a nga ha funengeti tikonopo to hetelela ta ndzima ya buku ya swiletelo.",
+  "A practice message on Contact now says it was kept on this device, not sent.": "Rungula ro titoloveta eka Vulavurisana sweswi ri vula leswaku ri hlayisiwile eka xitirhisiwa lexi, a ri rhumeriwanga.",
+  "Report totals now match their charts, and report counts read correctly.": "Mihlanganiso ya swiviko sweswi yi fambelana ni tichati ta yona, naswona tinhlayo ta swiviko ti tsariwe kahle.",
 };
 export default copy;

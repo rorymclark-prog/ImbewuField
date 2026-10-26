@@ -139,5 +139,10 @@ const copy:UpdateCopy={
   "Visit, training and programme reports compare recorded delivery across periods.": "Imibiko yokuvakasha, yokuqeqeshwa neyohlelo iqhathanisa okwenziwe okuqoshiwe ezikhathini ezehlukene.",
   "MEL reports compare dated readings and include agreed donor indicator details.": "Imibiko ye-MEL iqhathanisa ukufundwa okunezinsuku futhi ifaka imininingwane yezinkomba zabaxhasi esivunyelwene ngayo.",
   "Donor evidence, missing records and current snapshots stay clear in every PDF.": "Ubufakazi babaxhasi, amarekhodi angekho nezithombe zamanje kuhlala kucacile kuyo yonke i-PDF.",
+  "The menu, field-visit form and crop prices are easy to read in dark mode.": "Imenyu, ifomu lokuvakashela insimu namanani ezitshalo kulula ukukufunda kumodi emnyama.",
+  "Messages, the exchange form and Records links are clearer, in light and dark.": "Imilayezo, ifomu lokushintshana nezixhumanisi zamaRekhodi kucace kakhulu, ekukhanyeni nasebumnyameni.",
+  "Lima no longer covers the last buttons of a manual chapter.": "ULima akasamboze izinkinobho zokugcina zesahluko sencwadi yeziqondiso.",
+  "A practice message on Contact now says it was kept on this device, not sent.": "Umlayezo wokuzilolonga kuThintana manje uthi ugcinwe kule divayisi, awuthunyelwanga.",
+  "Report totals now match their charts, and report counts read correctly.": "Izingqikithi zemibiko manje ziyafana namashadi azo, futhi izibalo zemibiko zibhalwe kahle.",
 };
 export default copy;

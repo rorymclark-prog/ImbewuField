@@ -139,5 +139,10 @@ const copy:UpdateCopy={
   "Visit, training and programme reports compare recorded delivery across periods.": "Mivhigo ya u dalela, vhugudisi na mbekanyamushumo i vhambedza zwo itwaho zwo rekhodiwaho vhukati ha tshifhinga.",
   "MEL reports compare dated readings and include agreed donor indicator details.": "Mivhigo ya MEL i vhambedza zwo vhalwaho zwi na maḓuvha, nahone i katela mafhungo a zwiga zwa vhalambedzi zwo tendelwaho.",
   "Donor evidence, missing records and current snapshots stay clear in every PDF.": "Vhuṱanzi ha vhalambedzi, rekhodo dzo shayaho na zwifanyiso zwa zwino zwi dzula zwi tshi pfesesea kha PDF iṅwe na iṅwe.",
+  "The menu, field-visit form and crop prices are easy to read in dark mode.": "Menyu, fomo ya u dalela tsimu na mitengo ya zwiliwa zwi leluwa u vhala kha modu ya swiswi.",
+  "Messages, the exchange form and Records links are clearer, in light and dark.": "Milaedza, fomo ya u tshintshana na vhukwamanyi ha Rekhodo zwo kona u vhonala, kha tshedza na swiswi.",
+  "Lima no longer covers the last buttons of a manual chapter.": "Lima a tsha khou fukedza dzibathoni dza u fhedza dza ndima ya bugu ya ndaela.",
+  "A practice message on Contact now says it was kept on this device, not sent.": "Mulaedza wa u ḓigudisa kha Kwamani zwino u ri wo vhulungwa kha tshishumiswa itshi, a wo ngo rumelwa.",
+  "Report totals now match their charts, and report counts read correctly.": "Tshoṱhe tsha mivhigo zwino tshi tendelana na tshati dzayo, nahone mbalo dza mivhigo dzo ṅwalwa zwavhuḓi.",
 };
 export default copy;

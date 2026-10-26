@@ -69,9 +69,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '26 October 2026', sha: '72434e1e', changes: [
     'The menu, field-visit form and crop prices are easy to read in dark mode.',
     'Messages, the exchange form and Records links are clearer, in light and dark.',
-    'Lima no longer covers Next at the end of a manual chapter.',
+    'Lima no longer covers the last buttons of a manual chapter.',
     'A practice message on Contact now says it was kept on this device, not sent.',
-    'Report totals match their charts, and counts read "1 entry", not "1 entries".',
+    'Report totals now match their charts, and report counts read correctly.',
   ] },
   { when: '26 October 2026', sha: '98c8a22e', changes: [
     'Home shows today\'s date in isiZulu again instead of placeholder words.',

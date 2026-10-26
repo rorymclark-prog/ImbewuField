@@ -139,5 +139,10 @@ const copy:UpdateCopy={
   "Visit, training and programme reports compare recorded delivery across periods.": "Ditlaleho tsa ketelo, thupelo le lenaneo di bapisa tse entsweng tse rekotilweng mahareng a dinako.",
   "MEL reports compare dated readings and include agreed donor indicator details.": "Ditlaleho tsa MEL di bapisa dipalo tse nang le matsatsi, mme di kenyelletsa dintlha tsa matshwao a bafani tse dumellanweng.",
   "Donor evidence, missing records and current snapshots stay clear in every PDF.": "Bopaki ba bafani, direkoto tse sieo le dinepe tsa jwale di sala di hlakile ho PDF e nngwe le e nngwe.",
+  "The menu, field-visit form and crop prices are easy to read in dark mode.": "Menyu, foromo ya ketelo ya tshimo le ditheko tsa dijalo di bonolo ho bala ka mokgwa o lefifi.",
+  "Messages, the exchange form and Records links are clearer, in light and dark.": "Melaetsa, foromo ya phapanyetsano le dihokelo tsa Direkoto di hlakile haholwanyane, leseding le lefifing.",
+  "Lima no longer covers the last buttons of a manual chapter.": "Lima ha a sa kwahela dikonopo tsa ho qetela tsa kgaolo ya bukana.",
+  "A practice message on Contact now says it was kept on this device, not sent.": "Molaetsa wa boikwetliso ho Ikopanye le rona jwale o re o bolokilwe sesebedisweng sena, ha o a romellwa.",
+  "Report totals now match their charts, and report counts read correctly.": "Dikakaretso tsa ditlaleho jwale di dumellana le dichate tsa tsona, mme dipalo tsa ditlaleho di ngotswe hantle.",
 };
 export default copy;
