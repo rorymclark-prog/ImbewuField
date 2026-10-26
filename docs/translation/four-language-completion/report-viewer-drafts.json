@@ -1,0 +1,5348 @@
+{
+  "status": "Unreviewed AI drafts; no fluent-speaker approval is claimed.",
+  "baseCommit": "e0802e0c",
+  "scope": "Report controls only; saved report text, generated advice, crop-plan PDF bodies and user-authored names retain their own language.",
+  "entries": [
+    {
+      "key": "reportUiTheEssentialsInPictures",
+      "english": "The essentials, in pictures",
+      "locations": [
+        "components/ReportView.tsx:356"
+      ],
+      "legacyZulu": "Okubalulekile, ngezithombe",
+      "zu": "Okubalulekile, ngezithombe",
+      "st": "Dintlha tsa bohlokwa, ka ditshwantsho",
+      "ts": "Swilo swa nkoka, hi swifaniso",
+      "ve": "Zwa ndeme, nga zwifanyiso"
+    },
+    {
+      "key": "reportUiYourMappedSpacePlannedStorageAndSeasonalRainfall",
+      "english": "Your mapped space, planned storage and seasonal rainfall.",
+      "locations": [
+        "components/ReportView.tsx:357"
+      ],
+      "legacyZulu": "Indawo ebalazwe, ukugcinwa kwamanzi okuhleliwe nemvula yesizini.",
+      "zu": "Indawo ebalazwe, ukugcinwa kwamanzi okuhleliwe nemvula yesizini.",
+      "st": "Sebaka sa hao se mmepilweng, polokelo e rerilweng le pula ya sehla.",
+      "ts": "Ndhawu ya wena leyi mepiweke, vuhlayiselo bya mati byo kunguhatiwa ni mpfula ya nguva.",
+      "ve": "Fhethu haṋu ho itwaho mapa, polokelo yo pulaniwaho na mvula ya khalaṅwaha."
+    },
+    {
+      "key": "reportUiChooseUpTo12MapsForThisReport",
+      "english": "Choose up to 12 maps for this report.",
+      "locations": [
+        "components/ReportView.tsx:419"
+      ],
+      "legacyZulu": "Khetha amamephu angafika ku-12 alo mbiko.",
+      "zu": "Khetha amamephu angafika ku-12 alo mbiko.",
+      "st": "Kgetha ho fihla ho dimmapa tse 12 bakeng sa tlaleho ena.",
+      "ts": "Hlawula mimepe yo fika eka 12 eka xiviko lexi.",
+      "ve": "Khethani mapa a u swika kha 12 kha muvhigo uyu."
+    },
+    {
+      "key": "reportUiCouldNotSaveTheMapSelectionPleaseTry",
+      "english": "Could not save the map selection. Please try again.",
+      "locations": [
+        "components/ReportView.tsx:424"
+      ],
+      "legacyZulu": "Ukukhethwa kwamamephu akugcinwanga. Zama futhi.",
+      "zu": "Ukukhethwa kwamamephu akugcinwanga. Zama futhi.",
+      "st": "Kgetho ya dimmapa ha e a kgona ho bolokwa. Ka kopo leka hape.",
+      "ts": "Ku hlawula mimepe a ku kotanga ku hlayisiwa. Hi kombela u ringeta nakambe.",
+      "ve": "Khetho ya mapa a yo ngo kona u vhulungiwa. Kha vha lingedze hafhu."
+    },
+    {
+      "key": "reportUiMeanTemperature",
+      "english": "Mean temperature",
+      "locations": [
+        "components/ReportView.tsx:860"
+      ],
+      "legacyZulu": "Izinga lokushisa elimaphakathi",
+      "zu": "Izinga lokushisa elimaphakathi",
+      "st": "Mocheso o mahareng",
+      "ts": "Mahiselo ya xiringaniso",
+      "ve": "Mutsho wa vhukati"
+    },
+    {
+      "key": "reportUiSeeTheFullReportOnImbewuField",
+      "english": "See the full report on ImbewuField",
+      "locations": [
+        "components/ReportView.tsx:860"
+      ],
+      "legacyZulu": "Bona umbiko ophelele ku-ImbewuField",
+      "zu": "Bona umbiko ophelele ku-ImbewuField",
+      "st": "Bona tlaleho e felletseng ho ImbewuField",
+      "ts": "Vona xiviko lexi heleleke eka ImbewuField",
+      "ve": "Vhonani muvhigo wo fhelelaho kha ImbewuField"
+    },
+    {
+      "key": "reportUiSiteReport",
+      "english": "Site report",
+      "locations": [
+        "components/ReportView.tsx:862",
+        "components/ReportView.tsx:888"
+      ],
+      "legacyZulu": "Umbiko wendawo",
+      "zu": "Umbiko wendawo",
+      "st": "Tlaleho ya sebaka",
+      "ts": "Xiviko xa ndhawu",
+      "ve": "Muvhigo wa fhethu"
+    },
+    {
+      "key": "reportUiNotSavedNoSpace",
+      "english": "Not saved — no space",
+      "locations": [
+        "components/ReportView.tsx:928"
+      ],
+      "legacyZulu": "Awugcinwanga — asikho isikhala",
+      "zu": "Awugcinwanga — asikho isikhala",
+      "st": "Ha e a bolokwa — ha ho sebaka",
+      "ts": "A swi hlayisiwanga — a ku na ndhawu",
+      "ve": "A zwo ngo vhulungiwa — a hu na tshikhala"
+    },
+    {
+      "key": "saveBtn",
+      "english": "Save",
+      "locations": [
+        "components/ReportView.tsx:929"
+      ],
+      "legacyZulu": "Londoloza",
+      "st": "Boloka",
+      "ts": "Hlayisa",
+      "ve": "Vhulungani"
+    },
+    {
+      "key": "reportUiGenerating",
+      "english": "Generating…",
+      "locations": [
+        "components/ReportView.tsx:986"
+      ],
+      "legacyZulu": "Kuyakhiwa…",
+      "zu": "Kuyakhiwa…",
+      "st": "E a hlahiswa…",
+      "ts": "Xa endliwa…",
+      "ve": "U khou bveledziwa…"
+    },
+    {
+      "key": "reportUiViewAndPrintOptions",
+      "english": "View and print options",
+      "locations": [
+        "components/ReportView.tsx:988"
+      ],
+      "legacyZulu": "Izinketho zokubuka nokuphrinta",
+      "zu": "Izinketho zokubuka nokuphrinta",
+      "st": "Dikgetho tsa ho sheba le ho hatisa",
+      "ts": "Swihlawuriwa swo languta ni ku kandziyisa",
+      "ve": "Zwa u khetha zwa u vhona na u gandisa"
+    },
+    {
+      "key": "reportUiScreen",
+      "english": "Screen",
+      "locations": [
+        "components/ReportView.tsx:989"
+      ],
+      "legacyZulu": "Isikrini",
+      "zu": "Isikrini",
+      "st": "Sekerine",
+      "ts": "Xikirini",
+      "ve": "Tshikirini"
+    },
+    {
+      "key": "reportUiPrintFullColour",
+      "english": "Print · full colour",
+      "locations": [
+        "components/ReportView.tsx:989"
+      ],
+      "legacyZulu": "Phrinta · imibala egcwele",
+      "zu": "Phrinta · imibala egcwele",
+      "st": "Hatisa · mebala e felletseng",
+      "ts": "Kandziyisa · mihlovo leyi heleleke",
+      "ve": "Gandisani · mivhala yo fhelelaho"
+    },
+    {
+      "key": "reportUiPrintSaveInk",
+      "english": "Print · save ink",
+      "locations": [
+        "components/ReportView.tsx:989"
+      ],
+      "legacyZulu": "Phrinta · yonga uyinki",
+      "zu": "Phrinta · yonga uyinki",
+      "st": "Hatisa · boloka enke",
+      "ts": "Kandziyisa · hlayisa inki",
+      "ve": "Gandisani · vhulungani inki"
+    },
+    {
+      "key": "reportUiCover",
+      "english": "Cover",
+      "locations": [
+        "components/ReportView.tsx:990"
+      ],
+      "legacyZulu": "Ikhava",
+      "zu": "Ikhava",
+      "st": "Sekwahelo",
+      "ts": "Khavhara",
+      "ve": "Khavara"
+    },
+    {
+      "key": "reportUiReportCoverImage",
+      "english": "Report cover image",
+      "locations": [
+        "components/ReportView.tsx:990"
+      ],
+      "legacyZulu": "Isithombe sekhava yombiko",
+      "zu": "Isithombe sekhava yombiko",
+      "st": "Setshwantsho sa sekwahelo sa tlaleho",
+      "ts": "Xifaniso xa khavhara ya xiviko",
+      "ve": "Tshifanyiso tsha khavara ya muvhigo"
+    },
+    {
+      "key": "reportUiAutomatic",
+      "english": "Automatic",
+      "locations": [
+        "components/ReportView.tsx:991"
+      ],
+      "legacyZulu": "Okuzenzakalelayo",
+      "zu": "Okuzenzakalelayo",
+      "st": "Ka boiketsetso",
+      "ts": "Hi yoxe",
+      "ve": "Nga yoṱhe"
+    },
+    {
+      "key": "reportUiSiteMap",
+      "english": "Site map",
+      "locations": [
+        "components/ReportView.tsx:991"
+      ],
+      "legacyZulu": "Imephu yendawo",
+      "zu": "Imephu yendawo",
+      "st": "Mmapa wa sebaka",
+      "ts": "Mepe wa ndhawu",
+      "ve": "Mapa wa fhethu"
+    },
+    {
+      "key": "reportUiSitePhoto",
+      "english": "Site photo",
+      "locations": [
+        "components/ReportView.tsx:991"
+      ],
+      "legacyZulu": "Isithombe sendawo",
+      "zu": "Isithombe sendawo",
+      "st": "Senepe sa sebaka",
+      "ts": "Xifaniso xa ndhawu",
+      "ve": "Tshifanyiso tsha fhethu"
+    },
+    {
+      "key": "reportUiNoPicture",
+      "english": "No picture",
+      "locations": [
+        "components/ReportView.tsx:991"
+      ],
+      "legacyZulu": "Asikho isithombe",
+      "zu": "Asikho isithombe",
+      "st": "Ha ho setshwantsho",
+      "ts": "A ku na xifaniso",
+      "ve": "A hu na tshifanyiso"
+    },
+    {
+      "key": "reportUiIncludePhotosAndMapsInPDF",
+      "english": "Include photos and maps in PDF",
+      "locations": [
+        "components/ReportView.tsx:993"
+      ],
+      "legacyZulu": "Faka izithombe namamephu ku-PDF",
+      "zu": "Faka izithombe namamephu ku-PDF",
+      "st": "Kenya dinepe le dimmapa ho PDF",
+      "ts": "Katsa swifaniso ni mimepe eka PDF",
+      "ve": "Kateleni zwifanyiso na mapa kha PDF"
+    },
+    {
+      "key": "reportUiScreenPrintAndSummaryControlsChangeTheView",
+      "english": "Screen, print and summary controls change the view or export without a new AI call.",
+      "locations": [
+        "components/ReportView.tsx:995"
+      ],
+      "legacyZulu": "Izilawuli zesikrini, zokuphrinta nezifinyezo zishintsha indlela yokubuka noma yokukhipha umbiko ngaphandle kokusebenzisa i-AI futhi.",
+      "zu": "Izilawuli zesikrini, zokuphrinta nezifinyezo zishintsha indlela yokubuka noma yokukhipha umbiko ngaphandle kokusebenzisa i-AI futhi.",
+      "st": "Ditaolo tsa sekerine, ho hatisa le dikakaretso di fetola pono kapa tlhahiso ntle le kopo e ntjha ya AI.",
+      "ts": "Swilawuri swa xikirini, ku kandziyisa ni minkomiso swi cinca nkombiso kumbe leswi humesiwaka handle ka xikombelo lexintshwa xa AI.",
+      "ve": "Zwilangi zwa tshikirini, u gandisa na manweledzo zwi shandula kuvhonele kana zwine zwa bviswa hu si na khumbelo ntswa ya AI."
+    },
+    {
+      "key": "reportUiGenerateNewReportRefreshesTheAdviceFromThis",
+      "english": "Generate new report refreshes the advice from this design. Saved reports stay available while you explore; restarting the workspace clears them. Prepared full advice is in English; translated summaries are available.",
+      "locations": [
+        "components/ReportView.tsx:996"
+      ],
+      "legacyZulu": "Ukukhiqiza umbiko omusha kuvuselela izeluleko ezisuselwe kulo mklamo. Imibiko egciniwe izohlala ikhona ngenkathi ubheka; ukuqala kabusha indawo yokusebenza kuyayisusa. Umbiko ophelele olungiselelwe ungowesiNgisi; izifinyezo ezihunyushiwe ziyatholakala.",
+      "zu": "Ukukhiqiza umbiko omusha kuvuselela izeluleko ezisuselwe kulo mklamo. Imibiko egciniwe izohlala ikhona ngenkathi ubheka; ukuqala kabusha indawo yokusebenza kuyayisusa. Umbiko ophelele olungiselelwe ungowesiNgisi; izifinyezo ezihunyushiwe ziyatholakala.",
+      "st": "Ho hlahisa tlaleho e ntjha ho ntjhafatsa keletso ho tswa moralong ona. Ditlaleho tse bolokilweng di sala di fumaneha ha o ntse o hlahloba; ho qala sebaka sa mosebetsi hape ho a di hlakola. Keletso e felletseng e lokiseditsweng e ka Senyesemane; dikakaretso tse fetoletsweng di a fumaneha.",
+      "ts": "Ku endla xiviko lexintshwa swi pfuxeta switsundzuxo leswi humaka eka dizayini leyi. Swiviko leswi hlayisiweke swa ha kumeka loko u lavisisa; ku sungula ndhawu ya swikombiso nakambe swa swi susa. Switsundzuxo leswi heleleke leswi lunghisiweke swi hi Xinghezi; minkomiso leyi hundzuluxeriweke ya kumeka.",
+      "ve": "U bveledza muvhigo muswa zwi vusuludza ngeletshedzo i bvaho kha nyolo iyi. Mivhigo yo vhulungwaho i kha ḓi wanala musi ni tshi sedzulusa; u thoma hafhu fhethu ha u shumela zwi a i thutha. Ngeletshedzo yo fhelelaho yo lugiselelwaho i nga Luisimane; manweledzo o ṱalutshedzelwaho a a wanala."
+    },
+    {
+      "key": "reportUiLanguageChangesApplyToNewReportsAndSummaries",
+      "english": "Language changes apply to new reports and summaries. Regenerate to translate the full advice.",
+      "locations": [
+        "components/ReportView.tsx:997"
+      ],
+      "legacyZulu": "Ushintsho lolimi lusebenza emibikweni emisha nasezifinyezweni. Khiqiza kabusha ukuhumusha zonke izeluleko.",
+      "zu": "Ushintsho lolimi lusebenza emibikweni emisha nasezifinyezweni. Khiqiza kabusha ukuhumusha zonke izeluleko.",
+      "st": "Diphetoho tsa puo di sebetsa ditlalehong tse ntjha le dikakaretsong. Hlahisa hape ho fetolela keletso e felletseng.",
+      "ts": "Ku cinca ririmi swi tirha eka swiviko leswintshwa ni minkomiso. Endla nakambe ku hundzuluxela switsundzuxo leswi heleleke.",
+      "ve": "Tshanduko dza luambo dzi shuma kha mivhigo miswa na manweledzo. Bveledzani hafhu uri ni ṱalutshedzele ngeletshedzo yoṱhe."
+    },
+    {
+      "key": "reportUiReadTheReport",
+      "english": "Read the report",
+      "locations": [
+        "components/ReportView.tsx:1020",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Funda umbiko",
+      "zu": "Funda umbiko",
+      "st": "Bala tlaleho",
+      "ts": "Hlaya xiviko",
+      "ve": "Vhalani muvhigo"
+    },
+    {
+      "key": "reportUiRef",
+      "english": "Ref",
+      "locations": [
+        "components/ReportView.tsx:1035"
+      ],
+      "legacyZulu": "Inombolo",
+      "zu": "Inombolo",
+      "st": "Nomoro",
+      "ts": "Nomboro",
+      "ve": "Nomboro"
+    },
+    {
+      "key": "reportUiNextReportSettings",
+      "english": "Next report settings",
+      "locations": [
+        "components/ReportView.tsx:1046"
+      ],
+      "legacyZulu": "Izilungiselelo zombiko olandelayo",
+      "zu": "Izilungiselelo zombiko olandelayo",
+      "st": "Ditlhophiso tsa tlaleho e latelang",
+      "ts": "Swiyimiso swa xiviko lexi landzelaka",
+      "ve": "Nzudzanyo dza muvhigo u tevhelaho"
+    },
+    {
+      "key": "reportUiReportSettings",
+      "english": "Report settings",
+      "locations": [
+        "components/ReportView.tsx:1046"
+      ],
+      "legacyZulu": "Izilungiselelo zombiko",
+      "zu": "Izilungiselelo zombiko",
+      "st": "Ditlhophiso tsa tlaleho",
+      "ts": "Swiyimiso swa xiviko",
+      "ve": "Nzudzanyo dza muvhigo"
+    },
+    {
+      "key": "reportUiWordingChangesHowTheAdviceReadsDepthChanges",
+      "english": "Wording changes how the advice reads. Depth changes how much advice is written. Generate a new report to apply these choices.",
+      "locations": [
+        "components/ReportView.tsx:1047"
+      ],
+      "legacyZulu": "Indlela yokubhala ishintsha ukufundeka kwezeluleko. Ukujula kushintsha ubude bazo. Khiqiza umbiko omusha ukuze usebenzise lezi zinqumo.",
+      "zu": "Indlela yokubhala ishintsha ukufundeka kwezeluleko. Ukujula kushintsha ubude bazo. Khiqiza umbiko omusha ukuze usebenzise lezi zinqumo.",
+      "st": "Mokgwa wa ho ngola o fetola kamoo keletso e balehang kateng. Botebo bo fetola hore na ho ngolwa keletso e kae. Hlahisa tlaleho e ntjha ho sebedisa dikgetho tsena.",
+      "ts": "Matsalelo ya cinca ndlela leyi switsundzuxo swi hlayekaka ha yona. Vuenti byi cinca leswaku ku tsariwa switsundzuxo swo tala ku fikela kwihi. Endla xiviko lexintshwa ku tirhisa swihlawuriwa leswi.",
+      "ve": "Maṅwalele a shandula nḓila ine ngeletshedzo ya vhalea ngayo. Vhudzivha vhu shandula uri hu ṅwaliwa ngeletshedzo nngafhani. Bveledzani muvhigo muswa uri ni shumise khetho idzi."
+    },
+    {
+      "key": "reportUiEnglishAlongside",
+      "english": "+ English alongside",
+      "locations": [
+        "components/ReportView.tsx:1068"
+      ],
+      "legacyZulu": "+ IsiNgisi eceleni",
+      "zu": "+ IsiNgisi eceleni",
+      "st": "+ Senyesemane le sona",
+      "ts": "+ Xinghezi etlhelo",
+      "ve": "+ Luisimane thungo"
+    },
+    {
+      "key": "reportUiWording",
+      "english": "Wording",
+      "locations": [
+        "components/ReportView.tsx:1074",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Indlela yokuchaza",
+      "zu": "Indlela yokuchaza",
+      "st": "Mokgwa wa ho ngola",
+      "ts": "Matsalelo",
+      "ve": "Maṅwalele"
+    },
+    {
+      "key": "reportUiAdviceDepth",
+      "english": "Advice depth",
+      "locations": [
+        "components/ReportView.tsx:1088"
+      ],
+      "legacyZulu": "Ukujula kwezeluleko",
+      "zu": "Ukujula kwezeluleko",
+      "st": "Botebo ba keletso",
+      "ts": "Vuenti bya switsundzuxo",
+      "ve": "Vhudzivha ha ngeletshedzo"
+    },
+    {
+      "key": "reportUiSections",
+      "english": "Sections",
+      "locations": [
+        "components/ReportView.tsx:1116",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Izigaba",
+      "zu": "Izigaba",
+      "st": "Dikarolo",
+      "ts": "Swiyenge",
+      "ve": "Zwipiḓa"
+    },
+    {
+      "key": "reportUiSelectTheSectionsMostUsefulToASmall",
+      "english": "Select the sections most useful to a small-scale farmer",
+      "locations": [
+        "components/ReportView.tsx:1121"
+      ],
+      "legacyZulu": "Khetha izigaba eziwusizo kakhulu kumlimi omncane",
+      "zu": "Khetha izigaba eziwusizo kakhulu kumlimi omncane",
+      "st": "Kgetha dikarolo tse thusang molemi e monyenyane haholo",
+      "ts": "Hlawula swiyenge leswi pfunaka ngopfu murimi lontsongo",
+      "ve": "Khethani zwipiḓa zwine zwa thusa vhukuma mulimi muṱuku"
+    },
+    {
+      "key": "reportUiFarmer",
+      "english": "Farmer",
+      "locations": [
+        "components/ReportView.tsx:1122"
+      ],
+      "legacyZulu": "Umlimi",
+      "zu": "Umlimi",
+      "st": "Molemi",
+      "ts": "Murimi",
+      "ve": "Mulimi"
+    },
+    {
+      "key": "reportUiSelectAllSections",
+      "english": "Select all sections",
+      "locations": [
+        "components/ReportView.tsx:1127"
+      ],
+      "legacyZulu": "Khetha zonke izigaba",
+      "zu": "Khetha zonke izigaba",
+      "st": "Kgetha dikarolo tsohle",
+      "ts": "Hlawula swiyenge hinkwato",
+      "ve": "Khethani zwipiḓa zwoṱhe"
+    },
+    {
+      "key": "reportUiAll",
+      "english": "All",
+      "locations": [
+        "components/ReportView.tsx:1128"
+      ],
+      "legacyZulu": "Zonke",
+      "zu": "Zonke",
+      "st": "Tsohle",
+      "ts": "Hinkwato",
+      "ve": "Zwoṱhe"
+    },
+    {
+      "key": "reportUiDeselectAllSections",
+      "english": "Deselect all sections",
+      "locations": [
+        "components/ReportView.tsx:1133"
+      ],
+      "legacyZulu": "Susa ukukhetha kuzo zonke izigaba",
+      "zu": "Susa ukukhetha kuzo zonke izigaba",
+      "st": "Tlosa kgetho dikarolong tsohle",
+      "ts": "Susa ku hlawula eka swiyenge hinkwato",
+      "ve": "Bvisani khetho kha zwipiḓa zwoṱhe"
+    },
+    {
+      "key": "reportUiNone",
+      "english": "None",
+      "locations": [
+        "components/ReportView.tsx:1134"
+      ],
+      "legacyZulu": "Azikho",
+      "zu": "Azikho",
+      "st": "Ha ho letho",
+      "ts": "Ku hava",
+      "ve": "A hu na"
+    },
+    {
+      "key": "reportUiBriefAdviceExecutiveSummaryOnlyChooseAtA",
+      "english": "Brief advice = Executive Summary only. Choose At a glance or Field guide for a fixed-page summary PDF.",
+      "locations": [
+        "components/ReportView.tsx:1140"
+      ],
+      "legacyZulu": "Izeluleko ezimfushane = isifinyezo kuphela. Khetha inani lamakhasi ezinkinobheni zesifinyezo ezingenhla.",
+      "zu": "Izeluleko ezimfushane = isifinyezo kuphela. Khetha inani lamakhasi ezinkinobheni zesifinyezo ezingenhla.",
+      "st": "Keletso e kgutshwane = Kakaretso ya bohlokwa feela. Kgetha Ka pono e le nngwe kapa Tataiso ya tshimo bakeng sa PDF ya kakaretso e nang le palo e tsitsitseng ya maqephe.",
+      "ts": "Switsundzuxo swo koma = Nkomiso wa nkoka ntsena. Hlawula Hi ku languta ntsena kumbe Nkongomiso wa le nsin'wini ku kuma PDF ya nkomiso leyi nga ni nhlayo ya matluka leyi vekiweke.",
+      "ve": "Ngeletshedzo pfufhi = Manweledzo a ndeme fhedzi. Khethani Nga u lavhelesa kana Nyendedzi ya tsimuni u wana PDF ya manweledzo i re na tshivhalo tsho vhewaho tsha masiaṱari."
+    },
+    {
+      "key": "reportUiPhotosIncluded",
+      "english": "Photos included",
+      "locations": [
+        "components/ReportView.tsx:1169",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Izithombe zifakiwe",
+      "zu": "Izithombe zifakiwe",
+      "st": "Dinepe di kentswe",
+      "ts": "Swifaniso swi katsiwile",
+      "ve": "Zwifanyiso zwo katelwa"
+    },
+    {
+      "key": "reportUiPhotoAnalysisWillInformTheReport",
+      "english": "Photo analysis will inform the report",
+      "locations": [
+        "components/ReportView.tsx:1170",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Ukuhlolwa kwezithombe kuzosiza umbiko",
+      "zu": "Ukuhlolwa kwezithombe kuzosiza umbiko",
+      "st": "Tlhahlobo ya dinepe e tla thusa ho etsa tlaleho",
+      "ts": "Nxopaxopo wa swifaniso wu ta pfuna ku endla xiviko",
+      "ve": "Tsenguluso ya zwifanyiso i ḓo thusa u ita muvhigo"
+    },
+    {
+      "key": "reportUiAerialSnapshotCaptured",
+      "english": "Aerial snapshot captured",
+      "locations": [
+        "components/ReportView.tsx:1179"
+      ],
+      "legacyZulu": "Isithombe sasemoyeni sigciniwe",
+      "zu": "Isithombe sasemoyeni sigciniwe",
+      "st": "Setshwantsho sa sebaka se tswang hodimo se nkuwe",
+      "ts": "Xifaniso xa le henhla xa ndhawu xi tekiwile",
+      "ve": "Tshifanyiso tsha fhethu tshi bvaho nṱha tsho dzhiiwa"
+    },
+    {
+      "key": "reportUiNoAerialSnapshot",
+      "english": "No aerial snapshot",
+      "locations": [
+        "components/ReportView.tsx:1179"
+      ],
+      "legacyZulu": "Asikho isithombe sasemoyeni",
+      "zu": "Asikho isithombe sasemoyeni",
+      "st": "Ha ho setshwantsho se tswang hodimo",
+      "ts": "A ku na xifaniso xa le henhla",
+      "ve": "A hu na tshifanyiso tshi bvaho nṱha"
+    },
+    {
+      "key": "reportUiCloseReportZoomIntoYourSiteOnThe",
+      "english": "Close report → zoom into your site on the map → tap Capture → reopen",
+      "locations": [
+        "components/ReportView.tsx:1183"
+      ],
+      "legacyZulu": "Vala umbiko → sondeza indawo ebalazweni → thepha Capture → uvule umbiko futhi",
+      "zu": "Vala umbiko → sondeza indawo ebalazweni → thepha Capture → uvule umbiko futhi",
+      "st": "Kwala tlaleho → atametsa sebaka sa hao mmapeng → tobetsa Capture → bula hape",
+      "ts": "Pfala xiviko → tshinela eka ndhawu ya wena emepeni → khumba Capture → pfula nakambe",
+      "ve": "Valani muvhigo → sendedzani fhethu haṋu kha mapa → puṱedzani Capture → vulani hafhu"
+    },
+    {
+      "key": "reportUiInThisReport",
+      "english": "In this report",
+      "locations": [
+        "components/ReportView.tsx:1195"
+      ],
+      "legacyZulu": "Kulo mbiko",
+      "zu": "Kulo mbiko",
+      "st": "Tlalehong ena",
+      "ts": "Eka xiviko lexi",
+      "ve": "Kha muvhigo uyu"
+    },
+    {
+      "key": "reportUiNotMeasuredSoilTestNeeded",
+      "english": "Not measured — soil test needed",
+      "locations": [
+        "components/ReportView.tsx:1265"
+      ],
+      "legacyZulu": "Awukahlolwa — hlola umhlabathi",
+      "zu": "Awukahlolwa — hlola umhlabathi",
+      "st": "Ha e a lekanngwa — tlhahlobo ya mobu e a hlokahala",
+      "ts": "A swi pimiwanga — ku laveka ku kamberiwa ka misava",
+      "ve": "A zwo ngo kaliwa — hu ṱoḓea ndingo ya mavu"
+    },
+    {
+      "key": "reportUiMappedBoundary",
+      "english": "Mapped boundary",
+      "locations": [
+        "components/ReportView.tsx:1268"
+      ],
+      "legacyZulu": "Umngcele obalazwe",
+      "zu": "Umngcele obalazwe",
+      "st": "Moedi o mmepilweng",
+      "ts": "Ndzilekano lowu mepiweke",
+      "ve": "Mukano wo itwaho mapa"
+    },
+    {
+      "key": "reportUiMappedGrowingArea",
+      "english": "Mapped growing area",
+      "locations": [
+        "components/ReportView.tsx:1269"
+      ],
+      "legacyZulu": "Indawo yokutshala ebalazwe",
+      "zu": "Indawo yokutshala ebalazwe",
+      "st": "Sebaka sa ho lema se mmepilweng",
+      "ts": "Ndhawu yo byala leyi mepiweke",
+      "ve": "Fhethu ha u lima ho itwaho mapa"
+    },
+    {
+      "key": "reportUiTankCapacityInPlan",
+      "english": "Tank capacity in plan",
+      "locations": [
+        "components/ReportView.tsx:1270"
+      ],
+      "legacyZulu": "Umthamo wamathangi ohlelweni",
+      "zu": "Umthamo wamathangi ohlelweni",
+      "st": "Bokgoni ba ditanka moralong",
+      "ts": "Vundzeni bya mathangi eka pulani",
+      "ve": "Vhungomu ha mathangi kha pulane"
+    },
+    {
+      "key": "reportUiKPpenClimateClass",
+      "english": "Köppen climate class",
+      "locations": [
+        "components/ReportView.tsx:1287"
+      ],
+      "legacyZulu": "Uhlobo lwesimo sezulu i-Köppen",
+      "zu": "Uhlobo lwesimo sezulu i-Köppen",
+      "st": "Sehlopha sa boemo ba lehodimo sa Köppen",
+      "ts": "Ntlawa wa maxelo wa Köppen",
+      "ve": "Tshigwada tsha mutsho tsha Köppen"
+    },
+    {
+      "key": "reportUiRainfall",
+      "english": "rainfall",
+      "locations": [
+        "components/ReportView.tsx:1288"
+      ],
+      "legacyZulu": "imvula",
+      "zu": "imvula",
+      "st": "pula",
+      "ts": "mpfula",
+      "ve": "mvula"
+    },
+    {
+      "key": "reportUiWet",
+      "english": "wet",
+      "locations": [
+        "components/ReportView.tsx:1288"
+      ],
+      "legacyZulu": "manzi",
+      "zu": "manzi",
+      "st": "e mongobo",
+      "ts": "ya ku tsakama",
+      "ve": "ha mvula"
+    },
+    {
+      "key": "reportUiDry",
+      "english": "dry",
+      "locations": [
+        "components/ReportView.tsx:1288"
+      ],
+      "legacyZulu": "omile",
+      "zu": "omile",
+      "st": "e ommeng",
+      "ts": "yo oma",
+      "ve": "ho oma"
+    },
+    {
+      "key": "reportUiMean",
+      "english": "mean",
+      "locations": [
+        "components/ReportView.tsx:1289",
+        "components/ReportView.tsx:1297"
+      ],
+      "legacyZulu": "isilinganiso",
+      "zu": "isilinganiso",
+      "st": "karolelano",
+      "ts": "xiringaniso",
+      "ve": "vhukati"
+    },
+    {
+      "key": "reportUiBRUZone",
+      "english": "BRU zone",
+      "locations": [
+        "components/ReportView.tsx:1297"
+      ],
+      "legacyZulu": "Isigodi se-BRU",
+      "zu": "Isigodi se-BRU",
+      "st": "Sebaka sa BRU",
+      "ts": "Zoni ya BRU",
+      "ve": "Zouni ya BRU"
+    },
+    {
+      "key": "reportUiParentZone",
+      "english": "parent zone",
+      "locations": [
+        "components/ReportView.tsx:1297"
+      ],
+      "legacyZulu": "isigodi esiyisisekelo",
+      "zu": "isigodi esiyisisekelo",
+      "st": "sebaka se seholo seo e leng karolo ya sona",
+      "ts": "zoni leyikulu leyi yi nga eka yona",
+      "ve": "zouni khulwane ine ya vha khayo"
+    },
+    {
+      "key": "reportUiViewFullSize",
+      "english": "View full size",
+      "locations": [
+        "components/ReportView.tsx:1308",
+        "components/ReportView.tsx:1432"
+      ],
+      "legacyZulu": "Buka ngosayizi ogcwele",
+      "zu": "Buka ngosayizi ogcwele",
+      "st": "Sheba ka boholo bo felletseng",
+      "ts": "Vona hi sayizi leyi heleleke",
+      "ve": "Vhonani nga saizi yo fhelelaho"
+    },
+    {
+      "key": "reportUiCurrentSiteEvidenceItMayPostdateSavedReport",
+      "english": "Current site evidence; it may postdate saved report text.",
+      "locations": [
+        "components/ReportView.tsx:1308"
+      ],
+      "legacyZulu": "Ubufakazi bendawo bamanje; kungenzeka buqoqwe ngemva kombhalo wombiko ogciniwe.",
+      "zu": "Ubufakazi bendawo bamanje; kungenzeka buqoqwe ngemva kombhalo wombiko ogciniwe.",
+      "st": "Bopaki ba jwale ba sebaka; bo ka ba bokelletswe ka mora mongolo wa tlaleho e bolokilweng.",
+      "ts": "Vumbhoni bya sweswi bya ndhawu; byi nga va byi hlengeletiwe endzhaku ka tsalwa ra xiviko lexi hlayisiweke.",
+      "ve": "Vhuṱanzi ha zwino ha fhethu; vhu nga vha ho kuvhanganywa nga murahu ha maṅwalwa a muvhigo wo vhulungwaho."
+    },
+    {
+      "key": "reportUiCapturedSiteSatelliteView",
+      "english": "Captured site satellite view",
+      "locations": [
+        "components/ReportView.tsx:1308"
+      ],
+      "legacyZulu": "Isithombe sesathelayithi esithathwe sendawo",
+      "zu": "Isithombe sesathelayithi esithathwe sendawo",
+      "st": "Setshwantsho sa sathelaete se nkuweng sa sebaka",
+      "ts": "Xifaniso xa sathelayiti xa ndhawu lexi tekiweke",
+      "ve": "Tshifanyiso tsha sathelaithi tsha fhethu tsho dzhiiwaho"
+    },
+    {
+      "key": "reportUiSavedDesign",
+      "english": "Saved design",
+      "locations": [
+        "components/ReportView.tsx:1308"
+      ],
+      "legacyZulu": "Umklamo ogciniwe",
+      "zu": "Umklamo ogciniwe",
+      "st": "Moralo o bolokilweng",
+      "ts": "Dizayini leyi hlayisiweke",
+      "ve": "Nyolo yo vhulungwaho"
+    },
+    {
+      "key": "reportUiMaxarSatelliteImagery",
+      "english": "Maxar satellite imagery",
+      "locations": [
+        "components/ReportView.tsx:1329"
+      ],
+      "legacyZulu": "Imifanekiso yesathelayithi yakwa-Maxar",
+      "zu": "Imifanekiso yesathelayithi yakwa-Maxar",
+      "st": "Ditshwantsho tsa sathelaete tsa Maxar",
+      "ts": "Swifaniso swa sathelayiti swa Maxar",
+      "ve": "Zwifanyiso zwa sathelaithi zwa Maxar"
+    },
+    {
+      "key": "reportUiTheLastAttemptClosedTheAppSoThis",
+      "english": "The last attempt closed the app, so this report was made without sending your design maps to be read — everything else is complete, and your maps still show below and in the PDF. Generate again any time to retry with them.",
+      "locations": [
+        "components/ReportView.tsx:1338"
+      ],
+      "legacyZulu": "Ukuzama kokugcina kwavala uhlelo lokusebenza, ngakho lo mbiko wenziwe ngaphandle kokuthumela amamephu omklamo wakho ukuba afundwe — konke okunye kuphelele, futhi amamephu akho asabonakala ngezansi naku-PDF. Khiqiza futhi noma nini ukuze uzame ukuwafaka.",
+      "zu": "Ukuzama kokugcina kwavala uhlelo lokusebenza, ngakho lo mbiko wenziwe ngaphandle kokuthumela amamephu omklamo wakho ukuba afundwe — konke okunye kuphelele, futhi amamephu akho asabonakala ngezansi naku-PDF. Khiqiza futhi noma nini ukuze uzame ukuwafaka.",
+      "st": "Teko ya ho qetela e ile ya kwala app, kahoo tlaleho ena e entswe ntle le ho romela dimmapa tsa moralo wa hao hore di balwe — tse ding tsohle di felletse, mme dimmapa tsa hao di ntse di bonahala ka tlase le ho PDF. Hlahisa hape neng kapa neng ho leka hape ka tsona.",
+      "ts": "Ndzingo wo hetelela wu pfale app, kutani xiviko lexi xi endliwile handle ko rhumela mimepe ya dizayini ya wena ku ya hlayiwa — leswin'wana hinkwato swi herile, naswona mimepe ya wena ya ha vonaka laha hansi ni le ka PDF. Endla nakambe nkarhi wihi na wihi ku ringeta hi yona.",
+      "ve": "Ndingo yo fhiraho yo vala app, zwenezwo muvhigo uyu wo itwa hu si na u rumela mapa a nyolo yaṋu uri a vhaliwe — zwiṅwe zwoṱhe zwo fhela, nahone mapa aṋu a kha ḓi vhonala afho fhasi na kha PDF. Bveledzani hafhu nga tshifhinga tshiṅwe na tshiṅwe uri ni lingedze nao."
+    },
+    {
+      "key": "reportUiYourSavedDesignMaps",
+      "english": "Your saved design maps",
+      "locations": [
+        "components/ReportView.tsx:1342"
+      ],
+      "legacyZulu": "Amamephu akho omklamo agciniwe",
+      "zu": "Amamephu akho omklamo agciniwe",
+      "st": "Dimmapa tsa moralo wa hao tse bolokilweng",
+      "ts": "Mimepe ya dizayini ya wena leyi hlayisiweke",
+      "ve": "Mapa a nyolo yaṋu o vhulungwaho"
+    },
+    {
+      "key": "reportUiMapsSelectedForThisReport",
+      "english": "Maps selected for this report",
+      "locations": [
+        "components/ReportView.tsx:1346"
+      ],
+      "legacyZulu": "Amamephu akhethelwe lo mbiko",
+      "zu": "Amamephu akhethelwe lo mbiko",
+      "st": "Dimmapa tse kgethilweng bakeng sa tlaleho ena",
+      "ts": "Mimepe leyi hlawuriweke eka xiviko lexi",
+      "ve": "Mapa o khethwaho kha muvhigo uyu"
+    },
+    {
+      "key": "reportUiOpenAMapToInspectTheFullSize",
+      "english": "Open a map to inspect the full-size original. Your selection is used for the cover and PDF.",
+      "locations": [
+        "components/ReportView.tsx:1348"
+      ],
+      "legacyZulu": "Vula imephu ukuze uhlole eyangempela ngosayizi ogcwele. Okukhethile kusetshenziswa ekhasini langaphambili naku-PDF.",
+      "zu": "Vula imephu ukuze uhlole eyangempela ngosayizi ogcwele. Okukhethile kusetshenziswa ekhasini langaphambili naku-PDF.",
+      "st": "Bula mmapa ho hlahloba wa pele ka boholo bo felletseng. Kgetho ya hao e sebediswa bakeng sa sekwahelo le PDF.",
+      "ts": "Pfula mepe ku kambela wa masungulo hi sayizi leyi heleleke. Ku hlawula ka wena ku tirhisiwa eka khavhara ni PDF.",
+      "ve": "Vulani mapa uri ni ṱole wa u thoma nga saizi yo fhelelaho. Khetho yaṋu i shumiswa kha khavara na PDF."
+    },
+    {
+      "key": "reportUiYourSavedSitePhotos",
+      "english": "Your saved site photos",
+      "locations": [
+        "components/ReportView.tsx:1364"
+      ],
+      "legacyZulu": "Izithombe zakho zendawo ezigciniwe",
+      "zu": "Izithombe zakho zendawo ezigciniwe",
+      "st": "Dinepe tsa sebaka sa hao tse bolokilweng",
+      "ts": "Swifaniso swa ndhawu ya wena leswi hlayisiweke",
+      "ve": "Zwifanyiso zwa fhethu haṋu zwo vhulungwaho"
+    },
+    {
+      "key": "reportUiOf",
+      "english": "of",
+      "locations": [
+        "components/ReportView.tsx:1365"
+      ],
+      "legacyZulu": "ku",
+      "zu": "ku",
+      "st": "ho tse",
+      "ts": "eka",
+      "ve": "kha"
+    },
+    {
+      "key": "reportUiPhoto",
+      "english": "Photo",
+      "locations": [
+        "components/ReportView.tsx:1388"
+      ],
+      "legacyZulu": "Isithombe",
+      "zu": "Isithombe",
+      "st": "Senepe",
+      "ts": "Xifaniso",
+      "ve": "Tshifanyiso"
+    },
+    {
+      "key": "reportUiPhotosFromYourCurrentSiteEvidenceSavedReport",
+      "english": "Photos from your current site evidence. Saved report text may refer to an earlier selection. Photos can be included in the full PDF.",
+      "locations": [
+        "components/ReportView.tsx:1399"
+      ],
+      "legacyZulu": "Izithombe ezisebufakazini bakho bendawo njengamanje. Umbiko ogciniwe ungase ubhekisele ezithombeni zangaphambili. Ungafaka izithombe ku-PDF egcwele.",
+      "zu": "Izithombe ezisebufakazini bakho bendawo njengamanje. Umbiko ogciniwe ungase ubhekisele ezithombeni zangaphambili. Ungafaka izithombe ku-PDF egcwele.",
+      "st": "Dinepe tse tswang bopaking ba jwale ba sebaka sa hao. Mongolo wa tlaleho e bolokilweng o ka bua ka kgetho ya pejana. Dinepe di ka kenngwa ho PDF e felletseng.",
+      "ts": "Swifaniso leswi humaka eka vumbhoni bya sweswi bya ndhawu ya wena. Tsalwa ra xiviko lexi hlayisiweke ri nga va ri kombetela eka leswi a swi hlawuriwile khale. Swifaniso swi nga katsiwa eka PDF leyi heleleke.",
+      "ve": "Zwifanyiso zwi bvaho kha vhuṱanzi ha zwino ha fhethu haṋu. Maṅwalwa a muvhigo wo vhulungwaho a nga vha a tshi amba nga khetho ya kale. Zwifanyiso zwi nga katelwa kha PDF yo fhelelaho."
+    },
+    {
+      "key": "reportUiNoSavedDesignMapsWereFoundInThis",
+      "english": "No saved design maps were found in this browser for this site. If you saved them on another device, open the report there.",
+      "locations": [
+        "components/ReportView.tsx:1408"
+      ],
+      "legacyZulu": "Awekho amamephu omklamo wale ndawo atholakele kulesi siphequluli. Uma uwagcine kwenye idivayisi, vula umbiko lapho.",
+      "zu": "Awekho amamephu omklamo wale ndawo atholakele kulesi siphequluli. Uma uwagcine kwenye idivayisi, vula umbiko lapho.",
+      "st": "Ha ho dimmapa tsa moralo tse bolokilweng tse fumanweng sebatling sena bakeng sa sebaka sena. Haeba o di bolokile sesebedisweng se seng, bula tlaleho teng.",
+      "ts": "A ku kumiwanga mimepe ya dizayini leyi hlayisiweke eka xisecha lexi ya ndhawu leyi. Loko u yi hlayisile eka xitirhisiwa xin'wana, pfula xiviko kona.",
+      "ve": "A hu na mapa a nyolo o vhulungwaho o wanalaho kha tshiswaswari itshi a fhethu afha. Arali no a vhulunga kha tshiṅwe tshishumiswa, vulani muvhigo henefho."
+    },
+    {
+      "key": "reportUiInkSavingEditionFullColourExportIncludesThe",
+      "english": "Ink-saving edition. Full-colour export includes the visual overview and charts.",
+      "locations": [
+        "components/ReportView.tsx:1412"
+      ],
+      "legacyZulu": "Umbiko oyonga uyinki. Ukukhipha ngemibala egcwele kufaka amashadi.",
+      "zu": "Umbiko oyonga uyinki. Ukukhipha ngemibala egcwele kufaka amashadi.",
+      "st": "Mofuta o bolokang enke. PDF ya mebala e felletseng e kenyelletsa kakaretso ya ditshwantsho le ditjhate.",
+      "ts": "Nkandziyiso lowu hlayisaka inki. PDF ya mihlovo leyi heleleke yi katsa nkomiso wa swifaniso ni tichati.",
+      "ve": "Khophi i vhulungaho inki. PDF ya mivhala yo fhelelaho i katela manweledzo a zwifanyiso na tshati."
+    },
+    {
+      "key": "reportUiFIELDNOTES",
+      "english": "FIELD NOTES",
+      "locations": [
+        "components/ReportView.tsx:1432"
+      ],
+      "legacyZulu": "AMANOTHI ASENSIMINI",
+      "zu": "AMANOTHI ASENSIMINI",
+      "st": "DINTLHA TSA TSHIMO",
+      "ts": "TINOTSI TA NSIMU",
+      "ve": "NOTSI DZA TSIMU"
+    },
+    {
+      "key": "reportUiGeneratedByImbewuField",
+      "english": "Generated by ImbewuField",
+      "locations": [
+        "components/ReportView.tsx:1436"
+      ],
+      "legacyZulu": "Kukhiqizwe yi-ImbewuField",
+      "zu": "Kukhiqizwe yi-ImbewuField",
+      "st": "E hlahisitswe ke ImbewuField",
+      "ts": "Xi endliwile hi ImbewuField",
+      "ve": "Wo bveledzwa nga ImbewuField"
+    },
+    {
+      "key": "reportUiPhotosIncluded91",
+      "english": "photos included",
+      "locations": [
+        "components/ReportView.tsx:1452"
+      ],
+      "legacyZulu": "izithombe zifakiwe",
+      "zu": "izithombe zifakiwe",
+      "st": "dinepe di kentswe",
+      "ts": "swifaniso swi katsiwile",
+      "ve": "zwifanyiso zwo katelwa"
+    },
+    {
+      "key": "reportUiFitPage",
+      "english": "Fit page",
+      "locations": [
+        "components/ReportView.tsx:1480"
+      ],
+      "legacyZulu": "Linganisa ikhasi",
+      "zu": "Linganisa ikhasi",
+      "st": "Lekanya le leqephe",
+      "ts": "Ringanisa ni tluka",
+      "ve": "Linganyisani na siaṱari"
+    },
+    {
+      "key": "reportUiZoomToRead",
+      "english": "Zoom to read",
+      "locations": [
+        "components/ReportView.tsx:1480"
+      ],
+      "legacyZulu": "Khulisa ukuze ufunde",
+      "zu": "Khulisa ukuze ufunde",
+      "st": "Atametsa ho bala",
+      "ts": "Tshinela ku hlaya",
+      "ve": "Sendedzani u vhala"
+    },
+    {
+      "key": "reportsOfflineClose",
+      "english": "Close",
+      "locations": [
+        "components/ReportView.tsx:1481"
+      ],
+      "legacyZulu": "Vala",
+      "ts": "Pfala"
+    },
+    {
+      "key": "reportUiCouldNotExportTheCropPlanPleaseTry",
+      "english": "Could not export the crop plan. Please try again.",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:36"
+      ],
+      "legacyZulu": "Uhlelo lwezitshalo alukhiphekanga. Zama futhi.",
+      "zu": "Uhlelo lwezitshalo alukhiphekanga. Zama futhi.",
+      "st": "Moralo wa dijalo ha o a kgona ho romelwa. Ka kopo leka hape.",
+      "ts": "Pulani ya swibyariwa a yi kotanga ku humesiwa. Hi kombela u ringeta nakambe.",
+      "ve": "Pulane ya zwiliṅwa a yo ngo kona u bviswa. Kha vha lingedze hafhu."
+    },
+    {
+      "key": "reportUiSowSeed",
+      "english": "Sow seed",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:41"
+      ],
+      "legacyZulu": "Hlwanyela imbewu",
+      "zu": "Hlwanyela imbewu",
+      "st": "Jala peo",
+      "ts": "Byala mbewu",
+      "ve": "Zwalani mbeu"
+    },
+    {
+      "key": "reportUiCheckSeedlingsTransplantWhenReady",
+      "english": "Check seedlings; transplant when ready",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:41"
+      ],
+      "legacyZulu": "Hlola izithombo; tshala uma sezilungile",
+      "zu": "Hlola izithombo; tshala uma sezilungile",
+      "st": "Hlahloba dipeo; di fallisetse ha di se di loketse",
+      "ts": "Kambela swimilana; swi simele loko swi lunghekile",
+      "ve": "Ṱolani zwimilana; zwi ṱavheni musi zwo no lugela"
+    },
+    {
+      "key": "reportUiSeasonalSowingCalendar",
+      "english": "Seasonal sowing calendar",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:43"
+      ],
+      "legacyZulu": "Ikhalenda lokuhlwanyela lezinkathi zonyaka",
+      "zu": "Ikhalenda lokuhlwanyela lezinkathi zonyaka",
+      "st": "Khalendara ya ho jala ya dihla",
+      "ts": "Khalendara ya ku byala ya tinguva",
+      "ve": "Khalenda ya u zwala ya khalaṅwaha"
+    },
+    {
+      "key": "reportUiSavedPlan",
+      "english": "Saved plan",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:44"
+      ],
+      "legacyZulu": "Uhlelo olugciniwe",
+      "zu": "Uhlelo olugciniwe",
+      "st": "Moralo o bolokilweng",
+      "ts": "Pulani leyi hlayisiweke",
+      "ve": "Pulane yo vhulungwaho"
+    },
+    {
+      "key": "reportUiThisOlderReportHasACropSummaryWithout",
+      "english": "This older report has a crop summary without dated planting records.",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:44"
+      ],
+      "legacyZulu": "Lo mbiko omdala unesifinyezo sezitshalo ngaphandle kwamarekhodi anezinsuku.",
+      "zu": "Lo mbiko omdala unesifinyezo sezitshalo ngaphandle kwamarekhodi anezinsuku.",
+      "st": "Tlaleho ena ya kgale e na le kakaretso ya dijalo ntle le direkoto tsa ho lema tse nang le matsatsi.",
+      "ts": "Xiviko lexi xa khale xi ni nkomiso wa swibyariwa handle ka tirhekhodo to byala leti nga ni masiku.",
+      "ve": "Muvhigo uyu wa kale u na manweledzo a zwiliṅwa hu si na rekhodo dza u ṱavha dzi re na maḓuvha."
+    },
+    {
+      "key": "reportUiTheCurrentCropPlanHasChangedThisCalendar",
+      "english": "The current crop plan has changed. This calendar keeps the plan saved with this report.",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:45"
+      ],
+      "legacyZulu": "Uhlelo lwamanje lushintshile. Leli khalenda ligcina uhlelo olwalugcinwe nalo mbiko.",
+      "zu": "Uhlelo lwamanje lushintshile. Leli khalenda ligcina uhlelo olwalugcinwe nalo mbiko.",
+      "st": "Moralo wa jwale wa dijalo o fetohile. Khalendara ena e boloka moralo o bolokilweng le tlaleho ena.",
+      "ts": "Pulani ya sweswi ya swibyariwa yi cincile. Khalendara leyi yi hlayisa pulani leyi hlayisiweke ni xiviko lexi.",
+      "ve": "Pulane ya zwino ya zwiliṅwa yo shanduka. Khalenda iyi i vhulunga pulane yo vhulungwaho na muvhigo uyu."
+    },
+    {
+      "key": "reportUiSSowSeedInTraysForTransplantCrops",
+      "english": "S = sow seed (in trays for transplant crops). T = check seedlings and transplant when ready. These are planned tasks; check water and field conditions.",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:47"
+      ],
+      "zu": "S = hlwanyela imbewu (emathreyini ezitshalo ezizotshalwa kabusha). T = hlola izithombo bese utshala uma sezilungile. Lena yimisebenzi ehleliwe; hlola amanzi nezimo zensimu.",
+      "st": "S = jala peo (ditereing bakeng sa dijalo tse fallisetswang). T = hlahloba dipeo mme o di fallisetse ha di loketse. Tsena ke mesebetsi e rerilweng; hlahloba metsi le maemo a tshimo.",
+      "ts": "S = byala mbewu (ematireyini eka swibyariwa leswi simekiwaka). T = kambela swimilana kutani u swi simela loko swi lunghekile. Leyi i mintirho leyi kunguhatiweke; kambela mati ni swiyimo swa nsimu.",
+      "ve": "S = zwalani mbeu (kha ṱhireyi kha zwiliṅwa zwine zwa ḓo ṱavhululwa). T = ṱolani zwimilana ni zwi ṱavhe musi zwo lugela. I mishumo yo pulaniwaho; ṱolani maḓi na nyimele dza tsimuni.",
+      "priorZulu": "S = hlwanyela imbewu. T = hlola izithombo bese utshala uma sezilungile. Hlola amanzi nezimo zendawo.",
+      "reason": "Restores the source tray qualifier for transplant crops and the planned-task caveat omitted by the earlier UI draft. The English instruction and saved planting data stay exact."
+    },
+    {
+      "key": "reportUiCrop",
+      "english": "Crop",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:48"
+      ],
+      "legacyZulu": "Isitshalo",
+      "zu": "Isitshalo",
+      "st": "Sejalo",
+      "ts": "Xibyariwa",
+      "ve": "Tshiliṅwa"
+    },
+    {
+      "key": "reportUiNoSowingOrTransplantTaskScheduled",
+      "english": "No sowing or transplant task scheduled",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:53"
+      ],
+      "legacyZulu": "Akukho ukuhlwanyela noma ukutshala okuhleliwe",
+      "zu": "Akukho ukuhlwanyela noma ukutshala okuhleliwe",
+      "st": "Ha ho mosebetsi wa ho jala kapa ho fallisetsa dipeo o rerilweng",
+      "ts": "A ku na ntiro wa ku byala kumbe ku simela lowu kunguhatiweke",
+      "ve": "A hu na mushumo wo pulaniwaho wa u zwala kana u ṱavha zwimilana"
+    },
+    {
+      "key": "reportUiNoNewSowingTransplantTaskInThisPeriod",
+      "english": "No new sowing/transplant task in this period:",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:55"
+      ],
+      "legacyZulu": "Akukho ukuhlwanyela noma ukutshala okusha kulesi sikhathi:",
+      "zu": "Akukho ukuhlwanyela noma ukutshala okusha kulesi sikhathi:",
+      "st": "Ha ho mosebetsi o motjha wa ho jala/ho fallisetsa nakong ena:",
+      "ts": "A ku na ntiro lowuntshwa wa ku byala/ku simela eka nkarhi lowu:",
+      "ve": "A hu na mushumo muswa wa u zwala/u ṱavha zwimilana kha tshifhinga itshi:"
+    },
+    {
+      "key": "reportUiSeeTheWorkingPlanForCropsAlreadyGrowing",
+      "english": "See the working plan for crops already growing and undated records.",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:55"
+      ],
+      "legacyZulu": "Bheka uhlelo lomsebenzi ngezitshalo ezikhulayo namarekhodi angenazinsuku.",
+      "zu": "Bheka uhlelo lomsebenzi ngezitshalo ezikhulayo namarekhodi angenazinsuku.",
+      "st": "Sheba moralo wa mosebetsi bakeng sa dijalo tse seng di ntse di hola le direkoto tse se nang matsatsi.",
+      "ts": "Vona pulani ya mintirho ya swibyariwa leswi se swi kulaka ni tirhekhodo leti nga riki na masiku.",
+      "ve": "Vhonani pulane ya mushumo ya zwiliṅwa zwine zwa khou hula na rekhodo dzi si na maḓuvha."
+    },
+    {
+      "key": "reportUiSowingNotRecorded",
+      "english": "Sowing not recorded",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:56"
+      ],
+      "legacyZulu": "Ukuhlwanyela akubhalwanga",
+      "zu": "Ukuhlwanyela akubhalwanga",
+      "st": "Ho jala ha ho a rekotwa",
+      "ts": "Ku byala a ku rhekhodiwanga",
+      "ve": "U zwala a ho ngo rekhodiwa"
+    },
+    {
+      "key": "reportUiSavedPlanChoicesAndChecks",
+      "english": "Saved plan choices and checks",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:57"
+      ],
+      "legacyZulu": "Ukukhetha nokuhlola uhlelo olugciniwe",
+      "zu": "Ukukhetha nokuhlola uhlelo olugciniwe",
+      "st": "Dikgetho le ditlhahlobo tsa moralo o bolokilweng",
+      "ts": "Swihlawuriwa ni mikambelo ya pulani leyi hlayisiweke",
+      "ve": "Khetho na ṱholisiso dza pulane yo vhulungwaho"
+    },
+    {
+      "key": "reportUiFullCropPlanReportEnglish",
+      "english": "Full crop-plan report (English)",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:59"
+      ],
+      "legacyZulu": "Umbiko ophelele wohlelo lwezitshalo (isiNgisi)",
+      "zu": "Umbiko ophelele wohlelo lwezitshalo (isiNgisi)",
+      "st": "Tlaleho e felletseng ya moralo wa dijalo (Senyesemane)",
+      "ts": "Xiviko lexi heleleke xa pulani ya swibyariwa (Xinghezi)",
+      "ve": "Muvhigo wo fhelelaho wa pulane ya zwiliṅwa (Luisimane)"
+    },
+    {
+      "key": "reportUiQuickPrintSummaryEnglish",
+      "english": "Quick-print summary (English)",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:60"
+      ],
+      "legacyZulu": "Isifinyezo sokuphrinta (isiNgisi)",
+      "zu": "Isifinyezo sokuphrinta (isiNgisi)",
+      "st": "Kakaretso ya ho hatisa kapele (Senyesemane)",
+      "ts": "Nkomiso wo kandziyisa hi ku hatlisa (Xinghezi)",
+      "ve": "Manweledzo a u gandisa nga u ṱavhanya (Luisimane)"
+    },
+    {
+      "key": "reportUiOpenCurrentProductionPlan",
+      "english": "Open current production plan",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:61"
+      ],
+      "legacyZulu": "Vula uhlelo lokukhiqiza lwamanje",
+      "zu": "Vula uhlelo lokukhiqiza lwamanje",
+      "st": "Bula moralo wa jwale wa tlhahiso",
+      "ts": "Pfula pulani ya sweswi ya vuhumelerisi",
+      "ve": "Vulani pulane ya zwino ya mbveledzo"
+    },
+    {
+      "key": "reportUiAttachFullWorkingPlanToPDFEnglish",
+      "english": "Attach full working plan to PDF (English)",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:62"
+      ],
+      "legacyZulu": "Faka uhlelo lomsebenzi oluphelele ku-PDF (isiNgisi)",
+      "zu": "Faka uhlelo lomsebenzi oluphelele ku-PDF (isiNgisi)",
+      "st": "Kenya moralo o felletseng wa mosebetsi ho PDF (Senyesemane)",
+      "ts": "Namarheta pulani leyi heleleke ya mintirho eka PDF (Xinghezi)",
+      "ve": "Ṱumetshedzani pulane yo fhelelaho ya mushumo kha PDF (Luisimane)"
+    },
+    {
+      "key": "reportUiPreparingCropPlanReport",
+      "english": "Preparing crop-plan report…",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:64"
+      ],
+      "legacyZulu": "Kulungiswa umbiko wohlelo lwezitshalo…",
+      "zu": "Kulungiswa umbiko wohlelo lwezitshalo…",
+      "st": "Ho lokiswa tlaleho ya moralo wa dijalo…",
+      "ts": "Ku lulamisiwa xiviko xa pulani ya swibyariwa…",
+      "ve": "Hu khou dzudzanywa muvhigo wa pulane ya zwiliṅwa…"
+    },
+    {
+      "key": "reportUiCouldNotSaveYourMapReviewPleaseTry",
+      "english": "Could not save your map review. Please try again.",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:32"
+      ],
+      "legacyZulu": "Ukubuyekezwa kwemephu akugcinwanga. Zama futhi.",
+      "zu": "Ukubuyekezwa kwemephu akugcinwanga. Zama futhi.",
+      "st": "Tlhahlobo ya hao ya mmapa ha e a kgona ho bolokwa. Ka kopo leka hape.",
+      "ts": "Nkambelo wa wena wa mepe a wu kotanga ku hlayisiwa. Hi kombela u ringeta nakambe.",
+      "ve": "Ṱholisiso yaṋu ya mapa a yo ngo kona u vhulungiwa. Kha vha lingedze hafhu."
+    },
+    {
+      "key": "reportUiMapChecklistReportSelection",
+      "english": "Map checklist & report selection",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:37"
+      ],
+      "legacyZulu": "Uhlu lwamamephu nokukhetha umbiko",
+      "zu": "Uhlu lwamamephu nokukhetha umbiko",
+      "st": "Lenane la dimmapa le kgetho ya tlaleho",
+      "ts": "Nxaxamelo wa mimepe ni ku hlawula ka xiviko",
+      "ve": "Mutevhe wa mapa na khetho ya muvhigo"
+    },
+    {
+      "key": "reportUiMapTypesSaved",
+      "english": "map types saved",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:37"
+      ],
+      "legacyZulu": "izinhlobo zamamephu ezigciniwe",
+      "zu": "izinhlobo zamamephu ezigciniwe",
+      "st": "mefuta ya dimmapa e bolokilwe",
+      "ts": "tinxaka ta mimepe leti hlayisiweke",
+      "ve": "tshaka dza mapa dzo vhulungwaho"
+    },
+    {
+      "key": "reportUiReviewed",
+      "english": "reviewed",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:37"
+      ],
+      "legacyZulu": "kubuyekeziwe",
+      "zu": "kubuyekeziwe",
+      "st": "di hlahlobilwe",
+      "ts": "swi kamberiwile",
+      "ve": "zwo ṱoliwa"
+    },
+    {
+      "key": "reportUiIncluded",
+      "english": "included",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:37"
+      ],
+      "legacyZulu": "kufakiwe",
+      "zu": "kufakiwe",
+      "st": "di kentswe",
+      "ts": "swi katsiwile",
+      "ve": "zwo katelwa"
+    },
+    {
+      "key": "reportUiChooseOneVersionPerMapTypeSavingA",
+      "english": "Choose one version per map type. Saving a map records it here; mark it reviewed when you are happy with it. All other versions stay in your saved maps. Changing attachments does not rewrite saved advice.",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:38"
+      ],
+      "legacyZulu": "Khetha inguqulo eyodwa yohlobo ngalunye lwemephu. Maka ukuthi ibuyekeziwe uma wenelisekile ngayo. Ezinye izinguqulo zihlala zigciniwe. Ukushintsha amamephu akushintshi iseluleko esigciniwe.",
+      "zu": "Khetha inguqulo eyodwa yohlobo ngalunye lwemephu. Maka ukuthi ibuyekeziwe uma wenelisekile ngayo. Ezinye izinguqulo zihlala zigciniwe. Ukushintsha amamephu akushintshi iseluleko esigciniwe.",
+      "st": "Kgetha mofuta o le mong bakeng sa mofuta ka mong wa mmapa. Ho boloka mmapa ho o rekota mona; o tshwaye o hlahlobilwe ha o kgotsofetse ka wona. Mefuta e meng yohle e sala dimmapeng tsa hao tse bolokilweng. Ho fetola dintho tse hoketsweng ha ho ngole keletso e bolokilweng hape.",
+      "ts": "Hlawula nkandziyiso wun'we eka muxaka wun'wana ni wun'wana wa mepe. Ku hlayisa mepe swa wu rhekhoda laha; wu funge leswaku wu kamberiwile loko u enerisekile ha wona. Minkandziyiso leyin'wana hinkwato yi sala eka mimepe ya wena leyi hlayisiweke. Ku cinca leswi namarhetiweke a swi tsali nakambe switsundzuxo leswi hlayisiweke.",
+      "ve": "Khethani khophi nthihi kha lushaka luṅwe na luṅwe lwa mapa. U vhulunga mapa zwi a u rekhoda hafha; u swayeni wo ṱoliwa musi no fushea ngawo. Dziṅwe khophi dzoṱhe dzi sala kha mapa aṋu o vhulungwaho. U shandula zwo ṱumetshedzwaho a zwi ṅwali hafhu ngeletshedzo yo vhulungwaho."
+    },
+    {
+      "key": "reportUiSomeSelectedMapsAreUnavailableInThisBrowser",
+      "english": "Some selected maps are unavailable in this browser. They have not been replaced.",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:40"
+      ],
+      "legacyZulu": "Amanye amamephu akhethiwe awatholakali kulesi siphequluli. Awakafakwa amanye esikhundleni sawo.",
+      "zu": "Amanye amamephu akhethiwe awatholakali kulesi siphequluli. Awakafakwa amanye esikhundleni sawo.",
+      "st": "Dimmapa tse ding tse kgethilweng ha di fumanehe sebatling sena. Ha di a nkelwa sebaka.",
+      "ts": "Mimepe yin'wana leyi hlawuriweke a yi kumeki eka xisecha lexi. A yi siviwanga.",
+      "ve": "Maṅwe mapa o khethwaho ha wanali kha tshiswaswari itshi. Ha ngo vhewa maṅwe madzuloni awo."
+    },
+    {
+      "key": "reportUiRemoveUnavailableSelections",
+      "english": "Remove unavailable selections",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:40"
+      ],
+      "legacyZulu": "Susa ukukhetha okungatholakali",
+      "zu": "Susa ukukhetha okungatholakali",
+      "st": "Tlosa dikgetho tse sa fumaneheng",
+      "ts": "Susa leswi hlawuriweke leswi nga kumekiki",
+      "ve": "Bvisani khetho dzi sa wanali"
+    },
+    {
+      "key": "reportUiSavedVersions",
+      "english": "saved versions",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:49"
+      ],
+      "legacyZulu": "izinguqulo ezigciniwe",
+      "zu": "izinguqulo ezigciniwe",
+      "st": "mefuta e bolokilweng",
+      "ts": "minkandziyiso leyi hlayisiweke",
+      "ve": "khophi dzo vhulungwaho"
+    },
+    {
+      "key": "reportUiNoSavedMapInThisBrowser",
+      "english": "No saved map in this browser",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:49"
+      ],
+      "legacyZulu": "Ayikho imephu egciniwe kulesi siphequluli",
+      "zu": "Ayikho imephu egciniwe kulesi siphequluli",
+      "st": "Ha ho mmapa o bolokilweng sebatling sena",
+      "ts": "A ku na mepe lowu hlayisiweke eka xisecha lexi",
+      "ve": "A hu na mapa wo vhulungwaho kha tshiswaswari itshi"
+    },
+    {
+      "key": "reportUiVersion",
+      "english": "version",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:50"
+      ],
+      "legacyZulu": "inguqulo",
+      "zu": "inguqulo",
+      "st": "mofuta",
+      "ts": "nkandziyiso",
+      "ve": "khophi"
+    },
+    {
+      "key": "reportUiReviewStatus",
+      "english": "review status",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:53"
+      ],
+      "legacyZulu": "isimo sokubuyekeza",
+      "zu": "isimo sokubuyekeza",
+      "st": "boemo ba tlhahlobo",
+      "ts": "xiyimo xa nkambelo",
+      "ve": "nyimele ya ṱholisiso"
+    },
+    {
+      "key": "reportUiMissing",
+      "english": "Missing",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:59"
+      ],
+      "legacyZulu": "Ayikho",
+      "zu": "Ayikho",
+      "st": "Ha e yo",
+      "ts": "A yi kona",
+      "ve": "A i ho"
+    },
+    {
+      "key": "reportUiSavedReviewNeeded",
+      "english": "Saved · review needed",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:62"
+      ],
+      "legacyZulu": "Igciniwe · idinga ukubuyekezwa",
+      "zu": "Igciniwe · idinga ukubuyekezwa",
+      "st": "E bolokilwe · e hloka tlhahlobo",
+      "ts": "Wu hlayisiwile · wu fanele ku kamberiwa",
+      "ve": "Wo vhulungiwa · u ṱoḓa u ṱoliwa"
+    },
+    {
+      "key": "reportUiNeedsChanges",
+      "english": "Needs changes",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:62"
+      ],
+      "legacyZulu": "Idinga ukushintshwa",
+      "zu": "Idinga ukushintshwa",
+      "st": "E hloka diphetoho",
+      "ts": "Wu lava ku cinciwa",
+      "ve": "U ṱoḓa tshanduko"
+    },
+    {
+      "key": "reportUiReviewed129",
+      "english": "Reviewed",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:62"
+      ],
+      "legacyZulu": "Ibuyekeziwe",
+      "zu": "Ibuyekeziwe",
+      "st": "E hlahlobilwe",
+      "ts": "Wu kamberiwile",
+      "ve": "Wo ṱoliwa"
+    },
+    {
+      "key": "reportUiNotNeededForThisSite",
+      "english": "Not needed for this site",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:63"
+      ],
+      "legacyZulu": "Ayidingeki kule ndawo",
+      "zu": "Ayidingeki kule ndawo",
+      "st": "Ha e hlokehe sebakeng sena",
+      "ts": "A wu laveki eka ndhawu leyi",
+      "ve": "A u ṱoḓei kha fhethu afha"
+    },
+    {
+      "key": "reportUiIncludeInReport",
+      "english": "Include in report",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:66"
+      ],
+      "legacyZulu": "Faka embikweni",
+      "zu": "Faka embikweni",
+      "st": "Kenya tlalehong",
+      "ts": "Katsa eka xiviko",
+      "ve": "Kateleni kha muvhigo"
+    },
+    {
+      "key": "reportUiInspectMap",
+      "english": "Inspect map",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:67"
+      ],
+      "legacyZulu": "Hlola imephu",
+      "zu": "Hlola imephu",
+      "st": "Hlahloba mmapa",
+      "ts": "Kambela mepe",
+      "ve": "Ṱolani mapa"
+    },
+    {
+      "key": "reportUiOpenDesign",
+      "english": "Open design",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:68"
+      ],
+      "legacyZulu": "Vula umklamo",
+      "zu": "Vula umklamo",
+      "st": "Bula moralo",
+      "ts": "Pfula dizayini",
+      "ve": "Vulani nyolo"
+    },
+    {
+      "key": "reportUiAtAGlance",
+      "english": "At a glance",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:17"
+      ],
+      "legacyZulu": "Ngokubheka nje",
+      "zu": "Ngokubheka nje",
+      "st": "Ka pono e le nngwe",
+      "ts": "Hi ku languta ntsena",
+      "ve": "Nga u lavhelesa"
+    },
+    {
+      "key": "reportUiTheEssentialsClearlyLaidOut",
+      "english": "The essentials, clearly laid out.",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:17"
+      ],
+      "legacyZulu": "Okubalulekile, kubekwe ngokucacile.",
+      "zu": "Okubalulekile, kubekwe ngokucacile.",
+      "st": "Dintlha tsa bohlokwa, di behilwe ka ho hlaka.",
+      "ts": "Swilo swa nkoka, swi hleriwile kahle.",
+      "ve": "Zwa ndeme, zwo vhewa nga nḓila i pfalaho."
+    },
+    {
+      "key": "reportUi1PageSummaryPDF",
+      "english": "1-page summary PDF",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:17"
+      ],
+      "legacyZulu": "I-PDF yesifinyezo sekhasi elilodwa",
+      "zu": "I-PDF yesifinyezo sekhasi elilodwa",
+      "st": "PDF ya kakaretso ya leqephe le 1",
+      "ts": "PDF ya nkomiso ya tluka ra 1",
+      "ve": "PDF ya manweledzo ya siaṱari ḽa 1"
+    },
+    {
+      "key": "reportUiFieldGuide",
+      "english": "Field guide",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:18"
+      ],
+      "legacyZulu": "Umhlahlandlela wasensimini",
+      "zu": "Umhlahlandlela wasensimini",
+      "st": "Tataiso ya tshimo",
+      "ts": "Nkongomiso wa le nsin'wini",
+      "ve": "Nyendedzi ya tsimuni"
+    },
+    {
+      "key": "reportUiTheSiteResourcesAndNextActions",
+      "english": "The site, resources and next actions.",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:18"
+      ],
+      "legacyZulu": "Indawo, izinsiza nezinyathelo ezilandelayo.",
+      "zu": "Indawo, izinsiza nezinyathelo ezilandelayo.",
+      "st": "Sebaka, disebediswa le diketso tse latelang.",
+      "ts": "Ndhawu, switirhisiwa ni magoza lama landzelaka.",
+      "ve": "Fhethu, zwishumiswa na maga a tevhelaho."
+    },
+    {
+      "key": "reportUi5PageSummaryPDF",
+      "english": "5-page summary PDF",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:18"
+      ],
+      "legacyZulu": "I-PDF yesifinyezo samakhasi amahlanu",
+      "zu": "I-PDF yesifinyezo samakhasi amahlanu",
+      "st": "PDF ya kakaretso ya maqephe a 5",
+      "ts": "PDF ya nkomiso ya matluka ya 5",
+      "ve": "PDF ya manweledzo ya masiaṱari a 5"
+    },
+    {
+      "key": "reportUiCompleteReport",
+      "english": "Complete report",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:19"
+      ],
+      "legacyZulu": "Umbiko ogcwele",
+      "zu": "Umbiko ogcwele",
+      "st": "Tlaleho e felletseng",
+      "ts": "Xiviko lexi heleleke",
+      "ve": "Muvhigo wo fhelelaho"
+    },
+    {
+      "key": "reportUiEveryChapterMapAndVisual",
+      "english": "Every chapter, map and visual.",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:19"
+      ],
+      "legacyZulu": "Zonke izahluko, amamephu nemifanekiso.",
+      "zu": "Zonke izahluko, amamephu nemifanekiso.",
+      "st": "Kgaolo e nngwe le e nngwe, mmapa le setshwantsho.",
+      "ts": "Kavanyisa yin'wana ni yin'wana, mepe ni xifaniso.",
+      "ve": "Ndima iṅwe na iṅwe, mapa na tshifanyiso."
+    },
+    {
+      "key": "reportUiFullReportPDF",
+      "english": "Full report PDF",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:19"
+      ],
+      "legacyZulu": "I-PDF yombiko ogcwele",
+      "zu": "I-PDF yombiko ogcwele",
+      "st": "PDF ya tlaleho e felletseng",
+      "ts": "PDF ya xiviko lexi heleleke",
+      "ve": "PDF ya muvhigo wo fhelelaho"
+    },
+    {
+      "key": "reportUiChooseHowToRead",
+      "english": "Choose how to read",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:21"
+      ],
+      "legacyZulu": "Khetha indlela yokufunda",
+      "zu": "Khetha indlela yokufunda",
+      "st": "Kgetha mokgwa wa ho bala",
+      "ts": "Hlawula ndlela yo hlaya",
+      "ve": "Khethani nḓila ya u vhala"
+    },
+    {
+      "key": "reportUiYOURREPORTYOURPACE",
+      "english": "YOUR REPORT, YOUR PACE",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:22"
+      ],
+      "legacyZulu": "UMBIKO WAKHO, NGEJUBANE LAKHO",
+      "zu": "UMBIKO WAKHO, NGEJUBANE LAKHO",
+      "st": "TLALEHO YA HAO, KA LEBELO LA HAO",
+      "ts": "XIVIKO XA WENA, HI RIVILO RA WENA",
+      "ve": "MUVHIGO WAṊU, NGA TSHIKHAḒA TSHAṊU"
+    },
+    {
+      "key": "reportUiSwitchViewsWithoutRewritingYourReport",
+      "english": "Switch views without rewriting your report.",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:22"
+      ],
+      "legacyZulu": "Shintsha ukubuka ngaphandle kokubhala kabusha umbiko wakho.",
+      "zu": "Shintsha ukubuka ngaphandle kokubhala kabusha umbiko wakho.",
+      "st": "Fetola pono ntle le ho ngola tlaleho ya hao hape.",
+      "ts": "Cinca nkombiso handle ko tsala xiviko xa wena nakambe.",
+      "ve": "Shandulani kuvhonele hu si na u ṅwala muvhigo waṋu hafhu."
+    },
+    {
+      "key": "reportUiVisualsHelpYouReadOnScreenTheSummary",
+      "english": "Visuals help you read on screen. The summary PDF is a concise, ink-saving handout; choose Complete report for the full visual PDF.",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:27"
+      ],
+      "legacyZulu": "Imifanekiso isiza ukufunda esikrinini. I-PDF yesifinyezo iyonga uyinki; khetha Umbiko ogcwele ukuze uthole i-PDF enemifanekiso yonke.",
+      "zu": "Imifanekiso isiza ukufunda esikrinini. I-PDF yesifinyezo iyonga uyinki; khetha Umbiko ogcwele ukuze uthole i-PDF enemifanekiso yonke.",
+      "st": "Ditshwantsho di o thusa ho bala sekerineng. PDF ya kakaretso ke pampiri e kgutshwane e bolokang enke; kgetha Tlaleho e felletseng bakeng sa PDF e nang le ditshwantsho tsohle.",
+      "ts": "Swifaniso swi ku pfuna ku hlaya exikirinini. PDF ya nkomiso i phepha ro koma leri hlayisaka inki; hlawula Xiviko lexi heleleke ku kuma PDF leyi nga ni swifaniso hinkwato.",
+      "ve": "Zwifanyiso zwi ni thusa u vhala kha tshikirini. PDF ya manweledzo ndi bammbiri ḽipfufhi ḽi vhulungaho inki; khethani Muvhigo wo fhelelaho u wana PDF i re na zwifanyiso zwoṱhe."
+    },
+    {
+      "key": "reportUiFindAChapter",
+      "english": "Find a chapter",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:29"
+      ],
+      "legacyZulu": "Thola isahluko",
+      "zu": "Thola isahluko",
+      "st": "Fumana kgaolo",
+      "ts": "Kuma kavanyisa",
+      "ve": "Wanani ndima"
+    },
+    {
+      "key": "reportUiReportChapters",
+      "english": "Report chapters",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:30"
+      ],
+      "legacyZulu": "Izahluko zombiko",
+      "zu": "Izahluko zombiko",
+      "st": "Dikgaolo tsa tlaleho",
+      "ts": "Tikavanyisa ta xiviko",
+      "ve": "Ndima dza muvhigo"
+    },
+    {
+      "key": "reportUiLength",
+      "english": "Length",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Ubude bezeluleko",
+      "zu": "Ubude bezeluleko",
+      "st": "Bolelele",
+      "ts": "Vulehi",
+      "ve": "Vhulapfu"
+    },
+    {
+      "key": "reportUiBriefAdvice",
+      "english": "Brief advice",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Izeluleko ezimfushane",
+      "zu": "Izeluleko ezimfushane",
+      "st": "Keletso e kgutshwane",
+      "ts": "Switsundzuxo swo koma",
+      "ve": "Ngeletshedzo pfufhi"
+    },
+    {
+      "key": "reportUiStandard",
+      "english": "Standard",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Okujwayelekile",
+      "zu": "Okujwayelekile",
+      "st": "E tlwaelehileng",
+      "ts": "Ya ntolovelo",
+      "ve": "Zwo ḓoweleaho"
+    },
+    {
+      "key": "reportUiComprehensive",
+      "english": "Comprehensive",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Okuphelele",
+      "zu": "Okuphelele",
+      "st": "E akaretsang tsohle",
+      "ts": "Leswi katsaka hinkwaso",
+      "ve": "Zwi katelaho zwoṱhe"
+    },
+    {
+      "key": "reportUiExportPDF",
+      "english": "Export PDF",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Khipha i-PDF",
+      "zu": "Khipha i-PDF",
+      "st": "Romela PDF",
+      "ts": "Humesa PDF",
+      "ve": "Bvisani PDF"
+    },
+    {
+      "key": "reportUiPDFReady",
+      "english": "PDF ready",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "I-PDF isilungile",
+      "zu": "I-PDF isilungile",
+      "st": "PDF e loketse",
+      "ts": "PDF yi lunghekile",
+      "ve": "PDF yo lugela"
+    },
+    {
+      "key": "reportUiBuilding",
+      "english": "Building…",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Kuyakhiwa…",
+      "zu": "Kuyakhiwa…",
+      "st": "E a ahwa…",
+      "ts": "Ya akiwa…",
+      "ve": "I khou fhaṱiwa…"
+    },
+    {
+      "key": "reportUiGenerateReport",
+      "english": "Generate report",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Khiqiza umbiko",
+      "zu": "Khiqiza umbiko",
+      "st": "Hlahisa tlaleho",
+      "ts": "Endla xiviko",
+      "ve": "Bveledzani muvhigo"
+    },
+    {
+      "key": "reportUiGenerateNewReport",
+      "english": "Generate new report",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Khiqiza umbiko omusha",
+      "zu": "Khiqiza umbiko omusha",
+      "st": "Hlahisa tlaleho e ntjha",
+      "ts": "Endla xiviko lexintshwa",
+      "ve": "Bveledzani muvhigo muswa"
+    },
+    {
+      "key": "reportUiRegenerate",
+      "english": "Regenerate",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Khiqiza kabusha",
+      "zu": "Khiqiza kabusha",
+      "st": "Hlahisa hape",
+      "ts": "Endla nakambe",
+      "ve": "Bveledzani hafhu"
+    },
+    {
+      "key": "reportUiShare",
+      "english": "Share",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Yabelana",
+      "zu": "Yabelana",
+      "st": "Arolelana",
+      "ts": "Avelana",
+      "ve": "Kovhani"
+    },
+    {
+      "key": "reportUiCopied",
+      "english": "Copied!",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Kukopishiwe!",
+      "zu": "Kukopishiwe!",
+      "st": "E kopiditswe!",
+      "ts": "Swi kopiwile!",
+      "ve": "Zwo kopiwa!"
+    },
+    {
+      "key": "reportUiTapToOpen",
+      "english": "Tap to open",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Thepha ukuze uvule",
+      "zu": "Thepha ukuze uvule",
+      "st": "Tobetsa ho bula",
+      "ts": "Khumba ku pfula",
+      "ve": "Puṱedzani uri ni vule"
+    },
+    {
+      "key": "reportUiSiteConditions",
+      "english": "Site Conditions",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Izimo zendawo",
+      "zu": "Izimo zendawo",
+      "st": "Maemo a sebaka",
+      "ts": "Swiyimo swa ndhawu",
+      "ve": "Nyimele dza fhethu"
+    },
+    {
+      "key": "reportUiNaturalVegetationBiome",
+      "english": "Natural Vegetation & Biome",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Izitshalo zemvelo nohlobo lwemvelo",
+      "zu": "Izitshalo zemvelo nohlobo lwemvelo",
+      "st": "Dimela tsa tlhaho le mofuta wa tikoloho",
+      "ts": "Swimila swa ntumbuluko ni muxaka wa mbango",
+      "ve": "Zwimela zwa mvelo na lushaka lwa vhupo"
+    },
+    {
+      "key": "reportUiWaterHarvesting",
+      "english": "Water Harvesting",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Ukuqoqwa kwamanzi",
+      "zu": "Ukuqoqwa kwamanzi",
+      "st": "Pokello ya metsi",
+      "ts": "Ku hlengeleta mati",
+      "ve": "U kuvhanganya maḓi"
+    },
+    {
+      "key": "reportUiIrrigationPlan",
+      "english": "Irrigation Plan",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Uhlelo lokunisela",
+      "zu": "Uhlelo lokunisela",
+      "st": "Moralo wa nosetso",
+      "ts": "Pulani ya ncheleto",
+      "ve": "Pulane ya u sheledza"
+    },
+    {
+      "key": "reportUiSoilStrategy",
+      "english": "Soil Strategy",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Uhlelo lomhlabathi",
+      "zu": "Uhlelo lomhlabathi",
+      "st": "Leano la mobu",
+      "ts": "Pulani ya misava",
+      "ve": "Pulane ya mavu"
+    },
+    {
+      "key": "reportUiPlantingCalendar",
+      "english": "Planting Calendar",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Ikhalenda lokutshala",
+      "zu": "Ikhalenda lokutshala",
+      "st": "Khalendara ya ho lema",
+      "ts": "Khalendara ya ku byala",
+      "ve": "Khalenda ya u ṱavha"
+    },
+    {
+      "key": "reportUiYearRoundFoodProduction",
+      "english": "Year-Round Food Production",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Ukukhiqiza ukudla unyaka wonke",
+      "zu": "Ukukhiqiza ukudla unyaka wonke",
+      "st": "Tlhahiso ya dijo selemo ho pota",
+      "ts": "Vuhumelerisi bya swakudya lembe hinkwaro",
+      "ve": "Mbveledzo ya zwiḽiwa ṅwaha woṱhe"
+    },
+    {
+      "key": "reportUiSuitablePlantsForThisSite",
+      "english": "Suitable Plants for This Site",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Izitshalo ezifanele le ndawo",
+      "zu": "Izitshalo ezifanele le ndawo",
+      "st": "Dimela tse loketseng sebaka sena",
+      "ts": "Swimila leswi faneleke ndhawu leyi",
+      "ve": "Zwimela zwo teaho fhethu afha"
+    },
+    {
+      "key": "reportUiFruitNutBerryTrees",
+      "english": "Fruit, Nut & Berry Trees",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Izihlahla zezithelo, amantongomane namajikijolo",
+      "zu": "Izihlahla zezithelo, amantongomane namajikijolo",
+      "st": "Difate tsa ditholwana, matokomane le menokotshwai",
+      "ts": "Mirhi ya mihandzu, timanga ni miberi",
+      "ve": "Miri ya mitshelo, nḓuhu na mitshelo miṱuku ya beri"
+    },
+    {
+      "key": "reportUiIndigenousTrees",
+      "english": "Indigenous Trees",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Izihlahla zendabuko",
+      "zu": "Izihlahla zendabuko",
+      "st": "Difate tsa tlhaho tsa mona",
+      "ts": "Mirhi ya ndhavuko wa laha",
+      "ve": "Miri ya tsiko ya hafha"
+    },
+    {
+      "key": "reportUiAgroecosystemPlantingGuide",
+      "english": "Agroecosystem Planting Guide",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Umhlahlandlela wokutshala ohambisana nemvelo",
+      "zu": "Umhlahlandlela wokutshala ohambisana nemvelo",
+      "st": "Tataiso ya ho lema e tsamaellanang le tikoloho ya temo",
+      "ts": "Nkongomiso wo byala lowu fambelanaka ni mbango wa vurimi",
+      "ve": "Nyendedzi ya u ṱavha i ananaho na vhupo ha vhulimi"
+    },
+    {
+      "key": "reportUiCropRotation",
+      "english": "Crop Rotation",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Ukushintshanisa izitshalo",
+      "zu": "Ukushintshanisa izitshalo",
+      "st": "Phapanyetsano ya dijalo",
+      "ts": "Ku cincanisa swibyariwa",
+      "ve": "U tshintshana zwiliṅwa"
+    },
+    {
+      "key": "reportUiAnimalsLivestock",
+      "english": "Animals & Livestock",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Izilwane nemfuyo",
+      "zu": "Izilwane nemfuyo",
+      "st": "Diphoofolo le mehlape",
+      "ts": "Swiharhi ni swifuwo",
+      "ve": "Phukha na zwifuwo"
+    },
+    {
+      "key": "reportUiSunSolar",
+      "english": "Sun & Solar",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Ilanga namandla elanga",
+      "zu": "Ilanga namandla elanga",
+      "st": "Letsatsi le matla a letsatsi",
+      "ts": "Dyambu ni gezi ra dyambu",
+      "ve": "Ḓuvha na maanḓa a ḓuvha"
+    },
+    {
+      "key": "reportUiWindWindbreaks",
+      "english": "Wind & Windbreaks",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Umoya nezivimbamoya",
+      "zu": "Umoya nezivimbamoya",
+      "st": "Moya le dithibelamoya",
+      "ts": "Moya ni swisivela-moya",
+      "ve": "Muya na zwithivhela-muya"
+    },
+    {
+      "key": "reportUiFireHazards",
+      "english": "Fire & Hazards",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Umlilo nezingozi",
+      "zu": "Umlilo nezingozi",
+      "st": "Mollo le dikotsi",
+      "ts": "Ndzilo ni makhombo",
+      "ve": "Mulilo na khombo"
+    },
+    {
+      "key": "reportUiEconomicOpportunities",
+      "english": "Economic Opportunities",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Amathuba okuthola imali",
+      "zu": "Amathuba okuthola imali",
+      "st": "Menyetla ya moruo",
+      "ts": "Mikateko ya ikhonomi",
+      "ve": "Zwikhala zwa ikonomi"
+    },
+    {
+      "key": "reportUiPlantGuilds",
+      "english": "Plant Guilds",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Amaqoqo ezitshalo ezisizanayo",
+      "zu": "Amaqoqo ezitshalo ezisizanayo",
+      "st": "Dihlopha tsa dimela tse thusanang",
+      "ts": "Mintlawa ya swimila leswi pfunanaka",
+      "ve": "Zwigwada zwa zwimela zwine zwa thusana"
+    },
+    {
+      "key": "reportUiZoneDesign",
+      "english": "Zone Design",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Ukuhlelwa kwezindawo",
+      "zu": "Ukuhlelwa kwezindawo",
+      "st": "Moralo wa dibaka",
+      "ts": "Dizayini ya tizoni",
+      "ve": "Nyolo ya zouni"
+    },
+    {
+      "key": "reportUiSeasonalCalendar",
+      "english": "Seasonal Calendar",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Ikhalenda lezinkathi",
+      "zu": "Ikhalenda lezinkathi",
+      "st": "Khalendara ya dihla",
+      "ts": "Khalendara ya tinguva",
+      "ve": "Khalenda ya khalaṅwaha"
+    },
+    {
+      "key": "reportUi5YearVision",
+      "english": "5-Year Vision",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Umbono weminyaka emihlanu",
+      "zu": "Umbono weminyaka emihlanu",
+      "st": "Pono ya dilemo tse 5",
+      "ts": "Xivono xa malembe ya 5",
+      "ve": "Bono ḽa miṅwaha ya 5"
+    },
+    {
+      "key": "reportUiYear1Priorities",
+      "english": "Year 1 Priorities",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ],
+      "legacyZulu": "Okubalulekile onyakeni wokuqala",
+      "zu": "Okubalulekile onyakeni wokuqala",
+      "st": "Dintlha tsa pele tsa selemo sa 1",
+      "ts": "Swilo swa nkoka swa lembe ra 1",
+      "ve": "Zwa u thoma zwa ṅwaha wa 1"
+    },
+    {
+      "key": "reportUiExistingSiteBoundary",
+      "english": "Existing site & boundary",
+      "locations": [
+        "lib/report-map-selection.ts:REPORT_MAP_TYPES"
+      ],
+      "legacyZulu": "Indawo ekhona nomngcele",
+      "zu": "Indawo ekhona nomngcele",
+      "st": "Sebaka se teng le moedi",
+      "ts": "Ndhawu leyi nga kona ni ndzilekano",
+      "ve": "Fhethu hu re hone na mukano"
+    },
+    {
+      "key": "reportUiSectorAnalysis",
+      "english": "Sector analysis",
+      "locations": [
+        "lib/report-map-selection.ts:REPORT_MAP_TYPES"
+      ],
+      "legacyZulu": "Ukuhlaziywa kwemikhakha",
+      "zu": "Ukuhlaziywa kwemikhakha",
+      "st": "Tlhahlobo ya dikarolo tsa tikoloho",
+      "ts": "Nxopaxopo wa swiyenge swa mbango",
+      "ve": "Tsenguluso ya khethekanyo dza vhupo"
+    },
+    {
+      "key": "reportUiZones",
+      "english": "Zones",
+      "locations": [
+        "lib/report-map-selection.ts:REPORT_MAP_TYPES"
+      ],
+      "legacyZulu": "Izindawo",
+      "zu": "Izindawo",
+      "st": "Dibaka",
+      "ts": "Tizoni",
+      "ve": "Zouni"
+    },
+    {
+      "key": "reportUiEarthworks",
+      "english": "Earthworks",
+      "locations": [
+        "lib/report-map-selection.ts:REPORT_MAP_TYPES"
+      ],
+      "legacyZulu": "Imisebenzi yomhlaba",
+      "zu": "Imisebenzi yomhlaba",
+      "st": "Mesebetsi ya mobu",
+      "ts": "Mintirho ya misava",
+      "ve": "Mishumo ya mavu"
+    },
+    {
+      "key": "reportUiPlanting",
+      "english": "Planting",
+      "locations": [
+        "lib/report-map-selection.ts:REPORT_MAP_TYPES"
+      ],
+      "legacyZulu": "Ukutshala",
+      "zu": "Ukutshala",
+      "st": "Ho lema",
+      "ts": "Ku byala",
+      "ve": "U ṱavha"
+    },
+    {
+      "key": "reportUiStructures",
+      "english": "Structures",
+      "locations": [
+        "lib/report-map-selection.ts:REPORT_MAP_TYPES"
+      ],
+      "legacyZulu": "Izakhiwo",
+      "zu": "Izakhiwo",
+      "st": "Meaho",
+      "ts": "Miako",
+      "ve": "Zwifhaṱo"
+    },
+    {
+      "key": "reportUiWholeDesign",
+      "english": "Whole design",
+      "locations": [
+        "lib/report-map-selection.ts:REPORT_MAP_TYPES"
+      ],
+      "legacyZulu": "Umklamo ophelele",
+      "zu": "Umklamo ophelele",
+      "st": "Moralo o felletseng",
+      "ts": "Dizayini hinkwaro",
+      "ve": "Nyolo yoṱhe"
+    },
+    {
+      "key": "reportUiImplementationPhasing",
+      "english": "Implementation & phasing",
+      "locations": [
+        "lib/report-map-selection.ts:REPORT_MAP_TYPES"
+      ],
+      "legacyZulu": "Ukuqalisa ngezigaba",
+      "zu": "Ukuqalisa ngezigaba",
+      "st": "Ho phethahatsa ka mekgahlelo",
+      "ts": "Ku tirhisa ni ku endla hi swigaba",
+      "ve": "U shumisa na u ita nga zwipiḓa"
+    },
+    {
+      "key": "reportUiGenerateBriefAdviceChooseAtAGlanceFor",
+      "english": "Generate brief advice. Choose At a glance for a 1-page summary PDF.",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Khiqiza izeluleko ezimfushane. Khetha Ngokubheka nje ukuze uthole i-PDF yesifinyezo sekhasi elilodwa.",
+      "st": "Hlahisa keletso e kgutshwane. Kgetha Ka pono e le nngwe bakeng sa PDF ya kakaretso ya leqephe le 1.",
+      "ts": "Endla switsundzuxo swo koma. Hlawula Hi ku languta ntsena ku kuma PDF ya nkomiso ya tluka ra 1.",
+      "ve": "Bveledzani ngeletshedzo pfufhi. Khethani Nga u lavhelesa u wana PDF ya manweledzo ya siaṱari ḽa 1.",
+      "legacyZulu": "Khiqiza izeluleko ezimfushane. Khetha Ngokubheka nje ukuze uthole i-PDF yesifinyezo sekhasi elilodwa."
+    },
+    {
+      "key": "reportUiCoreSectionsForTheFarmer",
+      "english": "Core sections for the farmer",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Izigaba ezisemqoka zomlimi.",
+      "st": "Dikarolo tsa bohlokwa bakeng sa molemi",
+      "ts": "Swiyenge swa nkoka eka murimi",
+      "ve": "Zwipiḓa zwa ndeme kha mulimi",
+      "legacyZulu": "Izigaba ezisemqoka zomlimi."
+    },
+    {
+      "key": "reportUiAllSectionsFullDetail",
+      "english": "All sections, full detail",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Zonke izigaba nemininingwane ephelele.",
+      "st": "Dikarolo tsohle, dintlha tse felletseng",
+      "ts": "Swiyenge hinkwato, vuxokoxoko hinkwabyo",
+      "ve": "Zwipiḓa zwoṱhe, zwidodombedzwa zwoṱhe",
+      "legacyZulu": "Zonke izigaba nemininingwane ephelele."
+    },
+    {
+      "key": "reportUiSowingCalendar",
+      "english": "Sowing calendar",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Ikhalenda lokuhlwanyela",
+      "st": "Khalendara ya ho jala",
+      "ts": "Khalendara ya ku byala",
+      "ve": "Khalenda ya u zwala"
+    },
+    {
+      "key": "reportUiOpenMap",
+      "english": "Open map",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Vula imephu",
+      "st": "Bula mmapa",
+      "ts": "Pfula mepe",
+      "ve": "Vulani mapa"
+    },
+    {
+      "key": "reportUiSavedReportDate",
+      "english": "Saved report · {date}",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Umbiko ogciniwe · {date}",
+      "st": "Tlaleho e bolokilweng · {date}",
+      "ts": "Xiviko lexi hlayisiweke · {date}",
+      "ve": "Muvhigo wo vhulungwaho · {date}"
+    },
+    {
+      "key": "reportUiPreparedReport",
+      "english": "Prepared report",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Umbiko olungiselelwe",
+      "st": "Tlaleho e lokiseditsweng",
+      "ts": "Xiviko lexi lunghisiweke",
+      "ve": "Muvhigo wo lugiselelwaho"
+    },
+    {
+      "key": "reportUiNewReportNotSavedYet",
+      "english": "New report · not saved yet",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Umbiko omusha · awukagcinwa",
+      "st": "Tlaleho e ntjha · ha e so bolokwe",
+      "ts": "Xiviko lexintshwa · a xi si hlayisiwa",
+      "ve": "Muvhigo muswa · a u athu vhulungiwa"
+    },
+    {
+      "key": "reportUiWordingWordingDepthDepthLanguageLanguage",
+      "english": "Wording: {wording} · Depth: {depth} · Language: {language}",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Indlela yokuchaza: {wording} · Ukujula: {depth} · Ulimi: {language}",
+      "st": "Mokgwa wa ho ngola: {wording} · Botebo: {depth} · Puo: {language}",
+      "ts": "Matsalelo: {wording} · Vuenti: {depth} · Ririmi: {language}",
+      "ve": "Maṅwalele: {wording} · Vhudzivha: {depth} · Luambo: {language}"
+    },
+    {
+      "key": "reportUiReportReference",
+      "english": "Report reference",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Inombolo yombiko",
+      "st": "Nomoro ya tlaleho",
+      "ts": "Nomboro ya xiviko",
+      "ve": "Nomboro ya muvhigo"
+    },
+    {
+      "key": "reportUiGenerated",
+      "english": "Generated",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Kukhiqiziwe",
+      "st": "E hlahisitswe",
+      "ts": "Xi endliwile",
+      "ve": "Wo bveledzwa"
+    },
+    {
+      "key": "reportUiEnglishAlongside209",
+      "english": "English alongside",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "IsiNgisi eceleni",
+      "st": "Senyesemane le sona",
+      "ts": "Xinghezi etlhelo",
+      "ve": "Luisimane thungo"
+    },
+    {
+      "key": "reportUiSectionsRequested",
+      "english": "Sections requested",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Izigaba eziceliwe",
+      "st": "Dikarolo tse kopilweng",
+      "ts": "Swiyenge leswi komberiweke",
+      "ve": "Zwipiḓa zwo humbelwaho"
+    },
+    {
+      "key": "reportUiAIProviderModel",
+      "english": "AI provider / model",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Umhlinzeki we-AI / imodeli",
+      "st": "Mofani wa AI / mohlala",
+      "ts": "Munyiki wa AI / modele",
+      "ve": "Muṋetshedzi wa AI / modele"
+    },
+    {
+      "key": "reportUiPreparedReportNoAICharge",
+      "english": "Prepared report; no AI charge",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Umbiko olungiselelwe; akukho nkokhelo ye-AI",
+      "st": "Tlaleho e lokiseditsweng; ha ho tefiso ya AI",
+      "ts": "Xiviko lexi lunghisiweke; a ku na hakelo ya AI",
+      "ve": "Muvhigo wo lugiselelwaho; a hu na mbadelo ya AI"
+    },
+    {
+      "key": "reportUiThisOlderReportDidNotRecordItsOriginal",
+      "english": "This older report did not record its original settings. The controls are for your next report.",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Lo mbiko omdala awuzange ubhale izilungiselelo zawo zokuqala. Izilawuli ezombiko wakho olandelayo.",
+      "st": "Tlaleho ena ya kgale ha e a rekota ditlhophiso tsa yona tsa pele. Ditaolo ke tsa tlaleho ya hao e latelang.",
+      "ts": "Xiviko lexi xa khale a xi rhekhodanga swiyimiso swa xona swa masungulo. Swilawuri i swa xiviko xa wena lexi landzelaka.",
+      "ve": "Muvhigo uyu wa kale a wo ngo rekhoda nzudzanyo dzawo dza u thoma. Zwilangi ndi zwa muvhigo waṋu u tevhelaho."
+    },
+    {
+      "key": "surveyNotRecorded",
+      "english": "Not recorded",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "st": "Ha e a rekotwa",
+      "ts": "A swi rhekhodiwanga",
+      "ve": "A zwo ngo rekhodiwa"
+    },
+    {
+      "key": "surveyAnswerYes",
+      "english": "Yes",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "st": "Ee",
+      "ts": "Ina",
+      "ve": "Ee"
+    },
+    {
+      "key": "surveyAnswerNo",
+      "english": "No",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "st": "Tjhe",
+      "ts": "E-e",
+      "ve": "Hai"
+    },
+    {
+      "key": "reportUiYouHaveCountSavedReportsDeleteOneTo",
+      "english": "You have {count} saved reports — delete one to save this",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Unemibiko egciniwe engu-{count} — susa owodwa ukuze ugcine lo mbiko",
+      "st": "O na le ditlaleho tse bolokilweng tse {count} — hlakola e le nngwe ho boloka ena",
+      "ts": "U ni swiviko leswi hlayisiweke swa {count} — susa xin'we ku hlayisa lexi",
+      "ve": "Ni na mivhigo yo vhulungwaho ya {count} — thuthani muthihi uri ni vhulunge uyu",
+      "legacyZulu": "Unemibiko egciniwe engu-{count} — susa owodwa ukuze ugcine lo mbiko"
+    },
+    {
+      "key": "reportUiCouldNotBuildThePDF",
+      "english": "Could not build the PDF.",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Umbiko we-PDF awukwazanga ukwakhiwa.",
+      "st": "PDF ha e a kgona ho ahwa.",
+      "ts": "PDF a yi kotanga ku akiwa.",
+      "ve": "PDF a yo ngo kona u fhaṱiwa.",
+      "legacyZulu": "Umbiko we-PDF awukwazanga ukwakhiwa."
+    },
+    {
+      "key": "reportUiCouldNotBuildThePDFCheckYourConnection",
+      "english": "Could not build the PDF. Check your connection and try again.",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Umbiko we-PDF awukwazanga ukwakhiwa. Hlola uxhumano lwakho bese uzama futhi.",
+      "st": "PDF ha e a kgona ho ahwa. Hlahloba kgokelo ya hao mme o leke hape.",
+      "ts": "PDF a yi kotanga ku akiwa. Kambela vuhlanganisi bya wena kutani u ringeta nakambe.",
+      "ve": "PDF a yo ngo kona u fhaṱiwa. Ṱolani vhuṱumani haṋu ni lingedze hafhu.",
+      "legacyZulu": "Umbiko we-PDF awukwazanga ukwakhiwa. Hlola uxhumano lwakho bese uzama futhi."
+    },
+    {
+      "key": "reportUiNoSignalWritingTheReportNeedsInternetYour",
+      "english": "No signal — writing the report needs internet. Your section choices are kept; try again when you have bars.",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Ayikho inethiwekhi — kudingeka i-inthanethi ukuze kubhalwe umbiko. Izigaba ozikhethile zigciniwe; zama futhi uma inethiwekhi isibuya.",
+      "st": "Ha ho letshwao — ho ngola tlaleho ho hloka inthanete. Dikgetho tsa hao tsa dikarolo di bolokilwe; leka hape ha letshwao le kgutla.",
+      "ts": "A ku na netiweke — ku tsala xiviko swi lava inthanete. Swiyenge leswi u swi hlawuleke swi hlayisiwile; ringeta nakambe loko netiweke yi vuya.",
+      "ve": "A hu na netiweke — u ṅwala muvhigo zwi ṱoḓa inthanete. Khetho dzaṋu dza zwipiḓa dzo vhulungiwa; lingedzani hafhu musi netiweke yo vhuya.",
+      "legacyZulu": "Ayikho inethiwekhi — kudingeka i-inthanethi ukuze kubhalwe umbiko. Izigaba ozikhethile zigciniwe; zama futhi uma inethiwekhi isibuya."
+    },
+    {
+      "key": "reportUiReportLanguage",
+      "english": "Report language",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Ulimi lombiko",
+      "st": "Puo ya tlaleho",
+      "ts": "Ririmi ra xiviko",
+      "ve": "Luambo lwa muvhigo"
+    },
+    {
+      "key": "reportUiThisReportKeepsItsOriginalLanguageTextControls",
+      "english": "This report keeps its original {language} text. Controls use your app language. Choose a report language before generating a new version.",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ],
+      "zu": "Lo mbiko ugcina umbhalo wawo wokuqala ngolimi oluthi {language}. Izilawuli zisebenzisa ulimi lwe-app yakho. Khetha ulimi lombiko ngaphambi kokukhiqiza inguqulo entsha.",
+      "st": "Tlaleho ena e boloka mongolo wa yona wa pele wa {language}. Ditaolo di sebedisa puo ya app ya hao. Kgetha puo ya tlaleho pele o hlahisa mofuta o motjha.",
+      "ts": "Xiviko lexi xi hlayisa tsalwa ra xona ra masungulo ra {language}. Swilawuri swi tirhisa ririmi ra app ya wena. Hlawula ririmi ra xiviko u nga si endla nkandziyiso lowuntshwa.",
+      "ve": "Muvhigo uyu u vhulunga maṅwalwa awo a u thoma a {language}. Zwilangi zwi shumisa luambo lwa app yaṋu. Khethani luambo lwa muvhigo ni sa athu u bveledza khophi ntswa."
+    },
+    {
+      "key": "reportUiBruCrosswalkCaveat",
+      "english": "Zone name \"{zone}\" is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk.",
+      "locations": [
+        "components/ReportView.tsx:BRU caveat"
+      ],
+      "zu": "Igama lesigodi elithi \"{zone}\" ukulingana kwesimo sezulu okuzanywayo, akusiyo i-BRU→Bioresource Group ehloliwe ngokugcwele.",
+      "st": "Lebitso la sebaka \"{zone}\" ke ho bapisa boemo ba lehodimo ka hohle kamoo ho ka kgonehang, eseng kamano e netefaditsweng ya BRU→Bioresource Group.",
+      "ts": "Vito ra zoni \"{zone}\" i ku yelanisa maxelo hi ndlela leyi nga kotekaka, a hi ku yelanisa loku tiyisisiweke ka BRU→Bioresource Group.",
+      "ve": "Dzina ḽa zouni \"{zone}\" ndi u vhambedza mutsho nga nḓila i konadzeaho, a si u vhambedza ho khwaṱhisedzwaho ha BRU→Bioresource Group.",
+      "legacyZulu": "Igama lesigodi elithi \"{zone}\" ukulingana kwesimo sezulu okuzanywayo, akusiyo i-BRU→Bioresource Group ehloliwe ngokugcwele."
+    },
+    {
+      "key": "reportUiServerStatus",
+      "english": "The server returned code {status}.",
+      "locations": [
+        "components/ReportView.tsx:generate HTTP failure"
+      ],
+      "zu": "Iseva ibuyise ikhodi engu-{status}.",
+      "st": "Seva e kgutlisitse khoutu ya {status}.",
+      "ts": "Sevha yi tlherise khodi ya {status}.",
+      "ve": "Seva yo humisa khoudu ya {status}.",
+      "legacyZulu": "Iseva ibuyise ikhodi engu-{status}."
+    },
+    {
+      "key": "reportUiGenerationFailed",
+      "english": "Could not generate the report. Please try again.",
+      "locations": [
+        "components/ReportView.tsx:generate fallback error"
+      ],
+      "zu": "Umbiko awukwazanga ukukhiqizwa. Zama futhi.",
+      "st": "Tlaleho ha e a kgona ho hlahiswa. Ka kopo leka hape.",
+      "ts": "Xiviko a xi kotanga ku endliwa. Hi kombela u ringeta nakambe.",
+      "ve": "Muvhigo a wo ngo kona u bveledzwa. Kha vha lingedze hafhu."
+    }
+  ],
+  "preserved": [
+    {
+      "key": "reportShareTitle",
+      "language": "zu",
+      "wording": "Ukuhlaziya Indawo kwe-ImbewuField"
+    },
+    {
+      "key": "reportShareTitle",
+      "language": "st",
+      "wording": "Tlhahlobo ya Sebaka ya ImbewuField"
+    },
+    {
+      "key": "reportShareTitle",
+      "language": "ts",
+      "wording": "Nxopaxopo wa Ndhawu wa ImbewuField"
+    },
+    {
+      "key": "reportShareTitle",
+      "language": "ve",
+      "wording": "Tsedzuluso ya Fhethu ya ImbewuField"
+    },
+    {
+      "key": "reportRainfallLabel",
+      "language": "zu",
+      "wording": "Imvula"
+    },
+    {
+      "key": "reportRainfallLabel",
+      "language": "st",
+      "wording": "Pula"
+    },
+    {
+      "key": "reportRainfallLabel",
+      "language": "ts",
+      "wording": "Mpfula"
+    },
+    {
+      "key": "reportRainfallLabel",
+      "language": "ve",
+      "wording": "Mvula"
+    },
+    {
+      "key": "reportSoilPhLabel",
+      "language": "zu",
+      "wording": "pH yenhlabathi"
+    },
+    {
+      "key": "reportSoilPhLabel",
+      "language": "st",
+      "wording": "pH ya mobu"
+    },
+    {
+      "key": "reportSoilPhLabel",
+      "language": "ts",
+      "wording": "pH ya misava"
+    },
+    {
+      "key": "reportSoilPhLabel",
+      "language": "ve",
+      "wording": "pH ya mavu"
+    },
+    {
+      "key": "reportToolbarBack",
+      "language": "zu",
+      "wording": "Emuva"
+    },
+    {
+      "key": "reportToolbarBack",
+      "language": "st",
+      "wording": "Morao"
+    },
+    {
+      "key": "reportToolbarBack",
+      "language": "ts",
+      "wording": "Tlhelela endzhaku"
+    },
+    {
+      "key": "reportToolbarBack",
+      "language": "ve",
+      "wording": "Vhuyani murahu"
+    },
+    {
+      "key": "reportPlaceholderTitle",
+      "language": "zu",
+      "wording": "Umbiko"
+    },
+    {
+      "key": "reportPlaceholderTitle",
+      "language": "st",
+      "wording": "Tlaleho"
+    },
+    {
+      "key": "reportPlaceholderTitle",
+      "language": "ts",
+      "wording": "Xiviko"
+    },
+    {
+      "key": "reportPlaceholderTitle",
+      "language": "ve",
+      "wording": "Muvhigo"
+    },
+    {
+      "key": "settingsButtonLabel",
+      "language": "zu",
+      "wording": "Izilungiselelo"
+    },
+    {
+      "key": "settingsButtonLabel",
+      "language": "st",
+      "wording": "Ditlhophiso"
+    },
+    {
+      "key": "settingsButtonLabel",
+      "language": "ts",
+      "wording": "Swiyimiso"
+    },
+    {
+      "key": "settingsButtonLabel",
+      "language": "ve",
+      "wording": "Nzudzanyo"
+    },
+    {
+      "key": "buttonSaved",
+      "language": "zu",
+      "wording": "Kulondoloziwe"
+    },
+    {
+      "key": "buttonSaved",
+      "language": "st",
+      "wording": "E bolokilwe"
+    },
+    {
+      "key": "buttonSaved",
+      "language": "ts",
+      "wording": "Swi hlayisiwile"
+    },
+    {
+      "key": "buttonSaved",
+      "language": "ve",
+      "wording": "Zwo vhulungwa"
+    },
+    {
+      "key": "saveBtn",
+      "language": "zu",
+      "wording": "Londoloza"
+    },
+    {
+      "key": "reportsSavedReports",
+      "language": "zu",
+      "wording": "Imibiko egciniwe"
+    },
+    {
+      "key": "reportsSavedReports",
+      "language": "st",
+      "wording": "Ditlaleho tse bolokilweng"
+    },
+    {
+      "key": "reportsSavedReports",
+      "language": "ts",
+      "wording": "Swiviko leswi hlayisiweke"
+    },
+    {
+      "key": "reportsSavedReports",
+      "language": "ve",
+      "wording": "Mivhigo yo vhulungwaho"
+    },
+    {
+      "key": "sidebarDeleteReport",
+      "language": "zu",
+      "wording": "Susa"
+    },
+    {
+      "key": "sidebarDeleteReport",
+      "language": "st",
+      "wording": "Hlakola"
+    },
+    {
+      "key": "sidebarDeleteReport",
+      "language": "ts",
+      "wording": "Susa"
+    },
+    {
+      "key": "sidebarDeleteReport",
+      "language": "ve",
+      "wording": "Bvisani"
+    },
+    {
+      "key": "sidebarLanguageLabel",
+      "language": "zu",
+      "wording": "Ulimi"
+    },
+    {
+      "key": "sidebarLanguageLabel",
+      "language": "st",
+      "wording": "Puo"
+    },
+    {
+      "key": "sidebarLanguageLabel",
+      "language": "ts",
+      "wording": "Ririmi"
+    },
+    {
+      "key": "sidebarLanguageLabel",
+      "language": "ve",
+      "wording": "Luambo"
+    },
+    {
+      "key": "reportPrintSubtitle",
+      "language": "zu",
+      "wording": "Umbiko Wokuhlaziya Indawo we-Permaculture"
+    },
+    {
+      "key": "reportPrintSubtitle",
+      "language": "st",
+      "wording": "Tlaleho ya Tlhahlobo ya Sebaka ya Permaculture"
+    },
+    {
+      "key": "reportPrintSubtitle",
+      "language": "ts",
+      "wording": "Xiviko xa Nxopaxopo wa Ndhawu xa Permaculture"
+    },
+    {
+      "key": "reportPrintSubtitle",
+      "language": "ve",
+      "wording": "Muvhigo wa Tsedzuluso ya Fhethu wa Permaculture"
+    },
+    {
+      "key": "reportBiomeLabel",
+      "language": "zu",
+      "wording": "I-biome"
+    },
+    {
+      "key": "reportBiomeLabel",
+      "language": "st",
+      "wording": "Sebaka sa tlhaho"
+    },
+    {
+      "key": "reportBiomeLabel",
+      "language": "ts",
+      "wording": "Ndhawu ya ntumbuluko"
+    },
+    {
+      "key": "reportBiomeLabel",
+      "language": "ve",
+      "wording": "Vhupo ha mupo"
+    },
+    {
+      "key": "reportElevationLabel",
+      "language": "zu",
+      "wording": "Ukuphakama"
+    },
+    {
+      "key": "reportElevationLabel",
+      "language": "st",
+      "wording": "Bophahamo"
+    },
+    {
+      "key": "reportElevationLabel",
+      "language": "ts",
+      "wording": "Vutlakuko"
+    },
+    {
+      "key": "reportElevationLabel",
+      "language": "ve",
+      "wording": "Vhulapfu"
+    },
+    {
+      "key": "reportSatelliteViewHeader",
+      "language": "zu",
+      "wording": "Umbono Wesathelayithi Wendawo"
+    },
+    {
+      "key": "reportSatelliteViewHeader",
+      "language": "st",
+      "wording": "Pono ya Sathelaete ya Sebaka"
+    },
+    {
+      "key": "reportSatelliteViewHeader",
+      "language": "ts",
+      "wording": "Ku Languta ka Sathelayiti ka Ndhawu"
+    },
+    {
+      "key": "reportSatelliteViewHeader",
+      "language": "ve",
+      "wording": "U Vhona ha Sathelaiti ha Fhethu"
+    },
+    {
+      "key": "reportSatelliteImageAlt",
+      "language": "zu",
+      "wording": "Umbono wesathelayithi othwetshuliwe wendawo"
+    },
+    {
+      "key": "reportSatelliteImageAlt",
+      "language": "st",
+      "wording": "Pono ya sathelaete e nkilweng ya sebaka"
+    },
+    {
+      "key": "reportSatelliteImageAlt",
+      "language": "ts",
+      "wording": "Ku languta ka sathelayiti loku tekiweke ka ndhawu"
+    },
+    {
+      "key": "reportSatelliteImageAlt",
+      "language": "ve",
+      "wording": "U vhona ha sathelaiti ho dzhiwaho ha fhethu"
+    },
+    {
+      "key": "reportPlaceholderBody",
+      "language": "zu",
+      "wording": "Khetha izigaba zakho bese uchofoza Khiqiza"
+    },
+    {
+      "key": "reportPlaceholderBody",
+      "language": "st",
+      "wording": "Kgetha dikarolo tsa hao mme o tobetse Etsa"
+    },
+    {
+      "key": "reportPlaceholderBody",
+      "language": "ts",
+      "wording": "Hlawula swiyenge swa wena kutani u tinya Endla"
+    },
+    {
+      "key": "reportPlaceholderBody",
+      "language": "ve",
+      "wording": "Khethani zwipiḓa zwaṋu nahone ni tobe Itani"
+    },
+    {
+      "key": "reportSectionsSelected",
+      "language": "zu",
+      "wording": "izigaba ezikhethiwe"
+    },
+    {
+      "key": "reportSectionsSelected",
+      "language": "st",
+      "wording": "dikarolo tse kgethilweng"
+    },
+    {
+      "key": "reportSectionsSelected",
+      "language": "ts",
+      "wording": "swiyenge leswi hlawuriweke"
+    },
+    {
+      "key": "reportSectionsSelected",
+      "language": "ve",
+      "wording": "zwipiḓa zwo khethwaho"
+    },
+    {
+      "key": "reportsOfflineClose",
+      "language": "zu",
+      "wording": "Vala"
+    },
+    {
+      "key": "reportsOfflineClose",
+      "language": "st",
+      "wording": "Kwala"
+    },
+    {
+      "key": "reportsOfflineClose",
+      "language": "ve",
+      "wording": "Valani"
+    },
+    {
+      "key": "toneSimple",
+      "language": "zu",
+      "wording": "Lula"
+    },
+    {
+      "key": "toneSimple",
+      "language": "st",
+      "wording": "Bonolo"
+    },
+    {
+      "key": "toneSimple",
+      "language": "ts",
+      "wording": "Lo olova"
+    },
+    {
+      "key": "toneSimple",
+      "language": "ve",
+      "wording": "Zwo leluwaho"
+    },
+    {
+      "key": "toneDetailed",
+      "language": "zu",
+      "wording": "Enemininingwane"
+    },
+    {
+      "key": "toneDetailed",
+      "language": "st",
+      "wording": "E qaqileng"
+    },
+    {
+      "key": "toneDetailed",
+      "language": "ts",
+      "wording": "Leyi nga na vuxokoxoko"
+    },
+    {
+      "key": "toneDetailed",
+      "language": "ve",
+      "wording": "I na zwidodombedzwa"
+    },
+    {
+      "key": "reportSavedPlacesHeader",
+      "language": "zu",
+      "wording": "Izindawo Ezilondoloziwe · Amaphuzu e-GPS"
+    },
+    {
+      "key": "reportSavedPlacesHeader",
+      "language": "st",
+      "wording": "Dibaka tse Bolokilweng · Dintlha tsa GPS"
+    },
+    {
+      "key": "reportSavedPlacesHeader",
+      "language": "ts",
+      "wording": "Tindhawu leti Hlayisiweke · Tindhawu ta GPS"
+    },
+    {
+      "key": "reportSavedPlacesHeader",
+      "language": "ve",
+      "wording": "Fhethu ho Vhulungwaho · Fhethu ha GPS"
+    },
+    {
+      "key": "reportMonthlyRainfallHeader",
+      "language": "zu",
+      "wording": "Iphethini Yemvula Yanyanga Zonke"
+    },
+    {
+      "key": "reportMonthlyRainfallHeader",
+      "language": "st",
+      "wording": "Mokgwa wa Pula wa Kgwedi le Kgwedi"
+    },
+    {
+      "key": "reportMonthlyRainfallHeader",
+      "language": "ts",
+      "wording": "Phetheni ya Mpfula ya N'hweti na N'hweti"
+    },
+    {
+      "key": "reportMonthlyRainfallHeader",
+      "language": "ve",
+      "wording": "Phethheni ya Mvula ya Ṅwedzi nga Ṅwedzi"
+    },
+    {
+      "key": "reportExecutiveSummaryHeading",
+      "language": "zu",
+      "wording": "Isifinyezo Esiphezulu"
+    },
+    {
+      "key": "reportExecutiveSummaryHeading",
+      "language": "st",
+      "wording": "Kakaretso e Phethahatsang"
+    },
+    {
+      "key": "reportExecutiveSummaryHeading",
+      "language": "ts",
+      "wording": "Nkatsakanyo wa Vufambisi"
+    },
+    {
+      "key": "reportExecutiveSummaryHeading",
+      "language": "ve",
+      "wording": "Manweledzo a Vhulanguli"
+    },
+    {
+      "key": "reportGroupWater",
+      "language": "zu",
+      "wording": "Amanzi"
+    },
+    {
+      "key": "reportGroupWater",
+      "language": "st",
+      "wording": "Metsi"
+    },
+    {
+      "key": "reportGroupWater",
+      "language": "ts",
+      "wording": "Mati"
+    },
+    {
+      "key": "reportGroupWater",
+      "language": "ve",
+      "wording": "Maḓi"
+    },
+    {
+      "key": "surveyNotRecorded",
+      "language": "zu",
+      "wording": "Akurekhodiwe"
+    },
+    {
+      "key": "surveyAnswerYes",
+      "language": "zu",
+      "wording": "Yebo"
+    },
+    {
+      "key": "surveyAnswerNo",
+      "language": "zu",
+      "wording": "Cha"
+    }
+  ],
+  "controls": [
+    {
+      "english": "The essentials, in pictures",
+      "key": "reportUiTheEssentialsInPictures",
+      "locations": [
+        "components/ReportView.tsx:356"
+      ]
+    },
+    {
+      "english": "Your mapped space, planned storage and seasonal rainfall.",
+      "key": "reportUiYourMappedSpacePlannedStorageAndSeasonalRainfall",
+      "locations": [
+        "components/ReportView.tsx:357"
+      ]
+    },
+    {
+      "english": "Choose up to 12 maps for this report.",
+      "key": "reportUiChooseUpTo12MapsForThisReport",
+      "locations": [
+        "components/ReportView.tsx:419"
+      ]
+    },
+    {
+      "english": "Could not save the map selection. Please try again.",
+      "key": "reportUiCouldNotSaveTheMapSelectionPleaseTry",
+      "locations": [
+        "components/ReportView.tsx:424"
+      ]
+    },
+    {
+      "english": "ImbewuField site analysis",
+      "key": "reportShareTitle",
+      "locations": [
+        "components/ReportView.tsx:860"
+      ]
+    },
+    {
+      "english": "Rainfall",
+      "key": "reportRainfallLabel",
+      "locations": [
+        "components/ReportView.tsx:860",
+        "components/ReportView.tsx:1263",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Soil pH",
+      "key": "reportSoilPhLabel",
+      "locations": [
+        "components/ReportView.tsx:860",
+        "components/ReportView.tsx:1265",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Mean temperature",
+      "key": "reportUiMeanTemperature",
+      "locations": [
+        "components/ReportView.tsx:860"
+      ]
+    },
+    {
+      "english": "See the full report on ImbewuField",
+      "key": "reportUiSeeTheFullReportOnImbewuField",
+      "locations": [
+        "components/ReportView.tsx:860"
+      ]
+    },
+    {
+      "english": "Site report",
+      "key": "reportUiSiteReport",
+      "locations": [
+        "components/ReportView.tsx:862",
+        "components/ReportView.tsx:888"
+      ]
+    },
+    {
+      "english": "Back",
+      "key": "reportToolbarBack",
+      "locations": [
+        "components/ReportView.tsx:883"
+      ]
+    },
+    {
+      "english": "Report",
+      "key": "reportPlaceholderTitle",
+      "locations": [
+        "components/ReportView.tsx:906",
+        "components/ReportView.tsx:1446"
+      ]
+    },
+    {
+      "english": "Settings",
+      "key": "settingsButtonLabel",
+      "locations": [
+        "components/ReportView.tsx:907"
+      ]
+    },
+    {
+      "english": "Not saved — no space",
+      "key": "reportUiNotSavedNoSpace",
+      "locations": [
+        "components/ReportView.tsx:928"
+      ]
+    },
+    {
+      "english": "Saved",
+      "key": "buttonSaved",
+      "locations": [
+        "components/ReportView.tsx:929"
+      ]
+    },
+    {
+      "english": "Save",
+      "key": "saveBtn",
+      "locations": [
+        "components/ReportView.tsx:929"
+      ]
+    },
+    {
+      "english": "Generating…",
+      "key": "reportUiGenerating",
+      "locations": [
+        "components/ReportView.tsx:986"
+      ]
+    },
+    {
+      "english": "View and print options",
+      "key": "reportUiViewAndPrintOptions",
+      "locations": [
+        "components/ReportView.tsx:988"
+      ]
+    },
+    {
+      "english": "Screen",
+      "key": "reportUiScreen",
+      "locations": [
+        "components/ReportView.tsx:989"
+      ]
+    },
+    {
+      "english": "Print · full colour",
+      "key": "reportUiPrintFullColour",
+      "locations": [
+        "components/ReportView.tsx:989"
+      ]
+    },
+    {
+      "english": "Print · save ink",
+      "key": "reportUiPrintSaveInk",
+      "locations": [
+        "components/ReportView.tsx:989"
+      ]
+    },
+    {
+      "english": "Cover",
+      "key": "reportUiCover",
+      "locations": [
+        "components/ReportView.tsx:990"
+      ]
+    },
+    {
+      "english": "Report cover image",
+      "key": "reportUiReportCoverImage",
+      "locations": [
+        "components/ReportView.tsx:990"
+      ]
+    },
+    {
+      "english": "Automatic",
+      "key": "reportUiAutomatic",
+      "locations": [
+        "components/ReportView.tsx:991"
+      ]
+    },
+    {
+      "english": "Site map",
+      "key": "reportUiSiteMap",
+      "locations": [
+        "components/ReportView.tsx:991"
+      ]
+    },
+    {
+      "english": "Site photo",
+      "key": "reportUiSitePhoto",
+      "locations": [
+        "components/ReportView.tsx:991"
+      ]
+    },
+    {
+      "english": "No picture",
+      "key": "reportUiNoPicture",
+      "locations": [
+        "components/ReportView.tsx:991"
+      ]
+    },
+    {
+      "english": "Include photos and maps in PDF",
+      "key": "reportUiIncludePhotosAndMapsInPDF",
+      "locations": [
+        "components/ReportView.tsx:993"
+      ]
+    },
+    {
+      "english": "Screen, print and summary controls change the view or export without a new AI call.",
+      "key": "reportUiScreenPrintAndSummaryControlsChangeTheView",
+      "locations": [
+        "components/ReportView.tsx:995"
+      ]
+    },
+    {
+      "english": "Generate new report refreshes the advice from this design. Saved reports stay available while you explore; restarting the workspace clears them. Prepared full advice is in English; translated summaries are available.",
+      "key": "reportUiGenerateNewReportRefreshesTheAdviceFromThis",
+      "locations": [
+        "components/ReportView.tsx:996"
+      ]
+    },
+    {
+      "english": "Language changes apply to new reports and summaries. Regenerate to translate the full advice.",
+      "key": "reportUiLanguageChangesApplyToNewReportsAndSummaries",
+      "locations": [
+        "components/ReportView.tsx:997"
+      ]
+    },
+    {
+      "english": "Read the report",
+      "key": "reportUiReadTheReport",
+      "locations": [
+        "components/ReportView.tsx:1020",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Saved reports",
+      "key": "reportsSavedReports",
+      "locations": [
+        "components/ReportView.tsx:1027",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Ref",
+      "key": "reportUiRef",
+      "locations": [
+        "components/ReportView.tsx:1035"
+      ]
+    },
+    {
+      "english": "Delete",
+      "key": "sidebarDeleteReport",
+      "locations": [
+        "components/ReportView.tsx:1037",
+        "components/ReportView.tsx:1038"
+      ]
+    },
+    {
+      "english": "Next report settings",
+      "key": "reportUiNextReportSettings",
+      "locations": [
+        "components/ReportView.tsx:1046"
+      ]
+    },
+    {
+      "english": "Report settings",
+      "key": "reportUiReportSettings",
+      "locations": [
+        "components/ReportView.tsx:1046"
+      ]
+    },
+    {
+      "english": "Wording changes how the advice reads. Depth changes how much advice is written. Generate a new report to apply these choices.",
+      "key": "reportUiWordingChangesHowTheAdviceReadsDepthChanges",
+      "locations": [
+        "components/ReportView.tsx:1047"
+      ]
+    },
+    {
+      "english": "Language",
+      "key": "sidebarLanguageLabel",
+      "locations": [
+        "components/ReportView.tsx:1051",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "+ English alongside",
+      "key": "reportUiEnglishAlongside",
+      "locations": [
+        "components/ReportView.tsx:1068"
+      ]
+    },
+    {
+      "english": "Wording",
+      "key": "reportUiWording",
+      "locations": [
+        "components/ReportView.tsx:1074",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Advice depth",
+      "key": "reportUiAdviceDepth",
+      "locations": [
+        "components/ReportView.tsx:1088"
+      ]
+    },
+    {
+      "english": "Sections",
+      "key": "reportUiSections",
+      "locations": [
+        "components/ReportView.tsx:1116",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Select the sections most useful to a small-scale farmer",
+      "key": "reportUiSelectTheSectionsMostUsefulToASmall",
+      "locations": [
+        "components/ReportView.tsx:1121"
+      ]
+    },
+    {
+      "english": "Farmer",
+      "key": "reportUiFarmer",
+      "locations": [
+        "components/ReportView.tsx:1122"
+      ]
+    },
+    {
+      "english": "Select all sections",
+      "key": "reportUiSelectAllSections",
+      "locations": [
+        "components/ReportView.tsx:1127"
+      ]
+    },
+    {
+      "english": "All",
+      "key": "reportUiAll",
+      "locations": [
+        "components/ReportView.tsx:1128"
+      ]
+    },
+    {
+      "english": "Deselect all sections",
+      "key": "reportUiDeselectAllSections",
+      "locations": [
+        "components/ReportView.tsx:1133"
+      ]
+    },
+    {
+      "english": "None",
+      "key": "reportUiNone",
+      "locations": [
+        "components/ReportView.tsx:1134"
+      ]
+    },
+    {
+      "english": "Brief advice = Executive Summary only. Choose At a glance or Field guide for a fixed-page summary PDF.",
+      "key": "reportUiBriefAdviceExecutiveSummaryOnlyChooseAtA",
+      "locations": [
+        "components/ReportView.tsx:1140"
+      ]
+    },
+    {
+      "english": "Photos included",
+      "key": "reportUiPhotosIncluded",
+      "locations": [
+        "components/ReportView.tsx:1169",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Photo analysis will inform the report",
+      "key": "reportUiPhotoAnalysisWillInformTheReport",
+      "locations": [
+        "components/ReportView.tsx:1170",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Aerial snapshot captured",
+      "key": "reportUiAerialSnapshotCaptured",
+      "locations": [
+        "components/ReportView.tsx:1179"
+      ]
+    },
+    {
+      "english": "No aerial snapshot",
+      "key": "reportUiNoAerialSnapshot",
+      "locations": [
+        "components/ReportView.tsx:1179"
+      ]
+    },
+    {
+      "english": "Close report → zoom into your site on the map → tap Capture → reopen",
+      "key": "reportUiCloseReportZoomIntoYourSiteOnThe",
+      "locations": [
+        "components/ReportView.tsx:1183"
+      ]
+    },
+    {
+      "english": "In this report",
+      "key": "reportUiInThisReport",
+      "locations": [
+        "components/ReportView.tsx:1195"
+      ]
+    },
+    {
+      "english": "Permaculture site analysis report",
+      "key": "reportPrintSubtitle",
+      "locations": [
+        "components/ReportView.tsx:1248",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Biome",
+      "key": "reportBiomeLabel",
+      "locations": [
+        "components/ReportView.tsx:1262",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Elevation",
+      "key": "reportElevationLabel",
+      "locations": [
+        "components/ReportView.tsx:1264",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Not measured — soil test needed",
+      "key": "reportUiNotMeasuredSoilTestNeeded",
+      "locations": [
+        "components/ReportView.tsx:1265"
+      ]
+    },
+    {
+      "english": "Mapped boundary",
+      "key": "reportUiMappedBoundary",
+      "locations": [
+        "components/ReportView.tsx:1268"
+      ]
+    },
+    {
+      "english": "Mapped growing area",
+      "key": "reportUiMappedGrowingArea",
+      "locations": [
+        "components/ReportView.tsx:1269"
+      ]
+    },
+    {
+      "english": "Tank capacity in plan",
+      "key": "reportUiTankCapacityInPlan",
+      "locations": [
+        "components/ReportView.tsx:1270"
+      ]
+    },
+    {
+      "english": "Köppen climate class",
+      "key": "reportUiKPpenClimateClass",
+      "locations": [
+        "components/ReportView.tsx:1287"
+      ]
+    },
+    {
+      "english": "rainfall",
+      "key": "reportUiRainfall",
+      "locations": [
+        "components/ReportView.tsx:1288"
+      ]
+    },
+    {
+      "english": "wet",
+      "key": "reportUiWet",
+      "locations": [
+        "components/ReportView.tsx:1288"
+      ]
+    },
+    {
+      "english": "dry",
+      "key": "reportUiDry",
+      "locations": [
+        "components/ReportView.tsx:1288"
+      ]
+    },
+    {
+      "english": "mean",
+      "key": "reportUiMean",
+      "locations": [
+        "components/ReportView.tsx:1289",
+        "components/ReportView.tsx:1297"
+      ]
+    },
+    {
+      "english": "BRU zone",
+      "key": "reportUiBRUZone",
+      "locations": [
+        "components/ReportView.tsx:1297"
+      ]
+    },
+    {
+      "english": "parent zone",
+      "key": "reportUiParentZone",
+      "locations": [
+        "components/ReportView.tsx:1297"
+      ]
+    },
+    {
+      "english": "View full size",
+      "key": "reportUiViewFullSize",
+      "locations": [
+        "components/ReportView.tsx:1308",
+        "components/ReportView.tsx:1432"
+      ]
+    },
+    {
+      "english": "Current site evidence; it may postdate saved report text.",
+      "key": "reportUiCurrentSiteEvidenceItMayPostdateSavedReport",
+      "locations": [
+        "components/ReportView.tsx:1308"
+      ]
+    },
+    {
+      "english": "Captured site satellite view",
+      "key": "reportUiCapturedSiteSatelliteView",
+      "locations": [
+        "components/ReportView.tsx:1308"
+      ]
+    },
+    {
+      "english": "Saved design",
+      "key": "reportUiSavedDesign",
+      "locations": [
+        "components/ReportView.tsx:1308"
+      ]
+    },
+    {
+      "english": "Site satellite view",
+      "key": "reportSatelliteViewHeader",
+      "locations": [
+        "components/ReportView.tsx:1314",
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Captured satellite view of the site",
+      "key": "reportSatelliteImageAlt",
+      "locations": [
+        "components/ReportView.tsx:1323"
+      ]
+    },
+    {
+      "english": "Maxar satellite imagery",
+      "key": "reportUiMaxarSatelliteImagery",
+      "locations": [
+        "components/ReportView.tsx:1329"
+      ]
+    },
+    {
+      "english": "The last attempt closed the app, so this report was made without sending your design maps to be read — everything else is complete, and your maps still show below and in the PDF. Generate again any time to retry with them.",
+      "key": "reportUiTheLastAttemptClosedTheAppSoThis",
+      "locations": [
+        "components/ReportView.tsx:1338"
+      ]
+    },
+    {
+      "english": "Your saved design maps",
+      "key": "reportUiYourSavedDesignMaps",
+      "locations": [
+        "components/ReportView.tsx:1342"
+      ]
+    },
+    {
+      "english": "Maps selected for this report",
+      "key": "reportUiMapsSelectedForThisReport",
+      "locations": [
+        "components/ReportView.tsx:1346"
+      ]
+    },
+    {
+      "english": "Open a map to inspect the full-size original. Your selection is used for the cover and PDF.",
+      "key": "reportUiOpenAMapToInspectTheFullSize",
+      "locations": [
+        "components/ReportView.tsx:1348"
+      ]
+    },
+    {
+      "english": "Your saved site photos",
+      "key": "reportUiYourSavedSitePhotos",
+      "locations": [
+        "components/ReportView.tsx:1364"
+      ]
+    },
+    {
+      "english": "of",
+      "key": "reportUiOf",
+      "locations": [
+        "components/ReportView.tsx:1365"
+      ]
+    },
+    {
+      "english": "Photo",
+      "key": "reportUiPhoto",
+      "locations": [
+        "components/ReportView.tsx:1388"
+      ]
+    },
+    {
+      "english": "Photos from your current site evidence. Saved report text may refer to an earlier selection. Photos can be included in the full PDF.",
+      "key": "reportUiPhotosFromYourCurrentSiteEvidenceSavedReport",
+      "locations": [
+        "components/ReportView.tsx:1399"
+      ]
+    },
+    {
+      "english": "No saved design maps were found in this browser for this site. If you saved them on another device, open the report there.",
+      "key": "reportUiNoSavedDesignMapsWereFoundInThis",
+      "locations": [
+        "components/ReportView.tsx:1408"
+      ]
+    },
+    {
+      "english": "Ink-saving edition. Full-colour export includes the visual overview and charts.",
+      "key": "reportUiInkSavingEditionFullColourExportIncludesThe",
+      "locations": [
+        "components/ReportView.tsx:1412"
+      ]
+    },
+    {
+      "english": "FIELD NOTES",
+      "key": "reportUiFIELDNOTES",
+      "locations": [
+        "components/ReportView.tsx:1432"
+      ]
+    },
+    {
+      "english": "Generated by ImbewuField",
+      "key": "reportUiGeneratedByImbewuField",
+      "locations": [
+        "components/ReportView.tsx:1436"
+      ]
+    },
+    {
+      "english": "Select your sections and click Generate",
+      "key": "reportPlaceholderBody",
+      "locations": [
+        "components/ReportView.tsx:1448"
+      ]
+    },
+    {
+      "english": "sections selected",
+      "key": "reportSectionsSelected",
+      "locations": [
+        "components/ReportView.tsx:1451"
+      ]
+    },
+    {
+      "english": "photos included",
+      "key": "reportUiPhotosIncluded91",
+      "locations": [
+        "components/ReportView.tsx:1452"
+      ]
+    },
+    {
+      "english": "Fit page",
+      "key": "reportUiFitPage",
+      "locations": [
+        "components/ReportView.tsx:1480"
+      ]
+    },
+    {
+      "english": "Zoom to read",
+      "key": "reportUiZoomToRead",
+      "locations": [
+        "components/ReportView.tsx:1480"
+      ]
+    },
+    {
+      "english": "Close",
+      "key": "reportsOfflineClose",
+      "locations": [
+        "components/ReportView.tsx:1481"
+      ]
+    },
+    {
+      "english": "Could not export the crop plan. Please try again.",
+      "key": "reportUiCouldNotExportTheCropPlanPleaseTry",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:36"
+      ]
+    },
+    {
+      "english": "Sow seed",
+      "key": "reportUiSowSeed",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:41"
+      ]
+    },
+    {
+      "english": "Check seedlings; transplant when ready",
+      "key": "reportUiCheckSeedlingsTransplantWhenReady",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:41"
+      ]
+    },
+    {
+      "english": "Seasonal sowing calendar",
+      "key": "reportUiSeasonalSowingCalendar",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:43"
+      ]
+    },
+    {
+      "english": "Saved plan",
+      "key": "reportUiSavedPlan",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:44"
+      ]
+    },
+    {
+      "english": "This older report has a crop summary without dated planting records.",
+      "key": "reportUiThisOlderReportHasACropSummaryWithout",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:44"
+      ]
+    },
+    {
+      "english": "The current crop plan has changed. This calendar keeps the plan saved with this report.",
+      "key": "reportUiTheCurrentCropPlanHasChangedThisCalendar",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:45"
+      ]
+    },
+    {
+      "english": "S = sow seed (in trays for transplant crops). T = check seedlings and transplant when ready. These are planned tasks; check water and field conditions.",
+      "key": "reportUiSSowSeedInTraysForTransplantCrops",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:47"
+      ]
+    },
+    {
+      "english": "Crop",
+      "key": "reportUiCrop",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:48"
+      ]
+    },
+    {
+      "english": "No sowing or transplant task scheduled",
+      "key": "reportUiNoSowingOrTransplantTaskScheduled",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:53"
+      ]
+    },
+    {
+      "english": "No new sowing/transplant task in this period:",
+      "key": "reportUiNoNewSowingTransplantTaskInThisPeriod",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:55"
+      ]
+    },
+    {
+      "english": "See the working plan for crops already growing and undated records.",
+      "key": "reportUiSeeTheWorkingPlanForCropsAlreadyGrowing",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:55"
+      ]
+    },
+    {
+      "english": "Sowing not recorded",
+      "key": "reportUiSowingNotRecorded",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:56"
+      ]
+    },
+    {
+      "english": "Saved plan choices and checks",
+      "key": "reportUiSavedPlanChoicesAndChecks",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:57"
+      ]
+    },
+    {
+      "english": "Full crop-plan report (English)",
+      "key": "reportUiFullCropPlanReportEnglish",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:59"
+      ]
+    },
+    {
+      "english": "Quick-print summary (English)",
+      "key": "reportUiQuickPrintSummaryEnglish",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:60"
+      ]
+    },
+    {
+      "english": "Open current production plan",
+      "key": "reportUiOpenCurrentProductionPlan",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:61"
+      ]
+    },
+    {
+      "english": "Attach full working plan to PDF (English)",
+      "key": "reportUiAttachFullWorkingPlanToPDFEnglish",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:62"
+      ]
+    },
+    {
+      "english": "Preparing crop-plan report…",
+      "key": "reportUiPreparingCropPlanReport",
+      "locations": [
+        "components/report/ReportCropPlan.tsx:64"
+      ]
+    },
+    {
+      "english": "Could not save your map review. Please try again.",
+      "key": "reportUiCouldNotSaveYourMapReviewPleaseTry",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:32"
+      ]
+    },
+    {
+      "english": "Map checklist & report selection",
+      "key": "reportUiMapChecklistReportSelection",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:37"
+      ]
+    },
+    {
+      "english": "map types saved",
+      "key": "reportUiMapTypesSaved",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:37"
+      ]
+    },
+    {
+      "english": "reviewed",
+      "key": "reportUiReviewed",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:37"
+      ]
+    },
+    {
+      "english": "included",
+      "key": "reportUiIncluded",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:37"
+      ]
+    },
+    {
+      "english": "Choose one version per map type. Saving a map records it here; mark it reviewed when you are happy with it. All other versions stay in your saved maps. Changing attachments does not rewrite saved advice.",
+      "key": "reportUiChooseOneVersionPerMapTypeSavingA",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:38"
+      ]
+    },
+    {
+      "english": "Some selected maps are unavailable in this browser. They have not been replaced.",
+      "key": "reportUiSomeSelectedMapsAreUnavailableInThisBrowser",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:40"
+      ]
+    },
+    {
+      "english": "Remove unavailable selections",
+      "key": "reportUiRemoveUnavailableSelections",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:40"
+      ]
+    },
+    {
+      "english": "saved versions",
+      "key": "reportUiSavedVersions",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:49"
+      ]
+    },
+    {
+      "english": "No saved map in this browser",
+      "key": "reportUiNoSavedMapInThisBrowser",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:49"
+      ]
+    },
+    {
+      "english": "version",
+      "key": "reportUiVersion",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:50"
+      ]
+    },
+    {
+      "english": "review status",
+      "key": "reportUiReviewStatus",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:53"
+      ]
+    },
+    {
+      "english": "Missing",
+      "key": "reportUiMissing",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:59"
+      ]
+    },
+    {
+      "english": "Saved · review needed",
+      "key": "reportUiSavedReviewNeeded",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:62"
+      ]
+    },
+    {
+      "english": "Needs changes",
+      "key": "reportUiNeedsChanges",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:62"
+      ]
+    },
+    {
+      "english": "Reviewed",
+      "key": "reportUiReviewed129",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:62"
+      ]
+    },
+    {
+      "english": "Not needed for this site",
+      "key": "reportUiNotNeededForThisSite",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:63"
+      ]
+    },
+    {
+      "english": "Include in report",
+      "key": "reportUiIncludeInReport",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:66"
+      ]
+    },
+    {
+      "english": "Inspect map",
+      "key": "reportUiInspectMap",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:67"
+      ]
+    },
+    {
+      "english": "Open design",
+      "key": "reportUiOpenDesign",
+      "locations": [
+        "components/report/ReportMapStocktake.tsx:68"
+      ]
+    },
+    {
+      "english": "At a glance",
+      "key": "reportUiAtAGlance",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:17"
+      ]
+    },
+    {
+      "english": "The essentials, clearly laid out.",
+      "key": "reportUiTheEssentialsClearlyLaidOut",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:17"
+      ]
+    },
+    {
+      "english": "1-page summary PDF",
+      "key": "reportUi1PageSummaryPDF",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:17"
+      ]
+    },
+    {
+      "english": "Field guide",
+      "key": "reportUiFieldGuide",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:18"
+      ]
+    },
+    {
+      "english": "The site, resources and next actions.",
+      "key": "reportUiTheSiteResourcesAndNextActions",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:18"
+      ]
+    },
+    {
+      "english": "5-page summary PDF",
+      "key": "reportUi5PageSummaryPDF",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:18"
+      ]
+    },
+    {
+      "english": "Complete report",
+      "key": "reportUiCompleteReport",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:19"
+      ]
+    },
+    {
+      "english": "Every chapter, map and visual.",
+      "key": "reportUiEveryChapterMapAndVisual",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:19"
+      ]
+    },
+    {
+      "english": "Full report PDF",
+      "key": "reportUiFullReportPDF",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:19"
+      ]
+    },
+    {
+      "english": "Choose how to read",
+      "key": "reportUiChooseHowToRead",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:21"
+      ]
+    },
+    {
+      "english": "YOUR REPORT, YOUR PACE",
+      "key": "reportUiYOURREPORTYOURPACE",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:22"
+      ]
+    },
+    {
+      "english": "Switch views without rewriting your report.",
+      "key": "reportUiSwitchViewsWithoutRewritingYourReport",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:22"
+      ]
+    },
+    {
+      "english": "Visuals help you read on screen. The summary PDF is a concise, ink-saving handout; choose Complete report for the full visual PDF.",
+      "key": "reportUiVisualsHelpYouReadOnScreenTheSummary",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:27"
+      ]
+    },
+    {
+      "english": "Find a chapter",
+      "key": "reportUiFindAChapter",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:29"
+      ]
+    },
+    {
+      "english": "Report chapters",
+      "key": "reportUiReportChapters",
+      "locations": [
+        "components/report/ReportReadingGuide.tsx:30"
+      ]
+    },
+    {
+      "english": "Length",
+      "key": "reportUiLength",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Simple",
+      "key": "toneSimple",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Detailed",
+      "key": "toneDetailed",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Brief advice",
+      "key": "reportUiBriefAdvice",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Standard",
+      "key": "reportUiStandard",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Comprehensive",
+      "key": "reportUiComprehensive",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Export PDF",
+      "key": "reportUiExportPDF",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "PDF ready",
+      "key": "reportUiPDFReady",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Building…",
+      "key": "reportUiBuilding",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Generate report",
+      "key": "reportUiGenerateReport",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Generate new report",
+      "key": "reportUiGenerateNewReport",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Regenerate",
+      "key": "reportUiRegenerate",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Share",
+      "key": "reportUiShare",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Copied!",
+      "key": "reportUiCopied",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Saved places · GPS points",
+      "key": "reportSavedPlacesHeader",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Monthly rainfall pattern",
+      "key": "reportMonthlyRainfallHeader",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Tap to open",
+      "key": "reportUiTapToOpen",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Executive summary",
+      "key": "reportExecutiveSummaryHeading",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Site Conditions",
+      "key": "reportUiSiteConditions",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Natural Vegetation & Biome",
+      "key": "reportUiNaturalVegetationBiome",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Water Harvesting",
+      "key": "reportUiWaterHarvesting",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Irrigation Plan",
+      "key": "reportUiIrrigationPlan",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Soil Strategy",
+      "key": "reportUiSoilStrategy",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Planting Calendar",
+      "key": "reportUiPlantingCalendar",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Year-Round Food Production",
+      "key": "reportUiYearRoundFoodProduction",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Suitable Plants for This Site",
+      "key": "reportUiSuitablePlantsForThisSite",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Fruit, Nut & Berry Trees",
+      "key": "reportUiFruitNutBerryTrees",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Indigenous Trees",
+      "key": "reportUiIndigenousTrees",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Agroecosystem Planting Guide",
+      "key": "reportUiAgroecosystemPlantingGuide",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Crop Rotation",
+      "key": "reportUiCropRotation",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Animals & Livestock",
+      "key": "reportUiAnimalsLivestock",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Sun & Solar",
+      "key": "reportUiSunSolar",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Wind & Windbreaks",
+      "key": "reportUiWindWindbreaks",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Fire & Hazards",
+      "key": "reportUiFireHazards",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Economic Opportunities",
+      "key": "reportUiEconomicOpportunities",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Plant Guilds",
+      "key": "reportUiPlantGuilds",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Zone Design",
+      "key": "reportUiZoneDesign",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Seasonal Calendar",
+      "key": "reportUiSeasonalCalendar",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "5-Year Vision",
+      "key": "reportUi5YearVision",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Year 1 Priorities",
+      "key": "reportUiYear1Priorities",
+      "locations": [
+        "lib/report-localisation.ts:REPORT_ZU"
+      ]
+    },
+    {
+      "english": "Existing site & boundary",
+      "key": "reportUiExistingSiteBoundary",
+      "locations": [
+        "lib/report-map-selection.ts:REPORT_MAP_TYPES"
+      ]
+    },
+    {
+      "english": "Sector analysis",
+      "key": "reportUiSectorAnalysis",
+      "locations": [
+        "lib/report-map-selection.ts:REPORT_MAP_TYPES"
+      ]
+    },
+    {
+      "english": "Zones",
+      "key": "reportUiZones",
+      "locations": [
+        "lib/report-map-selection.ts:REPORT_MAP_TYPES"
+      ]
+    },
+    {
+      "english": "Water",
+      "key": "reportGroupWater",
+      "locations": [
+        "lib/report-map-selection.ts:REPORT_MAP_TYPES"
+      ]
+    },
+    {
+      "english": "Earthworks",
+      "key": "reportUiEarthworks",
+      "locations": [
+        "lib/report-map-selection.ts:REPORT_MAP_TYPES"
+      ]
+    },
+    {
+      "english": "Planting",
+      "key": "reportUiPlanting",
+      "locations": [
+        "lib/report-map-selection.ts:REPORT_MAP_TYPES"
+      ]
+    },
+    {
+      "english": "Structures",
+      "key": "reportUiStructures",
+      "locations": [
+        "lib/report-map-selection.ts:REPORT_MAP_TYPES"
+      ]
+    },
+    {
+      "english": "Whole design",
+      "key": "reportUiWholeDesign",
+      "locations": [
+        "lib/report-map-selection.ts:REPORT_MAP_TYPES"
+      ]
+    },
+    {
+      "english": "Implementation & phasing",
+      "key": "reportUiImplementationPhasing",
+      "locations": [
+        "lib/report-map-selection.ts:REPORT_MAP_TYPES"
+      ]
+    },
+    {
+      "english": "Generate brief advice. Choose At a glance for a 1-page summary PDF.",
+      "key": "reportUiGenerateBriefAdviceChooseAtAGlanceFor",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "Core sections for the farmer",
+      "key": "reportUiCoreSectionsForTheFarmer",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "All sections, full detail",
+      "key": "reportUiAllSectionsFullDetail",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "Sowing calendar",
+      "key": "reportUiSowingCalendar",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "Open map",
+      "key": "reportUiOpenMap",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "Saved report · {date}",
+      "key": "reportUiSavedReportDate",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "Prepared report",
+      "key": "reportUiPreparedReport",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "New report · not saved yet",
+      "key": "reportUiNewReportNotSavedYet",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "Wording: {wording} · Depth: {depth} · Language: {language}",
+      "key": "reportUiWordingWordingDepthDepthLanguageLanguage",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "Report reference",
+      "key": "reportUiReportReference",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "Generated",
+      "key": "reportUiGenerated",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "English alongside",
+      "key": "reportUiEnglishAlongside209",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "Sections requested",
+      "key": "reportUiSectionsRequested",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "AI provider / model",
+      "key": "reportUiAIProviderModel",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "Prepared report; no AI charge",
+      "key": "reportUiPreparedReportNoAICharge",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "This older report did not record its original settings. The controls are for your next report.",
+      "key": "reportUiThisOlderReportDidNotRecordItsOriginal",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "Not recorded",
+      "key": "surveyNotRecorded",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "Yes",
+      "key": "surveyAnswerYes",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "No",
+      "key": "surveyAnswerNo",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "You have {count} saved reports — delete one to save this",
+      "key": "reportUiYouHaveCountSavedReportsDeleteOneTo",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "Could not build the PDF.",
+      "key": "reportUiCouldNotBuildThePDF",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "Could not build the PDF. Check your connection and try again.",
+      "key": "reportUiCouldNotBuildThePDFCheckYourConnection",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "No signal — writing the report needs internet. Your section choices are kept; try again when you have bars.",
+      "key": "reportUiNoSignalWritingTheReportNeedsInternetYour",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "Report language",
+      "key": "reportUiReportLanguage",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "This report keeps its original {language} text. Controls use your app language. Choose a report language before generating a new version.",
+      "key": "reportUiThisReportKeepsItsOriginalLanguageTextControls",
+      "locations": [
+        "components/ReportView.tsx or report child controls"
+      ]
+    },
+    {
+      "english": "Zone name \"{zone}\" is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk.",
+      "key": "reportUiBruCrosswalkCaveat",
+      "locations": [
+        "components/ReportView.tsx:BRU caveat"
+      ]
+    },
+    {
+      "english": "The server returned code {status}.",
+      "key": "reportUiServerStatus",
+      "locations": [
+        "components/ReportView.tsx:generate HTTP failure"
+      ]
+    },
+    {
+      "key": "reportUiGenerationFailed",
+      "english": "Could not generate the report. Please try again.",
+      "locations": [
+        "components/ReportView.tsx:generate fallback error"
+      ]
+    }
+  ],
+  "baseSourceSha256": {
+    "zu": "192eab64bcd7fb7e334c0e688f906eb3c9419493fc83ad42eb3ec95b49a6d538",
+    "st": "65621c755f6c232a3f0de3ad1e04e96dac53c42a97ae75658a8bc01faf9915ba",
+    "ts": "b71b2e614f0015ca66095a291a2ef8cb03bda3b44ee9c6437adde53fb37dc6c8",
+    "ve": "e7498963c78d1b223e3db3bcbb56c49f748bccdd6f211b2ab65fad366e71944b"
+  },
+  "beforeValues": {
+    "zu": {
+      "reportUiTheEssentialsInPictures": null,
+      "reportUiYourMappedSpacePlannedStorageAndSeasonalRainfall": null,
+      "reportUiChooseUpTo12MapsForThisReport": null,
+      "reportUiCouldNotSaveTheMapSelectionPleaseTry": null,
+      "reportUiMeanTemperature": null,
+      "reportUiSeeTheFullReportOnImbewuField": null,
+      "reportUiSiteReport": null,
+      "reportUiNotSavedNoSpace": null,
+      "reportUiGenerating": null,
+      "reportUiViewAndPrintOptions": null,
+      "reportUiScreen": null,
+      "reportUiPrintFullColour": null,
+      "reportUiPrintSaveInk": null,
+      "reportUiCover": null,
+      "reportUiReportCoverImage": null,
+      "reportUiAutomatic": null,
+      "reportUiSiteMap": null,
+      "reportUiSitePhoto": null,
+      "reportUiNoPicture": null,
+      "reportUiIncludePhotosAndMapsInPDF": null,
+      "reportUiScreenPrintAndSummaryControlsChangeTheView": null,
+      "reportUiGenerateNewReportRefreshesTheAdviceFromThis": null,
+      "reportUiLanguageChangesApplyToNewReportsAndSummaries": null,
+      "reportUiReadTheReport": null,
+      "reportUiRef": null,
+      "reportUiNextReportSettings": null,
+      "reportUiReportSettings": null,
+      "reportUiWordingChangesHowTheAdviceReadsDepthChanges": null,
+      "reportUiEnglishAlongside": null,
+      "reportUiWording": null,
+      "reportUiAdviceDepth": null,
+      "reportUiSections": null,
+      "reportUiSelectTheSectionsMostUsefulToASmall": null,
+      "reportUiFarmer": null,
+      "reportUiSelectAllSections": null,
+      "reportUiAll": null,
+      "reportUiDeselectAllSections": null,
+      "reportUiNone": null,
+      "reportUiBriefAdviceExecutiveSummaryOnlyChooseAtA": null,
+      "reportUiPhotosIncluded": null,
+      "reportUiPhotoAnalysisWillInformTheReport": null,
+      "reportUiAerialSnapshotCaptured": null,
+      "reportUiNoAerialSnapshot": null,
+      "reportUiCloseReportZoomIntoYourSiteOnThe": null,
+      "reportUiInThisReport": null,
+      "reportUiNotMeasuredSoilTestNeeded": null,
+      "reportUiMappedBoundary": null,
+      "reportUiMappedGrowingArea": null,
+      "reportUiTankCapacityInPlan": null,
+      "reportUiKPpenClimateClass": null,
+      "reportUiRainfall": null,
+      "reportUiWet": null,
+      "reportUiDry": null,
+      "reportUiMean": null,
+      "reportUiBRUZone": null,
+      "reportUiParentZone": null,
+      "reportUiViewFullSize": null,
+      "reportUiCurrentSiteEvidenceItMayPostdateSavedReport": null,
+      "reportUiCapturedSiteSatelliteView": null,
+      "reportUiSavedDesign": null,
+      "reportUiMaxarSatelliteImagery": null,
+      "reportUiTheLastAttemptClosedTheAppSoThis": null,
+      "reportUiYourSavedDesignMaps": null,
+      "reportUiMapsSelectedForThisReport": null,
+      "reportUiOpenAMapToInspectTheFullSize": null,
+      "reportUiYourSavedSitePhotos": null,
+      "reportUiOf": null,
+      "reportUiPhoto": null,
+      "reportUiPhotosFromYourCurrentSiteEvidenceSavedReport": null,
+      "reportUiNoSavedDesignMapsWereFoundInThis": null,
+      "reportUiInkSavingEditionFullColourExportIncludesThe": null,
+      "reportUiFIELDNOTES": null,
+      "reportUiGeneratedByImbewuField": null,
+      "reportUiPhotosIncluded91": null,
+      "reportUiFitPage": null,
+      "reportUiZoomToRead": null,
+      "reportUiCouldNotExportTheCropPlanPleaseTry": null,
+      "reportUiSowSeed": null,
+      "reportUiCheckSeedlingsTransplantWhenReady": null,
+      "reportUiSeasonalSowingCalendar": null,
+      "reportUiSavedPlan": null,
+      "reportUiThisOlderReportHasACropSummaryWithout": null,
+      "reportUiTheCurrentCropPlanHasChangedThisCalendar": null,
+      "reportUiSSowSeedInTraysForTransplantCrops": null,
+      "reportUiCrop": null,
+      "reportUiNoSowingOrTransplantTaskScheduled": null,
+      "reportUiNoNewSowingTransplantTaskInThisPeriod": null,
+      "reportUiSeeTheWorkingPlanForCropsAlreadyGrowing": null,
+      "reportUiSowingNotRecorded": null,
+      "reportUiSavedPlanChoicesAndChecks": null,
+      "reportUiFullCropPlanReportEnglish": null,
+      "reportUiQuickPrintSummaryEnglish": null,
+      "reportUiOpenCurrentProductionPlan": null,
+      "reportUiAttachFullWorkingPlanToPDFEnglish": null,
+      "reportUiPreparingCropPlanReport": null,
+      "reportUiCouldNotSaveYourMapReviewPleaseTry": null,
+      "reportUiMapChecklistReportSelection": null,
+      "reportUiMapTypesSaved": null,
+      "reportUiReviewed": null,
+      "reportUiIncluded": null,
+      "reportUiChooseOneVersionPerMapTypeSavingA": null,
+      "reportUiSomeSelectedMapsAreUnavailableInThisBrowser": null,
+      "reportUiRemoveUnavailableSelections": null,
+      "reportUiSavedVersions": null,
+      "reportUiNoSavedMapInThisBrowser": null,
+      "reportUiVersion": null,
+      "reportUiReviewStatus": null,
+      "reportUiMissing": null,
+      "reportUiSavedReviewNeeded": null,
+      "reportUiNeedsChanges": null,
+      "reportUiReviewed129": null,
+      "reportUiNotNeededForThisSite": null,
+      "reportUiIncludeInReport": null,
+      "reportUiInspectMap": null,
+      "reportUiOpenDesign": null,
+      "reportUiAtAGlance": null,
+      "reportUiTheEssentialsClearlyLaidOut": null,
+      "reportUi1PageSummaryPDF": null,
+      "reportUiFieldGuide": null,
+      "reportUiTheSiteResourcesAndNextActions": null,
+      "reportUi5PageSummaryPDF": null,
+      "reportUiCompleteReport": null,
+      "reportUiEveryChapterMapAndVisual": null,
+      "reportUiFullReportPDF": null,
+      "reportUiChooseHowToRead": null,
+      "reportUiYOURREPORTYOURPACE": null,
+      "reportUiSwitchViewsWithoutRewritingYourReport": null,
+      "reportUiVisualsHelpYouReadOnScreenTheSummary": null,
+      "reportUiFindAChapter": null,
+      "reportUiReportChapters": null,
+      "reportUiLength": null,
+      "reportUiBriefAdvice": null,
+      "reportUiStandard": null,
+      "reportUiComprehensive": null,
+      "reportUiExportPDF": null,
+      "reportUiPDFReady": null,
+      "reportUiBuilding": null,
+      "reportUiGenerateReport": null,
+      "reportUiGenerateNewReport": null,
+      "reportUiRegenerate": null,
+      "reportUiShare": null,
+      "reportUiCopied": null,
+      "reportUiTapToOpen": null,
+      "reportUiSiteConditions": null,
+      "reportUiNaturalVegetationBiome": null,
+      "reportUiWaterHarvesting": null,
+      "reportUiIrrigationPlan": null,
+      "reportUiSoilStrategy": null,
+      "reportUiPlantingCalendar": null,
+      "reportUiYearRoundFoodProduction": null,
+      "reportUiSuitablePlantsForThisSite": null,
+      "reportUiFruitNutBerryTrees": null,
+      "reportUiIndigenousTrees": null,
+      "reportUiAgroecosystemPlantingGuide": null,
+      "reportUiCropRotation": null,
+      "reportUiAnimalsLivestock": null,
+      "reportUiSunSolar": null,
+      "reportUiWindWindbreaks": null,
+      "reportUiFireHazards": null,
+      "reportUiEconomicOpportunities": null,
+      "reportUiPlantGuilds": null,
+      "reportUiZoneDesign": null,
+      "reportUiSeasonalCalendar": null,
+      "reportUi5YearVision": null,
+      "reportUiYear1Priorities": null,
+      "reportUiExistingSiteBoundary": null,
+      "reportUiSectorAnalysis": null,
+      "reportUiZones": null,
+      "reportUiEarthworks": null,
+      "reportUiPlanting": null,
+      "reportUiStructures": null,
+      "reportUiWholeDesign": null,
+      "reportUiImplementationPhasing": null,
+      "reportUiGenerateBriefAdviceChooseAtAGlanceFor": null,
+      "reportUiCoreSectionsForTheFarmer": null,
+      "reportUiAllSectionsFullDetail": null,
+      "reportUiSowingCalendar": null,
+      "reportUiOpenMap": null,
+      "reportUiSavedReportDate": null,
+      "reportUiPreparedReport": null,
+      "reportUiNewReportNotSavedYet": null,
+      "reportUiWordingWordingDepthDepthLanguageLanguage": null,
+      "reportUiReportReference": null,
+      "reportUiGenerated": null,
+      "reportUiEnglishAlongside209": null,
+      "reportUiSectionsRequested": null,
+      "reportUiAIProviderModel": null,
+      "reportUiPreparedReportNoAICharge": null,
+      "reportUiThisOlderReportDidNotRecordItsOriginal": null,
+      "reportUiYouHaveCountSavedReportsDeleteOneTo": null,
+      "reportUiCouldNotBuildThePDF": null,
+      "reportUiCouldNotBuildThePDFCheckYourConnection": null,
+      "reportUiNoSignalWritingTheReportNeedsInternetYour": null,
+      "reportUiReportLanguage": null,
+      "reportUiThisReportKeepsItsOriginalLanguageTextControls": null,
+      "reportUiBruCrosswalkCaveat": null,
+      "reportUiServerStatus": null,
+      "reportUiGenerationFailed": null
+    },
+    "st": {
+      "reportUiTheEssentialsInPictures": null,
+      "reportUiYourMappedSpacePlannedStorageAndSeasonalRainfall": null,
+      "reportUiChooseUpTo12MapsForThisReport": null,
+      "reportUiCouldNotSaveTheMapSelectionPleaseTry": null,
+      "reportUiMeanTemperature": null,
+      "reportUiSeeTheFullReportOnImbewuField": null,
+      "reportUiSiteReport": null,
+      "reportUiNotSavedNoSpace": null,
+      "saveBtn": null,
+      "reportUiGenerating": null,
+      "reportUiViewAndPrintOptions": null,
+      "reportUiScreen": null,
+      "reportUiPrintFullColour": null,
+      "reportUiPrintSaveInk": null,
+      "reportUiCover": null,
+      "reportUiReportCoverImage": null,
+      "reportUiAutomatic": null,
+      "reportUiSiteMap": null,
+      "reportUiSitePhoto": null,
+      "reportUiNoPicture": null,
+      "reportUiIncludePhotosAndMapsInPDF": null,
+      "reportUiScreenPrintAndSummaryControlsChangeTheView": null,
+      "reportUiGenerateNewReportRefreshesTheAdviceFromThis": null,
+      "reportUiLanguageChangesApplyToNewReportsAndSummaries": null,
+      "reportUiReadTheReport": null,
+      "reportUiRef": null,
+      "reportUiNextReportSettings": null,
+      "reportUiReportSettings": null,
+      "reportUiWordingChangesHowTheAdviceReadsDepthChanges": null,
+      "reportUiEnglishAlongside": null,
+      "reportUiWording": null,
+      "reportUiAdviceDepth": null,
+      "reportUiSections": null,
+      "reportUiSelectTheSectionsMostUsefulToASmall": null,
+      "reportUiFarmer": null,
+      "reportUiSelectAllSections": null,
+      "reportUiAll": null,
+      "reportUiDeselectAllSections": null,
+      "reportUiNone": null,
+      "reportUiBriefAdviceExecutiveSummaryOnlyChooseAtA": null,
+      "reportUiPhotosIncluded": null,
+      "reportUiPhotoAnalysisWillInformTheReport": null,
+      "reportUiAerialSnapshotCaptured": null,
+      "reportUiNoAerialSnapshot": null,
+      "reportUiCloseReportZoomIntoYourSiteOnThe": null,
+      "reportUiInThisReport": null,
+      "reportUiNotMeasuredSoilTestNeeded": null,
+      "reportUiMappedBoundary": null,
+      "reportUiMappedGrowingArea": null,
+      "reportUiTankCapacityInPlan": null,
+      "reportUiKPpenClimateClass": null,
+      "reportUiRainfall": null,
+      "reportUiWet": null,
+      "reportUiDry": null,
+      "reportUiMean": null,
+      "reportUiBRUZone": null,
+      "reportUiParentZone": null,
+      "reportUiViewFullSize": null,
+      "reportUiCurrentSiteEvidenceItMayPostdateSavedReport": null,
+      "reportUiCapturedSiteSatelliteView": null,
+      "reportUiSavedDesign": null,
+      "reportUiMaxarSatelliteImagery": null,
+      "reportUiTheLastAttemptClosedTheAppSoThis": null,
+      "reportUiYourSavedDesignMaps": null,
+      "reportUiMapsSelectedForThisReport": null,
+      "reportUiOpenAMapToInspectTheFullSize": null,
+      "reportUiYourSavedSitePhotos": null,
+      "reportUiOf": null,
+      "reportUiPhoto": null,
+      "reportUiPhotosFromYourCurrentSiteEvidenceSavedReport": null,
+      "reportUiNoSavedDesignMapsWereFoundInThis": null,
+      "reportUiInkSavingEditionFullColourExportIncludesThe": null,
+      "reportUiFIELDNOTES": null,
+      "reportUiGeneratedByImbewuField": null,
+      "reportUiPhotosIncluded91": null,
+      "reportUiFitPage": null,
+      "reportUiZoomToRead": null,
+      "reportUiCouldNotExportTheCropPlanPleaseTry": null,
+      "reportUiSowSeed": null,
+      "reportUiCheckSeedlingsTransplantWhenReady": null,
+      "reportUiSeasonalSowingCalendar": null,
+      "reportUiSavedPlan": null,
+      "reportUiThisOlderReportHasACropSummaryWithout": null,
+      "reportUiTheCurrentCropPlanHasChangedThisCalendar": null,
+      "reportUiSSowSeedInTraysForTransplantCrops": null,
+      "reportUiCrop": null,
+      "reportUiNoSowingOrTransplantTaskScheduled": null,
+      "reportUiNoNewSowingTransplantTaskInThisPeriod": null,
+      "reportUiSeeTheWorkingPlanForCropsAlreadyGrowing": null,
+      "reportUiSowingNotRecorded": null,
+      "reportUiSavedPlanChoicesAndChecks": null,
+      "reportUiFullCropPlanReportEnglish": null,
+      "reportUiQuickPrintSummaryEnglish": null,
+      "reportUiOpenCurrentProductionPlan": null,
+      "reportUiAttachFullWorkingPlanToPDFEnglish": null,
+      "reportUiPreparingCropPlanReport": null,
+      "reportUiCouldNotSaveYourMapReviewPleaseTry": null,
+      "reportUiMapChecklistReportSelection": null,
+      "reportUiMapTypesSaved": null,
+      "reportUiReviewed": null,
+      "reportUiIncluded": null,
+      "reportUiChooseOneVersionPerMapTypeSavingA": null,
+      "reportUiSomeSelectedMapsAreUnavailableInThisBrowser": null,
+      "reportUiRemoveUnavailableSelections": null,
+      "reportUiSavedVersions": null,
+      "reportUiNoSavedMapInThisBrowser": null,
+      "reportUiVersion": null,
+      "reportUiReviewStatus": null,
+      "reportUiMissing": null,
+      "reportUiSavedReviewNeeded": null,
+      "reportUiNeedsChanges": null,
+      "reportUiReviewed129": null,
+      "reportUiNotNeededForThisSite": null,
+      "reportUiIncludeInReport": null,
+      "reportUiInspectMap": null,
+      "reportUiOpenDesign": null,
+      "reportUiAtAGlance": null,
+      "reportUiTheEssentialsClearlyLaidOut": null,
+      "reportUi1PageSummaryPDF": null,
+      "reportUiFieldGuide": null,
+      "reportUiTheSiteResourcesAndNextActions": null,
+      "reportUi5PageSummaryPDF": null,
+      "reportUiCompleteReport": null,
+      "reportUiEveryChapterMapAndVisual": null,
+      "reportUiFullReportPDF": null,
+      "reportUiChooseHowToRead": null,
+      "reportUiYOURREPORTYOURPACE": null,
+      "reportUiSwitchViewsWithoutRewritingYourReport": null,
+      "reportUiVisualsHelpYouReadOnScreenTheSummary": null,
+      "reportUiFindAChapter": null,
+      "reportUiReportChapters": null,
+      "reportUiLength": null,
+      "reportUiBriefAdvice": null,
+      "reportUiStandard": null,
+      "reportUiComprehensive": null,
+      "reportUiExportPDF": null,
+      "reportUiPDFReady": null,
+      "reportUiBuilding": null,
+      "reportUiGenerateReport": null,
+      "reportUiGenerateNewReport": null,
+      "reportUiRegenerate": null,
+      "reportUiShare": null,
+      "reportUiCopied": null,
+      "reportUiTapToOpen": null,
+      "reportUiSiteConditions": null,
+      "reportUiNaturalVegetationBiome": null,
+      "reportUiWaterHarvesting": null,
+      "reportUiIrrigationPlan": null,
+      "reportUiSoilStrategy": null,
+      "reportUiPlantingCalendar": null,
+      "reportUiYearRoundFoodProduction": null,
+      "reportUiSuitablePlantsForThisSite": null,
+      "reportUiFruitNutBerryTrees": null,
+      "reportUiIndigenousTrees": null,
+      "reportUiAgroecosystemPlantingGuide": null,
+      "reportUiCropRotation": null,
+      "reportUiAnimalsLivestock": null,
+      "reportUiSunSolar": null,
+      "reportUiWindWindbreaks": null,
+      "reportUiFireHazards": null,
+      "reportUiEconomicOpportunities": null,
+      "reportUiPlantGuilds": null,
+      "reportUiZoneDesign": null,
+      "reportUiSeasonalCalendar": null,
+      "reportUi5YearVision": null,
+      "reportUiYear1Priorities": null,
+      "reportUiExistingSiteBoundary": null,
+      "reportUiSectorAnalysis": null,
+      "reportUiZones": null,
+      "reportUiEarthworks": null,
+      "reportUiPlanting": null,
+      "reportUiStructures": null,
+      "reportUiWholeDesign": null,
+      "reportUiImplementationPhasing": null,
+      "reportUiGenerateBriefAdviceChooseAtAGlanceFor": null,
+      "reportUiCoreSectionsForTheFarmer": null,
+      "reportUiAllSectionsFullDetail": null,
+      "reportUiSowingCalendar": null,
+      "reportUiOpenMap": null,
+      "reportUiSavedReportDate": null,
+      "reportUiPreparedReport": null,
+      "reportUiNewReportNotSavedYet": null,
+      "reportUiWordingWordingDepthDepthLanguageLanguage": null,
+      "reportUiReportReference": null,
+      "reportUiGenerated": null,
+      "reportUiEnglishAlongside209": null,
+      "reportUiSectionsRequested": null,
+      "reportUiAIProviderModel": null,
+      "reportUiPreparedReportNoAICharge": null,
+      "reportUiThisOlderReportDidNotRecordItsOriginal": null,
+      "surveyNotRecorded": null,
+      "surveyAnswerYes": null,
+      "surveyAnswerNo": null,
+      "reportUiYouHaveCountSavedReportsDeleteOneTo": null,
+      "reportUiCouldNotBuildThePDF": null,
+      "reportUiCouldNotBuildThePDFCheckYourConnection": null,
+      "reportUiNoSignalWritingTheReportNeedsInternetYour": null,
+      "reportUiReportLanguage": null,
+      "reportUiThisReportKeepsItsOriginalLanguageTextControls": null,
+      "reportUiBruCrosswalkCaveat": null,
+      "reportUiServerStatus": null,
+      "reportUiGenerationFailed": null
+    },
+    "ts": {
+      "reportUiTheEssentialsInPictures": null,
+      "reportUiYourMappedSpacePlannedStorageAndSeasonalRainfall": null,
+      "reportUiChooseUpTo12MapsForThisReport": null,
+      "reportUiCouldNotSaveTheMapSelectionPleaseTry": null,
+      "reportUiMeanTemperature": null,
+      "reportUiSeeTheFullReportOnImbewuField": null,
+      "reportUiSiteReport": null,
+      "reportUiNotSavedNoSpace": null,
+      "saveBtn": null,
+      "reportUiGenerating": null,
+      "reportUiViewAndPrintOptions": null,
+      "reportUiScreen": null,
+      "reportUiPrintFullColour": null,
+      "reportUiPrintSaveInk": null,
+      "reportUiCover": null,
+      "reportUiReportCoverImage": null,
+      "reportUiAutomatic": null,
+      "reportUiSiteMap": null,
+      "reportUiSitePhoto": null,
+      "reportUiNoPicture": null,
+      "reportUiIncludePhotosAndMapsInPDF": null,
+      "reportUiScreenPrintAndSummaryControlsChangeTheView": null,
+      "reportUiGenerateNewReportRefreshesTheAdviceFromThis": null,
+      "reportUiLanguageChangesApplyToNewReportsAndSummaries": null,
+      "reportUiReadTheReport": null,
+      "reportUiRef": null,
+      "reportUiNextReportSettings": null,
+      "reportUiReportSettings": null,
+      "reportUiWordingChangesHowTheAdviceReadsDepthChanges": null,
+      "reportUiEnglishAlongside": null,
+      "reportUiWording": null,
+      "reportUiAdviceDepth": null,
+      "reportUiSections": null,
+      "reportUiSelectTheSectionsMostUsefulToASmall": null,
+      "reportUiFarmer": null,
+      "reportUiSelectAllSections": null,
+      "reportUiAll": null,
+      "reportUiDeselectAllSections": null,
+      "reportUiNone": null,
+      "reportUiBriefAdviceExecutiveSummaryOnlyChooseAtA": null,
+      "reportUiPhotosIncluded": null,
+      "reportUiPhotoAnalysisWillInformTheReport": null,
+      "reportUiAerialSnapshotCaptured": null,
+      "reportUiNoAerialSnapshot": null,
+      "reportUiCloseReportZoomIntoYourSiteOnThe": null,
+      "reportUiInThisReport": null,
+      "reportUiNotMeasuredSoilTestNeeded": null,
+      "reportUiMappedBoundary": null,
+      "reportUiMappedGrowingArea": null,
+      "reportUiTankCapacityInPlan": null,
+      "reportUiKPpenClimateClass": null,
+      "reportUiRainfall": null,
+      "reportUiWet": null,
+      "reportUiDry": null,
+      "reportUiMean": null,
+      "reportUiBRUZone": null,
+      "reportUiParentZone": null,
+      "reportUiViewFullSize": null,
+      "reportUiCurrentSiteEvidenceItMayPostdateSavedReport": null,
+      "reportUiCapturedSiteSatelliteView": null,
+      "reportUiSavedDesign": null,
+      "reportUiMaxarSatelliteImagery": null,
+      "reportUiTheLastAttemptClosedTheAppSoThis": null,
+      "reportUiYourSavedDesignMaps": null,
+      "reportUiMapsSelectedForThisReport": null,
+      "reportUiOpenAMapToInspectTheFullSize": null,
+      "reportUiYourSavedSitePhotos": null,
+      "reportUiOf": null,
+      "reportUiPhoto": null,
+      "reportUiPhotosFromYourCurrentSiteEvidenceSavedReport": null,
+      "reportUiNoSavedDesignMapsWereFoundInThis": null,
+      "reportUiInkSavingEditionFullColourExportIncludesThe": null,
+      "reportUiFIELDNOTES": null,
+      "reportUiGeneratedByImbewuField": null,
+      "reportUiPhotosIncluded91": null,
+      "reportUiFitPage": null,
+      "reportUiZoomToRead": null,
+      "reportsOfflineClose": null,
+      "reportUiCouldNotExportTheCropPlanPleaseTry": null,
+      "reportUiSowSeed": null,
+      "reportUiCheckSeedlingsTransplantWhenReady": null,
+      "reportUiSeasonalSowingCalendar": null,
+      "reportUiSavedPlan": null,
+      "reportUiThisOlderReportHasACropSummaryWithout": null,
+      "reportUiTheCurrentCropPlanHasChangedThisCalendar": null,
+      "reportUiSSowSeedInTraysForTransplantCrops": null,
+      "reportUiCrop": null,
+      "reportUiNoSowingOrTransplantTaskScheduled": null,
+      "reportUiNoNewSowingTransplantTaskInThisPeriod": null,
+      "reportUiSeeTheWorkingPlanForCropsAlreadyGrowing": null,
+      "reportUiSowingNotRecorded": null,
+      "reportUiSavedPlanChoicesAndChecks": null,
+      "reportUiFullCropPlanReportEnglish": null,
+      "reportUiQuickPrintSummaryEnglish": null,
+      "reportUiOpenCurrentProductionPlan": null,
+      "reportUiAttachFullWorkingPlanToPDFEnglish": null,
+      "reportUiPreparingCropPlanReport": null,
+      "reportUiCouldNotSaveYourMapReviewPleaseTry": null,
+      "reportUiMapChecklistReportSelection": null,
+      "reportUiMapTypesSaved": null,
+      "reportUiReviewed": null,
+      "reportUiIncluded": null,
+      "reportUiChooseOneVersionPerMapTypeSavingA": null,
+      "reportUiSomeSelectedMapsAreUnavailableInThisBrowser": null,
+      "reportUiRemoveUnavailableSelections": null,
+      "reportUiSavedVersions": null,
+      "reportUiNoSavedMapInThisBrowser": null,
+      "reportUiVersion": null,
+      "reportUiReviewStatus": null,
+      "reportUiMissing": null,
+      "reportUiSavedReviewNeeded": null,
+      "reportUiNeedsChanges": null,
+      "reportUiReviewed129": null,
+      "reportUiNotNeededForThisSite": null,
+      "reportUiIncludeInReport": null,
+      "reportUiInspectMap": null,
+      "reportUiOpenDesign": null,
+      "reportUiAtAGlance": null,
+      "reportUiTheEssentialsClearlyLaidOut": null,
+      "reportUi1PageSummaryPDF": null,
+      "reportUiFieldGuide": null,
+      "reportUiTheSiteResourcesAndNextActions": null,
+      "reportUi5PageSummaryPDF": null,
+      "reportUiCompleteReport": null,
+      "reportUiEveryChapterMapAndVisual": null,
+      "reportUiFullReportPDF": null,
+      "reportUiChooseHowToRead": null,
+      "reportUiYOURREPORTYOURPACE": null,
+      "reportUiSwitchViewsWithoutRewritingYourReport": null,
+      "reportUiVisualsHelpYouReadOnScreenTheSummary": null,
+      "reportUiFindAChapter": null,
+      "reportUiReportChapters": null,
+      "reportUiLength": null,
+      "reportUiBriefAdvice": null,
+      "reportUiStandard": null,
+      "reportUiComprehensive": null,
+      "reportUiExportPDF": null,
+      "reportUiPDFReady": null,
+      "reportUiBuilding": null,
+      "reportUiGenerateReport": null,
+      "reportUiGenerateNewReport": null,
+      "reportUiRegenerate": null,
+      "reportUiShare": null,
+      "reportUiCopied": null,
+      "reportUiTapToOpen": null,
+      "reportUiSiteConditions": null,
+      "reportUiNaturalVegetationBiome": null,
+      "reportUiWaterHarvesting": null,
+      "reportUiIrrigationPlan": null,
+      "reportUiSoilStrategy": null,
+      "reportUiPlantingCalendar": null,
+      "reportUiYearRoundFoodProduction": null,
+      "reportUiSuitablePlantsForThisSite": null,
+      "reportUiFruitNutBerryTrees": null,
+      "reportUiIndigenousTrees": null,
+      "reportUiAgroecosystemPlantingGuide": null,
+      "reportUiCropRotation": null,
+      "reportUiAnimalsLivestock": null,
+      "reportUiSunSolar": null,
+      "reportUiWindWindbreaks": null,
+      "reportUiFireHazards": null,
+      "reportUiEconomicOpportunities": null,
+      "reportUiPlantGuilds": null,
+      "reportUiZoneDesign": null,
+      "reportUiSeasonalCalendar": null,
+      "reportUi5YearVision": null,
+      "reportUiYear1Priorities": null,
+      "reportUiExistingSiteBoundary": null,
+      "reportUiSectorAnalysis": null,
+      "reportUiZones": null,
+      "reportUiEarthworks": null,
+      "reportUiPlanting": null,
+      "reportUiStructures": null,
+      "reportUiWholeDesign": null,
+      "reportUiImplementationPhasing": null,
+      "reportUiGenerateBriefAdviceChooseAtAGlanceFor": null,
+      "reportUiCoreSectionsForTheFarmer": null,
+      "reportUiAllSectionsFullDetail": null,
+      "reportUiSowingCalendar": null,
+      "reportUiOpenMap": null,
+      "reportUiSavedReportDate": null,
+      "reportUiPreparedReport": null,
+      "reportUiNewReportNotSavedYet": null,
+      "reportUiWordingWordingDepthDepthLanguageLanguage": null,
+      "reportUiReportReference": null,
+      "reportUiGenerated": null,
+      "reportUiEnglishAlongside209": null,
+      "reportUiSectionsRequested": null,
+      "reportUiAIProviderModel": null,
+      "reportUiPreparedReportNoAICharge": null,
+      "reportUiThisOlderReportDidNotRecordItsOriginal": null,
+      "surveyNotRecorded": null,
+      "surveyAnswerYes": null,
+      "surveyAnswerNo": null,
+      "reportUiYouHaveCountSavedReportsDeleteOneTo": null,
+      "reportUiCouldNotBuildThePDF": null,
+      "reportUiCouldNotBuildThePDFCheckYourConnection": null,
+      "reportUiNoSignalWritingTheReportNeedsInternetYour": null,
+      "reportUiReportLanguage": null,
+      "reportUiThisReportKeepsItsOriginalLanguageTextControls": null,
+      "reportUiBruCrosswalkCaveat": null,
+      "reportUiServerStatus": null,
+      "reportUiGenerationFailed": null
+    },
+    "ve": {
+      "reportUiTheEssentialsInPictures": null,
+      "reportUiYourMappedSpacePlannedStorageAndSeasonalRainfall": null,
+      "reportUiChooseUpTo12MapsForThisReport": null,
+      "reportUiCouldNotSaveTheMapSelectionPleaseTry": null,
+      "reportUiMeanTemperature": null,
+      "reportUiSeeTheFullReportOnImbewuField": null,
+      "reportUiSiteReport": null,
+      "reportUiNotSavedNoSpace": null,
+      "saveBtn": null,
+      "reportUiGenerating": null,
+      "reportUiViewAndPrintOptions": null,
+      "reportUiScreen": null,
+      "reportUiPrintFullColour": null,
+      "reportUiPrintSaveInk": null,
+      "reportUiCover": null,
+      "reportUiReportCoverImage": null,
+      "reportUiAutomatic": null,
+      "reportUiSiteMap": null,
+      "reportUiSitePhoto": null,
+      "reportUiNoPicture": null,
+      "reportUiIncludePhotosAndMapsInPDF": null,
+      "reportUiScreenPrintAndSummaryControlsChangeTheView": null,
+      "reportUiGenerateNewReportRefreshesTheAdviceFromThis": null,
+      "reportUiLanguageChangesApplyToNewReportsAndSummaries": null,
+      "reportUiReadTheReport": null,
+      "reportUiRef": null,
+      "reportUiNextReportSettings": null,
+      "reportUiReportSettings": null,
+      "reportUiWordingChangesHowTheAdviceReadsDepthChanges": null,
+      "reportUiEnglishAlongside": null,
+      "reportUiWording": null,
+      "reportUiAdviceDepth": null,
+      "reportUiSections": null,
+      "reportUiSelectTheSectionsMostUsefulToASmall": null,
+      "reportUiFarmer": null,
+      "reportUiSelectAllSections": null,
+      "reportUiAll": null,
+      "reportUiDeselectAllSections": null,
+      "reportUiNone": null,
+      "reportUiBriefAdviceExecutiveSummaryOnlyChooseAtA": null,
+      "reportUiPhotosIncluded": null,
+      "reportUiPhotoAnalysisWillInformTheReport": null,
+      "reportUiAerialSnapshotCaptured": null,
+      "reportUiNoAerialSnapshot": null,
+      "reportUiCloseReportZoomIntoYourSiteOnThe": null,
+      "reportUiInThisReport": null,
+      "reportUiNotMeasuredSoilTestNeeded": null,
+      "reportUiMappedBoundary": null,
+      "reportUiMappedGrowingArea": null,
+      "reportUiTankCapacityInPlan": null,
+      "reportUiKPpenClimateClass": null,
+      "reportUiRainfall": null,
+      "reportUiWet": null,
+      "reportUiDry": null,
+      "reportUiMean": null,
+      "reportUiBRUZone": null,
+      "reportUiParentZone": null,
+      "reportUiViewFullSize": null,
+      "reportUiCurrentSiteEvidenceItMayPostdateSavedReport": null,
+      "reportUiCapturedSiteSatelliteView": null,
+      "reportUiSavedDesign": null,
+      "reportUiMaxarSatelliteImagery": null,
+      "reportUiTheLastAttemptClosedTheAppSoThis": null,
+      "reportUiYourSavedDesignMaps": null,
+      "reportUiMapsSelectedForThisReport": null,
+      "reportUiOpenAMapToInspectTheFullSize": null,
+      "reportUiYourSavedSitePhotos": null,
+      "reportUiOf": null,
+      "reportUiPhoto": null,
+      "reportUiPhotosFromYourCurrentSiteEvidenceSavedReport": null,
+      "reportUiNoSavedDesignMapsWereFoundInThis": null,
+      "reportUiInkSavingEditionFullColourExportIncludesThe": null,
+      "reportUiFIELDNOTES": null,
+      "reportUiGeneratedByImbewuField": null,
+      "reportUiPhotosIncluded91": null,
+      "reportUiFitPage": null,
+      "reportUiZoomToRead": null,
+      "reportUiCouldNotExportTheCropPlanPleaseTry": null,
+      "reportUiSowSeed": null,
+      "reportUiCheckSeedlingsTransplantWhenReady": null,
+      "reportUiSeasonalSowingCalendar": null,
+      "reportUiSavedPlan": null,
+      "reportUiThisOlderReportHasACropSummaryWithout": null,
+      "reportUiTheCurrentCropPlanHasChangedThisCalendar": null,
+      "reportUiSSowSeedInTraysForTransplantCrops": null,
+      "reportUiCrop": null,
+      "reportUiNoSowingOrTransplantTaskScheduled": null,
+      "reportUiNoNewSowingTransplantTaskInThisPeriod": null,
+      "reportUiSeeTheWorkingPlanForCropsAlreadyGrowing": null,
+      "reportUiSowingNotRecorded": null,
+      "reportUiSavedPlanChoicesAndChecks": null,
+      "reportUiFullCropPlanReportEnglish": null,
+      "reportUiQuickPrintSummaryEnglish": null,
+      "reportUiOpenCurrentProductionPlan": null,
+      "reportUiAttachFullWorkingPlanToPDFEnglish": null,
+      "reportUiPreparingCropPlanReport": null,
+      "reportUiCouldNotSaveYourMapReviewPleaseTry": null,
+      "reportUiMapChecklistReportSelection": null,
+      "reportUiMapTypesSaved": null,
+      "reportUiReviewed": null,
+      "reportUiIncluded": null,
+      "reportUiChooseOneVersionPerMapTypeSavingA": null,
+      "reportUiSomeSelectedMapsAreUnavailableInThisBrowser": null,
+      "reportUiRemoveUnavailableSelections": null,
+      "reportUiSavedVersions": null,
+      "reportUiNoSavedMapInThisBrowser": null,
+      "reportUiVersion": null,
+      "reportUiReviewStatus": null,
+      "reportUiMissing": null,
+      "reportUiSavedReviewNeeded": null,
+      "reportUiNeedsChanges": null,
+      "reportUiReviewed129": null,
+      "reportUiNotNeededForThisSite": null,
+      "reportUiIncludeInReport": null,
+      "reportUiInspectMap": null,
+      "reportUiOpenDesign": null,
+      "reportUiAtAGlance": null,
+      "reportUiTheEssentialsClearlyLaidOut": null,
+      "reportUi1PageSummaryPDF": null,
+      "reportUiFieldGuide": null,
+      "reportUiTheSiteResourcesAndNextActions": null,
+      "reportUi5PageSummaryPDF": null,
+      "reportUiCompleteReport": null,
+      "reportUiEveryChapterMapAndVisual": null,
+      "reportUiFullReportPDF": null,
+      "reportUiChooseHowToRead": null,
+      "reportUiYOURREPORTYOURPACE": null,
+      "reportUiSwitchViewsWithoutRewritingYourReport": null,
+      "reportUiVisualsHelpYouReadOnScreenTheSummary": null,
+      "reportUiFindAChapter": null,
+      "reportUiReportChapters": null,
+      "reportUiLength": null,
+      "reportUiBriefAdvice": null,
+      "reportUiStandard": null,
+      "reportUiComprehensive": null,
+      "reportUiExportPDF": null,
+      "reportUiPDFReady": null,
+      "reportUiBuilding": null,
+      "reportUiGenerateReport": null,
+      "reportUiGenerateNewReport": null,
+      "reportUiRegenerate": null,
+      "reportUiShare": null,
+      "reportUiCopied": null,
+      "reportUiTapToOpen": null,
+      "reportUiSiteConditions": null,
+      "reportUiNaturalVegetationBiome": null,
+      "reportUiWaterHarvesting": null,
+      "reportUiIrrigationPlan": null,
+      "reportUiSoilStrategy": null,
+      "reportUiPlantingCalendar": null,
+      "reportUiYearRoundFoodProduction": null,
+      "reportUiSuitablePlantsForThisSite": null,
+      "reportUiFruitNutBerryTrees": null,
+      "reportUiIndigenousTrees": null,
+      "reportUiAgroecosystemPlantingGuide": null,
+      "reportUiCropRotation": null,
+      "reportUiAnimalsLivestock": null,
+      "reportUiSunSolar": null,
+      "reportUiWindWindbreaks": null,
+      "reportUiFireHazards": null,
+      "reportUiEconomicOpportunities": null,
+      "reportUiPlantGuilds": null,
+      "reportUiZoneDesign": null,
+      "reportUiSeasonalCalendar": null,
+      "reportUi5YearVision": null,
+      "reportUiYear1Priorities": null,
+      "reportUiExistingSiteBoundary": null,
+      "reportUiSectorAnalysis": null,
+      "reportUiZones": null,
+      "reportUiEarthworks": null,
+      "reportUiPlanting": null,
+      "reportUiStructures": null,
+      "reportUiWholeDesign": null,
+      "reportUiImplementationPhasing": null,
+      "reportUiGenerateBriefAdviceChooseAtAGlanceFor": null,
+      "reportUiCoreSectionsForTheFarmer": null,
+      "reportUiAllSectionsFullDetail": null,
+      "reportUiSowingCalendar": null,
+      "reportUiOpenMap": null,
+      "reportUiSavedReportDate": null,
+      "reportUiPreparedReport": null,
+      "reportUiNewReportNotSavedYet": null,
+      "reportUiWordingWordingDepthDepthLanguageLanguage": null,
+      "reportUiReportReference": null,
+      "reportUiGenerated": null,
+      "reportUiEnglishAlongside209": null,
+      "reportUiSectionsRequested": null,
+      "reportUiAIProviderModel": null,
+      "reportUiPreparedReportNoAICharge": null,
+      "reportUiThisOlderReportDidNotRecordItsOriginal": null,
+      "surveyNotRecorded": null,
+      "surveyAnswerYes": null,
+      "surveyAnswerNo": null,
+      "reportUiYouHaveCountSavedReportsDeleteOneTo": null,
+      "reportUiCouldNotBuildThePDF": null,
+      "reportUiCouldNotBuildThePDFCheckYourConnection": null,
+      "reportUiNoSignalWritingTheReportNeedsInternetYour": null,
+      "reportUiReportLanguage": null,
+      "reportUiThisReportKeepsItsOriginalLanguageTextControls": null,
+      "reportUiBruCrosswalkCaveat": null,
+      "reportUiServerStatus": null,
+      "reportUiGenerationFailed": null
+    }
+  }
+}

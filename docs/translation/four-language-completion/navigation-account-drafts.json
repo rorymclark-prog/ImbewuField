@@ -1,0 +1,1025 @@
+{
+  "status": "Unreviewed AI drafts; no fluent human review is claimed.",
+  "sourceRef": "d99108f1",
+  "languages": [
+    "st",
+    "ts",
+    "ve"
+  ],
+  "entries": [
+    {
+      "key": "completionScoreAria",
+      "english": "Site setup completeness",
+      "st": "Ho phetheha ha tlhophiso ya sebaka",
+      "ts": "Ku hetiseka ka ku lulamisa ndhawu",
+      "ve": "U fhelela ha nzudzanyo ya fhethu"
+    },
+    {
+      "key": "completionScoreTitle",
+      "english": "Site completeness",
+      "st": "Ho phetheha ha sebaka",
+      "ts": "Ku hetiseka ka ndhawu",
+      "ve": "U fhelela ha fhethu"
+    },
+    {
+      "key": "completionScoreProgressAria",
+      "english": "{percent}% complete, {done} of {total} stages done",
+      "st": "{percent}% e phethilwe, mehato e {done} ho e {total} e phethilwe",
+      "ts": "{percent}% yi hetisekile, ku hetiwile swiyenge swa {done} eka {total}",
+      "ve": "{percent}% yo fhela, zwiteṅwa zwa {done} kha {total} zwo fhela"
+    },
+    {
+      "key": "completionScoreDoneCount",
+      "english": "{done}/{total} done",
+      "st": "{done}/{total} e phethilwe",
+      "ts": "Ku hetiwile {done}/{total}",
+      "ve": "{done}/{total} zwo fhela"
+    },
+    {
+      "key": "completionStepLocated",
+      "english": "Site located",
+      "st": "Sebaka se fumanwe",
+      "ts": "Ndhawu yi kumiwile",
+      "ve": "Fhethu ho wanala"
+    },
+    {
+      "key": "completionStepBoundary",
+      "english": "Boundary traced",
+      "st": "Moedi o takilwe",
+      "ts": "Ndzilekano wu dirowiwile",
+      "ve": "Mukano wo oliwa"
+    },
+    {
+      "key": "completionStepSurvey",
+      "english": "Site survey filled",
+      "st": "Tlhahlobo ya sebaka e tlatsitswe",
+      "ts": "Ndzavisiso wa ndhawu wu tatiwile",
+      "ve": "Ṱhoḓisiso ya fhethu yo ḓadzwa"
+    },
+    {
+      "key": "completionStepDesign",
+      "english": "Design done",
+      "st": "Moralo o phethilwe",
+      "ts": "Dizayini yi hetiwile",
+      "ve": "Pulane yo fhela"
+    },
+    {
+      "key": "completionStepCropPlan",
+      "english": "Production plan done",
+      "st": "Moralo wa tlhahiso o phethilwe",
+      "ts": "Pulani ya vuhumelerisi yi hetiwile",
+      "ve": "Pulane ya mveledziso yo fhela"
+    },
+    {
+      "key": "completionStatusDone",
+      "english": "Done",
+      "st": "E phethilwe",
+      "ts": "Swi herile",
+      "ve": "Zwo fhela"
+    },
+    {
+      "key": "completionStatusPartial",
+      "english": "Partial",
+      "st": "E phethilwe ka karolo",
+      "ts": "Swi herile hi xiphemu",
+      "ve": "Zwo fhela nga tshipiḓa"
+    },
+    {
+      "key": "completionStatusNotStarted",
+      "english": "Not started",
+      "st": "Ha e so qalwe",
+      "ts": "A swi si sungula",
+      "ve": "A zwi athu thoma"
+    },
+    {
+      "key": "tabRecords",
+      "english": "Records",
+      "st": "Ditlaleho",
+      "ts": "Tirhekhodo",
+      "ve": "Rekhodo"
+    },
+    {
+      "key": "tabDashboard",
+      "english": "Dashboard",
+      "st": "Kakaretso",
+      "ts": "Nkatsakanyo",
+      "ve": "Manweledzo"
+    },
+    {
+      "key": "tabStudies",
+      "english": "Studies",
+      "st": "Dithuto",
+      "ts": "Tidyondzo",
+      "ve": "Ngudo"
+    },
+    {
+      "key": "settingsButtonLabel",
+      "english": "Settings",
+      "st": "Ditlhophiso",
+      "ts": "Swiyimiso",
+      "ve": "Nzudzanyo"
+    },
+    {
+      "key": "settingsButtonAriaLabel",
+      "english": "Settings",
+      "st": "Ditlhophiso",
+      "ts": "Swiyimiso",
+      "ve": "Nzudzanyo"
+    },
+    {
+      "key": "homeMainSite",
+      "english": "Main site",
+      "st": "Sebaka se seholo",
+      "ts": "Ndhawu-nkulu",
+      "ve": "Fhethu ha ndeme"
+    },
+    {
+      "key": "homeSetAsMain",
+      "english": "Set as main site",
+      "st": "Kgetha e le sebaka se seholo",
+      "ts": "Hlawula yi va ndhawu-nkulu",
+      "ve": "Nangani sa fhethu ha ndeme"
+    },
+    {
+      "key": "homeMainSiteLabel",
+      "english": "Main",
+      "st": "Se seholo",
+      "ts": "Ya nkoka",
+      "ve": "Ha ndeme"
+    },
+    {
+      "key": "homeQuickJournalDesc",
+      "english": "Notes & photos",
+      "st": "Dintlha le dinepe",
+      "ts": "Tinotsi ni swifaniso",
+      "ve": "Notsi na zwifanyiso"
+    },
+    {
+      "key": "homeUpcomingTasks",
+      "english": "Upcoming tasks",
+      "st": "Mesebetsi e tlang",
+      "ts": "Mintirho leyi taka",
+      "ve": "Mishumo i ḓaho"
+    },
+    {
+      "key": "homeTaskBoardViewPlan",
+      "english": "View production plan",
+      "st": "Sheba moralo wa tlhahiso",
+      "ts": "Vona pulani ya vuhumelerisi",
+      "ve": "Vhonani pulane ya mveledziso"
+    },
+    {
+      "key": "navPlantingCalendar",
+      "english": "Planting calendar",
+      "st": "Khalendara ya ho lema",
+      "ts": "Khalendara ya ku byala",
+      "ve": "Khaḽenda ya u ṱavha"
+    },
+    {
+      "key": "navCommunity",
+      "english": "Community",
+      "st": "Setjhaba",
+      "ts": "Vaaki",
+      "ve": "Tshitshavha"
+    },
+    {
+      "key": "navLandmark",
+      "english": "Main navigation",
+      "st": "Lenane le leholo la ho tsamaya",
+      "ts": "Menyu-nkulu ya ku famba",
+      "ve": "Menyu ya ndeme ya u tshimbila"
+    },
+    {
+      "key": "navNetwork",
+      "english": "Network",
+      "st": "Marangrang",
+      "ts": "Netiweke",
+      "ve": "Netiweke"
+    },
+    {
+      "key": "navExchange",
+      "english": "Exchange",
+      "st": "Phapanyetsano",
+      "ts": "Ku cincana",
+      "ve": "U tshintshana"
+    },
+    {
+      "key": "navBedCropPlan",
+      "english": "Production plan",
+      "st": "Moralo wa tlhahiso",
+      "ts": "Pulani ya vuhumelerisi",
+      "ve": "Pulane ya mveledziso"
+    },
+    {
+      "key": "navAssessments",
+      "english": "Project assessments",
+      "st": "Ditekolo tsa projeke",
+      "ts": "Mikambelo ya phurojeke",
+      "ve": "Ṱhaṱhuvho dza thandela"
+    },
+    {
+      "key": "navDesignStudio",
+      "english": "Design studio",
+      "st": "Sebaka sa ho rala",
+      "ts": "Ndhawu ya ku dizayina",
+      "ve": "Fhethu ha u pulana"
+    },
+    {
+      "key": "navOfflineSync",
+      "english": "Saved on this phone",
+      "st": "Tse bolokilweng fonong ena",
+      "ts": "Leswi hlayisiweke eka riqingho leri",
+      "ve": "Zwo vhulungwaho kha founu iyi"
+    },
+    {
+      "key": "navFeedback",
+      "english": "Report a problem or suggest a feature",
+      "st": "Tlaleha bothata kapa etsa tlhahiso ya ntho e ka eketswang",
+      "ts": "Vika xiphiqo kumbe ringanyeta xitirhisiwa",
+      "ve": "Vhigani thaidzo kana ni dzinginye tshumelo"
+    },
+    {
+      "key": "navWhatsNew",
+      "english": "What's new",
+      "st": "Tse ntjha",
+      "ts": "Leswintshwa",
+      "ve": "Zwiswa"
+    },
+    {
+      "key": "navTour",
+      "english": "Take a tour",
+      "st": "Etela app ka tataiso",
+      "ts": "Valanga app hi ku kongomisiwa",
+      "ve": "Dalelani app nga vhulivhisi"
+    },
+    {
+      "key": "navTipsHelp",
+      "english": "Tips and help",
+      "st": "Dikeletso le thuso",
+      "ts": "Switsundzuxo ni mpfuno",
+      "ve": "Ngeletshedzo na thuso"
+    },
+    {
+      "key": "navTourControls",
+      "english": "Tour controls",
+      "st": "Ditaolo tsa ketelo",
+      "ts": "Swilawuri swa riendzo",
+      "ve": "Zwilangi zwa lwendo"
+    },
+    {
+      "key": "navTourGardensReports",
+      "english": "18 gardens and completed reports",
+      "st": "Dirapa tse 18 le ditlaleho tse phethilweng",
+      "ts": "Swirhapa swa 18 ni swiviko leswi hetiwile",
+      "ve": "Ngade dza 18 na mivhigo yo fhelelaho"
+    },
+    {
+      "key": "navExitTour",
+      "english": "Exit tour",
+      "st": "Tloha ketelong",
+      "ts": "Huma eka riendzo",
+      "ve": "Ibvani kha lwendo"
+    },
+    {
+      "key": "navPageHelp",
+      "english": "Page help",
+      "st": "Thuso ya leqephe",
+      "ts": "Mpfuno wa pheji",
+      "ve": "Thuso ya siaṱari"
+    },
+    {
+      "key": "continueSiteTitle",
+      "english": "Continue with {site}",
+      "st": "Tswela pele ka {site}",
+      "ts": "Yana mahlweni na {site}",
+      "ve": "Bvelani phanḓa na {site}"
+    },
+    {
+      "key": "continueSitePct",
+      "english": "{pct}% complete",
+      "st": "{pct}% e phethilwe",
+      "ts": "{pct}% yi hetisekile",
+      "ve": "{pct}% yo fhela"
+    },
+    {
+      "key": "continueSiteCta",
+      "english": "Open my site",
+      "st": "Bula sebaka sa ka",
+      "ts": "Pfula ndhawu ya mina",
+      "ve": "Vulani fhethu hanga"
+    },
+    {
+      "key": "loginRoleFarmer",
+      "english": "Farmer",
+      "st": "Sehwai",
+      "ts": "Murimi",
+      "ve": "Mulimi"
+    },
+    {
+      "key": "loginRoleStudent",
+      "english": "Student",
+      "st": "Moithuti",
+      "ts": "Mudyondzi",
+      "ve": "Mugudiswa"
+    },
+    {
+      "key": "loginSubtitleSignIn",
+      "english": "Sign in to your account.",
+      "st": "Kena akhaontong ya hao.",
+      "ts": "Nghena eka akhawunti ya wena.",
+      "ve": "Dzhenani kha akhaunthu yaṋu."
+    },
+    {
+      "key": "loginSubtitleCreate",
+      "english": "Create a new account.",
+      "st": "Theha akhaonto e ntjha.",
+      "ts": "Endla akhawunti leyintshwa.",
+      "ve": "Vhulani akhaunthu ntswa."
+    },
+    {
+      "key": "loginSubtitleReset",
+      "english": "Reset your password.",
+      "st": "Beha phasewete ya hao botjha.",
+      "ts": "Vekela phasiwedi ya wena nakambe.",
+      "ve": "Vhekanyani hafhu phasiwede yaṋu."
+    },
+    {
+      "key": "loginContinueToMap",
+      "english": "Sign in to continue to your map",
+      "st": "Kena ho tswela pele mmapeng wa hao",
+      "ts": "Nghena leswaku u ya mahlweni eka mepe wa wena",
+      "ve": "Dzhenani uri ni bvele phanḓa kha mmapa waṋu"
+    },
+    {
+      "key": "loginBackendUnavailableNotice",
+      "english": "Sign-in is not available in this practice version. Everything you try here is kept on this device.",
+      "st": "Ho kena ha ho fumanehe mofuteng ona wa boikwetliso. Tsohle tseo o di lekang mona di bolokwa sesebedisweng sena.",
+      "ts": "Ku nghena a ku kumeki eka nkandziyiso lowu wa ku titoloveta. Hinkwaswo leswi u swi ringetaka laha swi hlayisiwa eka xitirhisiwa lexi.",
+      "ve": "U dzhena a hu wanali kha nzudzanyo iyi ya u ḓiḓowedza. Zwoṱhe zwine na lingedza hafha zwi vhulungwa kha tshishumiswa itshi."
+    },
+    {
+      "key": "loginSignIn",
+      "english": "Sign in",
+      "st": "Kena",
+      "ts": "Nghena",
+      "ve": "Dzhenani"
+    },
+    {
+      "key": "loginCreateAccount",
+      "english": "Create account",
+      "st": "Theha akhaonto",
+      "ts": "Endla akhawunti",
+      "ve": "Vhulani akhaunthu"
+    },
+    {
+      "key": "loginResetEmailSent",
+      "english": "Reset email sent to",
+      "st": "Imeile ya ho beha phasewete botjha e rometswe ho",
+      "ts": "Imeyili yo vekela phasiwedi nakambe yi rhumeriwile eka",
+      "ve": "Imeili ya u vhekanya hafhu phasiwede yo rumelwa kha"
+    },
+    {
+      "key": "loginResetCheckInbox",
+      "english": "Check your inbox and follow the link to set a new password.",
+      "st": "Sheba imeile ya hao mme o latele sehokelo ho beha phasewete e ntjha.",
+      "ts": "Kambela bokisi ra ti-imeyili kutani u landzela xihlanganisi ku veka phasiwedi leyintshwa.",
+      "ve": "Ṱolani imeili yaṋu ni tevhele vhuṱumani u vhea phasiwede ntswa."
+    },
+    {
+      "key": "loginBackToSignIn",
+      "english": "Back to sign in",
+      "st": "Kgutlela ho kena",
+      "ts": "Tlhelela eka ku nghena",
+      "ve": "Humelani kha u dzhena"
+    },
+    {
+      "key": "loginFullName",
+      "english": "Full name",
+      "st": "Lebitso le felletseng",
+      "ts": "Vito hi ku helela",
+      "ve": "Dzina ḽo fhelelaho"
+    },
+    {
+      "key": "loginEmailAddress",
+      "english": "Email address",
+      "st": "Aterese ya imeile",
+      "ts": "Adirese ya imeyili",
+      "ve": "Aḓirese ya imeili"
+    },
+    {
+      "key": "loginPassword",
+      "english": "Password",
+      "st": "Phasewete",
+      "ts": "Phasiwedi",
+      "ve": "Phasiwede"
+    },
+    {
+      "key": "loginRole",
+      "english": "Role",
+      "st": "Karolo",
+      "ts": "Ntirho",
+      "ve": "Mushumo"
+    },
+    {
+      "key": "loginSigningIn",
+      "english": "Signing in...",
+      "st": "O a kena...",
+      "ts": "Ku nghena...",
+      "ve": "Hu khou dzheniwa..."
+    },
+    {
+      "key": "loginCreatingAccount",
+      "english": "Creating account...",
+      "st": "Akhaonto e a thehwa...",
+      "ts": "Ku endla akhawunti...",
+      "ve": "Hu khou vhulwa akhaunthu..."
+    },
+    {
+      "key": "loginSending",
+      "english": "Sending...",
+      "st": "E a romelwa...",
+      "ts": "Ku rhumela...",
+      "ve": "Hu khou rumelwa..."
+    },
+    {
+      "key": "loginSendResetEmail",
+      "english": "Send reset email",
+      "st": "Romela imeile ya ho beha phasewete botjha",
+      "ts": "Rhumela imeyili yo vekela phasiwedi nakambe",
+      "ve": "Rumelani imeili ya u vhekanya hafhu phasiwede"
+    },
+    {
+      "key": "loginForgotPassword",
+      "english": "Forgot your password?",
+      "st": "O lebetse phasewete ya hao?",
+      "ts": "U rivarile phasiwedi ya wena?",
+      "ve": "No hangwa phasiwede yaṋu?"
+    },
+    {
+      "key": "loginOr",
+      "english": "or",
+      "st": "kapa",
+      "ts": "kumbe",
+      "ve": "kana"
+    },
+    {
+      "key": "loginConnecting",
+      "english": "Connecting...",
+      "st": "E a hokela...",
+      "ts": "Ku hlanganisa...",
+      "ve": "Hu khou ṱumanywa..."
+    },
+    {
+      "key": "loginContinueWithGoogle",
+      "english": "Continue with Google",
+      "st": "Tswela pele ka Google",
+      "ts": "Yana mahlweni hi Google",
+      "ve": "Bvelani phanḓa nga Google"
+    },
+    {
+      "key": "loginGoogleEmbeddedHelp",
+      "english": "Google sign-in doesn’t open inside this in-app browser. Sign in with email above, or open the app in Chrome / Safari:",
+      "st": "Ho kena ka Google ha ho bulehe ho sebadi sena se ka hara app. Kena ka imeile ka hodimo, kapa bula app ho Chrome / Safari:",
+      "ts": "Ku nghena hi Google a ku pfuleki eka browser leyi nga endzeni ka app. Nghena hi imeyili laha henhla, kumbe u pfula app eka Chrome / Safari:",
+      "ve": "U dzhena nga Google a hu vulei kha browser iyi ya nga ngomu ha app. Dzhenani nga imeili afho nṱha, kana ni vule app kha Chrome / Safari:"
+    },
+    {
+      "key": "loginLinkCopied",
+      "english": "Link copied",
+      "st": "Sehokelo se kopilitswe",
+      "ts": "Xihlanganisi xi kopiwile",
+      "ve": "Vhuṱumani ho kopiwa"
+    },
+    {
+      "key": "loginCopyAppLink",
+      "english": "Copy app link",
+      "st": "Kopitsa sehokelo sa app",
+      "ts": "Kopa xihlanganisi xa app",
+      "ve": "Kopani vhuṱumani ha app"
+    },
+    {
+      "key": "loginBackToApp",
+      "english": "Back to app",
+      "st": "Kgutlela ho app",
+      "ts": "Tlhelela eka app",
+      "ve": "Humelani kha app"
+    },
+    {
+      "key": "loginTrustFooter",
+      "english": "Built for South African smallholder farmers",
+      "st": "E etseditswe balemi ba banyenyane ba Afrika Borwa",
+      "ts": "Yi endleriwe varimi lavatsongo va Afrika Dzonga",
+      "ve": "Yo itelwa vhalimi vhaṱuku vha Afrika Tshipembe"
+    },
+    {
+      "key": "loginErrorInvalidEmail",
+      "english": "That doesn’t look like a valid email address.",
+      "st": "Seo ha se bonahale e le aterese ya imeile e nepahetseng.",
+      "ts": "Sweswo a swi vonaki swi ri adirese ya imeyili leyi nga yona.",
+      "ve": "Izwo a zwi vhonali zwi aḓirese ya imeili yo teaho."
+    },
+    {
+      "key": "loginErrorAccountDisabled",
+      "english": "This account has been disabled.",
+      "st": "Akhaonto ena e kwetswe.",
+      "ts": "Akhawunti leyi yi pfariwile.",
+      "ve": "Akhaunthu iyi yo valiwa."
+    },
+    {
+      "key": "loginErrorAccountNotFound",
+      "english": "No account found with that email.",
+      "st": "Ha ho akhaonto e fumanweng ka imeile eo.",
+      "ts": "A ku kumiwanga akhawunti leyi tirhisaka imeyili yoleyo.",
+      "ve": "A hu na akhaunthu yo wanalaho nga imeili iyo."
+    },
+    {
+      "key": "loginErrorWrongPassword",
+      "english": "Incorrect password — try again.",
+      "st": "Phasewete e fosahetse — leka hape.",
+      "ts": "Phasiwedi yi hoxekile — ringeta nakambe.",
+      "ve": "Phasiwede yo khakhea — lingedzani hafhu."
+    },
+    {
+      "key": "loginErrorInvalidCredentials",
+      "english": "Email or password is incorrect.",
+      "st": "Imeile kapa phasewete e fosahetse.",
+      "ts": "Imeyili kumbe phasiwedi yi hoxekile.",
+      "ve": "Imeili kana phasiwede yo khakhea."
+    },
+    {
+      "key": "loginErrorEmailInUse",
+      "english": "An account with that email already exists.",
+      "st": "Akhaonto e nang le imeile eo e se e ntse e le teng.",
+      "ts": "Akhawunti leyi tirhisaka imeyili yoleyo se yi kona.",
+      "ve": "Akhaunthu i shumisaho imeili iyo yo no vha hone."
+    },
+    {
+      "key": "loginErrorWeakPassword",
+      "english": "Choose a stronger password (at least 6 characters).",
+      "st": "Kgetha phasewete e matla ho feta (bonyane ditlhaku tse 6).",
+      "ts": "Hlawula phasiwedi leyi tiyeke (swihlawulekisi swa 6 kumbe ku tlurisa).",
+      "ve": "Khethani phasiwede yo khwaṱhaho (ḽeḓere dza 6 kana u fhira)."
+    },
+    {
+      "key": "loginErrorTooManyAttempts",
+      "english": "Too many attempts — wait a moment and try again.",
+      "st": "O lekile hangata haholo — ema hanyane mme o leke hape.",
+      "ts": "Ku ringeta ko tala — yimanyana kutani u ringeta nakambe.",
+      "ve": "No lingedza lunzhi — lindelani zwiṱuku ni lingedze hafhu."
+    },
+    {
+      "key": "loginErrorNetwork",
+      "english": "Network error — check your connection.",
+      "st": "Phoso ya marangrang — hlahloba kgokelo ya hao.",
+      "ts": "Xihoxo xa netiweke — kambela vuhlanganisi bya wena.",
+      "ve": "Vhukhakhi ha netiweke — ṱolani vhuṱumani haṋu."
+    },
+    {
+      "key": "loginErrorCancelled",
+      "english": "Sign-in was cancelled.",
+      "st": "Ho kena ho hlakotswe.",
+      "ts": "Ku nghena ku khanseriwile.",
+      "ve": "U dzhena ho fheliswa."
+    },
+    {
+      "key": "loginErrorDifferentProvider",
+      "english": "An account already exists with this email using a different sign-in method.",
+      "st": "Akhaonto e se e ntse e le teng ka imeile ena e sebedisa mokgwa o mong wa ho kena.",
+      "ts": "Akhawunti leyi tirhisaka imeyili leyi se yi kona hi ndlela yin’wana ya ku nghena.",
+      "ve": "Akhaunthu i shumisaho imeili iyi yo no vha hone nga iṅwe nḓila ya u dzhena."
+    },
+    {
+      "key": "loginErrorEmailDisabled",
+      "english": "Email and password sign-in is disabled for this app. The app administrator needs to enable it.",
+      "st": "Ho kena ka imeile le phasewete ho kwetswe bakeng sa app ena. Molaodi wa app o lokela ho ho bula.",
+      "ts": "Ku nghena hi imeyili ni phasiwedi ku pfariwile eka app leyi. Mulawuri wa app u fanele ku ku pfulela.",
+      "ve": "U dzhena nga imeili na phasiwede ho valiwa kha app iyi. Mulanguli wa app u tea u hu vula."
+    },
+    {
+      "key": "loginErrorGoogleDisabled",
+      "english": "Google sign-in is disabled for this app. The app administrator needs to enable it.",
+      "st": "Ho kena ka Google ho kwetswe bakeng sa app ena. Molaodi wa app o lokela ho ho bula.",
+      "ts": "Ku nghena hi Google ku pfariwile eka app leyi. Mulawuri wa app u fanele ku ku pfulela.",
+      "ve": "U dzhena nga Google ho valiwa kha app iyi. Mulanguli wa app u tea u hu vula."
+    },
+    {
+      "key": "loginErrorPopupBlocked",
+      "english": "Your browser blocked Google sign-in. Allow popups for this site and try again, or open it in Safari / Chrome.",
+      "st": "Sebadi sa hao se thibetse ho kena ka Google. Dumella difensetere tse itlhahisang bakeng sa sebaka sena mme o leke hape, kapa o se bule ho Safari / Chrome.",
+      "ts": "Browser ya wena yi sivele ku nghena hi Google. Pfumelela mafasitere lama tipfulelaka eka sayiti leyi kutani u ringeta nakambe, kumbe u yi pfula eka Safari / Chrome.",
+      "ve": "Browser yaṋu yo thivhela u dzhena nga Google. Tendelani mafasiṱere ane a ḓivula kha sayithi iyi ni lingedze hafhu, kana ni i vule kha Safari / Chrome."
+    },
+    {
+      "key": "loginErrorDomainNotAuthorised",
+      "english": "This web address isn’t authorised for Google sign-in yet. Use email + password for now.",
+      "st": "Aterese ena ya webo ha e eso dumellwe bakeng sa ho kena ka Google. Sebedisa imeile le phasewete hona jwale.",
+      "ts": "Adirese leyi ya webu a yi si pfumeleriwa ku nghena hi Google. Sweswi tirhisa imeyili ni phasiwedi.",
+      "ve": "Aḓirese iyi ya web a i athu tendelwa u dzhena nga Google. Zwa zwino shumisani imeili na phasiwede."
+    },
+    {
+      "key": "loginErrorStorageBlocked",
+      "english": "This browser blocks the storage Google sign-in needs — open the site in Chrome or Safari.",
+      "st": "Sebadi sena se thibela polokelo e hlokwang ke ho kena ka Google — bula sebaka sena ho Chrome kapa Safari.",
+      "ts": "Browser leyi yi sivela vuhlayiselo bya ku nghena hi Google — pfula sayiti eka Chrome kumbe Safari.",
+      "ve": "Browser iyi i thivhela fhethu ha u vhulunga hu ṱoḓwaho nga u dzhena nga Google — vulani sayithi kha Chrome kana Safari."
+    },
+    {
+      "key": "loginErrorBackendSampleMode",
+      "english": "Firebase is not configured yet — running in sample mode.",
+      "st": "Firebase ha e eso hlophiswe — app e sebetsa ka mokgwa wa mohlala.",
+      "ts": "Firebase a yi si lulamisiwa — app yi tirha eka xiyimo xa swikombiso.",
+      "ve": "Firebase a i athu dzudzanywa — app i khou shuma nga nzudzanyo ya tsumbo."
+    },
+    {
+      "key": "loginErrorBackendUnavailable",
+      "english": "Firebase is not configured yet.",
+      "st": "Firebase ha e eso hlophiswe.",
+      "ts": "Firebase a yi si lulamisiwa.",
+      "ve": "Firebase a i athu dzudzanywa."
+    },
+    {
+      "key": "loginErrorGoogleEmbedded",
+      "english": "Google sign-in won’t open inside this in-app browser. Open imbewufield.vercel.app in Chrome or Safari, or sign in with email + password here.",
+      "st": "Ho kena ka Google ho ke ke ha buleha ho sebadi sena se ka hara app. Bula imbewufield.vercel.app ho Chrome kapa Safari, kapa kena ka imeile le phasewete mona.",
+      "ts": "Ku nghena hi Google a ku nge pfuleki eka browser leyi nga endzeni ka app. Pfula imbewufield.vercel.app eka Chrome kumbe Safari, kumbe u nghena hi imeyili ni phasiwedi laha.",
+      "ve": "U dzhena nga Google a hu nga vulei kha browser iyi ya nga ngomu ha app. Vulani imbewufield.vercel.app kha Chrome kana Safari, kana ni dzhene nga imeili na phasiwede hafha."
+    },
+    {
+      "key": "loginErrorUnexpected",
+      "english": "Something went wrong. Please try again.",
+      "st": "Ho bile le phoso. Ka kopo leka hape.",
+      "ts": "Ku ve ni xihoxo. Hi kombela u ringeta nakambe.",
+      "ve": "Hu na zwe zwa khakhea. Ni khou humbelwa u lingedza hafhu."
+    },
+    {
+      "key": "gateTitle",
+      "english": "Access ImbewuField",
+      "st": "Kena ho ImbewuField",
+      "ts": "Nghena eka ImbewuField",
+      "ve": "Dzhenani kha ImbewuField"
+    },
+    {
+      "key": "gateDescription",
+      "english": "Private prototype — enter the password to continue.",
+      "st": "Mofuta wa teko wa poraefete — kenya phasewete ho tswela pele.",
+      "ts": "Xikombiso xa xihundla xa ku ringeta — nghenisa phasiwedi ku ya mahlweni.",
+      "ve": "Tsumbo ya phuraivethe ya u lingedza — dzhenisani phasiwede u bvela phanḓa."
+    },
+    {
+      "key": "gatePassword",
+      "english": "Password",
+      "st": "Phasewete",
+      "ts": "Phasiwedi",
+      "ve": "Phasiwede"
+    },
+    {
+      "key": "gateWrongPassword",
+      "english": "Wrong password — try again.",
+      "st": "Phasewete e fosahetse — leka hape.",
+      "ts": "Phasiwedi yi hoxekile — ringeta nakambe.",
+      "ve": "Phasiwede yo khakhea — lingedzani hafhu."
+    },
+    {
+      "key": "gateChecking",
+      "english": "Checking...",
+      "st": "E a hlahloba...",
+      "ts": "Ku kambela...",
+      "ve": "Hu khou ṱolwa..."
+    },
+    {
+      "key": "gateEnter",
+      "english": "Enter",
+      "st": "Kena",
+      "ts": "Nghena",
+      "ve": "Dzhenani"
+    }
+  ],
+  "notices": {
+    "st": {
+      "languageDraftNoticeText": "Phetolelo ena ya Sesotho ke moralo wa mochini o so hlahlojweng.",
+      "languageDraftNoticeEnglishToggle": "Senyesemane",
+      "languageDraftNoticeDismiss": "Pata"
+    },
+    "ts": {
+      "languageDraftNoticeText": "Vuhundzuluxi bya Xitsonga i xitsalwana xa muchini lexi nga si kamberiwaka.",
+      "languageDraftNoticeEnglishToggle": "Xinghezi",
+      "languageDraftNoticeDismiss": "Pfala"
+    },
+    "ve": {
+      "languageDraftNoticeText": "Maipfi aya a Tshivenḓa ndi mvetamveto ya mutshini i sa athu ṱolwa.",
+      "languageDraftNoticeEnglishToggle": "English",
+      "languageDraftNoticeDismiss": "Valani"
+    }
+  },
+  "beforeValues": {
+    "st": {
+      "completionScoreAria": null,
+      "completionScoreTitle": null,
+      "completionScoreProgressAria": null,
+      "completionScoreDoneCount": null,
+      "completionStepLocated": null,
+      "completionStepBoundary": null,
+      "completionStepSurvey": null,
+      "completionStepDesign": null,
+      "completionStepCropPlan": null,
+      "completionStatusDone": null,
+      "completionStatusPartial": null,
+      "completionStatusNotStarted": null,
+      "tabRecords": null,
+      "tabDashboard": null,
+      "tabStudies": null,
+      "settingsButtonLabel": null,
+      "settingsButtonAriaLabel": null,
+      "homeMainSite": null,
+      "homeSetAsMain": null,
+      "homeMainSiteLabel": null,
+      "homeQuickJournalDesc": "Notes & photos",
+      "homeUpcomingTasks": null,
+      "homeTaskBoardViewPlan": null,
+      "navPlantingCalendar": null,
+      "navCommunity": null,
+      "navLandmark": null,
+      "navNetwork": null,
+      "navExchange": null,
+      "navBedCropPlan": null,
+      "navAssessments": null,
+      "navDesignStudio": null,
+      "navOfflineSync": null,
+      "navFeedback": null,
+      "navWhatsNew": null,
+      "navTour": null,
+      "navTipsHelp": null,
+      "navTourControls": null,
+      "navTourGardensReports": null,
+      "navExitTour": null,
+      "navPageHelp": null,
+      "continueSiteTitle": null,
+      "continueSitePct": null,
+      "continueSiteCta": null,
+      "loginRoleFarmer": null,
+      "loginRoleStudent": null,
+      "loginSubtitleSignIn": null,
+      "loginSubtitleCreate": null,
+      "loginSubtitleReset": null,
+      "loginContinueToMap": null,
+      "loginBackendUnavailableNotice": null,
+      "loginSignIn": null,
+      "loginCreateAccount": null,
+      "loginResetEmailSent": null,
+      "loginResetCheckInbox": null,
+      "loginBackToSignIn": null,
+      "loginFullName": null,
+      "loginEmailAddress": null,
+      "loginPassword": null,
+      "loginRole": null,
+      "loginSigningIn": null,
+      "loginCreatingAccount": null,
+      "loginSending": null,
+      "loginSendResetEmail": null,
+      "loginForgotPassword": null,
+      "loginOr": null,
+      "loginConnecting": null,
+      "loginContinueWithGoogle": null,
+      "loginGoogleEmbeddedHelp": null,
+      "loginLinkCopied": null,
+      "loginCopyAppLink": null,
+      "loginBackToApp": null,
+      "loginTrustFooter": null,
+      "loginErrorInvalidEmail": null,
+      "loginErrorAccountDisabled": null,
+      "loginErrorAccountNotFound": null,
+      "loginErrorWrongPassword": null,
+      "loginErrorInvalidCredentials": null,
+      "loginErrorEmailInUse": null,
+      "loginErrorWeakPassword": null,
+      "loginErrorTooManyAttempts": null,
+      "loginErrorNetwork": null,
+      "loginErrorCancelled": null,
+      "loginErrorDifferentProvider": null,
+      "loginErrorEmailDisabled": null,
+      "loginErrorGoogleDisabled": null,
+      "loginErrorPopupBlocked": null,
+      "loginErrorDomainNotAuthorised": null,
+      "loginErrorStorageBlocked": null,
+      "loginErrorBackendSampleMode": null,
+      "loginErrorBackendUnavailable": null,
+      "loginErrorGoogleEmbedded": null,
+      "loginErrorUnexpected": null,
+      "gateTitle": null,
+      "gateDescription": null,
+      "gatePassword": null,
+      "gateWrongPassword": null,
+      "gateChecking": null,
+      "gateEnter": null,
+      "languageDraftNoticeText": null,
+      "languageDraftNoticeEnglishToggle": null,
+      "languageDraftNoticeDismiss": null
+    },
+    "ts": {
+      "completionScoreAria": null,
+      "completionScoreTitle": null,
+      "completionScoreProgressAria": null,
+      "completionScoreDoneCount": null,
+      "completionStepLocated": null,
+      "completionStepBoundary": null,
+      "completionStepSurvey": null,
+      "completionStepDesign": null,
+      "completionStepCropPlan": null,
+      "completionStatusDone": null,
+      "completionStatusPartial": null,
+      "completionStatusNotStarted": null,
+      "tabRecords": null,
+      "tabDashboard": null,
+      "tabStudies": null,
+      "settingsButtonLabel": null,
+      "settingsButtonAriaLabel": null,
+      "homeMainSite": null,
+      "homeSetAsMain": null,
+      "homeMainSiteLabel": null,
+      "homeQuickJournalDesc": "Notes & photos",
+      "homeUpcomingTasks": null,
+      "homeTaskBoardViewPlan": null,
+      "navPlantingCalendar": null,
+      "navCommunity": null,
+      "navLandmark": null,
+      "navNetwork": null,
+      "navExchange": null,
+      "navBedCropPlan": null,
+      "navAssessments": null,
+      "navDesignStudio": null,
+      "navOfflineSync": null,
+      "navFeedback": null,
+      "navWhatsNew": null,
+      "navTour": null,
+      "navTipsHelp": null,
+      "navTourControls": null,
+      "navTourGardensReports": null,
+      "navExitTour": null,
+      "navPageHelp": null,
+      "continueSiteTitle": null,
+      "continueSitePct": null,
+      "continueSiteCta": null,
+      "loginRoleFarmer": null,
+      "loginRoleStudent": null,
+      "loginSubtitleSignIn": null,
+      "loginSubtitleCreate": null,
+      "loginSubtitleReset": null,
+      "loginContinueToMap": null,
+      "loginBackendUnavailableNotice": null,
+      "loginSignIn": null,
+      "loginCreateAccount": null,
+      "loginResetEmailSent": null,
+      "loginResetCheckInbox": null,
+      "loginBackToSignIn": null,
+      "loginFullName": null,
+      "loginEmailAddress": null,
+      "loginPassword": null,
+      "loginRole": null,
+      "loginSigningIn": null,
+      "loginCreatingAccount": null,
+      "loginSending": null,
+      "loginSendResetEmail": null,
+      "loginForgotPassword": null,
+      "loginOr": null,
+      "loginConnecting": null,
+      "loginContinueWithGoogle": null,
+      "loginGoogleEmbeddedHelp": null,
+      "loginLinkCopied": null,
+      "loginCopyAppLink": null,
+      "loginBackToApp": null,
+      "loginTrustFooter": null,
+      "loginErrorInvalidEmail": null,
+      "loginErrorAccountDisabled": null,
+      "loginErrorAccountNotFound": null,
+      "loginErrorWrongPassword": null,
+      "loginErrorInvalidCredentials": null,
+      "loginErrorEmailInUse": null,
+      "loginErrorWeakPassword": null,
+      "loginErrorTooManyAttempts": null,
+      "loginErrorNetwork": null,
+      "loginErrorCancelled": null,
+      "loginErrorDifferentProvider": null,
+      "loginErrorEmailDisabled": null,
+      "loginErrorGoogleDisabled": null,
+      "loginErrorPopupBlocked": null,
+      "loginErrorDomainNotAuthorised": null,
+      "loginErrorStorageBlocked": null,
+      "loginErrorBackendSampleMode": null,
+      "loginErrorBackendUnavailable": null,
+      "loginErrorGoogleEmbedded": null,
+      "loginErrorUnexpected": null,
+      "gateTitle": null,
+      "gateDescription": null,
+      "gatePassword": null,
+      "gateWrongPassword": null,
+      "gateChecking": null,
+      "gateEnter": null,
+      "languageDraftNoticeText": null,
+      "languageDraftNoticeEnglishToggle": null,
+      "languageDraftNoticeDismiss": null
+    },
+    "ve": {
+      "completionScoreAria": null,
+      "completionScoreTitle": null,
+      "completionScoreProgressAria": null,
+      "completionScoreDoneCount": null,
+      "completionStepLocated": null,
+      "completionStepBoundary": null,
+      "completionStepSurvey": null,
+      "completionStepDesign": null,
+      "completionStepCropPlan": null,
+      "completionStatusDone": null,
+      "completionStatusPartial": null,
+      "completionStatusNotStarted": null,
+      "tabRecords": null,
+      "tabDashboard": null,
+      "tabStudies": null,
+      "settingsButtonLabel": null,
+      "settingsButtonAriaLabel": null,
+      "homeMainSite": null,
+      "homeSetAsMain": null,
+      "homeMainSiteLabel": null,
+      "homeQuickJournalDesc": "Notes & photos",
+      "homeUpcomingTasks": null,
+      "homeTaskBoardViewPlan": null,
+      "navPlantingCalendar": null,
+      "navCommunity": null,
+      "navLandmark": null,
+      "navNetwork": null,
+      "navExchange": null,
+      "navBedCropPlan": null,
+      "navAssessments": null,
+      "navDesignStudio": null,
+      "navOfflineSync": null,
+      "navFeedback": null,
+      "navWhatsNew": null,
+      "navTour": null,
+      "navTipsHelp": null,
+      "navTourControls": null,
+      "navTourGardensReports": null,
+      "navExitTour": null,
+      "navPageHelp": null,
+      "continueSiteTitle": null,
+      "continueSitePct": null,
+      "continueSiteCta": null,
+      "loginRoleFarmer": null,
+      "loginRoleStudent": null,
+      "loginSubtitleSignIn": null,
+      "loginSubtitleCreate": null,
+      "loginSubtitleReset": null,
+      "loginContinueToMap": null,
+      "loginBackendUnavailableNotice": null,
+      "loginSignIn": null,
+      "loginCreateAccount": null,
+      "loginResetEmailSent": null,
+      "loginResetCheckInbox": null,
+      "loginBackToSignIn": null,
+      "loginFullName": null,
+      "loginEmailAddress": null,
+      "loginPassword": null,
+      "loginRole": null,
+      "loginSigningIn": null,
+      "loginCreatingAccount": null,
+      "loginSending": null,
+      "loginSendResetEmail": null,
+      "loginForgotPassword": null,
+      "loginOr": null,
+      "loginConnecting": null,
+      "loginContinueWithGoogle": null,
+      "loginGoogleEmbeddedHelp": null,
+      "loginLinkCopied": null,
+      "loginCopyAppLink": null,
+      "loginBackToApp": null,
+      "loginTrustFooter": null,
+      "loginErrorInvalidEmail": null,
+      "loginErrorAccountDisabled": null,
+      "loginErrorAccountNotFound": null,
+      "loginErrorWrongPassword": null,
+      "loginErrorInvalidCredentials": null,
+      "loginErrorEmailInUse": null,
+      "loginErrorWeakPassword": null,
+      "loginErrorTooManyAttempts": null,
+      "loginErrorNetwork": null,
+      "loginErrorCancelled": null,
+      "loginErrorDifferentProvider": null,
+      "loginErrorEmailDisabled": null,
+      "loginErrorGoogleDisabled": null,
+      "loginErrorPopupBlocked": null,
+      "loginErrorDomainNotAuthorised": null,
+      "loginErrorStorageBlocked": null,
+      "loginErrorBackendSampleMode": null,
+      "loginErrorBackendUnavailable": null,
+      "loginErrorGoogleEmbedded": null,
+      "loginErrorUnexpected": null,
+      "gateTitle": null,
+      "gateDescription": null,
+      "gatePassword": null,
+      "gateWrongPassword": null,
+      "gateChecking": null,
+      "gateEnter": null,
+      "languageDraftNoticeText": null,
+      "languageDraftNoticeEnglishToggle": null,
+      "languageDraftNoticeDismiss": null
+    }
+  }
+}

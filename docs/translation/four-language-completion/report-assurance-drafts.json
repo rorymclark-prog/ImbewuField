@@ -1,0 +1,125 @@
+{
+  "sourceSha": "1340afff206706a36fdeec5fa4b6e104ff16a808",
+  "status": "Unreviewed AI drafts; no fluent-speaker approval. All statements are translated from the recorded English source, not new agronomic validation.",
+  "entries": [
+    {
+      "english": "How much to trust this plan",
+      "zu": "Kungakanani ongakwethemba kulolu hlelo",
+      "st": "O ka tshepa moralo ona ho fihlela kae",
+      "ts": "Leswaku u nga yi tshemba ku fika kwihi pulani leyi",
+      "ve": "Uri ni nga fulufhela pulane iyi u swika ngafhi"
+    },
+    {
+      "english": "No agronomist has checked this plan. It is built from your own map, from climate and soil data measured by satellites and global models, and from published South African growing guidelines. It is put together carefully and in good faith — but it is a starting point, not an instruction.",
+      "zu": "Akekho uchwepheshe wezolimo ohlole lolu hlelo. Lwakhiwe kusuka ebalazweni lakho, kudatha yesimo sezulu nomhlabathi elinganiswa amasathelayithi namamodeli omhlaba wonke, naseziqondisweni zokutshala ezishicilelwe zaseNingizimu Afrika. Luhlanganiswe ngokucophelela nangenhloso enhle — kodwa luyisiqalo, hhayi umyalelo.",
+      "st": "Ha ho setsebi sa temo se hlahlobileng moralo ona. O thehilwe mmapeng wa hao, ho data ya tlelaemete le mobu e lekantsweng ke disathalaete le mehlala ya lefatshe lohle, le ditataisong tsa temo tsa Afrika Borwa tse phatlaladitsweng. O kopantswe ka hloko le ka maikemisetso a matle — empa ke qalo, ha se taelo.",
+      "ts": "A ku na mutivi wa vurimi loyi a kambeke pulani leyi. Yi sekeriwe eka mepe wa wena, eka datha ya maxelo ni misava leyi pimiweke hi tisathalayiti ni timodele ta misava hinkwaro, ni le ka swiletelo swa ku byala swa Afrika-Dzonga leswi kandziyisiweke. Yi hlanganisiwe hi vukheta ni hi xikongomelo lexinene — kambe i masungulo, a hi xileriso.",
+      "ve": "A hu na muḓivhi wa zwa vhulimi o ṱolaho pulane iyi. Yo fhaṱiwa nga mapa waṋu, data ya kilima na mavu yo pimiwaho nga sathaḽaithi na modele dza ḽifhasi ḽoṱhe, na ndaela dza u ṱavha dza Afurika Tshipembe dzo ganḓiswaho. Yo kuvhanganywa nga vhuronwane na muhumbulo wavhuḓi — fhedzi ndi mathomo, a si ndaela."
+    },
+    {
+      "english": "Use your own judgement alongside it. A computer cannot see your land. It does not know where the water stands after heavy rain, which corner the frost settles in, what failed here last year, or what your family will actually eat. You do.",
+      "zu": "Sebenzisa nokwahlulela kwakho kanye nalo. Ikhompyutha ayikwazi ukubona umhlaba wakho. Ayazi ukuthi amanzi ama kuphi ngemva kwemvula enkulu, ukuthi isithwathwa sihlala kuliphi ikhoneni, ukuthi yini engaphumelelanga lapha ngonyaka odlule, noma ukuthi umndeni wakho uzodlani ngokoqobo. Wena uyakwazi lokho.",
+      "st": "Sebedisa le kahlolo ya hao hammoho le wona. Khomphutha ha e kgone ho bona mobu wa hao. Ha e tsebe moo metsi a emang teng ka mora pula e matla, hore serame se dula sekhutlong sefe, hore ho hlolehile eng mona selemong se fetileng, kapa hore lelapa la hao le tla ja eng ka nnete. Wena o a tseba.",
+      "ts": "Tirhisa ni ku avanyisa ka wena na wona. Khomphyuta a yi swi koti ku vona misava ya wena. A yi tivi laha mati ma yimaka kona endzhaku ka mpfula ya ntamu, leswaku gwitsi ri tshamaka ekhoneni rihi, leswi tsandzekeke laha lembe leri hundzeke, kumbe leswi ndyangu wa wena wu nga ta swi dya hakunene. Wena wa swi tiva.",
+      "ve": "Shumisani na khaṱhulo yaṋu na yone. Khomphiyutha a i koni u vhona mavu aṋu. A i ḓivhi hune maḓi a ima hone nga murahu ha mvula khulwane, uri murotholo u dzula kha khuḓa ifhio, zwo kundelwaho fhano ṅwaha wo fhiraho, kana zwine muṱa waṋu wa ḓo ḽa zwa vhukuma. Inwi ni a zwi ḓivha."
+    },
+    {
+      "english": "Soil is the figure most likely to be wrong. Ours comes from a global model that reads a wide area, and real soil can change from one end of a single field to the other. If any number here matters to a decision you are spending money on, a soil test is the only way to know. You can upload one and the plan will be rebuilt around your real numbers.",
+      "zu": "Isibalo somhlabathi yisona esingase sibe nephutha kakhulu. Esethu sivela kumodeli yomhlaba wonke efunda indawo ebanzi, futhi umhlabathi wangempela ungashintsha ukusuka kolunye uhlangothi lwensimu eyodwa kuya kolunye. Uma noma iyiphi inombolo lapha ibalulekile esinqumweni ozosebenzisa imali kuso, ukuhlolwa komhlabathi kuwukuphela kwendlela yokwazi. Ungalayisha umbiko wokuhlolwa bese uhlelo lwakhiwa kabusha ngokwezibalo zakho zangempela.",
+      "st": "Palo ya mobu ke yona e ka bang le phoso haholo. Ya rona e tswa mohlaleng wa lefatshe lohle o balang sebaka se seholo, mme mobu wa nnete o ka fetoha ho tloha ntlheng e nngwe ya tshimo e le nngwe ho ya ho e nngwe. Haeba palo efe kapa efe mona e ama qeto eo o sebedisang tjhelete ho yona, teko ya mobu ke yona feela tsela ya ho tseba. O ka kenya tlaleho ya teko mme moralo o tla ahwa botjha ho ya ka dipalo tsa hao tsa nnete.",
+      "ts": "Nhlayo ya misava hi yona leyi nga ha vaka ni xihoxo ngopfu. Ya hina yi huma eka modele ya misava hinkwaro leyi hlayaka ndhawu leyikulu, naswona misava ya xiviri yi nga cinca ku suka etlhelo rin'we ra nsimu yin'we ku ya eka lerin'wana. Loko nhlayo yin'wana ni yin'wana laha yi ri ya nkoka eka xiboho lexi u nga ta tirhisa mali eka xona, xikambelo xa misava hi xona ntsena ndlela yo tiva. U nga nghenisa xiviko xa xona kutani pulani yi ta akiwa hi vuntshwa hi tinhlayo ta wena ta xiviri.",
+      "ve": "Nomboro ya mavu ndi yone ine ya nga vha na vhukhakhi vhuhulu. Ya hashu i bva kha modele ya ḽifhasi ḽoṱhe i sedzaho fhethu huhulwane, nahone mavu a vhukuma a nga shanduka u bva kha luṅwe lurumbu lwa tsimu nthihi u ya kha luṅwe. Arali nomboro iṅwe na iṅwe afha i na ndeme kha tsheo ine na khou shumisa tshelede khayo, ndingo ya mavu ndi yone nḓila nthihi ya u ḓivha. Ni nga dzhenisa muvhigo wayo nahone pulane ya fhaṱululwa nga nomboro dzaṋu dza vhukuma."
+    },
+    {
+      "english": "Show this to your local agricultural extension officer. They know your district, your rainfall and your pests in a way no model does, and they can correct in ten minutes what would otherwise cost you a season. It costs nothing, and it is the single most useful thing you can do with this document.",
+      "zu": "Bonisa lokhu kumeluleki wezolimo wendawo yakho. Bazi isifunda sakho, imvula nezinambuzane zendawo ngendlela engeke yaziwe yimodeli, futhi bangalungisa ngemizuzu eyishumi lokho obekungakulahlekisela isizini. Akubizi lutho, futhi kuyinto ewusizo kunazo zonke ongayenza ngalo mbhalo.",
+      "st": "Bontsha sena ho moeletsi wa temo wa lehae. O tseba setereke sa hao, pula ya hao le disenyi tsa hao ka tsela eo mohlala o ke keng wa e tseba, mme a ka lokisa ka metsotso e leshome seo se ka beng se o lahledisitse sehla. Ha ho lefellwe letho, mme ke ntho e molemo ka ho fetisisa eo o ka e etsang ka tokomane ena.",
+      "ts": "Komba leswi mutsundzuxi wa swa vurimi wa laha kusuhi. Va tiva xifundzantsongo xa wena, mpfula ya wena ni switsotswana swa wena hi ndlela leyi modele yi nga yi tiviki, naswona va nga lulamisa hi timinete ta khume leswi a swi ta ku lahlekisela nguva. A swi durhi mali, naswona hi swona swa nkoka ngopfu leswi u nga swi endlaka hi tsalwa leri.",
+      "ve": "Sumbedzani hezwi muṱuṱuwedzi wa zwa vhulimi wa henefho. Vha ḓivha tshiṱiriki tshaṋu, mvula yaṋu na zwikhokhonono zwaṋu nga nḓila ine modele ya si i ḓivhe, nahone vha nga lulamisa nga minethe ya fumi zwine zwa nga vha zwo ni xedzela khalanwaha. A zwi ḓuri tshithu, nahone ndi tshithu tsha ndeme u fhira zwoṱhe tshine na nga ita nga ḽiṅwalo iḽi."
+    },
+    {
+      "english": "Expect some of it to be wrong. Write down what you actually planted and what you actually harvested. Every season you record makes the next plan fit your land more closely than this one does — that is the point of it.",
+      "zu": "Lindela ukuthi okunye kulo kuzoba nephutha. Bhala lokho okutshalwe ngokoqobo nalokho okuvuniwe ngokoqobo. Isizini ngayinye oyibhalayo yenza uhlelo olulandelayo lufanele umhlaba wakho kangcono kunalolu — yilokho oluhloselwe kona.",
+      "st": "Lebella hore tse ding di be le phoso. Ngola seo o hlileng o se jetseng le seo o hlileng o se kotutseng. Sehla se seng le se seng seo o se ngolang se etsa hore moralo o latelang o tshwanele mobu wa hao ho feta ona — ke sona sepheo sa wona.",
+      "ts": "Langutela leswaku swin'wana swi ta va ni swihoxo. Tsala leswi u swi byaleke hakunene ni leswi u swi tshoveleke hakunene. Nguva yin'wana ni yin'wana leyi u yi rhekhodaka yi endla leswaku pulani leyi landzelaka yi fambelana ni misava ya wena ku antswa ku hundza leyi — hi wona xikongomelo xa yona.",
+      "ve": "Lavhelelani uri zwiṅwe zwa hone zwi ḓo vha na vhukhakhi. Ṅwalani zwe na ṱavha zwa vhukuma na zwe na kaṋa zwa vhukuma. Khalanwaha iṅwe na iṅwe ine na i ṅwala i ita uri pulane i tevhelaho i tshimbidzane na mavu aṋu u fhira iyi — ndi tshone tshiitisi tshayo."
+    },
+    {
+      "english": "Not checked by an agronomist — a planning guide, not an instruction. Show it to your extension officer, and get a soil test before spending on soil.",
+      "zu": "Awukahlolwa uchwepheshe wezolimo — umhlahlandlela wokuhlela, hhayi umyalelo. Wubonise kumeluleki wakho wezolimo, futhi uhlole umhlabathi ngaphambi kokuchitha imali kuwo.",
+      "st": "Ha o a hlahlojwa ke setsebi sa temo — ke tataiso ya ho rera, ha se taelo. O bontshe moeletsi wa hao wa temo, mme o etse teko ya mobu pele o sebedisa tjhelete mobung.",
+      "ts": "A yi si kamberiwa hi mutivi wa vurimi — i nkongomiso wo pulana, a hi xileriso. Yi kombe mutsundzuxi wa wena wa vurimi, kutani u kambela misava u nga si tirhisa mali eka yona.",
+      "ve": "A i athu ṱolwa nga muḓivhi wa zwa vhulimi — ndi tsumbanḓila ya u pulana, a si ndaela. I sumbedzeni muṱuṱuwedzi waṋu wa zwa vhulimi, ni ite ndingo ya mavu musi ni sa athu shumisa tshelede kha mavu."
+    },
+    {
+      "english": "From the SoilGrids global model, which reads an area far wider than your field. Treat it as the district, not your soil. A soil test is the only way to know your own.",
+      "zu": "Ivela kumodeli yomhlaba wonke ye-SoilGrids, efunda indawo ebanzi kakhulu kunensimu yakho. Yithathe njengeyesifunda, hhayi eyomhlabathi wakho. Ukuhlolwa komhlabathi kuwukuphela kwendlela yokwazi owakho.",
+      "st": "E tswa mohlaleng wa lefatshe lohle wa SoilGrids, o balang sebaka se seholo haholo ho feta tshimo ya hao. O nke e le wa setereke, eseng wa mobu wa hao. Teko ya mobu ke yona feela tsela ya ho tseba wa hao.",
+      "ts": "Yi huma eka modele ya misava hinkwaro ya SoilGrids, leyi hlayaka ndhawu leyikulu ngopfu ku hundza nsimu ya wena. Yi teke yi ri ya xifundzantsongo, ku nga ri ya misava ya wena. Xikambelo xa misava hi xona ntsena ndlela yo tiva ya wena.",
+      "ve": "I bva kha modele ya ḽifhasi ḽoṱhe ya SoilGrids, i sedzaho fhethu huhulwane u fhira tsimu yaṋu. I dzhieni sa ya tshiṱiriki, hu si ya mavu aṋu. Ndingo ya mavu ndi yone nḓila nthihi ya u ḓivha aṋu."
+    },
+    {
+      "english": "NOT A READING. No soil data was available for this point, so these are the app's general figures — the same numbers it would show anywhere. Do not spend money on the strength of them. A soil test is the only way to know.",
+      "zu": "AKUSONA ISILINGANISO. Ayikho idatha yomhlabathi ebitholakala kuleli phuzu, ngakho lezi yizibalo ezijwayelekile ze-app — yizo ezifanayo ebingazibonisa noma kuphi. Ungasebenzisi imali ngenxa yazo. Ukuhlolwa komhlabathi kuwukuphela kwendlela yokwazi.",
+      "st": "HA SE TEKANYO. Ha ho data ya mobu e neng e fumaneha sebakeng sena, kahoo tsena ke dipalo tse akaretsang tsa app — dipalo tse tshwanang le tseo e neng e tla di bontsha kae kapa kae. O se ke wa sebedisa tjhelete ka lebaka la tsona. Teko ya mobu ke yona feela tsela ya ho tseba.",
+      "ts": "A HI MPIMO. A ku nga ri na datha ya misava ya ndhawu leyi, kutani leti i tinhlayo ta ntolovelo ta app — tinhlayo leti fanaka leti a yi ta ti komba kun'wana ni kun'wana. U nga tirhisi mali hi ku titshega hi tona. Xikambelo xa misava hi xona ntsena ndlela yo tiva.",
+      "ve": "A SI MBONALO YO PIMIWAHO. Ho vha hu si na data ya mavu kha fhethu hafha, ngauralo hezwi ndi nomboro dza app dza u angaredza — nomboro dzithihi dzine ya nga dzi sumbedza huṅwe na huṅwe. Ni songo shumisa tshelede no ḓitika ngadzo. Ndingo ya mavu ndi yone nḓila nthihi ya u ḓivha."
+    },
+    {
+      "english": "From a soil test you uploaded for this site. This is the most reliable soil figure in the app and it overrides the global model.",
+      "zu": "Ivela ekuhlolweni komhlabathi okulayishele le ndawo. Lesi yisibalo somhlabathi esithembeke kakhulu kule app futhi sithatha indawo yemodeli yomhlaba wonke.",
+      "st": "E tswa tekong ya mobu eo o e kentseng bakeng sa sebaka sena. Ena ke palo ya mobu e tshepahalang ka ho fetisisa ka har'a app mme e nka sebaka sa mohlala wa lefatshe lohle.",
+      "ts": "Yi huma eka xikambelo xa misava lexi u xi ngheniseke xa ndhawu leyi. Lowu i mpimo wa misava lowu tshembekaka ngopfu eka app naswona wu siva modele ya misava hinkwaro.",
+      "ve": "I bva kha ndingo ya mavu ye na dzhenisa ya fhethu hafha. Iyi ndi nomboro ya mavu i fulufhedzeaho u fhira dzoṱhe kha app nahone i dzhiela modele ya ḽifhasi ḽoṱhe vhudzulo."
+    },
+    {
+      "english": "Had your soil tested? Upload the report and every soil figure, amendment quantity and crop suggestion here will be rebuilt from your real numbers instead of a global model.",
+      "zu": "Usuhlolile umhlabathi wakho? Layisha umbiko bese zonke izibalo zomhlabathi, ubuningi bezinto zokufaka emhlabathini neziphakamiso zezitshalo lapha kwakhiwa kabusha ngezibalo zakho zangempela esikhundleni semodeli yomhlaba wonke.",
+      "st": "Na o se o entse teko ya mobu? Kenya tlaleho mme palo e nngwe le e nngwe ya mobu, bongata ba dintho tsa ho ntlafatsa mobu le tlhahiso ya dijalo mona di tla ahwa botjha ho ya ka dipalo tsa hao tsa nnete ho e na le mohlala wa lefatshe lohle.",
+      "ts": "Xana u kamberile misava ya wena? Nghenisa xiviko kutani nhlayo yin'wana ni yin'wana ya misava, nhlayo ya swilo swo antswisa misava ni xitsundzuxo xa xibyariwa laha swi ta akiwa hi vuntshwa hi tinhlayo ta wena ta xiviri ematshan'weni ya modele ya misava hinkwaro.",
+      "ve": "No ita ndingo ya mavu aṋu? Dzhenisani muvhigo nahone nomboro iṅwe na iṅwe ya mavu, vhunzhi ha zwithu zwa u khwinisa mavu na themendelo ya zwiliṅwa afha zwi ḓo fhaṱululwa nga nomboro dzaṋu dza vhukuma nṱhani ha modele ya ḽifhasi ḽoṱhe."
+    },
+    {
+      "english": "This reading did not record where its numbers came from. Treat it with the same caution as a model estimate.",
+      "zu": "Lesi sibalo asibhalanga ukuthi izinombolo zaso zivela kuphi. Sisebenzise ngokuqapha okufanayo nokwesilinganiso semodeli.",
+      "st": "Tekanyo ena ha e a ngola hore dipalo tsa yona di tswa kae. E nke ka tlhokomelo e tshwanang le ya khakanyo ya mohlala.",
+      "ts": "Mpimo lowu a wu rhekhodanga leswaku tinhlayo ta wona ti huma kwihi. Wu teke hi vukheta byo fana ni bya mpimo wa modele.",
+      "ve": "Mbonalo iyi a yo ngo ṅwala uri nomboro dzayo dzi bva ngafhi. I dzhieni nga vhuronwane vhu fanaho na ha ndeme yo anganywaho nga modele."
+    },
+    {
+      "english": "Your soil test",
+      "zu": "Ukuhlolwa komhlabathi wakho",
+      "st": "Teko ya mobu wa hao",
+      "ts": "Xikambelo xa misava ya wena",
+      "ve": "Ndingo ya mavu aṋu"
+    },
+    {
+      "english": "Modelled — SoilGrids",
+      "zu": "Imodeli — SoilGrids",
+      "st": "Mohlala — SoilGrids",
+      "ts": "Modele — SoilGrids",
+      "ve": "Modele — SoilGrids"
+    },
+    {
+      "english": "Not a reading",
+      "zu": "Akusona isilinganiso",
+      "st": "Ha se tekanyo",
+      "ts": "A hi mpimo",
+      "ve": "A si mbonalo yo pimiwaho"
+    },
+    {
+      "english": "Source unknown",
+      "zu": "Umthombo awaziwa",
+      "st": "Mohlodi ha o tsejwe",
+      "ts": "Xihlovo a xi tiveki",
+      "ve": "Tshiko a tshi ḓivhei"
+    }
+  ],
+  "scope": [
+    "lib/plan-assurance.ts",
+    "lib/report-site-facts.ts",
+    "app/api/generate-report/route.ts",
+    "components/atlas/AtlasPanel.tsx"
+  ],
+  "contextRule": "When report soil provenance is supplied, lab/estimate/unknown use their already-existing source-specific caution instead of the generic model-soil paragraph. SoilGrids retains the full original model paragraph. Callers without provenance retain the exact generic source. No quantities, source status, figures or species change."
+}

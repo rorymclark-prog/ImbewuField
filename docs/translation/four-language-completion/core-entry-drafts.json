@@ -1,0 +1,1907 @@
+{
+  "status": "Unreviewed AI drafts; no fluent-speaker review is claimed.",
+  "baseCommit": "bf338855",
+  "languages": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "entries": [
+    {
+      "key": "reportsViewerLoadError",
+      "english": "The report viewer could not load. Reconnect and try opening the saved report again.",
+      "st": "Sebadi sa tlaleho ha se a kgona ho buleha. Hokela hape mme o leke ho bula tlaleho e bolokilweng hape.",
+      "ts": "Xivoni xa xiviko a xi kotanga ku pfula. Hlanganisa nakambe kutani u ringeta ku pfula xiviko lexi hlayisiweke.",
+      "ve": "Tshivhoni tsha muvhigo a tsho ngo kona u vulea. Ṱumanyani hafhu ni lingedze u vula muvhigo wo vhulungwaho."
+    },
+    {
+      "key": "reportsTitle",
+      "english": "Site reports",
+      "st": "Ditlaleho tsa sebaka",
+      "ts": "Swiviko swa ndhawu",
+      "ve": "Mivhigo ya fhethu"
+    },
+    {
+      "key": "reportsIntro",
+      "english": "Choose a site to prepare and generate its site report, or reopen a report you have already saved.",
+      "st": "Kgetha sebaka ho lokisa le ho etsa tlaleho ya sona, kapa o bule tlaleho eo o seng o e bolokile.",
+      "ts": "Hlawula ndhawu ku lulamisa ni ku endla xiviko xa yona, kumbe u pfula xiviko lexi u se u xi hlayisile.",
+      "ve": "Khethani fhethu uri ni dzudzanye ni bveledze muvhigo waho, kana ni vule muvhigo we na no u vhulunga."
+    },
+    {
+      "key": "reportsFunderNotice",
+      "english": "Your funder workspace contains the programme reports shared with you.",
+      "st": "Sebaka sa hao sa mosebetsi sa motshehetsi se na le ditlaleho tsa lenaneo tse arolelanweng le wena.",
+      "ts": "Ndhawu ya wena ya museketeri wa timali yi na swiviko swa nongonoko leswi avelaniweke na wena.",
+      "ve": "Fhethu haṋu ha u shumela sa muṋei wa tshelede hu na mivhigo ya mbekanyamushumo ye na kovhelwa."
+    },
+    {
+      "key": "reportsOpenFunderView",
+      "english": "Open funder view",
+      "st": "Bula pono ya motshehetsi",
+      "ts": "Pfula nkombiso wa museketeri wa timali",
+      "ve": "Vulani tshivhoni tsha muṋei wa tshelede"
+    },
+    {
+      "key": "reportsLoading",
+      "english": "Loading your saved sites…",
+      "st": "Dibaka tsa hao tse bolokilweng di a kenngwa…",
+      "ts": "Ku layicha tindhawu ta wena leti hlayisiweke…",
+      "ve": "Hu khou laisiwa fhethu haṋu ho vhulungwaho…"
+    },
+    {
+      "key": "reportsSampleWorkspaceNotice",
+      "english": "Sample workspace · your real sites and saved reports are kept separate.",
+      "st": "Sebaka sa mohlala · dibaka tsa hao tsa nnete le ditlaleho tse bolokilweng di bolokwa ka thoko.",
+      "ts": "Ndhawu ya swikombiso · tindhawu ta wena ta xiviri ni swiviko leswi hlayisiweke swi hlayisiwa swi hambanile.",
+      "ve": "Fhethu ha tsumbo · fhethu haṋu ha vhukuma na mivhigo yo vhulungwaho zwi vhulungwa zwo fhambaniswa."
+    },
+    {
+      "key": "reportsChooseSitesOrReports",
+      "english": "Choose sites or reports",
+      "st": "Kgetha dibaka kapa ditlaleho",
+      "ts": "Hlawula tindhawu kumbe swiviko",
+      "ve": "Khethani fhethu kana mivhigo"
+    },
+    {
+      "key": "reportsSavedSites",
+      "english": "Saved sites",
+      "st": "Dibaka tse bolokilweng",
+      "ts": "Tindhawu leti hlayisiweke",
+      "ve": "Fhethu ho vhulungwaho"
+    },
+    {
+      "key": "reportsSavedReports",
+      "english": "Saved reports",
+      "st": "Ditlaleho tse bolokilweng",
+      "ts": "Swiviko leswi hlayisiweke",
+      "ve": "Mivhigo yo vhulungwaho"
+    },
+    {
+      "key": "reportsSelectNewSite",
+      "english": "Select a new site on the map",
+      "st": "Kgetha sebaka se setjha mmapeng",
+      "ts": "Hlawula ndhawu leyintshwa eka mepe",
+      "ve": "Khethani fhethu huswa kha mmapa"
+    },
+    {
+      "key": "reportsSelectNewSiteHelp",
+      "english": "Search for a place or tap its position, then continue to its report.",
+      "st": "Batla sebaka kapa o tobetse moo se leng teng, ebe o tswela pele tlalehong ya sona.",
+      "ts": "Lavisisa ndhawu kumbe u tinya laha yi nga kona, kutani u ya eka xiviko xa yona.",
+      "ve": "Ṱoḓani fhethu kana ni kwame hune ha vha hone, ni bvele phanḓa kha muvhigo waho."
+    },
+    {
+      "key": "reportsSitesDescription",
+      "english": "Open a site to generate a report and see which photos, test results, survey details and design work would improve it.",
+      "st": "Bula sebaka ho etsa tlaleho le ho bona hore na ke dinepe, diphetho tsa diteko, dintlha tsa tlhahlobo le moralo dife tse ka e ntlafatsang.",
+      "ts": "Pfula ndhawu ku endla xiviko ni ku vona leswaku hi swihi swifaniso, mimbuyelo ya swikambelo, vuxokoxoko bya ndzavisiso ni dizayini leswi nga yi antswisaka.",
+      "ve": "Vulani fhethu uri ni bveledze muvhigo ni vhone zwifanyiso, mvelelo dza ndingo, zwidodombedzwa zwa ṱhoḓisiso na pulane zwine zwa nga u khwinisa."
+    },
+    {
+      "key": "reportsNoSitesTitle",
+      "english": "No sites saved yet",
+      "st": "Ha ho dibaka tse bolokilweng",
+      "ts": "A ku na tindhawu leti hlayisiweke sweswi",
+      "ve": "A hu na fhethu ho vhulungwaho zwino"
+    },
+    {
+      "key": "reportsNoSitesHelp",
+      "english": "Select a site on the map to begin. Name and save it in the report workspace so you can return here.",
+      "st": "Kgetha sebaka mmapeng ho qala. Se rehe le ho se boloka sebakeng sa tlaleho hore o kgone ho kgutlela mona.",
+      "ts": "Hlawula ndhawu eka mepe ku sungula. Yi thye vito u yi hlayisa eka ndhawu ya xiviko leswaku u ta kota ku tlhelela laha.",
+      "ve": "Khethani fhethu kha mmapa u thoma. Hu ṋeeni dzina ni hu vhulunge kha fhethu ha muvhigo uri ni kone u vhuya hafha."
+    },
+    {
+      "key": "reportsSavedSiteFallback",
+      "english": "Saved site",
+      "st": "Sebaka se bolokilweng",
+      "ts": "Ndhawu leyi hlayisiweke",
+      "ve": "Fhethu ho vhulungwaho"
+    },
+    {
+      "key": "reportsOneSavedReportLatest",
+      "english": "1 saved report · latest {date}",
+      "st": "Tlaleho e 1 e bolokilweng · ya moraorao {date}",
+      "ts": "Xiviko xa 1 lexi hlayisiweke · xa sweswinyana {date}",
+      "ve": "Muvhigo wa 1 wo vhulungwaho · wa zwino {date}"
+    },
+    {
+      "key": "reportsManySavedReportsLatest",
+      "english": "{count} saved reports · latest {date}",
+      "st": "Ditlaleho tse {count} tse bolokilweng · ya moraorao {date}",
+      "ts": "Swiviko swa {count} leswi hlayisiweke · xa sweswinyana {date}",
+      "ve": "Mivhigo ya {count} yo vhulungwaho · wa zwino {date}"
+    },
+    {
+      "key": "reportsReadyForFirstReport",
+      "english": "Ready for its first report",
+      "st": "Se loketse tlaleho ya pele",
+      "ts": "Yi lunghekele xiviko xa yona xo sungula",
+      "ve": "Ho lugela muvhigo wa u thoma"
+    },
+    {
+      "key": "reportsOpenWorkspaceForSite",
+      "english": "Open report workspace for {site}",
+      "st": "Bula sebaka sa tlaleho bakeng sa {site}",
+      "ts": "Pfula ndhawu ya xiviko xa {site}",
+      "ve": "Vulani fhethu ha muvhigo wa {site}"
+    },
+    {
+      "key": "reportsOpenGenerateReport",
+      "english": "Open site & generate report",
+      "st": "Bula sebaka mme o etse tlaleho",
+      "ts": "Pfula ndhawu u endla xiviko",
+      "ve": "Vulani fhethu ni bveledze muvhigo"
+    },
+    {
+      "key": "reportsReadLatest",
+      "english": "Read latest saved report",
+      "st": "Bala tlaleho ya moraorao e bolokilweng",
+      "ts": "Hlaya xiviko xa sweswinyana lexi hlayisiweke",
+      "ve": "Vhalani muvhigo wa zwino wo vhulungwaho"
+    },
+    {
+      "key": "reportsOpening",
+      "english": "Opening…",
+      "st": "E a buleha…",
+      "ts": "Ku pfula…",
+      "ve": "Hu khou vulwa…"
+    },
+    {
+      "key": "reportsEarlierReportsDescription",
+      "english": "Open an earlier report without generating it again. Each report retains its saved text and site snapshot.",
+      "st": "Bula tlaleho ya pejana ntle le ho e etsa hape. Tlaleho ka nngwe e boloka mongolo wa yona o bolokilweng le setshwantsho sa boemo ba sebaka ka nako eo.",
+      "ts": "Pfula xiviko xa khale handle ko xi endla nakambe. Xiviko xin’wana ni xin’wana xi hlayisa matsalwa ya xona ni vuxokoxoko bya ndhawu bya nkarhi wolowo.",
+      "ve": "Vulani muvhigo wa kale ni sa u bveledzi hafhu. Muvhigo muṅwe na muṅwe u vhulunga maṅwalwa awo na tshivhumbeo tsha fhethu tsha tshifhinga tshenetsho."
+    },
+    {
+      "key": "reportsNoSavedReports",
+      "english": "No saved reports yet. Open a saved site, generate its report and choose Save.",
+      "st": "Ha ho ditlaleho tse bolokilweng. Bula sebaka se bolokilweng, etsa tlaleho mme o kgethe Boloka.",
+      "ts": "A ku na swiviko leswi hlayisiweke sweswi. Pfula ndhawu leyi hlayisiweke, endla xiviko kutani u hlawula Hlayisa.",
+      "ve": "A hu na mivhigo yo vhulungwaho zwino. Vulani fhethu ho vhulungwaho, ni bveledze muvhigo ni nange Vhulungani."
+    },
+    {
+      "key": "reportsUnlinkedSiteHeading",
+      "english": "Reports from places not saved as sites",
+      "st": "Ditlaleho tsa dibaka tse sa bolokwang e le dibaka",
+      "ts": "Swiviko swa tindhawu leti nga hlayisiwang eka tindhawu ta wena",
+      "ve": "Mivhigo ya fhethu hu songo vhulungwaho sa fhethu haṋu"
+    },
+    {
+      "key": "reportsRemovedPinNote",
+      "english": "These reports remain available even if their saved pin was removed.",
+      "st": "Ditlaleho tsena di dula di fumaneha le ha lesupa la sebaka le bolokilweng le tlositswe.",
+      "ts": "Swiviko leswi swa ha kumeka hambiloko phini ya ndhawu leyi hlayisiweke yi susiwile.",
+      "ve": "Mivhigo iyi i kha ḓi wanala naho phini ya fhethu yo vhulungwaho yo bviswa."
+    },
+    {
+      "key": "reportBiomeLabel",
+      "english": "Biome",
+      "st": "Sebaka sa tlhaho",
+      "ts": "Ndhawu ya ntumbuluko",
+      "ve": "Vhupo ha mupo",
+      "beforeLines": {
+        "st": "  reportBiomeLabel: 'Biome',\n",
+        "ts": "  reportBiomeLabel: 'Biome',\n",
+        "ve": "  reportBiomeLabel: 'Biome',\n"
+      }
+    },
+    {
+      "key": "siteDesignOpenStudio",
+      "english": "Open the design studio",
+      "st": "Bula sebaka sa ho rala",
+      "ts": "Pfula ndhawu ya ku dizayina",
+      "ve": "Vulani fhethu ha u pulana"
+    },
+    {
+      "key": "siteDesignStudioDesc",
+      "english": "Place tanks, trees & zones on your land at real scale — step-by-step guidance, or one-tap auto-design.",
+      "st": "Beha ditanka, difate le dikarolo naheng ya hao ka tekanyo ya nnete — ka tataiso ya mohato ka mohato kapa moralo wa ka boyona ka ho tobetsa hang.",
+      "ts": "Veka matangi, mirhi ni swiyenge eka misava ya wena hi xikalo xa xiviri — nkongomiso wa goza hi goza kumbe dizayini ya otomatiki hi ku tinya kan’we.",
+      "ve": "Vheani mathannga, miri na zwiteṅwa kha mavu aṋu nga tshikalo tsha vhukuma — nga vhulivhisi ha ḽiga nga ḽiga kana pulane ya nga yoṱhe nga u kwama luthihi."
+    },
+    {
+      "key": "siteDesignStartDesigning",
+      "english": "Start designing this site →",
+      "st": "Qala ho rala sebaka sena →",
+      "ts": "Sungula ku dizayina ndhawu leyi →",
+      "ve": "Thomani u pulana fhethu afha →"
+    },
+    {
+      "key": "siteDesignSelectLocation",
+      "english": "Select a location on the map to open the Design Studio for it.",
+      "st": "Kgetha sebaka mmapeng ho bula sebaka sa ho se rala.",
+      "ts": "Hlawula ndhawu eka mepe ku pfula ndhawu ya ku yi dizayina.",
+      "ve": "Khethani fhethu kha mmapa uri ni vule fhethu ha u hu pulana."
+    },
+    {
+      "key": "siteDesignSketchHeader",
+      "english": "Sketch → AI design",
+      "st": "Setshwantsho se takilweng → Moralo wa AI",
+      "ts": "Xiketsa → Dizayini ya AI",
+      "ve": "Tshiketshe → Pulane ya AI"
+    },
+    {
+      "key": "siteDesignUploadIntro",
+      "english": "Upload a hand-drawn plan of your land (or a photo of one). Lima reads it and lays out a permaculture design on your sketch, using this site's climate, soil, sun and wind.",
+      "st": "Kenya moralo wa naha ya hao o takilweng ka letsoho (kapa senepe sa wona). Lima e a o bala mme e beha moralo wa permaculture hodima setshwantsho sa hao, e sebedisa boemo ba lehodimo, mobu, letsatsi le moya tsa sebaka sena.",
+      "ts": "Layicha pulani ya misava ya wena leyi dirowiweke hi voko (kumbe xifaniso xa yona). Lima wa yi hlaya kutani a veka dizayini ya permaculture eka xiketsa xa wena, a tirhisa maxelo, misava, dyambu ni moya swa ndhawu leyi.",
+      "ve": "Laisani pulane ya mavu aṋu yo oliwaho nga tshanḓa (kana tshifanyiso tshayo). Lima u a i vhala a dzudzanya pulane ya permaculture kha tshiketshe tshaṋu, a tshi shumisa mutsho, mavu, ḓuvha na muya zwa fhethu afha."
+    },
+    {
+      "key": "siteDesignDropSketch",
+      "english": "Drop your site sketch here or tap to upload",
+      "st": "Beha setshwantsho sa sebaka mona kapa o tobetse ho se kenya",
+      "ts": "Hoxa xiketsa xa ndhawu laha kumbe u tinya ku xi layicha",
+      "ve": "Vheani tshiketshe tsha fhethu hafha kana ni kwame u tshi laisa"
+    },
+    {
+      "key": "siteDesignSketchHint",
+      "english": "a hand drawing, plan, or photo of one",
+      "st": "setshwantsho sa letsoho, moralo kapa senepe sa tsona",
+      "ts": "xiketsa xa voko, pulani kumbe xifaniso xa swona",
+      "ve": "tshiketshe tsha tshanḓa, pulane kana tshifanyiso tshazwo"
+    },
+    {
+      "key": "siteDesignToneSimple",
+      "english": "Simple",
+      "st": "E bonolo",
+      "ts": "Swo olova",
+      "ve": "Zwo leluwaho"
+    },
+    {
+      "key": "siteDesignToneDetailed",
+      "english": "Detailed",
+      "st": "E qaqileng",
+      "ts": "Ya vuxokoxoko",
+      "ve": "Ya zwidodombedzwa"
+    },
+    {
+      "key": "siteDesignGenerating",
+      "english": "Designing your site…",
+      "st": "Sebaka sa hao se a ralwa…",
+      "ts": "Ku dizayina ndhawu ya wena…",
+      "ve": "Hu khou pulaniwa fhethu haṋu…"
+    },
+    {
+      "key": "siteDesignGenerateButton",
+      "english": "Generate design",
+      "st": "Etsa moralo",
+      "ts": "Endla dizayini",
+      "ve": "Bveledzani pulane"
+    },
+    {
+      "key": "siteDesignPhotoAnalysisNote",
+      "english": "Your photo analysis will be used in the design",
+      "st": "Tlhahlobo ya senepe sa hao e tla sebediswa moralong",
+      "ts": "Nxopaxopo wa xifaniso xa wena wu ta tirhisiwa eka dizayini",
+      "ve": "Tsenguluso ya tshifanyiso tshaṋu i ḓo shumiswa kha pulane"
+    },
+    {
+      "key": "mapGuideButton",
+      "english": "Lima's quick guide",
+      "st": "Tataiso e kgutshwane ya Lima",
+      "ts": "Nkongomiso wo koma wa Lima",
+      "ve": "Vhulivhisi vhupfufhi ha Lima"
+    },
+    {
+      "key": "mapGuideTitle",
+      "english": "How the map tools work",
+      "st": "Kamoo dithulusi tsa mmapa di sebetsang kateng",
+      "ts": "Ndlela leyi switirhisiwa swa mepe swi tirhaka ha yona",
+      "ve": "Nḓila ine zwishumiswa zwa mmapa zwa shuma ngayo"
+    },
+    {
+      "key": "mapGuideHeading",
+      "english": "Your map guide",
+      "st": "Tataiso ya hao ya mmapa",
+      "ts": "Nkongomiso wa wena wa mepe",
+      "ve": "Vhulivhisi haṋu ha mmapa"
+    },
+    {
+      "key": "mapGuideIntro",
+      "english": "Here’s the map in a few taps — you can reopen this any time with the ? button.",
+      "st": "Mmapa ke ona ka ho tobetsa makgetlo a mmalwa — o ka bula tataiso ena hape neng kapa neng ka konopo ya ?.",
+      "ts": "Mepe hi lowu hi ku tinya minkarhi yi nga ri yingani — u nga pfula nkongomiso lowu nkarhi wihi na wihi hi batheni ya ?.",
+      "ve": "Mmapa ndi uyu nga u kwama lu si lunzhi — ni nga vula vhulivhisi uhu tshifhinga tshiṅwe na tshiṅwe nga bathene ya ?."
+    },
+    {
+      "key": "mapGuideSearchTitle",
+      "english": "Find your land",
+      "st": "Fumana naha ya hao",
+      "ts": "Kuma misava ya wena",
+      "ve": "Wanani mavu aṋu"
+    },
+    {
+      "key": "mapGuideSearchDescription",
+      "english": "Search a town, or tap the map — I read its climate, soil and water.",
+      "st": "Batla toropo kapa o tobetse mmapa — ke bala boemo ba lehodimo, mobu le metsi a teng.",
+      "ts": "Lavisisa doroba kumbe u tinya mepe — ndzi hlaya maxelo, misava ni mati swa ndhawu.",
+      "ve": "Ṱoḓani ḓorobo kana ni kwame mmapa — ndi vhala mutsho, mavu na maḓi zwa hone."
+    },
+    {
+      "key": "mapGuideBoundaryTitle",
+      "english": "Draw land boundary",
+      "st": "Taka moedi wa naha",
+      "ts": "Dirowa ndzilekano wa misava",
+      "ve": "Olani mukano wa mavu"
+    },
+    {
+      "key": "mapGuideBoundaryDescription",
+      "english": "Mark each corner of your plot, or tap GPS to walk it. I measure the area.",
+      "st": "Tshwaya sekhutlo ka seng sa tshimo ya hao kapa o tobetse GPS ho e tsamaya. Ke lekanya boholo ba yona.",
+      "ts": "Maka khoneni yin’wana ni yin’wana ya ndhawu ya wena kumbe u tinya GPS ku famba hi ndzilekano. Ndza pima vukulu bya yona.",
+      "ve": "Swayani khona iṅwe na iṅwe ya mavu aṋu kana ni kwame GPS u i tshimbila. Ndi pima vhuhulwane haho."
+    },
+    {
+      "key": "mapGuideHarvestTitle",
+      "english": "Draw harvesting area",
+      "st": "Taka sebaka sa ho bokella metsi",
+      "ts": "Dirowa ndhawu yo hlengeleta mati",
+      "ve": "Olani fhethu ha u kuvhanganya maḓi"
+    },
+    {
+      "key": "mapGuideHarvestDescription",
+      "english": "Outline your roof, swale or earthwork — I calculate how much rain it collects.",
+      "st": "Taka moedi wa marulelo, foro ya ho tshwara metsi kapa mosebetsi wa mobu — ke bala pula eo e e bokellang.",
+      "ts": "Dirowa ndzilekano wa lwangu, swale kumbe xivumbeko xa misava — ndzi hlayela mpfula leyi xi yi hlengeletaka.",
+      "ve": "Olani mukano wa ṱhanga, mugero wa u fara maḓi kana mushumo wa mavu — ndi vhalela mvula ine zwa i kuvhanganya."
+    },
+    {
+      "key": "mapGuideWaterPointTitle",
+      "english": "Add water point",
+      "st": "Kenya sebaka sa metsi",
+      "ts": "Engetela ndhawu ya mati",
+      "ve": "Engedzani fhethu ha maḓi"
+    },
+    {
+      "key": "mapGuideWaterPointDescription",
+      "english": "Drop a pin on a borehole, spring, dam or tank — marks infrastructure on the map.",
+      "st": "Beha lesupa selibeng se tjhekilweng, mohloding, letamong kapa tankeng — se tshwaya ditshebeletso tsa metsi mmapeng.",
+      "ts": "Veka phini eka xihlovo xo borhiwa, xihlovo, damu kumbe tangi — yi maka switirhisiwa eka mepe.",
+      "ve": "Vheani phini kha mugodi wa maḓi, tshisima, damu kana thannga — i swaya themamveledziso kha mmapa."
+    },
+    {
+      "key": "mapGuidePlaceTitle",
+      "english": "Save place",
+      "st": "Boloka sebaka",
+      "ts": "Hlayisa ndhawu",
+      "ve": "Vhulungani fhethu"
+    },
+    {
+      "key": "mapGuidePlaceDescription",
+      "english": "Drop a coloured pin and name it — Home, Field or Water.",
+      "st": "Beha lesupa le nang le mmala mme o se rehe — Lehae, Tshimo kapa Metsi.",
+      "ts": "Veka phini ya muvala u yi thya vito — Kaya, Nsimu kumbe Mati.",
+      "ve": "Vheani phini ya muvhala ni i ṋee dzina — Hayani, Tsimu kana Maḓi."
+    },
+    {
+      "key": "mapGuideLayersTitle",
+      "english": "Map layers",
+      "st": "Dikarolo tsa mmapa",
+      "ts": "Swiyenge swa mepe",
+      "ve": "Zwiteṅwa zwa mmapa"
+    },
+    {
+      "key": "mapGuideLayersDescription",
+      "english": "Switch satellite / topo and toggle contours & relief.",
+      "st": "Fapanyetsana sathelaete / mmapa wa dibopeho tsa naha mme o bule kapa o kwale mela ya bophahamo le sebopeho sa naha.",
+      "ts": "Cinca sathelayiti / mepe wa xivumbeko xa misava kutani u pfulela kumbe u timela milayeni ya vulehe ni xivumbeko xa misava.",
+      "ve": "Tshintshani sathelaithi / mmapa wa mbumbo ya mavu ni vule kana u tsima mitalo ya vhunṱha na mbumbo ya mavu."
+    },
+    {
+      "key": "mapGuideClose",
+      "english": "Got it",
+      "st": "Ke utlwisisa",
+      "ts": "Ndza swi twisisa",
+      "ve": "Ndo zwi pfesesa"
+    },
+    {
+      "key": "mapPrintWindowTabTitle",
+      "english": "ImbewuField — base map",
+      "st": "ImbewuField — mmapa wa motheo",
+      "ts": "ImbewuField — mepe wa masungulo",
+      "ve": "ImbewuField — mmapa wa mutheo"
+    },
+    {
+      "key": "mapPrintWindowHeading",
+      "english": "Site base map",
+      "st": "Mmapa wa motheo wa sebaka",
+      "ts": "Mepe wa masungulo wa ndhawu",
+      "ve": "Mmapa wa mutheo wa fhethu"
+    },
+    {
+      "key": "mapPrintWindowInstructions",
+      "english": "Print and sketch your design by hand — beds, paths, trees, water, compost. Drawn to scale; contours show the slope.",
+      "st": "Printa mme o take moralo wa hao ka letsoho — dibethe, ditsela, difate, metsi le compost. O takilwe ka tekanyo; mela ya bophahamo e bontsha letsoapo.",
+      "ts": "Printa u dirowa dizayini ya wena hi voko — mibedo, tindlela, mirhi, mati ni compost. Wu dirowiwile hi xikalo; milayeni ya vulehe yi komba ku voyama.",
+      "ve": "Gandisani ni ole pulane yaṋu nga tshanḓa — mibete, nḓila, miri, maḓi na compost. Wo oliwa nga tshikalo; mitalo ya vhunṱha i sumbedza mutsheṱo."
+    },
+    {
+      "key": "limaWhoIs",
+      "english": "Lima, your planting helper",
+      "st": "Lima, mothusi wa hao wa ho lema",
+      "ts": "Lima, mupfuni wa wena wa ku byala",
+      "ve": "Lima, muthusi waṋu wa u ṱavha"
+    },
+    {
+      "key": "limaAskButton",
+      "english": "Ask for help",
+      "st": "Kopa thuso",
+      "ts": "Kombela mpfuno",
+      "ve": "Humbelani thuso"
+    },
+    {
+      "key": "limaPhotoButton",
+      "english": "Photo",
+      "st": "Senepe",
+      "ts": "Xifaniso",
+      "ve": "Tshifanyiso"
+    },
+    {
+      "key": "limaClosePhotoDialog",
+      "english": "Close",
+      "st": "Kwala",
+      "ts": "Pfala",
+      "ve": "Valani"
+    },
+    {
+      "key": "limaFabAriaLabel",
+      "english": "Open Lima, your field guide — drag to move",
+      "st": "Bula Lima, motataisi wa hao wa tshimong — hula ho mo suthisa",
+      "ts": "Pfula Lima, mukongomisi wa wena wa le nsin'wini — koka ku n'wi susumeta",
+      "ve": "Vulani Lima, mulivhisi waṋu wa tsimuni — kokodzani u mu sudzulusa"
+    },
+    {
+      "key": "limaFabTitle",
+      "english": "Open Lima",
+      "st": "Bula Lima",
+      "ts": "Pfula Lima",
+      "ve": "Vulani Lima"
+    },
+    {
+      "key": "limaFieldGuideSubtitle",
+      "english": "Field guide · ImbewuField",
+      "st": "Tataiso ya tshimo · ImbewuField",
+      "ts": "Nkongomiso wa nsimu · ImbewuField",
+      "ve": "Vhulivhisi ha tsimu · ImbewuField"
+    },
+    {
+      "key": "chatGreeting",
+      "english": "Hi — I'm Lima.",
+      "st": "Dumela — ke nna Lima.",
+      "ts": "Avuxeni — hi mina Lima.",
+      "ve": "Aa — ndi nṋe Lima."
+    },
+    {
+      "key": "chatIntro",
+      "english": "Ask about your site, crops, soil & water, finances, or project. Tap the camera to photograph a plant or pest for a diagnosis. Organic & regenerative only.",
+      "st": "Botsa ka sebaka sa hao, dijalo, mobu le metsi, ditjhelete kapa projeke. Tobetsa khamera ho nka senepe sa semela kapa sesenyi hore se hlahlojwe. Ka temo ya tlhaho le e tsosolosang feela.",
+      "ts": "Vutisa hi ndhawu ya wena, swibyariwa, misava ni mati, timali kumbe phurojeke. Tinya khamera u teka xifaniso xa ximilana kumbe xitsotswana leswaku xi hlahluviwa. Ku tirhisiwa tindlela ta vurimi bya ntumbuluko ni ku pfuxeta ntsena.",
+      "ve": "Vhudzisani nga fhethu haṋu, zwiliṅwa, mavu na maḓi, tshelede kana thandela. Kwamani khamera u dzhie tshifanyiso tsha tshimela kana tshikhokhonono uri tshi ṱolwe. Ndi zwa vhulimi ha mupo na u vusuludza fhedzi."
+    },
+    {
+      "key": "chatSampleDataLoaded",
+      "english": "Ubhejane farm data loaded — tap to clear",
+      "st": "Data ya polasi ya Ubhejane e kentswe — tobetsa ho e tlosa",
+      "ts": "Datha ya purasi ya Ubhejane yi layichiwile — tinya ku yi susa",
+      "ve": "Data ya bulasi ya Ubhejane yo laisiwa — kwamani u i bvisa"
+    },
+    {
+      "key": "chatSampleDataLoad",
+      "english": "Load Ubhejane farm data (to test finance questions)",
+      "st": "Kenya data ya polasi ya Ubhejane (ho leka dipotso tsa ditjhelete)",
+      "ts": "Layicha datha ya purasi ya Ubhejane (ku ringeta swivutiso swa timali)",
+      "ve": "Laisani data ya bulasi ya Ubhejane (u lingedza mbudziso dza tshelede)"
+    },
+    {
+      "key": "chatSuggestionPlant",
+      "english": "What should I plant on my site this season?",
+      "st": "Ke lokela ho lema eng sebakeng sa ka sehleng see?",
+      "ts": "Xana ndzi fanele ku byala yini eka ndhawu ya mina hi nguva leyi?",
+      "ve": "Ndi tea u ṱavha mini kha fhethu hanga kha khalanwaha iyi?"
+    },
+    {
+      "key": "chatSuggestionBestCrop",
+      "english": "Which of my crops makes the most money per kg?",
+      "st": "Ke sejalo sefe sa ka se fanang ka tjhelete e ngata ka kg?",
+      "ts": "Hi xihi xibyariwa xa mina lexi tisaka mali yo tala hi kg?",
+      "ve": "Ndi tshiliṅwa tshifhio tshanga tshi tisaho tshelede nnzhi nga kg?"
+    },
+    {
+      "key": "chatSuggestionContract",
+      "english": "What are my contract obligations and am I on track?",
+      "st": "Boitlamo ba ka ba konteraka ke bofe mme na ke ntse ke le tseleng e nepahetseng?",
+      "ts": "Hi swihi leswi kontiraka ya mina yi ndzi bohaka swona naswona xana ndzi le ndleleni leyi faneleke?",
+      "ve": "Ndi vhudifhinduleli vhufhio ha khonṱhiraka yanga nahone ndi kha nḓila yo teaho?"
+    },
+    {
+      "key": "chatSuggestionPest",
+      "english": "Natural ways to deal with pests & disease?",
+      "st": "Ke ditsela dife tsa tlhaho tsa ho laola disenyi le mafu?",
+      "ts": "Hi tihi tindlela ta ntumbuluko to lawula switsotswana ni mavabyi?",
+      "ve": "Ndi nḓila dzifhio dza mupo dza u langa zwikhokhonono na malwadze?"
+    },
+    {
+      "key": "chatSuggestionWater",
+      "english": "How do I harvest and store rainwater here?",
+      "st": "Nka bokella le ho boloka metsi a pula jwang mona?",
+      "ts": "Xana ndzi nga hlengeleta ni ku hlayisa mati ya mpfula laha hi ndlela yihi?",
+      "ve": "Ndi nga kuvhanganya na u vhulunga hani maḓi a mvula hafha?"
+    },
+    {
+      "key": "chatPhotoAttached",
+      "english": "Photo attached",
+      "st": "Senepe se kentswe",
+      "ts": "Xifaniso xi namarhetiwile",
+      "ve": "Tshifanyiso tsho ṱumetshedzwa"
+    },
+    {
+      "key": "chatRemovePhoto",
+      "english": "remove",
+      "st": "tlosa",
+      "ts": "susa",
+      "ve": "bvisani"
+    },
+    {
+      "key": "chatTakePhotoTitle",
+      "english": "Take / attach a photo",
+      "st": "Nka / kenya senepe",
+      "ts": "Teka / namarheta xifaniso",
+      "ve": "Dzhiani / ṱumetshedzani tshifanyiso"
+    },
+    {
+      "key": "chatInputPlaceholder",
+      "english": "Ask Lima anything...",
+      "st": "Botsa Lima eng kapa eng...",
+      "ts": "Vutisa Lima xin’wana ni xin’wana...",
+      "ve": "Vhudzisani Lima tshiṅwe na tshiṅwe..."
+    },
+    {
+      "key": "chatThinking",
+      "english": "Thinking…",
+      "st": "E a nahana…",
+      "ts": "Ku ehleketa…",
+      "ve": "Hu khou humbulwa…"
+    },
+    {
+      "key": "chatDefaultPhotoQuestion",
+      "english": "Please diagnose this photo.",
+      "st": "Ka kopo hlahloba senepe sena.",
+      "ts": "Hi kombela u hlahluva xifaniso lexi.",
+      "ve": "Ni khou humbelwa u ṱola tshifanyiso itshi."
+    },
+    {
+      "key": "chatErrorMessage",
+      "english": "Sorry, something went wrong. Please try again.",
+      "st": "Ho na le phoso e etsahetseng. Ka kopo leka hape.",
+      "ts": "Ku ve ni xihoxo. Hi kombela u ringeta nakambe.",
+      "ve": "Hu na zwe zwa khakhea. Ni khou humbelwa u lingedza hafhu."
+    },
+    {
+      "key": "chatPhotoOpenError",
+      "english": "This photo could not be opened. Please try another photo or a JPEG image.",
+      "st": "Senepe sena ha se a kgona ho buleha. Ka kopo leka senepe se seng kapa setshwantsho sa JPEG.",
+      "ts": "Xifaniso lexi a xi kotanga ku pfuleka. Hi kombela u ringeta xin’wana kumbe xifaniso xa JPEG.",
+      "ve": "Tshifanyiso itshi a tsho ngo kona u vulea. Ni khou humbelwa u lingedza tshiṅwe kana tshifanyiso tsha JPEG."
+    },
+    {
+      "key": "welcomeHeroTitle",
+      "english": "Let's find your land.",
+      "st": "A re fumane naha ya hao.",
+      "ts": "A hi kumeni misava ya wena.",
+      "ve": "Kha ri wane mavu aṋu."
+    },
+    {
+      "key": "welcomeHeroSub",
+      "english": "One tap — Lima reads your soil, rain and climate.",
+      "st": "Ka ho tobetsa hang — Lima e bala mobu, pula le boemo ba lehodimo ba sebaka sa hao.",
+      "ts": "Hi ku tinya kan’we — Lima u hlaya misava, mpfula ni maxelo swa ndhawu ya wena.",
+      "ve": "Nga u kwama luthihi — Lima u vhala mavu, mvula na mutsho zwa fhethu haṋu."
+    },
+    {
+      "key": "welcomeFindLand",
+      "english": "Find my land",
+      "st": "Fumana naha ya ka",
+      "ts": "Kuma misava ya mina",
+      "ve": "Wanani mavu anga"
+    },
+    {
+      "key": "homeTaskMarkNotDone",
+      "english": "Mark not done",
+      "newSource": true,
+      "zu": "Susa uphawu lokwenziwe",
+      "st": "Susa letshwao la ho qetwa",
+      "ts": "Maka leswaku a swi si hela",
+      "ve": "Swayani uri a zwi athu fhela"
+    },
+    {
+      "key": "homeTaskMarkDone",
+      "english": "Mark done",
+      "newSource": true,
+      "zu": "Maka njengokwenziwe",
+      "st": "Tshwaya hore e phethilwe",
+      "ts": "Maka leswaku swi herile",
+      "ve": "Swayani uri zwo fhela"
+    },
+    {
+      "key": "homeTaskAddCalendar",
+      "english": "Add to calendar",
+      "newSource": true,
+      "zu": "Faka ekhalendeni",
+      "st": "Kenya khalendareng",
+      "ts": "Engetela eka khalendara",
+      "ve": "Engedzani kha khaḽenda"
+    },
+    {
+      "key": "homePricesLabel",
+      "english": "Prices",
+      "newSource": true,
+      "zu": "Amanani",
+      "st": "Ditheko",
+      "ts": "Minxavo",
+      "ve": "Mitengo"
+    },
+    {
+      "key": "homePricesDescription",
+      "english": "Wholesale & retail",
+      "newSource": true,
+      "zu": "Izintengo zezitolo ezinkulu nezokuthengisa",
+      "st": "Ditheko tsa ho rekisa ka bongata le mabenkeleng",
+      "ts": "Minxavo ya ku xavisa hi xitalo ni ya le mavhengeleni",
+      "ve": "Mitengo ya u rengisa nga vhunzhi na ya mavhengeleni"
+    },
+    {
+      "key": "homeLearnAction",
+      "english": "Learn",
+      "newSource": true,
+      "zu": "Funda",
+      "st": "Ithute",
+      "ts": "Dyondza",
+      "ve": "Gudani"
+    },
+    {
+      "key": "homeTourDescription",
+      "english": "A guided look at your maps, crop plans, harvests, sales and invoices. Practise with Ubhejane Crèche Garden, then return to your own work.",
+      "newSource": true,
+      "zu": "Bheka amamephu akho, izinhlelo zezitshalo, izivuno, ukuthengisa nama-invoyisi ngokuqondiswa. Zilolonge e-Ubhejane Crèche Garden, bese ubuyela emsebenzini wakho.",
+      "st": "Ketelo e tataiswang ya dimmapa, meralo ya dijalo, dikotulo, dithekiso le di-invoice tsa hao. Ikwetlise ka Ubhejane Crèche Garden, ebe o kgutlela mosebetsing wa hao.",
+      "ts": "Riendzo leri kongomisiwaka ra mimepe, tipulani ta swibyariwa, ntshovelo, ku xavisa ni ti-invoice ta wena. Titolovete hi Ubhejane Crèche Garden, kutani u tlhelela eka mintirho ya wena.",
+      "ve": "Lwendo lu livhiswaho lwa mimapa, pulane dza zwiliṅwa, khaṋo, thengiso na dzi-invoice dzaṋu. Ḓiḓowedzeni nga Ubhejane Crèche Garden, ni kone u humela kha mushumo waṋu."
+    },
+    {
+      "key": "homeMentorHeroTitle",
+      "english": "Your mentor dashboard",
+      "newSource": true,
+      "zu": "Ideshibhodi yakho yomeluleki",
+      "st": "Kakaretso ya hao ya moeletsi",
+      "ts": "Nkatsakanyo wa wena wa muleteri",
+      "ve": "Manweledzo aṋu a mueletshedzi"
+    },
+    {
+      "key": "homeMentorHeroDescription",
+      "english": "Review your assigned farmers, garden visits and training records.",
+      "newSource": true,
+      "zu": "Buyekeza abalimi ababelwe wena, ukuvakashelwa kwezingadi namarekhodi okuqeqeshwa.",
+      "st": "Hlahloba balemi bao o ba abetsweng, diketelo tsa dirapa le ditlaleho tsa thupelo.",
+      "ts": "Kambisisa varimi lava u averiweke vona, maendzo ya swirhapa ni tirhekhodo ta ndzetelo.",
+      "ve": "Ṱolani vhalimi vhe na avhelwa, madalo a ngade na rekhodo dza vhugudisi."
+    },
+    {
+      "key": "homeMentorHeroOpen",
+      "english": "Open mentor dashboard",
+      "newSource": true,
+      "zu": "Vula ideshibhodi yomeluleki",
+      "st": "Bula kakaretso ya moeletsi",
+      "ts": "Pfula nkatsakanyo wa muleteri",
+      "ve": "Vulani manweledzo a mueletshedzi"
+    },
+    {
+      "key": "homeOrganisationHeroTitle",
+      "english": "Your organisation dashboard",
+      "newSource": true,
+      "zu": "Ideshibhodi yenhlangano yakho",
+      "st": "Kakaretso ya mokgatlo wa hao",
+      "ts": "Nkatsakanyo wa nhlangano wa wena",
+      "ve": "Manweledzo a dzangano ḽaṋu"
+    },
+    {
+      "key": "homeOrganisationHeroDescription",
+      "english": "Review gardens, assessments and reports across your programme.",
+      "newSource": true,
+      "zu": "Buyekeza izingadi, ukuhlola nemibiko kulo lonke uhlelo lwakho.",
+      "st": "Hlahloba dirapa, ditekolo le ditlaleho lenaneong lohle la hao.",
+      "ts": "Kambisisa swirhapa, mikambelo ni swiviko eka nongonoko wa wena hinkwaro.",
+      "ve": "Ṱolani ngade, ṱhaṱhuvho na mivhigo kha mbekanyamushumo yaṋu yoṱhe."
+    },
+    {
+      "key": "homeOrganisationHeroOpen",
+      "english": "Open organisation dashboard",
+      "newSource": true,
+      "zu": "Vula ideshibhodi yenhlangano",
+      "st": "Bula kakaretso ya mokgatlo",
+      "ts": "Pfula nkatsakanyo wa nhlangano",
+      "ve": "Vulani manweledzo a dzangano"
+    },
+    {
+      "key": "homeFunderHeroTitle",
+      "english": "Your funder dashboard",
+      "newSource": true,
+      "zu": "Ideshibhodi yakho yomxhasi",
+      "st": "Kakaretso ya hao ya motshehetsi",
+      "ts": "Nkatsakanyo wa wena wa museketeri wa timali",
+      "ve": "Manweledzo aṋu a muṋei wa tshelede"
+    },
+    {
+      "key": "homeFunderHeroDescription",
+      "english": "Review the programme summaries shared with you.",
+      "newSource": true,
+      "zu": "Buyekeza izifinyezo zohlelo esabelwane nawe.",
+      "st": "Hlahloba dikakaretso tsa lenaneo tse arolelanweng le wena.",
+      "ts": "Kambisisa minkatsakanyo ya nongonoko leyi avelaniweke na wena.",
+      "ve": "Ṱolani manweledzo a mbekanyamushumo e na kovhelwa."
+    },
+    {
+      "key": "homeFunderHeroOpen",
+      "english": "Open funder dashboard",
+      "newSource": true,
+      "zu": "Vula ideshibhodi yomxhasi",
+      "st": "Bula kakaretso ya motshehetsi",
+      "ts": "Pfula nkatsakanyo wa museketeri wa timali",
+      "ve": "Vulani manweledzo a muṋei wa tshelede"
+    },
+    {
+      "key": "homeSproutAria",
+      "english": "About your farm plan sprout",
+      "newSource": true,
+      "zu": "Mayelana nehlumela lohlelo lwepulazi lakho",
+      "st": "Ka lehlomela la moralo wa polasi ya hao",
+      "ts": "Hi xihluke xa pulani ya purasi ra wena",
+      "ve": "Nga tshimelana tsha pulane ya bulasi yaṋu"
+    },
+    {
+      "key": "homeSproutTitle",
+      "english": "Your farm plan sprout",
+      "newSource": true,
+      "zu": "Ihlumela lohlelo lwepulazi lakho",
+      "st": "Lehlomela la moralo wa polasi ya hao",
+      "ts": "Xihluke xa pulani ya purasi ra wena",
+      "ve": "Tshimelana tsha pulane ya bulasi yaṋu"
+    },
+    {
+      "key": "homeSproutDescription",
+      "english": "It grows as you find your land, trace its boundary, survey it, design it and plan crops.",
+      "newSource": true,
+      "zu": "Liyakhula njengoba uthola indawo yakho, ulandelela umngcele wayo, uyihlola, uyiklama futhi uhlele izitshalo.",
+      "st": "Le hola ha o fumana naha ya hao, o taka moedi wa yona, o e hlahloba, o e rala mme o rera dijalo.",
+      "ts": "Xa kula loko u kuma misava ya wena, u dirowa ndzilekano, u yi kambisisa, u yi dizayina kutani u kunguhata swibyariwa.",
+      "ve": "Tshi a hula musi ni tshi wana mavu aṋu, ni ola mukano waho, ni a ṱola, ni a pulana na u pulana zwiliṅwa."
+    },
+    {
+      "key": "homeSproutStatus",
+      "english": "{completed} of {total} steps done · {percent}% complete",
+      "newSource": true,
+      "zu": "Izinyathelo ezingu-{completed} kwezingu-{total} seziqediwe · {percent}% kuqediwe",
+      "st": "Mehato e {completed} ho e {total} e phethilwe · {percent}% e phethilwe",
+      "ts": "Magoza ya {completed} eka {total} ma herile · {percent}% yi hetisekile",
+      "ve": "Maḽiga a {completed} kha {total} o fhela · {percent}% yo fhela"
+    },
+    {
+      "key": "homeWeekdaySun",
+      "english": "Sunday",
+      "newSource": true,
+      "st": "Sontaha",
+      "ts": "Sonto",
+      "ve": "Swondaha"
+    },
+    {
+      "key": "homeWeekdayMon",
+      "english": "Monday",
+      "newSource": true,
+      "st": "Mantaha",
+      "ts": "Musumbhunuku",
+      "ve": "Musumbuluwo"
+    },
+    {
+      "key": "homeWeekdayTue",
+      "english": "Tuesday",
+      "newSource": true,
+      "st": "Labobedi",
+      "ts": "Ravumbirhi",
+      "ve": "Ḽavhuvhili"
+    },
+    {
+      "key": "homeWeekdayWed",
+      "english": "Wednesday",
+      "newSource": true,
+      "st": "Laboraro",
+      "ts": "Ravunharhu",
+      "ve": "Ḽavhuraru"
+    },
+    {
+      "key": "homeWeekdayThu",
+      "english": "Thursday",
+      "newSource": true,
+      "st": "Labone",
+      "ts": "Ravumune",
+      "ve": "Ḽavhuṋa"
+    },
+    {
+      "key": "homeWeekdayFri",
+      "english": "Friday",
+      "newSource": true,
+      "st": "Labohlano",
+      "ts": "Ravuntlhanu",
+      "ve": "Ḽavhuṱanu"
+    },
+    {
+      "key": "homeWeekdaySat",
+      "english": "Saturday",
+      "newSource": true,
+      "st": "Moqebelo",
+      "ts": "Mugqivela",
+      "ve": "Mugivhela"
+    },
+    {
+      "key": "reportsEnglishSavedNote",
+      "english": "Some saved reports have their full text in English. These controls use {language}.",
+      "newSource": true,
+      "zu": "Eminye imibiko egciniwe inombhalo ophelele wesiNgisi. Izilawuli zalapha zisebenzisa {language}.",
+      "st": "Ditlaleho tse ding tse bolokilweng di na le mongolo o felletseng ka Senyesemane. Ditaolo tsena di sebedisa {language}.",
+      "ts": "Swiviko swin’wana leswi hlayisiweke swi ni matsalwa ya swona hi Xinghezi. Swilawuri leswi swi tirhisa {language}.",
+      "ve": "Miṅwe mivhigo yo vhulungwaho i na maṅwalwa ayo o fhelelaho nga English. Zwilangi izwi zwi shumisa {language}."
+    },
+    {
+      "key": "welcomeShowExample",
+      "english": "Show me an example first",
+      "ts": "N’kombise xikombiso ku sungula",
+      "ve": "Ntsumbedzeni tsumbo u thoma"
+    }
+  ],
+  "preserved": [
+    {
+      "key": "reportOpenButton",
+      "language": "st",
+      "wording": "Bula"
+    },
+    {
+      "key": "reportToolbarBack",
+      "language": "st",
+      "wording": "Morao"
+    },
+    {
+      "key": "reportToolbarTitle",
+      "language": "st",
+      "wording": "Tlaleho ya Tlhahlobo ya Sebaka"
+    },
+    {
+      "key": "reportPrintSubtitle",
+      "language": "st",
+      "wording": "Tlaleho ya Tlhahlobo ya Sebaka ya Permaculture"
+    },
+    {
+      "key": "reportSavedPlacesHeader",
+      "language": "st",
+      "wording": "Dibaka tse Bolokilweng · Dintlha tsa GPS"
+    },
+    {
+      "key": "reportSatelliteViewHeader",
+      "language": "st",
+      "wording": "Pono ya Sathelaete ya Sebaka"
+    },
+    {
+      "key": "reportSatelliteImageAlt",
+      "language": "st",
+      "wording": "Pono ya sathelaete e nkilweng ya sebaka"
+    },
+    {
+      "key": "reportMonthlyRainfallHeader",
+      "language": "st",
+      "wording": "Mokgwa wa Pula wa Kgwedi le Kgwedi"
+    },
+    {
+      "key": "reportPlaceholderTitle",
+      "language": "st",
+      "wording": "Tlaleho"
+    },
+    {
+      "key": "reportPlaceholderBody",
+      "language": "st",
+      "wording": "Kgetha dikarolo tsa hao mme o tobetse Etsa"
+    },
+    {
+      "key": "reportSectionSelected",
+      "language": "st",
+      "wording": "karolo"
+    },
+    {
+      "key": "reportSectionsSelected",
+      "language": "st",
+      "wording": "dikarolo tse kgethilweng"
+    },
+    {
+      "key": "reportPhotosIncludedSuffix",
+      "language": "st",
+      "wording": "· dinepe di kenyeleditswe"
+    },
+    {
+      "key": "reportShareTitle",
+      "language": "st",
+      "wording": "Tlhahlobo ya Sebaka ya ImbewuField"
+    },
+    {
+      "key": "reportRainfallLabel",
+      "language": "st",
+      "wording": "Pula"
+    },
+    {
+      "key": "reportElevationLabel",
+      "language": "st",
+      "wording": "Bophahamo"
+    },
+    {
+      "key": "reportSoilPhLabel",
+      "language": "st",
+      "wording": "pH ya mobu"
+    },
+    {
+      "key": "reportVegetationLabel",
+      "language": "st",
+      "wording": "Dimela"
+    },
+    {
+      "key": "reportSiteAreaLabel",
+      "language": "st",
+      "wording": "Sebaka sa Sebaka"
+    },
+    {
+      "key": "reportWaterStorageLabel",
+      "language": "st",
+      "wording": "Polokelo ya Metsi"
+    },
+    {
+      "key": "reportExecutiveSummaryHeading",
+      "language": "st",
+      "wording": "Kakaretso e Phethahatsang"
+    },
+    {
+      "key": "reportCompletenessLabel",
+      "language": "st",
+      "wording": "Phethelo ya tlaleho"
+    },
+    {
+      "key": "reportEvidenceDocsLabel",
+      "language": "st",
+      "wording": "Bopaki & ditokomane"
+    },
+    {
+      "key": "reportFullLibraryLink",
+      "language": "st",
+      "wording": "Laeborari e felletseng"
+    },
+    {
+      "key": "reportGroupWater",
+      "language": "st",
+      "wording": "Metsi"
+    },
+    {
+      "key": "reportGroupStructures",
+      "language": "st",
+      "wording": "Meaho & phihlello"
+    },
+    {
+      "key": "reportGroupSoil",
+      "language": "st",
+      "wording": "Mobu & dibethe tsa serapa"
+    },
+    {
+      "key": "reportGroupTrees",
+      "language": "st",
+      "wording": "Difate & dimela tse leng teng"
+    },
+    {
+      "key": "reportGroupAnimals",
+      "language": "st",
+      "wording": "Dihlahiswa tsa diphoofolo"
+    },
+    {
+      "key": "reportGroupEnergy",
+      "language": "st",
+      "wording": "Matla & motlakase"
+    },
+    {
+      "key": "reportGroupSitePhotos",
+      "language": "st",
+      "wording": "Diponahalo tsa sebaka"
+    },
+    {
+      "key": "reportAddWater",
+      "language": "st",
+      "wording": "Kenyelletsa metsi"
+    },
+    {
+      "key": "reportAddStructures",
+      "language": "st",
+      "wording": "Kenyelletsa meaho & phihlello"
+    },
+    {
+      "key": "reportAddSoil",
+      "language": "st",
+      "wording": "Kenyelletsa mobu & dibethe tsa serapa"
+    },
+    {
+      "key": "reportAddTrees",
+      "language": "st",
+      "wording": "Kenyelletsa difate & dimela tse leng teng"
+    },
+    {
+      "key": "reportAddAnimals",
+      "language": "st",
+      "wording": "Kenyelletsa dihlahiswa tsa diphoofolo"
+    },
+    {
+      "key": "reportAddEnergy",
+      "language": "st",
+      "wording": "Kenyelletsa matla & motlakase"
+    },
+    {
+      "key": "reportItemSingular",
+      "language": "st",
+      "wording": "ntho"
+    },
+    {
+      "key": "reportItemPlural",
+      "language": "st",
+      "wording": "dintho"
+    },
+    {
+      "key": "reportPhotosCount",
+      "language": "st",
+      "wording": "{n} diponahalo"
+    },
+    {
+      "key": "reportOpenButton",
+      "language": "ts",
+      "wording": "Pfula"
+    },
+    {
+      "key": "reportToolbarBack",
+      "language": "ts",
+      "wording": "Tlhelela endzhaku"
+    },
+    {
+      "key": "reportToolbarTitle",
+      "language": "ts",
+      "wording": "Xiviko xa Nxopaxopo wa Ndhawu"
+    },
+    {
+      "key": "reportPrintSubtitle",
+      "language": "ts",
+      "wording": "Xiviko xa Nxopaxopo wa Ndhawu xa Permaculture"
+    },
+    {
+      "key": "reportSavedPlacesHeader",
+      "language": "ts",
+      "wording": "Tindhawu leti Hlayisiweke · Tindhawu ta GPS"
+    },
+    {
+      "key": "reportSatelliteViewHeader",
+      "language": "ts",
+      "wording": "Ku Languta ka Sathelayiti ka Ndhawu"
+    },
+    {
+      "key": "reportSatelliteImageAlt",
+      "language": "ts",
+      "wording": "Ku languta ka sathelayiti loku tekiweke ka ndhawu"
+    },
+    {
+      "key": "reportMonthlyRainfallHeader",
+      "language": "ts",
+      "wording": "Phetheni ya Mpfula ya N'hweti na N'hweti"
+    },
+    {
+      "key": "reportPlaceholderTitle",
+      "language": "ts",
+      "wording": "Xiviko"
+    },
+    {
+      "key": "reportPlaceholderBody",
+      "language": "ts",
+      "wording": "Hlawula swiyenge swa wena kutani u tinya Endla"
+    },
+    {
+      "key": "reportSectionSelected",
+      "language": "ts",
+      "wording": "xiyenge"
+    },
+    {
+      "key": "reportSectionsSelected",
+      "language": "ts",
+      "wording": "swiyenge leswi hlawuriweke"
+    },
+    {
+      "key": "reportPhotosIncludedSuffix",
+      "language": "ts",
+      "wording": "· swifaniso swi katsiwile"
+    },
+    {
+      "key": "reportShareTitle",
+      "language": "ts",
+      "wording": "Nxopaxopo wa Ndhawu wa ImbewuField"
+    },
+    {
+      "key": "reportRainfallLabel",
+      "language": "ts",
+      "wording": "Mpfula"
+    },
+    {
+      "key": "reportElevationLabel",
+      "language": "ts",
+      "wording": "Vutlakuko"
+    },
+    {
+      "key": "reportSoilPhLabel",
+      "language": "ts",
+      "wording": "pH ya misava"
+    },
+    {
+      "key": "reportVegetationLabel",
+      "language": "ts",
+      "wording": "Swimilana"
+    },
+    {
+      "key": "reportSiteAreaLabel",
+      "language": "ts",
+      "wording": "Vukulu bya Ndhawu"
+    },
+    {
+      "key": "reportWaterStorageLabel",
+      "language": "ts",
+      "wording": "Ku Hlayisa Mati"
+    },
+    {
+      "key": "reportExecutiveSummaryHeading",
+      "language": "ts",
+      "wording": "Nkatsakanyo wa Vufambisi"
+    },
+    {
+      "key": "reportCompletenessLabel",
+      "language": "ts",
+      "wording": "Ku hetiseka ka xiviko"
+    },
+    {
+      "key": "reportEvidenceDocsLabel",
+      "language": "ts",
+      "wording": "Vumbhoni & matsalwa"
+    },
+    {
+      "key": "reportFullLibraryLink",
+      "language": "ts",
+      "wording": "Layiburari hinkwayo"
+    },
+    {
+      "key": "reportGroupWater",
+      "language": "ts",
+      "wording": "Mati"
+    },
+    {
+      "key": "reportGroupStructures",
+      "language": "ts",
+      "wording": "Swiako & ku fikelela"
+    },
+    {
+      "key": "reportGroupSoil",
+      "language": "ts",
+      "wording": "Misava & mibhedhi yo byala"
+    },
+    {
+      "key": "reportGroupTrees",
+      "language": "ts",
+      "wording": "Mirhi & swimilana leswi nga kona"
+    },
+    {
+      "key": "reportGroupAnimals",
+      "language": "ts",
+      "wording": "Maendlelo ya swifuwo"
+    },
+    {
+      "key": "reportGroupEnergy",
+      "language": "ts",
+      "wording": "Matimba & gezi"
+    },
+    {
+      "key": "reportGroupSitePhotos",
+      "language": "ts",
+      "wording": "Swifaniso swa ndhawu"
+    },
+    {
+      "key": "reportAddWater",
+      "language": "ts",
+      "wording": "Engetela mati"
+    },
+    {
+      "key": "reportAddStructures",
+      "language": "ts",
+      "wording": "Engetela swiako & ku fikelela"
+    },
+    {
+      "key": "reportAddSoil",
+      "language": "ts",
+      "wording": "Engetela misava & mibhedhi yo byala"
+    },
+    {
+      "key": "reportAddTrees",
+      "language": "ts",
+      "wording": "Engetela mirhi & swimilana leswi nga kona"
+    },
+    {
+      "key": "reportAddAnimals",
+      "language": "ts",
+      "wording": "Engetela maendlelo ya swifuwo"
+    },
+    {
+      "key": "reportAddEnergy",
+      "language": "ts",
+      "wording": "Engetela matimba & gezi"
+    },
+    {
+      "key": "reportItemSingular",
+      "language": "ts",
+      "wording": "nchumu"
+    },
+    {
+      "key": "reportItemPlural",
+      "language": "ts",
+      "wording": "swilo"
+    },
+    {
+      "key": "reportPhotosCount",
+      "language": "ts",
+      "wording": "swifaniso swa {n}"
+    },
+    {
+      "key": "reportOpenButton",
+      "language": "ve",
+      "wording": "Vulani"
+    },
+    {
+      "key": "reportToolbarBack",
+      "language": "ve",
+      "wording": "Vhuyani murahu"
+    },
+    {
+      "key": "reportToolbarTitle",
+      "language": "ve",
+      "wording": "Muvhigo wa Tsedzuluso ya Fhethu"
+    },
+    {
+      "key": "reportPrintSubtitle",
+      "language": "ve",
+      "wording": "Muvhigo wa Tsedzuluso ya Fhethu wa Permaculture"
+    },
+    {
+      "key": "reportSavedPlacesHeader",
+      "language": "ve",
+      "wording": "Fhethu ho Vhulungwaho · Fhethu ha GPS"
+    },
+    {
+      "key": "reportSatelliteViewHeader",
+      "language": "ve",
+      "wording": "U Vhona ha Sathelaiti ha Fhethu"
+    },
+    {
+      "key": "reportSatelliteImageAlt",
+      "language": "ve",
+      "wording": "U vhona ha sathelaiti ho dzhiwaho ha fhethu"
+    },
+    {
+      "key": "reportMonthlyRainfallHeader",
+      "language": "ve",
+      "wording": "Phethheni ya Mvula ya Ṅwedzi nga Ṅwedzi"
+    },
+    {
+      "key": "reportPlaceholderTitle",
+      "language": "ve",
+      "wording": "Muvhigo"
+    },
+    {
+      "key": "reportPlaceholderBody",
+      "language": "ve",
+      "wording": "Khethani zwipiḓa zwaṋu nahone ni tobe Itani"
+    },
+    {
+      "key": "reportSectionSelected",
+      "language": "ve",
+      "wording": "tshipiḓa"
+    },
+    {
+      "key": "reportSectionsSelected",
+      "language": "ve",
+      "wording": "zwipiḓa zwo khethwaho"
+    },
+    {
+      "key": "reportPhotosIncludedSuffix",
+      "language": "ve",
+      "wording": "· zwifanyiso zwo katelwa"
+    },
+    {
+      "key": "reportShareTitle",
+      "language": "ve",
+      "wording": "Tsedzuluso ya Fhethu ya ImbewuField"
+    },
+    {
+      "key": "reportRainfallLabel",
+      "language": "ve",
+      "wording": "Mvula"
+    },
+    {
+      "key": "reportElevationLabel",
+      "language": "ve",
+      "wording": "Vhulapfu"
+    },
+    {
+      "key": "reportSoilPhLabel",
+      "language": "ve",
+      "wording": "pH ya mavu"
+    },
+    {
+      "key": "reportVegetationLabel",
+      "language": "ve",
+      "wording": "Zwimela"
+    },
+    {
+      "key": "reportSiteAreaLabel",
+      "language": "ve",
+      "wording": "Vhuhulwane ha Fhethu"
+    },
+    {
+      "key": "reportWaterStorageLabel",
+      "language": "ve",
+      "wording": "U Vhulunga Maḓi"
+    },
+    {
+      "key": "reportExecutiveSummaryHeading",
+      "language": "ve",
+      "wording": "Manweledzo a Vhulanguli"
+    },
+    {
+      "key": "reportCompletenessLabel",
+      "language": "ve",
+      "wording": "U fhelela ha muvhigo"
+    },
+    {
+      "key": "reportEvidenceDocsLabel",
+      "language": "ve",
+      "wording": "Vhuṱanzi & maṅwalwa"
+    },
+    {
+      "key": "reportFullLibraryLink",
+      "language": "ve",
+      "wording": "Laebulari yoṱhe"
+    },
+    {
+      "key": "reportGroupWater",
+      "language": "ve",
+      "wording": "Maḓi"
+    },
+    {
+      "key": "reportGroupStructures",
+      "language": "ve",
+      "wording": "Zwifhaṱo & nḓila dza u swikela"
+    },
+    {
+      "key": "reportGroupSoil",
+      "language": "ve",
+      "wording": "Mavu & ndima dza u lima"
+    },
+    {
+      "key": "reportGroupTrees",
+      "language": "ve",
+      "wording": "Miri & zwimela zwi re hone"
+    },
+    {
+      "key": "reportGroupAnimals",
+      "language": "ve",
+      "wording": "Maitele a zwifuwo"
+    },
+    {
+      "key": "reportGroupEnergy",
+      "language": "ve",
+      "wording": "Maanḓa & mudagasi"
+    },
+    {
+      "key": "reportGroupSitePhotos",
+      "language": "ve",
+      "wording": "Zwifanyiso zwa fhethu"
+    },
+    {
+      "key": "reportAddWater",
+      "language": "ve",
+      "wording": "Engedzani maḓi"
+    },
+    {
+      "key": "reportAddStructures",
+      "language": "ve",
+      "wording": "Engedzani zwifhaṱo & nḓila dza u swikela"
+    },
+    {
+      "key": "reportAddSoil",
+      "language": "ve",
+      "wording": "Engedzani mavu & ndima dza u lima"
+    },
+    {
+      "key": "reportAddTrees",
+      "language": "ve",
+      "wording": "Engedzani miri & zwimela zwi re hone"
+    },
+    {
+      "key": "reportAddAnimals",
+      "language": "ve",
+      "wording": "Engedzani maitele a zwifuwo"
+    },
+    {
+      "key": "reportAddEnergy",
+      "language": "ve",
+      "wording": "Engedzani maanḓa & mudagasi"
+    },
+    {
+      "key": "reportItemSingular",
+      "language": "ve",
+      "wording": "tshithu"
+    },
+    {
+      "key": "reportItemPlural",
+      "language": "ve",
+      "wording": "zwithu"
+    },
+    {
+      "key": "reportPhotosCount",
+      "language": "ve",
+      "wording": "zwifanyiso zwa {n}"
+    },
+    {
+      "key": "welcomeShowExample",
+      "language": "zu",
+      "wording": "Ngibonise isibonelo kuqala"
+    },
+    {
+      "key": "welcomeShowExample",
+      "language": "st",
+      "wording": "Mpontshe mohlala pele"
+    }
+  ],
+  "newEnglish": {
+    "homeTaskMarkNotDone": "Mark not done",
+    "homeTaskMarkDone": "Mark done",
+    "homeTaskAddCalendar": "Add to calendar",
+    "homePricesLabel": "Prices",
+    "homePricesDescription": "Wholesale & retail",
+    "homeLearnAction": "Learn",
+    "homeTourDescription": "A guided look at your maps, crop plans, harvests, sales and invoices. Practise with Ubhejane Crèche Garden, then return to your own work.",
+    "homeMentorHeroTitle": "Your mentor dashboard",
+    "homeMentorHeroDescription": "Review your assigned farmers, garden visits and training records.",
+    "homeMentorHeroOpen": "Open mentor dashboard",
+    "homeOrganisationHeroTitle": "Your organisation dashboard",
+    "homeOrganisationHeroDescription": "Review gardens, assessments and reports across your programme.",
+    "homeOrganisationHeroOpen": "Open organisation dashboard",
+    "homeFunderHeroTitle": "Your funder dashboard",
+    "homeFunderHeroDescription": "Review the programme summaries shared with you.",
+    "homeFunderHeroOpen": "Open funder dashboard",
+    "homeSproutAria": "About your farm plan sprout",
+    "homeSproutTitle": "Your farm plan sprout",
+    "homeSproutDescription": "It grows as you find your land, trace its boundary, survey it, design it and plan crops.",
+    "homeSproutStatus": "{completed} of {total} steps done · {percent}% complete",
+    "homeWeekdaySun": "Sunday",
+    "homeWeekdayMon": "Monday",
+    "homeWeekdayTue": "Tuesday",
+    "homeWeekdayWed": "Wednesday",
+    "homeWeekdayThu": "Thursday",
+    "homeWeekdayFri": "Friday",
+    "homeWeekdaySat": "Saturday",
+    "reportsEnglishSavedNote": "Some saved reports have their full text in English. These controls use {language}."
+  },
+  "beforeValues": {
+    "zu": {
+      "homeTaskMarkNotDone": null,
+      "homeTaskMarkDone": null,
+      "homeTaskAddCalendar": null,
+      "homePricesLabel": null,
+      "homePricesDescription": null,
+      "homeLearnAction": null,
+      "homeTourDescription": null,
+      "homeMentorHeroTitle": null,
+      "homeMentorHeroDescription": null,
+      "homeMentorHeroOpen": null,
+      "homeOrganisationHeroTitle": null,
+      "homeOrganisationHeroDescription": null,
+      "homeOrganisationHeroOpen": null,
+      "homeFunderHeroTitle": null,
+      "homeFunderHeroDescription": null,
+      "homeFunderHeroOpen": null,
+      "homeSproutAria": null,
+      "homeSproutTitle": null,
+      "homeSproutDescription": null,
+      "homeSproutStatus": null,
+      "reportsEnglishSavedNote": null
+    },
+    "st": {
+      "reportsViewerLoadError": null,
+      "reportsTitle": null,
+      "reportsIntro": null,
+      "reportsFunderNotice": null,
+      "reportsOpenFunderView": null,
+      "reportsLoading": null,
+      "reportsSampleWorkspaceNotice": null,
+      "reportsChooseSitesOrReports": null,
+      "reportsSavedSites": null,
+      "reportsSavedReports": null,
+      "reportsSelectNewSite": null,
+      "reportsSelectNewSiteHelp": null,
+      "reportsSitesDescription": null,
+      "reportsNoSitesTitle": null,
+      "reportsNoSitesHelp": null,
+      "reportsSavedSiteFallback": null,
+      "reportsOneSavedReportLatest": null,
+      "reportsManySavedReportsLatest": null,
+      "reportsReadyForFirstReport": null,
+      "reportsOpenWorkspaceForSite": null,
+      "reportsOpenGenerateReport": null,
+      "reportsReadLatest": null,
+      "reportsOpening": null,
+      "reportsEarlierReportsDescription": null,
+      "reportsNoSavedReports": null,
+      "reportsUnlinkedSiteHeading": null,
+      "reportsRemovedPinNote": null,
+      "reportBiomeLabel": "Biome",
+      "siteDesignOpenStudio": null,
+      "siteDesignStudioDesc": null,
+      "siteDesignStartDesigning": null,
+      "siteDesignSelectLocation": null,
+      "siteDesignSketchHeader": null,
+      "siteDesignUploadIntro": null,
+      "siteDesignDropSketch": null,
+      "siteDesignSketchHint": null,
+      "siteDesignToneSimple": null,
+      "siteDesignToneDetailed": null,
+      "siteDesignGenerating": null,
+      "siteDesignGenerateButton": null,
+      "siteDesignPhotoAnalysisNote": null,
+      "mapGuideButton": null,
+      "mapGuideTitle": null,
+      "mapGuideHeading": null,
+      "mapGuideIntro": null,
+      "mapGuideSearchTitle": null,
+      "mapGuideSearchDescription": null,
+      "mapGuideBoundaryTitle": null,
+      "mapGuideBoundaryDescription": null,
+      "mapGuideHarvestTitle": null,
+      "mapGuideHarvestDescription": null,
+      "mapGuideWaterPointTitle": null,
+      "mapGuideWaterPointDescription": null,
+      "mapGuidePlaceTitle": null,
+      "mapGuidePlaceDescription": null,
+      "mapGuideLayersTitle": null,
+      "mapGuideLayersDescription": null,
+      "mapGuideClose": null,
+      "mapPrintWindowTabTitle": null,
+      "mapPrintWindowHeading": null,
+      "mapPrintWindowInstructions": null,
+      "limaWhoIs": "Lima, your planting helper",
+      "limaAskButton": "Ask for help",
+      "limaPhotoButton": "Photo",
+      "limaClosePhotoDialog": null,
+      "limaFabAriaLabel": null,
+      "limaFabTitle": null,
+      "limaFieldGuideSubtitle": null,
+      "chatGreeting": "Hi — I'm Lima.",
+      "chatIntro": "Ask about your site, crops, soil & water, finances, or project. Tap the camera to photograph a plant or pest for a diagnosis. Organic & regenerative only.",
+      "chatSampleDataLoaded": "Ubhejane farm data loaded — tap to clear",
+      "chatSampleDataLoad": "Load Ubhejane farm data (to test finance questions)",
+      "chatSuggestionPlant": "What should I plant on my site this season?",
+      "chatSuggestionBestCrop": "Which of my crops makes the most money per kg?",
+      "chatSuggestionContract": "What are my contract obligations and am I on track?",
+      "chatSuggestionPest": "Natural ways to deal with pests & disease?",
+      "chatSuggestionWater": "How do I harvest and store rainwater here?",
+      "chatPhotoAttached": "Photo attached",
+      "chatRemovePhoto": "remove",
+      "chatTakePhotoTitle": "Take / attach a photo",
+      "chatInputPlaceholder": "Ask Lima anything...",
+      "chatThinking": "Thinking…",
+      "chatDefaultPhotoQuestion": "Please diagnose this photo.",
+      "chatErrorMessage": "Sorry, something went wrong. Please try again.",
+      "chatPhotoOpenError": "This photo could not be opened. Please try another photo or a JPEG image.",
+      "welcomeHeroTitle": null,
+      "welcomeHeroSub": null,
+      "welcomeFindLand": null,
+      "homeTaskMarkNotDone": null,
+      "homeTaskMarkDone": null,
+      "homeTaskAddCalendar": null,
+      "homePricesLabel": null,
+      "homePricesDescription": null,
+      "homeLearnAction": null,
+      "homeTourDescription": null,
+      "homeMentorHeroTitle": null,
+      "homeMentorHeroDescription": null,
+      "homeMentorHeroOpen": null,
+      "homeOrganisationHeroTitle": null,
+      "homeOrganisationHeroDescription": null,
+      "homeOrganisationHeroOpen": null,
+      "homeFunderHeroTitle": null,
+      "homeFunderHeroDescription": null,
+      "homeFunderHeroOpen": null,
+      "homeSproutAria": null,
+      "homeSproutTitle": null,
+      "homeSproutDescription": null,
+      "homeSproutStatus": null,
+      "homeWeekdaySun": null,
+      "homeWeekdayMon": null,
+      "homeWeekdayTue": null,
+      "homeWeekdayWed": null,
+      "homeWeekdayThu": null,
+      "homeWeekdayFri": null,
+      "homeWeekdaySat": null,
+      "reportsEnglishSavedNote": null
+    },
+    "ts": {
+      "reportsViewerLoadError": null,
+      "reportsTitle": null,
+      "reportsIntro": null,
+      "reportsFunderNotice": null,
+      "reportsOpenFunderView": null,
+      "reportsLoading": null,
+      "reportsSampleWorkspaceNotice": null,
+      "reportsChooseSitesOrReports": null,
+      "reportsSavedSites": null,
+      "reportsSavedReports": null,
+      "reportsSelectNewSite": null,
+      "reportsSelectNewSiteHelp": null,
+      "reportsSitesDescription": null,
+      "reportsNoSitesTitle": null,
+      "reportsNoSitesHelp": null,
+      "reportsSavedSiteFallback": null,
+      "reportsOneSavedReportLatest": null,
+      "reportsManySavedReportsLatest": null,
+      "reportsReadyForFirstReport": null,
+      "reportsOpenWorkspaceForSite": null,
+      "reportsOpenGenerateReport": null,
+      "reportsReadLatest": null,
+      "reportsOpening": null,
+      "reportsEarlierReportsDescription": null,
+      "reportsNoSavedReports": null,
+      "reportsUnlinkedSiteHeading": null,
+      "reportsRemovedPinNote": null,
+      "reportBiomeLabel": "Biome",
+      "siteDesignOpenStudio": null,
+      "siteDesignStudioDesc": null,
+      "siteDesignStartDesigning": null,
+      "siteDesignSelectLocation": null,
+      "siteDesignSketchHeader": null,
+      "siteDesignUploadIntro": null,
+      "siteDesignDropSketch": null,
+      "siteDesignSketchHint": null,
+      "siteDesignToneSimple": null,
+      "siteDesignToneDetailed": null,
+      "siteDesignGenerating": null,
+      "siteDesignGenerateButton": null,
+      "siteDesignPhotoAnalysisNote": null,
+      "mapGuideButton": null,
+      "mapGuideTitle": null,
+      "mapGuideHeading": null,
+      "mapGuideIntro": null,
+      "mapGuideSearchTitle": null,
+      "mapGuideSearchDescription": null,
+      "mapGuideBoundaryTitle": null,
+      "mapGuideBoundaryDescription": null,
+      "mapGuideHarvestTitle": null,
+      "mapGuideHarvestDescription": null,
+      "mapGuideWaterPointTitle": null,
+      "mapGuideWaterPointDescription": null,
+      "mapGuidePlaceTitle": null,
+      "mapGuidePlaceDescription": null,
+      "mapGuideLayersTitle": null,
+      "mapGuideLayersDescription": null,
+      "mapGuideClose": null,
+      "mapPrintWindowTabTitle": null,
+      "mapPrintWindowHeading": null,
+      "mapPrintWindowInstructions": null,
+      "limaWhoIs": "Lima, your planting helper",
+      "limaAskButton": "Ask for help",
+      "limaPhotoButton": "Photo",
+      "limaClosePhotoDialog": null,
+      "limaFabAriaLabel": null,
+      "limaFabTitle": null,
+      "limaFieldGuideSubtitle": null,
+      "chatGreeting": "Hi — I'm Lima.",
+      "chatIntro": "Ask about your site, crops, soil & water, finances, or project. Tap the camera to photograph a plant or pest for a diagnosis. Organic & regenerative only.",
+      "chatSampleDataLoaded": "Ubhejane farm data loaded — tap to clear",
+      "chatSampleDataLoad": "Load Ubhejane farm data (to test finance questions)",
+      "chatSuggestionPlant": "What should I plant on my site this season?",
+      "chatSuggestionBestCrop": "Which of my crops makes the most money per kg?",
+      "chatSuggestionContract": "What are my contract obligations and am I on track?",
+      "chatSuggestionPest": "Natural ways to deal with pests & disease?",
+      "chatSuggestionWater": "How do I harvest and store rainwater here?",
+      "chatPhotoAttached": "Photo attached",
+      "chatRemovePhoto": "remove",
+      "chatTakePhotoTitle": "Take / attach a photo",
+      "chatInputPlaceholder": "Ask Lima anything...",
+      "chatThinking": "Thinking…",
+      "chatDefaultPhotoQuestion": "Please diagnose this photo.",
+      "chatErrorMessage": "Sorry, something went wrong. Please try again.",
+      "chatPhotoOpenError": "This photo could not be opened. Please try another photo or a JPEG image.",
+      "welcomeHeroTitle": null,
+      "welcomeHeroSub": null,
+      "welcomeFindLand": null,
+      "homeTaskMarkNotDone": null,
+      "homeTaskMarkDone": null,
+      "homeTaskAddCalendar": null,
+      "homePricesLabel": null,
+      "homePricesDescription": null,
+      "homeLearnAction": null,
+      "homeTourDescription": null,
+      "homeMentorHeroTitle": null,
+      "homeMentorHeroDescription": null,
+      "homeMentorHeroOpen": null,
+      "homeOrganisationHeroTitle": null,
+      "homeOrganisationHeroDescription": null,
+      "homeOrganisationHeroOpen": null,
+      "homeFunderHeroTitle": null,
+      "homeFunderHeroDescription": null,
+      "homeFunderHeroOpen": null,
+      "homeSproutAria": null,
+      "homeSproutTitle": null,
+      "homeSproutDescription": null,
+      "homeSproutStatus": null,
+      "homeWeekdaySun": null,
+      "homeWeekdayMon": null,
+      "homeWeekdayTue": null,
+      "homeWeekdayWed": null,
+      "homeWeekdayThu": null,
+      "homeWeekdayFri": null,
+      "homeWeekdaySat": null,
+      "reportsEnglishSavedNote": null,
+      "welcomeShowExample": null
+    },
+    "ve": {
+      "reportsViewerLoadError": null,
+      "reportsTitle": null,
+      "reportsIntro": null,
+      "reportsFunderNotice": null,
+      "reportsOpenFunderView": null,
+      "reportsLoading": null,
+      "reportsSampleWorkspaceNotice": null,
+      "reportsChooseSitesOrReports": null,
+      "reportsSavedSites": null,
+      "reportsSavedReports": null,
+      "reportsSelectNewSite": null,
+      "reportsSelectNewSiteHelp": null,
+      "reportsSitesDescription": null,
+      "reportsNoSitesTitle": null,
+      "reportsNoSitesHelp": null,
+      "reportsSavedSiteFallback": null,
+      "reportsOneSavedReportLatest": null,
+      "reportsManySavedReportsLatest": null,
+      "reportsReadyForFirstReport": null,
+      "reportsOpenWorkspaceForSite": null,
+      "reportsOpenGenerateReport": null,
+      "reportsReadLatest": null,
+      "reportsOpening": null,
+      "reportsEarlierReportsDescription": null,
+      "reportsNoSavedReports": null,
+      "reportsUnlinkedSiteHeading": null,
+      "reportsRemovedPinNote": null,
+      "reportBiomeLabel": "Biome",
+      "siteDesignOpenStudio": null,
+      "siteDesignStudioDesc": null,
+      "siteDesignStartDesigning": null,
+      "siteDesignSelectLocation": null,
+      "siteDesignSketchHeader": null,
+      "siteDesignUploadIntro": null,
+      "siteDesignDropSketch": null,
+      "siteDesignSketchHint": null,
+      "siteDesignToneSimple": null,
+      "siteDesignToneDetailed": null,
+      "siteDesignGenerating": null,
+      "siteDesignGenerateButton": null,
+      "siteDesignPhotoAnalysisNote": null,
+      "mapGuideButton": null,
+      "mapGuideTitle": null,
+      "mapGuideHeading": null,
+      "mapGuideIntro": null,
+      "mapGuideSearchTitle": null,
+      "mapGuideSearchDescription": null,
+      "mapGuideBoundaryTitle": null,
+      "mapGuideBoundaryDescription": null,
+      "mapGuideHarvestTitle": null,
+      "mapGuideHarvestDescription": null,
+      "mapGuideWaterPointTitle": null,
+      "mapGuideWaterPointDescription": null,
+      "mapGuidePlaceTitle": null,
+      "mapGuidePlaceDescription": null,
+      "mapGuideLayersTitle": null,
+      "mapGuideLayersDescription": null,
+      "mapGuideClose": null,
+      "mapPrintWindowTabTitle": null,
+      "mapPrintWindowHeading": null,
+      "mapPrintWindowInstructions": null,
+      "limaWhoIs": "Lima, your planting helper",
+      "limaAskButton": "Ask for help",
+      "limaPhotoButton": "Photo",
+      "limaClosePhotoDialog": null,
+      "limaFabAriaLabel": null,
+      "limaFabTitle": null,
+      "limaFieldGuideSubtitle": null,
+      "chatGreeting": "Hi — I'm Lima.",
+      "chatIntro": "Ask about your site, crops, soil & water, finances, or project. Tap the camera to photograph a plant or pest for a diagnosis. Organic & regenerative only.",
+      "chatSampleDataLoaded": "Ubhejane farm data loaded — tap to clear",
+      "chatSampleDataLoad": "Load Ubhejane farm data (to test finance questions)",
+      "chatSuggestionPlant": "What should I plant on my site this season?",
+      "chatSuggestionBestCrop": "Which of my crops makes the most money per kg?",
+      "chatSuggestionContract": "What are my contract obligations and am I on track?",
+      "chatSuggestionPest": "Natural ways to deal with pests & disease?",
+      "chatSuggestionWater": "How do I harvest and store rainwater here?",
+      "chatPhotoAttached": "Photo attached",
+      "chatRemovePhoto": "remove",
+      "chatTakePhotoTitle": "Take / attach a photo",
+      "chatInputPlaceholder": "Ask Lima anything...",
+      "chatThinking": "Thinking…",
+      "chatDefaultPhotoQuestion": "Please diagnose this photo.",
+      "chatErrorMessage": "Sorry, something went wrong. Please try again.",
+      "chatPhotoOpenError": "This photo could not be opened. Please try another photo or a JPEG image.",
+      "welcomeHeroTitle": null,
+      "welcomeHeroSub": null,
+      "welcomeFindLand": null,
+      "homeTaskMarkNotDone": null,
+      "homeTaskMarkDone": null,
+      "homeTaskAddCalendar": null,
+      "homePricesLabel": null,
+      "homePricesDescription": null,
+      "homeLearnAction": null,
+      "homeTourDescription": null,
+      "homeMentorHeroTitle": null,
+      "homeMentorHeroDescription": null,
+      "homeMentorHeroOpen": null,
+      "homeOrganisationHeroTitle": null,
+      "homeOrganisationHeroDescription": null,
+      "homeOrganisationHeroOpen": null,
+      "homeFunderHeroTitle": null,
+      "homeFunderHeroDescription": null,
+      "homeFunderHeroOpen": null,
+      "homeSproutAria": null,
+      "homeSproutTitle": null,
+      "homeSproutDescription": null,
+      "homeSproutStatus": null,
+      "homeWeekdaySun": null,
+      "homeWeekdayMon": null,
+      "homeWeekdayTue": null,
+      "homeWeekdayWed": null,
+      "homeWeekdayThu": null,
+      "homeWeekdayFri": null,
+      "homeWeekdaySat": null,
+      "reportsEnglishSavedNote": null,
+      "welcomeShowExample": null
+    }
+  }
+}

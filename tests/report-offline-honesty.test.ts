@@ -56,7 +56,24 @@ test('a dead connection during generate reads as no-signal, not as Failed to fet
     'network-shaped errors must be recognised (Chrome and Safari word them differently)');
   assert.match(reportView, /No signal — writing the report needs internet/,
     'the farmer-language line must exist');
-  // The jargon must not be the fallback for network failures: the honest line and the raw
-  // message must be alternatives of the same ternary.
-  assert.match(reportView, /\? 'No signal[\s\S]{0,120}: err\.message/);
+  // Execute the actual catch classification. Unknown failures now have a translatable source
+  // instead of raw English, while HTTP codes and diagnostic detail remain available.
+  const start = reportView.indexOf('const offline =');
+  const end = reportView.indexOf('\n      }\n    } finally', start);
+  assert.ok(start >= 0 && end > start);
+  const classify = new Function('err', 'navigator', 'setError', 'console', reportView.slice(start, end));
+  const run = (message: string, online: boolean) => {
+    let shown = ''; const diagnostics: unknown[][] = [];
+    classify(new Error(message), { onLine: online }, (value: string) => { shown = value; }, { error: (...args: unknown[]) => diagnostics.push(args) });
+    return { shown, diagnostics };
+  };
+  for (const message of ['Failed to fetch', 'Load failed', 'NetworkError']) {
+    assert.match(run(message, true).shown, /^No signal — writing the report needs internet/);
+  }
+  assert.match(run('Unrecognised error', false).shown, /^No signal/);
+  assert.equal(run('HTTP 403', true).shown, 'HTTP 403');
+  const unknown = run('Unrecognised error', true);
+  assert.equal(unknown.shown, 'Could not generate the report. Please try again.');
+  assert.ok(unknown.diagnostics.flat().includes('Unrecognised error'));
+
 });

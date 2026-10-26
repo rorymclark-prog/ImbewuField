@@ -1,0 +1,342 @@
+{
+  "date": "2026-10-21",
+  "base": "4c3837434e9bc985e745fe86bd987846567d5261",
+  "branch": "codex/four-language-report-visuals",
+  "stackedOn": "#1033",
+  "status": "Unreviewed AI drafts; no fluent-speaker approval. Whole-app goal remains incomplete.",
+  "scope": "71 source variants: typed metric/chart text, figure chrome, calendar alternatives and fictional-garden chart descriptions. The figure drawing annotations and concept-art content are still outstanding.",
+  "isolatedFixture": "The real overview/card components were rendered with their actual CSS, existing demo facts and a fictional garden. Calendar and long-label SVGs used the production renderer. Forty SVG cases had no text outside their viewBoxes; every image decoded. Thirty-two screenshots were captured; the sixteen inspected calendar/progress/water screenshots are committed. No claim that a static SSR fixture exercised React scroll-cue effects.",
+  "appFixture": "Owned browser profile; English QA saved report with existing demo facts. At a glance selected, charts enlarged locally and Escape used to close. Next-generation language stayed English. No paid request or PDF creation was made. All sixteen actual-app screenshots were inspected and committed. Original saved bytes and body stayed exact; no horizontal overflow.",
+  "isolated": [
+    {
+      "lang": "zu",
+      "bounds": [
+        {
+          "id": "area",
+          "width": 640,
+          "height": 164,
+          "outside": []
+        },
+        {
+          "id": "rainfall",
+          "width": 640,
+          "height": 252,
+          "outside": []
+        },
+        {
+          "id": "water",
+          "width": 640,
+          "height": 150,
+          "outside": []
+        },
+        {
+          "id": "calendar-0",
+          "width": 820,
+          "height": 486,
+          "outside": []
+        },
+        {
+          "id": "calendar-7",
+          "width": 820,
+          "height": 370,
+          "outside": []
+        },
+        {
+          "id": "cost",
+          "width": 640,
+          "height": 296,
+          "outside": []
+        },
+        {
+          "id": "area",
+          "width": 640,
+          "height": 230,
+          "outside": []
+        },
+        {
+          "id": "learning",
+          "width": 640,
+          "height": 252,
+          "outside": []
+        },
+        {
+          "id": "empty",
+          "width": 640,
+          "height": 150,
+          "outside": []
+        },
+        {
+          "id": "long",
+          "width": 640,
+          "height": 182,
+          "outside": []
+        }
+      ],
+      "loadedImages": true,
+      "calendarAlternatives": [
+        "Ikhalenda lokuhlwanyela. Garlic · Bed 6: Mey; isizini yokuqala kuphela: Mey; Onions · Bed 1: Mas; isizini yokuqala kuphela: Mas; Butternut · Bed 3: Dis; Swiss chard (spinach) · Bed 5: Eph; isizini yokuqala kuphela: Eph; Tomatoes · Bed 4: Okt; Maize (mielies) · Bed 7: Okt; Green beans · Bed 5: Okt",
+        "Ikhalenda lokuhlwanyela. Lettuce · Bed 2, Bed 3: Mey, Sep; isizini yokuqala kuphela: Mey; Broccoli · Bed 6: Feb; Sweet potato · Bed 6: Okt; Cabbage · Bed 1, Bed 2: Mas; isizini yokuqala kuphela: Mas; Carrots · Bed 2, Bed 4: Eph"
+      ],
+      "bodyLanguage": "zu"
+    },
+    {
+      "lang": "st",
+      "bounds": [
+        {
+          "id": "area",
+          "width": 640,
+          "height": 164,
+          "outside": []
+        },
+        {
+          "id": "rainfall",
+          "width": 640,
+          "height": 252,
+          "outside": []
+        },
+        {
+          "id": "water",
+          "width": 640,
+          "height": 150,
+          "outside": []
+        },
+        {
+          "id": "calendar-0",
+          "width": 820,
+          "height": 486,
+          "outside": []
+        },
+        {
+          "id": "calendar-7",
+          "width": 820,
+          "height": 370,
+          "outside": []
+        },
+        {
+          "id": "cost",
+          "width": 640,
+          "height": 296,
+          "outside": []
+        },
+        {
+          "id": "area",
+          "width": 640,
+          "height": 230,
+          "outside": []
+        },
+        {
+          "id": "learning",
+          "width": 640,
+          "height": 252,
+          "outside": []
+        },
+        {
+          "id": "empty",
+          "width": 640,
+          "height": 150,
+          "outside": []
+        },
+        {
+          "id": "long",
+          "width": 640,
+          "height": 203,
+          "outside": []
+        }
+      ],
+      "loadedImages": true,
+      "calendarAlternatives": [
+        "Khalendara ya hao ya ho jala. Garlic · Bed 6: Mot; sehla sa pele feela: Mot; Onions · Bed 1: Hlb; sehla sa pele feela: Hlb; Butternut · Bed 3: Tsh; Swiss chard (spinach) · Bed 5: Mme; sehla sa pele feela: Mme; Tomatoes · Bed 4: Mph; Maize (mielies) · Bed 7: Mph; Green beans · Bed 5: Mph",
+        "Khalendara ya hao ya ho jala. Lettuce · Bed 2, Bed 3: Mot, Leo; sehla sa pele feela: Mot; Broccoli · Bed 6: Hlk; Sweet potato · Bed 6: Mph; Cabbage · Bed 1, Bed 2: Hlb; sehla sa pele feela: Hlb; Carrots · Bed 2, Bed 4: Mme"
+      ],
+      "bodyLanguage": "st"
+    },
+    {
+      "lang": "ts",
+      "bounds": [
+        {
+          "id": "area",
+          "width": 640,
+          "height": 164,
+          "outside": []
+        },
+        {
+          "id": "rainfall",
+          "width": 640,
+          "height": 252,
+          "outside": []
+        },
+        {
+          "id": "water",
+          "width": 640,
+          "height": 150,
+          "outside": []
+        },
+        {
+          "id": "calendar-0",
+          "width": 820,
+          "height": 486,
+          "outside": []
+        },
+        {
+          "id": "calendar-7",
+          "width": 820,
+          "height": 370,
+          "outside": []
+        },
+        {
+          "id": "cost",
+          "width": 640,
+          "height": 296,
+          "outside": []
+        },
+        {
+          "id": "area",
+          "width": 640,
+          "height": 230,
+          "outside": []
+        },
+        {
+          "id": "learning",
+          "width": 640,
+          "height": 252,
+          "outside": []
+        },
+        {
+          "id": "empty",
+          "width": 640,
+          "height": 150,
+          "outside": []
+        },
+        {
+          "id": "long",
+          "width": 640,
+          "height": 203,
+          "outside": []
+        }
+      ],
+      "loadedImages": true,
+      "calendarAlternatives": [
+        "Khalendara ya wena yo byala hi mbewu. Garlic · Bed 6: Mudy; nguva yo sungula ntsena: Mudy; Onions · Bed 1: Nyku; nguva yo sungula ntsena: Nyku; Butternut · Bed 3: N'we; Swiss chard (spinach) · Bed 5: Dziv; nguva yo sungula ntsena: Dziv; Tomatoes · Bed 4: Nhla; Maize (mielies) · Bed 7: Nhla; Green beans · Bed 5: Nhla",
+        "Khalendara ya wena yo byala hi mbewu. Lettuce · Bed 2, Bed 3: Mudy, Ndzh; nguva yo sungula ntsena: Mudy; Broccoli · Bed 6: Nyny; Sweet potato · Bed 6: Nhla; Cabbage · Bed 1, Bed 2: Nyku; nguva yo sungula ntsena: Nyku; Carrots · Bed 2, Bed 4: Dziv"
+      ],
+      "bodyLanguage": "ts"
+    },
+    {
+      "lang": "ve",
+      "bounds": [
+        {
+          "id": "area",
+          "width": 640,
+          "height": 164,
+          "outside": []
+        },
+        {
+          "id": "rainfall",
+          "width": 640,
+          "height": 252,
+          "outside": []
+        },
+        {
+          "id": "water",
+          "width": 640,
+          "height": 150,
+          "outside": []
+        },
+        {
+          "id": "calendar-0",
+          "width": 820,
+          "height": 486,
+          "outside": []
+        },
+        {
+          "id": "calendar-7",
+          "width": 820,
+          "height": 370,
+          "outside": []
+        },
+        {
+          "id": "cost",
+          "width": 640,
+          "height": 296,
+          "outside": []
+        },
+        {
+          "id": "area",
+          "width": 640,
+          "height": 230,
+          "outside": []
+        },
+        {
+          "id": "learning",
+          "width": 640,
+          "height": 252,
+          "outside": []
+        },
+        {
+          "id": "empty",
+          "width": 640,
+          "height": 150,
+          "outside": []
+        },
+        {
+          "id": "long",
+          "width": 640,
+          "height": 203,
+          "outside": []
+        }
+      ],
+      "loadedImages": true,
+      "calendarAlternatives": [
+        "Khalenda yaṋu ya u zwala. Garlic · Bed 6: Shun; khalanwaha ya u thoma fhedzi: Shun; Onions · Bed 1: Ṱhaf; khalanwaha ya u thoma fhedzi: Ṱhaf; Butternut · Bed 3: Nyen; Swiss chard (spinach) · Bed 5: Lamb; khalanwaha ya u thoma fhedzi: Lamb; Tomatoes · Bed 4: Tshi; Maize (mielies) · Bed 7: Tshi; Green beans · Bed 5: Tshi",
+        "Khalenda yaṋu ya u zwala. Lettuce · Bed 2, Bed 3: Shun, Khub; khalanwaha ya u thoma fhedzi: Shun; Broccoli · Bed 6: Luhu; Sweet potato · Bed 6: Tshi; Cabbage · Bed 1, Bed 2: Ṱhaf; khalanwaha ya u thoma fhedzi: Ṱhaf; Carrots · Bed 2, Bed 4: Lamb"
+      ],
+      "bodyLanguage": "ve"
+    }
+  ],
+  "app": [
+    {
+      "lang": "zu",
+      "visualLanguage": "zu",
+      "requestedLanguage": "en",
+      "waterText": "L\nUkugcina amanzi\nBuka ngosayizi ogcwele\nRainwater tank (2500 L) ×1\n2 500 L\nokuhleliwe\n\nUmthamo awusho amanzi akhona manje.",
+      "modalAlt": "Ukugcina amanzi",
+      "originalBytesUnchanged": true,
+      "originalBody": true,
+      "originalContentLanguage": "en",
+      "overflow": false
+    },
+    {
+      "lang": "st",
+      "visualLanguage": "st",
+      "requestedLanguage": "en",
+      "waterText": "L\nPolokelo ya metsi\nSheba ka boholo bo felletseng\nRainwater tank (2500 L) ×1\n2 500 L\ne sisinngwang\n\nBokgoni ha se metsi a fumanehang hona jwale.",
+      "modalAlt": "Polokelo ya metsi",
+      "originalBytesUnchanged": true,
+      "originalBody": true,
+      "originalContentLanguage": "en",
+      "overflow": false
+    },
+    {
+      "lang": "ts",
+      "visualLanguage": "ts",
+      "requestedLanguage": "en",
+      "waterText": "L\nVuhlayiselo bya mati\nVona hi sayizi leyi heleleke\nRainwater tank (2500 L) ×1\n2 500 L\nlexi ringanyetiwaka\n\nVundzeni a hi mati lama nga kona sweswi.",
+      "modalAlt": "Vuhlayiselo bya mati",
+      "originalBytesUnchanged": true,
+      "originalBody": true,
+      "originalContentLanguage": "en",
+      "overflow": false
+    },
+    {
+      "lang": "ve",
+      "visualLanguage": "ve",
+      "requestedLanguage": "en",
+      "waterText": "L\nVhugalelo ha maḓi\nVhonani nga saizi yo fhelelaho\nRainwater tank (2500 L) ×1\n2 500 L\ntsho dzinginywaho\n\nVhungomu a si maḓi ane a vha hone zwino.",
+      "modalAlt": "Vhugalelo ha maḓi",
+      "originalBytesUnchanged": true,
+      "originalBody": true,
+      "originalContentLanguage": "en",
+      "overflow": false
+    }
+  ]
+}

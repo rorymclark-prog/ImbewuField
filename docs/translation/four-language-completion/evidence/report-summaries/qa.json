@@ -1,0 +1,242 @@
+{
+  "date": "2026-10-21",
+  "base": "a91d590da461876b730efab0a2a9ccc6a4c4476f",
+  "branch": "codex/four-language-report-summaries",
+  "stackedOn": "#1032",
+  "status": "Unreviewed AI drafts, not fluent-speaker approval. Whole-app translation remains incomplete.",
+  "fixture": "Existing demo design/crop plan with lab soil source and original farm name Original Ṱhoho {count} farm. Literal braces intentionally test preservation of a recorded name. Saved report body is an English QA snapshot in an owned browser profile. No paid requests were made.",
+  "pdfReview": "All 24 pages of eight one/five-page PDFs were rendered and visually inspected. Browser downloads have the exact same extracted text and rendered PNG hashes as the inspected Node outputs. Fonts preserve native letters; bodies, cautions and footers do not overlap.",
+  "browserReview": "Sixteen phone/desktop screenshots captured; four phone one-page and four desktop five-page screenshots visually inspected. DOM checks cover both editions in all four languages. Charts/figure text above summaries still has English-only content, outside this batch and outstanding under the whole-app goal.",
+  "browser": [
+    {
+      "lang": "zu",
+      "reading": "one",
+      "summaryLang": "zu",
+      "pages": 1,
+      "requestedLanguage": "en",
+      "originalBytesUnchanged": true,
+      "overflow": false,
+      "nativeBody": "01\nAMANOTHI ASENSIMINI · 1 / 1\nOriginal Ṱhoho {count} farm\n28.6280°S, 29.8910°E\nUmngcele obalazwe: Akubhaliwe\nIndawo yokutshala ebalazwe: 128 m²\nImibhede yemifino: 7 · 44 m²\nIziza zezitshalo eziyisisekelo: 4 · 84 m²\nIndawo ebalazwe ayiqinisekisi ukuthi yonke i",
+      "downloadName": "ImbewuField-Site-Report-Original-Thoho-count-farm-2026-10-21-1-page-summary.pdf",
+      "downloadError": null
+    },
+    {
+      "lang": "zu",
+      "reading": "five",
+      "summaryLang": "zu",
+      "pages": 5,
+      "requestedLanguage": "en",
+      "originalBytesUnchanged": true,
+      "overflow": false,
+      "nativeBody": "01\nAMANOTHI ASENSIMINI · 1 / 5\nOriginal Ṱhoho {count} farm\n28.6280°S, 29.8910°E\nUmngcele obalazwe: Akubhaliwe\nIndawo yokutshala ebalazwe: 128 m²\nImibhede yemifino: 7 · 44 m²\nIziza zezitshalo eziyisisekelo: 4 · 84 m²\nIndawo ebalazwe ayiqinisekisi ukuthi yonke i",
+      "downloadName": "ImbewuField-Site-Report-Original-Thoho-count-farm-2026-10-21-5-page-summary.pdf",
+      "downloadError": null
+    },
+    {
+      "lang": "zu",
+      "returnedToOriginal": true,
+      "originalContentLanguage": "en"
+    },
+    {
+      "lang": "st",
+      "reading": "one",
+      "summaryLang": "st",
+      "pages": 1,
+      "requestedLanguage": "en",
+      "originalBytesUnchanged": true,
+      "overflow": false,
+      "nativeBody": "01\nDINTLHA TSA TSHIMO · 1 / 1\nOriginal Ṱhoho {count} farm\n28.6280°S, 29.8910°E\nMoedi o takilweng mmapeng: Ha e a rekotwa\nSebaka sa ho lema se takilweng mmapeng: 128 m²\nDibethe tsa meroho: 7 · 44 m²\nDitsha tsa dijalo tsa motheo: 4 · 84 m²\nSebaka se takilweng mm",
+      "downloadName": "ImbewuField-Site-Report-Original-Thoho-count-farm-2026-10-21-1-page-summary.pdf",
+      "downloadError": null
+    },
+    {
+      "lang": "st",
+      "reading": "five",
+      "summaryLang": "st",
+      "pages": 5,
+      "requestedLanguage": "en",
+      "originalBytesUnchanged": true,
+      "overflow": false,
+      "nativeBody": "01\nDINTLHA TSA TSHIMO · 1 / 5\nOriginal Ṱhoho {count} farm\n28.6280°S, 29.8910°E\nMoedi o takilweng mmapeng: Ha e a rekotwa\nSebaka sa ho lema se takilweng mmapeng: 128 m²\nDibethe tsa meroho: 7 · 44 m²\nDitsha tsa dijalo tsa motheo: 4 · 84 m²\nSebaka se takilweng mm",
+      "downloadName": "ImbewuField-Site-Report-Original-Thoho-count-farm-2026-10-21-5-page-summary.pdf",
+      "downloadError": null
+    },
+    {
+      "lang": "st",
+      "returnedToOriginal": true,
+      "originalContentLanguage": "en"
+    },
+    {
+      "lang": "ts",
+      "reading": "one",
+      "summaryLang": "ts",
+      "pages": 1,
+      "requestedLanguage": "en",
+      "originalBytesUnchanged": true,
+      "overflow": false,
+      "nativeBody": "01\nTINOTSI TA NSIMU · 1 / 1\nOriginal Ṱhoho {count} farm\n28.6280°S, 29.8910°E\nNdzilakana lowu dirowiweke emepeni: A swi rhekhodiwanga\nNdhawu yo byala leyi dirowiweke emepeni: 128 m²\nMibedo ya matsavu: 7 · 44 m²\nSwiphemu swa swibyariwa swa swakudya swa nkoka: 4 ",
+      "downloadName": "ImbewuField-Site-Report-Original-Thoho-count-farm-2026-10-21-1-page-summary.pdf",
+      "downloadError": null
+    },
+    {
+      "lang": "ts",
+      "reading": "five",
+      "summaryLang": "ts",
+      "pages": 5,
+      "requestedLanguage": "en",
+      "originalBytesUnchanged": true,
+      "overflow": false,
+      "nativeBody": "01\nTINOTSI TA NSIMU · 1 / 5\nOriginal Ṱhoho {count} farm\n28.6280°S, 29.8910°E\nNdzilakana lowu dirowiweke emepeni: A swi rhekhodiwanga\nNdhawu yo byala leyi dirowiweke emepeni: 128 m²\nMibedo ya matsavu: 7 · 44 m²\nSwiphemu swa swibyariwa swa swakudya swa nkoka: 4 ",
+      "downloadName": "ImbewuField-Site-Report-Original-Thoho-count-farm-2026-10-21-5-page-summary.pdf",
+      "downloadError": null
+    },
+    {
+      "lang": "ts",
+      "returnedToOriginal": true,
+      "originalContentLanguage": "en"
+    },
+    {
+      "lang": "ve",
+      "reading": "one",
+      "summaryLang": "ve",
+      "pages": 1,
+      "requestedLanguage": "en",
+      "originalBytesUnchanged": true,
+      "overflow": false,
+      "nativeBody": "01\nNOTSI DZA TSIMU · 1 / 1\nOriginal Ṱhoho {count} farm\n28.6280°S, 29.8910°E\nMukano wo olwaho kha mapa: A zwo ngo rekhodiwa\nFhethu ha u lima ho olwaho kha mapa: 128 m²\nMibete ya miroho: 7 · 44 m²\nZwipiḓa zwa zwiliṅwa zwa zwiḽiwa zwa ndeme: 4 · 84 m²\nFhethu ho o",
+      "downloadName": "ImbewuField-Site-Report-Original-Thoho-count-farm-2026-10-21-1-page-summary.pdf",
+      "downloadError": null
+    },
+    {
+      "lang": "ve",
+      "reading": "five",
+      "summaryLang": "ve",
+      "pages": 5,
+      "requestedLanguage": "en",
+      "originalBytesUnchanged": true,
+      "overflow": false,
+      "nativeBody": "01\nNOTSI DZA TSIMU · 1 / 5\nOriginal Ṱhoho {count} farm\n28.6280°S, 29.8910°E\nMukano wo olwaho kha mapa: A zwo ngo rekhodiwa\nFhethu ha u lima ho olwaho kha mapa: 128 m²\nMibete ya miroho: 7 · 44 m²\nZwipiḓa zwa zwiliṅwa zwa zwiḽiwa zwa ndeme: 4 · 84 m²\nFhethu ho o",
+      "downloadName": "ImbewuField-Site-Report-Original-Thoho-count-farm-2026-10-21-5-page-summary.pdf",
+      "downloadError": null
+    },
+    {
+      "lang": "ve",
+      "returnedToOriginal": true,
+      "originalContentLanguage": "en"
+    }
+  ],
+  "pdfs": [
+    {
+      "language": "zu",
+      "requestedPages": 1,
+      "pages": 1,
+      "bytes": 74269,
+      "browserDownloaded": true,
+      "textMatchesInspectedNodePdf": true,
+      "renderedPixelsMatchInspectedPages": true,
+      "pageSha256": {
+        "report-summary-zu-1-1.png": "993eee1d9bab83348c2007fc5bf8cf3852f30d242c677436ea76a70743834457"
+      }
+    },
+    {
+      "language": "zu",
+      "requestedPages": 5,
+      "pages": 5,
+      "bytes": 80277,
+      "browserDownloaded": true,
+      "textMatchesInspectedNodePdf": true,
+      "renderedPixelsMatchInspectedPages": true,
+      "pageSha256": {
+        "report-summary-zu-5-1.png": "2b782f7bf3b0c8d794327fb6defa8f8229b607bba6bae6924a0ac99af1deba0f",
+        "report-summary-zu-5-2.png": "95796716212ecd17839964c377912401931550697aef41e225a58c58b74004d1",
+        "report-summary-zu-5-3.png": "5a4200b17913ee33f875c06c856435f45f71c50e3c4e19b696963a0841f647bb",
+        "report-summary-zu-5-4.png": "ec00c19de77ffa28310d72e611ea8caa381b915a367149592c38ba544acfbc89",
+        "report-summary-zu-5-5.png": "d70c14a2d7c3d902609947de6aa34f8527f0452a213c5128671ead5ad14be441"
+      }
+    },
+    {
+      "language": "st",
+      "requestedPages": 1,
+      "pages": 1,
+      "bytes": 74036,
+      "browserDownloaded": true,
+      "textMatchesInspectedNodePdf": true,
+      "renderedPixelsMatchInspectedPages": true,
+      "pageSha256": {
+        "report-summary-st-1-1.png": "150e880d125769558cedfc48e89133be7f46c468ae03f0fd098bc3769b20e283"
+      }
+    },
+    {
+      "language": "st",
+      "requestedPages": 5,
+      "pages": 5,
+      "bytes": 79994,
+      "browserDownloaded": true,
+      "textMatchesInspectedNodePdf": true,
+      "renderedPixelsMatchInspectedPages": true,
+      "pageSha256": {
+        "report-summary-st-5-2.png": "5fa6dfaf11cf8ae749f8785bcd2608d56346bec817070acb4f24e79c84cb64ef",
+        "report-summary-st-5-3.png": "c407f8e1543ffaf72ffe9ec99831fae0caf3c60120a45011cef7f8dc9a977a83",
+        "report-summary-st-5-1.png": "b5b04cd82f621a903c0fd7b04af32c43b1058de7a88b89f52dc9650e02d4aba7",
+        "report-summary-st-5-4.png": "48900f9f120deb32f4de961ff73ce16e0f2451b0cb5799a30e1d9dc20655a287",
+        "report-summary-st-5-5.png": "706422fb38c3927ff5f192078c70adb0576b2fd836f4a2e2af48969b9a2bb1ed"
+      }
+    },
+    {
+      "language": "ts",
+      "requestedPages": 1,
+      "pages": 1,
+      "bytes": 74355,
+      "browserDownloaded": true,
+      "textMatchesInspectedNodePdf": true,
+      "renderedPixelsMatchInspectedPages": true,
+      "pageSha256": {
+        "report-summary-ts-1-1.png": "86e0b69580fa0c171b7d82a5ad85afaafc6fcf6ae98e4d7026d5983627616b8d"
+      }
+    },
+    {
+      "language": "ts",
+      "requestedPages": 5,
+      "pages": 5,
+      "bytes": 80694,
+      "browserDownloaded": true,
+      "textMatchesInspectedNodePdf": true,
+      "renderedPixelsMatchInspectedPages": true,
+      "pageSha256": {
+        "report-summary-ts-5-5.png": "65a9e46a574a602b52c8fc9663adf83998f1dda252ce4c8157b3dd856044004d",
+        "report-summary-ts-5-4.png": "60221eccda73731e6b1052af35b1a2071118482e3aed4d5578baf5c17c65ede9",
+        "report-summary-ts-5-1.png": "be99513151ae39f01770c5de901f5b833877fadc72f7a0f8956886eb71c7d19f",
+        "report-summary-ts-5-3.png": "73832f2210204f727db2f4b89767d7c7863d1130da4637f3010c516a3992fb72",
+        "report-summary-ts-5-2.png": "f58c20183160623b500c99f39f4df45df773be1337a61e9920f6956ee43be8d9"
+      }
+    },
+    {
+      "language": "ve",
+      "requestedPages": 1,
+      "pages": 1,
+      "bytes": 74557,
+      "browserDownloaded": true,
+      "textMatchesInspectedNodePdf": true,
+      "renderedPixelsMatchInspectedPages": true,
+      "pageSha256": {
+        "report-summary-ve-1-1.png": "8a3aca45a5ab5ea9a371289d287a0acf87af069279ca3aa6f4c77d480849237c"
+      }
+    },
+    {
+      "language": "ve",
+      "requestedPages": 5,
+      "pages": 5,
+      "bytes": 80935,
+      "browserDownloaded": true,
+      "textMatchesInspectedNodePdf": true,
+      "renderedPixelsMatchInspectedPages": true,
+      "pageSha256": {
+        "report-summary-ve-5-1.png": "c54c33645e5f847f62d12db4e917ae545031283e8f167d0b67f944ab047d851a",
+        "report-summary-ve-5-3.png": "78b188b7942675df554aef5cf12eb5dbd436fdf4bb51ce175d75635d1744cdbe",
+        "report-summary-ve-5-2.png": "90a3b629985b471de945954432cb6a6311742a817789ed4f6efca381cbba1ff0",
+        "report-summary-ve-5-5.png": "7677b16542158837a4a309e5641167519418de14651f89c652b745d6c9d64174",
+        "report-summary-ve-5-4.png": "06bcd95c392500eb2e65b91ea3265264b2dc4b677f14e19e3fbf042ed8b4f968"
+      }
+    }
+  ]
+}

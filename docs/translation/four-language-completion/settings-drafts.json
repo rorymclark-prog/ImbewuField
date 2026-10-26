@@ -1,0 +1,572 @@
+{
+  "status": "Unreviewed AI drafts. Existing isiZulu Settings copy is preserved verbatim; no human review is claimed.",
+  "baseCommit": "39df6174ac72df2c2646bd45a6728febd9bbb3f6",
+  "languages": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "entries": [
+    {
+      "key": "settingsSubtitle",
+      "english": "Language, text size & theme",
+      "zu": "Ulimi, usayizi wombhalo nombala wohlelo",
+      "st": "Puo, boholo ba mongolo le mebala",
+      "ts": "Ririmi, vukulu bya matsalwa ni mivala",
+      "ve": "Luambo, vhuhulwane ha maṅwalwa na mivhala"
+    },
+    {
+      "key": "settingsClose",
+      "english": "Close settings",
+      "zu": "Vala izilungiselelo",
+      "st": "Kwala ditlhophiso",
+      "ts": "Pfala swiyimiso",
+      "ve": "Valani nzudzanyo"
+    },
+    {
+      "key": "settingsShowAmount",
+      "english": "How much to show",
+      "zu": "Kuboniswe okungakanani",
+      "st": "Ho bontshwe bokae",
+      "ts": "Ku kombisiwa swo tala ku fikela kwihi",
+      "ve": "Hu sumbedzwe zwingafhani"
+    },
+    {
+      "key": "settingsSimple",
+      "english": "Simple",
+      "zu": "Okulula",
+      "st": "E bonolo",
+      "ts": "Swo olova",
+      "ve": "Zwo leluwaho"
+    },
+    {
+      "key": "settingsSimpleDesc",
+      "english": "The main jobs only. Best when you are starting out.",
+      "zu": "Imisebenzi eyinhloko kuphela. Kuhle uma usaqala.",
+      "st": "Mesebetsi ya bohlokwa feela. E loketse ha o sa qala.",
+      "ts": "Mintirho-nkulu ntsena. Swi lulamile loko wa ha sungula.",
+      "ve": "Mishumo ya ndeme fhedzi. Zwo tea musi ni tshi kha ḓi thoma."
+    },
+    {
+      "key": "settingsAllTools",
+      "english": "All tools",
+      "zu": "Wonke amathuluzi",
+      "st": "Dithulusi tsohle",
+      "ts": "Switirhisiwa hinkwato",
+      "ve": "Zwishumiswa zwoṱhe"
+    },
+    {
+      "key": "settingsAllToolsDesc",
+      "english": "Everything, including every planning and money tool.",
+      "zu": "Konke, kuhlanganise wonke amathuluzi okuhlela nawemali.",
+      "st": "Tsohle, ho kenyeletswa dithulusi tsohle tsa ho rala le tsa ditjhelete.",
+      "ts": "Hinkwako, ku katsa switirhisiwa swo kunguhata ni swa mali.",
+      "ve": "Zwoṱhe, hu tshi katelwa zwishumiswa zwoṱhe zwa u pulana na zwa tshelede."
+    },
+    {
+      "key": "settingsChangeAnyTime",
+      "english": "You can change this any time.",
+      "zu": "Ungakushintsha noma nini.",
+      "st": "O ka fetola sena neng kapa neng.",
+      "ts": "U nga cinca leswi nkarhi wihi na wihi.",
+      "ve": "Ni nga shandula izwi tshifhinga tshiṅwe na tshiṅwe."
+    },
+    {
+      "key": "settingsTextSize",
+      "english": "Text size",
+      "zu": "Usayizi wombhalo",
+      "st": "Boholo ba mongolo",
+      "ts": "Vukulu bya matsalwa",
+      "ve": "Vhuhulwane ha maṅwalwa"
+    },
+    {
+      "key": "settingsTextNormal",
+      "english": "Normal",
+      "zu": "Ovamile",
+      "st": "Bo tlwaelehileng",
+      "ts": "Bya ntolovelo",
+      "ve": "Ha nḓowelo"
+    },
+    {
+      "key": "settingsTextLarge",
+      "english": "Large",
+      "zu": "Omkhulu",
+      "st": "Bo boholo",
+      "ts": "Byikulu",
+      "ve": "Huhulwane"
+    },
+    {
+      "key": "settingsTextLarger",
+      "english": "Larger",
+      "zu": "Omkhudlwana",
+      "st": "Bo boholo ho feta",
+      "ts": "Byikulu ku tlurisa",
+      "ve": "Huhulwane u fhira"
+    },
+    {
+      "key": "settingsTextScaleHelp",
+      "english": "Makes the whole app bigger — text, buttons and menus.",
+      "zu": "Kukhulisa umbhalo, izinkinobho namamenyu kulo lonke uhlelo.",
+      "st": "E hodisa app yohle — mongolo, dikonopo le dimenu.",
+      "ts": "Swi kurisa app hinkwaro — matsalwa, tibatheni ni timenyu.",
+      "ve": "Zwi hulisa app yoṱhe — maṅwalwa, dzibathene na mimenyu."
+    },
+    {
+      "key": "settingsGuidance",
+      "english": "Guidance",
+      "zu": "Ukuholwa",
+      "st": "Tataiso",
+      "ts": "Nkongomiso",
+      "ve": "Vhulivhisi"
+    },
+    {
+      "key": "settingsColourTheme",
+      "english": "Colour theme",
+      "zu": "Umbala wohlelo",
+      "st": "Mebala ya app",
+      "ts": "Mivala ya app",
+      "ve": "Mivhala ya app"
+    },
+    {
+      "key": "settingsThemeEarth",
+      "english": "Earth",
+      "zu": "Umhlaba",
+      "st": "Lefatshe",
+      "ts": "Misava",
+      "ve": "Mavu"
+    },
+    {
+      "key": "settingsThemeEarthDesc",
+      "english": "Warm agricultural tones",
+      "zu": "Imibala efudumele yezolimo",
+      "st": "Mebala e mofuthu ya temo",
+      "ts": "Mivala yo kufumela ya vurimi",
+      "ve": "Mivhala ya vhulimi i dudelaho"
+    },
+    {
+      "key": "settingsThemeSlate",
+      "english": "Slate",
+      "zu": "I-Slate",
+      "st": "Slate",
+      "ts": "Slate",
+      "ve": "Slate"
+    },
+    {
+      "key": "settingsThemeSlateDesc",
+      "english": "Clean modern professional",
+      "zu": "Imibala ehlanzekile yesimanje",
+      "st": "Ponahalo e hlwekileng ya sejwalejwale le ya mosebetsi",
+      "ts": "Ku languteka ka manguva lawa ko tenga ka xiphurofexinali",
+      "ve": "Mivhala ya musalauno yo kunaho ya vhuporofesheni"
+    },
+    {
+      "key": "settingsDisplayMode",
+      "english": "Display mode",
+      "zu": "Indlela yokubonisa",
+      "st": "Mokgwa wa pontsho",
+      "ts": "Ndlela ya nkombiso",
+      "ve": "Nḓila ya u sumbedza"
+    },
+    {
+      "key": "settingsModeLight",
+      "english": "Light",
+      "zu": "Ukukhanya",
+      "st": "E kganyang",
+      "ts": "Ku vonakala",
+      "ve": "Tshedza"
+    },
+    {
+      "key": "settingsModeDark",
+      "english": "Dark",
+      "zu": "Ubumnyama",
+      "st": "E lefifi",
+      "ts": "Munyama",
+      "ve": "Swiswi"
+    },
+    {
+      "key": "settingsModeAuto",
+      "english": "Auto",
+      "zu": "Okuzenzakalelayo",
+      "st": "Ka boyona",
+      "ts": "Hi yoxe",
+      "ve": "Nga yoṱhe"
+    },
+    {
+      "key": "settingsModeAutoHelp",
+      "english": "Auto follows your device setting.",
+      "zu": "Okuzenzakalelayo kulandela izilungiselelo zedivayisi yakho.",
+      "st": "Mokgwa wa ka boyona o latela ditlhophiso tsa sesebediswa sa hao.",
+      "ts": "Ndlela ya Hi yoxe yi landzela swiyimiso swa xitirhisiwa xa wena.",
+      "ve": "Nḓila ya Nga yoṱhe i tevhela nzudzanyo ya tshishumiswa tshaṋu."
+    },
+    {
+      "key": "settingsTourSupport",
+      "english": "Tour and support",
+      "zu": "Ukuhlola nosizo",
+      "st": "Ketelo le thuso",
+      "ts": "Riendzo ni mpfuno",
+      "ve": "Lwendo na thuso"
+    },
+    {
+      "key": "settingsTourSamples",
+      "english": "Tour & samples · 15 minutes",
+      "zu": "Ukuhlola nezibonelo · imizuzu engu-15",
+      "st": "Ketelo le mehlala · metsotso e 15",
+      "ts": "Riendzo ni swikombiso · timinete ta 15",
+      "ve": "Lwendo na tsumbo · mimunithi ya 15"
+    },
+    {
+      "key": "settingsChooseWorkspace",
+      "english": "Choose a workspace",
+      "zu": "Khetha indawo yokusebenza",
+      "st": "Kgetha sebaka sa ho sebetsa",
+      "ts": "Hlawula ndhawu yo tirhela",
+      "ve": "Khethani fhethu ha u shumela"
+    },
+    {
+      "key": "settingsBrowseGardens",
+      "english": "Browse 18 gardens",
+      "zu": "Buka izingadi ezingu-18",
+      "st": "Sheba dirapa tse 18",
+      "ts": "Vona swirhapa swa 18",
+      "ve": "Vhonani ngade dza 18"
+    },
+    {
+      "key": "settingsFeedback",
+      "english": "Report a bug / request a feature",
+      "zu": "Bika iphutha / cela isici",
+      "st": "Tlaleha phoso / kopa ntho e ka eketswang",
+      "ts": "Vika xihoxo / kombela xitirhisiwa",
+      "ve": "Vhigani vhukhakhi / humbelani tshumelo"
+    },
+    {
+      "key": "settingsDataNote",
+      "english": "Farm guidance is built from South African climate, soil and terrain data.",
+      "zu": "Amasu ezolimo asekelwe ku-climate, inhlabathi kanye nedatha yendawo yaseNingizimu Afrika.",
+      "st": "Tataiso ya temo e thehilwe ho data ya boemo ba lehodimo, mobu le sebopeho sa naha ya Afrika Borwa.",
+      "ts": "Nkongomiso wa vurimi wu sekeriwe eka datha ya maxelo, misava ni xivumbeko xa misava ya Afrika Dzonga.",
+      "ve": "Vhulivhisi ha vhulimi ho bveledzwa nga data ya mutsho, mavu na mbumbo ya mavu a Afrika Tshipembe."
+    },
+    {
+      "key": "settingsSavedAutomatically",
+      "english": "ImbewuField · saved automatically",
+      "zu": "ImbewuField · kulondolozwa ngokuzenzakalelayo",
+      "st": "ImbewuField · e bolokwa ka boyona",
+      "ts": "ImbewuField · swi hlayisiwa hi swoxe",
+      "ve": "ImbewuField · zwi vhulungwa nga zwoṱhe"
+    },
+    {
+      "key": "settingsAiTitle",
+      "english": "Paid AI features",
+      "zu": "Amathuluzi e-AI akhokhelwayo",
+      "st": "Dithulusi tsa AI tse lefellwang",
+      "ts": "Switirhisiwa swa AI leswi hakeriwaka",
+      "ve": "Zwishumiswa zwa AI zwi badelwaho"
+    },
+    {
+      "key": "settingsAiDescription",
+      "english": "Choose which AI tools this account can use on this device. Typing, phone dictation, photos and saving records still work when AI is off.",
+      "zu": "Khetha amathuluzi e-AI le akhawunti engawasebenzisa kule divayisi. Ukuthayipha, ukubiza umbhalo ngocingo, izithombe nokulondoloza amarekhodi kusasebenza noma i-AI ivaliwe.",
+      "st": "Kgetha dithulusi tsa AI tseo akhaonto ena e ka di sebedisang sesebedisweng sena. Ho thaepa, ho bua hore fono e ngole, dinepe le ho boloka ditlaleho di ntse di sebetsa ha AI e timilwe.",
+      "ts": "Hlawula switirhisiwa swa AI leswi akhawunti leyi yi nga swi tirhisaka eka xitirhisiwa lexi. Ku thayipa, ku vula marito leswaku riqingho ri tsala, swifaniso ni ku hlayisa tirhekhodo swa ha tirha loko AI yi timiwile.",
+      "ve": "Khethani zwishumiswa zwa AI zwine akhaunthu iyi ya nga zwi shumisa kha tshishumiswa itshi. U thaipha, u amba uri founu i ṅwale, zwifanyiso na u vhulunga rekhodo zwi kha ḓi shuma musi AI yo tsimiwa."
+    },
+    {
+      "key": "settingsAiAllowAll",
+      "english": "Allow all paid AI tools",
+      "zu": "Vumela wonke amathuluzi e-AI akhokhelwayo",
+      "st": "Dumella dithulusi tsohle tsa AI tse lefellwang",
+      "ts": "Pfumelela switirhisiwa swa AI leswi hakeriwaka hinkwato",
+      "ve": "Tendelani zwishumiswa zwoṱhe zwa AI zwi badelwaho"
+    },
+    {
+      "key": "settingsAiChat",
+      "english": "Lima chat and advice",
+      "zu": "Ingxoxo nezeluleko zikaLima",
+      "st": "Puisano le dikeletso tsa Lima",
+      "ts": "Mburi ni switsundzuxo swa Lima",
+      "ve": "Nyambedzano na ngeletshedzo dza Lima"
+    },
+    {
+      "key": "settingsAiReceipts",
+      "english": "Receipt scanning",
+      "zu": "Ukuskena amarisidi",
+      "st": "Ho sekena dirasiti",
+      "ts": "Ku sekena tirhisiti",
+      "ve": "U sekena rasithi"
+    },
+    {
+      "key": "settingsAiReports",
+      "english": "Report writing",
+      "zu": "Ukubhala imibiko",
+      "st": "Ho ngola ditlaleho",
+      "ts": "Ku tsala swiviko",
+      "ve": "U ṅwala mivhigo"
+    },
+    {
+      "key": "settingsAiNotes",
+      "english": "Visit-note cleanup",
+      "zu": "Ukuhlela amanothi okuvakasha",
+      "st": "Ho hlophisa dintlha tsa ketelo",
+      "ts": "Ku lulamisa tinotsi ta ku endzela",
+      "ve": "U dzudzanya notsi dza madalo"
+    },
+    {
+      "key": "settingsAiPhotos",
+      "english": "Photo and plant analysis",
+      "zu": "Ukuhlaziya izithombe nezitshalo",
+      "st": "Ho hlahloba dinepe le dimela",
+      "ts": "Ku xopaxopa swifaniso ni swimilana",
+      "ve": "U sengulusa zwifanyiso na zwimela"
+    },
+    {
+      "key": "settingsAiDesigns",
+      "english": "AI designs and images",
+      "zu": "Imiklamo nezithombe ze-AI",
+      "st": "Meralo le ditshwantsho tsa AI",
+      "ts": "Tidizayini ni swifaniso swa AI",
+      "ve": "Pulane na zwifanyiso zwa AI"
+    },
+    {
+      "key": "settingsAiSaveError",
+      "english": "These settings could not be saved.",
+      "zu": "Lezi zilungiselelo azikwazanga ukulondolozwa.",
+      "st": "Ditlhophiso tsena ha di a kgona ho bolokwa.",
+      "ts": "Swiyimiso leswi a swi kotanga ku hlayisiwa.",
+      "ve": "Nzudzanyo iyi a yo ngo kona u vhulungwa."
+    },
+    {
+      "key": "langPartialTag",
+      "english": "Partly in English",
+      "zu": "Okunye kusesiNgisini",
+      "st": "Tse ding di ka Senyesemane",
+      "ts": "Swin’wana swi hi Xinghezi",
+      "ve": "Zwiṅwe zwi kha ḓi vha nga English"
+    },
+    {
+      "key": "langPartialActiveNote",
+      "english": "Some of {lang} is still shown in English while translation continues.",
+      "zu": "Okunye kolimi lwe-{lang} kusaboniswa ngesiNgisi ngesikhathi ukuhumusha kusaqhubeka.",
+      "st": "Tse ding tsa {lang} di ntse di bontshwa ka Senyesemane ha phetolelo e ntse e tswela pele.",
+      "ts": "Swin’wana swa {lang} swa ha kombisiwa hi Xinghezi loko vuhundzuluxi byi ya mahlweni.",
+      "ve": "Zwiṅwe zwa {lang} zwi kha ḓi sumbedzwa nga English musi u ṱalutshedzela hu tshi bvela phanḓa."
+    }
+  ],
+  "supplementalEntries": [
+    {
+      "key": "settingsGuideMe",
+      "english": "Guide me",
+      "st": "Ntataise",
+      "ve": "Ntsumbedzeni nḓila"
+    },
+    {
+      "key": "settingsGuideMeDesc",
+      "english": "Show the next-step guide on your site report.",
+      "st": "Bontsha tataiso ya mohato o latelang tlalehong ya sebaka sa hao.",
+      "ve": "Sumbedzani vhulivhisi ha ḽiga ḽi tevhelaho kha muvhigo wa fhethu haṋu."
+    },
+    {
+      "key": "settingsVoiceLabel",
+      "english": "Lima reads aloud",
+      "st": "Lima o balla hodimo",
+      "ve": "Lima u vhalela nṱha"
+    },
+    {
+      "key": "settingsVoiceDesc",
+      "english": "Speak tips out loud when a voice is available.",
+      "st": "Balla dikeletso hodimo ha lentswe le fumaneha.",
+      "ve": "Vhalelani ngeletshedzo nṱha musi ipfi ḽi tshi wanala."
+    }
+  ],
+  "beforeValues": {
+    "zu": {
+      "settingsSubtitle": null,
+      "settingsClose": null,
+      "settingsShowAmount": null,
+      "settingsSimple": null,
+      "settingsSimpleDesc": null,
+      "settingsAllTools": null,
+      "settingsAllToolsDesc": null,
+      "settingsChangeAnyTime": null,
+      "settingsTextSize": null,
+      "settingsTextNormal": null,
+      "settingsTextLarge": null,
+      "settingsTextLarger": null,
+      "settingsTextScaleHelp": null,
+      "settingsGuidance": null,
+      "settingsColourTheme": null,
+      "settingsThemeEarth": null,
+      "settingsThemeEarthDesc": null,
+      "settingsThemeSlate": null,
+      "settingsThemeSlateDesc": null,
+      "settingsDisplayMode": null,
+      "settingsModeLight": null,
+      "settingsModeDark": null,
+      "settingsModeAuto": null,
+      "settingsModeAutoHelp": null,
+      "settingsTourSupport": null,
+      "settingsTourSamples": null,
+      "settingsChooseWorkspace": null,
+      "settingsBrowseGardens": null,
+      "settingsFeedback": null,
+      "settingsDataNote": null,
+      "settingsSavedAutomatically": null,
+      "settingsAiTitle": null,
+      "settingsAiDescription": null,
+      "settingsAiAllowAll": null,
+      "settingsAiChat": null,
+      "settingsAiReceipts": null,
+      "settingsAiReports": null,
+      "settingsAiNotes": null,
+      "settingsAiPhotos": null,
+      "settingsAiDesigns": null,
+      "settingsAiSaveError": null,
+      "langPartialTag": null,
+      "langPartialActiveNote": null
+    },
+    "st": {
+      "settingsSubtitle": null,
+      "settingsClose": null,
+      "settingsShowAmount": null,
+      "settingsSimple": null,
+      "settingsSimpleDesc": null,
+      "settingsAllTools": null,
+      "settingsAllToolsDesc": null,
+      "settingsChangeAnyTime": null,
+      "settingsTextSize": null,
+      "settingsTextNormal": null,
+      "settingsTextLarge": null,
+      "settingsTextLarger": null,
+      "settingsTextScaleHelp": null,
+      "settingsGuidance": null,
+      "settingsColourTheme": null,
+      "settingsThemeEarth": null,
+      "settingsThemeEarthDesc": null,
+      "settingsThemeSlate": null,
+      "settingsThemeSlateDesc": null,
+      "settingsDisplayMode": null,
+      "settingsModeLight": null,
+      "settingsModeDark": null,
+      "settingsModeAuto": null,
+      "settingsModeAutoHelp": null,
+      "settingsTourSupport": null,
+      "settingsTourSamples": null,
+      "settingsChooseWorkspace": null,
+      "settingsBrowseGardens": null,
+      "settingsFeedback": null,
+      "settingsDataNote": null,
+      "settingsSavedAutomatically": null,
+      "settingsAiTitle": null,
+      "settingsAiDescription": null,
+      "settingsAiAllowAll": null,
+      "settingsAiChat": null,
+      "settingsAiReceipts": null,
+      "settingsAiReports": null,
+      "settingsAiNotes": null,
+      "settingsAiPhotos": null,
+      "settingsAiDesigns": null,
+      "settingsAiSaveError": null,
+      "langPartialTag": null,
+      "langPartialActiveNote": null,
+      "settingsGuideMe": null,
+      "settingsGuideMeDesc": null,
+      "settingsVoiceLabel": null,
+      "settingsVoiceDesc": null
+    },
+    "ts": {
+      "settingsSubtitle": null,
+      "settingsClose": null,
+      "settingsShowAmount": null,
+      "settingsSimple": null,
+      "settingsSimpleDesc": null,
+      "settingsAllTools": null,
+      "settingsAllToolsDesc": null,
+      "settingsChangeAnyTime": null,
+      "settingsTextSize": null,
+      "settingsTextNormal": null,
+      "settingsTextLarge": null,
+      "settingsTextLarger": null,
+      "settingsTextScaleHelp": null,
+      "settingsGuidance": null,
+      "settingsColourTheme": null,
+      "settingsThemeEarth": null,
+      "settingsThemeEarthDesc": null,
+      "settingsThemeSlate": null,
+      "settingsThemeSlateDesc": null,
+      "settingsDisplayMode": null,
+      "settingsModeLight": null,
+      "settingsModeDark": null,
+      "settingsModeAuto": null,
+      "settingsModeAutoHelp": null,
+      "settingsTourSupport": null,
+      "settingsTourSamples": null,
+      "settingsChooseWorkspace": null,
+      "settingsBrowseGardens": null,
+      "settingsFeedback": null,
+      "settingsDataNote": null,
+      "settingsSavedAutomatically": null,
+      "settingsAiTitle": null,
+      "settingsAiDescription": null,
+      "settingsAiAllowAll": null,
+      "settingsAiChat": null,
+      "settingsAiReceipts": null,
+      "settingsAiReports": null,
+      "settingsAiNotes": null,
+      "settingsAiPhotos": null,
+      "settingsAiDesigns": null,
+      "settingsAiSaveError": null,
+      "langPartialTag": null,
+      "langPartialActiveNote": null
+    },
+    "ve": {
+      "settingsSubtitle": null,
+      "settingsClose": null,
+      "settingsShowAmount": null,
+      "settingsSimple": null,
+      "settingsSimpleDesc": null,
+      "settingsAllTools": null,
+      "settingsAllToolsDesc": null,
+      "settingsChangeAnyTime": null,
+      "settingsTextSize": null,
+      "settingsTextNormal": null,
+      "settingsTextLarge": null,
+      "settingsTextLarger": null,
+      "settingsTextScaleHelp": null,
+      "settingsGuidance": null,
+      "settingsColourTheme": null,
+      "settingsThemeEarth": null,
+      "settingsThemeEarthDesc": null,
+      "settingsThemeSlate": null,
+      "settingsThemeSlateDesc": null,
+      "settingsDisplayMode": null,
+      "settingsModeLight": null,
+      "settingsModeDark": null,
+      "settingsModeAuto": null,
+      "settingsModeAutoHelp": null,
+      "settingsTourSupport": null,
+      "settingsTourSamples": null,
+      "settingsChooseWorkspace": null,
+      "settingsBrowseGardens": null,
+      "settingsFeedback": null,
+      "settingsDataNote": null,
+      "settingsSavedAutomatically": null,
+      "settingsAiTitle": null,
+      "settingsAiDescription": null,
+      "settingsAiAllowAll": null,
+      "settingsAiChat": null,
+      "settingsAiReceipts": null,
+      "settingsAiReports": null,
+      "settingsAiNotes": null,
+      "settingsAiPhotos": null,
+      "settingsAiDesigns": null,
+      "settingsAiSaveError": null,
+      "langPartialTag": null,
+      "langPartialActiveNote": null,
+      "settingsGuideMe": null,
+      "settingsGuideMeDesc": null,
+      "settingsVoiceLabel": null,
+      "settingsVoiceDesc": null
+    }
+  }
+}

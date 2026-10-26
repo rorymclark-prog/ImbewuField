@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { actualPracticeUi, practiceNodeText } from './tour-practice-renderers.ts';
+import { sampleWorkspaceDraft } from '../lib/sample-workspace-copy.ts';
+import { controlT } from './control-icon-renderers.ts';
 
 import { resolveSampleChooserDraft, SESOTHO_SAMPLE_CHOOSER_DRAFT as draft } from '../lib/sample-chooser-translation-draft-st.ts';
 
@@ -51,18 +53,29 @@ test('draft resolution exposes Sesotho only in Sesotho and holds uncertain copy 
   assert.equal(draft.roles.ngo.subtitle.reviewStatus, 'hold');
 });
 
-test('the chooser visibly pairs every selected draft field and keeps English/isiZulu routing intact', () => {
-  const page = readFileSync(new URL('../app/samples/page.tsx', import.meta.url), 'utf8');
-  assert.match(page, /if \(pair\.reviewStatus === 'hold'\) return <>{pair\.sourceEnglish}<\/>/);
-  assert.match(page, /English: \{pair\.sourceEnglish\}/);
-  assert.match(page, /<PairedDraft lang=\{lang\} pair=\{SESOTHO_SAMPLE_CHOOSER_DRAFT\.eyebrow\}/);
-  assert.match(page, /<PairedDraft lang=\{lang\} pair=\{SESOTHO_SAMPLE_CHOOSER_DRAFT\.heading\}/);
-  assert.match(page, /<PairedDraft lang=\{lang\} pair=\{SESOTHO_SAMPLE_CHOOSER_DRAFT\.intro\}/);
-  assert.match(page, /<PairedDraft lang=\{lang\} pair=\{SESOTHO_SAMPLE_CHOOSER_DRAFT\.sectionHeading\}/);
-  assert.match(page, /<PairedDraft lang=\{lang\} pair=\{roleCopy\.label\}/);
-  assert.match(page, /<PairedDraft lang=\{lang\} pair=\{roleCopy\.title\}/);
-  assert.match(page, /<PairedDraft lang=\{lang\} pair=\{roleCopy\.subtitle\}/);
-  assert.match(page, /lang === 'zu' \? examplesZu/);
-  assert.match(page, /lang === 'st' \|\| lang === 've'/);
-  assert.match(page, /const ui = \(english: string, zulu: string\) => lang === 'zu' \? zulu : english/);
+// The earlier source-regex test required the old English-only hold branch forever.
+// Keep its historical hold assertions above; the real chooser must now pair every
+// source with the recorded unreviewed draft, including newly filled held fields.
+test('Sesotho chooser drafts remain visibly paired when historical held fields gain native drafts', async () => {
+  const h = await actualPracticeUi('st');
+  try {
+    assert.ok(h.text().includes(controlT('st')('languageDraftNoticeText')));
+    for (const key of ['eyebrow', 'heading', 'intro', 'sectionLabel', 'sectionHeading'] as const) {
+      const source = draft[key].sourceEnglish;
+      if (key === 'sectionLabel') assert.ok(h.renderer.root.findAllByProps({ 'aria-label': sampleWorkspaceDraft(source, 'st') }).length);
+      else assert.ok(h.text().includes(sampleWorkspaceDraft(source, 'st')!));
+      if (key !== 'sectionLabel') assert.ok(h.renderer.root.findAllByProps({ lang: 'en' }).some(n => practiceNodeText(n).includes(source)));
+    }
+    for (const role of ['ngo', 'funder', 'farmer', 'mentor', 'student'] as const) {
+      const card = h.renderer.root.findByProps({ id: 'sample-' + role });
+      for (const pair of Object.values(draft.roles[role])) {
+        assert.ok(practiceNodeText(card).includes(sampleWorkspaceDraft(pair.sourceEnglish, 'st')!));
+        assert.ok(card.findAllByProps({ lang: 'en' }).some(n => practiceNodeText(n).includes(pair.sourceEnglish)));
+      }
+      await h.choose(role);
+    }
+    assert.deepEqual(h.calls.routes, ['/ngo', '/funder', '/farmer', '/mentor', '/student']);
+    await h.language('en'); assert.ok(h.text().includes('Choose a view'));
+    await h.language('zu'); assert.ok(h.text().includes('Khetha indawo yokusebenza'));
+  } finally { await h.dispose(); }
 });

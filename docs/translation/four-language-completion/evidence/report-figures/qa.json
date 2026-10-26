@@ -1,0 +1,326 @@
+{
+  "sourceSha": "25c83e2d4cb14f4fd75a11bf297de334dff6e312",
+  "languages": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "reviewStatus": "unreviewed AI drafts; no fluent-speaker review",
+  "screenshots": 36,
+  "svgBounds": [
+    {
+      "lang": "zu",
+      "bounds": [
+        {
+          "id": "site-plan",
+          "width": 640,
+          "height": 728,
+          "outside": []
+        },
+        {
+          "id": "land-use",
+          "width": 640,
+          "height": 206,
+          "outside": []
+        },
+        {
+          "id": "status",
+          "width": 640,
+          "height": 292,
+          "outside": []
+        },
+        {
+          "id": "equipment-plan",
+          "width": 640,
+          "height": 909,
+          "outside": []
+        },
+        {
+          "id": "equipment-status",
+          "width": 640,
+          "height": 231,
+          "outside": []
+        },
+        {
+          "id": "multiple-plots",
+          "width": 640,
+          "height": 728,
+          "outside": []
+        }
+      ],
+      "imagesLoaded": true
+    },
+    {
+      "lang": "st",
+      "bounds": [
+        {
+          "id": "site-plan",
+          "width": 640,
+          "height": 764,
+          "outside": []
+        },
+        {
+          "id": "land-use",
+          "width": 640,
+          "height": 206,
+          "outside": []
+        },
+        {
+          "id": "status",
+          "width": 640,
+          "height": 310,
+          "outside": []
+        },
+        {
+          "id": "equipment-plan",
+          "width": 640,
+          "height": 910,
+          "outside": []
+        },
+        {
+          "id": "equipment-status",
+          "width": 640,
+          "height": 231,
+          "outside": []
+        },
+        {
+          "id": "multiple-plots",
+          "width": 640,
+          "height": 764,
+          "outside": []
+        }
+      ],
+      "imagesLoaded": true
+    },
+    {
+      "lang": "ts",
+      "bounds": [
+        {
+          "id": "site-plan",
+          "width": 640,
+          "height": 782,
+          "outside": []
+        },
+        {
+          "id": "land-use",
+          "width": 640,
+          "height": 206,
+          "outside": []
+        },
+        {
+          "id": "status",
+          "width": 640,
+          "height": 310,
+          "outside": []
+        },
+        {
+          "id": "equipment-plan",
+          "width": 640,
+          "height": 945,
+          "outside": []
+        },
+        {
+          "id": "equipment-status",
+          "width": 640,
+          "height": 231,
+          "outside": []
+        },
+        {
+          "id": "multiple-plots",
+          "width": 640,
+          "height": 782,
+          "outside": []
+        }
+      ],
+      "imagesLoaded": true
+    },
+    {
+      "lang": "ve",
+      "bounds": [
+        {
+          "id": "site-plan",
+          "width": 640,
+          "height": 764,
+          "outside": []
+        },
+        {
+          "id": "land-use",
+          "width": 640,
+          "height": 188,
+          "outside": []
+        },
+        {
+          "id": "status",
+          "width": 640,
+          "height": 292,
+          "outside": []
+        },
+        {
+          "id": "equipment-plan",
+          "width": 640,
+          "height": 944,
+          "outside": []
+        },
+        {
+          "id": "equipment-status",
+          "width": 640,
+          "height": 231,
+          "outside": []
+        },
+        {
+          "id": "multiple-plots",
+          "width": 640,
+          "height": 764,
+          "outside": []
+        }
+      ],
+      "imagesLoaded": true
+    }
+  ],
+  "equipmentPlanTextOverlap": {
+    "thresholdPixels": 0.5,
+    "results": [
+      {
+        "language": "zu",
+        "overlap": []
+      },
+      {
+        "language": "st",
+        "overlap": []
+      },
+      {
+        "language": "ts",
+        "overlap": []
+      },
+      {
+        "language": "ve",
+        "overlap": []
+      }
+    ]
+  },
+  "actualViewer": [
+    {
+      "lang": "zu",
+      "figures": [
+        {
+          "id": "site-plan",
+          "title": "Ipulani lendawo",
+          "alt": "Ipulani lendawo elidwetshwe kumklamo ogciniwe: 7 imibhede yemifino, 4 iziza eziyisisekelo, 5 izihlahla nezitshalo, 1 into yamanzi. Isikali 10 m.",
+          "lang": "zu"
+        },
+        {
+          "id": "land-use",
+          "title": "Ukuthi umhlaba usetshenziswa kanjani",
+          "alt": "Ukusetshenziswa komhlaba: Imibhede yemifino 44 m²; Iziza zezitshalo eziyisisekelo 84 m²; Uphahla 144 m²; Konke okunye: izindlela, izihlahla, igceke, umhlaba ovulekile 765 m².",
+          "lang": "zu"
+        },
+        {
+          "id": "status",
+          "title": "Okwakhiwe, nokusazokwakhiwa",
+          "alt": "Okwakhiwe nokuhleliwe: Imibhede yemifino 0/7; Iziza zezitshalo eziyisisekelo 4/4; Izihlahla nezitshalo 0/5; Amanzi 0/1; Izakhiwo 0/1; Izindlela, imisele namapayipi 0/3.",
+          "lang": "zu"
+        }
+      ],
+      "requestedLanguage": "en",
+      "originalBytesUnchanged": true,
+      "designBytesUnchanged": true,
+      "originalBody": true,
+      "originalContentLanguage": "en",
+      "overflow": false
+    },
+    {
+      "lang": "st",
+      "figures": [
+        {
+          "id": "site-plan",
+          "title": "Polane ya sebaka",
+          "alt": "Polane ya sebaka e takilweng ho tswa moralong o bolokilweng: 7 dibethe tsa meroho, 4 masimo a dijalo tsa motheo, 5 difate le dimela, 1 ntho ya metsi. Mola wa sekala 10 m.",
+          "lang": "st"
+        },
+        {
+          "id": "land-use",
+          "title": "Kamoo mobu o sebediswang kateng",
+          "alt": "Tshebediso ya mobu: Dibethe tsa meroho 44 m²; Masimo a dijalo tsa motheo 84 m²; Marulelo 144 m²; Tse ding tsohle: ditsela, difate, lebala, mobu o bulehileng 765 m².",
+          "lang": "st"
+        },
+        {
+          "id": "status",
+          "title": "Tse ahilweng le tse sa ntseng di tla ahuwa",
+          "alt": "Tse ahilweng le tse rerilweng: Dibethe tsa meroho 0/7; Masimo a dijalo tsa motheo 4/4; Difate le dimela 0/5; Metsi 0/1; Meaho 0/1; Ditsela, diforo tse tshwarang metsi le dipeipi 0/3.",
+          "lang": "st"
+        }
+      ],
+      "requestedLanguage": "en",
+      "originalBytesUnchanged": true,
+      "designBytesUnchanged": true,
+      "originalBody": true,
+      "originalContentLanguage": "en",
+      "overflow": false
+    },
+    {
+      "lang": "ts",
+      "figures": [
+        {
+          "id": "site-plan",
+          "title": "Pulani ya ndhawu",
+          "alt": "Pulani ya ndhawu leyi dirowiweke ku suka eka dizayini leyi hlayisiweke: 7 mibedo ya matsavu, 4 masimu ya swibyariwa swa nkoka, 5 mirhi ni swibyariwa, 1 nchumu wa mati. Layini ya xikalo 10 m.",
+          "lang": "ts"
+        },
+        {
+          "id": "land-use",
+          "title": "Ndlela leyi misava yi tirhisiwaka ha yona",
+          "alt": "Matirhiselo ya misava: Mibedo ya matsavu 44 m²; Masimu ya swibyariwa swa nkoka 84 m²; Lwangu 144 m²; Swilo leswin'wana: tindlela, mirhi, rivala, misava leyi pfulekeke 765 m².",
+          "lang": "ts"
+        },
+        {
+          "id": "status",
+          "title": "Leswi akiweke ni leswi swa ha faneleke ku akiwa",
+          "alt": "Leswi akiweke ni leswi kunguhatiweke: Mibedo ya matsavu 0/7; Masimu ya swibyariwa swa nkoka 4/4; Mirhi ni swimilana 0/5; Mati 0/1; Miako 0/1; Tindlela, misele yo khoma mati ni tiphayiphi 0/3.",
+          "lang": "ts"
+        }
+      ],
+      "requestedLanguage": "en",
+      "originalBytesUnchanged": true,
+      "designBytesUnchanged": true,
+      "originalBody": true,
+      "originalContentLanguage": "en",
+      "overflow": false
+    },
+    {
+      "lang": "ve",
+      "figures": [
+        {
+          "id": "site-plan",
+          "title": "Pulane ya fhethu",
+          "alt": "Pulane ya fhethu yo oliwaho u bva kha dizaini yo vhulungwaho: 7 mibethe ya miroho, 4 tsimu dza zwiliṅwa zwa ndeme, 5 miri na zwimela, 1 tshithu tsha maḓi. Mutalo wa tshikalo 10 m.",
+          "lang": "ve"
+        },
+        {
+          "id": "land-use",
+          "title": "Nḓila ine mavu a shumiswa ngayo",
+          "alt": "U shumisa mavu: Mibete ya miroho 44 m²; Tsimu dza zwiliṅwa zwa ndeme 84 m²; Ṱhanga 144 m²; Zwiṅwe zwoṱhe: nḓila, miri, muṱa, mavu o vuleaho 765 m².",
+          "lang": "ve"
+        },
+        {
+          "id": "status",
+          "title": "Zwo fhaṱiwaho na zwi sa athu fhaṱiwa",
+          "alt": "Zwo fhaṱiwaho na zwo pulaniwaho: Mibete ya miroho 0/7; Tsimu dza zwiliṅwa zwa ndeme 4/4; Miri na zwimela 0/5; Maḓi 0/1; Zwifhaṱo 0/1; Nḓila, migero ya u fara maḓi na bommbo 0/3.",
+          "lang": "ve"
+        }
+      ],
+      "requestedLanguage": "en",
+      "originalBytesUnchanged": true,
+      "designBytesUnchanged": true,
+      "originalBody": true,
+      "originalContentLanguage": "en",
+      "overflow": false
+    }
+  ],
+  "limitations": [
+    "Five other report figure builders still need translation and layout work.",
+    "Source attribution strings and farmer-saved names stay as recorded.",
+    "Full report PDF follows the saved content language; no PDF was created in this batch.",
+    "Full-suite CI remains pending."
+  ]
+}

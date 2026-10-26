@@ -39,15 +39,15 @@ test('Garden Survey opens the survey the progress bar actually reads', () => {
     "home's own 'do the site survey' nudge must point at the same URL as the drawer entry");
 });
 
-test('the Planting Calendar has a door in Farm Tools', () => {
+test('the Planting Calendar has a translated door in Farm Tools for every target language', async () => {
   const nav = read('../components/NavDrawer.tsx');
   assert.match(nav, /href: '\/calendar', Icon: Calendar,\s*label: t\('navPlantingCalendar'\)/,
     'the calendar entry must sit alongside the other Farm Tools items, translated like they are');
   assert.match(nav, /import \{[\s\S]*?\bCalendar\b[\s\S]*?\} from 'lucide-react'/,
     'Lucide only — no emoji as UI icons');
 
-  // Rory asked for an isiZulu app pass. Both the English fallback and the isiZulu
-  // calendar label must now exist; the remaining languages still fall back.
+  // Rory's whole-app pass extends the isiZulu label to all four target languages.
+  // Reachability and a real local label are the rule; exactly two declarations was a snapshot.
   const i18n = read('../lib/i18n.tsx');
   const enBlockStart = i18n.indexOf('const T_en: Dict = {');
   const enBlockEnd = i18n.indexOf('\n};', enBlockStart);
@@ -64,8 +64,14 @@ test('the Planting Calendar has a door in Farm Tools', () => {
     ...['af', 'zu', 'xh', 'nso', 'tn', 'st', 'ts', 've', 'ss', 'nr']
       .map((code) => read(`../lib/locales/${code}.ts`)),
   ];
-  const allOccurrences = localeFiles.flatMap((src) => src.match(/^\s*navPlantingCalendar:/gm) ?? []);
-  assert.equal(allOccurrences.length, 2, 'the label should exist once in each of English and isiZulu');
+  for (const src of localeFiles) {
+    assert.ok((src.match(/^\s*navPlantingCalendar:/gm) ?? []).length <= 1, 'a second label must not silently override the first');
+  }
+  for (const code of ['zu', 'st', 'ts', 've']) {
+    const { default: dict } = await import(`../lib/locales/${code}.ts`);
+    assert.ok(dict.navPlantingCalendar?.trim(), `${code}: calendar navigation cannot be blank`);
+    assert.notEqual(dict.navPlantingCalendar, 'Planting Calendar', `${code}: calendar navigation still falls back to English`);
+  }
 });
 
 test('the calendar page it links to renders real content on its own', () => {

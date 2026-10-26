@@ -9,7 +9,7 @@ import { startRolePreview, useSampleRole } from '@/lib/use-role-navigation';
 import { readSampleChooserAccountRole } from '@/lib/sample-choice-access';
 import { prepareSampleFarm } from '@/lib/sample-farm-session';
 import { PRODUCT_TOUR, PRODUCT_TOUR_FEATURES, cleanProductTourProgress, sampleChoicesForAccount } from '@/lib/sample-tour';
-import { productTourError, productTourFeatureCopy, productTourStepCopy, productTourUi } from '@/lib/sample-tour-localization';
+import { productTourDuration, productTourError, productTourFeatureCopy, productTourStepCopy, productTourUi } from '@/lib/sample-tour-localization';
 import type { UserRole } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n-context';
 import { announceOverlay } from '@/lib/overlay-signal';
@@ -27,7 +27,7 @@ const Context = createContext<TourContextValue | null>(null);
 export function useProductTour() { return useContext(Context); }
 
 export default function ProductTourProvider({ children }: { children: React.ReactNode }) {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const tourUi = (key: Parameters<typeof productTourUi>[0], fallback: string, values: Record<string, string | number> = {}) =>
     productTourUi(key, lang, values) ?? fallback;
   const router = useRouter();
@@ -138,16 +138,18 @@ export default function ProductTourProvider({ children }: { children: React.Reac
     {children}
     <dialog ref={dialog} className={styles.dialog} lang={lang} aria-labelledby="product-tour-title" onCancel={()=>setExpanded(false)} onClose={()=>setExpanded(false)}>
       <div className={styles.dialogHead}><span>{tourUi('tour', 'TOUR')} · {state.current + 1} / {PRODUCT_TOUR.length}</span><button type="button" onClick={()=>setExpanded(false)} aria-label={tourUi('close', 'Close tour guide')}>×</button></div>
+      {['zu','st','ts','ve'].includes(lang)&&<p className={styles.notice} role="note">{tourUi('draftDisclosure', '')}</p>}
       <h2 id="product-tour-title">{inView && feature ? feature.title : stepCopy.title}</h2>
-      <p className={styles.time}>{stepCopy.title}{inView && features.length > 1 ? ` · ${tourUi('tip', 'Tip')} ${featureIndex + 1} / ${features.length}` : ` · ${tourUi('aboutMinutes', `About ${step.minutes} min`, { duration: step.minutes === 1 ? 'umzuzu' : `imizuzu engu-${step.minutes}` })}`}</p>
+      <p className={styles.time}>{stepCopy.title}{inView && features.length > 1 ? ` · ${tourUi('tip', 'Tip')} ${featureIndex + 1} / ${features.length}` : ` · ${tourUi('aboutMinutes', `About ${step.minutes} min`, { duration: productTourDuration(step.minutes,lang) })}`}</p>
       <p>{inView && feature ? feature.text : stepCopy.task}</p>
+      {['zu','st','ts','ve'].includes(lang)&&<details><summary>{t('languageDraftNoticeEnglishToggle')}</summary><div lang="en"><strong>{inView&&features[featureIndex]?features[featureIndex].title:step.title}</strong><p>{inView&&features[featureIndex]?features[featureIndex].text:step.task}</p></div></details>}
       {inView && features.length > 1 && <div className={styles.featureProgress} aria-label={tourUi('tipAria', `Tip ${featureIndex + 1} of ${features.length}: ${feature?.title ?? stepCopy.title}`, { current: featureIndex + 1, total: features.length, title: feature?.title ?? stepCopy.title })}>
         {features.map((tip, i) => {
           const translatedTip = productTourFeatureCopy(step.id, i, lang, tip)!;
           return <button key={tip.title} type="button" aria-label={tourUi('tipAria', `Tip ${i + 1}: ${tip.title}`, { current: i + 1, total: features.length, title: translatedTip.title })} aria-current={i === featureIndex ? 'step' : undefined} onClick={() => setFeatureIndex(i)} />;
         })}
       </div>}
-      {error && <p role="alert">{productTourError(error, lang)}</p>}
+      {error && <p role="alert" lang={productTourError(error,lang)===error?'':lang}>{productTourError(error, lang)}{['zu','st','ts','ve'].includes(lang)&&productTourError(error,lang)!==error&&<small lang="en" style={{display:'block',fontSize:12}}><span lang={lang}>{t('offlineSourceLabel')}: </span>{error}</small>}</p>}
       <div className={styles.controls}>
       {inView && featureIndex < features.length - 1 && <button type="button" className={styles.primary} onClick={() => setFeatureIndex(i => i + 1)}>{tourUi('nextTip', 'Next tip')}</button>}
       <button type="button" className={inView && featureIndex < features.length - 1 ? undefined : styles.primary} onClick={()=>inView ? setExpanded(false) : go(state.current)} disabled={!allowed(state.current)}>{inView ? tourUi('tryNow', 'Try it now') : tourUi('openView', 'Open this view')}</button>

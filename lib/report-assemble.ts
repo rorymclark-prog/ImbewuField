@@ -54,12 +54,12 @@ export function assembleReportDocument(input: AssembleInput): AssembledReport {
   const bodyAndBack = joinBlocks([input.glance, ...input.body, ...input.backMatter]);
 
   // 2 — figures first, so a caption never lands in the section counter.
-  const figured = numberFigures(bodyAndBack);
+  const figured = numberFigures(bodyAndBack,input.language);
   // 3 — then sections, which also yields the heading list the contents needs.
   const numbered = numberSections(figured.markdown);
 
-  const contents = buildContents(numbered.headings).replace('## Contents', input.language === 'zu' ? '## Okuqukethwe' : '## Contents');
-  const figuresList = buildListOfFigures(figured.figures);
+  const contents = buildContents(numbered.headings,input.language);
+  const figuresList = buildListOfFigures(figured.figures,input.language);
 
   // 4 — front matter goes in only now, and is itself never numbered (see UNNUMBERED_TITLES).
   const markdown = joinBlocks([input.cover, contents, figuresList, numbered.markdown]);

@@ -1,0 +1,208 @@
+{
+  "sourceSha": "2b8f58cf7d6a20361e41bd7c726992602c701c60",
+  "status": "Unreviewed AI drafts; no fluent-speaker review.",
+  "entries": [
+    {
+      "key": "photoViewerOpen",
+      "english": "Open photo: {caption}",
+      "zu": "Vula isithombe: {caption}",
+      "st": "Bula setshwantsho: {caption}",
+      "ts": "Pfula xifaniso: {caption}",
+      "ve": "Vulani tshifanyiso: {caption}"
+    },
+    {
+      "key": "photoViewerTriggerFallback",
+      "english": "profile or site photograph",
+      "zu": "isithombe sephrofayela noma sendawo",
+      "st": "setshwantsho sa profaele kapa sa sebaka",
+      "ts": "xifaniso xa phurofayili kumbe xa ndhawu",
+      "ve": "tshifanyiso tsha phurofaiḽi kana tsha fhethu"
+    },
+    {
+      "key": "photoViewerCaptionFallback",
+      "english": "Photograph",
+      "zu": "Isithombe",
+      "st": "Setshwantsho",
+      "ts": "Xifaniso",
+      "ve": "Tshifanyiso"
+    },
+    {
+      "key": "photoViewerSampleLabel",
+      "english": "Illustration",
+      "zu": "Umdwebo",
+      "st": "Setshwantsho se takilweng",
+      "ts": "Xifaniso lexi dirowiweke",
+      "ve": "Tshifanyiso tsho olwa"
+    },
+    {
+      "key": "photoViewerDialogTitle",
+      "english": "Photo viewer",
+      "zu": "Isibukeli sezithombe",
+      "st": "Sebohi sa ditshwantsho",
+      "ts": "Xilanguti xa swifaniso",
+      "ve": "Tshivhoni tsha zwifanyiso"
+    },
+    {
+      "key": "photoViewerClose",
+      "english": "Close ×",
+      "zu": "Vala ×",
+      "st": "Kwala ×",
+      "ts": "Pfala ×",
+      "ve": "Valani ×"
+    },
+    {
+      "key": "photoViewerLoadError",
+      "english": "This photo could not load. Close and try again when connected.",
+      "zu": "Lesi sithombe asikwazanga ukulayishwa. Vala bese uzama futhi uma usuxhumekile.",
+      "st": "Setshwantsho sena ha se a kgona ho kena. Kwala mme o leke hape ha o hokahane.",
+      "ts": "Xifaniso lexi a xi kotanga ku layicha. Pfala kutani u ringeta nakambe loko u hlanganisiwile.",
+      "ve": "Tshifanyiso itshi a tsho ngo konadzea u laisiwa. Valani ni lingedze hafhu musi no ṱumanywa."
+    },
+    {
+      "key": "photoViewerFit",
+      "english": "Fit to screen",
+      "zu": "Linganisa nesikrini",
+      "st": "Lekanya le sekirini",
+      "ts": "Ringanisa ni xikirini",
+      "ve": "Linganyisani na tshikirini"
+    },
+    {
+      "key": "photoViewerEnlarge",
+      "english": "Enlarge",
+      "zu": "Khulisa",
+      "st": "Hodisa",
+      "ts": "Kurisa",
+      "ve": "Hulisani"
+    }
+  ],
+  "beforeValues": {
+    "zu": {
+      "photoViewerOpen": null,
+      "photoViewerTriggerFallback": null,
+      "photoViewerCaptionFallback": null,
+      "photoViewerSampleLabel": null,
+      "photoViewerDialogTitle": null,
+      "photoViewerClose": null,
+      "photoViewerLoadError": null,
+      "photoViewerFit": null,
+      "photoViewerEnlarge": null
+    },
+    "st": {
+      "photoViewerOpen": null,
+      "photoViewerTriggerFallback": null,
+      "photoViewerCaptionFallback": null,
+      "photoViewerSampleLabel": null,
+      "photoViewerDialogTitle": null,
+      "photoViewerClose": null,
+      "photoViewerLoadError": null,
+      "photoViewerFit": null,
+      "photoViewerEnlarge": null
+    },
+    "ts": {
+      "photoViewerOpen": null,
+      "photoViewerTriggerFallback": null,
+      "photoViewerCaptionFallback": null,
+      "photoViewerSampleLabel": null,
+      "photoViewerDialogTitle": null,
+      "photoViewerClose": null,
+      "photoViewerLoadError": null,
+      "photoViewerFit": null,
+      "photoViewerEnlarge": null
+    },
+    "ve": {
+      "photoViewerOpen": null,
+      "photoViewerTriggerFallback": null,
+      "photoViewerCaptionFallback": null,
+      "photoViewerSampleLabel": null,
+      "photoViewerDialogTitle": null,
+      "photoViewerClose": null,
+      "photoViewerLoadError": null,
+      "photoViewerFit": null,
+      "photoViewerEnlarge": null
+    }
+  },
+  "beforeLines": {
+    "zu": {
+      "photoViewerOpen": [],
+      "photoViewerTriggerFallback": [],
+      "photoViewerCaptionFallback": [],
+      "photoViewerSampleLabel": [],
+      "photoViewerDialogTitle": [],
+      "photoViewerClose": [],
+      "photoViewerLoadError": [],
+      "photoViewerFit": [],
+      "photoViewerEnlarge": []
+    },
+    "st": {
+      "photoViewerOpen": [],
+      "photoViewerTriggerFallback": [],
+      "photoViewerCaptionFallback": [],
+      "photoViewerSampleLabel": [],
+      "photoViewerDialogTitle": [],
+      "photoViewerClose": [],
+      "photoViewerLoadError": [],
+      "photoViewerFit": [],
+      "photoViewerEnlarge": []
+    },
+    "ts": {
+      "photoViewerOpen": [],
+      "photoViewerTriggerFallback": [],
+      "photoViewerCaptionFallback": [],
+      "photoViewerSampleLabel": [],
+      "photoViewerDialogTitle": [],
+      "photoViewerClose": [],
+      "photoViewerLoadError": [],
+      "photoViewerFit": [],
+      "photoViewerEnlarge": []
+    },
+    "ve": {
+      "photoViewerOpen": [],
+      "photoViewerTriggerFallback": [],
+      "photoViewerCaptionFallback": [],
+      "photoViewerSampleLabel": [],
+      "photoViewerDialogTitle": [],
+      "photoViewerClose": [],
+      "photoViewerLoadError": [],
+      "photoViewerFit": [],
+      "photoViewerEnlarge": []
+    }
+  },
+  "sourceSha256": {
+    "components/PhotoViewer.tsx": "c4177986f2aba0b7fcd947620683748987ffcd82f7064ca4939371dba90250a9",
+    "components/PhotoViewer.module.css": "ce9837445453014ad2b2e5916d66b12ad41c89807c2692a1c5a2df70c2bc700e",
+    "lib/i18n-pending.ts": "40bef988248928d88981577b2f6e49deb1dddf5a18f75abc9268e270621f52bd",
+    "lib/locales/zu.ts": "21dd848f118e86b323fe6cea8b099c280e664a80f8d3847a4d6f1cb97339251d",
+    "lib/locales/st.ts": "079bf86b2894ff476dcb4f4176bab690ba1de344cd43f49860bdbdfc02737a41",
+    "lib/locales/ts.ts": "c5f4fd8685657a72cd61562c7d20d22f1305bb80a7bd4718020c18bc586ac2bf",
+    "lib/locales/ve.ts": "043ee182b66810d5c368df2ad6052e94dfc08c9d5b92cf4f13f75ac18fff76d5"
+  },
+  "sourceFiles": {
+    "components/PhotoViewer.tsx": "'use client';\n\nimport { useEffect, useRef, useState } from 'react';\nimport styles from './PhotoViewer.module.css';\n\n/** Mark only profile/site photos: maps, crop symbols and controls keep their own actions. */\nexport default function PhotoViewer() {\n  const dialog = useRef<HTMLDialogElement>(null);\n  const trigger = useRef<HTMLImageElement | null>(null);\n  const [photo, setPhoto] = useState<{ src: string; caption: string } | null>(null);\n  const [zoom, setZoom] = useState(false);\n  const [failed, setFailed] = useState(false);\n\n  useEffect(() => {\n    function prepare() {\n      document.querySelectorAll<HTMLImageElement>('img[data-photo-preview]').forEach(img => {\n        img.tabIndex = 0;\n        img.setAttribute('role', 'button');\n        img.setAttribute('aria-label', `Open photo: ${img.alt || 'profile or site photograph'}`);\n        img.style.cursor = 'zoom-in';\n      });\n    }\n    function open(event: Event) {\n      if (!(event.target instanceof HTMLImageElement) || !event.target.hasAttribute('data-photo-preview')) return;\n      if (event instanceof KeyboardEvent && event.key !== 'Enter' && event.key !== ' ') return;\n      // A portrait inside a directory row must enlarge without opening that row too.\n      event.preventDefault(); event.stopPropagation();\n      trigger.current = event.target;\n      const source = event.target.currentSrc || event.target.src;\n      const sampleImage = new URL(source, window.location.href).pathname.startsWith('/demo/');\n      const caption = event.target.alt || 'Photograph';\n      setPhoto({ src: source, caption: sampleImage ? `Illustration · ${caption}` : caption });\n      setZoom(false); setFailed(false);\n      dialog.current?.showModal();\n    }\n    prepare();\n    const observer = new MutationObserver(prepare);\n    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['src', 'alt', 'data-photo-preview'] });\n    document.addEventListener('click', open, true);\n    document.addEventListener('keydown', open, true);\n    return () => { observer.disconnect(); document.removeEventListener('click', open, true); document.removeEventListener('keydown', open, true); };\n  }, []);\n\n  return <dialog ref={dialog} className={styles.viewer} aria-label=\"Photo viewer\" onKeyDown={e => e.stopPropagation()}\n    onClick={e => { if (e.target === dialog.current) dialog.current.close(); }}\n    onClose={() => { setPhoto(null); setZoom(false); if (trigger.current?.isConnected) trigger.current.focus(); }}>\n    {photo && <div className={styles.panel}>\n      <header><p>{photo.caption}</p><button type=\"button\" autoFocus onClick={() => dialog.current?.close()}>Close ×</button></header>\n      <div className={styles.imageArea}>{failed ? <p role=\"status\">This photo could not load. Close and try again when connected.</p> : <img className={zoom ? styles.zoomed : ''} src={photo.src} alt={photo.caption} onError={() => setFailed(true)} />}</div>\n      {!failed && <button type=\"button\" aria-pressed={zoom} onClick={() => setZoom(!zoom)}>{zoom ? 'Fit to screen' : 'Enlarge'}</button>}\n    </div>}\n  </dialog>;\n}\n",
+    "components/PhotoViewer.module.css": ".viewer { border: 0; padding: 0; background: transparent; color: var(--text-primary, #203d2d); max-width: 96vw; max-height: 94dvh; }\n.viewer::backdrop { background: rgb(8 20 13 / 85%); }\n.panel { background: var(--bg-0, #fffdf7); border-radius: 20px; padding: 16px; width: min(1000px, 92vw); max-height: 90dvh; overflow: auto; }\n.panel header { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }\n.panel p { margin: 0; font-size: 16px; }\n.panel button { border: 1px solid var(--border, #adbaae); border-radius: 12px; background: var(--bg-1, #f3f3e9); color: inherit; padding: 10px 16px; min-width: 44px; min-height: 44px; font-size: 16px; flex-shrink: 0; }\n.panel button:focus-visible { outline: 3px solid #b87924; outline-offset: 3px; }\n.imageArea { overflow: auto; max-height: 70dvh; margin-bottom: 12px; text-align: center; }\n.imageArea img { display: block; margin: auto; max-width: 100%; max-height: 68dvh; width: auto; height: auto; object-fit: contain; border-radius: 8px; }\n.imageArea img.zoomed { max-width: none; max-height: none; min-width: 100%; width: auto; }\n@media (max-width: 600px) { .panel { padding: 12px; } .panel header { align-items: flex-start; } }\n@media print { .viewer { display: none; } }\n"
+  },
+  "scope": "Global opted-in photo viewer controls, accessibility, illustration marker and load error. Original photograph source and owned caption remain verbatim. No new photographs, uploads or farming claims.",
+  "releasePairs": [
+    {
+      "english": "Photo viewer controls now have four draft translations.",
+      "zu": "Izinkinobho zesibukeli sezithombe manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
+      "st": "Ditaolo tsa sebohi sa ditshwantsho jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
+      "ts": "Swilawuri swa xilanguti xa swifaniso sweswi swi ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",
+      "ve": "Zwilangi zwa tshivhoni tsha zwifanyiso zwino zwi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa."
+    },
+    {
+      "english": "Open a saved photograph",
+      "zu": "Vula isithombe esigciniwe",
+      "st": "Bula setshwantsho se bolokilweng",
+      "ts": "Pfula xifaniso lexi hlayisiweke",
+      "ve": "Vulani tshifanyiso tsho vhulungwaho"
+    },
+    {
+      "english": "If your account has a photograph, open it. The photo viewer controls use your language; the original caption stays as recorded.",
+      "zu": "Uma i-akhawunti yakho inesithombe, sivule. Izinkinobho zesibukeli sezithombe zisebenzisa ulimi lwakho; umbhalo wesithombe wokuqala uhlala njengoba uqoshiwe.",
+      "st": "Haeba akhaonto ya hao e na le setshwantsho, se bule. Ditaolo tsa sebohi sa ditshwantsho di sebedisa puo ya hao; mongolo wa pele wa setshwantsho o sala o le jwalo ka ha o ngotswe.",
+      "ts": "Loko akhawunti ya wena yi ri ni xifaniso, xi pfule. Swilawuri swa xilanguti xa swifaniso swi tirhisa ririmi ra wena; nhlamuselo yo sungula ya xifaniso yi sala yi ri leswi yi tsariweke swona.",
+      "ve": "Arali akhaunthu yaṋu i na tshifanyiso, tshi vuleni. Zwilangi zwa tshivhoni tsha zwifanyiso zwi shumisa luambo lwaṋu; ṱhaluso ya u thoma ya tshifanyiso i sala nga nḓila ye ya ṅwalwa ngayo."
+    }
+  ],
+  "guideNote": "The new optional Account photo stop keeps two visible stops when the older Updates stop leaves the five-note window; original sharing stop remains. No photo is invented when Account has none."
+}

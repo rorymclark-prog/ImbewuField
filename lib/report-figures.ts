@@ -35,6 +35,9 @@ import { deriveSectorModel, labelToBearing, sectorSiteFromLocation } from './sec
 import { isValidEarthLatitude } from './solar';
 import { aspectLabel } from './biome';
 import type { PhasePlan } from './phasing';
+import { reportVisualText } from './report-visuals';
+import { reportRecordedSourceLabel } from './report-localisation';
+import { recordsMonthShort, recordsMonthRangeIndices, recordsSeasonLabel } from './records-months';
 
 /** `note` says how to read the drawing and what it cannot tell you; `source` says where every mark came from. */
 export type ReportFigure = { id: string; title: string; note: string; source: string; svg: string; width: number; height: number; alt: string };
@@ -46,7 +49,8 @@ const GREEN = '#245738', BLUE = '#24738a', AMBER = '#af6b24', VIOLET = '#766395'
 const FONT = 'Arial, sans-serif';
 
 type Translate = (en: string, zu: string) => string;
-const translator = (language: string): Translate => (en, zu) => language === 'zu' ? zu : en;
+const translator = (language: string): Translate => (en, zu) => reportVisualText(en, language, {}, zu);
+const nativeDraft = (language: string) => ['zu', 'st', 'ts', 've'].includes(language);
 const finite = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v);
 const escapeXml = (s: string) => s.replace(/[<>&"']/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&apos;' }[c]!));
 /** Space-grouped thousands and a decimal point, built by hand: en-ZA's own formatter groups with
@@ -174,7 +178,7 @@ export function sitePlanFigure(canvas: DesignCanvasState | null | undefined, lan
       paint: isBed ? 'bed' : CATEGORY_PAINT[def.category] ?? 'structure', round: def.shape === 'circle', cx: item.x * wMetres, cy: item.y * hMetres, w, h,
       rot: def.shape === 'circle' ? 0 : finite(item.rot) ? item.rot : 0, planned: statusOf(item) === 'proposed',
       inside: isBed ? (numbered ? numbered[1] : `${bedNumber}`) : codes.get(item.defId) ?? '',
-      label: isBed || codes.has(item.defId) ? '' : clip(custom || def.name, 24),
+      label: isBed || codes.has(item.defId) ? '' : clip(custom || reportVisualText(def.name, language), 24),
     });
   }
   const areas: PlanArea[] = canvas.zones
@@ -401,7 +405,7 @@ export function sitePlanFigure(canvas: DesignCanvasState | null | undefined, lan
   if (present.has('boundary')) key.push({ draw: (x, y) => p.line(x, y, x + 24, y, { stroke: INK, width: 2, dash: '11 4 2 4' }), text: t('Site boundary', 'Umngcele wendawo') });
   if (present.has('building')) key.push({ draw: (x, y) => p.rect(x + 2, y - 7, 20, 14, { fill: SLATE }), text: t('Buildings', 'Izakhiwo') });
   if (counts.bed) key.push({ draw: swatch('bed', false, '1'), text: some(counts.bed.all, t('vegetable bed, numbered', 'umbhede wemifino, unenombolo'), t('vegetable beds, numbered', 'imibhede yemifino, inezinombolo')) });
-  if (plotNumber) key.push({ draw: (x, y) => p.rect(x + 2, y - 7, 20, 14, { fill: plotHatch, stroke: AMBER, width: 1.4 }), text: plotNumber === 1 ? t('1 staple plot (P1)', 'isiza esiyisisekelo esi-1 (P1)') : t(`${plotNumber} staple plots (P1–P${plotNumber})`, `iziza eziyisisekelo ezi-${plotNumber} (P1–P${plotNumber})`) });
+  if (plotNumber) key.push({ draw: (x, y) => p.rect(x + 2, y - 7, 20, 14, { fill: plotHatch, stroke: AMBER, width: 1.4 }), text: plotNumber === 1 ? t('1 staple plot (P1)', 'isiza esiyisisekelo esi-1 (P1)') : reportVisualText('{count} staple plots (P1–P{count})', language, { count: plotNumber }) });
   if (counts.planting) key.push({ draw: swatch('planting', true), text: some(counts.planting.all, t('tree or planting, to scale', 'isihlahla noma isitshalo, ngesikali'), t('trees and plantings, to scale', 'izihlahla nezitshalo, ngesikali')) });
   if (counts.water) key.push({ draw: swatch('water', true), text: some(counts.water.all, t('water tank or water point', 'ithangi noma indawo yamanzi'), t('water tanks and points', 'amathangi nezindawo zamanzi')) });
   if (present.has('hard')) key.push({ draw: (x, y) => p.rect(x + 2, y - 7, 20, 14, { fill: GROUND_FILL.driveway, stroke: '#b9c0bb', width: 1 }), text: t('Paving and driveway', 'Indawo egandayiwe') });
@@ -414,16 +418,45 @@ export function sitePlanFigure(canvas: DesignCanvasState | null | undefined, lan
 
   let y = panelH + 24;
   const columnW = (W - 12) / 2, keyChars = Math.floor((columnW - 40) / (13.5 * 0.56));
-  key.forEach((row, i) => { const x = 8 + (i % 2) * columnW, rowY = y + Math.floor(i / 2) * 25; row.draw(x, rowY); p.text(x + 32, rowY + 5, clip(row.text, keyChars), { size: 13.5 }); });
-  y += Math.ceil(key.length / 2) * 25;
+  if (nativeDraft(language)) {
+    // A clipped native legend can hide the distinction between a water point and a tank.
+    // Give both cells the taller cell's height; the plan above keeps its original projection.
+    for (let i = 0; i < key.length; i += 2) {
+      let rowHeight = 25;
+      key.slice(i, i + 2).forEach((row, column) => {
+        const x = 8 + column * columnW, lines = wrapText(row.text, 13.5, columnW - 40);
+        row.draw(x, y);
+        lines.forEach((line, at) => p.text(x + 32, y + 5 + at * 18, line, { size: 13.5 }));
+        rowHeight = Math.max(rowHeight, lines.length * 18 + 7);
+      });
+      y += rowHeight;
+    }
+  } else {
+    key.forEach((row, i) => { const x = 8 + (i % 2) * columnW, rowY = y + Math.floor(i / 2) * 25; row.draw(x, rowY); p.text(x + 32, rowY + 5, clip(row.text, keyChars), { size: 13.5 }); });
+    y += Math.ceil(key.length / 2) * 25;
+  }
   if (anyPlanned) {
     p.rect(9, y - 7, 10, 14, { fill: SLATE }); p.rect(22, y - 7, 10, 14, { fill: '#ffffff', stroke: SLATE, width: 1.5, dash: '4 2.5' });
-    p.text(40, y + 5, anyExisting ? t('Solid = already there.  Dashed outline = planned, not built yet.', 'Okugcwele = sekukhona.  Umugqa onamachashaza = kuhleliwe, akukakhiwa.') : t('Dashed outlines: everything on this plan is planned, not built yet.', 'Imigqa enamachashaza: konke okukuleli pulani kuhleliwe, akukakhiwa.'), { size: 13.5, weight: 700, fill: INK });
-    y += 25;
+    const statusKey = anyExisting ? t('Solid = already there.  Dashed outline = planned, not built yet.', 'Okugcwele = sekukhona.  Umugqa onamachashaza = kuhleliwe, akukakhiwa.') : t('Dashed outlines: everything on this plan is planned, not built yet.', 'Imigqa enamachashaza: konke okukuleli pulani kuhleliwe, akukakhiwa.');
+    const statusLines = nativeDraft(language) ? wrapText(statusKey, 13.5, W - 48) : [statusKey];
+    statusLines.forEach((line, at) => p.text(40, y + 5 + at * 18, line, { size: 13.5, weight: 700, fill: INK }));
+    y += Math.max(25, statusLines.length * 18 + 7);
   }
   const plantNames = new Map<string, { code: string; name: string; count: number }>();
   for (const item of canvas.items) { const code = codes.get(item.defId), def = ELEMENTS_BY_ID[item.defId]; if (!code || !def || isBedDef(item.defId)) continue; const row = plantNames.get(item.defId) ?? { code, name: def.name, count: 0 }; row.count += 1; plantNames.set(item.defId, row); }
   const footnote = (value: string) => { for (const lineText of wrapText(value, 13, W - 20)) { p.text(8, y + 6, lineText, { size: 13, fill: MUTED }); y += 17; } y += 3; };
+  if (nativeDraft(language)) {
+    // A small symbol may have no room for its default name. Keep the full translated catalogue
+    // label in the key instead of silently dropping it; farmer-saved names stay as recorded.
+    const names = new Map<string, number>();
+    for (const item of canvas.items) {
+      const def = ELEMENTS_BY_ID[item.defId];
+      if (!def || isBedDef(item.defId) || codes.has(item.defId) || item.label?.trim()) continue;
+      const name = reportVisualText(def.name, language);
+      names.set(name, (names.get(name) ?? 0) + 1);
+    }
+    if (names.size) footnote([...names].map(([name, count]) => `${name} ×${count}`).join('  ·  '));
+  }
   if (plantNames.size) footnote(`${t('Plant codes', 'Amakhodi ezitshalo')}: ${[...plantNames.values()].sort((a, b) => a.code.localeCompare(b.code)).map(row => `${row.code} ${row.name}${row.count > 1 ? ` ×${row.count}` : ''}`).join('  ·  ')}`);
   if (bedNames.length) footnote(`${t('Bed names', 'Amagama emibhede')}: ${bedNames.slice(0, 16).join('  ·  ')}${bedNames.length > 16 ? ' …' : ''}`);
 
@@ -457,29 +490,20 @@ function axis(max: number, target = 4) {
   return { top, ticks };
 }
 
-/** "Oct–Mar" → [9,10,11,0,1,2]. Anything it cannot read gives [] and that season is not drawn. */
-function seasonMonths(label: string | undefined): number[] {
-  const m = /^\s*([A-Za-z]{3})[a-z]*\s*[–—-]\s*([A-Za-z]{3})[a-z]*\s*$/.exec(label ?? '');
-  if (!m) return [];
-  const at = (s: string) => MONTHS.findIndex(x => x.toLowerCase() === s.toLowerCase());
-  const from = at(m[1]), to = at(m[2]);
-  if (from < 0 || to < 0) return [];
-  const out: number[] = [];
-  for (let i = from; out.length < 12; i = (i + 1) % 12) { out.push(i); if (i === to) break; }
-  return out;
-}
+const seasonMonths=recordsMonthRangeIndices;
 
 /** Flagged months as readable runs, joining a run that wraps the year end: "Nov–Feb, Jun". */
-function monthRuns(flags: boolean[]): string {
+function monthRuns(flags: boolean[], language = 'en'): string {
+  const names = MONTHS.map((_, i) => recordsMonthShort(language, i + 1));
   if (!flags.some(Boolean)) return '';
-  if (flags.every(Boolean)) return 'Jan–Dec';
+  if (flags.every(Boolean)) return `${names[0]}–${names[11]}`;
   const runs: string[] = [];
   const start = flags.indexOf(false);
   let open = -1;
   for (let k = 1; k <= 12; k++) {
     const i = (start + k) % 12;
     if (flags[i]) { if (open < 0) open = i; continue; }
-    if (open >= 0) { const end = (i + 11) % 12; runs.push(open === end ? MONTHS[open] : `${MONTHS[open]}–${MONTHS[end]}`); open = -1; }
+    if (open >= 0) { const end = (i + 11) % 12; runs.push(open === end ? names[open] : `${names[open]}–${names[end]}`); open = -1; }
   }
   return runs.join(', ');
 }
@@ -491,11 +515,24 @@ function barPath(x: number, base: number, w: number, h: number, r = 4) {
   return `M${px(x)} ${px(base)}V${px(y + rr)}Q${px(x)} ${px(y)} ${px(x + rr)} ${px(y)}H${px(x + w - rr)}Q${px(x + w)} ${px(y)} ${px(x + w)} ${px(y + rr)}V${px(base)}Z`;
 }
 
-const monthLabels = (p: Pen, left: number, slot: number, y: number) => MONTHS.forEach((m, i) => p.text(left + slot * (i + 0.5), y, m, { size: 12, fill: MUTED, anchor: 'middle' }));
+const monthLabels = (p: Pen, left: number, slot: number, y: number, language = 'en') => MONTHS.forEach((_, i) => p.text(left + slot * (i + 0.5), y, recordsMonthShort(language, i + 1), { size: 12, fill: MUTED, anchor: 'middle' }));
 
 type KeyEntry = { draw: (x: number, y: number) => void; label: string };
 /** Key entries left to right, wrapping to the drawing's width. Returns the y under the last row. */
-function keyRow(p: Pen, x0: number, y: number, entries: KeyEntry[], maxX = W - 14): number {
+function keyRow(p: Pen, x0: number, y: number, entries: KeyEntry[], maxX = W - 14, language = 'en'): number {
+  if (nativeDraft(language)) {
+    let x = x0, rowHeight = 21;
+    for (const entry of entries) {
+      const width = Math.min(maxX - x0, 28 + textWidth(entry.label, 12) + 16);
+      if (x > x0 && x + width > maxX) { x = x0; y += rowHeight; rowHeight = 21; }
+      const lines = wrapText(entry.label, 12, maxX - x - 28);
+      entry.draw(x, y);
+      lines.forEach((line, at) => p.text(x + 28, y + 4 + at * 16, line, { size: 12 }));
+      rowHeight = Math.max(rowHeight, lines.length * 16 + 5);
+      x += width;
+    }
+    return y + rowHeight;
+  }
   let x = x0;
   for (const entry of entries) {
     const w = 28 + textWidth(entry.label, 12) + 16;
@@ -514,7 +551,31 @@ function paragraph(p: Pen, x: number, y: number, value: string, width: number, o
   return y;
 }
 
-const rainSourceLabel = (source: string | undefined, t: Translate) => source === 'nasa-power' ? 'NASA POWER (50 km climate grid)' : source === 'open-meteo' ? 'ERA5-Land via Open-Meteo (9 km grid)' : t('climate data service', 'isevisi yedatha yesimo sezulu');
+const rainSourceLabel = (source: string | undefined, t: Translate) => source === 'nasa-power' ? t('NASA POWER (50 km climate grid)', 'NASA POWER (igridi yesimo sezulu engu-50 km)') : source === 'open-meteo' ? t('ERA5-Land via Open-Meteo (9 km grid)', 'ERA5-Land nge-Open-Meteo (igridi engu-9 km)') : t('climate data service', 'isevisi yedatha yesimo sezulu');
+
+/** More words need more paper; a native header must never paint over the chart's first value. */
+function figureHeader(p: Pen, headline: string, detail: string, language: string, detailSize = 13): number {
+  const head = nativeDraft(language) ? wrapText(headline, 17, W - 28) : [headline];
+  const sub = nativeDraft(language) ? wrapText(detail, detailSize, W - 28) : [detail];
+  head.forEach((line, i) => p.text(14, 25 + i * 22, line, { size: 17, weight: 700, fill: INK }));
+  sub.forEach((line, i) => p.text(14, 46 + (head.length - 1) * 22 + i * 18, line, { size: detailSize, fill: MUTED }));
+  return (head.length - 1) * 22 + (sub.length - 1) * 18;
+}
+
+/** Only recognised source month ranges are localised; arbitrary recorded prose stays as recorded. */
+function figureSeason(value: string | undefined, language: string): string {
+  if (!value || !nativeDraft(language)) return value ?? '';
+  if (value.endsWith(', episodic')) return reportVisualText('{range}, episodic', language, { range: figureSeason(value.slice(0, -10), language) });
+  return recordsSeasonLabel(language,value);
+}
+
+function figurePhaseRange(value: string, language: string): string {
+  if (!nativeDraft(language)) return value;
+  const weeks = /^(Week|Weeks) (\d+)–(\d+)$/.exec(value);
+  if (weeks) return reportVisualText(`${weeks[1]} {start}–{end}`, language, { start: weeks[2], end: weeks[3] });
+  const month = /^Month (\d+)\+$/.exec(value);
+  return month ? reportVisualText('Month {month}+', language, { month: month[1] }) : value;
+}
 
 // ── 2. Climate: when the rain comes, and how warm it is ───────────────────────────────────────
 
@@ -532,10 +593,11 @@ export function climateFigure(location: LocationData | null | undefined, languag
   const wettest = monthly.indexOf(Math.max(...monthly)), driest = monthly.indexOf(Math.min(...monthly));
   const left = 50, right = W - 14, slot = (right - left) / 12;
 
-  p.text(14, 25, `${figureNumber(annual)} mm ${t('of rain in an average year', 'yemvula ngonyaka ojwayelekile')}`, { size: 17, weight: 700, fill: INK });
-  p.text(14, 46, `${t('Wettest month', 'Inyanga enemvula kakhulu')}: ${MONTHS[wettest]} (${figureNumber(monthly[wettest])} mm)   ·   ${t('Driest month', 'Inyanga eyome kakhulu')}: ${MONTHS[driest]} (${figureNumber(monthly[driest])} mm)`, { size: 13, fill: MUTED });
+  const month = (index: number) => recordsMonthShort(language, index + 1);
+  const offset = figureHeader(p, `${figureNumber(annual)} mm ${t('of rain in an average year', 'yemvula ngonyaka ojwayelekile')}`,
+    `${t('Wettest month', 'Inyanga enemvula kakhulu')}: ${month(wettest)} (${figureNumber(monthly[wettest])} mm)   ·   ${t('Driest month', 'Inyanga eyome kakhulu')}: ${month(driest)} (${figureNumber(monthly[driest])} mm)`, language);
 
-  const top = 82, base = 226, scale = axis(Math.max(...monthly));
+  const top = 82 + offset, base = 226 + offset, scale = axis(Math.max(...monthly));
   p.text(left - 8, top - 12, 'mm', { size: 11, fill: MUTED, anchor: 'end' });
   for (const tick of scale.ticks) {
     const y = base - (tick / scale.top) * (base - top);
@@ -558,17 +620,19 @@ export function climateFigure(location: LocationData | null | undefined, languag
     else if (dry.includes(i)) p.rect(x, y, w, 7, { fill: dryHatch, stroke: AMBER, width: 1 });
     else p.rect(x, y, w, 7, { fill: TRACK });
   }
-  monthLabels(p, left, slot, base + 30);
+  monthLabels(p, left, slot, base + 30, language);
   const entries: KeyEntry[] = [];
-  if (wet.length) entries.push({ label: `${t('Wet season', 'Isikhathi semvula')} (${rain.wetSeason})`, draw: (x, y) => p.rect(x, y - 5, 20, 9, { fill: BLUE }) });
-  if (dry.length) entries.push({ label: `${t('Dry season', 'Isikhathi sesomiso')} (${rain.drySeason})`, draw: (x, y) => p.rect(x, y - 5, 20, 9, { fill: dryHatch, stroke: AMBER, width: 1 }) });
-  let height = entries.length ? keyRow(p, left, base + 52, entries) : base + 42;
+  if (wet.length) entries.push({ label: `${t('Wet season', 'Isikhathi semvula')} (${figureSeason(rain.wetSeason, language)})`, draw: (x, y) => p.rect(x, y - 5, 20, 9, { fill: BLUE }) });
+  if (dry.length) entries.push({ label: `${t('Dry season', 'Isikhathi sesomiso')} (${figureSeason(rain.drySeason, language)})`, draw: (x, y) => p.rect(x, y - 5, 20, 9, { fill: dryHatch, stroke: AMBER, width: 1 }) });
+  let height = entries.length ? keyRow(p, left, base + 52, entries, W - 14, language) : base + 42;
 
   const temps = location?.climate?.monthlyTemp;
   let tempAlt = '';
   if (twelve(temps)) {
     const warm = temps.indexOf(Math.max(...temps)), cold = temps.indexOf(Math.min(...temps));
-    p.text(14, height + 20, t('Average temperature each month (°C)', 'Izinga lokushisa elijwayelekile ngenyanga (°C)'), { size: 14, weight: 700, fill: INK });
+    const temperatureTitle = t('Average temperature each month (°C)', 'Izinga lokushisa elijwayelekile ngenyanga (°C)');
+    if (nativeDraft(language)) height = paragraph(p, 14, height + 20, temperatureTitle, W - 28, { size: 14, weight: 700, fill: INK }) - 40;
+    else p.text(14, height + 20, temperatureTitle, { size: 14, weight: 700, fill: INK });
     const tTop = height + 44, tBase = tTop + 92;
     const step = Math.max(...temps) - Math.min(...temps) > 16 ? 10 : 5;
     const lo = Math.floor((Math.min(...temps) - 1.5) / step) * step, hi = Math.ceil((Math.max(...temps) + 1.5) / step) * step;
@@ -578,10 +642,10 @@ export function climateFigure(location: LocationData | null | undefined, languag
     p.path(`M${pts.map(([x, y]) => `${px(x)} ${px(y)}`).join('L')}`, { stroke: AMBER, width: 2.2 });
     pts.forEach(([x, y], i) => { const strong = i === warm || i === cold; p.circle(x, y, strong ? 5 : 3.2, { fill: strong ? AMBER : '#ffffff', stroke: strong ? '#ffffff' : AMBER, width: 2 }); });
     p.text(pts[warm][0], pts[warm][1] - 11, `${figureNumber(temps[warm], 1)} °C`, { size: 12, weight: 700, fill: INK, anchor: 'middle', halo: true });
-    p.text(pts[cold][0], pts[cold][1] + 20, `${figureNumber(temps[cold], 1)} °C`, { size: 12, weight: 700, fill: INK, anchor: 'middle', halo: true });
-    monthLabels(p, left, slot, tBase + 20);
+    if (!nativeDraft(language) || warm !== cold) p.text(pts[cold][0], pts[cold][1] + (nativeDraft(language) ? -11 : 20), `${figureNumber(temps[cold], 1)} °C`, { size: 12, weight: 700, fill: INK, anchor: 'middle', halo: true });
+    monthLabels(p, left, slot, tBase + 20, language);
     height = tBase + 30;
-    tempAlt = ` ${t('Warmest month', 'Inyanga efudumele kakhulu')} ${MONTHS[warm]} ${figureNumber(temps[warm], 1)} °C, ${t('coolest', 'ebanda kakhulu')} ${MONTHS[cold]} ${figureNumber(temps[cold], 1)} °C.`;
+    tempAlt = ` ${t('Warmest month', 'Inyanga efudumele kakhulu')} ${month(warm)} ${figureNumber(temps[warm], 1)} °C, ${t('coolest', 'ebanda kakhulu')} ${month(cold)} ${figureNumber(temps[cold], 1)} °C.`;
   }
 
   return {
@@ -589,7 +653,7 @@ export function climateFigure(location: LocationData | null | undefined, languag
     title: t('Rain and warmth through the year', 'Imvula nokufudumala phakathi nonyaka'),
     note: t('Long-term monthly averages for this location, not a forecast. Any one year can be much wetter or much drier than this.', 'Izilinganiso zesikhathi eside zale ndawo, akusona isibikezelo. Noma yimuphi unyaka ungaba nemvula eningi noma ube womile kakhulu kunalokhu.'),
     source: rainSourceLabel(rain.rainfallSource, t),
-    alt: `${t('Rain by month', 'Imvula ngenyanga')}: ${figureNumber(annual)} mm ${t('a year', 'ngonyaka')}; ${t('wettest', 'enemvula kakhulu')} ${MONTHS[wettest]} ${figureNumber(monthly[wettest])} mm, ${t('driest', 'eyome kakhulu')} ${MONTHS[driest]} ${figureNumber(monthly[driest])} mm.${tempAlt}`,
+    alt: `${t('Rain by month', 'Imvula ngenyanga')}: ${figureNumber(annual)} mm ${t('a year', 'ngonyaka')}; ${t('wettest', 'enemvula kakhulu')} ${month(wettest)} ${figureNumber(monthly[wettest])} mm, ${t('driest', 'eyome kakhulu')} ${month(driest)} ${figureNumber(monthly[driest])} mm.${tempAlt}`,
   };
 }
 
@@ -618,10 +682,10 @@ export function waterBudgetFigure(facts: ReportSiteFacts | null | undefined, loc
   const short = needL ? catchL.map((v, i) => v < needL[i]) : catchL.map(() => false);
   const left = 62, right = W - 14, slot = (right - left) / 12;
 
-  p.text(14, 25, `${t('This roof can catch', 'Lolu phahla lungabamba')} ${figureNumber(annualCatch)} L ${t('in an average year', 'ngonyaka ojwayelekile')}`, { size: 17, weight: 700, fill: INK });
-  p.text(14, 46, `${figureNumber(roof)} m² ${t('of traced roof', 'yophahla oludwetshiwe')} × ${figureNumber(annualMm)} mm ${t('of rain', 'yemvula')} × ${coefficient} (${t('the rest is lost to splash and the first dirty flush', 'okunye kulahleka ngokuchaphazela nangamanzi okuqala angcolile')})`, { size: 12.5, fill: MUTED });
+  const offset = figureHeader(p, `${t('This roof can catch', 'Lolu phahla lungabamba')} ${figureNumber(annualCatch)} L ${t('in an average year', 'ngonyaka ojwayelekile')}`,
+    `${figureNumber(roof)} m² ${t('of traced roof', 'yophahla oludwetshiwe')} × ${figureNumber(annualMm)} mm ${t('of rain', 'yemvula')} × ${coefficient} (${t('the rest is lost to splash and the first dirty flush', 'okunye kulahleka ngokuchaphazela nangamanzi okuqala angcolile')})`, language, 12.5);
 
-  const top = 84, base = 232, scale = axis(Math.max(...catchL, ...(needL ?? [0])));
+  const top = 84 + offset, base = 232 + offset, scale = axis(Math.max(...catchL, ...(needL ?? [0])));
   p.text(left - 8, top - 12, t('litres', 'amalitha'), { size: 11, fill: MUTED, anchor: 'end' });
   for (const tick of scale.ticks) {
     const y = base - (tick / scale.top) * (base - top);
@@ -641,11 +705,11 @@ export function waterBudgetFigure(facts: ReportSiteFacts | null | undefined, loc
     }
     p.text(x + w / 2, labelY, figureNumber(Math.round(value / 100) * 100), { size: 10.5, anchor: 'middle', fill: short[i] ? INK : MUTED, weight: short[i] ? 700 : 400, halo: true });
   });
-  monthLabels(p, left, slot, base + 19);
+  monthLabels(p, left, slot, base + 19, language);
   const entries: KeyEntry[] = [{ label: t('Rain the roof catches that month', 'Imvula ebanjwa uphahla ngaleyo nyanga'), draw: (x, y) => p.rect(x + 2, y - 6, 15, 12, { fill: BLUE }) }];
   if (needL) entries.push({ label: `${t('Water used that month', 'Amanzi asetshenziswa ngaleyo nyanga')} (${figureNumber(daily as number)} L ${t('a day', 'ngosuku')})`, draw: (x, y) => p.line(x, y, x + 20, y, { stroke: INK, width: 2.6 }) });
   if (short.some(Boolean)) entries.push({ label: t('Short: must come from the tank or another source', 'Ukushoda: kumele kuvele ethangini noma komunye umthombo'), draw: (x, y) => p.rect(x + 2, y - 6, 15, 12, { fill: gap, stroke: AMBER, width: 1 }) });
-  let y = keyRow(p, 14, base + 44, entries) + 8;
+  let y = keyRow(p, 14, base + 44, entries, W - 14, language) + 8;
 
   // Storage: what is drawn on the plan against what would carry the site through the dry run.
   const stored = facts?.water?.statedStorageLitres ?? 0;
@@ -661,7 +725,8 @@ export function waterBudgetFigure(facts: ReportSiteFacts | null | undefined, loc
     const barLeft = 14, barMax = W - 28 - 150, unit = barMax / Math.max(stored, needed, 1);
     const row = (label: string, litres: number, look: ShapeOptions) => {
       y += 18;
-      p.text(barLeft, y, label, { size: 12.5 });
+      if (nativeDraft(language)) y = paragraph(p, barLeft, y, label, W - 28, { size: 12.5 }) - 18;
+      else p.text(barLeft, y, label, { size: 12.5 });
       y += 7;
       p.rect(barLeft, y, Math.max(3, litres * unit), 16, { radius: 3, ...look });
       p.text(barLeft + Math.max(3, litres * unit) + 8, y + 12.5, `${figureNumber(litres)} L`, { size: 13, weight: 700, fill: INK });
@@ -675,7 +740,7 @@ export function waterBudgetFigure(facts: ReportSiteFacts | null | undefined, loc
   const lines: string[] = [];
   if (!needL) lines.push(t('Daily water use has not been recorded for this site, so this figure cannot show which months run short. Add it in the Design Studio, Water step.', 'Ukusetshenziswa kwamanzi kwansuku zonke akukaqoshwa kule ndawo, ngakho lo mdwebo awukwazi ukukhombisa izinyanga ezishodayo. Kufake ku-Design Studio, isinyathelo Samanzi.'));
   else if (short.some(Boolean)) {
-    lines.push(`${t('The roof catches less than is used in', 'Uphahla lubamba okuncane kunalokho okusetshenziswayo ngo')} ${monthRuns(short)}.${sizing?.ok && sizing.dryRunShortfallL > 0 ? ` ${t('Over the longest dry run the gap adds up to', 'Esikhathini eside esomile igebe lifinyelela ku')} ${figureNumber(Math.round(sizing.dryRunShortfallL))} L.` : ''}`);
+    lines.push(`${t('The roof catches less than is used in', 'Uphahla lubamba okuncane kunalokho okusetshenziswayo ngo')} ${monthRuns(short, language)}.${sizing?.ok && sizing.dryRunShortfallL > 0 ? ` ${t('Over the longest dry run the gap adds up to', 'Esikhathini eside esomile igebe lifinyelela ku')} ${figureNumber(Math.round(sizing.dryRunShortfallL))} L.` : ''}`);
     if (sizing?.ok && sizing.waterNegative) lines.push(t('Over the whole year this roof catches less than the site uses. A bigger tank helps, but more roof or another water source is needed to close the gap.', 'Ngonyaka wonke lolu phahla lubamba okuncane kunalokho okusetshenziswa indawo. Ithangi elikhulu liyasiza, kodwa kudingeka uphahla olwengeziwe noma omunye umthombo wamanzi.'));
   } else lines.push(t('In an average year the roof catches more than is used in every month.', 'Ngonyaka ojwayelekile uphahla lubamba okungaphezu kwalokho okusetshenziswayo nyanga zonke.'));
   for (const line of lines) y = paragraph(p, 14, y + 6, line, W - 28) + 2;
@@ -684,8 +749,8 @@ export function waterBudgetFigure(facts: ReportSiteFacts | null | undefined, loc
     id: 'water-budget', width: W, height: Math.ceil(y + 4), svg: p.done(y + 4),
     title: t('Roof water: what comes in and what goes out', 'Amanzi ophahla: okungenayo nokuphumayo'),
     note: t('Average-year arithmetic, not a promise of rain. It counts only the roof that has been traced and only the tanks drawn on the plan; it says nothing about whether the water is safe to drink.', 'Izibalo zonyaka ojwayelekile, akusona isithembiso semvula. Kubalwa kuphela uphahla oludwetshiwe namathangi asepulanini; akusho lutho ngokuphepha kwamanzi okuphuzwa.'),
-    source: `${t('Roof', 'Uphahla')}: ${facts?.roof?.source ?? t('traced area', 'indawo edwetshiwe')}. ${t('Rain', 'Imvula')}: ${rainSourceLabel(rain.rainfallSource, t)}.${needL ? ` ${t('Daily use: as recorded in the Design Studio.', 'Ukusetshenziswa kwansuku zonke: njengoba kuqoshwe ku-Design Studio.')}` : ''}`,
-    alt: `${t('Roof catch by month', 'Okubanjwa uphahla ngenyanga')}: ${figureNumber(annualCatch)} L ${t('a year', 'ngonyaka')}${short.some(Boolean) ? `; ${t('short in', 'kuyashoda ngo')} ${monthRuns(short)}` : ''}${stored > 0 ? `; ${t('storage on the plan', 'isitoreji esikupulani')} ${figureNumber(stored)} L` : ''}${needed > 0 ? `; ${t('storage needed', 'isitoreji esidingekayo')} ${figureNumber(needed)} L` : ''}.`,
+    source: `${t('Roof', 'Uphahla')}: ${reportRecordedSourceLabel(facts?.roof?.source ?? t('traced area', 'indawo edwetshiwe'),language)}. ${t('Rain', 'Imvula')}: ${rainSourceLabel(rain.rainfallSource, t)}.${needL ? ` ${t('Daily use: as recorded in the Design Studio.', 'Ukusetshenziswa kwansuku zonke: njengoba kuqoshwe ku-Design Studio.')}` : ''}`,
+    alt: `${t('Roof catch by month', 'Okubanjwa uphahla ngenyanga')}: ${figureNumber(annualCatch)} L ${t('a year', 'ngonyaka')}${short.some(Boolean) ? `; ${t('short in', 'kuyashoda ngo')} ${monthRuns(short, language)}` : ''}${stored > 0 ? `; ${t('storage on the plan', 'isitoreji esikupulani')} ${figureNumber(stored)} L` : ''}${needed > 0 ? `; ${t('storage needed', 'isitoreji esidingekayo')} ${figureNumber(needed)} L` : ''}.`,
   };
 }
 
@@ -711,6 +776,18 @@ function arrow(p: Pen, from: [number, number], to: [number, number], o: ShapeOpt
   p.path(pathOf([to, [to[0] - Math.cos(a - 0.42) * head * 1.5, to[1] - Math.sin(a - 0.42) * head * 1.5], [to[0] - Math.cos(a + 0.42) * head * 1.5, to[1] - Math.sin(a + 0.42) * head * 1.5]], true), { fill: o.stroke ?? INK });
 }
 
+type SectorCaption = Array<{ value: string; bold?: boolean }>;
+function sectorCaptionLayout(bearingDeg: number, lines: SectorCaption) {
+  const b = ((bearingDeg % 360) + 360) % 360, octant = Math.round(b / 45) % 8;
+  // Which corner of the label touches the bearing line: N hangs above, NE sits up-right, and so on.
+  const hx = [0.5, 0, 0, 0, 0.5, 1, 1, 1][octant], hy = [1, 1, 0.5, 0, 0, 0, 0.5, 1][octant];
+  const maxWidth = octant === 2 || octant === 6 ? 128 : octant === 0 || octant === 4 ? 200 : 186;
+  // A line that will not fit breaks at its ' · ' joints first, and only then between words.
+  const rows = lines.flatMap(line => (textWidth(line.value, 12) * (line.bold ? 1.08 : 1) <= maxWidth ? [line.value] : line.value.split(' · ')).flatMap(part => wrapText(part, 12, maxWidth / (line.bold ? 1.08 : 1))).map(value => ({ value, bold: line.bold })));
+  const w = Math.max(...rows.map(r => textWidth(r.value, 12) * (r.bold ? 1.08 : 1))), h = rows.length * 15;
+  return { b, hx, hy, rows, w, h };
+}
+
 /**
  * The permaculture sector drawing: where the sun travels in summer and in winter, where wind and
  * fire arrive from, and which way the ground falls. All of it comes from lib/sector — the model
@@ -726,14 +803,28 @@ export function sectorFigure(location: LocationData | null | undefined, facts: R
   const model = deriveSectorModel(sectorSiteFromLocation(location), location.lat, finite(location.lon) ? location.lon : undefined);
   const t = translator(language);
   const p = pen();
-  const cx = W / 2, cy = 276, R = 128;
+  const cx = W / 2, R = 128;
   const side = (s: 'N' | 'S' | 'overhead') => s === 'S' ? t('to the south', 'eningizimu') : s === 'N' ? t('to the north', 'enyakatho') : t('overhead', 'phezulu ngqo');
   const { summer, winter } = model.solar;
 
   // The finding first: the low winter sun is what decides where shade falls when it matters most.
-  p.text(14, 25, winter.noonSide === 'overhead' ? t('The midday sun stands almost overhead', 'Ilanga lasemini licishe libe phezulu ngqo') : `${t('The midday sun stands', 'Ilanga lasemini lima')} ${side(winter.noonSide)}`, { size: 17, weight: 700, fill: INK });
-  const shadowOf = (path: typeof winter) => { if (!finite(path.shadowRatio) || path.shadowRatio <= 0.05) return ''; const n = figureNumber(path.shadowRatio, 1); return t(`a 1 m post throws a ${n} m shadow`, `isigxobo esingu-1 m senza isithunzi esingu-${n} m`); };
-  p.text(14, 46, `${t('Winter', 'Ubusika')}: ${Math.round(winter.noonAltitudeDeg)}° ${t('above the horizon', 'ngaphezu komkhathizwe')}${shadowOf(winter) ? `, ${shadowOf(winter)}` : ''}   ·   ${t('Summer', 'Ihlobo')}: ${Math.round(summer.noonAltitudeDeg)}°`, { size: 13, fill: MUTED });
+  const headline = winter.noonSide === 'overhead' ? t('The midday sun stands almost overhead', 'Ilanga lasemini licishe libe phezulu ngqo') : `${t('The midday sun stands', 'Ilanga lasemini lima')} ${side(winter.noonSide)}`;
+  const shadowOf = (path: typeof winter) => { if (!finite(path.shadowRatio) || path.shadowRatio <= 0.05) return ''; const n = figureNumber(path.shadowRatio, 1); return reportVisualText('a 1 m post throws a {length} m shadow', language, { length: n }); };
+  const offset = figureHeader(p, headline, `${t('Winter', 'Ubusika')}: ${Math.round(winter.noonAltitudeDeg)}° ${t('above the horizon', 'ngaphezu komkhathizwe')}${shadowOf(winter) ? `, ${shadowOf(winter)}` : ''}   ·   ${t('Summer', 'Ihlobo')}: ${Math.round(summer.noonAltitudeDeg)}°`, language);
+  const sameBearing = (x: number, y: number) => Math.abs(((x - y + 540) % 360) - 180) < 12;
+  const windCaption = (wind: typeof model.namedWind[number]): SectorCaption => [
+    { value: reportVisualText(sentence(wind.title), language), bold: true },
+    { value: `${t('from the', 'uvela e')} ${wind.fromLabel} · ${figureSeason(wind.season, language)}` },
+    ...(model.fire && sameBearing(model.fire.bearingDeg, wind.bearingDeg) ? [{ value: t('fire follows this wind', 'umlilo ulandela lo moya') }] : []),
+  ];
+  // Walking a long NW caption outward moves its TOP upward. Reserve enough headroom for the
+  // same 96 px placement search instead of letting a translated title cross the page edge.
+  const nativeTop = nativeDraft(language) ? Math.max(0, ...model.namedWind.map(wind => {
+    const caption = sectorCaptionLayout(wind.bearingDeg, windCaption(wind));
+    const fromR = R + (model.fire && sameBearing(model.fire.bearingDeg, wind.bearingDeg) ? 47 : 31);
+    return 56 + offset + Math.max(0, (fromR + 96) * Math.cos(caption.b * Math.PI / 180)) + caption.h * caption.hy + 12;
+  })) : 0;
+  const cy = Math.max(276 + offset, nativeTop);
 
   p.circle(cx, cy, R, { fill: PAPER, stroke: HAIR, width: 1.5 });
   for (let b = 0; b < 360; b += 22.5) { const major = b % 90 === 0; const [x1, y1] = polar(cx, cy, R, b), [x2, y2] = polar(cx, cy, R - (major ? 9 : 5), b); p.line(x1, y1, x2, y2, { stroke: major ? MUTED : HAIR, width: major ? 1.6 : 1 }); }
@@ -766,19 +857,13 @@ export function sectorFigure(location: LocationData | null | undefined, facts: R
   };
   const placed: Box[] = [];
   const outside = (bearingDeg: number, fromR: number, lines: Array<{ value: string; bold?: boolean }>) => {
-    const b = ((bearingDeg % 360) + 360) % 360, octant = Math.round(b / 45) % 8;
-    // Which corner of the label touches the bearing line: N hangs above, NE sits up-right, and so on.
-    const hx = [0.5, 0, 0, 0, 0.5, 1, 1, 1][octant], hy = [1, 1, 0.5, 0, 0, 0, 0.5, 1][octant];
-    const maxWidth = octant === 2 || octant === 6 ? 128 : octant === 0 || octant === 4 ? 200 : 186;
-    // A line that will not fit breaks at its ' · ' joints first, and only then between words.
-    const rows = lines.flatMap(line => (textWidth(line.value, 12) * (line.bold ? 1.08 : 1) <= maxWidth ? [line.value] : line.value.split(' · ')).flatMap(part => wrapText(part, 12, maxWidth / (line.bold ? 1.08 : 1))).map(value => ({ value, bold: line.bold })));
-    const w = Math.max(...rows.map(r => textWidth(r.value, 12) * (r.bold ? 1.08 : 1))), h = rows.length * 15;
+    const { b, hx, hy, rows, w, h } = sectorCaptionLayout(bearingDeg, lines);
     let box: Box = { x: 0, y: 0, w, h };
     for (let r = fromR; r <= fromR + 96; r += 6) {
       const [ax, ay] = polar(cx, cy, r, b);
       box = { x: Math.min(W - 10 - w, Math.max(10, ax - w * hx)), y: ay - h * hy, w, h };
       const grown: Box = { x: box.x - 4, y: box.y - 4, w: w + 8, h: h + 8 };
-      if (box.y >= 56 && !placed.some(other => overlaps(grown, other)) && !outline.some(([x, y]) => x > grown.x && x < grown.x + grown.w && y > grown.y && y < grown.y + grown.h)) break;
+      if (box.y >= 56 + offset && !placed.some(other => overlaps(grown, other)) && !outline.some(([x, y]) => x > grown.x && x < grown.x + grown.w && y > grown.y && y < grown.y + grown.h)) break;
     }
     placed.push(box);
     const anchor = hx === 0 ? 'start' : hx === 1 ? 'end' : 'middle';
@@ -787,7 +872,6 @@ export function sectorFigure(location: LocationData | null | undefined, facts: R
 
   const windHatch = model.namedWind.length ? p.hatch('wind', SLATE, 5, 1.3) : '';
   const fireHatch = model.fire ? p.hatch('fire', AMBER, 4, 1.5) : '';
-  const sameBearing = (x: number, y: number) => Math.abs(((x - y + 540) % 360) - 180) < 12;
   if (model.fire) wedge(R + 27, R + 41, model.fire.bearingDeg, model.fire.halfWidthDeg, { fill: fireHatch, stroke: AMBER, width: 1.4, dash: '5 3' });
   for (const wind of model.namedWind) {
     wedge(R + 4, R + 25, wind.bearingDeg, wind.halfWidthDeg, { fill: windHatch, stroke: SLATE, width: 1.3, dash: '5 3' });
@@ -795,13 +879,13 @@ export function sectorFigure(location: LocationData | null | undefined, facts: R
   }
   for (const wind of model.namedWind) {
     const carriesFire = !!model.fire && sameBearing(model.fire.bearingDeg, wind.bearingDeg);
-    outside(wind.bearingDeg, R + (carriesFire ? 47 : 31), [{ value: sentence(wind.title), bold: true }, { value: `${t('from the', 'uvela e')} ${wind.fromLabel} · ${wind.season}` }, ...(carriesFire ? [{ value: t('fire follows this wind', 'umlilo ulandela lo moya') }] : [])]);
-    described.push(`${sentence(wind.title)}: ${t('from the', 'uvela e')} ${wind.fromLabel}, ${wind.season} (${t('regional pattern', 'iphethini yesifunda')}).`);
+    outside(wind.bearingDeg, R + (carriesFire ? 47 : 31), windCaption(wind));
+    described.push(`${reportVisualText(sentence(wind.title), language)}: ${t('from the', 'uvela e')} ${wind.fromLabel}, ${figureSeason(wind.season, language)} (${t('regional pattern', 'iphethini yesifunda')}).`);
   }
   if (model.fire) {
     const fire = model.fire;
     if (!model.namedWind.some(w => sameBearing(fire.bearingDeg, w.bearingDeg))) outside(fire.bearingDeg, R + 47, [{ value: t('Fire risk', 'Ingozi yomlilo'), bold: true }, { value: `${t('from the', 'uvela e')} ${fire.fromLabel}` }]);
-    described.push(`${t('Fire is most likely to arrive from the', 'Umlilo kungenzeka ufike uvela e')} ${fire.fromLabel}. ${fire.seasonNote}`);
+    described.push(`${t('Fire is most likely to arrive from the', 'Umlilo kungenzeka ufike uvela e')} ${fire.fromLabel}. ${reportVisualText(fire.seasonNote, language)}`);
   }
   const observed = labelToBearing(facts?.measurements?.localWindFrom);
   if (observed !== null) {
@@ -827,7 +911,8 @@ export function sectorFigure(location: LocationData | null | undefined, facts: R
   p.path(`M${cx - 8} ${cy + 7}V${cy - 2}L${cx} ${cy - 10}L${cx + 8} ${cy - 2}V${cy + 7}Z`, { fill: INK });
 
   const lowest = Math.max(cy + R, ...outline.map(([, y]) => y), ...placed.map(box => box.y + box.h));
-  const height = keyRow(p, 14, lowest + 32, key) + 4;
+  let height = keyRow(p, 14, lowest + 32, key, W - 14, language) + 4;
+  if (nativeDraft(language)) height = paragraph(p, 14, height + 8, reportVisualText('Compass: N = north; E = east; S = south; W = west.', language), W - 28, { size: 12, fill: MUTED }) + 4;
   const lat = `${Math.abs(location.lat).toFixed(2)}° ${location.lat < 0 ? 'S' : 'N'}`;
   return {
     id: 'sectors', width: W, height: Math.ceil(height), svg: p.done(height),
@@ -858,28 +943,34 @@ export function soilFigure(location: LocationData | null | undefined, language =
   if (!known) {
     // Nothing measured: three empty scales would be a tall drawing of nothing. Say so once, and
     // show what a soil test fills in.
-    p.text(14, 25, t('The soil here has not been measured yet', 'Umhlabathi walapha awukalinganiswa'), { size: 17, weight: 700, fill: INK });
-    p.text(14, 46, t('A soil test fills in these three readings.', 'Ukuhlolwa komhlabathi kugcwalisa lezi zilinganiso ezintathu.'), { size: 13, fill: MUTED });
+    const offset = figureHeader(p, t('The soil here has not been measured yet', 'Umhlabathi walapha awukalinganiswa'), t('A soil test fills in these three readings.', 'Ukuhlolwa komhlabathi kugcwalisa lezi zilinganiso ezintathu.'), language);
     const slots = [t('How sour or sweet (pH)', 'Ubumuncu noma ubumnandi (pH)'), t('Sand, silt and clay', 'Isihlabathi, udaka nobumba'), t('Organic carbon', 'Ikhabhoni yemvelo')];
     const gap = 12, slotW = (W - 28 - gap * 2) / 3;
+    const slotLines = slots.map(name => nativeDraft(language) ? wrapText(name, 12.5, slotW - 16) : [name]);
+    const extra = (Math.max(...slotLines.map(lines => lines.length)) - 1) * 16;
     slots.forEach((name, i) => {
       const x = 14 + i * (slotW + gap);
-      p.rect(x, 64, slotW, 58, { fill: '#ffffff', stroke: MUTED, width: 1.2, dash: '5 4', radius: 6 });
-      p.text(x + slotW / 2, 88, name, { size: 12.5, weight: 700, fill: INK, anchor: 'middle' });
-      p.text(x + slotW / 2, 108, t('not measured', 'akulinganiswanga'), { size: 12, fill: MUTED, anchor: 'middle' });
+      p.rect(x, 64 + offset, slotW, 58 + extra, { fill: '#ffffff', stroke: MUTED, width: 1.2, dash: '5 4', radius: 6 });
+      slotLines[i].forEach((line, at) => p.text(x + slotW / 2, 88 + offset + at * 16, line, { size: 12.5, weight: 700, fill: INK, anchor: 'middle' }));
+      p.text(x + slotW / 2, 108 + offset + extra, t('not measured', 'akulinganiswanga'), { size: 12, fill: MUTED, anchor: 'middle' });
     });
     return {
-      id: 'soil', width: W, height: 134, svg: p.done(134),
+      id: 'soil', width: W, height: 134 + offset + extra, svg: p.done(134 + offset + extra),
       title: t('Soil at a glance', 'Umhlabathi ngamafuphi'),
       note: t('No soil measurement is recorded for this site, so nothing is plotted. Arrange a soil test on a sample from the top 30 cm.', 'Akukho ukulinganiswa komhlabathi okuqoshiwe kule ndawo, ngakho akukho okudwetshiwe. Hlela ukuhlolwa komhlabathi kusampula yamasentimitha angu-30 aphezulu.'),
       source: t('No soil measurement recorded', 'Akukho ukulinganiswa komhlabathi okuqoshiwe'),
       alt: t('Soil not measured.', 'Umhlabathi awulinganiswanga.'),
     };
   }
+  const heading = (value: string, baseline: number) => {
+    const lines = nativeDraft(language) ? wrapText(value, 14, W - 28) : [value];
+    lines.forEach((line, at) => p.text(14, baseline + at * 20, line, { size: 14, weight: 700, fill: INK }));
+    return baseline + (lines.length - 1) * 20;
+  };
   let y = 24;
 
   // pH
-  p.text(14, y, t('How sour or sweet the soil is (pH)', 'Ukuthi umhlabathi umuncu noma umnandi kangakanani (pH)'), { size: 14, weight: 700, fill: INK });
+  y = heading(t('How sour or sweet the soil is (pH)', 'Ukuthi umhlabathi umuncu noma umnandi kangakanani (pH)'), y);
   const phY = y + 42, phOf = (v: number) => x0 + ((v - 4) / 5) * (x1 - x0);
   const ph = known && finite(soil.ph) && soil.ph >= 3 && soil.ph <= 10 ? soil.ph : null;
   if (ph !== null) {
@@ -889,16 +980,30 @@ export function soilFigure(location: LocationData | null | undefined, language =
     p.text(phOf(Math.min(9, Math.max(4, ph))), phY - 15, `pH ${figureNumber(ph, 1)}`, { size: 14, weight: 700, fill: INK, anchor: 'middle', halo: true });
   } else empty(phY);
   for (let v = 4; v <= 9; v++) { p.line(phOf(v), phY + 9, phOf(v), phY + 14, { stroke: MUTED, width: 1 }); p.text(phOf(v), phY + 28, String(v), { size: 12, fill: MUTED, anchor: 'middle' }); }
-  p.text(x0, phY + 46, t('← more acid (sour)', '← umuncu kakhulu'), { size: 12, fill: MUTED });
-  p.text(x1, phY + 46, t('more alkaline →', 'une-alkali kakhulu →'), { size: 12, fill: MUTED, anchor: 'end' });
-  if (ph !== null) p.text((phOf(6) + phOf(7)) / 2, phY + 46, t('most vegetables: 6 to 7', 'imifino eminingi: 6 kuya ku-7'), { size: 12, fill: GREEN, weight: 700, anchor: 'middle' });
-  y = phY + 78;
+  if (nativeDraft(language)) {
+    const acid = wrapText(t('← more acid (sour)', '← umuncu kakhulu'), 12, 250);
+    const alkaline = wrapText(t('more alkaline →', 'une-alkali kakhulu →'), 12, 250);
+    acid.forEach((line, at) => p.text(x0, phY + 46 + at * 17, line, { size: 12, fill: MUTED }));
+    alkaline.forEach((line, at) => p.text(x1, phY + 46 + at * 17, line, { size: 12, fill: MUTED, anchor: 'end' }));
+    y = phY + 46 + Math.max(acid.length, alkaline.length) * 17;
+    if (ph !== null) {
+      const lines = wrapText(t('most vegetables: 6 to 7', 'imifino eminingi: 6 kuya ku-7'), 12, x1 - x0);
+      lines.forEach((line, at) => p.text((phOf(6) + phOf(7)) / 2, y + at * 17, line, { size: 12, fill: GREEN, weight: 700, anchor: 'middle' }));
+      y += lines.length * 17;
+    }
+    y += 20;
+  } else {
+    p.text(x0, phY + 46, t('← more acid (sour)', '← umuncu kakhulu'), { size: 12, fill: MUTED });
+    p.text(x1, phY + 46, t('more alkaline →', 'une-alkali kakhulu →'), { size: 12, fill: MUTED, anchor: 'end' });
+    if (ph !== null) p.text((phOf(6) + phOf(7)) / 2, phY + 46, t('most vegetables: 6 to 7', 'imifino eminingi: 6 kuya ku-7'), { size: 12, fill: GREEN, weight: 700, anchor: 'middle' });
+    y = phY + 78;
+  }
 
   // Texture
   const parts = [{ name: t('Sand', 'Isihlabathi'), value: soil.sand }, { name: t('Silt', 'Udaka olucolekile'), value: soil.silt }, { name: t('Clay', 'Ubumba'), value: soil.clay }];
   const total = parts.reduce((sum, part) => sum + (finite(part.value) ? part.value : NaN), 0);
   const textureOk = known && Number.isFinite(total) && total > 90 && total < 110 && parts.every(part => (part.value as number) >= 0);
-  p.text(14, y, `${t('What the soil is made of', 'Ukuthi umhlabathi wenziwe ngani')}${textureOk && soil.textureClass ? `: ${soil.textureClass}` : ''}`, { size: 14, weight: 700, fill: INK });
+  y = heading(`${t('What the soil is made of', 'Ukuthi umhlabathi wenziwe ngani')}${textureOk && soil.textureClass ? `: ${lab ? soil.textureClass : reportVisualText(soil.textureClass, language)}` : ''}`, y);
   const barY = y + 16;
   if (textureOk) {
     const looks: ShapeOptions[] = [{ fill: '#f5eadc', stroke: AMBER }, { fill: p.hatch('silt', SLATE, 6, 1.2), stroke: SLATE }, { fill: AMBER, stroke: AMBER }];
@@ -907,15 +1012,20 @@ export function soilFigure(location: LocationData | null | undefined, language =
       const w = ((part.value as number) / total) * (x1 - x0);
       p.rect(x + 1, barY, Math.max(0, w - 2), 26, { ...looks[i], width: 1.4, dash: lab ? undefined : '5 3', radius: 3 });
       const label = `${part.name} ${Math.round(part.value as number)} %`;
-      if (w > textWidth(label, 12.5) + 12) p.text(x + w / 2, barY + 44, label, { size: 12.5, weight: 700, fill: INK, anchor: 'middle' });
-      else p.text(x + w / 2, barY + 44, `${Math.round(part.value as number)} %`, { size: 12, fill: INK, anchor: 'middle' });
+      // Native names use the wrapped key below; a narrow clay segment must not drop its name.
+      if (!nativeDraft(language)) {
+        if (w > textWidth(label, 12.5) + 12) p.text(x + w / 2, barY + 44, label, { size: 12.5, weight: 700, fill: INK, anchor: 'middle' });
+        else p.text(x + w / 2, barY + 44, `${Math.round(part.value as number)} %`, { size: 12, fill: INK, anchor: 'middle' });
+      }
       x += w;
     });
   } else empty(barY + 13);
-  y = barY + 78;
+  y = nativeDraft(language) && textureOk
+    ? keyRow(p, x0, barY + 52, parts.map((part, i) => ({ label: `${part.name} ${Math.round(part.value as number)} %`, draw: (x, yy) => p.rect(x, yy - 6, 18, 12, { fill: i === 0 ? '#f5eadc' : i === 1 ? 'url(#silt)' : AMBER, stroke: i === 1 ? SLATE : AMBER, width: 1.4, dash: lab ? undefined : '5 3' }) })), x1, language) + 24
+    : barY + 78;
 
   // Organic carbon
-  p.text(14, y, t('Organic carbon: how much rotted plant matter the soil holds', 'Ikhabhoni yemvelo: ukuthi umhlabathi uphethe izinto zezitshalo ezibolile ezingakanani'), { size: 14, weight: 700, fill: INK });
+  y = heading(t('Organic carbon: how much rotted plant matter the soil holds', 'Ikhabhoni yemvelo: ukuthi umhlabathi uphethe izinto zezitshalo ezibolile ezingakanani'), y);
   const ocY = y + 42, ocOf = (v: number) => x0 + (v / 5) * (x1 - x0);
   const oc = known && finite(soil.organicCarbon) && soil.organicCarbon >= 0 ? soil.organicCarbon : null;
   if (oc !== null) {
@@ -957,34 +1067,46 @@ export function timelineFigure(plan: PhasePlan | null | undefined, language = 'e
   const maxWeek = Math.max(...phases.map(ph => ph.weekEnd), 1);
   const step = maxWeek <= 12 ? 1 : maxWeek <= 24 ? 2 : maxWeek <= 48 ? 4 : 8;
   const xOf = (week: number) => left + (week / maxWeek) * (right - left);
-  const rowH = 46, top = 66, bottom = top + phases.length * rowH;
   const overlap = phases.some((ph, i) => i > 0 && ph.weekStart < phases[i - 1].weekEnd);
-  p.text(14, 25, `${figureNumber(phases.length)} ${t('stages of work. The last one starts around week', 'izigaba zomsebenzi. Esokugcina siqala cishe ngeviki')} ${figureNumber(last.weekStart)}`, { size: 17, weight: 700, fill: INK });
-  p.text(14, 46, overlap ? t('Stages overlap: the next one can start before the one before it is finished.', 'Izigaba ziyadlulana: esilandelayo singaqala ngaphambi kokuba esandulelayo siphele.') : t('Each stage starts when the one before it is finished.', 'Isigaba ngasinye siqala lapho esandulelayo sesiphelile.'), { size: 13, fill: MUTED });
+  const offset = figureHeader(p, `${figureNumber(phases.length)} ${t('stages of work. The last one starts around week', 'izigaba zomsebenzi. Esokugcina siqala cishe ngeviki')} ${figureNumber(last.weekStart)}`,
+    overlap ? t('Stages overlap: the next one can start before the one before it is finished.', 'Izigaba ziyadlulana: esilandelayo singaqala ngaphambi kokuba esandulelayo siphele.') : t('Each stage starts when the one before it is finished.', 'Isigaba ngasinye siqala lapho esandulelayo sesiphelile.'), language);
+  const top = 66 + offset;
+  const labels = phases.map(phase => {
+    const title = `${phase.n}. ${nativeDraft(language) ? reportVisualText(phase.title, language) : clip(phase.title, 58)}`;
+    const range = figurePhaseRange(phase.weekRange, language);
+    const titles = nativeDraft(language) ? wrapText(title, 13.5, right - left - 170) : [title];
+    const ranges = nativeDraft(language) ? wrapText(range, 12, 150) : [range];
+    return { titles, ranges, extra: (Math.max(titles.length, ranges.length) - 1) * 18 };
+  });
+  const bottom = top + labels.reduce((sum, label) => sum + 46 + label.extra, 0);
   for (let w = 0; w <= maxWeek; w += step) p.line(xOf(w), top, xOf(w), bottom + 4, { stroke: HAIR, width: 1 });
+  let rowY = top;
   phases.forEach((phase, i) => {
-    const y = top + i * rowH, open = phase === last;
-    p.text(left, y + 16, `${phase.n}. ${clip(phase.title, 58)}`, { size: 13.5, weight: 700, fill: INK, halo: true });
-    p.text(right, y + 16, phase.weekRange, { size: 12, fill: MUTED, anchor: 'end', halo: true });
+    const y = rowY, open = phase === last;
+    const label = labels[i], barY = y + 23 + label.extra;
+    label.titles.forEach((line, at) => p.text(left, y + 16 + at * 18, line, { size: 13.5, weight: 700, fill: INK, halo: true }));
+    label.ranges.forEach((line, at) => p.text(right, y + 16 + at * 18, line, { size: 12, fill: MUTED, anchor: 'end', halo: true }));
     const xa = xOf(phase.weekStart), xb = Math.max(xa + 8, xOf(phase.weekEnd));
-    p.rect(xa, y + 23, xb - xa, 14, { fill: '#e6efe6', stroke: GREEN, width: 1.6, dash: '5 3', radius: 3 });
-    if (open) p.path(pathOf([[xb + 2, y + 23], [xb + 13, y + 30], [xb + 2, y + 37]], true), { fill: GREEN });
-    else { p.path(pathOf([[xb, y + 21], [xb + 9, y + 30], [xb, y + 39], [xb - 9, y + 30]], true), { fill: INK, stroke: '#ffffff', width: 1.5 }); p.text(xb, y + 33.5, String.fromCharCode(64 + phase.n), { size: 9.5, weight: 700, fill: '#ffffff', anchor: 'middle' }); }
+    p.rect(xa, barY, xb - xa, 14, { fill: '#e6efe6', stroke: GREEN, width: 1.6, dash: '5 3', radius: 3 });
+    if (open) p.path(pathOf([[xb + 2, barY], [xb + 13, barY + 7], [xb + 2, barY + 14]], true), { fill: GREEN });
+    else { p.path(pathOf([[xb, barY - 2], [xb + 9, barY + 7], [xb, barY + 16], [xb - 9, barY + 7]], true), { fill: INK, stroke: '#ffffff', width: 1.5 }); p.text(xb, barY + 10.5, String.fromCharCode(64 + phase.n), { size: 9.5, weight: 700, fill: '#ffffff', anchor: 'middle' }); }
+    rowY += 46 + label.extra;
   });
   p.line(left, bottom + 4, right, bottom + 4, { stroke: MUTED, width: 1 });
   for (let w = 0; w <= maxWeek; w += step) p.text(xOf(w), bottom + 20, String(w), { size: 11.5, fill: MUTED, anchor: 'middle' });
-  p.text((left + right) / 2, bottom + 38, t('weeks from the day work starts', 'amaviki kusukela ngosuku umsebenzi oqala ngalo'), { size: 12, fill: MUTED, anchor: 'middle' });
-  const y = keyRow(p, left, bottom + 62, [
+  const axisLines = nativeDraft(language) ? wrapText(t('weeks from the day work starts', 'amaviki kusukela ngosuku umsebenzi oqala ngalo'), 12, right - left) : [t('weeks from the day work starts', 'amaviki kusukela ngosuku umsebenzi oqala ngalo')];
+  axisLines.forEach((line, at) => p.text((left + right) / 2, bottom + 38 + at * 16, line, { size: 12, fill: MUTED, anchor: 'middle' }));
+  const y = keyRow(p, left, bottom + 62 + (axisLines.length - 1) * 16, [
     { label: t('Planned work, not started', 'Umsebenzi ohleliwe, awukaqali'), draw: (x, yy) => p.rect(x + 1, yy - 6, 20, 12, { fill: '#e6efe6', stroke: GREEN, width: 1.6, dash: '5 3', radius: 3 }) },
     { label: t('Hold point: stop and check before the next phase', 'Iphuzu lokuma: yima uhlole ngaphambi kwesigaba esilandelayo'), draw: (x, yy) => p.path(pathOf([[x + 10, yy - 8], [x + 18, yy], [x + 10, yy + 8], [x + 2, yy]], true), { fill: INK }) },
     { label: t('Carries on', 'Kuyaqhubeka'), draw: (x, yy) => p.path(pathOf([[x + 4, yy - 7], [x + 16, yy], [x + 4, yy + 7]], true), { fill: GREEN }) },
-  ]);
+  ], W - 14, language);
   return {
     id: 'timeline', width: W, height: Math.ceil(y + 2), svg: p.done(y + 2),
     title: t('Order of work', 'Ukulandelana komsebenzi'),
     note: t('The order and rough length of each phase, worked out from what is on the saved design. The weeks are a planning guide, not a promise: weather, money and labour will move them. The order should not change.', 'Ukulandelana nobude obulinganiselwe besigaba ngasinye, kubalwe kulokho okusemklamweni ogciniwe. Amaviki ayisiqondiso sokuhlela, akusona isithembiso: isimo sezulu, imali nabasebenzi kuzowashintsha. Ukulandelana akufanele kushintshe.'),
     source: t('Build phases derived from the saved design', 'Izigaba zokwakha ezithathwe kumklamo ogciniwe'),
-    alt: `${t('Order of work', 'Ukulandelana komsebenzi')}: ${phases.map(ph => `${ph.n}. ${ph.title} (${ph.weekRange})`).join('; ')}.`,
+    alt: `${t('Order of work', 'Ukulandelana komsebenzi')}: ${phases.map(ph => `${ph.n}. ${reportVisualText(ph.title, language)} (${figurePhaseRange(ph.weekRange, language)})`).join('; ')}.`,
   };
 }
 
@@ -1013,16 +1135,17 @@ export function landUseFigure(facts: ReportSiteFacts | null | undefined, languag
   let y = 96;
   for (const part of rows) {
     p.rect(x0, y - 11, 18, 13, { ...part.look, radius: 2 });
-    p.text(x0 + 28, y, part.name, { size: 13 });
+    const labelLines = nativeDraft(language) ? wrapText(part.name, 13, x1 - x0 - 210) : [part.name];
+    labelLines.forEach((line, at) => p.text(x0 + 28, y + at * 18, line, { size: 13 }));
     const share = (part.value / total) * 100;
     p.text(x1, y, `${figureNumber(part.value)} m²  ·  ${share < 1 ? '<1' : figureNumber(share)} %`, { size: 13, weight: 700, fill: INK, anchor: 'end' });
-    y += 23;
+    y += Math.max(23, labelLines.length * 18 + 5);
   }
   return {
     id: 'land-use', width: W, height: Math.ceil(y), svg: p.done(y),
     title: t('How the ground is used', 'Ukuthi umhlaba usetshenziswa kanjani'),
     note: t('Areas as drawn on the saved design and traced on the map, whether built yet or not. Trees, paths and tanks are not counted as areas.', 'Izindawo njengoba zidwetshwe kumklamo ogciniwe nakumephu, noma sezakhiwe noma cha. Izihlahla, izindlela namathangi akubalwa njengezindawo.'),
-    source: `${t('Boundary', 'Umngcele')}: ${facts?.boundary?.source ?? t('traced on the map', 'udwetshwe kumephu')}. ${t('Beds and plots: saved design.', 'Imibhede neziza: umklamo ogciniwe.')}`,
+    source: `${t('Boundary', 'Umngcele')}: ${reportRecordedSourceLabel(facts?.boundary?.source ?? t('traced on the map', 'udwetshwe kumephu'),language)}. ${t('Beds and plots: saved design.', 'Imibhede neziza: umklamo ogciniwe.')}`,
     alt: `${t('Land use', 'Ukusetshenziswa komhlaba')}: ${rows.map(part => `${part.name} ${figureNumber(part.value)} m²`).join('; ')}.`,
   };
 }
@@ -1047,16 +1170,19 @@ export function statusFigure(canvas: DesignCanvasState | null | undefined, langu
   if (!rows.length) return null;
   const p = pen();
   const built = rows.reduce((sum, row) => sum + row.built, 0), planned = rows.reduce((sum, row) => sum + row.planned, 0);
-  p.text(14, 25, `${figureNumber(built)} ${t('already there', 'sekukhona')}  ·  ${figureNumber(planned)} ${t('still to build or plant', 'kusazokwakhiwa noma kutshalwe')}`, { size: 17, weight: 700, fill: INK });
+  const headline = `${figureNumber(built)} ${t('already there', 'sekukhona')}  ·  ${figureNumber(planned)} ${t('still to build or plant', 'kusazokwakhiwa noma kutshalwe')}`;
+  const headlineLines = nativeDraft(language) ? wrapText(headline, 17, W - 28) : [headline];
+  headlineLines.forEach((line, at) => p.text(14, 25 + at * 22, line, { size: 17, weight: 700, fill: INK }));
   const dotsX = 196, pitch = 17, perRow = Math.floor((W - 14 - 96 - dotsX) / pitch);
-  let y = 56;
+  let y = 56 + (headlineLines.length - 1) * 22;
   for (const row of rows) {
-    p.text(14, y + 4, names[row.key], { size: 13 });
+    const labelLines = nativeDraft(language) ? wrapText(names[row.key], 13, dotsX - 30) : [names[row.key]];
+    labelLines.forEach((line, at) => p.text(14, y + 4 + at * 18, line, { size: 13 }));
     const count = row.built + row.planned, shown = Math.min(count, perRow - 2);
     for (let i = 0; i < shown; i++) { const x = dotsX + i * pitch; if (i < row.built) p.circle(x, y, 6, { fill: GREEN }); else p.circle(x, y, 5.2, { fill: '#ffffff', stroke: GREEN, width: 1.8, dash: '3 2' }); }
     if (count > shown) p.text(dotsX + shown * pitch, y + 4, `+${count - shown}`, { size: 12, fill: MUTED });
     p.text(W - 14, y + 4, `${row.built} / ${count}`, { size: 13, weight: 700, fill: INK, anchor: 'end' });
-    y += 25;
+    y += Math.max(25, labelLines.length * 18 + 7);
   }
   y = keyRow(p, 14, y + 8, [
     { label: t('Already there', 'Sekukhona'), draw: (x, yy) => p.circle(x + 10, yy, 6, { fill: GREEN }) },

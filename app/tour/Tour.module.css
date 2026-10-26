@@ -19,6 +19,9 @@
 .card .open:focus-visible { outline: none; }
 .open:focus-visible::after { outline: 3px solid var(--color-harvest); outline-offset: 3px; }
 .card .description { margin-top: 0; font-size: 14px; line-height: 1.5; }
+/* The card's transparent action layer must not intercept the source-text toggle. */
+.source { position: relative; z-index: 1; }
+.source summary { cursor: pointer; min-height: 44px; padding: 8px 0; }
 .action { display: flex; align-items: center; gap: 6px; min-height: 44px; padding-top: 6px; margin-top: auto; color: var(--text-primary); font-size: 14px; font-weight: 650; }
 .card:has(.open:disabled) .action { color: var(--text-secondary); }
 @media (prefers-reduced-motion: reduce) { .card { transition: none; } }

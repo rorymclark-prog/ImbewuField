@@ -1,0 +1,20 @@
+{
+  "sourceSha": "ac308edb2c7b2e4c5bda9c41ebdf611804bead35",
+  "status": "Unreviewed AI draft; no fluent-speaker approval. Existing equipment/route drafts reused only on exact recorded identities. No plant species, custom names or quantities translated.",
+  "entries": [
+    {
+      "english": "Windbreak row",
+      "zu": "Umugqa wokuvikela umoya",
+      "st": "Mola wa ho thibela moya",
+      "ts": "Layini yo sivela moya",
+      "ve": "Muduba wa u thivhela muya"
+    }
+  ],
+  "authorities": [
+    "ELEMENTS_BY_ID",
+    "ROUTE_LABELS",
+    "plantTakesCode",
+    "REPORT_VISUAL_COPY"
+  ],
+  "preservation": "Old records without IDs remain raw. Tanks carry optional defId from the existing summary producer; capacity still comes from statedTankCapacityLitres and is never inferred by the translation helper."
+}

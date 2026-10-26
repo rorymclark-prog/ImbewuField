@@ -1,0 +1,2400 @@
+{
+  "sourceSha": "11de95386e157080500f368be9adbe4cabf0f6fe",
+  "status": "Unreviewed AI drafts; no fluent-speaker approval.",
+  "entries": [
+    {
+      "key": "profileChangePhoto",
+      "english": "Change photo",
+      "st": "Fetola setshwantsho",
+      "ts": "Cinca xifaniso",
+      "ve": "Shandukisani tshifanyiso"
+    },
+    {
+      "key": "mentorEditProfileButton",
+      "english": "Edit profile",
+      "st": "Fetola profaele",
+      "ts": "Hlela phurofayili",
+      "ve": "Lugisani phurofai\u1e3di"
+    },
+    {
+      "key": "savedPlacesRemove",
+      "english": "Remove",
+      "st": "Tlosa",
+      "ts": "Susa",
+      "ve": "Bvisani"
+    },
+    {
+      "key": "designPhotoSaving",
+      "english": "Saving...",
+      "st": "Ho a bolokwa...",
+      "ts": "Swa hlayisiwa...",
+      "ve": "Zwi khou vhulungwa..."
+    },
+    {
+      "key": "tipsChoosePracticeView",
+      "english": "Choose a practice view",
+      "st": "Kgetha leqephe la boikwetliso",
+      "ts": "Hlawula tluka ro titoloveta",
+      "ve": "Nangani sia\u1e71ari \u1e3da n\u1e13owen\u1e13owe"
+    },
+    {
+      "key": "profileRoleAdmin",
+      "english": "Admin",
+      "st": "Motsamaisi",
+      "ts": "Mulawuri",
+      "ve": "Mulanguli"
+    },
+    {
+      "key": "cancelBtn",
+      "english": "Cancel",
+      "st": "Hlakola",
+      "ts": "Tshika",
+      "ve": "Litshani"
+    }
+  ],
+  "beforeValues": {
+    "zu": {},
+    "st": {
+      "profileChangePhoto": "Change photo",
+      "mentorEditProfileButton": "Edit profile",
+      "savedPlacesRemove": null,
+      "designPhotoSaving": "Saving...",
+      "tipsChoosePracticeView": null,
+      "profileRoleAdmin": "Admin",
+      "cancelBtn": null
+    },
+    "ts": {
+      "profileChangePhoto": "Change photo",
+      "mentorEditProfileButton": "Edit profile",
+      "savedPlacesRemove": null,
+      "designPhotoSaving": "Saving...",
+      "tipsChoosePracticeView": null,
+      "profileRoleAdmin": "Admin",
+      "cancelBtn": null
+    },
+    "ve": {
+      "profileChangePhoto": "Change photo",
+      "mentorEditProfileButton": "Edit profile",
+      "savedPlacesRemove": null,
+      "designPhotoSaving": "Saving...",
+      "tipsChoosePracticeView": null,
+      "profileRoleAdmin": "Admin",
+      "cancelBtn": null
+    }
+  },
+  "beforeLines": {
+    "zu": {},
+    "st": {
+      "profileChangePhoto": [],
+      "mentorEditProfileButton": [],
+      "savedPlacesRemove": [],
+      "designPhotoSaving": [],
+      "tipsChoosePracticeView": [],
+      "profileRoleAdmin": [],
+      "cancelBtn": []
+    },
+    "ts": {
+      "profileChangePhoto": [],
+      "mentorEditProfileButton": [],
+      "savedPlacesRemove": [],
+      "designPhotoSaving": [],
+      "tipsChoosePracticeView": [],
+      "profileRoleAdmin": [],
+      "cancelBtn": []
+    },
+    "ve": {
+      "profileChangePhoto": [],
+      "mentorEditProfileButton": [],
+      "savedPlacesRemove": [],
+      "designPhotoSaving": [],
+      "tipsChoosePracticeView": [],
+      "profileRoleAdmin": [],
+      "cancelBtn": []
+    }
+  },
+  "sourceSha256": {
+    "app/account/page.tsx": "646d00694f589fd2f5994bcff9ec9ab2d6d843995dfb2b35cbcd56a1736ba296",
+    "components/AccountAccess.tsx": "2b9591a2674067c0b394cf3ddc01dc068929d092c5707197b05675c32e3a3f99",
+    "components/AiAllowance.tsx": "61e9a6ac7a543cb6fc8ee1a4aedaf8d9f4bb7af6e06a3d33e3db5eb4262cf27d",
+    "components/AppConfirm.tsx": "b712f0e03784e766051e5322a52e36f879e98c0a10467abebe48be68bafea2f2",
+    "app/login/page.tsx": "f1aa5b5e9cbbec4f2116cbd4bebf7b9f18935bd185780ec21c843af6faff23c9",
+    "lib/auth.tsx": "0bbe8fc191dd5116398ce413a311057a1c0b287adbe95f3c38af658bb408487d",
+    "lib/db/queries.ts": "b14103f2961675b686ac69ed07b4ace5ae2327f9164d98fb091fbd01f95483c4",
+    "lib/ai-budget.ts": "7bfde9c3f2e41d3071f0dd6fbf3db730c919b3c28ad9cd845fb6bba748b3b2be",
+    "lib/api-client-auth.ts": "e9c75fd1955b303f85a6268c4251512fe72c39b9b87a0793291f87802bc91387",
+    "lib/use-role-navigation.ts": "3c0882bd12348c10b7942d9619df1dd9fc0f9f6cdcc938b82fd256744822695a",
+    "lib/sample-mode.ts": "97d38d04eb782bbbf56170ce9e5a54febb3523e2cc19789db7e864ed6f9b62d7",
+    "lib/i18n.tsx": "b926a4e185ed5d8b266004ad8f9e019aefadeca821f0d2567279406ab22e5be3",
+    "lib/locales/zu.ts": "d38b0c6e9f2cb83ac17308530cabd50e4964b2d14c132a80c5ce8c1da0a2b5e9",
+    "lib/locales/st.ts": "04e9b7f3696120fcaa7638c497191ebe86f506f8c06817c70f554d01543cbd1f",
+    "lib/locales/ts.ts": "947e290ab0288e8c3a939b0a02770eeb331ab8e3140505dff9c8dbee3b2c375a",
+    "lib/locales/ve.ts": "6fedc468bb0f1c3e924aeb8086c0d6752e08d6ba8c4c21265a34eb61aeb65b34",
+    "components/ConsentPanel.tsx": "35e64eaf2fb0967202443bef03448f7a309c366c11b8efca82ca89d26e81fd18",
+    "lib/consent.ts": "eadb096311f75289a801f03ef1a040d7337243c1a5092ae77bd1c7af97a063bb"
+  },
+  "bodyEntries": [
+    {
+      "english": "Could not save. Try again.",
+      "st": "Ha ho a kgoneha ho boloka. Leka hape.",
+      "ts": "A swi kotekanga ku hlayisa. Ringeta nakambe.",
+      "ve": "A zwo ngo konadzea u vhulunga. Lingedzani hafhu.",
+      "zu": "Akukwazanga ukulondolozwa. Zama futhi."
+    },
+    {
+      "english": "Could not update your photo.",
+      "st": "Ha ho a kgoneha ho ntjhafatsa setshwantsho sa hao.",
+      "ts": "A swi kotekanga ku pfuxeta xifaniso xa wena.",
+      "ve": "A zwo ngo konadzea u khwinisa tshifanyiso tsha\u1e4bu.",
+      "zu": "Akukwazanga ukushintsha isithombe sakho."
+    },
+    {
+      "english": "New passwords do not match.",
+      "st": "Diphasewete tse ntjha ha di tshwane.",
+      "ts": "Tiphasiwedi letintshwa a ti fani.",
+      "ve": "Phasiwede ntswa a dzi fani.",
+      "zu": "Amaphasiwedi amasha awafani."
+    },
+    {
+      "english": "Password must be at least 6 characters.",
+      "st": "Phasewete e tlameha ho ba le bonyane ditlhaku tse 6.",
+      "ts": "Phasiwedi yi fanele yi va ni swihlawulekisi swa kwalomu ka 6.",
+      "ve": "Phasiwede i tea u vha na zwiga zwi si fhasi ha 6.",
+      "zu": "Iphasiwedi kumele ibe nezinhlamvu okungenani eziyisi-6."
+    },
+    {
+      "english": "Loading your account\u2026",
+      "st": "Akhaonto ya hao e a kenngwa\u2026",
+      "ts": "Akhawunti ya wena ya layicha\u2026",
+      "ve": "Akhaunthu ya\u1e4bu i khou laisiwa\u2026",
+      "zu": "Kulayishwa i-akhawunti yakho\u2026"
+    },
+    {
+      "english": "Tour account",
+      "st": "Akhaonto ya ketelo",
+      "ts": "Akhawunti ya riendzo",
+      "ve": "Akhaunthu ya lwendo",
+      "zu": "I-akhawunti yohambo"
+    },
+    {
+      "english": "Farm / organisation",
+      "st": "Polasi / mokgatlo",
+      "ts": "Purasi / nhlangano",
+      "ve": "Bulasi / dzangano",
+      "zu": "Ipulazi / inhlangano"
+    },
+    {
+      "english": "Appearance & language",
+      "st": "Ponahalo le puo",
+      "ts": "Xivumbeko ni ririmi",
+      "ve": "Mbonalo na luambo",
+      "zu": "Ukubukeka nolimi"
+    },
+    {
+      "english": "You are using the practice version. Nothing here is saved to a real account \u2014 sign in to keep your own records.",
+      "st": "O sebedisa mofuta wa boikwetliso. Ha ho letho mona le bolokwang akhaontong ya nnete \u2014 kena hore o boloke direkoto tsa hao.",
+      "ts": "U tirhisa app yo titoloveta. A ku na lexi hlayisiwaka laha eka akhawunti ya xiviri \u2014 nghena leswaku u hlayisa tirhekhodo ta wena.",
+      "ve": "Ni khou shumisa app ya n\u1e13owen\u1e13owe. A hu na tshithu tshine tsha vhulungwa kha akhaunthu ya vhukuma afha \u2014 dzhenani uri ni vhulunge rekhodo dza\u1e4bu.",
+      "zu": "Usebenzisa inguqulo yokuzilolonga. Akukho okulondolozwa ku-akhawunti yangempela lapha \u2014 ngena ngemvume ukuze ulondoloze amarekhodi akho."
+    },
+    {
+      "english": "Still loading\u2026 you can sign in instead.",
+      "st": "E sa ntse e kenngwa\u2026 o ka kena ho e na le ho leta.",
+      "ts": "Ya ha layicha\u2026 u nga nghena ematshan\u2019weni yo rindza.",
+      "ve": "I kha \u1e13i laisiwa\u2026 ni nga dzhena vhudzuloni ha u lindela.",
+      "zu": "Kusalayishwa\u2026 ungangena ngemvume esikhundleni."
+    },
+    {
+      "english": "Sign in to manage your account.",
+      "st": "Kena hore o laole akhaonto ya hao.",
+      "ts": "Nghena leswaku u lawula akhawunti ya wena.",
+      "ve": "Dzhenani uri ni lange akhaunthu ya\u1e4bu.",
+      "zu": "Ngena ngemvume ukuze uphathe i-akhawunti yakho."
+    },
+    {
+      "english": "Profile details",
+      "st": "Dintlha tsa profaele",
+      "ts": "Vuxokoxoko bya phurofayili",
+      "ve": "Zwite\u1e45wa zwa phurofai\u1e3di",
+      "zu": "Imininingwane yephrofayela"
+    },
+    {
+      "english": "Your full name",
+      "st": "Mabitso le fane ya hao",
+      "ts": "Mavito ya wena hi ku helela",
+      "ve": "Madzina a\u1e4bu nga vhu\u1e13alo",
+      "zu": "Amagama akho aphelele"
+    },
+    {
+      "english": "Phone",
+      "st": "Mohala",
+      "ts": "Riqingho",
+      "ve": "Lu\u1e71ingo",
+      "zu": "Ucingo"
+    },
+    {
+      "english": "Business name",
+      "st": "Lebitso la kgwebo",
+      "ts": "Vito ra bindzu",
+      "ve": "Dzina \u1e3da bindu",
+      "zu": "Igama lebhizinisi"
+    },
+    {
+      "english": "(heads your invoices)",
+      "st": "(le hlaha hodimo ho di-invoice tsa hao)",
+      "ts": "(ri va ehenhla ka ti-invoice ta wena)",
+      "ve": "(\u1e3di vha n\u1e71ha ha dzi-invoice dza\u1e4bu)",
+      "zu": "(livela kuma-invoice akho)"
+    },
+    {
+      "english": "e.g. Ubhejane Creche",
+      "st": "mohl. Ubhejane Creche",
+      "ts": "xik. Ubhejane Creche",
+      "ve": "tsumbo Ubhejane Creche",
+      "zu": "isib. Ubhejane Creche"
+    },
+    {
+      "english": "Leave this empty to invoice under your own name instead.",
+      "st": "Tlohela sena se se na letho hore di-invoice di sebedise lebitso la hao.",
+      "ts": "Siya laha ku nga ri na nhlamulo leswaku ti-invoice ti tirhisa vito ra wena.",
+      "ve": "Siyani afha hu si na tshithu uri dzi-invoice dzi shumise dzina \u1e3da\u1e4bu.",
+      "zu": "Shiya lokhu kungenalutho ukuze i-invoice isebenzise igama lakho."
+    },
+    {
+      "english": "Business logo",
+      "st": "Letshwao la kgwebo",
+      "ts": "Mfungho wa bindzu",
+      "ve": "Tshiga tsha bindu",
+      "zu": "Uphawu lwebhizinisi"
+    },
+    {
+      "english": "(shown on invoices)",
+      "st": "(le bontshwa di-invoice-ng)",
+      "ts": "(wu kombisiwa eka ti-invoice)",
+      "ve": "(tshi sumbedzwa kha dzi-invoice)",
+      "zu": "(luvela kuma-invoice)"
+    },
+    {
+      "english": "Adding\u2026",
+      "st": "E a eketswa\u2026",
+      "ts": "Swa engetela\u2026",
+      "ve": "Tshi khou engedzwa\u2026",
+      "zu": "Iyengezwa\u2026"
+    },
+    {
+      "english": "Replace",
+      "st": "Kenya e nngwe",
+      "ts": "Siva",
+      "ve": "Vheani tshi\u1e45we",
+      "zu": "Faka olunye"
+    },
+    {
+      "english": "Add a logo",
+      "st": "Kenya letshwao",
+      "ts": "Engetela mfungho",
+      "ve": "Engedzani tshiga",
+      "zu": "Faka uphawu"
+    },
+    {
+      "english": "A photo of your sign works. It is made smaller automatically.",
+      "st": "O ka sebedisa setshwantsho sa letshwao la hao. Se fokotswa ka bosona.",
+      "ts": "U nga tirhisa xifaniso xa mfungho wa wena. Xi hungutiwa hi xoxe.",
+      "ve": "Ni nga shumisa tshifanyiso tsha tshiga tsha\u1e4bu. Tshi \u1e71ukufhadzwa nga tsho\u1e71he.",
+      "zu": "Ungafaka isithombe sophawu lwakho. Sizoncishiswa ngokuzenzakalela."
+    },
+    {
+      "english": "Email",
+      "st": "Imeile",
+      "ts": "Imeyili",
+      "ve": "Imei\u1e3di",
+      "zu": "I-imeyili"
+    },
+    {
+      "english": "Account settings",
+      "st": "Ditlhophiso tsa akhaonto",
+      "ts": "Swiyimiso swa akhawunti",
+      "ve": "Nzudzanyo dza akhaunthu",
+      "zu": "Izilungiselelo ze-akhawunti"
+    },
+    {
+      "english": "More account settings",
+      "st": "Ditlhophiso tse ding tsa akhaonto",
+      "ts": "Swiyimiso swin\u2019wana swa akhawunti",
+      "ve": "Dzi\u1e45we nzudzanyo dza akhaunthu",
+      "zu": "Ezinye izilungiselelo ze-akhawunti"
+    },
+    {
+      "english": "Change password",
+      "st": "Fetola phasewete",
+      "ts": "Cinca phasiwedi",
+      "ve": "Shandukisani phasiwede",
+      "zu": "Shintsha iphasiwedi"
+    },
+    {
+      "english": "Password updated successfully.",
+      "st": "Phasewete e ntjhafaditswe.",
+      "ts": "Phasiwedi yi pfuxetiwile.",
+      "ve": "Phasiwede yo khwiniswa.",
+      "zu": "Iphasiwedi ibuyekeziwe."
+    },
+    {
+      "english": "Current password",
+      "st": "Phasewete ya hona jwale",
+      "ts": "Phasiwedi ya sweswi",
+      "ve": "Phasiwede ya zwino",
+      "zu": "Iphasiwedi yamanje"
+    },
+    {
+      "english": "New password",
+      "st": "Phasewete e ntjha",
+      "ts": "Phasiwedi leyintshwa",
+      "ve": "Phasiwede ntswa",
+      "zu": "Iphasiwedi entsha"
+    },
+    {
+      "english": "Confirm new password",
+      "st": "Netefatsa phasewete e ntjha",
+      "ts": "Tiyisisa phasiwedi leyintshwa",
+      "ve": "Khwathisedzani phasiwede ntswa",
+      "zu": "Qinisekisa iphasiwedi entsha"
+    },
+    {
+      "english": "Hide passwords",
+      "st": "Pata diphasewete",
+      "ts": "Fihla tiphasiwedi",
+      "ve": "Dzumbani phasiwede",
+      "zu": "Fihla amaphasiwedi"
+    },
+    {
+      "english": "Show passwords",
+      "st": "Bontsha diphasewete",
+      "ts": "Kombisa tiphasiwedi",
+      "ve": "Sumbedzani phasiwede",
+      "zu": "Bonisa amaphasiwedi"
+    },
+    {
+      "english": "Updating...",
+      "st": "E a ntjhafatswa...",
+      "ts": "Swa pfuxeta...",
+      "ve": "I khou khwiniswa...",
+      "zu": "Kuyabuyekezwa..."
+    },
+    {
+      "english": "Update password",
+      "st": "Ntjhafatsa phasewete",
+      "ts": "Pfuxeta phasiwedi",
+      "ve": "Khwinisani phasiwede",
+      "zu": "Buyekeza iphasiwedi"
+    },
+    {
+      "english": "Signing out...",
+      "st": "O a tswa...",
+      "ts": "Wa huma...",
+      "ve": "Ni khou bva...",
+      "zu": "Kuyaphuma..."
+    },
+    {
+      "english": "Sign out",
+      "st": "Tswa",
+      "ts": "Huma",
+      "ve": "Bvani",
+      "zu": "Phuma"
+    },
+    {
+      "english": "ImbewuField \u00b7 growing with you",
+      "st": "ImbewuField \u00b7 e hola le wena",
+      "ts": "ImbewuField \u00b7 yi kula na wena",
+      "ve": "ImbewuField \u00b7 i khou aluwa na inwi",
+      "zu": "ImbewuField \u00b7 ikhula nawe"
+    },
+    {
+      "english": "Explore role views",
+      "st": "Lekola maqephe a mesebetsi",
+      "ts": "Valanga matluka ya mintirho",
+      "ve": "Sedzani masia\u1e71ari a mishumo",
+      "zu": "Hlola izikrini zezindima"
+    },
+    {
+      "english": "Your account permissions stay unchanged.",
+      "st": "Ditumello tsa akhaonto ya hao ha di fetohe.",
+      "ts": "Timfanelo ta akhawunti ya wena a ti cinci.",
+      "ve": "Thendelo dza akhaunthu ya\u1e4bu a dzi shanduki.",
+      "zu": "Izimvume ze-akhawunti yakho zihlala zinjalo."
+    },
+    {
+      "english": "Choose a view",
+      "st": "Kgetha leqephe",
+      "ts": "Hlawula tluka",
+      "ve": "Nangani sia\u1e71ari",
+      "zu": "Khetha isikrini"
+    },
+    {
+      "english": "Your app access",
+      "st": "Phihlello ya hao ho app",
+      "ts": "Ku fikelela ka wena eka app",
+      "ve": "U swikelela ha\u1e4bu app",
+      "zu": "Ukungena kwakho kuhlelo lokusebenza"
+    },
+    {
+      "english": "Platform administrator",
+      "st": "Motsamaisi wa sethala",
+      "ts": "Mulawuri wa pulatifomo",
+      "ve": "Mulanguli wa pu\u1e3datifomo",
+      "zu": "Umlawuli wohlelo"
+    },
+    {
+      "english": "Your account can open every role dashboard. Choose the relevant organisation inside the portfolio.",
+      "st": "Akhaonto ya hao e ka bula dashboard ya mosebetsi o mong le o mong. Kgetha mokgatlo o amehang ka hara pokello ya diporojeke.",
+      "ts": "Akhawunti ya wena yi nga pfula dashboard ya mintirho hinkwato. Hlawula nhlangano lowu faneleke eka nhlengeleto wa tiphurojeke.",
+      "ve": "Akhaunthu ya\u1e4bu i nga vula dashboard ya mushumo mu\u1e45we na mu\u1e45we. Nangani dzangano \u1e3do teaho kha khuvhanganyo ya thandela.",
+      "zu": "I-akhawunti yakho ingavula izikrini zazo zonke izindima. Khetha inhlangano efanele ngaphakathi kohlu lwamaphrojekthi."
+    },
+    {
+      "english": "Your normal login stays the same. A platform administrator must enable owner access on the correct account; choosing a dashboard does not change your permissions.",
+      "st": "Mokgwa wa hao wa ho kena ha o fetohe. Motsamaisi wa sethala o tlameha ho dumella phihlello ya monga yona akhaontong e nepahetseng; ho kgetha dashboard ha ho fetole ditumello tsa hao.",
+      "ts": "Ndlela ya wena yo nghena a yi cinci. Mulawuri wa pulatifomo u fanele a pfumelela ku fikelela ka n\u2019winyi eka akhawunti leyi faneleke; ku hlawula dashboard a swi cinci timfanelo ta wena.",
+      "ve": "N\u1e13ila ya\u1e4bu ya u dzhena a i shanduki. Mulanguli wa pu\u1e3datifomo u tea u tendela u swikelela ha mu\u1e4be kha akhaunthu yo teaho; u nanga dashboard a zwi shanduli thendelo dza\u1e4bu.",
+      "zu": "Indlela yakho evamile yokungena ihlala injalo. Umlawuli wohlelo kufanele avule ukufinyelela komnikazi ku-akhawunti efanele; ukukhetha isikrini akuzishintshi izimvume zakho."
+    },
+    {
+      "english": "Refresh my access",
+      "st": "Ntjhafatsa phihlello ya ka",
+      "ts": "Pfuxeta ku fikelela ka mina",
+      "ve": "Khwinisani u swikelela hanga",
+      "zu": "Buyekeza ukufinyelela kwami"
+    },
+    {
+      "english": "Explore with demonstration records",
+      "st": "Lekola ka direkoto tsa pontsho",
+      "ts": "Valanga hi tirhekhodo to komba",
+      "ve": "Sedzani nga rekhodo dza tsumbo",
+      "zu": "Hlola ngamarekhodi okubonisa"
+    },
+    {
+      "english": "Try each role using the Ubhejane farm. Your account role stays the same and practice changes do not affect real projects.",
+      "st": "Leka mosebetsi o mong le o mong ka polasi ya Ubhejane. Mosebetsi wa akhaonto ya hao ha o fetohe mme diphetoho tsa boikwetliso ha di ame diporojeke tsa nnete.",
+      "ts": "Ringeta mintirho yin\u2019wana ni yin\u2019wana hi purasi ra Ubhejane. Ntirho wa akhawunti ya wena a wu cinci naswona ku cinca ko titoloveta a ku khumbi tiphurojeke ta xiviri.",
+      "ve": "Lingedzani mushumo mu\u1e45we na mu\u1e45we nga bulasi \u1e3da Ubhejane. Mushumo wa akhaunthu ya\u1e4bu a u shanduki nahone tshanduko dza n\u1e13owen\u1e13owe a dzi kwami thandela dza vhukuma.",
+      "zu": "Zama indima ngayinye usebenzisa ipulazi lase-Ubhejane. Indima ye-akhawunti yakho ihlala injalo, futhi izinguquko zokuzilolonga azithinti amaphrojekthi angempela."
+    },
+    {
+      "english": "AI this month",
+      "st": "AI kgweding ena",
+      "ts": "AI n\u2019hweti leyi",
+      "ve": "AI kha \u1e45wedzi uno",
+      "zu": "I-AI kule nyanga"
+    },
+    {
+      "english": "AI allowance used",
+      "st": "Karolo ya AI e sebedisitsweng",
+      "ts": "Mpimo wa AI lowu tirhisiweke",
+      "ve": "Mukovhe wa AI wo shumiswaho",
+      "zu": "Isabelo se-AI esisetshenzisiwe"
+    },
+    {
+      "english": "Avatar",
+      "zu": "Isithombe somsebenzisi",
+      "st": "Setshwantsho sa mosebedisi",
+      "ts": "Xifaniso xa mutirhisi",
+      "ve": "Tshifanyiso tsha mushumisi"
+    },
+    {
+      "english": "ImbewuField user",
+      "zu": "Umsebenzisi we-ImbewuField",
+      "st": "Mosebedisi wa ImbewuField",
+      "ts": "Mutirhisi wa ImbewuField",
+      "ve": "Mushumisi wa ImbewuField"
+    },
+    {
+      "english": "Could not add that logo.",
+      "zu": "Akukwazanga ukufaka lolo phawu.",
+      "st": "Ha ho a kgoneha ho kenya letshwao leo.",
+      "ts": "A swi kotekanga ku engetela mfungho wolowo.",
+      "ve": "A zwo ngo konadzea u engedza tshiga itsho."
+    },
+    {
+      "english": "NGO coordinator",
+      "zu": "Umxhumanisi we-NGO",
+      "st": "Mohokahanyi wa NGO",
+      "ts": "Muhlanganisi wa NGO",
+      "ve": "Mu\u1e71anganyi wa NGO"
+    },
+    {
+      "english": "Profile not loaded",
+      "zu": "Iphrofayela ayikalayishwa",
+      "st": "Profaele ha e so kenngwe",
+      "ts": "Phurofayili a yi si layicha",
+      "ve": "Phurofai\u1e3di a i athu laisiwa"
+    },
+    {
+      "english": " \u00b7 linked to an organisation",
+      "zu": " \u00b7 kuxhunywe enhlanganweni",
+      "st": " \u00b7 e hoketswe mokgatlong",
+      "ts": " \u00b7 yi hlanganisiwe ni nhlangano",
+      "ve": " \u00b7 yo \u1e71umanywa na dzangano"
+    },
+    {
+      "english": " \u00b7 no organisation linked",
+      "zu": " \u00b7 ayikho inhlangano exhunyiwe",
+      "st": " \u00b7 ha ho mokgatlo o hoketsweng",
+      "ts": " \u00b7 a ku na nhlangano lowu hlanganisiweke",
+      "ve": " \u00b7 a hu na dzangano \u1e3do \u1e71umanywaho"
+    },
+    {
+      "english": "Access refreshed.",
+      "zu": "Ukufinyelela kubuyekeziwe.",
+      "st": "Phihlello e ntjhafaditswe.",
+      "ts": "Ku fikelela ku pfuxetiwile.",
+      "ve": "U swikelela ho khwiniswa."
+    },
+    {
+      "english": "Could not refresh access. Try again.",
+      "zu": "Ayikwazanga ukubuyekeza ukufinyelela. Zama futhi.",
+      "st": "Ha ho a kgoneha ho ntjhafatsa phihlello. Leka hape.",
+      "ts": "A swi kotekanga ku pfuxeta ku fikelela. Ringeta nakambe.",
+      "ve": "A zwo ngo konadzea u khwinisa u swikelela. Lingedzani hafhu."
+    },
+    {
+      "english": "Signed in as ",
+      "zu": "Ungene ngemvume njengo-",
+      "st": "O kene o le ",
+      "ts": "U nghenile tani hi ",
+      "ve": "No dzhena sa "
+    },
+    {
+      "english": "your linked account",
+      "zu": "i-akhawunti yakho exhunyiwe",
+      "st": "akhaonto ya hao e hoketsweng",
+      "ts": "akhawunti ya wena leyi hlanganisiweke",
+      "ve": "akhaunthu ya\u1e4bu yo \u1e71umanywaho"
+    },
+    {
+      "english": "dashboard",
+      "zu": "isikrini",
+      "st": "boto ya taolo",
+      "ts": "dashboard",
+      "ve": "dashibodo"
+    },
+    {
+      "english": "Tour mode could not start.",
+      "zu": "Imodi yokuvakasha ayikwazanga ukuqala.",
+      "st": "Mokgwa wa ketelo ha o a kgona ho qala.",
+      "ts": "Ndlela ya riendzo a yi kotanga ku sungula.",
+      "ve": "Moudu wa lwendo a wo ngo kona u thoma."
+    },
+    {
+      "english": "Not signed in.",
+      "zu": "Awungenanga ngemvume.",
+      "st": "Ha o a kena.",
+      "ts": "A wu nghenanga.",
+      "ve": "A no ngo dzhena."
+    },
+    {
+      "english": "Your account uses Google sign-in \u2014 password changes are not applicable.",
+      "zu": "I-akhawunti yakho ingena nge-Google \u2014 ukushintsha iphasiwedi akusebenzi kuyo.",
+      "st": "Akhaonto ya hao e kena ka Google \u2014 ho fetola phasewete ha ho sebetse ho yona.",
+      "ts": "Akhawunti ya wena yi tirhisa ku nghena ka Google \u2014 ku cinca phasiwedi a swi tirhi eka yona.",
+      "ve": "Akhaunthu ya\u1e4bu i dzhena nga Google \u2014 u shandukisa phasiwede a zwi shumi khayo."
+    },
+    {
+      "english": "Please sign out and sign back in before changing your password.",
+      "zu": "Sicela uphume bese ungena futhi ngaphambi kokushintsha iphasiwedi yakho.",
+      "st": "Tswa mme o kene hape pele o fetola phasewete ya hao.",
+      "ts": "Huma kutani u nghena nakambe u nga si cinca phasiwedi ya wena.",
+      "ve": "Bvani ni dovhe ni dzhene musi ni sa athu shandukisa phasiwede ya\u1e4bu."
+    },
+    {
+      "english": "Backend not configured.",
+      "zu": "Uhlelo lweseva alukalungiswa.",
+      "st": "Seva ha e so hlophiswe.",
+      "ts": "Sevha a yi si lulamisiwa.",
+      "ve": "Seva a i athu dzudzanywa."
+    },
+    {
+      "english": "This month's full AI allowance is used. AI still works, on a simpler model, until {date}.",
+      "zu": "Isabelo se-AI sale nyanga sesiphelile. I-AI isasebenza, ngohlobo olulula, kuze kube ngu-{date}.",
+      "st": "Karolo yohle ya AI ya kgwedi ena e sebedisitswe. AI e ntse e sebetsa, ka mofuta o bobebe, ho fihlela {date}.",
+      "ts": "Mpimo wa AI wa n\u2019hweti leyi wu tirhisiwile hinkwawu. AI ya ha tirha, hi modele wo olova, ku fikela {date}.",
+      "ve": "Mukovhe wo\u1e71he wa AI wa \u1e45wedzi uno wo shumiswa. AI i kha \u1e13i shuma, nga modele yo leluwaho, u swika {date}."
+    },
+    {
+      "english": "R{remaining} of R{cap} left. Refills on {date}.",
+      "zu": "Kusele u-R{remaining} ku-R{cap}. Kugcwaliswa ngo-{date}.",
+      "st": "Ho setse R{remaining} ho R{cap}. E tlatswa hape ka {date}.",
+      "ts": "Ku sale R{remaining} eka R{cap}. Wu tlhela wu tatiwa hi {date}.",
+      "ve": "Ho sala R{remaining} kha R{cap}. U dovha wa \u1e13adzwa nga {date}."
+    },
+    {
+      "english": "Open Farmer practice view",
+      "zu": "Vula isikrini sokuzilolonga: Umlimi",
+      "st": "Bula leqephe la boikwetliso: Molemisi",
+      "ts": "Pfula tluka ro titoloveta: Murimi",
+      "ve": "Vulani sia\u1e71ari \u1e3da n\u1e13owen\u1e13owe: Mulimi"
+    },
+    {
+      "english": "Open Student practice view",
+      "zu": "Vula isikrini sokuzilolonga: Umfundi",
+      "st": "Bula leqephe la boikwetliso: Moithuti",
+      "ts": "Pfula tluka ro titoloveta: Mudyondzi",
+      "ve": "Vulani sia\u1e71ari \u1e3da n\u1e13owen\u1e13owe: Mugudi"
+    },
+    {
+      "english": "Open Mentor practice view",
+      "zu": "Vula isikrini sokuzilolonga: Umeluleki",
+      "st": "Bula leqephe la boikwetliso: Moeletsi",
+      "ts": "Pfula tluka ro titoloveta: Muleteri",
+      "ve": "Vulani sia\u1e71ari \u1e3da n\u1e13owen\u1e13owe: Mueletshedzi"
+    },
+    {
+      "english": "Open Organisation practice view",
+      "zu": "Vula isikrini sokuzilolonga: Inhlangano",
+      "st": "Bula leqephe la boikwetliso: Mokgatlo",
+      "ts": "Pfula tluka ro titoloveta: Nhlangano",
+      "ve": "Vulani sia\u1e71ari \u1e3da n\u1e13owen\u1e13owe: Dzangano"
+    },
+    {
+      "english": "Open Funder practice view",
+      "zu": "Vula isikrini sokuzilolonga: Umxhasi wezimali",
+      "st": "Bula leqephe la boikwetliso: Motshehetsi",
+      "ts": "Pfula tluka ro titoloveta: Museketeri wa mali",
+      "ve": "Vulani sia\u1e71ari \u1e3da n\u1e13owen\u1e13owe: Mulambedzi"
+    },
+    {
+      "english": "Something went wrong ({code}).",
+      "zu": "Kube nephutha ({code}).",
+      "st": "Ho na le phoso ({code}).",
+      "ts": "Ku ve ni xihoxo ({code}).",
+      "ve": "Ho vha na vhukhakhi ({code})."
+    },
+    {
+      "english": "What you share",
+      "zu": "Lokho owabelana ngakho",
+      "st": "Seo o se arolelanang",
+      "ts": "Leswi u swi avelanaka",
+      "ve": "Zwine na kovhana"
+    },
+    {
+      "english": "What you sold",
+      "zu": "Lokho okuthengisile",
+      "st": "Seo o se rekisitseng",
+      "ts": "Leswi u swi xaviseke",
+      "ve": "Zwe na rengisa"
+    },
+    {
+      "english": "Your crop sales and the money you earned from them.",
+      "zu": "Izitshalo ozithengisile nemali oyitholile ngazo.",
+      "st": "Dijalo tseo o di rekisitseng le tjhelete eo o e fumaneng ka tsona.",
+      "ts": "Dibyariwa leswi u swi xaviseke ni mali leyi u yi kumeke hi swona.",
+      "ve": "Zwibveledzwa zwa\u1e4bu zwa masimuni zwe na rengisa na tshelede ye na wana ngazwo."
+    },
+    {
+      "english": "What you spent",
+      "zu": "Lokho okusebenzisile",
+      "st": "Seo o se lefileng",
+      "ts": "Leswi u swi tirhiseke",
+      "ve": "Zwe na shumisa"
+    },
+    {
+      "english": "What you paid for seed, tools and inputs.",
+      "zu": "Imali oyikhokhele imbewu, amathuluzi nezinsiza zokulima.",
+      "st": "Seo o se lefileng bakeng sa peo, disebediswa le dintho tsa temo.",
+      "ts": "Leswi u swi hakeleke eka mbewu, switirho ni switirhisiwa swa vurimi.",
+      "ve": "Zwe na badela kha mbeu, zwishumiswa na zwishumiswa zwa vhulimi."
+    },
+    {
+      "english": "What you harvested",
+      "zu": "Lokho okuvunile",
+      "st": "Seo o se kotutseng",
+      "ts": "Leswi u swi tshoveleke",
+      "ve": "Zwe na ka\u1e4ba"
+    },
+    {
+      "english": "Your harvest weights per crop.",
+      "zu": "Izisindo zesivuno sakho ngesitshalo ngasinye.",
+      "st": "Boima ba kotulo ya hao bakeng sa sejalo ka seng.",
+      "ts": "Ntiko wa ntshovelo wa wena eka xibyariwa xin\u2019wana ni xin\u2019wana.",
+      "ve": "Zwileme zwa kha\u1e4bo ya\u1e4bu kha tshimela tshi\u1e45we na tshi\u1e45we."
+    },
+    {
+      "english": "Your training",
+      "zu": "Ukuqeqeshwa kwakho",
+      "st": "Thupelo ya hao",
+      "ts": "Vuleteri bya wena",
+      "ve": "Vhugudisi ha\u1e4bu"
+    },
+    {
+      "english": "Which course modules you have finished.",
+      "zu": "Izingxenye zezifundo oziqedile.",
+      "st": "Dikarolo tsa thupelo tseo o di qetileng.",
+      "ts": "Swiyenge swa khoso leswi u swi heteke.",
+      "ve": "Zwipi\u1e13a zwa khoso zwe na fhedza."
+    },
+    {
+      "english": "Your survey answers",
+      "zu": "Izimpendulo zakho zenhlolovo",
+      "st": "Dikarabo tsa hao tsa dipatlisiso",
+      "ts": "Tinhlamulo ta wena ta ndzavisiso",
+      "ve": "Phindulo dza\u1e4bu dza \u1e71ho\u1e13isiso"
+    },
+    {
+      "english": "The answers you gave in programme surveys.",
+      "zu": "Izimpendulo ozinikezile ezinhloloveni zohlelo.",
+      "st": "Dikarabo tseo o faneng ka tsona dipatlisisong tsa lenaneo.",
+      "ts": "Tinhlamulo leti u ti nyikeke eka mindzavisiso ya nongonoko.",
+      "ve": "Phindulo dze na \u1e4bea kha \u1e71ho\u1e13isiso dza mbekanyamushumo."
+    },
+    {
+      "english": "Where your farm is",
+      "zu": "Lapho ipulazi lakho likhona",
+      "st": "Moo polasi ya hao e leng teng",
+      "ts": "Laha purasi ra wena ri nga kona",
+      "ve": "Hune bulasi \u1e3da\u1e4bu \u1e3da vha hone"
+    },
+    {
+      "english": "Your exact plot location. With this off, only the district is shown.",
+      "zu": "Indawo eqondile yensimu yakho. Uma lokhu kuvaliwe, kuboniswa isifunda kuphela.",
+      "st": "Sebaka se nepahetseng sa tshimo ya hao. Ha sena se timilwe, ho bontshwa setereke feela.",
+      "ts": "Ndhawu leyi kongomeke ya nsimu ya wena. Loko leswi swi timiwile, ku kombisiwa xifundzha ntsena.",
+      "ve": "Fhethu ho livhaho ha tshipi\u1e13a tsha mavu a\u1e4bu. Musi izwi zwo dzimiwa, hu sumbedzwa tshi\u1e71iriki fhedzi."
+    },
+    {
+      "english": "Nothing here is shared unless you switch it on. You can change your mind at any time, and {organisation} will stop seeing it straight away.",
+      "zu": "Akukho lutho olwabiwayo lapha ngaphandle kokuthi uyivule. Ungashintsha umqondo wakho noma nini, futhi {organisation} izoyeka ukukubona ngokushesha.",
+      "st": "Ha ho letho mona le arolelanwang ntle le ha o le bulela. O ka fetola maikutlo a hao neng kapa neng, mme {organisation} o tla kgaotsa ho le bona hanghang.",
+      "ts": "A ku na lexi avelaniwaka laha handle ka loko u xi pfula. U nga cinca miehleketo ya wena nkarhi wun\u2019wana ni wun\u2019wana, kutani {organisation} wu ta tshika ku xi vona hi nkarhi wolowo.",
+      "ve": "A hu na tshithu tshine tsha kovhiwa afha nga nn\u1e13a ha musi no tshi vula. Ni nga shandukisa muhumbulo wa\u1e4bu tshifhinga tshi\u1e45we na tshi\u1e45we, nahone {organisation} \u1e3di \u1e13o litsha u tshi vhona nga u \u1e71avhanya."
+    },
+    {
+      "english": "the organisation running your programme",
+      "zu": "inhlangano eqhuba uhlelo lwakho",
+      "st": "mokgatlo o tsamaisang lenaneo la hao",
+      "ts": "nhlangano lowu fambisaka nongonoko wa wena",
+      "ve": "dzangano \u1e3dine \u1e3da tshimbidza mbekanyamushumo ya\u1e4bu"
+    },
+    {
+      "english": "Loading\u2026",
+      "zu": "Kusalayishwa\u2026",
+      "st": "Ho a kenngwa\u2026",
+      "ts": "Swa layicha\u2026",
+      "ve": "Zwi khou laisiwa\u2026"
+    },
+    {
+      "english": "Couldn't load your sharing settings. Check your connection and try again.",
+      "zu": "Izilungiselelo zokwabelana azikwazi ukulayishwa. Hlola uxhumano lwakho bese uzama futhi.",
+      "st": "Ha ho a kgoneha ho kenya ditlhophiso tsa hao tsa ho arolelana. Hlahloba kgokahano ya hao mme o leke hape.",
+      "ts": "A swi kotekanga ku layicha swiyimiso swa wena swo avelana. Kambela vuhlanganisi bya wena kutani u ringeta nakambe.",
+      "ve": "A zwo ngo konadzea u laisa nzudzanyo dza\u1e4bu dza u kovhana. \u1e70olani vhu\u1e71umani ha\u1e4bu ni lingedze hafhu."
+    },
+    {
+      "english": "Retry",
+      "zu": "Zama futhi",
+      "st": "Leka hape",
+      "ts": "Ringeta nakambe",
+      "ve": "Lingedzani hafhu"
+    },
+    {
+      "english": "That did not save. Your sharing settings have not changed.",
+      "zu": "Lokho akugcinwanga. Izilungiselelo zakho zokwabelana azishintshanga.",
+      "st": "Seo ha se a bolokwa. Ditlhophiso tsa hao tsa ho arolelana ha di a fetoha.",
+      "ts": "Sweswo a swi hlayisiwanga. Swiyimiso swa wena swo avelana a swi cincanga.",
+      "ve": "Izwo a zwo ngo vhulungwa. Nzudzanyo dza\u1e4bu dza u kovhana a dzo ngo shanduka."
+    },
+    {
+      "english": "You are not sharing anything.",
+      "zu": "Awabelani ngalutho.",
+      "st": "Ha o arolelane letho.",
+      "ts": "A wu avelani na xilo.",
+      "ve": "A ni khou kovhana tshithu."
+    },
+    {
+      "english": "You are sharing {count} of {total} things.",
+      "zu": "Wabelana ngezinto ezingu-{count} kwezingu-{total}.",
+      "st": "O arolelana dintho tse {count} ho tse {total}.",
+      "ts": "U avelana swilo swa {count} eka swa {total}.",
+      "ve": "Ni khou kovhana zwithu zwa {count} kha zwa {total}."
+    },
+    {
+      "english": "Stop sharing everything",
+      "zu": "Yeka ukwabelana ngakho konke",
+      "st": "Kgaotsa ho arolelana ntho e nngwe le e nngwe",
+      "ts": "Tshika ku avelana swilo hinkwato",
+      "ve": "Litshani u kovhana zwithu zwo\u1e71he"
+    }
+  ],
+  "reusedKeys": {
+    "Account": "tabAccount",
+    "Language": "language",
+    "Sign in": "loginSignIn",
+    "Exit tour": "navExitTour",
+    "Learn": "homeLearnAction",
+    "Change photo": "profileChangePhoto",
+    "Edit profile": "mentorEditProfileButton",
+    "Edit": "placePopupEdit",
+    "Full name": "loginFullName",
+    "Remove": "savedPlacesRemove",
+    "Saving...": "designPhotoSaving",
+    "Save": "saveBtn",
+    "Cancel": "cancelBtn",
+    "Role": "loginRole",
+    "Choose a practice view": "tipsChoosePracticeView",
+    "Farmer": "homeRoleFarmerLabel",
+    "Mentor": "homeRoleMentorLabel",
+    "Student": "homeRoleStudentLabel",
+    "Organisation": "homeRoleNGOLabel",
+    "Funder": "homeRoleFunderLabel",
+    "Admin": "profileRoleAdmin"
+  },
+  "inlineControls": [
+    {
+      "english": "Account",
+      "zu": [
+        "I-akhawunti"
+      ],
+      "occurrences": [
+        {
+          "english": "Account",
+          "zu": "I-akhawunti",
+          "file": "app/account/page.tsx",
+          "line": 32
+        },
+        {
+          "english": "Account",
+          "zu": "I-akhawunti",
+          "file": "app/account/page.tsx",
+          "line": 306
+        },
+        {
+          "english": "Account",
+          "zu": "I-akhawunti",
+          "file": "app/account/page.tsx",
+          "line": 312
+        }
+      ],
+      "dictionaryKeys": [
+        {
+          "key": "tabAccount",
+          "zu": "I\u2011akhawunti",
+          "st": "Akhaonto",
+          "ts": "Akhawunti",
+          "ve": "Akhaunthu"
+        }
+      ]
+    },
+    {
+      "english": "Could not save. Try again.",
+      "zu": [
+        "Akukwazanga ukulondolozwa. Zama futhi."
+      ],
+      "occurrences": [
+        {
+          "english": "Could not save. Try again.",
+          "zu": "Akukwazanga ukulondolozwa. Zama futhi.",
+          "file": "app/account/page.tsx",
+          "line": 142
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Could not update your photo.",
+      "zu": [
+        "Akukwazanga ukushintsha isithombe sakho."
+      ],
+      "occurrences": [
+        {
+          "english": "Could not update your photo.",
+          "zu": "Akukwazanga ukushintsha isithombe sakho.",
+          "file": "app/account/page.tsx",
+          "line": 157
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "New passwords do not match.",
+      "zu": [
+        "Amaphasiwedi amasha awafani."
+      ],
+      "occurrences": [
+        {
+          "english": "New passwords do not match.",
+          "zu": "Amaphasiwedi amasha awafani.",
+          "file": "app/account/page.tsx",
+          "line": 190
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Password must be at least 6 characters.",
+      "zu": [
+        "Iphasiwedi kumele ibe nezinhlamvu okungenani eziyisi-6."
+      ],
+      "occurrences": [
+        {
+          "english": "Password must be at least 6 characters.",
+          "zu": "Iphasiwedi kumele ibe nezinhlamvu okungenani eziyisi-6.",
+          "file": "app/account/page.tsx",
+          "line": 191
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Loading your account\u2026",
+      "zu": [
+        "Kulayishwa i-akhawunti yakho\u2026"
+      ],
+      "occurrences": [
+        {
+          "english": "Loading your account\u2026",
+          "zu": "Kulayishwa i-akhawunti yakho\u2026",
+          "file": "app/account/page.tsx",
+          "line": 210
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Tour account",
+      "zu": [
+        "I-akhawunti yohambo"
+      ],
+      "occurrences": [
+        {
+          "english": "Tour account",
+          "zu": "I-akhawunti yohambo",
+          "file": "app/account/page.tsx",
+          "line": 225
+        },
+        {
+          "english": "Tour account",
+          "zu": "I-akhawunti yohambo",
+          "file": "app/account/page.tsx",
+          "line": 232
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Farm / organisation",
+      "zu": [
+        "Ipulazi / inhlangano"
+      ],
+      "occurrences": [
+        {
+          "english": "Farm / organisation",
+          "zu": "Ipulazi / inhlangano",
+          "file": "app/account/page.tsx",
+          "line": 242
+        },
+        {
+          "english": "Farm / organisation",
+          "zu": "Ipulazi / inhlangano",
+          "file": "app/account/page.tsx",
+          "line": 468
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Language",
+      "zu": [
+        "Ulimi"
+      ],
+      "occurrences": [
+        {
+          "english": "Language",
+          "zu": "Ulimi",
+          "file": "app/account/page.tsx",
+          "line": 243
+        },
+        {
+          "english": "Language",
+          "zu": "Ulimi",
+          "file": "app/account/page.tsx",
+          "line": 437
+        },
+        {
+          "english": "Language",
+          "zu": "Ulimi",
+          "file": "app/account/page.tsx",
+          "line": 469
+        }
+      ],
+      "dictionaryKeys": [
+        {
+          "key": "language",
+          "zu": "Ulimi",
+          "st": "Puo",
+          "ts": "Ririmi",
+          "ve": "Luambo"
+        },
+        {
+          "key": "sidebarLanguageLabel",
+          "zu": "Ulimi",
+          "st": "Puo",
+          "ts": "Ririmi",
+          "ve": "Luambo"
+        }
+      ]
+    },
+    {
+      "english": "Appearance & language",
+      "zu": [
+        "Ukubukeka nolimi"
+      ],
+      "occurrences": [
+        {
+          "english": "Appearance & language",
+          "zu": "Ukubukeka nolimi",
+          "file": "app/account/page.tsx",
+          "line": 248
+        },
+        {
+          "english": "Appearance & language",
+          "zu": "Ukubukeka nolimi",
+          "file": "app/account/page.tsx",
+          "line": 565
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "You are using the practice version. Nothing here is saved to a real account \u2014 sign in to keep your own records.",
+      "zu": [
+        "Usebenzisa inguqulo yokuzilolonga. Akukho okulondolozwa ku-akhawunti yangempela lapha \u2014 ngena ngemvume ukuze ulondoloze amarekhodi akho."
+      ],
+      "occurrences": [
+        {
+          "english": "You are using the practice version. Nothing here is saved to a real account \u2014 sign in to keep your own records.",
+          "zu": "Usebenzisa inguqulo yokuzilolonga. Akukho okulondolozwa ku-akhawunti yangempela lapha \u2014 ngena ngemvume ukuze ulondoloze amarekhodi akho.",
+          "file": "app/account/page.tsx",
+          "line": 253
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Sign in",
+      "zu": [
+        "Ngena ngemvume"
+      ],
+      "occurrences": [
+        {
+          "english": "Sign in",
+          "zu": "Ngena ngemvume",
+          "file": "app/account/page.tsx",
+          "line": 259
+        },
+        {
+          "english": "Sign in",
+          "zu": "Ngena ngemvume",
+          "file": "app/account/page.tsx",
+          "line": 291
+        }
+      ],
+      "dictionaryKeys": [
+        {
+          "key": "loginSignIn",
+          "zu": "Ngena",
+          "st": "Kena",
+          "ts": "Nghena",
+          "ve": "Dzhenani"
+        }
+      ]
+    },
+    {
+      "english": "Exit tour",
+      "zu": [
+        "Phuma ohambo"
+      ],
+      "occurrences": [
+        {
+          "english": "Exit tour",
+          "zu": "Phuma ohambo",
+          "file": "app/account/page.tsx",
+          "line": 264
+        }
+      ],
+      "dictionaryKeys": [
+        {
+          "key": "navExitTour",
+          "zu": "Phuma ohambweni",
+          "st": "Tloha ketelong",
+          "ts": "Huma eka riendzo",
+          "ve": "Ibvani kha lwendo"
+        }
+      ]
+    },
+    {
+      "english": "Still loading\u2026 you can sign in instead.",
+      "zu": [
+        "Kusalayishwa\u2026 ungangena ngemvume esikhundleni."
+      ],
+      "occurrences": [
+        {
+          "english": "Still loading\u2026 you can sign in instead.",
+          "zu": "Kusalayishwa\u2026 ungangena ngemvume esikhundleni.",
+          "file": "app/account/page.tsx",
+          "line": 286
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Sign in to manage your account.",
+      "zu": [
+        "Ngena ngemvume ukuze uphathe i-akhawunti yakho."
+      ],
+      "occurrences": [
+        {
+          "english": "Sign in to manage your account.",
+          "zu": "Ngena ngemvume ukuze uphathe i-akhawunti yakho.",
+          "file": "app/account/page.tsx",
+          "line": 286
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Learn",
+      "zu": [
+        "Funda"
+      ],
+      "occurrences": [
+        {
+          "english": "Learn",
+          "zu": "Funda",
+          "file": "app/account/page.tsx",
+          "line": 307
+        }
+      ],
+      "dictionaryKeys": [
+        {
+          "key": "designLearn",
+          "zu": "Learn",
+          "st": "Learn",
+          "ts": "Learn",
+          "ve": "Learn"
+        },
+        {
+          "key": "homeLearnAction",
+          "zu": "Funda",
+          "st": "Ithute",
+          "ts": "Dyondza",
+          "ve": "Gudani"
+        },
+        {
+          "key": "pricesLearn",
+          "zu": "Funda",
+          "st": null,
+          "ts": null,
+          "ve": null
+        }
+      ]
+    },
+    {
+      "english": "Profile details",
+      "zu": [
+        "Imininingwane yephrofayela"
+      ],
+      "occurrences": [
+        {
+          "english": "Profile details",
+          "zu": "Imininingwane yephrofayela",
+          "file": "app/account/page.tsx",
+          "line": 317
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Change photo",
+      "zu": [
+        "Shintsha isithombe"
+      ],
+      "occurrences": [
+        {
+          "english": "Change photo",
+          "zu": "Shintsha isithombe",
+          "file": "app/account/page.tsx",
+          "line": 333
+        }
+      ],
+      "dictionaryKeys": [
+        {
+          "key": "profileChangePhoto",
+          "zu": "Shintsha isithombe",
+          "st": "Change photo",
+          "ts": "Change photo",
+          "ve": "Change photo"
+        }
+      ]
+    },
+    {
+      "english": "Edit profile",
+      "zu": [
+        "Hlela iphrofayela"
+      ],
+      "occurrences": [
+        {
+          "english": "Edit profile",
+          "zu": "Hlela iphrofayela",
+          "file": "app/account/page.tsx",
+          "line": 355
+        },
+        {
+          "english": "Edit profile",
+          "zu": "Hlela iphrofayela",
+          "file": "app/account/page.tsx",
+          "line": 366
+        }
+      ],
+      "dictionaryKeys": [
+        {
+          "key": "mentorEditProfileButton",
+          "zu": "Edit profile",
+          "st": "Edit profile",
+          "ts": "Edit profile",
+          "ve": "Edit profile"
+        }
+      ]
+    },
+    {
+      "english": "Edit",
+      "zu": [
+        "Hlela"
+      ],
+      "occurrences": [
+        {
+          "english": "Edit",
+          "zu": "Hlela",
+          "file": "app/account/page.tsx",
+          "line": 358
+        }
+      ],
+      "dictionaryKeys": [
+        {
+          "key": "designGlossyEdit",
+          "zu": "Edit",
+          "st": "Edit",
+          "ts": "Edit",
+          "ve": "Edit"
+        },
+        {
+          "key": "placePopupEdit",
+          "zu": "Hlela",
+          "st": "Fetola",
+          "ts": "Cinca",
+          "ve": "Shandulani"
+        }
+      ]
+    },
+    {
+      "english": "Full name",
+      "zu": [
+        "Amagama aphelele"
+      ],
+      "occurrences": [
+        {
+          "english": "Full name",
+          "zu": "Amagama aphelele",
+          "file": "app/account/page.tsx",
+          "line": 369
+        }
+      ],
+      "dictionaryKeys": [
+        {
+          "key": "profileFullNameLabel",
+          "zu": "Igama eliphelele",
+          "st": "Full name",
+          "ts": "Full name",
+          "ve": "Full name"
+        },
+        {
+          "key": "loginFullName",
+          "zu": "Igama nesibongo",
+          "st": "Lebitso le felletseng",
+          "ts": "Vito hi ku helela",
+          "ve": "Dzina \u1e3do fhelelaho"
+        }
+      ]
+    },
+    {
+      "english": "Your full name",
+      "zu": [
+        "Amagama akho aphelele"
+      ],
+      "occurrences": [
+        {
+          "english": "Your full name",
+          "zu": "Amagama akho aphelele",
+          "file": "app/account/page.tsx",
+          "line": 371
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Phone",
+      "zu": [
+        "Ucingo"
+      ],
+      "occurrences": [
+        {
+          "english": "Phone",
+          "zu": "Ucingo",
+          "file": "app/account/page.tsx",
+          "line": 377
+        },
+        {
+          "english": "Phone",
+          "zu": "Ucingo",
+          "file": "app/account/page.tsx",
+          "line": 467
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Business name",
+      "zu": [
+        "Igama lebhizinisi"
+      ],
+      "occurrences": [
+        {
+          "english": "Business name",
+          "zu": "Igama lebhizinisi",
+          "file": "app/account/page.tsx",
+          "line": 390
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "(heads your invoices)",
+      "zu": [
+        "(livela kuma-invoice akho)"
+      ],
+      "occurrences": [
+        {
+          "english": "(heads your invoices)",
+          "zu": "(livela kuma-invoice akho)",
+          "file": "app/account/page.tsx",
+          "line": 390
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "e.g. Ubhejane Creche",
+      "zu": [
+        "isib. Ubhejane Creche"
+      ],
+      "occurrences": [
+        {
+          "english": "e.g. Ubhejane Creche",
+          "zu": "isib. Ubhejane Creche",
+          "file": "app/account/page.tsx",
+          "line": 392
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Leave this empty to invoice under your own name instead.",
+      "zu": [
+        "Shiya lokhu kungenalutho ukuze i-invoice isebenzise igama lakho."
+      ],
+      "occurrences": [
+        {
+          "english": "Leave this empty to invoice under your own name instead.",
+          "zu": "Shiya lokhu kungenalutho ukuze i-invoice isebenzise igama lakho.",
+          "file": "app/account/page.tsx",
+          "line": 396
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Business logo",
+      "zu": [
+        "Uphawu lwebhizinisi"
+      ],
+      "occurrences": [
+        {
+          "english": "Business logo",
+          "zu": "Uphawu lwebhizinisi",
+          "file": "app/account/page.tsx",
+          "line": 404
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "(shown on invoices)",
+      "zu": [
+        "(luvela kuma-invoice)"
+      ],
+      "occurrences": [
+        {
+          "english": "(shown on invoices)",
+          "zu": "(luvela kuma-invoice)",
+          "file": "app/account/page.tsx",
+          "line": 404
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Adding\u2026",
+      "zu": [
+        "Iyengezwa\u2026"
+      ],
+      "occurrences": [
+        {
+          "english": "Adding\u2026",
+          "zu": "Iyengezwa\u2026",
+          "file": "app/account/page.tsx",
+          "line": 418
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Replace",
+      "zu": [
+        "Faka olunye"
+      ],
+      "occurrences": [
+        {
+          "english": "Replace",
+          "zu": "Faka olunye",
+          "file": "app/account/page.tsx",
+          "line": 418
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Add a logo",
+      "zu": [
+        "Faka uphawu"
+      ],
+      "occurrences": [
+        {
+          "english": "Add a logo",
+          "zu": "Faka uphawu",
+          "file": "app/account/page.tsx",
+          "line": 418
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Remove",
+      "zu": [
+        "Susa"
+      ],
+      "occurrences": [
+        {
+          "english": "Remove",
+          "zu": "Susa",
+          "file": "app/account/page.tsx",
+          "line": 424
+        }
+      ],
+      "dictionaryKeys": [
+        {
+          "key": "editRemoveCornerButton",
+          "zu": "Susa",
+          "st": "Tlosa",
+          "ts": "Susa",
+          "ve": "Bvisani"
+        },
+        {
+          "key": "savedPlacesRemove",
+          "zu": null,
+          "st": null,
+          "ts": null,
+          "ve": null
+        }
+      ]
+    },
+    {
+      "english": "A photo of your sign works. It is made smaller automatically.",
+      "zu": [
+        "Ungafaka isithombe sophawu lwakho. Sizoncishiswa ngokuzenzakalela."
+      ],
+      "occurrences": [
+        {
+          "english": "A photo of your sign works. It is made smaller automatically.",
+          "zu": "Ungafaka isithombe sophawu lwakho. Sizoncishiswa ngokuzenzakalela.",
+          "file": "app/account/page.tsx",
+          "line": 429
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Saving...",
+      "zu": [
+        "Kuyalondolozwa..."
+      ],
+      "occurrences": [
+        {
+          "english": "Saving...",
+          "zu": "Kuyalondolozwa...",
+          "file": "app/account/page.tsx",
+          "line": 455
+        }
+      ],
+      "dictionaryKeys": [
+        {
+          "key": "designPhotoSaving",
+          "zu": "Iyalondoloza... \u00b7 Saving...",
+          "st": "Saving...",
+          "ts": "Saving...",
+          "ve": "Saving..."
+        }
+      ]
+    },
+    {
+      "english": "Save",
+      "zu": [
+        "Londoloza"
+      ],
+      "occurrences": [
+        {
+          "english": "Save",
+          "zu": "Londoloza",
+          "file": "app/account/page.tsx",
+          "line": 455
+        }
+      ],
+      "dictionaryKeys": [
+        {
+          "key": "nativeEditSaveButton",
+          "zu": "Londoloza",
+          "st": "Boloka",
+          "ts": "Hlayisa",
+          "ve": "Vhulungani"
+        },
+        {
+          "key": "waterPointNamingConfirmButton",
+          "zu": "Londoloza",
+          "st": "Boloka",
+          "ts": "Hlayisa",
+          "ve": "Vhulungani"
+        },
+        {
+          "key": "profileSaveButton",
+          "zu": "Gcina",
+          "st": "Save",
+          "ts": "Save",
+          "ve": "Save"
+        },
+        {
+          "key": "evidenceSheetSave",
+          "zu": null,
+          "st": null,
+          "ts": null,
+          "ve": null
+        },
+        {
+          "key": "saveBtn",
+          "zu": "Londoloza",
+          "st": "Boloka",
+          "ts": "Hlayisa",
+          "ve": "Vhulungani"
+        }
+      ]
+    },
+    {
+      "english": "Cancel",
+      "zu": [
+        "Khansela"
+      ],
+      "occurrences": [
+        {
+          "english": "Cancel",
+          "zu": "Khansela",
+          "file": "app/account/page.tsx",
+          "line": 460
+        },
+        {
+          "english": "Cancel",
+          "zu": "Khansela",
+          "file": "app/account/page.tsx",
+          "line": 550
+        }
+      ],
+      "dictionaryKeys": [
+        {
+          "key": "designCancel",
+          "zu": "Cancel",
+          "st": "Cancel",
+          "ts": "Cancel",
+          "ve": "Cancel"
+        },
+        {
+          "key": "designCanvasCancel",
+          "zu": "Khansela",
+          "st": "Hlakola",
+          "ts": "Khansela",
+          "ve": "Khanselani"
+        },
+        {
+          "key": "designPaletteBedBlockCancel",
+          "zu": "Khansela \u00b7 Cancel",
+          "st": "Cancel",
+          "ts": "Cancel",
+          "ve": "Cancel"
+        },
+        {
+          "key": "drawCancelButton",
+          "zu": "Khansela",
+          "st": "Hlakola",
+          "ts": "Tshika",
+          "ve": "Litshani"
+        },
+        {
+          "key": "waterDropCancelButton",
+          "zu": "Khansela",
+          "st": "Hlakola",
+          "ts": "Tshika",
+          "ve": "Litshani"
+        },
+        {
+          "key": "editCancelButton",
+          "zu": "Khansela",
+          "st": "Hlakola",
+          "ts": "Tshika",
+          "ve": "Litshani"
+        },
+        {
+          "key": "savePlaceCancelButton",
+          "zu": "Khansela",
+          "st": "Hlakola",
+          "ts": "Tshika",
+          "ve": "Litshani"
+        },
+        {
+          "key": "cancelBtn",
+          "zu": "Khansela",
+          "st": null,
+          "ts": null,
+          "ve": null
+        }
+      ]
+    },
+    {
+      "english": "Email",
+      "zu": [
+        "I-imeyili"
+      ],
+      "occurrences": [
+        {
+          "english": "Email",
+          "zu": "I-imeyili",
+          "file": "app/account/page.tsx",
+          "line": 466
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Role",
+      "zu": [
+        "Isikhundla"
+      ],
+      "occurrences": [
+        {
+          "english": "Role",
+          "zu": "Isikhundla",
+          "file": "app/account/page.tsx",
+          "line": 470
+        }
+      ],
+      "dictionaryKeys": [
+        {
+          "key": "profileRoleLabel",
+          "zu": "Indima",
+          "st": "Role",
+          "ts": "Role",
+          "ve": "Role"
+        },
+        {
+          "key": "loginRole",
+          "zu": "Indima",
+          "st": "Karolo",
+          "ts": "Ntirho",
+          "ve": "Mushumo"
+        }
+      ]
+    },
+    {
+      "english": "Account settings",
+      "zu": [
+        "Izilungiselelo ze-akhawunti"
+      ],
+      "occurrences": [
+        {
+          "english": "Account settings",
+          "zu": "Izilungiselelo ze-akhawunti",
+          "file": "app/account/page.tsx",
+          "line": 475
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "More account settings",
+      "zu": [
+        "Ezinye izilungiselelo ze-akhawunti"
+      ],
+      "occurrences": [
+        {
+          "english": "More account settings",
+          "zu": "Ezinye izilungiselelo ze-akhawunti",
+          "file": "app/account/page.tsx",
+          "line": 483
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Change password",
+      "zu": [
+        "Shintsha iphasiwedi"
+      ],
+      "occurrences": [
+        {
+          "english": "Change password",
+          "zu": "Shintsha iphasiwedi",
+          "file": "app/account/page.tsx",
+          "line": 507
+        },
+        {
+          "english": "Change password",
+          "zu": "Shintsha iphasiwedi",
+          "file": "app/account/page.tsx",
+          "line": 512
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Password updated successfully.",
+      "zu": [
+        "Iphasiwedi ibuyekeziwe."
+      ],
+      "occurrences": [
+        {
+          "english": "Password updated successfully.",
+          "zu": "Iphasiwedi ibuyekeziwe.",
+          "file": "app/account/page.tsx",
+          "line": 516
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Current password",
+      "zu": [
+        "Iphasiwedi yamanje"
+      ],
+      "occurrences": [
+        {
+          "english": "Current password",
+          "zu": "Iphasiwedi yamanje",
+          "file": "app/account/page.tsx",
+          "line": 524
+        },
+        {
+          "english": "Current password",
+          "zu": "Iphasiwedi yamanje",
+          "file": "app/account/page.tsx",
+          "line": 525
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "New password",
+      "zu": [
+        "Iphasiwedi entsha"
+      ],
+      "occurrences": [
+        {
+          "english": "New password",
+          "zu": "Iphasiwedi entsha",
+          "file": "app/account/page.tsx",
+          "line": 524
+        },
+        {
+          "english": "New password",
+          "zu": "Iphasiwedi entsha",
+          "file": "app/account/page.tsx",
+          "line": 525
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Confirm new password",
+      "zu": [
+        "Qinisekisa iphasiwedi entsha"
+      ],
+      "occurrences": [
+        {
+          "english": "Confirm new password",
+          "zu": "Qinisekisa iphasiwedi entsha",
+          "file": "app/account/page.tsx",
+          "line": 524
+        },
+        {
+          "english": "Confirm new password",
+          "zu": "Qinisekisa iphasiwedi entsha",
+          "file": "app/account/page.tsx",
+          "line": 525
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Hide passwords",
+      "zu": [
+        "Fihla amaphasiwedi"
+      ],
+      "occurrences": [
+        {
+          "english": "Hide passwords",
+          "zu": "Fihla amaphasiwedi",
+          "file": "app/account/page.tsx",
+          "line": 532
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Show passwords",
+      "zu": [
+        "Bonisa amaphasiwedi"
+      ],
+      "occurrences": [
+        {
+          "english": "Show passwords",
+          "zu": "Bonisa amaphasiwedi",
+          "file": "app/account/page.tsx",
+          "line": 532
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Updating...",
+      "zu": [
+        "Kuyabuyekezwa..."
+      ],
+      "occurrences": [
+        {
+          "english": "Updating...",
+          "zu": "Kuyabuyekezwa...",
+          "file": "app/account/page.tsx",
+          "line": 545
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Update password",
+      "zu": [
+        "Buyekeza iphasiwedi"
+      ],
+      "occurrences": [
+        {
+          "english": "Update password",
+          "zu": "Buyekeza iphasiwedi",
+          "file": "app/account/page.tsx",
+          "line": 545
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Signing out...",
+      "zu": [
+        "Kuyaphuma..."
+      ],
+      "occurrences": [
+        {
+          "english": "Signing out...",
+          "zu": "Kuyaphuma...",
+          "file": "app/account/page.tsx",
+          "line": 575
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Sign out",
+      "zu": [
+        "Phuma"
+      ],
+      "occurrences": [
+        {
+          "english": "Sign out",
+          "zu": "Phuma",
+          "file": "app/account/page.tsx",
+          "line": 575
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "ImbewuField \u00b7 growing with you",
+      "zu": [
+        "ImbewuField \u00b7 ikhula nawe"
+      ],
+      "occurrences": [
+        {
+          "english": "ImbewuField \u00b7 growing with you",
+          "zu": "ImbewuField \u00b7 ikhula nawe",
+          "file": "app/account/page.tsx",
+          "line": 579
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Explore role views",
+      "zu": [
+        "Hlola izikrini zezindima"
+      ],
+      "occurrences": [
+        {
+          "english": "Explore role views",
+          "zu": "Hlola izikrini zezindima",
+          "file": "components/AccountAccess.tsx",
+          "line": 20
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Your account permissions stay unchanged.",
+      "zu": [
+        "Izimvume ze-akhawunti yakho zihlala zinjalo."
+      ],
+      "occurrences": [
+        {
+          "english": "Your account permissions stay unchanged.",
+          "zu": "Izimvume ze-akhawunti yakho zihlala zinjalo.",
+          "file": "components/AccountAccess.tsx",
+          "line": 21
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Choose a view",
+      "zu": [
+        "Khetha isikrini"
+      ],
+      "occurrences": [
+        {
+          "english": "Choose a view",
+          "zu": "Khetha isikrini",
+          "file": "components/AccountAccess.tsx",
+          "line": 22
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Your app access",
+      "zu": [
+        "Ukungena kwakho kuhlelo lokusebenza"
+      ],
+      "occurrences": [
+        {
+          "english": "Your app access",
+          "zu": "Ukungena kwakho kuhlelo lokusebenza",
+          "file": "components/AccountAccess.tsx",
+          "line": 34
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Platform administrator",
+      "zu": [
+        "Umlawuli wohlelo"
+      ],
+      "occurrences": [
+        {
+          "english": "Platform administrator",
+          "zu": "Umlawuli wohlelo",
+          "file": "components/AccountAccess.tsx",
+          "line": 36
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Your account can open every role dashboard. Choose the relevant organisation inside the portfolio.",
+      "zu": [
+        "I-akhawunti yakho ingavula izikrini zazo zonke izindima. Khetha inhlangano efanele ngaphakathi kohlu lwamaphrojekthi."
+      ],
+      "occurrences": [
+        {
+          "english": "Your account can open every role dashboard. Choose the relevant organisation inside the portfolio.",
+          "zu": "I-akhawunti yakho ingavula izikrini zazo zonke izindima. Khetha inhlangano efanele ngaphakathi kohlu lwamaphrojekthi.",
+          "file": "components/AccountAccess.tsx",
+          "line": 43
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Your normal login stays the same. A platform administrator must enable owner access on the correct account; choosing a dashboard does not change your permissions.",
+      "zu": [
+        "Indlela yakho evamile yokungena ihlala injalo. Umlawuli wohlelo kufanele avule ukufinyelela komnikazi ku-akhawunti efanele; ukukhetha isikrini akuzishintshi izimvume zakho."
+      ],
+      "occurrences": [
+        {
+          "english": "Your normal login stays the same. A platform administrator must enable owner access on the correct account; choosing a dashboard does not change your permissions.",
+          "zu": "Indlela yakho evamile yokungena ihlala injalo. Umlawuli wohlelo kufanele avule ukufinyelela komnikazi ku-akhawunti efanele; ukukhetha isikrini akuzishintshi izimvume zakho.",
+          "file": "components/AccountAccess.tsx",
+          "line": 44
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Refresh my access",
+      "zu": [
+        "Buyekeza ukufinyelela kwami"
+      ],
+      "occurrences": [
+        {
+          "english": "Refresh my access",
+          "zu": "Buyekeza ukufinyelela kwami",
+          "file": "components/AccountAccess.tsx",
+          "line": 46
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Explore with demonstration records",
+      "zu": [
+        "Hlola ngamarekhodi okubonisa"
+      ],
+      "occurrences": [
+        {
+          "english": "Explore with demonstration records",
+          "zu": "Hlola ngamarekhodi okubonisa",
+          "file": "components/AccountAccess.tsx",
+          "line": 51
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "Choose a practice view",
+      "zu": [
+        "Khetha isikrini sokuzilolonga"
+      ],
+      "occurrences": [
+        {
+          "english": "Choose a practice view",
+          "zu": "Khetha isikrini sokuzilolonga",
+          "file": "components/AccountAccess.tsx",
+          "line": 52
+        }
+      ],
+      "dictionaryKeys": [
+        {
+          "key": "tipsChoosePracticeView",
+          "zu": null,
+          "st": null,
+          "ts": null,
+          "ve": null
+        }
+      ]
+    },
+    {
+      "english": "Try each role using the Ubhejane farm. Your account role stays the same and practice changes do not affect real projects.",
+      "zu": [
+        "Zama indima ngayinye usebenzisa ipulazi lase-Ubhejane. Indima ye-akhawunti yakho ihlala injalo, futhi izinguquko zokuzilolonga azithinti amaphrojekthi angempela."
+      ],
+      "occurrences": [
+        {
+          "english": "Try each role using the Ubhejane farm. Your account role stays the same and practice changes do not affect real projects.",
+          "zu": "Zama indima ngayinye usebenzisa ipulazi lase-Ubhejane. Indima ye-akhawunti yakho ihlala injalo, futhi izinguquko zokuzilolonga azithinti amaphrojekthi angempela.",
+          "file": "components/AccountAccess.tsx",
+          "line": 53
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "AI this month",
+      "zu": [
+        "I-AI kule nyanga"
+      ],
+      "occurrences": [
+        {
+          "english": "AI this month",
+          "zu": "I-AI kule nyanga",
+          "file": "components/AiAllowance.tsx",
+          "line": 27
+        }
+      ],
+      "dictionaryKeys": []
+    },
+    {
+      "english": "AI allowance used",
+      "zu": [
+        "Isabelo se-AI esisetshenzisiwe"
+      ],
+      "occurrences": [
+        {
+          "english": "AI allowance used",
+          "zu": "Isabelo se-AI esisetshenzisiwe",
+          "file": "components/AiAllowance.tsx",
+          "line": 31
+        }
+      ],
+      "dictionaryKeys": []
+    }
+  ],
+  "sourceTemplates": [
+    {
+      "file": "components/AccountAccess.tsx",
+      "source": "label(name, zulu)"
+    },
+    {
+      "file": "components/AccountAccess.tsx",
+      "source": "label(`Open ${name} practice view`, `Vula isikrini sokuzilolonga: ${zulu}`)"
+    },
+    {
+      "file": "components/AccountAccess.tsx",
+      "source": "label(name, zulu)"
+    },
+    {
+      "file": "components/AiAllowance.tsx",
+      "source": "copy(`This month's full AI allowance is used. AI still works, on a simpler model, until ${resets}.`,\n                 `Isabelo se-AI sale nyanga sesiphelile. I-AI isasebenza, ngohlobo olulula, kuze kube ngu-${resets}.`)"
+    },
+    {
+      "file": "components/AiAllowance.tsx",
+      "source": "copy(`R${a.remainingZar.toFixed(2)} of R${a.capZar.toFixed(2)} left. Refills on ${resets}.`,\n                 `Kusele u-R${a.remainingZar.toFixed(2)} ku-R${a.capZar.toFixed(2)}. Kugcwaliswa ngo-${resets}.`)"
+    }
+  ],
+  "dynamicRoles": [
+    "Open Farmer practice view",
+    "Open Student practice view",
+    "Open Mentor practice view",
+    "Open Organisation practice view",
+    "Open Funder practice view"
+  ],
+  "sourceLiterals": {
+    "app/account/page.tsx": [
+      {
+        "file": "app/account/page.tsx",
+        "line": 495,
+        "kind": "text",
+        "text": "isiZulu machine drafts \u2014 not reviewed."
+      },
+      {
+        "file": "app/account/page.tsx",
+        "line": 495,
+        "kind": "text",
+        "text": "English source wording is shown beside each draft until first-language and consent-meaning review."
+      },
+      {
+        "file": "app/account/page.tsx",
+        "line": 496,
+        "kind": "text",
+        "text": "Imibhalo yesiZulu eyisivivinyo yomshini \u2014 ayikabuyekezwa."
+      },
+      {
+        "file": "app/account/page.tsx",
+        "line": 496,
+        "kind": "text",
+        "text": "Umbhalo wesiNgisi uboniswa eduze kwayo kuze kuqedwe ukubuyekezwa ngumuntu okhuluma isiZulu njengolimi lokuqala nokuhlolwa kwencazelo yemvume."
+      },
+      {
+        "file": "app/account/page.tsx",
+        "line": 496,
+        "kind": "text",
+        "text": "(isiZulu machine draft)"
+      }
+    ],
+    "components/AccountAccess.tsx": [
+      {
+        "file": "components/AccountAccess.tsx",
+        "line": 16,
+        "kind": "text",
+        "text": "English source:"
+      },
+      {
+        "file": "components/AccountAccess.tsx",
+        "line": 41,
+        "kind": "text",
+        "text": "Umbhalo wesiZulu uwuhlaka olusazobuyekezwa isikhulumi sesiZulu esinekhono. (The isiZulu text is a draft awaiting review by a fluent isiZulu speaker.)"
+      },
+      {
+        "file": "components/AccountAccess.tsx",
+        "line": 48,
+        "kind": "conditional",
+        "text": "Ungene ngemvume njengo-"
+      },
+      {
+        "file": "components/AccountAccess.tsx",
+        "line": 48,
+        "kind": "conditional",
+        "text": "Signed in as"
+      },
+      {
+        "file": "components/AccountAccess.tsx",
+        "line": 49,
+        "kind": "conditional",
+        "text": "isikrini"
+      },
+      {
+        "file": "components/AccountAccess.tsx",
+        "line": 49,
+        "kind": "conditional",
+        "text": "dashboard"
+      }
+    ],
+    "components/AiAllowance.tsx": [],
+    "components/AppConfirm.tsx": []
+  },
+  "scope": "Account page, access panel, AI allowance wording and shared default cancel. Preserve permissions, profile mutations, saved values, operations and budget arithmetic. Existing English/isiZulu copy pairs remain the source. Shared existing auth error keys retain one mapping authority.",
+  "diagnosticWrapper": {
+    "source": "lib/auth.tsx:friendlyAuthError",
+    "english": "Something went wrong ({code}).",
+    "reason": "Translate only the known wrapper; retain the original code and exact English source."
+  },
+  "releasePair": {
+    "english": "Account controls and messages now have four draft translations.",
+    "zu": "Izinkinobho nemilayezo ye-akhawunti manje kunokuhumusha okusaluhlaka ngezilimi ezine.",
+    "st": "Ditaolo le melaetsa ya akhaonto jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
+    "ts": "Swilawuri ni swiviko swa akhawunti sweswi swi ni vuhundzuluxi bya mpfampfarhuto hi tindzimi ta mune.",
+    "ve": "Zwilangi na milaedza zwa akhaunthu zwino zwi na \u1e71halutshedzelo dza mvetomveto nga nyambo n\u1e4ba."
+  },
+  "consent": {
+    "heading": {
+      "label": "What you share",
+      "labelZuDraft": "Lokho owabelana ngakho"
+    },
+    "scopes": [
+      {
+        "id": "sales",
+        "label": "What you sold",
+        "detail": "Your crop sales and the money you earned from them.",
+        "labelZuDraft": "Lokho okuthengisile",
+        "detailZuDraft": "Izitshalo ozithengisile nemali oyitholile ngazo."
+      },
+      {
+        "id": "expenses",
+        "label": "What you spent",
+        "detail": "What you paid for seed, tools and inputs.",
+        "labelZuDraft": "Lokho okusebenzisile",
+        "detailZuDraft": "Imali oyikhokhele imbewu, amathuluzi nezinsiza zokulima."
+      },
+      {
+        "id": "production",
+        "label": "What you harvested",
+        "detail": "Your harvest weights per crop.",
+        "labelZuDraft": "Lokho okuvunile",
+        "detailZuDraft": "Izisindo zesivuno sakho ngesitshalo ngasinye."
+      },
+      {
+        "id": "training",
+        "label": "Your training",
+        "detail": "Which course modules you have finished.",
+        "labelZuDraft": "Ukuqeqeshwa kwakho",
+        "detailZuDraft": "Izingxenye zezifundo oziqedile."
+      },
+      {
+        "id": "surveys",
+        "label": "Your survey answers",
+        "detail": "The answers you gave in programme surveys.",
+        "labelZuDraft": "Izimpendulo zakho zenhlolovo",
+        "detailZuDraft": "Izimpendulo ozinikezile ezinhloloveni zohlelo."
+      },
+      {
+        "id": "location",
+        "label": "Where your farm is",
+        "detail": "Your exact plot location. With this off, only the district is shown.",
+        "labelZuDraft": "Lapho ipulazi lakho likhona",
+        "detailZuDraft": "Indawo eqondile yensimu yakho. Uma lokhu kuvaliwe, kuboniswa isifunda kuphela."
+      }
+    ],
+    "sourceRows": [
+      "What you share",
+      "What you sold",
+      "Your crop sales and the money you earned from them.",
+      "What you spent",
+      "What you paid for seed, tools and inputs.",
+      "What you harvested",
+      "Your harvest weights per crop.",
+      "Your training",
+      "Which course modules you have finished.",
+      "Your survey answers",
+      "The answers you gave in programme surveys.",
+      "Where your farm is",
+      "Your exact plot location. With this off, only the district is shown.",
+      "Nothing here is shared unless you switch it on. You can change your mind at any time, and {organisation} will stop seeing it straight away.",
+      "the organisation running your programme",
+      "Loading\u2026",
+      "Couldn't load your sharing settings. Check your connection and try again.",
+      "Retry",
+      "That did not save. Your sharing settings have not changed.",
+      "You are not sharing anything.",
+      "You are sharing {count} of {total} things.",
+      "Stop sharing everything"
+    ],
+    "reason": "All existing English clauses, source identities, order, off defaults, save/reload/withdraw operations and exact scope IDs remain. English source and explicit unreviewed status accompany every target draft."
+  },
+  "authSourceKeys": {
+    "That doesn't look like a valid email address.": "loginErrorInvalidEmail",
+    "This account has been disabled.": "loginErrorAccountDisabled",
+    "No account found with that email.": "loginErrorAccountNotFound",
+    "Incorrect password \u2014 try again.": "loginErrorWrongPassword",
+    "Email or password is incorrect.": "loginErrorInvalidCredentials",
+    "An account with that email already exists.": "loginErrorEmailInUse",
+    "Choose a stronger password (at least 6 characters).": "loginErrorWeakPassword",
+    "Too many attempts \u2014 wait a moment and try again.": "loginErrorTooManyAttempts",
+    "Network error \u2014 check your connection.": "loginErrorNetwork",
+    "Sign-in was cancelled.": "loginErrorCancelled",
+    "An account already exists with this email using a different sign-in method.": "loginErrorDifferentProvider",
+    "Email and password sign-in is disabled for this app. The app administrator needs to enable it.": "loginErrorEmailDisabled",
+    "Google sign-in is disabled for this app. The app administrator needs to enable it.": "loginErrorGoogleDisabled",
+    "Your browser blocked Google sign-in. Allow popups for this site and try again, or open it in Safari / Chrome.": "loginErrorPopupBlocked",
+    "This web address isn't authorised for Google sign-in yet. Use email + password for now.": "loginErrorDomainNotAuthorised",
+    "This browser blocks the storage Google sign-in needs \u2014 open the site in Chrome or Safari.": "loginErrorStorageBlocked",
+    "Firebase is not configured yet \u2014 running in sample mode.": "loginErrorBackendSampleMode",
+    "Firebase is not configured yet.": "loginErrorBackendUnavailable",
+    "Google sign-in won't open inside this in-app browser. Open imbewufield.vercel.app in Chrome or Safari, or sign in with email + password here.": "loginErrorGoogleEmbedded"
+  },
+  "lexicalContext": [
+    {
+      "source": "https://www.education.gov.za/Portals/0/Documents/MTbBE/mttbe%20terminology/Authenticated%20Terminology%20from%20Grade%204_Xitsonga%202024.pdf?ver=2025-11-19-153412-297",
+      "supports": "weight: ntiko",
+      "scope": "Noun root only; the complete sentence remains an unreviewed draft."
+    },
+    {
+      "source": "https://www.dsac.gov.za/sites/default/files/2023-11/Multilingual%20Mathematics%20Dictionary.pdf",
+      "supports": "scale (measurement instrument): xikalo / xipima-ntiko",
+      "rejectedDraft": "Swikalo swa ntshovelo wa wena eka xibyariwa xin\u2019wana ni xin\u2019wana.",
+      "acceptedDraft": "Ntiko wa ntshovelo wa wena eka xibyariwa xin\u2019wana ni xin\u2019wana.",
+      "reason": "The consent clause shares harvest weights, not weighing scales."
+    }
+  ]
+}

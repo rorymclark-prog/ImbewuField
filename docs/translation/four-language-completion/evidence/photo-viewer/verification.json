@@ -1,0 +1,60 @@
+{
+  "sourceSha": "2b8f58cf7d6a20361e41bd7c726992602c701c60",
+  "states": 144,
+  "readingLines": 1242,
+  "minimumVisibleTextContrast": 5.3449599037930815,
+  "languages": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "sizes": [
+    "390x844",
+    "390x600",
+    "1440x1000"
+  ],
+  "themes": [
+    "earth light",
+    "earth dark"
+  ],
+  "scope": "Actual app-level PhotoViewer, language provider, draft notice, CSS and native dialog via a temporary QA route; synthetic SVG photos and guest onboarding/consent preconditions in disposable browser context. No uploaded or user photograph changed.",
+  "cases": [
+    "owned caption with braces and dollar sequences",
+    "enlarged view",
+    "empty-caption fallback",
+    "demo illustration label",
+    "load error and exact English source",
+    "long unbroken caption"
+  ],
+  "interactionSupplement": {
+    "conditions": 8,
+    "checks": [
+      "Close initially focused",
+      "native Close button",
+      "backdrop dismissal",
+      "focus return",
+      "notice switches to English while preserving caption"
+    ]
+  },
+  "negativeControl": {
+    "correctedCloseReachable": true,
+    "restoredOldCss": {
+      "right": 1553.34375,
+      "width": 390
+    },
+    "detected": true
+  },
+  "observedRepair": "Original caption overflow pushed Close off-screen. Header caption now flexes, shrinks and wraps anywhere without truncation. Restoring old CSS reproduces the defect.",
+  "limits": [
+    "Machine drafts have no fluent-speaker approval.",
+    "QA photographs are synthetic placeholders; no upload, saved-photo mutation, signed-in Firebase or device-photo flow is claimed.",
+    "Visual coverage is earth light/dark on specified viewports, not every browser/device/theme."
+  ],
+  "guideSupplement": {
+    "states": 8,
+    "readingLines": 260,
+    "minimumVisibleTextContrast": 6.631273255371509,
+    "scope": "Actual app-level update guide on the signed-out login route with disposable guest preconditions; its optional Account-photo stop was opened in all four languages on short phone and desktop. No sign-in or account write."
+  }
+}

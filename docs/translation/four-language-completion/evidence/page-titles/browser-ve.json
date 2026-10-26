@@ -1,0 +1,338 @@
+{
+  "lang": "ve",
+  "routes": [
+    {
+      "route": "/login",
+      "source": "Sign in \u2014 ImbewuField",
+      "ssr": "Sign in \u2014 ImbewuField",
+      "browserTitle": "Dzhenani \u2014 ImbewuField"
+    },
+    {
+      "route": "/tips",
+      "source": "Tips and help \u2014 ImbewuField",
+      "ssr": "Tips and help \u2014 ImbewuField",
+      "browserTitle": "Ngeletshedzo na thuso \u2014 ImbewuField"
+    },
+    {
+      "route": "/updates",
+      "source": "What's new \u2014 ImbewuField",
+      "ssr": "What's new \u2014 ImbewuField",
+      "browserTitle": "Zwiswa \u2014 ImbewuField"
+    },
+    {
+      "route": "/exchange",
+      "source": "Farmer exchange \u2014 ImbewuField",
+      "ssr": "Farmer exchange \u2014 ImbewuField",
+      "browserTitle": "U tshintshana ha vhalimi \u2014 ImbewuField"
+    },
+    {
+      "route": "/partners",
+      "source": "ImbewuField for NGOs and funders",
+      "ssr": "ImbewuField for NGOs and funders",
+      "browserTitle": "ImbewuField ya dzi-NGO na vhalambedzi"
+    },
+    {
+      "route": "/student/design",
+      "source": "Design a working homestead \u2014 teaching preview",
+      "ssr": "Design a working homestead \u2014 teaching preview",
+      "browserTitle": "Pulanani mu\u1e13i une wa shuma \u2014 mbonelaphan\u1e13a ya u funza"
+    },
+    {
+      "route": "/student/design/scale",
+      "source": "Read the scale, check the space \u2014 design practice",
+      "ssr": "Read the scale, check the space \u2014 design practice",
+      "browserTitle": "Vhalani tshikalo, \u1e71olani tshikhala \u2014 u \u1e13i\u1e13owedza u pulana"
+    }
+  ],
+  "replacements": [
+    {
+      "source": "Reports \u2014 ImbewuField",
+      "value": "Mivhigo \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Saved on this phone \u2014 ImbewuField",
+      "value": "Zwo vhulungwaho kha founu iyi \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Funder \u2014 ImbewuField",
+      "value": "Mulambedzi \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Planting calendar \u2014 ImbewuField",
+      "value": "Khalan\u1e13ara ya u zwala \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Network \u2014 ImbewuField",
+      "value": "Netiweke \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "My Records \u2014 ImbewuField",
+      "value": "Rekhodo dzanga \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "What's new \u2014 ImbewuField",
+      "value": "Zwiswa \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Example farm \u2014 ImbewuField",
+      "value": "Bulasi \u1e3da tsumbo \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Map \u2014 ImbewuField",
+      "value": "Mmapa \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Contact \u2014 ImbewuField",
+      "value": "Kwamani \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Sign in \u2014 ImbewuField",
+      "value": "Dzhenani \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Farm-gate prices \u2014 ImbewuField",
+      "value": "Mitengo ya khoroni ya bulasi \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Community \u2014 ImbewuField",
+      "value": "Tshitshavha \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Lima Vision \u2014 ImbewuField",
+      "value": "Lima Vision \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Profile \u2014 ImbewuField",
+      "value": "Phurofai\u1e3di \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Project assessments \u2014 ImbewuField",
+      "value": "\u1e70ha\u1e71huvho dza thandela \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Take a tour \u2014 ImbewuField",
+      "value": "Dalelani app nga vhulivhisi \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Design studio \u2014 ImbewuField",
+      "value": "Fhethu ha u pulana \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Tips and help \u2014 ImbewuField",
+      "value": "Ngeletshedzo na thuso \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Study \u2014 ImbewuField",
+      "value": "Gudani \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Home \u2014 ImbewuField",
+      "value": "Hayani \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Mentor \u2014 ImbewuField",
+      "value": "Mueletshedzi \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Permaculture manual \u2014 ImbewuField",
+      "value": "Bugu ya Permaculture \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Surveys \u2014 ImbewuField",
+      "value": "Tsedzuluso \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Field journal \u2014 ImbewuField",
+      "value": "Bugu ya tsimuni \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Messages \u2014 ImbewuField",
+      "value": "Milaedza \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Atlas \u2014 ImbewuField",
+      "value": "Atlas \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Organisation \u2014 ImbewuField",
+      "value": "Dzangano \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Account \u2014 ImbewuField",
+      "value": "Akhaunthu \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Invoice \u2014 ImbewuField",
+      "value": "Invhoisi \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Farm Finance \u2014 ImbewuField teaching preview",
+      "value": "Masheleni a bulasi \u2014 mbonelaphan\u1e13a ya u funza ya ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Farmer exchange \u2014 ImbewuField",
+      "value": "U tshintshana ha vhalimi \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Farm Finance lesson \u2014 ImbewuField teaching preview",
+      "value": "Ngudo ya masheleni a bulasi \u2014 mbonelaphan\u1e13a ya u funza ya ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "ACT Teach the Teachers | two-day facilitator refresher",
+      "value": "ACT Teach the Teachers | mvusuludzo ya vhatshimbidzi vha ngudo ya ma\u1e13uvha mavhili",
+      "method": "replace"
+    },
+    {
+      "source": "ImbewuField \u2014 permaculture planning for South African farmers",
+      "value": "ImbewuField \u2014 u pulana ha permaculture ha vhalimi vha Afrika Tshipembe",
+      "method": "text"
+    },
+    {
+      "source": "Farm Finance practical project \u2014 teaching preview",
+      "value": "Thandela ya nyito ya masheleni a bulasi \u2014 mbonelaphan\u1e13a ya u funza",
+      "method": "replace"
+    },
+    {
+      "source": "ImbewuField for NGOs and funders",
+      "value": "ImbewuField ya dzi-NGO na vhalambedzi",
+      "method": "text"
+    },
+    {
+      "source": "Design a working homestead \u2014 teaching preview",
+      "value": "Pulanani mu\u1e13i une wa shuma \u2014 mbonelaphan\u1e13a ya u funza",
+      "method": "replace"
+    },
+    {
+      "source": "The busy yard \u2014 design practice case",
+      "value": "Luvhande lu re na mishumo minzhi \u2014 tsumbo ya u \u1e13i\u1e13owedza u pulana",
+      "method": "text"
+    },
+    {
+      "source": "Report a bug or suggest a feature \u2014 ImbewuField",
+      "value": "Vhigani vhukhakhi kana ni dzinginye tshumelo \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Permaculture design lesson \u2014 teaching preview",
+      "value": "Ngudo ya u pulana permaculture \u2014 mbonelaphan\u1e13a ya u funza",
+      "method": "text"
+    },
+    {
+      "source": "Choose a view \u2014 ImbewuField",
+      "value": "Nangani mbonalo \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Example gardens \u2014 ImbewuField",
+      "value": "Ngade dza tsumbo \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Your design learning folder \u2014 ImbewuField",
+      "value": "Fo\u1e3duda ya\u1e4bu ya u guda u pulana \u2014 ImbewuField",
+      "method": "replace"
+    },
+    {
+      "source": "Example production \u2014 ImbewuField",
+      "value": "Vhubveledzi ha tsumbo \u2014 ImbewuField",
+      "method": "text"
+    },
+    {
+      "source": "Worked design demonstration \u2014 teaching preview",
+      "value": "Tsumbedzo ya pulane yo shumwaho \u2014 mbonelaphan\u1e13a ya u funza",
+      "method": "replace"
+    },
+    {
+      "source": "Read the scale, check the space \u2014 design practice",
+      "value": "Vhalani tshikalo, \u1e71olani tshikhala \u2014 u \u1e13i\u1e13owedza u pulana",
+      "method": "text"
+    }
+  ],
+  "owners": [
+    {
+      "kind": "unknown/private",
+      "value": "QA Farmer\u2019s {name} $& report"
+    },
+    {
+      "kind": "manual URL language",
+      "value": "Permaculture Manual \u00b7 ImbewuField"
+    },
+    {
+      "kind": "Pitch",
+      "value": "ImbewuField \u2014 partner deck"
+    }
+  ],
+  "languageChanges": [
+    {
+      "language": "en",
+      "title": "Home \u2014 ImbewuField"
+    },
+    {
+      "language": "ve",
+      "title": "Hayani \u2014 ImbewuField"
+    }
+  ],
+  "release": [
+    {
+      "size": "phone",
+      "text": "\u1e70hoho dza masia\u1e71ari a app zwino dzi na \u1e71halutshedzelo dza mvetamveto nga nyambo n\u1e4ba.",
+      "measured": {
+        "left": 28.1171875,
+        "right": 351.21875,
+        "top": 371.0625,
+        "bottom": 404.4375,
+        "viewport": {
+          "width": 390,
+          "height": 844
+        }
+      }
+    },
+    {
+      "size": "desktop",
+      "text": "\u1e70hoho dza masia\u1e71ari a app zwino dzi na \u1e71halutshedzelo dza mvetamveto nga nyambo n\u1e4ba.",
+      "measured": {
+        "left": 410.6171875,
+        "right": 939.296875,
+        "top": 329.375,
+        "bottom": 344.875,
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        }
+      }
+    }
+  ]
+}

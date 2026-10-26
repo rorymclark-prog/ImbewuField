@@ -1,0 +1,3737 @@
+{
+  "sourceCommit": "a91d590da461876b730efab0a2a9ccc6a4c4476f",
+  "cases": [
+    {
+      "name": "no saved facts",
+      "facts": null,
+      "location": {
+        "lat": -28.628,
+        "lon": 29.891,
+        "biome": {
+          "name": "Grassland",
+          "code": "GR",
+          "description": "Highveld temperate grassland, summer rainfall, cold frosty winters",
+          "color": "#9FC169",
+          "rainfallPattern": "summer",
+          "meanRainfall": "500–900mm",
+          "keySpecies": [
+            "Buffalo Thorn",
+            "Wild Olive",
+            "Highveld Protea",
+            "Rooigrass",
+            "Bulbine",
+            "Wild Garlic"
+          ],
+          "soilType": "Red/yellow apedal soils, moderate depth, clay-rich on Highveld",
+          "waterStrategy": "Heavy summer thunderstorms (short, intense). Keyline design on all slopes — angle swales 1:1000 off true contour to move water across hillside. Winter dry → storage essential. Roof: 1m² = 1L per 1mm rain.",
+          "soilStrategy": "Often compacted by livestock. Subsoil aeration before earthworks. Oats/vetch winter cover crops. pH usually 5.5–6.5, add agricultural lime if below 5.5. Build OM with compost + biochar.",
+          "challenges": [
+            "Hard frosts (–5°C to –10°C)",
+            "Hail",
+            "Erodible clay soils on slopes",
+            "Vlei (wetland) drainage issues"
+          ]
+        },
+        "rainfall": {
+          "monthly": [
+            133.6,
+            107,
+            86.5,
+            47.7,
+            11.8,
+            12,
+            12.1,
+            18.6,
+            36.9,
+            82.1,
+            110.7,
+            132.4
+          ],
+          "annual": 791,
+          "pattern": "summer",
+          "wetSeason": "Oct–Mar",
+          "drySeason": "May–Aug",
+          "rainfallSource": "nasa-power"
+        },
+        "climate": {
+          "meanTemp": 18.1,
+          "maxTemp": 42.1,
+          "minTemp": -2.3,
+          "monthlyTemp": [
+            22.72,
+            22.25,
+            20.78,
+            17.67,
+            14.78,
+            11.6,
+            11.54,
+            14.43,
+            17.92,
+            19.83,
+            21.08,
+            22.4
+          ],
+          "solarRadiation": 5.3,
+          "koppen": "Dwb",
+          "koppenDesc": "Cold continental highland",
+          "windSpeed": 2.2,
+          "windFromSummer": "E",
+          "windFromWinter": "NW"
+        },
+        "soil": {
+          "textureClass": "Loam",
+          "ph": 6.5,
+          "organicCarbon": 1.2,
+          "clay": 25,
+          "sand": 45,
+          "silt": 30,
+          "bulkDensity": 1.3
+        },
+        "elevation": {
+          "elevation": 962,
+          "slopeDeg": 1.3,
+          "slopePct": 2.3,
+          "aspectDeg": 355,
+          "aspectLabel": "N"
+        },
+        "vegetation": {
+          "vegUnit": "Thukela Thornveld",
+          "biome": "Savanna",
+          "bioregion": "Sub-Escarpment Savanna Bioregion"
+        },
+        "bru": {
+          "brucode": "Tc1",
+          "bruParent": "Tc1",
+          "map": 723,
+          "tmin": -6.5,
+          "tmean": 18.1,
+          "tmax": 40.1,
+          "nearestBrg": "Dry Tall Grassveld",
+          "isApproximateName": true,
+          "attribution": "Zone data: KZN DARD Bioresource Units"
+        }
+      },
+      "expected": {
+        "en": {
+          "one": [
+            {
+              "title": "Site summary",
+              "lines": [
+                "28.6280°S, 29.8910°E",
+                "Mapped boundary: Not recorded",
+                "Mapped growing area: Not recorded",
+                "Vegetable beds: Not recorded · Not recorded",
+                "Staple plots: Not recorded · Not recorded",
+                "Mapped space is not confirmation that all of it is currently in production.",
+                "Annual rainfall estimate: 791 mm",
+                "Soil: Not measured. Arrange a soil test.",
+                "Stated tank capacity in the design: Not recorded",
+                "Capacity is not water currently available; check which tanks are already installed.",
+                "Crop rows: Not recorded",
+                "No crop rows linked to this site were saved with this report.",
+                "Priced infrastructure subtotal: Not recorded",
+                "Lines awaiting a price or measurement: Not recorded",
+                "Planned budget, not actual spending. A missing price is not zero. Obtain current local quotes.",
+                "Next: verify the land measurements, soil and water supply; confirm the crop plan and obtain missing quotes."
+              ]
+            }
+          ],
+          "five": [
+            {
+              "title": "Site summary",
+              "lines": [
+                "28.6280°S, 29.8910°E",
+                "Mapped boundary: Not recorded",
+                "Mapped growing area: Not recorded",
+                "Vegetable beds: Not recorded · Not recorded",
+                "Staple plots: Not recorded · Not recorded",
+                "Mapped space is not confirmation that all of it is currently in production.",
+                "Annual rainfall estimate: 791 mm",
+                "Soil: Not measured. Arrange a soil test.",
+                "Stated tank capacity in the design: Not recorded",
+                "Capacity is not water currently available; check which tanks are already installed."
+              ]
+            },
+            {
+              "title": "Crop plan",
+              "lines": [
+                "This is the saved planting plan, not a harvest or sales record. Check actual bed clearance before each next planting.",
+                "For seed quantities, use the crop planner’s seed list. Do not buy seed from an inferred yield or monthly availability chart.",
+                "No crop rows linked to this site were saved with this report."
+              ]
+            },
+            {
+              "title": "Water, soil and the mapped site",
+              "lines": [
+                "Soil: Not measured. Arrange a soil test.",
+                "Stated tank capacity in the design: Not recorded",
+                "Capacity is not water currently available; check which tanks are already installed.",
+                "Traced roof: Not recorded",
+                "Confirm water reliability, drainage and soil condition on the ground before construction or amendment purchases."
+              ]
+            },
+            {
+              "title": "Bill of quantities",
+              "lines": [
+                "Priced infrastructure subtotal: Not recorded",
+                "Lines awaiting a price or measurement: Not recorded",
+                "Planned budget, not actual spending. A missing price is not zero. Obtain current local quotes."
+              ]
+            },
+            {
+              "title": "Next actions and checks",
+              "lines": [
+                "Confirm what is already on the site and what is still proposed. Keep the saved design as the reference.",
+                "Check the crop plan against the real beds and seasonal conditions. A planned sowing is not proof of planting.",
+                "Record harvest weight, food kept or donated, sales and costs with their dates.",
+                "Check production area on site before reporting hectares to a funder. Count each physical bed once.",
+                "Agree support actions with the farmer. At review, record what improved, what did not and what needs to change.",
+                "This summary uses saved measurements and plan quantities. Read the full report for detailed advice, assumptions and source notes."
+              ]
+            }
+          ],
+          "full": "## report basis\n\nThis ready-to-read sample is assembled from the saved site and design records. It is not a new AI analysis or an independently verified assessment. Sample finances, soil examples and household examples remain illustrative wherever labelled. Planned areas and infrastructure do not establish completed work.\n\n## Site summary\n\n- 28.6280°S, 29.8910°E\n- Mapped boundary: Not recorded\n- Mapped growing area: Not recorded\n- Vegetable beds: Not recorded · Not recorded\n- Staple plots: Not recorded · Not recorded\n- Mapped space is not confirmation that all of it is currently in production.\n- Annual rainfall estimate: 791 mm\n- Soil: Not measured. Arrange a soil test.\n- Stated tank capacity in the design: Not recorded\n- Capacity is not water currently available; check which tanks are already installed.\n\n## Crop plan\n\n- This is the saved planting plan, not a harvest or sales record. Check actual bed clearance before each next planting.\n- For seed quantities, use the crop planner’s seed list. Do not buy seed from an inferred yield or monthly availability chart.\n- No crop rows linked to this site were saved with this report.\n\n## Water, soil and the mapped site\n\n- Soil: Not measured. Arrange a soil test.\n- Stated tank capacity in the design: Not recorded\n- Capacity is not water currently available; check which tanks are already installed.\n- Traced roof: Not recorded\n- Confirm water reliability, drainage and soil condition on the ground before construction or amendment purchases.\n\n## Bill of quantities\n\n- Priced infrastructure subtotal: Not recorded\n- Lines awaiting a price or measurement: Not recorded\n- Planned budget, not actual spending. A missing price is not zero. Obtain current local quotes.\n\n## Next actions and checks\n\n- Confirm what is already on the site and what is still proposed. Keep the saved design as the reference.\n- Check the crop plan against the real beds and seasonal conditions. A planned sowing is not proof of planting.\n- Record harvest weight, food kept or donated, sales and costs with their dates.\n- Check production area on site before reporting hectares to a funder. Count each physical bed once.\n- Agree support actions with the farmer. At review, record what improved, what did not and what needs to change.\n- This summary uses saved measurements and plan quantities. Read the full report for detailed advice, assumptions and source notes.\n\n## Full design inventory\n\nNo placed elements recorded.\n\n## Production spaces\n\nNo production spaces recorded.\n\n## Evidence and limitations\n\nSite photos and map plates, where available, are shown separately in this report. An AI-generated reference photograph is not evidence of the real site. Missing measurements, quotes or records remain missing. Review the site, dates and evidence with the implementing organisation before using this example for a funding decision."
+        },
+        "zu": {
+          "one": [
+            {
+              "title": "Isifinyezo sendawo",
+              "lines": [
+                "28.6280°S, 29.8910°E",
+                "Umngcele obalazwe: Akubhaliwe",
+                "Indawo yokutshala ebalazwe: Akubhaliwe",
+                "Imibhede yemifino: Akubhaliwe · Akubhaliwe",
+                "Iziza zezitshalo eziyisisekelo: Akubhaliwe · Akubhaliwe",
+                "Indawo ebalazwe ayiqinisekisi ukuthi yonke isatshaliwe njengamanje.",
+                "Isilinganiso semvula yonyaka: 791 mm",
+                "Umhlabathi: Awukahlolwa. Hlela ukuhlolwa komhlabathi.",
+                "Umthamo wamathangi obhalwe emklamweni: Akubhaliwe",
+                "Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.",
+                "Imigqa yezitshalo: Akubhaliwe",
+                "Ayikho imigqa yezitshalo exhunywe kule ndawo egcinwe nalo mbiko.",
+                "Isamba sezindleko zengqalasizinda ezinentengo: Akubhaliwe",
+                "Imigqa elinde intengo noma isilinganiso: Akubhaliwe",
+                "Lena ibhajethi ehleliwe, akuzona izimali esezisetshenzisiwe. Intengo engekho ayisho uziro. Thola amanani akamuva endaweni.",
+                "Okulandelayo: qinisekisa izilinganiso zomhlaba, umhlabathi namanzi; qinisekisa uhlelo lwezitshalo uthole namanani angekho."
+              ]
+            }
+          ],
+          "five": [
+            {
+              "title": "Isifinyezo sendawo",
+              "lines": [
+                "28.6280°S, 29.8910°E",
+                "Umngcele obalazwe: Akubhaliwe",
+                "Indawo yokutshala ebalazwe: Akubhaliwe",
+                "Imibhede yemifino: Akubhaliwe · Akubhaliwe",
+                "Iziza zezitshalo eziyisisekelo: Akubhaliwe · Akubhaliwe",
+                "Indawo ebalazwe ayiqinisekisi ukuthi yonke isatshaliwe njengamanje.",
+                "Isilinganiso semvula yonyaka: 791 mm",
+                "Umhlabathi: Awukahlolwa. Hlela ukuhlolwa komhlabathi.",
+                "Umthamo wamathangi obhalwe emklamweni: Akubhaliwe",
+                "Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe."
+              ]
+            },
+            {
+              "title": "Uhlelo lwezitshalo",
+              "lines": [
+                "Lolu uhlelo lokutshala olugciniwe, alulona irekhodi lesivuno noma ukuthengisa. Hlola ukuthi umbhede usukhululekile ngaphambi kokutshala okulandelayo.",
+                "Ngobuningi bembewu, sebenzisa uhlu lwembewu kuhlelo lwezitshalo. Ungathengi imbewu ngokwesivuno esiqageliwe noma ishadi lokutholakala kwenyanga.",
+                "Ayikho imigqa yezitshalo exhunywe kule ndawo egcinwe nalo mbiko."
+              ]
+            },
+            {
+              "title": "Amanzi, umhlabathi nendawo ebalazwe",
+              "lines": [
+                "Umhlabathi: Awukahlolwa. Hlela ukuhlolwa komhlabathi.",
+                "Umthamo wamathangi obhalwe emklamweni: Akubhaliwe",
+                "Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.",
+                "Uphahla olulinganisiwe: Akubhaliwe",
+                "Qinisekisa ukutholakala kwamanzi, ukuphuma kwamanzi nesimo somhlabathi ngaphambi kokwakha noma ukuthenga izinto zokulungisa umhlabathi."
+              ]
+            },
+            {
+              "title": "Uhlu lobuningi nezindleko",
+              "lines": [
+                "Isamba sezindleko zengqalasizinda ezinentengo: Akubhaliwe",
+                "Imigqa elinde intengo noma isilinganiso: Akubhaliwe",
+                "Lena ibhajethi ehleliwe, akuzona izimali esezisetshenzisiwe. Intengo engekho ayisho uziro. Thola amanani akamuva endaweni."
+              ]
+            },
+            {
+              "title": "Izinyathelo ezilandelayo nokuhlola",
+              "lines": [
+                "Qinisekisa okukhona endaweni nokusahleliwe. Sebenzisa umklamo ogciniwe njengereferensi.",
+                "Qhathanisa uhlelo lwezitshalo nemibhede yangempela nezimo zesizini. Ukuhlwanyela okuhleliwe akubona ubufakazi bokuthi sekutshaliwe.",
+                "Bhala isisindo sesivuno, ukudla okugciniwe noma okunikelwe, ukuthengisa nezindleko kanye nezinsuku zakho.",
+                "Hlola indawo ekhiqizayo ngaphambi kokubika amahektha kumxhasi. Bala umbhede ngamunye kanye.",
+                "Vumelana nomlimi ngezinyathelo zosizo. Ekubuyekezeni, bhala okuthuthukile, okungathuthukanga nokudinga ukushintsha.",
+                "Lesi sifinyezo sisebenzisa izilinganiso ezigciniwe nobuningi bohlelo. Funda umbiko ogcwele ngezeluleko eziningiliziwe, okucatshangiwe namanothi emithombo."
+              ]
+            }
+          ],
+          "full": "## Isisekelo sombiko\n\nLesi yisibonelo esilungiselelwe ukufundeka, esakhiwe ngamarekhodi agciniwe endawo nawomklamo. Asikona ukuhlaziywa okusha kwe-AI noma ukuhlolwa okuzimele okuqinisekisiwe. Izibonelo zezimali, zomhlabathi nezasekhaya ziyizibonelo zokubonisa kuphela uma zibhalwe kanjalo. Izindawo nengqalasizinda okuhleliwe akufakazeli ukuthi umsebenzi usuqediwe.\n\n## Isifinyezo sendawo\n\n- 28.6280°S, 29.8910°E\n- Umngcele obalazwe: Akubhaliwe\n- Indawo yokutshala ebalazwe: Akubhaliwe\n- Imibhede yemifino: Akubhaliwe · Akubhaliwe\n- Iziza zezitshalo eziyisisekelo: Akubhaliwe · Akubhaliwe\n- Indawo ebalazwe ayiqinisekisi ukuthi yonke isatshaliwe njengamanje.\n- Isilinganiso semvula yonyaka: 791 mm\n- Umhlabathi: Awukahlolwa. Hlela ukuhlolwa komhlabathi.\n- Umthamo wamathangi obhalwe emklamweni: Akubhaliwe\n- Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.\n\n## Uhlelo lwezitshalo\n\n- Lolu uhlelo lokutshala olugciniwe, alulona irekhodi lesivuno noma ukuthengisa. Hlola ukuthi umbhede usukhululekile ngaphambi kokutshala okulandelayo.\n- Ngobuningi bembewu, sebenzisa uhlu lwembewu kuhlelo lwezitshalo. Ungathengi imbewu ngokwesivuno esiqageliwe noma ishadi lokutholakala kwenyanga.\n- Ayikho imigqa yezitshalo exhunywe kule ndawo egcinwe nalo mbiko.\n\n## Amanzi, umhlabathi nendawo ebalazwe\n\n- Umhlabathi: Awukahlolwa. Hlela ukuhlolwa komhlabathi.\n- Umthamo wamathangi obhalwe emklamweni: Akubhaliwe\n- Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.\n- Uphahla olulinganisiwe: Akubhaliwe\n- Qinisekisa ukutholakala kwamanzi, ukuphuma kwamanzi nesimo somhlabathi ngaphambi kokwakha noma ukuthenga izinto zokulungisa umhlabathi.\n\n## Uhlu lobuningi nezindleko\n\n- Isamba sezindleko zengqalasizinda ezinentengo: Akubhaliwe\n- Imigqa elinde intengo noma isilinganiso: Akubhaliwe\n- Lena ibhajethi ehleliwe, akuzona izimali esezisetshenzisiwe. Intengo engekho ayisho uziro. Thola amanani akamuva endaweni.\n\n## Izinyathelo ezilandelayo nokuhlola\n\n- Qinisekisa okukhona endaweni nokusahleliwe. Sebenzisa umklamo ogciniwe njengereferensi.\n- Qhathanisa uhlelo lwezitshalo nemibhede yangempela nezimo zesizini. Ukuhlwanyela okuhleliwe akubona ubufakazi bokuthi sekutshaliwe.\n- Bhala isisindo sesivuno, ukudla okugciniwe noma okunikelwe, ukuthengisa nezindleko kanye nezinsuku zakho.\n- Hlola indawo ekhiqizayo ngaphambi kokubika amahektha kumxhasi. Bala umbhede ngamunye kanye.\n- Vumelana nomlimi ngezinyathelo zosizo. Ekubuyekezeni, bhala okuthuthukile, okungathuthukanga nokudinga ukushintsha.\n- Lesi sifinyezo sisebenzisa izilinganiso ezigciniwe nobuningi bohlelo. Funda umbiko ogcwele ngezeluleko eziningiliziwe, okucatshangiwe namanothi emithombo.\n\n## Uhlu oluphelele lomklamo\n\nAkukho zinto ezibekiwe ezirekhodiwe.\n\n## Izindawo zokukhiqiza\n\nAzikho izindawo zokukhiqiza ezirekhodiwe.\n\n## Ubufakazi nemikhawulo\n\nIzithombe zendawo namamephu, uma zikhona, ziboniswa ngokwehlukana kulo mbiko. Isithombe esiyisibonelo esikhiqizwe yi-AI asibona ubufakazi bendawo yangempela. Izilinganiso, amanani noma amarekhodi angekho zihlala zingekho. Buyekeza indawo, izinsuku nobufakazi nenhlangano ezosebenzisa uhlelo ngaphambi kokusebenzisa lesi sibonelo esinqumweni sokuxhasa ngezimali."
+        }
+      }
+    },
+    {
+      "name": "saved demo plan",
+      "facts": {
+        "productionEnterpriseChoices": {},
+        "productionItems": [
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "jojo_2500"
+          },
+          {
+            "defId": "compost_bay"
+          },
+          {
+            "defId": "tree_mango"
+          },
+          {
+            "defId": "tree_avocado"
+          },
+          {
+            "defId": "tree_natal_plum"
+          },
+          {
+            "defId": "tree_moringa"
+          },
+          {
+            "defId": "tree_moringa"
+          }
+        ],
+        "design": {
+          "beds": [
+            {
+              "label": "Bed 1",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 2",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 3",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 4",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 5",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 6",
+              "areaM2": 8,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 7",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Plot 1",
+              "areaM2": 21,
+              "kind": "plot"
+            },
+            {
+              "label": "Plot 2",
+              "areaM2": 21,
+              "kind": "plot"
+            },
+            {
+              "label": "Plot 3",
+              "areaM2": 21,
+              "kind": "plot"
+            },
+            {
+              "label": "Plot 4",
+              "areaM2": 21,
+              "kind": "plot"
+            }
+          ],
+          "bedCount": 7,
+          "bedAreaM2": 44,
+          "plotCount": 4,
+          "plotAreaM2": 84,
+          "growingAreaM2": 128,
+          "elements": [
+            {
+              "name": "Moringa Tree",
+              "category": "growing",
+              "count": 2,
+              "status": "proposed",
+              "defId": "tree_moringa"
+            },
+            {
+              "name": "Avocado Tree",
+              "category": "growing",
+              "count": 1,
+              "status": "proposed",
+              "defId": "tree_avocado"
+            },
+            {
+              "name": "Compost bays",
+              "category": "structure",
+              "count": 1,
+              "status": "proposed",
+              "defId": "compost_bay"
+            },
+            {
+              "name": "Mango Tree",
+              "category": "growing",
+              "count": 1,
+              "status": "proposed",
+              "defId": "tree_mango"
+            },
+            {
+              "name": "Natal Plum",
+              "category": "growing",
+              "count": 1,
+              "status": "proposed",
+              "defId": "tree_natal_plum"
+            },
+            {
+              "name": "Rainwater tank (2500 L)",
+              "category": "water",
+              "count": 1,
+              "status": "proposed",
+              "defId": "jojo_2500"
+            }
+          ],
+          "routes": [
+            {
+              "label": "Swale (on-contour earthwork)",
+              "count": 1,
+              "totalLengthM": 34,
+              "kind": "swale"
+            },
+            {
+              "label": "Path",
+              "count": 1,
+              "totalLengthM": 18.5,
+              "kind": "path"
+            },
+            {
+              "label": "Greywater line",
+              "count": 1,
+              "totalLengthM": 10.5,
+              "kind": "greywater"
+            }
+          ],
+          "zones": [
+            {
+              "zone": 1,
+              "label": "Daily garden",
+              "areaM2": 143,
+              "contains": [
+                "Rainwater tank (2500 L)",
+                "Compost bays"
+              ],
+              "staplePlots": 0
+            },
+            {
+              "zone": 2,
+              "label": "Garden & orchard",
+              "areaM2": 137,
+              "contains": [
+                "Bed 1",
+                "Bed 2",
+                "Bed 3",
+                "Bed 4",
+                "Bed 5",
+                "Bed 6",
+                "Bed 7"
+              ],
+              "staplePlots": 0
+            },
+            {
+              "zone": 3,
+              "label": "Field crops",
+              "areaM2": 180,
+              "contains": [
+                "Mango Tree",
+                "Avocado Tree",
+                "Natal Plum",
+                "Moringa Tree x2"
+              ],
+              "staplePlots": 0
+            },
+            {
+              "zone": 5,
+              "label": "Natural habitat",
+              "areaM2": 60,
+              "contains": [],
+              "staplePlots": 0
+            }
+          ],
+          "savedAt": "2026-10-21"
+        },
+        "water": {
+          "tanks": [
+            {
+              "name": "Rainwater tank (2500 L)",
+              "count": 1,
+              "statedLitres": 2500,
+              "status": "proposed"
+            }
+          ],
+          "statedStorageLitres": 2500,
+          "tanksOfUnknownCapacity": 0,
+          "mapPoints": [],
+          "bodies": []
+        },
+        "measurements": {
+          "dailyWaterUseL": 200
+        },
+        "crop": {
+          "snapshot": {
+            "siteId": "qa-summary-translation",
+            "capturedAt": "2026-10-21T11:59:04.830Z",
+            "planUpdatedAt": 1792583944828,
+            "beds": [
+              {
+                "id": "demo-bed-1",
+                "label": "Bed 1",
+                "areaM2": 6,
+                "minDimM": 1.5,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-bed-2",
+                "label": "Bed 2",
+                "areaM2": 6,
+                "minDimM": 1.5,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-bed-3",
+                "label": "Bed 3",
+                "areaM2": 6,
+                "minDimM": 1.5,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-bed-4",
+                "label": "Bed 4",
+                "areaM2": 6,
+                "minDimM": 1.5,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-bed-5",
+                "label": "Bed 5",
+                "areaM2": 6,
+                "minDimM": 1.5,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-bed-6",
+                "label": "Bed 6",
+                "areaM2": 8,
+                "minDimM": 2,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-hugel-1",
+                "label": "Bed 7",
+                "areaM2": 6,
+                "minDimM": 2,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-staple-1",
+                "label": "Plot 1",
+                "areaM2": 21,
+                "minDimM": 3.500016094024488,
+                "kind": "plot"
+              },
+              {
+                "id": "demo-staple-2",
+                "label": "Plot 2",
+                "areaM2": 21,
+                "minDimM": 4.200019263199479,
+                "kind": "plot"
+              },
+              {
+                "id": "demo-staple-3",
+                "label": "Plot 3",
+                "areaM2": 21,
+                "minDimM": 3.500017285142505,
+                "kind": "plot"
+              },
+              {
+                "id": "demo-staple-4",
+                "label": "Plot 4",
+                "areaM2": 21,
+                "minDimM": 3.500017285142505,
+                "kind": "plot"
+              }
+            ],
+            "plantings": [
+              {
+                "id": "demo-planting-1",
+                "bedId": "demo-bed-6",
+                "cropKey": "garlic",
+                "sowMonth": 5,
+                "areaFraction": 0.5,
+                "existing": true
+              },
+              {
+                "id": "demo-planting-2",
+                "bedId": "demo-bed-1",
+                "cropKey": "onions",
+                "sowMonth": 3,
+                "areaFraction": 0.6116666666666667,
+                "existing": true
+              },
+              {
+                "id": "demo-planting-3",
+                "bedId": "demo-bed-3",
+                "cropKey": "butternut",
+                "sowMonth": 12
+              },
+              {
+                "id": "demo-planting-4",
+                "bedId": "demo-bed-5",
+                "cropKey": "swiss-chard",
+                "sowMonth": 4,
+                "areaFraction": 0.945,
+                "existing": true
+              },
+              {
+                "id": "demo-planting-5",
+                "bedId": "demo-bed-4",
+                "cropKey": "tomatoes",
+                "sowMonth": 10,
+                "areaFraction": 0.75
+              },
+              {
+                "id": "demo-planting-6",
+                "bedId": "demo-hugel-1",
+                "cropKey": "maize",
+                "sowMonth": 10,
+                "areaFraction": 0.8333333333333334
+              },
+              {
+                "id": "demo-planting-7",
+                "bedId": "demo-bed-5",
+                "cropKey": "green-beans",
+                "sowMonth": 10,
+                "areaFraction": 0.6883333333333334
+              },
+              {
+                "id": "demo-planting-8",
+                "bedId": "demo-bed-2",
+                "cropKey": "lettuce",
+                "sowMonth": 9,
+                "areaFraction": 0.6166666666666667
+              },
+              {
+                "id": "demo-planting-9",
+                "bedId": "demo-bed-6",
+                "cropKey": "broccoli",
+                "sowMonth": 2,
+                "areaFraction": 0.46875
+              },
+              {
+                "id": "demo-planting-10",
+                "bedId": "demo-bed-6",
+                "cropKey": "sweet-potato",
+                "sowMonth": 10,
+                "areaFraction": 0.45875
+              },
+              {
+                "id": "demo-planting-11",
+                "bedId": "demo-bed-1",
+                "cropKey": "cabbage",
+                "sowMonth": 3,
+                "areaFraction": 0.38833333333333336,
+                "existing": true
+              },
+              {
+                "id": "demo-planting-12",
+                "bedId": "demo-bed-2",
+                "cropKey": "cabbage",
+                "sowMonth": 3,
+                "areaFraction": 0.145,
+                "existing": true
+              },
+              {
+                "id": "demo-planting-13",
+                "bedId": "demo-bed-2",
+                "cropKey": "carrots",
+                "sowMonth": 4,
+                "areaFraction": 0.855
+              },
+              {
+                "id": "demo-planting-14",
+                "bedId": "demo-bed-4",
+                "cropKey": "carrots",
+                "sowMonth": 4,
+                "areaFraction": 0.20166666666666666
+              },
+              {
+                "id": "demo-planting-15",
+                "bedId": "demo-bed-3",
+                "cropKey": "lettuce",
+                "sowMonth": 5,
+                "areaFraction": 0.6166666666666667,
+                "existing": true
+              }
+            ],
+            "outlines": [
+              {
+                "bedId": "demo-bed-1",
+                "points": [
+                  [
+                    28.408028475047697,
+                    27.605398947841227
+                  ],
+                  [
+                    29.908028475047697,
+                    27.605398947841227
+                  ],
+                  [
+                    29.908028475047697,
+                    31.605398947841227
+                  ],
+                  [
+                    28.408028475047697,
+                    31.605398947841227
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-bed-2",
+                "points": [
+                  [
+                    30.908039941631746,
+                    27.605398947841227
+                  ],
+                  [
+                    32.40803994163174,
+                    27.605398947841227
+                  ],
+                  [
+                    32.40803994163174,
+                    31.605398947841227
+                  ],
+                  [
+                    30.908039941631746,
+                    31.605398947841227
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-bed-3",
+                "points": [
+                  [
+                    33.4080514082158,
+                    27.605398947841227
+                  ],
+                  [
+                    34.9080514082158,
+                    27.605398947841227
+                  ],
+                  [
+                    34.9080514082158,
+                    31.605398947841227
+                  ],
+                  [
+                    33.4080514082158,
+                    31.605398947841227
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-bed-4",
+                "points": [
+                  [
+                    28.408028475047697,
+                    32.605422912208724
+                  ],
+                  [
+                    29.908028475047697,
+                    32.605422912208724
+                  ],
+                  [
+                    29.908028475047697,
+                    36.605422912208724
+                  ],
+                  [
+                    28.408028475047697,
+                    36.605422912208724
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-bed-5",
+                "points": [
+                  [
+                    30.908039941631746,
+                    32.605422912208724
+                  ],
+                  [
+                    32.40803994163174,
+                    32.605422912208724
+                  ],
+                  [
+                    32.40803994163174,
+                    36.605422912208724
+                  ],
+                  [
+                    30.908039941631746,
+                    36.605422912208724
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-bed-6",
+                "points": [
+                  [
+                    33.40805255542564,
+                    32.605422912208724
+                  ],
+                  [
+                    35.40805255542564,
+                    32.605422912208724
+                  ],
+                  [
+                    35.40805255542564,
+                    36.605422912208724
+                  ],
+                  [
+                    33.40805255542564,
+                    36.605422912208724
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-hugel-1",
+                "points": [
+                  [
+                    36.40806631642939,
+                    28.60540125328979
+                  ],
+                  [
+                    38.40806631642939,
+                    28.60540125328979
+                  ],
+                  [
+                    38.40806631642939,
+                    31.60540125328979
+                  ],
+                  [
+                    36.40806631642939,
+                    31.60540125328979
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-staple-1",
+                "points": [
+                  [
+                    41.80808649574241,
+                    28.005391718192676
+                  ],
+                  [
+                    47.8081140177499,
+                    28.005391718192676
+                  ],
+                  [
+                    47.8081140177499,
+                    31.505407812217165
+                  ],
+                  [
+                    41.80808649574241,
+                    31.505407812217165
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-staple-2",
+                "points": [
+                  [
+                    55.40814887418021,
+                    26.205383831609037
+                  ],
+                  [
+                    59.60816813737969,
+                    26.205383831609037
+                  ],
+                  [
+                    59.60816813737969,
+                    31.205406392552753
+                  ],
+                  [
+                    55.40814887418021,
+                    31.205406392552753
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-staple-3",
+                "points": [
+                  [
+                    46.40810759668341,
+                    32.10541067084652
+                  ],
+                  [
+                    52.40813511317648,
+                    32.10541067084652
+                  ],
+                  [
+                    52.40813511317648,
+                    35.60542795598902
+                  ],
+                  [
+                    46.40810759668341,
+                    35.60542795598902
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-staple-4",
+                "points": [
+                  [
+                    53.40813970201586,
+                    32.10541067084652
+                  ],
+                  [
+                    59.40816721850893,
+                    32.10541067084652
+                  ],
+                  [
+                    59.40816721850893,
+                    35.60542795598902
+                  ],
+                  [
+                    53.40813970201586,
+                    35.60542795598902
+                  ]
+                ]
+              }
+            ]
+          },
+          "plantingCount": 15,
+          "bedsPlanted": 7,
+          "crops": [
+            {
+              "name": "Garlic",
+              "sowMonths": [
+                "May"
+              ],
+              "bedLabels": [
+                "Bed 6"
+              ],
+              "alreadyGrowing": true,
+              "firstSeasonOnlyMonths": [
+                "May"
+              ]
+            },
+            {
+              "name": "Onions",
+              "sowMonths": [
+                "Mar"
+              ],
+              "bedLabels": [
+                "Bed 1"
+              ],
+              "alreadyGrowing": true,
+              "firstSeasonOnlyMonths": [
+                "Mar"
+              ]
+            },
+            {
+              "name": "Butternut",
+              "sowMonths": [
+                "Dec"
+              ],
+              "bedLabels": [
+                "Bed 3"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Swiss chard (spinach)",
+              "sowMonths": [
+                "Apr"
+              ],
+              "bedLabels": [
+                "Bed 5"
+              ],
+              "alreadyGrowing": true,
+              "firstSeasonOnlyMonths": [
+                "Apr"
+              ]
+            },
+            {
+              "name": "Tomatoes",
+              "sowMonths": [
+                "Oct"
+              ],
+              "bedLabels": [
+                "Bed 4"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Maize (mielies)",
+              "sowMonths": [
+                "Oct"
+              ],
+              "bedLabels": [
+                "Bed 7"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Green beans",
+              "sowMonths": [
+                "Oct"
+              ],
+              "bedLabels": [
+                "Bed 5"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Lettuce",
+              "sowMonths": [
+                "May",
+                "Sep"
+              ],
+              "bedLabels": [
+                "Bed 2",
+                "Bed 3"
+              ],
+              "alreadyGrowing": true,
+              "firstSeasonOnlyMonths": [
+                "May"
+              ]
+            },
+            {
+              "name": "Broccoli",
+              "sowMonths": [
+                "Feb"
+              ],
+              "bedLabels": [
+                "Bed 6"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Sweet potato",
+              "sowMonths": [
+                "Oct"
+              ],
+              "bedLabels": [
+                "Bed 6"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Cabbage",
+              "sowMonths": [
+                "Mar"
+              ],
+              "bedLabels": [
+                "Bed 1",
+                "Bed 2"
+              ],
+              "alreadyGrowing": true,
+              "firstSeasonOnlyMonths": [
+                "Mar"
+              ]
+            },
+            {
+              "name": "Carrots",
+              "sowMonths": [
+                "Apr"
+              ],
+              "bedLabels": [
+                "Bed 2",
+                "Bed 4"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            }
+          ]
+        }
+      },
+      "location": {
+        "lat": -28.628,
+        "lon": 29.891,
+        "biome": {
+          "name": "Grassland",
+          "code": "GR",
+          "description": "Highveld temperate grassland, summer rainfall, cold frosty winters",
+          "color": "#9FC169",
+          "rainfallPattern": "summer",
+          "meanRainfall": "500–900mm",
+          "keySpecies": [
+            "Buffalo Thorn",
+            "Wild Olive",
+            "Highveld Protea",
+            "Rooigrass",
+            "Bulbine",
+            "Wild Garlic"
+          ],
+          "soilType": "Red/yellow apedal soils, moderate depth, clay-rich on Highveld",
+          "waterStrategy": "Heavy summer thunderstorms (short, intense). Keyline design on all slopes — angle swales 1:1000 off true contour to move water across hillside. Winter dry → storage essential. Roof: 1m² = 1L per 1mm rain.",
+          "soilStrategy": "Often compacted by livestock. Subsoil aeration before earthworks. Oats/vetch winter cover crops. pH usually 5.5–6.5, add agricultural lime if below 5.5. Build OM with compost + biochar.",
+          "challenges": [
+            "Hard frosts (–5°C to –10°C)",
+            "Hail",
+            "Erodible clay soils on slopes",
+            "Vlei (wetland) drainage issues"
+          ]
+        },
+        "rainfall": {
+          "monthly": [
+            133.6,
+            107,
+            86.5,
+            47.7,
+            11.8,
+            12,
+            12.1,
+            18.6,
+            36.9,
+            82.1,
+            110.7,
+            132.4
+          ],
+          "annual": 791,
+          "pattern": "summer",
+          "wetSeason": "Oct–Mar",
+          "drySeason": "May–Aug",
+          "rainfallSource": "nasa-power"
+        },
+        "climate": {
+          "meanTemp": 18.1,
+          "maxTemp": 42.1,
+          "minTemp": -2.3,
+          "monthlyTemp": [
+            22.72,
+            22.25,
+            20.78,
+            17.67,
+            14.78,
+            11.6,
+            11.54,
+            14.43,
+            17.92,
+            19.83,
+            21.08,
+            22.4
+          ],
+          "solarRadiation": 5.3,
+          "koppen": "Dwb",
+          "koppenDesc": "Cold continental highland",
+          "windSpeed": 2.2,
+          "windFromSummer": "E",
+          "windFromWinter": "NW"
+        },
+        "soil": {
+          "textureClass": "Loam",
+          "ph": 6.5,
+          "organicCarbon": 1.2,
+          "clay": 25,
+          "sand": 45,
+          "silt": 30,
+          "bulkDensity": 1.3
+        },
+        "elevation": {
+          "elevation": 962,
+          "slopeDeg": 1.3,
+          "slopePct": 2.3,
+          "aspectDeg": 355,
+          "aspectLabel": "N"
+        },
+        "vegetation": {
+          "vegUnit": "Thukela Thornveld",
+          "biome": "Savanna",
+          "bioregion": "Sub-Escarpment Savanna Bioregion"
+        },
+        "bru": {
+          "brucode": "Tc1",
+          "bruParent": "Tc1",
+          "map": 723,
+          "tmin": -6.5,
+          "tmean": 18.1,
+          "tmax": 40.1,
+          "nearestBrg": "Dry Tall Grassveld",
+          "isApproximateName": true,
+          "attribution": "Zone data: KZN DARD Bioresource Units"
+        }
+      },
+      "expected": {
+        "en": {
+          "one": [
+            {
+              "title": "Site summary",
+              "lines": [
+                "28.6280°S, 29.8910°E",
+                "Mapped boundary: Not recorded",
+                "Mapped growing area: 128 m²",
+                "Vegetable beds: 7 · 44 m²",
+                "Staple plots: 4 · 84 m²",
+                "Mapped space is not confirmation that all of it is currently in production.",
+                "Annual rainfall estimate: 791 mm",
+                "Soil: Not measured. Arrange a soil test.",
+                "Stated tank capacity in the design: 2 500 L",
+                "Capacity is not water currently available; check which tanks are already installed.",
+                "Crop rows: 15",
+                "Garlic · Bed 6 · sow: May · once only: May · includes an existing crop",
+                "Onions · Bed 1 · sow: Mar · once only: Mar · includes an existing crop",
+                "Butternut · Bed 3 · sow: Dec",
+                "Swiss chard (spinach) · Bed 5 · sow: Apr · once only: Apr · includes an existing crop",
+                "More crop rows are listed in the five-page or full report.",
+                "Priced infrastructure subtotal: R 15 890",
+                "Lines awaiting a price or measurement: 2",
+                "Planned budget, not actual spending. A missing price is not zero. Obtain current local quotes.",
+                "Next: verify the land measurements, soil and water supply; confirm the crop plan and obtain missing quotes."
+              ]
+            }
+          ],
+          "five": [
+            {
+              "title": "Site summary",
+              "lines": [
+                "28.6280°S, 29.8910°E",
+                "Mapped boundary: Not recorded",
+                "Mapped growing area: 128 m²",
+                "Vegetable beds: 7 · 44 m²",
+                "Staple plots: 4 · 84 m²",
+                "Mapped space is not confirmation that all of it is currently in production.",
+                "Annual rainfall estimate: 791 mm",
+                "Soil: Not measured. Arrange a soil test.",
+                "Stated tank capacity in the design: 2 500 L",
+                "Capacity is not water currently available; check which tanks are already installed."
+              ]
+            },
+            {
+              "title": "Crop plan",
+              "lines": [
+                "This is the saved planting plan, not a harvest or sales record. Check actual bed clearance before each next planting.",
+                "For seed quantities, use the crop planner’s seed list. Do not buy seed from an inferred yield or monthly availability chart.",
+                "Garlic · Bed 6 · sow: May · once only: May · includes an existing crop",
+                "Onions · Bed 1 · sow: Mar · once only: Mar · includes an existing crop",
+                "Butternut · Bed 3 · sow: Dec",
+                "Swiss chard (spinach) · Bed 5 · sow: Apr · once only: Apr · includes an existing crop",
+                "Tomatoes · Bed 4 · sow: Oct",
+                "Maize (mielies) · Bed 7 · sow: Oct",
+                "Green beans · Bed 5 · sow: Oct",
+                "Lettuce · Bed 2, Bed 3 · sow: May, Sep · once only: May · includes an existing crop",
+                "Broccoli · Bed 6 · sow: Feb",
+                "Sweet potato · Bed 6 · sow: Oct",
+                "Cabbage · Bed 1, Bed 2 · sow: Mar · once only: Mar · includes an existing crop",
+                "Carrots · Bed 2, Bed 4 · sow: Apr"
+              ]
+            },
+            {
+              "title": "Water, soil and the mapped site",
+              "lines": [
+                "Soil: Not measured. Arrange a soil test.",
+                "Stated tank capacity in the design: 2 500 L",
+                "Capacity is not water currently available; check which tanks are already installed.",
+                "Traced roof: Not recorded",
+                "Rainwater tank (2500 L) ×1 · planned",
+                "Swale (on-contour earthwork): 34 m",
+                "Path: 18.5 m",
+                "Greywater line: 10.5 m",
+                "Confirm water reliability, drainage and soil condition on the ground before construction or amendment purchases."
+              ]
+            },
+            {
+              "title": "Bill of quantities",
+              "lines": [
+                "Priced infrastructure subtotal: R 15 890",
+                "Lines awaiting a price or measurement: 2",
+                "Planned budget, not actual spending. A missing price is not zero. Obtain current local quotes.",
+                "Rainwater tank (2500 L) (2 500 L) · 1 no. · R 5 500",
+                "Swale (on-contour earthwork) · 34 m · R 2 040",
+                "Path · 18.5 m · R 1 480",
+                "Greywater line · 10.5 m · quote / measurement needed",
+                "Vegetable beds established (7 beds) · 44 m² · R 5 280",
+                "Staple plots established (4 plots) · 84 m² · quote / measurement needed",
+                "Moringa Tree · 2 no. · R 160",
+                "Avocado Tree · 1 no. · R 450",
+                "Compost bays · 1 no. · R 600",
+                "Mango Tree · 1 no. · R 300",
+                "Natal Plum · 1 no. · R 80"
+              ]
+            },
+            {
+              "title": "Next actions and checks",
+              "lines": [
+                "Confirm what is already on the site and what is still proposed. Keep the saved design as the reference.",
+                "Check the crop plan against the real beds and seasonal conditions. A planned sowing is not proof of planting.",
+                "Record harvest weight, food kept or donated, sales and costs with their dates.",
+                "Check production area on site before reporting hectares to a funder. Count each physical bed once.",
+                "Agree support actions with the farmer. At review, record what improved, what did not and what needs to change.",
+                "This summary uses saved measurements and plan quantities. Read the full report for detailed advice, assumptions and source notes."
+              ]
+            }
+          ],
+          "full": "## report basis\n\nThis ready-to-read sample is assembled from the saved site and design records. It is not a new AI analysis or an independently verified assessment. Sample finances, soil examples and household examples remain illustrative wherever labelled. Planned areas and infrastructure do not establish completed work.\n\n## Site summary\n\n- 28.6280°S, 29.8910°E\n- Mapped boundary: Not recorded\n- Mapped growing area: 128 m²\n- Vegetable beds: 7 · 44 m²\n- Staple plots: 4 · 84 m²\n- Mapped space is not confirmation that all of it is currently in production.\n- Annual rainfall estimate: 791 mm\n- Soil: Not measured. Arrange a soil test.\n- Stated tank capacity in the design: 2 500 L\n- Capacity is not water currently available; check which tanks are already installed.\n\n## Crop plan\n\n- This is the saved planting plan, not a harvest or sales record. Check actual bed clearance before each next planting.\n- For seed quantities, use the crop planner’s seed list. Do not buy seed from an inferred yield or monthly availability chart.\n- Garlic · Bed 6 · sow: May · once only: May · includes an existing crop\n- Onions · Bed 1 · sow: Mar · once only: Mar · includes an existing crop\n- Butternut · Bed 3 · sow: Dec\n- Swiss chard (spinach) · Bed 5 · sow: Apr · once only: Apr · includes an existing crop\n- Tomatoes · Bed 4 · sow: Oct\n- Maize (mielies) · Bed 7 · sow: Oct\n- Green beans · Bed 5 · sow: Oct\n- Lettuce · Bed 2, Bed 3 · sow: May, Sep · once only: May · includes an existing crop\n- Broccoli · Bed 6 · sow: Feb\n- Sweet potato · Bed 6 · sow: Oct\n- Cabbage · Bed 1, Bed 2 · sow: Mar · once only: Mar · includes an existing crop\n- Carrots · Bed 2, Bed 4 · sow: Apr\n\n## Water, soil and the mapped site\n\n- Soil: Not measured. Arrange a soil test.\n- Stated tank capacity in the design: 2 500 L\n- Capacity is not water currently available; check which tanks are already installed.\n- Traced roof: Not recorded\n- Rainwater tank (2500 L) ×1 · planned\n- Swale (on-contour earthwork): 34 m\n- Path: 18.5 m\n- Greywater line: 10.5 m\n- Confirm water reliability, drainage and soil condition on the ground before construction or amendment purchases.\n\n## Bill of quantities\n\n- Priced infrastructure subtotal: R 15 890\n- Lines awaiting a price or measurement: 2\n- Planned budget, not actual spending. A missing price is not zero. Obtain current local quotes.\n- Rainwater tank (2500 L) (2 500 L) · 1 no. · R 5 500\n- Swale (on-contour earthwork) · 34 m · R 2 040\n- Path · 18.5 m · R 1 480\n- Greywater line · 10.5 m · quote / measurement needed\n- Vegetable beds established (7 beds) · 44 m² · R 5 280\n- Staple plots established (4 plots) · 84 m² · quote / measurement needed\n- Moringa Tree · 2 no. · R 160\n- Avocado Tree · 1 no. · R 450\n- Compost bays · 1 no. · R 600\n- Mango Tree · 1 no. · R 300\n- Natal Plum · 1 no. · R 80\n\n## Next actions and checks\n\n- Confirm what is already on the site and what is still proposed. Keep the saved design as the reference.\n- Check the crop plan against the real beds and seasonal conditions. A planned sowing is not proof of planting.\n- Record harvest weight, food kept or donated, sales and costs with their dates.\n- Check production area on site before reporting hectares to a funder. Count each physical bed once.\n- Agree support actions with the farmer. At review, record what improved, what did not and what needs to change.\n- This summary uses saved measurements and plan quantities. Read the full report for detailed advice, assumptions and source notes.\n\n## Full design inventory\n\n- Moringa Tree × 2 · proposed\n- Avocado Tree × 1 · proposed\n- Compost bays × 1 · proposed\n- Mango Tree × 1 · proposed\n- Natal Plum × 1 · proposed\n- Rainwater tank (2500 L) × 1 · proposed\n\n## Production spaces\n\n- Bed 1 · 6 m² · bed\n- Bed 2 · 6 m² · bed\n- Bed 3 · 6 m² · bed\n- Bed 4 · 6 m² · bed\n- Bed 5 · 6 m² · bed\n- Bed 6 · 8 m² · bed\n- Bed 7 · 6 m² · bed\n- Plot 1 · 21 m² · plot\n- Plot 2 · 21 m² · plot\n- Plot 3 · 21 m² · plot\n- Plot 4 · 21 m² · plot\n\n## Evidence and limitations\n\nSite photos and map plates, where available, are shown separately in this report. An AI-generated reference photograph is not evidence of the real site. Missing measurements, quotes or records remain missing. Review the site, dates and evidence with the implementing organisation before using this example for a funding decision."
+        },
+        "zu": {
+          "one": [
+            {
+              "title": "Isifinyezo sendawo",
+              "lines": [
+                "28.6280°S, 29.8910°E",
+                "Umngcele obalazwe: Akubhaliwe",
+                "Indawo yokutshala ebalazwe: 128 m²",
+                "Imibhede yemifino: 7 · 44 m²",
+                "Iziza zezitshalo eziyisisekelo: 4 · 84 m²",
+                "Indawo ebalazwe ayiqinisekisi ukuthi yonke isatshaliwe njengamanje.",
+                "Isilinganiso semvula yonyaka: 791 mm",
+                "Umhlabathi: Awukahlolwa. Hlela ukuhlolwa komhlabathi.",
+                "Umthamo wamathangi obhalwe emklamweni: 2 500 L",
+                "Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.",
+                "Imigqa yezitshalo: 15",
+                "Garlic · Bed 6 · hlwanyela: May · kanye kuphela: May · kufaka isitshalo esesikhona",
+                "Onions · Bed 1 · hlwanyela: Mar · kanye kuphela: Mar · kufaka isitshalo esesikhona",
+                "Butternut · Bed 3 · hlwanyela: Dec",
+                "Swiss chard (spinach) · Bed 5 · hlwanyela: Apr · kanye kuphela: Apr · kufaka isitshalo esesikhona",
+                "Eminye imigqa yezitshalo isembikweni wamakhasi amahlanu noma ogcwele.",
+                "Isamba sezindleko zengqalasizinda ezinentengo: R 15 890",
+                "Imigqa elinde intengo noma isilinganiso: 2",
+                "Lena ibhajethi ehleliwe, akuzona izimali esezisetshenzisiwe. Intengo engekho ayisho uziro. Thola amanani akamuva endaweni.",
+                "Okulandelayo: qinisekisa izilinganiso zomhlaba, umhlabathi namanzi; qinisekisa uhlelo lwezitshalo uthole namanani angekho."
+              ]
+            }
+          ],
+          "five": [
+            {
+              "title": "Isifinyezo sendawo",
+              "lines": [
+                "28.6280°S, 29.8910°E",
+                "Umngcele obalazwe: Akubhaliwe",
+                "Indawo yokutshala ebalazwe: 128 m²",
+                "Imibhede yemifino: 7 · 44 m²",
+                "Iziza zezitshalo eziyisisekelo: 4 · 84 m²",
+                "Indawo ebalazwe ayiqinisekisi ukuthi yonke isatshaliwe njengamanje.",
+                "Isilinganiso semvula yonyaka: 791 mm",
+                "Umhlabathi: Awukahlolwa. Hlela ukuhlolwa komhlabathi.",
+                "Umthamo wamathangi obhalwe emklamweni: 2 500 L",
+                "Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe."
+              ]
+            },
+            {
+              "title": "Uhlelo lwezitshalo",
+              "lines": [
+                "Lolu uhlelo lokutshala olugciniwe, alulona irekhodi lesivuno noma ukuthengisa. Hlola ukuthi umbhede usukhululekile ngaphambi kokutshala okulandelayo.",
+                "Ngobuningi bembewu, sebenzisa uhlu lwembewu kuhlelo lwezitshalo. Ungathengi imbewu ngokwesivuno esiqageliwe noma ishadi lokutholakala kwenyanga.",
+                "Garlic · Bed 6 · hlwanyela: May · kanye kuphela: May · kufaka isitshalo esesikhona",
+                "Onions · Bed 1 · hlwanyela: Mar · kanye kuphela: Mar · kufaka isitshalo esesikhona",
+                "Butternut · Bed 3 · hlwanyela: Dec",
+                "Swiss chard (spinach) · Bed 5 · hlwanyela: Apr · kanye kuphela: Apr · kufaka isitshalo esesikhona",
+                "Tomatoes · Bed 4 · hlwanyela: Oct",
+                "Maize (mielies) · Bed 7 · hlwanyela: Oct",
+                "Green beans · Bed 5 · hlwanyela: Oct",
+                "Lettuce · Bed 2, Bed 3 · hlwanyela: May, Sep · kanye kuphela: May · kufaka isitshalo esesikhona",
+                "Broccoli · Bed 6 · hlwanyela: Feb",
+                "Sweet potato · Bed 6 · hlwanyela: Oct",
+                "Cabbage · Bed 1, Bed 2 · hlwanyela: Mar · kanye kuphela: Mar · kufaka isitshalo esesikhona",
+                "Carrots · Bed 2, Bed 4 · hlwanyela: Apr"
+              ]
+            },
+            {
+              "title": "Amanzi, umhlabathi nendawo ebalazwe",
+              "lines": [
+                "Umhlabathi: Awukahlolwa. Hlela ukuhlolwa komhlabathi.",
+                "Umthamo wamathangi obhalwe emklamweni: 2 500 L",
+                "Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.",
+                "Uphahla olulinganisiwe: Akubhaliwe",
+                "Rainwater tank (2500 L) ×1 · ihleliwe",
+                "Swale (on-contour earthwork): 34 m",
+                "Path: 18.5 m",
+                "Greywater line: 10.5 m",
+                "Qinisekisa ukutholakala kwamanzi, ukuphuma kwamanzi nesimo somhlabathi ngaphambi kokwakha noma ukuthenga izinto zokulungisa umhlabathi."
+              ]
+            },
+            {
+              "title": "Uhlu lobuningi nezindleko",
+              "lines": [
+                "Isamba sezindleko zengqalasizinda ezinentengo: R 15 890",
+                "Imigqa elinde intengo noma isilinganiso: 2",
+                "Lena ibhajethi ehleliwe, akuzona izimali esezisetshenzisiwe. Intengo engekho ayisho uziro. Thola amanani akamuva endaweni.",
+                "Rainwater tank (2500 L) (2 500 L) · 1 no. · R 5 500",
+                "Swale (on-contour earthwork) · 34 m · R 2 040",
+                "Path · 18.5 m · R 1 480",
+                "Greywater line · 10.5 m · kudingeka intengo / isilinganiso",
+                "Vegetable beds established (7 beds) · 44 m² · R 5 280",
+                "Staple plots established (4 plots) · 84 m² · kudingeka intengo / isilinganiso",
+                "Moringa Tree · 2 no. · R 160",
+                "Avocado Tree · 1 no. · R 450",
+                "Compost bays · 1 no. · R 600",
+                "Mango Tree · 1 no. · R 300",
+                "Natal Plum · 1 no. · R 80"
+              ]
+            },
+            {
+              "title": "Izinyathelo ezilandelayo nokuhlola",
+              "lines": [
+                "Qinisekisa okukhona endaweni nokusahleliwe. Sebenzisa umklamo ogciniwe njengereferensi.",
+                "Qhathanisa uhlelo lwezitshalo nemibhede yangempela nezimo zesizini. Ukuhlwanyela okuhleliwe akubona ubufakazi bokuthi sekutshaliwe.",
+                "Bhala isisindo sesivuno, ukudla okugciniwe noma okunikelwe, ukuthengisa nezindleko kanye nezinsuku zakho.",
+                "Hlola indawo ekhiqizayo ngaphambi kokubika amahektha kumxhasi. Bala umbhede ngamunye kanye.",
+                "Vumelana nomlimi ngezinyathelo zosizo. Ekubuyekezeni, bhala okuthuthukile, okungathuthukanga nokudinga ukushintsha.",
+                "Lesi sifinyezo sisebenzisa izilinganiso ezigciniwe nobuningi bohlelo. Funda umbiko ogcwele ngezeluleko eziningiliziwe, okucatshangiwe namanothi emithombo."
+              ]
+            }
+          ],
+          "full": "## Isisekelo sombiko\n\nLesi yisibonelo esilungiselelwe ukufundeka, esakhiwe ngamarekhodi agciniwe endawo nawomklamo. Asikona ukuhlaziywa okusha kwe-AI noma ukuhlolwa okuzimele okuqinisekisiwe. Izibonelo zezimali, zomhlabathi nezasekhaya ziyizibonelo zokubonisa kuphela uma zibhalwe kanjalo. Izindawo nengqalasizinda okuhleliwe akufakazeli ukuthi umsebenzi usuqediwe.\n\n## Isifinyezo sendawo\n\n- 28.6280°S, 29.8910°E\n- Umngcele obalazwe: Akubhaliwe\n- Indawo yokutshala ebalazwe: 128 m²\n- Imibhede yemifino: 7 · 44 m²\n- Iziza zezitshalo eziyisisekelo: 4 · 84 m²\n- Indawo ebalazwe ayiqinisekisi ukuthi yonke isatshaliwe njengamanje.\n- Isilinganiso semvula yonyaka: 791 mm\n- Umhlabathi: Awukahlolwa. Hlela ukuhlolwa komhlabathi.\n- Umthamo wamathangi obhalwe emklamweni: 2 500 L\n- Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.\n\n## Uhlelo lwezitshalo\n\n- Lolu uhlelo lokutshala olugciniwe, alulona irekhodi lesivuno noma ukuthengisa. Hlola ukuthi umbhede usukhululekile ngaphambi kokutshala okulandelayo.\n- Ngobuningi bembewu, sebenzisa uhlu lwembewu kuhlelo lwezitshalo. Ungathengi imbewu ngokwesivuno esiqageliwe noma ishadi lokutholakala kwenyanga.\n- Garlic · Bed 6 · hlwanyela: May · kanye kuphela: May · kufaka isitshalo esesikhona\n- Onions · Bed 1 · hlwanyela: Mar · kanye kuphela: Mar · kufaka isitshalo esesikhona\n- Butternut · Bed 3 · hlwanyela: Dec\n- Swiss chard (spinach) · Bed 5 · hlwanyela: Apr · kanye kuphela: Apr · kufaka isitshalo esesikhona\n- Tomatoes · Bed 4 · hlwanyela: Oct\n- Maize (mielies) · Bed 7 · hlwanyela: Oct\n- Green beans · Bed 5 · hlwanyela: Oct\n- Lettuce · Bed 2, Bed 3 · hlwanyela: May, Sep · kanye kuphela: May · kufaka isitshalo esesikhona\n- Broccoli · Bed 6 · hlwanyela: Feb\n- Sweet potato · Bed 6 · hlwanyela: Oct\n- Cabbage · Bed 1, Bed 2 · hlwanyela: Mar · kanye kuphela: Mar · kufaka isitshalo esesikhona\n- Carrots · Bed 2, Bed 4 · hlwanyela: Apr\n\n## Amanzi, umhlabathi nendawo ebalazwe\n\n- Umhlabathi: Awukahlolwa. Hlela ukuhlolwa komhlabathi.\n- Umthamo wamathangi obhalwe emklamweni: 2 500 L\n- Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.\n- Uphahla olulinganisiwe: Akubhaliwe\n- Rainwater tank (2500 L) ×1 · ihleliwe\n- Swale (on-contour earthwork): 34 m\n- Path: 18.5 m\n- Greywater line: 10.5 m\n- Qinisekisa ukutholakala kwamanzi, ukuphuma kwamanzi nesimo somhlabathi ngaphambi kokwakha noma ukuthenga izinto zokulungisa umhlabathi.\n\n## Uhlu lobuningi nezindleko\n\n- Isamba sezindleko zengqalasizinda ezinentengo: R 15 890\n- Imigqa elinde intengo noma isilinganiso: 2\n- Lena ibhajethi ehleliwe, akuzona izimali esezisetshenzisiwe. Intengo engekho ayisho uziro. Thola amanani akamuva endaweni.\n- Rainwater tank (2500 L) (2 500 L) · 1 no. · R 5 500\n- Swale (on-contour earthwork) · 34 m · R 2 040\n- Path · 18.5 m · R 1 480\n- Greywater line · 10.5 m · kudingeka intengo / isilinganiso\n- Vegetable beds established (7 beds) · 44 m² · R 5 280\n- Staple plots established (4 plots) · 84 m² · kudingeka intengo / isilinganiso\n- Moringa Tree · 2 no. · R 160\n- Avocado Tree · 1 no. · R 450\n- Compost bays · 1 no. · R 600\n- Mango Tree · 1 no. · R 300\n- Natal Plum · 1 no. · R 80\n\n## Izinyathelo ezilandelayo nokuhlola\n\n- Qinisekisa okukhona endaweni nokusahleliwe. Sebenzisa umklamo ogciniwe njengereferensi.\n- Qhathanisa uhlelo lwezitshalo nemibhede yangempela nezimo zesizini. Ukuhlwanyela okuhleliwe akubona ubufakazi bokuthi sekutshaliwe.\n- Bhala isisindo sesivuno, ukudla okugciniwe noma okunikelwe, ukuthengisa nezindleko kanye nezinsuku zakho.\n- Hlola indawo ekhiqizayo ngaphambi kokubika amahektha kumxhasi. Bala umbhede ngamunye kanye.\n- Vumelana nomlimi ngezinyathelo zosizo. Ekubuyekezeni, bhala okuthuthukile, okungathuthukanga nokudinga ukushintsha.\n- Lesi sifinyezo sisebenzisa izilinganiso ezigciniwe nobuningi bohlelo. Funda umbiko ogcwele ngezeluleko eziningiliziwe, okucatshangiwe namanothi emithombo.\n\n## Uhlu oluphelele lomklamo\n\n- Moringa Tree × 2 · okuhleliwe\n- Avocado Tree × 1 · okuhleliwe\n- Compost bays × 1 · okuhleliwe\n- Mango Tree × 1 · okuhleliwe\n- Natal Plum × 1 · okuhleliwe\n- Rainwater tank (2500 L) × 1 · okuhleliwe\n\n## Izindawo zokukhiqiza\n\n- Bed 1 · 6 m² · umbhede\n- Bed 2 · 6 m² · umbhede\n- Bed 3 · 6 m² · umbhede\n- Bed 4 · 6 m² · umbhede\n- Bed 5 · 6 m² · umbhede\n- Bed 6 · 8 m² · umbhede\n- Bed 7 · 6 m² · umbhede\n- Plot 1 · 21 m² · isiza\n- Plot 2 · 21 m² · isiza\n- Plot 3 · 21 m² · isiza\n- Plot 4 · 21 m² · isiza\n\n## Ubufakazi nemikhawulo\n\nIzithombe zendawo namamephu, uma zikhona, ziboniswa ngokwehlukana kulo mbiko. Isithombe esiyisibonelo esikhiqizwe yi-AI asibona ubufakazi bendawo yangempela. Izilinganiso, amanani noma amarekhodi angekho zihlala zingekho. Buyekeza indawo, izinsuku nobufakazi nenhlangano ezosebenzisa uhlelo ngaphambi kokusebenzisa lesi sibonelo esinqumweni sokuxhasa ngezimali."
+        }
+      }
+    },
+    {
+      "name": "lab soil",
+      "facts": {
+        "productionEnterpriseChoices": {},
+        "productionItems": [
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "jojo_2500"
+          },
+          {
+            "defId": "compost_bay"
+          },
+          {
+            "defId": "tree_mango"
+          },
+          {
+            "defId": "tree_avocado"
+          },
+          {
+            "defId": "tree_natal_plum"
+          },
+          {
+            "defId": "tree_moringa"
+          },
+          {
+            "defId": "tree_moringa"
+          }
+        ],
+        "design": {
+          "beds": [
+            {
+              "label": "Bed 1",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 2",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 3",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 4",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 5",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 6",
+              "areaM2": 8,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 7",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Plot 1",
+              "areaM2": 21,
+              "kind": "plot"
+            },
+            {
+              "label": "Plot 2",
+              "areaM2": 21,
+              "kind": "plot"
+            },
+            {
+              "label": "Plot 3",
+              "areaM2": 21,
+              "kind": "plot"
+            },
+            {
+              "label": "Plot 4",
+              "areaM2": 21,
+              "kind": "plot"
+            }
+          ],
+          "bedCount": 7,
+          "bedAreaM2": 44,
+          "plotCount": 4,
+          "plotAreaM2": 84,
+          "growingAreaM2": 128,
+          "elements": [
+            {
+              "name": "Moringa Tree",
+              "category": "growing",
+              "count": 2,
+              "status": "proposed",
+              "defId": "tree_moringa"
+            },
+            {
+              "name": "Avocado Tree",
+              "category": "growing",
+              "count": 1,
+              "status": "proposed",
+              "defId": "tree_avocado"
+            },
+            {
+              "name": "Compost bays",
+              "category": "structure",
+              "count": 1,
+              "status": "proposed",
+              "defId": "compost_bay"
+            },
+            {
+              "name": "Mango Tree",
+              "category": "growing",
+              "count": 1,
+              "status": "proposed",
+              "defId": "tree_mango"
+            },
+            {
+              "name": "Natal Plum",
+              "category": "growing",
+              "count": 1,
+              "status": "proposed",
+              "defId": "tree_natal_plum"
+            },
+            {
+              "name": "Rainwater tank (2500 L)",
+              "category": "water",
+              "count": 1,
+              "status": "proposed",
+              "defId": "jojo_2500"
+            }
+          ],
+          "routes": [
+            {
+              "label": "Swale (on-contour earthwork)",
+              "count": 1,
+              "totalLengthM": 34,
+              "kind": "swale"
+            },
+            {
+              "label": "Path",
+              "count": 1,
+              "totalLengthM": 18.5,
+              "kind": "path"
+            },
+            {
+              "label": "Greywater line",
+              "count": 1,
+              "totalLengthM": 10.5,
+              "kind": "greywater"
+            }
+          ],
+          "zones": [
+            {
+              "zone": 1,
+              "label": "Daily garden",
+              "areaM2": 143,
+              "contains": [
+                "Rainwater tank (2500 L)",
+                "Compost bays"
+              ],
+              "staplePlots": 0
+            },
+            {
+              "zone": 2,
+              "label": "Garden & orchard",
+              "areaM2": 137,
+              "contains": [
+                "Bed 1",
+                "Bed 2",
+                "Bed 3",
+                "Bed 4",
+                "Bed 5",
+                "Bed 6",
+                "Bed 7"
+              ],
+              "staplePlots": 0
+            },
+            {
+              "zone": 3,
+              "label": "Field crops",
+              "areaM2": 180,
+              "contains": [
+                "Mango Tree",
+                "Avocado Tree",
+                "Natal Plum",
+                "Moringa Tree x2"
+              ],
+              "staplePlots": 0
+            },
+            {
+              "zone": 5,
+              "label": "Natural habitat",
+              "areaM2": 60,
+              "contains": [],
+              "staplePlots": 0
+            }
+          ],
+          "savedAt": "2026-10-21"
+        },
+        "water": {
+          "tanks": [
+            {
+              "name": "Rainwater tank (2500 L)",
+              "count": 1,
+              "statedLitres": 2500,
+              "status": "proposed"
+            }
+          ],
+          "statedStorageLitres": 2500,
+          "tanksOfUnknownCapacity": 0,
+          "mapPoints": [],
+          "bodies": []
+        },
+        "measurements": {
+          "dailyWaterUseL": 200
+        },
+        "crop": {
+          "snapshot": {
+            "siteId": "qa-summary-translation",
+            "capturedAt": "2026-10-21T11:59:04.830Z",
+            "planUpdatedAt": 1792583944828,
+            "beds": [
+              {
+                "id": "demo-bed-1",
+                "label": "Bed 1",
+                "areaM2": 6,
+                "minDimM": 1.5,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-bed-2",
+                "label": "Bed 2",
+                "areaM2": 6,
+                "minDimM": 1.5,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-bed-3",
+                "label": "Bed 3",
+                "areaM2": 6,
+                "minDimM": 1.5,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-bed-4",
+                "label": "Bed 4",
+                "areaM2": 6,
+                "minDimM": 1.5,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-bed-5",
+                "label": "Bed 5",
+                "areaM2": 6,
+                "minDimM": 1.5,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-bed-6",
+                "label": "Bed 6",
+                "areaM2": 8,
+                "minDimM": 2,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-hugel-1",
+                "label": "Bed 7",
+                "areaM2": 6,
+                "minDimM": 2,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-staple-1",
+                "label": "Plot 1",
+                "areaM2": 21,
+                "minDimM": 3.500016094024488,
+                "kind": "plot"
+              },
+              {
+                "id": "demo-staple-2",
+                "label": "Plot 2",
+                "areaM2": 21,
+                "minDimM": 4.200019263199479,
+                "kind": "plot"
+              },
+              {
+                "id": "demo-staple-3",
+                "label": "Plot 3",
+                "areaM2": 21,
+                "minDimM": 3.500017285142505,
+                "kind": "plot"
+              },
+              {
+                "id": "demo-staple-4",
+                "label": "Plot 4",
+                "areaM2": 21,
+                "minDimM": 3.500017285142505,
+                "kind": "plot"
+              }
+            ],
+            "plantings": [
+              {
+                "id": "demo-planting-1",
+                "bedId": "demo-bed-6",
+                "cropKey": "garlic",
+                "sowMonth": 5,
+                "areaFraction": 0.5,
+                "existing": true
+              },
+              {
+                "id": "demo-planting-2",
+                "bedId": "demo-bed-1",
+                "cropKey": "onions",
+                "sowMonth": 3,
+                "areaFraction": 0.6116666666666667,
+                "existing": true
+              },
+              {
+                "id": "demo-planting-3",
+                "bedId": "demo-bed-3",
+                "cropKey": "butternut",
+                "sowMonth": 12
+              },
+              {
+                "id": "demo-planting-4",
+                "bedId": "demo-bed-5",
+                "cropKey": "swiss-chard",
+                "sowMonth": 4,
+                "areaFraction": 0.945,
+                "existing": true
+              },
+              {
+                "id": "demo-planting-5",
+                "bedId": "demo-bed-4",
+                "cropKey": "tomatoes",
+                "sowMonth": 10,
+                "areaFraction": 0.75
+              },
+              {
+                "id": "demo-planting-6",
+                "bedId": "demo-hugel-1",
+                "cropKey": "maize",
+                "sowMonth": 10,
+                "areaFraction": 0.8333333333333334
+              },
+              {
+                "id": "demo-planting-7",
+                "bedId": "demo-bed-5",
+                "cropKey": "green-beans",
+                "sowMonth": 10,
+                "areaFraction": 0.6883333333333334
+              },
+              {
+                "id": "demo-planting-8",
+                "bedId": "demo-bed-2",
+                "cropKey": "lettuce",
+                "sowMonth": 9,
+                "areaFraction": 0.6166666666666667
+              },
+              {
+                "id": "demo-planting-9",
+                "bedId": "demo-bed-6",
+                "cropKey": "broccoli",
+                "sowMonth": 2,
+                "areaFraction": 0.46875
+              },
+              {
+                "id": "demo-planting-10",
+                "bedId": "demo-bed-6",
+                "cropKey": "sweet-potato",
+                "sowMonth": 10,
+                "areaFraction": 0.45875
+              },
+              {
+                "id": "demo-planting-11",
+                "bedId": "demo-bed-1",
+                "cropKey": "cabbage",
+                "sowMonth": 3,
+                "areaFraction": 0.38833333333333336,
+                "existing": true
+              },
+              {
+                "id": "demo-planting-12",
+                "bedId": "demo-bed-2",
+                "cropKey": "cabbage",
+                "sowMonth": 3,
+                "areaFraction": 0.145,
+                "existing": true
+              },
+              {
+                "id": "demo-planting-13",
+                "bedId": "demo-bed-2",
+                "cropKey": "carrots",
+                "sowMonth": 4,
+                "areaFraction": 0.855
+              },
+              {
+                "id": "demo-planting-14",
+                "bedId": "demo-bed-4",
+                "cropKey": "carrots",
+                "sowMonth": 4,
+                "areaFraction": 0.20166666666666666
+              },
+              {
+                "id": "demo-planting-15",
+                "bedId": "demo-bed-3",
+                "cropKey": "lettuce",
+                "sowMonth": 5,
+                "areaFraction": 0.6166666666666667,
+                "existing": true
+              }
+            ],
+            "outlines": [
+              {
+                "bedId": "demo-bed-1",
+                "points": [
+                  [
+                    28.408028475047697,
+                    27.605398947841227
+                  ],
+                  [
+                    29.908028475047697,
+                    27.605398947841227
+                  ],
+                  [
+                    29.908028475047697,
+                    31.605398947841227
+                  ],
+                  [
+                    28.408028475047697,
+                    31.605398947841227
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-bed-2",
+                "points": [
+                  [
+                    30.908039941631746,
+                    27.605398947841227
+                  ],
+                  [
+                    32.40803994163174,
+                    27.605398947841227
+                  ],
+                  [
+                    32.40803994163174,
+                    31.605398947841227
+                  ],
+                  [
+                    30.908039941631746,
+                    31.605398947841227
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-bed-3",
+                "points": [
+                  [
+                    33.4080514082158,
+                    27.605398947841227
+                  ],
+                  [
+                    34.9080514082158,
+                    27.605398947841227
+                  ],
+                  [
+                    34.9080514082158,
+                    31.605398947841227
+                  ],
+                  [
+                    33.4080514082158,
+                    31.605398947841227
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-bed-4",
+                "points": [
+                  [
+                    28.408028475047697,
+                    32.605422912208724
+                  ],
+                  [
+                    29.908028475047697,
+                    32.605422912208724
+                  ],
+                  [
+                    29.908028475047697,
+                    36.605422912208724
+                  ],
+                  [
+                    28.408028475047697,
+                    36.605422912208724
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-bed-5",
+                "points": [
+                  [
+                    30.908039941631746,
+                    32.605422912208724
+                  ],
+                  [
+                    32.40803994163174,
+                    32.605422912208724
+                  ],
+                  [
+                    32.40803994163174,
+                    36.605422912208724
+                  ],
+                  [
+                    30.908039941631746,
+                    36.605422912208724
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-bed-6",
+                "points": [
+                  [
+                    33.40805255542564,
+                    32.605422912208724
+                  ],
+                  [
+                    35.40805255542564,
+                    32.605422912208724
+                  ],
+                  [
+                    35.40805255542564,
+                    36.605422912208724
+                  ],
+                  [
+                    33.40805255542564,
+                    36.605422912208724
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-hugel-1",
+                "points": [
+                  [
+                    36.40806631642939,
+                    28.60540125328979
+                  ],
+                  [
+                    38.40806631642939,
+                    28.60540125328979
+                  ],
+                  [
+                    38.40806631642939,
+                    31.60540125328979
+                  ],
+                  [
+                    36.40806631642939,
+                    31.60540125328979
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-staple-1",
+                "points": [
+                  [
+                    41.80808649574241,
+                    28.005391718192676
+                  ],
+                  [
+                    47.8081140177499,
+                    28.005391718192676
+                  ],
+                  [
+                    47.8081140177499,
+                    31.505407812217165
+                  ],
+                  [
+                    41.80808649574241,
+                    31.505407812217165
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-staple-2",
+                "points": [
+                  [
+                    55.40814887418021,
+                    26.205383831609037
+                  ],
+                  [
+                    59.60816813737969,
+                    26.205383831609037
+                  ],
+                  [
+                    59.60816813737969,
+                    31.205406392552753
+                  ],
+                  [
+                    55.40814887418021,
+                    31.205406392552753
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-staple-3",
+                "points": [
+                  [
+                    46.40810759668341,
+                    32.10541067084652
+                  ],
+                  [
+                    52.40813511317648,
+                    32.10541067084652
+                  ],
+                  [
+                    52.40813511317648,
+                    35.60542795598902
+                  ],
+                  [
+                    46.40810759668341,
+                    35.60542795598902
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-staple-4",
+                "points": [
+                  [
+                    53.40813970201586,
+                    32.10541067084652
+                  ],
+                  [
+                    59.40816721850893,
+                    32.10541067084652
+                  ],
+                  [
+                    59.40816721850893,
+                    35.60542795598902
+                  ],
+                  [
+                    53.40813970201586,
+                    35.60542795598902
+                  ]
+                ]
+              }
+            ]
+          },
+          "plantingCount": 15,
+          "bedsPlanted": 7,
+          "crops": [
+            {
+              "name": "Garlic",
+              "sowMonths": [
+                "May"
+              ],
+              "bedLabels": [
+                "Bed 6"
+              ],
+              "alreadyGrowing": true,
+              "firstSeasonOnlyMonths": [
+                "May"
+              ]
+            },
+            {
+              "name": "Onions",
+              "sowMonths": [
+                "Mar"
+              ],
+              "bedLabels": [
+                "Bed 1"
+              ],
+              "alreadyGrowing": true,
+              "firstSeasonOnlyMonths": [
+                "Mar"
+              ]
+            },
+            {
+              "name": "Butternut",
+              "sowMonths": [
+                "Dec"
+              ],
+              "bedLabels": [
+                "Bed 3"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Swiss chard (spinach)",
+              "sowMonths": [
+                "Apr"
+              ],
+              "bedLabels": [
+                "Bed 5"
+              ],
+              "alreadyGrowing": true,
+              "firstSeasonOnlyMonths": [
+                "Apr"
+              ]
+            },
+            {
+              "name": "Tomatoes",
+              "sowMonths": [
+                "Oct"
+              ],
+              "bedLabels": [
+                "Bed 4"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Maize (mielies)",
+              "sowMonths": [
+                "Oct"
+              ],
+              "bedLabels": [
+                "Bed 7"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Green beans",
+              "sowMonths": [
+                "Oct"
+              ],
+              "bedLabels": [
+                "Bed 5"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Lettuce",
+              "sowMonths": [
+                "May",
+                "Sep"
+              ],
+              "bedLabels": [
+                "Bed 2",
+                "Bed 3"
+              ],
+              "alreadyGrowing": true,
+              "firstSeasonOnlyMonths": [
+                "May"
+              ]
+            },
+            {
+              "name": "Broccoli",
+              "sowMonths": [
+                "Feb"
+              ],
+              "bedLabels": [
+                "Bed 6"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Sweet potato",
+              "sowMonths": [
+                "Oct"
+              ],
+              "bedLabels": [
+                "Bed 6"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Cabbage",
+              "sowMonths": [
+                "Mar"
+              ],
+              "bedLabels": [
+                "Bed 1",
+                "Bed 2"
+              ],
+              "alreadyGrowing": true,
+              "firstSeasonOnlyMonths": [
+                "Mar"
+              ]
+            },
+            {
+              "name": "Carrots",
+              "sowMonths": [
+                "Apr"
+              ],
+              "bedLabels": [
+                "Bed 2",
+                "Bed 4"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            }
+          ]
+        },
+        "farmName": "Original Ṱhoho {count} farm"
+      },
+      "location": {
+        "lat": -28.628,
+        "lon": 29.891,
+        "biome": {
+          "name": "Grassland",
+          "code": "GR",
+          "description": "Highveld temperate grassland, summer rainfall, cold frosty winters",
+          "color": "#9FC169",
+          "rainfallPattern": "summer",
+          "meanRainfall": "500–900mm",
+          "keySpecies": [
+            "Buffalo Thorn",
+            "Wild Olive",
+            "Highveld Protea",
+            "Rooigrass",
+            "Bulbine",
+            "Wild Garlic"
+          ],
+          "soilType": "Red/yellow apedal soils, moderate depth, clay-rich on Highveld",
+          "waterStrategy": "Heavy summer thunderstorms (short, intense). Keyline design on all slopes — angle swales 1:1000 off true contour to move water across hillside. Winter dry → storage essential. Roof: 1m² = 1L per 1mm rain.",
+          "soilStrategy": "Often compacted by livestock. Subsoil aeration before earthworks. Oats/vetch winter cover crops. pH usually 5.5–6.5, add agricultural lime if below 5.5. Build OM with compost + biochar.",
+          "challenges": [
+            "Hard frosts (–5°C to –10°C)",
+            "Hail",
+            "Erodible clay soils on slopes",
+            "Vlei (wetland) drainage issues"
+          ]
+        },
+        "rainfall": {
+          "monthly": [
+            133.6,
+            107,
+            86.5,
+            47.7,
+            11.8,
+            12,
+            12.1,
+            18.6,
+            36.9,
+            82.1,
+            110.7,
+            132.4
+          ],
+          "annual": 791,
+          "pattern": "summer",
+          "wetSeason": "Oct–Mar",
+          "drySeason": "May–Aug",
+          "rainfallSource": "nasa-power"
+        },
+        "climate": {
+          "meanTemp": 18.1,
+          "maxTemp": 42.1,
+          "minTemp": -2.3,
+          "monthlyTemp": [
+            22.72,
+            22.25,
+            20.78,
+            17.67,
+            14.78,
+            11.6,
+            11.54,
+            14.43,
+            17.92,
+            19.83,
+            21.08,
+            22.4
+          ],
+          "solarRadiation": 5.3,
+          "koppen": "Dwb",
+          "koppenDesc": "Cold continental highland",
+          "windSpeed": 2.2,
+          "windFromSummer": "E",
+          "windFromWinter": "NW"
+        },
+        "soil": {
+          "textureClass": "Loam",
+          "ph": 6.5,
+          "organicCarbon": 1.2,
+          "clay": 25,
+          "sand": 45,
+          "silt": 30,
+          "bulkDensity": 1.3,
+          "soilSource": "lab"
+        },
+        "elevation": {
+          "elevation": 962,
+          "slopeDeg": 1.3,
+          "slopePct": 2.3,
+          "aspectDeg": 355,
+          "aspectLabel": "N"
+        },
+        "vegetation": {
+          "vegUnit": "Thukela Thornveld",
+          "biome": "Savanna",
+          "bioregion": "Sub-Escarpment Savanna Bioregion"
+        },
+        "bru": {
+          "brucode": "Tc1",
+          "bruParent": "Tc1",
+          "map": 723,
+          "tmin": -6.5,
+          "tmean": 18.1,
+          "tmax": 40.1,
+          "nearestBrg": "Dry Tall Grassveld",
+          "isApproximateName": true,
+          "attribution": "Zone data: KZN DARD Bioresource Units"
+        }
+      },
+      "expected": {
+        "en": {
+          "one": [
+            {
+              "title": "Original Ṱhoho {count} farm",
+              "lines": [
+                "28.6280°S, 29.8910°E",
+                "Mapped boundary: Not recorded",
+                "Mapped growing area: 128 m²",
+                "Vegetable beds: 7 · 44 m²",
+                "Staple plots: 4 · 84 m²",
+                "Mapped space is not confirmation that all of it is currently in production.",
+                "Annual rainfall estimate: 791 mm",
+                "Soil: pH 6.5 · lab result",
+                "Stated tank capacity in the design: 2 500 L",
+                "Capacity is not water currently available; check which tanks are already installed.",
+                "Crop rows: 15",
+                "Garlic · Bed 6 · sow: May · once only: May · includes an existing crop",
+                "Onions · Bed 1 · sow: Mar · once only: Mar · includes an existing crop",
+                "Butternut · Bed 3 · sow: Dec",
+                "Swiss chard (spinach) · Bed 5 · sow: Apr · once only: Apr · includes an existing crop",
+                "More crop rows are listed in the five-page or full report.",
+                "Priced infrastructure subtotal: R 15 890",
+                "Lines awaiting a price or measurement: 2",
+                "Planned budget, not actual spending. A missing price is not zero. Obtain current local quotes.",
+                "Next: verify the land measurements, soil and water supply; confirm the crop plan and obtain missing quotes."
+              ]
+            }
+          ],
+          "five": [
+            {
+              "title": "Original Ṱhoho {count} farm",
+              "lines": [
+                "28.6280°S, 29.8910°E",
+                "Mapped boundary: Not recorded",
+                "Mapped growing area: 128 m²",
+                "Vegetable beds: 7 · 44 m²",
+                "Staple plots: 4 · 84 m²",
+                "Mapped space is not confirmation that all of it is currently in production.",
+                "Annual rainfall estimate: 791 mm",
+                "Soil: pH 6.5 · lab result",
+                "Stated tank capacity in the design: 2 500 L",
+                "Capacity is not water currently available; check which tanks are already installed."
+              ]
+            },
+            {
+              "title": "Crop plan",
+              "lines": [
+                "This is the saved planting plan, not a harvest or sales record. Check actual bed clearance before each next planting.",
+                "For seed quantities, use the crop planner’s seed list. Do not buy seed from an inferred yield or monthly availability chart.",
+                "Garlic · Bed 6 · sow: May · once only: May · includes an existing crop",
+                "Onions · Bed 1 · sow: Mar · once only: Mar · includes an existing crop",
+                "Butternut · Bed 3 · sow: Dec",
+                "Swiss chard (spinach) · Bed 5 · sow: Apr · once only: Apr · includes an existing crop",
+                "Tomatoes · Bed 4 · sow: Oct",
+                "Maize (mielies) · Bed 7 · sow: Oct",
+                "Green beans · Bed 5 · sow: Oct",
+                "Lettuce · Bed 2, Bed 3 · sow: May, Sep · once only: May · includes an existing crop",
+                "Broccoli · Bed 6 · sow: Feb",
+                "Sweet potato · Bed 6 · sow: Oct",
+                "Cabbage · Bed 1, Bed 2 · sow: Mar · once only: Mar · includes an existing crop",
+                "Carrots · Bed 2, Bed 4 · sow: Apr"
+              ]
+            },
+            {
+              "title": "Water, soil and the mapped site",
+              "lines": [
+                "Soil: pH 6.5 · lab result",
+                "Stated tank capacity in the design: 2 500 L",
+                "Capacity is not water currently available; check which tanks are already installed.",
+                "Traced roof: Not recorded",
+                "Rainwater tank (2500 L) ×1 · planned",
+                "Swale (on-contour earthwork): 34 m",
+                "Path: 18.5 m",
+                "Greywater line: 10.5 m",
+                "Confirm water reliability, drainage and soil condition on the ground before construction or amendment purchases."
+              ]
+            },
+            {
+              "title": "Bill of quantities",
+              "lines": [
+                "Priced infrastructure subtotal: R 15 890",
+                "Lines awaiting a price or measurement: 2",
+                "Planned budget, not actual spending. A missing price is not zero. Obtain current local quotes.",
+                "Rainwater tank (2500 L) (2 500 L) · 1 no. · R 5 500",
+                "Swale (on-contour earthwork) · 34 m · R 2 040",
+                "Path · 18.5 m · R 1 480",
+                "Greywater line · 10.5 m · quote / measurement needed",
+                "Vegetable beds established (7 beds) · 44 m² · R 5 280",
+                "Staple plots established (4 plots) · 84 m² · quote / measurement needed",
+                "Moringa Tree · 2 no. · R 160",
+                "Avocado Tree · 1 no. · R 450",
+                "Compost bays · 1 no. · R 600",
+                "Mango Tree · 1 no. · R 300",
+                "Natal Plum · 1 no. · R 80"
+              ]
+            },
+            {
+              "title": "Next actions and checks",
+              "lines": [
+                "Confirm what is already on the site and what is still proposed. Keep the saved design as the reference.",
+                "Check the crop plan against the real beds and seasonal conditions. A planned sowing is not proof of planting.",
+                "Record harvest weight, food kept or donated, sales and costs with their dates.",
+                "Check production area on site before reporting hectares to a funder. Count each physical bed once.",
+                "Agree support actions with the farmer. At review, record what improved, what did not and what needs to change.",
+                "This summary uses saved measurements and plan quantities. Read the full report for detailed advice, assumptions and source notes."
+              ]
+            }
+          ],
+          "full": "## report basis\n\nThis ready-to-read sample is assembled from the saved site and design records. It is not a new AI analysis or an independently verified assessment. Sample finances, soil examples and household examples remain illustrative wherever labelled. Planned areas and infrastructure do not establish completed work.\n\n## Original Ṱhoho {count} farm\n\n- 28.6280°S, 29.8910°E\n- Mapped boundary: Not recorded\n- Mapped growing area: 128 m²\n- Vegetable beds: 7 · 44 m²\n- Staple plots: 4 · 84 m²\n- Mapped space is not confirmation that all of it is currently in production.\n- Annual rainfall estimate: 791 mm\n- Soil: pH 6.5 · lab result\n- Stated tank capacity in the design: 2 500 L\n- Capacity is not water currently available; check which tanks are already installed.\n\n## Crop plan\n\n- This is the saved planting plan, not a harvest or sales record. Check actual bed clearance before each next planting.\n- For seed quantities, use the crop planner’s seed list. Do not buy seed from an inferred yield or monthly availability chart.\n- Garlic · Bed 6 · sow: May · once only: May · includes an existing crop\n- Onions · Bed 1 · sow: Mar · once only: Mar · includes an existing crop\n- Butternut · Bed 3 · sow: Dec\n- Swiss chard (spinach) · Bed 5 · sow: Apr · once only: Apr · includes an existing crop\n- Tomatoes · Bed 4 · sow: Oct\n- Maize (mielies) · Bed 7 · sow: Oct\n- Green beans · Bed 5 · sow: Oct\n- Lettuce · Bed 2, Bed 3 · sow: May, Sep · once only: May · includes an existing crop\n- Broccoli · Bed 6 · sow: Feb\n- Sweet potato · Bed 6 · sow: Oct\n- Cabbage · Bed 1, Bed 2 · sow: Mar · once only: Mar · includes an existing crop\n- Carrots · Bed 2, Bed 4 · sow: Apr\n\n## Water, soil and the mapped site\n\n- Soil: pH 6.5 · lab result\n- Stated tank capacity in the design: 2 500 L\n- Capacity is not water currently available; check which tanks are already installed.\n- Traced roof: Not recorded\n- Rainwater tank (2500 L) ×1 · planned\n- Swale (on-contour earthwork): 34 m\n- Path: 18.5 m\n- Greywater line: 10.5 m\n- Confirm water reliability, drainage and soil condition on the ground before construction or amendment purchases.\n\n## Bill of quantities\n\n- Priced infrastructure subtotal: R 15 890\n- Lines awaiting a price or measurement: 2\n- Planned budget, not actual spending. A missing price is not zero. Obtain current local quotes.\n- Rainwater tank (2500 L) (2 500 L) · 1 no. · R 5 500\n- Swale (on-contour earthwork) · 34 m · R 2 040\n- Path · 18.5 m · R 1 480\n- Greywater line · 10.5 m · quote / measurement needed\n- Vegetable beds established (7 beds) · 44 m² · R 5 280\n- Staple plots established (4 plots) · 84 m² · quote / measurement needed\n- Moringa Tree · 2 no. · R 160\n- Avocado Tree · 1 no. · R 450\n- Compost bays · 1 no. · R 600\n- Mango Tree · 1 no. · R 300\n- Natal Plum · 1 no. · R 80\n\n## Next actions and checks\n\n- Confirm what is already on the site and what is still proposed. Keep the saved design as the reference.\n- Check the crop plan against the real beds and seasonal conditions. A planned sowing is not proof of planting.\n- Record harvest weight, food kept or donated, sales and costs with their dates.\n- Check production area on site before reporting hectares to a funder. Count each physical bed once.\n- Agree support actions with the farmer. At review, record what improved, what did not and what needs to change.\n- This summary uses saved measurements and plan quantities. Read the full report for detailed advice, assumptions and source notes.\n\n## Full design inventory\n\n- Moringa Tree × 2 · proposed\n- Avocado Tree × 1 · proposed\n- Compost bays × 1 · proposed\n- Mango Tree × 1 · proposed\n- Natal Plum × 1 · proposed\n- Rainwater tank (2500 L) × 1 · proposed\n\n## Production spaces\n\n- Bed 1 · 6 m² · bed\n- Bed 2 · 6 m² · bed\n- Bed 3 · 6 m² · bed\n- Bed 4 · 6 m² · bed\n- Bed 5 · 6 m² · bed\n- Bed 6 · 8 m² · bed\n- Bed 7 · 6 m² · bed\n- Plot 1 · 21 m² · plot\n- Plot 2 · 21 m² · plot\n- Plot 3 · 21 m² · plot\n- Plot 4 · 21 m² · plot\n\n## Evidence and limitations\n\nSite photos and map plates, where available, are shown separately in this report. An AI-generated reference photograph is not evidence of the real site. Missing measurements, quotes or records remain missing. Review the site, dates and evidence with the implementing organisation before using this example for a funding decision."
+        },
+        "zu": {
+          "one": [
+            {
+              "title": "Original Ṱhoho {count} farm",
+              "lines": [
+                "28.6280°S, 29.8910°E",
+                "Umngcele obalazwe: Akubhaliwe",
+                "Indawo yokutshala ebalazwe: 128 m²",
+                "Imibhede yemifino: 7 · 44 m²",
+                "Iziza zezitshalo eziyisisekelo: 4 · 84 m²",
+                "Indawo ebalazwe ayiqinisekisi ukuthi yonke isatshaliwe njengamanje.",
+                "Isilinganiso semvula yonyaka: 791 mm",
+                "Umhlabathi: pH 6.5 · umphumela wokuhlolwa",
+                "Umthamo wamathangi obhalwe emklamweni: 2 500 L",
+                "Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.",
+                "Imigqa yezitshalo: 15",
+                "Garlic · Bed 6 · hlwanyela: May · kanye kuphela: May · kufaka isitshalo esesikhona",
+                "Onions · Bed 1 · hlwanyela: Mar · kanye kuphela: Mar · kufaka isitshalo esesikhona",
+                "Butternut · Bed 3 · hlwanyela: Dec",
+                "Swiss chard (spinach) · Bed 5 · hlwanyela: Apr · kanye kuphela: Apr · kufaka isitshalo esesikhona",
+                "Eminye imigqa yezitshalo isembikweni wamakhasi amahlanu noma ogcwele.",
+                "Isamba sezindleko zengqalasizinda ezinentengo: R 15 890",
+                "Imigqa elinde intengo noma isilinganiso: 2",
+                "Lena ibhajethi ehleliwe, akuzona izimali esezisetshenzisiwe. Intengo engekho ayisho uziro. Thola amanani akamuva endaweni.",
+                "Okulandelayo: qinisekisa izilinganiso zomhlaba, umhlabathi namanzi; qinisekisa uhlelo lwezitshalo uthole namanani angekho."
+              ]
+            }
+          ],
+          "five": [
+            {
+              "title": "Original Ṱhoho {count} farm",
+              "lines": [
+                "28.6280°S, 29.8910°E",
+                "Umngcele obalazwe: Akubhaliwe",
+                "Indawo yokutshala ebalazwe: 128 m²",
+                "Imibhede yemifino: 7 · 44 m²",
+                "Iziza zezitshalo eziyisisekelo: 4 · 84 m²",
+                "Indawo ebalazwe ayiqinisekisi ukuthi yonke isatshaliwe njengamanje.",
+                "Isilinganiso semvula yonyaka: 791 mm",
+                "Umhlabathi: pH 6.5 · umphumela wokuhlolwa",
+                "Umthamo wamathangi obhalwe emklamweni: 2 500 L",
+                "Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe."
+              ]
+            },
+            {
+              "title": "Uhlelo lwezitshalo",
+              "lines": [
+                "Lolu uhlelo lokutshala olugciniwe, alulona irekhodi lesivuno noma ukuthengisa. Hlola ukuthi umbhede usukhululekile ngaphambi kokutshala okulandelayo.",
+                "Ngobuningi bembewu, sebenzisa uhlu lwembewu kuhlelo lwezitshalo. Ungathengi imbewu ngokwesivuno esiqageliwe noma ishadi lokutholakala kwenyanga.",
+                "Garlic · Bed 6 · hlwanyela: May · kanye kuphela: May · kufaka isitshalo esesikhona",
+                "Onions · Bed 1 · hlwanyela: Mar · kanye kuphela: Mar · kufaka isitshalo esesikhona",
+                "Butternut · Bed 3 · hlwanyela: Dec",
+                "Swiss chard (spinach) · Bed 5 · hlwanyela: Apr · kanye kuphela: Apr · kufaka isitshalo esesikhona",
+                "Tomatoes · Bed 4 · hlwanyela: Oct",
+                "Maize (mielies) · Bed 7 · hlwanyela: Oct",
+                "Green beans · Bed 5 · hlwanyela: Oct",
+                "Lettuce · Bed 2, Bed 3 · hlwanyela: May, Sep · kanye kuphela: May · kufaka isitshalo esesikhona",
+                "Broccoli · Bed 6 · hlwanyela: Feb",
+                "Sweet potato · Bed 6 · hlwanyela: Oct",
+                "Cabbage · Bed 1, Bed 2 · hlwanyela: Mar · kanye kuphela: Mar · kufaka isitshalo esesikhona",
+                "Carrots · Bed 2, Bed 4 · hlwanyela: Apr"
+              ]
+            },
+            {
+              "title": "Amanzi, umhlabathi nendawo ebalazwe",
+              "lines": [
+                "Umhlabathi: pH 6.5 · umphumela wokuhlolwa",
+                "Umthamo wamathangi obhalwe emklamweni: 2 500 L",
+                "Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.",
+                "Uphahla olulinganisiwe: Akubhaliwe",
+                "Rainwater tank (2500 L) ×1 · ihleliwe",
+                "Swale (on-contour earthwork): 34 m",
+                "Path: 18.5 m",
+                "Greywater line: 10.5 m",
+                "Qinisekisa ukutholakala kwamanzi, ukuphuma kwamanzi nesimo somhlabathi ngaphambi kokwakha noma ukuthenga izinto zokulungisa umhlabathi."
+              ]
+            },
+            {
+              "title": "Uhlu lobuningi nezindleko",
+              "lines": [
+                "Isamba sezindleko zengqalasizinda ezinentengo: R 15 890",
+                "Imigqa elinde intengo noma isilinganiso: 2",
+                "Lena ibhajethi ehleliwe, akuzona izimali esezisetshenzisiwe. Intengo engekho ayisho uziro. Thola amanani akamuva endaweni.",
+                "Rainwater tank (2500 L) (2 500 L) · 1 no. · R 5 500",
+                "Swale (on-contour earthwork) · 34 m · R 2 040",
+                "Path · 18.5 m · R 1 480",
+                "Greywater line · 10.5 m · kudingeka intengo / isilinganiso",
+                "Vegetable beds established (7 beds) · 44 m² · R 5 280",
+                "Staple plots established (4 plots) · 84 m² · kudingeka intengo / isilinganiso",
+                "Moringa Tree · 2 no. · R 160",
+                "Avocado Tree · 1 no. · R 450",
+                "Compost bays · 1 no. · R 600",
+                "Mango Tree · 1 no. · R 300",
+                "Natal Plum · 1 no. · R 80"
+              ]
+            },
+            {
+              "title": "Izinyathelo ezilandelayo nokuhlola",
+              "lines": [
+                "Qinisekisa okukhona endaweni nokusahleliwe. Sebenzisa umklamo ogciniwe njengereferensi.",
+                "Qhathanisa uhlelo lwezitshalo nemibhede yangempela nezimo zesizini. Ukuhlwanyela okuhleliwe akubona ubufakazi bokuthi sekutshaliwe.",
+                "Bhala isisindo sesivuno, ukudla okugciniwe noma okunikelwe, ukuthengisa nezindleko kanye nezinsuku zakho.",
+                "Hlola indawo ekhiqizayo ngaphambi kokubika amahektha kumxhasi. Bala umbhede ngamunye kanye.",
+                "Vumelana nomlimi ngezinyathelo zosizo. Ekubuyekezeni, bhala okuthuthukile, okungathuthukanga nokudinga ukushintsha.",
+                "Lesi sifinyezo sisebenzisa izilinganiso ezigciniwe nobuningi bohlelo. Funda umbiko ogcwele ngezeluleko eziningiliziwe, okucatshangiwe namanothi emithombo."
+              ]
+            }
+          ],
+          "full": "## Isisekelo sombiko\n\nLesi yisibonelo esilungiselelwe ukufundeka, esakhiwe ngamarekhodi agciniwe endawo nawomklamo. Asikona ukuhlaziywa okusha kwe-AI noma ukuhlolwa okuzimele okuqinisekisiwe. Izibonelo zezimali, zomhlabathi nezasekhaya ziyizibonelo zokubonisa kuphela uma zibhalwe kanjalo. Izindawo nengqalasizinda okuhleliwe akufakazeli ukuthi umsebenzi usuqediwe.\n\n## Original Ṱhoho {count} farm\n\n- 28.6280°S, 29.8910°E\n- Umngcele obalazwe: Akubhaliwe\n- Indawo yokutshala ebalazwe: 128 m²\n- Imibhede yemifino: 7 · 44 m²\n- Iziza zezitshalo eziyisisekelo: 4 · 84 m²\n- Indawo ebalazwe ayiqinisekisi ukuthi yonke isatshaliwe njengamanje.\n- Isilinganiso semvula yonyaka: 791 mm\n- Umhlabathi: pH 6.5 · umphumela wokuhlolwa\n- Umthamo wamathangi obhalwe emklamweni: 2 500 L\n- Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.\n\n## Uhlelo lwezitshalo\n\n- Lolu uhlelo lokutshala olugciniwe, alulona irekhodi lesivuno noma ukuthengisa. Hlola ukuthi umbhede usukhululekile ngaphambi kokutshala okulandelayo.\n- Ngobuningi bembewu, sebenzisa uhlu lwembewu kuhlelo lwezitshalo. Ungathengi imbewu ngokwesivuno esiqageliwe noma ishadi lokutholakala kwenyanga.\n- Garlic · Bed 6 · hlwanyela: May · kanye kuphela: May · kufaka isitshalo esesikhona\n- Onions · Bed 1 · hlwanyela: Mar · kanye kuphela: Mar · kufaka isitshalo esesikhona\n- Butternut · Bed 3 · hlwanyela: Dec\n- Swiss chard (spinach) · Bed 5 · hlwanyela: Apr · kanye kuphela: Apr · kufaka isitshalo esesikhona\n- Tomatoes · Bed 4 · hlwanyela: Oct\n- Maize (mielies) · Bed 7 · hlwanyela: Oct\n- Green beans · Bed 5 · hlwanyela: Oct\n- Lettuce · Bed 2, Bed 3 · hlwanyela: May, Sep · kanye kuphela: May · kufaka isitshalo esesikhona\n- Broccoli · Bed 6 · hlwanyela: Feb\n- Sweet potato · Bed 6 · hlwanyela: Oct\n- Cabbage · Bed 1, Bed 2 · hlwanyela: Mar · kanye kuphela: Mar · kufaka isitshalo esesikhona\n- Carrots · Bed 2, Bed 4 · hlwanyela: Apr\n\n## Amanzi, umhlabathi nendawo ebalazwe\n\n- Umhlabathi: pH 6.5 · umphumela wokuhlolwa\n- Umthamo wamathangi obhalwe emklamweni: 2 500 L\n- Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.\n- Uphahla olulinganisiwe: Akubhaliwe\n- Rainwater tank (2500 L) ×1 · ihleliwe\n- Swale (on-contour earthwork): 34 m\n- Path: 18.5 m\n- Greywater line: 10.5 m\n- Qinisekisa ukutholakala kwamanzi, ukuphuma kwamanzi nesimo somhlabathi ngaphambi kokwakha noma ukuthenga izinto zokulungisa umhlabathi.\n\n## Uhlu lobuningi nezindleko\n\n- Isamba sezindleko zengqalasizinda ezinentengo: R 15 890\n- Imigqa elinde intengo noma isilinganiso: 2\n- Lena ibhajethi ehleliwe, akuzona izimali esezisetshenzisiwe. Intengo engekho ayisho uziro. Thola amanani akamuva endaweni.\n- Rainwater tank (2500 L) (2 500 L) · 1 no. · R 5 500\n- Swale (on-contour earthwork) · 34 m · R 2 040\n- Path · 18.5 m · R 1 480\n- Greywater line · 10.5 m · kudingeka intengo / isilinganiso\n- Vegetable beds established (7 beds) · 44 m² · R 5 280\n- Staple plots established (4 plots) · 84 m² · kudingeka intengo / isilinganiso\n- Moringa Tree · 2 no. · R 160\n- Avocado Tree · 1 no. · R 450\n- Compost bays · 1 no. · R 600\n- Mango Tree · 1 no. · R 300\n- Natal Plum · 1 no. · R 80\n\n## Izinyathelo ezilandelayo nokuhlola\n\n- Qinisekisa okukhona endaweni nokusahleliwe. Sebenzisa umklamo ogciniwe njengereferensi.\n- Qhathanisa uhlelo lwezitshalo nemibhede yangempela nezimo zesizini. Ukuhlwanyela okuhleliwe akubona ubufakazi bokuthi sekutshaliwe.\n- Bhala isisindo sesivuno, ukudla okugciniwe noma okunikelwe, ukuthengisa nezindleko kanye nezinsuku zakho.\n- Hlola indawo ekhiqizayo ngaphambi kokubika amahektha kumxhasi. Bala umbhede ngamunye kanye.\n- Vumelana nomlimi ngezinyathelo zosizo. Ekubuyekezeni, bhala okuthuthukile, okungathuthukanga nokudinga ukushintsha.\n- Lesi sifinyezo sisebenzisa izilinganiso ezigciniwe nobuningi bohlelo. Funda umbiko ogcwele ngezeluleko eziningiliziwe, okucatshangiwe namanothi emithombo.\n\n## Uhlu oluphelele lomklamo\n\n- Moringa Tree × 2 · okuhleliwe\n- Avocado Tree × 1 · okuhleliwe\n- Compost bays × 1 · okuhleliwe\n- Mango Tree × 1 · okuhleliwe\n- Natal Plum × 1 · okuhleliwe\n- Rainwater tank (2500 L) × 1 · okuhleliwe\n\n## Izindawo zokukhiqiza\n\n- Bed 1 · 6 m² · umbhede\n- Bed 2 · 6 m² · umbhede\n- Bed 3 · 6 m² · umbhede\n- Bed 4 · 6 m² · umbhede\n- Bed 5 · 6 m² · umbhede\n- Bed 6 · 8 m² · umbhede\n- Bed 7 · 6 m² · umbhede\n- Plot 1 · 21 m² · isiza\n- Plot 2 · 21 m² · isiza\n- Plot 3 · 21 m² · isiza\n- Plot 4 · 21 m² · isiza\n\n## Ubufakazi nemikhawulo\n\nIzithombe zendawo namamephu, uma zikhona, ziboniswa ngokwehlukana kulo mbiko. Isithombe esiyisibonelo esikhiqizwe yi-AI asibona ubufakazi bendawo yangempela. Izilinganiso, amanani noma amarekhodi angekho zihlala zingekho. Buyekeza indawo, izinsuku nobufakazi nenhlangano ezosebenzisa uhlelo ngaphambi kokusebenzisa lesi sibonelo esinqumweni sokuxhasa ngezimali."
+        }
+      }
+    },
+    {
+      "name": "modelled soil",
+      "facts": {
+        "productionEnterpriseChoices": {},
+        "productionItems": [
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "veg_bed"
+          },
+          {
+            "defId": "jojo_2500"
+          },
+          {
+            "defId": "compost_bay"
+          },
+          {
+            "defId": "tree_mango"
+          },
+          {
+            "defId": "tree_avocado"
+          },
+          {
+            "defId": "tree_natal_plum"
+          },
+          {
+            "defId": "tree_moringa"
+          },
+          {
+            "defId": "tree_moringa"
+          }
+        ],
+        "design": {
+          "beds": [
+            {
+              "label": "Bed 1",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 2",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 3",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 4",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 5",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 6",
+              "areaM2": 8,
+              "kind": "bed"
+            },
+            {
+              "label": "Bed 7",
+              "areaM2": 6,
+              "kind": "bed"
+            },
+            {
+              "label": "Plot 1",
+              "areaM2": 21,
+              "kind": "plot"
+            },
+            {
+              "label": "Plot 2",
+              "areaM2": 21,
+              "kind": "plot"
+            },
+            {
+              "label": "Plot 3",
+              "areaM2": 21,
+              "kind": "plot"
+            },
+            {
+              "label": "Plot 4",
+              "areaM2": 21,
+              "kind": "plot"
+            }
+          ],
+          "bedCount": 7,
+          "bedAreaM2": 44,
+          "plotCount": 4,
+          "plotAreaM2": 84,
+          "growingAreaM2": 128,
+          "elements": [
+            {
+              "name": "Moringa Tree",
+              "category": "growing",
+              "count": 2,
+              "status": "proposed",
+              "defId": "tree_moringa"
+            },
+            {
+              "name": "Avocado Tree",
+              "category": "growing",
+              "count": 1,
+              "status": "proposed",
+              "defId": "tree_avocado"
+            },
+            {
+              "name": "Compost bays",
+              "category": "structure",
+              "count": 1,
+              "status": "proposed",
+              "defId": "compost_bay"
+            },
+            {
+              "name": "Mango Tree",
+              "category": "growing",
+              "count": 1,
+              "status": "proposed",
+              "defId": "tree_mango"
+            },
+            {
+              "name": "Natal Plum",
+              "category": "growing",
+              "count": 1,
+              "status": "proposed",
+              "defId": "tree_natal_plum"
+            },
+            {
+              "name": "Rainwater tank (2500 L)",
+              "category": "water",
+              "count": 1,
+              "status": "proposed",
+              "defId": "jojo_2500"
+            }
+          ],
+          "routes": [
+            {
+              "label": "Swale (on-contour earthwork)",
+              "count": 1,
+              "totalLengthM": 34,
+              "kind": "swale"
+            },
+            {
+              "label": "Path",
+              "count": 1,
+              "totalLengthM": 18.5,
+              "kind": "path"
+            },
+            {
+              "label": "Greywater line",
+              "count": 1,
+              "totalLengthM": 10.5,
+              "kind": "greywater"
+            }
+          ],
+          "zones": [
+            {
+              "zone": 1,
+              "label": "Daily garden",
+              "areaM2": 143,
+              "contains": [
+                "Rainwater tank (2500 L)",
+                "Compost bays"
+              ],
+              "staplePlots": 0
+            },
+            {
+              "zone": 2,
+              "label": "Garden & orchard",
+              "areaM2": 137,
+              "contains": [
+                "Bed 1",
+                "Bed 2",
+                "Bed 3",
+                "Bed 4",
+                "Bed 5",
+                "Bed 6",
+                "Bed 7"
+              ],
+              "staplePlots": 0
+            },
+            {
+              "zone": 3,
+              "label": "Field crops",
+              "areaM2": 180,
+              "contains": [
+                "Mango Tree",
+                "Avocado Tree",
+                "Natal Plum",
+                "Moringa Tree x2"
+              ],
+              "staplePlots": 0
+            },
+            {
+              "zone": 5,
+              "label": "Natural habitat",
+              "areaM2": 60,
+              "contains": [],
+              "staplePlots": 0
+            }
+          ],
+          "savedAt": "2026-10-21"
+        },
+        "water": {
+          "tanks": [
+            {
+              "name": "Rainwater tank (2500 L)",
+              "count": 1,
+              "statedLitres": 2500,
+              "status": "proposed"
+            }
+          ],
+          "statedStorageLitres": 2500,
+          "tanksOfUnknownCapacity": 0,
+          "mapPoints": [],
+          "bodies": []
+        },
+        "measurements": {
+          "dailyWaterUseL": 200
+        },
+        "crop": {
+          "snapshot": {
+            "siteId": "qa-summary-translation",
+            "capturedAt": "2026-10-21T11:59:04.830Z",
+            "planUpdatedAt": 1792583944828,
+            "beds": [
+              {
+                "id": "demo-bed-1",
+                "label": "Bed 1",
+                "areaM2": 6,
+                "minDimM": 1.5,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-bed-2",
+                "label": "Bed 2",
+                "areaM2": 6,
+                "minDimM": 1.5,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-bed-3",
+                "label": "Bed 3",
+                "areaM2": 6,
+                "minDimM": 1.5,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-bed-4",
+                "label": "Bed 4",
+                "areaM2": 6,
+                "minDimM": 1.5,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-bed-5",
+                "label": "Bed 5",
+                "areaM2": 6,
+                "minDimM": 1.5,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-bed-6",
+                "label": "Bed 6",
+                "areaM2": 8,
+                "minDimM": 2,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-hugel-1",
+                "label": "Bed 7",
+                "areaM2": 6,
+                "minDimM": 2,
+                "kind": "bed"
+              },
+              {
+                "id": "demo-staple-1",
+                "label": "Plot 1",
+                "areaM2": 21,
+                "minDimM": 3.500016094024488,
+                "kind": "plot"
+              },
+              {
+                "id": "demo-staple-2",
+                "label": "Plot 2",
+                "areaM2": 21,
+                "minDimM": 4.200019263199479,
+                "kind": "plot"
+              },
+              {
+                "id": "demo-staple-3",
+                "label": "Plot 3",
+                "areaM2": 21,
+                "minDimM": 3.500017285142505,
+                "kind": "plot"
+              },
+              {
+                "id": "demo-staple-4",
+                "label": "Plot 4",
+                "areaM2": 21,
+                "minDimM": 3.500017285142505,
+                "kind": "plot"
+              }
+            ],
+            "plantings": [
+              {
+                "id": "demo-planting-1",
+                "bedId": "demo-bed-6",
+                "cropKey": "garlic",
+                "sowMonth": 5,
+                "areaFraction": 0.5,
+                "existing": true
+              },
+              {
+                "id": "demo-planting-2",
+                "bedId": "demo-bed-1",
+                "cropKey": "onions",
+                "sowMonth": 3,
+                "areaFraction": 0.6116666666666667,
+                "existing": true
+              },
+              {
+                "id": "demo-planting-3",
+                "bedId": "demo-bed-3",
+                "cropKey": "butternut",
+                "sowMonth": 12
+              },
+              {
+                "id": "demo-planting-4",
+                "bedId": "demo-bed-5",
+                "cropKey": "swiss-chard",
+                "sowMonth": 4,
+                "areaFraction": 0.945,
+                "existing": true
+              },
+              {
+                "id": "demo-planting-5",
+                "bedId": "demo-bed-4",
+                "cropKey": "tomatoes",
+                "sowMonth": 10,
+                "areaFraction": 0.75
+              },
+              {
+                "id": "demo-planting-6",
+                "bedId": "demo-hugel-1",
+                "cropKey": "maize",
+                "sowMonth": 10,
+                "areaFraction": 0.8333333333333334
+              },
+              {
+                "id": "demo-planting-7",
+                "bedId": "demo-bed-5",
+                "cropKey": "green-beans",
+                "sowMonth": 10,
+                "areaFraction": 0.6883333333333334
+              },
+              {
+                "id": "demo-planting-8",
+                "bedId": "demo-bed-2",
+                "cropKey": "lettuce",
+                "sowMonth": 9,
+                "areaFraction": 0.6166666666666667
+              },
+              {
+                "id": "demo-planting-9",
+                "bedId": "demo-bed-6",
+                "cropKey": "broccoli",
+                "sowMonth": 2,
+                "areaFraction": 0.46875
+              },
+              {
+                "id": "demo-planting-10",
+                "bedId": "demo-bed-6",
+                "cropKey": "sweet-potato",
+                "sowMonth": 10,
+                "areaFraction": 0.45875
+              },
+              {
+                "id": "demo-planting-11",
+                "bedId": "demo-bed-1",
+                "cropKey": "cabbage",
+                "sowMonth": 3,
+                "areaFraction": 0.38833333333333336,
+                "existing": true
+              },
+              {
+                "id": "demo-planting-12",
+                "bedId": "demo-bed-2",
+                "cropKey": "cabbage",
+                "sowMonth": 3,
+                "areaFraction": 0.145,
+                "existing": true
+              },
+              {
+                "id": "demo-planting-13",
+                "bedId": "demo-bed-2",
+                "cropKey": "carrots",
+                "sowMonth": 4,
+                "areaFraction": 0.855
+              },
+              {
+                "id": "demo-planting-14",
+                "bedId": "demo-bed-4",
+                "cropKey": "carrots",
+                "sowMonth": 4,
+                "areaFraction": 0.20166666666666666
+              },
+              {
+                "id": "demo-planting-15",
+                "bedId": "demo-bed-3",
+                "cropKey": "lettuce",
+                "sowMonth": 5,
+                "areaFraction": 0.6166666666666667,
+                "existing": true
+              }
+            ],
+            "outlines": [
+              {
+                "bedId": "demo-bed-1",
+                "points": [
+                  [
+                    28.408028475047697,
+                    27.605398947841227
+                  ],
+                  [
+                    29.908028475047697,
+                    27.605398947841227
+                  ],
+                  [
+                    29.908028475047697,
+                    31.605398947841227
+                  ],
+                  [
+                    28.408028475047697,
+                    31.605398947841227
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-bed-2",
+                "points": [
+                  [
+                    30.908039941631746,
+                    27.605398947841227
+                  ],
+                  [
+                    32.40803994163174,
+                    27.605398947841227
+                  ],
+                  [
+                    32.40803994163174,
+                    31.605398947841227
+                  ],
+                  [
+                    30.908039941631746,
+                    31.605398947841227
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-bed-3",
+                "points": [
+                  [
+                    33.4080514082158,
+                    27.605398947841227
+                  ],
+                  [
+                    34.9080514082158,
+                    27.605398947841227
+                  ],
+                  [
+                    34.9080514082158,
+                    31.605398947841227
+                  ],
+                  [
+                    33.4080514082158,
+                    31.605398947841227
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-bed-4",
+                "points": [
+                  [
+                    28.408028475047697,
+                    32.605422912208724
+                  ],
+                  [
+                    29.908028475047697,
+                    32.605422912208724
+                  ],
+                  [
+                    29.908028475047697,
+                    36.605422912208724
+                  ],
+                  [
+                    28.408028475047697,
+                    36.605422912208724
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-bed-5",
+                "points": [
+                  [
+                    30.908039941631746,
+                    32.605422912208724
+                  ],
+                  [
+                    32.40803994163174,
+                    32.605422912208724
+                  ],
+                  [
+                    32.40803994163174,
+                    36.605422912208724
+                  ],
+                  [
+                    30.908039941631746,
+                    36.605422912208724
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-bed-6",
+                "points": [
+                  [
+                    33.40805255542564,
+                    32.605422912208724
+                  ],
+                  [
+                    35.40805255542564,
+                    32.605422912208724
+                  ],
+                  [
+                    35.40805255542564,
+                    36.605422912208724
+                  ],
+                  [
+                    33.40805255542564,
+                    36.605422912208724
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-hugel-1",
+                "points": [
+                  [
+                    36.40806631642939,
+                    28.60540125328979
+                  ],
+                  [
+                    38.40806631642939,
+                    28.60540125328979
+                  ],
+                  [
+                    38.40806631642939,
+                    31.60540125328979
+                  ],
+                  [
+                    36.40806631642939,
+                    31.60540125328979
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-staple-1",
+                "points": [
+                  [
+                    41.80808649574241,
+                    28.005391718192676
+                  ],
+                  [
+                    47.8081140177499,
+                    28.005391718192676
+                  ],
+                  [
+                    47.8081140177499,
+                    31.505407812217165
+                  ],
+                  [
+                    41.80808649574241,
+                    31.505407812217165
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-staple-2",
+                "points": [
+                  [
+                    55.40814887418021,
+                    26.205383831609037
+                  ],
+                  [
+                    59.60816813737969,
+                    26.205383831609037
+                  ],
+                  [
+                    59.60816813737969,
+                    31.205406392552753
+                  ],
+                  [
+                    55.40814887418021,
+                    31.205406392552753
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-staple-3",
+                "points": [
+                  [
+                    46.40810759668341,
+                    32.10541067084652
+                  ],
+                  [
+                    52.40813511317648,
+                    32.10541067084652
+                  ],
+                  [
+                    52.40813511317648,
+                    35.60542795598902
+                  ],
+                  [
+                    46.40810759668341,
+                    35.60542795598902
+                  ]
+                ]
+              },
+              {
+                "bedId": "demo-staple-4",
+                "points": [
+                  [
+                    53.40813970201586,
+                    32.10541067084652
+                  ],
+                  [
+                    59.40816721850893,
+                    32.10541067084652
+                  ],
+                  [
+                    59.40816721850893,
+                    35.60542795598902
+                  ],
+                  [
+                    53.40813970201586,
+                    35.60542795598902
+                  ]
+                ]
+              }
+            ]
+          },
+          "plantingCount": 15,
+          "bedsPlanted": 7,
+          "crops": [
+            {
+              "name": "Garlic",
+              "sowMonths": [
+                "May"
+              ],
+              "bedLabels": [
+                "Bed 6"
+              ],
+              "alreadyGrowing": true,
+              "firstSeasonOnlyMonths": [
+                "May"
+              ]
+            },
+            {
+              "name": "Onions",
+              "sowMonths": [
+                "Mar"
+              ],
+              "bedLabels": [
+                "Bed 1"
+              ],
+              "alreadyGrowing": true,
+              "firstSeasonOnlyMonths": [
+                "Mar"
+              ]
+            },
+            {
+              "name": "Butternut",
+              "sowMonths": [
+                "Dec"
+              ],
+              "bedLabels": [
+                "Bed 3"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Swiss chard (spinach)",
+              "sowMonths": [
+                "Apr"
+              ],
+              "bedLabels": [
+                "Bed 5"
+              ],
+              "alreadyGrowing": true,
+              "firstSeasonOnlyMonths": [
+                "Apr"
+              ]
+            },
+            {
+              "name": "Tomatoes",
+              "sowMonths": [
+                "Oct"
+              ],
+              "bedLabels": [
+                "Bed 4"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Maize (mielies)",
+              "sowMonths": [
+                "Oct"
+              ],
+              "bedLabels": [
+                "Bed 7"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Green beans",
+              "sowMonths": [
+                "Oct"
+              ],
+              "bedLabels": [
+                "Bed 5"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Lettuce",
+              "sowMonths": [
+                "May",
+                "Sep"
+              ],
+              "bedLabels": [
+                "Bed 2",
+                "Bed 3"
+              ],
+              "alreadyGrowing": true,
+              "firstSeasonOnlyMonths": [
+                "May"
+              ]
+            },
+            {
+              "name": "Broccoli",
+              "sowMonths": [
+                "Feb"
+              ],
+              "bedLabels": [
+                "Bed 6"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Sweet potato",
+              "sowMonths": [
+                "Oct"
+              ],
+              "bedLabels": [
+                "Bed 6"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            },
+            {
+              "name": "Cabbage",
+              "sowMonths": [
+                "Mar"
+              ],
+              "bedLabels": [
+                "Bed 1",
+                "Bed 2"
+              ],
+              "alreadyGrowing": true,
+              "firstSeasonOnlyMonths": [
+                "Mar"
+              ]
+            },
+            {
+              "name": "Carrots",
+              "sowMonths": [
+                "Apr"
+              ],
+              "bedLabels": [
+                "Bed 2",
+                "Bed 4"
+              ],
+              "alreadyGrowing": false,
+              "firstSeasonOnlyMonths": []
+            }
+          ]
+        }
+      },
+      "location": {
+        "lat": -28.628,
+        "lon": 29.891,
+        "biome": {
+          "name": "Grassland",
+          "code": "GR",
+          "description": "Highveld temperate grassland, summer rainfall, cold frosty winters",
+          "color": "#9FC169",
+          "rainfallPattern": "summer",
+          "meanRainfall": "500–900mm",
+          "keySpecies": [
+            "Buffalo Thorn",
+            "Wild Olive",
+            "Highveld Protea",
+            "Rooigrass",
+            "Bulbine",
+            "Wild Garlic"
+          ],
+          "soilType": "Red/yellow apedal soils, moderate depth, clay-rich on Highveld",
+          "waterStrategy": "Heavy summer thunderstorms (short, intense). Keyline design on all slopes — angle swales 1:1000 off true contour to move water across hillside. Winter dry → storage essential. Roof: 1m² = 1L per 1mm rain.",
+          "soilStrategy": "Often compacted by livestock. Subsoil aeration before earthworks. Oats/vetch winter cover crops. pH usually 5.5–6.5, add agricultural lime if below 5.5. Build OM with compost + biochar.",
+          "challenges": [
+            "Hard frosts (–5°C to –10°C)",
+            "Hail",
+            "Erodible clay soils on slopes",
+            "Vlei (wetland) drainage issues"
+          ]
+        },
+        "rainfall": {
+          "monthly": [
+            133.6,
+            107,
+            86.5,
+            47.7,
+            11.8,
+            12,
+            12.1,
+            18.6,
+            36.9,
+            82.1,
+            110.7,
+            132.4
+          ],
+          "annual": 791,
+          "pattern": "summer",
+          "wetSeason": "Oct–Mar",
+          "drySeason": "May–Aug",
+          "rainfallSource": "nasa-power"
+        },
+        "climate": {
+          "meanTemp": 18.1,
+          "maxTemp": 42.1,
+          "minTemp": -2.3,
+          "monthlyTemp": [
+            22.72,
+            22.25,
+            20.78,
+            17.67,
+            14.78,
+            11.6,
+            11.54,
+            14.43,
+            17.92,
+            19.83,
+            21.08,
+            22.4
+          ],
+          "solarRadiation": 5.3,
+          "koppen": "Dwb",
+          "koppenDesc": "Cold continental highland",
+          "windSpeed": 2.2,
+          "windFromSummer": "E",
+          "windFromWinter": "NW"
+        },
+        "soil": {
+          "textureClass": "Loam",
+          "ph": 6.5,
+          "organicCarbon": 1.2,
+          "clay": 25,
+          "sand": 45,
+          "silt": 30,
+          "bulkDensity": 1.3,
+          "soilSource": "soilgrids"
+        },
+        "elevation": {
+          "elevation": 962,
+          "slopeDeg": 1.3,
+          "slopePct": 2.3,
+          "aspectDeg": 355,
+          "aspectLabel": "N"
+        },
+        "vegetation": {
+          "vegUnit": "Thukela Thornveld",
+          "biome": "Savanna",
+          "bioregion": "Sub-Escarpment Savanna Bioregion"
+        },
+        "bru": {
+          "brucode": "Tc1",
+          "bruParent": "Tc1",
+          "map": 723,
+          "tmin": -6.5,
+          "tmean": 18.1,
+          "tmax": 40.1,
+          "nearestBrg": "Dry Tall Grassveld",
+          "isApproximateName": true,
+          "attribution": "Zone data: KZN DARD Bioresource Units"
+        }
+      },
+      "expected": {
+        "en": {
+          "one": [
+            {
+              "title": "Site summary",
+              "lines": [
+                "28.6280°S, 29.8910°E",
+                "Mapped boundary: Not recorded",
+                "Mapped growing area: 128 m²",
+                "Vegetable beds: 7 · 44 m²",
+                "Staple plots: 4 · 84 m²",
+                "Mapped space is not confirmation that all of it is currently in production.",
+                "Annual rainfall estimate: 791 mm",
+                "Soil: pH 6.5 · SoilGrids model; confirm on site",
+                "Stated tank capacity in the design: 2 500 L",
+                "Capacity is not water currently available; check which tanks are already installed.",
+                "Crop rows: 15",
+                "Garlic · Bed 6 · sow: May · once only: May · includes an existing crop",
+                "Onions · Bed 1 · sow: Mar · once only: Mar · includes an existing crop",
+                "Butternut · Bed 3 · sow: Dec",
+                "Swiss chard (spinach) · Bed 5 · sow: Apr · once only: Apr · includes an existing crop",
+                "More crop rows are listed in the five-page or full report.",
+                "Priced infrastructure subtotal: R 15 890",
+                "Lines awaiting a price or measurement: 2",
+                "Planned budget, not actual spending. A missing price is not zero. Obtain current local quotes.",
+                "Next: verify the land measurements, soil and water supply; confirm the crop plan and obtain missing quotes."
+              ]
+            }
+          ],
+          "five": [
+            {
+              "title": "Site summary",
+              "lines": [
+                "28.6280°S, 29.8910°E",
+                "Mapped boundary: Not recorded",
+                "Mapped growing area: 128 m²",
+                "Vegetable beds: 7 · 44 m²",
+                "Staple plots: 4 · 84 m²",
+                "Mapped space is not confirmation that all of it is currently in production.",
+                "Annual rainfall estimate: 791 mm",
+                "Soil: pH 6.5 · SoilGrids model; confirm on site",
+                "Stated tank capacity in the design: 2 500 L",
+                "Capacity is not water currently available; check which tanks are already installed."
+              ]
+            },
+            {
+              "title": "Crop plan",
+              "lines": [
+                "This is the saved planting plan, not a harvest or sales record. Check actual bed clearance before each next planting.",
+                "For seed quantities, use the crop planner’s seed list. Do not buy seed from an inferred yield or monthly availability chart.",
+                "Garlic · Bed 6 · sow: May · once only: May · includes an existing crop",
+                "Onions · Bed 1 · sow: Mar · once only: Mar · includes an existing crop",
+                "Butternut · Bed 3 · sow: Dec",
+                "Swiss chard (spinach) · Bed 5 · sow: Apr · once only: Apr · includes an existing crop",
+                "Tomatoes · Bed 4 · sow: Oct",
+                "Maize (mielies) · Bed 7 · sow: Oct",
+                "Green beans · Bed 5 · sow: Oct",
+                "Lettuce · Bed 2, Bed 3 · sow: May, Sep · once only: May · includes an existing crop",
+                "Broccoli · Bed 6 · sow: Feb",
+                "Sweet potato · Bed 6 · sow: Oct",
+                "Cabbage · Bed 1, Bed 2 · sow: Mar · once only: Mar · includes an existing crop",
+                "Carrots · Bed 2, Bed 4 · sow: Apr"
+              ]
+            },
+            {
+              "title": "Water, soil and the mapped site",
+              "lines": [
+                "Soil: pH 6.5 · SoilGrids model; confirm on site",
+                "Stated tank capacity in the design: 2 500 L",
+                "Capacity is not water currently available; check which tanks are already installed.",
+                "Traced roof: Not recorded",
+                "Rainwater tank (2500 L) ×1 · planned",
+                "Swale (on-contour earthwork): 34 m",
+                "Path: 18.5 m",
+                "Greywater line: 10.5 m",
+                "Confirm water reliability, drainage and soil condition on the ground before construction or amendment purchases."
+              ]
+            },
+            {
+              "title": "Bill of quantities",
+              "lines": [
+                "Priced infrastructure subtotal: R 15 890",
+                "Lines awaiting a price or measurement: 2",
+                "Planned budget, not actual spending. A missing price is not zero. Obtain current local quotes.",
+                "Rainwater tank (2500 L) (2 500 L) · 1 no. · R 5 500",
+                "Swale (on-contour earthwork) · 34 m · R 2 040",
+                "Path · 18.5 m · R 1 480",
+                "Greywater line · 10.5 m · quote / measurement needed",
+                "Vegetable beds established (7 beds) · 44 m² · R 5 280",
+                "Staple plots established (4 plots) · 84 m² · quote / measurement needed",
+                "Moringa Tree · 2 no. · R 160",
+                "Avocado Tree · 1 no. · R 450",
+                "Compost bays · 1 no. · R 600",
+                "Mango Tree · 1 no. · R 300",
+                "Natal Plum · 1 no. · R 80"
+              ]
+            },
+            {
+              "title": "Next actions and checks",
+              "lines": [
+                "Confirm what is already on the site and what is still proposed. Keep the saved design as the reference.",
+                "Check the crop plan against the real beds and seasonal conditions. A planned sowing is not proof of planting.",
+                "Record harvest weight, food kept or donated, sales and costs with their dates.",
+                "Check production area on site before reporting hectares to a funder. Count each physical bed once.",
+                "Agree support actions with the farmer. At review, record what improved, what did not and what needs to change.",
+                "This summary uses saved measurements and plan quantities. Read the full report for detailed advice, assumptions and source notes."
+              ]
+            }
+          ],
+          "full": "## report basis\n\nThis ready-to-read sample is assembled from the saved site and design records. It is not a new AI analysis or an independently verified assessment. Sample finances, soil examples and household examples remain illustrative wherever labelled. Planned areas and infrastructure do not establish completed work.\n\n## Site summary\n\n- 28.6280°S, 29.8910°E\n- Mapped boundary: Not recorded\n- Mapped growing area: 128 m²\n- Vegetable beds: 7 · 44 m²\n- Staple plots: 4 · 84 m²\n- Mapped space is not confirmation that all of it is currently in production.\n- Annual rainfall estimate: 791 mm\n- Soil: pH 6.5 · SoilGrids model; confirm on site\n- Stated tank capacity in the design: 2 500 L\n- Capacity is not water currently available; check which tanks are already installed.\n\n## Crop plan\n\n- This is the saved planting plan, not a harvest or sales record. Check actual bed clearance before each next planting.\n- For seed quantities, use the crop planner’s seed list. Do not buy seed from an inferred yield or monthly availability chart.\n- Garlic · Bed 6 · sow: May · once only: May · includes an existing crop\n- Onions · Bed 1 · sow: Mar · once only: Mar · includes an existing crop\n- Butternut · Bed 3 · sow: Dec\n- Swiss chard (spinach) · Bed 5 · sow: Apr · once only: Apr · includes an existing crop\n- Tomatoes · Bed 4 · sow: Oct\n- Maize (mielies) · Bed 7 · sow: Oct\n- Green beans · Bed 5 · sow: Oct\n- Lettuce · Bed 2, Bed 3 · sow: May, Sep · once only: May · includes an existing crop\n- Broccoli · Bed 6 · sow: Feb\n- Sweet potato · Bed 6 · sow: Oct\n- Cabbage · Bed 1, Bed 2 · sow: Mar · once only: Mar · includes an existing crop\n- Carrots · Bed 2, Bed 4 · sow: Apr\n\n## Water, soil and the mapped site\n\n- Soil: pH 6.5 · SoilGrids model; confirm on site\n- Stated tank capacity in the design: 2 500 L\n- Capacity is not water currently available; check which tanks are already installed.\n- Traced roof: Not recorded\n- Rainwater tank (2500 L) ×1 · planned\n- Swale (on-contour earthwork): 34 m\n- Path: 18.5 m\n- Greywater line: 10.5 m\n- Confirm water reliability, drainage and soil condition on the ground before construction or amendment purchases.\n\n## Bill of quantities\n\n- Priced infrastructure subtotal: R 15 890\n- Lines awaiting a price or measurement: 2\n- Planned budget, not actual spending. A missing price is not zero. Obtain current local quotes.\n- Rainwater tank (2500 L) (2 500 L) · 1 no. · R 5 500\n- Swale (on-contour earthwork) · 34 m · R 2 040\n- Path · 18.5 m · R 1 480\n- Greywater line · 10.5 m · quote / measurement needed\n- Vegetable beds established (7 beds) · 44 m² · R 5 280\n- Staple plots established (4 plots) · 84 m² · quote / measurement needed\n- Moringa Tree · 2 no. · R 160\n- Avocado Tree · 1 no. · R 450\n- Compost bays · 1 no. · R 600\n- Mango Tree · 1 no. · R 300\n- Natal Plum · 1 no. · R 80\n\n## Next actions and checks\n\n- Confirm what is already on the site and what is still proposed. Keep the saved design as the reference.\n- Check the crop plan against the real beds and seasonal conditions. A planned sowing is not proof of planting.\n- Record harvest weight, food kept or donated, sales and costs with their dates.\n- Check production area on site before reporting hectares to a funder. Count each physical bed once.\n- Agree support actions with the farmer. At review, record what improved, what did not and what needs to change.\n- This summary uses saved measurements and plan quantities. Read the full report for detailed advice, assumptions and source notes.\n\n## Full design inventory\n\n- Moringa Tree × 2 · proposed\n- Avocado Tree × 1 · proposed\n- Compost bays × 1 · proposed\n- Mango Tree × 1 · proposed\n- Natal Plum × 1 · proposed\n- Rainwater tank (2500 L) × 1 · proposed\n\n## Production spaces\n\n- Bed 1 · 6 m² · bed\n- Bed 2 · 6 m² · bed\n- Bed 3 · 6 m² · bed\n- Bed 4 · 6 m² · bed\n- Bed 5 · 6 m² · bed\n- Bed 6 · 8 m² · bed\n- Bed 7 · 6 m² · bed\n- Plot 1 · 21 m² · plot\n- Plot 2 · 21 m² · plot\n- Plot 3 · 21 m² · plot\n- Plot 4 · 21 m² · plot\n\n## Evidence and limitations\n\nSite photos and map plates, where available, are shown separately in this report. An AI-generated reference photograph is not evidence of the real site. Missing measurements, quotes or records remain missing. Review the site, dates and evidence with the implementing organisation before using this example for a funding decision."
+        },
+        "zu": {
+          "one": [
+            {
+              "title": "Isifinyezo sendawo",
+              "lines": [
+                "28.6280°S, 29.8910°E",
+                "Umngcele obalazwe: Akubhaliwe",
+                "Indawo yokutshala ebalazwe: 128 m²",
+                "Imibhede yemifino: 7 · 44 m²",
+                "Iziza zezitshalo eziyisisekelo: 4 · 84 m²",
+                "Indawo ebalazwe ayiqinisekisi ukuthi yonke isatshaliwe njengamanje.",
+                "Isilinganiso semvula yonyaka: 791 mm",
+                "Umhlabathi: pH 6.5 · imodeli ye-SoilGrids; qinisekisa endaweni",
+                "Umthamo wamathangi obhalwe emklamweni: 2 500 L",
+                "Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.",
+                "Imigqa yezitshalo: 15",
+                "Garlic · Bed 6 · hlwanyela: May · kanye kuphela: May · kufaka isitshalo esesikhona",
+                "Onions · Bed 1 · hlwanyela: Mar · kanye kuphela: Mar · kufaka isitshalo esesikhona",
+                "Butternut · Bed 3 · hlwanyela: Dec",
+                "Swiss chard (spinach) · Bed 5 · hlwanyela: Apr · kanye kuphela: Apr · kufaka isitshalo esesikhona",
+                "Eminye imigqa yezitshalo isembikweni wamakhasi amahlanu noma ogcwele.",
+                "Isamba sezindleko zengqalasizinda ezinentengo: R 15 890",
+                "Imigqa elinde intengo noma isilinganiso: 2",
+                "Lena ibhajethi ehleliwe, akuzona izimali esezisetshenzisiwe. Intengo engekho ayisho uziro. Thola amanani akamuva endaweni.",
+                "Okulandelayo: qinisekisa izilinganiso zomhlaba, umhlabathi namanzi; qinisekisa uhlelo lwezitshalo uthole namanani angekho."
+              ]
+            }
+          ],
+          "five": [
+            {
+              "title": "Isifinyezo sendawo",
+              "lines": [
+                "28.6280°S, 29.8910°E",
+                "Umngcele obalazwe: Akubhaliwe",
+                "Indawo yokutshala ebalazwe: 128 m²",
+                "Imibhede yemifino: 7 · 44 m²",
+                "Iziza zezitshalo eziyisisekelo: 4 · 84 m²",
+                "Indawo ebalazwe ayiqinisekisi ukuthi yonke isatshaliwe njengamanje.",
+                "Isilinganiso semvula yonyaka: 791 mm",
+                "Umhlabathi: pH 6.5 · imodeli ye-SoilGrids; qinisekisa endaweni",
+                "Umthamo wamathangi obhalwe emklamweni: 2 500 L",
+                "Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe."
+              ]
+            },
+            {
+              "title": "Uhlelo lwezitshalo",
+              "lines": [
+                "Lolu uhlelo lokutshala olugciniwe, alulona irekhodi lesivuno noma ukuthengisa. Hlola ukuthi umbhede usukhululekile ngaphambi kokutshala okulandelayo.",
+                "Ngobuningi bembewu, sebenzisa uhlu lwembewu kuhlelo lwezitshalo. Ungathengi imbewu ngokwesivuno esiqageliwe noma ishadi lokutholakala kwenyanga.",
+                "Garlic · Bed 6 · hlwanyela: May · kanye kuphela: May · kufaka isitshalo esesikhona",
+                "Onions · Bed 1 · hlwanyela: Mar · kanye kuphela: Mar · kufaka isitshalo esesikhona",
+                "Butternut · Bed 3 · hlwanyela: Dec",
+                "Swiss chard (spinach) · Bed 5 · hlwanyela: Apr · kanye kuphela: Apr · kufaka isitshalo esesikhona",
+                "Tomatoes · Bed 4 · hlwanyela: Oct",
+                "Maize (mielies) · Bed 7 · hlwanyela: Oct",
+                "Green beans · Bed 5 · hlwanyela: Oct",
+                "Lettuce · Bed 2, Bed 3 · hlwanyela: May, Sep · kanye kuphela: May · kufaka isitshalo esesikhona",
+                "Broccoli · Bed 6 · hlwanyela: Feb",
+                "Sweet potato · Bed 6 · hlwanyela: Oct",
+                "Cabbage · Bed 1, Bed 2 · hlwanyela: Mar · kanye kuphela: Mar · kufaka isitshalo esesikhona",
+                "Carrots · Bed 2, Bed 4 · hlwanyela: Apr"
+              ]
+            },
+            {
+              "title": "Amanzi, umhlabathi nendawo ebalazwe",
+              "lines": [
+                "Umhlabathi: pH 6.5 · imodeli ye-SoilGrids; qinisekisa endaweni",
+                "Umthamo wamathangi obhalwe emklamweni: 2 500 L",
+                "Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.",
+                "Uphahla olulinganisiwe: Akubhaliwe",
+                "Rainwater tank (2500 L) ×1 · ihleliwe",
+                "Swale (on-contour earthwork): 34 m",
+                "Path: 18.5 m",
+                "Greywater line: 10.5 m",
+                "Qinisekisa ukutholakala kwamanzi, ukuphuma kwamanzi nesimo somhlabathi ngaphambi kokwakha noma ukuthenga izinto zokulungisa umhlabathi."
+              ]
+            },
+            {
+              "title": "Uhlu lobuningi nezindleko",
+              "lines": [
+                "Isamba sezindleko zengqalasizinda ezinentengo: R 15 890",
+                "Imigqa elinde intengo noma isilinganiso: 2",
+                "Lena ibhajethi ehleliwe, akuzona izimali esezisetshenzisiwe. Intengo engekho ayisho uziro. Thola amanani akamuva endaweni.",
+                "Rainwater tank (2500 L) (2 500 L) · 1 no. · R 5 500",
+                "Swale (on-contour earthwork) · 34 m · R 2 040",
+                "Path · 18.5 m · R 1 480",
+                "Greywater line · 10.5 m · kudingeka intengo / isilinganiso",
+                "Vegetable beds established (7 beds) · 44 m² · R 5 280",
+                "Staple plots established (4 plots) · 84 m² · kudingeka intengo / isilinganiso",
+                "Moringa Tree · 2 no. · R 160",
+                "Avocado Tree · 1 no. · R 450",
+                "Compost bays · 1 no. · R 600",
+                "Mango Tree · 1 no. · R 300",
+                "Natal Plum · 1 no. · R 80"
+              ]
+            },
+            {
+              "title": "Izinyathelo ezilandelayo nokuhlola",
+              "lines": [
+                "Qinisekisa okukhona endaweni nokusahleliwe. Sebenzisa umklamo ogciniwe njengereferensi.",
+                "Qhathanisa uhlelo lwezitshalo nemibhede yangempela nezimo zesizini. Ukuhlwanyela okuhleliwe akubona ubufakazi bokuthi sekutshaliwe.",
+                "Bhala isisindo sesivuno, ukudla okugciniwe noma okunikelwe, ukuthengisa nezindleko kanye nezinsuku zakho.",
+                "Hlola indawo ekhiqizayo ngaphambi kokubika amahektha kumxhasi. Bala umbhede ngamunye kanye.",
+                "Vumelana nomlimi ngezinyathelo zosizo. Ekubuyekezeni, bhala okuthuthukile, okungathuthukanga nokudinga ukushintsha.",
+                "Lesi sifinyezo sisebenzisa izilinganiso ezigciniwe nobuningi bohlelo. Funda umbiko ogcwele ngezeluleko eziningiliziwe, okucatshangiwe namanothi emithombo."
+              ]
+            }
+          ],
+          "full": "## Isisekelo sombiko\n\nLesi yisibonelo esilungiselelwe ukufundeka, esakhiwe ngamarekhodi agciniwe endawo nawomklamo. Asikona ukuhlaziywa okusha kwe-AI noma ukuhlolwa okuzimele okuqinisekisiwe. Izibonelo zezimali, zomhlabathi nezasekhaya ziyizibonelo zokubonisa kuphela uma zibhalwe kanjalo. Izindawo nengqalasizinda okuhleliwe akufakazeli ukuthi umsebenzi usuqediwe.\n\n## Isifinyezo sendawo\n\n- 28.6280°S, 29.8910°E\n- Umngcele obalazwe: Akubhaliwe\n- Indawo yokutshala ebalazwe: 128 m²\n- Imibhede yemifino: 7 · 44 m²\n- Iziza zezitshalo eziyisisekelo: 4 · 84 m²\n- Indawo ebalazwe ayiqinisekisi ukuthi yonke isatshaliwe njengamanje.\n- Isilinganiso semvula yonyaka: 791 mm\n- Umhlabathi: pH 6.5 · imodeli ye-SoilGrids; qinisekisa endaweni\n- Umthamo wamathangi obhalwe emklamweni: 2 500 L\n- Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.\n\n## Uhlelo lwezitshalo\n\n- Lolu uhlelo lokutshala olugciniwe, alulona irekhodi lesivuno noma ukuthengisa. Hlola ukuthi umbhede usukhululekile ngaphambi kokutshala okulandelayo.\n- Ngobuningi bembewu, sebenzisa uhlu lwembewu kuhlelo lwezitshalo. Ungathengi imbewu ngokwesivuno esiqageliwe noma ishadi lokutholakala kwenyanga.\n- Garlic · Bed 6 · hlwanyela: May · kanye kuphela: May · kufaka isitshalo esesikhona\n- Onions · Bed 1 · hlwanyela: Mar · kanye kuphela: Mar · kufaka isitshalo esesikhona\n- Butternut · Bed 3 · hlwanyela: Dec\n- Swiss chard (spinach) · Bed 5 · hlwanyela: Apr · kanye kuphela: Apr · kufaka isitshalo esesikhona\n- Tomatoes · Bed 4 · hlwanyela: Oct\n- Maize (mielies) · Bed 7 · hlwanyela: Oct\n- Green beans · Bed 5 · hlwanyela: Oct\n- Lettuce · Bed 2, Bed 3 · hlwanyela: May, Sep · kanye kuphela: May · kufaka isitshalo esesikhona\n- Broccoli · Bed 6 · hlwanyela: Feb\n- Sweet potato · Bed 6 · hlwanyela: Oct\n- Cabbage · Bed 1, Bed 2 · hlwanyela: Mar · kanye kuphela: Mar · kufaka isitshalo esesikhona\n- Carrots · Bed 2, Bed 4 · hlwanyela: Apr\n\n## Amanzi, umhlabathi nendawo ebalazwe\n\n- Umhlabathi: pH 6.5 · imodeli ye-SoilGrids; qinisekisa endaweni\n- Umthamo wamathangi obhalwe emklamweni: 2 500 L\n- Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.\n- Uphahla olulinganisiwe: Akubhaliwe\n- Rainwater tank (2500 L) ×1 · ihleliwe\n- Swale (on-contour earthwork): 34 m\n- Path: 18.5 m\n- Greywater line: 10.5 m\n- Qinisekisa ukutholakala kwamanzi, ukuphuma kwamanzi nesimo somhlabathi ngaphambi kokwakha noma ukuthenga izinto zokulungisa umhlabathi.\n\n## Uhlu lobuningi nezindleko\n\n- Isamba sezindleko zengqalasizinda ezinentengo: R 15 890\n- Imigqa elinde intengo noma isilinganiso: 2\n- Lena ibhajethi ehleliwe, akuzona izimali esezisetshenzisiwe. Intengo engekho ayisho uziro. Thola amanani akamuva endaweni.\n- Rainwater tank (2500 L) (2 500 L) · 1 no. · R 5 500\n- Swale (on-contour earthwork) · 34 m · R 2 040\n- Path · 18.5 m · R 1 480\n- Greywater line · 10.5 m · kudingeka intengo / isilinganiso\n- Vegetable beds established (7 beds) · 44 m² · R 5 280\n- Staple plots established (4 plots) · 84 m² · kudingeka intengo / isilinganiso\n- Moringa Tree · 2 no. · R 160\n- Avocado Tree · 1 no. · R 450\n- Compost bays · 1 no. · R 600\n- Mango Tree · 1 no. · R 300\n- Natal Plum · 1 no. · R 80\n\n## Izinyathelo ezilandelayo nokuhlola\n\n- Qinisekisa okukhona endaweni nokusahleliwe. Sebenzisa umklamo ogciniwe njengereferensi.\n- Qhathanisa uhlelo lwezitshalo nemibhede yangempela nezimo zesizini. Ukuhlwanyela okuhleliwe akubona ubufakazi bokuthi sekutshaliwe.\n- Bhala isisindo sesivuno, ukudla okugciniwe noma okunikelwe, ukuthengisa nezindleko kanye nezinsuku zakho.\n- Hlola indawo ekhiqizayo ngaphambi kokubika amahektha kumxhasi. Bala umbhede ngamunye kanye.\n- Vumelana nomlimi ngezinyathelo zosizo. Ekubuyekezeni, bhala okuthuthukile, okungathuthukanga nokudinga ukushintsha.\n- Lesi sifinyezo sisebenzisa izilinganiso ezigciniwe nobuningi bohlelo. Funda umbiko ogcwele ngezeluleko eziningiliziwe, okucatshangiwe namanothi emithombo.\n\n## Uhlu oluphelele lomklamo\n\n- Moringa Tree × 2 · okuhleliwe\n- Avocado Tree × 1 · okuhleliwe\n- Compost bays × 1 · okuhleliwe\n- Mango Tree × 1 · okuhleliwe\n- Natal Plum × 1 · okuhleliwe\n- Rainwater tank (2500 L) × 1 · okuhleliwe\n\n## Izindawo zokukhiqiza\n\n- Bed 1 · 6 m² · umbhede\n- Bed 2 · 6 m² · umbhede\n- Bed 3 · 6 m² · umbhede\n- Bed 4 · 6 m² · umbhede\n- Bed 5 · 6 m² · umbhede\n- Bed 6 · 8 m² · umbhede\n- Bed 7 · 6 m² · umbhede\n- Plot 1 · 21 m² · isiza\n- Plot 2 · 21 m² · isiza\n- Plot 3 · 21 m² · isiza\n- Plot 4 · 21 m² · isiza\n\n## Ubufakazi nemikhawulo\n\nIzithombe zendawo namamephu, uma zikhona, ziboniswa ngokwehlukana kulo mbiko. Isithombe esiyisibonelo esikhiqizwe yi-AI asibona ubufakazi bendawo yangempela. Izilinganiso, amanani noma amarekhodi angekho zihlala zingekho. Buyekeza indawo, izinsuku nobufakazi nenhlangano ezosebenzisa uhlelo ngaphambi kokusebenzisa lesi sibonelo esinqumweni sokuxhasa ngezimali."
+        }
+      }
+    }
+  ]
+}
