@@ -1,0 +1,347 @@
+0 | tagline | The smartness/cleverness of Permaculture
+1 | welcomeTitle | Welcome to ImbewuField
+2 | welcomeSub | Smart permaculture planning for South African land.
+3 | pickLang | Choose your language
+4 | pickLangSub | You can change it any time on the top bar.
+5 | start | Start
+6 | heroSub | Tap anywhere in South Africa and get a complete plan for your land.
+7 | clickAnalyse | Tap the map so that you can analyse
+8 | dataSources | Data sources
+9 | language | Language
+10 | tabHome | Home
+11 | tabMap | Map
+12 | tabAccount | Account
+13 | toolbarMinButton | Find your land
+14 | toolbarHeader | Find your land
+15 | toolbarHideButton | Hide
+16 | shareButtonTitle | Share this place
+17 | shareCopiedToast | The link has been copied out/taken out!
+18 | shareFailedToast | Sharing did not succeed
+19 | guideButtonTitle | How the map tools work
+20 | guideButtonAriaLabel | Lima's quick guide
+21 | searchPlaceholder | Look for a town or address
+22 | searchAriaLabel | Look for / Search
+23 | recentSearchesHeader | Recent
+24 | searchErrorNotFound | It is not found — try adding "South Africa"
+25 | layersButtonCollapsedSatellite | Satellite
+26 | layersButtonCollapsedContours | Contour lines (lines of height)
+27 | layersButtonCollapsedRelief | Height / elevation
+28 | layersButtonOpen | Map layers
+29 | layerToggleSatellite | Satellite
+30 | layerToggleContours | Contour lines
+31 | layerToggleRelief | Height / elevation
+32 | editToolSectionLabel | Editing tool · try both
+33 | editEngineBigHandles | Big handles
+34 | editEngineMapboxTool | Mapbox tool
+35 | toolsSectionLabel | Tools
+36 | locateMeButton | Find me
+37 | savePlaceButton | Save place
+38 | savePlaceConfirmedButton | Saved
+39 | placesSectionLabel | Places
+40 | placesLabelsToggle | Labels
+41 | noSavedPlacesMessage | There are no saved places for now — tap a place on the map, then save it.
+42 | drawingInProgressBoundary | Boundary
+43 | drawingInProgressWater | Water
+44 | drawingInProgressInstruction | tap the points · double-tap to finish · Esc to cancel
+45 | drawCancelButton | Cancel
+46 | nativeEditHint | Drag the dots to change the shape · the middle dot adds a corner
+47 | nativeEditUndoButton | Bring back / Restore
+48 | nativeEditRenameButton | Give a new name
+49 | nativeEditDeleteButton | Delete
+50 | nativeEditConfirmDeleteButton | Confirm deleting
+51 | nativeEditSaveButton | Save
+52 | parcelsSectionLabel | Portions / divisions
+53 | parcelsLabelsToggle | Labels
+54 | parcelDefaultName | Portion / division
+55 | parcelAddButton | Add a portion
+56 | parcelLandLabel | Land
+57 | parcelDeleteConfirm | Are you sure?
+58 | drawLandBoundaryButton | Draw the land boundary
+59 | waterSectionLabel | Water
+60 | waterInfrastructureSectionLabel | Structures / foundations
+61 | waterAreaDefaultName | Place / area
+62 | waterAreaAddButton | Place/area for collecting water
+63 | waterPointAddButton | Place of water / water point
+64 | waterPointFallbackLabel | Place of water / water point
+65 | askLimaButton | Ask Lima about your land
+66 | askLimaSubtitle | Size, water, what you should plant…
+67 | elevationReadoutLabel | height
+68 | elevationReadoutUnit | above the sea
+69 | zoomInTitle | Bring closer
+70 | zoomInAriaLabel | Bring closer
+71 | zoomOutTitle | Make accustomed / practise (does not clearly say zoom out)
+72 | zoomOutAriaLabel | Make accustomed / practise (does not clearly say zoom out)
+73 | firstTapHint | Tap your place or look for a town
+74 | labelsPillHeader | Labels
+75 | labelsParcelsAndWaterToggle | Portions and water
+76 | labelsShapesToggle | Shapes
+77 | labelsHatchToggle | Frame / structure
+78 | labelsPlacesToggle | Places
+79 | labelsPeopleToggle | People
+80 | pinDrawHintStart | Mark each corner of your land — tap the map, or put the cross in the middle and then tap Add corner
+81 | pinDrawHintStartWater | Mark each corner of your water-collecting place — tap the map, or put the cross in the middle and then tap Add corner
+82 | pinDrawHintOneCorner | one corner has been marked — add two more, then tap Finish
+83 | pinDrawHintTwoCorners | the corners have been marked — add one more, then tap Finish
+84 | pinDrawHintReady | the corners have been marked — tap Finish to close the shape
+85 | drawCancelConfirm | You are throwing away/discarding?
+86 | drawUndoButton | Bring back / Restore
+87 | drawGpsTitle | Stand at the corner of your land and tap to place it here
+88 | drawAddCornerButton | Add corner
+89 | drawFinishButton | Finish
+90 | waterDropHint | Move to the place, then tap Place here
+91 | waterDropCancelButton | Cancel
+92 | waterDropPlaceButton | Place here
+93 | editHintDrag | Drag the corner so that you move it
+94 | editHintCornerSelected | it is selected — drag or Remove
+95 | editCancelButton | Cancel
+96 | editRemoveCornerButton | Remove
+97 | editRenameButton | Give a new name
+98 | editAddCornerButton | Add corner
+99 | editDoneButton | It has been done
+100 | movePinBarText | Drag
+101 | movePinBarSuffix | to a new place
+102 | placePopupGoTo | Go to
+103 | placePopupEdit | Edit
+104 | placePopupMove | Move
+105 | placePopupDelete | Delete
+106 | placePopupShare | Share
+107 | placePopupShareCopied | It has been copied out!
+108 | savePlaceSheetTitleEdit | Edit place
+109 | savePlaceSheetTitleNew | Save this place
+110 | savePlaceNamePlaceholder | Give it a name — e.g. Home plot
+111 | savePlaceLabelHeader | Label
+112 | savePlaceCustomColourLabel | A colour you make yourself
+113 | savePlacePickColourPrompt | Choose a colour
+114 | savePlaceCancelButton | Cancel
+115 | savePlaceConfirmButton | Save place
+116 | shapeNamingTitleWater | Name your water-collecting place
+117 | shapeNamingTitleLand | Name your land
+118 | shapeNamingPlaceholderLand | e.g. Home plot
+119 | shapeNamingPlaceholderWater | e.g. Main roof, Northern swale
+120 | shapeNamingCategoryHeader | What is this?
+121 | shapeNamingLinkToPlaceHeader | Connect with a place (if you choose)
+122 | shapeNamingSkipButton | Skip
+123 | shapeNamingConfirmButton | Save name
+124 | shapeCategoryHomePlot | Home plot
+125 | shapeCategoryVegetableGarden | Vegetable garden
+126 | shapeCategoryStapleCropPlot | Plot of basic/foundational crops
+127 | shapeCategoryField | Field
+128 | shapeCategoryOrchard | Fruit enclosure/pen
+129 | shapeCategoryGrazing | Pasture
+130 | shapeCategoryOther | Others
+131 | waterCategoryRoof | Roof
+132 | waterCategorySwale | Furrow/channel (swale)
+133 | waterCategoryContourBank | Wall for holding back water
+134 | waterCategoryRoadRunOff | Water coming from the road
+135 | waterCategoryEarthwork | Work of the earth
+136 | waterPointNamingTitle | Name your water place
+137 | waterPointNamingPlaceholder | e.g. Main borehole (water hole), Northern dam
+138 | waterPointNamingTypeHeader | Which type is it?
+139 | waterPointNamingDeleteButton | Delete
+140 | waterPointNamingSkipButton | Skip
+141 | waterPointNamingConfirmButton | Save
+142 | threeDWarning | In 3D you may not be able to zoom in enough to draw boundaries or water. Delete 3D so that you do that.
+143 | guideLimaSubtitle | Your map guide
+144 | guideIntroText | Here is the map in a few taps — you can open it again any time with the button that says ?.
+145 | guideFindYourLandTitle | Find your land
+146 | guideFindYourLandDesc | Look for a town, or tap the map — I read the weather/climate, the land and the water.
+147 | guideDrawBoundaryTitle | Draw the boundary of the land
+148 | guideDrawBoundaryDesc | Mark each corner of your plot, or tap GPS so that you walk it. I measure the size.
+149 | guideDrawHarvestingTitle | Draw a water-collecting place
+150 | guideDrawHarvestingDesc | Draw a roof, a furrow or earthwork — I calculate how much rain it collects.
+151 | guideAddWaterPointTitle | Add a water place
+152 | guideAddWaterPointDesc | Put the pointer at a borehole (water hole), at a spring, at a dam or at a tank — it marks the structures on the map.
+153 | guideSavePlaceTitle | Save place
+154 | guideSavePlaceDesc | Put a coloured pointer and give it a name — Home, Field or Water.
+155 | guideMapLayersTitle | Map layers
+156 | guideMapLayersDesc | Change satellite / topo, then open or close the contour lines and height.
+157 | guideGotItButton | I understand
+158 | tabOverview | General view
+159 | tabAsk | Ask
+160 | tabReports | Reports
+161 | tabPeople | People
+162 | tabWater | Water
+163 | tabSoil | Land/Soil
+164 | tabClimate | Climate/weather
+165 | tabNature | Nature
+166 | tabArea | Place/area
+167 | tabPhotos | Photos
+168 | tabDesign | Design
+169 | tabAI | Knowledge/information
+170 | tabPlaces | Places
+171 | tabFarm | Farm
+172 | siteReportOverline | Place reports
+173 | suitabilityGoodFit | It is well suited
+174 | suitabilityFairSite | A middling place
+175 | suitabilityChallenging | Has a challenge
+176 | statAnnualRainfall | Rain of the year
+177 | statSoilTexture | Type of soil
+178 | statFrostRisk | Danger of frost
+179 | statElevation | Height
+180 | frostLikely | It is likely
+181 | frostOccasional | At some times / sometimes
+182 | frostRare | It does not often happen
+183 | yourLand | Your land
+184 | perimeterUnit | circuit / circumference (going around)
+185 | hectaresUnit | hectares
+186 | harvestingAreas | Places for collecting water
+187 | catchmentAreaLabel | place for collecting
+188 | estimatedVolumeUnit | estimated kL
+189 | plantingCalendarHeader | Planting calendar
+190 | calendarGrow | Make grow / Grow (it)
+191 | calendarDry | It is dry
+192 | calendarFrost | Frost
+193 | calendarRest | Rest
+194 | generateFullReport | Make a complete report
+195 | saveThisPlace | Save this place
+196 | savedToPlaces | Saved in places
+197 | cardKeySpecies | Main types/species
+198 | cardMainChallenges | Main challenges
+199 | statSolar | Sun
+200 | statSolarSub | m²/day on average
+201 | statEToEst | Estimated ETo
+202 | statEToSub | water slipping away/escaping per day
+203 | waterHarvestingStrategyHeader | Strategy for collecting water
+204 | statTexture | Type
+205 | phAcidic | It has acid — add lime
+206 | phAlkaline | It has alkali — add sulphur
+207 | phNeutral | It is nearly in the middle
+208 | statOrganicCarbon | Natural carbon
+209 | organicCarbonLow | Low — goal: 2–3%
+210 | organicCarbonOk | It is acceptable
+211 | statBulkDensity | Crowdedness/packing of the soil
+212 | bulkDensityCompacted | It is hard/firm
+213 | bulkDensityOk | I understand
+214 | textureCompositionHeader | Make-up of the soil type
+215 | textureSand | Sand
+216 | textureSilt | Mud
+217 | textureClay | Clay
+218 | soilStrategyHeader | Strategy for the soil
+219 | soilHealthScoreHeader | Score of the health of the soil
+220 | soilHealthScoreHealthy | It has health
+221 | soilHealthScoreModerate | Middling
+222 | soilHealthScoreDegraded | It is spoiled/ruined
+223 | priorityImprovementsHeader | Main improvements
+224 | statSolarClimate | Sun
+225 | statSolarClimateUnit | kWh/m²/day
+226 | statSummerMax | The highest of summer
+227 | statWinterMin | The lowest of winter
+228 | frostLikelyLabel | Frost is likely
+229 | frostFreeLabel | There is no frost
+230 | windSectionHeader | Wind
+231 | windAvgUnit | km/h on average
+232 | windSummerLabel | Summer (coming from KU)
+233 | windWinterLabel | Winter (coming from KU)
+234 | windbreakDesignHeader | Design of the wind protection
+235 | windbreakRowSystem | -system of rows/lines
+236 | monthlyTemperatureHeader | Temperature level of the month (°C)
+237 | rainfallTimingHeader | Time of the rain
+238 | rainfallPatternSuffix | rain
+239 | rainfallWetLabel | In the wet (waters):
+240 | rainfallDryLabel | It is dry:
+241 | earthworksBeforeRainsLabel | → Work of the earth before the first rains:
+242 | earthworksWinterDate | April–May
+243 | earthworksSummerDate | Aug–Sep
+244 | savedReportsHeader | Saved reports
+245 | noSavedReportsMessage | There are no saved reports for now. Open
+246 | noSavedReportsGenerateLink | Make a complete report
+247 | noSavedReportsSaveTip | , then tap
+248 | noSavedReportsSaveLink | Save report
+249 | noSavedReportsSuffix | so that you save it here.
+250 | reportOpenButton | Open
+251 | surveyPromptTitle | Do you want a clear report?
+252 | surveyPromptBody | The site questionnaire takes 2 minutes and gives Lima things the map does not have: how many people work here, irrigation, goals, and challenges. The report becomes more detailed.
+253 | surveyFillButton | Fill in the questionnaire (2 minutes)
+254 | surveySkipButton | Skip for now, do it anyway
+255 | photoPromptTitle | Add photos of the place
+256 | photoPromptBody | Satellite pictures are not clear and cannot see the colour of the soil, the outflow of water, or what is actually growing. A few photos allow Lima to give you a plan based on what is actually there.
+257 | photoLabelAllDirections | All directions/ways
+258 | photoDetailAllDirections | Stand in the middle, take 4 photos all around
+259 | photoLabelSoilProfile | Shape/structure of the soil
+260 | photoDetailSoilProfile | Dig a small hole — show the colour and the layers
+261 | photoLabelWaterDrainage | Water and its outflow
+262 | photoDetailWaterDrainage | Dams, wet places, furrows, places that are full of water
+263 | photoLabelWhatsGrowing | What is growing
+264 | photoDetailWhatsGrowing | Trees, crops, bare places, whichever crops
+265 | photoTapToAdd | Tap to add photos
+266 | photoAnalysingButton | It is analysing the photos…
+267 | photoAnalyseGenerateButton | Analyse and make a plan
+268 | photoSkipButton | Skip — do it without photos
+269 | rainfallSourceEra5Title | ERA5-Land 9km grid (Open-Meteo)
+270 | rainfallSourceNasaTitle | NASA POWER 50km grid
+271 | designMapLink | Map of the design
+272 | taglinePlaceholder | (slogan via i18n t())
+273 | openNavigationAriaLabel | Open the guidance
+274 | appearanceSettingsAriaLabel | Settings of appearance
+275 | appearanceTitle | Appearance
+276 | openDetailsPanelAriaLabel | Open the details panel
+277 | closeDetailsPanelAriaLabel | Close the details panel
+278 | tapToClose | tap to close
+279 | resultsButton | Results
+280 | detailsButton | Details
+281 | failedToLoadData | It did not succeed in loading the data
+282 | siteQuestionnaireTitle | Questionnaire of the place
+283 | stepOfSteps | Step {n} of {total}
+284 | stepSiteAndGoals | Place and goals
+285 | stepWater | Water
+286 | stepRoofCatchment | Collecting from the roof
+287 | stepLandAndSoil | Land and its quality/level
+288 | stepWhatExists | What exists
+289 | stepChallenges | Challenges
+290 | sectionWhoIsThisSiteFor | Whose is this place?
+291 | radioMeMyFamily | Me / my family
+292 | radioMeMyFamilyDesc | Home or small land
+293 | radioCommunityGroup | Community group / organisation
+294 | radioCommunityGroupDesc | A garden shared in common, an organisation, or an NGO site
+295 | sectionAdultsWhoWorkThisLand | Adults who work this land
+296 | sectionApproximateNumberOfMembers | Estimated number of members
+297 | chipUnder20 | Under 20
+298 | sectionGoalsSelectAll | Goals of this place (choose everything that is suitable)
+299 | goalFoodSecurityLabel | Security of food
+300 | goalFoodSecurityDesc | Feed the home or members all year
+301 | goalGenerateIncomeLabel | Make income
+302 | goalGenerateIncomeDesc | Sell the remaining produce or products that have had price added
+303 | goalRestoreTheLandLabel | Bring back the land
+304 | goalRestoreTheLandDesc | Cover crops, making compost, restoring
+305 | goalDemonstrateTeachLabel | Show / teach
+306 | goalDemonstrateTeachDesc | A place for training others
+307 | sectionWaterSources | Sources of water present at this place (choose all)
+308 | waterSourceMunicipalTap | Municipal tap
+309 | waterSourceBorehole | Water hole (borehole)
+310 | waterSourceRiverStream | River / stream
+311 | waterSourceRainwater | Rain water
+312 | waterSourceGreyWater | Water that has been used
+313 | waterSourceNoneYet | No water for now
+314 | sectionHowDoesWaterReachPlants | How does water reach the crops? (choose everything suitable)
+315 | waterDeliveryDripLabel | Irrigation by drops
+316 | waterDeliveryDripDesc | Lines / pipes going straight to the roots
+317 | waterDeliverySprinklerLabel | Sprinkler
+318 | waterDeliverySprinklerDesc | System of spraying from above
+319 | waterDeliveryPipedLabel | By pipe to tap / garden pipe
+320 | waterDeliveryPipedDesc | Garden pipe or tap
+321 | waterDeliveryGravityLabel | Driven by the power of gravity
+322 | waterDeliveryGravityDesc | High tank or a high spring
+323 | waterDeliveryBucketLabel | Irrigated by hand
+324 | waterDeliveryBucketDesc | Bucket / watering can
+325 | waterDeliveryFloodLabel | Flooding / furrow
+326 | waterDeliveryFloodDesc | Water running in furrows
+327 | waterDeliveryNoneLabel | Depends on rain only
+328 | waterDeliveryNoneDesc | There is no extra irrigation
+329 | sectionWaterStorage | Storing of water at the place (choose all)
+330 | waterStorageJojoTanks | Jojo / plastic tanks
+331 | waterStorageEarthDam | Earth dam
+332 | waterStoragePond | Pond / storage hole
+333 | waterStorageCistern | Tank under the ground
+334 | waterStorageNone | There is no place of storing
+335 | roofCatchmentWhyMattersLabel | Why this matters: 
+336 | roofCatchmentWhyMattersText | Lima uses the size of the roof to calculate how much rainwater you can collect each year — it directly determines your recommendations for tank, swale design, and irrigation planning.
+337 | sectionMainBuildingRoofArea | Size of the roof of the main building (m²)
+338 | roofMainBuildingGuide | Use the roof boundary drawn on the map or measured on site. Leave it here unwritten if you don't know.
+339 | roofMainPlaceholder | e.g. 100
+340 | roofMainHint | The area covered by the roof when seen straight from above; do not use the sloping surface of the roof.
+341 | sectionSecondaryRoofs | Other roofs — "isisele" (unfamiliar word, not clearly a known building term), shed, workshop (m²) — if you choose
+342 | roofSecondaryPlaceholder | e.g. 60
+343 | roofSecondaryHint | Add the size of all other roofs that can collect water
+344 | toggleGuttersLabel | Gutters and downpipes are present
+345 | toggleGuttersSub | It directs the rain to tanks or to a place of storing
+346 | liveEstimateTitle | Estimate of now
