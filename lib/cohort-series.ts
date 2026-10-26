@@ -167,6 +167,11 @@ export const COHORT_MIN_MONTHS = 3;
 /** One non-empty month is a dot, not a series. Mirrors SERIES_MIN_ACTIVE_MONTHS. */
 export const COHORT_MIN_ACTIVE_MONTHS = 2;
 
+/** Report year-on-year comparisons need both years, from the same authorised ledgers. */
+export function portfolioHistoryMonths(value: unknown): 12 | 24 {
+  return value === '24' || value === 24 ? 24 : 12;
+}
+
 /** Clamped so a caller cannot ask for a 400-column axis or a zero-column one. */
 export function clampCohortWindow(value: number): number {
   if (!Number.isFinite(value)) return 12;

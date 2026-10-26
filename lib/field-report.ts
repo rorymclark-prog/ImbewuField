@@ -1,7 +1,8 @@
 import { FIELD_FOCUS, FIELD_PROGRAMMES, fieldVisitReportLines, summariseFieldWork, type FieldWorkspace } from './field-teams';
 import type { ReportChart, ReportMetric, ReportSection, ReportTable } from './programme-report-pdf';
+import { previousReportDateRange } from './programme-report';
 
-export function buildFieldReport(data: FieldWorkspace, options: { from?: string; to?: string; farmerId?: string; today: string; organisation?: boolean; loadedPhotoCount?: number }) {
+export function buildFieldReport(data: FieldWorkspace, options: { from?: string; to?: string; farmerId?: string; today: string; organisation?: boolean; loadedPhotoCount?: number; comparePrevious?: boolean }) {
   if (data.visitCursor) throw Error('Load the complete authorised visit history before creating a field report.');
   const { from = '', to = '', farmerId = '', today } = options;
   const summary = summariseFieldWork(data, from, to, farmerId, today);
@@ -57,7 +58,12 @@ export function buildFieldReport(data: FieldWorkspace, options: { from?: string;
       'Training attendance and learner feedback belong in the facilitator delivery report. They do not substitute for an observed practical skill or a follow-up garden check.',
     ] },
   ];
+  const earlier=options.comparePrevious?previousReportDateRange(from,to):null;
+  if(earlier){
+    const before=summariseFieldWork(data,earlier.from,earlier.to,farmerId,today);
+    tables.unshift({title:'Historical fieldwork comparison',keepAllRowsInSummary:true,note:`Earlier ${earlier.from} to ${earlier.to}; selected ${from} to ${to}. Equal numbers of calendar days. Current assignments and corrected visit records apply to both periods. This is delivery coverage, not a matched outcome comparison. Open/completed action status is current and is not compared historically. Zero recorded visits does not establish no support.`,columns:['Recorded measure','Earlier period','Selected period','Recorded change'],rows:[['Saved visits',before.visits.length,summary.visits.length],['Current assigned people visited',before.visited,summary.visited]].map(([label,b,a])=>[String(label),String(b),String(a),`${Number(a)-Number(b)>0?'+':''}${Number(a)-Number(b)}`])});
+  }
   const chart: ReportChart | undefined = summary.focus.length ? { title: 'Support delivered by recorded focus', note: 'A visit can cover several focus areas. These bars must not be added as unique visits.', rows: summary.focus } : undefined;
   return { title: options.organisation ? 'Field implementation report' : 'Mentor field report', scope, metrics, tables, sections, chart,
-    filename: `ImbewuField-${options.organisation ? 'field-implementation' : 'mentor-field'}-${from || 'all'}-${to || today}-${farmerId ? 'selected-participant' : 'all-participants'}` };
+    filename: `ImbewuField-${options.organisation ? 'field-implementation' : 'mentor-field'}-${from || 'all'}-${to || today}-${farmerId ? 'selected-participant' : 'all-participants'}${earlier?'-compared':''}` };
 }
