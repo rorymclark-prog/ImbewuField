@@ -1,0 +1,119 @@
+{
+  "inspectedAt": "2026-10-26T06:12:30.424752+00:00",
+  "nativeContactSheets": [
+    "st-after-care-a-contact.png",
+    "st-after-care-b-contact.png",
+    "ts-after-care-a-contact.png",
+    "ts-after-care-b-contact.png",
+    "ve-after-care-a-contact.png",
+    "ve-after-care-b-contact.png",
+    "zu-after-care-a-contact.png",
+    "zu-after-care-b-contact.png"
+  ],
+  "priorityPages": [
+    {
+      "file": "zu-after-care-a.pdf",
+      "language": "zu",
+      "label": "long-cherry",
+      "row": 40,
+      "page": 10,
+      "image": "zu-long-cherry-p10.png"
+    },
+    {
+      "file": "zu-after-care-a.pdf",
+      "language": "zu",
+      "label": "pear-cultivar-december",
+      "row": 45,
+      "page": 12,
+      "image": "zu-pear-cultivar-december-p12.png"
+    },
+    {
+      "file": "zu-after-care-b.pdf",
+      "language": "zu",
+      "label": "five-year-shade",
+      "row": 59,
+      "page": 4,
+      "image": "zu-five-year-shade-p4.png"
+    },
+    {
+      "file": "st-after-care-a.pdf",
+      "language": "st",
+      "label": "long-cherry",
+      "row": 40,
+      "page": 10,
+      "image": "st-long-cherry-p10.png"
+    },
+    {
+      "file": "st-after-care-a.pdf",
+      "language": "st",
+      "label": "pear-cultivar-december",
+      "row": 45,
+      "page": 12,
+      "image": "st-pear-cultivar-december-p12.png"
+    },
+    {
+      "file": "st-after-care-b.pdf",
+      "language": "st",
+      "label": "five-year-shade",
+      "row": 59,
+      "page": 4,
+      "image": "st-five-year-shade-p4.png"
+    },
+    {
+      "file": "ts-after-care-a.pdf",
+      "language": "ts",
+      "label": "long-cherry",
+      "row": 40,
+      "page": 11,
+      "image": "ts-long-cherry-p11.png"
+    },
+    {
+      "file": "ts-after-care-a.pdf",
+      "language": "ts",
+      "label": "pear-cultivar-december",
+      "row": 45,
+      "page": 13,
+      "image": "ts-pear-cultivar-december-p13.png"
+    },
+    {
+      "file": "ts-after-care-b.pdf",
+      "language": "ts",
+      "label": "five-year-shade",
+      "row": 59,
+      "page": 4,
+      "image": "ts-five-year-shade-p4.png"
+    },
+    {
+      "file": "ve-after-care-a.pdf",
+      "language": "ve",
+      "label": "long-cherry",
+      "row": 40,
+      "page": 13,
+      "image": "ve-long-cherry-p13.png"
+    },
+    {
+      "file": "ve-after-care-a.pdf",
+      "language": "ve",
+      "label": "pear-cultivar-december",
+      "row": 45,
+      "page": 15,
+      "image": "ve-pear-cultivar-december-p15.png"
+    },
+    {
+      "file": "ve-after-care-b.pdf",
+      "language": "ve",
+      "label": "five-year-shade",
+      "row": 59,
+      "page": 4,
+      "image": "ve-five-year-shade-p4.png"
+    }
+  ],
+  "browserContacts": [
+    "prunus-avium-phone-contact.png",
+    "schotia-afra-var-afra-phone-contact.png",
+    "mimusops-afra-desktop-contact.png",
+    "pyrus-communis-desktop-contact.png"
+  ],
+  "finding": "All eight native PDF contacts and twelve enlarged priority pages were inspected. No overlap, cut-off or stranded final condition observed. Complete cherry, literal December cultivar and five-year shade clauses remain readable. Browser phone and desktop contacts were already inspected.",
+  "limits": "Visual layout/glyph inspection does not establish fluent-speaker, agricultural, current-permission, production-route or physical-device approval. Supplementary research and component headings remain partly English."
+}

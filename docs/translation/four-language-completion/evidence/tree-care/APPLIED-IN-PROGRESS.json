@@ -1,0 +1,78 @@
+{
+  "updatedAt": "2026-10-26T05:57:00.387430+00:00",
+  "status": "Applied unreviewed drafts; partial verification in progress, not a finished delivery.",
+  "sourceDescriptions": 91,
+  "typedBindings": 91,
+  "existingIdentities": 34,
+  "nativeDrafts": 364,
+  "inheritedRegistryRowsExact": 1465,
+  "combinedRegistryRows": 1556,
+  "focused": {
+    "tests": 226,
+    "files": 18,
+    "pass": 226,
+    "fail": 0,
+    "typecheck": 0,
+    "diff": 0
+  },
+  "browser": {
+    "status": "passed",
+    "rows": {
+      "phone": {
+        "states": 272,
+        "pairs": 136,
+        "completeNativeCarePurchaseFields": 364
+      },
+      "desktop": {
+        "states": 16,
+        "pairs": 8,
+        "completeNativeCarePurchaseFields": 20
+      },
+      "englishPhone": {
+        "states": 8,
+        "pairs": 4,
+        "completeNativeCarePurchaseFields": 0
+      }
+    },
+    "nativePairs": 144,
+    "languageSwitches": 6,
+    "allExpanded": true,
+    "providedContextsUnchanged": true,
+    "callbackEvents": 0,
+    "horizontalOverflows": 0,
+    "wholeMarkup": "Only complete typed care/purchase paragraphs change; all English/unsupported markup stays exact.",
+    "visualInspection": "Two four-language complete phone-card contacts inspected: cherry qualifications and source five-year shade caveat. Desktop views and PDF pages pending inspection. Layout checks are not fluent review.",
+    "cleanup": "Temporary tab12 closed; viewport override reset; GET-only server95588 stopped.",
+    "limits": "Actual unchanged component and real React/Lucide with generated complete guides and synthetic parents. No full account route, backend save, physical device, current legal permission or language approval."
+  },
+  "PDF": {
+    "comparisons": [
+      {
+        "case": "care-a",
+        "sameText": true,
+        "samePixels": true
+      },
+      {
+        "case": "care-b",
+        "sameText": true,
+        "samePixels": true
+      }
+    ],
+    "totalPDFs": 12,
+    "totalPages": 125,
+    "totalWordBounds": 54435,
+    "completeGuideClauses": 1400,
+    "completeCarePurchaseFieldOccurrences": 364,
+    "visualInspection": "Pending actual contact-sheet and enlarged-page inspection. Text and bounds checks cannot establish visual quality."
+  },
+  "visualSeen": [
+    "prunus-avium-phone-contact.png",
+    "schotia-afra-var-afra-phone-contact.png",
+    "mimusops-afra-desktop-contact.png",
+    "pyrus-communis-desktop-contact.png"
+  ],
+  "visualPending": "All8nativePDFcontacts and12enlargedprioritypages already rendered/located in output/tree-care-qa; not yet viewed.",
+  "fullSuite": "not started",
+  "publication": "not pushed/noPR",
+  "review": "No fluent/agricultural approval; current-main/full-account/physicaldevice/production unverified."
+}

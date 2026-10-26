@@ -1,0 +1,7 @@
+# Tree-care and nursery draft-only baseline
+
+IN PROGRESS:91 complete source clauses /364 unreviewed native drafts,34 existing identities,55care+36purchase fields. Drafts are not yet applied to the runtime at this checkpoint. Fluent/agricultural review, implementation, registered preservation checks, browser/PDF verification and required full ordered suite are pending. This historical baseline will remain after implementation; current delivery evidence will supersede its pending status explicitly.
+
+Parent64b39585de1a52139991cbbf4b198c21ace84add. Immutable `tests/fixtures/tree-care-translation/before.json.gz` contains17contexts /102guide+102purchasingstates and8fullsource modules. Probe independently bound every current clause to its typed field. All1465runtime rows, scientific identities, source data and complete output states remain exact. Calendar months match the existing month authority; cultivarDecember remains literal. The five-year shade statement is retained as a word-number qualification, never a first-food age. Draft refinement journal retains observed wording corrections and is not fluent-speaker approval.
+
+No saved geometry, source species, lesson/quiz, farming figure, current-legal assertion, paid call, merge, deployment or PLAN_VERSION changes. The whole app remains unfinished. The draft-only probe deliberately checks unapplied status and will become historical once the implementation is applied; it must not be mistaken for a current runtime test.

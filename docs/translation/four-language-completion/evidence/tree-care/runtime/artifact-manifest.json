@@ -1,0 +1,462 @@
+[
+  {
+    "file": "README.md",
+    "bytes": 4025,
+    "sha256": "6918475f775f7482f6e8b20121b9875b68d20c3855f679f48bc2391ff6201609"
+  },
+  {
+    "file": "browser/desktop.json.gz",
+    "bytes": 8499,
+    "sha256": "5374bc5f21ec82078c7d98ec2cd93b5c0113ff85659b2a7b7be9edd46b877fc8"
+  },
+  {
+    "file": "browser/english-phone.json.gz",
+    "bytes": 5279,
+    "sha256": "b27eec4165572c87caa7941f13be9cafc9db74ced12c114c2ed73007309b2b95"
+  },
+  {
+    "file": "browser/language-switches.json.gz",
+    "bytes": 6116,
+    "sha256": "d9570fa76eb729ea56705081941dab02f5eaa24d360ecff414525acb0ca3477f"
+  },
+  {
+    "file": "browser/mimusops-afra-desktop-contact.png",
+    "bytes": 963184,
+    "sha256": "9fe20693c7aa4518750f60749bcfb62f2b956687b0175f1a6637b6c604245b7d"
+  },
+  {
+    "file": "browser/phone-representatives.json.gz",
+    "bytes": 9200,
+    "sha256": "7a9a79fce38e3f53b370ba1359c67edfbaf2b397144f70cb8b01ae5325bc9d2d"
+  },
+  {
+    "file": "browser/prunus-avium-phone-contact.png",
+    "bytes": 1555412,
+    "sha256": "5dfc4cfcd73e8ac6b379308574cf731f73ce1233352576344d12ec9fdcdedbbc"
+  },
+  {
+    "file": "browser/pyrus-communis-desktop-contact.png",
+    "bytes": 1368807,
+    "sha256": "cdf4fe9b54c2e4a011f837ff903f96fef554f18c6bb87489cfcc01b191f69eac"
+  },
+  {
+    "file": "browser/schotia-afra-var-afra-phone-contact.png",
+    "bytes": 899104,
+    "sha256": "378c6855ff6b32afcb80f5521575dded0f63cded2b046770e1a462f28199123c"
+  },
+  {
+    "file": "browser/source-manifest.json",
+    "bytes": 514,
+    "sha256": "068da0849c73ca7b3e7b65d369b82a5f4630983e1e3213adec25a11078595580"
+  },
+  {
+    "file": "browser/st-mimusops-afra-desktop.png",
+    "bytes": 77064,
+    "sha256": "71ff9f803ca13286051e56c943f7d7d07c7b3d4d5a08738394a1e3e268800c1c"
+  },
+  {
+    "file": "browser/st-phone.json.gz",
+    "bytes": 55970,
+    "sha256": "47b4c893fe69e84f6155bac762ac045d1bb3b2da3bb945f66605e76ee082794b"
+  },
+  {
+    "file": "browser/st-prunus-avium-phone-card.png",
+    "bytes": 547880,
+    "sha256": "b91593bc7f809ceeb577d5a2c33f08a2324483e6139a81bd5cdbba8bbedc4ad6"
+  },
+  {
+    "file": "browser/st-prunus-avium-phone-full.png",
+    "bytes": 591002,
+    "sha256": "98a5c90b1695d5eeea9d7b1000f77ef99aeba5820c2f168044d111bd1fc145b4"
+  },
+  {
+    "file": "browser/st-prunus-avium-phone-viewport.png",
+    "bytes": 62456,
+    "sha256": "01bd57cbb3b37ee739a0f46926b9225744d83f81b9d5ad3f02a819b99bd78597"
+  },
+  {
+    "file": "browser/st-pyrus-communis-desktop.png",
+    "bytes": 102375,
+    "sha256": "88003ddabfa3cf01b92bc39dba8d0c2b2fab53b4da9666466841845f452d6002"
+  },
+  {
+    "file": "browser/st-schotia-afra-var-afra-phone-card.png",
+    "bytes": 295484,
+    "sha256": "27e66f4c2df3ce14b981d84aa7c315794f0b74805c7b846d72d4b4234452907b"
+  },
+  {
+    "file": "browser/st-schotia-afra-var-afra-phone-full.png",
+    "bytes": 277569,
+    "sha256": "a6a954f4e1abbf3aa2a1ad24f9382888f1e998b59919902cc23053334d2747fa"
+  },
+  {
+    "file": "browser/st-schotia-afra-var-afra-phone-viewport.png",
+    "bytes": 58150,
+    "sha256": "45058ab5bf7c79f14c6170576437c04ab10fe0a7f36bb3f2818fb91c9beecbf8"
+  },
+  {
+    "file": "browser/ts-mimusops-afra-desktop.png",
+    "bytes": 81299,
+    "sha256": "30c478b65d262e92f6ea28d06bd4d5be73615d9e54afa0ab7281a7fb120337d0"
+  },
+  {
+    "file": "browser/ts-phone.json.gz",
+    "bytes": 56916,
+    "sha256": "76e4fc5716874f31b53401bb4b807cae58d32ca2a389e66a46ce60430b7a75f3"
+  },
+  {
+    "file": "browser/ts-prunus-avium-phone-card.png",
+    "bytes": 556386,
+    "sha256": "160f714fbd779c6ec7ee3aab01bf2717df5d1dad2216466d617981a435853e2a"
+  },
+  {
+    "file": "browser/ts-prunus-avium-phone-full.png",
+    "bytes": 590313,
+    "sha256": "b7ffa8675c3b5b6c0d284cde385fd6ce8b0bb611813d7b462b8cde01b9b36a1c"
+  },
+  {
+    "file": "browser/ts-prunus-avium-phone-viewport.png",
+    "bytes": 64592,
+    "sha256": "a479d7b57960a1cdb99eb4f1e48d0580e8ec6986cbbd58c9f98f73e048701c2c"
+  },
+  {
+    "file": "browser/ts-pyrus-communis-desktop.png",
+    "bytes": 106699,
+    "sha256": "382fa50939d5168b9a9de6e009079247ca37163c8ff0a2813f79f719e55f0a5c"
+  },
+  {
+    "file": "browser/ts-schotia-afra-var-afra-phone-card.png",
+    "bytes": 320653,
+    "sha256": "49a41559a734553e778a8e67a0d2c07d427a907586af32911aa65155f410c357"
+  },
+  {
+    "file": "browser/ts-schotia-afra-var-afra-phone-full.png",
+    "bytes": 301099,
+    "sha256": "3b1899169b359f270ac167c387b842b78fc07e9502c72765954e3f682d9d9bca"
+  },
+  {
+    "file": "browser/ts-schotia-afra-var-afra-phone-viewport.png",
+    "bytes": 59718,
+    "sha256": "1dbd73d5600e93b86e42dca1eb10693daef9bba931e8a7f6ffb78e4669175b02"
+  },
+  {
+    "file": "browser/ve-mimusops-afra-desktop.png",
+    "bytes": 79238,
+    "sha256": "63f84a435b1744da379bbe23f35d03b5d0252eaf50b7c16e778e97ba7ec1c077"
+  },
+  {
+    "file": "browser/ve-phone.json.gz",
+    "bytes": 56643,
+    "sha256": "a32d7d8f5c9f746d1c1b27ad574e93f667758ba499bd6809b721eba05a74cb3d"
+  },
+  {
+    "file": "browser/ve-prunus-avium-phone-card.png",
+    "bytes": 552330,
+    "sha256": "a4f3620d59714599925964f87055f6242b750941b41882e6f3248b5c6f458b05"
+  },
+  {
+    "file": "browser/ve-prunus-avium-phone-full.png",
+    "bytes": 596308,
+    "sha256": "6f3f0cb5b547a9fa5decc61bdd928be2f97e51a971f074945a0af9a9c5793a8d"
+  },
+  {
+    "file": "browser/ve-prunus-avium-phone-viewport.png",
+    "bytes": 63925,
+    "sha256": "1eef23e6ce97c1d9dc8b1f3dab7143b4cbe88899800211d483aaf02acf1867cf"
+  },
+  {
+    "file": "browser/ve-pyrus-communis-desktop.png",
+    "bytes": 105229,
+    "sha256": "e820e472ad57d80f152816c4dbde0602f873986d0e9ef9e7c775a80561e66acf"
+  },
+  {
+    "file": "browser/ve-schotia-afra-var-afra-phone-card.png",
+    "bytes": 319888,
+    "sha256": "05754b62f01fada3636a2bfc20100067c7ab844cdda036c9904da68a4e03b3de"
+  },
+  {
+    "file": "browser/ve-schotia-afra-var-afra-phone-full.png",
+    "bytes": 301946,
+    "sha256": "c08a5aca28959c0fc5ffafc362ae65466e660cb35e4b2b35e594c48d0aa33a7d"
+  },
+  {
+    "file": "browser/ve-schotia-afra-var-afra-phone-viewport.png",
+    "bytes": 61346,
+    "sha256": "bafe740636747494b06da1fa3075cad65ed377793d7e5c6648f32f9c0ff0e625"
+  },
+  {
+    "file": "browser/verification.json",
+    "bytes": 1238,
+    "sha256": "29f785a6b3e4dd8158ff26c800dbbb3c9bcfbdde766ff381a8beda6a468c938f"
+  },
+  {
+    "file": "browser/verification.json.gz",
+    "bytes": 637,
+    "sha256": "be652879011cc73a8ad3680697c73e6bb3e166b7abf269ecda832af7700205af"
+  },
+  {
+    "file": "browser/zu-mimusops-afra-desktop.png",
+    "bytes": 77221,
+    "sha256": "33416bc1858903820e6c906784f12fe72078ffabd9f58de98646a53aedf41532"
+  },
+  {
+    "file": "browser/zu-phone.json.gz",
+    "bytes": 56330,
+    "sha256": "1cf735d3ad37c41dda3406b8be26caafa30ff558f209ef0c05663aedc8d3e8c3"
+  },
+  {
+    "file": "browser/zu-prunus-avium-phone-card.png",
+    "bytes": 543341,
+    "sha256": "3895596b1ec30e3fd0962bc52d939d39969b1d2436d32a5ee8540cc4715e2f5c"
+  },
+  {
+    "file": "browser/zu-prunus-avium-phone-full.png",
+    "bytes": 588514,
+    "sha256": "43d830d8f5e8c1d10b92885f90f432d0e19df736e2aced23252789365a0ea7d0"
+  },
+  {
+    "file": "browser/zu-prunus-avium-phone-viewport.png",
+    "bytes": 62494,
+    "sha256": "8881d435f202049ffa8283e78cd86bdab268ac82162edf6d1f55f052d61a8a3a"
+  },
+  {
+    "file": "browser/zu-pyrus-communis-desktop.png",
+    "bytes": 102397,
+    "sha256": "6b4eafcfd2a9d6581ed3bfc6ca11de8f779183f3921f0eab0d78ad9ab535c63a"
+  },
+  {
+    "file": "browser/zu-schotia-afra-var-afra-phone-card.png",
+    "bytes": 304904,
+    "sha256": "06d83f8018fcf510cc64ab837548172a44191209ad1b863c9c56aa6b58967a4e"
+  },
+  {
+    "file": "browser/zu-schotia-afra-var-afra-phone-full.png",
+    "bytes": 282766,
+    "sha256": "c906824e3abbc1a3ebc89298eda91eaa8535f5431625bb2d74b1b89a87bbad95"
+  },
+  {
+    "file": "browser/zu-schotia-afra-var-afra-phone-viewport.png",
+    "bytes": 58625,
+    "sha256": "1e3a06339563884b0c389710ca91a6562f15e93bc232cd559a264b327494ecc5"
+  },
+  {
+    "file": "focused-checks.json",
+    "bytes": 1592,
+    "sha256": "9015287cd3e5d45688156c7ebe3c668db7d58d856e8da85fdd7e4b51e6536855"
+  },
+  {
+    "file": "generation.json.gz",
+    "bytes": 83083,
+    "sha256": "1647314b33c83fb0f4d433e5852bee1ea52effb67be2d4f75341cf0bea8a4a0a"
+  },
+  {
+    "file": "inspection.json",
+    "bytes": 15382,
+    "sha256": "58d4c87a480b226d4053db9c01e42a9a4f2ea04659963bbbee67368abad45f0c"
+  },
+  {
+    "file": "pdf/en-after-care-a.pdf",
+    "bytes": 72752,
+    "sha256": "8273ba38bedcd81f12f0393bf8714d1c884a30f90d30005e04a083bc94d43eee"
+  },
+  {
+    "file": "pdf/en-after-care-b.pdf",
+    "bytes": 58513,
+    "sha256": "47691f278ec8e964ef12a7610719fbc769c9f26b5f690bf1fbec19bb51cf0b96"
+  },
+  {
+    "file": "pdf/en-before-care-a.pdf",
+    "bytes": 72752,
+    "sha256": "14765b6379c0ea6bbb1eb3f17e922646c2f8740942a7f92aabe148a46b6324ee"
+  },
+  {
+    "file": "pdf/en-before-care-b.pdf",
+    "bytes": 58513,
+    "sha256": "9b890e71c7ebbce5f7cc8ae0f36af654bcc49321ba20892b0b4d9017d32b2d19"
+  },
+  {
+    "file": "pdf/st-after-care-a-contact.png",
+    "bytes": 1413886,
+    "sha256": "3781a792294fdb773b5b3f430a1a6f88c2b8cfd54b74db9f619c7e3eb77c73e8"
+  },
+  {
+    "file": "pdf/st-after-care-a.pdf",
+    "bytes": 378787,
+    "sha256": "25d934045495c823c010cb7c0f58fd22514f2efc4bb9395c2702b5ae05c12443"
+  },
+  {
+    "file": "pdf/st-after-care-b-contact.png",
+    "bytes": 1114634,
+    "sha256": "00f937e5a537772a97a1f9487e50488c9e8c80b49281cba93ef3e759eb10a1ee"
+  },
+  {
+    "file": "pdf/st-after-care-b.pdf",
+    "bytes": 338693,
+    "sha256": "030e091c7b1c0d8d3f8500fd4b3f770c09d7b4630a991bd2f63e59eb1a3a67b7"
+  },
+  {
+    "file": "pdf/st-five-year-shade-p4.png",
+    "bytes": 217965,
+    "sha256": "22d84d8dec858e8a475b776c0509ded6154c934feb491e075619442cd7824065"
+  },
+  {
+    "file": "pdf/st-long-cherry-p10.png",
+    "bytes": 226867,
+    "sha256": "7eee21e10bc0c0172a161d37c4adbe4f6e5569cb44c41bf52d4ed8688c8753ff"
+  },
+  {
+    "file": "pdf/st-pear-cultivar-december-p12.png",
+    "bytes": 207292,
+    "sha256": "7c00f0ec5c19c503fbb5f764fea39aa6774bccc7caf6205e80f36af158b8a417"
+  },
+  {
+    "file": "pdf/ts-after-care-a-contact.png",
+    "bytes": 1546996,
+    "sha256": "166434a82230b33e7c9255dd5794a2f96d7713104b468f63c619adfbc84e3e69"
+  },
+  {
+    "file": "pdf/ts-after-care-a.pdf",
+    "bytes": 393132,
+    "sha256": "4f0163242e5bc06560d1c5ab33dbad12268f1d50c1f6977e66e1b7cd73a6a305"
+  },
+  {
+    "file": "pdf/ts-after-care-b-contact.png",
+    "bytes": 1196773,
+    "sha256": "977488e913e7869ace839349cbda26ff8be922e9706d0740bf44b7111c8e68f9"
+  },
+  {
+    "file": "pdf/ts-after-care-b.pdf",
+    "bytes": 348668,
+    "sha256": "e318580810564d911a76a090aa0230ab3d7dbb8028df47f444089d729a3dd005"
+  },
+  {
+    "file": "pdf/ts-five-year-shade-p4.png",
+    "bytes": 246011,
+    "sha256": "8183cbf0a545f85226dd5168ed34c3f1f29e91b1417a98f273395481f2c22aaa"
+  },
+  {
+    "file": "pdf/ts-long-cherry-p11.png",
+    "bytes": 240736,
+    "sha256": "7602dc732bb5298bb10b254507bbab74d48353a2d9a57a2d32fbb87a43a64abc"
+  },
+  {
+    "file": "pdf/ts-pear-cultivar-december-p13.png",
+    "bytes": 225888,
+    "sha256": "55bcbbadc040f1a3d5c0cfa3f03d3f78028e72ede07e811d1cd38e97bea987ac"
+  },
+  {
+    "file": "pdf/ve-after-care-a-contact.png",
+    "bytes": 1594726,
+    "sha256": "dcc4476338c260269f72aaade9b7f74f67d007909fa9a1255bbe8bb22e27d0d1"
+  },
+  {
+    "file": "pdf/ve-after-care-a.pdf",
+    "bytes": 404210,
+    "sha256": "cde5c8a3032263b92575fe8c7586ada87fcdb7c808cbba845b2a68bcf898cbb3"
+  },
+  {
+    "file": "pdf/ve-after-care-b-contact.png",
+    "bytes": 1262082,
+    "sha256": "8832458690a5f9a6ab98288b40497f2edc0751e0c40a2ba8fca9a268e6c83880"
+  },
+  {
+    "file": "pdf/ve-after-care-b.pdf",
+    "bytes": 354338,
+    "sha256": "8f4f02d00baf958f762f7f9bf7eddc07981dc3f6555f0347a6fb3ab157a6d92a"
+  },
+  {
+    "file": "pdf/ve-five-year-shade-p4.png",
+    "bytes": 236694,
+    "sha256": "62000913d590acb49f22665385e9390ee160bee98ba936b7dbe7d424a0d7f3fc"
+  },
+  {
+    "file": "pdf/ve-long-cherry-p13.png",
+    "bytes": 242208,
+    "sha256": "6165563e58e72b571da625897c2fc4d4407fcc08c44405455e588923d119cf1d"
+  },
+  {
+    "file": "pdf/ve-pear-cultivar-december-p15.png",
+    "bytes": 224693,
+    "sha256": "a40b42f0550b7d96ca808efae6f93f37bcb7a6770b2aaa065a395b51bb8acc8a"
+  },
+  {
+    "file": "pdf/zu-after-care-a-contact.png",
+    "bytes": 1439254,
+    "sha256": "94974c51cc08667f645c3b8f5a0f53fb4d5870e7c5a88473ee83d1e785a3aef3"
+  },
+  {
+    "file": "pdf/zu-after-care-a.pdf",
+    "bytes": 376628,
+    "sha256": "88a685e3f2519231d9bb29d7e93e9c34bd6cd0c74165d27a5cb66b9fbab6df33"
+  },
+  {
+    "file": "pdf/zu-after-care-b-contact.png",
+    "bytes": 1130015,
+    "sha256": "b8783e0b5960bd7ad191fcb8f14aea12c589c5172e70e183ff6cb5dcb08169fd"
+  },
+  {
+    "file": "pdf/zu-after-care-b.pdf",
+    "bytes": 337803,
+    "sha256": "1d081c845a27e99d6236acf0067e19702b5d16c34f120f7b9f57375b9f3a3853"
+  },
+  {
+    "file": "pdf/zu-five-year-shade-p4.png",
+    "bytes": 228025,
+    "sha256": "6283a16f3a8f49fe9a63e13a19b30967574e56228f0a25371ebc1630ff88a375"
+  },
+  {
+    "file": "pdf/zu-long-cherry-p10.png",
+    "bytes": 234060,
+    "sha256": "52f9daafac0ef7461896f9e812a50ce45e26eae2431ce067a8825897d16d88c8"
+  },
+  {
+    "file": "pdf/zu-pear-cultivar-december-p12.png",
+    "bytes": 210404,
+    "sha256": "0490c9ba59106fe01c80f1f8c676e725a0a206f47bd0290979fd768818850f29"
+  },
+  {
+    "file": "priority-pages.json",
+    "bytes": 2071,
+    "sha256": "8d6288c81cc9c6e34653e32be561b8e207689a1607baeda37f8033bb3510dbba"
+  },
+  {
+    "file": "remaining-guidance-inventory.json",
+    "bytes": 53975,
+    "sha256": "c5764a543600af0108e2c9a8eaedeb01f221e558eabbff45ad9d30e7656c41f8"
+  },
+  {
+    "file": "reproduce/build-browser.mjs.txt",
+    "bytes": 4848,
+    "sha256": "f5b2ab55a501dabafe82b24ede86d05c6dedc9c273516c11402f14bc8029bb96"
+  },
+  {
+    "file": "reproduce/imbewu-inspect-tree-care-pdfs.py.txt",
+    "bytes": 4949,
+    "sha256": "bad1d5e6c2648ac126118315863f76a443ecc29cf1f318c0101d2a166804823e"
+  },
+  {
+    "file": "reproduce/imbewu-verify-care-browser.py.txt",
+    "bytes": 3853,
+    "sha256": "5575f6161a853e25569ebb0fb994386667a10913af2f028874f71d1402e35583"
+  },
+  {
+    "file": "reproduce/inventory-guidance.mjs.txt",
+    "bytes": 2706,
+    "sha256": "f5a6a53546947ae4196a72c3a6f39e98f72232464c08172773a65858068f5dfd"
+  },
+  {
+    "file": "reproduce/render-guides.mjs.txt",
+    "bytes": 3237,
+    "sha256": "7cfb6e5e395f48a70f8c32b1e651017ea43e9bd6ba3ea3a9d17cc94cff34ab38"
+  },
+  {
+    "file": "verification.json",
+    "bytes": 3060,
+    "sha256": "5a81876787d3ef6e94368f9c543521168b085076e8e9e7e560e8f5719e12d2d8"
+  },
+  {
+    "file": "visual-inspection.json",
+    "bytes": 3379,
+    "sha256": "21e63803ad01114f0c835d44d4ef71f7ec8212f46f119794f84b0a5f0a9b9e45"
+  }
+]

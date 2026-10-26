@@ -1,0 +1,19 @@
+from pathlib import Path
+import json,gzip,html,collections
+r=Path.cwd();q=Path('/private/tmp/imbewu-tree-care-browser-proof');p=json.loads((r/'docs/translation/four-language-completion/tree-care-drafts.json').read_text());before=json.loads(gzip.decompress((r/'tests/fixtures/tree-care-translation/before.json.gz').read_bytes()));source=next(row for row in before['rows']if row['id']=='trees-subtropical-coast');phones=[r for l in ['zu','st','ts','ve']for r in json.loads((q/(l+'-phone.json')).read_text())];totals={};allPairs=0
+for kind,rows in [('phone',phones),('desktop',json.loads((q/'desktop.json').read_text())),('englishPhone',json.loads((q/'english-phone.json').read_text()))]:
+ pairs=collections.defaultdict(dict);fields=0
+ for row in rows:
+  s=row['state'];assert not row['overflow']and row['open']and not s['events'];pairs[(s['id'],s['language'])][s['version']]=row;i=next(i for i,g in enumerate(source['context']['trees'])if g['harvest']['speciesId']==s['id']);context=dict(source['context']);context['trees']=[source['context']['trees'][i]];context['animals']=[];assert s['context']==context
+ for(id,language),pair in pairs.items():
+  assert set(pair)=={'before','after'};a,b=pair['before'],pair['after'];i=next(i for i,g in enumerate(source['context']['trees'])if g['harvest']['speciesId']==id);original=source['outputs'][language]['foodForest'][i];assert a['state']['guide']['foodForest']==[original];expected=json.loads(json.dumps(original));markup=a['html']
+  if language in ['zu','st','ts','ve']:
+   allPairs+=1
+   for index,binding in enumerate(p['fieldBindings']):
+    for f in [f for f in binding['fields']if f['speciesId']==id]:
+     sourceText=binding['english'];matches=[(j,line)for j,line in enumerate(expected['lines'])if(line==sourceText if f['field']=='care'else line.endswith(sourceText))];assert len(matches)==1,(id,language,index,matches);j,old=matches[0];assert old.count(sourceText)==1;nextText=old.replace(sourceText,p['rows'][index][language]);expected['lines'][j]=nextText;oldhtml='>'+html.escape(old,quote=False)+'<';newhtml='>'+html.escape(nextText,quote=False)+'<';assert markup.count(oldhtml)==1,(id,index,'whole paragraph missing');markup=markup.replace(oldhtml,newhtml);fields+=1
+  assert b['state']['guide']['foodForest']==[expected];assert markup==b['html'],'whole actual component markup may change only the complete bound care and purchase paragraphs'
+ totals[kind]={'states':len(rows),'pairs':len(pairs),'completeNativeCarePurchaseFields':fields}
+switches=json.loads((q/'language-switches.json').read_text());assert len(switches)==6 and all(not r['overflow']and not r['state']['events']and r['state']['context']==switches[0]['state']['context']for r in switches)
+assert totals['phone']=={'states':272,'pairs':136,'completeNativeCarePurchaseFields':364};assert totals['desktop']=={'states':16,'pairs':8,'completeNativeCarePurchaseFields':20};assert totals['englishPhone']['states']==8
+result={'status':'passed','rows':totals,'nativePairs':allPairs,'languageSwitches':6,'allExpanded':True,'providedContextsUnchanged':True,'callbackEvents':0,'horizontalOverflows':0,'wholeMarkup':'Only complete typed care/purchase paragraphs change; all English/unsupported markup stays exact.','visualInspection':'Two four-language complete phone-card contacts inspected: cherry qualifications and source five-year shade caveat. Desktop views and PDF pages pending inspection. Layout checks are not fluent review.','cleanup':'Temporary tab12 closed; viewport override reset; GET-only server95588 stopped.','limits':'Actual unchanged component and real React/Lucide with generated complete guides and synthetic parents. No full account route, backend save, physical device, current legal permission or language approval.'};(q/'verification.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');print(result)

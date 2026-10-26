@@ -1,0 +1,10 @@
+{
+  "component": {
+    "file": "components/crops/ProductionGuideCard.tsx",
+    "sha256": "89c3238b5bf367c0015c84e2d1a88d48d224b0961f739929fec337ba27e6b2c1",
+    "transformation": "Imports replaced by actual React and Lucide. All component functions retained."
+  },
+  "cases": 34,
+  "sourceDescriptions": 91,
+  "limits": "Actual component with complete generated guides, immutable before outputs and synthetic in-memory parents. No production route, backend, current legal permission or fluent-speaker approval."
+}

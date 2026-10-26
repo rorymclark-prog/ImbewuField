@@ -10964,6 +10964,734 @@
       "ts": "swirhabyana leswintshwa swa le hansi ka misava; ginger leyi omisiweke yi rhekhodiwa yi ri yoxe",
       "ve": "tsinde ntswa dzi aluwaho fhasi ha mavu; ginger yo omiswaho i rekhodiwa nga thungo",
       "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record the exact identity and obtain local expert food-use advice before counting it as household food.",
+      "zu": "Bhala ubunikazi obuqondile besitshalo bese uthola iseluleko sikachwepheshe wendawo ngokusetshenziswa njengokudla ngaphambi kokusibala njengokudla kwasekhaya.",
+      "st": "Rekota hore ke semela sefe hantle mme o fumane keletso ya setsebi sa lehae ka tshebediso e le dijo pele o se bala e le dijo tsa lelapa.",
+      "ts": "Rhekhoda leswaku i ximilana xihi hi ku kongoma kutani u kuma switsundzuxo swa mutivi wa laha kaya hi ku tirhisiwa tani hi swakudya u nga si xi hlaya tani hi swakudya swa le kaya.",
+      "ve": "Rekhodani vhuvha ha tshimela nga vhuḓalo ni wane nyeletshedzo ya muḓivhi wa henefho nga ha u shumiswa sa zwiḽiwa musi ni sa athu u tshi vhalela sa zwiḽiwa zwa muṱa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm exact species with a qualified indigenous nursery. Do not substitute genus-level berry claims for identification.",
+      "zu": "Qinisekisa uhlobo oluqondile ngenkulisa yezitshalo zomdabu enobungcweti. Ungasebenzisi izimangalo zamajikijolo ezingeni le-genus esikhundleni sokuhlonza uhlobo.",
+      "st": "Netefatsa mofuta o nepahetseng setsing sa dimela tsa tlhaho se nang le tsebo e loketseng. O se ke wa sebedisa ditlaleho tsa monokotshwai boemong ba genus ho ena le ho hlwaya mofuta hantle.",
+      "ts": "Tiyisisa muxaka lowu kongomeke eka ndhawu yo kurisa swimilana swa ndhavuko leyi nga ni vuswikoti. U nga siveli ku tiva muxaka hi swiviko swa mihandzu leyitsongo swa xiyimo xa genus.",
+      "ve": "Khwaṱhisedzani lushaka lwo teaho na neseḽi ya zwimela zwa henefho i re na ndalukanyo. Ni songo dzhia zwine zwa ambiwa nga mitshelo miṱuku kha vhuimo ha genus sa u dzhiela vhudzulo u topola lushaka nga vhuḓalo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Keep this as an identified hedge/inventory plant. Seek expert local food-use review before treating berries as household food.",
+      "zu": "Gcina lesi njengesitshalo esihlonziwe sothango noma sohlu lwezitshalo ezikhona. Funa ukubuyekezwa nguchwepheshe wendawo ngokusetshenziswa njengokudla ngaphambi kokuphatha amajikijolo njengokudla kwasekhaya.",
+      "st": "Boloka sena e le semela se hlwauweng sa lekhoakhoa kapa sa lenane la dimela tse teng. Kopa tlhahlobo ya setsebi sa lehae ka tshebediso e le dijo pele o nka monokotshwai e le dijo tsa lelapa.",
+      "ts": "Hlayisa lexi tani hi ximilana lexi tiviwaka xa rihlampfu kumbe xa nxaxamelo wa swimila leswi nga kona. Lava nkambisiso wa mutivi wa laha kaya hi ku tirhisiwa tani hi swakudya u nga si teka mihandzu leyitsongo tani hi swakudya swa le kaya.",
+      "ve": "Tshimela itshi tshi dzule tshi tshi ḓivhea sa tsha luhura kana kha mutevhe wa zwimela zwi re hone. Ṱoḓani tsedzuluso ya muḓivhi wa henefho nga ha u shumiswa sa zwiḽiwa musi ni sa athu u dzhia mitshelo miṱuku sa zwiḽiwa zwa muṱa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm the exact species and intended hedge use with a local indigenous nursery.",
+      "zu": "Qinisekisa uhlobo oluqondile nokusetshenziswa okuhlosiwe kothango ngenkulisa yendawo yezitshalo zomdabu.",
+      "st": "Netefatsa mofuta o nepahetseng le tshebediso e rerilweng ya lekhoakhoa setsing sa lehae sa dimela tsa tlhaho.",
+      "ts": "Tiyisisa muxaka lowu kongomeke ni ku tirhisiwa loku kunguhatiweke ka rihlampfu eka ndhawu ya laha kaya yo kurisa swimilana swa ndhavuko.",
+      "ve": "Khwaṱhisedzani lushaka lwo teaho na tshumiso yo dzudzanywaho ya luhura na neseḽi ya henefho ya zwimela zwa henefho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record planting batches and harvested leaves/fruit separately.",
+      "zu": "Bhala amaqoqo okutshalwa namaqabunga noma izithelo ezivuniwe ngokwehlukana.",
+      "st": "Rekota dihlopha tsa ho lema le makgasi kapa ditholwana tse kotutsweng ka thoko.",
+      "ts": "Rhekhoda mintlawa yo byala ni matluka kumbe mihandzu leyi tshoveriweke swi hambanile.",
+      "ve": "Rekhodani zwigwada zwa u ṱavha na maṱari kana mitshelo yo kaṋwaho nga thungo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Match this frost-sensitive plant to dry saline/coastal conditions. Its accumulated salts can return to the soil as plants die.",
+      "zu": "Fanisa lesi sitshalo esizwela isithwathwa nezimo ezomile ezinosawoti noma zasogwini. Usawoti osiqongelelile ungabuyela emhlabathini lapho izitshalo zifa.",
+      "st": "Bapisa semela sena se angwang ke serame se nang le leqhwa le maemo a ommeng a nang le letswai kapa a lebopong. Letswai le bokellaneng ho sona le ka kgutlela mobung ha dimela di shwa.",
+      "ts": "Fananisa ximilana lexi khumbiwaka hi gwitsi ni swiyimo swo oma leswi nga ni munyu kumbe swa le ribuweni. Munyu lowu xi wu hlengeleteke wu nga tlhelela emisaveni loko swimila swi fa.",
+      "ve": "Fanyisani tshimela itshi tshi kwameaho nga murotholo wa gwanda na nyimele dzo omaho dzi re na muṋo kana dza khunzi. Muṋo wo kuvhanganywaho u nga humela mavuni musi zwimela zwi tshi fa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Obtain exact-species seed or plants and assess the bed soil; no regional food cultivar or annual food yield is verified.",
+      "zu": "Thola imbewu noma izitshalo zohlobo oluqondile bese uhlola inhlabathi yombhede; alukho uhlobo lokudla lwesifunda noma isivuno sokudla sonyaka oluqinisekisiwe.",
+      "st": "Fumana peo kapa dimela tsa mofuta o nepahetseng mme o hlahlobe mobu wa bethe; ha ho mofuta wa dijo wa sebaka kapa kotulo ya dijo ya selemo e netefaditsweng.",
+      "ts": "Kuma mbewu kumbe swimila swa muxaka lowu kongomeke kutani u kambela misava ya mubedo; a ku na muxaka wa swakudya wa xifundzha kumbe ntshovelo wa swakudya wa lembe lowu tiyisisiweke.",
+      "ve": "Wanani mbeu kana zwimela zwa lushaka lwo teaho ni ṱole mavu a mubete; a hu na lushaka lwa zwiḽiwa lwa dzingu kana khaṋo ya zwiḽiwa ya ṅwaha yo khwaṱhisedzwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "SANBI records this tree in east-coast dune forest from Eastern Cape through KwaZulu-Natal, with tolerance of salty sea spray.",
+      "zu": "I-SANBI ibhala lesi sihlahla ehlathini lezindunduma zogwini olusempumalanga kusukela e-Eastern Cape kudlule KwaZulu-Natal, sibekezelela inkungu yasolwandle enosawoti.",
+      "st": "SANBI e rekota sefate sena merung ya ditutulu tsa lehlabathe tsa lebopo le ka botjhabela ho tloha Eastern Cape ho pholletsa le KwaZulu-Natal, se mamella marothodi a lewatle a nang le letswai.",
+      "ts": "SANBI yi rhekhoda murhi lowu eka khwati ra switsunga swa sava swa ribuwa ra le vuxeni ku suka Eastern Cape ku ya hi KwaZulu-Natal, wu ri ni ku tiyisela swiphemu swa mati ya lwandle leswi nga ni munyu leswi hahiwaka hi moya.",
+      "ve": "SANBI i rekhoda muri uyu ḓakani ḽa zwikwara zwa muṱavha zwa khunzi ya vhubvaḓuvha u bva Eastern Cape u fhira KwaZulu-Natal, u tshi konḓelela tshifafhadzo tsha maḓi a lwanzhe a re na muṋo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm Mimusops afra and lawful nursery provenance. Check current protected-tree collection requirements before taking plants or products from existing trees.",
+      "zu": "Qinisekisa i-Mimusops afra nokuthi ivela ngokusemthethweni enkulisa. Hlola izidingo zamanje zokuqoqwa kwezihlahla ezivikelwe ngaphambi kokuthatha izitshalo noma imikhiqizo ezihlahleni ezikhona.",
+      "st": "Netefatsa Mimusops afra le hore e tswa setsing sa dimela ka molao. Hlahloba ditlhoko tsa hajwale tsa ho bokella difate tse sireleditsweng pele o nka dimela kapa dihlahiswa difateng tse teng.",
+      "ts": "Tiyisisa Mimusops afra ni leswaku yi huma hi nawu eka ndhawu yo kurisa swimilana. Kambela swilaveko swa sweswi swa ku hlengeleta mirhi leyi sirheleleriweke u nga si teka swimila kumbe swikumiwa eka mirhi leyi nga kona.",
+      "ve": "Khwaṱhisedzani Mimusops afra na vhubvo ha neseḽi vhu tevhelaho mulayo. Ṱolani ṱhoḓea dza zwino dza u kuvhanganya miri yo tsireledzwaho musi ni sa athu u dzhia zwimela kana zwibveledzwa kha miri i re hone.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Retain this climber in mapped inventory, but do not count it as normal household food until a qualified local specialist confirms identity, edible part and safe preparation.",
+      "zu": "Gcina lesi sitshalo esikhwelayo ohlwini lwezitshalo ezikhona ebalazweni, kodwa ungasibali njengokudla okuvamile kwasekhaya kuze kube uchwepheshe wendawo oqeqeshiwe uqinisekisa ubunikazi, ingxenye edliwayo nendlela ephephile yokusilungisa.",
+      "st": "Boloka semela sena se namelang lenaneng la dimela tse teng mmapeng, empa o se ke wa se bala e le dijo tse tlwaelehileng tsa lelapa ho fihlela setsebi sa lehae se tshwanelehang se netefatsa hore ke semela sefe, karolo e jewang le tokiso e bolokehileng.",
+      "ts": "Hlayisa ximilana lexi khandziyaka eka nxaxamelo wa swimila leswi nga eka mepe, kambe u nga xi hlayi tani hi swakudya swa ntolovelo swa le kaya ku kondza mutivi wa laha kaya la nga ni vuswikoti a tiyisisa muxaka wa xona, xiphemu lexi dyiwaka ni ku xi lulamisa hi ndlela leyi hlayisekeke.",
+      "ve": "Tshimela itshi tshi gonyelelaho tshi dzule kha mutevhe wa zwimela zwi re kha mapa, fhedzi ni songo tshi vhalela sa zwiḽiwa zwo ḓoweleaho zwa muṱa u swika muḓivhi wa henefho a re na ndalukanyo a tshi khwaṱhisedza vhuvha hatsho, tshipiḓa tshi ḽiwaho na u lugisela ho tsireledzeaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "SANBI records it across South Africa except Western Cape, in varied habitats.",
+      "zu": "I-SANBI isibhala ezindaweni ezihlukahlukene e-South Africa yonkana ngaphandle kwase-Western Cape.",
+      "st": "SANBI e se rekota dibakeng tse fapaneng ho pholletsa le South Africa ntle le Western Cape.",
+      "ts": "SANBI yi xi rhekhoda etindhawini to hambana eSouth Africa hinkwaro handle ka Western Cape.",
+      "ve": "SANBI i tshi rekhoda vhudzuloni ho fhambanaho u mona na South Africa nga nnḓa ha Western Cape.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Resolve food-use and preparation with an experienced local food-plant specialist before buying it as a household crop.",
+      "zu": "Cacisa ukusetshenziswa njengokudla nendlela yokulungisa nochwepheshe wendawo onolwazi lwezitshalo zokudla ngaphambi kokusithenga njengesitshalo sokudla kwasekhaya.",
+      "st": "Rarolla tshebediso e le dijo le tokiso le setsebi sa lehae se nang le boiphihlelo ka dimela tsa dijo pele o se reka e le sejalo sa lelapa.",
+      "ts": "Lulamisa mhaka ya ku tirhisiwa tani hi swakudya ni ndlela yo lunghisa ni mutivi wa laha kaya la nga ni ntokoto wa swimila swa swakudya u nga si xi xava tani hi xibyariwa xa le kaya.",
+      "ve": "Tandululani tshumiso sa zwiḽiwa na u lugisela na muḓivhi wa henefho a re na tshenzhelo ya zwimela zwa zwiḽiwa musi ni sa athu u tshi renga sa tshiliṅwa tsha muṱa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Treat edible-fat preparation as a specialist process requiring local validation.",
+      "zu": "Phatha ukulungiswa kwamafutha adliwayo njengenqubo yobuchwepheshe edinga ukuqinisekiswa endaweni.",
+      "st": "Nka tokiso ya mafura a jewang e le tshebetso ya setsebi e hlokang netefatso ya lehae.",
+      "ts": "Teka ku lulamisiwa ka mafurha lama dyiwaka tani hi endlelo ra mutivi leri lavaka ku tiyisisiwa laha kaya.",
+      "ve": "Dzhiani u lugisela mapfura a ḽiwaho sa maitele a muḓivhi a ṱoḓaho u khwaṱhisedzwa henefho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Use well-drained coastal sand with sun or semi-shade; fruit production needs correctly sexed planting material.",
+      "zu": "Sebenzisa isihlabathi sasogwini esikhipha amanzi kahle, elangeni noma emthunzini oyingxenye; ukukhiqiza izithelo kudinga izitshalo zokutshala eziqinisekiswe kahle ukuthi ezesilisa noma ezesifazane.",
+      "st": "Sebedisa lehlabathe la lebopong le ntshang metsi hantle, letsatsing kapa moriting o sa fellang; tlhahiso ya ditholwana e hloka dimela tsa ho lema tse hlwauweng bong ba tsona hantle.",
+      "ts": "Tirhisa sava ra le ribuweni leri humesaka mati kahle, laha ku nga ni dyambu kumbe ndzhuti wo ringanela; ku humelerisa mihandzu swi lava swimila swo byala leswi kombisiweke kahle loko swi ri swa xinuna kumbe swa xisati.",
+      "ve": "Shumisani muṱavha wa khunzi u bvisaho maḓi zwavhuḓi, ḓuvhani kana murunzini u sa fhelelaho; u bveledza mitshelo zwi ṱoḓa zwimela zwa u ṱavha zwo topolwaho zwavhuḓi uri ndi zwa tshiduna kana tshisadzi.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm the exact species and male/female stock with an indigenous nursery. Keep landscape use separate from an unverified household food process.",
+      "zu": "Qinisekisa uhlobo oluqondile nezitshalo zesilisa/zesifazane ngenkulisa yezitshalo zomdabu. Hlukanisa ukusetshenziswa kokulungisa indawo nenqubo yokudla kwasekhaya engakaqinisekiswa.",
+      "st": "Netefatsa mofuta o nepahetseng le dimela tse tona/tse tshehadi setsing sa dimela tsa tlhaho. Arola tshebediso ya ho kgabisa sebaka le tshebetso ya dijo tsa lelapa e sa netefatswang.",
+      "ts": "Tiyisisa muxaka lowu kongomeke ni swimila swa xinuna/xisati eka ndhawu yo kurisa swimilana swa ndhavuko. Hambanisa ku tirhisiwa eku khaviseni ka ndhawu ni endlelo ra swakudya swa le kaya leri nga si tiyisisiwa.",
+      "ve": "Khwaṱhisedzani lushaka lwo teaho na zwimela zwa tshiduna/tshisadzi na neseḽi ya zwimela zwa henefho. Fhambanyani tshumiso ya u khavhisa fhethu na maitele a zwiḽiwa zwa muṱa a sa athu khwaṱhisedzwa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm the exact mulberry species and that the chosen plant is a fruiting form. Fruit colour alone cannot identify it.",
+      "zu": "Qinisekisa uhlobo oluqondile lwe-mulberry nokuthi isitshalo esikhethiwe siyathela. Umbala wesithelo uwodwa awukwazi ukusihlonza.",
+      "st": "Netefatsa mofuta o nepahetseng wa mulberry le hore semela se kgethilweng ke se behang ditholwana. Mmala wa tholwana feela o ke ke wa se hlwaya.",
+      "ts": "Tiyisisa muxaka lowu kongomeke wa mulberry ni leswaku ximilana lexi hlawuriweke i xa ku tswala mihandzu. Muhlovo wa mihandzu ntsena a wu nge xi tivi.",
+      "ve": "Khwaṱhisedzani lushaka lwo teaho lwa mulberry na uri tshimela tsho nangwaho tshi a aṋwa mitshelo. Muvhala wa mutshelo u woṱhe a u koni u tshi topola.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Watch water stress during fruit development and record the actual ripe picking months.",
+      "zu": "Qaphela ukushoda kwamanzi ngesikhathi sokukhula kwezithelo bese ubhala izinyanga zangempela zokukha ezivuthiwe.",
+      "st": "Hlokomela kgatello ya kgaello ya metsi nakong ya kgolo ya ditholwana mme o rekote dikgwedi tsa nnete tsa ho kga tse butswitseng.",
+      "ts": "Languta ku kayivela ka mati loko mihandzu yi kula kutani u rhekhoda tin'hweti ta xiviri ta ku kha mihandzu leyi vupfeke.",
+      "ve": "Sedzani mutsiko wa ṱhahelelo ya maḓi musi mitshelo i tshi aluwa ni rekhode miṅwedzi ya vhukuma ya u kaṋa yo vhibvaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask for identified Morus nigra fruiting material with a locally observed season. Do not use a generic black-fruited mulberry or fruitless ornamental as proof of this product.",
+      "zu": "Cela izitshalo zokutshala ze-Morus nigra ezihlonziwe, ezithela ngezikhathi ezibonwe endaweni. Ungasebenzisi i-mulberry nje enezithelo ezimnyama noma isitshalo sokuhlobisa esingathelisi njengobufakazi balo mkhiqizo.",
+      "st": "Kopa dimela tsa Morus nigra tse hlwauweng tse behang ditholwana ka nako e bonweng sebakeng seo. O se ke wa sebedisa mulberry efe kapa efe e nang le ditholwana tse ntsho kapa semela sa mokgabiso se sa beheng ditholwana e le bopaki ba sehlahiswa sena.",
+      "ts": "Kombela swimila swa Morus nigra leswi tiviwaka leswi tswalaka mihandzu hi nguva leyi voniweke endhawini. U nga tirhisi mulberry yin'wana ni yin'wana ya mihandzu ya ntima kumbe ximilana xo khavisa lexi nga tswariki mihandzu tani hi vumbhoni bya xikumiwa lexi.",
+      "ve": "Humbelani zwimela zwa Morus nigra zwo topolwaho zwi aṋwaho mitshelo nga tshifhinga tsho sedzwaho henefho. Ni songo shumisa mulberry iṅwe na iṅwe i re na mitshelo mitswu kana tshimela tsha u khavhisa tshi sa aṋwiho sa vhuṱanzi ha tshibveledzwa itshi.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "SANBI records this slow-growing tree in summer and winter rainfall areas, with frost, drought and wind resistance.",
+      "zu": "I-SANBI ibhala lesi sihlahla esikhula kancane ezindaweni zemvula yasehlobo neyasebusika, simelana nesithwathwa, isomiso nomoya.",
+      "st": "SANBI e rekota sefate sena se holang butle dibakeng tsa pula ya lehlabula le ya mariha, se mamella serame sa leqhwa, komello le moya.",
+      "ts": "SANBI yi rhekhoda murhi lowu kulaka hi ku nonoka etindhawini ta mpfula ya ximumu ni ya xixika, wu tiyisela gwitsi, dyandza ni moya.",
+      "ve": "SANBI i rekhoda muri uyu u aluwaho nga u ongolowa fhethu ha mvula ya tshilimo na ya vhuriha, u tshi konḓelela murotholo wa gwanda, gomelelo na muya.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Keep its roots away from walls, patios and pools; SANBI notes that they can be aggressive.",
+      "zu": "Gcina izimpande zaso zikude nezindonga, izindawo ezingaphandle ezigandayiwe namachibi okubhukuda; i-SANBI ithi zinganda ngamandla.",
+      "st": "Boloka metso ya sona hole le mabota, mathule a katilweng le matamo a ho sesa; SANBI e bolela hore e ka nama ka matla.",
+      "ts": "Hlayisa timitsu ta xona ti ri ekule ni makhumbi, swivava leswi andlaleriweke ni swidziva swo hlambela; SANBI yi vula leswaku ti nga hangalaka hi nguvu.",
+      "ve": "Midzi yatsho i dzule kule na mbondo, fhethu ho pavhiwaho nnḓa na mativa a u tala; SANBI i amba uri i nga phaḓalala nga maanḓa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask for the wild-olive taxon in the catalogue, rather than substituting a commercial olive cultivar. Record actual local picking.",
+      "zu": "Cela i-wild-olive taxon esohlwini lwezitshalo, ungayishintshi ngohlobo lwe-olive lokuhweba. Bhala ukukha kwangempela kwendawo.",
+      "st": "Kopa taxon ya wild-olive e khathalokong ho ena le ho e nkela sebaka ka mofuta wa olive wa kgwebo. Rekota ho kga ha nnete ha sebakeng seo.",
+      "ts": "Kombela taxon ya wild-olive leyi nga eka khathalogi, u nga yi sivi hi muxaka wa olive wa bindzu. Rhekhoda ku kha ka xiviri ka laha kaya.",
+      "ve": "Humbelani taxon ya wild-olive i re kha khathaḽogo, ni songo i dzhiela vhudzulo nga lushaka lwa olive lwa bindzu. Rekhodani u kaṋa ha vhukuma ha henefho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Match the cultivar to table olives or oil. Check drainage, irrigation and winter conditions; humid summer rainfall can bring disease problems.",
+      "zu": "Fanisa uhlobo olukhethiwe nama-olive okudliwa etafuleni noma amafutha. Hlola ukuphuma kwamanzi enhlabathini, ukuchelela nezimo zasebusika; imvula yasehlobo enomswakama ingaletha izinkinga zezifo.",
+      "st": "Bapisa mofuta o kgethilweng le diolive tsa ho jewa kapa oli. Hlahloba ho tswa ha metsi mobung, nosetso le maemo a mariha; pula ya lehlabula e nang le mongobo e ka tlisa mathata a mafu.",
+      "ts": "Fananisa muxaka lowu hlawuriweke ni tiolive to dyiwa kumbe mafurha. Kambela ku huma ka mati emisaveni, ku cheleta ni swiyimo swa xixika; mpfula ya ximumu leyi nga ni ndzhongo yi nga tisa swiphiqo swa mavabyi.",
+      "ve": "Fanyisani lushaka lwo nangwaho na olive dza u ḽa kana mapfura. Ṱolani u bva ha maḓi mavuni, u sheledza na nyimele dza vhuriha; mvula ya tshilimo i re na muṋa i nga ḓisa thaidzo dza malwadze.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Pick at the intended green, black or oil stage. Processing and safe kept-stock conditions must be recorded separately.",
+      "zu": "Kha ngesikhathi esihlosiwe sokuba luhlaza, mnyama noma ukwenza amafutha. Izimo zokucutshungulwa nokugcinwa komkhiqizo ngokuphephile kufanele zibhalwe ngokwehlukana.",
+      "st": "Kga boemong bo rerilweng ba botala, botsho kapa oli. Maemo a ho sebetswa le a ho boloka sehlahiswa ka polokeho a tlameha ho rekotwa ka thoko.",
+      "ts": "Kha eka xiyimo lexi kunguhatiweke xa rihlaza, ntima kumbe mafurha. Swiyimo swa ku lulamisa ni swa ku hlayisa xikumiwa hi ndlela leyi hlayisekeke swi fanele ku rhekhodiwa swi hambanile.",
+      "ve": "Kaṋani kha vhuimo ho dzudzanywaho ha vhudala, vhutswu kana mapfura. Nyimele dza u shuma na dza u vhulunga tshibveledzwa nga nḓila yo tsireledzeaho dzi tea u rekhodiwa nga thungo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Mission is a source-backed black-table and oil candidate; Kalamata is for black table olives; Manzanilla and Barouni for green table olives; Frantoio for oil and compatible pollen. Confirm regional fit through SA Olive's registered nurseries.",
+      "zu": "I-Mission iyindlela engase ikhethwe, esekelwe emthonjeni, yama-olive amnyama okudliwa namafutha; i-Kalamata ingeyama-olive amnyama okudliwa; i-Manzanilla ne-Barouni ingeyama-olive aluhlaza okudliwa; i-Frantoio ingeyamafutha nempova ehambisanayo. Qinisekisa ukufaneleka kwesifunda ngezinkulisa ezibhalisiwe ze-SA Olive.",
+      "st": "Mission ke mofuta o ka kgethwang bakeng sa diolive tse ntsho tsa ho jewa le oli o tsheheditsweng ke mohlodi; Kalamata ke ya diolive tse ntsho tsa ho jewa; Manzanilla le Barouni ke tsa diolive tse tala tsa ho jewa; Frantoio ke ya oli le peo ya dipalesa e tsamaellanang. Netefatsa ho tshwaneleha ha sebaka ka ditsi tsa dimela tse ngodisitsweng tsa SA Olive.",
+      "ts": "Mission i muxaka lowu nga hlawuriwaka wa tiolive ta ntima to dyiwa ni mafurha lowu seketeriwaka hi xihlovo; Kalamata i wa tiolive ta ntima to dyiwa; Manzanilla na Barouni i ta tiolive ta rihlaza to dyiwa; Frantoio i wa mafurha ni mpova lowu fambisanaka. Tiyisisa ku faneleka ka xifundzha hi tindhawu to kurisa swimilana leti tsarisiweke ta SA Olive.",
+      "ve": "Mission ndi lushaka lu nga nangwaho lwa olive ntswu dza u ḽa na mapfura lwo tikedzwaho nga tshiko; Kalamata ndi ya olive ntswu dza u ḽa; Manzanilla na Barouni ndi dza olive ndala dza u ḽa; Frantoio ndi ya mapfura na luvhanda lu tshimbidzanaho. Khwaṱhisedzani u tea ha dzingu nga neseḽi dzo ṅwaliswaho dza SA Olive.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "SANBI describes a spreading pioneer shrub for sun and well-drained soil, including coastal and inland habitats. Leave room for its spread.",
+      "zu": "I-SANBI ichaza isihlahla esincane esiyiphayona esisakazekayo, esifanele ilanga nenhlabathi ekhipha amanzi kahle, kuhlanganise nezindawo zasogwini nezangaphakathi. Shiya indawo yokusakazeka kwaso.",
+      "st": "SANBI e hlalosa sehlahla sa pele se namang se ratang letsatsi le mobu o ntshang metsi hantle, ho akarelletsa dibaka tsa lebopong le tsa ka hare ho naha. Siya sebaka sa ho nama ha sona.",
+      "ts": "SANBI yi hlamusela xihlahla lexi sungulaka ku mila endhawini, lexi hangalakaka, xa dyambu ni misava leyi humesaka mati kahle, ku katsa tindhawu ta le ribuweni ni ta le ndzeni ka tiko. Siya ndhawu ya ku hangalaka ka xona.",
+      "ve": "SANBI i ṱalusa tshiṱaka tsha u thoma u mela fhethu tshi phaḓalalaho tsha ḓuvhani na mavu a bvisaho maḓi zwavhuḓi, hu tshi katelwa vhudzulo ha khunzi na ha ngomu shangoni. Siani tshikhala tsha u phaḓalala hatsho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm the exact species and local provenance; the checked source gives no named fruit cultivar.",
+      "zu": "Qinisekisa uhlobo oluqondile nemvelaphi yendawo; umthombo ohloliwe awunikezi uhlobo lwesithelo olukhethiwe olunegama.",
+      "st": "Netefatsa mofuta o nepahetseng le tshimoloho ya lehae; mohlodi o hlahlobilweng ha o fane ka mofuta wa tholwana o kgethilweng o nang le lebitso.",
+      "ts": "Tiyisisa muxaka lowu kongomeke ni laha xi humaka kona endhawini; xihlovo lexi kambisisiweke a xi nyiki muxaka wa mihandzu lowu hlawuriweke lowu nga ni vito.",
+      "ve": "Khwaṱhisedzani lushaka lwo teaho na vhubvo ha henefho; tshiko tsho ṱolwaho a tshi ṋei lushaka lwa mitshelo lwo nangwaho lu re na dzina.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Female palms need suitable male pollen. Record sex, cultivar and pollination management before forecasting fruit.",
+      "zu": "Amasundu esifazane adinga impova yesilisa efanele. Bhala ubulili, uhlobo olukhethiwe nokuphathwa kokuvundiswa ngempova ngaphambi kokubikezela izithelo.",
+      "st": "Dipalema tse tshehadi di hloka peo ya dipalesa e loketseng ya tse tona. Rekota bong, mofuta o kgethilweng le taolo ya ho tsamaisa peo ya dipalesa pele o etsa ponelopele ya ditholwana.",
+      "ts": "Mipalema ya xisati yi lava mpova lowu faneleke wa ya xinuna. Rhekhoda rimbewu, muxaka lowu hlawuriweke ni mafambiselo ya ku hangalasa mpova u nga si vhumbha mihandzu.",
+      "ve": "Miri ya palema ya tshisadzi i ṱoḓa luvhanda lwo teaho lwa tshiduna. Rekhodani mbeu ya tshiduna kana tshisadzi, lushaka lwo nangwaho na ndangulo ya u phaḓaladza luvhanda musi ni sa athu u bvumba mitshelo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Check heat, water and rain during ripening. The Hermon trial found uneven ripening and spoilage, so regional success alone does not establish a local crop.",
+      "zu": "Hlola ukushisa, amanzi nemvula ngesikhathi sokuvuthwa. Ucwaningo lwase-Hermon lwathola ukuvuthwa okungalingani nokonakala, ngakho impumelelo yesifunda iyodwa ayiqinisekisi isivuno sendawo.",
+      "st": "Hlahloba mocheso, metsi le pula nakong ya ho butswa. Teko ya Hermon e fumane ho butswa ho sa lekaneng le ho senyeha, kahoo katleho ya sebaka feela ha e netefatse sejalo sa lehae.",
+      "ts": "Kambela ku hisa, mati ni mpfula loko mihandzu yi vupfa. Ndzavisiso wa Hermon wu kume ku vupfa loku nga ringaniki ni ku onhaka, hikokwalaho ku humelela ka xifundzha ntsena a ku tiyisisi xibyariwa xa laha kaya.",
+      "ve": "Ṱolani mufhiso, maḓi na mvula musi mitshelo i tshi vhibva. Mulingo wa Hermon wo wana u vhibva hu sa lingani na u sina, ngauralo u bvelela ha dzingu hu hoṱhe a hu khwaṱhisedzi tshiliṅwa tsha henefho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Medjool is documented in the Hermon study. Obtain known fruiting female material and compatible pollen advice; a seedling's sex and eventual fruit quality are not established by its appearance.",
+      "zu": "I-Medjool ibhalwe ocwaningweni lwase-Hermon. Thola izitshalo zesifazane ezaziwayo ukuthi ziyathela neseluleko sempova ehambisanayo; ukubukeka kwesithombo akufakazeli ubulili baso noma ikhwalithi yezithelo esiyozithela.",
+      "st": "Medjool e ngotswe phuputsong ya Hermon. Fumana dimela tse tshehadi tse tsejwang di beha ditholwana le keletso ka peo ya dipalesa e tsamaellanang; ponahalo ya semela se tswang peong ha e netefatse bong ba sona kapa boleng ba ditholwana tseo se tla di beha.",
+      "ts": "Medjool yi tsariwile eka ndzavisiso wa Hermon. Kuma swimila swa xisati leswi tivekaka leswaku swi tswala mihandzu ni switsundzuxo swa mpova lowu fambisanaka; rimbewu ra ximilana lexi mileke hi mbewu ni nkoka wa mihandzu ya xona ya le ndzhaku a swi tiyisisiwi hi ndlela leyi xi langutekaka ha yona.",
+      "ve": "Medjool yo ṅwalwa kha ṱhoḓisiso ya Hermon. Wanani zwimela zwa tshisadzi zwi ḓivheaho uri zwi a aṋwa mitshelo na nyeletshedzo ya luvhanda lu tshimbidzanaho; u vhonala ha tshimela tsho melaho nga mbeu a hu khwaṱhisedzi mbeu yatsho ya tshiduna kana tshisadzi kana ndeme ya mitshelo yatsho ya tshifhingani tshi ḓaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Female trees bear nuts and need pollen from suitable male trees. The Prieska reference comes from a dry, irrigated Karoo farm.",
+      "zu": "Izihlahla zesifazane zithela amantongomane futhi zidinga impova yezihlahla zesilisa ezifanele. Isikhombo sase-Prieska sivela epulazini elomile lase-Karoo eliniselwa ngenkasa.",
+      "st": "Difate tse tshehadi di beha ditholwana tse nang le dikgapetla tse thata mme di hloka peo ya dipalesa ya difate tse tona tse loketseng. Tshupiso ya Prieska e tswa polasing e ommeng ya Karoo e nosetswang.",
+      "ts": "Mirhi ya xisati yi tswala mihandzu ya swikamba swo tiya naswona yi lava mpova wa mirhi ya xinuna leyi faneleke. Xikombiso xa Prieska xi huma eka purasi ro oma ra Karoo leri cheletiwaka.",
+      "ve": "Miri ya tshisadzi i aṋwa mitshelo ya makanda o khwaṱhaho nahone i ṱoḓa luvhanda lwa miri ya tshiduna yo teaho. Tshikombo tsha Prieska tshi bva kha bulasi ḽo omaho ḽa Karoo ḽi sheledzwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm male and female planting material, irrigation and local winter/summer conditions; a February producer reference does not validate a humid coast.",
+      "zu": "Qinisekisa izitshalo zokutshala zesilisa nezesifazane, ukuchelela nezimo zasebusika/ehlobo zendawo; isikhombo somkhiqizi sango-Februwari asiqinisekisi ukufaneleka kogwini olunomswakama.",
+      "st": "Netefatsa dimela tsa ho lema tse tona le tse tshehadi, nosetso le maemo a lehae a mariha/lehlabula; tshupiso ya mohlahisi ya Hlakola ha e netefatse lebopo le nang le mongobo.",
+      "ts": "Tiyisisa swimila swo byala swa xinuna ni swa xisati, ku cheleta ni swiyimo swa laha kaya swa xixika/ximumu; xikombiso xa muhumelerisi xa Nyenyenyani a xi tiyisisi ku faneleka ka ribuwa leri nga ni ndzhongo.",
+      "ve": "Khwaṱhisedzani zwimela zwa u ṱavha zwa tshiduna na tshisadzi, u sheledza na nyimele dza henefho dza vhuriha/tshilimo; tshikombo tsha mubveledzi tsha Luhuhi a tshi khwaṱhisedzi u tea ha khunzi i re na muṋa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Discuss Shufrah and Ariyeh from the Prieska producer evidence, or Shufra, Ariyeh and Sirora from the Prince Albert project, with a specialist nursery. Select a compatible male and confirm local fit.",
+      "zu": "Xoxa ngama-Shufrah ne-Ariyeh asebufakazini bomkhiqizi wase-Prieska, noma ama-Shufra, Ariyeh ne-Sirora asephrojekthini yase-Prince Albert, nenkulisa enobuchwepheshe. Khetha isitshalo sesilisa esihambisanayo bese uqinisekisa ukufaneleka kwendawo.",
+      "st": "Buisana le setsi sa dimela se nang le botsebi ka Shufrah le Ariyeh tse bopaking ba mohlahisi wa Prieska, kapa Shufra, Ariyeh le Sirora tse projekeng ya Prince Albert. Kgetha semela se setona se tsamaellanang mme o netefatse ho tshwaneleha ha sebaka.",
+      "ts": "Burisana ni ndhawu yo kurisa swimilana ya vutivi hi Shufrah na Ariyeh leswi humaka eka vumbhoni bya muhumelerisi wa Prieska, kumbe Shufra, Ariyeh na Sirora leswi humaka eka phurojeke ya Prince Albert. Hlawula ximilana xa xinuna lexi fambisanaka kutani u tiyisisa ku faneleka ka laha kaya.",
+      "ve": "Haseledzani na neseḽi ya vhuḓivhi nga Shufrah na Ariyeh zwi bvaho kha vhuṱanzi ha mubveledzi wa Prieska, kana Shufra, Ariyeh na Sirora zwi bvaho kha thandela ya Prince Albert. Nangani tshimela tsha tshiduna tshi tshimbidzanaho ni khwaṱhisedze u tea ha henefho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Protect young plants from heavy browsing. SANBI reports warm rocky and semi-arid habitats; ground-level goat browsing can prevent vegetative spread and reduce regeneration.",
+      "zu": "Vikela izitshalo ezincane ekudliweni kakhulu yizilwane. I-SANBI ibika izindawo ezifudumele ezinamatshe nezomile kancane; ukudla kwezimbuzi eduze komhlabathi kungavimbela ukusabalala ngezingxenye zesitshalo futhi kunciphise ukuvuseleleka.",
+      "st": "Sireletsa dimela tse ntjha ho fulwa haholo. SANBI e tlaleha dibaka tse futhumetseng tse majwe le tse batlang di omme; ho fulwa ke dipodi haufi le mobu ho ka thibela ho ata ka dikarolo tsa semela le ho fokotsa ho ikgolela hape.",
+      "ts": "Sirhelela swimila leswintshwa eka ku dyiwa ngopfu hi swiharhi. SANBI yi vika tindhawu to kufumela ta maribye ni leti nga oma ngopfu; ku dya ka timbuti ekusuhi ni misava ku nga sivela ku hangalaka hi swiphemu swa ximilana ni ku hunguta ku tlhela xi mila.",
+      "ve": "Tsireledzani zwimela zwiṱuku kha u ḽiwa nga zwifuwo nga maanḓa. SANBI i vhiga vhudzulo ho fhisaho ha matombo na ho omaho zwiṱuku; u ḽa ha mbudzi tsini na mavu hu nga thivhela u phaḓalala nga zwipiḓa zwa tshimela na u fhungudza u dovha tsha mela.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask for correctly identified spekboom and record whether it is planted for food, browse or restoration. No measured household leaf yield is supplied.",
+      "zu": "Cela i-spekboom ehlonzwe kahle bese ubhala ukuthi itshalelwa ukudla, ukudliwa yizilwane noma ukubuyisela indawo esimweni. Asikho isivuno samaqabunga esilinganisiwe sokudla kwasekhaya esinikeziwe.",
+      "st": "Kopa spekboom e hlwauweng hantle mme o rekote hore e lenngwe bakeng sa dijo, ho fulwa kapa ho tsosolosa sebaka. Ha ho kotulo e lekantsweng ya makgasi bakeng sa lelapa e fanweng.",
+      "ts": "Kombela spekboom leyi tiviwaka kahle kutani u rhekhoda loko yi byaleriwe swakudya, ku dyiwa hi swiharhi kumbe ku vuyetela ndhawu. A ku na ntshovelo wa matluka wa le kaya lowu pimiweke lowu nyikiweke.",
+      "ve": "Humbelani spekboom yo topolwaho zwavhuḓi ni rekhode arali yo ṱavhelwa zwiḽiwa, u ḽiwa nga zwifuwo kana u vhuyedzedza fhethu. A hu na khaṋo yo kaliwaho ya maṱari a muṱa yo ṋewaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Keep each cultivar's picking reference separate. The Robertson example used summer irrigation.",
+      "zu": "Gcina isikhombo sokukha sohlobo ngalunye olukhethiwe ngokwehlukana. Isibonelo sase-Robertson sasebenzisa ukuchelela ehlobo.",
+      "st": "Boloka tshupiso ya ho kga ya mofuta ka mong o kgethilweng ka thoko. Mohlala wa Robertson o sebedisitse nosetso ya lehlabula.",
+      "ts": "Hlayisa xikombiso xa ku kha xa muxaka wun'wana ni wun'wana lowu hlawuriweke xi ri xoxe. Xikombiso xa Robertson xi tirhise ku cheleta ka ximumu.",
+      "ve": "Tshikombo tsha u kaṋa tsha lushaka luṅwe na luṅwe lwo nangwaho tshi dzule nga thungo. Tsumbo ya Robertson yo shumisa u sheledza ha tshilimo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm winter chilling, water and the actual planting material before using a reference as a local plan.",
+      "zu": "Qinisekisa ukubanda kwasebusika, amanzi nezitshalo zangempela zokutshala ngaphambi kokusebenzisa isikhombo njengohlelo lwendawo.",
+      "st": "Netefatsa ho bata ha mariha, metsi le dimela tsa sebele tsa ho lema pele o sebedisa tshupiso e le moralo wa lehae.",
+      "ts": "Tiyisisa ku titimela ka xixika, mati ni swimila swa xiviri swo byala u nga si tirhisa xikombiso tani hi pulani ya laha kaya.",
+      "ve": "Khwaṱhisedzani u rothola ha vhuriha, maḓi na zwimela zwa vhukuma zwa u ṱavha musi ni sa athu u shumisa tshikombo sa pulane ya henefho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Solitaire has a sourced November first-pick reference and named chilling context at Simondium; discuss its local fit with the nursery.",
+      "zu": "I-Solitaire inesikhombo esivela emthonjeni sokukha kokuqala ngo-Novemba nezimo zokubanda ezichaziwe e-Simondium; xoxa ngenkulisa ngokufaneleka kwayo endaweni.",
+      "st": "Solitaire e na le tshupiso ya ho kga ha pele ka Pundungwane e nang le mohlodi le maemo a ho bata a boletsweng Simondium; buisana le setsi sa dimela ka ho tshwaneleha ha yona sebakeng seo.",
+      "ts": "Solitaire yi ni xikombiso xa ku kha ko sungula hi Hukuri lexi nga ni xihlovo ni xiyimo xa ku titimela lexi boxiweke eSimondium; burisana ni ndhawu yo kurisa swimilana hi ku faneleka ka yona endhawini.",
+      "ve": "Solitaire i na tshikombo tshi bvaho tshikoni tsha u kaṋa ha u thoma nga Ḽara na nyimele dza u rothola dzo bulwaho ngei Simondium; haseledzani na neseḽi nga ha u tea hayo henefho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Imperial has a December reference at Robertson. This is a local trial candidate, not advice for frost-free coastal KZN.",
+      "zu": "I-Imperial inesikhombo sango-Disemba e-Robertson. Iyindlela engase ihlolwe endaweni, hhayi iseluleko sasogwini lwase-KZN olungenasithwathwa.",
+      "st": "Imperial e na le tshupiso ya Tshitwe Robertson. Ke mofuta o ka lekwang sebakeng seo, eseng keletso ya lebopo la KZN le se nang serame sa leqhwa.",
+      "ts": "Imperial yi ni xikombiso xa N'wendzamhala eRobertson. I muxaka lowu nga ringiwaka endhawini, a hi switsundzuxo swa ribuwa ra KZN leri nga riki na gwitsi.",
+      "ve": "Imperial i na tshikombo tsha Nyendavhusiku ngei Robertson. Ndi lushaka lu nga lingwaho henefho, hu si nyeletshedzo ya khunzi ya KZN i si na murotholo wa gwanda.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Check measured winter chilling, spring frost, drainage and rain near picking. The older KZN guide regarded commercial suitability there as still under trial; a broad climate-zone label does not replace current local advice.",
+      "zu": "Hlola ukubanda kwasebusika okulinganisiwe, isithwathwa sasentwasahlobo, ukuphuma kwamanzi nemvula eduze nesikhathi sokukha. Umhlahlandlela wakudala wase-KZN wawubheka ukufaneleka kokuhweba khona njengokusahlolwa; ilebula elibanzi lendawo yesimo sezulu alithathi indawo yeseluleko samanje sendawo.",
+      "st": "Hlahloba ho bata ha mariha ho lekantsweng, serame sa leqhwa sa selemo, ho tswa ha metsi le pula haufi le nako ya ho kga. Tataiso ya kgale ya KZN e ne e nka hore ho tshwaneleha bakeng sa kgwebo moo ho ntse ho le tekong; leibole e akaretsang ya sebaka sa tlelaemete ha e nke sebaka sa keletso ya hajwale ya lehae.",
+      "ts": "Kambela ku titimela ka xixika loku pimiweke, gwitsi ra ximun'wana, ku huma ka mati ni mpfula ekusuhi ni nkarhi wa ku kha. Nkongomiso wa khale wa KZN wu teke leswaku ku faneleka ka bindzu kwalaho ka ha ringiwa; lebulu yo anama ya ndhawu ya maxelo a yi sivi switsundzuxo swa sweswi swa laha kaya.",
+      "ve": "Ṱolani u rothola ha vhuriha ho kaliwaho, murotholo wa gwanda wa luṱavula, u bva ha maḓi na mvula tsini na tshifhinga tsha u kaṋa. Ngeletshedzo ya kale ya KZN yo dzhia u tea ha bindzu henefho sa zwi kha ḓi lingwaho; ḽebuḽu yo angalalaho ya dzingu ḽa kilima a i dzhieli vhudzulo nyeletshedzo ya zwino ya henefho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Pollination depends on the selected cultivar. Compatible flowering and pollen sources are separate from early or late fruit ripening.",
+      "zu": "Ukuvundiswa ngempova kuya ngohlobo olukhethiwe. Ukuqhakaza okuhambisanayo nemithombo yempova kwehlukile ekuvuthweni kwezithelo kusenesikhathi noma sekwephuzile.",
+      "st": "Ho tsamaiswa ha peo ya dipalesa ho itshetlehile ka mofuta o kgethilweng. Ho thunya ho tsamaellanang le mehlodi ya peo ya dipalesa ho fapane le ho butswa ha ditholwana kapele kapa hamorao.",
+      "ts": "Ku hangalasiwa ka mpova ku ya hi muxaka lowu hlawuriweke. Ku huma ka swiluva leswi fambisanaka ni swihlovo swa mpova swi hambanile ni ku vupfa ka mihandzu ka le mahlweni kumbe ka le ndzhaku.",
+      "ve": "U phaḓaladzwa ha luvhanda zwi ya nga lushaka lwo nangwaho. U vha na maluvha a tshimbidzanaho na zwiko zwa luvhanda zwi fhambana na u vhibva ha mitshelo nga u ṱavhanya kana nga murahu.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Regional guide candidates include Bing, Van, Rainier, Burlat and Vista, which generally need compatible pollen partners. It explicitly lists Lapins, Stella and Sweetheart as self-fertile. Minnie Royal, Royal Lee, Royal Dawn and Early Sweet are lower-chill candidates. Confirm current stock, exact rootstock, compatibility and measured local chilling before purchase; this is not a warm-coast recommendation.",
+      "zu": "Izinhlobo ezingase zikhethwe emhlahlandleleni wesifunda zihlanganisa i-Bing, Van, Rainier, Burlat ne-Vista, ngokuvamile ezidinga izinhlobo zempova ezihambisanayo. Ubala ngokucacile i-Lapins, Stella ne-Sweetheart njengezivundisayo ngempova yazo. I-Minnie Royal, Royal Lee, Royal Dawn ne-Early Sweet yizinhlobo ezingase zikhethwe ezidinga ukubanda okuncane. Qinisekisa izitshalo ezitholakalayo manje, isiphunzi esiqondile, ukuhambisana nokubanda kwendawo okulinganisiwe ngaphambi kokuthenga; lokhu akusona isincomo sogu olufudumele.",
+      "st": "Mefuta e ka kgethwang tataisong ya sebaka e kenyelletsa Bing, Van, Rainier, Burlat le Vista, tseo ka kakaretso di hlokang balekane ba peo ya dipalesa ba tsamaellanang. E thathamisa ka ho hlaka Lapins, Stella le Sweetheart e le tse kgonang ho beha ditholwana ka peo ya tsona ya dipalesa. Minnie Royal, Royal Lee, Royal Dawn le Early Sweet ke mefuta e ka kgethwang e hlokang ho bata ho fokolang. Netefatsa dimela tse fumanehang hajwale, kutu ya motso e nepahetseng, ho tsamaellana le ho bata ha lehae ho lekantsweng pele o reka; sena ha se kgothaletso ya lebopo le futhumetseng.",
+      "ts": "Mixaka leyi nga hlawuriwaka eka nkongomiso wa xifundzha yi katsa Bing, Van, Rainier, Burlat na Vista, leti hi ntolovelo ti lavaka mirhi ya mpova leyi fambisanaka. Wu xaxameta hi ku kongoma Lapins, Stella na Sweetheart tani hi leti kotaka ku tswala mihandzu hi mpova wa tona. Minnie Royal, Royal Lee, Royal Dawn na Early Sweet i mixaka leyi nga hlawuriwaka leyi lavaka ku titimela kutsongo. Tiyisisa swimila leswi kumekaka sweswi, nsinya wa timitsu lowu kongomeke, ku fambisana ni ku titimela ka laha kaya loku pimiweke u nga si xava; leswi a hi swibumabumelo swa ribuwa leri kufumelaka.",
+      "ve": "Tshaka dzi nga nangwaho kha ngeletshedzo ya dzingu dzi katela Bing, Van, Rainier, Burlat na Vista, dzine nga u angaredza dza ṱoḓa balekane vha luvhanda vha tshimbidzanaho. I bula nga vhuḓalo Lapins, Stella na Sweetheart sa dzi konaho u aṋwa mitshelo nga luvhanda lwadzo. Minnie Royal, Royal Lee, Royal Dawn na Early Sweet ndi tshaka dzi nga nangwaho dzi ṱoḓaho u rothola huṱuku. Khwaṱhisedzani zwimela zwi re hone zwino, mudzi wa mutheo wo teaho, u tshimbidzana na u rothola ha henefho ho kaliwaho musi ni sa athu u renga; izwi a si themendelo ya khunzi i fhisaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Check the named cultivar's winter needs and compatible pollen before planting. Texas Mission is self-incompatible.",
+      "zu": "Hlola izidingo zasebusika zohlobo oluqanjwe ngegama nempova ehambisanayo ngaphambi kokutshala. I-Texas Mission ayihambisani nempova yayo.",
+      "st": "Hlahloba ditlhoko tsa mariha tsa mofuta o boletsweng ka lebitso le peo ya dipalesa e tsamaellanang pele o lema. Texas Mission ha e tsamaellane le peo ya yona ya dipalesa.",
+      "ts": "Kambela swilaveko swa xixika swa muxaka lowu boxiweke hi vito ni mpova lowu fambisanaka u nga si byala. Texas Mission a yi fambisani ni mpova wa yona.",
+      "ve": "Ṱolani ṱhoḓea dza vhuriha dza lushaka lwo bulwaho nga dzina na luvhanda lu tshimbidzanaho musi ni sa athu u ṱavha. Texas Mission a i tshimbidzani na luvhanda lwayo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record whether nut weights mean kernels or nuts in shell; these are different quantities.",
+      "zu": "Bhala ukuthi izisindo zamantongomane zisho ingaphakathi elidliwayo noma amantongomane asenamagobolondo; lezi izilinganiso ezihlukene.",
+      "st": "Rekota hore boima ba ditholwana tse dikgapetla tse thata bo bolela dikahare tse jewang kapa ditholwana di sa le dikgapetleng; tsena ke dipalo tse fapaneng.",
+      "ts": "Rhekhoda loko ntiko wa mihandzu ya swikamba swo tiya wu vula leswi nga endzeni kumbe mihandzu leyi nga ni swikamba swa yona; leswi i mimpimo leyi hambaneke.",
+      "ve": "Rekhodani arali zwileme zwa mitshelo ya makanda o khwaṱhaho zwi tshi amba zwipiḓa zwa ngomu kana mitshelo i tshee na makanda; izwi ndi zwikalo zwo fhambanaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Texas Mission is a documented SAPO cultivar; its sheet names Nonpareil as pollen partner and describes a high chilling requirement. Confirm local suitability with the nursery.",
+      "zu": "I-Texas Mission iwuhlobo olubhalwe yi-SAPO; iphepha layo liqamba i-Nonpareil njengomlingani wempova futhi lichaza isidingo esikhulu sokubanda. Qinisekisa ukufaneleka kwendawo ngenkulisa.",
+      "st": "Texas Mission ke mofuta o ngotsweng ke SAPO; leqephe la wona le bolela Nonpareil e le molekane wa peo ya dipalesa mme le hlalosa tlhoko e phahameng ya ho bata. Netefatsa ho tshwaneleha ha lehae le setsi sa dimela.",
+      "ts": "Texas Mission i muxaka lowu tsariweke hi SAPO; phepha ra yona ri boxa Nonpareil tani hi munghana wa mpova naswona ri hlamusela xilaveko lexikulu xa ku titimela. Tiyisisa ku faneleka ka laha kaya ni ndhawu yo kurisa swimilana.",
+      "ve": "Texas Mission ndi lushaka lwo ṅwalwaho nga SAPO; siaṱari ḽayo ḽi bula Nonpareil sa muṅwe wa luvhanda nahone ḽi ṱalusa ṱhoḓea khulwane ya u rothola. Khwaṱhisedzani u tea ha henefho na neseḽi.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record the named cultivar and actual first and last picking months. January and February references are alternatives, not a mixed-orchard calendar for every tree.",
+      "zu": "Bhala uhlobo oluqanjwe ngegama nezinyanga zangempela zokukha kokuqala nokokugcina. Izikhombo zango-Januwari no-Februwari zingezinye ongakhetha kuzo, hhayi ikhalenda lensimu exubile lezihlahla zonke.",
+      "st": "Rekota mofuta o boletsweng ka lebitso le dikgwedi tsa nnete tsa ho kga ha pele le ha ho qetela. Ditshupiso tsa Pherekgong le Hlakola ke dikgetho tse fapaneng, eseng khalendara ya serapa sa difate se kopantsweng bakeng sa sefate ka seng.",
+      "ts": "Rhekhoda muxaka lowu boxiweke hi vito ni tin'hweti ta xiviri to sungula ni to hetelela ta ku kha. Swikombiso swa Sunguti na Nyenyenyani i tindlela to hambana leti nga hlawuriwaka, a hi khalendara ya nsimu ya mirhi yo hambana ya murhi wun'wana ni wun'wana.",
+      "ve": "Rekhodani lushaka lwo bulwaho nga dzina na miṅwedzi ya vhukuma ya u kaṋa ha u thoma na ha u fhedza. Zwikombo zwa Phando na Luhuhi ndi zwinangwaho zwo fhambanaho, a si khaḽenda ya tsimu ya miri yo ṱanganaho ya muri muṅwe na muṅwe.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Rosemarie Select is a source-backed Western Cape candidate to discuss with the nursery. Ask about December or Packham's Triumph as compatible pollen partners.",
+      "zu": "I-Rosemarie Select iwuhlobo lwase-Western Cape olungase lukhethwe, olusekelwe emthonjeni, okufanele kuxoxwe ngalo nenkulisa. Buza nge-December noma i-Packham's Triumph njengezinhlobo zempova ezihambisanayo.",
+      "st": "Rosemarie Select ke mofuta wa Western Cape o ka kgethwang o tsheheditsweng ke mohlodi oo o ka buisanang le setsi sa dimela ka wona. Botsa ka December kapa Packham's Triumph e le balekane ba peo ya dipalesa ba tsamaellanang.",
+      "ts": "Rosemarie Select i muxaka wa Western Cape lowu nga hlawuriwaka lowu seketeriwaka hi xihlovo lowu faneleke ku burisaniwa ha wona ni ndhawu yo kurisa swimilana. Vutisa hi December kumbe Packham's Triumph tani hi mirhi ya mpova leyi fambisanaka.",
+      "ve": "Rosemarie Select ndi lushaka lwa Western Cape lu nga nangwaho lwo tikedzwaho nga tshiko lu no tea u haseledzwa na neseḽi. Vhudzisani nga December kana Packham's Triumph sa balekane vha luvhanda vha tshimbidzanaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "For Packham's Triumph, ask about Clapp's Favourite, December or Starkrimson and check local winter conditions.",
+      "zu": "Nge-Packham's Triumph, buza nge-Clapp's Favourite, December noma i-Starkrimson bese uhlola izimo zasebusika zendawo.",
+      "st": "Bakeng sa Packham's Triumph, botsa ka Clapp's Favourite, December kapa Starkrimson mme o hlahlobe maemo a mariha a lehae.",
+      "ts": "Eka Packham's Triumph, vutisa hi Clapp's Favourite, December kumbe Starkrimson kutani u kambela swiyimo swa xixika swa laha kaya.",
+      "ve": "Kha Packham's Triumph, vhudzisani nga Clapp's Favourite, December kana Starkrimson ni ṱole nyimele dza vhuriha dza henefho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm exact identity and the intended food preparation with an experienced local adviser.",
+      "zu": "Qinisekisa ubunikazi obuqondile nendlela ehlosiwe yokulungisa ukudla nomeluleki wendawo onolwazi.",
+      "st": "Netefatsa hore ke semela sefe hantle le tokiso ya dijo e rerilweng le moeletsi wa lehae ya nang le boiphihlelo.",
+      "ts": "Tiyisisa muxaka lowu kongomeke ni malulamiselo ya swakudya lama kunguhatiweke ni mutsundzuxi wa laha kaya la nga ni ntokoto.",
+      "ve": "Khwaṱhisedzani vhuvha nga vhuḓalo na u lugisela zwiḽiwa ho dzudzanywaho na mueletshedzi wa henefho a re na tshenzhelo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The South African account describes stream-bank/forest-slope growth and frost resistance; its berries are described as bird food.",
+      "zu": "Umbhalo wase-South Africa uchaza ukukhula osebeni lwemifudlana nasemithambekeni yamahlathi nokumelana nesithwathwa; amajikijolo aso achazwa njengokudla kwezinyoni.",
+      "st": "Tlaleho ya South Africa e hlalosa kgolo mabopong a melatswana le matsoapong a meru le ho mamella serame sa leqhwa; monokotshwai wa sona o hlaloswa e le dijo tsa dinonyana.",
+      "ts": "Rungula ra South Africa ri hlamusela ku kula eribuweni ra milambu leyitsongo ni le mikhupeni ya makhwati ni ku tiyisela gwitsi; mihandzu leyitsongo ya xona yi hlamuseriwa tani hi swakudya swa tinyenyana.",
+      "ve": "Mafhungo a South Africa a ṱalusa u aluwa mathungoni a milambwana na fhethu ho sendamaho ha maḓaka na u konḓelela murotholo wa gwanda; mitshelo yatsho miṱuku i ṱaluswa sa zwiḽiwa zwa zwiṋoni.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Buy exact-species stock for the verified intended use. Do not treat medicinal or wildlife-fruit evidence as a fresh household-food forecast.",
+      "zu": "Thenga izitshalo zohlobo oluqondile ukuze zisetshenziselwe inhloso eqinisekisiwe. Ungaphathi ubufakazi bokwelapha noma bezithelo ezidliwa izilwane zasendle njengesibikezelo sokudla okusha kwasekhaya.",
+      "st": "Reka dimela tsa mofuta o nepahetseng bakeng sa tshebediso e rerilweng e netefaditsweng. O se ke wa nka bopaki ba tshebediso ya moriana kapa ba ditholwana tsa diphoofolo tse hlaha e le ponelopele ya dijo tse foreshe tsa lelapa.",
+      "ts": "Xava swimila swa muxaka lowu kongomeke swa ku tirhisiwa loku kunguhatiweke loku tiyisisiweke. U nga teki vumbhoni bya vutshunguri kumbe bya mihandzu ya swiharhi swa nhova tani hi mvhumbo wa swakudya leswintshwa swa le kaya.",
+      "ve": "Rengani zwimela zwa lushaka lwo teaho zwa tshumiso yo dzudzanywaho yo khwaṱhisedzwaho. Ni songo dzhia vhuṱanzi ha mushonga kana ha mitshelo ya zwipuka zwa ḓaka sa mbonelaphanḓa ya zwiḽiwa zwiswa zwa muṱa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Provide climbing support and control its spread where space is limited. SANBI records coastal dunes and forest margins from Western Cape to KwaZulu-Natal and Mpumalanga.",
+      "zu": "Nika isekelo sokukhwela bese ulawula ukusakazeka kwaso lapho indawo incane. I-SANBI isibhala ezindundumeni zasogwini nasemaphethelweni amahlathi kusukela e-Western Cape kuya KwaZulu-Natal nase-Mpumalanga.",
+      "st": "Fana ka tshehetso ya ho nama mme o laole ho ata ha sona moo sebaka se haellang. SANBI e se rekota ditutulung tsa lehlabathe tsa lebopong le mathokong a meru ho tloha Western Cape ho ya KwaZulu-Natal le Mpumalanga.",
+      "ts": "Nyika xiseketelo xo khandziya kutani u lawula ku hangalaka ka xona laha ndhawu yi nga yitsongo. SANBI yi xi rhekhoda eswitsungeni swa sava swa ribuwa ni le makumu ka makhwati ku suka Western Cape ku ya KwaZulu-Natal na Mpumalanga.",
+      "ve": "Ṋeani tshitsigiso tsha u gonyelela ni lange u phaḓalala hatsho hune tshikhala tsha vha tshiṱuku. SANBI i tshi rekhoda kha zwikwara zwa muṱavha zwa khunzi na mathungoni a maḓaka u bva Western Cape u ya KwaZulu-Natal na Mpumalanga.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm Rhoicissus digitata; other wild-grape species have different descriptions and cannot supply its dates.",
+      "zu": "Qinisekisa i-Rhoicissus digitata; ezinye izinhlobo ze-wild-grape zinezincazelo ezihlukile futhi azikwazi ukunikeza izikhathi zayo.",
+      "st": "Netefatsa Rhoicissus digitata; mefuta e meng ya wild-grape e na le ditlhaloso tse fapaneng mme e ke ke ya fana ka matsatsi a yona.",
+      "ts": "Tiyisisa Rhoicissus digitata; mixaka yin'wana ya wild-grape yi ni tinhlamuselo leti hambaneke naswona a yi nge nyiki masiku ya yona.",
+      "ve": "Khwaṱhisedzani Rhoicissus digitata; dziṅwe tshaka dza wild-grape dzi na ṱhalutshedzo dzo fhambanaho nahone a dzi koni u ṋea maḓuvha ayo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Provide a trellis or other support. Young plants need water until established; SANBI describes later drought tolerance and sun to semi-shade use.",
+      "zu": "Nika uhlaka lokukhwela noma esinye isekelo. Izitshalo ezincane zidinga amanzi zize zime kahle; i-SANBI ichaza ukubekezelela isomiso kamuva nokukhula elangeni kuya emthunzini oyingxenye.",
+      "st": "Fana ka foreime ya ho nama kapa tshehetso e nngwe. Dimela tse ntjha di hloka metsi ho fihlela di tsitsitse; SANBI e hlalosa ho mamella komello hamorao le tshebediso letsatsing ho ya moriting o sa fellang.",
+      "ts": "Nyika fureme yo khandziya kumbe xiseketelo xin'wana. Swimila leswintshwa swi lava mati ku kondza swi tiya; SANBI yi hlamusela ku tiyisela dyandza endzhaku ni ku tirhisiwa edyambyini ku ya eka ndzhuti wo ringanela.",
+      "ve": "Ṋeani fureme ya u gonyelela kana tshiṅwe tshitsigiso. Zwimela zwiṱuku zwi ṱoḓa maḓi u swika zwi tshi khwaṱha; SANBI i ṱalusa u konḓelela gomelelo nga murahu na u shumiswa ḓuvhani u ya murunzini u sa fhelelaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask for Rhoicissus tridentata and record local ripe-fruit months. Do not use medicinal or animal root use as food evidence.",
+      "zu": "Cela i-Rhoicissus tridentata bese ubhala izinyanga zezithelo ezivuthiwe endaweni. Ungasebenzisi ukusetshenziswa kwezimpande ekwelapheni noma ezilwaneni njengobufakazi bokudla.",
+      "st": "Kopa Rhoicissus tridentata mme o rekote dikgwedi tsa ditholwana tse butswitseng sebakeng seo. O se ke wa sebedisa tshebediso ya metso e le moriana kapa bakeng sa diphoofolo e le bopaki ba dijo.",
+      "ts": "Kombela Rhoicissus tridentata kutani u rhekhoda tin'hweti ta mihandzu leyi vupfeke ya laha kaya. U nga tirhisi ku tirhisiwa ka timitsu eku tshunguleni kumbe eka swiharhi tani hi vumbhoni bya swakudya.",
+      "ve": "Humbelani Rhoicissus tridentata ni rekhode miṅwedzi ya mitshelo yo vhibvaho ya henefho. Ni songo shumisa tshumiso ya midzi sa mushonga kana kha zwipuka sa vhuṱanzi ha zwiḽiwa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Use well-drained soil and adequate water during establishment; avoid waterlogging and root rot.",
+      "zu": "Sebenzisa inhlabathi ekhipha amanzi kahle namanzi anele lapho izitshalo zisakhula ukuze zime kahle; gwema ukugcwala kwamanzi nokubola kwezimpande.",
+      "st": "Sebedisa mobu o ntshang metsi hantle le metsi a lekaneng nakong ya ho tiya ha dimela; qoba ho tlala metsi le ho bola ha metso.",
+      "ts": "Tirhisa misava leyi humesaka mati kahle ni mati lama ringaneke loko swimila swi sungula ku tiya; papalata ku tala ka mati ni ku bola ka timitsu.",
+      "ve": "Shumisani mavu a bvisaho maḓi zwavhuḓi na maḓi o linganaho musi zwimela zwi tshi khou thoma u khwaṱha; iledzani u ḓala ha maḓi na u bola ha midzi.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record fresh leaves, dried seasoning and essential oil as different products.",
+      "zu": "Bhala amaqabunga amasha, isinongo esomisiwe namafutha ephunga lesitshalo (essential oil) njengemikhiqizo ehlukene.",
+      "st": "Rekota makgasi a foreshe, senoko se omisitsweng le oli ya monko wa semela (essential oil) e le dihlahiswa tse fapaneng.",
+      "ts": "Rhekhoda matluka lamantshwa, swo nandzihisa leswi omisiweke ni mafurha ya risuna ra ximilana (essential oil) tani hi swikumiwa leswi hambaneke.",
+      "ve": "Rekhodani maṱari maswa, tshinaki tsho omiswaho na mapfura a munukhelelo wa tshimela (essential oil) sa zwibveledzwa zwo fhambanaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Obtain identified healthy rosemary material and local growing advice; no regional culinary-leaf yield variety is verified.",
+      "zu": "Thola izitshalo ezinempilo ze-rosemary ezihlonziwe neseluleko sokukhulisa sendawo; alukho uhlobo lwesifunda olunesivuno samaqabunga okupheka oluqinisekisiwe.",
+      "st": "Fumana dimela tsa rosemary tse phetseng hantle tse hlwauweng le keletso ya lehae ya ho di hodisa; ha ho mofuta wa sebaka wa tlhahiso ya makgasi a ho pheha o netefaditsweng.",
+      "ts": "Kuma swimila swa rosemary leswi hanyeke kahle leswi tiviwaka ni switsundzuxo swa ku kurisa swa laha kaya; a ku na muxaka wa xifundzha wa ntshovelo wa matluka yo sweka lowu tiyisisiweke.",
+      "ve": "Wanani zwimela zwa rosemary zwi re na mutakalo zwo topolwaho na nyeletshedzo ya henefho ya u zwi alusa; a hu na lushaka lwa dzingu lwa khaṋo ya maṱari a u bika lwo khwaṱhisedzwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Its natural setting includes dry stream banks in the Little Karoo and drier Eastern and southern Western Cape.",
+      "zu": "Indawo yaso yemvelo ihlanganisa osebeni olomile lwemifudlana e-Little Karoo nasezindaweni ezomile kakhulu zase-Eastern Cape naseningizimu ye-Western Cape.",
+      "st": "Tikoloho ya sona ya tlhaho e kenyelletsa mabopo a ommeng a melatswana Little Karoo le dibakeng tse ommeng ho feta tsa Eastern Cape le borwa ba Western Cape.",
+      "ts": "Ndhawu ya xona ya ntumbuluko yi katsa maribuwa lama omeke ya milambu leyitsongo eLittle Karoo ni le tindhawini leti omeke swinene ta Eastern Cape ni le dzongeni ra Western Cape.",
+      "ve": "Vhudzulo hatsho ha mvelo vhu katela mathungo o omaho a milambwana ngei Little Karoo na fhethu ho omaho u fhira huṅwe ha Eastern Cape na tshipembe tsha Western Cape.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "The pods disperse seeds when dry. Record your local seed collection and use; this is not a measured food yield.",
+      "zu": "Imidumba isabalalisa imbewu lapho yomile. Bhala ukuqoqwa nokusetshenziswa kwembewu endaweni yakini; lokhu akusona isivuno sokudla esilinganisiwe.",
+      "st": "Li-pod (mekotlana ya peo) di hasanya dipeo ha di omme. Rekota ho bokella le ho sebedisa peo sebakeng sa heno; sena ha se kotulo ya dijo e lekantsweng.",
+      "ts": "Ti-pod (swikhwama swa mbewu) ti hangalasa mbewu loko ti omile. Rhekhoda ku hlengeleta ni ku tirhisa mbewu ka laha kaya; leswi a hi ntshovelo wa swakudya lowu pimiweke.",
+      "ve": "Dzi-pod (zwikwama zwa mbeu) dzi phaḓaladza mbeu musi dzo oma. Rekhodani u kuvhanganya na u shumisa mbeu ha henefho; izwi a si khaṋo yo kaliwaho ya zwiḽiwa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask for Schotia afra var. afra, with botanical identity confirmed. The source's five-year shade claim is not a first-food age.",
+      "zu": "Cela i-Schotia afra var. afra, ubunikazi besitshalo buqinisekisiwe. Isimangalo somthombo somthunzi ngeminyaka emihlanu asisona isikhathi sokudla kokuqala.",
+      "st": "Kopa Schotia afra var. afra, ho netefaditswe hore ke semela sefe hantle ka thuto ya dimela. Tlaleho ya mohlodi ya moriti ka dilemo tse hlano ha se dilemo tsa dijo tsa pele.",
+      "ts": "Kombela Schotia afra var. afra, muxaka wa xona wa xibotani wu tiyisisiwile. Rungula ra xihlovo ra ndzhuti hi nkarhi wa malembe ya ntlhanu a ri vuli vukhale bya swakudya swo sungula.",
+      "ve": "Humbelani Schotia afra var. afra, vhuvha ha tshimela ha botaniki ho khwaṱhisedzwa. Zwine tshiko tsha amba nga ha murunzi nga miṅwaha miṱanu a si vhukale ha zwiḽiwa zwa u thoma.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "SANBI records this frost- and drought-resistant shade tree in Karoo and Kalahari conditions.",
+      "zu": "I-SANBI ibhala lesi sihlahla somthunzi esimelana nesithwathwa nesomiso ezimweni zase-Karoo nase-Kalahari.",
+      "st": "SANBI e rekota sefate sena sa moriti se mamellang serame sa leqhwa le komello maemong a Karoo le Kalahari.",
+      "ts": "SANBI yi rhekhoda murhi lowu wa ndzhuti lowu tiyiselaka gwitsi ni dyandza eka swiyimo swa Karoo na Kalahari.",
+      "ve": "SANBI i rekhoda muri uyu wa murunzi u konḓelelaho murotholo wa gwanda na gomelelo kha nyimele dza Karoo na Kalahari.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Large amounts of its leaves can taint dairy milk, according to SANBI; this is not a ration recommendation.",
+      "zu": "Ngokusho kwe-SANBI, amaqabunga aso amaningi angonakalisa ukunambitheka kobisi lwezilwane zobisi; lokhu akusona isincomo sesabelo sokudla.",
+      "st": "Ho ya ka SANBI, makgasi a sona a mangata a ka senya tatso ya lebese la diphoofolo tsa lebese; sena ha se kgothaletso ya kabo ya dijo.",
+      "ts": "Hi ku ya hi SANBI, matluka ya xona yo tala ya nga onha nantswo wa ntswamba wa swifuwo swa masi; leswi a hi swibumabumelo swa mpimo wa swakudya.",
+      "ve": "U ya nga SANBI, maṱari atsho manzhi a nga tshinya muthetshelo wa mafhi a zwifuwo zwa mafhi; izwi a si themendelo ya mukovhe wa zwiḽiwa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask about male and female plants if fruit is intended. Natural distribution in the source excludes KwaZulu-Natal; broad hardiness is not a local fruit guarantee.",
+      "zu": "Buza ngezitshalo zesilisa nezesifazane uma kuhloswe izithelo. Ukusabalala kwemvelo okusemthonjeni akuhlanganisi i-KwaZulu-Natal; ukubekezelela izimo eziningi akusona isiqinisekiso sezithelo endaweni.",
+      "st": "Botsa ka dimela tse tona le tse tshehadi haeba ho rerilwe ditholwana. Kabo ya tlhaho mohloding ha e kenyelletse KwaZulu-Natal; ho mamella maemo a mangata ha se tiisetso ya ditholwana sebakeng seo.",
+      "ts": "Vutisa hi swimila swa xinuna ni swa xisati loko ku kunguhatiwa mihandzu. Ku hangalaka ka ntumbuluko eka xihlovo a ku katsi KwaZulu-Natal; ku tiyisela swiyimo swo tala a hi xitiyisekiso xa mihandzu ya laha kaya.",
+      "ve": "Vhudzisani nga zwimela zwa tshiduna na tshisadzi arali mitshelo i yone yo dzudzanywaho. U phaḓalala ha mvelo kha tshiko a hu kateli KwaZulu-Natal; u konḓelela nyimele nnzhi a si khwaṱhisedzo ya mitshelo ya henefho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Pick ripe fruit and record drying separately.",
+      "zu": "Kha izithelo ezivuthiwe bese ubhala ukomisa ngokwehlukana.",
+      "st": "Kga ditholwana tse butswitseng mme o rekote ho omisa ka thoko.",
+      "ts": "Kha mihandzu leyi vupfeke kutani u rhekhoda ku omisa swi ri swoxe.",
+      "ve": "Kaṋani mitshelo yo vhibvaho ni rekhode u omisa nga thungo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "This shrub suits exposed coastal gardens and dune stabilisation; confirm local provenance.",
+      "zu": "Lesi sihlahla esincane sifanele izingadi zasogwini ezivulekele umoya nokuqinisa izindunduma zesihlabathi; qinisekisa imvelaphi yendawo.",
+      "st": "Sehlahla sena se tshwaneleha dirapeng tsa lebopong tse pepesehileng le ho tsitsisa ditutulu tsa lehlabathe; netefatsa tshimoloho ya lehae.",
+      "ts": "Xihlahla lexi xi faneleka eka swirhapa swa le ribuweni leswi nga sirheleriwang ni ku tiyisa switsunga swa sava; tiyisisa laha xi humaka kona endhawini.",
+      "ve": "Tshiṱaka itshi tshi tea ngade dza khunzi dzi songo tsireledzwaho na u khwaṱhisa zwikwara zwa muṱavha; khwaṱhisedzani vhubvo ha henefho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask an indigenous nursery for exact species and local material. No regional high-yield food cultivar is verified.",
+      "zu": "Cela inkulisa yezitshalo zomdabu ukuthi iqinisekise uhlobo oluqondile nezitshalo zendawo. Alukho uhlobo lokudla lwesifunda olunesivuno esikhulu oluqinisekisiwe.",
+      "st": "Kopa setsi sa dimela tsa tlhaho bakeng sa mofuta o nepahetseng le dimela tsa lehae. Ha ho mofuta wa dijo wa sebaka o fanang ka kotulo e ngata o netefaditsweng.",
+      "ts": "Kombela muxaka lowu kongomeke ni swimila swa laha kaya eka ndhawu yo kurisa swimilana swa ndhavuko. A ku na muxaka wa swakudya wa xifundzha wa ntshovelo wo tala lowu tiyisisiweke.",
+      "ve": "Humbelani neseḽi ya zwimela zwa henefho uri ni wane lushaka lwo teaho na zwimela zwa henefho. A hu na lushaka lwa zwiḽiwa lwa dzingu lu bveledzaho khaṋo nnzhi lwo khwaṱhisedzwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Allow fruit to ripen. This drought-resistant shrub can form a hedge; prune to suit the space.",
+      "zu": "Vumela izithelo zivuthwe. Lesi sihlahla esincane esimelana nesomiso singaba uthango; sithene sifanele indawo ekhona.",
+      "st": "Dumella ditholwana ho butswa. Sehlahla sena se mamellang komello se ka etsa lekhoakhoa; se pome ho lekana sebaka.",
+      "ts": "Pfumelela mihandzu yi vupfa. Xihlahla lexi tiyiselaka dyandza xi nga endla rihlampfu; xi tsemelela leswaku xi ringana ndhawu.",
+      "ve": "Tendelani mitshelo i vhibve. Tshiṱaka itshi tshi konḓelelaho gomelelo tshi nga vha luhura; tshi tumuleni uri tshi tea tshikhala.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm the exact species with a local indigenous-plant nursery; no tested regional cultivar or quantified yield selection is established.",
+      "zu": "Qinisekisa uhlobo oluqondile ngenkulisa yendawo yezitshalo zomdabu; alukho uhlobo lwesifunda oluhloliwe noma ukukhethwa kwesivuno esikalwe ngobuningi okuqinisekisiwe.",
+      "st": "Netefatsa mofuta o nepahetseng le setsi sa lehae sa dimela tsa tlhaho; ha ho mofuta wa sebaka o lekilweng kapa kgetho ya kotulo e lekantsweng ka palo e netefaditsweng.",
+      "ts": "Tiyisisa muxaka lowu kongomeke ni ndhawu ya laha kaya yo kurisa swimilana swa ndhavuko; a ku na muxaka wa xifundzha lowu ringiweke kumbe nhlawulo wa ntshovelo lowu pimiweke hi nhlayo lowu tiyisisiweke.",
+      "ve": "Khwaṱhisedzani lushaka lwo teaho na neseḽi ya henefho ya zwimela zwa henefho; a hu na lushaka lwa dzingu lwo lingwaho kana nango ya khaṋo yo kaliwaho nga tshivhalo yo khwaṱhisedzwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record ripe fruit picking and drying separately. No storage duration or fermentation recipe is assigned.",
+      "zu": "Bhala ukukha izithelo ezivuthiwe nokuzomisa ngokwehlukana. Asikho isikhathi sokugcina noma iresiphi yokuvutshelwa enikeziwe.",
+      "st": "Rekota ho kga ditholwana tse butswitseng le ho omisa ka thoko. Ha ho nako ya polokelo kapa risepe ya ho bedisa e fanweng.",
+      "ts": "Rhekhoda ku kha mihandzu leyi vupfeke ni ku omisa swi hambanile. A ku na nkarhi wo hlayisa kumbe rhisipi yo virisa leyi nyikiweke.",
+      "ve": "Rekhodani u kaṋa mitshelo yo vhibvaho na u omisa nga thungo. A hu na tshifhinga tsha u vhulunga kana nḓila ya u vhila yo ṋewaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Confirm the exact species and local provenance; the SANBI assessment places it on stony fynbos/karroid slopes of the Northern and Western Cape.",
+      "zu": "Qinisekisa uhlobo oluqondile nemvelaphi yendawo; ukuhlolwa kwe-SANBI kusibeka emithambekeni enamatshe ye-fynbos/karroid yase-Northern Cape nase-Western Cape.",
+      "st": "Netefatsa mofuta o nepahetseng le tshimoloho ya lehae; tekolo ya SANBI e se beha matsoapong a majwe a fynbos/karroid a Northern Cape le Western Cape.",
+      "ts": "Tiyisisa muxaka lowu kongomeke ni laha xi humaka kona endhawini; nkambisiso wa SANBI wu xi veka emikhupeni ya maribye ya fynbos/karroid ya Northern Cape na Western Cape.",
+      "ve": "Khwaṱhisedzani lushaka lwo teaho na vhubvo ha henefho; tsedzuluso ya SANBI i tshi vhea fhethu ho sendamaho ha matombo ha fynbos/karroid ha Northern Cape na Western Cape.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Shelter this coastal tree from direct salt-laden sea wind; SANBI reports salt burn despite its coastal habitat.",
+      "zu": "Vikela lesi sihlahla sasogwini emoyeni wasolwandle oqonde kuso onosawoti; i-SANBI ibika ukushiswa usawoti nakuba sikhula ogwini.",
+      "st": "Sireletsa sefate sena sa lebopong moyeng o tobileng wa lewatle o tletseng letswai; SANBI e tlaleha ho tjheswa ke letswai leha tikoloho ya sona e le ya lebopong.",
+      "ts": "Sirhelela murhi lowu wa le ribuweni eka moya wa lwandle lowu wu baka hi ku kongoma lowu rhwaleke munyu; SANBI yi vika ku tshwa hi munyu hambiloko wu ri ni ndhawu ya ntumbuluko ya le ribuweni.",
+      "ve": "Tsireledzani muri uyu wa khunzi kha muya wa lwanzhe wo ḓalaho muṋo u u vhudzulaho wo tou livha; SANBI i vhiga u swa nga muṋo naho vhudzulo hawo vhu ha khunzi.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask a nursery to confirm the species and lawful provenance. Check current collection requirements before taking plants or products from existing trees.",
+      "zu": "Cela inkulisa ukuthi iqinisekise uhlobo nemvelaphi esemthethweni. Hlola izidingo zamanje zokuqoqa ngaphambi kokuthatha izitshalo noma imikhiqizo ezihlahleni ezikhona.",
+      "st": "Kopa setsi sa dimela ho netefatsa mofuta le tshimoloho e molaong. Hlahloba ditlhoko tsa hajwale tsa ho bokella pele o nka dimela kapa dihlahiswa difateng tse teng.",
+      "ts": "Kombela ndhawu yo kurisa swimilana yi tiyisisa muxaka ni laha swi humaka kona hi nawu. Kambela swilaveko swa sweswi swa ku hlengeleta u nga si teka swimila kumbe swikumiwa eka mirhi leyi nga kona.",
+      "ve": "Humbelani neseḽi uri i khwaṱhisedze lushaka na vhubvo vhu tevhelaho mulayo. Ṱolani ṱhoḓea dza zwino dza u kuvhanganya musi ni sa athu u dzhia zwimela kana zwibveledzwa kha miri i re hone.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Harvest young leafy tops; wash off sand before cooking.",
+      "zu": "Vuna iziqongo ezincane ezinamaqabunga; geza isihlabathi ngaphambi kokupheka.",
+      "st": "Kotula dintlha tse ntjha tse nang le makgasi; hlatswa lehlabathe pele o pheha.",
+      "ts": "Tshovela swiphemu swa le henhla leswintshwa leswi nga ni matluka; hlantswa sava u nga si sweka.",
+      "ve": "Kaṋani ṱhodzi ntswa dzi re na maṱari; ṱanzwani muṱavha musi ni sa athu u bika.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Use well-drained coastal sand and keep divided plants moist until established.",
+      "zu": "Sebenzisa isihlabathi sasogwini esikhipha amanzi kahle bese ugcina izitshalo ezihlukanisiwe zinomswakama zize zime kahle.",
+      "st": "Sebedisa lehlabathe la lebopong le ntshang metsi hantle mme o boloke dimela tse arotsweng di le mongobo ho fihlela di tsitsitse.",
+      "ts": "Tirhisa sava ra le ribuweni leri humesaka mati kahle kutani u hlayisa swimila leswi avanyisiweke swi ri ni ndzhongo ku kondza swi tiya.",
+      "ve": "Shumisani muṱavha wa khunzi u bvisaho maḓi zwavhuḓi ni dzule ni tshi ṋea zwimela zwo khethekanywaho muṋa u swika zwi tshi khwaṱha.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Obtain correctly identified coastal planting material; record local growth and leaf-picking months because rainy seasons differ across South Africa.",
+      "zu": "Thola izitshalo zasogwini zokutshala ezihlonzwe kahle; bhala ukukhula nezinyanga zokukha amaqabunga endaweni ngoba izikhathi zemvula ziyehluka e-South Africa.",
+      "st": "Fumana dimela tsa ho lema tsa lebopong tse hlwauweng hantle; rekota kgolo le dikgwedi tsa ho kga makgasi tsa lehae hobane dinako tsa pula di fapana ho pholletsa le South Africa.",
+      "ts": "Kuma swimila swo byala swa le ribuweni leswi tiviwaka kahle; rhekhoda ku kula ni tin'hweti ta ku kha matluka ta laha kaya hikuva tinguva ta mpfula ta hambana eSouth Africa.",
+      "ve": "Wanani zwimela zwa u ṱavha zwa khunzi zwo topolwaho zwavhuḓi; rekhodani u aluwa na miṅwedzi ya u kaṋa maṱari ya henefho ngauri zwifhinga zwa mvula zwi a fhambana u mona na South Africa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Harvest young shoots for cooking. Record food harvest separately from animal fodder.",
+      "zu": "Vuna amahlumela amancane okupheka. Bhala isivuno sokudla ngokwehlukana nokudla kwezilwane.",
+      "st": "Kotula mahlomela a matjha bakeng sa ho pheha. Rekota kotulo ya dijo ka thoko ho furu ya diphoofolo.",
+      "ts": "Tshovela swihluke leswintshwa swo sweka. Rhekhoda ntshovelo wa swakudya swi hambanile ni furu ya swiharhi.",
+      "ve": "Kaṋani matavhi maṱuku a u bika. Rekhodani khaṋo ya zwiḽiwa nga thungo na furu ya zwifuwo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Use a sunny, well-drained coastal, fynbos or Karoo position suited to this water-wise pioneer.",
+      "zu": "Sebenzisa indawo enelanga, ekhipha amanzi kahle, yasogwini, ye-fynbos noma ye-Karoo, efanele lesi sitshalo esiyiphayona esingadingi amanzi amaningi.",
+      "st": "Sebedisa sebaka se nang le letsatsi se ntshang metsi hantle sa lebopong, fynbos kapa Karoo se loketseng semela sena sa pele se sebedisang metsi ka hloko.",
+      "ts": "Tirhisa ndhawu ya dyambu leyi humesaka mati kahle ya le ribuweni, fynbos kumbe Karoo leyi faneleke ximilana lexi sungulaka ku mila endhawini lexi tirhisaka mati hi ku hlayisa.",
+      "ve": "Shumisani fhethu ha ḓuvhani hu bvisaho maḓi zwavhuḓi ha khunzi, fynbos kana Karoo ho teaho tshimela itshi tsha u thoma u mela fhethu tshi shumisaho maḓi nga vhulondi.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Obtain correctly identified local planting material; no named food cultivar or annual kg/plant benchmark is sourced.",
+      "zu": "Thola izitshalo zendawo zokutshala ezihlonzwe kahle; alukho uhlobo lokudla olunegama noma isilinganiso sonyaka se-kg/plant esivela emthonjeni.",
+      "st": "Fumana dimela tsa ho lema tsa lehae tse hlwauweng hantle; ha ho mofuta wa dijo o nang le lebitso kapa tekanyetso ya selemo ya kg/plant e nang le mohlodi.",
+      "ts": "Kuma swimila swo byala swa laha kaya leswi tiviwaka kahle; a ku na muxaka wa swakudya lowu nga ni vito kumbe mpimo wa lembe wa kg/plant lowu nga ni xihlovo.",
+      "ve": "Wanani zwimela zwa u ṱavha zwa henefho zwo topolwaho zwavhuḓi; a hu na lushaka lwa zwiḽiwa lu re na dzina kana tshikalo tsha ṅwaha tsha kg/plant tshi bvaho tshikoni.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record picking of young flower buds separately from open flowers.",
+      "zu": "Bhala ukukha imiqumbe emincane yezimbali ngokwehlukana nezimbali ezivulekile.",
+      "st": "Rekota ho kga dithunthung tse ntjha tsa dipalesa ka thoko ho dipalesa tse bulehileng.",
+      "ts": "Rhekhoda ku kha ka swiluva leswintshwa leswi nga si pfuleka swi hambanile ni swiluva leswi pfulekeke.",
+      "ve": "Rekhodani u kaṋa maluvha maṱuku a sa athu u vulea nga thungo na maluvha o vuleaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Match the plant to well-drained coastal sandy conditions and its seasonal growth.",
+      "zu": "Fanisa isitshalo nezimo zesihlabathi sasogwini ezikhipha amanzi kahle nokukhula kwaso ngokwezikhathi zonyaka.",
+      "st": "Bapisa semela le maemo a lehlabathe la lebopong le ntshang metsi hantle le kgolo ya sona ya dinako tsa selemo.",
+      "ts": "Fananisa ximilana ni swiyimo swa sava ra le ribuweni leri humesaka mati kahle ni ku kula ka xona ka tinguva.",
+      "ve": "Fanyisani tshimela na nyimele dza muṱavha wa khunzi u bvisaho maḓi zwavhuḓi na u aluwa hatsho ha zwifhinga.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Use exact-species nursery identification; no first bud harvest age or food kg/plant benchmark is verified.",
+      "zu": "Sebenzisa ukuhlonza kwenkulisa okuqinisekisa uhlobo oluqondile; ayiqinisekisiwe iminyaka yokuvuna imiqumbe kokuqala noma isilinganiso sokudla se-kg/plant.",
+      "st": "Sebedisa tlhwayiso ya mofuta o nepahetseng setsing sa dimela; ha ho dilemo tsa kotulo ya pele ya dithunthung kapa tekanyetso ya dijo ya kg/plant e netefaditsweng.",
+      "ts": "Tirhisa ku tiva muxaka lowu kongomeke eka ndhawu yo kurisa swimilana; a ku na vukhale bya ntshovelo wo sungula wa swiluva leswi nga si pfuleka kumbe mpimo wa swakudya wa kg/plant lowu tiyisisiweke.",
+      "ve": "Shumisani u topola lushaka lwo teaho ha neseḽi; a hu na vhukale ha khaṋo ya u thoma ya maluvha a sa athu u vulea kana tshikalo tsha zwiḽiwa tsha kg/plant tsho khwaṱhisedzwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Match this fast pioneer to warm, moist eastern/northern conditions; protect damp, shaded seedlings.",
+      "zu": "Fanisa lesi sitshalo esiyiphayona esikhula ngokushesha nezimo ezifudumele ezinomswakama zasempumalanga/zasenyakatho; vikela izithombo ezinomswakama ezisemthunzini.",
+      "st": "Bapisa semela sena sa pele se holang ka potlako le maemo a futhumetseng a mongobo a botjhabela/leboya; sireletsa dimela tse nyane tse leng mongobong le moriting.",
+      "ts": "Fananisa ximilana lexi sungulaka ku mila endhawini lexi kulaka hi ku hatlisa ni swiyimo swo kufumela leswi nga ni ndzhongo swa le vuxeni/n'walungwini; sirhelela swimilana leswi nga ni ndzhongo leswi nga endzhutini.",
+      "ve": "Fanyisani tshimela itshi tsha u thoma u mela fhethu tshi aluwaho nga u ṱavhanya na nyimele dzi fhisaho dzi re na muṋa dza vhubvaḓuvha/devhula; tsireledzani zwimela zwiṱuku zwi re na muṋa zwi re murunzini.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record young-leaf harvest separately from fruit consumed by wildlife.",
+      "zu": "Bhala isivuno samaqabunga amancane ngokwehlukana nezithelo ezidliwa izilwane zasendle.",
+      "st": "Rekota kotulo ya makgasi a matjha ka thoko ho ditholwana tse jewang ke diphoofolo tse hlaha.",
+      "ts": "Rhekhoda ntshovelo wa matluka lamantshwa swi hambanile ni mihandzu leyi dyiwaka hi swiharhi swa nhova.",
+      "ve": "Rekhodani khaṋo ya maṱari maṱuku nga thungo na mitshelo i ḽiwaho nga zwipuka zwa ḓaka.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Use correctly identified local planting material; no named leaf-food cultivar or quantified annual food output is verified.",
+      "zu": "Sebenzisa izitshalo zendawo zokutshala ezihlonzwe kahle; alukho uhlobo olunegama lwamaqabunga okudla noma umkhiqizo wokudla wonyaka olinganisiwe ngobuningi okuqinisekisiwe.",
+      "st": "Sebedisa dimela tsa ho lema tsa lehae tse hlwauweng hantle; ha ho mofuta o nang le lebitso wa makgasi a dijo kapa tlhahiso ya dijo ya selemo e lekantsweng ka palo e netefaditsweng.",
+      "ts": "Tirhisa swimila swo byala swa laha kaya leswi tiviwaka kahle; a ku na muxaka wa matluka ya swakudya lowu nga ni vito kumbe vuhumelerisi bya swakudya bya lembe lowu pimiweke hi nhlayo lowu tiyisisiweke.",
+      "ve": "Shumisani zwimela zwa u ṱavha zwa henefho zwo topolwaho zwavhuḓi; a hu na lushaka lu re na dzina lwa maṱari a zwiḽiwa kana mbuelo ya zwiḽiwa ya ṅwaha yo kaliwaho nga tshivhalo yo khwaṱhisedzwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "It tolerates prolonged drought but grows better with regular water. SANBI records its eastern South African distribution.",
+      "zu": "Sibekezelela isomiso eside kodwa sikhula kangcono ngamanzi avamile. I-SANBI ibhala ukusabalala kwaso empumalanga ye-South Africa.",
+      "st": "Se mamella komello e telele empa se hola hantle ho feta ka metsi a kamehla. SANBI e rekota kabo ya sona ka botjhabela ho South Africa.",
+      "ts": "Xi tiyisela dyandza ra nkarhi wo leha kambe xi kula kahle swinene loko xi kuma mati nkarhi na nkarhi. SANBI yi rhekhoda ku hangalaka ka xona evuxeni bya South Africa.",
+      "ve": "Tshi konḓelela gomelelo ḽa tshifhinga tshilapfu fhedzi tshi aluwa khwine nga maḓi a tshifhinga tshoṱhe. SANBI i rekhoda u phaḓalala hatsho vhubvaḓuvha ha South Africa.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask for Tulbaghia violacea, rather than a plant identified only as wild garlic. Record local leaf and flower picking separately.",
+      "zu": "Cela i-Tulbaghia violacea, unganeliseki ngesitshalo esihlonzwe kuphela njenge-wild garlic. Bhala ukukha amaqabunga nezimbali kwendawo ngokwehlukana.",
+      "st": "Kopa Tulbaghia violacea ho ena le semela se hlwauweng feela e le wild garlic. Rekota ho kga makgasi le dipalesa ha lehae ka thoko.",
+      "ts": "Kombela Tulbaghia violacea, ku nga ri ximilana lexi tiviwaka ntsena tani hi wild garlic. Rhekhoda ku kha ka matluka ni swiluva ka laha kaya swi hambanile.",
+      "ve": "Humbelani Tulbaghia violacea, hu si tshimela tsho topolwaho fhedzi sa wild garlic. Rekhodani u kaṋa maṱari na maluvha ha henefho nga thungo.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Use the planting date to record the rhizome harvest cycle. The Pretoria trial reference is conditional, not a fixed calendar across climates.",
+      "zu": "Sebenzisa usuku lokutshala ukubhala umjikelezo wokuvuna ama-rhizome, iziqu ezingaphansi komhlabathi. Isikhombo socwaningo lwase-Pretoria sinemibandela, akusona ikhalenda elingaguquki kuzo zonke izimo zezulu.",
+      "st": "Sebedisa letsatsi la ho lema ho rekota potoloho ya kotulo ya rhizome, e leng kutu e melang ka tlasa mobu. Tshupiso ya teko ya Pretoria e na le dipehelo, ha se khalendara e sa fetoheng ditlimaeteng tsohle.",
+      "ts": "Tirhisa siku ro byala ku rhekhoda xirhendzevutana xa ntshovelo wa rhizome, ku nga xirhabyana xa le hansi ka misava. Xikombiso xa ndzavisiso wa Pretoria xi ni swipimelo, a hi khalendara leyi nga cinciki eka maxelo yo hambana.",
+      "ve": "Shumisani datumu ya u ṱavha u rekhoda mutevhe wa khaṋo ya rhizome, tsinde i aluwaho fhasi ha mavu. Tshikombo tsha mulingo wa Pretoria tshi na nyimele, a si khaḽenda i sa shandukiho kha kilima dzo fhambanaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Record fresh rhizome and dried spice weights separately; keep edible ginger distinct from ornamental or African ginger species.",
+      "zu": "Bhala izisindo zama-rhizome amasha nesinongo esomisiwe ngokwehlukana; hlukanisa ujinja odliwayo nezinhlobo zejinja zokuhlobisa noma ze-African ginger.",
+      "st": "Rekota boima ba rhizome e foreshe le senoko se omisitsweng ka thoko; boloka ginger e jewang e fapane le mefuta ya ginger ya mokgabiso kapa ya African ginger.",
+      "ts": "Rhekhoda ntiko wa rhizome leyintshwa ni swo nandzihisa leswi omisiweke swi hambanile; hambanisa ginger leyi dyiwaka ni mixaka ya ginger yo khavisa kumbe ya African ginger.",
+      "ve": "Rekhodani zwileme zwa rhizome ntswa na tshinaki tsho omiswaho nga thungo; fhambanyani ginger i ḽiwaho na tshaka dza ginger dza u khavhisa kana dza African ginger.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask a local supplier for healthy, identified Zingiber officinale planting rhizomes; no South African cultivar-specific yield curve is verified.",
+      "zu": "Cela umphakeli wendawo ama-rhizome okutshala e-Zingiber officinale anempilo, ahlonziwe; alikho ijika lesivuno lohlobo oluthile lwase-South Africa eliqinisekisiwe.",
+      "st": "Kopa mofani wa lehae di-rhizome tsa ho lema tsa Zingiber officinale tse phetseng hantle tse hlwauweng; ha ho kerafo ya kotulo ya mofuta o itseng wa South Africa e netefaditsweng.",
+      "ts": "Kombela muphakeri wa laha kaya ti-rhizome to byala ta Zingiber officinale leti hanyeke kahle leti tiviwaka; a ku na girafu ya ntshovelo ya muxaka wo karhi wa South Africa leyi tiyisisiweke.",
+      "ve": "Humbelani muṋetshedzi wa henefho dzi-rhizome dza u ṱavha dza Zingiber officinale dzi re na mutakalo dzo topolwaho; a hu na girafu ya khaṋo ya lushaka lwo khetheaho lwa South Africa yo khwaṱhisedzwaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "SANBI records a wide range from frost-free coast to winter-frost regions. Its hooked and straight thorns matter when choosing access routes.",
+      "zu": "I-SANBI ibhala ukusabalala okubanzi kusukela ogwini olungenasithwathwa kuya ezifundeni ezinesithwathwa sasebusika. Ameva aso agobile naqondile abalulekile lapho kukhethwa izindlela zokungena nokuhamba.",
+      "st": "SANBI e rekota kabo e pharaletseng ho tloha lebopong le se nang serame sa leqhwa ho ya dibakeng tsa serame sa leqhwa sa mariha. Meutlwa ya sona e kobehileng le e otlolohileng e bohlokwa ha ho kgethwa ditsela tsa phihlello.",
+      "ts": "SANBI yi rhekhoda ndhawu yo anama ku suka eribuweni leri nga riki na gwitsi ku ya eka swifundzha swa gwitsi ra xixika. Mitwa ya xona leyi govekeke ni leyi kongomeke i ya nkoka loko ku hlawuriwa tindlela to nghena.",
+      "ve": "SANBI i rekhoda u phaḓalala hu angalalaho u bva khunzini i si na murotholo wa gwanda u ya madzinguni a murotholo wa gwanda wa vhuriha. Mipfa yatsho yo khotheaho na yo tou tswititi ndi ya ndeme musi hu tshi nangwa nḓila dza u swikelela.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ask for an identified buffalo-thorn plant suited to local conditions; the checked source supplies no named food cultivar.",
+      "zu": "Cela isitshalo se-buffalo-thorn esihlonziwe esifanele izimo zendawo; umthombo ohloliwe awunikezi uhlobo lokudla olunegama.",
+      "st": "Kopa semela sa buffalo-thorn se hlwauweng se loketseng maemo a lehae; mohlodi o hlahlobilweng ha o fane ka mofuta wa dijo o nang le lebitso.",
+      "ts": "Kombela ximilana xa buffalo-thorn lexi tiviwaka lexi faneleke swiyimo swa laha kaya; xihlovo lexi kambisisiweke a xi nyiki muxaka wa swakudya lowu nga ni vito.",
+      "ve": "Humbelani tshimela tsha buffalo-thorn tsho topolwaho tshi teaho nyimele dza henefho; tshiko tsho ṱolwaho a tshi ṋei lushaka lwa zwiḽiwa lu re na dzina.",
+      "generatedScope": "product-guidance"
     }
   ],
   "preservation": "Default English, private and recorded values, task/event identities, dates, source figures/units, source URLs and farming gates retain immutable original comparisons. No species facts or saved geometry changed; new language remains unreviewed.",

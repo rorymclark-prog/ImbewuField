@@ -1,0 +1,11 @@
+# Applied care and nursery draft continuation
+
+This supersedes the historical unapplied status in DRAFT-BASELINE.md. All 91 source clauses have 364 drafts applied locally. The 1,465 inherited rows remain exact; the registry now has 1,556 rows. Source modules, models, wording, figures, species, food holds, seasons and citations remain unchanged. Fluent and agricultural review remain pending.
+
+Node 24 typechecking, all 226 affected tests in 18 files, and whitespace checks pass. The earlier whole-guide expectation correctly rejected undeclared native changes; its complete assertion now includes the independently bound care and purchase layer. The first new helper wrongly required a profile for all 103 trees. The mandatory profile assertion now applies to every declared binding, and unbound trees remain in the complete unchanged-output comparison. Historical failure metadata is retained. No production source or assertion was deleted.
+
+Actual browser checks cover 272 expanded phone states before/after, 16 desktop states, eight English/unsupported controls and six language switches. The 136 native phone pairs cover 364 complete care/purchase fields; eight native desktop pairs cover 20 fields. Whole markup differs only in those complete typed paragraphs. Supplied contexts remain exact, with zero callbacks and zero measured horizontal overflows. Complete four-language phone contacts for cherry and the shade caveat, and desktop contacts for provenance and pear, were inspected. Temporary tab 12 is closed, the viewport is reset and GET-only server 95588 is stopped.
+
+Twelve actual PDFs contain 125 pages, 54,435 checked word bounds and 1,400 complete native guide clauses. All 364 care/purchase binding occurrences stay whole on a page. Both English control sets have identical pixels and text. **PDF visual review remains pending:** eight native contacts and 12 enlarged priority pages are already rendered in output/tree-care-qa. Do not claim the printed picture is visually verified yet.
+
+Complete evidence packaging and the required ordered full suite are pending. This branch has no push, PR, merge or deployment. The whole-app goal remains active. The bounded 801-source inventory still has 136 prose and three classification candidates; this is not a whole-app percentage. Component headings and supplementary research remain partly English.

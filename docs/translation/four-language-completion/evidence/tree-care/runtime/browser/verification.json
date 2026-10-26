@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "rows": {
+    "phone": {
+      "states": 272,
+      "pairs": 136,
+      "completeNativeCarePurchaseFields": 364
+    },
+    "desktop": {
+      "states": 16,
+      "pairs": 8,
+      "completeNativeCarePurchaseFields": 20
+    },
+    "englishPhone": {
+      "states": 8,
+      "pairs": 4,
+      "completeNativeCarePurchaseFields": 0
+    }
+  },
+  "nativePairs": 144,
+  "languageSwitches": 6,
+  "allExpanded": true,
+  "providedContextsUnchanged": true,
+  "callbackEvents": 0,
+  "horizontalOverflows": 0,
+  "wholeMarkup": "Only complete typed care/purchase paragraphs change; all English/unsupported markup stays exact.",
+  "visualInspection": "Both complete four-language phone-card contacts (cherry and shade caveat), both four-language desktop contacts (provenance and pear) and all eight native PDF contacts/twelve enlarged actual pages inspected. Layout/glyph visibility only; no fluent approval.",
+  "cleanup": "Temporary tab12 closed; viewport override reset; GET-only server95588 stopped.",
+  "limits": "Actual unchanged component and real React/Lucide with generated complete guides and synthetic parents. No full account route, backend save, physical device, current legal permission or language approval."
+}

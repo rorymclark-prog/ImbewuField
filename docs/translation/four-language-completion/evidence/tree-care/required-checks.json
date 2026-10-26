@@ -1,0 +1,54 @@
+{
+  "fullRun": {
+    "startedAt": "2026-10-26T06:16:58.589010+00:00",
+    "pid": 16222,
+    "base": "de2b46ca827eb5f7e7727b3afeaeb9b049a5bcf7",
+    "branch": "codex/four-language-tree-care",
+    "tmpdir": "/private/tmp/imbewufield-tree-care-checks-20261026-bykfzrqa",
+    "frozenInputs": 1792,
+    "registeredTestFiles": 574,
+    "commands": [
+      {
+        "name": "typecheck",
+        "command": [
+          "npx",
+          "tsc",
+          "--noEmit"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "test",
+        "command": [
+          "npm",
+          "test"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "diff",
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "status": "passed",
+    "current": "diff",
+    "endedAt": "2026-10-26T07:18:02.174088+00:00",
+    "changedFrozenInputs": []
+  },
+  "result": {
+    "tests": 5874,
+    "pass": 5873,
+    "fail": 0,
+    "existingTodo": 1,
+    "registeredTestFiles": 574
+  },
+  "sourceCheckpoint": "de2b46ca827eb5f7e7727b3afeaeb9b049a5bcf7",
+  "deliveryFrozenInputsChecked": 1792,
+  "changedFrozenInputsAtDelivery": [],
+  "review": "Unreviewed drafts; no fluent/agricultural/current-main/full-account/production approval."
+}

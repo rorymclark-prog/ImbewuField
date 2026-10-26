@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Tree care and nursery advice now have four-language draft translations.": "Nhlayiso wa mirhi ni switsundzuxo swa tindhawu to kurisa swimilana sweswi swi ni swikiro swa vuhundzuluxeri bya tindzimi ta mune.",
+  "Original food-use cautions and source conditions stay in the advice.": "Switsundzuxo swo sungula swa ku tirhisiwa tani hi swakudya ni swipimelo swa swihlovo swi sala eka switsundzuxo.",
+  "Review tree care drafts": "Kambisisa swikiro swa nhlayiso wa mirhi",
+  "Read the full care and buying advice. Check the English before acting.": "Hlaya switsundzuxo leswi heleleke swa nhlayiso ni ku xava. Kambela Xinghezi u nga si endla.",
   "Tree product descriptions now have four-language translation drafts.": "Tinhlamuselo ta swikumiwa swa mirhi sweswi ti ni swikiro swa vuhundzuluxeri bya tindzimi ta mune.",
   "Food-use cautions and processing distinctions stay in the descriptions.": "Switsundzuxo swa ku tirhisiwa tani hi swakudya ni ku hambana ka malulamiselo swi sala eka tinhlamuselo.",
   "Review tree product drafts": "Kambisisa swikiro swa swikumiwa swa mirhi",

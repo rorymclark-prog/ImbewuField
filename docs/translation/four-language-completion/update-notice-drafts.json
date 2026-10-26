@@ -1566,6 +1566,34 @@
       "st": "Bala ditlhaloso tsa dihlahiswa mme o hlahlobe Senyesemane sa pele pele o etsa.",
       "ts": "Hlaya tinhlamuselo ta swikumiwa kutani u kambela Xinghezi xo sungula u nga si endla.",
       "ve": "Vhalani ṱhalutshedzo dza zwibveledzwa ni ṱole Luisimane lwa u thoma musi ni sa athu ita."
+    },
+    {
+      "english": "Tree care and nursery advice now have four-language draft translations.",
+      "zu": "Ukunakekelwa kwezihlahla nezeluleko zezinkulisa manje kunemibhalo yokuhumusha ngezilimi ezine.",
+      "st": "Tlhokomelo ya difate le keletso ya ditsi tsa dimela jwale di na le diphetolelo tsa pele tsa dipuo tse nne.",
+      "ts": "Nhlayiso wa mirhi ni switsundzuxo swa tindhawu to kurisa swimilana sweswi swi ni swikiro swa vuhundzuluxeri bya tindzimi ta mune.",
+      "ve": "Ndondolo ya miri na nyeletshedzo ya neseḽi zwino zwi na mvetamveto ya ṱhalutshedzo nga nyambo nṋa."
+    },
+    {
+      "english": "Original food-use cautions and source conditions stay in the advice.",
+      "zu": "Izixwayiso zokuqala zokusetshenziswa njengokudla nemibandela yemithombo kuhlala ezelulekweni.",
+      "st": "Ditemoso tsa pele tsa tshebediso e le dijo le dipehelo tsa mehlodi di dula keletsong.",
+      "ts": "Switsundzuxo swo sungula swa ku tirhisiwa tani hi swakudya ni swipimelo swa swihlovo swi sala eka switsundzuxo.",
+      "ve": "Nyeletshedzo dza u thoma dza u shumiswa sa zwiḽiwa na nyimele dza zwiko zwi dzula kha nyeletshedzo."
+    },
+    {
+      "english": "Review tree care drafts",
+      "zu": "Buyekeza imibhalo yokunakekelwa kwezihlahla",
+      "st": "Hlahloba dingolwa tsa pele tsa tlhokomelo ya difate",
+      "ts": "Kambisisa swikiro swa nhlayiso wa mirhi",
+      "ve": "Sedzulusani mvetamveto ya ndondolo ya miri"
+    },
+    {
+      "english": "Read the full care and buying advice. Check the English before acting.",
+      "zu": "Funda izeluleko eziphelele zokunakekela nokuthenga. Hlola isiNgisi ngaphambi kokwenza.",
+      "st": "Bala keletso e felletseng ya tlhokomelo le ho reka. Hlahloba Senyesemane pele o etsa.",
+      "ts": "Hlaya switsundzuxo leswi heleleke swa nhlayiso ni ku xava. Kambela Xinghezi u nga si endla.",
+      "ve": "Vhalani nyeletshedzo yo fhelelaho ya ndondolo na u renga. Ṱolani Luisimane musi ni sa athu ita."
     }
   ],
   "historyBefore": [
