@@ -11,7 +11,7 @@ import {
 import { AI_INPUT_WIDTH } from '@/lib/sheet-scale';
 import { calculateStyleSheetSize } from '@/lib/reference-presentation';
 import { fullTreatmentProtectPolicy } from '@/lib/locked-polish-flow';
-import { SHEET_RENDER_RECIPE } from '@/lib/sheet-render-recipe';
+import { SHEET_RENDER_RECIPE, savedSheetFreshness } from '@/lib/sheet-render-recipe';
 
 // CHROME IS DRAWN AFTER THE AI PASS, ALWAYS.
 //
@@ -337,7 +337,12 @@ test('a change to what a paid sheet looks like bumps the recipe token', () => {
     DESIGN_GLOSSY_SOURCE.includes('+ `:${SHEET_RENDER_RECIPE}`'),
     'the last-render cache must use the same recipe authority as durable saved sheets',
   );
-  assert.equal(SHEET_RENDER_RECIPE, 'r5', 'the r-token must move when the sheet changes');
+  // The former equality pinned r5 rather than the cache rule and rejected this legitimate
+  // legend-shell repair. Pre-shared-panel bitmaps must remain available but read as older.
+  assert.match(SHEET_RENDER_RECIPE, /^r[1-9]\d*$/);
+  assert.ok(Number(SHEET_RENDER_RECIPE.slice(1)) > 5, 'the shared-panel recipe must differ from pre-repair r5');
+  assert.equal(savedSheetFreshness({ planVersion: 'same', renderRecipe: 'r5' }, 'same'), 'older-render');
+  assert.equal(savedSheetFreshness({ planVersion: 'same', renderRecipe: SHEET_RENDER_RECIPE }, 'same'), 'current');
   // PLAN_VERSION must NOT move with it: bumping that re-keys the gallery and takes paid renders
   // away from farmers who already have them.
   assert.match(

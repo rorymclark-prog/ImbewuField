@@ -109,6 +109,8 @@ import {
 } from '@/lib/plant-codes';
 import { paintTopDownVetiverHedge, VETIVER_HEDGE_IDS } from '@/lib/vetiver-hedge';
 import {
+  SHEET_LEGEND_TYPE,
+  sheetLegendPanelMetrics,
   balancedLegendColumnRanges,
   countedLegendText,
   fitLegendFontSize,
@@ -9548,37 +9550,24 @@ export async function buildImplementationMap(
   //    or widened sheet width. When content would overflow we shed task bullets and surplus site
   //    rules — never shrink the type — exactly as the spec requires ("fewer task bullets over
   //    unreadable text"). A hard clip at the panel foot guarantees nothing ever spills.
-  const ip = Math.round(lgW * 0.055);
-  const innerX = lgX + ip;
-  const innerW = lgW - ip * 2;
-  const panelBottom = lgBottom - ip;
-
-  ctx.fillStyle = '#FBF6EC';
-  ctx.fillRect(lgX, lgY, lgW, lgBottom - lgY);
-  ctx.strokeStyle = 'rgba(32,25,15,0.34)';
-  ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.moveTo(lgX, lgY);
-  ctx.lineTo(lgX, lgBottom);
-  ctx.stroke();
+  const panel = drawSheetLegendPanel(ctx, lgX, lgW, lgBottom - lgY);
+  const ip = panel.contentLeft;
+  const innerX = lgX + panel.contentLeft;
+  const innerW = panel.contentRight - panel.contentLeft;
+  const panelBottom = panel.contentBottom;
   ctx.save();
   ctx.beginPath();
-  ctx.rect(lgX, lgY, lgW, lgBottom - lgY);
+  ctx.rect(innerX, panel.inset, innerW, panelBottom - panel.inset);
   ctx.clip();
 
-  const fsHeader = Math.round(lgW * 0.051);
-  const fsSection = Math.round(lgW * 0.035);
-  const fsBody = Math.round(lgW * 0.029);
+  const fsHeader = Math.round(lgW * SHEET_LEGEND_TYPE.title);
+  const fsSection = Math.round(lgW * SHEET_LEGEND_TYPE.section);
+  const fsBody = Math.round(lgW * SHEET_LEGEND_TYPE.detail);
   const lineH = Math.round(fsBody * 1.34);
   const blockGap = Math.round(lineH * 0.55);
-  // Sheet 08's header used SHEET_TITLE_FONT (Georgia) while 01–07 set theirs in
-  // REFERENCE_LABEL_FONT, so one sheet of a printed plan set arrived in a different typeface. It
-  // also made the sheet number read as "o8": Georgia has oldstyle figures, so its zero sits at
-  // x-height next to a full-height 8. Nobody chose that — the phasing panel was written separately
-  // and reached for the nearest title constant.
   const headerFont = `800 ${fsHeader}px ${REFERENCE_LABEL_FONT}`;
   const sectionFont = `800 ${fsSection}px ${SHEET_BODY_FONT}`;
-  const titleFont = `800 ${Math.round(lgW * 0.034)}px ${SHEET_BODY_FONT}`;
+  const titleFont = `800 ${Math.round(lgW * SHEET_LEGEND_TYPE.section)}px ${SHEET_BODY_FONT}`;
   const bodyFont = `500 ${fsBody}px ${SHEET_BODY_FONT}`;
   const weekFont = `600 ${fsBody}px ${SHEET_BODY_FONT}`;
   const holdFont = `italic 600 ${fsBody}px ${SHEET_BODY_FONT}`;
@@ -9622,7 +9611,9 @@ export async function buildImplementationMap(
     h += wrap(phase.holdPoint, bulletTextW, holdFont).length * lineH; // hold point
     return h + blockGap;
   };
-  const headerH = panelTitleLines.length * Math.round(fsHeader * 1.08) + lineH * 2 + Math.round(lineH * 0.8);
+  const headerH = panel.titleBaseline - ip
+    + panelTitleLines.length * Math.round(fsHeader * 1.08)
+    + Math.round(lgW * (0.006 + SHEET_LEGEND_TYPE.style + 0.035 + 0.045 + 0.03));
   const coLines = wrap(plan.criticalOrder.join('  →  '), innerW, bodyFont);
   const criticalH = plan.criticalOrder.length
     ? Math.round(fsSection * 1.3) + coLines.length * lineH + blockGap
@@ -9653,7 +9644,7 @@ export async function buildImplementationMap(
   while (!fits() && maxRules > 1) maxRules--;
 
   // ── Render top-down (with a hard clip at the panel foot as a belt-and-braces guard) ──────────
-  let y = lgY + ip + fsHeader;
+  let y = panel.titleBaseline;
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#20190F';
@@ -9662,21 +9653,22 @@ export async function buildImplementationMap(
     ctx.fillText(line, innerX, y);
     y += Math.round(fsHeader * 1.08);
   }
+  y += Math.round(lgW * 0.006);
   ctx.fillStyle = '#6B6355';
-  ctx.font = `italic 500 ${fsBody}px ${SHEET_BODY_FONT}`;
+  ctx.font = `600 ${Math.round(lgW * SHEET_LEGEND_TYPE.style)}px ${SHEET_BODY_FONT}`;
   ctx.fillText('Reference Blueprint', innerX, y);
-  y += lineH;
+  y += Math.round(lgW * SHEET_LEGEND_TYPE.style);
   ctx.fillStyle = '#8A8172';
-  ctx.font = `500 ${fsBody}px ${SHEET_BODY_FONT}`;
+  ctx.font = `600 ${fsBody}px ${SHEET_BODY_FONT}`;
   ctx.fillText(placeName ?? 'Your design', innerX, y);
-  y += Math.round(lineH * 0.45);
-  ctx.strokeStyle = 'rgba(32,25,15,0.24)';
-  ctx.lineWidth = 1;
+  y += Math.round(lgW * 0.035);
+  ctx.strokeStyle = 'rgba(11,18,11,0.25)';
+  ctx.lineWidth = 1.5;
   ctx.beginPath();
   ctx.moveTo(innerX, y);
-  ctx.lineTo(lgX + lgW - ip, y);
+  ctx.lineTo(lgX + panel.contentRight, y);
   ctx.stroke();
-  y += Math.round(lineH * 0.75);
+  y += Math.round(lgW * 0.045) + Math.round(lgW * 0.03);
 
   const drawLines = (lines: string[], x: number, font: string, color: string): void => {
     ctx.font = font;
@@ -10310,7 +10302,7 @@ function drawStyleLegendSymbol(
 // docs/PLAN-SET-SPEC.md). The Blueprint maps bake this in; the Style output never had it, which is
 // most of the visible gap vs ChatGPT's sheets. All drawn deterministically from the real design.
 /**
- * Centre a finished sheet on A-series landscape paper.
+ * Place a finished sheet on A-series landscape paper with its legend anchored at the right.
  *
  * Pure addition: the composed sheet is drawn unchanged into a larger paper-coloured canvas, so no
  * mark moves relative to any other mark and nothing can be clipped. Where the plot's shape does not
@@ -10339,15 +10331,35 @@ function padToPaperSheet(sheet: HTMLCanvasElement): string {
   // someone forgot to fill.
   ctx.fillStyle = '#FBF6EC';
   ctx.fillRect(0, 0, paper.width, paper.height);
+  // The compact masterplan omits leader gutters. Put its spare paper on the left so its
+  // legend still sits on the same right-hand trim as the other eight sheets.
   ctx.drawImage(
     sheet,
-    Math.round((paper.width - sheet.width) / 2),
+    paper.width - sheet.width,
     Math.round((paper.height - sheet.height) / 2),
   );
   // drawImage is synchronous: the unpadded sheet is finished once copied. Keeping both backing
   // stores until Safari's next GC doubled the largest exact-sheet allocation on every render.
   releaseCanvas(sheet);
   return drainCanvasToDataUrl(canvas, 'image/png');
+}
+
+// Rory asked for the same box, in the same place, with the same fonts on every map.
+// Previously only Water/Planting/Structures had this frame, and Phasing drew a separate shell.
+function drawSheetLegendPanel(ctx: CanvasRenderingContext2D, x: number, width: number, height: number) {
+  const panel = sheetLegendPanelMetrics(width, height);
+  ctx.save();
+  ctx.fillStyle = '#0B2116';
+  ctx.fillRect(x, 0, width, height);
+  roundRectPath(ctx, x + panel.inset, panel.inset,
+    width - panel.inset * 2, height - panel.inset * 2, Math.round(width * 0.055));
+  ctx.fillStyle = '#F7F2E7';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(67,61,48,0.36)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+  ctx.restore();
+  return panel;
 }
 
 async function composeStyleSheet(
@@ -10412,46 +10424,23 @@ async function composeStyleSheet(
   if (gutter > 0 && options.gutterLayout) drawLabelGutter(ctx, options.gutterLayout, gutter, mapW, H);
 
   // ── Legend panel ──
-  const benchmarkPanel = styleLabel === 'Reference Blueprint' && (filter === 'water' || filter === 'planting' || filter === 'structures');
-  const panelInset = benchmarkPanel ? Math.max(12, Math.round(legendW * 0.035)) : 0;
-  ctx.fillStyle = benchmarkPanel ? '#0B2116' : '#FBF6EC';
-  ctx.fillRect(W, 0, legendW, H);
-  if (benchmarkPanel) {
-    ctx.save();
-    ctx.shadowColor = 'rgba(0,0,0,0.3)';
-    ctx.shadowBlur = Math.round(legendW * 0.035);
-    ctx.shadowOffsetY = Math.round(legendW * 0.012);
-    roundRectPath(
-      ctx,
-      W + panelInset,
-      panelInset,
-      legendW - panelInset * 2,
-      H - panelInset * 2,
-      Math.round(legendW * 0.055),
-    );
-    ctx.fillStyle = '#F7F2E7';
-    ctx.fill();
-    ctx.shadowColor = 'transparent';
-    ctx.strokeStyle = 'rgba(67,61,48,0.36)';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-    ctx.restore();
-  }
-  const pad = Math.round(legendW * 0.075);
-  const lx = W + panelInset + pad;
-  const maxX = outW - panelInset - pad;
+  const panel = drawSheetLegendPanel(ctx, W, legendW, H);
+  const panelInset = panel.inset;
+  const pad = panel.padding;
+  const lx = W + panel.contentLeft;
+  const maxX = W + panel.contentRight;
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
-  let y = panelInset + pad + Math.round(legendW * 0.07);
+  let y = panel.titleBaseline;
   ctx.fillStyle = '#20190F';
-  const titleSize = Math.round(legendW * 0.078);
+  const titleSize = Math.round(legendW * SHEET_LEGEND_TYPE.title);
   ctx.font = `800 ${titleSize}px ${REFERENCE_LABEL_FONT}`;
   const titleWords = `${options.sheetNumber ?? SHEET_NO[filter]} — ${layerLabel.toUpperCase()}`.split(/\s+/);
   const titleLines: string[] = [];
   let titleLine = '';
   for (const word of titleWords) {
     const next = titleLine ? `${titleLine} ${word}` : word;
-    if (titleLine && ctx.measureText(next).width > maxX - lx && titleLines.length < 2) {
+    if (titleLine && ctx.measureText(next).width > maxX - lx) {
       titleLines.push(titleLine);
       titleLine = word;
     } else {
@@ -10459,19 +10448,19 @@ async function composeStyleSheet(
     }
   }
   if (titleLine) titleLines.push(titleLine);
-  for (const line of titleLines.slice(0, 3)) {
+  for (const line of titleLines) {
     ctx.fillText(line, lx, y);
     y += Math.round(titleSize * 1.08);
   }
   y += Math.round(legendW * 0.006);
   ctx.fillStyle = '#6B6355';
-  ctx.font = `600 ${Math.round(legendW * 0.05)}px ${SHEET_BODY_FONT}`;
+  ctx.font = `600 ${Math.round(legendW * SHEET_LEGEND_TYPE.style)}px ${SHEET_BODY_FONT}`;
   const styleWords = styleLabel.split(/\s+/);
   const styleLines: string[] = [];
   let styleLine = '';
   for (const word of styleWords) {
     const next = styleLine ? `${styleLine} ${word}` : word;
-    if (styleLine && ctx.measureText(next).width > maxX - lx && styleLines.length < 2) {
+    if (styleLine && ctx.measureText(next).width > maxX - lx) {
       styleLines.push(styleLine);
       styleLine = word;
     } else {
@@ -10479,13 +10468,13 @@ async function composeStyleSheet(
     }
   }
   if (styleLine) styleLines.push(styleLine);
-  const styleLineH = Math.round(legendW * 0.05);
-  for (const line of styleLines.slice(0, 3)) {
+  const styleLineH = Math.round(legendW * SHEET_LEGEND_TYPE.style);
+  for (const line of styleLines) {
     ctx.fillText(line, lx, y);
     y += styleLineH;
   }
   ctx.fillStyle = '#8A8172';
-  ctx.font = `600 ${Math.round(legendW * 0.045)}px ${SHEET_BODY_FONT}`;
+  ctx.font = `600 ${Math.round(legendW * SHEET_LEGEND_TYPE.detail)}px ${SHEET_BODY_FONT}`;
   ctx.fillText(placeName ?? 'Your design', lx, y);
   y += Math.round(legendW * 0.035);
   ctx.strokeStyle = 'rgba(11,18,11,0.25)';

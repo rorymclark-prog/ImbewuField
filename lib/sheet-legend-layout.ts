@@ -319,3 +319,26 @@ export function countedLegendText(label: string, count: number, status?: 'existi
   const qualified = status === 'existing' ? `${label} (existing)` : label;
   return `${qualified} ×${count}`;
 }
+
+/** One panel for the whole printed set. Sheet-specific content must not select its own box. */
+export function sheetLegendPanelMetrics(width: number, height: number) {
+  const inset = Math.max(12, Math.round(width * 0.035));
+  const padding = Math.round(width * 0.075);
+  return {
+    inset,
+    padding,
+    contentLeft: inset + padding,
+    contentRight: width - inset - padding,
+    titleBaseline: inset + padding + Math.round(width * 0.07),
+    contentBottom: height - inset - padding,
+  };
+}
+
+// Phasing's paragraphs use the same detail role as the site-name line. Its old independent
+// 2.9%-of-panel body was much smaller than any other panel text in the exported nine-map set.
+export const SHEET_LEGEND_TYPE = Object.freeze({
+  title: 0.078,
+  style: 0.05,
+  detail: 0.045,
+  section: 0.05,
+});

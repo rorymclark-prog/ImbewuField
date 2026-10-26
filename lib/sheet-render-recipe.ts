@@ -6,7 +6,7 @@
  * the gallery keep those renders while saying plainly that a bitmap made before a framing or
  * compositing repair will not redraw itself after an app update.
  */
-export const SHEET_RENDER_RECIPE = 'r5';
+export const SHEET_RENDER_RECIPE = 'r6';
 
 export type SavedSheetFreshness = 'current' | 'older-plan' | 'older-render';
 

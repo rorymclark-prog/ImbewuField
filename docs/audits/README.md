@@ -6,6 +6,8 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Site survey: start here
 
+Latest legend follow-up: [Consistent legend panels across all nine sheets — 26 October 2026](2026-10-26/map-legend-consistency-codex.md).
+
 Latest map follow-up: [Ubhejane map recovery and current exact-sheet delivery — 26 October 2026](2026-10-26/ubhejane-map-recovery-codex.md).
 
 Latest implementation: [Survey draft recovery and signed-in Ubhejane check — 22 October 2026](2026-10-22/survey-draft-recovery-codex.md).
@@ -63,6 +65,8 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [Consistent legend panels across all nine sheets — 26 October 2026](2026-10-26/map-legend-consistency-codex.md).
 
 - [Ubhejane map recovery and current exact-sheet delivery — 26 October 2026](2026-10-26/ubhejane-map-recovery-codex.md).
 
