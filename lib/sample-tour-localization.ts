@@ -1,5 +1,9 @@
+import { sampleWorkspaceDraft } from './sample-workspace-copy';
+import { REGIONAL_TOUR } from './sample-tour-regional';
 import { PRODUCT_TOUR, PRODUCT_TOUR_FEATURES, type ProductTourStep, type TourFeature } from './sample-tour';
 import { fillInline, inlineText, xhInlineDraft } from '@/lib/xh-inline';
+
+const regionalTour=(language:string)=>Object.hasOwn(REGIONAL_TOUR,language)?REGIONAL_TOUR[language]:undefined;
 
 type TourId = (typeof PRODUCT_TOUR)[number]['id'];
 type TourFeatureId = keyof typeof PRODUCT_TOUR_FEATURES;
@@ -114,8 +118,8 @@ export function productTourStepCopy(step: ProductTourStep, language: string): Lo
       ...(step.secondaryLabel === undefined ? {} : { secondaryLabel: inlineText(language, step.secondaryLabel) }),
     };
   }
-  if (language !== 'zu') return step;
-  return PRODUCT_TOUR_ZU[step.id as TourId] ?? step;
+  const table=language==='zu'?PRODUCT_TOUR_ZU:regionalTour(language)?.steps;
+  return table&&Object.hasOwn(table,step.id)?table[step.id]:step;
 }
 
 export function productTourFeatureCopy(
@@ -127,8 +131,8 @@ export function productTourFeatureCopy(
   if (language === 'xh') {
     return fallback && { title: inlineText(language, fallback.title), text: inlineText(language, fallback.text) };
   }
-  if (language !== 'zu') return fallback;
-  const translated = PRODUCT_TOUR_FEATURES_ZU[id as TourFeatureId]?.[index];
+  const table=language==='zu'?PRODUCT_TOUR_FEATURES_ZU:regionalTour(language)?.features;
+  const translated=table&&Object.hasOwn(table,id)?table[id]?.[index]:undefined;
   return translated ?? fallback;
 }
 
@@ -176,30 +180,47 @@ export function productTourUi(key: TourUiKey, language: string, values: Record<s
     const filled = key === 'aboutMinutes' && values.duration !== undefined ? { ...values, duration: xhDuration(values.duration) } : values;
     return Object.entries(filled).reduce((text, [name, value]) => text.replaceAll(`{${name}}`, String(value)), draft);
   }
-  if (language !== 'zu') return undefined;
-  return Object.entries(values).reduce((text, [name, value]) => text.replaceAll(`{${name}}`, String(value)), UI_ZU[key]);
+  const template=language === 'zu' ? UI_ZU[key] : regionalTour(language)?.ui[key];
+  // A translated title is data: braces and dollar sequences inside it must be inserted once.
+  return template?.replace(/\{([^{}]+)\}/g,(match,name)=>Object.hasOwn(values,name)?String(values[name]):match);
 }
+
+export const PRODUCT_TOUR_ERRORS_ZU:Readonly<Record<string,string>> = {
+  'Your browser could not save tour progress. You can still explore the views.': 'Isiphequluli asikwazanga ukugcina inqubekelaphambili yohambo. Usengaqhubeka nokuhlola izikrini.',
+  'The view could not open. Please try again.': 'Isikrini asikwazanga ukuvuleka. Sicela uzame futhi.',
+  'Could not start the tour. Please allow session storage.': 'Uhambo alukwazanga ukuqala. Vumela ukugcinwa kwedatha kweseshini.',
+  'The example farm could not load. Please try again.': 'Ipulazi lesibonelo alikwazanga ukuvuleka. Sicela uzame futhi.',
+  'The next view could not open.': 'Isikrini esilandelayo asikwazanga ukuvuleka.',
+};
 
 export function productTourError(message: string, language: string): string {
   if (language === 'xh') return inlineText(language, message);
-  if (language !== 'zu') return message;
-  const known: Record<string, string> = {
-    'Your browser could not save tour progress. You can still explore the views.': 'Isiphequluli asikwazanga ukugcina inqubekelaphambili yohambo. Usengaqhubeka nokuhlola izikrini.',
-    'The view could not open. Please try again.': 'Isikrini asikwazanga ukuvuleka. Sicela uzame futhi.',
-    'Could not start the tour. Please allow session storage.': 'Uhambo alukwazanga ukuqala. Vumela ukugcinwa kwedatha kweseshini.',
-    'The example farm could not load. Please try again.': 'Ipulazi lesibonelo alikwazanga ukuvuleka. Sicela uzame futhi.',
-    'The next view could not open.': 'Isikrini esilandelayo asikwazanga ukuvuleka.',
-  };
-  return known[message] ?? message;
+  const errors=language==='zu'?PRODUCT_TOUR_ERRORS_ZU:regionalTour(language)?.errors;
+  return errors&&Object.hasOwn(errors,message)?errors[message]:message;
 }
 
-export function productTourLocalizationIsComplete(): boolean {
+export function productTourLocalizationIsComplete(language = 'zu'): boolean {
+  const regional=regionalTour(language);
+  if(language!=='zu'&&!regional)return false;
+  if(regional&&(!Object.keys(UI_ZU).every(key=>regional.ui[key]?.trim())||!Object.keys(PRODUCT_TOUR_ERRORS_ZU).every(key=>Object.hasOwn(regional.errors,key)&&regional.errors[key]?.trim())))return false;
   return PRODUCT_TOUR.every(step => {
-    const copy = PRODUCT_TOUR_ZU[step.id as TourId];
+    const copy = language==='zu'?PRODUCT_TOUR_ZU[step.id as TourId]:regional?.steps[step.id];
     const features = PRODUCT_TOUR_FEATURES[step.id] ?? [];
-    const translatedFeatures = PRODUCT_TOUR_FEATURES_ZU[step.id as TourFeatureId] ?? [];
-    return Boolean(copy?.title.trim() && copy.task.trim()) &&
-      Boolean(step.secondaryLabel === undefined || copy.secondaryLabel?.trim()) &&
-      features.length === translatedFeatures.length && translatedFeatures.every(feature => feature.title.trim() && feature.text.trim());
+    const translatedFeatures = (language==='zu'?PRODUCT_TOUR_FEATURES_ZU[step.id as TourFeatureId]:regional?.features[step.id]) ?? [];
+    if(!copy?.title.trim()||!copy.task.trim())return false;
+    if(step.secondaryLabel!==undefined&&!copy.secondaryLabel?.trim())return false;
+    return features.length===translatedFeatures.length&&translatedFeatures.every(feature=>feature.title.trim()&&feature.text.trim());
   });
+}
+
+/** The source uses min; regional duration labels keep that unit and number instead of isiZulu words. */
+export function productTourDuration(minutes:number,language:string):string {
+  return language==='zu'?(minutes===1?'umzuzu':`imizuzu engu-${minutes}`):`${minutes} min`;
+}
+
+/** Raw shell copy shares one source identity; supplied isiZulu clauses keep their exact original wording. */
+export function sampleWorkspaceText(language:string,english:string,zulu:string,values:Record<string,string|number>={}):string {
+  // isiXhosa: the draft keyed by the exact English template (lib/locales/xh-inline).
+  const template=language==='zu'?zulu:language==='xh'?inlineText(language,english):sampleWorkspaceDraft(english,language)??english;
+  return template.replace(/\{([^{}]+)\}/g,(match,name)=>Object.hasOwn(values,name)?String(values[name]):match);
 }

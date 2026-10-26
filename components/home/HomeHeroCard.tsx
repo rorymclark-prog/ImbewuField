@@ -3,7 +3,7 @@
 import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import { ArrowRight, MapPin, Eye, ChevronRight, Users, BarChart3, Building2 } from 'lucide-react';
-import { useLanguage } from '@/lib/i18n';
+import { translate, useLanguage } from '@/lib/i18n';
 import { inlineText } from '@/lib/xh-inline';
 import { useSiteProgress } from '@/lib/site-progress';
 import { nextAction } from '@/lib/home-next-step';
@@ -27,26 +27,11 @@ export interface HomeHeroCardProps {
   staffRole?: 'mentor' | 'ngo' | 'funder' | null;
 }
 
-const STAFF_HERO_COPY: Record<'mentor' | 'ngo' | 'funder', { Icon: typeof Users; en: { title: string; desc: string; cta: string }; zu: { title: string; desc: string; cta: string }; href: string }> = {
-  mentor: {
-    Icon: Users,
-    href: '/mentor',
-    en: { title: 'Your mentor dashboard', desc: 'Review your assigned farmers, garden visits and training records.', cta: 'Open mentor dashboard' },
-    zu: { title: 'Ideshibhodi yakho yomeluleki', desc: 'Buyekeza abalimi ababelwe wena, ukuvakashelwa kwezingadi namarekhodi okuqeqeshwa.', cta: 'Vula ideshibhodi yomeluleki' },
-  },
-  ngo: {
-    Icon: BarChart3,
-    href: '/ngo',
-    en: { title: 'Your organisation dashboard', desc: 'Review gardens, assessments and reports across your programme.', cta: 'Open organisation dashboard' },
-    zu: { title: 'Ideshibhodi yenhlangano yakho', desc: 'Buyekeza izingadi, ukuhlola nemibiko kulo lonke uhlelo lwakho.', cta: 'Vula ideshibhodi yenhlangano' },
-  },
-  funder: {
-    Icon: Building2,
-    href: '/funder',
-    en: { title: 'Your funder dashboard', desc: 'Review the programme summaries shared with you.', cta: 'Open funder dashboard' },
-    zu: { title: 'Ideshibhodi yakho yomxhasi', desc: 'Buyekeza izifinyezo zohlelo esabelwane nawe.', cta: 'Vula ideshibhodi yomxhasi' },
-  },
-};
+const STAFF_HERO_COPY = {
+  mentor: { Icon: Users, href: '/mentor', titleKey: 'homeMentorHeroTitle', descriptionKey: 'homeMentorHeroDescription', ctaKey: 'homeMentorHeroOpen' },
+  ngo: { Icon: BarChart3, href: '/ngo', titleKey: 'homeOrganisationHeroTitle', descriptionKey: 'homeOrganisationHeroDescription', ctaKey: 'homeOrganisationHeroOpen' },
+  funder: { Icon: Building2, href: '/funder', titleKey: 'homeFunderHeroTitle', descriptionKey: 'homeFunderHeroDescription', ctaKey: 'homeFunderHeroOpen' },
+} as const;
 
 // Shared green-card shell — identical background/backgroundImage/borderRadius/boxShadow
 // across all three variants so the card never visually jumps when the variant swaps.
@@ -184,7 +169,10 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
   // never the farmer's land/site prompt (there is nothing for them to act on there). ──
   if (staffRole) {
     const copy = STAFF_HERO_COPY[staffRole];
-    const text = lang === 'zu' ? copy.zu : lang === 'xh' ? { title: inlineText(lang, copy.en.title), desc: inlineText(lang, copy.en.desc), cta: inlineText(lang, copy.en.cta) } : copy.en;
+    // The staff hero keys are not in the isiXhosa dictionary yet; isiXhosa reads the inline draft
+    // for their English.
+    const heroText = (key: string) => lang === 'xh' ? inlineText(lang, translate('en', key)) : t(key);
+    const text = { title: heroText(copy.titleKey), desc: heroText(copy.descriptionKey), cta: heroText(copy.ctaKey) };
     const Icon = copy.Icon;
     return (
       <Link href={copy.href} className="imf-hero-settle" style={{ ...SHELL_STYLE, textDecoration: 'none' }}>
@@ -245,12 +233,6 @@ export default function HomeHeroCard({ places, mainSite, firstName, level = 'ful
     return (
       <div className="imf-hero-settle" style={SHELL_STYLE}>
         <HeroEntranceStyle />
-        {lang === 'st' && (
-          <p role="note" className="font-sans" style={{ background: '#FFF5D6', border: '1px solid #E9CC76', color: '#704B08', borderRadius: 12, padding: '8px 10px', fontSize: 12, lineHeight: 1.45, marginBottom: 14 }}>
-            <span lang="st">{t('studentSesothoUiDraftNotice')}</span>
-            <span lang="en" className="block mt-1">English source: {t('studentSesothoUiDraftNoticeSource')}</span>
-          </p>
-        )}
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
             <div className="u-display-sm" style={{ color: 'rgba(234,243,226,0.88)', marginBottom: 2 }}>

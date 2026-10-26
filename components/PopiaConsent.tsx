@@ -11,7 +11,8 @@ import {
 
 const POPIA_KEY = 'imbewu_popia';
 const ONBOARD_KEY = 'permamap_onboarded';
-const ENGLISH_SOURCE_LANGS = new Set(['zu', 'xh', 'st', 've']);
+// isiXhosa is an unreviewed machine draft too, so it keeps the English source beside every line.
+const ENGLISH_SOURCE_LANGS = new Set(['zu', 'xh', 'st', 'ts', 've']);
 
 type Goal = 'feed' | 'income' | 'soil';
 
@@ -71,8 +72,9 @@ function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boolean) =
 export default function PopiaConsent() {
   const { t, lang } = useLanguage();
   const showEnglishSource = ENGLISH_SOURCE_LANGS.has(lang);
-  const copy = (key: string) => <span>{t(key)}{showEnglishSource && <small className="block mt-1" style={{ fontSize: 12, fontWeight: 400, lineHeight: 1.4 }}><span className="font-semibold">English source:</span> {translate('en', key)}</small>}</span>;
-  const copyString = (key: string) => showEnglishSource ? `${t(key)} · ${translate('en', key)}` : t(key);
+  const copy = (key: string) => <span><span lang={lang}>{t(key)}</span>{showEnglishSource && <small lang="en" className="block mt-1" style={{ fontSize: 12, fontWeight: 400, lineHeight: 1.4 }}><span lang={lang} className="font-semibold">{t('popiaEnglishSourceLabel')}</span> {translate('en', key)}</small>}</span>;
+  // A switch has one native name; its separately tagged source stays available in the reading flow.
+  const copyString = (key: string) => t(key);
   const [ready, setReady] = useState(false);
   const [done, setDone] = useState(false);
   const [step, setStep] = useState<1 | 2>(1);
@@ -130,7 +132,7 @@ export default function PopiaConsent() {
       <div
         role="dialog"
         aria-modal="true"
-        aria-labelledby="popia-dialog-heading"
+        aria-label={t(step === 1 ? 'popiaTitle' : 'popiaGoalTitle')}
         className="w-full max-w-sm rounded-2xl p-6 overflow-y-auto"
         style={{
           background: 'var(--bg-1)',
@@ -139,8 +141,7 @@ export default function PopiaConsent() {
           maxHeight: 'calc(100dvh - 2rem)',
         }}
       >
-        {lang === 'zu' && <p role="note" className="rounded-lg px-3 py-2 mb-4 font-sans" style={{ fontSize: 12, lineHeight: 1.4, background: 'color-mix(in srgb, var(--gold) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 25%, transparent)', color: 'var(--text-muted)' }}>{t('popiaZuluDraftNotice')}</p>}
-        {(lang === 'st' || lang === 've' || lang === 'xh') && <p role="note" className="rounded-lg px-3 py-2 mb-4 font-sans" style={{ fontSize: 12, lineHeight: 1.4, background: 'color-mix(in srgb, var(--gold) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 25%, transparent)', color: 'var(--text-muted)' }}>{inlineText(lang, 'Translation status: unreviewed. Read the English source before choosing.')}</p>}
+        {showEnglishSource && <p lang={lang} role="note" className="rounded-lg px-3 py-2 mb-4 font-sans" style={{ fontSize: 12, lineHeight: 1.4, background: 'color-mix(in srgb, var(--gold) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 25%, transparent)', color: 'var(--text-muted)' }}>{lang === 'xh' ? inlineText(lang, 'Unreviewed consent translation. Read the English source before choosing or agreeing.') : t('popiaConsentDraftNotice')}</p>}
         {/* ── Step indicator ── */}
         <div className="flex gap-1.5 mb-6">
           {([1, 2] as const).map((s) => (
@@ -216,6 +217,7 @@ export default function PopiaConsent() {
             <button
               type="button"
               onClick={() => storeData && setStep(2)}
+              aria-label={t('popiaAgreeButton')}
               disabled={!storeData}
               className="w-full py-3 rounded-xl font-sans font-semibold transition-all"
               style={{
@@ -265,6 +267,9 @@ export default function PopiaConsent() {
                     key={v}
                     type="button"
                     onClick={() => setGoal(v)}
+                    aria-label={t(labelKey)}
+                    aria-describedby={`popia-goal-${v}-description`}
+                    aria-pressed={on}
                     className="w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-left transition-all"
                     style={{
                       background: on ? 'var(--color-forest-800)' : 'var(--bg-1)',
@@ -293,6 +298,7 @@ export default function PopiaConsent() {
                         {copy(labelKey)}
                       </div>
                       <div
+                        id={`popia-goal-${v}-description`}
                         className="font-sans mt-0.5"
                         style={{ fontSize: 12, color: on ? 'color-mix(in srgb, var(--color-canvas) 70%, transparent)' : 'var(--text-muted)', lineHeight: 1.4 }}
                       >
@@ -321,6 +327,7 @@ export default function PopiaConsent() {
             <button
               type="button"
               onClick={handleComplete}
+              aria-label={t('popiaGetStarted')}
               disabled={!goal}
               className="w-full py-3 rounded-xl font-sans font-semibold transition-all"
               style={{

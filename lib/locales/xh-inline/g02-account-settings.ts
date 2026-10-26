@@ -147,7 +147,6 @@ const drafts: Record<string, string> = {
   "Page controls": "Izilawuli zephepha",
   "ISIXHOSA MACHINE DRAFT.": "IDRAFTI YESIXHOSA ENGUQULELWE NGOMATSHINI.",
   "Navigation wording has not been reviewed by a fluent isiXhosa speaker.": "Amagama okukhetha asetyenziswa kwimenyu awakahlolwa ngumntu othetha isiXhosa kakuhle.",
-  "Translation status: unreviewed. Read the English source before choosing.": "Imeko yenguqulelo: ayikahlolwa. Funda umbhalo wesiNgesi wemvelaphi phambi kokukhetha.",
 };
 
 export default drafts;

@@ -1,0 +1,785 @@
+{
+  "sourceSha": "40b81b7880c05b19619be1212c2f468d14af5f57",
+  "status": "Unreviewed AI drafts; no fluent-speaker or consent-meaning approval.",
+  "entries": [
+    {
+      "key": "communityRetry",
+      "english": "Retry",
+      "st": "Leka hape",
+      "ts": "Ringeta nakambe",
+      "ve": "Lingedzani hafhu"
+    },
+    {
+      "key": "communityLocationUnsupported",
+      "english": "This device can't share a location.",
+      "st": "Sesebediswa sena ha se kgone ho arolelana sebaka.",
+      "ts": "Xitirhisiwa lexi a xi koti ku avelana ndhawu.",
+      "ve": "Tshishumiswa itshi a tshi koni u kovhana fhethu."
+    },
+    {
+      "key": "communityLocationDenied",
+      "english": "Could not get your location — map visibility left off.",
+      "st": "Ha ho a kgoneha ho fumana sebaka sa hao — ho bonahala mmapeng ho siilwe ho timilwe.",
+      "ts": "A swi kotekanga ku kuma ndhawu ya wena — ku vonakala emepeni ku siyiwe ku timiwile.",
+      "ve": "A zwo ngo konadzea u wana fhethu haṋu — u vhonala kha mapa ho siiwa ho dzimiwa."
+    },
+    {
+      "key": "communityProfileSaveError",
+      "english": "Could not save — try again.",
+      "st": "Ha ho a kgoneha ho boloka — leka hape.",
+      "ts": "A swi kotekanga ku hlayisa — ringeta nakambe.",
+      "ve": "A zwo ngo konadzea u vhulunga — lingedzani hafhu."
+    },
+    {
+      "key": "communityDeleteProfileConfirm",
+      "english": "Delete your community profile? This removes your profile and map pin. Your board posts stay until you close them individually.",
+      "st": "Hlakola profaele ya hao ya setjhaba? Sena se tlosa profaele ya hao le phini ya mmappa. Melaetsa ya hao botong e sala ho fihlela o e kwala ka bonngwe.",
+      "ts": "Xana u lava ku susa phurofayili ya wena ya vaaki? Swi susa phurofayili ya wena ni mfungho wa mepe. Switiviso swa wena swa le bodweni swi sala ku fikela loko u swi pfala hi xin’we-xin’we.",
+      "ve": "Ni ṱoḓa u bvisa phurofaiḽi yaṋu ya tshitshavha? Izwi zwi bvisa phurofaiḽi yaṋu na tshiga kha mapa. Milaedza yaṋu kha bodo i sala u swika ni tshi i vala nga muthihi nga muthihi."
+    },
+    {
+      "key": "communityDeleteProfile",
+      "english": "Delete my community profile",
+      "st": "Hlakola profaele ya ka ya setjhaba",
+      "ts": "Susa phurofayili ya mina ya vaaki",
+      "ve": "Bvisani phurofaiḽi yanga ya tshitshavha"
+    },
+    {
+      "key": "communityLoadingStatus",
+      "english": "Loading community profile",
+      "st": "Profaele ya setjhaba e a kenngwa…",
+      "ts": "Phurofayili ya vaaki ya layicha…",
+      "ve": "Phurofaiḽi ya tshitshavha i khou laisiwa…"
+    },
+    {
+      "key": "communityEditProfileTitle",
+      "english": "Your community profile",
+      "st": "Profaele ya hao ya setjhaba",
+      "ts": "Phurofayili ya wena ya vaaki",
+      "ve": "Phurofaiḽi yaṋu ya tshitshavha"
+    },
+    {
+      "key": "communityEditProfileIntro",
+      "english": "Share as much or as little as you like. Nothing here is visible until you save it.",
+      "st": "Arolelana ho hongata kapa ho honyenyane kamoo o ratang. Ha ho letho mona le bonahalang ho fihlela o le boloka.",
+      "ts": "Avelana swo tala kumbe switsongo hi laha u lavaka. A ku na lexi vonakaka laha ku fikela loko u xi hlayisa.",
+      "ve": "Kovhanani zwinzhi kana zwiṱuku nga hune na funa. A hu na tshithu tshi vhonalaho afha u swika ni tshi tshi vhulunga."
+    },
+    {
+      "key": "communityDisplayNameLabel",
+      "english": "Display name",
+      "st": "Lebitso le bontshwang",
+      "ts": "Vito leri kombisiwaka",
+      "ve": "Dzina ḽi sumbedzwaho"
+    },
+    {
+      "key": "communityDisplayNamePlaceholder",
+      "english": "e.g. Thabo M.",
+      "st": "mohl. Thabo M.",
+      "ts": "xik. Thabo M.",
+      "ve": "tsumbo Thabo M."
+    },
+    {
+      "key": "communityAreaLabel",
+      "english": "Area / district",
+      "st": "Sebaka / setereke",
+      "ts": "Ndhawu / xifundzha",
+      "ve": "Fhethu / tshiṱiriki"
+    },
+    {
+      "key": "communityAreaPlaceholder",
+      "english": "e.g. Bergville, KZN",
+      "st": "mohl. Bergville, KZN",
+      "ts": "xik. Bergville, KZN",
+      "ve": "tsumbo Bergville, KZN"
+    },
+    {
+      "key": "communityAreaHint",
+      "english": "Town or district — not your exact address",
+      "st": "Toropo kapa setereke — e seng aterese ya hao e nepahetseng",
+      "ts": "Doroba kumbe xifundzha — ku nga ri adirese ya wena leyi kongomeke",
+      "ve": "Ḓorobo kana tshiṱiriki — hu si adirese yaṋu yo livhaho"
+    },
+    {
+      "key": "communityBioLabel",
+      "english": "About you",
+      "st": "Ka wena",
+      "ts": "Hi wena",
+      "ve": "Nga inwi"
+    },
+    {
+      "key": "communityBioPlaceholder",
+      "english": "What you grow, what you're into…",
+      "st": "Seo o se lemang, seo o se ratang…",
+      "ts": "Leswi u swi byalaka, leswi u swi tsakelaka…",
+      "ve": "Zwine na lima, zwine na takalela…"
+    },
+    {
+      "key": "communityCropsLabel",
+      "english": "What you grow",
+      "st": "Seo o se lemang",
+      "ts": "Leswi u swi byalaka",
+      "ve": "Zwine na lima"
+    },
+    {
+      "key": "communityPhotosLabel",
+      "english": "Produce photos",
+      "st": "Ditshwantsho tsa dijalo",
+      "ts": "Swifaniso swa swibyariwa",
+      "ve": "Zwifanyiso zwa zwibveledzwa"
+    },
+    {
+      "key": "communityPhotosHint",
+      "english": "Up to 4 photos",
+      "st": "Ditshwantsho tse fihlang ho 4",
+      "ts": "Swifaniso swo fika eka 4",
+      "ve": "Zwifanyiso zwi swikaho kha 4"
+    },
+    {
+      "key": "communityShowOnMapLabel",
+      "english": "Show me on the community map",
+      "st": "Mpontshe mmapeng wa setjhaba",
+      "ts": "Nkombise emepeni wa vaaki",
+      "ve": "Ntsumbedzeni kha mapa wa tshitshavha"
+    },
+    {
+      "key": "communityLocationPending",
+      "english": "Getting your approximate area…",
+      "st": "Sebaka sa hao se hakantsweng se a fumanwa…",
+      "ts": "Ku kumiwa ndhawu ya wena leyi ringanyetiweke…",
+      "ve": "Hu khou wanwa fhethu haṋu ho anganyelwaho…"
+    },
+    {
+      "key": "communityShowOnMapHint",
+      "english": "Your location shows as an approximate ~1km area, never your exact homestead",
+      "st": "Sebaka sa hao se bontshwa e le sebaka se hakantsweng sa ~1km, e seng lehae la hao le nepahetseng",
+      "ts": "Ndhawu ya wena yi kombisiwa yi ri ndhawu yo ringanyetiwa ya ~1km, ku nga ri ndhawu leyi kongomeke ya muti wa wena",
+      "ve": "Fhethu haṋu hu sumbedzwa sa vhupo ho anganyelwaho ha ~1km, hu si fhethu ho livhaho ha muḓi waṋu"
+    },
+    {
+      "key": "communityProfileSaved",
+      "english": "Saved",
+      "st": "E bolokilwe",
+      "ts": "Swi hlayisiwile",
+      "ve": "Zwo vhulungwa"
+    },
+    {
+      "key": "communitySaveProfile",
+      "english": "Save profile",
+      "st": "Boloka profaele",
+      "ts": "Hlayisa phurofayili",
+      "ve": "Vhulungani phurofaiḽi"
+    },
+    {
+      "key": "communityMoreCrops",
+      "english": "+ More crops",
+      "zu": "+ Ezinye izitshalo",
+      "st": "+ Dijalo tse ding",
+      "ts": "+ Swibyariwa swin’wana",
+      "ve": "+ Zwiṅwe zwimela"
+    },
+    {
+      "key": "communityProfilePhotoAlt",
+      "english": "Profile photo {number}",
+      "zu": "Isithombe sephrofayela {number}",
+      "st": "Setshwantsho sa profaele {number}",
+      "ts": "Xifaniso xa phurofayili {number}",
+      "ve": "Tshifanyiso tsha phurofaiḽi {number}"
+    },
+    {
+      "key": "communityRemovePhotoAria",
+      "english": "Remove photo {number}",
+      "zu": "Susa isithombe {number}",
+      "st": "Tlosa setshwantsho {number}",
+      "ts": "Susa xifaniso {number}",
+      "ve": "Bvisani tshifanyiso {number}"
+    },
+    {
+      "key": "communityAddPhotoAria",
+      "english": "Add a photo",
+      "zu": "Faka isithombe",
+      "st": "Kenya setshwantsho",
+      "ts": "Engetela xifaniso",
+      "ve": "Engedzani tshifanyiso"
+    },
+    {
+      "key": "communityPhotoUploading",
+      "english": "Uploading photo…",
+      "zu": "Isithombe siyalayishwa…",
+      "st": "Setshwantsho se a romelwa…",
+      "ts": "Xifaniso xa layichiwa…",
+      "ve": "Tshifanyiso tshi khou rumelwa…"
+    },
+    {
+      "key": "communityPhotoUploadError",
+      "english": "Could not add that photo. Try again.",
+      "zu": "Akukwazanga ukufaka leso sithombe. Zama futhi.",
+      "st": "Ha ho a kgoneha ho kenya setshwantsho seo. Leka hape.",
+      "ts": "A swi kotekanga ku engetela xifaniso xexo. Ringeta nakambe.",
+      "ve": "A zwo ngo konadzea u engedza tshifanyiso itsho. Lingedzani hafhu."
+    },
+    {
+      "key": "communityProfileLoadError",
+      "english": "Could not load your community profile. Check your connection and try again.",
+      "zu": "Akukwazanga ukulayisha iphrofayela yakho yomphakathi. Hlola uxhumano lwakho bese uzama futhi.",
+      "st": "Ha ho a kgoneha ho kenya profaele ya hao ya setjhaba. Hlahloba kgokahano ya hao mme o leke hape.",
+      "ts": "A swi kotekanga ku layicha phurofayili ya wena ya vaaki. Kambela vuhlanganisi bya wena kutani u ringeta nakambe.",
+      "ve": "A zwo ngo konadzea u laisa phurofaiḽi yaṋu ya tshitshavha. Ṱolani vhuṱumani haṋu ni lingedze hafhu."
+    },
+    {
+      "key": "communityProfileDeleteError",
+      "english": "Could not confirm deletion. Check your connection and try again.",
+      "zu": "Akukwazanga ukuqinisekisa ukususwa. Hlola uxhumano lwakho bese uzama futhi.",
+      "st": "Ha ho a kgoneha ho netefatsa ho hlakolwa. Hlahloba kgokahano ya hao mme o leke hape.",
+      "ts": "A swi kotekanga ku tiyisisa ku susiwa. Kambela vuhlanganisi bya wena kutani u ringeta nakambe.",
+      "ve": "A zwo ngo konadzea u khwaṱhisedza u bviswa. Ṱolani vhuṱumani haṋu ni lingedze hafhu."
+    },
+    {
+      "key": "communityProfileDeleting",
+      "english": "Deleting…",
+      "zu": "Kuyasuswa…",
+      "st": "E a hlakolwa…",
+      "ts": "Swa susiwa…",
+      "ve": "I khou bviswa…"
+    }
+  ],
+  "beforeValues": {
+    "zu": {
+      "communityMoreCrops": null,
+      "communityProfilePhotoAlt": null,
+      "communityRemovePhotoAria": null,
+      "communityAddPhotoAria": null,
+      "communityPhotoUploading": null,
+      "communityPhotoUploadError": null,
+      "communityProfileLoadError": null,
+      "communityProfileDeleteError": null,
+      "communityProfileDeleting": null
+    },
+    "st": {
+      "communityRetry": null,
+      "communityLocationUnsupported": null,
+      "communityLocationDenied": null,
+      "communityProfileSaveError": null,
+      "communityDeleteProfileConfirm": null,
+      "communityDeleteProfile": null,
+      "communityLoadingStatus": null,
+      "communityEditProfileTitle": null,
+      "communityEditProfileIntro": null,
+      "communityDisplayNameLabel": null,
+      "communityDisplayNamePlaceholder": null,
+      "communityAreaLabel": null,
+      "communityAreaPlaceholder": null,
+      "communityAreaHint": null,
+      "communityBioLabel": null,
+      "communityBioPlaceholder": null,
+      "communityCropsLabel": null,
+      "communityPhotosLabel": null,
+      "communityPhotosHint": null,
+      "communityShowOnMapLabel": null,
+      "communityLocationPending": null,
+      "communityShowOnMapHint": null,
+      "communityProfileSaved": null,
+      "communitySaveProfile": null,
+      "communityMoreCrops": null,
+      "communityProfilePhotoAlt": null,
+      "communityRemovePhotoAria": null,
+      "communityAddPhotoAria": null,
+      "communityPhotoUploading": null,
+      "communityPhotoUploadError": null,
+      "communityProfileLoadError": null,
+      "communityProfileDeleteError": null,
+      "communityProfileDeleting": null
+    },
+    "ts": {
+      "communityRetry": null,
+      "communityLocationUnsupported": null,
+      "communityLocationDenied": null,
+      "communityProfileSaveError": null,
+      "communityDeleteProfileConfirm": null,
+      "communityDeleteProfile": null,
+      "communityLoadingStatus": null,
+      "communityEditProfileTitle": null,
+      "communityEditProfileIntro": null,
+      "communityDisplayNameLabel": null,
+      "communityDisplayNamePlaceholder": null,
+      "communityAreaLabel": null,
+      "communityAreaPlaceholder": null,
+      "communityAreaHint": null,
+      "communityBioLabel": null,
+      "communityBioPlaceholder": null,
+      "communityCropsLabel": null,
+      "communityPhotosLabel": null,
+      "communityPhotosHint": null,
+      "communityShowOnMapLabel": null,
+      "communityLocationPending": null,
+      "communityShowOnMapHint": null,
+      "communityProfileSaved": null,
+      "communitySaveProfile": null,
+      "communityMoreCrops": null,
+      "communityProfilePhotoAlt": null,
+      "communityRemovePhotoAria": null,
+      "communityAddPhotoAria": null,
+      "communityPhotoUploading": null,
+      "communityPhotoUploadError": null,
+      "communityProfileLoadError": null,
+      "communityProfileDeleteError": null,
+      "communityProfileDeleting": null
+    },
+    "ve": {
+      "communityRetry": null,
+      "communityLocationUnsupported": null,
+      "communityLocationDenied": null,
+      "communityProfileSaveError": null,
+      "communityDeleteProfileConfirm": null,
+      "communityDeleteProfile": null,
+      "communityLoadingStatus": null,
+      "communityEditProfileTitle": null,
+      "communityEditProfileIntro": null,
+      "communityDisplayNameLabel": null,
+      "communityDisplayNamePlaceholder": null,
+      "communityAreaLabel": null,
+      "communityAreaPlaceholder": null,
+      "communityAreaHint": null,
+      "communityBioLabel": null,
+      "communityBioPlaceholder": null,
+      "communityCropsLabel": null,
+      "communityPhotosLabel": null,
+      "communityPhotosHint": null,
+      "communityShowOnMapLabel": null,
+      "communityLocationPending": null,
+      "communityShowOnMapHint": null,
+      "communityProfileSaved": null,
+      "communitySaveProfile": null,
+      "communityMoreCrops": null,
+      "communityProfilePhotoAlt": null,
+      "communityRemovePhotoAria": null,
+      "communityAddPhotoAria": null,
+      "communityPhotoUploading": null,
+      "communityPhotoUploadError": null,
+      "communityProfileLoadError": null,
+      "communityProfileDeleteError": null,
+      "communityProfileDeleting": null
+    }
+  },
+  "beforeLines": {
+    "zu": {
+      "communityMoreCrops": [],
+      "communityProfilePhotoAlt": [],
+      "communityRemovePhotoAria": [],
+      "communityAddPhotoAria": [],
+      "communityPhotoUploading": [],
+      "communityPhotoUploadError": [],
+      "communityProfileLoadError": [],
+      "communityProfileDeleteError": [],
+      "communityProfileDeleting": []
+    },
+    "st": {
+      "communityRetry": [],
+      "communityLocationUnsupported": [],
+      "communityLocationDenied": [],
+      "communityProfileSaveError": [],
+      "communityDeleteProfileConfirm": [],
+      "communityDeleteProfile": [],
+      "communityLoadingStatus": [],
+      "communityEditProfileTitle": [],
+      "communityEditProfileIntro": [],
+      "communityDisplayNameLabel": [],
+      "communityDisplayNamePlaceholder": [],
+      "communityAreaLabel": [],
+      "communityAreaPlaceholder": [],
+      "communityAreaHint": [],
+      "communityBioLabel": [],
+      "communityBioPlaceholder": [],
+      "communityCropsLabel": [],
+      "communityPhotosLabel": [],
+      "communityPhotosHint": [],
+      "communityShowOnMapLabel": [],
+      "communityLocationPending": [],
+      "communityShowOnMapHint": [],
+      "communityProfileSaved": [],
+      "communitySaveProfile": [],
+      "communityMoreCrops": [],
+      "communityProfilePhotoAlt": [],
+      "communityRemovePhotoAria": [],
+      "communityAddPhotoAria": [],
+      "communityPhotoUploading": [],
+      "communityPhotoUploadError": [],
+      "communityProfileLoadError": [],
+      "communityProfileDeleteError": [],
+      "communityProfileDeleting": []
+    },
+    "ts": {
+      "communityRetry": [],
+      "communityLocationUnsupported": [],
+      "communityLocationDenied": [],
+      "communityProfileSaveError": [],
+      "communityDeleteProfileConfirm": [],
+      "communityDeleteProfile": [],
+      "communityLoadingStatus": [],
+      "communityEditProfileTitle": [],
+      "communityEditProfileIntro": [],
+      "communityDisplayNameLabel": [],
+      "communityDisplayNamePlaceholder": [],
+      "communityAreaLabel": [],
+      "communityAreaPlaceholder": [],
+      "communityAreaHint": [],
+      "communityBioLabel": [],
+      "communityBioPlaceholder": [],
+      "communityCropsLabel": [],
+      "communityPhotosLabel": [],
+      "communityPhotosHint": [],
+      "communityShowOnMapLabel": [],
+      "communityLocationPending": [],
+      "communityShowOnMapHint": [],
+      "communityProfileSaved": [],
+      "communitySaveProfile": [],
+      "communityMoreCrops": [],
+      "communityProfilePhotoAlt": [],
+      "communityRemovePhotoAria": [],
+      "communityAddPhotoAria": [],
+      "communityPhotoUploading": [],
+      "communityPhotoUploadError": [],
+      "communityProfileLoadError": [],
+      "communityProfileDeleteError": [],
+      "communityProfileDeleting": []
+    },
+    "ve": {
+      "communityRetry": [],
+      "communityLocationUnsupported": [],
+      "communityLocationDenied": [],
+      "communityProfileSaveError": [],
+      "communityDeleteProfileConfirm": [],
+      "communityDeleteProfile": [],
+      "communityLoadingStatus": [],
+      "communityEditProfileTitle": [],
+      "communityEditProfileIntro": [],
+      "communityDisplayNameLabel": [],
+      "communityDisplayNamePlaceholder": [],
+      "communityAreaLabel": [],
+      "communityAreaPlaceholder": [],
+      "communityAreaHint": [],
+      "communityBioLabel": [],
+      "communityBioPlaceholder": [],
+      "communityCropsLabel": [],
+      "communityPhotosLabel": [],
+      "communityPhotosHint": [],
+      "communityShowOnMapLabel": [],
+      "communityLocationPending": [],
+      "communityShowOnMapHint": [],
+      "communityProfileSaved": [],
+      "communitySaveProfile": [],
+      "communityMoreCrops": [],
+      "communityProfilePhotoAlt": [],
+      "communityRemovePhotoAria": [],
+      "communityAddPhotoAria": [],
+      "communityPhotoUploading": [],
+      "communityPhotoUploadError": [],
+      "communityProfileLoadError": [],
+      "communityProfileDeleteError": [],
+      "communityProfileDeleting": []
+    }
+  },
+  "sourceSha256": {
+    "app/community/profile/page.tsx": "60c866684bbc7d42e566489b2917d3b006b290e3782a16b8817a82be8197ecaf",
+    "lib/db/community-queries.ts": "e926e09d4c8fc719a59b5d434d63cf7d71472fba6b8ccdcc775b0619aef9a10e",
+    "lib/community/flag.ts": "0d0361a64a6ae05451ed0e29fbee6f5d2a3eb771bef6b02385c35b7d9f0dc188",
+    "lib/site-evidence.ts": "2c4059c7405412502bf5c831dae0d4c31b2ec8fc827759d1b770c2e1cc895740",
+    "components/AppConfirm.tsx": "aa6a85118eb453554fa4375a8975af7b75e8b89d1d54efc7d25a6210556f3c1e",
+    "lib/i18n.tsx": "b926a4e185ed5d8b266004ad8f9e019aefadeca821f0d2567279406ab22e5be3",
+    "lib/i18n-pending.ts": "d0a3d00a62bd83768d47ab6547ad29dcb2a624031e4bd4d23c7f9aef5baff2d7",
+    "lib/locales/zu.ts": "d38b0c6e9f2cb83ac17308530cabd50e4964b2d14c132a80c5ce8c1da0a2b5e9",
+    "lib/locales/st.ts": "d247bc9876428a42c809eeab512859a816bc6a3298836ac450f5ea95e0116e4f",
+    "lib/locales/ts.ts": "a68c7bd7ecc768c68a2c93f2987653a179379709a0e3e642ee2330fdb6d75298",
+    "lib/locales/ve.ts": "eb7ee86429c78cf1a5b3d44e5c387860bfc27997704385b4bcd86c599cfdbabc"
+  },
+  "englishAdditions": {
+    "communityLocationUnsupported": "This device can't share a location.",
+    "communityLocationDenied": "Could not get your location — map visibility left off.",
+    "communityProfileSaveError": "Could not save — try again.",
+    "communityLoadingStatus": "Loading community profile",
+    "communityLocationPending": "Getting your approximate area…",
+    "communityProfileSaved": "Saved",
+    "communityMoreCrops": "+ More crops",
+    "communityProfilePhotoAlt": "Profile photo {number}",
+    "communityRemovePhotoAria": "Remove photo {number}",
+    "communityAddPhotoAria": "Add a photo",
+    "communityPhotoUploading": "Uploading photo…",
+    "communityPhotoUploadError": "Could not add that photo. Try again.",
+    "communityProfileLoadError": "Could not load your community profile. Check your connection and try again.",
+    "communityProfileDeleteError": "Could not confirm deletion. Check your connection and try again.",
+    "communityProfileDeleting": "Deleting…"
+  },
+  "sourceControls": [
+    {
+      "key": "communityLocationUnsupported",
+      "english": null,
+      "zu": "Le divayisi ayikwazi ukwabelana ngendawo.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityLocationDenied",
+      "english": null,
+      "zu": "Indawo yakho ayitholakalanga — ukubonakala emephini kuvaliwe.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityProfileSaveError",
+      "english": null,
+      "zu": "Iphrofayela ayilondolozekanga — zama futhi.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityDeleteProfileConfirm",
+      "english": "Delete your community profile? This removes your profile and map pin. Your board posts stay until you close them individually.",
+      "zu": "Uyafuna ukususa iphrofayela yakho yomphakathi? Lokhu kususa iphrofayela yakho nephini emephini. Okuthunyelwe kwakho ebhodini kuhlala kuze kube yilapho ukuvala ngakunye.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityDeleteProfile",
+      "english": "Delete my community profile",
+      "zu": "Susa iphrofayela yami yomphakathi",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "cancelBtn",
+      "english": "Cancel",
+      "zu": "Khansela",
+      "st": "Hlakola",
+      "ts": "Tshika",
+      "ve": "Litshani"
+    },
+    {
+      "key": "communityLoadingStatus",
+      "english": null,
+      "zu": "Kulayishwa umphakathi…",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityEditProfileTitle",
+      "english": "Your community profile",
+      "zu": "Iphrofayili yakho yomphakathi",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityDraftReviewNotice",
+      "english": null,
+      "zu": "Umbhalo wesiZulu ungumbhalo wokuqala; awukabuyekezwa isikhulumi esisazi kahle isiZulu.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityEditProfileIntro",
+      "english": "Share as much or as little as you like. Nothing here is visible until you save it.",
+      "zu": "Yabelana ngolwazi oluningi noma oluncane ngokuthanda kwakho. Akukho okubonakala kwabanye uze ukulondoloze.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityDisplayNameLabel",
+      "english": "Display name",
+      "zu": "Igama eliboniswayo",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityDisplayNamePlaceholder",
+      "english": "e.g. Thabo M.",
+      "zu": "isib. Thabo M.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityAreaLabel",
+      "english": "Area / district",
+      "zu": "Indawo / isifunda",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityAreaPlaceholder",
+      "english": "e.g. Bergville, KZN",
+      "zu": "isib. Bergville, KZN",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityAreaHint",
+      "english": "Town or district — not your exact address",
+      "zu": "Idolobha noma isifunda — ungafaki ikheli lakho eliqondile",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityBioLabel",
+      "english": "About you",
+      "zu": "Mayelana nawe",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityBioPlaceholder",
+      "english": "What you grow, what you're into…",
+      "zu": "Yini oyitshalayo, yini oyithandayo…",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityCropsLabel",
+      "english": "What you grow",
+      "zu": "Okutshalayo",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityPhotosLabel",
+      "english": "Produce photos",
+      "zu": "Izithombe zesivuno",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityPhotosHint",
+      "english": "Up to 4 photos",
+      "zu": "Izithombe ezingafika kwezingu-4",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityShowOnMapLabel",
+      "english": "Show me on the community map",
+      "zu": "Ngibonise emephini yomphakathi",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityLocationPending",
+      "english": null,
+      "zu": "Kutholwa indawo yakho eseduze…",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityShowOnMapHint",
+      "english": "Your location shows as an approximate ~1km area, never your exact homestead",
+      "zu": "Indawo yakho iboniswa njengendawo elinganiselwa ku-1 km — akuboniswa ikhaya lakho eliqondile",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communityProfileSaved",
+      "english": null,
+      "zu": "Iphrofayela ilondoloziwe",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "communitySaveProfile",
+      "english": "Save profile",
+      "zu": "Londoloza iphrofayili",
+      "st": null,
+      "ts": null,
+      "ve": null
+    }
+  ],
+  "privacyPairs": [
+    {
+      "english": "This device can't share a location.",
+      "key": "communityLocationUnsupported"
+    },
+    {
+      "english": "Could not get your location — map visibility left off.",
+      "key": "communityLocationDenied"
+    },
+    {
+      "english": "Delete your community profile? This removes your profile and map pin. Your board posts stay until you close them individually.",
+      "key": "communityDeleteProfileConfirm"
+    },
+    {
+      "english": "Delete my community profile",
+      "key": "communityDeleteProfile"
+    },
+    {
+      "english": "Share as much or as little as you like. Nothing here is visible until you save it.",
+      "key": "communityEditProfileIntro"
+    },
+    {
+      "english": "Town or district — not your exact address",
+      "key": "communityAreaHint"
+    },
+    {
+      "english": "Show me on the community map",
+      "key": "communityShowOnMapLabel"
+    },
+    {
+      "english": "Your location shows as an approximate ~1km area, never your exact homestead",
+      "key": "communityShowOnMapHint"
+    },
+    {
+      "english": "Delete my community profile",
+      "key": "communityDeleteProfile"
+    }
+  ],
+  "cropOptionsSource": "CROP_OPTIONS = [\n  'maize', 'beans', 'tomato', 'spinach', 'cabbage', 'potato', 'pumpkin',\n  'sweet potato', 'onion', 'chilli', 'herbs', 'fruit trees', 'seedlings', 'seed',\n]",
+  "scope": "Community profile controls, location/privacy text, photos, read/write/delete feedback and a source-paired confirmation. Preserve saved profile values, crop catalogue identities, bio/photo limits, location rounding/opt-in state, feature/auth gates, payloads, post preservation and confirmation outcomes. The old isiZulu-only review key remains unchanged but is replaced at this caller by the shared four-language notice.",
+  "releasePair": {
+    "english": "Community profile controls now have four draft translations.",
+    "zu": "Izinkinobho zephrofayela yomphakathi manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
+    "st": "Ditaolo tsa profaele ya setjhaba jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
+    "ts": "Swilawuri swa phurofayili ya vaaki sweswi swi ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",
+    "ve": "Zwilangi zwa phurofaiḽi ya tshitshavha zwino zwi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa."
+  },
+  "guidePairs": [
+    {
+      "english": "Review sharing choices",
+      "zu": "Buyekeza izinketho zokwabelana",
+      "st": "Hlahloba dikgetho tsa ho arolelana",
+      "ts": "Kambisisa swihlawulekisi swo avelana",
+      "ve": "Ṱolani khetho dza u kovhana"
+    },
+    {
+      "english": "Menu → Account",
+      "zu": "Imenyu → I-akhawunti",
+      "st": "Menyu → Akhaonto",
+      "ts": "Menyu → Akhawunti",
+      "ve": "Menyu → Akhaunthu"
+    },
+    {
+      "english": "In Account, review sharing permissions beside their English source. Sharing a community profile is a separate choice when Community is available.",
+      "zu": "Ku-Akhawunti, buyekeza izimvume zokwabelana eceleni kombhalo wazo wokuqala wesiNgisi. Ukwabelana ngephrofayela yomphakathi kuyisinqumo esihlukile lapho Umphakathi utholakala.",
+      "st": "Ho Akhaonto, hlahloba ditumello tsa ho arolelana pela mongolo wa tsona wa pele wa Senyesemane. Ho arolelana profaele ya setjhaba ke kgetho e arohaneng ha Setjhaba se fumaneha.",
+      "ts": "Eka Akhawunti, kambisisa mpfumelelo wo avelana ekusuhi ni tsalwa ra wona ro sungula ra Xinghezi. Ku avelana phurofayili ya vaaki i xihlawulekisi lexi hambaneke loko Vaaki va kumeka.",
+      "ve": "Kha Akhaunthu, ṱolani thendelo dza u kovhana tsini na maṅwalwa adzo a u thoma a English. U kovhana phurofaiḽi ya tshitshavha ndi khetho yo fhambanaho musi Tshitshavha tshi tshi wanala."
+    }
+  ],
+  "guideRoute": "/account"
+}

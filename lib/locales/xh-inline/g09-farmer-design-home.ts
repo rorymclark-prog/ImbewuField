@@ -101,7 +101,6 @@ const drafts: Record<string, string> = {
   "Choose a practice view": "Khetha imbonakalo yokuziqhelisa",
 
   // ── app/home/page.tsx ──
-  "Unreviewed isiXhosa draft. These Home and site-selection labels may be inaccurate; switch to English before changing saved site settings.": "Idrafti yesiXhosa engekahlolwa. Ezi leyibhile zeKhaya nezokukhetha indawo zingabi ngachanekanga; tshintshela kwisiNgesi phambi kokutshintsha iisetingi zendawo egciniweyo.",
   "Mark not done": "Phawula ukuba akugqitywanga",
   "Mark done": "Phawula ukuba kugqityiwe",
   "Add to calendar": "Yongeza kwikhalenda",

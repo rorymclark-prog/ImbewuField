@@ -67,7 +67,6 @@ const drafts: Record<string, string> = {
   "Could not save — try again.": "Asikwazanga ukugcina — zama kwakhona.",
   "Getting your approximate area…": "Kufunyanwa ummandla wakho oqikelelweyo…",
   "Saved": "Kugciniwe",
-  "isiXhosa draft — not reviewed by a fluent speaker": "Idrafti yesiXhosa — ayikahlolwa ngumntu othetha kakuhle isiXhosa",
   "This device can't share a location.": "Esi sixhobo asikwazi ukwabelana ngendawo.",
   "Could not get your location — map visibility left off.": "Asikwazanga ukufumana indawo yakho — ukubonakala kwimephu kuhlala kucinyiwe.",
   "Delete your community profile? This removes your profile and map pin. Your board posts stay until you close them individually.": "Cima iprofayile yakho yoluntu? Oku kususa iprofayile yakho nephini yakho kwimephu. Izaziso zakho zebhodi zihlala zide uzivale nganye nganye.",

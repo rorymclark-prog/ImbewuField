@@ -135,7 +135,7 @@ test('an unknown role is shown gated links, and a resolved wrong role is not', (
  * there was invisible to every figure the app reports. The fix was the label, not the store —
  * lib/field-journal.ts is a diary, deliberately localStorage-only so sample mode sandboxes it.
  */
-test('the Journal tile does not promise to record harvests', () => {
+test('the Journal tile describes notes and photos in each target language without promising harvest records', async () => {
   const en = read('lib/i18n.tsx');
   const desc = en.match(/homeQuickJournalDesc:\s*'([^']*)'/);
   assert.ok(desc, 'homeQuickJournalDesc must exist in the English dictionary');
@@ -143,16 +143,25 @@ test('the Journal tile does not promise to record harvests', () => {
     'the Journal stores notes and photos, not weights. A tile that says "Log harvests" sends a ' +
     'farmer to record her yield somewhere no report will ever read it. Weights live in /records.');
 
-  // The isiZulu and isiXhosa drafts name the Journal's actual notes and photos. Other locales still
-  // use the English pending text until their wording is prepared; none may restore the old harvest promise.
+  // The whole-app translation request now supplies source-paired regional drafts. The rule is
+  // still honest diary wording, not the old requirement that every other language stay English.
+  // The isiXhosa draft (this branch) names the Journal's actual notes and photos too.
+  const packet = JSON.parse(read('docs/translation/four-language-completion/navigation-account-drafts.json'));
+  const journal = packet.entries.find((entry: { key: string }) => entry.key === 'homeQuickJournalDesc');
+  assert.ok(journal, 'the regional Journal labels need their exact source meaning available for review');
+  assert.equal(journal.english, desc[1], 'a changed English meaning requires new translation review');
   const dir = join(ROOT, 'lib/locales');
   for (const f of readdirSync(dir).filter((n) => n.endsWith('.ts'))) {
     const src = read(`lib/locales/${f}`);
     assert.doesNotMatch(src, /homeQuickJournalDesc:\s*['"][^'"\n]*(?:Rekhoda izivuno|Log harvests)/i,
       `${f} must not restore the old promise that the Journal records harvests.`);
-    if (f === 'zu.ts' || f === 'xh.ts') {
+    if (['zu.ts', 'xh.ts', 'st.ts', 'ts.ts', 've.ts'].includes(f)) {
       assert.match(src, /homeQuickJournalDesc:\s*['"][^'"\n]+['"]/,
-        `${f}: the isiZulu/isiXhosa draft must not fall back to the old English-only Journal label`);
+        `${f}: the target language needs its own notes-and-photos label`);
+      const code = f.slice(0, -3);
+      const { default: dict } = await import(`../lib/locales/${code}.ts`);
+      assert.notEqual(dict.homeQuickJournalDesc, desc[1], `${f}: the tile is still English`);
+      if (code !== 'zu' && code !== 'xh') assert.equal(dict.homeQuickJournalDesc, journal[code], `${f}: the tile must retain its source-paired review draft`);
     } else {
       assert.doesNotMatch(src, /homeQuickJournalDesc:/,
         `${f} remains on the English pending text until its own review draft is prepared`);

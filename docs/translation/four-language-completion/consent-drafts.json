@@ -1,0 +1,303 @@
+{
+  "sourceSha": "9072996bde9e0826384e2b4bfb292e4c1035d948",
+  "status": "Unreviewed AI draft additions/corrections. No fluent-speaker approval or compliance certification.",
+  "entries": [
+    {
+      "key": "popiaConsentDraftNotice",
+      "english": "Unreviewed consent translation. Read the English source before choosing or agreeing.",
+      "zu": "UHLAKA LWESIZULU — Umbhalo wesiZulu wemvume awukabuyekezwa. Funda umbhalo wesiNgisi oseduze ngaphambi kokukhetha noma ukuvuma.",
+      "st": "Phetolelo ya tumello ha e eso hlahlojwe. Bala mongolo wa Senyesemane pele o kgetha kapa o dumela.",
+      "ts": "Vuhundzuluxi bya mpfumelelo a byi si kamberiwa. Hlaya tsalwa ra Xinghezi u nga si hlawula kumbe ku pfumela.",
+      "ve": "Ṱhalutshedzo ya thendelo a i athu ṱolwa. Vhalani maṅwalwa a English musi ni sa athu nanga kana u tenda."
+    },
+    {
+      "key": "popiaEnglishSourceLabel",
+      "english": "English source:",
+      "zu": "Umbhalo wokuqala wesiNgisi:",
+      "st": "Mongolo wa pele wa Senyesemane:",
+      "ts": "Tsalwa ro sungula ra Xinghezi:",
+      "ve": "Maṅwalwa a u thoma a English:"
+    },
+    {
+      "key": "popiaGoalPickOne",
+      "english": "Pick one to continue",
+      "st": "Kgetha e le nngwe hore o tswele pele",
+      "ts": "Hlawula xin’we leswaku u ya mahlweni",
+      "ve": "Nangani tshithihi uri ni bvele phanḓa"
+    },
+    {
+      "key": "popiaShareLabel",
+      "english": "Share anonymised results with my NGO",
+      "zu": "Yabelana ngemiphumela engadaluli ukuthi ingeyabani ne-NGO yami",
+      "st": "Arolelana diphetho tse sa senoleng hore ke tsa mang le NGO ya ka",
+      "ts": "Avelana mimbuyelo leyi nga kombiki leswaku i ya mani na NGO ya mina",
+      "ve": "Kovhelanani mvelelo dzi sa sumbedzi uri ndi dza nnyi na NGO yanga"
+    },
+    {
+      "key": "popiaGoalFeedDesc",
+      "english": "A steady spread of vegetables through the year",
+      "ts": "Ku kumeka ka matsavu hi ku landzelelana lembe hinkwaro"
+    }
+  ],
+  "beforeValues": {
+    "zu": {
+      "popiaConsentDraftNotice": null,
+      "popiaEnglishSourceLabel": null,
+      "popiaShareLabel": "Yabelana nge-NGO yami ngemiphumela engamaziwi"
+    },
+    "st": {
+      "popiaConsentDraftNotice": null,
+      "popiaEnglishSourceLabel": null,
+      "popiaGoalPickOne": null,
+      "popiaShareLabel": "Arolelana le NGO ya ka ka diphetho tse sa tsejweng"
+    },
+    "ts": {
+      "popiaConsentDraftNotice": null,
+      "popiaEnglishSourceLabel": null,
+      "popiaGoalPickOne": null,
+      "popiaShareLabel": "Avelana mimbuyelo leyi nga kombiki mavito na NGO ya mina",
+      "popiaGoalFeedDesc": "Matsavu lama nga heriki lembe hinkwaro"
+    },
+    "ve": {
+      "popiaConsentDraftNotice": null,
+      "popiaEnglishSourceLabel": null,
+      "popiaGoalPickOne": null,
+      "popiaShareLabel": "Kovhelanani mvelelo dzi sa sumbedzi dzina na NGO yanga"
+    }
+  },
+  "beforeLines": {
+    "zu": {
+      "popiaConsentDraftNotice": [],
+      "popiaEnglishSourceLabel": [],
+      "popiaShareLabel": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 1564,
+          "text": "  popiaShareLabel: 'Yabelana nge-NGO yami ngemiphumela engamaziwi',\n"
+        }
+      ]
+    },
+    "st": {
+      "popiaConsentDraftNotice": [],
+      "popiaEnglishSourceLabel": [],
+      "popiaGoalPickOne": [],
+      "popiaShareLabel": [
+        {
+          "file": "lib/locales/st.ts",
+          "line": 810,
+          "text": "  popiaShareLabel: 'Arolelana le NGO ya ka ka diphetho tse sa tsejweng',\n"
+        }
+      ]
+    },
+    "ts": {
+      "popiaConsentDraftNotice": [],
+      "popiaEnglishSourceLabel": [],
+      "popiaGoalPickOne": [],
+      "popiaShareLabel": [
+        {
+          "file": "lib/locales/ts.ts",
+          "line": 742,
+          "text": "  popiaShareLabel: 'Avelana mimbuyelo leyi nga kombiki mavito na NGO ya mina',\n"
+        }
+      ],
+      "popiaGoalFeedDesc": [
+        {
+          "file": "lib/locales/ts.ts",
+          "line": 749,
+          "text": "  popiaGoalFeedDesc: 'Matsavu lama nga heriki lembe hinkwaro',\n"
+        }
+      ]
+    },
+    "ve": {
+      "popiaConsentDraftNotice": [],
+      "popiaEnglishSourceLabel": [],
+      "popiaGoalPickOne": [],
+      "popiaShareLabel": [
+        {
+          "file": "lib/locales/ve.ts",
+          "line": 773,
+          "text": "  popiaShareLabel: 'Kovhelanani mvelelo dzi sa sumbedzi dzina na NGO yanga',\n"
+        }
+      ]
+    }
+  },
+  "sourceControls": [
+    {
+      "key": "popiaGoalFeedLabel",
+      "english": "Feed my family",
+      "zu": "Ondla umndeni wami",
+      "st": "Fepa lelapa la ka",
+      "ts": "Wundla ndyangu wa mina",
+      "ve": "U ḽisa muṱa wanga"
+    },
+    {
+      "key": "popiaGoalFeedDesc",
+      "english": "A steady spread of vegetables through the year",
+      "zu": "Ukusabalala okuqinile kwemifino unyaka wonke",
+      "st": "Meroho e fumanehang kamehla selemo sohle",
+      "ts": "Matsavu lama nga heriki lembe hinkwaro",
+      "ve": "Miroho i wanalaho nga u tevhekana ṅwaha woṱhe"
+    },
+    {
+      "key": "popiaGoalIncomeLabel",
+      "english": "Earn an income",
+      "zu": "Hola imali",
+      "st": "Fumana lekeno",
+      "ts": "Kuma muholo",
+      "ve": "U wana mbuelo"
+    },
+    {
+      "key": "popiaGoalIncomeDesc",
+      "english": "Lima leans to market crops you can sell",
+      "zu": "Lima iya ezitshalo zomakethe ongazidayisa",
+      "st": "Lima e kgetha haholo dijalo tsa mmaraka tseo o ka di rekisang",
+      "ts": "Lima u tshikelela swibyariwa swa makete leswi u nga swi xavisaka",
+      "ve": "Lima u livhisa kha zwiliṅwa zwa makete zwine na nga zwi rengisa"
+    },
+    {
+      "key": "popiaGoalSoilLabel",
+      "english": "Restore my soil",
+      "zu": "Buyisela umhlaba wami",
+      "st": "Tsosolosa mobu wa ka",
+      "ts": "Pfuxeta misava ya mina",
+      "ve": "U vusuludza mavu anga"
+    },
+    {
+      "key": "popiaGoalSoilDesc",
+      "english": "Cover crops and legumes to bring back the land",
+      "zu": "Izitshalo ezisekela umhlaba nezimbumba ukubuyisa umhlaba",
+      "st": "Dijalo tse sireletsang mobu le dinawa ho tsosolosa naha",
+      "ts": "Swimilana swo funengeta misava na swimilana swa tinyawa (legumes) ku pfuxeta misava",
+      "ve": "Zwiliṅwa zwa u fukedza na zwimela zwa lushaka lwa nawa u vusuludza mavu"
+    },
+    {
+      "key": "popiaZuluDraftNotice",
+      "english": null,
+      "zu": "UHLAKA LWESIZULU — Umbhalo wesiZulu wemvume awukabuyekezwa. Funda umbhalo wesiNgisi oseduze ngaphambi kokukhetha noma ukuvuma.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "popiaTitle",
+      "english": "Your data, your choice",
+      "zu": "Idatha yakho, ukukhetha kwakho",
+      "st": "Data ya hao, kgetho ya hao",
+      "ts": "Datha ya wena, ku hlawula ka wena",
+      "ve": "Data yaṋu, khetho yaṋu"
+    },
+    {
+      "key": "popiaBody",
+      "english": "We keep your farm information safe and only use it to help you. You can change these settings any time in the app.",
+      "zu": "Sigcina ulwazi lwepulazi lakho luphephile futhi silusebenzisa kuphela ukukusiza. Ungashintsha lezi zilungiselelo noma nini kusicelo.",
+      "st": "Re boloka tlhahisoleseding ya polasi ya hao e bolokehile le ho e sebedisa ho wena feela. O ka fetola maemo ana nako efe kapa efe ka app.",
+      "ts": "Hi hlayisa vuxokoxoko bya purasi ra wena hi vuhlayiseki naswona hi byi tirhisa ntsena ku ku pfuna. U nga cinca swilulamiso leswi nkarhi wihi na wihi eka app.",
+      "ve": "Ri vhulunga mafhungo a bulasi yaṋu o tsireledzea nahone ri a shumisa u ni thusa fhedzi. Ni nga shandukisa magagulo aya tshifhinga tshiṅwe na tshiṅwe kha app."
+    },
+    {
+      "key": "popiaStoreLabel",
+      "english": "Store my farm & finance data",
+      "zu": "Gcina idatha yami yepulazi nezimali",
+      "st": "Boloka data ya ka ya polasi le ditjhelete",
+      "ts": "Hlayisa datha ya mina ya purasi na ya timali",
+      "ve": "Vhulungani data ya bulasi yanga na ya masheleni"
+    },
+    {
+      "key": "popiaStoreDesc",
+      "english": "Saved securely in the cloud so it's never lost. Required to use the app.",
+      "zu": "Kulondolozwe ngokuphepha efu ukuze kungalahleki. Kudingeka ukuze usebenzise isicelo.",
+      "st": "E bolokwa ka tshireletso lerung e le hore e se ke ya lahleha. E a hlokahala ho sebedisa app.",
+      "ts": "Yi hlayisiwa hi vuhlayiseki eka cloud leswaku yi nga lahleki. Swa laveka ku tirhisa app.",
+      "ve": "Zwi vhulungwa zwo tsireledzea kha klaudu uri zwi si xelele. Zwi a ṱoḓea uri ni shumise app."
+    },
+    {
+      "key": "popiaShareLabel",
+      "english": "Share anonymised results with my NGO",
+      "zu": "Yabelana nge-NGO yami ngemiphumela engamaziwi",
+      "st": "Arolelana le NGO ya ka ka diphetho tse sa tsejweng",
+      "ts": "Avelana mimbuyelo leyi nga kombiki mavito na NGO ya mina",
+      "ve": "Kovhelanani mvelelo dzi sa sumbedzi dzina na NGO yanga"
+    },
+    {
+      "key": "popiaShareDesc",
+      "english": "Helps programmes track impact. You can turn this off any time.",
+      "zu": "Isize izinhlelo ukuze zilandelele umthelela. Ungayivala noma nini.",
+      "st": "E thusa mananeo ho latela tshusumetso. O ka e tima nako efe kapa efe.",
+      "ts": "Swi pfuna minongonoko ku landzelela vuyelo. U nga swi tima nkarhi wihi na wihi.",
+      "ve": "Zwi thusa mbekanyamushumo u tevhela mvelelo. Ni nga zwi dzima tshifhinga tshiṅwe na tshiṅwe."
+    },
+    {
+      "key": "popiaAgreeButton",
+      "english": "I agree, continue",
+      "zu": "Ngiyavuma, qhubeka",
+      "st": "Ke dumela, tswela pele",
+      "ts": "Ndza pfumela, yana emahlweni",
+      "ve": "Ndi a tenda, bvelani phanḓa"
+    },
+    {
+      "key": "popiaStorageRequired",
+      "english": "Cloud storage is required to use ImbewuField.",
+      "zu": "Ukugcinwa kwefu kudingeka ukuze usebenzise i-ImbewuField.",
+      "st": "Polokelo ya leru e hlokwa ho sebedisa ImbewuField.",
+      "ts": "Ku hlayisa eka cloud swa laveka ku tirhisa ImbewuField.",
+      "ve": "U vhulunga kha klaudu zwi a ṱoḓea uri ni shumise ImbewuField."
+    },
+    {
+      "key": "popiaGoalTitle",
+      "english": "What do you most want from your land?",
+      "zu": "Yini oyifunayo kakhulu emhlabeni wakho?",
+      "st": "O batla eng haholo naheng ya hao?",
+      "ts": "I yini leswi u swi lavaka ngopfu eka misava ya wena?",
+      "ve": "Ni ṱoḓa mini vhukuma kha mavu aṋu?"
+    },
+    {
+      "key": "popiaGoalBody",
+      "english": "Lima uses this to tailor its suggestions for you.",
+      "zu": "Lima isebenzisa lokhu ukuze ilungiselele iziphakamiso zayo kuwe.",
+      "st": "Lima e sebedisa sena ho lokisetsa diphihlelelo tsa yona ho wena.",
+      "ts": "Lima u tirhisa leswi ku lulamisela wena switsundzuxo swa yena.",
+      "ve": "Lima u shumisa hezwi u ni ṋea nyeletshedzo dzo livhaho inwi."
+    },
+    {
+      "key": "popiaGetStarted",
+      "english": "Get started",
+      "zu": "Qala",
+      "st": "Qala",
+      "ts": "Sungula",
+      "ve": "Thomani"
+    },
+    {
+      "key": "popiaGoalPickOne",
+      "english": "Pick one to continue",
+      "zu": "Khetha okukodwa ukuze uqhubeke",
+      "st": null,
+      "ts": null,
+      "ve": null
+    }
+  ],
+  "componentSha256": "c650ad79a429ebc46c71f6521858f9f359d3fb5ef38af8704d36010e999b7f5c",
+  "englishSourceSha256": "b926a4e185ed5d8b266004ad8f9e019aefadeca821f0d2567279406ab22e5be3",
+  "reasons": {
+    "popiaShareLabel": "The English source says anonymised results, not just omitted names or unknown results. Plain native drafts now describe results that do not disclose whose they are. No data handling or policy is changed.",
+    "popiaGoalFeedDesc": "The earlier Xitsonga phrase said vegetables never end. The source describes a steady spread through the year as a chosen goal; retain succession/availability without an endless-food promise.",
+    "popiaGoalPickOne": "The existing English key had no native entry in st/ts/ve, so the actual disabled-goal prompt fell back to English.",
+    "popiaConsentDraftNotice": "One active source-bound notice now covers all four target consent drafts; the original isiZulu notice wording is retained. Its legacy key remains for source/history preservation.",
+    "popiaEnglishSourceLabel": "Replace the hardcoded English source label; tag the following original English separately."
+  },
+  "lexicalContext": {
+    "url": "https://www.justice.gov.za/legislation/acts/2013-004.pdf",
+    "note": "POPIA section 1 de-identify definition was consulted to avoid reducing the source word anonymised to names alone. This does not certify the app data processing or validate native legal prose. The existing English app policy is the source being translated, and remains exact."
+  },
+  "notes": [
+    "All 18 pre-existing English consent/goal clauses and the English dictionary file remain exact. Existing native wording changes only in the recorded source pairs; other clauses stay unchanged.",
+    "Storage required, sharing optional/off by default, three goal identities, selection gates, account-scoped record shape and navigation stay unchanged.",
+    "The earlier test excluding Xitsonga from English source pairing is obsolete for this revised unreviewed flow; all four target drafts now retain visible exact English source text with language metadata.",
+    "Tests must reverse only the complete exact declared locale layer before historical Study comparisons. Original hashes stay; changed/partial UI and unrelated learning text must remain detectable."
+  ],
+  "localeSourceSha256": {
+    "zu": "91ce21fba2e1cba529435ab0f393d6cead4a68dd4949b5c7960eb5ac9410f3bb",
+    "st": "2afbd970161c65e83800d05efd83047844968b2c54baab82a58458c273a69988",
+    "ts": "8d61e534f136345775ae5ce2dbf7830165b197021dd5fccbf5b9e4f13a00b3e6",
+    "ve": "ae9fb8afa1677309ba3c22acf462109454239649381a4a9db13e511ab2fd2b95"
+  }
+}

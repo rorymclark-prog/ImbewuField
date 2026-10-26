@@ -1,5 +1,6 @@
 'use client';
 
+import { translate,useLanguage } from '@/lib/i18n';
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 
 /**
@@ -21,8 +22,8 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState } f
  *   const appConfirm = useAppConfirm();
  *   if (!(await appConfirm({ message: '…', confirmLabel: 'Yes, delete', destructive: true }))) return;
  *
- * Labels are REQUIRED from the call site (no baked-in strings): translated
- * surfaces pass t(...) labels, so this component needs no i18n keys of its own.
+ * Callers own the question and explicit action labels. An omitted decline uses the shared
+ * Cancel translation so a translated question cannot gain an English default.
  */
 
 export interface AppConfirmOptions {
@@ -32,10 +33,14 @@ export interface AppConfirmOptions {
   message: string;
   /** The proceed button. Say what happens: "Yes, delete", "Update Ubhejane". */
   confirmLabel: string;
-  /** The decline button. Defaults to "Cancel" — pass a translated/meaningful label wherever that isn't right. */
+  /** The decline button. Defaults to the app-language "Cancel" — pass a translated/meaningful label wherever that isn't right. */
   cancelLabel?: string;
   /** Paints the confirm button the destructive red. Leave off for neutral choices. */
   destructive?: boolean;
+  /** The caller knows the question language; never infer it from a farmer's own words. */
+  language?: string;
+  /** Exact English backing for an explicitly unreviewed native question and its choices. */
+  englishSource?: { message:string; confirmLabel?:string; cancelLabel?:string };
 }
 
 type AskFn = (opts: AppConfirmOptions) => Promise<boolean>;
@@ -59,6 +64,7 @@ interface Pending {
 }
 
 export default function AppConfirmProvider({ children }: { children: React.ReactNode }) {
+  const {t,lang}=useLanguage();
   const [pending, setPending] = useState<Pending | null>(null);
   const cancelRef = useRef<HTMLButtonElement | null>(null);
 
@@ -108,6 +114,7 @@ export default function AppConfirmProvider({ children }: { children: React.React
         >
           <div
             role="alertdialog"
+            lang={pending.opts.language}
             aria-modal="true"
             aria-label={pending.opts.title ?? pending.opts.message}
             onClick={(e) => e.stopPropagation()}
@@ -120,6 +127,7 @@ export default function AppConfirmProvider({ children }: { children: React.React
               boxShadow: '0 12px 40px rgba(0,0,0,0.28)', color: 'var(--text-primary)',
             }}
           >
+            {pending.opts.englishSource&&['zu','st','ts','ve'].includes(pending.opts.language??'')&&<p role="note" lang={pending.opts.language} style={{fontSize:12,lineHeight:1.4,margin:'0 0 8px'}}>{translate(pending.opts.language!,'languageDraftNoticeText')}</p>}
             {pending.opts.title && (
               <div className="font-display font-semibold" style={{ fontSize: 16, marginBottom: 6 }}>
                 {pending.opts.title}
@@ -128,20 +136,24 @@ export default function AppConfirmProvider({ children }: { children: React.React
             <div style={{ fontSize: 14, lineHeight: 1.5, whiteSpace: 'pre-line', color: 'var(--text-primary)' }}>
               {pending.opts.message}
             </div>
+            {pending.opts.englishSource&&<small lang="en" style={{display:'block',fontSize:12,lineHeight:1.4,marginTop:8}}><span lang={pending.opts.language??lang}>{translate(pending.opts.language??lang,'offlineSourceLabel')}: </span>{pending.opts.englishSource.message}</small>}
             <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', marginTop: 16, flexWrap: 'wrap' }}>
               <button
                 ref={cancelRef}
+                aria-label={pending.opts.cancelLabel ?? t('cancelBtn')}
                 onClick={() => settle(false)}
                 className="font-display font-semibold rounded-xl"
                 style={{
                   minHeight: 44, padding: '8px 16px', fontSize: 13, cursor: 'pointer',
-                  background: '#FFFFFF', border: '1px solid var(--border)', color: 'var(--text-secondary)',
+                  background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-secondary)',
                 }}
               >
-                {pending.opts.cancelLabel ?? 'Cancel'}
+                {pending.opts.cancelLabel ?? t('cancelBtn')}
+                {pending.opts.englishSource?.cancelLabel&&<small lang="en" style={{display:'block',fontSize:12,fontWeight:400}}>{pending.opts.englishSource.cancelLabel}</small>}
               </button>
               <button
                 onClick={() => settle(true)}
+                aria-label={pending.opts.confirmLabel}
                 className="font-display font-semibold rounded-xl"
                 style={{
                   minHeight: 44, padding: '8px 16px', fontSize: 13, cursor: 'pointer',
@@ -151,6 +163,7 @@ export default function AppConfirmProvider({ children }: { children: React.React
                 }}
               >
                 {pending.opts.confirmLabel}
+                {pending.opts.englishSource?.confirmLabel&&<small lang="en" style={{display:'block',fontSize:12,fontWeight:400}}>{pending.opts.englishSource.confirmLabel}</small>}
               </button>
             </div>
           </div>

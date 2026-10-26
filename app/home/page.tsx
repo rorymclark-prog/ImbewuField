@@ -1,5 +1,8 @@
 'use client';
 
+import LanguageDraftNote from '@/components/LanguageDraftNote';
+import { recordsMonthLong } from '@/lib/records-months';
+
 import Link from 'next/link';
 import {
   Sprout,
@@ -65,13 +68,19 @@ const LANG_TO_LOCALE: Record<string, string> = {
   ss: 'ss-ZA',
   nr: 'nr-ZA',
 };
-const localUi = (lang: string, english: string, zulu: string) => inlineText(lang, english, zulu);
+// isiXhosa: these Home keys are still English in the xh locale; xh readers get the unreviewed
+// draft keyed by that same English (lib/locales/xh-inline). Every other language keeps t(key).
+const xhKeyText = (lang: string, t: (key: string) => string, key: string) => {
+  const text = t(key);
+  return lang === 'xh' && text === translate('en', key) ? inlineText(lang, text) : text;
+};
 
 // zu-01: zu-ZA has no Intl.DateTimeFormat data in most browsers, so toLocaleDateString silently
 // fell back to the runtime default locale and rendered English, month-first ('FRIDAY · OCTOBER
 // 16'). isiZulu builds its own day-first string from lib/locales/zu.ts's weekday/month tables
-// instead of Intl; every other language keeps using Intl, with 'en-ZA' as the fallback for an
-// unlisted locale code rather than the browser default.
+// instead of Intl. Sesotho, Xitsonga and Tshivenda also use explicit weekday words and the
+// existing calendar's month authority; Intl otherwise silently returns English on some devices.
+// Other languages retain Intl with 'en-ZA' for an unlisted locale code.
 const ZU_WEEKDAY_KEYS = ['homeWeekdaySun', 'homeWeekdayMon', 'homeWeekdayTue', 'homeWeekdayWed', 'homeWeekdayThu', 'homeWeekdayFri', 'homeWeekdaySat'];
 const ZU_MONTH_KEYS = ['homeMonthJan', 'homeMonthFeb', 'homeMonthMar', 'homeMonthApr', 'homeMonthMay', 'homeMonthJun', 'homeMonthJul', 'homeMonthAug', 'homeMonthSep', 'homeMonthOct', 'homeMonthNov', 'homeMonthDec'];
 
@@ -85,6 +94,11 @@ function getDayDate(lang: string, now: Date = new Date()) {
   if (lang === 'xh') {
     const day = translate('xh', ZU_WEEKDAY_KEYS[now.getDay()]);
     const month = translate('xh', ZU_MONTH_KEYS[now.getMonth()]);
+    return `${day} · ${now.getDate()} ${month}`;
+  }
+  if (['st', 'ts', 've'].includes(lang)) {
+    const day = translate(lang, ZU_WEEKDAY_KEYS[now.getDay()]);
+    const month = recordsMonthLong(lang, now.getMonth() + 1);
     return `${day} · ${now.getDate()} ${month}`;
   }
   const locale = LANG_TO_LOCALE[lang] ?? 'en-ZA';
@@ -219,7 +233,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
           >
             <button
               onClick={() => onToggle(task.id)}
-              aria-label={localUi(lang, task.completed ? 'Mark not done' : 'Mark done', task.completed ? 'Susa uphawu lokwenziwe' : 'Maka njengokwenziwe')}
+              aria-label={xhKeyText(lang, t, task.completed ? 'homeTaskMarkNotDone' : 'homeTaskMarkDone')}
               className={`relative before:absolute before:-inset-3 before:content-[''] ${task.completed ? 'imf-task-check' : ''}`}
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: 'var(--color-forest-800)', flexShrink: 0 }}
             >
@@ -239,7 +253,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
             </div>
             <button
               onClick={() => downloadTaskIcs(task)}
-              aria-label={localUi(lang, 'Add to calendar', 'Faka ekhalendeni')}
+              aria-label={xhKeyText(lang, t, 'homeTaskAddCalendar')}
               className="relative before:absolute before:-inset-[13px] before:content-['']"
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: 'var(--color-muted)', flexShrink: 0 }}
             >
@@ -307,7 +321,7 @@ function FarmPlanCard({ places, mainSite, staffRole = null }: { places: SavedPla
           {label}
         </div>
         <div className="font-sans" style={{ fontSize: 12.5, color: 'var(--color-muted-strong)', marginTop: 4 }}>
-          {pct}% {localUi(lang, 'complete', 'kuqediwe')}
+          {t('continueSitePct').replace('{pct}', String(pct))}
         </div>
       </div>
       <span
@@ -432,7 +446,7 @@ function HomeLandingInner() {
     { href: '/journal',           Icon: Leaf,          label: t('homeQuickJournal'),     desc: t('homeQuickJournalDesc'),     color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
     { href: '/facilitator/crops', Icon: CalendarDays,  label: t('homeQuickCropPlanner'), desc: t('homeQuickCropPlannerDesc'), color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
     { href: '/records',           Icon: Wheat,         label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
-    { href: '/prices',            Icon: Tag,           label: localUi(lang, 'Prices', 'Amanani'), desc: localUi(lang, 'Wholesale & retail', 'Izintengo zezitolo ezinkulu nezokuthengisa'), color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
+    { href: '/prices',            Icon: Tag,           label: xhKeyText(lang, t, 'homePricesLabel'), desc: xhKeyText(lang, t, 'homePricesDescription'), color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
   ];
   const STAFF_LINKS = !staffRole ? [] : [
     // w19-09: the role dashboard link is gone — the hero CTA and the Dashboard tab already go there.
@@ -453,7 +467,7 @@ function HomeLandingInner() {
       {staffRole && (
         <AppHeader
           title={dayDate || '\u00a0'}
-          right={<LessonLink id="home:overview" label={localUi(lang, 'Learn', 'Funda')} />}
+          right={<LessonLink id="home:overview" label={xhKeyText(lang, t, 'homeLearnAction')} />}
         />
       )}
       {/* ── Header ── */}
@@ -483,10 +497,10 @@ function HomeLandingInner() {
         <DesktopPrimaryNav />
         <div className="flex-1" />
 
-        <LessonLink id="home:overview" label={localUi(lang, 'Learn', 'Funda')} />
+        <LessonLink id="home:overview" label={xhKeyText(lang, t, 'homeLearnAction')} />
         <button
           onClick={() => setSettingsOpen(true)}
-          aria-label={localUi(lang, 'Settings', 'Izilungiselelo')}
+          aria-label={t('settingsButtonAriaLabel')}
           className="flex items-center justify-center rounded-xl flex-shrink-0"
           style={{ width: 36, height: 36, background: 'rgba(32,25,15,0.06)', border: '1px solid var(--color-border)', color: 'var(--color-muted-strong)', cursor: 'pointer' }}
         >
@@ -576,16 +590,7 @@ function HomeLandingInner() {
           </h1>
         )}
 
-        {lang === 'xh' && (
-          <p role="note" lang="xh" className="rounded-xl px-3 py-2 font-sans" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: 'var(--color-muted-strong)', background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
-            {inlineText(lang, 'Unreviewed isiXhosa draft. These Home and site-selection labels may be inaccurate; switch to English before changing saved site settings.')}
-          </p>
-        )}
-        {lang === 'zu' && (
-          <p role="note" className="rounded-xl px-3 py-2 font-sans" style={{ margin: 0, fontSize: 12, lineHeight: 1.45, color: 'var(--color-muted-strong)', background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
-            ISIZULU DRAFT — These Home and site-selection labels are unreviewed drafts. Check the English before changing saved site settings. / UMBHALO WESIZULU USALUHLAKA — Lezi zinguqulo zasekhaya nezokukhetha indawo azikabuyekezwa. Hlola isiNgisi ngaphambi kokushintsha izilungiselelo zendawo egciniwe.
-          </p>
-        )}
+        <LanguageDraftNote lang={lang} scope="home" />
 
         {/* The home screen answers the farmer's questions in order: what should I do, what is
             happening at my farm, then everything else. On desktop these become two balanced
@@ -699,11 +704,11 @@ function HomeLandingInner() {
           <div className="flex items-center gap-2 mb-1.5">
             <Sparkles size={16} style={{ color: 'var(--color-harvest)', flexShrink: 0 }} />
             <span className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--color-ink)' }}>
-              {localUi(lang, 'Take a tour', 'Buka uhambo lokuqondisa')}
+              {t('navTour')}
             </span>
           </div>
           <p className="font-sans" style={{ fontSize: 12.5, color: 'var(--color-muted-strong)', lineHeight: 1.4 }}>
-            {localUi(lang, 'A guided look at your maps, crop plans, harvests, sales and invoices. Practise with Ubhejane Crèche Garden, then return to your own work.', 'Bheka amamephu akho, izinhlelo zezitshalo, izivuno, ukuthengisa nama-invoyisi ngokuqondiswa. Zilolonge e-Ubhejane Crèche Garden, bese ubuyela emsebenzini wakho.')}
+            {xhKeyText(lang, t, 'homeTourDescription')}
           </p>
         </button>}
 

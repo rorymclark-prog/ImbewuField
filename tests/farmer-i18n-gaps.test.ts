@@ -38,7 +38,8 @@ const mapSource = readFileSync(new URL('../components/Map.tsx', import.meta.url)
 const tipsSource = readFileSync(new URL('../app/tips/page.tsx', import.meta.url), 'utf8');
 const recordsSource = readFileSync(new URL('../app/records/page.tsx', import.meta.url), 'utf8');
 const studentPageSource = readFileSync(new URL('../app/student/page.tsx', import.meta.url), 'utf8');
-const homeHeroCardSource = readFileSync(new URL('../components/home/HomeHeroCard.tsx', import.meta.url), 'utf8');
+const homePageSource = readFileSync(new URL('../app/home/page.tsx', import.meta.url), 'utf8');
+const draftNoteSource = readFileSync(new URL('../components/LanguageDraftNote.tsx', import.meta.url), 'utf8');
 const sesothoUiReviewSource = readFileSync(new URL('../docs/study-translation-reviews/SESOTHO-STUDENT-WELCOME-UI-DRAFT-REVIEW.md', import.meta.url), 'utf8');
 
 const OTHER_LOCALES = ['af', 'zu', 'xh', 'nso', 'tn', 'st', 'ts', 've', 'ss', 'nr'] as const;
@@ -272,10 +273,18 @@ test('the small Sesotho Student and Welcome draft keeps its English sources and 
       `${key} must keep its exact source and draft in the review packet`);
   }
 
-  assert.match(homeHeroCardSource, /lang === 'st'/, 'Welcome must show its notice for Sesotho');
-  assert.match(homeHeroCardSource, /t\('studentSesothoUiDraftNotice'\)/, 'Welcome must identify the text as an unreviewed Sesotho draft');
-  assert.match(homeHeroCardSource, /English source: \{t\('studentSesothoUiDraftNoticeSource'\)\}/,
-    'Welcome must show the exact English source of its draft notice');
+  // Home now has one shared warning for all four drafts, outside the welcome card.
+  // The old Sesotho-only card note would duplicate that warning and miss the other languages.
+  assert.match(homePageSource, /<LanguageDraftNote lang=\{lang\} scope="home" \/>/,
+    'Welcome must remain covered by the page draft notice');
+  assert.match(draftNoteSource, /\['zu', 'st', 'ts', 've'\]\.includes\(lang\)/,
+    'the shared warning must include Sesotho and the other target languages');
+  assert.match(draftNoteSource, /t\('languageDraftNoticeText'\)/,
+    'the shared notice must identify its unreviewed wording');
+  assert.match(draftNoteSource, /<p lang="en"[^>]*>\{translate\('en', 'languageDraftNoticeEnglishText'\)/,
+    'the collapsed notice must retain the canonical English source');
+  assert.match(draftNoteSource, /onClick=\{\(\) => setLang\('en'\)\}/,
+    'the English source page must remain accessible');
   assert.match(sesothoUiReviewSource, /No human fluent review has been completed/);
 });
 

@@ -13,7 +13,8 @@
 // honestly (shows model.dataNotes[0]) and still lets the farmer move on — it must NEVER block.
 
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Sun, Wind, Flame, Droplets } from 'lucide-react';
+import LanguageDraftNote from '@/components/LanguageDraftNote';
 import type { LocationData } from '@/lib/types';
 import { deriveSectorModel, type SectorModel, type SectorSite } from '@/lib/sector';
 import { isValidEarthLatitude } from '@/lib/solar';
@@ -193,6 +194,8 @@ export default function SectorSummary({ lat, lon, site, onLooksRight }: SectorSu
     [effSite, effLat, effLon],
   );
 
+  // isiXhosa is an unreviewed machine draft too, so its rows keep the English source under them.
+  const native = ['zu','xh','st','ts','ve'].includes(lang);
   const rows = useMemo(() => (model ? buildRows(model, t, englishSectorText) : []), [model, t]);
   // Honest degradation/provenance: show missing-data caveats first, otherwise disclose the
   // regional profile rather than implying it was measured at this property.
@@ -203,6 +206,7 @@ export default function SectorSummary({ lat, lon, site, onLooksRight }: SectorSu
 
   return (
     <div style={{ padding: '2px 8px 4px' }}>
+      <LanguageDraftNote lang={lang} scope="design-controls" />
       <div style={{ borderRadius: 12, border: `1.5px solid ${OCHRE}`, background: PAPER, overflow: 'hidden' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 7, minHeight: 38, padding: '7px 10px', background: 'rgba(192,122,30,0.10)' }}>
           <span style={{ fontSize: 12.5, fontWeight: 800, color: DARK, flex: 1 }}>{t('designSectorTitle')}</span>
@@ -210,17 +214,20 @@ export default function SectorSummary({ lat, lon, site, onLooksRight }: SectorSu
         </div>
 
         <div style={{ padding: '8px 10px 4px', display: 'flex', flexDirection: 'column', gap: 7 }}>
-          {rows.map((r) => (
+          {rows.map((r) => {
+            const Icon = r.key === 'sun' ? Sun : r.key === 'wind' ? Wind : r.key === 'fire' ? Flame : Droplets;
+            return (
             <div key={r.key} style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-              <span style={{ flexShrink: 0, marginTop: 5, width: 9, height: 9, borderRadius: 9, background: r.dot }} />
+              <Icon size={15} aria-hidden style={{ flexShrink: 0, marginTop: 2, color: r.dot }} />
               <span style={{ fontSize: 12.5, lineHeight: 1.45, color: DARK }}>
-                <span lang={lang === 'zu' || lang === 'xh' ? lang : undefined}>{r.text}</span>
-                {(lang === 'zu' || lang === 'xh') && <span lang="en" style={{ display: 'block', marginTop: 2, fontSize: 11, lineHeight: 1.35, color: 'rgba(11,18,11,0.66)' }}>{r.sourceText}</span>}
+                <span lang={native ? lang : undefined}>{r.text}</span>
+                {native && <span lang="en" style={{ display: 'block', marginTop: 2, fontSize: 11, lineHeight: 1.35, color: 'rgba(11,18,11,0.66)' }}>{r.sourceText}</span>}
               </span>
             </div>
-          ))}
+            );
+          })}
           {note && (
-            <div style={{ fontSize: 11.5, lineHeight: 1.4, color: 'rgba(11,18,11,0.6)', fontStyle: 'italic', paddingLeft: 17 }}>
+            <div lang={model?.dataNotes[0] || model?.assumptionNotes[0] ? 'en' : lang} style={{ fontSize: 11.5, lineHeight: 1.4, color: 'rgba(11,18,11,0.6)', fontStyle: 'italic', paddingLeft: 23 }}>
               {note}
             </div>
           )}

@@ -57,7 +57,7 @@ export interface StudioReportSummary {
   groundAreas: StudioGroundArea[];
 }
 
-const ROUTE_LABELS: Record<LineShape['kind'], string> = {
+export const ROUTE_LABELS: Readonly<Record<LineShape['kind'], string>> = {
   swale: 'Swale (on-contour earthwork)',
   fence: 'Fence',
   path: 'Path',

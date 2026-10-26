@@ -27,6 +27,7 @@ import { useSampleRole } from '@/lib/use-role-navigation';
 import { accessibleSourceLabel } from '@/lib/accessible-label';
 import { translate, useLanguage } from '@/lib/i18n';
 import { inlineText } from '@/lib/xh-inline';
+import { sampleWorkspaceText } from '@/lib/sample-tour-localization';
 
 export default function MenuButton() {
   const [open, setOpen] = useState(false);
@@ -40,7 +41,7 @@ export default function MenuButton() {
         onClick={() => setOpen(true)}
         aria-label={accessibleSourceLabel(lang, t('openNavigationAriaLabel'), translate('en', 'openNavigationAriaLabel'))}
         aria-expanded={open}
-        title={sample ? (lang === 'zu' ? 'Uhambo — vula izinketho bese uphuma' : inlineText(lang, 'Tour — open choices and exit')) : t('openNavigationAriaLabel')}
+        title={sample ? (lang === 'xh' ? inlineText(lang, 'Tour — open choices and exit') : sampleWorkspaceText(lang, 'Tour — open choices and exit', 'Uhambo — vula izinketho bese uphuma')) : t('openNavigationAriaLabel')}
         className="flex-shrink-0 flex items-center justify-center rounded-full transition-all"
         style={{
           // Tokens, not hexes — the lesson SettingsButton already carries: a control
@@ -60,7 +61,7 @@ export default function MenuButton() {
         }}
       >
         <Menu size={18} strokeWidth={1.7} />
-        {sample && <span className="font-sans" style={{fontSize:12,lineHeight:1,fontWeight:700,whiteSpace:'nowrap',color:'var(--gold-dim)'}}>{lang === 'zu' ? 'Uhambo' : inlineText(lang, 'Tour')}</span>}
+        {sample && <span lang={lang} className="font-sans" style={{fontSize:12,lineHeight:1,fontWeight:700,whiteSpace:'nowrap',color:'var(--gold-dim)'}}>{t('tourPill')}</span>}
       </button>
       <FieldSyncBadge />
       <ProductTourButton />

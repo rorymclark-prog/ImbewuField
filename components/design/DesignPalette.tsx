@@ -74,6 +74,13 @@ import {
   Wind,
   X,
   ZoomIn,
+  MousePointer2,
+  Undo2,
+  Redo2,
+  Copy,
+  Magnet,
+  Ruler,
+  Trash2,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -119,7 +126,7 @@ import {
   type WaterInfrastructureLayer,
 } from '@/lib/design-layer-membership';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
-import { useLanguage } from '@/lib/i18n';
+import { translate, useLanguage } from '@/lib/i18n';
 import { inlineText } from '@/lib/xh-inline';
 import { uiVersion, DEFAULT_UI_VERSION, UI_VERSION_EVENT } from '@/lib/ui-version';
 import LessonLink from './LessonLink';
@@ -432,16 +439,12 @@ function categoriesForStep(step: WizardStep): DesignElementDef['category'][] | '
 // Guided gets larger touch targets throughout (first-time/gogo farmer, less precise
 // tapping); Pro stays at the standard 44px minimum so the whole catalog is scannable
 // without excess scrolling.
-// Screen space is the scarcest thing in this panel — it sits under the map and every row it
-// takes is map the farmer cannot see (Rory: "we need more realestat shorten the text do what you
-// need to!"). Every tool label is "<emoji> <word>" in all eleven locales, so showing the glyph
-// alone and moving the word to title + aria-label buys back most of a row's width while the name
-// stays available to a pointer and to a screen reader. A locale that ever translates WITHOUT a
-// leading pictograph keeps its whole word rather than being cut to its first letter.
-function toolGlyph(label: string): { glyph: string; full: string } {
+// Icon-only tools must stay compact when the translated name gets longer. Lucide markup owns
+// the action's picture; a legacy locale's pictograph is stripped only from its accessible label.
+function toolLabel(label: string): string {
   const full = label.trim();
   const m = full.match(/^([\p{Extended_Pictographic}\uFE0F\u200D]+)\s*(.+)$/u);
-  return { glyph: m ? m[1] : full, full: m ? m[2] : full };
+  return m ? m[2] : full;
 }
 
 /**
@@ -1065,6 +1068,9 @@ export default function DesignPalette({
             ? t('designPaletteTapCorners')
             : null;
 
+  const armedHintSource = tool === 'line' && ['zu','xh','st','ts','ve'].includes(lang)
+    ? translate('en','designPaletteTapCorners') : null;
+
   // Identity of the tip currently on screen. A NEW tip is a new key, so closing one never
   // suppresses the next — the farmer dismisses a sentence, not the feature.
   const hintKey = hintDef ? `def:${hintDef.id}` : armedHintLabel ? `armed:${armedHintLabel}` : null;
@@ -1115,18 +1121,21 @@ export default function DesignPalette({
         {/* Tool row: Select · Undo · Delete (scrolls) + Layers pinned right (always visible, so
             it can never fall off the bottom of the page). */}
         <div style={{ display: 'flex', gap: 10, alignItems: 'center', paddingBottom: 2 }}>
-          <div style={{ display: 'flex', gap: 10, overflowX: 'auto', WebkitOverflowScrolling: 'touch', flexWrap: 'nowrap', flex: 1, minWidth: 0 }}>
+          <div
+            onFocusCapture={(event) => event.target.scrollIntoView({ block: 'nearest', inline: 'nearest' })}
+            style={{ display: 'flex', gap: 10, overflowX: 'auto', WebkitOverflowScrolling: 'touch', flexWrap: 'nowrap', flex: 1, minWidth: 0 }}
+          >
           <button
             type="button"
-            title={toolGlyph(t('designPaletteSelect')).full}
-            aria-label={toolGlyph(t('designPaletteSelect')).full}
+            title={toolLabel(t('designPaletteSelect'))}
+            aria-label={toolLabel(t('designPaletteSelect'))}
             style={toolButtonStyle(tool === 'select')}
             onClick={() => {
               setTool('select');
               setHintDefId(null);
             }}
           >
-            {toolGlyph(t('designPaletteSelect')).glyph}
+            <MousePointer2 size={20} aria-hidden />
           </button>
           <button
             type="button"
@@ -1134,9 +1143,9 @@ export default function DesignPalette({
             onClick={onUndo}
             disabled={!canUndo}
           
-            title={toolGlyph(t('designPaletteUndo')).full}
-            aria-label={toolGlyph(t('designPaletteUndo')).full}>
-            {toolGlyph(t('designPaletteUndo')).glyph}
+            title={toolLabel(t('designPaletteUndo'))}
+            aria-label={toolLabel(t('designPaletteUndo'))}>
+            <Undo2 size={20} aria-hidden />
           </button>
           <button
             type="button"
@@ -1144,13 +1153,13 @@ export default function DesignPalette({
             onClick={onRedo}
             disabled={!canRedo}
           
-            title={toolGlyph(t('designPaletteRedo')).full}
-            aria-label={toolGlyph(t('designPaletteRedo')).full}>
-            {toolGlyph(t('designPaletteRedo')).glyph}
+            title={toolLabel(t('designPaletteRedo'))}
+            aria-label={toolLabel(t('designPaletteRedo'))}>
+            <Redo2 size={20} aria-hidden />
           </button>
           <button
             type="button"
-            aria-label={toolGlyph(t('designPaletteDuplicate')).full}
+            aria-label={toolLabel(t('designPaletteDuplicate'))}
             style={{
               ...toolButtonStyle(false),
               opacity: onDuplicateSelected ? 1 : 0.4,
@@ -1160,7 +1169,7 @@ export default function DesignPalette({
             disabled={!onDuplicateSelected}
             title={t('designPaletteDuplicateTitle')}
           >
-            {toolGlyph(t('designPaletteDuplicate')).glyph}
+            <Copy size={20} aria-hidden />
           </button>
           {/* Tidy outline — offered only when exactly one zone or line is selected (a placed item
               has no ring/polyline to simplify, and a multi-selection has no single shape to preview
@@ -1170,7 +1179,7 @@ export default function DesignPalette({
           {!simple && (
           <button
             type="button"
-            aria-label={toolGlyph(t('designPaletteTidy')).full}
+            aria-label={toolLabel(t('designPaletteTidy'))}
             style={{
               ...toolButtonStyle(false),
               opacity: onTidySelected ? 1 : 0.4,
@@ -1180,7 +1189,7 @@ export default function DesignPalette({
             disabled={!onTidySelected}
             title={t('designPaletteTidyTitle')}
           >
-            {toolGlyph(t('designPaletteTidy')).glyph}
+            <Paintbrush size={20} aria-hidden />
           </button>
           )}
           {/* Snap to neighbour — offered for one or more selected rings, provided at least one can
@@ -1188,7 +1197,7 @@ export default function DesignPalette({
           {!simple && (
           <button
             type="button"
-            aria-label={toolGlyph(t('designPaletteSnap')).full}
+            aria-label={toolLabel(t('designPaletteSnap'))}
             style={{
               ...toolButtonStyle(false),
               opacity: onSnapSelected ? 1 : 0.4,
@@ -1198,7 +1207,7 @@ export default function DesignPalette({
             disabled={!onSnapSelected}
             title={t('designPaletteSnapTitle')}
           >
-            {toolGlyph(t('designPaletteSnap')).glyph}
+            <Magnet size={20} aria-hidden />
           </button>
           )}
           {/* Clean up — offered only when 2+ placed items (never zones/lines) are selected. See
@@ -1207,7 +1216,7 @@ export default function DesignPalette({
           {!simple && (
           <button
             type="button"
-            aria-label={toolGlyph(t('designPaletteCleanup')).full}
+            aria-label={toolLabel(t('designPaletteCleanup'))}
             style={{
               ...toolButtonStyle(false),
               opacity: onCleanupSelected ? 1 : 0.4,
@@ -1217,7 +1226,7 @@ export default function DesignPalette({
             disabled={!onCleanupSelected}
             title={t('designPaletteCleanupTitle')}
           >
-            {toolGlyph(t('designPaletteCleanup')).glyph}
+            <Ruler size={20} aria-hidden />
           </button>
           )}
           {/* Angle field — rect-shaped items only (circles are rotation-invariant, and a LineShape
@@ -1457,8 +1466,8 @@ export default function DesignPalette({
           )}
           <button
             type="button"
-            title={toolGlyph(t('designPaletteDelete')).full}
-            aria-label={toolGlyph(t('designPaletteDelete')).full}
+            title={toolLabel(t('designPaletteDelete'))}
+            aria-label={toolLabel(t('designPaletteDelete'))}
             style={{
               ...toolButtonStyle(false),
               opacity: onDeleteSelected ? 1 : 0.4,
@@ -1469,7 +1478,7 @@ export default function DesignPalette({
             onClick={() => onDeleteSelected?.()}
             disabled={!onDeleteSelected}
           >
-            {toolGlyph(t('designPaletteDelete')).glyph}
+            <Trash2 size={20} aria-hidden />
           </button>
           </div>
 
@@ -2925,7 +2934,8 @@ export default function DesignPalette({
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            <div>{armedHintLabel}</div>
+            <div lang={armedHintSource ? lang : undefined}>{armedHintLabel}</div>
+            {armedHintSource && <div lang="en" style={{ fontSize: 11.5, opacity: 0.8 }}>{armedHintSource}</div>}
             {armedLessonId && <LessonLink id={armedLessonId} label={t('designPaletteLearnAbout')} />}
           </div>
         )}

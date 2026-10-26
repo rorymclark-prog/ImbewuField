@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import { Sprout, Users, GraduationCap, BarChart3, Building2, type LucideIcon } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { inlineTemplate } from '@/lib/xh-inline';
 import { useRouter } from 'next/navigation';
 import { useRoleNavigation, startRolePreview } from '@/lib/use-role-navigation';
 import { visibleRoleTabs } from '@/lib/role-navigation';
+import { sampleWorkspaceText } from '@/lib/sample-tour-localization';
 
 const ROLES: { key: string; labelKey: string; Icon: LucideIcon; href: string; ready: boolean }[] = [
   { key: 'farmer',  labelKey: 'homeRoleFarmerLabel',  Icon: Sprout,        href: '/farmer',  ready: true },
@@ -22,6 +23,8 @@ const ROLE_ALIASES: Record<string, string> = { facilitator: 'mentor' };
 
 export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { current: string; inMenu?: boolean; onNavigate?: () => void }) {
   const { t, lang } = useLanguage();
+  // isiXhosa reads the inline drafts keyed by the exact English (the sample-tour tables have none).
+  const ui = (english:string,zulu:string,values:Record<string,string|number>={}) => lang==='xh' ? inlineTemplate(lang,english,null,values) : sampleWorkspaceText(lang,english,zulu,values);
   const router = useRouter();
   const { accountRole, navigationRole, sample } = useRoleNavigation();
   const visible = visibleRoleTabs(navigationRole);
@@ -35,15 +38,15 @@ export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { 
         // Nav items: Public Sans 16/600 on desktop (handoff §0 type scale).
         const base = `flex items-center gap-1.5 px-2.5 py-1.5 rounded-full font-sans font-semibold text-[15px] lg:text-base transition-all whitespace-nowrap${inMenu ? ' min-h-[44px]' : ''}`;
         const style = active
-          ? { background: inMenu ? '#e9f1e9' : 'var(--badge-bg)', border: '1px solid #1F4D2B', color: 'var(--color-forest-700)' }
+          ? { background: 'var(--badge-bg)', border: '1px solid #1F4D2B', color: 'var(--color-forest-700)' }
           : r.ready
           ? { background: 'transparent', border: '1px solid transparent', color: 'var(--text-primary)' }
           : { background: 'transparent', border: '1px solid transparent', color: 'var(--text-secondary)', opacity: 0.5, cursor: 'not-allowed' };
-        const ariaLabel = active ? inlineTemplate(lang, '{label} (current)', null, { label: t(r.labelKey) }) : t(r.labelKey);
+        const ariaLabel = active ? ui('{label} (current)', '{label} (yamanje)', {label:t(r.labelKey)}) : t(r.labelKey);
 
         if (!r.ready) {
           return (
-            <span key={r.key} className={base} style={style} title={inlineText(lang, 'Coming soon')} aria-label={inlineTemplate(lang, '{label} (coming soon)', null, { label: t(r.labelKey) })}>
+            <span key={r.key} className={base} style={style} title={ui('Coming soon', 'Iyeza maduze')} aria-label={ui('{label} (coming soon)', '{label} (iyeza maduze)', {label:t(r.labelKey)})}>
               <r.Icon size={16} />
               <span data-header-label className={inMenu ? undefined : 'hidden md:inline'}>{t(r.labelKey)}</span>
             </span>
@@ -58,17 +61,17 @@ export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { 
             style={style}
             aria-label={ariaLabel}
             aria-current={active ? 'page' : undefined}
-            title={isAliasMatch ? inlineText(lang, 'Design map is the Mentor toolkit') : undefined}
+            title={isAliasMatch ? ui('Design map is the Mentor toolkit', 'Imephu yomklamo iyithuluzi lomeluleki') : undefined}
           >
             <r.Icon size={16} />
             <span data-header-label className={inMenu ? undefined : 'hidden md:inline'}>{t(r.labelKey)}</span>
           </Link>
         );
       })}
-      {(accountRole === 'ngo' || accountRole === 'admin') && <label className="font-sans text-sm" style={{ padding: '4px 8px', color: '#243d2d' }}>
-        <span className="sr-only">{inlineText(lang, 'View as with demonstration records')}</span>
-        <select aria-label={inlineText(lang, 'View as with demonstration records')} value="" onChange={e => { const target = ROLES.find(r => r.key === e.target.value); if (target && startRolePreview(target.key)) { onNavigate?.(); router.push(target.href); } }} style={{ minHeight: 44, maxWidth: 180, background: 'white', color: '#243d2d', borderRadius: 8, padding: 6 }}>
-          <option value="">{sample ? inlineText(lang, 'Switch view…') : inlineText(lang, 'Switch practice view…')}</option>
+      {(accountRole === 'ngo' || accountRole === 'admin') && <label className="font-sans text-sm" style={{ padding: '4px 8px', color: 'var(--text-primary)' }}>
+        <span className="sr-only">{ui('View as with demonstration records', 'Buka njengendima ethile ngamarekhodi okubonisa')}</span>
+        <select aria-label={ui('View as with demonstration records', 'Buka njengendima ethile ngamarekhodi okubonisa')} value="" onChange={e => { const target = ROLES.find(r => r.key === e.target.value); if (target && startRolePreview(target.key)) { onNavigate?.(); router.push(target.href); } }} style={{ minHeight: 44, maxWidth: 180, background: 'var(--bg-1)', color: 'var(--text-primary)', borderRadius: 8, padding: 6 }}>
+          <option value="">{sample ? ui('Switch view…', 'Shintsha isikrini…') : ui('Switch practice view…', 'Shintsha isikrini sokuzilolonga…')}</option>
           {ROLES.map(r => <option key={r.key} value={r.key}>{t(r.labelKey)}</option>)}
         </select>
       </label>}

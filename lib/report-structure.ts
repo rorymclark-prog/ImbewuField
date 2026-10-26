@@ -13,6 +13,18 @@
  * Fenced code blocks are skipped throughout: a `## ` inside a fence is content, not a heading.
  */
 
+import { reportDocumentText, REPORT_DOCUMENT_LANGUAGES } from './report-localisation';
+import { fillInline, inlineText } from '@/lib/xh-inline';
+
+/** isiXhosa's contents title is fixed (it must be recognised on the server, where no isiXhosa
+ * drafts load); the other front-matter wording uses the draft keyed by the exact English. */
+const XH_CONTENTS = 'Okuqulathwe';
+function documentText(source: string, language: string, values: Record<string, string | number> = {}): string {
+  if (language !== 'xh') return reportDocumentText(source, language, values);
+  if (source === 'Contents') return XH_CONTENTS;
+  return fillInline(inlineText(language, source), values);
+}
+
 /** Headings that are front matter and take no number. Compared case-insensitively. */
 const UNNUMBERED_TITLES = new Set([
   'contents',
@@ -20,6 +32,8 @@ const UNNUMBERED_TITLES = new Set([
   'site at a glance',
   'indawo kafushane',
   'okuqukethwe',
+  XH_CONTENTS.toLocaleLowerCase(),
+  ...['Contents','Document control','Site at a Glance'].flatMap(title=>REPORT_DOCUMENT_LANGUAGES.map(language=>reportDocumentText(title,language).toLocaleLowerCase())),
 ]);
 
 function isFenceToggle(line: string): boolean {
@@ -160,9 +174,9 @@ export function numberSections(markdown: string): NumberingResult {
  * heading, and a contents page listing a section the document does not contain is worse than
  * no contents page at all.
  */
-export function buildContents(headings: NumberedHeading[]): string {
+export function buildContents(headings: NumberedHeading[],language='en'): string {
   if (!headings.length) return '';
-  const out: string[] = ['## Contents', ''];
+  const out: string[] = [`## ${documentText('Contents',language)}`, ''];
   for (const h of headings) {
     if (h.level === 2) out.push(`**${h.number}. ${h.title}**  `);
     else out.push(`  ${h.number} ${h.title}  `);
@@ -184,7 +198,7 @@ export interface FigureResult {
  * a report has figures rather than pictures. Images whose alt text is empty are still numbered —
  * an uncaptioned figure is a defect worth seeing, not one worth hiding.
  */
-export function numberFigures(markdown: string): FigureResult {
+export function numberFigures(markdown: string,language='en'): FigureResult {
   const lines = markdown.split('\n');
   const out: string[] = [];
   const figures: string[] = [];
@@ -205,20 +219,21 @@ export function numberFigures(markdown: string): FigureResult {
     }
     const n = figures.length + 1;
     const alt = m[1].trim();
-    const caption = alt || 'Figure not captioned';
-    figures.push(`Figure ${n} — ${caption}`);
+    const caption = alt || documentText('Figure not captioned',language);
+    const text=documentText('Figure {number} — {caption}',language,{number:n,caption});
+    figures.push(text);
     out.push(line);
     out.push('');
-    out.push(`_Figure ${n} — ${caption}_`);
+    out.push(`_${text}_`);
   }
 
   return { markdown: out.join('\n'), figures };
 }
 
 /** The list of figures, or '' when the document has none. */
-export function buildListOfFigures(figures: string[]): string {
+export function buildListOfFigures(figures: string[],language='en'): string {
   if (!figures.length) return '';
-  return ['## Figures', '', ...figures.map((f) => `${f}  `), ''].join('\n');
+  return [`## ${documentText('Figures',language)}`, '', ...figures.map((f) => `${f}  `), ''].join('\n');
 }
 
 /**
@@ -239,18 +254,19 @@ export function buildListOfFigures(figures: string[]): string {
  * checked it) that must come from data, never from re-reading prose — inventing one at export time
  * is how a document ends up asserting something nobody entered.
  */
-export function ensureDocumentArchitecture(markdown: string): string {
+export function ensureDocumentArchitecture(markdown: string,language='en'): string {
   const text = markdown ?? '';
   if (!text.trim()) return text;
   // Already a structured document — leave it exactly as generated.
-  if (/^##\s+(?:Contents|Okuqukethwe|Okuqulathwe)\s*$/im.test(text)) return text;
+  const contentsTitles=new Set([...['en',...REPORT_DOCUMENT_LANGUAGES].map(code=>reportDocumentText('Contents',code).toLocaleLowerCase()),XH_CONTENTS.toLocaleLowerCase()]);
+  if(text.split('\n').some(line=>{const match=/^##\s+(.+?)\s*$/.exec(line);return match&&contentsTitles.has(match[1].toLocaleLowerCase());}))return text;
 
-  const figured = numberFigures(text);
+  const figured = numberFigures(text,language);
   const numbered = numberSections(figured.markdown);
   if (!numbered.headings.length) return text; // nothing to build a contents page out of
 
-  const contents = buildContents(numbered.headings);
-  const figuresList = buildListOfFigures(figured.figures);
+  const contents = buildContents(numbered.headings,language);
+  const figuresList = buildListOfFigures(figured.figures,language);
   const frontMatter = [contents, figuresList].filter((block) => block.length > 0).join('\n\n');
   if (!frontMatter) return numbered.markdown;
 

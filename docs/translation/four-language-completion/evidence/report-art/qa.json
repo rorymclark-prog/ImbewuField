@@ -1,0 +1,852 @@
+{
+  "status": "Unreviewed AI drafts; no fluent-language approval. Synthetic QA reports, no generated farming advice and no paid API calls.",
+  "sourceSha": "09b280efe5a7be82674af79dce70f238b7b07b1b",
+  "static": [
+    {
+      "lang": "zu",
+      "cases": [
+        {
+          "id": "layers",
+          "width": 820,
+          "height": 380,
+          "outside": [],
+          "overlaps": []
+        }
+      ],
+      "imagesLoaded": true
+    },
+    {
+      "lang": "st",
+      "cases": [
+        {
+          "id": "layers",
+          "width": 820,
+          "height": 370,
+          "outside": [],
+          "overlaps": []
+        }
+      ],
+      "imagesLoaded": true
+    },
+    {
+      "lang": "ts",
+      "cases": [
+        {
+          "id": "layers",
+          "width": 820,
+          "height": 384,
+          "outside": [],
+          "overlaps": []
+        }
+      ],
+      "imagesLoaded": true
+    },
+    {
+      "lang": "ve",
+      "cases": [
+        {
+          "id": "layers",
+          "width": 820,
+          "height": 370,
+          "outside": [],
+          "overlaps": []
+        }
+      ],
+      "imagesLoaded": true
+    }
+  ],
+  "app": [
+    {
+      "lang": "zu",
+      "mode": "native",
+      "contentLanguage": "zu",
+      "requestedLanguage": "zu",
+      "nativeTitles": 17,
+      "alts": [
+        {
+          "id": "art-roof-to-tank",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-swale-section",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-drip-bed",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-soil-layers",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-trench-bed",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-compost-bays",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-crop-rotation",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-guild-layers",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-windbreak-section",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-sun-house",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-zones",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-chicken-tractor",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-firebreak",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-food-all-year",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-market-table",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-five-year-change",
+          "count": 1,
+          "nativeAlt": true
+        }
+      ],
+      "storedReportUnchanged": true,
+      "designBytesUnchanged": true,
+      "overflow": false
+    },
+    {
+      "lang": "zu",
+      "mode": "saved-en",
+      "contentLanguage": "en",
+      "requestedLanguage": "en",
+      "nativeTitles": 17,
+      "alts": [
+        {
+          "id": "art-roof-to-tank",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-swale-section",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-drip-bed",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-soil-layers",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-trench-bed",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-compost-bays",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-crop-rotation",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-guild-layers",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-windbreak-section",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-sun-house",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-zones",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-chicken-tractor",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-firebreak",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-food-all-year",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-market-table",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-five-year-change",
+          "count": 1,
+          "nativeAlt": true
+        }
+      ],
+      "storedReportUnchanged": true,
+      "designBytesUnchanged": true,
+      "overflow": false
+    },
+    {
+      "lang": "st",
+      "mode": "native",
+      "contentLanguage": "st",
+      "requestedLanguage": "st",
+      "nativeTitles": 17,
+      "alts": [
+        {
+          "id": "art-roof-to-tank",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-swale-section",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-drip-bed",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-soil-layers",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-trench-bed",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-compost-bays",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-crop-rotation",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-guild-layers",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-windbreak-section",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-sun-house",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-zones",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-chicken-tractor",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-firebreak",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-food-all-year",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-market-table",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-five-year-change",
+          "count": 1,
+          "nativeAlt": true
+        }
+      ],
+      "storedReportUnchanged": true,
+      "designBytesUnchanged": true,
+      "overflow": false
+    },
+    {
+      "lang": "st",
+      "mode": "saved-en",
+      "contentLanguage": "en",
+      "requestedLanguage": "en",
+      "nativeTitles": 17,
+      "alts": [
+        {
+          "id": "art-roof-to-tank",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-swale-section",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-drip-bed",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-soil-layers",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-trench-bed",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-compost-bays",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-crop-rotation",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-guild-layers",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-windbreak-section",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-sun-house",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-zones",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-chicken-tractor",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-firebreak",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-food-all-year",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-market-table",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-five-year-change",
+          "count": 1,
+          "nativeAlt": true
+        }
+      ],
+      "storedReportUnchanged": true,
+      "designBytesUnchanged": true,
+      "overflow": false
+    },
+    {
+      "lang": "ts",
+      "mode": "native",
+      "contentLanguage": "ts",
+      "requestedLanguage": "ts",
+      "nativeTitles": 17,
+      "alts": [
+        {
+          "id": "art-roof-to-tank",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-swale-section",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-drip-bed",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-soil-layers",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-trench-bed",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-compost-bays",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-crop-rotation",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-guild-layers",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-windbreak-section",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-sun-house",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-zones",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-chicken-tractor",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-firebreak",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-food-all-year",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-market-table",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-five-year-change",
+          "count": 1,
+          "nativeAlt": true
+        }
+      ],
+      "storedReportUnchanged": true,
+      "designBytesUnchanged": true,
+      "overflow": false
+    },
+    {
+      "lang": "ts",
+      "mode": "saved-en",
+      "contentLanguage": "en",
+      "requestedLanguage": "en",
+      "nativeTitles": 17,
+      "alts": [
+        {
+          "id": "art-roof-to-tank",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-swale-section",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-drip-bed",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-soil-layers",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-trench-bed",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-compost-bays",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-crop-rotation",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-guild-layers",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-windbreak-section",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-sun-house",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-zones",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-chicken-tractor",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-firebreak",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-food-all-year",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-market-table",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-five-year-change",
+          "count": 1,
+          "nativeAlt": true
+        }
+      ],
+      "storedReportUnchanged": true,
+      "designBytesUnchanged": true,
+      "overflow": false
+    },
+    {
+      "lang": "ve",
+      "mode": "native",
+      "contentLanguage": "ve",
+      "requestedLanguage": "ve",
+      "nativeTitles": 17,
+      "alts": [
+        {
+          "id": "art-roof-to-tank",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-swale-section",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-drip-bed",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-soil-layers",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-trench-bed",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-compost-bays",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-crop-rotation",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-guild-layers",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-windbreak-section",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-sun-house",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-zones",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-chicken-tractor",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-firebreak",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-food-all-year",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-market-table",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-five-year-change",
+          "count": 1,
+          "nativeAlt": true
+        }
+      ],
+      "storedReportUnchanged": true,
+      "designBytesUnchanged": true,
+      "overflow": false
+    },
+    {
+      "lang": "ve",
+      "mode": "saved-en",
+      "contentLanguage": "en",
+      "requestedLanguage": "en",
+      "nativeTitles": 17,
+      "alts": [
+        {
+          "id": "art-roof-to-tank",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-swale-section",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-drip-bed",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-soil-layers",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-trench-bed",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-compost-bays",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-crop-rotation",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-guild-layers",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-windbreak-section",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-sun-house",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-zones",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-chicken-tractor",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-firebreak",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-food-all-year",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-market-table",
+          "count": 1,
+          "nativeAlt": true
+        },
+        {
+          "id": "art-five-year-change",
+          "count": 1,
+          "nativeAlt": true
+        }
+      ],
+      "storedReportUnchanged": true,
+      "designBytesUnchanged": true,
+      "overflow": false
+    }
+  ],
+  "screenshots": [
+    "app-st-native-desktop-layers.png",
+    "app-st-native-phone-enlarged.png",
+    "app-st-native-phone-swale.png",
+    "app-st-saved-en-desktop-layers.png",
+    "app-st-saved-en-phone-enlarged.png",
+    "app-st-saved-en-phone-swale.png",
+    "app-ts-native-desktop-layers.png",
+    "app-ts-native-phone-enlarged.png",
+    "app-ts-native-phone-swale.png",
+    "app-ts-saved-en-desktop-layers.png",
+    "app-ts-saved-en-phone-enlarged.png",
+    "app-ts-saved-en-phone-swale.png",
+    "app-ve-native-desktop-layers.png",
+    "app-ve-native-phone-enlarged.png",
+    "app-ve-native-phone-swale.png",
+    "app-ve-saved-en-desktop-layers.png",
+    "app-ve-saved-en-phone-enlarged.png",
+    "app-ve-saved-en-phone-swale.png",
+    "app-zu-native-desktop-layers.png",
+    "app-zu-native-phone-enlarged.png",
+    "app-zu-native-phone-swale.png",
+    "app-zu-saved-en-desktop-layers.png",
+    "app-zu-saved-en-phone-enlarged.png",
+    "app-zu-saved-en-phone-swale.png",
+    "native-app-contact.png",
+    "native-layers-phone-contact.png",
+    "original-contact.png",
+    "saved-en-app-contact.png",
+    "st-contact.png",
+    "st-desktop-layers.png",
+    "st-phone-art-food-all-year.png",
+    "st-phone-art-swale-section.png",
+    "st-phone-layers.png",
+    "st-phone-trees.png",
+    "ts-contact.png",
+    "ts-desktop-layers.png",
+    "ts-phone-art-food-all-year.png",
+    "ts-phone-art-swale-section.png",
+    "ts-phone-layers.png",
+    "ts-phone-trees.png",
+    "ve-contact.png",
+    "ve-desktop-layers.png",
+    "ve-phone-art-food-all-year.png",
+    "ve-phone-art-swale-section.png",
+    "ve-phone-layers.png",
+    "ve-phone-trees.png",
+    "zu-contact.png",
+    "zu-desktop-layers.png",
+    "zu-phone-art-food-all-year.png",
+    "zu-phone-art-swale-section.png",
+    "zu-phone-layers.png",
+    "zu-phone-trees.png"
+  ],
+  "inspection": "All 16 unchanged source illustrations are text-free. Production-component cards in all four targets inspected through desktop contact sheets; native phone cards, actual native and English-saved report screenshots, and enlarged vegetation dialogs inspected. No measured SVG text overflow or text-box collision above 0.5 px.",
+  "cleanup": "Temporary saved-report and design keys restored after app checks; paid route blocked during QA."
+}

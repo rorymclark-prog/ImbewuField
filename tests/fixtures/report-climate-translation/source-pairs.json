@@ -1,0 +1,818 @@
+{
+  "sourceSha": "792493f3c70e45517c6ae8000c5716f436befd26",
+  "functions": {
+    "climateFigure": {
+      "pairs": [
+        {
+          "line": 566,
+          "english": "of rain in an average year",
+          "zu": "yemvula ngonyaka ojwayelekile",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 567,
+          "english": "Wettest month",
+          "zu": "Inyanga enemvula kakhulu",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 567,
+          "english": "Driest month",
+          "zu": "Inyanga eyome kakhulu",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 594,
+          "english": "Wet season",
+          "zu": "Isikhathi semvula",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 595,
+          "english": "Dry season",
+          "zu": "Isikhathi sesomiso",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 602,
+          "english": "Average temperature each month (°C)",
+          "zu": "Izinga lokushisa elijwayelekile ngenyanga (°C)",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 615,
+          "english": "Warmest month",
+          "zu": "Inyanga efudumele kakhulu",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 615,
+          "english": "coolest",
+          "zu": "ebanda kakhulu",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 620,
+          "english": "Rain and warmth through the year",
+          "zu": "Imvula nokufudumala phakathi nonyaka",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 621,
+          "english": "Long-term monthly averages for this location, not a forecast. Any one year can be much wetter or much drier than this.",
+          "zu": "Izilinganiso zesikhathi eside zale ndawo, akusona isibikezelo. Noma yimuphi unyaka ungaba nemvula eningi noma ube womile kakhulu kunalokhu.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 623,
+          "english": "Rain by month",
+          "zu": "Imvula ngenyanga",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 623,
+          "english": "a year",
+          "zu": "ngonyaka",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 623,
+          "english": "wettest",
+          "zu": "enemvula kakhulu",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 623,
+          "english": "driest",
+          "zu": "eyome kakhulu",
+          "alreadyRegistered": false
+        }
+      ],
+      "dynamic": []
+    },
+    "waterBudgetFigure": {
+      "pairs": [
+        {
+          "line": 652,
+          "english": "This roof can catch",
+          "zu": "Lolu phahla lungabamba",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 652,
+          "english": "in an average year",
+          "zu": "ngonyaka ojwayelekile",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 653,
+          "english": "of traced roof",
+          "zu": "yophahla oludwetshiwe",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 653,
+          "english": "of rain",
+          "zu": "yemvula",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 653,
+          "english": "the rest is lost to splash and the first dirty flush",
+          "zu": "okunye kulahleka ngokuchaphazela nangamanzi okuqala angcolile",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 656,
+          "english": "litres",
+          "zu": "amalitha",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 676,
+          "english": "Rain the roof catches that month",
+          "zu": "Imvula ebanjwa uphahla ngaleyo nyanga",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 677,
+          "english": "Water used that month",
+          "zu": "Amanzi asetshenziswa ngaleyo nyanga",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 677,
+          "english": "a day",
+          "zu": "ngosuku",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 678,
+          "english": "Short: must come from the tank or another source",
+          "zu": "Ukushoda: kumele kuvele ethangini noma komunye umthombo",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 690,
+          "english": "Tank storage",
+          "zu": "Isitoreji samathangi",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 701,
+          "english": "On the plan",
+          "zu": "Kupulani",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 701,
+          "english": "already installed",
+          "zu": "sekufakiwe",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 701,
+          "english": "planned, not installed yet",
+          "zu": "kuhleliwe, akukafakwa",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 701,
+          "english": "tank of unknown size, not counted",
+          "zu": "ithangi elingaziwa usayizi, alibalwanga",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 702,
+          "english": "Needed to carry this use through the dry months (Tank Calculator)",
+          "zu": "Okudingekayo ukuze kudlule izinyanga ezomile (Isibali Sethangi)",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 707,
+          "english": "Daily water use has not been recorded for this site, so this figure cannot show which months run short. Add it in the Design Studio, Water step.",
+          "zu": "Ukusetshenziswa kwamanzi kwansuku zonke akukaqoshwa kule ndawo, ngakho lo mdwebo awukwazi ukukhombisa izinyanga ezishodayo. Kufake ku-Design Studio, isinyathelo Samanzi.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 709,
+          "english": "The roof catches less than is used in",
+          "zu": "Uphahla lubamba okuncane kunalokho okusetshenziswayo ngo",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 709,
+          "english": "Over the longest dry run the gap adds up to",
+          "zu": "Esikhathini eside esomile igebe lifinyelela ku",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 710,
+          "english": "Over the whole year this roof catches less than the site uses. A bigger tank helps, but more roof or another water source is needed to close the gap.",
+          "zu": "Ngonyaka wonke lolu phahla lubamba okuncane kunalokho okusetshenziswa indawo. Ithangi elikhulu liyasiza, kodwa kudingeka uphahla olwengeziwe noma omunye umthombo wamanzi.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 711,
+          "english": "In an average year the roof catches more than is used in every month.",
+          "zu": "Ngonyaka ojwayelekile uphahla lubamba okungaphezu kwalokho okusetshenziswayo nyanga zonke.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 716,
+          "english": "Roof water: what comes in and what goes out",
+          "zu": "Amanzi ophahla: okungenayo nokuphumayo",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 717,
+          "english": "Average-year arithmetic, not a promise of rain. It counts only the roof that has been traced and only the tanks drawn on the plan; it says nothing about whether the water is safe to drink.",
+          "zu": "Izibalo zonyaka ojwayelekile, akusona isithembiso semvula. Kubalwa kuphela uphahla oludwetshiwe namathangi asepulanini; akusho lutho ngokuphepha kwamanzi okuphuzwa.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 718,
+          "english": "Roof",
+          "zu": "Uphahla",
+          "alreadyRegistered": true
+        },
+        {
+          "line": 718,
+          "english": "traced area",
+          "zu": "indawo edwetshiwe",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 718,
+          "english": "Rain",
+          "zu": "Imvula",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 718,
+          "english": "Daily use: as recorded in the Design Studio.",
+          "zu": "Ukusetshenziswa kwansuku zonke: njengoba kuqoshwe ku-Design Studio.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 719,
+          "english": "Roof catch by month",
+          "zu": "Okubanjwa uphahla ngenyanga",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 719,
+          "english": "a year",
+          "zu": "ngonyaka",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 719,
+          "english": "short in",
+          "zu": "kuyashoda ngo",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 719,
+          "english": "storage on the plan",
+          "zu": "isitoreji esikupulani",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 719,
+          "english": "storage needed",
+          "zu": "isitoreji esidingekayo",
+          "alreadyRegistered": false
+        }
+      ],
+      "dynamic": []
+    },
+    "sectorFigure": {
+      "pairs": [
+        {
+          "line": 761,
+          "english": "to the south",
+          "zu": "eningizimu",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 761,
+          "english": "to the north",
+          "zu": "enyakatho",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 761,
+          "english": "overhead",
+          "zu": "phezulu ngqo",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 765,
+          "english": "The midday sun stands almost overhead",
+          "zu": "Ilanga lasemini licishe libe phezulu ngqo",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 765,
+          "english": "The midday sun stands",
+          "zu": "Ilanga lasemini lima",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 767,
+          "english": "Winter",
+          "zu": "Ubusika",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 767,
+          "english": "above the horizon",
+          "zu": "ngaphezu komkhathizwe",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 767,
+          "english": "Summer",
+          "zu": "Ihlobo",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 784,
+          "english": "rises",
+          "zu": "liphuma",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 784,
+          "english": "sets",
+          "zu": "lishona",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 785,
+          "english": "rises",
+          "zu": "liphuma",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 785,
+          "english": "sets",
+          "zu": "lishona",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 785,
+          "english": "above the horizon at midday",
+          "zu": "ngaphezu komkhathizwe emini",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 788,
+          "english": "Summer sun",
+          "zu": "Ilanga lasehlobo",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 789,
+          "english": "Winter sun",
+          "zu": "Ilanga lasebusika",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 829,
+          "english": "from the",
+          "zu": "uvela e",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 829,
+          "english": "fire follows this wind",
+          "zu": "umlilo ulandela lo moya",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 830,
+          "english": "from the",
+          "zu": "uvela e",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 830,
+          "english": "regional pattern",
+          "zu": "iphethini yesifunda",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 834,
+          "english": "Fire risk",
+          "zu": "Ingozi yomlilo",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 834,
+          "english": "from the",
+          "zu": "uvela e",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 835,
+          "english": "Fire is most likely to arrive from the",
+          "zu": "Umlilo kungenzeka ufike uvela e",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 841,
+          "english": "Wind recorded on this site: usually from the",
+          "zu": "Umoya oqoshwe kule ndawo: uvame ukuvela e",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 841,
+          "english": "strongest from the",
+          "zu": "onamandla kakhulu uvela e",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 842,
+          "english": "Wind you recorded here: from the",
+          "zu": "Umoya owuqophe lapha: uvela e",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 842,
+          "english": "strongest",
+          "zu": "onamandla",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 847,
+          "english": "The ground falls toward the",
+          "zu": "Umhlaba wehlela e",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 847,
+          "english": "slope",
+          "zu": "umthambeka",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 848,
+          "english": "Downhill, toward the",
+          "zu": "Ukwehla, ngase",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 848,
+          "english": "check with a level",
+          "zu": "hlola ngelevela",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 850,
+          "english": "The ground reads as nearly flat, so no downhill direction is drawn.",
+          "zu": "Umhlaba ubonakala ucishe ube yisicaba, ngakho akukho ndlela yokwehla edwetshiwe.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 851,
+          "english": "Nearly flat: no downhill direction drawn — check with a level",
+          "zu": "Cishe yisicaba: akukho ndlela yokwehla — hlola ngelevela",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 853,
+          "english": "Wind of the region — not measured on this site",
+          "zu": "Umoya wesifunda — awulinganiswanga kule ndawo",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 854,
+          "english": "Where fire is most likely to come from (regional)",
+          "zu": "Lapho umlilo ungavela khona (isifunda)",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 865,
+          "english": "Sun, wind and slope",
+          "zu": "Ilanga, umoya nomthambeka",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 866,
+          "english": "North is up; the house mark is this site. Sun paths are calculated from the latitude. Hatched marks are regional patterns, not measurements: check them against what you and your neighbours see.",
+          "zu": "INyakatho iphezulu; uphawu lwendlu yile ndawo. Izindlela zelanga zibalwa ngokwe-latitude. Izimpawu ezinemidwa ziyiphethini yesifunda, aziyona imilinganiso: ziqinisekise ngalokho wena nomakhelwane enikubonayo.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 867,
+          "english": "Sun: calculated for latitude",
+          "zu": "Ilanga: kubalwe nge-latitude",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 867,
+          "english": "Wind and fire: regional pattern",
+          "zu": "Umoya nomlilo: iphethini yesifunda",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 867,
+          "english": "Slope: elevation model.",
+          "zu": "Umthambeka: imodeli yokuphakama.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 867,
+          "english": "Observed wind: recorded in the Design Studio.",
+          "zu": "Umoya obonwe: uqoshwe ku-Design Studio.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 868,
+          "english": "Sector diagram",
+          "zu": "Umdwebo wamasekta",
+          "alreadyRegistered": false
+        }
+      ],
+      "dynamic": [
+        "t(`a 1 m post throws a ${n} m shadow`, `isigxobo esingu-1 m senza isithunzi esingu-${n} m`)"
+      ]
+    },
+    "soilFigure": {
+      "pairs": [
+        {
+          "line": 888,
+          "english": "not measured",
+          "zu": "akulinganiswanga",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 892,
+          "english": "The soil here has not been measured yet",
+          "zu": "Umhlabathi walapha awukalinganiswa",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 893,
+          "english": "A soil test fills in these three readings.",
+          "zu": "Ukuhlolwa komhlabathi kugcwalisa lezi zilinganiso ezintathu.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 894,
+          "english": "How sour or sweet (pH)",
+          "zu": "Ubumuncu noma ubumnandi (pH)",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 894,
+          "english": "Sand, silt and clay",
+          "zu": "Isihlabathi, udaka nobumba",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 894,
+          "english": "Organic carbon",
+          "zu": "Ikhabhoni yemvelo",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 900,
+          "english": "not measured",
+          "zu": "akulinganiswanga",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 904,
+          "english": "Soil at a glance",
+          "zu": "Umhlabathi ngamafuphi",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 905,
+          "english": "No soil measurement is recorded for this site, so nothing is plotted. Arrange a soil test on a sample from the top 30 cm.",
+          "zu": "Akukho ukulinganiswa komhlabathi okuqoshiwe kule ndawo, ngakho akukho okudwetshiwe. Hlela ukuhlolwa komhlabathi kusampula yamasentimitha angu-30 aphezulu.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 906,
+          "english": "No soil measurement recorded",
+          "zu": "Akukho ukulinganiswa komhlabathi okuqoshiwe",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 907,
+          "english": "Soil not measured.",
+          "zu": "Umhlabathi awulinganiswanga.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 913,
+          "english": "How sour or sweet the soil is (pH)",
+          "zu": "Ukuthi umhlabathi umuncu noma umnandi kangakanani (pH)",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 923,
+          "english": "← more acid (sour)",
+          "zu": "← umuncu kakhulu",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 924,
+          "english": "more alkaline →",
+          "zu": "une-alkali kakhulu →",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 925,
+          "english": "most vegetables: 6 to 7",
+          "zu": "imifino eminingi: 6 kuya ku-7",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 929,
+          "english": "Sand",
+          "zu": "Isihlabathi",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 929,
+          "english": "Silt",
+          "zu": "Udaka olucolekile",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 929,
+          "english": "Clay",
+          "zu": "Ubumba",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 932,
+          "english": "What the soil is made of",
+          "zu": "Ukuthi umhlabathi wenziwe ngani",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 949,
+          "english": "Organic carbon: how much rotted plant matter the soil holds",
+          "zu": "Ikhabhoni yemvelo: ukuthi umhlabathi uphethe izinto zezitshalo ezibolile ezingakanani",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 962,
+          "english": "Filled dot: measured by a laboratory on a sample from this site.",
+          "zu": "Ichashazi eligcwele: kulinganiswe yilabhorethri kusampula yale ndawo.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 962,
+          "english": "Hollow dot and dashed outlines: estimated for this location by the SoilGrids world soil model, not measured here. A soil test on your own sample will replace them.",
+          "zu": "Ichashazi elingenalutho nemidwa enqamukayo: kulinganiselwe le ndawo yimodeli yomhlabathi yomhlaba i-SoilGrids, akulinganiswanga lapha. Ukuhlolwa komhlabathi wakho kuzokuvala lokhu.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 963,
+          "english": "No soil measurement is recorded for this site, so nothing is plotted. Arrange a soil test: the result fills in all three scales.",
+          "zu": "Akukho ukulinganiswa komhlabathi okuqoshiwe kule ndawo, ngakho akukho okudwetshiwe. Hlela ukuhlolwa komhlabathi: umphumela uzogcwalisa zonke izikali ezintathu.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 967,
+          "english": "Soil at a glance",
+          "zu": "Umhlabathi ngamafuphi",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 968,
+          "english": "Top 30 cm of soil. No \"good\" or \"bad\" bands are drawn for organic carbon because the right level depends on the soil type and climate.",
+          "zu": "Amasentimitha angu-30 aphezulu omhlabathi. Ayikho imigqa ethi \"kuhle\" noma \"kubi\" yekhabhoni yemvelo ngoba izinga elifanele lincike ohlotsheni lomhlabathi nesimo sezulu.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 969,
+          "english": "Your uploaded laboratory soil test",
+          "zu": "Ukuhlolwa kwakho komhlabathi kwelabhorethri okulayishiwe",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 969,
+          "english": "SoilGrids world soil model (ISRIC), 250 m grid: an estimate, not a measurement",
+          "zu": "Imodeli yomhlabathi yomhlaba i-SoilGrids (ISRIC), igridi engu-250 m: isilinganiso, akusona isilinganiso sangempela",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 969,
+          "english": "No soil measurement recorded",
+          "zu": "Akukho ukulinganiswa komhlabathi okuqoshiwe",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 970,
+          "english": "Soil",
+          "zu": "Umhlabathi",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 970,
+          "english": "organic carbon",
+          "zu": "ikhabhoni yemvelo",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 970,
+          "english": "laboratory result",
+          "zu": "umphumela welabhorethri",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 970,
+          "english": "SoilGrids estimate",
+          "zu": "isilinganiso se-SoilGrids",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 970,
+          "english": "Soil not measured.",
+          "zu": "Umhlabathi awulinganiswanga.",
+          "alreadyRegistered": false
+        }
+      ],
+      "dynamic": []
+    },
+    "timelineFigure": {
+      "pairs": [
+        {
+          "line": 993,
+          "english": "stages of work. The last one starts around week",
+          "zu": "izigaba zomsebenzi. Esokugcina siqala cishe ngeviki",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 994,
+          "english": "Stages overlap: the next one can start before the one before it is finished.",
+          "zu": "Izigaba ziyadlulana: esilandelayo singaqala ngaphambi kokuba esandulelayo siphele.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 994,
+          "english": "Each stage starts when the one before it is finished.",
+          "zu": "Isigaba ngasinye siqala lapho esandulelayo sesiphelile.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 1007,
+          "english": "weeks from the day work starts",
+          "zu": "amaviki kusukela ngosuku umsebenzi oqala ngalo",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 1009,
+          "english": "Planned work, not started",
+          "zu": "Umsebenzi ohleliwe, awukaqali",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 1010,
+          "english": "Hold point: stop and check before the next phase",
+          "zu": "Iphuzu lokuma: yima uhlole ngaphambi kwesigaba esilandelayo",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 1011,
+          "english": "Carries on",
+          "zu": "Kuyaqhubeka",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 1015,
+          "english": "Order of work",
+          "zu": "Ukulandelana komsebenzi",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 1016,
+          "english": "The order and rough length of each phase, worked out from what is on the saved design. The weeks are a planning guide, not a promise: weather, money and labour will move them. The order should not change.",
+          "zu": "Ukulandelana nobude obulinganiselwe besigaba ngasinye, kubalwe kulokho okusemklamweni ogciniwe. Amaviki ayisiqondiso sokuhlela, akusona isithembiso: isimo sezulu, imali nabasebenzi kuzowashintsha. Ukulandelana akufanele kushintshe.",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 1017,
+          "english": "Build phases derived from the saved design",
+          "zu": "Izigaba zokwakha ezithathwe kumklamo ogciniwe",
+          "alreadyRegistered": false
+        },
+        {
+          "line": 1018,
+          "english": "Order of work",
+          "zu": "Ukulandelana komsebenzi",
+          "alreadyRegistered": false
+        }
+      ],
+      "dynamic": []
+    }
+  }
+}

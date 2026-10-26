@@ -312,9 +312,7 @@ const drafts: Record<string, string> = {
   "Download evidence report": "Khuphela ingxelo yobungqina",
   "Open site reports": "Vula iingxelo zendawo",
   "What you share": "Oko wabelana ngako",
-  "(isiXhosa machine draft)": "(idrafti yomatshini yesiXhosa)",
   "the organisation running your programme": "ngumbutho oqhuba inkqubo yakho",
-  "Nothing here is shared unless you switch it on. You can change your mind at any time, and {who} will stop seeing it straight away.": "Akukho nto yabelwanayo apha ngaphandle kokuba uyivule. Unokutshintsha ingqondo yakho nanini na, kwaye kwangoko ayisayi kuphinda ibonwe {who}.",
   "Loading…": "Iyalayisha…",
   "Couldn't load your sharing settings. Check your connection and try again.": "Iisetingi zakho zokwabelana azikwazanga ukulayishwa. Jonga uqhagamshelo lwakho uze uzame kwakhona.",
   "What you sold": "Oko ukuthengisileyo",
@@ -331,7 +329,6 @@ const drafts: Record<string, string> = {
   "Your exact plot location. With this off, only the district is shown.": "Indawo echanekileyo yesiza sakho. Xa oku kucinyiwe, kubonakala isithili kuphela.",
   "That did not save. Your sharing settings have not changed.": "Oko akugcinwanga. Iisetingi zakho zokwabelana azitshintshanga.",
   "You are not sharing anything.": "Awabelani nto.",
-  "You are sharing {on} of {total} things.": "Wabelana ngezinto ezi-{on} kwezi-{total}.",
   "Stop sharing everything": "Yeka ukwabelana ngayo yonke into",
 };
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
-import { useLanguage, translate } from '@/lib/i18n';
+import { APP_LANGS, translate, useLanguage } from '@/lib/i18n';
 
 /**
  * zu-04: the ONE shared "this isiZulu wording is an unreviewed draft" notice, replacing the
@@ -10,7 +10,7 @@ import { useLanguage, translate } from '@/lib/i18n';
  * /prices — English-first on Home, three lines sat inside a button or a header pill on /farmer,
  * three sentences on /student, a different ochre-box style on /login and /prices.
  *
- * isiZulu sentence first, short; the English source is a collapsed <details> toggle, never
+ * The selected language comes first; the English source is a collapsed <details> toggle, never
  * inline. Render once per page, directly under the header — never inside a button, card or pill,
  * so it cannot turn a nav pill into two lines or pad out an accordion label. Dismissible per page
  * for the session (sessionStorage), so returning to the same page later in a fresh tab shows it
@@ -18,26 +18,26 @@ import { useLanguage, translate } from '@/lib/i18n';
  *
  * isiXhosa joined isiZulu as a labelled machine-draft language (the full UI dictionary was
  * drafted in one pass, unreviewed). Its English source line is the same sentence with the
- * language name swapped, so lib/i18n.tsx does not need a second copy of it.
+ * language name swapped (from APP_LANGS), so lib/i18n.tsx does not need a second copy of it.
  */
-const DRAFT_LANGUAGE_NAMES: Record<string, string> = { zu: 'isiZulu', xh: 'isiXhosa' };
-
 export default function LanguageDraftNote({ lang, scope }: { lang: string; scope: string }) {
-  const { t } = useLanguage();
-  const [dismissed, setDismissed] = useState(false);
-  const storageKey = `imbewu_lang_draft_dismissed_${scope}`;
+  const { setLang } = useLanguage();
+  const [dismissedKey, setDismissedKey] = useState<string | null>(null);
+  // Dismissing isiZulu must not hide the warning after switching to a different draft language.
+  const storageKey = `imbewu_lang_draft_dismissed_${scope}_${lang}`;
+  const t = (key: string) => translate(lang, key);
 
   useEffect(() => {
     try {
-      if (sessionStorage.getItem(storageKey) === '1') setDismissed(true);
+      setDismissedKey(sessionStorage.getItem(storageKey) === '1' ? storageKey : null);
     } catch { /* sessionStorage unavailable (private browsing); the note just stays visible */ }
   }, [storageKey]);
 
-  const languageName = DRAFT_LANGUAGE_NAMES[lang];
-  if (!languageName || dismissed) return null;
+  // isiXhosa is an unreviewed machine draft too, so it carries the same notice.
+  if ((lang !== 'xh' && !['zu', 'st', 'ts', 've'].includes(lang)) || dismissedKey === storageKey) return null;
 
   const dismiss = () => {
-    setDismissed(true);
+    setDismissedKey(storageKey);
     try { sessionStorage.setItem(storageKey, '1'); } catch { /* dismissal only lasts this render */ }
   };
 
@@ -61,7 +61,10 @@ export default function LanguageDraftNote({ lang, scope }: { lang: string; scope
       </div>
       <details className="mt-1">
         <summary style={{ cursor: 'pointer', color: 'var(--text-muted)', fontSize: 12 }}>{t('languageDraftNoticeEnglishToggle')}</summary>
-        <p lang="en" style={{ margin: '4px 0 0' }}>{translate('en', 'languageDraftNoticeEnglishText').replace('isiZulu', languageName)}</p>
+        <p lang="en" style={{ margin: '4px 0 0' }}>{translate('en', 'languageDraftNoticeEnglishText').replace('isiZulu', APP_LANGS.find((locale) => locale.code === lang)?.label ?? lang)}</p>
+        <button type="button" onClick={() => setLang('en')} className="min-h-11 underline">
+          {t('languageDraftNoticeEnglishToggle')}
+        </button>
       </details>
     </div>
   );

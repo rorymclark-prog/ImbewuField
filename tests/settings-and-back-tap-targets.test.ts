@@ -22,10 +22,12 @@ const MIN = 44;
 
 test('the Appearance panel close button clears the 44px touch-target floor', () => {
   const src = source('../components/ThemePanel.tsx');
-  // The label follows the selected language (isiXhosa via inlineText); retain the labels and the same touch target.
-  const label = "aria-label={zu ? 'Vala izilungiselelo' : inlineText(lang, 'Close settings')}";
+  // All selected languages now share the dictionary; isiXhosa may read the same settingsClose key
+  // through the panel's ui() wrapper (its xh-inline fallback). The touch-target rule still binds.
+  const label = ["aria-label={t('settingsClose')}", "aria-label={ui('settingsClose')}"]
+    .find((candidate) => src.includes(candidate)) ?? "aria-label={t('settingsClose')}";
   const at = src.indexOf(label);
-  assert.ok(at > 0, 'the Appearance panel close button moved or lost its bilingual label');
+  assert.ok(at > 0, 'the Appearance panel close button moved or lost its translated label');
   const nearby = src.slice(at, at + 400);
   const width = nearby.match(/width:\s*(\d+)/);
   const height = nearby.match(/height:\s*(\d+)/);

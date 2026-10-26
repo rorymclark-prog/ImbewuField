@@ -1,0 +1,146 @@
+[
+  {
+    "id": "roof-to-tank",
+    "path": "public/report-art/roof-to-tank.jpg",
+    "size": [
+      1427,
+      764
+    ],
+    "sha256": "97590f91900ab2ac3cca6975e19f49925f09b27297e8fb8552b76897f1602371"
+  },
+  {
+    "id": "swale-section",
+    "path": "public/report-art/swale-section.jpg",
+    "size": [
+      1425,
+      730
+    ],
+    "sha256": "28e26fd2fcab5ff5b18b3d2fcaf4708b88a43f8b1281668db76a506882813b12"
+  },
+  {
+    "id": "drip-bed",
+    "path": "public/report-art/drip-bed.jpg",
+    "size": [
+      1426,
+      784
+    ],
+    "sha256": "2c1e81a5a9db1e2514d8ea6f829cb51ca6e2119d333b5b569327b21a26616bd7"
+  },
+  {
+    "id": "soil-layers",
+    "path": "public/report-art/soil-layers.jpg",
+    "size": [
+      1425,
+      739
+    ],
+    "sha256": "b1dee50dd4b9de872e8d53afd27e4a715f8c5f2cb0bde7f0803a2ac8b42e8122"
+  },
+  {
+    "id": "trench-bed",
+    "path": "public/report-art/trench-bed.jpg",
+    "size": [
+      1358,
+      786
+    ],
+    "sha256": "4d2368c316b6dc0b5073a31ea0d9e3b5ef2c5ce0deb3094db8f3a7b266f19f5d"
+  },
+  {
+    "id": "compost-bays",
+    "path": "public/report-art/compost-bays.jpg",
+    "size": [
+      1426,
+      702
+    ],
+    "sha256": "771cb60fbcb99b9c4de941dc0ec659b26fc48b0d32e2182d8581f1ab4e580ef9"
+  },
+  {
+    "id": "crop-rotation",
+    "path": "public/report-art/crop-rotation.jpg",
+    "size": [
+      1336,
+      786
+    ],
+    "sha256": "f89f1a3ee062bbb34b25519e0de78feab818717618b8afec6984a7e637f44ddc"
+  },
+  {
+    "id": "guild-layers",
+    "path": "public/report-art/guild-layers.jpg",
+    "size": [
+      1338,
+      787
+    ],
+    "sha256": "7848380aa9e9f3603d7c5e5719a647667c6b229121d15ce7b74a78f86944c44d"
+  },
+  {
+    "id": "windbreak-section",
+    "path": "public/report-art/windbreak-section.jpg",
+    "size": [
+      1426,
+      558
+    ],
+    "sha256": "9ac1201bcb43ac19ee7ee30eae90d58e8409b95657a78d52309bc3d8e50e84ac"
+  },
+  {
+    "id": "sun-house",
+    "path": "public/report-art/sun-house.jpg",
+    "size": [
+      1426,
+      643
+    ],
+    "sha256": "8d5019c788c0644c9c03e542eeebd5f5cee5ce4ad2fb0cf65fc781f3d5b04053"
+  },
+  {
+    "id": "zones",
+    "path": "public/report-art/zones.jpg",
+    "size": [
+      1426,
+      739
+    ],
+    "sha256": "7b330ba61ba26e2ab334fe56959de6179395d6abd7c8a28279acbea98d843de3"
+  },
+  {
+    "id": "chicken-tractor",
+    "path": "public/report-art/chicken-tractor.jpg",
+    "size": [
+      1424,
+      786
+    ],
+    "sha256": "3afa0bca57b058a96304e174b4569756bc677cb8cb49184d42ea9ec34752b6d6"
+  },
+  {
+    "id": "firebreak",
+    "path": "public/report-art/firebreak.jpg",
+    "size": [
+      1426,
+      658
+    ],
+    "sha256": "5b5ea6e26a75f4a75ac5c79fec5613990880018a66ea93bce0008ae19cdd8761"
+  },
+  {
+    "id": "food-all-year",
+    "path": "public/report-art/food-all-year.jpg",
+    "size": [
+      1428,
+      585
+    ],
+    "sha256": "1f23d603434e24e4588c971d8f3f4d6e584249ce038c2ccbd9619c0a7a98738e"
+  },
+  {
+    "id": "market-table",
+    "path": "public/report-art/market-table.jpg",
+    "size": [
+      1340,
+      788
+    ],
+    "sha256": "0ad94c1b9965111ab82a7dde1c2a45b776808ee93e00094fde334dd181337260"
+  },
+  {
+    "id": "five-year-change",
+    "path": "public/report-art/five-year-change.jpg",
+    "size": [
+      1427,
+      617
+    ],
+    "sha256": "03c781c16086fa0bec516c98f8f08973a035106baaffbb98c3b903ea8c3b8781"
+  }
+]

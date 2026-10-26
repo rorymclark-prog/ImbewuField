@@ -6,16 +6,22 @@ import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { useLanguage } from '@/lib/i18n';
 import { inlineText } from '@/lib/xh-inline';
+import { accountText } from '@/lib/account-copy';
+import { sampleWorkspaceText } from '@/lib/sample-tour-localization';
 
 export default function AccountButton() {
   const { user, signOutUser } = useAuth();
   const { lang, t } = useLanguage();
-  const isZulu = lang === 'zu';
-  // isiXhosa is also an unreviewed machine draft, so it keeps the English beside it like isiZulu.
-  const isDraft = lang === 'zu' || lang === 'xh';
+  const native = ['zu', 'st', 'ts', 've'].includes(lang);
+  // isiXhosa is also an unreviewed machine draft, so it keeps the English beside it like the four
+  // languages above; its wording comes from the isiXhosa inline drafts, not the account tables.
+  const isXhosa = lang === 'xh';
+  const isDraft = native || isXhosa;
+  const signIn = isXhosa ? inlineText(lang, 'Sign in') : accountText(lang, 'Sign in', 'Ngena ngemvume', t);
+  const signOut = isXhosa ? inlineText(lang, 'Sign out') : accountText(lang, 'Sign out', 'Phuma ngemvume', t);
   const signOutCopy = 'Signing out ends access to this account on this device. Sign in again to continue.';
   const signOutZulu = 'Ukuphuma ngemvume kuvala ukufinyelela kule akhawunti kule divayisi. Ngena futhi ukuze uqhubeke.';
-  const signOutDraft = inlineText(lang, signOutCopy, signOutZulu);
+  const signOutDescription = isXhosa ? inlineText(lang, signOutCopy, signOutZulu) : sampleWorkspaceText(lang, signOutCopy, signOutZulu);
 
   // Don't render at all when Firebase is unconfigured — no auth to surface.
   if (!isBackendConfigured()) return null;
@@ -23,9 +29,7 @@ export default function AccountButton() {
   if (user) {
     // Sample farm shows a neutral label — never the real signed-in user's name/email (the one
     // spot the demo would otherwise leak their identity; the rest reads "Sample Farmer").
-    // zu-07: was the literal English 'Tour' regardless of language — shares the same key
-    // SampleModeBanner uses, which matches MenuButton.tsx's own hardcoded isiZulu text.
-    const label = isSampleMode() ? t('tourPill') : (user.displayName?.split(' ')[0] ?? user.email ?? 'Account');
+    const label = isSampleMode() ? t('tourPill') : (user.displayName?.split(' ')[0] ?? user.email ?? t('tabAccount'));
     return (
       <div
         className="flex items-center gap-2 px-3.5 rounded-full flex-shrink-0"
@@ -48,10 +52,11 @@ export default function AccountButton() {
           onClick={signOutUser}
           className="font-sans transition-opacity hover:opacity-80"
           style={{ color: 'var(--text-secondary)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 17 }}
-          aria-label={isDraft ? `${signOutDraft} (${signOutCopy})` : signOutCopy}
-          title={isDraft ? `${signOutDraft} (${signOutCopy})` : signOutCopy}
+          lang={lang}
+          aria-label={isDraft ? `${signOutDescription} (${signOutCopy})` : signOutCopy}
+          title={isDraft ? `${signOutDescription} (${signOutCopy})` : signOutCopy}
         >
-          {isZulu ? 'Phuma ngemvume (Sign out)' : isDraft ? `${inlineText(lang, 'Sign out')} (Sign out)` : 'Sign out'}
+          {isDraft ? <><span lang={lang}>{signOut}</span> <span lang="en">(Sign out)</span></> : 'Sign out'}
         </button>
       </div>
     );
@@ -74,7 +79,7 @@ export default function AccountButton() {
         fontSize: 20,
       }}
     >
-      {isZulu ? 'Ngena ngemvume (Sign in)' : isDraft ? `${inlineText(lang, 'Sign in')} (Sign in)` : 'Sign in'}
+      {isDraft ? <><span lang={lang}>{signIn}</span> <span lang="en">(Sign in)</span></> : 'Sign in'}
     </Link>
   );
 }

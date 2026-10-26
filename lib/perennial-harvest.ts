@@ -177,8 +177,14 @@ export function formatRange([min, max]: [number, number]): string {
   const f = (n: number) => (Number.isInteger(n) ? String(n) : n.toFixed(1).replace(/\.0$/, ''));
   return min === max ? f(min) : `${f(min)}–${f(max)}`;
 }
-export function firstCropAgeLabel(range: [number, number]): string {
-  return range[1] < 2 ? `${formatRange([Math.round(range[0] * 12), Math.round(range[1] * 12)])} months` : `${formatRange(range)} years`;
+export function firstCropAgeLabel(
+  range: [number, number],
+  format: (age: string, unit: 'months' | 'years') => string = (age,unit) => `${age} ${unit}`,
+): string {
+  // Translated labels use this same conversion, so presentation cannot invent a different age.
+  return range[1] < 2
+    ? format(formatRange([Math.round(range[0] * 12), Math.round(range[1] * 12)]), 'months')
+    : format(formatRange(range), 'years');
 }
 
 /**
