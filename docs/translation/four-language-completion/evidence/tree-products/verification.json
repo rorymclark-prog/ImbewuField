@@ -1,0 +1,61 @@
+{
+  "createdAt": "2026-10-26T04:59:30.426096+00:00",
+  "branch": "codex/four-language-tree-products",
+  "parent": "6247d4a1e1db42b77805ec89819fad0ef7bf5ee6",
+  "sourceDescriptions": 21,
+  "catalogueBindings": 22,
+  "nativeDrafts": 84,
+  "registryRows": 1465,
+  "inheritedRowsExact": 1444,
+  "focused": {
+    "tests": 221,
+    "files": 17,
+    "fail": 0,
+    "typecheck": 0,
+    "diff": 0,
+    "run": "final-focused-checks.json"
+  },
+  "browser": {
+    "phoneStates": 176,
+    "phoneBindings": 88,
+    "desktopStates": 16,
+    "englishPhoneStates": 8,
+    "checkedNativePairs": 96,
+    "allExpanded": true,
+    "measuredHorizontalOverflows": 0,
+    "callbackEvents": 0,
+    "wholeMarkup": "Before/after differs only through the complete declared product-description line. Original English/unsupported whole markup stays exact. All provided contexts remain exact.",
+    "limits": "Isolated actual component and complete generated guides; no full account route, backend writes, fluent review or whole-app completion. Initial closed-only isiZulu capture retained separately and excluded from expanded counts.",
+    "languageSwitches": 6,
+    "visualInspection": "Phone contact inspected with all4rootexclusions and fresh/dried ginger descriptions visible;4-language specialist desktop contact inspected. All8PDF contacts and8 enlarged clause pages inspected separately. Layout/glyph visibility only; no fluent approval.",
+    "cleanup": "Temporary tab11 closed; viewport reset; GET-only server65146 stopped after use."
+  },
+  "PDF": {
+    "comparisons": [
+      {
+        "case": "products-a",
+        "sameText": true,
+        "samePixels": true
+      },
+      {
+        "case": "products-b",
+        "sameText": true,
+        "samePixels": true
+      }
+    ],
+    "totalPDFs": 12,
+    "totalPages": 88,
+    "totalWordBounds": 36221,
+    "completeGuideClauses": 976,
+    "completeProductFieldOccurrences": 88,
+    "visualInspection": "All8nativecontacts and8enlargedactual pages inspected: roots-excluded onpage2all4langs; gingerfresh/dried onpage6zu/st/ts andpage7ve. No overlap or cut-off observed. Long source notes remain partly English and preserve original whole fields. Visual inspection is not fluent-language or agricultural approval."
+  },
+  "requiredFullSuite": "pending",
+  "CI": "not pushed yet",
+  "review": "Unreviewed drafts; fluent and agricultural approval pending; whole-app goal incomplete",
+  "remainingBounded801SourceInventory": {
+    "proseCandidates": 227,
+    "classificationCandidates": 3,
+    "notWholeAppPercentage": true
+  }
+}

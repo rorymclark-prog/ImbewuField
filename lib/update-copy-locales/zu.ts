@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Tree product descriptions now have four-language translation drafts.": "Izincazelo zemikhiqizo yezihlahla manje zinemibhalo yokuhumusha ngezilimi ezine.",
+  "Food-use cautions and processing distinctions stay in the descriptions.": "Izixwayiso zokusetshenziswa njengokudla nomehluko wokucutshungulwa kuhlala ezincazelweni.",
+  "Review tree product drafts": "Buyekeza imibhalo yemikhiqizo yezihlahla",
+  "Read product descriptions and check the original English before acting.": "Funda izincazelo zemikhiqizo bese uhlola isiNgisi sokuqala ngaphambi kokwenza.",
   "Animal law notes have draft translations and English originals.": "Amanothi emithetho yezilwane anemibhalo yokuhumusha neyokuqala yesiNgisi.",
   "Some legal sources are historical. Check current permits before acting.": "Eminye imithombo yemithetho ingeyezikhathi ezedlule. Hlola izimvume zamanje ngaphambi kokwenza.",
   "Review animal law drafts": "Buyekeza imibhalo emithetho yezilwane",

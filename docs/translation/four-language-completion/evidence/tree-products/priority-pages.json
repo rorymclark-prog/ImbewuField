@@ -1,0 +1,58 @@
+[
+  {
+    "file": "zu-after-products-b.pdf",
+    "language": "zu",
+    "label": "roots-excluded",
+    "page": 2,
+    "image": "zu-roots-excluded-p2.png"
+  },
+  {
+    "file": "zu-after-products-b.pdf",
+    "language": "zu",
+    "label": "fresh-dried-ginger",
+    "page": 6,
+    "image": "zu-fresh-dried-ginger-p6.png"
+  },
+  {
+    "file": "st-after-products-b.pdf",
+    "language": "st",
+    "label": "roots-excluded",
+    "page": 2,
+    "image": "st-roots-excluded-p2.png"
+  },
+  {
+    "file": "st-after-products-b.pdf",
+    "language": "st",
+    "label": "fresh-dried-ginger",
+    "page": 6,
+    "image": "st-fresh-dried-ginger-p6.png"
+  },
+  {
+    "file": "ts-after-products-b.pdf",
+    "language": "ts",
+    "label": "roots-excluded",
+    "page": 2,
+    "image": "ts-roots-excluded-p2.png"
+  },
+  {
+    "file": "ts-after-products-b.pdf",
+    "language": "ts",
+    "label": "fresh-dried-ginger",
+    "page": 6,
+    "image": "ts-fresh-dried-ginger-p6.png"
+  },
+  {
+    "file": "ve-after-products-b.pdf",
+    "language": "ve",
+    "label": "roots-excluded",
+    "page": 2,
+    "image": "ve-roots-excluded-p2.png"
+  },
+  {
+    "file": "ve-after-products-b.pdf",
+    "language": "ve",
+    "label": "fresh-dried-ginger",
+    "page": 7,
+    "image": "ve-fresh-dried-ginger-p7.png"
+  }
+]

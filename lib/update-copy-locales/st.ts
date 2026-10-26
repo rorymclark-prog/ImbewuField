@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Tree product descriptions now have four-language translation drafts.": "Ditlhaloso tsa dihlahiswa tsa difate jwale di na le diphetolelo tsa pele tsa dipuo tse nne.",
+  "Food-use cautions and processing distinctions stay in the descriptions.": "Ditemoso tsa tshebediso e le dijo le diphapang tsa ho sebetswa di dula ditlhalosong.",
+  "Review tree product drafts": "Hlahloba dingolwa tsa pele tsa dihlahiswa tsa difate",
+  "Read product descriptions and check the original English before acting.": "Bala ditlhaloso tsa dihlahiswa mme o hlahlobe Senyesemane sa pele pele o etsa.",
   "Animal law notes have draft translations and English originals.": "Dintlha tsa melao ya diphoofolo di na le diphetolelo tsa pele le tsa Senyesemane tsa mantlha.",
   "Some legal sources are historical. Check current permits before acting.": "Mehlodi e meng ya molao ke ya nako e fetileng. Hlahloba ditumello tsa hajwale pele o etsa.",
   "Review animal law drafts": "Hlahloba dingolwa tsa pele tsa melao ya diphoofolo",

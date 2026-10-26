@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Tree product descriptions now have four-language translation drafts.": "Ṱhalutshedzo dza zwibveledzwa zwa miri zwino dzi na mvetamveto ya ṱhalutshedzo nga nyambo nṋa.",
+  "Food-use cautions and processing distinctions stay in the descriptions.": "Nyeletshedzo dza u shumiswa sa zwiḽiwa na phambano dza u shuma zwi dzula kha ṱhalutshedzo.",
+  "Review tree product drafts": "Sedzulusani mvetamveto ya zwibveledzwa zwa miri",
+  "Read product descriptions and check the original English before acting.": "Vhalani ṱhalutshedzo dza zwibveledzwa ni ṱole Luisimane lwa u thoma musi ni sa athu ita.",
   "Animal law notes have draft translations and English originals.": "Notsi dza milayo ya zwifuwo dzi na mvetamveto ya ṱhalutshedzo na Luisimane lwa u thoma.",
   "Some legal sources are historical. Check current permits before acting.": "Zwiṅwe zwiko zwa mulayo ndi zwa kale. Ṱolani thendelo dza zwino musi ni sa athu ita.",
   "Review animal law drafts": "Sedzulusani mvetamveto ya milayo ya zwifuwo",

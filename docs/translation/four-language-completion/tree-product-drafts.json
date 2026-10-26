@@ -1,0 +1,533 @@
+{
+  "status": "IN PROGRESS: Unreviewed source-bound translation drafts. Fluent and agricultural review remain; the whole app is unfinished.",
+  "base": "6247d4a1e1db42b77805ec89819fad0ef7bf5ee6",
+  "sourceCount": 21,
+  "rows": [
+    {
+      "english": "food product not verified",
+      "zu": "umkhiqizo wokudla awukaqinisekiswa",
+      "st": "sehlahiswa sa dijo ha se eso netefatswe",
+      "ts": "xikumiwa xa swakudya a xi si tiyisisiwa",
+      "ve": "tshibveledzwa tsha zwiḽiwa a tshi athu khwaṱhisedzwa",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "berries — food use requires specialist review",
+      "zu": "amajikijolo — ukusetshenziswa njengokudla kudinga ukubuyekezwa uchwepheshe",
+      "st": "monokotshwai — tshebediso e le dijo e hloka tlhahlobo ya setsebi",
+      "ts": "mihandzu leyitsongo — ku tirhisiwa tani hi swakudya swi lava ku kambisisiwa hi mutivi",
+      "ve": "mitshelo miṱuku — u shumiswa sa zwiḽiwa zwi ṱoḓa u sedzuluswa nga muḓivhi",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "leaves and fruit",
+      "zu": "amaqabunga nezithelo",
+      "st": "makgasi le ditholwana",
+      "ts": "matluka ni mihandzu",
+      "ve": "maṱari na mitshelo",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "traditionally prepared leaves/fruit — specialist review needed",
+      "zu": "amaqabunga/izithelo ezilungiswe ngendlela yesintu — kudingeka ukubuyekezwa uchwepheshe",
+      "st": "makgasi/ditholwana tse lokisitsweng ka mokgwa wa setso — tlhahlobo ya setsebi e a hlokahala",
+      "ts": "matluka/mihandzu leyi lunghisiweke hi ndlela ya ndhavuko — ku kambisisiwa hi mutivi swa laveka",
+      "ve": "maṱari/mitshelo yo lugiswaho nga nḓila ya sialala — hu ṱoḓea u sedzuluswa nga muḓivhi",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "berry fat — traditional processed product",
+      "zu": "amafutha amajikijolo — umkhiqizo ocutshungulwe ngendlela yesintu",
+      "st": "mafura a monokotshwai — sehlahiswa se sebetswang ka mokgwa wa setso",
+      "ts": "mafurha ya mihandzu leyitsongo — xikumiwa lexi lulamisiweke hi ndlela ya ndhavuko",
+      "ve": "mapfura a mitshelo miṱuku — tshibveledzwa tsho shumiwaho nga nḓila ya sialala",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "fruit (bunch of bananas)",
+      "zu": "izithelo (isixha sikabhanana)",
+      "st": "ditholwana (lesihla la dipanana)",
+      "ts": "mihandzu (xichocho xa mabanana)",
+      "ve": "mitshelo (tshiṱoko tsha miomva)",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "ripe wild-olive fruit",
+      "zu": "izithelo ezivuthiwe ze-wild-olive",
+      "st": "ditholwana tse butswitseng tsa wild-olive",
+      "ts": "mihandzu leyi vupfeke ya wild-olive",
+      "ve": "mitshelo yo vhibvaho ya wild-olive",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "nuts",
+      "zu": "amantongomane",
+      "st": "ditholwana tse nang le dikgapetla tse thata",
+      "ts": "mihandzu ya swikamba swo tiya",
+      "ve": "mitshelo ya makanda o khwaṱhaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "edible leaves",
+      "zu": "amaqabunga adliwayo",
+      "st": "makgasi a jewang",
+      "ts": "matluka lama dyiwaka",
+      "ve": "maṱari a ḽiwaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "Ripe sweet cherries.",
+      "zu": "Ama-cherry amnandi avuthiwe.",
+      "st": "Dicheri tse monate tse butswitseng.",
+      "ts": "Macherisi yo tsokombela lama vupfeke.",
+      "ve": "Mitshelo ya cherries i ṱapilaho yo vhibvaho.",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "leaf brewing flavour — specialist use",
+      "zu": "amaqabunga okunandisa lapho kuphiswa — ukusetshenziswa nguchwepheshe",
+      "st": "tatso ya makgasi ha ho ritela — tshebediso ya setsebi",
+      "ts": "nantswo wa matluka loko ku swekiwa swakunwa — ku tirhisiwa hi mutivi",
+      "ve": "muthetshelo wa maṱari musi hu tshi khou ukwa — u shumiswa nga muḓivhi",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "edible berries; roots excluded",
+      "zu": "amajikijolo adliwayo; izimpande azifakiwe",
+      "st": "monokotshwai o jewang; metso ha e kenyeletswe",
+      "ts": "mihandzu leyitsongo leyi dyiwaka; timitsu a ti katsiwi",
+      "ve": "mitshelo miṱuku i ḽiwaho; midzi a i katelwi",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "fresh or dried leaves for seasoning",
+      "zu": "amaqabunga amasha noma omisiwe okunandisa ukudla",
+      "st": "makgasi a foreshe kapa a omisitsweng bakeng sa ho noka dijo",
+      "ts": "matluka lamantshwa kumbe lama omisiweke yo nandzihisa swakudya",
+      "ve": "maṱari maswa kana o omiswaho a u naka zwiḽiwa",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "edible seeds",
+      "zu": "imbewu edliwayo",
+      "st": "dipeo tse jewang",
+      "ts": "mbewu leyi dyiwaka",
+      "ve": "mbeu dzi ḽiwaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "ripe dried fruit",
+      "zu": "izithelo ezivuthiwe ezomisiwe",
+      "st": "ditholwana tse butswitseng tse omisitsweng",
+      "ts": "mihandzu leyi vupfeke leyi omisiweke",
+      "ve": "mitshelo yo vhibvaho yo omiswaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "young leafy tops and stems",
+      "zu": "iziqongo ezincane ezinamaqabunga neziqu",
+      "st": "dintlha tse ntjha tse nang le makgasi le dikutu",
+      "ts": "swiphemu swa le henhla leswintshwa leswi nga ni matluka ni swirhabyana",
+      "ve": "ṱhodzi ntswa dzi re na maṱari na tsinde",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "young shoots, cooked",
+      "zu": "amahlumela amancane, aphekiwe",
+      "st": "mahlomela a matjha, a phehilweng",
+      "ts": "swihluke leswintshwa, swi swekiwile",
+      "ve": "matavhi maṱuku, o bikwa",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "flower buds",
+      "zu": "imiqumbe yezimbali",
+      "st": "dithunthung tsa dipalesa",
+      "ts": "swiluva leswi nga si pfuleka",
+      "ve": "maluvha a sa athu u vulea",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "young leaves for cooked greens",
+      "zu": "amaqabunga amancane okuba yimifino ephekiwe",
+      "st": "makgasi a matjha bakeng sa moroho o phehilweng",
+      "ts": "matluka lamantshwa ya matsavu lama swekiweke",
+      "ve": "maṱari maṱuku a muroho wo bikwaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "leaves and edible flowers",
+      "zu": "amaqabunga nezimbali ezidliwayo",
+      "st": "makgasi le dipalesa tse jewang",
+      "ts": "matluka ni swiluva leswi dyiwaka",
+      "ve": "maṱari na maluvha a ḽiwaho",
+      "generatedScope": "product-guidance"
+    },
+    {
+      "english": "fresh rhizomes; dried ginger recorded separately",
+      "zu": "iziqu ezingaphansi komhlabathi ezisanda kuvunwa; ujinja omisiwe ubhalwa ngokwehlukana",
+      "st": "dikutu tse foreshe tse melang ka tlasa mobu; ginger e omisitsweng e rekotwa ka thoko",
+      "ts": "swirhabyana leswintshwa swa le hansi ka misava; ginger leyi omisiweke yi rhekhodiwa yi ri yoxe",
+      "ve": "tsinde ntswa dzi aluwaho fhasi ha mavu; ginger yo omiswaho i rekhodiwa nga thungo",
+      "generatedScope": "product-guidance"
+    }
+  ],
+  "sourceBindings": [
+    {
+      "english": "food product not verified",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "lycium-cinereum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "berries — food use requires specialist review",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "lycium-ferocissimum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "leaves and fruit",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "mesembryanthemum-crystallinum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "traditionally prepared leaves/fruit — specialist review needed",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "momordica-balsamina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "berry fat — traditional processed product",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "morella-cordifolia"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "fruit (bunch of bananas)",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "musa-acuminata-aaa-group"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "ripe wild-olive fruit",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "olea-europaea-subsp-africana"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "nuts",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "pistacia-vera",
+        "prunus-dulcis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "edible leaves",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "portulacaria-afra"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ripe sweet cherries.",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "prunus-avium"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "leaf brewing flavour — specialist use",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "rhamnus-prinoides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "edible berries; roots excluded",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "rhoicissus-tridentata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "fresh or dried leaves for seasoning",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "salvia-rosmarinus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "edible seeds",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "schotia-afra-var-afra"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "ripe dried fruit",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "searsia-undulata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "young leafy tops and stems",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "tetragonia-decumbens"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "young shoots, cooked",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "tetragonia-fruticosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "flower buds",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "trachyandra-ciliata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "young leaves for cooked greens",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "trema-orientalis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "leaves and edible flowers",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "tulbaghia-violacea"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "fresh rhizomes; dried ginger recorded separately",
+      "scopes": [
+        "tree-product"
+      ],
+      "identities": [
+        "zingiber-officinale"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    }
+  ],
+  "scope": "Only complete typed product descriptions. All scientific identities, source data, food-use holds, figures, source URLs, guides outside their first product line and private content are preserved.",
+  "review": {
+    "fluent": "pending",
+    "agricultural": "pending",
+    "browser": "Actual expanded176phone before/afterstates,16desktop,8English/unsupportedphone,6switches;allprovidedcontextsandwholemarkupchecked;0overflow. Representativephone/desktop views inspected. Isolated route only.",
+    "PDF": "12actualPDFs88pages36221bounds976completeguideclauses88wholeproductbindingoccurrences;Englishcontrols samepixels/text;8nativecontacts+8enlargedpages inspected.",
+    "fullSuite": "pending",
+    "focused": "Final ordered affected run: Node24 typecheck clean,221tests17files passed,0failures,diff clean. Historical213test run failed only the missing complete-review-packet rows; packet repaired, no assertions edited."
+  },
+  "releaseCopy": [
+    {
+      "english": "Tree product descriptions now have four-language translation drafts.",
+      "zu": "Izincazelo zemikhiqizo yezihlahla manje zinemibhalo yokuhumusha ngezilimi ezine.",
+      "st": "Ditlhaloso tsa dihlahiswa tsa difate jwale di na le diphetolelo tsa pele tsa dipuo tse nne.",
+      "ts": "Tinhlamuselo ta swikumiwa swa mirhi sweswi ti ni swikiro swa vuhundzuluxeri bya tindzimi ta mune.",
+      "ve": "Ṱhalutshedzo dza zwibveledzwa zwa miri zwino dzi na mvetamveto ya ṱhalutshedzo nga nyambo nṋa."
+    },
+    {
+      "english": "Food-use cautions and processing distinctions stay in the descriptions.",
+      "zu": "Izixwayiso zokusetshenziswa njengokudla nomehluko wokucutshungulwa kuhlala ezincazelweni.",
+      "st": "Ditemoso tsa tshebediso e le dijo le diphapang tsa ho sebetswa di dula ditlhalosong.",
+      "ts": "Switsundzuxo swa ku tirhisiwa tani hi swakudya ni ku hambana ka malulamiselo swi sala eka tinhlamuselo.",
+      "ve": "Nyeletshedzo dza u shumiswa sa zwiḽiwa na phambano dza u shuma zwi dzula kha ṱhalutshedzo."
+    },
+    {
+      "english": "Review tree product drafts",
+      "zu": "Buyekeza imibhalo yemikhiqizo yezihlahla",
+      "st": "Hlahloba dingolwa tsa pele tsa dihlahiswa tsa difate",
+      "ts": "Kambisisa swikiro swa swikumiwa swa mirhi",
+      "ve": "Sedzulusani mvetamveto ya zwibveledzwa zwa miri"
+    },
+    {
+      "english": "Read product descriptions and check the original English before acting.",
+      "zu": "Funda izincazelo zemikhiqizo bese uhlola isiNgisi sokuqala ngaphambi kokwenza.",
+      "st": "Bala ditlhaloso tsa dihlahiswa mme o hlahlobe Senyesemane sa pele pele o etsa.",
+      "ts": "Hlaya tinhlamuselo ta swikumiwa kutani u kambela Xinghezi xo sungula u nga si endla.",
+      "ve": "Vhalani ṱhalutshedzo dza zwibveledzwa ni ṱole Luisimane lwa u thoma musi ni sa athu ita."
+    }
+  ],
+  "evidence": "evidence/tree-products/README.md"
+}

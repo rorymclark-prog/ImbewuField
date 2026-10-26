@@ -16,6 +16,8 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
+Latest tree-product translation continuation: [26 October 2026](2026-10-26/tree-product-description-drafts.md).21 complete product descriptions applied as unreviewed drafts; full suite pending.
+
 Latest legal runtime continuation: [26 October 2026](2026-10-26/animal-law-runtime-drafts.md). Complete draft implementation and bounded source/pagination checks; full ordered suite pending.
 
 Previous legal translation source continuation: [26 October 2026](2026-10-26/animal-legal-translation-source-review.md). Draft-only; TLAG-001–003 remain open before runtime publication.
