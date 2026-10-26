@@ -1,0 +1,51 @@
+{
+  "scope": "Authored typed product/animal fields from103catalogue trees and all15enterprise authorities. These include proper source-region names and physical unit codes needing classification; counts are not a missing-UI percentage. No publication identities, species names, private fields or figures changed.",
+  "allSourceFields": 801,
+  "remaining": [
+    {
+      "english": "KwaZulu-Natal",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "carica-papaya"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Tierhoek Organic Farm, Robertson, Breede River Valley, Western Cape — Portuguese quince",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "cydonia-oblonga"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Western Cape",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "fragaria-x-ananassa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    }
+  ]
+}

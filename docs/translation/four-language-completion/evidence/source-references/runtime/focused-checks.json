@@ -1,0 +1,61 @@
+{
+  "at": "2026-10-26T10:04:05.453430+00:00",
+  "commands": [
+    {
+      "name": "typecheck",
+      "command": [
+        "npx",
+        "tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "affected-tests",
+      "command": [
+        "node",
+        "--import",
+        "./tests/register-alias.mjs",
+        "--test",
+        "tests/source-reference-localization.test.ts",
+        "tests/garden-programme-localization.test.ts",
+        "tests/report-summary-localization.test.ts",
+        "tests/site-export-localization.test.ts",
+        "tests/projection-pdf-localization.test.ts",
+        "tests/production-graph-localization.test.ts",
+        "tests/guidance-localization.test.ts",
+        "tests/tree-product-localization.test.ts",
+        "tests/tree-care-localization.test.ts",
+        "tests/tree-guide-control-localization.test.ts",
+        "tests/crop-export-instruction-localization.test.ts",
+        "tests/animal-welfare-localization.test.ts",
+        "tests/animal-control-localization.test.ts",
+        "tests/animal-reference-localization.test.ts",
+        "tests/animal-legal-localization.test.ts",
+        "tests/plan-note-localization.test.ts",
+        "tests/update-notices-localization.test.ts",
+        "tests/four-language-completion.test.ts"
+      ],
+      "exitCode": 0,
+      "totals": {
+        "tests": 212,
+        "pass": 212,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "files": 18
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "scope": "Affected tests, not the required full suite. Earlier failed regression selected supplementary notes instead of the actual first-crop note; corrected selector preserves all assertions."
+}

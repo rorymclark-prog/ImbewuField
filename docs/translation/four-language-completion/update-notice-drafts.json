@@ -1622,6 +1622,20 @@
       "st": "Hlahloba matsatsi a ho jala, dikgwedi tsa kotulo le dintlha tsa mehlodi. Diphetolelo di ntse di hloka tlhahlobo.",
       "ts": "Kambisisa masiku yo byala, tin’hweti to tshovela ni tinotsi ta swihlovo. Vuhundzuluxeri bya ha lava ku kambisisiwa.",
       "ve": "Ṱolani maḓuvha a u ṱavha, miṅwedzi ya khaṋo na notsi dza zwiko. Ṱhalutshedzelo dzi kha ḓi ṱoḓa u ṱolisiswa."
+    },
+    {
+      "english": "Crop source headings and full notes now have four-language translation drafts.",
+      "zu": "Izihloko zemithombo yezitshalo namanothi aphelele manje kunemibhalo yokuhumusha ngezilimi ezine.",
+      "st": "Dihlooho tsa mehlodi ya dijalo le dintlha tse felletseng jwale di na le diphetolelo tsa pele tsa dipuo tse nne.",
+      "ts": "Tinhlokomhaka ta swihlovo swa swibyariwa ni tinotsi leti heleleke sweswi swi ni matsalelo ya vuhundzuluxeri hi tindzimi ta mune.",
+      "ve": "Ṱhoho dza zwiko zwa zwiliṅwa na notsi dzo fhelelaho zwino zwi na mvetamveto ya ṱhalutshedzelo nga nyambo nṋa."
+    },
+    {
+      "english": "Translated PDFs now keep the ® mark in source names.",
+      "zu": "Ama-PDF ahunyushiwe manje agcina uphawu lwe-® emagameni emithombo.",
+      "st": "Di-PDF tse fetoletsweng jwale di boloka letshwao la ® mabitsong a mehlodi.",
+      "ts": "Ti-PDF leti hundzuluxeriweke sweswi ti hlayisa mfungho wa ® eka mavito ya swihlovo.",
+      "ve": "Dzi-PDF dzo ṱalutshedzelwaho zwino dzi vhulunga luswayo lwa ® kha madzina a zwiko."
     }
   ],
   "historyBefore": [

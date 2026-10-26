@@ -1,0 +1,86 @@
+[
+  {
+    "language": "zu",
+    "group": 1,
+    "page": 5,
+    "term": "Langkloof",
+    "image": "zu-priority-1.png"
+  },
+  {
+    "language": "zu",
+    "group": 2,
+    "page": 9,
+    "term": "African Delight®",
+    "image": "zu-priority-2.png"
+  },
+  {
+    "language": "zu",
+    "group": 3,
+    "page": 10,
+    "term": "Z. officinale",
+    "image": "zu-priority-3.png"
+  },
+  {
+    "language": "st",
+    "group": 1,
+    "page": 5,
+    "term": "Langkloof",
+    "image": "st-priority-1.png"
+  },
+  {
+    "language": "st",
+    "group": 2,
+    "page": 9,
+    "term": "African Delight®",
+    "image": "st-priority-2.png"
+  },
+  {
+    "language": "st",
+    "group": 3,
+    "page": 10,
+    "term": "Z. officinale",
+    "image": "st-priority-3.png"
+  },
+  {
+    "language": "ts",
+    "group": 1,
+    "page": 5,
+    "term": "Langkloof",
+    "image": "ts-priority-1.png"
+  },
+  {
+    "language": "ts",
+    "group": 2,
+    "page": 10,
+    "term": "African Delight®",
+    "image": "ts-priority-2.png"
+  },
+  {
+    "language": "ts",
+    "group": 3,
+    "page": 10,
+    "term": "Z. officinale",
+    "image": "ts-priority-3.png"
+  },
+  {
+    "language": "ve",
+    "group": 1,
+    "page": 5,
+    "term": "Langkloof",
+    "image": "ve-priority-1.png"
+  },
+  {
+    "language": "ve",
+    "group": 2,
+    "page": 10,
+    "term": "African Delight®",
+    "image": "ve-priority-2.png"
+  },
+  {
+    "language": "ve",
+    "group": 3,
+    "page": 10,
+    "term": "Z. officinale",
+    "image": "ve-priority-3.png"
+  }
+]

@@ -1,0 +1,36 @@
+from pathlib import Path
+from PIL import Image,ImageDraw
+import subprocess,json,hashlib,unicodedata,xml.etree.ElementTree as ET,collections
+r=Path.cwd();folder=r/'output/pdf/source-reference-qa';generation=json.loads((r/'output/source-reference-qa/generation.json').read_text());flat=lambda s:''.join(unicodedata.normalize('NFC',s).replace('≥','>=').replace('≤','<=').replace('→','->').split());rows=[];bindings=[]
+for entry in generation['rows']:
+ pdf=folder/entry['file'];out=folder/pdf.stem;out.mkdir(exist_ok=True);run=subprocess.run(['pdftoppm','-r','65','-png',str(pdf),str(out/'page')],capture_output=True,text=True);assert run.returncode==0 and not run.stderr.strip(),run.stderr
+ pages=sorted(out.glob('page-*.png'),key=lambda p:int(p.stem.split('-')[-1]));grid=Image.new('RGB',(1520,((len(pages)+1)//2)*600),'#eeeae1');draw=ImageDraw.Draw(grid)
+ for i,p in enumerate(pages):
+  im=Image.open(p).convert('RGB');im.thumbnail((748,572));x=i%2*760;y=i//2*600;grid.paste(im,(x+6,y+22));draw.text((x+8,y+5),p.name,fill='black')
+ grid.save(folder/(pdf.stem+'-contact.png'))
+ for first in range(0,len(pages),4):
+  part=Image.new('RGB',(1200,1720),'#eeeae1');d=ImageDraw.Draw(part)
+  for j,p in enumerate(pages[first:first+4]):
+   im=Image.open(p).convert('RGB');im.thumbnail((586,825));x=j%2*600;y=j//2*860;part.paste(im,(x+7,y+25));d.text((x+8,y+5),pdf.stem+' '+p.name,fill='black')
+  part.save(folder/(pdf.stem+f'-contact-part-{first//4+1}.png'))
+ parsed=subprocess.run(['pdftotext','-bbox',str(pdf),'-'],capture_output=True,text=True);assert parsed.returncode==0 and not parsed.stderr.strip(),parsed.stderr;xml=ET.fromstring(parsed.stdout);bad=[];words=0
+ for i,page in enumerate(xml.findall('.//{*}page')):
+  for word in page.findall('.//{*}word'):
+   words+=1;a={k:float(word.attrib[k])for k in ['xMin','xMax','yMin','yMax']}
+   if a['xMin']<12 or a['xMax']>float(page.attrib['width'])-12 or a['yMin']<12 or a['yMax']>float(page.attrib['height'])-12:bad.append({'page':i+1,'word':word.text,**a})
+ text=subprocess.check_output(['pdftotext','-layout',str(pdf),'-'],text=True);(folder/(pdf.stem+'.txt')).write_text(text);checked=0;whole=0
+ if entry['language']!='en':
+  guide=entry['guide'];clauses=[guide['area']]+[s for group in ['siteObservations','recordedProduction','cropChoices','foodForest','animalProducts']for item in guide.get(group,[])for s in [item['title'],*item['lines']]];pageTexts=text.split('\f')
+  for clause in clauses:assert flat(clause)in flat(text),(pdf.name,'incomplete whole guide clause',clause);checked+=1
+  counts=collections.Counter(flat(clause)for clause in clauses)
+  for clause,required in counts.items():assert flat(text).count(clause)>=required,(pdf.name,'repeated full guide clause missing',required,clause)
+  for paragraph in entry['expectedReferenceParagraphs']:
+   matching=[i+1 for i,page in enumerate(pageTexts)if flat(paragraph['text'])in flat(page)];assert matching,(pdf.name,'complete reference condition split or missing',paragraph);whole+=1
+   for field in paragraph['fields']:bindings.append({'file':pdf.name,'language':entry['language'],'speciesId':paragraph['speciesId'],'referenceIndex':paragraph['referenceIndex'],'field':field['field'],'english':field['english'],'wholeParagraphPages':matching})
+ assert not bad,(pdf.name,bad)
+ rows.append({'file':pdf.name,'language':entry['language'],'version':entry['version'],'pages':len(pages),'wordBounds':words,'clipped':bad,'parserErrors':parsed.stderr.strip(),'completeGuideClauses':checked,'completeReferenceParagraphsWholePage':whole,'typedReferenceFieldsWholePage':entry['typedReferenceFields']if entry['language']!='en'else 0,'pixelHashes':[hashlib.sha256(Image.open(p).tobytes()).hexdigest()for p in pages],'pdfSha256':hashlib.sha256(pdf.read_bytes()).hexdigest()})
+comparisons=[]
+for group in ['references-1','references-2','references-3']:
+ a=next(x for x in rows if x['file']==f'en-before-{group}.pdf');b=next(x for x in rows if x['file']==f'en-after-{group}.pdf');sameText=(folder/f'en-before-{group}.txt').read_text()==(folder/f'en-after-{group}.txt').read_text();samePixels=a['pixelHashes']==b['pixelHashes'];assert sameText and samePixels;comparisons.append({'case':group,'sameText':sameText,'samePixels':samePixels})
+assert len(bindings)==544,len(bindings)
+result={'scope':generation['scope'],'rows':rows,'bindings':bindings,'comparisons':comparisons,'totalPDFs':len(rows),'totalPages':sum(r['pages']for r in rows),'totalWordBounds':sum(r['wordBounds']for r in rows),'completeGuideClauses':sum(r['completeGuideClauses']for r in rows),'referenceParagraphsWholePage':sum(r['completeReferenceParagraphsWholePage']for r in rows),'typedReferenceFieldsWholePage':len(bindings),'visualInspection':'PENDING actual contacts and enlarged-page inspection;text/bounds cannot establish visual quality.'};(r/'output/source-reference-qa/inspection.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items()if k not in ['rows','scope','bindings']},ensure_ascii=False))

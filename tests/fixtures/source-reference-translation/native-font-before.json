@@ -1,0 +1,9 @@
+{
+  "source": "import type { jsPDF } from 'jspdf';\n\n/** Core PDF fonts omit Tshivenda letters. Bundle the fonts so exports also work without a font request. */\nexport async function registerReportPdfFont(doc: jsPDF): Promise<string> {\n  const [regular, bold] = await Promise.all([\n    import('./report-fonts/noto-sans-regular.ts'),\n    import('./report-fonts/noto-sans-bold.ts'),\n  ]);\n  doc.addFileToVFS('ImbewuSans-Regular.ttf', regular.default);\n  doc.addFileToVFS('ImbewuSans-Bold.ttf', bold.default);\n  doc.addFont('ImbewuSans-Regular.ttf', 'ImbewuSans', 'normal');\n  doc.addFont('ImbewuSans-Bold.ttf', 'ImbewuSans', 'bold');\n  return 'ImbewuSans';\n}\n\n/** Remove decorative emoji as before, while preserving letters, punctuation, figures and SI units. */\nexport function reportPdfText(text: string): string {\n  return text.normalize('NFC')\n    .replace(/[\\p{Extended_Pictographic}\\uFE0F\\u200D]/gu, '')\n    .replace(/[\\u0000-\\u0008\\u000B\\u000C\\u000E-\\u001F]/g, '')\n    .replace(/[ \\t]{2,}/g, ' ').trim();\n}\n",
+  "sha256": "3744a1bfc47ed2d64c4d00f96a2f402cc150418d35846772ff1c2d40579fd9ac",
+  "edit": {
+    "before": "    .replace(/[\\p{Extended_Pictographic}\\uFE0F\\u200D]/gu, '')",
+    "after": "    // Unicode also classifies source identity markers as pictographs. Keep them.\n    .replace(/[\\p{Extended_Pictographic}\\uFE0F\\u200D]/gu, marker => /[®©™]/u.test(marker) ? marker : '')"
+  },
+  "reason": "Actual native crop-reference PDF dropped the registered mark from the existing African Delight® source identity. Preserve meaningful source markers while continuing to remove decorative emoji."
+}

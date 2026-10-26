@@ -16,7 +16,8 @@ export async function registerReportPdfFont(doc: jsPDF): Promise<string> {
 /** Remove decorative emoji as before, while preserving letters, punctuation, figures and SI units. */
 export function reportPdfText(text: string): string {
   return text.normalize('NFC')
-    .replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu, '')
+    // Unicode also classifies source identity markers as pictographs. Keep them.
+    .replace(/[\p{Extended_Pictographic}\uFE0F\u200D]/gu, marker => /[®©™]/u.test(marker) ? marker : '')
     .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '')
     .replace(/[ \t]{2,}/g, ' ').trim();
 }

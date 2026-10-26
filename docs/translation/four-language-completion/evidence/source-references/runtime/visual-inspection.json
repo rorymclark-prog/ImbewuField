@@ -1,0 +1,128 @@
+{
+  "at": "2026-10-26T10:05:18.647800+00:00",
+  "pdfContactsSeen": [
+    "en-after-references-1-contact.png",
+    "en-after-references-2-contact.png",
+    "en-after-references-3-contact.png",
+    "st-after-references-1-contact.png",
+    "st-after-references-2-contact.png",
+    "st-after-references-3-contact.png",
+    "ts-after-references-1-contact.png",
+    "ts-after-references-2-contact.png",
+    "ts-after-references-3-contact.png",
+    "ve-after-references-1-contact.png",
+    "ve-after-references-2-contact.png",
+    "ve-after-references-3-contact.png",
+    "zu-after-references-1-contact.png",
+    "zu-after-references-2-contact.png",
+    "zu-after-references-3-contact.png"
+  ],
+  "enlargedPdfPagesSeen": [
+    {
+      "language": "zu",
+      "group": 1,
+      "page": 5,
+      "term": "Langkloof",
+      "image": "zu-priority-1.png"
+    },
+    {
+      "language": "zu",
+      "group": 2,
+      "page": 9,
+      "term": "African Delight®",
+      "image": "zu-priority-2.png"
+    },
+    {
+      "language": "zu",
+      "group": 3,
+      "page": 10,
+      "term": "Z. officinale",
+      "image": "zu-priority-3.png"
+    },
+    {
+      "language": "st",
+      "group": 1,
+      "page": 5,
+      "term": "Langkloof",
+      "image": "st-priority-1.png"
+    },
+    {
+      "language": "st",
+      "group": 2,
+      "page": 9,
+      "term": "African Delight®",
+      "image": "st-priority-2.png"
+    },
+    {
+      "language": "st",
+      "group": 3,
+      "page": 10,
+      "term": "Z. officinale",
+      "image": "st-priority-3.png"
+    },
+    {
+      "language": "ts",
+      "group": 1,
+      "page": 5,
+      "term": "Langkloof",
+      "image": "ts-priority-1.png"
+    },
+    {
+      "language": "ts",
+      "group": 2,
+      "page": 10,
+      "term": "African Delight®",
+      "image": "ts-priority-2.png"
+    },
+    {
+      "language": "ts",
+      "group": 3,
+      "page": 10,
+      "term": "Z. officinale",
+      "image": "ts-priority-3.png"
+    },
+    {
+      "language": "ve",
+      "group": 1,
+      "page": 5,
+      "term": "Langkloof",
+      "image": "ve-priority-1.png"
+    },
+    {
+      "language": "ve",
+      "group": 2,
+      "page": 10,
+      "term": "African Delight®",
+      "image": "ve-priority-2.png"
+    },
+    {
+      "language": "ve",
+      "group": 3,
+      "page": 10,
+      "term": "Z. officinale",
+      "image": "ve-priority-3.png"
+    }
+  ],
+  "browserContactsSeen": [
+    "st-desktop-contact.png",
+    "st-phone-contact.png",
+    "ts-desktop-contact.png",
+    "ts-phone-contact.png",
+    "ve-desktop-contact.png",
+    "ve-phone-contact.png",
+    "zu-desktop-contact.png",
+    "zu-phone-contact.png"
+  ],
+  "browserPanelsSeen": {
+    "phone": 20,
+    "desktop": 16
+  },
+  "observed": "No cut-off,overlap or missing glyphs observed in the inspected native panels/pages. Registered marker visibly retained; English source identities,citations,technical terms and synthetic QA headers intentionally remain. Long source text wraps and paginates.",
+  "limits": "Visual review is not fluent/agricultural approval; actual isolated components and PDF renderers,not signed-in routes,production deployment,physical-device or account/persistence integration. English controls proved pixel/text exact; their pages were not separately visually reviewed.",
+  "cleanup": {
+    "browserClosed": true,
+    "viewportReset": true,
+    "serverExitCode": 0,
+    "consoleErrors": []
+  }
+}

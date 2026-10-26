@@ -1,0 +1,11 @@
+from pathlib import Path
+from PIL import Image,ImageDraw
+import subprocess,json,unicodedata
+r=Path('/Users/roryclark/.codex/worktrees/four-language-weather/ImbewuField');folder=r/'output/pdf/source-reference-qa';records=[]
+for lang in ['zu','st','ts','ve']:
+ for group,term in [(1,'Langkloof'),(2,'African Delight®'),(3,'Z. officinale')]:
+  pdf=folder/f'{lang}-after-references-{group}.pdf';text=subprocess.check_output(['pdftotext','-layout',str(pdf),'-'],text=True);pages=text.split('\f');page=next(i+1 for i,s in enumerate(pages)if ''.join(unicodedata.normalize('NFC',term).split()) in ''.join(unicodedata.normalize('NFC',s).split()));out=folder/f'{lang}-priority-{group}';subprocess.run(['pdftoppm','-f',str(page),'-l',str(page),'-scale-to','1700','-singlefile','-png',str(pdf),str(out)],check=True,capture_output=True);records.append({'language':lang,'group':group,'page':page,'term':term,'image':out.name+'.png'})
+ raw=Path('/private/tmp/imbewu-source-reference-browser-proof');paths=[raw/f'{lang}-phone-{id}.png'for id in ['guide-malus-domestica','guide-persea-americana','guide-zingiber-officinale','guide-rhoicissus-tridentata','age-persea-americana']];images=[Image.open(p).convert('RGB')for p in paths];canvas=Image.new('RGB',(2000,max(i.height for i in images)+30),'#eeeae1');d=ImageDraw.Draw(canvas)
+ for index,(p,im)in enumerate(zip(paths,images)):canvas.paste(im,(index*400,30));d.text((index*400+3,5),p.stem.replace(lang+'-phone-',''),fill='black')
+ canvas.save(raw/f'{lang}-phone-contact.png')
+(r/'output/source-reference-qa/priority-pages.json').write_text(json.dumps(records,ensure_ascii=False,indent=2)+'\n');print(records)

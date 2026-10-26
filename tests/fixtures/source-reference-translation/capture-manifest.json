@@ -1,0 +1,13 @@
+{
+  "base": "4b2ab249d59ca0748802289d06b3d66a82b42e25",
+  "compressedSha256": "cf5fa72fc0a061aa6bc725e9e82bee1b467584a1f5f5f17c02621bbdc61017d4",
+  "uncompressedSha256": "c23a16c7430d1c301695b47b9f16b3f53c90c29a5bccc21cb50b7fc1be914fb6",
+  "contexts": 17,
+  "guideStates": 102,
+  "markdownStates": 102,
+  "species": 103,
+  "sourceRows": 136,
+  "typedBindings": 136,
+  "sourceFiles": 13,
+  "status": "Immutable current-source before-capture; exact live reference fields,figures,species,citations and complete guide decisions retained. Never overwrite."
+}
