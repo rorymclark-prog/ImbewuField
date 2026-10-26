@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { X } from 'lucide-react';
+import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { EVIDENCE_CATALOGUE, EVIDENCE_GROUP_ICON, INDIGENOUS_EDIBLES } from '@/lib/evidence-catalogue';
 import { getGroupCount, type EvidenceItem } from '@/lib/site-evidence';
 import EvidenceSheet from './EvidenceSheet';
@@ -18,6 +19,8 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
   const { t } = useLanguage();
   const [activeSheet, setActiveSheet] = useState<{ group: EvidenceCatalogueGroup; item: EvidenceCatalogueItem } | null>(null);
   const [, forceUpdate] = useState(0);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(true, dialogRef);
 
   function handleChanged() {
     forceUpdate((n) => n + 1);
@@ -39,6 +42,7 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
         onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
       >
         <div
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
           aria-label={t('evidenceCatalogueTitle')}

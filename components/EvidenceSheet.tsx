@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { X, Camera, Upload, Trash2, FileText, AlertTriangle } from 'lucide-react';
+import { useDialogFocus } from '@/lib/use-dialog-focus';
 import type { EvidenceCatalogueGroup, EvidenceCatalogueItem } from '@/lib/evidence-catalogue';
 import { EVIDENCE_GROUP_ICON, QUICK_NUMBERS, LIMA_TIPS } from '@/lib/evidence-catalogue';
 import { useLanguage } from '@/lib/i18n';
@@ -38,6 +39,8 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
   const [resultNote, setResultNote] = useState('');
   const isLab = item?.key === 'lab_result' && (group.key === 'soil' || group.key === 'water');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(true, dialogRef);
 
   const quickFields = QUICK_NUMBERS[group.key] ?? [];
   const limaTip = LIMA_TIPS[group.key];
@@ -144,6 +147,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-label={groupLabel}

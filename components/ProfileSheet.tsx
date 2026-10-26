@@ -1,6 +1,7 @@
 'use client';
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { X, Camera, Check, Loader2, User } from 'lucide-react';
+import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { uploadProfilePhoto, updateMyProfile } from '@/lib/db/queries';
 import { resizeFileForUpload } from '@/lib/site-evidence';
 import type { Profile } from '@/lib/db/types';
@@ -197,6 +198,8 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
   const [savedFlash, setSavedFlash] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(open, dialogRef);
 
   const toggleSkill = useCallback((skill: string) => {
     setSkills(prev =>
@@ -282,6 +285,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
 
   return (
     <div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
       aria-label={t('profileTitle')}

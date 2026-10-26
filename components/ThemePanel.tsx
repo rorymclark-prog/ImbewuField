@@ -1,5 +1,6 @@
 'use client';
 
+import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { useEffect, useRef, useState } from 'react';
 import AiFeatureSettings from './AiFeatureSettings';
 import LanguageDraftNote from './LanguageDraftNote';
@@ -67,6 +68,7 @@ export default function ThemePanel({ open, onClose }: Props) {
   const { theme, mode, textScale, setTheme, setMode, setTextScale } = useTheme();
   const { lang, setLang, t } = useLanguage();
   const panelRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(open, panelRef);
   const level = useAppLevel();
 
   // How much of each language is actually translated, so a language that is still mostly

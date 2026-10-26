@@ -6,8 +6,9 @@
 // current surface can't run shows an honest "Opens Studio" / "Opens map" chip instead of a
 // go-arrow — a low-literacy farmer must never tap "Lawn" and silently context-switch.
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSheetDismiss } from '@/lib/sheet-dismiss';
+import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { ArrowRight, X } from 'lucide-react';
 import SpeakButton from '@/components/SpeakButton';
 import { useLanguage, translate } from '@/lib/i18n';
@@ -53,6 +54,8 @@ export default function AddSheet({ open, surface, onClose, onPick, simple }: Add
   // did nothing. It now drags the sheet closed. Rory: "I want to be able to drag any of those top
   // closing buttons in the modals and it closes."
   const drag = useSheetDismiss(onClose, open);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(open && mounted, dialogRef);
 
   if (!mounted || !open) return null;
 
@@ -60,11 +63,12 @@ export default function AddSheet({ open, surface, onClose, onPick, simple }: Add
 
 
   return (
-    <div className="fixed inset-0 z-[60] flex flex-col justify-end" aria-modal="true" role="dialog">
+    <div ref={dialogRef} className="fixed inset-0 z-[60] flex flex-col justify-end" aria-modal="true" role="dialog">
       {/* Scrim */}
       <button
         aria-label={t('addSheetClose')}
         onClick={onClose}
+        tabIndex={-1}
         className="absolute inset-0"
         style={{ background: 'rgba(0,0,0,0.38)', backdropFilter: 'blur(2px)', border: 'none', cursor: 'pointer' }}
       />
@@ -102,7 +106,7 @@ export default function AddSheet({ open, surface, onClose, onPick, simple }: Add
         <div className="flex-shrink-0 flex items-center gap-2 px-5 pt-4 pb-3" style={{ borderBottom: '1px solid rgba(226,216,196,0.7)' }}>
           <div className="flex flex-col min-w-0 flex-1">
             <div className="flex items-center gap-2">
-              <h2 className="font-display truncate" style={{ fontSize: 19, fontWeight: 700, color: INK, margin: 0 }}>
+              <h2 tabIndex={-1} data-autofocus="" className="font-display truncate" style={{ fontSize: 19, fontWeight: 700, color: INK, margin: 0 }}>
                 {t('addSheetTitle')}
               </h2>
               <SpeakButton text={t('addSheetTitle')} englishText={translate('en', 'addSheetTitle')} color={FOREST} />
