@@ -1,3 +1,5 @@
+import * as productionControlCopy from '../lib/crop-export-copy.ts';
+import * as productionControlMonths from '../lib/records-months.ts';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -208,6 +210,10 @@ type FoodCardProps = {
 
 const foodCardRequire = createRequire(import.meta.url);
 const foodCardDependencies: Record<string, unknown> = {
+  // The existing assertions still render default English after native context was wired.
+  '@/lib/i18n': { useLanguage: () => ({lang:'en'}) },
+  '@/lib/crop-export-copy': productionControlCopy,
+  '@/lib/records-months': productionControlMonths,
   '@/lib/crop-catalog': { MONTHS_SHORT },
   '@/lib/animal-enterprises': { PRODUCT_LABEL },
   '@/lib/perennial-harvest': { formatMonthSpan },

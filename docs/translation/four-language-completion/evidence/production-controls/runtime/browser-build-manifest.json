@@ -1,0 +1,94 @@
+{
+  "scope": "Actual original/current components and leaf copy/month/record/numeric/art functions,realReact/Lucide/context/currentCSS. Full graph producer outputs captured for all32filter subsets for each supplied graph dataset;browser routes fixture inputs to those outputs. Model semantics separately protected by source and unit tests;this is not the full signed-in app or direct browser execution of the graph producer. No storage/backend/realrecords/paidcalls.",
+  "sources": [
+    {
+      "file": "components/crops/ProductionRecordsEditor.tsx",
+      "sha256": "666b6f26dda4ff9de9274642b538557b290ca6a9cc6f760953842ad2df3b8c7e"
+    },
+    {
+      "file": "components/crops/ProductionAvailabilityGraphs.tsx",
+      "sha256": "e25464859a9b530de51b5a4794811b9a31d15eb6dbd0687c02b7d4e32e841309"
+    },
+    {
+      "file": "components/crops/ProductionProjectionCard.tsx",
+      "sha256": "1d2dab496401f3a3155b7b71100bac4e38153831fb8abaa9ccb11f8c3e0bb9a7"
+    },
+    {
+      "file": "components/crops/YearOfFoodCard.tsx",
+      "sha256": "d9a818689a9ccba44dab1f1e647e28e8e039211882dee8e6a414590c67c41ddf"
+    },
+    {
+      "file": "components/crops/PoultryGuidanceCard.tsx",
+      "sha256": "e71d4321f1e284d51afd4211790882b0a1f599c68210bdbc2ed0eb400b018ef7"
+    }
+  ],
+  "cases": [
+    {
+      "id": "records-empty",
+      "file": "components/crops/ProductionRecordsEditor.tsx"
+    },
+    {
+      "id": "records-editable",
+      "file": "components/crops/ProductionRecordsEditor.tsx"
+    },
+    {
+      "id": "records-held-only",
+      "file": "components/crops/ProductionRecordsEditor.tsx"
+    },
+    {
+      "id": "graphs-full",
+      "file": "components/crops/ProductionAvailabilityGraphs.tsx"
+    },
+    {
+      "id": "graphs-no-input",
+      "file": "components/crops/ProductionAvailabilityGraphs.tsx"
+    },
+    {
+      "id": "graphs-no-records",
+      "file": "components/crops/ProductionAvailabilityGraphs.tsx"
+    },
+    {
+      "id": "projection-full",
+      "file": "components/crops/ProductionProjectionCard.tsx"
+    },
+    {
+      "id": "projection-empty",
+      "file": "components/crops/ProductionProjectionCard.tsx"
+    },
+    {
+      "id": "projection-missing",
+      "file": "components/crops/ProductionProjectionCard.tsx"
+    },
+    {
+      "id": "year-gaps",
+      "file": "components/crops/YearOfFoodCard.tsx"
+    },
+    {
+      "id": "year-no-beds",
+      "file": "components/crops/YearOfFoodCard.tsx"
+    },
+    {
+      "id": "year-all-fresh",
+      "file": "components/crops/YearOfFoodCard.tsx"
+    },
+    {
+      "id": "poultry-missing",
+      "file": "components/crops/PoultryGuidanceCard.tsx"
+    },
+    {
+      "id": "poultry-recorded",
+      "file": "components/crops/PoultryGuidanceCard.tsx"
+    },
+    {
+      "id": "poultry-attention",
+      "file": "components/crops/PoultryGuidanceCard.tsx"
+    }
+  ],
+  "registryCounts": {
+    "before": 1761,
+    "after": 1947
+  },
+  "graphDatasets": 2,
+  "filterMasks": 32,
+  "bytes": 4406220
+}

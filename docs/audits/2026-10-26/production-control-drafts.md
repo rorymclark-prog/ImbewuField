@@ -1,0 +1,18 @@
+# Production record and food controls — 26 October 2026
+
+Parent published draft PR1124 at784c2ef796a470445ddd82112314d616d7e4f94e. Immutable15-file/15-case/90-SSR-state capture remains d430d509f38ef50d039a775c868ea8b139aa8dd3;no capture was replaced. Parent delivery-only fast-forward preserved all working code hashes.
+
+|Finding|Observed issue|Result and limits|
+|---|---|---|
+|PCD-001|Five actual production record,availability,projection,year-of-food and poultry controls contained English.|186ordinary source phrases/744 unreviewed native drafts implemented.1761ancestor rows exact,1947combined. Native draft disclosures visible. Recorded names,notes,source citations and species identities intentionally retain original values.|
+|PCD-002|Editing and changing language could erase unknown/zero distinctions or relabel saved data.|Actual-component and49browser interaction states preserve original schemas,zero prices,unknown stock weights,IDs,dates,enum values,private data and full Plan arguments. No writes on display. Inputs,SVGgeometry,roles,limits and source URLs compared. Four current component interaction tests per language pass.|
+|PCD-003|Initial inventories missed three inline graph modes and combined producer stages.|Actual-render source guards found modes. Visual phone review found Farm yield schedule;Not planted yet left in English. All producer stage literals now require complete source-bound drafts;four missing stages added and composed clauses translated independently. Full ending conditions checked;unknown raw notes still retain honest labels. Models unchanged.|
+|PCD-004|Dictionary count included three same-language punctuation frames.|Unchanged inherited full-registry guard failed. Removed those rows and format punctuation directly around already translated values. No inherited assertion changed. Final228state markup remains identical to the stage-repair capture after formatting.|
+|PCD-005|Runtime preservation needs complete evidence and visual reading.|Final228states/114pairs,304loadedimages,0overflow,0appconsoleerrors. Complete JSON-string props replace transport-truncated observation objects as proof.40prioritynativepanels seen across4languages/2sizes;combined-stage failure retained and8corrected projections recaptured.7pixelpairs exact,1finalphoneimage separately viewed. Isolated actualcomponents/helpers/CSS;captured graph outputs,not full account/routes/direct browser graph-model execution.|
+|PCD-006|Refresh guide can lose useful navigation when newest release notes have no stops.|Added two translated review stops for production records and food charts. Existing guide tests retain Next/Previous,destination,progress and stored English source assertions.|
+
+331 affected tests/17files pass after Node24 typecheck;whitespace checks clean. Initial failing stages,punctuation dictionary rows and missing guide action were addressed in implementation;existing test assertions preserved. Native copy remains unreviewed. No farming figure,source model,species,lesson or quiz rewritten. No production build attempted.
+
+[Runtime evidence](../../translation/four-language-completion/evidence/production-controls/runtime/README.md). Required full ordered frozen-input run,finished push,stacked draft PR,issue35 delivery and both exact-head CI jobs remain pending. This changes the picture;PLAN_VERSION unchanged. No merge,deployment,paid call or real farmer-record writes.
+
+Whole-app translation,current-main/full-account/role integration,main crop page,other controls,feedback/signatures,lessons/media,errors/accessibility/exports and fluent/agricultural review remain open. This batch does not prove completion.

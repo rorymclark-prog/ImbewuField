@@ -1,5 +1,5 @@
 {
-  "status": "IN PROGRESS: 1444 source drafts; animal legal runtime/source/browser/PDF verification and whole-app work remain unfinished; languages unreviewed.",
+  "status": "IN PROGRESS: 1946 source-bound rows; newest production controls are unreviewed drafts with runtime/full verification pending. Whole-app and language-quality work remain incomplete.",
   "sourceSha": "dc9ade0cc9a208de55c7d0cccc6393f79257769d",
   "sourceBaseline": "output/crop-pdf-qa/baseline.json (immutable17files)",
   "instructionEnglishBaseline": "output/crop-pdf-qa/instruction-english-baseline.json: original49cataloguecrops/166tasks beforeedits",
@@ -13332,6 +13332,1494 @@
       "ts": "SANBI yi hlamusela nyama leyi vupfeke leyi omeke leyi tsokombelaka katsongo. Mihandzu leyi salaka eka misinya leyi nga riki na matluka hi Nyenyankulu–Mhawuri i ku ya mahlweni yi ri kona, a hi nguva leyi tiyisisiweke ya ku tshovela ya tin’hweti ta tsevu.",
       "ve": "SANBI i ṱalutshedza ṋama yo vhibvaho yo omaho i ḓifhaho zwiṱuku. Mitshelo i salaho kha miri i si na maṱari nga Ṱhafamuhwe–Ṱhangule ndi u dzula hayo henefho, a si tshifhinga tsho khwaṱhisedzwaho tsha khaṋo tsha miṅwedzi ya rathi.",
       "generatedScope": "product-guidance"
+    },
+    {
+      "english": "litres",
+      "zu": "amalitha",
+      "st": "dilitara",
+      "ts": "tilitara",
+      "ve": "ḽithara",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "eggs",
+      "zu": "amaqanda",
+      "st": "mahe",
+      "ts": "matandza",
+      "ve": "makumba",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "items",
+      "zu": "izinto",
+      "st": "dintho",
+      "ts": "swilo",
+      "ve": "zwithu",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "In store",
+      "zu": "Kugciniwe",
+      "st": "Di bolokilwe",
+      "ts": "Swi le vuhlayiselweni",
+      "ve": "Zwo vhulungwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Other processing",
+      "zu": "Okunye ukucubungula",
+      "st": "Tshebetso e nngwe",
+      "ts": "Maendlelo man’wana yo lulamisa",
+      "ve": "Huṅwe u shandukisa zwiḽiwa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{date}: enter kg of zero or more, or leave the amount blank.",
+      "zu": "{date}: faka ama-kg angu-zero noma ngaphezulu, noma shiya inani lingabhalwanga.",
+      "st": "{date}: kenya kg ya lefela kapa ho feta, kapa tlohela palo e sa ngolwa.",
+      "ts": "{date}: nghenisa kg ya ziro kumbe ku tlurisa, kumbe siya nhlayo yi nga tsariwanga.",
+      "ve": "{date}: dzhenisani kg dza zero kana u fhira, kana ni litshe tshivhalo tshi songo ṅwalwa.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Choose the product, month and unit.",
+      "zu": "Khetha umkhiqizo, inyanga neyunithi.",
+      "st": "Kgetha sehlahiswa, kgwedi le yuniti.",
+      "ts": "Hlawula xikumiwa, n’hweti ni yuniti.",
+      "ve": "Nangani tshibveledzwa, ṅwedzi na yuniti.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Enter the amount. Use 0 only when you mean zero; leave unknown production unrecorded.",
+      "zu": "Faka inani. Sebenzisa u-0 kuphela uma usho ukuthi akukho; ungarekhodi ukukhiqiza okungaziwa.",
+      "st": "Kenya palo. Sebedisa 0 feela ha o bolela lefela; o se ke wa rekota tlhahiso e sa tsejweng.",
+      "ts": "Nghenisa nhlayo. Tirhisa 0 ntsena loko u vula ziro; siya vuhumelerisi byo ka byi nga tiveki byi nga rhekhodiwanga.",
+      "ve": "Dzhenisani tshivhalo. Shumisani 0 fhedzi musi ni tshi amba zero; ni songo rekhoda vhubveledzi vhu sa ḓivhei.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Enter a price of zero or more, or leave it blank.",
+      "zu": "Faka inani lentengo elingu-zero noma ngaphezulu, noma ushiye kungabhalwanga.",
+      "st": "Kenya theko ya lefela kapa ho feta, kapa o e tlohele e sa ngolwa.",
+      "ts": "Nghenisa nxavo wa ziro kumbe ku tlurisa, kumbe u wu siya wu nga tsariwanga.",
+      "ve": "Dzhenisani mutengo wa zero kana u fhira, kana ni u litshe u songo ṅwalwa.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Check the product, date and amount before adding this record.",
+      "zu": "Hlola umkhiqizo, usuku nenani ngaphambi kokufaka leli rekhodi.",
+      "st": "Hlahloba sehlahiswa, letsatsi le palo pele o kenya rekoto ena.",
+      "ts": "Kambela xikumiwa, siku ni nhlayo u nga si engetela rhekhodo leyi.",
+      "ve": "Ṱolani tshibveledzwa, datumu na tshivhalo musi ni sa athu u dzhenisa rekhodo iyi.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Choose the original food from this plan.",
+      "zu": "Khetha ukudla okuvela kulolu hlelo.",
+      "st": "Kgetha dijo tsa pele tse tswang moralong ona.",
+      "ts": "Hlawula swakudya swo sungula swa pulani leyi.",
+      "ve": "Nangani zwiḽiwa zwa mathomoni zwi bvaho kha pulane iyi.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Name the food you are keeping, for example Dried mango.",
+      "zu": "Bhala igama lokudla okugcinayo, isibonelo Umango omisiwe.",
+      "st": "Bolela lebitso la dijo tseo o di bolokang, mohlala Mango o omisitsweng.",
+      "ts": "Thya swakudya leswi u swi hlayisaka, hi xikombiso Mango lowu omisiweke.",
+      "ve": "Ṅwalani dzina ḽa zwiḽiwa zwine na khou vhulunga, sa tsumbo Mango wo omiswaho.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Choose at least one month when this food is in store.",
+      "zu": "Khetha okungenani inyanga eyodwa lapho lokhu kudla kugciniwe.",
+      "st": "Kgetha bonyane kgwedi e le nngwe eo dijo tsena di leng polokelong ka yona.",
+      "ts": "Hlawula n’hweti yin’we kumbe ku tlurisa leyi swakudya leswi swi nga evuhlayiselweni ha yona.",
+      "ve": "Nangani ṅwedzi muthihi kana u fhira une zwiḽiwa izwi zwa vha zwo vhulungwa ngawo.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Check the food and its stock months before adding this record.",
+      "zu": "Hlola ukudla nezinyanga zokukugcina ngaphambi kokufaka leli rekhodi.",
+      "st": "Hlahloba dijo le dikgwedi tsa tsona tsa polokelo pele o kenya rekoto ena.",
+      "ts": "Kambela swakudya ni tin’hweti ta swona ta vuhlayiselo u nga si engetela rhekhodo leyi.",
+      "ve": "Ṱolani zwiḽiwa na miṅwedzi yazwo ya u vhulungwa musi ni sa athu u dzhenisa rekhodo iyi.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Production and food stock records",
+      "zu": "Amarekhodi okukhiqiza nokudla okugcinwe",
+      "st": "Direkoto tsa tlhahiso le dijo tse bolokilweng",
+      "ts": "Tirhekhodo ta vuhumelerisi ni swakudya leswi hlayisiweke",
+      "ve": "Rekhodo dza vhubveledzi na zwiḽiwa zwo vhulungwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Production and food-record translations are unreviewed drafts.",
+      "zu": "Izinguqulo zokukhiqiza namarekhodi okudla ziyimibhalo engakabuyekezwa.",
+      "st": "Diphetolelo tsa tlhahiso le direkoto tsa dijo ke dingolwa tse eso hlahlojwe.",
+      "ts": "Vuhundzuluxeri bya vuhumelerisi ni tirhekhodo ta swakudya i matsalelo lama nga si kambisisiwaka.",
+      "ve": "Ṱhalutshedzelo dza vhubveledzi na rekhodo dza zwiḽiwa ndi mvetamveto i sa athu u ṱolisiswa.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Use your own records or a locally checked estimate. Missing amounts stay unknown. Eggs, litres and kg are kept separate.",
+      "zu": "Sebenzisa amarekhodi akho noma isilinganiso esihlolwe endaweni. Amanani angekho ahlala engaziwa. Amaqanda, amalitha nama-kg agcinwa ngokwehlukana.",
+      "st": "Sebedisa direkoto tsa hao kapa khakanyo e hlahlobilweng sebakeng sa heno. Dipalo tse siyo di dula di sa tsejwe. Mahe, dilitara le kg di bolokwa di arohane.",
+      "ts": "Tirhisa tirhekhodo ta wena kumbe mpimanyeto lowu kambisisiweke laha kaya. Tinhlayo leti kayivelaka ti sala ti nga tiveki. Matandza, tilitara ni kg swi hlayisiwa swi hambanile.",
+      "ve": "Shumisani rekhodo dzaṋu kana u anganyela ho ṱolwaho henefho. Zwivhalo zwi siho zwi dzula zwi sa ḓivhei. Makumba, ḽithara na kg zwi vhulungwa zwo fhambana.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Add products to the plan to record their production and food in store.",
+      "zu": "Faka imikhiqizo ohlelweni ukuze urekhode ukukhiqizwa kwayo nokudla okugcinwe.",
+      "st": "Kenya dihlahiswa moralong ho rekota tlhahiso ya tsona le dijo tse bolokilweng.",
+      "ts": "Engetela swikumiwa eka pulani leswaku u rhekhoda vuhumelerisi bya swona ni swakudya leswi hlayisiweke.",
+      "ve": "Dzhenisani zwibveledzwa kha pulane uri ni rekhode vhubveledzi hazwo na zwiḽiwa zwo vhulungwaho.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Record expected or actual production",
+      "zu": "Rekhoda ukukhiqiza okulindelwe noma okwenzekile",
+      "st": "Rekota tlhahiso e lebeletsweng kapa e etsahetseng",
+      "ts": "Rhekhoda vuhumelerisi leri languteriweke kumbe leri veke kona",
+      "ve": "Rekhodani vhubveledzi ho lavhelelwaho kana ho iteaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{count} record",
+      "zu": "irekhodi elingu-{count}",
+      "st": "rekoto e {count}",
+      "ts": "rhekhodo ya {count}",
+      "ve": "rekhodo ya {count}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{count} records",
+      "zu": "amarekhodi angu-{count}",
+      "st": "direkoto tse {count}",
+      "ts": "tirhekhodo ta {count}",
+      "ve": "rekhodo dza {count}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Choose one product and one month. Expected means your estimate; actual means what was produced. Adding the same product, month and status replaces its previous figure.",
+      "zu": "Khetha umkhiqizo owodwa nenyanga eyodwa. Okulindelwe kusho isilinganiso sakho; okwenzekile kusho lokho okukhiqiziwe. Ukufaka umkhiqizo ofanayo, inyanga nesimo kuthatha indawo yenani lakho langaphambili.",
+      "st": "Kgetha sehlahiswa se le seng le kgwedi e le nngwe. E lebeletsweng e bolela khakanyo ya hao; e etsahetseng e bolela se hlahisitsweng. Ho kenya sehlahiswa, kgwedi le boemo bo tshwanang ho nkela palo ya pele sebaka.",
+      "ts": "Hlawula xikumiwa xin’we ni n’hweti yin’we. Lexi languteriweke xi vula mpimanyeto wa wena; lexi veke kona xi vula leswi humelerisiweke. Ku engetela xikumiwa, n’hweti ni xiyimo leswi fanaka swi siva nhlayo ya swona ya khale.",
+      "ve": "Nangani tshibveledzwa tshithihi na ṅwedzi muthihi. Ho lavhelelwaho zwi amba u anganyela haṋu; ho iteaho zwi amba zwo bveledzwaho. U dzhenisa tshibveledzwa, ṅwedzi na tshiimo zwi fanaho zwi dzhiela tshivhalo tsha kale vhudzulo.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Product",
+      "zu": "Umkhiqizo",
+      "st": "Sehlahiswa",
+      "ts": "Xikumiwa",
+      "ve": "Tshibveledzwa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Choose product",
+      "zu": "Khetha umkhiqizo",
+      "st": "Kgetha sehlahiswa",
+      "ts": "Hlawula xikumiwa",
+      "ve": "Nangani tshibveledzwa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Which figure?",
+      "zu": "Yiliphi inani?",
+      "st": "Ke palo efe?",
+      "ts": "I nhlayo yihi?",
+      "ve": "Ndi tshivhalo tshifhio?",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Expected — my estimate",
+      "zu": "Okulindelwe — isilinganiso sami",
+      "st": "E lebeletsweng — khakanyo ya ka",
+      "ts": "Lexi languteriweke — mpimanyeto wa mina",
+      "ve": "Ho lavhelelwaho — u anganyela hanga",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Actual — produced",
+      "zu": "Okwenzekile — okukhiqiziwe",
+      "st": "E etsahetseng — e hlahisitsweng",
+      "ts": "Lexi veke kona — leswi humelerisiweke",
+      "ve": "Ho iteaho — zwo bveledzwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Amount",
+      "zu": "Inani",
+      "st": "Palo",
+      "ts": "Nhlayo",
+      "ve": "Tshivhalo",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Enter amount",
+      "zu": "Faka inani",
+      "st": "Kenya palo",
+      "ts": "Nghenisa nhlayo",
+      "ve": "Dzhenisani tshivhalo",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Choose unit",
+      "zu": "Khetha iyunithi",
+      "st": "Kgetha yuniti",
+      "ts": "Hlawula yuniti",
+      "ve": "Nangani yuniti",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "My price per unit (R)",
+      "zu": "Intengo yami ngeyunithi (R)",
+      "st": "Theko ya ka ka yuniti (R)",
+      "ts": "Nxavo wa mina hi yuniti (R)",
+      "ve": "Mutengo wanga nga yuniti (R)",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Optional · your own price",
+      "zu": "Akuphoqelekile · intengo yakho",
+      "st": "Ha se tlamo · theko ya hao",
+      "ts": "A swi bohi · nxavo wa wena",
+      "ve": "A zwi kombetshedzwi · mutengo waṋu",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Leave blank if unknown",
+      "zu": "Shiya kungabhalwanga uma ungazi",
+      "st": "Tlohela e sa ngolwa ha e sa tsejwe",
+      "ts": "Siya swi nga tsariwanga loko swi nga tiveki",
+      "ve": "Litshe zwi songo ṅwalwa arali zwi sa ḓivhei",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Note",
+      "zu": "Inothi",
+      "st": "Ntlha",
+      "ts": "Notsi",
+      "ve": "Notsi",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Optional",
+      "zu": "Akuphoqelekile",
+      "st": "Ha se tlamo",
+      "ts": "A swi bohi",
+      "ve": "A zwi kombetshedzwi",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Where did this figure come from?",
+      "zu": "Leli nani livelaphi?",
+      "st": "Palo ee e tswa hokae?",
+      "ts": "Nhlayo leyi yi huma kwihi?",
+      "ve": "Tshivhalo itshi tshi bva ngafhi?",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "This price is your record, not a live market price or a profit calculation.",
+      "zu": "Le ntengo iyirekhodi lakho, ayiyona intengo yemakethe yamanje noma ukubalwa kwenzuzo.",
+      "st": "Theko ena ke rekoto ya hao, eseng theko ya mmaraka ya jwale kapa palo ya phaello.",
+      "ts": "Nxavo lowu i rhekhodo ya wena, a hi nxavo wa makete wa sweswi kumbe ku hlayela mpindzulo.",
+      "ve": "Mutengo uyu ndi rekhodo yaṋu, a si mutengo wa maraga wa zwino kana u vhalela mbuelo.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Update production record",
+      "zu": "Buyekeza irekhodi lokukhiqiza",
+      "st": "Ntjhafatsa rekoto ya tlhahiso",
+      "ts": "Pfuxeta rhekhodo ya vuhumelerisi",
+      "ve": "Khwinifhadzani rekhodo ya vhubveledzi",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Add production record",
+      "zu": "Faka irekhodi lokukhiqiza",
+      "st": "Kenya rekoto ya tlhahiso",
+      "ts": "Engetela rhekhodo ya vuhumelerisi",
+      "ve": "Dzhenisani rekhodo ya vhubveledzi",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Cancel edit",
+      "zu": "Khansela ukuhlela",
+      "st": "Hlakola ho fetola",
+      "ts": "Khansela ku hlela",
+      "ve": "Khanselani u shandula",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Expected",
+      "zu": "Okulindelwe",
+      "st": "E lebeletsweng",
+      "ts": "Lexi languteriweke",
+      "ve": "Ho lavhelelwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Actual",
+      "zu": "Okwenzekile",
+      "st": "E etsahetseng",
+      "ts": "Lexi veke kona",
+      "ve": "Ho iteaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Saved record kept for reference. This source is excluded from household food and production totals. Check its food-use guidance.",
+      "zu": "Irekhodi eligciniwe lihlala lingelokubhekisela. Lo mthombo awufakwa ezibalweni eziphelele zokudla kwasekhaya noma yokukhiqiza. Hlola iziqondiso zokuwusebenzisa njengokudla.",
+      "st": "Rekoto e bolokilweng e sala bakeng sa tshupiso. Mohlodi ona ha o kenngwe dipalong tsohle tsa dijo tsa lelapa le tlhahiso. Hlahloba tataiso ya tshebediso ya wona e le dijo.",
+      "ts": "Rhekhodo leyi hlayisiweke yi sala yi ri ya xikombo. Xihlovo lexi a xi katsiwi eka mintsengo ya swakudya swa ndyangu ni vuhumelerisi. Kambela nkongomiso wa ku xi tirhisa xi va swakudya.",
+      "ve": "Rekhodo yo vhulungwaho i dzula sa tshiko. Tshiko itshi a tshi katelwi kha ṱhanganyelo dza zwiḽiwa zwa muṱa na vhubveledzi. Ṱolani nyeletshedzo ya u tshi shumisa sa zwiḽiwa.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Own price: R{price} / {unit}",
+      "zu": "Intengo yakho: R{price} / {unit}",
+      "st": "Theko ya hao: R{price} / {unit}",
+      "ts": "Nxavo wa wena: R{price} / {unit}",
+      "ve": "Mutengo waṋu: R{price} / {unit}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Quantity × own price: R{value} before costs",
+      "zu": "Inani × intengo yakho: R{value} ngaphambi kwezindleko",
+      "st": "Palo × theko ya hao: R{value} pele ho ditjeho",
+      "ts": "Nhlayo × nxavo wa wena: R{value} ku nga si susiwa swiendleko",
+      "ve": "Tshivhalo × mutengo waṋu: R{value} hu sa athu u bviswa tshinyalelo",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Quantity × own price needs checking.",
+      "zu": "Inani × intengo yakho kudinga ukuhlolwa.",
+      "st": "Palo × theko ya hao e hloka ho hlahlojwa.",
+      "ts": "Nhlayo × nxavo wa wena swi lava ku kambisisiwa.",
+      "ve": "Tshivhalo × mutengo waṋu zwi ṱoḓa u ṱolwa.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Made-up example record",
+      "zu": "Irekhodi lesibonelo esiqanjiwe",
+      "st": "Rekoto ya mohlala o iqapetsweng",
+      "ts": "Rhekhodo ya xikombiso lexi endliweke",
+      "ve": "Rekhodo ya tsumbo yo tou itelwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Edit {label} {date} {status}",
+      "zu": "Hlela {label} {date} {status}",
+      "st": "Fetola {label} {date} {status}",
+      "ts": "Hlela {label} {date} {status}",
+      "ve": "Shandulani {label} {date} {status}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Remove {label} {date} {status}",
+      "zu": "Susa {label} {date} {status}",
+      "st": "Tlosa {label} {date} {status}",
+      "ts": "Susa {label} {date} {status}",
+      "ve": "Bvisani {label} {date} {status}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "No monthly production amounts recorded. Unknown does not mean zero.",
+      "zu": "Awekho amanani okukhiqiza enyanga arekhodiwe. Okungaziwa akusho u-zero.",
+      "st": "Ha ho dipalo tsa tlhahiso ya kgwedi tse rekotilweng. Ho sa tsejwe ha ho bolele lefela.",
+      "ts": "Ku hava tinhlayo ta vuhumelerisi bya n’hweti leti rhekhodiweke. Lexi nga tivekiki a xi vuli ziro.",
+      "ve": "A hu na zwivhalo zwa vhubveledzi ha ṅwedzi zwo rekhodiwaho. Zwi sa ḓivhei a zwi ambi zero.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Record food kept in store",
+      "zu": "Rekhoda ukudla okugciniwe",
+      "st": "Rekota dijo tse bolokilweng",
+      "ts": "Rhekhoda swakudya leswi hlayisiweke",
+      "ve": "Rekhodani zwiḽiwa zwo vhulungwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Record food you have kept, bought or carried from an earlier harvest. Choose its months yourself. The plan does not work out a safe shelf life or a preservation recipe.",
+      "zu": "Rekhoda ukudla okugcinile, okuthengile noma okusele esivunweni sangaphambili. Zikhethele izinyanga zakho. Uhlelo alubali isikhathi okuphephile ukukugcina noma indlela yokukulondoloza.",
+      "st": "Rekota dijo tseo o di bolokileng, o di rekileng kapa tse setseng kotulong ya pele. Ikgethele dikgwedi tsa tsona. Moralo ha o bale nako e bolokehileng ya ho di boloka kapa mokgwa wa ho di baballa.",
+      "ts": "Rhekhoda swakudya leswi u swi hlayiseke, u swi xaveke kumbe leswi saleke eka ntshovelo wa khale. Hlawula tin’hweti ta swona hi wexe. Pulani a yi hlayeli nkarhi lowu swi nga hlayisiwaka hi vuhlayiseki kumbe ndlela yo swi hlayisa.",
+      "ve": "Rekhodani zwiḽiwa zwe na vhulunga, na renga kana zwo salaho kha khaṋo ya kale. Ḓinangeleni miṅwedzi yazwo. Pulane a i vhali tshifhinga tshine zwa nga vhulungwa zwo tsireledzea kana nḓila ya u zwi vhulunga.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Original food",
+      "zu": "Ukudla kwasekuqaleni",
+      "st": "Dijo tsa pele",
+      "ts": "Swakudya swo sungula",
+      "ve": "Zwiḽiwa zwa mathomoni",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Name of food in store",
+      "zu": "Igama lokudla okugciniwe",
+      "st": "Lebitso la dijo tse bolokilweng",
+      "ts": "Vito ra swakudya leswi hlayisiweke",
+      "ve": "Dzina ḽa zwiḽiwa zwo vhulungwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "e.g. Dried mango",
+      "zu": "isb. Umango omisiwe",
+      "st": "mohl. Mango o omisitsweng",
+      "ts": "xik. Mango lowu omisiweke",
+      "ve": "sa tsumbo Mango wo omiswaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "How is it kept?",
+      "zu": "Kugcinwa kanjani?",
+      "st": "Di bolokwa jwang?",
+      "ts": "Swi hlayisiwa hi ndlela yihi?",
+      "ve": "Zwi vhulungwa hani?",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Months with food in store",
+      "zu": "Izinyanga ezinokudla okugciniwe",
+      "st": "Dikgwedi tse nang le dijo tse bolokilweng",
+      "ts": "Tin’hweti leti nga ni swakudya leswi hlayisiweke",
+      "ve": "Miṅwedzi i re na zwiḽiwa zwo vhulungwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Tick each month. Add kg held in that month only if you know it. Blank kg stays unknown; nothing carries forward automatically.",
+      "zu": "Thikha inyanga ngayinye. Faka ama-kg agciniwe kuleyo nyanga kuphela uma uwazi. Ama-kg angabhalwanga ahlala engaziwa; akukho okudlulela ezinyangeni ezilandelayo ngokuzenzakalelayo.",
+      "st": "Tshwaya kgwedi ka nngwe. Kenya kg e bolokilweng kgweding eo feela haeba o e tseba. Kg e sa ngolwang e dula e sa tsejwe; ha ho letho le fetisetswang pele ka bolona.",
+      "ts": "Fungha n’hweti yin’wana ni yin’wana. Nghenisa kg leyi hlayisiweke eka n’hweti yoleyo ntsena loko u yi tiva. Kg leyi nga tsariwangiki yi sala yi nga tiveki; ku hava lexi yisiwaka eka tin’hweti leti landzelaka hi xoxe.",
+      "ve": "Swayani ṅwedzi muṅwe na muṅwe. Dzhenisani kg dzo vhulungwaho kha ṅwedzi uyo fhedzi arali ni tshi dzi ḓivha. Kg dzi songo ṅwalwaho dzi dzula dzi sa ḓivhei; a hu na tshine tsha pfukiselwa phanḓa nga tshoṱhe.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "kg held · optional",
+      "zu": "ama-kg agciniwe · akuphoqelekile",
+      "st": "kg e bolokilweng · ha se tlamo",
+      "ts": "kg leyi hlayisiweke · a swi bohi",
+      "ve": "kg dzo vhulungwaho · a zwi kombetshedzwi",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{date} stock kg, optional",
+      "zu": "{date} ama-kg agciniwe, akuphoqelekile",
+      "st": "{date} kg e bolokilweng, ha se tlamo",
+      "ts": "{date} kg ya vuhlayiselo, a swi bohi",
+      "ve": "{date} kg dza zwiḽiwa zwo vhulungwaho, a zwi kombetshedzwi",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Unknown",
+      "zu": "Akwaziwa",
+      "st": "Ha e tsejwe",
+      "ts": "A swi tiveki",
+      "ve": "A zwi ḓivhei",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Stock note",
+      "zu": "Inothi lokudla okugciniwe",
+      "st": "Ntlha ya dijo tse bolokilweng",
+      "ts": "Notsi ya swakudya leswi hlayisiweke",
+      "ve": "Notsi ya zwiḽiwa zwo vhulungwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Bought, carried stock, or kept from which harvest?",
+      "zu": "Kuthengiwe, kugcinwe kusukela phambilini, noma kugcinwe kusiphi isivuno?",
+      "st": "Di rekilwe, di setse polokelong ya pele, kapa di bolokilwe kotulong efe?",
+      "ts": "Swi xaviwile, swi huma eka vuhlayiselo bya khale, kumbe swi hlayisiwile eka ntshovelo wihi?",
+      "ve": "Zwo rengwa, zwo sala kha zwiḽiwa zwa kale zwo vhulungwaho, kana zwo vhulungwa kha khaṋo ifhio?",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Update stock record",
+      "zu": "Buyekeza irekhodi lokudla okugciniwe",
+      "st": "Ntjhafatsa rekoto ya dijo tse bolokilweng",
+      "ts": "Pfuxeta rhekhodo ya swakudya leswi hlayisiweke",
+      "ve": "Khwinifhadzani rekhodo ya zwiḽiwa zwo vhulungwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Add stock record",
+      "zu": "Faka irekhodi lokudla okugciniwe",
+      "st": "Kenya rekoto ya dijo tse bolokilweng",
+      "ts": "Engetela rhekhodo ya swakudya leswi hlayisiweke",
+      "ve": "Dzhenisani rekhodo ya zwiḽiwa zwo vhulungwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Made-up example stock",
+      "zu": "Ukudla okugciniwe kwesibonelo esiqanjiwe",
+      "st": "Dijo tse bolokilweng tsa mohlala o iqapetsweng",
+      "ts": "Swakudya leswi hlayisiweke swa maxifaniso lama endliweke",
+      "ve": "Zwiḽiwa zwo vhulungwaho zwa tsumbo yo tou itelwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Farm stock record",
+      "zu": "Irekhodi lokudla okugciniwe epulazini",
+      "st": "Rekoto ya dijo tse bolokilweng polasing",
+      "ts": "Rhekhodo ya swakudya leswi hlayisiweke epurasini",
+      "ve": "Rekhodo ya zwiḽiwa zwo vhulungwaho bulasini",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Saved stock record kept for reference. This source is excluded from household food and stock totals. Check its food-use guidance.",
+      "zu": "Irekhodi lokudla okugciniwe lihlala lingelokubhekisela. Lo mthombo awufakwa ezibalweni eziphelele zokudla kwasekhaya noma ukudla okugciniwe. Hlola iziqondiso zokuwusebenzisa njengokudla.",
+      "st": "Rekoto ya dijo tse bolokilweng e sala bakeng sa tshupiso. Mohlodi ona ha o kenngwe dipalong tsohle tsa dijo tsa lelapa le dijo tse bolokilweng. Hlahloba tataiso ya tshebediso ya wona e le dijo.",
+      "ts": "Rhekhodo ya swakudya leswi hlayisiweke yi sala yi ri ya xikombo. Xihlovo lexi a xi katsiwi eka mintsengo ya swakudya swa ndyangu ni swakudya leswi hlayisiweke. Kambela nkongomiso wa ku xi tirhisa xi va swakudya.",
+      "ve": "Rekhodo ya zwiḽiwa zwo vhulungwaho i dzula sa tshiko. Tshiko itshi a tshi katelwi kha ṱhanganyelo dza zwiḽiwa zwa muṱa na zwiḽiwa zwo vhulungwaho. Ṱolani nyeletshedzo ya u tshi shumisa sa zwiḽiwa.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{amount} kg held",
+      "zu": "ama-kg agciniwe angu-{amount}",
+      "st": "kg e bolokilweng e {amount}",
+      "ts": "kg leyi hlayisiweke ya {amount}",
+      "ve": "kg dzo vhulungwaho dza {amount}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "kg unknown",
+      "zu": "ama-kg awaziwa",
+      "st": "kg ha e tsejwe",
+      "ts": "kg a yi tiveki",
+      "ve": "kg a dzi ḓivhei",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Edit {label} stock",
+      "zu": "Hlela {label} okugciniwe",
+      "st": "Fetola {label} e bolokilweng",
+      "ts": "Hlela {label} leyi hlayisiweke",
+      "ve": "Shandulani {label} zwo vhulungwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Remove {label} stock",
+      "zu": "Susa {label} okugciniwe",
+      "st": "Tlosa {label} e bolokilweng",
+      "ts": "Susa {label} leyi hlayisiweke",
+      "ve": "Bvisani {label} zwo vhulungwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "No kept-food records yet. A harvest does not automatically create stored or processed food.",
+      "zu": "Awekho amarekhodi okudla okugciniwe okwamanje. Isivuno asenzi ukudla okugciniwe noma okucutshunguliwe ngokuzenzakalelayo.",
+      "st": "Ha ho direkoto tsa dijo tse bolokilweng ha jwale. Kotulo ha e etse dijo tse bolokilweng kapa tse sebetswang ka boyona.",
+      "ts": "Ku hava tirhekhodo ta swakudya leswi hlayisiweke sweswi. Ntshovelo a wu endli swakudya leswi hlayisiweke kumbe leswi lulamisiweke hi woxe.",
+      "ve": "A hu athu u vha na rekhodo dza zwiḽiwa zwo vhulungwaho. Khaṋo a i iti zwiḽiwa zwo vhulungwaho kana zwo shandukiswaho nga yoṱhe.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Fresh + kept food",
+      "zu": "Ukudla okusha + okugciniwe",
+      "st": "Dijo tse foreshe + tse bolokilweng",
+      "ts": "Swakudya leswintshwa + leswi hlayisiweke",
+      "ve": "Zwiḽiwa zwiswa + zwo vhulungwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Fresh food",
+      "zu": "Ukudla okusha",
+      "st": "Dijo tse foreshe",
+      "ts": "Swakudya leswintshwa",
+      "ve": "Zwiḽiwa zwiswa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Fresh harvest, food in store and recorded preserved food.",
+      "zu": "Isivuno esisha, ukudla okugciniwe nokudla okulondoloziwe okurekhodiwe.",
+      "st": "Kotulo e foreshe, dijo tse bolokilweng le direkoto tsa dijo tse baballetsweng.",
+      "ts": "Ntshovelo lowuntshwa, swakudya leswi hlayisiweke ni swakudya leswi hlayisiweke hi maendlelo man’wana leswi rhekhodiweke.",
+      "ve": "Khaṋo ntswa, zwiḽiwa zwo vhulungwaho na zwiḽiwa zwo rekhodiwaho zwo vhulungwaho nga maṅwe maitele.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Harvested or produced this month, including staple crops.",
+      "zu": "Okuvuniwe noma okukhiqizwe kule nyanga, kuhlanganise nezitshalo zokudla okuyisisekelo.",
+      "st": "Tse kotutsweng kapa tse hlahisitsweng kgweding ena, ho kenyeletswa dijalo tsa dijo tsa motheo.",
+      "ts": "Leswi tshoveriweke kumbe leswi humelerisiweke eka n’hweti leyi, ku katsa swibyariwa swa swakudya swa xisekelo.",
+      "ve": "Zwo kaṋwaho kana zwo bveledzwaho kha ṅwedzi uyu, hu tshi katelwa zwiliṅwa zwa zwiḽiwa zwa mutheo.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{title} graph; scroll sideways on a phone",
+      "zu": "Igrafu ye-{title}; skrola emaceleni ocingweni",
+      "st": "Kerafo ya {title}; suthela mahlakoreng fonong",
+      "ts": "Girafu ya {title}; fambisa hi matlhelo eka riqingho",
+      "ve": "Girafu ya {title}; sudzulusani nga matungo kha luṱingo",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{title}: different food types by month",
+      "zu": "{title}: izinhlobo zokudla ezahlukene ngenyanga",
+      "st": "{title}: mefuta e fapaneng ya dijo ka kgwedi",
+      "ts": "{title}: mixaka yo hambana ya swakudya hi n’hweti",
+      "ve": "{title}: tshaka dzo fhambanaho dza zwiḽiwa nga ṅwedzi",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{date}: {count} food types — {names}",
+      "zu": "{date}: izinhlobo zokudla ezingu-{count} — {names}",
+      "st": "{date}: mefuta e {count} ya dijo — {names}",
+      "ts": "{date}: mixaka ya swakudya ya {count} — {names}",
+      "ve": "{date}: tshaka dza zwiḽiwa dza {count} — {names}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{date}: {count} food types with marked windows",
+      "zu": "{date}: izinhlobo zokudla ezingu-{count} ezinezikhathi ezimakiwe",
+      "st": "{date}: mefuta e {count} ya dijo e nang le dinako tse tshwailweng",
+      "ts": "{date}: mixaka ya swakudya ya {count} leyi nga ni minkarhi leyi funghiweke",
+      "ve": "{date}: tshaka dza zwiḽiwa dza {count} dzi re na zwifhinga zwo swaiwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Number of food types",
+      "zu": "Inani lezinhlobo zokudla",
+      "st": "Palo ya mefuta ya dijo",
+      "ts": "Nhlayo ya mixaka ya swakudya",
+      "ve": "Tshivhalo tsha tshaka dza zwiḽiwa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Food availability and growing space graphs",
+      "zu": "Amagrafu okutholakala kokudla nendawo yokulima",
+      "st": "Dikerafo tsa ho fumaneha ha dijo le sebaka sa ho lema",
+      "ts": "Tigirafu ta ku kumeka ka swakudya ni ndhawu yo byala",
+      "ve": "Girafu dza u wanala ha zwiḽiwa na fhethu ha u lima",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Include kept food",
+      "zu": "Faka nokudla okugciniwe",
+      "st": "Kenyeletsa dijo tse bolokilweng",
+      "ts": "Katsa swakudya leswi hlayisiweke",
+      "ve": "Katelani zwiḽiwa zwo vhulungwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "One food counts once, even if it is both fresh and frozen. These are planned or recorded windows, not kilograms or meals. Regional reference seasons and undated plants or housing stay outside these totals.",
+      "zu": "Ukudla okukodwa kubalwa kanye, noma kukusha futhi kuqandisiwe. Lezi izikhathi ezihleliwe noma ezirekhodiwe, hhayi amakhilogremu noma ukudla kokudla kanye. Izikhathi zesifunda eziyizinkomba nezitshalo noma izindlu zezilwane ezingakabhalelwa izinsuku azifakwa kulezi zibalo eziphelele.",
+      "st": "Mofuta o le mong wa dijo o balwa hang, leha o le foreshe hape o hoamisitswe. Tsena ke dinako tse rerilweng kapa tse rekotilweng, eseng dikhilograma kapa dijo tsa nako e le nngwe. Dinako tsa tshupiso tsa lebatowa le dimela kapa matlo a diphoofolo a se nang matsatsi ha di kenngwe dipalong tsena tsohle.",
+      "ts": "Swakudya swin’we swi hlayiwa kan’we, hambi swi ri leswintshwa ni leswi gwitsirisiweke. Leyi i minkarhi leyi pulaniweke kumbe leyi rhekhodiweke, a hi tikhilogiramu kumbe swakudya swa nkarhi wun’we. Tinguva ta xikombo ta xifundza ni swimila kumbe tindlu ta swifuwo leswi nga riki na masiku a swi katsiwi eka mintsengo leyi.",
+      "ve": "Tshakha nthihi ya zwiḽiwa i vhalwa luthihi, naho i ntswa nahone yo xwatuwaho. Izwi ndi zwifhinga zwo pulanwaho kana zwo rekhodiwaho, a si khilogireme kana zwiḽiwa zwa tshifhinga tshithihi. Khalaṅwaha dza tshiko dza dzingu na zwimela kana zwifhaṱo zwa zwifuwo zwi si na maḓuvha a zwi katelwi kha ṱhanganyelo idzi.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "What is included in kept food?",
+      "zu": "Yini efakwa ekudleni okugciniwe?",
+      "st": "Ho kenngwa eng dijong tse bolokilweng?",
+      "ts": "I yini lexi katsiwaka eka swakudya leswi hlayisiweke?",
+      "ve": "Ndi mini tshi katelwaho kha zwiḽiwa zwo vhulungwaho?",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Food in store follows each crop’s sourced storage conditions. Freezing, drying, fermentation and other processing enter only through dated stock records. A harvest does not automatically create preserved food.",
+      "zu": "Ukudla okugciniwe kulandela izimo zokugcina zesitshalo ngasinye ezicashunwe emthonjeni. Ukuqandisa, ukomisa, ukuvutshelwa nokunye ukucubungula kufakwa kuphela ngamarekhodi okudla okugciniwe anezinsuku. Isivuno asenzi ukudla okulondoloziwe ngokuzenzakalelayo.",
+      "st": "Dijo tse polokelong di latela maemo a polokelo a sejalo ka seng a tswang mohloding. Ho hoamisa, ho omisa, ho bedisa le ditshebetso tse ding di kenngwa feela ka direkoto tsa dijo tse bolokilweng tse nang le matsatsi. Kotulo ha e etse dijo tse baballetsweng ka boyona.",
+      "ts": "Swakudya swa le vuhlayiselweni swi landzela swiyimo swo hlayisa swa xibyariwa xin’wana ni xin’wana leswi humaka eka xihlovo. Ku gwitsirisa, ku omisa, maendlelo ya mbiriso ni maendlelo man’wana yo lulamisa swi katsiwa ntsena hi tirhekhodo ta swakudya leswi hlayisiweke leti nga ni masiku. Ntshovelo a wu endli swakudya leswi hlayisiweke hi woxe.",
+      "ve": "Zwiḽiwa zwo vhulungwaho zwi tevhela nyimele dza u vhulunga dza tshiliṅwa tshiṅwe na tshiṅwe dzi bvaho kha tshiko. U xwatula, u omisa, maitele a mbiliso na maṅwe maitele a u shandukisa zwiḽiwa zwi katelwa fhedzi nga rekhodo dza zwiḽiwa zwo vhulungwaho dzi re na maḓuvha. Khaṋo a i iti zwiḽiwa zwo vhulungwaho nga yoṱhe.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "· made-up stock record",
+      "zu": "· irekhodi lokudla okugciniwe eliqanjiwe",
+      "st": "· rekoto ya dijo tse bolokilweng e iqapetsweng",
+      "ts": "· rhekhodo ya swakudya leswi hlayisiweke leyi endliweke",
+      "ve": "· rekhodo ya zwiḽiwa zwo vhulungwaho yo tou itelwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "· farm stock record",
+      "zu": "· irekhodi lokudla okugciniwe epulazini",
+      "st": "· rekoto ya dijo tse bolokilweng polasing",
+      "ts": "· rhekhodo ya swakudya leswi hlayisiweke epurasini",
+      "ve": "· rekhodo ya zwiḽiwa zwo vhulungwaho bulasini",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "None of the kept-food records match the selected graph options.",
+      "zu": "Awekho amarekhodi okudla okugciniwe ahambisana nezinketho zegrafu ezikhethiwe.",
+      "st": "Ha ho direkoto tsa dijo tse bolokilweng tse tsamaellanang le dikgetho tsa kerafo tse kgethilweng.",
+      "ts": "Ku hava tirhekhodo ta swakudya leswi hlayisiweke leti fambelanaka ni swihlawuriwa swa girafu leswi hlawuriweke.",
+      "ve": "A hu na rekhodo dza zwiḽiwa zwo vhulungwaho dzi tshimbidzanaho na khetho dza girafu dzo nangwaho.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "No kept-food records are supplied. Their availability is unknown. This graph uses only the marked harvest and sourced crop-storage windows.",
+      "zu": "Awekho amarekhodi okudla okugciniwe anikeziwe. Ukutholakala kwakho akwaziwa. Le grafu isebenzisa kuphela izikhathi zesivuno ezimakiwe nezikhathi zokugcina izitshalo ezicashunwe emthonjeni.",
+      "st": "Ha ho direkoto tsa dijo tse bolokilweng tse fanweng. Ho fumaneha ha tsona ha ho tsejwe. Kerafo ena e sebedisa feela dinako tsa kotulo tse tshwailweng le dinako tsa polokelo ya dijalo tse tswang mohloding.",
+      "ts": "Ku hava tirhekhodo ta swakudya leswi hlayisiweke leti nyikiweke. Ku kumeka ka swona a ku tiveki. Girafu leyi yi tirhisa ntsena minkarhi ya ntshovelo leyi funghiweke ni minkarhi yo hlayisa swibyariwa leyi humaka eka xihlovo.",
+      "ve": "A hu na rekhodo dza zwiḽiwa zwo vhulungwaho dzo ṋewaho. U wanala hazwo a hu ḓivhei. Girafu iyi i shumisa fhedzi zwifhinga zwa khaṋo zwo swaiwaho na zwifhinga zwa u vhulunga zwiliṅwa zwi bvaho kha tshiko.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Production in kilograms",
+      "zu": "Ukukhiqiza ngamakhilogremu",
+      "st": "Tlhahiso ka dikhilograma",
+      "ts": "Vuhumelerisi hi tikhilogiramu",
+      "ve": "Vhubveledzi nga khilogireme",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Kilogram graph view",
+      "zu": "Ukubuka igrafu yamakhilogremu",
+      "st": "Pono ya kerafo ya dikhilograma",
+      "ts": "Mbono wa girafu ya tikhilogiramu",
+      "ve": "Mbonalo ya girafu ya khilogireme",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Whole crop-cycle benchmarks, grouped by the month picking starts. A bar is the full cycle, not kilograms harvested in that month.",
+      "zu": "Izilinganiso zomjikelezo wesitshalo wonke, ziqoqwe ngenyanga okuqala ukukha ngayo. Ibha iwumjikelezo wonke, hhayi amakhilogremu avunwe kuleyo nyanga.",
+      "st": "Ditekanyetso tsa potoloho yohle ya sejalo, di hlophisitswe ka kgwedi eo ho kga ho qalang ka yona. Bara ke potoloho yohle, eseng dikhilograma tse kotutsweng kgweding eo.",
+      "ts": "Mimpimo ya xirhendzevutana hinkwaxo xa xibyariwa, yi hleriwe hi n’hweti leyi ku kha ku sungulaka ha yona. Bara i xirhendzevutana hinkwaxo, a hi tikhilogiramu leti tshoveriweke eka n’hweti yoleyo.",
+      "ve": "Mipimo ya mutevhe woṱhe wa tshiliṅwa, yo kuvhanganywaho nga ṅwedzi une u kaṋa ha thoma ngawo. Bara ndi mutevhe woṱhe, a si khilogireme dzo kaṋwaho kha ṅwedzi uyo.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Expected and actual monthly quantities you enter. An actual record replaces the expectation for that food and month. Missing weights stay unknown.",
+      "zu": "Amanani enyanga okulindelwe nawenzekile owafakayo. Irekhodi lokwenzekile lithatha indawo yokulindelwe yalokho kudla kuleyo nyanga. Izisindo ezingekho zihlala zingaziwa.",
+      "st": "Dipalo tsa kgwedi tse lebeletsweng le tse etsahetseng tseo o di kenyang. Rekoto ya se etsahetseng e nkela se lebeletsweng sebaka bakeng sa dijo tseo le kgwedi eo. Boima bo siyo bo dula bo sa tsejwe.",
+      "ts": "Tinhlayo ta n’hweti leti languteriweke ni leti veke kona leti u ti nghenisaka. Rhekhodo ya leswi veke kona yi siva leswi languteriweke eka swakudya ni n’hweti yoleyo. Mintiko leyi kayivelaka yi sala yi nga tiveki.",
+      "ve": "Zwivhalo zwa ṅwedzi zwo lavhelelwaho na zwo iteaho zwine na dzhenisa. Rekhodo ya zwo iteaho i dzhiela zwo lavhelelwaho vhudzulo kha zwiḽiwa izwo na ṅwedzi uyo. Zwileme zwi siho zwi dzula zwi sa ḓivhei.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Weights recorded as present in each month. Stored, dried, frozen, fermented and processed foods are stocks; they are not a second harvest.",
+      "zu": "Izisindo ezirekhodwe njengezikhona enyangeni ngayinye. Ukudla okugciniwe, okomisiwe, okuqandisiwe, okuvutshelwe nokucutshunguliwe kuyizimpahla ezigciniwe; akusona isivuno sesibili.",
+      "st": "Boima bo rekotilweng bo le teng kgweding ka nngwe. Dijo tse bolokilweng, tse omisitsweng, tse hoamisitsweng, tse bedisitsweng le tse sebetsitsweng ke dijo tse polokelong; ha se kotulo ya bobedi.",
+      "ts": "Mintiko leyi rhekhodiweke yi ri kona eka n’hweti yin’wana ni yin’wana. Swakudya leswi hlayisiweke, leswi omisiweke, leswi gwitsirisiweke, swa mbiriso ni leswi lulamisiweke i swakudya swa vuhlayiselo; a hi ntshovelo wa vumbirhi.",
+      "ve": "Zwileme zwo rekhodiwaho sa zwi re hone kha ṅwedzi muṅwe na muṅwe. Zwiḽiwa zwo vhulungwaho, zwo omiswaho, zwo xwatuwaho, zwa mbiliso na zwo shumiwaho ndi zwiḽiwa zwo vhulungwaho; a si khaṋo ya vhuvhili.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Production weight graph; scroll sideways on a phone",
+      "zu": "Igrafu yesisindo somkhiqizo; skrola emaceleni ocingweni",
+      "st": "Kerafo ya boima ba tlhahiso; suthela mahlakoreng fonong",
+      "ts": "Girafu ya ntiko wa vuhumelerisi; fambisa hi matlhelo eka riqingho",
+      "ve": "Girafu ya tshileme tsha vhubveledzi; sudzulusani nga matungo kha luṱingo",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{kind} kilograms by month",
+      "zu": "{kind} ngamakhilogremu ngenyanga",
+      "st": "{kind} ka dikhilograma ka kgwedi",
+      "ts": "{kind} hi tikhilogiramu hi n’hweti",
+      "ve": "{kind} nga khilogireme nga ṅwedzi",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Whole crop-cycle",
+      "zu": "Umjikelezo wesitshalo wonke",
+      "st": "Potoloho yohle ya sejalo",
+      "ts": "Xirhendzevutana hinkwaxo xa xibyariwa",
+      "ve": "Mutevhe woṱhe wa tshiliṅwa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Recorded stock",
+      "zu": "Ukudla okugciniwe okurekhodiwe",
+      "st": "Dijo tse bolokilweng tse rekotilweng",
+      "ts": "Swakudya leswi hlayisiweke leswi rhekhodiweke",
+      "ve": "Zwiḽiwa zwo vhulungwaho zwo rekhodiwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Entered monthly production",
+      "zu": "Ukukhiqiza kwenyanga okufakiwe",
+      "st": "Tlhahiso ya kgwedi e kentsweng",
+      "ts": "Vuhumelerisi bya n’hweti leri nghenisiweke",
+      "ve": "Vhubveledzi ha ṅwedzi ho dzheniswaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "no new crop cycle starts picking",
+      "zu": "awukho umjikelezo omusha wesitshalo oqala ukuvunwa",
+      "st": "ha ho potoloho e ntjha ya sejalo e qalang ho kgolwa",
+      "ts": "ku hava xirhendzevutana lexintshwa xa xibyariwa lexi sungulaka ku khiwa",
+      "ve": "a hu na mutevhe muswa wa tshiliṅwa une wa thoma u kaṋwa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "quantity unknown",
+      "zu": "inani alaziwa",
+      "st": "palo ha e tsejwe",
+      "ts": "nhlayo a yi tiveki",
+      "ve": "tshivhalo a tshi ḓivhei",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "; incomplete, missing {names}",
+      "zu": "; akuphelele, kushoda {names}",
+      "st": "; ha e a fella, ho haella {names}",
+      "ts": "; a swi helelanga, ku kayivela {names}",
+      "ve": "; a zwo ngo fhela, hu khou ṱahela {names}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "kg · * = known subtotal with missing weights. ? = quantity unknown. – = no new crop cycle starts picking. Litres, eggs and items retain their own units. Tree kg by age remain in the yearly projection; they are not spread across months.",
+      "zu": "kg · * = ingqikithi yezibalo ezaziwayo enezisindo ezingekho. ? = inani alaziwa. – = awukho umjikelezo omusha wesitshalo oqala ukuvunwa. Amalitha, amaqanda nezinto kugcina amayunithi ako. Ama-kg ezihlahla ngokweminyaka ahlala ekubikezeleni konyaka; awasatshalaliswa ezinyangeni.",
+      "st": "kg · * = kakaretso e tsejwang e sa fellang e nang le boima bo siyo. ? = palo ha e tsejwe. – = ha ho potoloho e ntjha ya sejalo e qalang ho kgolwa. Dilitara, mahe le dintho di boloka diyuniti tsa tsona. Kg ya difate ka dilemo e sala ponelopeleng ya selemo; ha e arolwe ka dikgwedi.",
+      "ts": "kg · * = ntsengo lowu tivekaka lowu nga helelangiki wu ri ni mintiko leyi kayivelaka. ? = nhlayo a yi tiveki. – = ku hava xirhendzevutana lexintshwa xa xibyariwa lexi sungulaka ku khiwa. Tilitara, matandza ni swilo swi hlayisa tiyuniti ta swona. Kg ya misinya hi vukhale yi sala eka mbvhumbo wa lembe; a yi hangalasiwi hi tin’hweti.",
+      "ve": "kg · * = ṱhanganyelo ya zwithihi i ḓivheaho i re na zwileme zwi siho. ? = tshivhalo a tshi ḓivhei. – = a hu na mutevhe muswa wa tshiliṅwa une wa thoma u kaṋwa. Ḽithara, makumba na zwithu zwi vhulunga yuniti dzazwo. Kg dza miri nga miṅwaha dzi dzula kha mbonelaphanḓa ya ṅwaha; a dzi phaḓaladzwi nga miṅwedzi.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "See weights and information still needed",
+      "zu": "Bona izisindo nolwazi olusadingeka",
+      "st": "Bona boima le tlhahisoleseding e ntseng e hlokahala",
+      "ts": "Vona mintiko ni vuxokoxoko bya ha lavekaka",
+      "ve": "Vhonani zwileme na mafhungo a kha ḓi ṱoḓeaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{amount} kg for its full cycle",
+      "zu": "ama-kg angu-{amount} omjikelezo wawo wonke",
+      "st": "kg e {amount} bakeng sa potoloho ya sona yohle",
+      "ts": "kg ya {amount} eka xirhendzevutana xa xona hinkwaxo",
+      "ve": "kg dza {amount} kha mutevhe watsho woṱhe",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "No new crop cycle starts picking",
+      "zu": "Awukho umjikelezo omusha wesitshalo oqala ukuvunwa",
+      "st": "Ha ho potoloho e ntjha ya sejalo e qalang ho kgolwa",
+      "ts": "Ku hava xirhendzevutana lexintshwa xa xibyariwa lexi sungulaka ku khiwa",
+      "ve": "A hu na mutevhe muswa wa tshiliṅwa une wa thoma u kaṋwa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{label}: {amount} kg in store",
+      "zu": "{label}: ama-kg angu-{amount} agciniwe",
+      "st": "{label}: kg e {amount} e bolokilweng",
+      "ts": "{label}: kg ya {amount} evuhlayiselweni",
+      "ve": "{label}: kg dza {amount} dzo vhulungwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Stock weights not entered",
+      "zu": "Izisindo zokudla okugciniwe azifakiwe",
+      "st": "Boima ba dijo tse bolokilweng ha bo a kenngwa",
+      "ts": "Mintiko ya swakudya leswi hlayisiweke a yi nghenisiwanga",
+      "ve": "Zwileme zwa zwiḽiwa zwo vhulungwaho a zwo ngo dzheniswa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Monthly quantities not entered",
+      "zu": "Amanani enyanga awafakiwe",
+      "st": "Dipalo tsa kgwedi ha di a kenngwa",
+      "ts": "Tinhlayo ta n’hweti a ti nghenisiwanga",
+      "ve": "Zwivhalo zwa ṅwedzi a zwo ngo dzheniswa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Still needed:",
+      "zu": "Kusadingeka:",
+      "st": "Ho ntse ho hlokahala:",
+      "ts": "Swa ha laveka:",
+      "ve": "Zwi kha ḓi ṱoḓea:",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Crop growing space",
+      "zu": "Indawo yokulima izitshalo",
+      "st": "Sebaka sa ho lema dijalo",
+      "ts": "Ndhawu yo byala swibyariwa",
+      "ve": "Fhethu ha u lima zwiliṅwa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{area} m² of mapped beds and staple plots. Stored food does not keep a bed occupied.",
+      "zu": "{area} m² wemibhede nezinsimu zokudla okuyisisekelo ezisemabalazweni. Ukudla okugciniwe akugcini umbhede ugcwele.",
+      "st": "{area} m² ya dibethe le ditsha tsa dijalo tsa motheo tse takilweng mmapeng. Dijo tse bolokilweng ha di dule di nka sebaka betheng.",
+      "ts": "{area} m² ya mibedo ni tindhawu ta swibyariwa swa xisekelo leti nga emepeni. Swakudya leswi hlayisiweke a swi endli leswaku mubedo wu tama wu tirhisiwa.",
+      "ve": "{area} m² dza mibete na zwitentsi zwa zwiliṅwa zwa mutheo zwo sumbedzwaho kha mapa. Zwiḽiwa zwo vhulungwaho a zwi iti uri mubete u dzule wo farwa.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Growing space graph; scroll sideways on a phone",
+      "zu": "Igrafu yendawo yokulima; skrola emaceleni ocingweni",
+      "st": "Kerafo ya sebaka sa ho lema; suthela mahlakoreng fonong",
+      "ts": "Girafu ya ndhawu yo byala; fambisa hi matlhelo eka riqingho",
+      "ve": "Girafu ya fhethu ha u lima; sudzulusani nga matungo kha luṱingo",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Used and free crop growing space by month",
+      "zu": "Indawo yokulima esetshenzisiwe nengasetshenzisiwe ngenyanga",
+      "st": "Sebaka sa ho lema dijalo se sebedisitsweng le se lokolohileng ka kgwedi",
+      "ts": "Ndhawu yo byala swibyariwa leyi tirhisiwaka ni leyi nga tirhisiwiki hi n’hweti",
+      "ve": "Fhethu ha u lima zwiliṅwa hu shumiswaho na hu sa shumiswi nga ṅwedzi",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{date}: {occupied} m² occupied, {free} m² free",
+      "zu": "{date}: {occupied} m² esetshenzisiwe, {free} m² engasetshenzisiwe",
+      "st": "{date}: {occupied} m² e sebedisitsweng, {free} m² e lokolohileng",
+      "ts": "{date}: {occupied} m² leyi tirhisiwaka, {free} m² leyi nga tirhisiwiki",
+      "ve": "{date}: {occupied} m² hu shumiswaho, {free} m² hu sa shumiswi",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Map the beds and staple plots to see their occupied and free space. No crop ground is measured here yet.",
+      "zu": "Dweba imibhede nezinsimu zokudla okuyisisekelo ebalazweni ukuze ubone indawo esetshenzisiwe nengasetshenzisiwe. Ayikho indawo yezitshalo ekaliwe lapha okwamanje.",
+      "st": "Taka dibethe le ditsha tsa dijalo tsa motheo mmapeng ho bona sebaka se sebedisitsweng le se lokolohileng. Ha ho sebaka sa dijalo se lekantsweng mona ha jwale.",
+      "ts": "Beka mibedo ni tindhawu ta swibyariwa swa xisekelo emepeni leswaku u vona ndhawu leyi tirhisiwaka ni leyi nga tirhisiwiki. Ku hava ndhawu ya swibyariwa leyi pimiweke laha sweswi.",
+      "ve": "Sumbedzani mibete na zwitentsi zwa zwiliṅwa zwa mutheo kha mapa uri ni vhone fhethu hu shumiswaho na hu sa shumiswi. A hu athu u pimiwa fhethu ha zwiliṅwa hafha.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Occupied",
+      "zu": "Isetshenzisiwe",
+      "st": "E sebedisitsweng",
+      "ts": "Leyi tirhisiwaka",
+      "ve": "Hu shumiswaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Free between crops",
+      "zu": "Ayisetshenziswa phakathi kwezitshalo",
+      "st": "E lokolohileng pakeng tsa dijalo",
+      "ts": "Leyi nga tirhisiwiki magareng ka swibyariwa",
+      "ve": "Hu sa shumiswi vhukati ha zwiliṅwa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Crop ground only: food forest, animal areas and ponds are not measured here. The graph caps occupation at each bed’s size; it does not prove that overlapping plantings fit. Keep the plan’s space checks.",
+      "zu": "Indawo yezitshalo kuphela: ihlathi lokudla, izindawo zezilwane namachibi akukalwa lapha. Igrafu igcina indawo esetshenzisiwe ingeqi usayizi wombhede ngamunye; ayiqinisekisi ukuthi izitshalo ezikhula ngesikhathi esisodwa ziyalingana. Gcina ukuhlolwa kwendawo yohlelo.",
+      "st": "Sebaka sa dijalo feela: moru wa dijo, dibaka tsa diphoofolo le matamo ha di lekanngwe mona. Kerafo e thibela sebaka se sebedisitsweng ho feta boholo ba bethe ka nngwe; ha e pake hore dijalo tse leng teng ka nako e le nngwe di lekana. Boloka ditlhahlobo tsa sebaka tsa moralo.",
+      "ts": "Ndhawu ya swibyariwa ntsena: xihlahla xa swakudya, tindhawu ta swifuwo ni madziva a swi pimiwi laha. Girafu yi veka mpimo wa ndhawu leyi tirhisiwaka eka vukulu bya mubedo wun’wana ni wun’wana; a yi tiyisisi leswaku swimila leswi nghenelelanaka hi nkarhi swi nghena endhawini. Hlayisa minkambisiso ya ndhawu ya pulani.",
+      "ve": "Fhethu ha zwiliṅwa fhedzi: ḓaka ḽa zwiḽiwa, fhethu ha zwifuwo na mativha a zwi pimiwi hafha. Girafu i vhea mukano wa fhethu hu shumiswaho kha vhuhulwane ha mubete muṅwe na muṅwe; a i khwaṱhisedzi uri zwimela zwi tshimbidzanaho nga tshifhinga zwi a lingana. Vhulungani ṱhaṱhuvho dza fhethu dza pulane.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "How production changes as plants grow",
+      "zu": "Ukukhiqiza kushintsha kanjani njengoba izitshalo zikhula",
+      "st": "Kamoo tlhahiso e fetohang ha dimela di hola",
+      "ts": "Ndlela leyi vuhumelerisi byi cincaka ha yona loko swimila swi kula",
+      "ve": "Ndila ine vhubveledzi ha shanduka ngayo musi zwimela zwi tshi aluwa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "The next ten years, starting this month. Add planting dates and expected yields under each plant above. Missing yields remain visible; young trees do not receive a mature-tree yield.",
+      "zu": "Iminyaka eyishumi ezayo, kusukela kule nyanga. Faka izinsuku zokutshala nezivuno ezilindelwe ngaphansi kwesitshalo ngasinye ngenhla. Izivuno ezingekho zihlala zibonakala; izihlahla ezincane azinikwa isivuno sesihlahla esidala.",
+      "st": "Dilemo tse leshome tse tlang, ho qala kgweding ena. Kenya matsatsi a ho jala le chai e lebeletsweng tlasa semela ka seng ka hodimo. Chai e siyo e dula e bonahala; difate tse nyane ha di fuwe chai ya sefate se hodileng.",
+      "ts": "Malembe ya khume lama taka, ku sungula eka n’hweti leyi. Nghenisa masiku yo byala ni mintshovelo leyi languteriweke ehansi ka ximilana xin’wana ni xin’wana laha henhla. Mintshovelo leyi kayivelaka yi sala yi vonaka; misinya leyitsongo a yi nyikiwi ntshovelo wa nsinya lowu kuleke.",
+      "ve": "Miṅwaha ya fumi i ḓaho, u thoma kha ṅwedzi uyu. Dzhenisani maḓuvha a u ṱavha na khaṋo dzo lavhelelwaho fhasi ha tshimela tshiṅwe na tshiṅwe afho nṱha. Khaṋo dzi siho dzi dzula dzi tshi vhonala; miri miṱuku a i ṋewi khaṋo ya muri wo aluwaho.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Vegetables & staples",
+      "zu": "Imifino nokudla okuyisisekelo",
+      "st": "Meroho le dijalo tsa dijo tsa motheo",
+      "ts": "Miroho ni swibyariwa swa swakudya swa xisekelo",
+      "ve": "Miroho na zwiliṅwa zwa zwiḽiwa zwa mutheo",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Fruit, nuts & berries",
+      "zu": "Izithelo, amantongomane namajikijolo",
+      "st": "Ditholwana, linate le monokotshwai",
+      "ts": "Mihandzu, timanga ni mihandzu leyitsongo",
+      "ve": "Mitshelo, nḓuhu na mitshelo miṱuku",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Numbers are projections in kg",
+      "zu": "Amanani ayizibikezelo ngama-kg",
+      "st": "Dipalo ke diponelopele ka kg",
+      "ts": "Tinhlayo i mimbvhumbo hi kg",
+      "ve": "Zwivhalo ndi mbonelaphanḓa nga kg",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Check quantities",
+      "zu": "Hlola amanani",
+      "st": "Hlahloba dipalo",
+      "ts": "Kambela tinhlayo",
+      "ve": "Ṱolani zwivhalo",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Check beds",
+      "zu": "Hlola imibhede",
+      "st": "Hlahloba dibethe",
+      "ts": "Kambela mibedo",
+      "ve": "Ṱolani mibete",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "* Known subtotal only. Missing production is not zero. Striped ends show harvest that changes as plants age during the year.",
+      "zu": "* Ingqikithi yezibalo ezaziwayo kuphela. Ukukhiqiza okungaziwa akuyena u-zero. Imiphetho enemigqa ibonisa isivuno esishintsha njengoba izitshalo zikhula phakathi nonyaka.",
+      "st": "* Kakaretso e tsejwang e sa fellang feela. Tlhahiso e siyo ha se lefela. Dipheletso tse metsero di bontsha kotulo e fetohang ha dimela di hola selemong.",
+      "ts": "* Ntsengo lowu tivekaka lowu nga helelangiki ntsena. Vuhumelerisi leri kayivelaka a hi ziro. Makumu lama nga ni mintila ma komba ntshovelo lowu cincaka loko swimila swi kula elembeni.",
+      "ve": "* Ṱhanganyelo ya zwithihi i ḓivheaho fhedzi. Vhubveledzi vhu siho a si zero. Magumo a re na mitalo a sumbedza khaṋo ine ya shanduka musi zwimela zwi tshi aluwa vhukati ha ṅwaha.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Vegetables & staples:",
+      "zu": "Imifino nokudla okuyisisekelo:",
+      "st": "Meroho le dijalo tsa dijo tsa motheo:",
+      "ts": "Miroho ni swibyariwa swa swakudya swa xisekelo:",
+      "ve": "Miroho na zwiliṅwa zwa zwiḽiwa zwa mutheo:",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Resolve bed conflicts",
+      "zu": "Lungisa ukungqubuzana kwezinhlelo zemibhede",
+      "st": "Rarolla ho thulana ha meralo ya dibethe",
+      "ts": "Lulamisa ku lwisana ka tipulani ta mibedo",
+      "ve": "Lugisani u tshayisana ha pulane dza mibete",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{amount} from cycles starting harvest in this period",
+      "zu": "{amount} kusukela emijikelezweni eqala ukuvunwa kule nkathi",
+      "st": "{amount} ho tswa dipotolohong tse qalang ho kotulwa nakong ena",
+      "ts": "{amount} ku suka eka swirhendzevutana leswi sungulaka ku tshoveriwa eka nkarhi lowu",
+      "ve": "{amount} u bva kha mitevhe ine ya thoma u kaṋwa kha tshifhinga itshi",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Not quantified:",
+      "zu": "Akulinganiswanga:",
+      "st": "Ha e a lekanngwa ka palo:",
+      "ts": "A swi pimiwanga hi nhlayo:",
+      "ve": "A zwo ngo pimiwa nga tshivhalo:",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{count} plant",
+      "zu": "isitshalo esingu-{count}",
+      "st": "semela se {count}",
+      "ts": "ximilana xa {count}",
+      "ve": "tshimela tsha {count}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{count} plants",
+      "zu": "izitshalo ezingu-{count}",
+      "st": "dimela tse {count}",
+      "ts": "swimila swa {count}",
+      "ve": "zwimela zwa {count}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{amount} known + missing yields",
+      "zu": "{amount} okwaziwayo + izivuno ezingekho",
+      "st": "{amount} e tsejwang + chai e siyo",
+      "ts": "{amount} lowu tivekaka + mintshovelo leyi kayivelaka",
+      "ve": "{amount} i ḓivheaho + khaṋo dzi siho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "What the projection assumes",
+      "zu": "Okucatshangwa ukubikezela",
+      "st": "Seo ponelopele e se nkang e le motheo",
+      "ts": "Leswi mbvhumbo wu swi tekaka swi ri masungulo",
+      "ve": "Zwine mbonelaphanḓa ya zwi dzhia sa mutheo",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{list} and {last}",
+      "zu": "{list} no-{last}",
+      "st": "{list} le {last}",
+      "ts": "{list} ni {last}",
+      "ve": "{list} na {last}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{list} also expected",
+      "zu": "kulindelwe futhi {list}",
+      "st": "ho lebeletswe le {list}",
+      "ts": "{list} na swona swi languteriwile",
+      "ve": "{list} na zwone zwo lavhelelwa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{count} crop kind ready to pick",
+      "zu": "uhlobo lwesitshalo olungu-{count} olulungele ukukhiwa",
+      "st": "mofuta o {count} wa sejalo o loketseng ho kgolwa",
+      "ts": "muxaka wa xibyariwa wa {count} lowu lunghekeleke ku khiwa",
+      "ve": "lushaka lwa tshiliṅwa lwa {count} lwo lugelaho u kaṋwa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{count} crop kinds ready to pick",
+      "zu": "izinhlobo zezitshalo ezingu-{count} ezilungele ukukhiwa",
+      "st": "mefuta e {count} ya dijalo e loketseng ho kgolwa",
+      "ts": "mixaka ya swibyariwa ya {count} leyi lunghekeleke ku khiwa",
+      "ve": "tshaka dza zwiliṅwa dza {count} dzo lugelaho u kaṋwa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{count} stored crop kind",
+      "zu": "uhlobo lwesitshalo olungu-{count} olugciniwe",
+      "st": "mofuta o {count} wa sejalo o bolokilweng",
+      "ts": "muxaka wa xibyariwa wa {count} lowu hlayisiweke",
+      "ve": "lushaka lwa tshiliṅwa lwa {count} lwo vhulungwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{count} stored crop kinds",
+      "zu": "izinhlobo zezitshalo ezingu-{count} ezigciniwe",
+      "st": "mefuta e {count} ya dijalo e bolokilweng",
+      "ts": "mixaka ya swibyariwa ya {count} leyi hlayisiweke",
+      "ve": "tshaka dza zwiliṅwa dza {count} dzo vhulungwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{count} fruit tree kind",
+      "zu": "uhlobo lwesihlahla sezithelo olungu-{count}",
+      "st": "mofuta o {count} wa sefate sa ditholwana",
+      "ts": "muxaka wa nsinya wa mihandzu wa {count}",
+      "ve": "lushaka lwa muri wa mitshelo lwa {count}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{count} fruit tree kinds",
+      "zu": "izinhlobo zezihlahla zezithelo ezingu-{count}",
+      "st": "mefuta e {count} ya difate tsa ditholwana",
+      "ts": "mixaka ya misinya ya mihandzu ya {count}",
+      "ve": "tshaka dza miri ya mitshelo dza {count}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "nothing",
+      "zu": "akukho",
+      "st": "ha ho letho",
+      "ts": "ku hava",
+      "ve": "a hu na tshithu",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": ", nothing fresh",
+      "zu": ", akukho okusha",
+      "st": ", ha ho dijo tse foreshe",
+      "ts": ", ku hava leswintshwa",
+      "ve": ", a hu na zwiswa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "· sow {month} in {bed} ({share}) · picking {picking}",
+      "zu": "· tshala {month} ku-{bed} ({share}) · vuna {picking}",
+      "st": "· jala ka {month} ho {bed} ({share}) · kga ka {picking}",
+      "ts": "· byala hi {month} eka {bed} ({share}) · kha hi {picking}",
+      "ve": "· ṱavhani nga {month} kha {bed} ({share}) · kaṋani nga {picking}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Plan {crop}, sown in {month} in {bed}",
+      "zu": "Hlela {crop}, kuhlwanyelwe ngo-{month} ku-{bed}",
+      "st": "Rera {crop}, e jetsweng ka {month} ho {bed}",
+      "ts": "Pulana {crop}, lexi byariweke hi {month} eka {bed}",
+      "ve": "Pulanani {crop}, tsho ṱavhwaho nga {month} kha {bed}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Plan it",
+      "zu": "Kufake ohlelweni",
+      "st": "Se kenye moralong",
+      "ts": "Xi pulane",
+      "ve": "Zwi pulaneni",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Something fresh in all 12 months.",
+      "zu": "Kukhona ukudla okusha kuzo zonke izinyanga ezingu-12.",
+      "st": "Ho na le dijo tse foreshe dikgweding tsohle tse 12.",
+      "ts": "Ku ni swakudya leswintshwa eka tin’hweti hinkwato ta 12.",
+      "ve": "Hu na zwiḽiwa zwiswa kha miṅwedzi yoṱhe ya 12.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Something fresh in {count} of 12 months; nothing fresh in {months}.",
+      "zu": "Kukhona ukudla okusha ezinyangeni ezingu-{count} kwezingu-12; akukho okusha ngo-{months}.",
+      "st": "Ho na le dijo tse foreshe dikgweding tse {count} ho tse 12; ha ho tse foreshe ka {months}.",
+      "ts": "Ku ni swakudya leswintshwa eka tin’hweti ta {count} eka 12; ku hava leswintshwa hi {months}.",
+      "ve": "Hu na zwiḽiwa zwiswa kha miṅwedzi ya {count} kha ya 12; a hu na zwiswa nga {months}.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Year of food",
+      "zu": "Unyaka wokudla",
+      "st": "Selemo sa dijo",
+      "ts": "Lembe ra swakudya",
+      "ve": "Ṅwaha wa zwiḽiwa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "The plan as it repeats each year, beds, trees and animals together — the rows switched on in the chart above. This shows whether food comes in, not whether it is enough. Availability bars count crop kinds, not kilograms.",
+      "zu": "Uhlelo njengoba luphindwa unyaka ngamunye, imibhede, izihlahla nezilwane ndawonye — imigqa evuliwe eshadini elingenhla. Lokhu kubonisa ukuthi ukudla kuyatholakala yini, hhayi ukuthi kwanele yini. Amabha okutholakala abala izinhlobo zezitshalo, hhayi amakhilogremu.",
+      "st": "Moralo ha o ntse o pheta selemo le selemo, dibethe, difate le diphoofolo mmoho — mela e buletsweng kerafong e ka hodimo. Sena se bontsha hore na dijo di a fumaneha, eseng hore na di lekane. Dibara tsa ho fumaneha di bala mefuta ya dijalo, eseng dikhilograma.",
+      "ts": "Pulani loko yi vuyelerisiwa lembe rin’wana ni rin’wana, mibedo, misinya ni swifuwo swin’we — mintila leyi pfuriweke eka chati leyi nga laha henhla. Swi komba loko swakudya swi fika, a swi kombi loko swi ringana. Tibara ta ku kumeka ti hlayela mixaka ya swibyariwa, a hi tikhilogiramu.",
+      "ve": "Pulane musi i tshi dovhololwa ṅwaha muṅwe na muṅwe, mibete, miri na zwifuwo zwoṱhe — mitalo yo vulwaho kha tshati i re afho nṱha. Izwi zwi sumbedza arali zwiḽiwa zwi tshi wanala, a zwi sumbedzi arali zwi tshi eḓana. Mabari a u wanala a vhala tshaka dza zwiliṅwa, a si khilogireme.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "The next 12 months from today, beds, trees and animals together — the rows switched on in the chart above. This shows whether food comes in, not whether it is enough. Availability bars count crop kinds, not kilograms.",
+      "zu": "Izinyanga ezingu-12 ezizayo kusukela namuhla, imibhede, izihlahla nezilwane ndawonye — imigqa evuliwe eshadini elingenhla. Lokhu kubonisa ukuthi ukudla kuyatholakala yini, hhayi ukuthi kwanele yini. Amabha okutholakala abala izinhlobo zezitshalo, hhayi amakhilogremu.",
+      "st": "Dikgwedi tse 12 tse tlang ho tloha kajeno, dibethe, difate le diphoofolo mmoho — mela e buletsweng kerafong e ka hodimo. Sena se bontsha hore na dijo di a fumaneha, eseng hore na di lekane. Dibara tsa ho fumaneha di bala mefuta ya dijalo, eseng dikhilograma.",
+      "ts": "Tin’hweti ta 12 leti taka ku suka namuntlha, mibedo, misinya ni swifuwo swin’we — mintila leyi pfuriweke eka chati leyi nga laha henhla. Swi komba loko swakudya swi fika, a swi kombi loko swi ringana. Tibara ta ku kumeka ti hlayela mixaka ya swibyariwa, a hi tikhilogiramu.",
+      "ve": "Miṅwedzi ya 12 i ḓaho u bva ṋamusi, mibete, miri na zwifuwo zwoṱhe — mitalo yo vulwaho kha tshati i re afho nṱha. Izwi zwi sumbedza arali zwiḽiwa zwi tshi wanala, a zwi sumbedzi arali zwi tshi eḓana. Mabari a u wanala a vhala tshaka dza zwiliṅwa, a si khilogireme.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "fresh vegetables & staples",
+      "zu": "imifino emisha nokudla okuyisisekelo",
+      "st": "meroho e foreshe le dijalo tsa dijo tsa motheo",
+      "ts": "miroho leyintshwa ni swibyariwa swa swakudya swa xisekelo",
+      "ve": "miroho miswa na zwiliṅwa zwa zwiḽiwa zwa mutheo",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "animal products",
+      "zu": "imikhiqizo yezilwane",
+      "st": "dihlahiswa tsa diphoofolo",
+      "ts": "swikumiwa swa swifuwo",
+      "ve": "zwibveledzwa zwa zwifuwo",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "in store only",
+      "zu": "okugciniwe kuphela",
+      "st": "tse bolokilweng feela",
+      "ts": "leswi nga evuhlayiselweni ntsena",
+      "ve": "zwo vhulungwaho fhedzi",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Fill the months with no fresh crop",
+      "zu": "Gcwalisa izinyanga ezingenaso isitshalo esisha",
+      "st": "Tlatsa dikgwedi tse se nang dijalo tse foreshe",
+      "ts": "Tata tin’hweti leti nga riki na xibyariwa lexintshwa",
+      "ve": "Ḓadzisani miṅwedzi i si na tshiliṅwa tshiswa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Sowings in this region's usual window that your site’s temperatures allow, on a bed with room over the crop's months. “Plan it” opens the normal planting form so you can check it first.",
+      "zu": "Ukuhlwanyela ngesikhathi esivamile salesi sifunda esivunyelwa amazinga okushisa endaweni yakho, embhedeni onendawo kuzo zonke izinyanga zesitshalo. “Kufake ohlelweni” kuvula ifomu elijwayelekile lokutshala ukuze uqale ngokuhlola.",
+      "st": "Ho jala nakong e tlwaelehileng ya lebatowa lena eo dithemphereitjhara tsa sebaka sa hao di e dumellang, betheng e nang le sebaka dikgweding tsa sejalo. “Se kenye moralong” e bula foromo e tlwaelehileng ya ho jala hore o e hlahlobe pele.",
+      "ts": "Ku byala eka nkarhi lowu tolovelekeke wa xifundza lexi lowu matitimelelo ya ndhawu ya wena ma wu pfumelelaka, eka mubedo lowu nga ni ndhawu eka tin’hweti ta xibyariwa. “Xi pulane” swi pfula fomo ya ntolovelo yo byala leswaku u rhanga u yi kambela.",
+      "ve": "U ṱavha kha tshifhinga tsho ḓoweleaho tsha dzingu iḽi tshine mufhiso wa fhethu haṋu wa tshi tendela, kha mubete u re na tshikhala kha miṅwedzi ya tshiliṅwa. “Zwi pulaneni” zwi vula fomo yo ḓoweleaho ya u ṱavha uri ni thome u i ṱola.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Sowings in this region's usual window, on a bed with room over the crop's months. “Plan it” opens the normal planting form so you can check it first.",
+      "zu": "Ukuhlwanyela ngesikhathi esivamile salesi sifunda, embhedeni onendawo kuzo zonke izinyanga zesitshalo. “Kufake ohlelweni” kuvula ifomu elijwayelekile lokutshala ukuze uqale ngokuhlola.",
+      "st": "Ho jala nakong e tlwaelehileng ya lebatowa lena, betheng e nang le sebaka dikgweding tsa sejalo. “Se kenye moralong” e bula foromo e tlwaelehileng ya ho jala hore o e hlahlobe pele.",
+      "ts": "Ku byala eka nkarhi lowu tolovelekeke wa xifundza lexi, eka mubedo lowu nga ni ndhawu eka tin’hweti ta xibyariwa. “Xi pulane” swi pfula fomo ya ntolovelo yo byala leswaku u rhanga u yi kambela.",
+      "ve": "U ṱavha kha tshifhinga tsho ḓoweleaho tsha dzingu iḽi, kha mubete u re na tshikhala kha miṅwedzi ya tshiliṅwa. “Zwi pulaneni” zwi vula fomo yo ḓoweleaho ya u ṱavha uri ni thome u i ṱola.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "No veg bed is mapped yet, so there is nowhere to suggest a sowing. Draw a bed on the map.",
+      "zu": "Awukho umbhede wemifino osebalazweni okwamanje, ngakho akukho ndawo yokuphakamisa ukuhlwanyela. Dweba umbhede ebalazweni.",
+      "st": "Ha ho bethe ya meroho e takilweng mmapeng ha jwale, kahoo ha ho moo ho ka sisinngwang ho jala teng. Taka bethe mmapeng.",
+      "ts": "Ku hava mubedo wa miroho lowu nga emepeni sweswi, kutani ku hava laha ku nga ringanyetiwaka ku byala kona. Dirowa mubedo emepeni.",
+      "ve": "A hu athu u sumbedzwa mubete wa miroho kha mapa, ngauralo a hu na fhethu hune ha nga dzinginywa u ṱavha. Olani mubete kha mapa.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "nothing fresh at all",
+      "zu": "akukho ukudla okusha nhlobo",
+      "st": "ha ho dijo tse foreshe ho hang",
+      "ts": "ku hava swakudya leswintshwa nikatsongo",
+      "ve": "a hu na zwiḽiwa zwiswa na zwiṱuku",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "no fresh crop{cover}",
+      "zu": "akukho sitshalo esisha{cover}",
+      "st": "ha ho sejalo se foreshe{cover}",
+      "ts": "ku hava xibyariwa lexintshwa{cover}",
+      "ve": "a hu na tshiliṅwa tshiswa{cover}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "{crops}{others} could pick then, but no bed has room over those months. Free a bed or map another.",
+      "zu": "{crops}{others} kungakhiwa ngaleso sikhathi, kodwa awukho umbhede onendawo kuzo zonke lezo zinyanga. Khulula umbhede noma udwebe omunye ebalazweni.",
+      "st": "{crops}{others} di ka kgolwa ka nako eo, empa ha ho bethe e nang le sebaka dikgweding tseo. Lokolla bethe kapa o take e nngwe mmapeng.",
+      "ts": "{crops}{others} swi nga khiwa hi nkarhi wolowo, kambe ku hava mubedo lowu nga ni ndhawu eka tin’hweti teto. Ntshunxa mubedo kumbe u beka wun’wana emepeni.",
+      "ve": "{crops}{others} zwi nga kaṋwa nga tshifhinga itsho, fhedzi a hu na mubete u re na tshikhala kha miṅwedzi iyo. Vhululani mubete kana ni sumbedze muṅwe kha mapa.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": " and others",
+      "zu": " nokunye",
+      "st": " le tse ding",
+      "ts": " ni swin’wana",
+      "ve": " na zwiṅwe",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "No crop with sourced timing picks in this month from a sowing in this region’s window and your site’s temperatures.",
+      "zu": "Asikho isitshalo esinezikhathi ezicashunwe emthonjeni esingakhiwa kule nyanga uma sihlwanyelwe ngesikhathi salesi sifunda futhi sihambisana namazinga okushisa endaweni yakho.",
+      "st": "Ha ho sejalo se nang le dinako tse tswang mohloding se ka kgolwang kgweding ena ho tswa ho se jetsweng nakong ya lebatowa lena le dithemphereitjhara tsa sebaka sa hao.",
+      "ts": "Ku hava xibyariwa lexi nga ni minkarhi yo huma eka xihlovo lexi khiwaka eka n’hweti leyi loko xi byariwe eka nkarhi wa xifundza lexi ni matitimelelo ya ndhawu ya wena.",
+      "ve": "A hu na tshiliṅwa tshi re na zwifhinga zwi bvaho kha tshiko tshine tsha kaṋwa kha ṅwedzi uyu u bva kha u ṱavha kha tshifhinga tsha dzingu iḽi na mufhiso wa fhethu haṋu.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "No crop with sourced timing picks in this month from a sowing in this region’s window.",
+      "zu": "Asikho isitshalo esinezikhathi ezicashunwe emthonjeni esingakhiwa kule nyanga uma sihlwanyelwe ngesikhathi salesi sifunda.",
+      "st": "Ha ho sejalo se nang le dinako tse tswang mohloding se ka kgolwang kgweding ena ho tswa ho se jetsweng nakong ya lebatowa lena.",
+      "ts": "Ku hava xibyariwa lexi nga ni minkarhi yo huma eka xihlovo lexi khiwaka eka n’hweti leyi loko xi byariwe eka nkarhi wa xifundza lexi.",
+      "ve": "A hu na tshiliṅwa tshi re na zwifhinga zwi bvaho kha tshiko tshine tsha kaṋwa kha ṅwedzi uyu u bva kha u ṱavha kha tshifhinga tsha dzingu iḽi.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Show fewer months",
+      "zu": "Bonisa izinyanga ezimbalwa",
+      "st": "Bontsha dikgwedi tse mmalwa",
+      "ts": "Komba tin’hweti titsongo",
+      "ve": "Sumbedzani miṅwedzi miṱuku",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Show {count} more month",
+      "zu": "Bonisa enye inyanga engu-{count}",
+      "st": "Bontsha kgwedi e nngwe e {count}",
+      "ts": "Komba n’hweti yin’wana ya {count}",
+      "ve": "Sumbedzani muṅwe ṅwedzi wa {count}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Show {count} more months",
+      "zu": "Bonisa ezinye izinyanga ezingu-{count}",
+      "st": "Bontsha dikgwedi tse ding tse {count}",
+      "ts": "Komba tin’hweti tin’wana ta {count}",
+      "ve": "Sumbedzani miṅwe miṅwedzi ya {count}",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Chickens: choose with local advice",
+      "zu": "Izinkukhu: khetha ngeseluleko sendawo",
+      "st": "Dikgoho: kgetha ka keletso ya lehae",
+      "ts": "Tihuku: hlawula hi switsundzuxo swa laha kaya",
+      "ve": "Khuhu: nangani nga nyeletshedzo ya henefho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Purpose:",
+      "zu": "Inhloso:",
+      "st": "Sepheo:",
+      "ts": "Xikongomelo:",
+      "ve": "Ndivho:",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Your recorded breed:",
+      "zu": "Uhlobo lwenkukhu olurekhodile:",
+      "st": "Mofuta wa kgogo oo o o rekotileng:",
+      "ts": "Muxaka wa huku lowu u wu rhekhodeke:",
+      "ve": "Lushaka lwa khuhu lwe na rekhoda:",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Laying hens you recorded:",
+      "zu": "Izikhukhukazi ezizalelayo ozirekhodile:",
+      "st": "Dikgoho tse behelang tseo o di rekotileng:",
+      "ts": "Tihuku leti tshikelaka leti u ti rhekhodeke:",
+      "ve": "Khuhu dza tsadzi dzi khou kudzelaho dze na rekhoda:",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "These are your observations; they do not promise a yield.",
+      "zu": "Lokhu yilokho okubonile; akuqinisekisi isivuno.",
+      "st": "Tsena ke tseo o di boneng; ha di tshepise chai.",
+      "ts": "Leswi hi leswi u swi voneke; a swi tshembisi ntshovelo.",
+      "ve": "Izwi ndi zwe na vhona; a zwi fulufhedzisi khaṋo.",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Still to check in your site survey:",
+      "zu": "Okusafanele ukuhlolwe ekuhloleni indawo yakho:",
+      "st": "Tse ntseng di lokela ho hlahlojwa tlhahlobong ya sebaka sa hao:",
+      "ts": "Leswi swa ha lavaka ku kambisisiwa eka nkambisiso wa ndhawu ya wena:",
+      "ve": "Zwi kha ḓi fanela u ṱolwa kha ṱhoḓisiso ya fhethu haṋu:",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Breeds and production systems to discuss locally",
+      "zu": "Izinhlobo zezinkukhu nezindlela zokukhiqiza okuxoxwa ngazo endaweni",
+      "st": "Mefuta ya dikgoho le mekgwa ya tlhahiso tseo ho ka buisanwang ka tsona sebakeng sa heno",
+      "ts": "Mixaka ya tihuku ni maendlelo ya vuhumelerisi yo burisana ha yona laha kaya",
+      "ve": "Tshaka dza khuhu na maitele a vhubveledzi ane a nga haseledzwa henefho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Weather, housing and source references",
+      "zu": "Isimo sezulu, izindlu zezilwane nezinkomba zemithombo",
+      "st": "Boemo ba lehodimo, matlo a diphoofolo le ditshupiso tsa mehlodi",
+      "ts": "Maxelo, tindlu ta swifuwo ni swikombo swa swihlovo",
+      "ve": "Mutsho, zwifhaṱo zwa zwifuwo na zwiko zwa ndaedzi",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Crop-cycle estimates",
+      "zu": "Izilinganiso zomjikelezo wesitshalo",
+      "st": "Dikhakanyo tsa potoloho ya sejalo",
+      "ts": "Mimpimanyeto ya xirhendzevutana xa xibyariwa",
+      "ve": "U anganyela ha mutevhe wa tshiliṅwa",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Monthly production",
+      "zu": "Ukukhiqiza kwenyanga",
+      "st": "Tlhahiso ya kgwedi",
+      "ts": "Vuhumelerisi bya n’hweti",
+      "ve": "Vhubveledzi ha ṅwedzi",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Food in store",
+      "zu": "Ukudla okugciniwe",
+      "st": "Dijo tse bolokilweng",
+      "ts": "Swakudya leswi hlayisiweke",
+      "ve": "Zwiḽiwa zwo vhulungwaho",
+      "generatedScope": "production-control"
+    },
+    {
+      "english": "Farm yield schedule",
+      "zu": "Uhlelo lwesivuno sepulazi",
+      "st": "Lenaneo la chai ea polasi",
+      "ts": "Nongonoko wa ntshovelo wa purasi",
+      "ve": "Nongonoko wa khaṋo ya bulasi",
+      "generatedScope": "projection-detail"
+    },
+    {
+      "english": "Not planted yet",
+      "zu": "Akukatshalwa",
+      "st": "Ha e so lengwe",
+      "ts": "A swi si byariwa",
+      "ve": "A zwi athu u ṱavhiwa",
+      "generatedScope": "projection-detail"
+    },
+    {
+      "english": "Growing · before first-crop reference",
+      "zu": "Iyakhula · ngaphambi kwenkomba yesivuno sokuqala",
+      "st": "E ntse e hola · pele ho nako ea chai ea pele e boletsoeng mohloding",
+      "ts": "Swa kula · ku nga si fika nkarhi wa ntshovelo wo sungula lowu vuriweke eka xihlovo",
+      "ve": "Zwi khou aluwa · hu sa athu u swikwa tshifhinga tsha khaṋo ya u thoma tsho bulwaho kha tshiko",
+      "generatedScope": "projection-detail"
+    },
+    {
+      "english": "Add planting dates",
+      "zu": "Faka izinsuku zokutshala",
+      "st": "Kenya matsatsi a ho jala",
+      "ts": "Nghenisa masiku yo byala",
+      "ve": "Dzhenisani maḓuvha a u ṱavha",
+      "generatedScope": "projection-detail"
     }
   ],
   "preservation": "Default English, private and recorded values, task/event identities, dates, source figures/units, source URLs and farming gates retain immutable original comparisons. No species facts or saved geometry changed; new language remains unreviewed.",

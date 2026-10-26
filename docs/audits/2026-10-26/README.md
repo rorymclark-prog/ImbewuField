@@ -13,3 +13,5 @@
 - [Crop source references](source-reference-drafts.md):136 complete fields/544 drafts;212 affected tests and actual browser/PDF checks pass. Native PDF source-marker loss corrected. Full suite and review remain pending.
 
 - Crop source-reference full-run continuation:5,888pass0fail1existingTODO;1,819 frozen inputs exact. See its delivery proof;CI and whole-app completion remain separate.
+
+- [Production records and food controls](production-control-drafts.md):186phrases/744drafts,331affected checks,228browserstates and40nativepanels seen;full suite/CI/review pending.

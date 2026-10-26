@@ -1,0 +1,1121 @@
+{
+  "scope": "Actual original/current components,leaf helpers and CSS;captured graph producer outputs for32filter subsets,not signed-in routes/storage/full browser model execution or fluent review. React useId prefixes alone normalized;record IDs stay literal. Final 228-state recapture supersedes the first matrix after the observed composed-stage repair. The 49 interaction states predate only that text repair and four source-bound stage additions; focused actual-component tests recheck selection and all callback behaviors on current sources.",
+  "serializationDisclosure": "Original matrix objects were depth-limited by the observation transport. Separate 180 complete observed #qa-state JSON strings have no truncation, equal immutable fixture props in every language/version, and match all available historical matrix fields. Complete observed callback payloads compare to immutable originals, never a truncated expected object.",
+  "fullObservedPropStates": 228,
+  "matrixStates": 228,
+  "pairs": 114,
+  "nativePhoneStates": 120,
+  "nativeDesktopStates": 48,
+  "englishUnknownStates": 60,
+  "pairChecks": [
+    {
+      "language": "zu",
+      "device": "phone",
+      "id": "records-empty",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "zu",
+      "device": "phone",
+      "id": "records-editable",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 8
+    },
+    {
+      "language": "zu",
+      "device": "phone",
+      "id": "records-held-only",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "zu",
+      "device": "phone",
+      "id": "graphs-full",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 5
+    },
+    {
+      "language": "zu",
+      "device": "phone",
+      "id": "graphs-no-input",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "zu",
+      "device": "phone",
+      "id": "graphs-no-records",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "zu",
+      "device": "phone",
+      "id": "projection-full",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "zu",
+      "device": "phone",
+      "id": "projection-empty",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "zu",
+      "device": "phone",
+      "id": "projection-missing",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "zu",
+      "device": "phone",
+      "id": "year-gaps",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "zu",
+      "device": "phone",
+      "id": "year-no-beds",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "zu",
+      "device": "phone",
+      "id": "year-all-fresh",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "zu",
+      "device": "phone",
+      "id": "poultry-missing",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "zu",
+      "device": "phone",
+      "id": "poultry-recorded",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "zu",
+      "device": "phone",
+      "id": "poultry-attention",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "zu",
+      "device": "desktop",
+      "id": "records-empty",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "zu",
+      "device": "desktop",
+      "id": "records-editable",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 8
+    },
+    {
+      "language": "zu",
+      "device": "desktop",
+      "id": "graphs-full",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 5
+    },
+    {
+      "language": "zu",
+      "device": "desktop",
+      "id": "projection-full",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "zu",
+      "device": "desktop",
+      "id": "year-gaps",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "zu",
+      "device": "desktop",
+      "id": "poultry-attention",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "st",
+      "device": "phone",
+      "id": "records-empty",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "st",
+      "device": "phone",
+      "id": "records-editable",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 8
+    },
+    {
+      "language": "st",
+      "device": "phone",
+      "id": "records-held-only",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "st",
+      "device": "phone",
+      "id": "graphs-full",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 5
+    },
+    {
+      "language": "st",
+      "device": "phone",
+      "id": "graphs-no-input",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "st",
+      "device": "phone",
+      "id": "graphs-no-records",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "st",
+      "device": "phone",
+      "id": "projection-full",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "st",
+      "device": "phone",
+      "id": "projection-empty",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "st",
+      "device": "phone",
+      "id": "projection-missing",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "st",
+      "device": "phone",
+      "id": "year-gaps",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "st",
+      "device": "phone",
+      "id": "year-no-beds",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "st",
+      "device": "phone",
+      "id": "year-all-fresh",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "st",
+      "device": "phone",
+      "id": "poultry-missing",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "st",
+      "device": "phone",
+      "id": "poultry-recorded",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "st",
+      "device": "phone",
+      "id": "poultry-attention",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "st",
+      "device": "desktop",
+      "id": "records-empty",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "st",
+      "device": "desktop",
+      "id": "records-editable",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 8
+    },
+    {
+      "language": "st",
+      "device": "desktop",
+      "id": "graphs-full",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 5
+    },
+    {
+      "language": "st",
+      "device": "desktop",
+      "id": "projection-full",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "st",
+      "device": "desktop",
+      "id": "year-gaps",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "st",
+      "device": "desktop",
+      "id": "poultry-attention",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ts",
+      "device": "phone",
+      "id": "records-empty",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ts",
+      "device": "phone",
+      "id": "records-editable",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 8
+    },
+    {
+      "language": "ts",
+      "device": "phone",
+      "id": "records-held-only",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "ts",
+      "device": "phone",
+      "id": "graphs-full",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 5
+    },
+    {
+      "language": "ts",
+      "device": "phone",
+      "id": "graphs-no-input",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ts",
+      "device": "phone",
+      "id": "graphs-no-records",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ts",
+      "device": "phone",
+      "id": "projection-full",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "ts",
+      "device": "phone",
+      "id": "projection-empty",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ts",
+      "device": "phone",
+      "id": "projection-missing",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "ts",
+      "device": "phone",
+      "id": "year-gaps",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ts",
+      "device": "phone",
+      "id": "year-no-beds",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ts",
+      "device": "phone",
+      "id": "year-all-fresh",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ts",
+      "device": "phone",
+      "id": "poultry-missing",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ts",
+      "device": "phone",
+      "id": "poultry-recorded",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ts",
+      "device": "phone",
+      "id": "poultry-attention",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ts",
+      "device": "desktop",
+      "id": "records-empty",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ts",
+      "device": "desktop",
+      "id": "records-editable",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 8
+    },
+    {
+      "language": "ts",
+      "device": "desktop",
+      "id": "graphs-full",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 5
+    },
+    {
+      "language": "ts",
+      "device": "desktop",
+      "id": "projection-full",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "ts",
+      "device": "desktop",
+      "id": "year-gaps",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ts",
+      "device": "desktop",
+      "id": "poultry-attention",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ve",
+      "device": "phone",
+      "id": "records-empty",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ve",
+      "device": "phone",
+      "id": "records-editable",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 8
+    },
+    {
+      "language": "ve",
+      "device": "phone",
+      "id": "records-held-only",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "ve",
+      "device": "phone",
+      "id": "graphs-full",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 5
+    },
+    {
+      "language": "ve",
+      "device": "phone",
+      "id": "graphs-no-input",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ve",
+      "device": "phone",
+      "id": "graphs-no-records",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ve",
+      "device": "phone",
+      "id": "projection-full",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "ve",
+      "device": "phone",
+      "id": "projection-empty",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ve",
+      "device": "phone",
+      "id": "projection-missing",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "ve",
+      "device": "phone",
+      "id": "year-gaps",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ve",
+      "device": "phone",
+      "id": "year-no-beds",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ve",
+      "device": "phone",
+      "id": "year-all-fresh",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ve",
+      "device": "phone",
+      "id": "poultry-missing",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ve",
+      "device": "phone",
+      "id": "poultry-recorded",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ve",
+      "device": "phone",
+      "id": "poultry-attention",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ve",
+      "device": "desktop",
+      "id": "records-empty",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ve",
+      "device": "desktop",
+      "id": "records-editable",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 8
+    },
+    {
+      "language": "ve",
+      "device": "desktop",
+      "id": "graphs-full",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 5
+    },
+    {
+      "language": "ve",
+      "device": "desktop",
+      "id": "projection-full",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "ve",
+      "device": "desktop",
+      "id": "year-gaps",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "ve",
+      "device": "desktop",
+      "id": "poultry-attention",
+      "wholeEnglishExact": false,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "en",
+      "device": "phone",
+      "id": "records-empty",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "en",
+      "device": "phone",
+      "id": "records-editable",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 8
+    },
+    {
+      "language": "en",
+      "device": "phone",
+      "id": "records-held-only",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "en",
+      "device": "phone",
+      "id": "graphs-full",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 5
+    },
+    {
+      "language": "en",
+      "device": "phone",
+      "id": "graphs-no-input",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "en",
+      "device": "phone",
+      "id": "graphs-no-records",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "en",
+      "device": "phone",
+      "id": "projection-full",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "en",
+      "device": "phone",
+      "id": "projection-empty",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "en",
+      "device": "phone",
+      "id": "projection-missing",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "en",
+      "device": "phone",
+      "id": "year-gaps",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "en",
+      "device": "phone",
+      "id": "year-no-beds",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "en",
+      "device": "phone",
+      "id": "year-all-fresh",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "en",
+      "device": "phone",
+      "id": "poultry-missing",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "en",
+      "device": "phone",
+      "id": "poultry-recorded",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "en",
+      "device": "phone",
+      "id": "poultry-attention",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "xx",
+      "device": "phone",
+      "id": "records-empty",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "xx",
+      "device": "phone",
+      "id": "records-editable",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 8
+    },
+    {
+      "language": "xx",
+      "device": "phone",
+      "id": "records-held-only",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "xx",
+      "device": "phone",
+      "id": "graphs-full",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 5
+    },
+    {
+      "language": "xx",
+      "device": "phone",
+      "id": "graphs-no-input",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "xx",
+      "device": "phone",
+      "id": "graphs-no-records",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "xx",
+      "device": "phone",
+      "id": "projection-full",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "xx",
+      "device": "phone",
+      "id": "projection-empty",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "xx",
+      "device": "phone",
+      "id": "projection-missing",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 1
+    },
+    {
+      "language": "xx",
+      "device": "phone",
+      "id": "year-gaps",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "xx",
+      "device": "phone",
+      "id": "year-no-beds",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "xx",
+      "device": "phone",
+      "id": "year-all-fresh",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "xx",
+      "device": "phone",
+      "id": "poultry-missing",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "xx",
+      "device": "phone",
+      "id": "poultry-recorded",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    },
+    {
+      "language": "xx",
+      "device": "phone",
+      "id": "poultry-attention",
+      "wholeEnglishExact": true,
+      "completeOriginalPropsExact": true,
+      "allNonTextStructureInputsGeometryExact": true,
+      "imagesLoadedAndExact": 0
+    }
+  ],
+  "interactionStates": 49,
+  "explicitCallbacks": {
+    "production": 1,
+    "stock": 1,
+    "month": 8,
+    "plan": 4
+  },
+  "applicationConsoleErrors": [],
+  "imageChecks": 304,
+  "negativeRoleGeometryValueAndPrivateGuards": "passed in DOM comparisons and production-control-localization.test.ts",
+  "visualInspection": {
+    "seen": [
+      "zu-phone-records-editable.png",
+      "zu-phone-graphs-full.png",
+      "final-matrix/zu-phone-projection-full.png",
+      "zu-phone-year-gaps.png",
+      "zu-phone-poultry-attention.png",
+      "zu-desktop-records-editable.png",
+      "zu-desktop-graphs-full.png",
+      "final-matrix/zu-desktop-projection-full.png",
+      "zu-desktop-year-gaps.png",
+      "zu-desktop-poultry-attention.png",
+      "st-phone-records-editable.png",
+      "st-phone-graphs-full.png",
+      "final-matrix/st-phone-projection-full.png",
+      "st-phone-year-gaps.png",
+      "st-phone-poultry-attention.png",
+      "st-desktop-records-editable.png",
+      "st-desktop-graphs-full.png",
+      "final-matrix/st-desktop-projection-full.png",
+      "st-desktop-year-gaps.png",
+      "st-desktop-poultry-attention.png",
+      "ts-phone-records-editable.png",
+      "ts-phone-graphs-full.png",
+      "final-matrix/ts-phone-projection-full.png",
+      "ts-phone-year-gaps.png",
+      "ts-phone-poultry-attention.png",
+      "ts-desktop-records-editable.png",
+      "ts-desktop-graphs-full.png",
+      "final-matrix/ts-desktop-projection-full.png",
+      "ts-desktop-year-gaps.png",
+      "ts-desktop-poultry-attention.png",
+      "ve-phone-records-editable.png",
+      "ve-phone-graphs-full.png",
+      "final-matrix/ve-phone-projection-full.png",
+      "ve-phone-year-gaps.png",
+      "ve-phone-poultry-attention.png",
+      "ve-desktop-records-editable.png",
+      "ve-desktop-graphs-full.png",
+      "final-matrix/ve-desktop-projection-full.png",
+      "ve-desktop-year-gaps.png",
+      "ve-desktop-poultry-attention.png"
+    ],
+    "count": 40,
+    "observed": "All five priority widgets seen in each language at phone and desktop sizes; source text and native diacritics present, no card/paragraph collision seen. Existing charts intentionally scroll horizontally inside their containers; closed selects clip long labels as before. Initial English combined tree-stage fallback was observed, fixed, regression-tested and recaptured in eight native images. Earlier projection images are historical. No fluent-language approval.",
+    "formattingEquivalentPixelPairs": [
+      "zu-phone-projection-full.png",
+      "zu-desktop-projection-full.png",
+      "st-phone-projection-full.png",
+      "st-desktop-projection-full.png",
+      "ts-desktop-projection-full.png",
+      "ve-phone-projection-full.png",
+      "ve-desktop-projection-full.png"
+    ],
+    "nonidenticalScreensSeparatelySeen": [
+      {
+        "file": "ts-phone-projection-full.png",
+        "bbox": [
+          0,
+          2143,
+          387,
+          2160
+        ],
+        "inspection": "Final full screenshot viewed separately; paragraphs,stage text and ending visible. No exact-pixel claim."
+      }
+    ]
+  },
+  "formattingEquivalentWholeMarkupStates": 228,
+  "finalMatrixImageChecks": 304,
+  "cleanup": "Tabs29032031/29032033 closed; temporary viewport reset; localhost servers85251/38452 terminal0.",
+  "unrelatedExtensionErrorsCount": 3,
+  "unrelatedFinalExtensionErrorsCount": 3,
+  "consoleEvidence": "Verifier checked full locally held console records: zero application errors. Adobe extension errors classified separately; raw console/server/test logs excluded from committed evidence."
+}

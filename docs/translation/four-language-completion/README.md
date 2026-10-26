@@ -1554,3 +1554,7 @@ with whatever the current implementation happens to contain.
 ## Crop source-reference continuation
 
 136 supplementary source headings/notes now have544 unreviewed drafts. Original farming sources,identities and figures remain unchanged. Actual browser and PDF checks include complete paragraphs,English preservation and a repaired source-marker filter. See [audit](../../audits/2026-10-26/source-reference-drafts.md) and [runtime evidence](evidence/source-references/runtime/README.md). Full ordered suite,CI,current-main/role integration,remaining UI/media and fluent/agricultural review remain open.
+
+## Production controls continuation
+
+Five actual production record,food availability,projection,year-of-food and poultry controls now use186ordinary source phrases/744unreviewed drafts. Original records,models,figures and ancestor rows stay exact.331affected checks and228browserstates pass;40nativeprioritypanels actually seen. Visual review exposed and repaired a combined tree-stage fallback. See [audit](../../audits/2026-10-26/production-control-drafts.md) and [runtime evidence](evidence/production-controls/runtime/README.md). Full ordered suite,CI,current-main/role/account integration and wider whole-app/review work remain pending. Crop-source parent localfull verification passed5,888tests;its separate CI must be checked before any green claim.

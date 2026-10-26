@@ -1,0 +1,61 @@
+from pathlib import Path
+import json,re,copy,html,gzip
+from html.parser import HTMLParser
+r=Path('/Users/roryclark/.codex/worktrees/four-language-settings/ImbewuField');folder=Path('/private/tmp/imbewu-production-control-browser-proof');packet=json.loads((r/'docs/translation/four-language-completion/production-control-drafts.json').read_text());copyrows={row['english']:row for row in packet['rows']};escape=lambda s:html.escape(s,quote=False);react=lambda s:re.sub(r':r[0-9a-z]+:','__REACT_ID__',s)
+def structure(value):
+ value=re.sub(r'<p data-production-translation-draft="true"[^>]*>[\s\S]*?</p>','',react(value));value=re.sub(r' (aria-label|placeholder)="[^"]*"','',value);return re.sub(r'>[^<]*<','><',value)
+def controls(row):return[{k:v for k,v in n.items()if k not in ['aria','placeholder']}for n in row['inputs']]
+def valid(row):
+ assert not row['overflow']
+ assert row['open']
+ assert all(i['resolved']for i in row['idBindings'])
+ assert all(i['complete']and i['naturalWidth']>0 and i['naturalHeight']>0 for i in row['images'])
+baseline=json.loads(gzip.decompress((r/'tests/fixtures/production-control-translation/before.json.gz').read_bytes()))
+originalCases={row['id']:row['props']for row in baseline['cases']}
+fullObserved=json.loads((folder/'full-observed-state.json').read_text());assert len(fullObserved)==180;assert '[MaxDepth]'not in json.dumps(fullObserved)
+fullByKey={(row['language'],row['id'],row['version']):row for row in fullObserved};assert len(fullByKey)==180
+for observed in fullObserved:
+ assert observed['provided']==originalCases[observed['id']]
+ assert not observed['events']
+def historicalMatchesObserved(partial,whole):
+ if partial=='[MaxDepth]':return
+ assert type(partial)==type(whole),(type(partial),type(whole))
+ if isinstance(partial,dict):
+  assert partial.keys()==whole.keys()
+  for key in partial:historicalMatchesObserved(partial[key],whole[key])
+ elif isinstance(partial,list):
+  assert len(partial)==len(whole)
+  for a,b in zip(partial,whole):historicalMatchesObserved(a,b)
+ else:assert partial==whole
+pairs=[];allrows=[]
+for language in ['zu','st','ts','ve','en','xx']:
+ for device in (['phone','desktop']if language not in ['en','xx']else['controls']):
+  rows=json.loads((folder/f'{language}-{device}.json').read_text());assert len(rows)==(12 if device=='desktop'else 30);allrows.extend(rows)
+  for i in range(0,len(rows),2):
+   a,b=rows[i:i+2];valid(a);valid(b);assert a['state']['version']=='before'and b['state']['version']=='after';assert a['state']['id']==b['state']['id'];assert a['state']['provided']==b['state']['provided'];historicalMatchesObserved(a['state']['provided'],fullByKey[(language,a['state']['id'],'before')]['provided']);historicalMatchesObserved(b['state']['provided'],fullByKey[(language,b['state']['id'],'after')]['provided']);assert not a['state']['events']and not b['state']['events'];assert controls(a)==controls(b);assert a['images']==b['images'];assert structure(a['html'])==structure(b['html']),(language,device,a['state']['id'],'DOM drift')
+   if language in ['en','xx']:assert react(a['html'])==react(b['html']),'whole English/unknown DOM mismatch'
+   private=escape('PRIVATE {count} $& <kept> Ṱanḓa 03.50');assert a['html'].count(private)==b['html'].count(private)
+   pairs.append({'language':language,'device':device,'id':a['state']['id'],'wholeEnglishExact':language in ['en','xx'],'structureAndInputsExact':True,'providedExact':True,'imagesLoadedAndExact':len(a['images'])})
+assert len(allrows)==228 and len(pairs)==114
+# Check the full original callback arrays,not only an edited number.
+production=json.loads((folder/'production-edit-and-errors.json').read_text());a,b=production['edited'];wanted=copy.deepcopy(a['state']['provided']['productionRecords']);wanted[0]['quantity']=2.75;assert b['state']['events']==[{'id':'records-editable','version':'after','kind':'production','value':wanted}];assert not a['state']['events']
+for error in production['errors']:
+ valid(error);assert not error['state']['events'];lang=error['state']['language'];source='Enter the amount. Use 0 only when you mean zero; leave unknown production unrecorded.';assert error['alert']==(source if lang=='en'else copyrows[source][lang]);assert controls(error)==controls(production['errors'][0])
+stock=json.loads((folder/'stock-edit-and-errors.json').read_text());want=copy.deepcopy(stock[0]['state']['provided']['preservedProducts']);want[0]['quantities']=[q for q in want[0]['quantities']if q['year']!=2026];events=stock[-1]['state']['events'];assert events[0]==b['state']['events'][0];assert events[1]=={'id':'records-editable','version':'after','kind':'stock','value':want}
+for error in stock[1:-1]:
+ valid(error);assert error['state']['events']==b['state']['events'];assert controls(error)==controls(stock[1]);lang=error['state']['language'];dateMatch=re.search(r'<option value="2026-12">([^<]+)</option>',error['html']);assert dateMatch;date=html.unescape(dateMatch[1]);source='{date}: enter kg of zero or more, or leave the amount blank.';assert error['alert']==(source if lang=='en'else copyrows[source][lang]).replace('{date}',date)
+modes=json.loads((folder/'graph-modes-and-months.json').read_text());assert len(modes)==20
+for i,row in enumerate(modes):
+ valid(row);assert row['state']['provided']==modes[0]['state']['provided'];assert len(row['state']['events'])==2+2*(i//5+(i%5==4));assert[row['inputs'][j]['checked']for j in range(5)]==([True,False,True,True,True]if row['mode']=='stock-frozen-off'else[True]*5)
+ assert len(re.findall(r'aria-pressed="true"',row['html']))==1
+assert[m['value']for m in modes[-1]['state']['events']if m['kind']=='month']==[0,1]*4
+projection=json.loads((folder/'projection-selection.json').read_text());assert len(projection)==5
+for row in projection:valid(row);assert row['state']['provided']==projection[0]['state']['provided'];pressed=re.findall(r'<button[^>]*aria-pressed="(true|false)"',row['html']);assert pressed[2]=='true'and pressed.count('true')==1
+plans=json.loads((folder/'year-plan-and-expansion.json').read_text());assert len(plans)==8;expected=originalCases['year-gaps']['gapFills'][0]['suggestions'][0]
+for row in plans:
+ valid(row);assert row['state']['provided']==plans[0]['state']['provided'];assert re.findall(r'data-gap-fill-month="\d+"',row['html']).__len__()==(4 if row['stage']=='planned-one'else len(row['state']['provided']['gapFills']))
+assert '[MaxDepth]'not in json.dumps([event for event in plans[-1]['state']['events']if event['kind']=='plan']);assert all(event['value']==expected for event in plans[-1]['state']['events']if event['kind']=='plan');assert len(plans[-1]['state']['events'])==14
+# Deliberately break the same comparisons: role,geometry,value and private-note probes must fail.
+sample=next(row for row in allrows if row['state']['id']=='graphs-full');assert structure(sample['html'])!=structure(sample['html'].replace('role="button"','role="translated-button"',1));assert structure(sample['html'])!=structure(sample['html'].replace('width="28"','width="29"',1))
+console=json.loads((folder/'console-final.json').read_text());external=[x for x in console if x.get('url','').startswith('chrome-extension://')];app=[x for x in console if x not in external];assert not app,app
+result={'scope':'Actual original/current components,leaf helpers and CSS;captured graph producer outputs for32filter subsets,not signed-in routes/storage/full browser model execution or fluent review. React useId prefixes alone normalized;record IDs stay literal.','serializationDisclosure':'Original matrix objects were depth-limited by the observation transport. Separate 180 complete observed #qa-state JSON strings have no truncation, equal immutable fixture props in every language/version, and match all available historical matrix fields. Complete observed callback payloads compare to immutable originals, never a truncated expected object.','fullObservedPropStates':len(fullObserved),'matrixStates':len(allrows),'pairs':len(pairs),'nativePhoneStates':120,'nativeDesktopStates':48,'englishUnknownStates':60,'pairChecks':pairs,'interactionStates':len(production['edited'])+len(production['errors'])+len(stock)+len(modes)+len(projection)+len(plans),'explicitCallbacks':{'production':1,'stock':1,'month':8,'plan':4},'applicationConsoleErrors':app,'unrelatedExtensionErrors':external,'imageChecks':sum(len(row['images'])for row in allrows),'negativeRoleGeometryValueAndPrivateGuards':'passed in DOM comparisons and production-control-localization.test.ts','visualInspection':'PENDING actual screenshot inspection. Initial unmapped egg artwork capture excluded and preserved separately.'};(r/'output/production-controls-qa/browser-check.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');print({k:v for k,v in result.items()if k not in ['pairChecks','unrelatedExtensionErrors']})
