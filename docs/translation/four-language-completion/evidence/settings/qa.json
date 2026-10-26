@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-21",
+  "branch": "codex/four-language-settings",
+  "stackedOn": "#1028",
+  "route": "/home?translation-check=settings",
+  "phoneViewport": [
+    390,
+    844
+  ],
+  "desktopViewport": [
+    1440,
+    1000
+  ],
+  "captures": "Panel-only screenshots: language picker, text size and AI controls.",
+  "languages": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "observed": {
+    "radiosPerLanguage": 2,
+    "aiCheckboxesPerLanguage": 7,
+    "desktopHorizontalOverflow": false,
+    "phoneHorizontalOverflow": {
+      "ts": false,
+      "ve": false,
+      "zu": false
+    }
+  },
+  "sourceSwitch": "The navigation batch’s shared notice switched /login from isiZulu to English on the same route.",
+  "interaction": "Switched languages using the real Settings language buttons. No paid AI tool was invoked and no AI checkbox was toggled.",
+  "limits": "AI wording is unreviewed. The suite is still running; these screens are not evidence of whole-app translation completion."
+}

@@ -7,7 +7,8 @@ import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Loader2, MapPin, MessageCircle, Flag, ChevronDown, ChevronUp } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
-import { useLanguage } from '@/lib/i18n';
+import { translate,useLanguage } from '@/lib/i18n';
+import LanguageDraftNote from '@/components/LanguageDraftNote';
 import { useAppLevel } from '@/lib/app-level';
 import { communityEnabled } from '@/lib/community/flag';
 import { getCommunityProfile, getOrCreateThread, reportContent } from '@/lib/db/community-queries';
@@ -19,6 +20,8 @@ import AppHeader from '@/components/layout/AppHeader';
 export default function PublicCommunityProfilePage() {
   const { user, loading } = useAuth();
   const { t, lang } = useLanguage();
+  const draft=['zu','st','ts','ve'].includes(lang);
+  const paired=(key:string)=><><span lang={t(key)===translate('en',key)?'en':lang}>{t(key)}</span>{draft&&<small lang="en" style={{display:'block',fontSize:12,lineHeight:1.4,marginTop:4}}><span lang={lang}>{t('offlineSourceLabel')}: </span>{translate('en',key)}</small>}</>;
   const router = useRouter();
   const params = useParams<{ uid: string }>();
   const targetUid = params.uid;
@@ -26,6 +29,8 @@ export default function PublicCommunityProfilePage() {
 
   const [profile, setProfile] = useState<CommunityProfile | null>(null);
   const [busy, setBusy] = useState(true);
+  const [loadError,setLoadError]=useState(false);
+  const [loadAttempt,setLoadAttempt]=useState(0);
   const [moreOpen, setMoreOpen] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
   const [reportReason, setReportReason] = useState('');
@@ -38,10 +43,15 @@ export default function PublicCommunityProfilePage() {
   useEffect(() => {
     if (!communityEnabled()) { router.replace('/home'); return; }
     if (!loading && !user) { router.replace('/login'); return; }
+    let active=true;
     if (user && targetUid) {
-      getCommunityProfile(targetUid).then((p) => { setProfile(p); setBusy(false); }).catch(() => setBusy(false));
+      // A failed read is not evidence that a farmer withdrew their profile.
+      setBusy(true);setLoadError(false);setProfile(null);
+      setReportOpen(false);setReportReason('');setReportSent(false);setReportError(false);setMessageError(false);
+      getCommunityProfile(targetUid).then((p) => { if(active){setProfile(p);setBusy(false);} }).catch(() => {if(active){setLoadError(true);setBusy(false);}});
     }
-  }, [user, loading, router, targetUid]);
+    return()=>{active=false;};
+  }, [user, loading, router, targetUid,loadAttempt]);
 
   // getOrCreateThread() is a Firestore round trip (a query, sometimes a write).
   // On a weak signal it can reject, and an uncaught rejection here used to mean
@@ -80,41 +90,35 @@ export default function PublicCommunityProfilePage() {
     }
   }
 
+  const header=<AppHeader backFallback="/community" title={t('communityMemberTitle')} right={<LessonLink id="community:profile" label={t('homeLearnAction')}/>}/>;
+  const notice=<div className="px-4 pt-3"><LanguageDraftNote lang={lang} scope="community-member"/></div>;
   if (busy || loading || !communityEnabled()) {
-    return (
-      <div role="status" aria-label={lang === 'zu' ? t('communityLoadingStatus') : 'Loading community profile'} className="h-[100dvh] flex items-center justify-center" style={{ background: 'var(--bg-0)' }}>
-        <Loader2 size={24} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
-      </div>
-    );
+    return <div lang={lang} className="h-[100dvh] flex flex-col" style={{background:'var(--bg-0)',color:'var(--text-primary)'}}>{header}{notice}<main className="flex-1 flex flex-col items-center justify-center gap-3 px-6"><h1 className="font-display font-bold" style={{fontSize:20}}>{t('communityMemberTitle')}</h1><div role="status" aria-label={t('communityLoadingStatus')}><Loader2 size={24} className="animate-spin" aria-hidden style={{color:'var(--color-forest-800)'}}/><p>{t('communityLoadingStatus')}</p></div></main><TabBar hideAtDesktop/></div>;
   }
 
   return (
-    <div className="h-[100dvh] flex flex-col font-sans" style={{ background: 'var(--bg-0)', color: 'var(--text-primary)' }}>
-      <AppHeader
-        backFallback="/community"
-        title={lang === 'zu' ? 'Iphrofayela' : 'Profile'}
-        right={<LessonLink id="community:profile" label={lang === 'zu' ? 'Funda' : 'Learn'} />}
-      />
+    <div lang={lang} className="h-[100dvh] flex flex-col font-sans" style={{ background: 'var(--bg-0)', color: 'var(--text-primary)' }}>
+      {header}{notice}
 
       <main className={`${workspace.workspace} ${workspace.readingWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}>
-        {!profile ? (
+        {loadError?<div className="rounded-2xl px-4 py-10 text-center" style={{background:'var(--bg-1)',border:'1px solid var(--border)'}}><h1 className="font-display font-bold" style={{fontSize:20}}>{t('communityMemberTitle')}</h1><p role="alert">{paired('communityMemberLoadError')}</p><button type="button" onClick={()=>setLoadAttempt(n=>n+1)} className="rounded-xl px-4 py-2 font-semibold" style={{minHeight:44,background:'var(--brand)',color:'var(--on-forest)'}}>{t('communityRetry')}</button></div>:!profile ? (
           <div className="rounded-2xl px-4 py-10 text-center" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-            <p className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{lang === 'zu' ? t('communityProfileUnavailable') : 'This profile is no longer available.'}</p>
+            <h1 className="font-display font-bold" style={{fontSize:20}}>{t('communityMemberTitle')}</h1><p className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{paired('communityProfileUnavailable')}</p>
           </div>
         ) : (
           <>
             <div className="flex items-center gap-4" style={{ marginBottom: 18 }}>
-              <div style={{ width: 64, height: 64, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, background: 'var(--color-forest-800)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 64, height: 64, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, background: 'var(--brand)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {profile.photos?.[0]
-                  ? <img data-photo-preview src={profile.photos[0]} alt={profile.display_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ? <img data-photo-preview src={profile.photos[0]} alt={profile.display_name} lang="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   : <span style={{ color: 'var(--on-forest)', fontWeight: 700, fontSize: 22 }}>{(profile.display_name?.[0] ?? '?').toUpperCase()}</span>}
               </div>
               <div>
-                <h1 className="font-display font-bold" style={{ margin: 0, fontSize: 20, color: 'var(--text-primary)' }}>{profile.display_name}</h1>
+                <h1 lang="" className="font-display font-bold" style={{ margin: 0, fontSize: 20, color: 'var(--text-primary)' }}>{profile.display_name}</h1>
                 {profile.area_text && (
                   <div className="flex items-center gap-1.5" style={{ marginTop: 2 }}>
                     <MapPin size={12} style={{ color: 'var(--text-muted)' }} />
-                    <span className="font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{profile.area_text}</span>
+                    <span lang="" className="font-sans" style={{ fontSize: 13, color: 'var(--text-muted)' }}>{profile.area_text}</span>
                   </div>
                 )}
               </div>
@@ -136,13 +140,13 @@ export default function PublicCommunityProfilePage() {
             )}
 
             {(!simple || moreOpen) && profile.bio && (
-              <p className="font-sans max-w-prose" style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: 16 }}>{profile.bio}</p>
+              <p lang="" className="font-sans max-w-prose" style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: 16 }}>{profile.bio}</p>
             )}
 
             {profile.crops?.length > 0 && (
               <div className="flex flex-wrap gap-2" style={{ marginBottom: 18 }}>
                 {profile.crops.map((c) => (
-                  <span key={c} className="font-sans" style={{ fontSize: 12.5, padding: '5px 12px', borderRadius: 999, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.2)' }}>{c}</span>
+                  <span key={c} lang="" className="font-sans" style={{ fontSize: 12.5, padding: '5px 12px', borderRadius: 999, background: 'rgba(31,77,43,0.08)', color: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.2)' }}>{c}</span>
                 ))}
               </div>
             )}
@@ -150,16 +154,17 @@ export default function PublicCommunityProfilePage() {
             {(!simple || moreOpen) && profile.photos?.length > 0 && (
               <div className="flex flex-wrap gap-2" style={{ marginBottom: 20 }}>
                 {profile.photos.map((url, i) => (
-                  <img key={i} src={url} alt={`Photo of ${profile.display_name}, ${i + 1} of ${profile.photos.length}`} style={{ width: 96, height: 96, objectFit: 'cover', borderRadius: 12 }} />
+                  <img key={i} src={url} alt={t('communityMemberPhotoAlt').replace(/\{(name|number|total)\}/g,(_,key:string)=>({name:profile.display_name,number:String(i+1),total:String(profile.photos.length)})[key as 'name'|'number'|'total'])} style={{ width: 96, height: 96, objectFit: 'cover', borderRadius: 12 }} />
                 ))}
               </div>
             )}
 
             {user?.uid !== profile.uid && (
               <div className="flex gap-2">
+                {/* The forest accent becomes light in dark themes; the stable action fill keeps this caption readable. */}
                 <button
                   onClick={handleMessage}
-                  disabled={messaging}
+                  disabled={messaging} aria-busy={messaging}
                   className="flex items-center justify-center gap-2 font-display font-semibold rounded-xl"
                   style={{ flex: 1, background: 'var(--color-forest-800)', color: 'var(--on-forest-800)', border: 'none', cursor: messaging ? 'default' : 'pointer', padding: '12px 16px', fontSize: 14, opacity: messaging ? 0.7 : 1 }}
                 >
@@ -168,9 +173,9 @@ export default function PublicCommunityProfilePage() {
                 </button>
                 {(!simple || moreOpen) && (
                   <button
-                    onClick={() => setReportOpen((s) => !s)}
+                    onClick={() => setReportOpen((s) => !s)} aria-expanded={reportOpen} aria-controls="community-member-report"
                     className="flex items-center justify-center gap-2 font-sans font-semibold rounded-xl"
-                    style={{ background: 'transparent', color: 'var(--danger)', border: '1px solid rgba(139,32,32,0.3)', cursor: 'pointer', padding: '12px 16px', fontSize: 13 }}
+                    style={{ background: 'transparent', color: 'var(--text-primary)', border: '1px solid var(--danger)', minHeight:44, cursor: 'pointer', padding: '12px 16px', fontSize: 13 }}
                   >
                     <Flag size={14} /> {t('communityReportButton')}
                   </button>
@@ -179,14 +184,17 @@ export default function PublicCommunityProfilePage() {
             )}
 
             {messageError && (
-              <p className="font-sans" style={{ fontSize: 12, color: 'var(--danger)', margin: '8px 0 0' }}>
-                {t('communityContactError')}
+              <p role="alert" className="font-sans" style={{ fontSize: 12, color: 'var(--text-primary)', borderInlineStart:'3px solid var(--danger)', paddingInlineStart:8, margin: '8px 0 0' }}>
+                {paired('communityContactError')}
               </p>
             )}
 
             {reportOpen && (
-              <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', marginTop: 12 }}>
+              <div id="community-member-report" className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', marginTop: 12 }}>
+                <label htmlFor="community-member-report-reason" className="block font-sans font-semibold mb-2" style={{fontSize:13}}>{paired('communityReportReasonPlaceholder')}</label>
                 <textarea
+                  id="community-member-report-reason"
+                  lang=""
                   value={reportReason}
                   onChange={(e) => setReportReason(e.target.value.slice(0, 300))}
                   placeholder={t('communityReportReasonPlaceholder')}
@@ -196,15 +204,15 @@ export default function PublicCommunityProfilePage() {
                 />
                 <button
                   onClick={handleReport}
-                  disabled={!reportReason.trim() || reportBusy}
+                  disabled={!reportReason.trim() || reportBusy} aria-busy={reportBusy}
                   className="font-sans font-semibold rounded-xl"
-                  style={{ padding: '9px 16px', fontSize: 13, background: reportReason.trim() ? 'var(--danger)' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : 'var(--text-muted)', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
+                  style={{ minHeight:44, padding: '9px 16px', fontSize: 13, background: reportReason.trim() ? 'var(--danger)' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : 'var(--text-muted)', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
                 >
-                  {reportSent ? t('communityReportSent') : t('communityReportSubmit')}
+                  <span role={reportSent?'status':undefined}>{reportSent ? t('communityReportSent') : t('communityReportSubmit')}</span>
                 </button>
                 {reportError && (
-                  <p className="font-sans" style={{ fontSize: 12, color: 'var(--danger)', margin: '8px 0 0' }}>
-                    {t('communityReportError')}
+                  <p role="alert" className="font-sans" style={{ fontSize: 12, color: 'var(--text-primary)', borderInlineStart:'3px solid var(--danger)', paddingInlineStart:8, margin: '8px 0 0' }}>
+                    {paired('communityReportError')}
                   </p>
                 )}
               </div>

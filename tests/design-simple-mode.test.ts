@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { actualPaletteTools, hostButtons, controlT, type ControlLanguage } from './control-icon-renderers.ts';
 
 // swarm/design-simple: /design's Simple / All tools wiring, plus the fixes bundled into the same
 // track (Print/Export collapse, the DesignPrint live-preview error, i18n gaps, ochre-as-text and
@@ -74,9 +75,19 @@ test('Simple has no layer-visibility matrix and no multi-select / Tidy / Snap / 
     /!simple && \(\(desktopAside && !isPhone\) \|\| \(layersOpen && layersAnchor\)\)/,
     'the Layers panel open-condition must also require !simple',
   );
-  assert.match(PALETTE, /\{!simple && \(\s*<button\s*\n\s*type="button"\s*\n\s*aria-label=\{toolGlyph\(t\('designPaletteTidy'\)\)/, 'the Tidy button must not render in Simple');
-  assert.match(PALETTE, /\{!simple && \(\s*<button\s*\n\s*type="button"\s*\n\s*aria-label=\{toolGlyph\(t\('designPaletteSnap'\)\)/, 'the Snap button must not render in Simple');
-  assert.match(PALETTE, /\{!simple && \(\s*<button\s*\n\s*type="button"\s*\n\s*aria-label=\{toolGlyph\(t\('designPaletteCleanup'\)\)/, 'the Clean up (align & distribute) button must not render in Simple');
+  // The old regex pinned toolGlyph, an emoji extractor. Fixed Lucide icons changed that helper,
+  // not Simple's rule. Execute the real tool row so a wrongly visible action can actually fail.
+  for (const lang of ['en','zu','st','ts','ve'] as ControlLanguage[]) {
+    const names = ['designPaletteTidy','designPaletteSnap','designPaletteCleanup'].map(controlT(lang));
+    const hidden = (simple: boolean) => {
+      const buttons = hostButtons(actualPaletteTools(lang,{simple}).element);
+      for (const name of names) assert.ok(!buttons.some(b => b.props['aria-label'] === name), `${lang}: Simple must hide ${name}`);
+    };
+    hidden(true);
+    assert.throws(() => hidden(false), /Simple must hide/, 'an exposed advanced action must trip this guard');
+    const all = hostButtons(actualPaletteTools(lang,{simple:false}).element);
+    for (const name of names) assert.ok(all.some(b => b.props['aria-label'] === name), `${lang}: All tools must retain ${name}`);
+  }
   assert.match(PAGE, /onToggleAdditive=\{simple \? undefined : \(\) => setMultiSelectMode/, 'the multi-select toggle must not be offered to DesignCanvas in Simple');
 });
 

@@ -1,0 +1,195 @@
+{
+  "sourceSha": "842784742bbfc0a474b1275f0e2a2b50e345170b",
+  "status": "Unreviewed AI drafts; no fluent-speaker approval. Source prices, date basis, VAT inclusion, measured quantities, reasons and purchasing restrictions are translated without new financial figures.",
+  "entries": [
+    {
+      "english": "Cost & Bill of Quantities",
+      "zu": "Izindleko nohlu lobuningi",
+      "st": "Ditshenyehelo le lenane la bongata",
+      "ts": "Mali ni nxaxamelo wa nhlayo",
+      "ve": "Mutengo na mutevhe wa vhunzhi"
+    },
+    {
+      "english": "No priced work can be listed yet: nothing has been drawn on the plan to measure. Draw the beds, tanks, fences and paths in the Design Studio and this bill fills itself from those measurements.",
+      "zu": "Akukho msebenzi onentengo ongafakwa ohlwini okwamanje: akukho okudwetshiwe epulanini okungalinganiswa. Dweba imibhede, amathangi, uthango nezindlela eSitudiyo somklamo bese lolu hlu lugcwaliswa ngalezo zilinganiso.",
+      "st": "Ha ho mosebetsi o nang le theko o ka ngolwang hajwale: ha ho letho le takilweng moralong le ka lekanngwang. Taka dibethe, ditanka, diterata le ditsela ho Studio sa moralo mme lenane lena le tla tlatswa ka ditekanyo tseo.",
+      "ts": "A ku si va na mitirho leyi nga ni nxavo leyi nga nxaxametiwaka: a ku na lexi dirowiweke eka pulani lexi nga pimiwaka. Dirowa mibedo, mathangi, marihlampfu ni tindlela eka Xitudio xa dizayini kutani nxaxamelo lowu wu ta tatiwa hi mimpimo yoleyo.",
+      "ve": "A hu athu vha na mushumo u re na mutengo u nga ṅwalwaho: a hu na tsho olwaho kha pulane tshi nga pimiwaho. Olani mibethe, thannga, mahura na nḓila kha Studio ya nyolo nahone mutevhe uyu u ḓo ḓadzwa nga mbonalo dzenedzo."
+    },
+    {
+      "english": "Every quantity below is measured off this farm's own plan. Nothing here was estimated from a typical farm, and no line was added because a design \"usually has one\".",
+      "zu": "Bonke ubuningi obungezansi bulinganiswe epulanini laleli pulazi. Akukho okuqagelwe ngepulazi elivamile, futhi awukho umugqa ofakiwe ngoba umklamo \"uvame ukuba nakho\".",
+      "st": "Bongata bo bong le bo bong bo ka tlase bo lekantswe moralong wa polasi ena. Ha ho letho le hakantsweng ho tswa polasing e tlwaelehileng, mme ha ho mola o kentsweng hobane moralo \"o atisa ho ba le wona\".",
+      "ts": "Nhlayo yin'wana ni yin'wana laha hansi yi pimiwe eka pulani ya purasi leri. A ku na lexi ringanyetiweke hi ku ya hi purasi ra ntolovelo, naswona a ku na layini leyi engeteriweke hikuva dizayini \"yi tala ku va na yona\".",
+      "ve": "Vhunzhi vhuṅwe na vhuṅwe afho fhasi ho pimiwa kha pulane ya bulasi iḽi. A hu na tsho anganywaho u bva kha bulasi ḽo ḓoweleaho, nahone a hu na mutalo wo engedzwaho ngauri nyolo \"i anzela u vha natsho\"."
+    },
+    {
+      "english": "Item",
+      "zu": "Into",
+      "st": "Ntho",
+      "ts": "Nchumu",
+      "ve": "Tshithu"
+    },
+    {
+      "english": "Quantity",
+      "zu": "Ubuningi",
+      "st": "Bongata",
+      "ts": "Nhlayo",
+      "ve": "Vhunzhi"
+    },
+    {
+      "english": "Rate",
+      "zu": "Intengo ngeyunithi",
+      "st": "Theko ka yuniti",
+      "ts": "Nxavo hi yuniti",
+      "ve": "Mutengo nga yuniti"
+    },
+    {
+      "english": "Amount",
+      "zu": "Isamba",
+      "st": "Kakaretso",
+      "ts": "Ntsengo",
+      "ve": "Mutengo woṱhe"
+    },
+    {
+      "english": "Measured from",
+      "zu": "Kulinganiswe kuphi",
+      "st": "Ho lekantswe ho eng",
+      "ts": "Swi pimiwe eka yini",
+      "ve": "Zwo pimiwa zwi tshi bva ngafhi"
+    },
+    {
+      "english": "no researched rate — get a local quote",
+      "zu": "ayikho intengo ngeyunithi ecwaningiwe — thola intengo endaweni",
+      "st": "ha ho theko ka yuniti e batlisisitsweng — fumana khotheishene ya lehae",
+      "ts": "a ku na nxavo hi yuniti lowu lavisisiweke — kuma nxavo wa laha kusuhi",
+      "ve": "a hu na mutengo nga yuniti wo ṱoḓisisiwaho — wanani khotheisheni ya henefho"
+    },
+    {
+      "english": "quantity not measured — trace its footprint to price it",
+      "zu": "ubuningi abulinganisiwe — dweba indawo esiyithathayo ukuze kubalwe intengo",
+      "st": "bongata ha bo a lekanngwa — taka sebaka seo e se nkang ho fumana theko",
+      "ts": "nhlayo a yi pimiwanga — dirowa ndhawu leyi yi yi tekaka leswaku yi ta nyikiwa nxavo",
+      "ve": "vhunzhi a ho ngo pimiwa — olani fhethu hune tsha dzula hone uri tshi vhewe mutengo"
+    },
+    {
+      "english": "outside the price book's size range — get a local quote",
+      "zu": "ngaphandle kosayizi abakulolu hlu lwamanani — thola intengo endaweni",
+      "st": "boholo bo ka ntle ho meedi ya buka ya ditheko — fumana khotheishene ya lehae",
+      "ts": "ehandle ka vukulu bya buku ya minxavo — kuma nxavo wa laha kusuhi",
+      "ve": "vhuhulwane vhu nnḓa ha mikano ya bugu ya mitengo — wanani khotheisheni ya henefho"
+    },
+    {
+      "english": "already on the farm — not a build cost",
+      "zu": "sekhona epulazini — akusona isindleko sokwakha",
+      "st": "e se e le polasing — ha se tshenyehelo ya kaho",
+      "ts": "se yi le purasini — a hi mali yo aka",
+      "ve": "tsho no vha bulasini — a si mutengo wa u fhaṱa"
+    },
+    {
+      "english": "listed plant on saved plan — obtain local legal and ecological advice; do not buy or propagate from this bill",
+      "zu": "isitshalo esisohlwini esisepulanini eligciniwe — thola izeluleko zomthetho nezemvelo endaweni; ungathengi noma usandise izitshalo ngalolu hlu",
+      "st": "semela se lenaneng moralong o bolokilweng — fumana keletso ya lehae ya molao le ya tikoloho; o se ke wa reka kapa wa atisa dimela ho latela lenane lena",
+      "ts": "ximilana lexi nxaxametiweke eka pulani leyi hlayisiweke — kuma switsundzuxo swa nawu ni swa mbango swa laha kusuhi; u nga xavi kumbe u andzisa swimilana hi nxaxamelo lowu",
+      "ve": "tshimela tshi re kha mutevhe kha pulane yo vhulungwaho — wanani nyeletshedzo ya mulayo na ya mupo ya henefho; ni songo renga kana u andisa zwimela nga mutevhe uyu"
+    },
+    {
+      "english": "{amount} each",
+      "zu": "{amount} ngayinye",
+      "st": "{amount} ka nngwe",
+      "ts": "{amount} hi xin'we",
+      "ve": "{amount} nga tshithihi"
+    },
+    {
+      "english": "{count} no.",
+      "zu": "inani {count}",
+      "st": "palo {count}",
+      "ts": "nhlayo {count}",
+      "ve": "tshivhalo {count}"
+    },
+    {
+      "english": "Placed in the Design Studio",
+      "zu": "Kubekwe eSitudiyo somklamo",
+      "st": "Ho behilwe ho Studio sa moralo",
+      "ts": "Swi vekiwe eka Xitudio xa dizayini",
+      "ve": "Zwo vhewa kha Studio ya nyolo"
+    },
+    {
+      "english": "Measured off the traced line",
+      "zu": "Kulinganiswe emgqeni olandelwe",
+      "st": "Ho lekantswe moleng o latetsweng",
+      "ts": "Swi pimiwe eka layini leyi landzeleriweke",
+      "ve": "Zwo pimiwa kha mutalo wo tevhedzelwaho"
+    },
+    {
+      "english": "Subtotal of the priced lines: {subtotal}",
+      "zu": "Isamba semigqa enentengo: {subtotal}",
+      "st": "Kakaretso e sa fellang ya mela e nang le theko: {subtotal}",
+      "ts": "Ntsengo wa tilayini leti nga ni nxavo: {subtotal}",
+      "ve": "Mutengo wa mitalo i re na mutengo: {subtotal}"
+    },
+    {
+      "english": "This subtotal is NOT the cost of the build. {unpriced} a measured quantity but no rate, so the real figure is higher by whatever those cost. They are listed above with the reason, rather than left out or costed at zero — a bill that hides what it could not price reads as complete when it is not.",
+      "zu": "Lesi samba AKUZONA izindleko zokwakha. {unpriced} ubuningi obulinganisiwe, kodwa intengo ngeyunithi ayikho; ngakho isibalo sangempela siphezulu ngezindleko zalezo zinto. Zifakwe ngenhla nezizathu zazo, azishiywanga ngaphandle noma zibizwe ngoziro — uhlu olufihla okungenantengo lubukeka luphelele kodwa lungaphelele.",
+      "st": "Kakaretso ena HA SE ditshenyehelo tsa kaho. {unpriced} bongata bo lekantsweng empa theko ka yuniti ha e yo, kahoo palo ya nnete e phahame ka ditshenyehelo tsa dintho tseo. Di thathamisitswe ka hodimo le mabaka a tsona, ho e na le ho siuwa kapa ho behwa theko ya lefela — lenane le patang seo le sa kang la se behela theko le bonahala le felletse empa le sa fella.",
+      "ts": "Ntsengo lowu A HI mali ya ku aka. {unpriced} nhlayo leyi pimiweke kambe nxavo hi yuniti a wu kona, kutani nhlayo ya xiviri yi le henhla hi mali ya swilo swoleswo. Swi nxaxametiwile laha henhla ni xivangelo xa swona, ematshan'weni yo swi siya kumbe ku swi veka eka ziro — nxaxamelo lowu tumbetaka leswi wu nga swi nyiki nxavo wu vonaka wu helele loko wu nga helelanga.",
+      "ve": "Mutengo uyu A SI mutengo wa u fhaṱa. {unpriced} vhunzhi ho pimiwaho fhedzi mutengo nga yuniti a u ho, ngauralo nomboro ya vhukuma i fhira nga mutengo wa zwithu zwenezwo. Zwo ṅwalwa afho nṱha na zwivhangi zwazwo, nṱhani ha u zwi sia kana u zwi vhea kha ziro — mutevhe u dzumbaho zwine wa si kone u zwi vhea mutengo u vhonala wo fhelela ngeno u songo fhelela."
+    },
+    {
+      "english": "{count} line carries",
+      "zu": "umugqa ongu-{count} uphethe",
+      "st": "mola o {count} o na le",
+      "ts": "layini ya {count} yi na",
+      "ve": "mutalo wa {count} u na"
+    },
+    {
+      "english": "{count} lines carry",
+      "zu": "imigqa engu-{count} iphethe",
+      "st": "mela e {count} e na le",
+      "ts": "tilayini ta {count} ti na",
+      "ve": "mitalo ya {count} i na"
+    },
+    {
+      "english": "{items} excluded from this bill. They are part of the design and not part of the spend.",
+      "zu": "{items} kulolu hlu. Ziyingxenye yomklamo, aziyona ingxenye yezindleko.",
+      "st": "{items} lenaneng lena. Ke karolo ya moralo, ha se karolo ya tshebediso ya tjhelete.",
+      "ts": "{items} eka nxaxamelo lowu. I xiphemu xa dizayini, a hi xiphemu xa mali leyi nga ta tirhisiwa.",
+      "ve": "{items} kha mutevhe uyu. Ndi tshipiḓa tsha nyolo, a si tshipiḓa tsha tshelede ine ya ḓo shumiswa."
+    },
+    {
+      "english": "{count} item marked as already on the farm is",
+      "zu": "into engu-{count} emakwe ngokuthi isikhona epulazini ayifakiwe",
+      "st": "ntho e {count} e tshwailweng e le teng polasing ha e kenyeletswe",
+      "ts": "nchumu wa {count} lowu funghiweke leswaku se wu le purasini a wu katsiwanga",
+      "ve": "tshithu tsha {count} tsho swaiwaho uri tsho no vha bulasini a tshi katelwi"
+    },
+    {
+      "english": "{count} items marked as already on the farm are",
+      "zu": "izinto ezingu-{count} ezimakwe ngokuthi sezikhona epulazini azifakiwe",
+      "st": "dintho tse {count} tse tshwailweng di le teng polasing ha di kenyeletswe",
+      "ts": "swilo swa {count} leswi funghiweke leswaku se swi le purasini a swi katsiwanga",
+      "ve": "zwithu zwa {count} zwo swaiwaho uri zwo no vha bulasini a zwi katelwi"
+    },
+    {
+      "english": "All prices are rough planning estimates based on late-2025/early-2026 South African retail pricing incl. VAT and will vary by region, supplier, and site access — get local quotes before committing budget.",
+      "zu": "Zonke izintengo ziyizilinganiso zokuqala zokuhlela ezisekelwe kumanani okuthengisa aseNingizimu Afrika ngasekupheleni kuka-2025/ekuqaleni kuka-2026, kuhlanganisa i-VAT, futhi zizohluka ngesifunda, umhlinzeki nokufinyeleleka kwendawo — thola amanani endawo ngaphambi kokuzibophezela ngebhajethi.",
+      "st": "Ditheko tsohle ke dikhakanyo tsa ho rera tse thehilweng dithekong tsa mabenkele tsa Afrika Borwa tsa mafelong a 2025/mathwasong a 2026, ho kenyeletsa VAT, mme di tla fapana ho ya ka sebaka, mofani le ho fihlelleha ha sebaka — fumana dikhotheishene tsa lehae pele o itlama ka tekanyetso.",
+      "ts": "Minxavo hinkwaya i mimpimanyeto yo pulana leyi sekeriweke eka minxavo ya mavhengele ya Afrika-Dzonga ya ekuheleni ka 2025/eku sunguleni ka 2026, ku katsa VAT, naswona yi ta hambana hi ndhawu, muxavisi ni ku ngheneka ka ndhawu — kuma minxavo ya laha kusuhi u nga si tiboha eka mpimanyeto.",
+      "ve": "Mitengo yoṱhe ndi ndinganyelo dza u pulana dzo ḓitikaho nga mitengo ya mavhengeleni ya Afurika Tshipembe ya mafheloni a 2025/mathomoni a 2026, hu katelwa VAT, nahone i ḓo fhambana nga dzingu, murengisi na u swikelea ha fhethu — wanani khotheisheni dza henefho musi ni sa athu ḓivhofha kha mugaganyagwama."
+    }
+  ],
+  "visualEntries": [
+    {
+      "english": "Swale (on-contour earthwork)",
+      "zu": "Umsele wokubamba amanzi (umsebenzi womhlabathi olandela ukuphakama okufanayo)",
+      "st": "Foro e tshwarang metsi (mosebetsi wa mobu o latelang mela e lekanang ka bophahamo)",
+      "ts": "Nsele wo khoma mati (ntirho wa misava hi ku landza milayeni leyi nga eka ku tlakuka loku fanaka)",
+      "ve": "Mugero wa u fara maḓi (mushumo wa mavu kha mitalo i re kha vhuimo ha nṱha hu fanaho)"
+    }
+  ],
+  "sourceNotes": [
+    "BOQ no. is an item-count abbreviation; its native display uses a local word for count while SI units and values remain unchanged.",
+    "Existing summary drafts own authored bed/plot/listed-plant descriptions. Existing visual drafts own equipment, groups and known routes. Existing farmer-plan provenance draft is reused.",
+    "The native excluded-items fragments include their exclusion verb; English retains its original fragment plus excluded in the outer template."
+  ]
+}

@@ -1,0 +1,1818 @@
+{
+  "sourceSha": "ac308edb2c7b2e4c5bda9c41ebdf611804bead35",
+  "cases": [
+    {
+      "name": "catalogue",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Shed",
+                "defId": "shed",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Polytunnel",
+                "defId": "greenhouse_tunnel",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Shade Tunnel",
+                "defId": "shade_house",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Chicken Coop",
+                "defId": "chicken_coop",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Chicken Tractor",
+                "defId": "chicken_tractor",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Kraal",
+                "defId": "kraal",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Compost Bay (3-bin)",
+                "defId": "compost_bay",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Worm Farm",
+                "defId": "worm_farm",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Nursery Table",
+                "defId": "nursery_table",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Playground",
+                "defId": "playground",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Market Stall",
+                "defId": "market_stall",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Other structure",
+                "defId": "other_structure",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Beehive",
+                "defId": "beehive",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Goat Pen",
+                "defId": "goat_pen",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Pig Pen",
+                "defId": "pig_pen",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Duck Pond",
+                "defId": "duck_pond",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Rabbit Hutch",
+                "defId": "rabbit_hutch",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Livestock Trough",
+                "defId": "water_trough2",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Biodigester",
+                "defId": "biodigester",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Shade Sail",
+                "defId": "shade_sail",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Gate",
+                "defId": "gate",
+                "category": "access",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Bench",
+                "defId": "bench",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Sign",
+                "defId": "sign",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Ground Solar Panel",
+                "defId": "solar_panel_ground",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Washing Line",
+                "defId": "washline",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              }
+            ],
+            "routes": [
+              {
+                "kind": "swale",
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "kind": "fence",
+                "label": "Fence",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "kind": "path",
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "kind": "bedpath",
+                "label": "Bed path",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "kind": "pipe",
+                "label": "Water pipe",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "kind": "drip",
+                "label": "Drip line",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "kind": "windbreak",
+                "label": "Windbreak row",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "kind": "greywater",
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 34
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          }
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Loam",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "english": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 7 beds 44 m² + 4 staple plots 84 m² | Measured off the farmer's plan |\n| Structures placed | Shed x1, Polytunnel x1, Shade Tunnel x1, Chicken Coop x1, Chicken Tractor x1, Kraal x1, Compost Bay (3-bin) x1, Worm Farm x1, Nursery Table x1, Playground x1, Market Stall x1, Other structure x1, Beehive x1, Goat Pen x1, Pig Pen x1, Duck Pond x1, Rabbit Hutch x1, Livestock Trough x1, Biodigester x1, Shade Sail x1, Gate x1, Bench x1, Sign x1, Ground Solar Panel x1, Washing Line x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Swale 34 m · Fence 34 m · Path 34 m · Bed path 34 m · Water pipe 34 m · Drip line 34 m · Windbreak row 34 m · Greywater line 34 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | 2 500 L — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Loam | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n",
+      "visuals": {
+        "overviewTitle": "The site at a glance",
+        "overviewNote": "Space, seasons and the resources behind the plan.",
+        "title": "Your land, your plan",
+        "subtitle": "27.7262°S · 31.9630°E",
+        "basis": "Saved design quantities and site data. Planned work remains distinct from completed work.",
+        "metrics": [
+          {
+            "label": "Mapped site",
+            "value": "1 037 m²",
+            "note": "Traced on the map"
+          },
+          {
+            "label": "Growing space",
+            "value": "128 m²",
+            "note": "Mapped beds and staple plots"
+          },
+          {
+            "label": "Annual rainfall",
+            "value": "791 mm",
+            "note": "Climate estimate"
+          },
+          {
+            "label": "Storage in the plan",
+            "value": "2 500 L",
+            "note": "Stated capacity; check installation"
+          }
+        ],
+        "charts": [
+          {
+            "id": "area",
+            "title": "Space for growing",
+            "note": "Mapped area, not confirmation of land in production.",
+            "unit": "m²",
+            "kind": "bars",
+            "rows": [
+              {
+                "label": "Vegetable beds",
+                "value": 44,
+                "detail": "7"
+              },
+              {
+                "label": "Staple plots",
+                "value": 84,
+                "detail": "4"
+              }
+            ]
+          },
+          {
+            "id": "rainfall",
+            "title": "Rain through the year",
+            "note": "nasa-power · Monthly rainfall, not a weather forecast.",
+            "unit": "mm",
+            "kind": "months",
+            "rows": [
+              {
+                "label": "Jan",
+                "value": 133.6
+              },
+              {
+                "label": "Feb",
+                "value": 107
+              },
+              {
+                "label": "Mar",
+                "value": 86.5
+              },
+              {
+                "label": "Apr",
+                "value": 47.7
+              },
+              {
+                "label": "May",
+                "value": 11.8
+              },
+              {
+                "label": "Jun",
+                "value": 12
+              },
+              {
+                "label": "Jul",
+                "value": 12.1
+              },
+              {
+                "label": "Aug",
+                "value": 18.6
+              },
+              {
+                "label": "Sep",
+                "value": 36.9
+              },
+              {
+                "label": "Oct",
+                "value": 82.1
+              },
+              {
+                "label": "Nov",
+                "value": 110.7
+              },
+              {
+                "label": "Dec",
+                "value": 132.4
+              }
+            ]
+          },
+          {
+            "id": "water",
+            "title": "Water storage",
+            "note": "Capacity is not water currently available. ",
+            "kind": "bars",
+            "unit": "L",
+            "rows": [
+              {
+                "label": "Rainwater tank (2500 L) ×1",
+                "value": 2500,
+                "detail": "proposed"
+              }
+            ]
+          },
+          {
+            "id": "cost",
+            "title": "What has been priced",
+            "note": "Planned priced subtotal: R 42 366. 24 lines still need a price or measurement. Existing items are excluded. Confirm current local quotes.",
+            "unit": "R",
+            "kind": "bars",
+            "rows": [
+              {
+                "label": "Water",
+                "value": 5500
+              },
+              {
+                "label": "Earthworks & routes",
+                "value": 17986
+              },
+              {
+                "label": "Growing area",
+                "value": 5280
+              },
+              {
+                "label": "Structures & planting",
+                "value": 13600
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "legacy-labels",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Shed",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Polytunnel",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Shade Tunnel",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Chicken Coop",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Chicken Tractor",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Kraal",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Compost Bay (3-bin)",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Worm Farm",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Nursery Table",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Playground",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Market Stall",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Other structure",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Beehive",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Goat Pen",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Pig Pen",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Duck Pond",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Rabbit Hutch",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Livestock Trough",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Biodigester",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Shade Sail",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Gate",
+                "category": "access",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Bench",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Sign",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Ground Solar Panel",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Washing Line",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              }
+            ],
+            "routes": [
+              {
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "label": "Fence",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "label": "Bed path",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "label": "Water pipe",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "label": "Drip line",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "label": "Windbreak row",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 34
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          }
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Loam",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "english": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 7 beds 44 m² + 4 staple plots 84 m² | Measured off the farmer's plan |\n| Structures placed | Shed x1, Polytunnel x1, Shade Tunnel x1, Chicken Coop x1, Chicken Tractor x1, Kraal x1, Compost Bay (3-bin) x1, Worm Farm x1, Nursery Table x1, Playground x1, Market Stall x1, Other structure x1, Beehive x1, Goat Pen x1, Pig Pen x1, Duck Pond x1, Rabbit Hutch x1, Livestock Trough x1, Biodigester x1, Shade Sail x1, Gate x1, Bench x1, Sign x1, Ground Solar Panel x1, Washing Line x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Swale 34 m · Fence 34 m · Path 34 m · Bed path 34 m · Water pipe 34 m · Drip line 34 m · Windbreak row 34 m · Greywater line 34 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | 2 500 L — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Loam | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n",
+      "visuals": {
+        "overviewTitle": "The site at a glance",
+        "overviewNote": "Space, seasons and the resources behind the plan.",
+        "title": "Your land, your plan",
+        "subtitle": "27.7262°S · 31.9630°E",
+        "basis": "Saved design quantities and site data. Planned work remains distinct from completed work.",
+        "metrics": [
+          {
+            "label": "Mapped site",
+            "value": "1 037 m²",
+            "note": "Traced on the map"
+          },
+          {
+            "label": "Growing space",
+            "value": "128 m²",
+            "note": "Mapped beds and staple plots"
+          },
+          {
+            "label": "Annual rainfall",
+            "value": "791 mm",
+            "note": "Climate estimate"
+          },
+          {
+            "label": "Storage in the plan",
+            "value": "2 500 L",
+            "note": "Stated capacity; check installation"
+          }
+        ],
+        "charts": [
+          {
+            "id": "area",
+            "title": "Space for growing",
+            "note": "Mapped area, not confirmation of land in production.",
+            "unit": "m²",
+            "kind": "bars",
+            "rows": [
+              {
+                "label": "Vegetable beds",
+                "value": 44,
+                "detail": "7"
+              },
+              {
+                "label": "Staple plots",
+                "value": 84,
+                "detail": "4"
+              }
+            ]
+          },
+          {
+            "id": "rainfall",
+            "title": "Rain through the year",
+            "note": "nasa-power · Monthly rainfall, not a weather forecast.",
+            "unit": "mm",
+            "kind": "months",
+            "rows": [
+              {
+                "label": "Jan",
+                "value": 133.6
+              },
+              {
+                "label": "Feb",
+                "value": 107
+              },
+              {
+                "label": "Mar",
+                "value": 86.5
+              },
+              {
+                "label": "Apr",
+                "value": 47.7
+              },
+              {
+                "label": "May",
+                "value": 11.8
+              },
+              {
+                "label": "Jun",
+                "value": 12
+              },
+              {
+                "label": "Jul",
+                "value": 12.1
+              },
+              {
+                "label": "Aug",
+                "value": 18.6
+              },
+              {
+                "label": "Sep",
+                "value": 36.9
+              },
+              {
+                "label": "Oct",
+                "value": 82.1
+              },
+              {
+                "label": "Nov",
+                "value": 110.7
+              },
+              {
+                "label": "Dec",
+                "value": 132.4
+              }
+            ]
+          },
+          {
+            "id": "water",
+            "title": "Water storage",
+            "note": "Capacity is not water currently available. ",
+            "kind": "bars",
+            "unit": "L",
+            "rows": [
+              {
+                "label": "Rainwater tank (2500 L) ×1",
+                "value": 2500,
+                "detail": "proposed"
+              }
+            ]
+          },
+          {
+            "id": "cost",
+            "title": "What has been priced",
+            "note": "Planned priced subtotal: R 10 780. 34 lines still need a price or measurement. Existing items are excluded. Confirm current local quotes.",
+            "unit": "R",
+            "kind": "bars",
+            "rows": [
+              {
+                "label": "Water",
+                "value": 5500
+              },
+              {
+                "label": "Growing area",
+                "value": 5280
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "custom-labels",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Named Shed",
+                "defId": "shed",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Polytunnel",
+                "defId": "greenhouse_tunnel",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Shade Tunnel",
+                "defId": "shade_house",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Chicken Coop",
+                "defId": "chicken_coop",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Chicken Tractor",
+                "defId": "chicken_tractor",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Kraal",
+                "defId": "kraal",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Compost Bay (3-bin)",
+                "defId": "compost_bay",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Worm Farm",
+                "defId": "worm_farm",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Nursery Table",
+                "defId": "nursery_table",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Playground",
+                "defId": "playground",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Market Stall",
+                "defId": "market_stall",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Other structure",
+                "defId": "other_structure",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Beehive",
+                "defId": "beehive",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Goat Pen",
+                "defId": "goat_pen",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Pig Pen",
+                "defId": "pig_pen",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Duck Pond",
+                "defId": "duck_pond",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Rabbit Hutch",
+                "defId": "rabbit_hutch",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Livestock Trough",
+                "defId": "water_trough2",
+                "category": "animal",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Biodigester",
+                "defId": "biodigester",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Shade Sail",
+                "defId": "shade_sail",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Gate",
+                "defId": "gate",
+                "category": "access",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Bench",
+                "defId": "bench",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Sign",
+                "defId": "sign",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Ground Solar Panel",
+                "defId": "solar_panel_ground",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              },
+              {
+                "name": "Named Washing Line",
+                "defId": "washline",
+                "category": "structure",
+                "status": "proposed",
+                "count": 1
+              }
+            ],
+            "routes": [
+              {
+                "kind": "swale",
+                "label": "Named Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "kind": "fence",
+                "label": "Named Fence",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "kind": "path",
+                "label": "Named Path",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "kind": "bedpath",
+                "label": "Named Bed path",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "kind": "pipe",
+                "label": "Named Water pipe",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "kind": "drip",
+                "label": "Named Drip line",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "kind": "windbreak",
+                "label": "Named Windbreak row",
+                "count": 1,
+                "totalLengthM": 34
+              },
+              {
+                "kind": "greywater",
+                "label": "Named Greywater line",
+                "count": 1,
+                "totalLengthM": 34
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          }
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Loam",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "english": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 7 beds 44 m² + 4 staple plots 84 m² | Measured off the farmer's plan |\n| Structures placed | Named Shed x1, Named Polytunnel x1, Named Shade Tunnel x1, Named Chicken Coop x1, Named Chicken Tractor x1, Named Kraal x1, Named Compost Bay (3-bin) x1, Named Worm Farm x1, Named Nursery Table x1, Named Playground x1, Named Market Stall x1, Named Other structure x1, Named Beehive x1, Named Goat Pen x1, Named Pig Pen x1, Named Duck Pond x1, Named Rabbit Hutch x1, Named Livestock Trough x1, Named Biodigester x1, Named Shade Sail x1, Named Gate x1, Named Bench x1, Named Sign x1, Named Ground Solar Panel x1, Named Washing Line x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Named Swale 34 m · Named Fence 34 m · Named Path 34 m · Named Bed path 34 m · Named Water pipe 34 m · Named Drip line 34 m · Named Windbreak row 34 m · Named Greywater line 34 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | 2 500 L — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Loam | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n",
+      "visuals": {
+        "overviewTitle": "The site at a glance",
+        "overviewNote": "Space, seasons and the resources behind the plan.",
+        "title": "Your land, your plan",
+        "subtitle": "27.7262°S · 31.9630°E",
+        "basis": "Saved design quantities and site data. Planned work remains distinct from completed work.",
+        "metrics": [
+          {
+            "label": "Mapped site",
+            "value": "1 037 m²",
+            "note": "Traced on the map"
+          },
+          {
+            "label": "Growing space",
+            "value": "128 m²",
+            "note": "Mapped beds and staple plots"
+          },
+          {
+            "label": "Annual rainfall",
+            "value": "791 mm",
+            "note": "Climate estimate"
+          },
+          {
+            "label": "Storage in the plan",
+            "value": "2 500 L",
+            "note": "Stated capacity; check installation"
+          }
+        ],
+        "charts": [
+          {
+            "id": "area",
+            "title": "Space for growing",
+            "note": "Mapped area, not confirmation of land in production.",
+            "unit": "m²",
+            "kind": "bars",
+            "rows": [
+              {
+                "label": "Vegetable beds",
+                "value": 44,
+                "detail": "7"
+              },
+              {
+                "label": "Staple plots",
+                "value": 84,
+                "detail": "4"
+              }
+            ]
+          },
+          {
+            "id": "rainfall",
+            "title": "Rain through the year",
+            "note": "nasa-power · Monthly rainfall, not a weather forecast.",
+            "unit": "mm",
+            "kind": "months",
+            "rows": [
+              {
+                "label": "Jan",
+                "value": 133.6
+              },
+              {
+                "label": "Feb",
+                "value": 107
+              },
+              {
+                "label": "Mar",
+                "value": 86.5
+              },
+              {
+                "label": "Apr",
+                "value": 47.7
+              },
+              {
+                "label": "May",
+                "value": 11.8
+              },
+              {
+                "label": "Jun",
+                "value": 12
+              },
+              {
+                "label": "Jul",
+                "value": 12.1
+              },
+              {
+                "label": "Aug",
+                "value": 18.6
+              },
+              {
+                "label": "Sep",
+                "value": 36.9
+              },
+              {
+                "label": "Oct",
+                "value": 82.1
+              },
+              {
+                "label": "Nov",
+                "value": 110.7
+              },
+              {
+                "label": "Dec",
+                "value": 132.4
+              }
+            ]
+          },
+          {
+            "id": "water",
+            "title": "Water storage",
+            "note": "Capacity is not water currently available. ",
+            "kind": "bars",
+            "unit": "L",
+            "rows": [
+              {
+                "label": "Rainwater tank (2500 L) ×1",
+                "value": 2500,
+                "detail": "proposed"
+              }
+            ]
+          },
+          {
+            "id": "cost",
+            "title": "What has been priced",
+            "note": "Planned priced subtotal: R 42 366. 24 lines still need a price or measurement. Existing items are excluded. Confirm current local quotes.",
+            "unit": "R",
+            "kind": "bars",
+            "rows": [
+              {
+                "label": "Water",
+                "value": 5500
+              },
+              {
+                "label": "Earthworks & routes",
+                "value": 17986
+              },
+              {
+                "label": "Growing area",
+                "value": 5280
+              },
+              {
+                "label": "Structures & planting",
+                "value": 13600
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "location": {
+    "lat": -27.726231,
+    "lon": 31.963044,
+    "biome": {
+      "name": "Grassland",
+      "code": "GR",
+      "description": "Highveld temperate grassland, summer rainfall, cold frosty winters",
+      "color": "#9FC169",
+      "rainfallPattern": "summer",
+      "meanRainfall": "500–900mm",
+      "keySpecies": [
+        "Buffalo Thorn",
+        "Wild Olive",
+        "Highveld Protea",
+        "Rooigrass",
+        "Bulbine",
+        "Wild Garlic"
+      ],
+      "soilType": "Red/yellow apedal soils, moderate depth, clay-rich on Highveld",
+      "waterStrategy": "Heavy summer thunderstorms (short, intense). Keyline design on all slopes — angle swales 1:1000 off true contour to move water across hillside. Winter dry → storage essential. Roof: 1m² = 1L per 1mm rain.",
+      "soilStrategy": "Often compacted by livestock. Subsoil aeration before earthworks. Oats/vetch winter cover crops. pH usually 5.5–6.5, add agricultural lime if below 5.5. Build OM with compost + biochar.",
+      "challenges": [
+        "Hard frosts (–5°C to –10°C)",
+        "Hail",
+        "Erodible clay soils on slopes",
+        "Vlei (wetland) drainage issues"
+      ]
+    },
+    "rainfall": {
+      "monthly": [
+        133.6,
+        107,
+        86.5,
+        47.7,
+        11.8,
+        12,
+        12.1,
+        18.6,
+        36.9,
+        82.1,
+        110.7,
+        132.4
+      ],
+      "annual": 791,
+      "pattern": "summer",
+      "wetSeason": "Oct–Mar",
+      "drySeason": "May–Aug",
+      "rainfallSource": "nasa-power"
+    },
+    "climate": {
+      "meanTemp": 18.1,
+      "maxTemp": 42.1,
+      "minTemp": -2.3,
+      "monthlyTemp": [
+        22.72,
+        22.25,
+        20.78,
+        17.67,
+        14.78,
+        11.6,
+        11.54,
+        14.43,
+        17.92,
+        19.83,
+        21.08,
+        22.4
+      ],
+      "solarRadiation": 5.3,
+      "koppen": "Dwb",
+      "koppenDesc": "Cold continental highland",
+      "windSpeed": 2.2,
+      "windFromSummer": "E",
+      "windFromWinter": "NW"
+    },
+    "soil": {
+      "textureClass": "Loam",
+      "ph": 6.5,
+      "organicCarbon": 1.2,
+      "clay": 25,
+      "sand": 45,
+      "silt": 30,
+      "bulkDensity": 1.3,
+      "soilSource": "soilgrids"
+    },
+    "elevation": {
+      "elevation": 962,
+      "slopeDeg": 1.3,
+      "slopePct": 2.3,
+      "aspectDeg": 355,
+      "aspectLabel": "N"
+    },
+    "vegetation": {
+      "vegUnit": "Thukela Thornveld",
+      "biome": "Savanna",
+      "bioregion": "Sub-Escarpment Savanna Bioregion"
+    },
+    "bru": {
+      "brucode": "Tc1",
+      "bruParent": "Tc1",
+      "map": 723,
+      "tmin": -6.5,
+      "tmean": 18.1,
+      "tmax": 40.1,
+      "nearestBrg": "Dry Tall Grassveld",
+      "isApproximateName": true,
+      "attribution": "Zone data: KZN DARD Bioresource Units"
+    }
+  }
+}

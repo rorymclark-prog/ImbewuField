@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { controlT, type ControlLanguage } from './control-icon-renderers.ts';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { registerHooks } from 'node:module';
@@ -12,7 +13,7 @@ import {
 import { Ctx, type LangCtx } from '../lib/i18n-context';
 import {
   PRODUCT_TOUR_FEATURES_ZU, PRODUCT_TOUR_ZU, productTourFeatureCopy,
-  productTourLocalizationIsComplete, productTourStepCopy, productTourUi,
+  productTourLocalizationIsComplete, productTourStepCopy, productTourUi, productTourError,
 } from '../lib/sample-tour-localization';
 
 test('isiZulu tour copy covers every source stop and tip while preserving the English destinations', () => {
@@ -147,7 +148,7 @@ const { default: TourPage } = await import('../app/tour/page.tsx');
 pageHooks.deregister();
 
 function tourPageTree() {
-  const context: LangCtx = { lang: pageHarness.lang, setLang: () => {}, t: key => key, onboarded: true, completeOnboarding: () => {} };
+  const context: LangCtx = { lang: pageHarness.lang, setLang: () => {}, t: controlT((['zu','st','ts','ve'].includes(pageHarness.lang)?pageHarness.lang:'en') as ControlLanguage), onboarded: true, completeOnboarding: () => {} };
   return createElement(Ctx.Provider, { value: context }, createElement(TourPage));
 }
 function renderTour(value = tourState(), lang: LangCtx['lang'] = 'en') {
@@ -179,20 +180,32 @@ test('every tour card opens its chosen stop on first entry after workspace activ
   }
 });
 
-test('isiZulu stop cards visibly carry the unreviewed disclosure and localized stop instructions', () => {
-  const renderer = renderTour(tourState(), 'zu');
-  const renderedText = renderer.root.findAllByType('p').map(node => String(node.children.join(''))).join('\n');
-  assert.match(renderedText, /Uhlaka lwesiZulu olungakabuyekezwa/);
-  assert.match(renderedText, /Buka izithombe zengadi/);
-  assert.doesNotMatch(renderedText, /Browse garden photos, layouts and grower profiles/);
-  act(() => { renderer.unmount(); });
+// English source now lives in labelled, collapsed details. The contract is native primary
+// instructions plus exact source backing, rather than absence of English anywhere in the tree.
+function tourNodeText(node:any,skipEnglish=false):string {
+  if(typeof node==='string'||typeof node==='number')return String(node);
+  if(skipEnglish&&node.props?.lang==='en')return '';
+  return (node.children??[]).map((child:any)=>tourNodeText(child,skipEnglish)).join('');
+}
+test('draft-language stop cards visibly carry disclosure and native primary instructions with exact English source backing', () => {
+ for(const lang of ['zu','st','ts','ve']){
+  const renderer=renderTour(tourState(),lang);
+  try{
+   const notes=renderer.root.findAllByProps({role:'note'}).map(n=>tourNodeText(n)).join('\n');
+   assert.ok(notes.includes(productTourUi('draftDisclosure',lang)!));
+   const primary=PRODUCT_TOUR.map(step=>{const p=renderer.root.findByProps({id:`tour-${step.id}-description`});assert.equal(tourNodeText(p),productTourStepCopy(step,lang).task);return tourNodeText(p);}).join('\n');
+   if(lang==='zu'){assert.match(notes,/Uhlaka lwesiZulu olungakabuyekezwa/);assert.match(primary,/Buka izithombe zengadi/);}
+   assert.doesNotMatch(primary,/Browse garden photos, layouts and grower profiles/);
+   for(const step of PRODUCT_TOUR){const details=renderer.root.findAllByType('details').find(n=>tourNodeText(n).includes(step.task));assert.ok(details,step.id+' source is available');assert.notEqual(details.props.open,true,'English source starts collapsed');assert.ok(details.findAllByProps({lang:'en'}).some(n=>tourNodeText(n).includes(step.task)));}
+  }finally{act(()=>renderer.unmount());}
+ }
 });
-
-test('tour setup errors are also shown in isiZulu', () => {
-  const renderer = renderTour(tourState({ error: 'The example farm could not load. Please try again.' }), 'zu');
-  const alert = renderer.root.findByProps({ role: 'alert' });
-  assert.equal(alert.children.join(''), 'Ipulazi lesibonelo alikwazanga ukuvuleka. Sicela uzame futhi.');
-  act(() => { renderer.unmount(); });
+test('tour setup errors stay native while their exact English source is separately labelled', () => {
+ const source='The example farm could not load. Please try again.';
+ for(const lang of ['zu','st','ts','ve']){
+  const renderer=renderTour(tourState({error:source}),lang);
+  try{const alert=renderer.root.findByProps({role:'alert'});assert.equal(tourNodeText(alert,true),productTourError(source,lang));if(lang==='zu')assert.equal(tourNodeText(alert,true),'Ipulazi lesibonelo alikwazanga ukuvuleka. Sicela uzame futhi.');const english=alert.findByType('small');assert.equal(english.props.lang,'en');assert.equal(english.children.at(-1),source);}finally{act(()=>renderer.unmount());}
+ }
 });
 
 test('an active tour card jumps directly without restarting the existing checklist', () => {

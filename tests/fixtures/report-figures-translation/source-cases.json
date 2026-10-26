@@ -1,0 +1,1145 @@
+{
+  "sourceSha": "25c83e2d4cb14f4fd75a11bf297de334dff6e312",
+  "canvas": {
+    "siteId": "site:-27.72623,31.96304",
+    "frame": {
+      "centerLng": 31.963044,
+      "centerLat": -27.726231,
+      "zoom": 19.51439664056546,
+      "imgW": 960,
+      "imgH": 640,
+      "mPerPx": 0.09251687171200383
+    },
+    "items": [
+      {
+        "id": "demo-bed-1",
+        "defId": "veg_bed",
+        "x": 0.3282962962985039,
+        "y": 0.5,
+        "wM": 1.5,
+        "hM": 4,
+        "rot": 0,
+        "label": "Bed 1"
+      },
+      {
+        "id": "demo-bed-2",
+        "defId": "veg_bed",
+        "x": 0.3564444444452723,
+        "y": 0.5,
+        "wM": 1.5,
+        "hM": 4,
+        "rot": 0,
+        "label": "Bed 2"
+      },
+      {
+        "id": "demo-bed-3",
+        "defId": "veg_bed",
+        "x": 0.3845925925920407,
+        "y": 0.5,
+        "wM": 1.5,
+        "hM": 4,
+        "rot": 0,
+        "label": "Bed 3"
+      },
+      {
+        "id": "demo-bed-4",
+        "defId": "veg_bed",
+        "x": 0.3282962962985039,
+        "y": 0.5844444618560374,
+        "wM": 1.5,
+        "hM": 4,
+        "rot": 0,
+        "label": "Bed 4"
+      },
+      {
+        "id": "demo-bed-5",
+        "defId": "veg_bed",
+        "x": 0.3564444444452723,
+        "y": 0.5844444618560374,
+        "wM": 1.5,
+        "hM": 4,
+        "rot": 0,
+        "label": "Bed 5"
+      },
+      {
+        "id": "demo-bed-6",
+        "defId": "veg_bed",
+        "x": 0.38740740741292634,
+        "y": 0.5844444618560374,
+        "wM": 2,
+        "hM": 4,
+        "rot": 0,
+        "label": "Bed 6"
+      },
+      {
+        "id": "demo-hugel-1",
+        "defId": "veg_bed",
+        "x": 0.4211851852014661,
+        "y": 0.5084444446489215,
+        "wM": 2,
+        "hM": 3,
+        "rot": 0,
+        "label": "Bed 7"
+      },
+      {
+        "id": "demo-di-tank",
+        "defId": "jojo_2500",
+        "x": 0.3040888889071842,
+        "y": 0.3243556308094412,
+        "wM": 1.2,
+        "hM": 1.2,
+        "label": "Rainwater tank (2500 L)"
+      },
+      {
+        "id": "demo-di-compost",
+        "defId": "compost_bay",
+        "x": 0.429629629633079,
+        "y": 0.3268889620434493,
+        "wM": 1.5,
+        "hM": 1.5,
+        "label": "Compost bays"
+      },
+      {
+        "id": "demo-di-mango",
+        "defId": "tree_mango",
+        "x": 0.35362962962438665,
+        "y": 0.6520000563934445
+      },
+      {
+        "id": "demo-di-avocado",
+        "defId": "tree_avocado",
+        "x": 0.46622222221146026,
+        "y": 0.6520000563934445
+      },
+      {
+        "id": "demo-di-natal-plum",
+        "defId": "tree_natal_plum",
+        "x": 0.5788148147985339,
+        "y": 0.6435556058771909
+      },
+      {
+        "id": "demo-di-moringa-1",
+        "defId": "tree_moringa",
+        "x": 0.6463703703756134,
+        "y": 0.6351111557334661
+      },
+      {
+        "id": "demo-di-moringa-2",
+        "defId": "tree_moringa",
+        "x": 0.40992592591792343,
+        "y": 0.6688889584969729
+      }
+    ],
+    "zones": [
+      {
+        "id": "demo-dz-1",
+        "zone": 1,
+        "points": [
+          [
+            0.2860740740783513,
+            0.28044456206262114
+          ],
+          [
+            0.4549629629589617,
+            0.28044456206262114
+          ],
+          [
+            0.4549629629589617,
+            0.44088889746926724
+          ],
+          [
+            0.2860740740783513,
+            0.44088889746926724
+          ]
+        ]
+      },
+      {
+        "id": "demo-dz-2",
+        "zone": 2,
+        "points": [
+          [
+            0.2973333333618939,
+            0.4493333396501839
+          ],
+          [
+            0.4437037037375073,
+            0.4493333396501839
+          ],
+          [
+            0.4437037037375073,
+            0.6266667058225721
+          ],
+          [
+            0.2973333333618939,
+            0.6266667058225721
+          ]
+        ]
+      },
+      {
+        "id": "demo-dz-3",
+        "zone": 3,
+        "points": [
+          [
+            0.2973333333618939,
+            0.6266667058225721
+          ],
+          [
+            0.7026666666691502,
+            0.6266667058225721
+          ],
+          [
+            0.7026666666691502,
+            0.7111112198326737
+          ],
+          [
+            0.2973333333618939,
+            0.7111112198326737
+          ]
+        ]
+      },
+      {
+        "id": "demo-dz-4",
+        "zone": 5,
+        "points": [
+          [
+            0.6801481481641531,
+            0.29733343357220293
+          ],
+          [
+            0.7082962962798774,
+            0.29733343357220293
+          ],
+          [
+            0.7082962962798774,
+            0.7026667668949813
+          ],
+          [
+            0.6801481481641531,
+            0.7026667668949813
+          ]
+        ]
+      },
+      {
+        "id": "demo-staple-1",
+        "zone": 2,
+        "feature": "staple_garden",
+        "points": [
+          [
+            0.4707259259186685,
+            0.47297777961939574
+          ],
+          [
+            0.538281481495748,
+            0.47297777961939574
+          ],
+          [
+            0.538281481495748,
+            0.5320888914167881
+          ],
+          [
+            0.4707259259186685,
+            0.5320888914167881
+          ]
+        ]
+      },
+      {
+        "id": "demo-staple-2",
+        "zone": 2,
+        "feature": "staple_garden",
+        "points": [
+          [
+            0.6238518518395721,
+            0.44257778585888446
+          ],
+          [
+            0.6711407407186926,
+            0.44257778585888446
+          ],
+          [
+            0.6711407407186926,
+            0.5270222240127623
+          ],
+          [
+            0.6238518518395721,
+            0.5270222240127623
+          ]
+        ]
+      },
+      {
+        "id": "demo-staple-3",
+        "zone": 2,
+        "feature": "staple_garden",
+        "points": [
+          [
+            0.5225185185360411,
+            0.5422222265508025
+          ],
+          [
+            0.5900740740510325,
+            0.5422222265508025
+          ],
+          [
+            0.5900740740510325,
+            0.6013333584647625
+          ],
+          [
+            0.5225185185360411,
+            0.6013333584647625
+          ]
+        ]
+      },
+      {
+        "id": "demo-staple-4",
+        "zone": 2,
+        "feature": "staple_garden",
+        "points": [
+          [
+            0.6013333333345751,
+            0.5422222265508025
+          ],
+          [
+            0.6688888888495664,
+            0.5422222265508025
+          ],
+          [
+            0.6688888888495664,
+            0.6013333584647625
+          ],
+          [
+            0.6013333333345751,
+            0.6013333584647625
+          ]
+        ]
+      }
+    ],
+    "lines": [
+      {
+        "id": "demo-dl-path",
+        "kind": "path",
+        "points": [
+          [
+            0.4549629629589617,
+            0.4324444556143135
+          ],
+          [
+            0.4549629629589617,
+            0.5422222265508025
+          ],
+          [
+            0.31985185186689097,
+            0.5422222265508025
+          ]
+        ]
+      },
+      {
+        "id": "demo-dl-swale",
+        "kind": "swale",
+        "points": [
+          [
+            0.30859259258334837,
+            0.6097778072115034
+          ],
+          [
+            0.5,
+            0.6148444766644389
+          ],
+          [
+            0.6914074073856076,
+            0.6097778072115034
+          ]
+        ]
+      },
+      {
+        "id": "demo-dl-greywater",
+        "kind": "greywater",
+        "points": [
+          [
+            0.5450370370410382,
+            0.5371555589605123
+          ],
+          [
+            0.5112592592524986,
+            0.5371555589605123
+          ],
+          [
+            0.46622222221146026,
+            0.6435556058771909
+          ]
+        ]
+      }
+    ],
+    "step": "review",
+    "dailyWaterUseL": 200,
+    "updatedAt": "2026-10-21T12:56:40.998Z",
+    "rev": 1
+  },
+  "refs": {
+    "boundary": [
+      [
+        0.2691851851840814,
+        0.2703112398274243
+      ],
+      [
+        0.7206814814979832,
+        0.28551122336648405
+      ],
+      [
+        0.7296888889123996,
+        0.7229334545787424
+      ],
+      [
+        0.2838222222402692,
+        0.7144890011288225
+      ],
+      [
+        0.2691851851840814,
+        0.2703112398274243
+      ]
+    ],
+    "house": [
+      [
+        0.4774814814950029,
+        0.33111118073575196
+      ],
+      [
+        0.6576296295970678,
+        0.33111118073575196
+      ],
+      [
+        0.6576296295970678,
+        0.4324444556143135
+      ],
+      [
+        0.6125925925560296,
+        0.4324444556143135
+      ],
+      [
+        0.6125925925560296,
+        0.5337777805980295
+      ],
+      [
+        0.5450370370410382,
+        0.5337777805980295
+      ],
+      [
+        0.5450370370410382,
+        0.4662222250364721
+      ],
+      [
+        0.4774814814950029,
+        0.4662222250364721
+      ],
+      [
+        0.4774814814950029,
+        0.33111118073575196
+      ]
+    ],
+    "driveway": [
+      [
+        0.4437037037375073,
+        0.2770667879842222
+      ],
+      [
+        0.48874074071645734,
+        0.2770667879842222
+      ],
+      [
+        0.48874074071645734,
+        0.31760008120909333
+      ],
+      [
+        0.6801481481641531,
+        0.31760008120909333
+      ],
+      [
+        0.6801481481641531,
+        0.36488893344067036
+      ],
+      [
+        0.6576296295970678,
+        0.36488893344067036
+      ],
+      [
+        0.6576296295970678,
+        0.3395556183997542
+      ],
+      [
+        0.46622222221146026,
+        0.3395556183997542
+      ],
+      [
+        0.46622222221146026,
+        0.4324444556143135
+      ],
+      [
+        0.4437037037375073,
+        0.4324444556143135
+      ],
+      [
+        0.4437037037375073,
+        0.2770667879842222
+      ]
+    ],
+    "drivewayClosed": true
+  },
+  "location": {
+    "lat": -27.726231,
+    "lon": 31.963044,
+    "biome": {
+      "name": "Grassland",
+      "code": "GR",
+      "description": "Highveld temperate grassland, summer rainfall, cold frosty winters",
+      "color": "#9FC169",
+      "rainfallPattern": "summer",
+      "meanRainfall": "500–900mm",
+      "keySpecies": [
+        "Buffalo Thorn",
+        "Wild Olive",
+        "Highveld Protea",
+        "Rooigrass",
+        "Bulbine",
+        "Wild Garlic"
+      ],
+      "soilType": "Red/yellow apedal soils, moderate depth, clay-rich on Highveld",
+      "waterStrategy": "Heavy summer thunderstorms (short, intense). Keyline design on all slopes — angle swales 1:1000 off true contour to move water across hillside. Winter dry → storage essential. Roof: 1m² = 1L per 1mm rain.",
+      "soilStrategy": "Often compacted by livestock. Subsoil aeration before earthworks. Oats/vetch winter cover crops. pH usually 5.5–6.5, add agricultural lime if below 5.5. Build OM with compost + biochar.",
+      "challenges": [
+        "Hard frosts (–5°C to –10°C)",
+        "Hail",
+        "Erodible clay soils on slopes",
+        "Vlei (wetland) drainage issues"
+      ]
+    },
+    "rainfall": {
+      "monthly": [
+        133.6,
+        107,
+        86.5,
+        47.7,
+        11.8,
+        12,
+        12.1,
+        18.6,
+        36.9,
+        82.1,
+        110.7,
+        132.4
+      ],
+      "annual": 791,
+      "pattern": "summer",
+      "wetSeason": "Oct–Mar",
+      "drySeason": "May–Aug",
+      "rainfallSource": "nasa-power"
+    },
+    "climate": {
+      "meanTemp": 18.1,
+      "maxTemp": 42.1,
+      "minTemp": -2.3,
+      "monthlyTemp": [
+        22.72,
+        22.25,
+        20.78,
+        17.67,
+        14.78,
+        11.6,
+        11.54,
+        14.43,
+        17.92,
+        19.83,
+        21.08,
+        22.4
+      ],
+      "solarRadiation": 5.3,
+      "koppen": "Dwb",
+      "koppenDesc": "Cold continental highland",
+      "windSpeed": 2.2,
+      "windFromSummer": "E",
+      "windFromWinter": "NW"
+    },
+    "soil": {
+      "textureClass": "Loam",
+      "ph": 6.5,
+      "organicCarbon": 1.2,
+      "clay": 25,
+      "sand": 45,
+      "silt": 30,
+      "bulkDensity": 1.3,
+      "soilSource": "soilgrids"
+    },
+    "elevation": {
+      "elevation": 962,
+      "slopeDeg": 1.3,
+      "slopePct": 2.3,
+      "aspectDeg": 355,
+      "aspectLabel": "N"
+    },
+    "vegetation": {
+      "vegUnit": "Thukela Thornveld",
+      "biome": "Savanna",
+      "bioregion": "Sub-Escarpment Savanna Bioregion"
+    },
+    "bru": {
+      "brucode": "Tc1",
+      "bruParent": "Tc1",
+      "map": 723,
+      "tmin": -6.5,
+      "tmean": 18.1,
+      "tmax": 40.1,
+      "nearestBrg": "Dry Tall Grassveld",
+      "isApproximateName": true,
+      "attribution": "Zone data: KZN DARD Bioresource Units"
+    }
+  },
+  "facts": {
+    "productionEnterpriseChoices": {},
+    "productionItems": [
+      {
+        "defId": "veg_bed"
+      },
+      {
+        "defId": "veg_bed"
+      },
+      {
+        "defId": "veg_bed"
+      },
+      {
+        "defId": "veg_bed"
+      },
+      {
+        "defId": "veg_bed"
+      },
+      {
+        "defId": "veg_bed"
+      },
+      {
+        "defId": "veg_bed"
+      },
+      {
+        "defId": "jojo_2500"
+      },
+      {
+        "defId": "compost_bay"
+      },
+      {
+        "defId": "tree_mango"
+      },
+      {
+        "defId": "tree_avocado"
+      },
+      {
+        "defId": "tree_natal_plum"
+      },
+      {
+        "defId": "tree_moringa"
+      },
+      {
+        "defId": "tree_moringa"
+      }
+    ],
+    "design": {
+      "beds": [
+        {
+          "label": "Bed 1",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "label": "Bed 2",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "label": "Bed 3",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "label": "Bed 4",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "label": "Bed 5",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "label": "Bed 6",
+          "areaM2": 8,
+          "kind": "bed"
+        },
+        {
+          "label": "Bed 7",
+          "areaM2": 6,
+          "kind": "bed"
+        },
+        {
+          "label": "Plot 1",
+          "areaM2": 21,
+          "kind": "plot"
+        },
+        {
+          "label": "Plot 2",
+          "areaM2": 21,
+          "kind": "plot"
+        },
+        {
+          "label": "Plot 3",
+          "areaM2": 21,
+          "kind": "plot"
+        },
+        {
+          "label": "Plot 4",
+          "areaM2": 21,
+          "kind": "plot"
+        }
+      ],
+      "bedCount": 7,
+      "bedAreaM2": 44,
+      "plotCount": 4,
+      "plotAreaM2": 84,
+      "growingAreaM2": 128,
+      "elements": [
+        {
+          "name": "Moringa Tree",
+          "category": "growing",
+          "count": 2,
+          "status": "proposed",
+          "defId": "tree_moringa"
+        },
+        {
+          "name": "Avocado Tree",
+          "category": "growing",
+          "count": 1,
+          "status": "proposed",
+          "defId": "tree_avocado"
+        },
+        {
+          "name": "Compost bays",
+          "category": "structure",
+          "count": 1,
+          "status": "proposed",
+          "defId": "compost_bay"
+        },
+        {
+          "name": "Mango Tree",
+          "category": "growing",
+          "count": 1,
+          "status": "proposed",
+          "defId": "tree_mango"
+        },
+        {
+          "name": "Natal Plum",
+          "category": "growing",
+          "count": 1,
+          "status": "proposed",
+          "defId": "tree_natal_plum"
+        },
+        {
+          "name": "Rainwater tank (2500 L)",
+          "category": "water",
+          "count": 1,
+          "status": "proposed",
+          "defId": "jojo_2500"
+        }
+      ],
+      "routes": [
+        {
+          "label": "Swale (on-contour earthwork)",
+          "count": 1,
+          "totalLengthM": 34,
+          "kind": "swale"
+        },
+        {
+          "label": "Path",
+          "count": 1,
+          "totalLengthM": 18.5,
+          "kind": "path"
+        },
+        {
+          "label": "Greywater line",
+          "count": 1,
+          "totalLengthM": 10.5,
+          "kind": "greywater"
+        }
+      ],
+      "zones": [
+        {
+          "zone": 1,
+          "label": "Daily garden",
+          "areaM2": 143,
+          "contains": [
+            "Rainwater tank (2500 L)",
+            "Compost bays"
+          ],
+          "staplePlots": 0
+        },
+        {
+          "zone": 2,
+          "label": "Garden & orchard",
+          "areaM2": 137,
+          "contains": [
+            "Bed 1",
+            "Bed 2",
+            "Bed 3",
+            "Bed 4",
+            "Bed 5",
+            "Bed 6",
+            "Bed 7"
+          ],
+          "staplePlots": 0
+        },
+        {
+          "zone": 3,
+          "label": "Field crops",
+          "areaM2": 180,
+          "contains": [
+            "Mango Tree",
+            "Avocado Tree",
+            "Natal Plum",
+            "Moringa Tree x2"
+          ],
+          "staplePlots": 0
+        },
+        {
+          "zone": 5,
+          "label": "Natural habitat",
+          "areaM2": 60,
+          "contains": [],
+          "staplePlots": 0
+        }
+      ],
+      "savedAt": "2026-10-21"
+    },
+    "water": {
+      "tanks": [
+        {
+          "name": "Rainwater tank (2500 L)",
+          "count": 1,
+          "statedLitres": 2500,
+          "status": "proposed"
+        }
+      ],
+      "statedStorageLitres": 2500,
+      "tanksOfUnknownCapacity": 0,
+      "mapPoints": [],
+      "bodies": []
+    },
+    "measurements": {
+      "dailyWaterUseL": 200
+    },
+    "roof": {
+      "areaM2": 144,
+      "source": "Traced on the map"
+    },
+    "boundary": {
+      "areaM2": 1037,
+      "source": "Traced on the map"
+    }
+  },
+  "phasePlan": {
+    "phases": [
+      {
+        "n": 1,
+        "key": "setout",
+        "title": "Verify, Set Out & Make Safe",
+        "colour": "#E8E2D4",
+        "weekRange": "Week 0–1",
+        "weekStart": 0,
+        "weekEnd": 1,
+        "tasks": [
+          "Walk the boundary and peg every corner against the traced line before anything else.",
+          "Set out each element with pegs and string at its plan size — check the spacing on the ground, not on the screen.",
+          "Confirm buried services (water, power, septic) with the owner and mark them on the ground.",
+          "Mark a no-dig strip around the house footings and the tank stand.",
+          "Agree where materials and spoil may be stacked — not on the driveway."
+        ],
+        "holdPoint": "Hold Point A: Boundary pegs, marked services and the set-out agreed with the owner on site before any ground is broken.",
+        "itemIds": []
+      },
+      {
+        "n": 2,
+        "key": "access_water",
+        "title": "Safe Access & Water Spine",
+        "colour": "#4EA6D8",
+        "weekRange": "Weeks 1–4",
+        "weekStart": 1,
+        "weekEnd": 4,
+        "tasks": [
+          "Cut and compact the paths so every work area is reachable with a barrow.",
+          "Set every tank on a level, compacted base before you plumb it — a full tank cannot be moved."
+        ],
+        "holdPoint": "Hold Point B: Pressure and leak test the main line before backfilling any trench.",
+        "itemIds": [
+          "demo-di-tank",
+          "demo-dl-greywater",
+          "demo-dl-path"
+        ]
+      },
+      {
+        "n": 3,
+        "key": "earthworks",
+        "title": "Earthworks & Soil Building",
+        "colour": "#C07A1E",
+        "weekRange": "Weeks 3–6",
+        "weekStart": 3,
+        "weekEnd": 6,
+        "tasks": [
+          "Peg the contour with an A-frame or water level before you cut anything — eyeballed levels are how swales become drains.",
+          "Dig the swales on true contour and spread the spoil onto the downhill berm."
+        ],
+        "holdPoint": "Hold Point C: Levels re-checked along every swale and bank, and the bank planted, before the first big rain.",
+        "itemIds": [
+          "demo-dl-swale"
+        ]
+      },
+      {
+        "n": 4,
+        "key": "beds",
+        "title": "Beds, Drip & Working Infrastructure",
+        "colour": "#7FD46B",
+        "weekRange": "Weeks 5–9",
+        "weekStart": 5,
+        "weekEnd": 9,
+        "tasks": [
+          "Build the beds at their plan size and fill with compost — no bed wider than two arm-lengths.",
+          "Site the compost bays within barrow distance of both the kitchen and the beds."
+        ],
+        "holdPoint": "Hold Point D: Run the drip at working pressure and check every emitter before mulching over the lines.",
+        "itemIds": [
+          "demo-bed-1",
+          "demo-bed-2",
+          "demo-bed-3",
+          "demo-bed-4",
+          "demo-bed-5",
+          "demo-bed-6",
+          "demo-di-compost",
+          "demo-hugel-1"
+        ]
+      },
+      {
+        "n": 5,
+        "key": "perennials",
+        "title": "Perennials & Guilds",
+        "colour": "#2F7A4A",
+        "weekRange": "Weeks 8–12",
+        "weekStart": 8,
+        "weekEnd": 12,
+        "tasks": [
+          "Plant at the onset of the summer rains (Oct–Nov) — never into dry soil.",
+          "Dig the tree pits at the pegged positions and backfill with compost and topsoil.",
+          "Mulch every tree thick and wide, and keep the mulch off the stem.",
+          "Stake and guard the young trees against wind and browsing.",
+          "Plan the first two summers' watering: ~791 mm a year does not establish trees unaided."
+        ],
+        "holdPoint": "Hold Point E: Water tested and reaching every planting pit before the first tree goes in the ground.",
+        "itemIds": [
+          "demo-di-avocado",
+          "demo-di-mango",
+          "demo-di-moringa-1",
+          "demo-di-moringa-2",
+          "demo-di-natal-plum"
+        ]
+      },
+      {
+        "n": 6,
+        "key": "livestock",
+        "title": "Commissioning & Handover",
+        "colour": "#C879C0",
+        "weekRange": "Month 3+",
+        "weekStart": 11,
+        "weekEnd": 14,
+        "tasks": [
+          "Snag the build against this sheet: every hold point signed, every leak found and fixed.",
+          "Walk the owner through the valves, the drip zones and every hold point on this sheet.",
+          "Photograph each element against this sheet as the as-built record."
+        ],
+        "holdPoint": "Hold Point F: Every earlier hold point signed off and the as-built record handed over before the job is closed.",
+        "itemIds": []
+      }
+    ],
+    "criticalOrder": [
+      "Survey & set out",
+      "Safe access",
+      "Main water line",
+      "Swales on contour",
+      "Beds & structures",
+      "Trees & guilds",
+      "Commissioning & handover"
+    ],
+    "siteRules": [
+      "Keep the driveway open at all times — no spoil, pipe or materials stored on it.",
+      "No excavation within 1 m of the house footings or a tank stand.",
+      "Test the water before it goes onto food beds or into a trough.",
+      "Barrier or backfill every open excavation at the end of each working day.",
+      "Work inside the pegged boundary — agree anything on the line with the neighbour first.",
+      "Confirm every dimension on site — the plan is the intent, the ground is the truth."
+    ]
+  },
+  "figures": {
+    "en": [
+      {
+        "id": "site-plan",
+        "title": "Site plan",
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"640\" height=\"711\" viewBox=\"0 0 640 711\"><defs><pattern id=\"plot\" width=\"7\" height=\"7\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"7\" height=\"7\" fill=\"#ffffff\"/><path d=\"M0 0V7\" stroke=\"#af6b24\" stroke-width=\"1.6\"/></pattern><pattern id=\"bank\" width=\"5\" height=\"5\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"5\" height=\"5\" fill=\"#ffffff\"/><path d=\"M0 0V5\" stroke=\"#8a7355\" stroke-width=\"1.2\"/></pattern><clipPath id=\"plan\"><rect x=\"1.5\" y=\"1.5\" width=\"637\" height=\"449\"/></clipPath></defs><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><rect x=\"0.5\" y=\"0.5\" width=\"639\" height=\"485\" rx=\"6\" fill=\"#f7faf6\" stroke=\"#d5ded8\" stroke-width=\"1\"/><g clip-path=\"url(#plan)\"><path d=\"M249.7 35.1L306.5 35.1L306.5 69.2L548 69.2L548 109L519.6 109L519.6 87.7L278.1 87.7L278.1 165.8L249.7 165.8L249.7 35.1Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#dcdfdd\" stroke=\"#b9c0bb\" stroke-width=\"1\"/><path d=\"M283.8 199.9L369 199.9L369 249.7L283.8 249.7Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"url(#plot)\" stroke=\"#af6b24\" stroke-width=\"1.6\"/><path d=\"M477 174.4L536.7 174.4L536.7 245.4L477 245.4Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"url(#plot)\" stroke=\"#af6b24\" stroke-width=\"1.6\"/><path d=\"M349.1 258.2L434.4 258.2L434.4 307.9L349.1 307.9Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"url(#plot)\" stroke=\"#af6b24\" stroke-width=\"1.6\"/><path d=\"M448.6 258.2L533.8 258.2L533.8 307.9L448.6 307.9Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"url(#plot)\" stroke=\"#af6b24\" stroke-width=\"1.6\"/><path d=\"M292.3 80.6L519.6 80.6L519.6 165.8L462.8 165.8L462.8 251.1L377.5 251.1L377.5 194.3L292.3 194.3L292.3 80.6Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#52656a\" stroke=\"#ffffff\" stroke-width=\"1\"/><path d=\"M263.9 165.8L263.9 258.2L93.4 258.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#b9a788\" stroke-width=\"5\" stroke-dasharray=\"10 7\"/><path d=\"M79.2 315L320.7 319.3L562.3 315\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#24738a\" stroke-width=\"4\" stroke-dasharray=\"8 5.6\"/><path d=\"M377.5 253.9L334.9 253.9L278.1 343.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#766395\" stroke-width=\"2.4\" stroke-dasharray=\"5 4\"/><ellipse cx=\"136\" cy=\"350.5\" rx=\"71\" ry=\"71\" fill=\"none\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><ellipse cx=\"278.1\" cy=\"350.5\" rx=\"56.8\" ry=\"56.8\" fill=\"none\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><ellipse cx=\"420.2\" cy=\"343.4\" rx=\"21.3\" ry=\"21.3\" fill=\"none\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><ellipse cx=\"505.4\" cy=\"336.3\" rx=\"28.4\" ry=\"28.4\" fill=\"none\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><ellipse cx=\"207\" cy=\"364.8\" rx=\"28.4\" ry=\"28.4\" fill=\"none\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><rect x=\"221.3\" y=\"66.4\" width=\"21.3\" height=\"21.3\" rx=\"1.5\" fill=\"#e8ecec\" stroke=\"#52656a\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><ellipse cx=\"73.5\" cy=\"74.9\" rx=\"8.5\" ry=\"8.5\" fill=\"#e1eef2\" stroke=\"#24738a\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><rect x=\"93.4\" y=\"194.3\" width=\"21.3\" height=\"56.8\" rx=\"1.5\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><rect x=\"128.9\" y=\"194.3\" width=\"21.3\" height=\"56.8\" rx=\"1.5\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><rect x=\"164.4\" y=\"194.3\" width=\"21.3\" height=\"56.8\" rx=\"1.5\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><rect x=\"93.4\" y=\"265.3\" width=\"21.3\" height=\"56.8\" rx=\"1.5\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><rect x=\"128.9\" y=\"265.3\" width=\"21.3\" height=\"56.8\" rx=\"1.5\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><rect x=\"164.4\" y=\"265.3\" width=\"28.4\" height=\"56.8\" rx=\"1.5\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><rect x=\"207\" y=\"208.5\" width=\"28.4\" height=\"42.6\" rx=\"1.5\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M29.4 29.4L599.2 42.2L610.6 410.2L47.9 403.1L29.4 29.4Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2\" stroke-dasharray=\"11 4 2 4\"/></g><text x=\"287\" y=\"64.2\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Driveway</text><text x=\"326.4\" y=\"229.7\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">P1</text><text x=\"506.8\" y=\"214.8\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">P2</text><text x=\"391.8\" y=\"288\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">P3</text><text x=\"491.2\" y=\"288\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">P4</text><text x=\"406\" y=\"149.1\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\">House</text><text x=\"104\" y=\"228.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">1</text><text x=\"139.6\" y=\"228.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">2</text><text x=\"175.1\" y=\"228.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">3</text><text x=\"104\" y=\"299.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">4</text><text x=\"139.6\" y=\"299.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">5</text><text x=\"178.6\" y=\"299.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">6</text><text x=\"221.3\" y=\"235.2\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">7</text><text x=\"86.5\" y=\"62.4\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"600\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Rainwater tank (2500 L)</text><text x=\"231.9\" y=\"101.7\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"600\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Compost bays</text><text x=\"136\" y=\"355.9\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">MG</text><text x=\"278.1\" y=\"355.9\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">AV</text><text x=\"420.2\" y=\"348.8\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">NP</text><text x=\"505.4\" y=\"341.7\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">MO</text><text x=\"207\" y=\"370.2\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">MO</text><text x=\"224.8\" y=\"273.2\" fill=\"#6f6248\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"600\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Path</text><text x=\"378.7\" y=\"333.3\" fill=\"#24738a\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"600\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Swale</text><path d=\"M1 451L639 451\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><rect x=\"16\" y=\"467\" width=\"71\" height=\"7\" rx=\"0\" fill=\"#1b3024\"/><rect x=\"87\" y=\"467\" width=\"71\" height=\"7\" rx=\"0\" fill=\"#ffffff\"/><rect x=\"16\" y=\"467\" width=\"142.1\" height=\"7\" rx=\"0\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"1\"/><text x=\"166.1\" y=\"475\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"start\">10 m</text><path d=\"M616 458.0251241936625L622.5 477.0251241936625L616 472.5251241936625L609.5 477.0251241936625Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#1b3024\"/><text x=\"604\" y=\"474\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">North</text><path d=\"M8 509L32 509\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2\" stroke-dasharray=\"11 4 2 4\"/><text x=\"40\" y=\"514\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">Site boundary</text><rect x=\"324\" y=\"502\" width=\"20\" height=\"14\" rx=\"0\" fill=\"#52656a\"/><text x=\"354\" y=\"514\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">Buildings</text><rect x=\"10\" y=\"527\" width=\"20\" height=\"14\" rx=\"1.5\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><text x=\"20\" y=\"538\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"700\" text-anchor=\"middle\">1</text><text x=\"40\" y=\"539\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">7 vegetable beds, numbered</text><rect x=\"324\" y=\"527\" width=\"20\" height=\"14\" rx=\"0\" fill=\"url(#plot)\" stroke=\"#af6b24\" stroke-width=\"1.4\"/><text x=\"354\" y=\"539\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">4 staple plots (P1–P4)</text><circle cx=\"20\" cy=\"559\" r=\"8.5\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><text x=\"40\" y=\"564\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">5 trees and plantings, to scale</text><circle cx=\"334\" cy=\"559\" r=\"8.5\" fill=\"#e1eef2\" stroke=\"#24738a\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><text x=\"354\" y=\"564\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">1 water tank or water point</text><rect x=\"10\" y=\"577\" width=\"20\" height=\"14\" rx=\"0\" fill=\"#dcdfdd\" stroke=\"#b9c0bb\" stroke-width=\"1\"/><text x=\"40\" y=\"589\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">Paving and driveway</text><rect x=\"324\" y=\"577\" width=\"20\" height=\"14\" rx=\"1.5\" fill=\"#e8ecec\" stroke=\"#52656a\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><text x=\"354\" y=\"589\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">1 structure</text><path d=\"M8 609L32 609\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#b9a788\" stroke-width=\"5\" stroke-dasharray=\"6 4\"/><text x=\"40\" y=\"614\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">Path</text><path d=\"M322 609L346 609\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#24738a\" stroke-width=\"4\" stroke-dasharray=\"6 4\"/><text x=\"354\" y=\"614\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">Swale</text><path d=\"M8 634L32 634\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#766395\" stroke-width=\"2.4\" stroke-dasharray=\"6 4\"/><text x=\"40\" y=\"639\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">Greywater line</text><rect x=\"9\" y=\"652\" width=\"10\" height=\"14\" rx=\"0\" fill=\"#52656a\"/><rect x=\"22\" y=\"652\" width=\"10\" height=\"14\" rx=\"0\" fill=\"#ffffff\" stroke=\"#52656a\" stroke-width=\"1.5\" stroke-dasharray=\"4 2.5\"/><text x=\"40\" y=\"664\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"700\" text-anchor=\"start\">Solid = already there.  Dashed outline = planned, not built yet.</text><text x=\"8\" y=\"690\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Plant codes: AV Avocado Tree · MG Mango Tree · MO Moringa Tree ×2 · NP Natal Plum</text></svg>",
+        "width": 640,
+        "height": 711,
+        "note": "Drawn to scale from the saved design. North is up. Bed numbers match the bed list. It is not a land survey.",
+        "source": "Saved design (2026-10-21); boundary and buildings as traced on the map",
+        "alt": "Site plan drawn from the saved design: 7 vegetable beds, 4 staple plots, 5 trees and plantings, 1 water item. Scale bar 10 m."
+      },
+      {
+        "id": "land-use",
+        "width": 640,
+        "height": 188,
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"640\" height=\"188\" viewBox=\"0 0 640 188\"><defs><pattern id=\"plot\" width=\"5\" height=\"5\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"5\" height=\"5\" fill=\"#ffffff\"/><path d=\"M0 0V5\" stroke=\"#af6b24\" stroke-width=\"1.5\"/></pattern></defs><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"14\" y=\"24\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"16\" font-weight=\"700\" text-anchor=\"start\">The whole site: 1 037 m²</text><rect x=\"15\" y=\"38\" width=\"24\" height=\"30\" rx=\"3\" fill=\"#245738\"/><rect x=\"41\" y=\"38\" width=\"47.6\" height=\"30\" rx=\"3\" fill=\"url(#plot)\" stroke=\"#af6b24\" stroke-width=\"1.2\"/><rect x=\"90.5\" y=\"38\" width=\"83\" height=\"30\" rx=\"3\" fill=\"#52656a\"/><rect x=\"175.5\" y=\"38\" width=\"449.5\" height=\"30\" rx=\"3\" fill=\"#edf1ee\" stroke=\"#d5ded8\" stroke-width=\"1\"/><rect x=\"14\" y=\"85\" width=\"18\" height=\"13\" rx=\"2\" fill=\"#245738\"/><text x=\"42\" y=\"96\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Vegetable beds</text><text x=\"626\" y=\"96\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">44 m²  ·  4 %</text><rect x=\"14\" y=\"108\" width=\"18\" height=\"13\" rx=\"2\" fill=\"url(#plot)\" stroke=\"#af6b24\" stroke-width=\"1.2\"/><text x=\"42\" y=\"119\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Staple crop plots</text><text x=\"626\" y=\"119\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">84 m²  ·  8 %</text><rect x=\"14\" y=\"131\" width=\"18\" height=\"13\" rx=\"2\" fill=\"#52656a\"/><text x=\"42\" y=\"142\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Roof</text><text x=\"626\" y=\"142\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">144 m²  ·  14 %</text><rect x=\"14\" y=\"154\" width=\"18\" height=\"13\" rx=\"2\" fill=\"#edf1ee\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"42\" y=\"165\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Everything else: paths, trees, yard, open ground</text><text x=\"626\" y=\"165\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">765 m²  ·  74 %</text></svg>",
+        "title": "How the ground is used",
+        "note": "Areas as drawn on the saved design and traced on the map, whether built yet or not. Trees, paths and tanks are not counted as areas.",
+        "source": "Boundary: Traced on the map. Beds and plots: saved design.",
+        "alt": "Land use: Vegetable beds 44 m²; Staple crop plots 84 m²; Roof 144 m²; Everything else: paths, trees, yard, open ground 765 m²."
+      },
+      {
+        "id": "status",
+        "width": 640,
+        "height": 256,
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"640\" height=\"256\" viewBox=\"0 0 640 256\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"14\" y=\"25\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"17\" font-weight=\"700\" text-anchor=\"start\">4 already there  ·  17 still to build or plant</text><text x=\"14\" y=\"60\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Vegetable beds</text><circle cx=\"196\" cy=\"56\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"213\" cy=\"56\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"230\" cy=\"56\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"247\" cy=\"56\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"264\" cy=\"56\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"281\" cy=\"56\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"298\" cy=\"56\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><text x=\"626\" y=\"60\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">0 / 7</text><text x=\"14\" y=\"85\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Staple crop plots</text><circle cx=\"196\" cy=\"81\" r=\"6\" fill=\"#245738\"/><circle cx=\"213\" cy=\"81\" r=\"6\" fill=\"#245738\"/><circle cx=\"230\" cy=\"81\" r=\"6\" fill=\"#245738\"/><circle cx=\"247\" cy=\"81\" r=\"6\" fill=\"#245738\"/><text x=\"626\" y=\"85\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">4 / 4</text><text x=\"14\" y=\"110\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Trees and plants</text><circle cx=\"196\" cy=\"106\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"213\" cy=\"106\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"230\" cy=\"106\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"247\" cy=\"106\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"264\" cy=\"106\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><text x=\"626\" y=\"110\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">0 / 5</text><text x=\"14\" y=\"135\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Water</text><circle cx=\"196\" cy=\"131\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><text x=\"626\" y=\"135\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">0 / 1</text><text x=\"14\" y=\"160\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Structures</text><circle cx=\"196\" cy=\"156\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><text x=\"626\" y=\"160\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">0 / 1</text><text x=\"14\" y=\"185\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Paths, swales and pipes</text><circle cx=\"196\" cy=\"181\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"213\" cy=\"181\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"230\" cy=\"181\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><text x=\"626\" y=\"185\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">0 / 3</text><circle cx=\"24\" cy=\"214\" r=\"6\" fill=\"#245738\"/><text x=\"42\" y=\"218\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Already there</text><circle cx=\"155.4\" cy=\"214\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><text x=\"173.4\" y=\"218\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Planned, not built or planted yet</text><text x=\"42\" y=\"239\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Numbers: there now / total</text></svg>",
+        "title": "Built, and still to build",
+        "note": "One mark for each thing on the saved design, as it was marked there. Change an item to \"existing\" in the Design Studio once it is in the ground.",
+        "source": "Saved design (2026-10-21)",
+        "alt": "Built and planned: Vegetable beds 0/7; Staple crop plots 4/4; Trees and plants 0/5; Water 0/1; Structures 0/1; Paths, swales and pipes 0/3."
+      },
+      {
+        "id": "climate",
+        "width": 640,
+        "height": 465,
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"640\" height=\"465\" viewBox=\"0 0 640 465\"><defs><pattern id=\"dry\" width=\"5\" height=\"5\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"5\" height=\"5\" fill=\"#ffffff\"/><path d=\"M0 0V5\" stroke=\"#af6b24\" stroke-width=\"1.4\"/></pattern></defs><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"14\" y=\"25\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"17\" font-weight=\"700\" text-anchor=\"start\">791 mm of rain in an average year</text><text x=\"14\" y=\"46\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Wettest month: Jan (134 mm)   ·   Driest month: May (12 mm)</text><text x=\"42\" y=\"70\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">mm</text><path d=\"M50 226L626 226\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"42\" y=\"230\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">0</text><path d=\"M50 178L626 178\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"42\" y=\"182\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">50</text><path d=\"M50 130L626 130\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"42\" y=\"134\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">100</text><path d=\"M50 82L626 82\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"42\" y=\"86\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">150</text><path d=\"M59.1 226V101.7Q59.1 97.7 63.1 97.7H84.9Q88.9 97.7 88.9 101.7V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"74\" y=\"92.7\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"700\" text-anchor=\"middle\">134</text><path d=\"M107.1 226V127.3Q107.1 123.3 111.1 123.3H132.9Q136.9 123.3 136.9 127.3V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"122\" y=\"118.3\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">107</text><path d=\"M155.1 226V147Q155.1 143 159.1 143H180.9Q184.9 143 184.9 147V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"170\" y=\"138\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">87</text><path d=\"M203.1 226V184.2Q203.1 180.2 207.1 180.2H228.9Q232.9 180.2 232.9 184.2V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"218\" y=\"175.2\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">48</text><path d=\"M251.1 226V218.7Q251.1 214.7 255.1 214.7H276.9Q280.9 214.7 280.9 218.7V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"266\" y=\"209.7\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"700\" text-anchor=\"middle\">12</text><path d=\"M299.1 226V218.5Q299.1 214.5 303.1 214.5H324.9Q328.9 214.5 328.9 218.5V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"314\" y=\"209.5\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">12</text><path d=\"M347.1 226V218.4Q347.1 214.4 351.1 214.4H372.9Q376.9 214.4 376.9 218.4V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"362\" y=\"209.4\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">12</text><path d=\"M395.1 226V212.1Q395.1 208.1 399.1 208.1H420.9Q424.9 208.1 424.9 212.1V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"410\" y=\"203.1\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">19</text><path d=\"M443.1 226V194.6Q443.1 190.6 447.1 190.6H468.9Q472.9 190.6 472.9 194.6V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"458\" y=\"185.6\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">37</text><path d=\"M491.1 226V151.2Q491.1 147.2 495.1 147.2H516.9Q520.9 147.2 520.9 151.2V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"506\" y=\"142.2\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">82</text><path d=\"M539.1 226V123.7Q539.1 119.7 543.1 119.7H564.9Q568.9 119.7 568.9 123.7V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"554\" y=\"114.7\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">111</text><path d=\"M587.1 226V102.9Q587.1 98.9 591.1 98.9H612.9Q616.9 98.9 616.9 102.9V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"602\" y=\"93.9\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">132</text><rect x=\"51\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"#24738a\"/><rect x=\"99\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"#24738a\"/><rect x=\"147\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"#24738a\"/><rect x=\"195\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"#edf1ee\"/><rect x=\"243\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"url(#dry)\" stroke=\"#af6b24\" stroke-width=\"1\"/><rect x=\"291\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"url(#dry)\" stroke=\"#af6b24\" stroke-width=\"1\"/><rect x=\"339\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"url(#dry)\" stroke=\"#af6b24\" stroke-width=\"1\"/><rect x=\"387\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"url(#dry)\" stroke=\"#af6b24\" stroke-width=\"1\"/><rect x=\"435\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"#edf1ee\"/><rect x=\"483\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"#24738a\"/><rect x=\"531\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"#24738a\"/><rect x=\"579\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"#24738a\"/><text x=\"74\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jan</text><text x=\"122\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Feb</text><text x=\"170\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Mar</text><text x=\"218\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Apr</text><text x=\"266\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">May</text><text x=\"314\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jun</text><text x=\"362\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jul</text><text x=\"410\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Aug</text><text x=\"458\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Sep</text><text x=\"506\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Oct</text><text x=\"554\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Nov</text><text x=\"602\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Dec</text><rect x=\"50\" y=\"273\" width=\"20\" height=\"9\" rx=\"0\" fill=\"#24738a\"/><text x=\"78\" y=\"282\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Wet season (Oct–Mar)</text><rect x=\"228.4\" y=\"273\" width=\"20\" height=\"9\" rx=\"0\" fill=\"url(#dry)\" stroke=\"#af6b24\" stroke-width=\"1\"/><text x=\"256.4\" y=\"282\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Dry season (May–Aug)</text><text x=\"14\" y=\"319\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"start\">Average temperature each month (°C)</text><path d=\"M50 435L626 435\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"42\" y=\"439\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">10°</text><path d=\"M50 404.3L626 404.3\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"42\" y=\"408.3\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">15°</text><path d=\"M50 373.7L626 373.7\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"42\" y=\"377.7\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">20°</text><path d=\"M50 343L626 343\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"42\" y=\"347\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">25°</text><path d=\"M74 357L122 359.9L170 368.9L218 388L266 405.7L314 425.2L362 425.6L410 407.8L458 386.4L506 374.7L554 367L602 358.9\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#af6b24\" stroke-width=\"2.2\"/><circle cx=\"74\" cy=\"357\" r=\"5\" fill=\"#af6b24\" stroke=\"#ffffff\" stroke-width=\"2\"/><circle cx=\"122\" cy=\"359.9\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"170\" cy=\"368.9\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"218\" cy=\"388\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"266\" cy=\"405.7\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"314\" cy=\"425.2\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"362\" cy=\"425.6\" r=\"5\" fill=\"#af6b24\" stroke=\"#ffffff\" stroke-width=\"2\"/><circle cx=\"410\" cy=\"407.8\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"458\" cy=\"386.4\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"506\" cy=\"374.7\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"554\" cy=\"367\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"602\" cy=\"358.9\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><text x=\"74\" y=\"346\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">22.7 °C</text><text x=\"362\" y=\"445.6\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">11.5 °C</text><text x=\"74\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jan</text><text x=\"122\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Feb</text><text x=\"170\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Mar</text><text x=\"218\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Apr</text><text x=\"266\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">May</text><text x=\"314\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jun</text><text x=\"362\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jul</text><text x=\"410\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Aug</text><text x=\"458\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Sep</text><text x=\"506\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Oct</text><text x=\"554\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Nov</text><text x=\"602\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Dec</text></svg>",
+        "title": "Rain and warmth through the year",
+        "note": "Long-term monthly averages for this location, not a forecast. Any one year can be much wetter or much drier than this.",
+        "source": "NASA POWER (50 km climate grid)",
+        "alt": "Rain by month: 791 mm a year; wettest Jan 134 mm, driest May 12 mm. Warmest month Jan 22.7 °C, coolest Jul 11.5 °C."
+      },
+      {
+        "id": "sectors",
+        "width": 640,
+        "height": 544,
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"640\" height=\"544\" viewBox=\"0 0 640 544\"><defs><pattern id=\"wind\" width=\"5\" height=\"5\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"5\" height=\"5\" fill=\"#ffffff\"/><path d=\"M0 0V5\" stroke=\"#52656a\" stroke-width=\"1.3\"/></pattern><pattern id=\"fire\" width=\"4\" height=\"4\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"4\" height=\"4\" fill=\"#ffffff\"/><path d=\"M0 0V4\" stroke=\"#af6b24\" stroke-width=\"1.5\"/></pattern></defs><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"14\" y=\"25\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"17\" font-weight=\"700\" text-anchor=\"start\">The midday sun stands to the north</text><text x=\"14\" y=\"46\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Winter: 39° above the horizon, a 1 m post throws a 1.2 m shadow   ·   Summer: 86°</text><circle cx=\"320\" cy=\"276\" r=\"128\" fill=\"#f7faf6\" stroke=\"#d5ded8\" stroke-width=\"1.5\"/><path d=\"M320 148L320 157\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1.6\"/><path d=\"M369 157.7L367.1 162.4\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M410.5 185.5L407 189\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M438.3 227L433.6 228.9\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M448 276L439 276\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1.6\"/><path d=\"M438.3 325L433.6 323.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M410.5 366.5L407 363\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M369 394.3L367.1 389.6\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M320 404L320 395\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1.6\"/><path d=\"M271 394.3L272.9 389.6\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M229.5 366.5L233 363\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M201.7 325L206.4 323.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M192 276L201 276\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1.6\"/><path d=\"M201.7 227L206.4 228.9\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M229.5 185.5L233 189\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M271 157.7L272.9 162.4\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M402.2 317.3L404.2 313L406.1 308.5L407.6 304L409 299.4L410.1 294.7L410.9 290L411.5 285.2L411.9 280.4L412 275.6L411.9 270.8L411.5 266L410.8 261.3L409.9 256.6L408.8 251.9L407.4 247.3L405.8 242.8L403.9 238.3L401.9 234L399.6 229.8L397 225.7L394.3 221.7L391.4 217.9L388.2 214.3L384.9 210.8L381.4 207.5L377.8 204.4L374 201.5L370 198.8L365.9 196.3L361.7 194L357.3 191.9L352.9 190.1L348.4 188.5L343.8 187.1L339.1 186L334.4 185.1L329.6 184.5L324.8 184.1L320 184L315.2 184.1L310.4 184.5L305.6 185.1L300.9 186L296.2 187.1L291.6 188.5L287.1 190.1L282.7 191.9L278.3 194L274.1 196.3L270 198.8L266 201.5L262.2 204.4L258.6 207.5L255.1 210.8L251.8 214.3L248.6 217.9L245.7 221.7L243 225.7L240.4 229.8L238.1 234L236.1 238.3L234.2 242.8L232.6 247.3L231.2 251.9L230.1 256.6L229.2 261.3L228.5 266L228.1 270.8L228 275.6L228.1 280.4L228.5 285.2L229.1 290L229.9 294.7L231 299.4L232.4 304L233.9 308.5L235.8 313L237.8 317.3\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#af6b24\" stroke-width=\"7\"/><circle cx=\"402.2\" cy=\"317.3\" r=\"5.5\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2.4\"/><circle cx=\"237.8\" cy=\"317.3\" r=\"5.5\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2.4\"/><text x=\"320\" y=\"204\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Summer sun</text><path d=\"M373.6 249L372.1 246.3L370.6 243.7L368.8 241.1L367 238.7L365 236.3L362.9 234L360.7 231.9L358.4 229.9L355.9 228L353.4 226.2L350.8 224.5L348.1 223L345.4 221.6L342.6 220.4L339.7 219.3L336.7 218.4L333.8 217.6L330.7 217L327.7 216.5L324.6 216.2L321.5 216L318.5 216L315.4 216.2L312.3 216.5L309.3 217L306.2 217.6L303.3 218.4L300.3 219.3L297.4 220.4L294.6 221.6L291.9 223L289.2 224.5L286.6 226.2L284.1 228L281.6 229.9L279.3 231.9L277.1 234L275 236.3L273 238.7L271.2 241.1L269.4 243.7L267.9 246.3L266.4 249\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#af6b24\" stroke-width=\"7\"/><path d=\"M373.6 249L372.1 246.3L370.6 243.7L368.8 241.1L367 238.7L365 236.3L362.9 234L360.7 231.9L358.4 229.9L355.9 228L353.4 226.2L350.8 224.5L348.1 223L345.4 221.6L342.6 220.4L339.7 219.3L336.7 218.4L333.8 217.6L330.7 217L327.7 216.5L324.6 216.2L321.5 216L318.5 216L315.4 216.2L312.3 216.5L309.3 217L306.2 217.6L303.3 218.4L300.3 219.3L297.4 220.4L294.6 221.6L291.9 223L289.2 224.5L286.6 226.2L284.1 228L281.6 229.9L279.3 231.9L277.1 234L275 236.3L273 238.7L271.2 241.1L269.4 243.7L267.9 246.3L266.4 249\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"2.4\"/><circle cx=\"373.6\" cy=\"249\" r=\"5.5\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2.4\"/><circle cx=\"266.4\" cy=\"249\" r=\"5.5\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2.4\"/><text x=\"320\" y=\"236\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Winter sun</text><path d=\"M166.8 204.6L170.6 197L174.7 189.7L179.2 182.5L184 175.6L189.2 169L194.7 162.6L200.5 156.5L206.6 150.7L213 145.2L219.6 140L226.5 135.2L233.7 130.7L241 126.6L248.6 122.8L254.5 135.5L247.6 139L240.8 142.7L234.3 146.9L228 151.3L221.9 156L216 161.1L210.4 166.4L205.1 172L200 177.9L195.3 184L190.9 190.3L186.7 196.8L183 203.6L179.5 210.5Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"url(#fire)\" stroke=\"#af6b24\" stroke-width=\"1.4\" stroke-dasharray=\"5 3\"/><path d=\"M359.6 128.2L367.3 130.5L374.8 133.2L382.2 136.2L389.5 139.7L396.5 143.5L403.3 147.7L409.9 152.2L416.3 157.1L422.4 162.3L428.2 167.8L433.7 173.6L438.9 179.7L443.8 186.1L448.3 192.7L452.5 199.5L456.3 206.5L459.8 213.8L462.8 221.2L465.5 228.7L467.8 236.4L447.5 241.8L445.5 235.2L443.2 228.7L440.6 222.3L437.6 216.1L434.3 210L430.7 204.1L426.8 198.4L422.6 192.9L418.1 187.7L413.3 182.7L408.3 177.9L403.1 173.4L397.6 169.2L391.9 165.3L386 161.7L379.9 158.4L373.7 155.4L367.3 152.8L360.8 150.5L354.2 148.5Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"url(#wind)\" stroke=\"#52656a\" stroke-width=\"1.3\" stroke-dasharray=\"5 3\"/><path d=\"M428.2 167.8L411.6 184.4\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#52656a\" stroke-width=\"2\" stroke-dasharray=\"5 3\"/><path d=\"M407.7 188.3L411.4 178.5L417.5 184.6Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#52656a\"/><path d=\"M280.4 423.8L272.7 421.5L265.2 418.8L257.8 415.8L250.5 412.3L243.5 408.5L236.7 404.3L230.1 399.8L223.7 394.9L217.6 389.7L211.8 384.2L206.3 378.4L201.1 372.3L196.2 365.9L191.7 359.3L187.5 352.5L183.7 345.5L180.2 338.2L177.2 330.8L174.5 323.3L172.2 315.6L192.5 310.2L194.5 316.8L196.8 323.3L199.4 329.7L202.4 335.9L205.7 342L209.3 347.9L213.2 353.6L217.4 359.1L221.9 364.3L226.7 369.3L231.7 374.1L236.9 378.6L242.4 382.8L248.1 386.7L254 390.3L260.1 393.6L266.3 396.6L272.7 399.2L279.2 401.5L285.8 403.5Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"url(#wind)\" stroke=\"#52656a\" stroke-width=\"1.3\" stroke-dasharray=\"5 3\"/><path d=\"M211.8 384.2L228.4 367.6\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#52656a\" stroke-width=\"2\" stroke-dasharray=\"5 3\"/><path d=\"M232.3 363.7L228.6 373.5L222.5 367.4Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#52656a\"/><path d=\"M176.2 223.7L179.1 216.4L182.3 209.2L186 202.2L189.9 195.5L194.2 188.9L198.9 182.5L203.8 176.5L209.1 170.6L214.6 165.1L220.5 159.8L226.5 154.9L232.9 150.2L239.5 145.9L246.2 142L253.2 138.3L260.4 135.1L267.7 132.2L274.9 152L268.5 154.4L262.4 157.2L256.4 160.4L250.5 163.8L244.8 167.5L239.4 171.5L234.1 175.8L229.1 180.3L224.3 185.1L219.8 190.1L215.5 195.4L211.5 200.8L207.8 206.5L204.4 212.4L201.2 218.4L198.4 224.5L196 230.9Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"url(#wind)\" stroke=\"#52656a\" stroke-width=\"1.3\" stroke-dasharray=\"5 3\"/><path d=\"M211.8 167.8L228.4 184.4\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#52656a\" stroke-width=\"2\" stroke-dasharray=\"5 3\"/><path d=\"M232.3 188.3L222.5 184.6L228.6 178.5Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#52656a\"/><text x=\"432.4\" y=\"144.6\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"700\" text-anchor=\"start\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Summer cooling wind</text><text x=\"432.4\" y=\"159.6\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">from the NE · Sep–Mar</text><text x=\"207.6\" y=\"399.4\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"700\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Cold front — driving rain</text><text x=\"207.6\" y=\"414.4\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">from the SW · Mar–Aug</text><text x=\"196.3\" y=\"103.3\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"700\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Berg wind</text><text x=\"196.3\" y=\"118.3\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">from the NW</text><text x=\"196.3\" y=\"133.3\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">May–Aug, episodic</text><text x=\"196.3\" y=\"148.3\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">fire follows this wind</text><text x=\"320\" y=\"173\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"16\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">N</text><text x=\"428\" y=\"281\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">E</text><text x=\"320\" y=\"389\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">S</text><text x=\"212\" y=\"281\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">W</text><path d=\"M312 283V274L320 266L328 274V283Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#1b3024\"/><path d=\"M14 455.8L34 455.8\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#af6b24\" stroke-width=\"7\"/><text x=\"42\" y=\"459.8\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Summer sun: rises ESE, sets WSW</text><path d=\"M266.3 455.8L286.3 455.8\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#af6b24\" stroke-width=\"7\"/><path d=\"M266.3 455.8L286.3 455.8\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"2.4\"/><text x=\"294.3\" y=\"459.8\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Winter sun: rises ENE, sets WNW</text><circle cx=\"24\" cy=\"476.8\" r=\"5\" fill=\"none\" stroke=\"#24738a\" stroke-width=\"1.6\" stroke-dasharray=\"3 2\"/><text x=\"42\" y=\"480.8\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Nearly flat: no downhill direction drawn — check with a level</text><rect x=\"15\" y=\"490.8\" width=\"18\" height=\"13\" rx=\"0\" fill=\"url(#wind)\" stroke=\"#52656a\" stroke-width=\"1.3\" stroke-dasharray=\"4 2\"/><text x=\"42\" y=\"501.8\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Wind of the region — not measured on this site</text><rect x=\"15\" y=\"511.8\" width=\"18\" height=\"13\" rx=\"0\" fill=\"url(#fire)\" stroke=\"#af6b24\" stroke-width=\"1.3\" stroke-dasharray=\"4 2\"/><text x=\"42\" y=\"522.8\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Where fire is most likely to come from (regional)</text></svg>",
+        "title": "Sun, wind and slope",
+        "note": "North is up; the house mark is this site. Sun paths are calculated from the latitude. Hatched marks are regional patterns, not measurements: check them against what you and your neighbours see.",
+        "source": "Sun: calculated for latitude 27.73° S. Wind and fire: regional pattern (kzn-coastal). Slope: elevation model.",
+        "alt": "Sector diagram. Summer sun: rises ESE, sets WSW, 86° above the horizon at midday, to the north. Winter sun: rises ENE, sets WNW, 39° above the horizon at midday, to the north. Summer cooling wind: from the NE, Sep–Mar (regional pattern). Cold front — driving rain: from the SW, Mar–Aug (regional pattern). Berg wind: from the NW, May–Aug, episodic (regional pattern). Fire is most likely to arrive from the NW. Winter grassfire / ember risk follows the dry, hot berg wind, not the cooling summer wind. The ground reads as nearly flat, so no downhill direction is drawn."
+      },
+      {
+        "id": "water-budget",
+        "width": 640,
+        "height": 508,
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"640\" height=\"508\" viewBox=\"0 0 640 508\"><defs><pattern id=\"short\" width=\"5\" height=\"5\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"5\" height=\"5\" fill=\"#ffffff\"/><path d=\"M0 0V5\" stroke=\"#af6b24\" stroke-width=\"1.5\"/></pattern><pattern id=\"need\" width=\"5\" height=\"5\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"5\" height=\"5\" fill=\"#ffffff\"/><path d=\"M0 0V5\" stroke=\"#52656a\" stroke-width=\"1.4\"/></pattern></defs><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"14\" y=\"25\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"17\" font-weight=\"700\" text-anchor=\"start\">This roof can catch 91 123 L in an average year</text><text x=\"14\" y=\"46\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"400\" text-anchor=\"start\">144 m² of traced roof × 791 mm of rain × 0.8 (the rest is lost to splash and the first dirty flush)</text><text x=\"54\" y=\"72\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">litres</text><path d=\"M62 232L626 232\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"54\" y=\"236\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">0</text><path d=\"M62 195L626 195\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"54\" y=\"199\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">5 000</text><path d=\"M62 158L626 158\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"54\" y=\"162\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">10 000</text><path d=\"M62 121L626 121\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"54\" y=\"125\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">15 000</text><path d=\"M62 84L626 84\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"54\" y=\"88\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">20 000</text><path d=\"M71.4 232V122.1Q71.4 118.1 75.4 118.1H95.6Q99.6 118.1 99.6 122.1V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><path d=\"M66.4 186.1L104.6 186.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"85.5\" y=\"113.1\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"400\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">15 400</text><path d=\"M118.4 232V144.8Q118.4 140.8 122.4 140.8H142.6Q146.6 140.8 146.6 144.8V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><path d=\"M113.4 190.6L151.6 190.6\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"132.5\" y=\"135.8\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"400\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">12 300</text><path d=\"M165.4 232V162.3Q165.4 158.3 169.4 158.3H189.6Q193.6 158.3 193.6 162.3V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><path d=\"M160.4 186.1L198.6 186.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"179.5\" y=\"153.3\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"400\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">10 000</text><path d=\"M212.4 232V195.3Q212.4 191.3 216.4 191.3H236.6Q240.6 191.3 240.6 195.3V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><rect x=\"212.4\" y=\"187.6\" width=\"28.2\" height=\"1.7\" rx=\"0\" fill=\"url(#short)\" stroke=\"#af6b24\" stroke-width=\"1\"/><path d=\"M207.4 187.6L245.6 187.6\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"226.5\" y=\"181.6\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">5 500</text><path d=\"M259.4 232V225.9Q259.4 221.9 263.4 221.9H283.6Q287.6 221.9 287.6 225.9V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><rect x=\"259.4\" y=\"186.1\" width=\"28.2\" height=\"33.8\" rx=\"0\" fill=\"url(#short)\" stroke=\"#af6b24\" stroke-width=\"1\"/><path d=\"M254.4 186.1L292.6 186.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"273.5\" y=\"180.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">1 400</text><path d=\"M306.4 232V225.8Q306.4 221.8 310.4 221.8H330.6Q334.6 221.8 334.6 225.8V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><rect x=\"306.4\" y=\"187.6\" width=\"28.2\" height=\"32.2\" rx=\"0\" fill=\"url(#short)\" stroke=\"#af6b24\" stroke-width=\"1\"/><path d=\"M301.4 187.6L339.6 187.6\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"320.5\" y=\"181.6\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">1 400</text><path d=\"M353.4 232V225.7Q353.4 221.7 357.4 221.7H377.6Q381.6 221.7 381.6 225.7V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><rect x=\"353.4\" y=\"186.1\" width=\"28.2\" height=\"33.6\" rx=\"0\" fill=\"url(#short)\" stroke=\"#af6b24\" stroke-width=\"1\"/><path d=\"M348.4 186.1L386.6 186.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"367.5\" y=\"180.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">1 400</text><path d=\"M400.4 232V220.1Q400.4 216.1 404.4 216.1H424.6Q428.6 216.1 428.6 220.1V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><rect x=\"400.4\" y=\"186.1\" width=\"28.2\" height=\"28\" rx=\"0\" fill=\"url(#short)\" stroke=\"#af6b24\" stroke-width=\"1\"/><path d=\"M395.4 186.1L433.6 186.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"414.5\" y=\"180.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">2 100</text><path d=\"M447.4 232V204.5Q447.4 200.5 451.4 200.5H471.6Q475.6 200.5 475.6 204.5V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><rect x=\"447.4\" y=\"187.6\" width=\"28.2\" height=\"10.9\" rx=\"0\" fill=\"url(#short)\" stroke=\"#af6b24\" stroke-width=\"1\"/><path d=\"M442.4 187.6L480.6 187.6\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"461.5\" y=\"181.6\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">4 300</text><path d=\"M494.4 232V166Q494.4 162 498.4 162H518.6Q522.6 162 522.6 166V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><path d=\"M489.4 186.1L527.6 186.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"508.5\" y=\"157\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"400\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">9 500</text><path d=\"M541.4 232V141.6Q541.4 137.6 545.4 137.6H565.6Q569.6 137.6 569.6 141.6V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><path d=\"M536.4 187.6L574.6 187.6\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"555.5\" y=\"132.6\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"400\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">12 800</text><path d=\"M588.4 232V123.1Q588.4 119.1 592.4 119.1H612.6Q616.6 119.1 616.6 123.1V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><path d=\"M583.4 186.1L621.6 186.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"602.5\" y=\"114.1\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"400\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">15 300</text><text x=\"85.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jan</text><text x=\"132.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Feb</text><text x=\"179.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Mar</text><text x=\"226.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Apr</text><text x=\"273.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">May</text><text x=\"320.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jun</text><text x=\"367.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jul</text><text x=\"414.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Aug</text><text x=\"461.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Sep</text><text x=\"508.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Oct</text><text x=\"555.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Nov</text><text x=\"602.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Dec</text><rect x=\"16\" y=\"270\" width=\"15\" height=\"12\" rx=\"0\" fill=\"#24738a\"/><text x=\"42\" y=\"280\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Rain the roof catches that month</text><path d=\"M273 276L293 276\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"301\" y=\"280\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Water used that month (200 L a day)</text><rect x=\"16\" y=\"291\" width=\"15\" height=\"12\" rx=\"0\" fill=\"url(#short)\" stroke=\"#af6b24\" stroke-width=\"1\"/><text x=\"42\" y=\"301\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Short: must come from the tank or another source</text><path d=\"M14 326L626 326\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"14\" y=\"350\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"start\">Tank storage</text><text x=\"14\" y=\"380\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"400\" text-anchor=\"start\">On the plan — planned, not installed yet</text><rect x=\"14\" y=\"387\" width=\"56.1\" height=\"16\" rx=\"3\" fill=\"#e1eef2\" stroke=\"#24738a\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><text x=\"78.1\" y=\"399.5\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"start\">2 500 L</text><text x=\"14\" y=\"427\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"400\" text-anchor=\"start\">Needed to carry this use through the dry months (Tank Calculator)</text><rect x=\"14\" y=\"434\" width=\"462\" height=\"16\" rx=\"3\" fill=\"url(#need)\" stroke=\"#52656a\" stroke-width=\"1.2\"/><text x=\"484\" y=\"446.5\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"start\">20 600 L</text><text x=\"14\" y=\"466\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">The roof catches less than is used in Apr–Sep. Over the longest dry run the gap adds</text><text x=\"14\" y=\"484\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">up to 20 600 L.</text></svg>",
+        "title": "Roof water: what comes in and what goes out",
+        "note": "Average-year arithmetic, not a promise of rain. It counts only the roof that has been traced and only the tanks drawn on the plan; it says nothing about whether the water is safe to drink.",
+        "source": "Roof: Traced on the map. Rain: NASA POWER (50 km climate grid). Daily use: as recorded in the Design Studio.",
+        "alt": "Roof catch by month: 91 123 L a year; short in Apr–Sep; storage on the plan 2 500 L; storage needed 20 600 L."
+      },
+      {
+        "id": "soil",
+        "width": 640,
+        "height": 396,
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"640\" height=\"396\" viewBox=\"0 0 640 396\"><defs><pattern id=\"veg\" width=\"5\" height=\"5\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"5\" height=\"5\" fill=\"#ffffff\"/><path d=\"M0 0V5\" stroke=\"#245738\" stroke-width=\"1.3\"/></pattern><pattern id=\"silt\" width=\"6\" height=\"6\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"6\" height=\"6\" fill=\"#ffffff\"/><path d=\"M0 0V6\" stroke=\"#52656a\" stroke-width=\"1.2\"/></pattern></defs><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"14\" y=\"24\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"start\">How sour or sweet the soil is (pH)</text><rect x=\"40\" y=\"59\" width=\"560\" height=\"14\" rx=\"7\" fill=\"#edf1ee\"/><rect x=\"264\" y=\"59\" width=\"112\" height=\"14\" rx=\"0\" fill=\"url(#veg)\" stroke=\"#245738\" stroke-width=\"1.2\"/><circle cx=\"320\" cy=\"66\" r=\"8\" fill=\"#ffffff\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"320\" y=\"51\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">pH 6.5</text><path d=\"M40 75L40 80\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"40\" y=\"94\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">4</text><path d=\"M152 75L152 80\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"152\" y=\"94\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">5</text><path d=\"M264 75L264 80\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"264\" y=\"94\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">6</text><path d=\"M376 75L376 80\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"376\" y=\"94\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">7</text><path d=\"M488 75L488 80\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"488\" y=\"94\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">8</text><path d=\"M600 75L600 80\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"600\" y=\"94\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">9</text><text x=\"40\" y=\"112\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">← more acid (sour)</text><text x=\"600\" y=\"112\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\">more alkaline →</text><text x=\"320\" y=\"112\" fill=\"#245738\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"700\" text-anchor=\"middle\">most vegetables: 6 to 7</text><text x=\"14\" y=\"144\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"start\">What the soil is made of: Loam</text><rect x=\"41\" y=\"160\" width=\"250\" height=\"26\" rx=\"3\" fill=\"#f5eadc\" stroke=\"#af6b24\" stroke-width=\"1.4\" stroke-dasharray=\"5 3\"/><text x=\"166\" y=\"204\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"700\" text-anchor=\"middle\">Sand 45 %</text><rect x=\"293\" y=\"160\" width=\"166\" height=\"26\" rx=\"3\" fill=\"url(#silt)\" stroke=\"#52656a\" stroke-width=\"1.4\" stroke-dasharray=\"5 3\"/><text x=\"376\" y=\"204\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"700\" text-anchor=\"middle\">Silt 30 %</text><rect x=\"461\" y=\"160\" width=\"138\" height=\"26\" rx=\"3\" fill=\"#af6b24\" stroke=\"#af6b24\" stroke-width=\"1.4\" stroke-dasharray=\"5 3\"/><text x=\"530\" y=\"204\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"700\" text-anchor=\"middle\">Clay 25 %</text><text x=\"14\" y=\"238\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"start\">Organic carbon: how much rotted plant matter the soil holds</text><rect x=\"40\" y=\"273\" width=\"560\" height=\"14\" rx=\"7\" fill=\"#edf1ee\"/><circle cx=\"174.4\" cy=\"280\" r=\"8\" fill=\"#ffffff\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"174.4\" y=\"265\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">1.2 %</text><path d=\"M40 289L40 294\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"40\" y=\"308\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">0 %</text><path d=\"M152 289L152 294\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"152\" y=\"308\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">1 %</text><path d=\"M264 289L264 294\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"264\" y=\"308\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">2 %</text><path d=\"M376 289L376 294\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"376\" y=\"308\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">3 %</text><path d=\"M488 289L488 294\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"488\" y=\"308\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">4 %</text><path d=\"M600 289L600 294\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"600\" y=\"308\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">5+ %</text><path d=\"M14 332L626 332\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><circle cx=\"24\" cy=\"352\" r=\"8\" fill=\"#ffffff\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"42\" y=\"356\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"400\" text-anchor=\"start\">Hollow dot and dashed outlines: estimated for this location by the SoilGrids world</text><text x=\"42\" y=\"374\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"400\" text-anchor=\"start\">soil model, not measured here. A soil test on your own sample will replace them.</text></svg>",
+        "title": "Soil at a glance",
+        "note": "Top 30 cm of soil. No \"good\" or \"bad\" bands are drawn for organic carbon because the right level depends on the soil type and climate.",
+        "source": "SoilGrids world soil model (ISRIC), 250 m grid: an estimate, not a measurement",
+        "alt": "Soil: pH 6.5; Sand 45 %, Silt 30 %, Clay 25 %; organic carbon 1.2 % (SoilGrids estimate)."
+      },
+      {
+        "id": "timeline",
+        "width": 640,
+        "height": 448,
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"640\" height=\"448\" viewBox=\"0 0 640 448\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"14\" y=\"25\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"17\" font-weight=\"700\" text-anchor=\"start\">6 stages of work. The last one starts around week 11</text><text x=\"14\" y=\"46\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Stages overlap: the next one can start before the one before it is finished.</text><path d=\"M22 66L22 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M106 66L106 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M190 66L190 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M274 66L274 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M358 66L358 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M442 66L442 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M526 66L526 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M610 66L610 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"22\" y=\"82\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"700\" text-anchor=\"start\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">1. Verify, Set Out &amp; Make Safe</text><text x=\"610\" y=\"82\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Week 0–1</text><rect x=\"22\" y=\"89\" width=\"42\" height=\"14\" rx=\"3\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M64 87L73 96L64 105L55 96Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#1b3024\" stroke=\"#ffffff\" stroke-width=\"1.5\"/><text x=\"64\" y=\"99.5\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"9.5\" font-weight=\"700\" text-anchor=\"middle\">A</text><text x=\"22\" y=\"128\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"700\" text-anchor=\"start\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">2. Safe Access &amp; Water Spine</text><text x=\"610\" y=\"128\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Weeks 1–4</text><rect x=\"64\" y=\"135\" width=\"126\" height=\"14\" rx=\"3\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M190 133L199 142L190 151L181 142Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#1b3024\" stroke=\"#ffffff\" stroke-width=\"1.5\"/><text x=\"190\" y=\"145.5\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"9.5\" font-weight=\"700\" text-anchor=\"middle\">B</text><text x=\"22\" y=\"174\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"700\" text-anchor=\"start\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">3. Earthworks &amp; Soil Building</text><text x=\"610\" y=\"174\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Weeks 3–6</text><rect x=\"148\" y=\"181\" width=\"126\" height=\"14\" rx=\"3\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M274 179L283 188L274 197L265 188Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#1b3024\" stroke=\"#ffffff\" stroke-width=\"1.5\"/><text x=\"274\" y=\"191.5\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"9.5\" font-weight=\"700\" text-anchor=\"middle\">C</text><text x=\"22\" y=\"220\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"700\" text-anchor=\"start\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">4. Beds, Drip &amp; Working Infrastructure</text><text x=\"610\" y=\"220\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Weeks 5–9</text><rect x=\"232\" y=\"227\" width=\"168\" height=\"14\" rx=\"3\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M400 225L409 234L400 243L391 234Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#1b3024\" stroke=\"#ffffff\" stroke-width=\"1.5\"/><text x=\"400\" y=\"237.5\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"9.5\" font-weight=\"700\" text-anchor=\"middle\">D</text><text x=\"22\" y=\"266\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"700\" text-anchor=\"start\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">5. Perennials &amp; Guilds</text><text x=\"610\" y=\"266\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Weeks 8–12</text><rect x=\"358\" y=\"273\" width=\"168\" height=\"14\" rx=\"3\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M526 271L535 280L526 289L517 280Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#1b3024\" stroke=\"#ffffff\" stroke-width=\"1.5\"/><text x=\"526\" y=\"283.5\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"9.5\" font-weight=\"700\" text-anchor=\"middle\">E</text><text x=\"22\" y=\"312\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"700\" text-anchor=\"start\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">6. Commissioning &amp; Handover</text><text x=\"610\" y=\"312\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Month 3+</text><rect x=\"484\" y=\"319\" width=\"126\" height=\"14\" rx=\"3\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M612 319L623 326L612 333Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#245738\"/><path d=\"M22 346L610 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"22\" y=\"362\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11.5\" font-weight=\"400\" text-anchor=\"middle\">0</text><text x=\"106\" y=\"362\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11.5\" font-weight=\"400\" text-anchor=\"middle\">2</text><text x=\"190\" y=\"362\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11.5\" font-weight=\"400\" text-anchor=\"middle\">4</text><text x=\"274\" y=\"362\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11.5\" font-weight=\"400\" text-anchor=\"middle\">6</text><text x=\"358\" y=\"362\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11.5\" font-weight=\"400\" text-anchor=\"middle\">8</text><text x=\"442\" y=\"362\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11.5\" font-weight=\"400\" text-anchor=\"middle\">10</text><text x=\"526\" y=\"362\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11.5\" font-weight=\"400\" text-anchor=\"middle\">12</text><text x=\"610\" y=\"362\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11.5\" font-weight=\"400\" text-anchor=\"middle\">14</text><text x=\"316\" y=\"380\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">weeks from the day work starts</text><rect x=\"23\" y=\"398\" width=\"20\" height=\"12\" rx=\"3\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><text x=\"50\" y=\"408\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Planned work, not started</text><path d=\"M244 396L252 404L244 412L236 404Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#1b3024\"/><text x=\"262\" y=\"408\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Hold point: stop and check before the next phase</text><path d=\"M26 418L38 425L26 432Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#245738\"/><text x=\"50\" y=\"429\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Carries on</text></svg>",
+        "title": "Order of work",
+        "note": "The order and rough length of each phase, worked out from what is on the saved design. The weeks are a planning guide, not a promise: weather, money and labour will move them. The order should not change.",
+        "source": "Build phases derived from the saved design",
+        "alt": "Order of work: 1. Verify, Set Out & Make Safe (Week 0–1); 2. Safe Access & Water Spine (Weeks 1–4); 3. Earthworks & Soil Building (Weeks 3–6); 4. Beds, Drip & Working Infrastructure (Weeks 5–9); 5. Perennials & Guilds (Weeks 8–12); 6. Commissioning & Handover (Month 3+)."
+      }
+    ],
+    "zu": [
+      {
+        "id": "site-plan",
+        "title": "Ipulani lendawo",
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"640\" height=\"728\" viewBox=\"0 0 640 728\"><defs><pattern id=\"plot\" width=\"7\" height=\"7\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"7\" height=\"7\" fill=\"#ffffff\"/><path d=\"M0 0V7\" stroke=\"#af6b24\" stroke-width=\"1.6\"/></pattern><pattern id=\"bank\" width=\"5\" height=\"5\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"5\" height=\"5\" fill=\"#ffffff\"/><path d=\"M0 0V5\" stroke=\"#8a7355\" stroke-width=\"1.2\"/></pattern><clipPath id=\"plan\"><rect x=\"1.5\" y=\"1.5\" width=\"637\" height=\"449\"/></clipPath></defs><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><rect x=\"0.5\" y=\"0.5\" width=\"639\" height=\"485\" rx=\"6\" fill=\"#f7faf6\" stroke=\"#d5ded8\" stroke-width=\"1\"/><g clip-path=\"url(#plan)\"><path d=\"M249.7 35.1L306.5 35.1L306.5 69.2L548 69.2L548 109L519.6 109L519.6 87.7L278.1 87.7L278.1 165.8L249.7 165.8L249.7 35.1Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#dcdfdd\" stroke=\"#b9c0bb\" stroke-width=\"1\"/><path d=\"M283.8 199.9L369 199.9L369 249.7L283.8 249.7Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"url(#plot)\" stroke=\"#af6b24\" stroke-width=\"1.6\"/><path d=\"M477 174.4L536.7 174.4L536.7 245.4L477 245.4Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"url(#plot)\" stroke=\"#af6b24\" stroke-width=\"1.6\"/><path d=\"M349.1 258.2L434.4 258.2L434.4 307.9L349.1 307.9Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"url(#plot)\" stroke=\"#af6b24\" stroke-width=\"1.6\"/><path d=\"M448.6 258.2L533.8 258.2L533.8 307.9L448.6 307.9Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"url(#plot)\" stroke=\"#af6b24\" stroke-width=\"1.6\"/><path d=\"M292.3 80.6L519.6 80.6L519.6 165.8L462.8 165.8L462.8 251.1L377.5 251.1L377.5 194.3L292.3 194.3L292.3 80.6Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#52656a\" stroke=\"#ffffff\" stroke-width=\"1\"/><path d=\"M263.9 165.8L263.9 258.2L93.4 258.2\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#b9a788\" stroke-width=\"5\" stroke-dasharray=\"10 7\"/><path d=\"M79.2 315L320.7 319.3L562.3 315\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#24738a\" stroke-width=\"4\" stroke-dasharray=\"8 5.6\"/><path d=\"M377.5 253.9L334.9 253.9L278.1 343.4\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#766395\" stroke-width=\"2.4\" stroke-dasharray=\"5 4\"/><ellipse cx=\"136\" cy=\"350.5\" rx=\"71\" ry=\"71\" fill=\"none\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><ellipse cx=\"278.1\" cy=\"350.5\" rx=\"56.8\" ry=\"56.8\" fill=\"none\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><ellipse cx=\"420.2\" cy=\"343.4\" rx=\"21.3\" ry=\"21.3\" fill=\"none\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><ellipse cx=\"505.4\" cy=\"336.3\" rx=\"28.4\" ry=\"28.4\" fill=\"none\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><ellipse cx=\"207\" cy=\"364.8\" rx=\"28.4\" ry=\"28.4\" fill=\"none\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><rect x=\"221.3\" y=\"66.4\" width=\"21.3\" height=\"21.3\" rx=\"1.5\" fill=\"#e8ecec\" stroke=\"#52656a\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><ellipse cx=\"73.5\" cy=\"74.9\" rx=\"8.5\" ry=\"8.5\" fill=\"#e1eef2\" stroke=\"#24738a\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><rect x=\"93.4\" y=\"194.3\" width=\"21.3\" height=\"56.8\" rx=\"1.5\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><rect x=\"128.9\" y=\"194.3\" width=\"21.3\" height=\"56.8\" rx=\"1.5\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><rect x=\"164.4\" y=\"194.3\" width=\"21.3\" height=\"56.8\" rx=\"1.5\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><rect x=\"93.4\" y=\"265.3\" width=\"21.3\" height=\"56.8\" rx=\"1.5\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><rect x=\"128.9\" y=\"265.3\" width=\"21.3\" height=\"56.8\" rx=\"1.5\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><rect x=\"164.4\" y=\"265.3\" width=\"28.4\" height=\"56.8\" rx=\"1.5\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><rect x=\"207\" y=\"208.5\" width=\"28.4\" height=\"42.6\" rx=\"1.5\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M29.4 29.4L599.2 42.2L610.6 410.2L47.9 403.1L29.4 29.4Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2\" stroke-dasharray=\"11 4 2 4\"/></g><text x=\"287\" y=\"64.2\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Indlela yemoto</text><text x=\"326.4\" y=\"229.7\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">P1</text><text x=\"506.8\" y=\"214.8\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">P2</text><text x=\"391.8\" y=\"288\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">P3</text><text x=\"491.2\" y=\"288\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">P4</text><text x=\"406\" y=\"149.1\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\">Indlu</text><text x=\"104\" y=\"228.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">1</text><text x=\"139.6\" y=\"228.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">2</text><text x=\"175.1\" y=\"228.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">3</text><text x=\"104\" y=\"299.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">4</text><text x=\"139.6\" y=\"299.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">5</text><text x=\"178.6\" y=\"299.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">6</text><text x=\"221.3\" y=\"235.2\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">7</text><text x=\"86.5\" y=\"62.4\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"600\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Rainwater tank (2500 L)</text><text x=\"231.9\" y=\"101.7\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"600\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Compost bays</text><text x=\"136\" y=\"355.9\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">MG</text><text x=\"278.1\" y=\"355.9\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">AV</text><text x=\"420.2\" y=\"348.8\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">NP</text><text x=\"505.4\" y=\"341.7\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">MO</text><text x=\"207\" y=\"370.2\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\">MO</text><text x=\"224.8\" y=\"273.2\" fill=\"#6f6248\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"600\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Indlela</text><path d=\"M1 451L639 451\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><rect x=\"16\" y=\"467\" width=\"71\" height=\"7\" rx=\"0\" fill=\"#1b3024\"/><rect x=\"87\" y=\"467\" width=\"71\" height=\"7\" rx=\"0\" fill=\"#ffffff\"/><rect x=\"16\" y=\"467\" width=\"142.1\" height=\"7\" rx=\"0\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"1\"/><text x=\"166.1\" y=\"475\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"start\">10 m</text><path d=\"M616 458.0251241936625L622.5 477.0251241936625L616 472.5251241936625L609.5 477.0251241936625Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#1b3024\"/><text x=\"604\" y=\"474\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">INyakatho</text><path d=\"M8 509L32 509\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2\" stroke-dasharray=\"11 4 2 4\"/><text x=\"40\" y=\"514\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">Umngcele wendawo</text><rect x=\"324\" y=\"502\" width=\"20\" height=\"14\" rx=\"0\" fill=\"#52656a\"/><text x=\"354\" y=\"514\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">Izakhiwo</text><rect x=\"10\" y=\"527\" width=\"20\" height=\"14\" rx=\"1.5\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><text x=\"20\" y=\"538\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"700\" text-anchor=\"middle\">1</text><text x=\"40\" y=\"539\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">7 imibhede yemifino, inezinombolo</text><rect x=\"324\" y=\"527\" width=\"20\" height=\"14\" rx=\"0\" fill=\"url(#plot)\" stroke=\"#af6b24\" stroke-width=\"1.4\"/><text x=\"354\" y=\"539\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">iziza eziyisisekelo ezi-4 (P1–P4)</text><circle cx=\"20\" cy=\"559\" r=\"8.5\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><text x=\"40\" y=\"564\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">5 izihlahla nezitshalo, ngesikali</text><circle cx=\"334\" cy=\"559\" r=\"8.5\" fill=\"#e1eef2\" stroke=\"#24738a\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><text x=\"354\" y=\"564\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">1 ithangi noma indawo yamanzi</text><rect x=\"10\" y=\"577\" width=\"20\" height=\"14\" rx=\"0\" fill=\"#dcdfdd\" stroke=\"#b9c0bb\" stroke-width=\"1\"/><text x=\"40\" y=\"589\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">Indawo egandayiwe</text><rect x=\"324\" y=\"577\" width=\"20\" height=\"14\" rx=\"1.5\" fill=\"#e8ecec\" stroke=\"#52656a\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><text x=\"354\" y=\"589\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">1 isakhiwo esincane</text><path d=\"M8 609L32 609\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#b9a788\" stroke-width=\"5\" stroke-dasharray=\"6 4\"/><text x=\"40\" y=\"614\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">Indlela</text><path d=\"M322 609L346 609\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#24738a\" stroke-width=\"4\" stroke-dasharray=\"6 4\"/><text x=\"354\" y=\"614\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">Umsele wokubamba amanzi</text><path d=\"M8 634L32 634\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#766395\" stroke-width=\"2.4\" stroke-dasharray=\"6 4\"/><text x=\"40\" y=\"639\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"400\" text-anchor=\"start\">Amanzi asetshenzisiwe</text><rect x=\"9\" y=\"652\" width=\"10\" height=\"14\" rx=\"0\" fill=\"#52656a\"/><rect x=\"22\" y=\"652\" width=\"10\" height=\"14\" rx=\"0\" fill=\"#ffffff\" stroke=\"#52656a\" stroke-width=\"1.5\" stroke-dasharray=\"4 2.5\"/><text x=\"40\" y=\"664\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"700\" text-anchor=\"start\">Okugcwele = sekukhona.  Umugqa onamachashaza = kuhleliwe, akukakhiwa.</text><text x=\"8\" y=\"690\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Amakhodi ezitshalo: AV Avocado Tree · MG Mango Tree · MO Moringa Tree ×2 · NP Natal</text><text x=\"8\" y=\"707\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Plum</text></svg>",
+        "width": 640,
+        "height": 728,
+        "note": "Kudwetshwe ngesikali kusuka kumklamo ogciniwe. INyakatho iphezulu. Izinombolo zemibhede ziyafana nezasohlwini lwemibhede. Akusikho ukuhlolwa komhlaba.",
+        "source": "Umklamo ogciniwe (2026-10-21); umngcele nezakhiwo njengoba kudwetshwe kumephu",
+        "alt": "Ipulani lendawo elidwetshwe kumklamo ogciniwe: 7 imibhede yemifino, 4 iziza eziyisisekelo, 5 izihlahla nezitshalo, 1 into yamanzi. Isikali 10 m."
+      },
+      {
+        "id": "land-use",
+        "width": 640,
+        "height": 188,
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"640\" height=\"188\" viewBox=\"0 0 640 188\"><defs><pattern id=\"plot\" width=\"5\" height=\"5\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"5\" height=\"5\" fill=\"#ffffff\"/><path d=\"M0 0V5\" stroke=\"#af6b24\" stroke-width=\"1.5\"/></pattern></defs><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"14\" y=\"24\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"16\" font-weight=\"700\" text-anchor=\"start\">Indawo yonke: 1 037 m²</text><rect x=\"15\" y=\"38\" width=\"24\" height=\"30\" rx=\"3\" fill=\"#245738\"/><rect x=\"41\" y=\"38\" width=\"47.6\" height=\"30\" rx=\"3\" fill=\"url(#plot)\" stroke=\"#af6b24\" stroke-width=\"1.2\"/><rect x=\"90.5\" y=\"38\" width=\"83\" height=\"30\" rx=\"3\" fill=\"#52656a\"/><rect x=\"175.5\" y=\"38\" width=\"449.5\" height=\"30\" rx=\"3\" fill=\"#edf1ee\" stroke=\"#d5ded8\" stroke-width=\"1\"/><rect x=\"14\" y=\"85\" width=\"18\" height=\"13\" rx=\"2\" fill=\"#245738\"/><text x=\"42\" y=\"96\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Imibhede yemifino</text><text x=\"626\" y=\"96\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">44 m²  ·  4 %</text><rect x=\"14\" y=\"108\" width=\"18\" height=\"13\" rx=\"2\" fill=\"url(#plot)\" stroke=\"#af6b24\" stroke-width=\"1.2\"/><text x=\"42\" y=\"119\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Iziza zezitshalo eziyisisekelo</text><text x=\"626\" y=\"119\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">84 m²  ·  8 %</text><rect x=\"14\" y=\"131\" width=\"18\" height=\"13\" rx=\"2\" fill=\"#52656a\"/><text x=\"42\" y=\"142\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Uphahla</text><text x=\"626\" y=\"142\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">144 m²  ·  14 %</text><rect x=\"14\" y=\"154\" width=\"18\" height=\"13\" rx=\"2\" fill=\"#edf1ee\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"42\" y=\"165\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Konke okunye: izindlela, izihlahla, igceke, umhlaba ovulekile</text><text x=\"626\" y=\"165\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">765 m²  ·  74 %</text></svg>",
+        "title": "Ukuthi umhlaba usetshenziswa kanjani",
+        "note": "Izindawo njengoba zidwetshwe kumklamo ogciniwe nakumephu, noma sezakhiwe noma cha. Izihlahla, izindlela namathangi akubalwa njengezindawo.",
+        "source": "Umngcele: Traced on the map. Imibhede neziza: umklamo ogciniwe.",
+        "alt": "Ukusetshenziswa komhlaba: Imibhede yemifino 44 m²; Iziza zezitshalo eziyisisekelo 84 m²; Uphahla 144 m²; Konke okunye: izindlela, izihlahla, igceke, umhlaba ovulekile 765 m²."
+      },
+      {
+        "id": "status",
+        "width": 640,
+        "height": 256,
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"640\" height=\"256\" viewBox=\"0 0 640 256\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"14\" y=\"25\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"17\" font-weight=\"700\" text-anchor=\"start\">4 sekukhona  ·  17 kusazokwakhiwa noma kutshalwe</text><text x=\"14\" y=\"60\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Imibhede yemifino</text><circle cx=\"196\" cy=\"56\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"213\" cy=\"56\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"230\" cy=\"56\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"247\" cy=\"56\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"264\" cy=\"56\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"281\" cy=\"56\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"298\" cy=\"56\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><text x=\"626\" y=\"60\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">0 / 7</text><text x=\"14\" y=\"85\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Iziza zezitshalo eziyisisekelo</text><circle cx=\"196\" cy=\"81\" r=\"6\" fill=\"#245738\"/><circle cx=\"213\" cy=\"81\" r=\"6\" fill=\"#245738\"/><circle cx=\"230\" cy=\"81\" r=\"6\" fill=\"#245738\"/><circle cx=\"247\" cy=\"81\" r=\"6\" fill=\"#245738\"/><text x=\"626\" y=\"85\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">4 / 4</text><text x=\"14\" y=\"110\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Izihlahla nezitshalo</text><circle cx=\"196\" cy=\"106\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"213\" cy=\"106\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"230\" cy=\"106\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"247\" cy=\"106\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"264\" cy=\"106\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><text x=\"626\" y=\"110\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">0 / 5</text><text x=\"14\" y=\"135\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Amanzi</text><circle cx=\"196\" cy=\"131\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><text x=\"626\" y=\"135\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">0 / 1</text><text x=\"14\" y=\"160\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Izakhiwo</text><circle cx=\"196\" cy=\"156\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><text x=\"626\" y=\"160\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">0 / 1</text><text x=\"14\" y=\"185\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Izindlela, imisele namapayipi</text><circle cx=\"196\" cy=\"181\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"213\" cy=\"181\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><circle cx=\"230\" cy=\"181\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><text x=\"626\" y=\"185\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"end\">0 / 3</text><circle cx=\"24\" cy=\"214\" r=\"6\" fill=\"#245738\"/><text x=\"42\" y=\"218\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Sekukhona</text><circle cx=\"128.5\" cy=\"214\" r=\"5.2\" fill=\"#ffffff\" stroke=\"#245738\" stroke-width=\"1.8\" stroke-dasharray=\"3 2\"/><text x=\"146.5\" y=\"218\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Kuhleliwe, akukakhiwa noma kutshalwe</text><text x=\"42\" y=\"239\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Izinombolo: okukhona manje / isamba</text></svg>",
+        "title": "Okwakhiwe, nokusazokwakhiwa",
+        "note": "Uphawu olulodwa lwento ngayinye esemklamweni ogciniwe, njengoba yaphawulwa khona. Shintsha into ibe \"ekhona\" ku-Design Studio uma isisemhlabathini.",
+        "source": "Umklamo ogciniwe (2026-10-21)",
+        "alt": "Okwakhiwe nokuhleliwe: Imibhede yemifino 0/7; Iziza zezitshalo eziyisisekelo 4/4; Izihlahla nezitshalo 0/5; Amanzi 0/1; Izakhiwo 0/1; Izindlela, imisele namapayipi 0/3."
+      },
+      {
+        "id": "climate",
+        "width": 640,
+        "height": 465,
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"640\" height=\"465\" viewBox=\"0 0 640 465\"><defs><pattern id=\"dry\" width=\"5\" height=\"5\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"5\" height=\"5\" fill=\"#ffffff\"/><path d=\"M0 0V5\" stroke=\"#af6b24\" stroke-width=\"1.4\"/></pattern></defs><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"14\" y=\"25\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"17\" font-weight=\"700\" text-anchor=\"start\">791 mm yemvula ngonyaka ojwayelekile</text><text x=\"14\" y=\"46\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Inyanga enemvula kakhulu: Jan (134 mm)   ·   Inyanga eyome kakhulu: May (12 mm)</text><text x=\"42\" y=\"70\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">mm</text><path d=\"M50 226L626 226\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"42\" y=\"230\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">0</text><path d=\"M50 178L626 178\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"42\" y=\"182\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">50</text><path d=\"M50 130L626 130\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"42\" y=\"134\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">100</text><path d=\"M50 82L626 82\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"42\" y=\"86\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">150</text><path d=\"M59.1 226V101.7Q59.1 97.7 63.1 97.7H84.9Q88.9 97.7 88.9 101.7V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"74\" y=\"92.7\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"700\" text-anchor=\"middle\">134</text><path d=\"M107.1 226V127.3Q107.1 123.3 111.1 123.3H132.9Q136.9 123.3 136.9 127.3V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"122\" y=\"118.3\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">107</text><path d=\"M155.1 226V147Q155.1 143 159.1 143H180.9Q184.9 143 184.9 147V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"170\" y=\"138\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">87</text><path d=\"M203.1 226V184.2Q203.1 180.2 207.1 180.2H228.9Q232.9 180.2 232.9 184.2V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"218\" y=\"175.2\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">48</text><path d=\"M251.1 226V218.7Q251.1 214.7 255.1 214.7H276.9Q280.9 214.7 280.9 218.7V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"266\" y=\"209.7\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"700\" text-anchor=\"middle\">12</text><path d=\"M299.1 226V218.5Q299.1 214.5 303.1 214.5H324.9Q328.9 214.5 328.9 218.5V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"314\" y=\"209.5\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">12</text><path d=\"M347.1 226V218.4Q347.1 214.4 351.1 214.4H372.9Q376.9 214.4 376.9 218.4V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"362\" y=\"209.4\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">12</text><path d=\"M395.1 226V212.1Q395.1 208.1 399.1 208.1H420.9Q424.9 208.1 424.9 212.1V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"410\" y=\"203.1\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">19</text><path d=\"M443.1 226V194.6Q443.1 190.6 447.1 190.6H468.9Q472.9 190.6 472.9 194.6V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"458\" y=\"185.6\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">37</text><path d=\"M491.1 226V151.2Q491.1 147.2 495.1 147.2H516.9Q520.9 147.2 520.9 151.2V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"506\" y=\"142.2\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">82</text><path d=\"M539.1 226V123.7Q539.1 119.7 543.1 119.7H564.9Q568.9 119.7 568.9 123.7V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"554\" y=\"114.7\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">111</text><path d=\"M587.1 226V102.9Q587.1 98.9 591.1 98.9H612.9Q616.9 98.9 616.9 102.9V226Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><text x=\"602\" y=\"93.9\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"middle\">132</text><rect x=\"51\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"#24738a\"/><rect x=\"99\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"#24738a\"/><rect x=\"147\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"#24738a\"/><rect x=\"195\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"#edf1ee\"/><rect x=\"243\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"url(#dry)\" stroke=\"#af6b24\" stroke-width=\"1\"/><rect x=\"291\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"url(#dry)\" stroke=\"#af6b24\" stroke-width=\"1\"/><rect x=\"339\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"url(#dry)\" stroke=\"#af6b24\" stroke-width=\"1\"/><rect x=\"387\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"url(#dry)\" stroke=\"#af6b24\" stroke-width=\"1\"/><rect x=\"435\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"#edf1ee\"/><rect x=\"483\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"#24738a\"/><rect x=\"531\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"#24738a\"/><rect x=\"579\" y=\"232\" width=\"46\" height=\"7\" rx=\"0\" fill=\"#24738a\"/><text x=\"74\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jan</text><text x=\"122\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Feb</text><text x=\"170\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Mar</text><text x=\"218\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Apr</text><text x=\"266\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">May</text><text x=\"314\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jun</text><text x=\"362\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jul</text><text x=\"410\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Aug</text><text x=\"458\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Sep</text><text x=\"506\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Oct</text><text x=\"554\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Nov</text><text x=\"602\" y=\"256\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Dec</text><rect x=\"50\" y=\"273\" width=\"20\" height=\"9\" rx=\"0\" fill=\"#24738a\"/><text x=\"78\" y=\"282\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Isikhathi semvula (Oct–Mar)</text><rect x=\"275.4\" y=\"273\" width=\"20\" height=\"9\" rx=\"0\" fill=\"url(#dry)\" stroke=\"#af6b24\" stroke-width=\"1\"/><text x=\"303.4\" y=\"282\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Isikhathi sesomiso (May–Aug)</text><text x=\"14\" y=\"319\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"start\">Izinga lokushisa elijwayelekile ngenyanga (°C)</text><path d=\"M50 435L626 435\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"42\" y=\"439\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">10°</text><path d=\"M50 404.3L626 404.3\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"42\" y=\"408.3\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">15°</text><path d=\"M50 373.7L626 373.7\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"42\" y=\"377.7\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">20°</text><path d=\"M50 343L626 343\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"42\" y=\"347\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">25°</text><path d=\"M74 357L122 359.9L170 368.9L218 388L266 405.7L314 425.2L362 425.6L410 407.8L458 386.4L506 374.7L554 367L602 358.9\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#af6b24\" stroke-width=\"2.2\"/><circle cx=\"74\" cy=\"357\" r=\"5\" fill=\"#af6b24\" stroke=\"#ffffff\" stroke-width=\"2\"/><circle cx=\"122\" cy=\"359.9\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"170\" cy=\"368.9\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"218\" cy=\"388\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"266\" cy=\"405.7\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"314\" cy=\"425.2\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"362\" cy=\"425.6\" r=\"5\" fill=\"#af6b24\" stroke=\"#ffffff\" stroke-width=\"2\"/><circle cx=\"410\" cy=\"407.8\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"458\" cy=\"386.4\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"506\" cy=\"374.7\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"554\" cy=\"367\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><circle cx=\"602\" cy=\"358.9\" r=\"3.2\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2\"/><text x=\"74\" y=\"346\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">22.7 °C</text><text x=\"362\" y=\"445.6\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">11.5 °C</text><text x=\"74\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jan</text><text x=\"122\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Feb</text><text x=\"170\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Mar</text><text x=\"218\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Apr</text><text x=\"266\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">May</text><text x=\"314\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jun</text><text x=\"362\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jul</text><text x=\"410\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Aug</text><text x=\"458\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Sep</text><text x=\"506\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Oct</text><text x=\"554\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Nov</text><text x=\"602\" y=\"455\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Dec</text></svg>",
+        "title": "Imvula nokufudumala phakathi nonyaka",
+        "note": "Izilinganiso zesikhathi eside zale ndawo, akusona isibikezelo. Noma yimuphi unyaka ungaba nemvula eningi noma ube womile kakhulu kunalokhu.",
+        "source": "NASA POWER (50 km climate grid)",
+        "alt": "Imvula ngenyanga: 791 mm ngonyaka; enemvula kakhulu Jan 134 mm, eyome kakhulu May 12 mm. Inyanga efudumele kakhulu Jan 22.7 °C, ebanda kakhulu Jul 11.5 °C."
+      },
+      {
+        "id": "sectors",
+        "width": 640,
+        "height": 565,
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"640\" height=\"565\" viewBox=\"0 0 640 565\"><defs><pattern id=\"wind\" width=\"5\" height=\"5\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"5\" height=\"5\" fill=\"#ffffff\"/><path d=\"M0 0V5\" stroke=\"#52656a\" stroke-width=\"1.3\"/></pattern><pattern id=\"fire\" width=\"4\" height=\"4\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"4\" height=\"4\" fill=\"#ffffff\"/><path d=\"M0 0V4\" stroke=\"#af6b24\" stroke-width=\"1.5\"/></pattern></defs><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"14\" y=\"25\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"17\" font-weight=\"700\" text-anchor=\"start\">Ilanga lasemini lima enyakatho</text><text x=\"14\" y=\"46\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Ubusika: 39° ngaphezu komkhathizwe, isigxobo esingu-1 m senza isithunzi esingu-1.2 m   ·   Ihlobo: 86°</text><circle cx=\"320\" cy=\"276\" r=\"128\" fill=\"#f7faf6\" stroke=\"#d5ded8\" stroke-width=\"1.5\"/><path d=\"M320 148L320 157\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1.6\"/><path d=\"M369 157.7L367.1 162.4\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M410.5 185.5L407 189\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M438.3 227L433.6 228.9\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M448 276L439 276\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1.6\"/><path d=\"M438.3 325L433.6 323.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M410.5 366.5L407 363\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M369 394.3L367.1 389.6\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M320 404L320 395\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1.6\"/><path d=\"M271 394.3L272.9 389.6\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M229.5 366.5L233 363\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M201.7 325L206.4 323.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M192 276L201 276\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1.6\"/><path d=\"M201.7 227L206.4 228.9\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M229.5 185.5L233 189\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M271 157.7L272.9 162.4\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M402.2 317.3L404.2 313L406.1 308.5L407.6 304L409 299.4L410.1 294.7L410.9 290L411.5 285.2L411.9 280.4L412 275.6L411.9 270.8L411.5 266L410.8 261.3L409.9 256.6L408.8 251.9L407.4 247.3L405.8 242.8L403.9 238.3L401.9 234L399.6 229.8L397 225.7L394.3 221.7L391.4 217.9L388.2 214.3L384.9 210.8L381.4 207.5L377.8 204.4L374 201.5L370 198.8L365.9 196.3L361.7 194L357.3 191.9L352.9 190.1L348.4 188.5L343.8 187.1L339.1 186L334.4 185.1L329.6 184.5L324.8 184.1L320 184L315.2 184.1L310.4 184.5L305.6 185.1L300.9 186L296.2 187.1L291.6 188.5L287.1 190.1L282.7 191.9L278.3 194L274.1 196.3L270 198.8L266 201.5L262.2 204.4L258.6 207.5L255.1 210.8L251.8 214.3L248.6 217.9L245.7 221.7L243 225.7L240.4 229.8L238.1 234L236.1 238.3L234.2 242.8L232.6 247.3L231.2 251.9L230.1 256.6L229.2 261.3L228.5 266L228.1 270.8L228 275.6L228.1 280.4L228.5 285.2L229.1 290L229.9 294.7L231 299.4L232.4 304L233.9 308.5L235.8 313L237.8 317.3\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#af6b24\" stroke-width=\"7\"/><circle cx=\"402.2\" cy=\"317.3\" r=\"5.5\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2.4\"/><circle cx=\"237.8\" cy=\"317.3\" r=\"5.5\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2.4\"/><text x=\"320\" y=\"204\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Ilanga lasehlobo</text><path d=\"M373.6 249L372.1 246.3L370.6 243.7L368.8 241.1L367 238.7L365 236.3L362.9 234L360.7 231.9L358.4 229.9L355.9 228L353.4 226.2L350.8 224.5L348.1 223L345.4 221.6L342.6 220.4L339.7 219.3L336.7 218.4L333.8 217.6L330.7 217L327.7 216.5L324.6 216.2L321.5 216L318.5 216L315.4 216.2L312.3 216.5L309.3 217L306.2 217.6L303.3 218.4L300.3 219.3L297.4 220.4L294.6 221.6L291.9 223L289.2 224.5L286.6 226.2L284.1 228L281.6 229.9L279.3 231.9L277.1 234L275 236.3L273 238.7L271.2 241.1L269.4 243.7L267.9 246.3L266.4 249\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#af6b24\" stroke-width=\"7\"/><path d=\"M373.6 249L372.1 246.3L370.6 243.7L368.8 241.1L367 238.7L365 236.3L362.9 234L360.7 231.9L358.4 229.9L355.9 228L353.4 226.2L350.8 224.5L348.1 223L345.4 221.6L342.6 220.4L339.7 219.3L336.7 218.4L333.8 217.6L330.7 217L327.7 216.5L324.6 216.2L321.5 216L318.5 216L315.4 216.2L312.3 216.5L309.3 217L306.2 217.6L303.3 218.4L300.3 219.3L297.4 220.4L294.6 221.6L291.9 223L289.2 224.5L286.6 226.2L284.1 228L281.6 229.9L279.3 231.9L277.1 234L275 236.3L273 238.7L271.2 241.1L269.4 243.7L267.9 246.3L266.4 249\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"2.4\"/><circle cx=\"373.6\" cy=\"249\" r=\"5.5\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2.4\"/><circle cx=\"266.4\" cy=\"249\" r=\"5.5\" fill=\"#ffffff\" stroke=\"#af6b24\" stroke-width=\"2.4\"/><text x=\"320\" y=\"236\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Ilanga lasebusika</text><path d=\"M166.8 204.6L170.6 197L174.7 189.7L179.2 182.5L184 175.6L189.2 169L194.7 162.6L200.5 156.5L206.6 150.7L213 145.2L219.6 140L226.5 135.2L233.7 130.7L241 126.6L248.6 122.8L254.5 135.5L247.6 139L240.8 142.7L234.3 146.9L228 151.3L221.9 156L216 161.1L210.4 166.4L205.1 172L200 177.9L195.3 184L190.9 190.3L186.7 196.8L183 203.6L179.5 210.5Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"url(#fire)\" stroke=\"#af6b24\" stroke-width=\"1.4\" stroke-dasharray=\"5 3\"/><path d=\"M359.6 128.2L367.3 130.5L374.8 133.2L382.2 136.2L389.5 139.7L396.5 143.5L403.3 147.7L409.9 152.2L416.3 157.1L422.4 162.3L428.2 167.8L433.7 173.6L438.9 179.7L443.8 186.1L448.3 192.7L452.5 199.5L456.3 206.5L459.8 213.8L462.8 221.2L465.5 228.7L467.8 236.4L447.5 241.8L445.5 235.2L443.2 228.7L440.6 222.3L437.6 216.1L434.3 210L430.7 204.1L426.8 198.4L422.6 192.9L418.1 187.7L413.3 182.7L408.3 177.9L403.1 173.4L397.6 169.2L391.9 165.3L386 161.7L379.9 158.4L373.7 155.4L367.3 152.8L360.8 150.5L354.2 148.5Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"url(#wind)\" stroke=\"#52656a\" stroke-width=\"1.3\" stroke-dasharray=\"5 3\"/><path d=\"M428.2 167.8L411.6 184.4\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#52656a\" stroke-width=\"2\" stroke-dasharray=\"5 3\"/><path d=\"M407.7 188.3L411.4 178.5L417.5 184.6Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#52656a\"/><path d=\"M280.4 423.8L272.7 421.5L265.2 418.8L257.8 415.8L250.5 412.3L243.5 408.5L236.7 404.3L230.1 399.8L223.7 394.9L217.6 389.7L211.8 384.2L206.3 378.4L201.1 372.3L196.2 365.9L191.7 359.3L187.5 352.5L183.7 345.5L180.2 338.2L177.2 330.8L174.5 323.3L172.2 315.6L192.5 310.2L194.5 316.8L196.8 323.3L199.4 329.7L202.4 335.9L205.7 342L209.3 347.9L213.2 353.6L217.4 359.1L221.9 364.3L226.7 369.3L231.7 374.1L236.9 378.6L242.4 382.8L248.1 386.7L254 390.3L260.1 393.6L266.3 396.6L272.7 399.2L279.2 401.5L285.8 403.5Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"url(#wind)\" stroke=\"#52656a\" stroke-width=\"1.3\" stroke-dasharray=\"5 3\"/><path d=\"M211.8 384.2L228.4 367.6\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#52656a\" stroke-width=\"2\" stroke-dasharray=\"5 3\"/><path d=\"M232.3 363.7L228.6 373.5L222.5 367.4Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#52656a\"/><path d=\"M176.2 223.7L179.1 216.4L182.3 209.2L186 202.2L189.9 195.5L194.2 188.9L198.9 182.5L203.8 176.5L209.1 170.6L214.6 165.1L220.5 159.8L226.5 154.9L232.9 150.2L239.5 145.9L246.2 142L253.2 138.3L260.4 135.1L267.7 132.2L274.9 152L268.5 154.4L262.4 157.2L256.4 160.4L250.5 163.8L244.8 167.5L239.4 171.5L234.1 175.8L229.1 180.3L224.3 185.1L219.8 190.1L215.5 195.4L211.5 200.8L207.8 206.5L204.4 212.4L201.2 218.4L198.4 224.5L196 230.9Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"url(#wind)\" stroke=\"#52656a\" stroke-width=\"1.3\" stroke-dasharray=\"5 3\"/><path d=\"M211.8 167.8L228.4 184.4\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#52656a\" stroke-width=\"2\" stroke-dasharray=\"5 3\"/><path d=\"M232.3 188.3L222.5 184.6L228.6 178.5Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#52656a\"/><text x=\"432.4\" y=\"144.6\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"700\" text-anchor=\"start\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Summer cooling wind</text><text x=\"432.4\" y=\"159.6\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">uvela e NE · Sep–Mar</text><text x=\"207.6\" y=\"399.4\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"700\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Cold front — driving rain</text><text x=\"207.6\" y=\"414.4\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">uvela e SW · Mar–Aug</text><text x=\"196.3\" y=\"103.3\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"700\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Berg wind</text><text x=\"196.3\" y=\"118.3\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">uvela e NW</text><text x=\"196.3\" y=\"133.3\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">May–Aug, episodic</text><text x=\"196.3\" y=\"148.3\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">umlilo ulandela lo moya</text><text x=\"320\" y=\"173\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"16\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">N</text><text x=\"428\" y=\"281\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">E</text><text x=\"320\" y=\"389\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">S</text><text x=\"212\" y=\"281\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">W</text><path d=\"M312 283V274L320 266L328 274V283Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#1b3024\"/><path d=\"M14 455.8L34 455.8\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#af6b24\" stroke-width=\"7\"/><text x=\"42\" y=\"459.8\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Ilanga lasehlobo: liphuma ESE, lishona WSW</text><path d=\"M14 476.8L34 476.8\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#af6b24\" stroke-width=\"7\"/><path d=\"M14 476.8L34 476.8\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"2.4\"/><text x=\"42\" y=\"480.8\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Ilanga lasebusika: liphuma ENE, lishona WNW</text><circle cx=\"24\" cy=\"497.8\" r=\"5\" fill=\"none\" stroke=\"#24738a\" stroke-width=\"1.6\" stroke-dasharray=\"3 2\"/><text x=\"42\" y=\"501.8\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Cishe yisicaba: akukho ndlela yokwehla — hlola ngelevela</text><rect x=\"15\" y=\"511.8\" width=\"18\" height=\"13\" rx=\"0\" fill=\"url(#wind)\" stroke=\"#52656a\" stroke-width=\"1.3\" stroke-dasharray=\"4 2\"/><text x=\"42\" y=\"522.8\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Umoya wesifunda — awulinganiswanga kule ndawo</text><rect x=\"15\" y=\"532.8\" width=\"18\" height=\"13\" rx=\"0\" fill=\"url(#fire)\" stroke=\"#af6b24\" stroke-width=\"1.3\" stroke-dasharray=\"4 2\"/><text x=\"42\" y=\"543.8\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Lapho umlilo ungavela khona (isifunda)</text></svg>",
+        "title": "Ilanga, umoya nomthambeka",
+        "note": "INyakatho iphezulu; uphawu lwendlu yile ndawo. Izindlela zelanga zibalwa ngokwe-latitude. Izimpawu ezinemidwa ziyiphethini yesifunda, aziyona imilinganiso: ziqinisekise ngalokho wena nomakhelwane enikubonayo.",
+        "source": "Ilanga: kubalwe nge-latitude 27.73° S. Umoya nomlilo: iphethini yesifunda (kzn-coastal). Umthambeka: imodeli yokuphakama.",
+        "alt": "Umdwebo wamasekta. Ilanga lasehlobo: liphuma ESE, lishona WSW, 86° ngaphezu komkhathizwe emini, enyakatho. Ilanga lasebusika: liphuma ENE, lishona WNW, 39° ngaphezu komkhathizwe emini, enyakatho. Summer cooling wind: uvela e NE, Sep–Mar (iphethini yesifunda). Cold front — driving rain: uvela e SW, Mar–Aug (iphethini yesifunda). Berg wind: uvela e NW, May–Aug, episodic (iphethini yesifunda). Umlilo kungenzeka ufike uvela e NW. Winter grassfire / ember risk follows the dry, hot berg wind, not the cooling summer wind. Umhlaba ubonakala ucishe ube yisicaba, ngakho akukho ndlela yokwehla edwetshiwe."
+      },
+      {
+        "id": "water-budget",
+        "width": 640,
+        "height": 529,
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"640\" height=\"529\" viewBox=\"0 0 640 529\"><defs><pattern id=\"short\" width=\"5\" height=\"5\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"5\" height=\"5\" fill=\"#ffffff\"/><path d=\"M0 0V5\" stroke=\"#af6b24\" stroke-width=\"1.5\"/></pattern><pattern id=\"need\" width=\"5\" height=\"5\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"5\" height=\"5\" fill=\"#ffffff\"/><path d=\"M0 0V5\" stroke=\"#52656a\" stroke-width=\"1.4\"/></pattern></defs><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"14\" y=\"25\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"17\" font-weight=\"700\" text-anchor=\"start\">Lolu phahla lungabamba 91 123 L ngonyaka ojwayelekile</text><text x=\"14\" y=\"46\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"400\" text-anchor=\"start\">144 m² yophahla oludwetshiwe × 791 mm yemvula × 0.8 (okunye kulahleka ngokuchaphazela nangamanzi okuqala angcolile)</text><text x=\"54\" y=\"72\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">amalitha</text><path d=\"M62 232L626 232\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"54\" y=\"236\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">0</text><path d=\"M62 195L626 195\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"54\" y=\"199\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">5 000</text><path d=\"M62 158L626 158\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"54\" y=\"162\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">10 000</text><path d=\"M62 121L626 121\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"54\" y=\"125\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">15 000</text><path d=\"M62 84L626 84\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"54\" y=\"88\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11\" font-weight=\"400\" text-anchor=\"end\">20 000</text><path d=\"M71.4 232V122.1Q71.4 118.1 75.4 118.1H95.6Q99.6 118.1 99.6 122.1V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><path d=\"M66.4 186.1L104.6 186.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"85.5\" y=\"113.1\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"400\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">15 400</text><path d=\"M118.4 232V144.8Q118.4 140.8 122.4 140.8H142.6Q146.6 140.8 146.6 144.8V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><path d=\"M113.4 190.6L151.6 190.6\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"132.5\" y=\"135.8\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"400\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">12 300</text><path d=\"M165.4 232V162.3Q165.4 158.3 169.4 158.3H189.6Q193.6 158.3 193.6 162.3V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><path d=\"M160.4 186.1L198.6 186.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"179.5\" y=\"153.3\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"400\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">10 000</text><path d=\"M212.4 232V195.3Q212.4 191.3 216.4 191.3H236.6Q240.6 191.3 240.6 195.3V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><rect x=\"212.4\" y=\"187.6\" width=\"28.2\" height=\"1.7\" rx=\"0\" fill=\"url(#short)\" stroke=\"#af6b24\" stroke-width=\"1\"/><path d=\"M207.4 187.6L245.6 187.6\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"226.5\" y=\"181.6\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">5 500</text><path d=\"M259.4 232V225.9Q259.4 221.9 263.4 221.9H283.6Q287.6 221.9 287.6 225.9V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><rect x=\"259.4\" y=\"186.1\" width=\"28.2\" height=\"33.8\" rx=\"0\" fill=\"url(#short)\" stroke=\"#af6b24\" stroke-width=\"1\"/><path d=\"M254.4 186.1L292.6 186.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"273.5\" y=\"180.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">1 400</text><path d=\"M306.4 232V225.8Q306.4 221.8 310.4 221.8H330.6Q334.6 221.8 334.6 225.8V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><rect x=\"306.4\" y=\"187.6\" width=\"28.2\" height=\"32.2\" rx=\"0\" fill=\"url(#short)\" stroke=\"#af6b24\" stroke-width=\"1\"/><path d=\"M301.4 187.6L339.6 187.6\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"320.5\" y=\"181.6\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">1 400</text><path d=\"M353.4 232V225.7Q353.4 221.7 357.4 221.7H377.6Q381.6 221.7 381.6 225.7V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><rect x=\"353.4\" y=\"186.1\" width=\"28.2\" height=\"33.6\" rx=\"0\" fill=\"url(#short)\" stroke=\"#af6b24\" stroke-width=\"1\"/><path d=\"M348.4 186.1L386.6 186.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"367.5\" y=\"180.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">1 400</text><path d=\"M400.4 232V220.1Q400.4 216.1 404.4 216.1H424.6Q428.6 216.1 428.6 220.1V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><rect x=\"400.4\" y=\"186.1\" width=\"28.2\" height=\"28\" rx=\"0\" fill=\"url(#short)\" stroke=\"#af6b24\" stroke-width=\"1\"/><path d=\"M395.4 186.1L433.6 186.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"414.5\" y=\"180.1\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">2 100</text><path d=\"M447.4 232V204.5Q447.4 200.5 451.4 200.5H471.6Q475.6 200.5 475.6 204.5V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><rect x=\"447.4\" y=\"187.6\" width=\"28.2\" height=\"10.9\" rx=\"0\" fill=\"url(#short)\" stroke=\"#af6b24\" stroke-width=\"1\"/><path d=\"M442.4 187.6L480.6 187.6\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"461.5\" y=\"181.6\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">4 300</text><path d=\"M494.4 232V166Q494.4 162 498.4 162H518.6Q522.6 162 522.6 166V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><path d=\"M489.4 186.1L527.6 186.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"508.5\" y=\"157\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"400\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">9 500</text><path d=\"M541.4 232V141.6Q541.4 137.6 545.4 137.6H565.6Q569.6 137.6 569.6 141.6V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><path d=\"M536.4 187.6L574.6 187.6\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"555.5\" y=\"132.6\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"400\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">12 800</text><path d=\"M588.4 232V123.1Q588.4 119.1 592.4 119.1H612.6Q616.6 119.1 616.6 123.1V232Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#24738a\"/><path d=\"M583.4 186.1L621.6 186.1\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"602.5\" y=\"114.1\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"10.5\" font-weight=\"400\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">15 300</text><text x=\"85.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jan</text><text x=\"132.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Feb</text><text x=\"179.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Mar</text><text x=\"226.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Apr</text><text x=\"273.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">May</text><text x=\"320.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jun</text><text x=\"367.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Jul</text><text x=\"414.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Aug</text><text x=\"461.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Sep</text><text x=\"508.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Oct</text><text x=\"555.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Nov</text><text x=\"602.5\" y=\"251\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">Dec</text><rect x=\"16\" y=\"270\" width=\"15\" height=\"12\" rx=\"0\" fill=\"#24738a\"/><text x=\"42\" y=\"280\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Imvula ebanjwa uphahla ngaleyo nyanga</text><path d=\"M14 297L34 297\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"42\" y=\"301\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Amanzi asetshenziswa ngaleyo nyanga (200 L ngosuku)</text><rect x=\"16\" y=\"312\" width=\"15\" height=\"12\" rx=\"0\" fill=\"url(#short)\" stroke=\"#af6b24\" stroke-width=\"1\"/><text x=\"42\" y=\"322\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Ukushoda: kumele kuvele ethangini noma komunye umthombo</text><path d=\"M14 347L626 347\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"14\" y=\"371\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"start\">Isitoreji samathangi</text><text x=\"14\" y=\"401\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"400\" text-anchor=\"start\">Kupulani — kuhleliwe, akukafakwa</text><rect x=\"14\" y=\"408\" width=\"56.1\" height=\"16\" rx=\"3\" fill=\"#e1eef2\" stroke=\"#24738a\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><text x=\"78.1\" y=\"420.5\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"start\">2 500 L</text><text x=\"14\" y=\"448\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"400\" text-anchor=\"start\">Okudingekayo ukuze kudlule izinyanga ezomile (Isibali Sethangi)</text><rect x=\"14\" y=\"455\" width=\"462\" height=\"16\" rx=\"3\" fill=\"url(#need)\" stroke=\"#52656a\" stroke-width=\"1.2\"/><text x=\"484\" y=\"467.5\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"700\" text-anchor=\"start\">20 600 L</text><text x=\"14\" y=\"487\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Uphahla lubamba okuncane kunalokho okusetshenziswayo ngo Apr–Sep. Esikhathini eside</text><text x=\"14\" y=\"505\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">esomile igebe lifinyelela ku 20 600 L.</text></svg>",
+        "title": "Amanzi ophahla: okungenayo nokuphumayo",
+        "note": "Izibalo zonyaka ojwayelekile, akusona isithembiso semvula. Kubalwa kuphela uphahla oludwetshiwe namathangi asepulanini; akusho lutho ngokuphepha kwamanzi okuphuzwa.",
+        "source": "Uphahla: Traced on the map. Imvula: NASA POWER (50 km climate grid). Ukusetshenziswa kwansuku zonke: njengoba kuqoshwe ku-Design Studio.",
+        "alt": "Okubanjwa uphahla ngenyanga: 91 123 L ngonyaka; kuyashoda ngo Apr–Sep; isitoreji esikupulani 2 500 L; isitoreji esidingekayo 20 600 L."
+      },
+      {
+        "id": "soil",
+        "width": 640,
+        "height": 414,
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"640\" height=\"414\" viewBox=\"0 0 640 414\"><defs><pattern id=\"veg\" width=\"5\" height=\"5\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"5\" height=\"5\" fill=\"#ffffff\"/><path d=\"M0 0V5\" stroke=\"#245738\" stroke-width=\"1.3\"/></pattern><pattern id=\"silt\" width=\"6\" height=\"6\" patternUnits=\"userSpaceOnUse\" patternTransform=\"rotate(45)\"><rect width=\"6\" height=\"6\" fill=\"#ffffff\"/><path d=\"M0 0V6\" stroke=\"#52656a\" stroke-width=\"1.2\"/></pattern></defs><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"14\" y=\"24\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"start\">Ukuthi umhlabathi umuncu noma umnandi kangakanani (pH)</text><rect x=\"40\" y=\"59\" width=\"560\" height=\"14\" rx=\"7\" fill=\"#edf1ee\"/><rect x=\"264\" y=\"59\" width=\"112\" height=\"14\" rx=\"0\" fill=\"url(#veg)\" stroke=\"#245738\" stroke-width=\"1.2\"/><circle cx=\"320\" cy=\"66\" r=\"8\" fill=\"#ffffff\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"320\" y=\"51\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">pH 6.5</text><path d=\"M40 75L40 80\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"40\" y=\"94\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">4</text><path d=\"M152 75L152 80\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"152\" y=\"94\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">5</text><path d=\"M264 75L264 80\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"264\" y=\"94\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">6</text><path d=\"M376 75L376 80\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"376\" y=\"94\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">7</text><path d=\"M488 75L488 80\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"488\" y=\"94\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">8</text><path d=\"M600 75L600 80\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"600\" y=\"94\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">9</text><text x=\"40\" y=\"112\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">← umuncu kakhulu</text><text x=\"600\" y=\"112\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\">une-alkali kakhulu →</text><text x=\"320\" y=\"112\" fill=\"#245738\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"700\" text-anchor=\"middle\">imifino eminingi: 6 kuya ku-7</text><text x=\"14\" y=\"144\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"start\">Ukuthi umhlabathi wenziwe ngani: Loam</text><rect x=\"41\" y=\"160\" width=\"250\" height=\"26\" rx=\"3\" fill=\"#f5eadc\" stroke=\"#af6b24\" stroke-width=\"1.4\" stroke-dasharray=\"5 3\"/><text x=\"166\" y=\"204\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"700\" text-anchor=\"middle\">Isihlabathi 45 %</text><rect x=\"293\" y=\"160\" width=\"166\" height=\"26\" rx=\"3\" fill=\"url(#silt)\" stroke=\"#52656a\" stroke-width=\"1.4\" stroke-dasharray=\"5 3\"/><text x=\"376\" y=\"204\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"700\" text-anchor=\"middle\">Udaka olucolekile 30 %</text><rect x=\"461\" y=\"160\" width=\"138\" height=\"26\" rx=\"3\" fill=\"#af6b24\" stroke=\"#af6b24\" stroke-width=\"1.4\" stroke-dasharray=\"5 3\"/><text x=\"530\" y=\"204\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"700\" text-anchor=\"middle\">Ubumba 25 %</text><text x=\"14\" y=\"238\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"start\">Ikhabhoni yemvelo: ukuthi umhlabathi uphethe izinto zezitshalo ezibolile ezingakanani</text><rect x=\"40\" y=\"273\" width=\"560\" height=\"14\" rx=\"7\" fill=\"#edf1ee\"/><circle cx=\"174.4\" cy=\"280\" r=\"8\" fill=\"#ffffff\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"174.4\" y=\"265\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"14\" font-weight=\"700\" text-anchor=\"middle\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">1.2 %</text><path d=\"M40 289L40 294\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"40\" y=\"308\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">0 %</text><path d=\"M152 289L152 294\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"152\" y=\"308\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">1 %</text><path d=\"M264 289L264 294\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"264\" y=\"308\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">2 %</text><path d=\"M376 289L376 294\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"376\" y=\"308\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">3 %</text><path d=\"M488 289L488 294\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"488\" y=\"308\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">4 %</text><path d=\"M600 289L600 294\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"600\" y=\"308\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">5+ %</text><path d=\"M14 332L626 332\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><circle cx=\"24\" cy=\"352\" r=\"8\" fill=\"#ffffff\" stroke=\"#1b3024\" stroke-width=\"2.6\"/><text x=\"42\" y=\"356\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"400\" text-anchor=\"start\">Ichashazi elingenalutho nemidwa enqamukayo: kulinganiselwe le ndawo yimodeli</text><text x=\"42\" y=\"374\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"400\" text-anchor=\"start\">yomhlabathi yomhlaba i-SoilGrids, akulinganiswanga lapha. Ukuhlolwa komhlabathi</text><text x=\"42\" y=\"392\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12.5\" font-weight=\"400\" text-anchor=\"start\">wakho kuzokuvala lokhu.</text></svg>",
+        "title": "Umhlabathi ngamafuphi",
+        "note": "Amasentimitha angu-30 aphezulu omhlabathi. Ayikho imigqa ethi \"kuhle\" noma \"kubi\" yekhabhoni yemvelo ngoba izinga elifanele lincike ohlotsheni lomhlabathi nesimo sezulu.",
+        "source": "Imodeli yomhlabathi yomhlaba i-SoilGrids (ISRIC), igridi engu-250 m: isilinganiso, akusona isilinganiso sangempela",
+        "alt": "Umhlabathi: pH 6.5; Isihlabathi 45 %, Udaka olucolekile 30 %, Ubumba 25 %; ikhabhoni yemvelo 1.2 % (isilinganiso se-SoilGrids)."
+      },
+      {
+        "id": "timeline",
+        "width": 640,
+        "height": 448,
+        "svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"640\" height=\"448\" viewBox=\"0 0 640 448\"><rect width=\"100%\" height=\"100%\" fill=\"#ffffff\"/><text x=\"14\" y=\"25\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"17\" font-weight=\"700\" text-anchor=\"start\">6 izigaba zomsebenzi. Esokugcina siqala cishe ngeviki 11</text><text x=\"14\" y=\"46\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"13\" font-weight=\"400\" text-anchor=\"start\">Izigaba ziyadlulana: esilandelayo singaqala ngaphambi kokuba esandulelayo siphele.</text><path d=\"M22 66L22 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M106 66L106 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M190 66L190 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M274 66L274 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M358 66L358 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M442 66L442 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M526 66L526 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><path d=\"M610 66L610 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#d5ded8\" stroke-width=\"1\"/><text x=\"22\" y=\"82\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"700\" text-anchor=\"start\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">1. Verify, Set Out &amp; Make Safe</text><text x=\"610\" y=\"82\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Week 0–1</text><rect x=\"22\" y=\"89\" width=\"42\" height=\"14\" rx=\"3\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M64 87L73 96L64 105L55 96Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#1b3024\" stroke=\"#ffffff\" stroke-width=\"1.5\"/><text x=\"64\" y=\"99.5\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"9.5\" font-weight=\"700\" text-anchor=\"middle\">A</text><text x=\"22\" y=\"128\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"700\" text-anchor=\"start\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">2. Safe Access &amp; Water Spine</text><text x=\"610\" y=\"128\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Weeks 1–4</text><rect x=\"64\" y=\"135\" width=\"126\" height=\"14\" rx=\"3\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M190 133L199 142L190 151L181 142Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#1b3024\" stroke=\"#ffffff\" stroke-width=\"1.5\"/><text x=\"190\" y=\"145.5\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"9.5\" font-weight=\"700\" text-anchor=\"middle\">B</text><text x=\"22\" y=\"174\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"700\" text-anchor=\"start\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">3. Earthworks &amp; Soil Building</text><text x=\"610\" y=\"174\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Weeks 3–6</text><rect x=\"148\" y=\"181\" width=\"126\" height=\"14\" rx=\"3\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M274 179L283 188L274 197L265 188Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#1b3024\" stroke=\"#ffffff\" stroke-width=\"1.5\"/><text x=\"274\" y=\"191.5\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"9.5\" font-weight=\"700\" text-anchor=\"middle\">C</text><text x=\"22\" y=\"220\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"700\" text-anchor=\"start\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">4. Beds, Drip &amp; Working Infrastructure</text><text x=\"610\" y=\"220\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Weeks 5–9</text><rect x=\"232\" y=\"227\" width=\"168\" height=\"14\" rx=\"3\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M400 225L409 234L400 243L391 234Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#1b3024\" stroke=\"#ffffff\" stroke-width=\"1.5\"/><text x=\"400\" y=\"237.5\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"9.5\" font-weight=\"700\" text-anchor=\"middle\">D</text><text x=\"22\" y=\"266\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"700\" text-anchor=\"start\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">5. Perennials &amp; Guilds</text><text x=\"610\" y=\"266\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Weeks 8–12</text><rect x=\"358\" y=\"273\" width=\"168\" height=\"14\" rx=\"3\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M526 271L535 280L526 289L517 280Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#1b3024\" stroke=\"#ffffff\" stroke-width=\"1.5\"/><text x=\"526\" y=\"283.5\" fill=\"#ffffff\" font-family=\"Arial, sans-serif\" font-size=\"9.5\" font-weight=\"700\" text-anchor=\"middle\">E</text><text x=\"22\" y=\"312\" fill=\"#1b3024\" font-family=\"Arial, sans-serif\" font-size=\"13.5\" font-weight=\"700\" text-anchor=\"start\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">6. Commissioning &amp; Handover</text><text x=\"610\" y=\"312\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"end\" stroke=\"#ffffff\" stroke-width=\"3.5\" stroke-linejoin=\"round\" paint-order=\"stroke\">Month 3+</text><rect x=\"484\" y=\"319\" width=\"126\" height=\"14\" rx=\"3\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><path d=\"M612 319L623 326L612 333Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#245738\"/><path d=\"M22 346L610 346\" stroke-linecap=\"round\" fill=\"none\" stroke=\"#526258\" stroke-width=\"1\"/><text x=\"22\" y=\"362\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11.5\" font-weight=\"400\" text-anchor=\"middle\">0</text><text x=\"106\" y=\"362\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11.5\" font-weight=\"400\" text-anchor=\"middle\">2</text><text x=\"190\" y=\"362\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11.5\" font-weight=\"400\" text-anchor=\"middle\">4</text><text x=\"274\" y=\"362\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11.5\" font-weight=\"400\" text-anchor=\"middle\">6</text><text x=\"358\" y=\"362\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11.5\" font-weight=\"400\" text-anchor=\"middle\">8</text><text x=\"442\" y=\"362\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11.5\" font-weight=\"400\" text-anchor=\"middle\">10</text><text x=\"526\" y=\"362\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11.5\" font-weight=\"400\" text-anchor=\"middle\">12</text><text x=\"610\" y=\"362\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"11.5\" font-weight=\"400\" text-anchor=\"middle\">14</text><text x=\"316\" y=\"380\" fill=\"#526258\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"middle\">amaviki kusukela ngosuku umsebenzi oqala ngalo</text><rect x=\"23\" y=\"398\" width=\"20\" height=\"12\" rx=\"3\" fill=\"#e6efe6\" stroke=\"#245738\" stroke-width=\"1.6\" stroke-dasharray=\"5 3\"/><text x=\"50\" y=\"408\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Umsebenzi ohleliwe, awukaqali</text><path d=\"M32 417L40 425L32 433L24 425Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#1b3024\"/><text x=\"50\" y=\"429\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Iphuzu lokuma: yima uhlole ngaphambi kwesigaba esilandelayo</text><path d=\"M466.5 418L478.5 425L466.5 432Z\" stroke-linejoin=\"round\" stroke-linecap=\"round\" fill=\"#245738\"/><text x=\"490.5\" y=\"429\" fill=\"#263d30\" font-family=\"Arial, sans-serif\" font-size=\"12\" font-weight=\"400\" text-anchor=\"start\">Kuyaqhubeka</text></svg>",
+        "title": "Ukulandelana komsebenzi",
+        "note": "Ukulandelana nobude obulinganiselwe besigaba ngasinye, kubalwe kulokho okusemklamweni ogciniwe. Amaviki ayisiqondiso sokuhlela, akusona isithembiso: isimo sezulu, imali nabasebenzi kuzowashintsha. Ukulandelana akufanele kushintshe.",
+        "source": "Izigaba zokwakha ezithathwe kumklamo ogciniwe",
+        "alt": "Ukulandelana komsebenzi: 1. Verify, Set Out & Make Safe (Week 0–1); 2. Safe Access & Water Spine (Weeks 1–4); 3. Earthworks & Soil Building (Weeks 3–6); 4. Beds, Drip & Working Infrastructure (Weeks 5–9); 5. Perennials & Guilds (Weeks 8–12); 6. Commissioning & Handover (Month 3+)."
+      }
+    ]
+  }
+}

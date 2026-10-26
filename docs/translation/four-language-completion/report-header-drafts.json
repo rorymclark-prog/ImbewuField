@@ -1,0 +1,584 @@
+{
+  "status": "Unreviewed AI drafts; no fluent-speaker approval is claimed.",
+  "sourceSha": "af151ab440b84a9ff1d2c7aa930ed1493b4acd90",
+  "entries": [
+    {
+      "english": "Site Report — {name}",
+      "zu": "Umbiko wendawo — {name}",
+      "st": "Tlaleho ya sebaka — {name}",
+      "ts": "Xiviko xa ndhawu — {name}",
+      "ve": "Muvhigo wa fhethu — {name}"
+    },
+    {
+      "english": "Nothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.",
+      "zu": "Akukho kuleli thebula okubhalwe ngumkhiqizi wombiko. Isibalo ngasinye silinganiswa ebalazweni laleli pulazi noma sifundwa emthonjeni wedatha obhalwe eduze kwaso.",
+      "st": "Ha ho letho tafoleng ena le ngotsweng ke sehlahisi sa tlaleho. Palo ka nngwe e lekantswe mmapeng wa polasi ena kapa e badilwe mohloding wa data o boletsweng haufi le yona.",
+      "ts": "Ku hava lexi nga etafuleni leri lexi tsariweke hi muendli wa xiviko. Nhlayo yin'wana ni yin'wana yi pimiwe emepeni wa purasi leri kumbe yi hlayiwe eka xihlovo xa data lexi vuriweke ekusuhi na yona.",
+      "ve": "A hu na tshithu kha thebulu iyi tsho ṅwalwaho nga mubveledzi wa muvhigo. Nomboro iṅwe na iṅwe yo pimiwa kha mapa wa bulasi iyi kana yo vhalwa kha tshiko tsha data tsho bulwaho tsini nayo."
+    },
+    {
+      "english": "Measure",
+      "zu": "Okulinganiswayo",
+      "st": "Se lekanywang",
+      "ts": "Lexi pimiwaka",
+      "ve": "Tshine tsha pimiwa"
+    },
+    {
+      "english": "Value",
+      "zu": "Inani",
+      "st": "Boleng",
+      "ts": "Nhlayo",
+      "ve": "Ndeme"
+    },
+    {
+      "english": "Where it comes from",
+      "zu": "Lapho kuvela khona",
+      "st": "Moo se tswang teng",
+      "ts": "Laha swi humaka kona",
+      "ve": "Hune zwa bva hone"
+    },
+    {
+      "english": "Named by the farmer",
+      "zu": "Ibizwe ngegama ngumlimi",
+      "st": "Se rehetswe ke molemi",
+      "ts": "Yi thyiwe hi murimi",
+      "ve": "Ho rehiwa nga mulimi"
+    },
+    {
+      "english": "Property boundary",
+      "zu": "Umngcele wendawo",
+      "st": "Moedi wa sebaka",
+      "ts": "Ndzilekano wa ndhawu",
+      "ve": "Mukano wa fhethu"
+    },
+    {
+      "english": "Mapped site area",
+      "zu": "Ubukhulu bendawo ebalazwe",
+      "st": "Boholo ba sebaka se mmapeng",
+      "ts": "Vukulu bya ndhawu leyi nga emepeni",
+      "ve": "Vhuhulu ha fhethu ho swaiwaho kha mapa"
+    },
+    {
+      "english": "Sum of every shape drawn on the map (not a single traced boundary)",
+      "zu": "Isamba sazo zonke izimo ezidwetshwe ebalazweni (akuwona umngcele owodwa olandelwe)",
+      "st": "Kakaretso ya dibopeho tsohle tse takilweng mmapeng (ha se moedi o le mong o latetsweng)",
+      "ts": "Ntsengo wa swivumbeko hinkwato leswi dirowiweke emepeni (a hi ndzilekano wun'we lowu landzelerisiweke)",
+      "ve": "Ṱhanganyelo ya zwivhumbeo zwoṱhe zwo oliwaho kha mapa (a si mukano muthihi wo tevhedzelwaho)"
+    },
+    {
+      "english": "Not traced",
+      "zu": "Awukalandelwa ebalazweni",
+      "st": "Ha o so latelwe mmapeng",
+      "ts": "A wu si landzelerisiwa emepeni",
+      "ve": "A u athu u tevhedzelwa kha mapa"
+    },
+    {
+      "english": "Nothing drawn on the map yet",
+      "zu": "Akukho okudwetshwe ebalazweni okwamanje",
+      "st": "Ha ho eso takwe letho mmapeng",
+      "ts": "Ku hava lexi nga si dirowiwa emepeni",
+      "ve": "A hu athu u oliwa tshithu kha mapa"
+    },
+    {
+      "english": "Growing area drawn",
+      "zu": "Indawo yokutshala edwetshiwe",
+      "st": "Sebaka sa temo se takilweng",
+      "ts": "Ndhawu yo byala leyi dirowiweke",
+      "ve": "Fhethu ha u ṱavha ho oliwaho"
+    },
+    {
+      "english": "{count} bed {area}",
+      "zu": "Umbhede ongu-{count} {area}",
+      "st": "Bethe e {count} {area}",
+      "ts": "Mubedo wa {count} {area}",
+      "ve": "Mbethe wa {count} {area}"
+    },
+    {
+      "english": "{count} beds {area}",
+      "zu": "Imibhede engu-{count} {area}",
+      "st": "Dibethe tse {count} {area}",
+      "ts": "Mibedo ya {count} {area}",
+      "ve": "Mibethe ya {count} {area}"
+    },
+    {
+      "english": "{count} staple plot {area}",
+      "zu": "Isiqephu sezitshalo eziyisisekelo esingu-{count} {area}",
+      "st": "Tshimo e {count} ya dijalo tsa mantlha {area}",
+      "ts": "Xiphemu xa {count} xa swibyariwa swa swakudya swa nkoka {area}",
+      "ve": "Tshipiḓa tsha {count} tsha zwiliṅwa zwa zwiḽiwa zwa ndeme {area}"
+    },
+    {
+      "english": "{count} staple plots {area}",
+      "zu": "Iziqephu zezitshalo eziyisisekelo ezingu-{count} {area}",
+      "st": "Ditshimo tse {count} tsa dijalo tsa mantlha {area}",
+      "ts": "Swiphemu swa {count} swa swibyariwa swa swakudya swa nkoka {area}",
+      "ve": "Zwipiḓa zwa {count} zwa zwiliṅwa zwa zwiḽiwa zwa ndeme {area}"
+    },
+    {
+      "english": "Measured off the farmer's plan",
+      "zu": "Ilinganiswe ohlelweni lomlimi",
+      "st": "Se lekantswe moralong wa molemi",
+      "ts": "Swi pimiwe eka pulani ya murimi",
+      "ve": "Zwo pimiwa kha pulane ya mulimi"
+    },
+    {
+      "english": "Trees and perennials placed",
+      "zu": "Izihlahla nezitshalo zeminyaka eminingi ezibekiwe",
+      "st": "Difate le dimela tsa dilemo tse ngata tse behilweng",
+      "ts": "Mirhi ni swimilana swa nkarhi wo leha leswi vekiweke",
+      "ve": "Miri na zwimela zwa miṅwaha minzhi zwo vhewaho"
+    },
+    {
+      "english": "Placed by the farmer in the Design Studio",
+      "zu": "Kubekwe ngumlimi eSitudiyo somklamo",
+      "st": "Se behilwe ke molemi ho Studio sa moralo",
+      "ts": "Swi vekiwe hi murimi eka Xitudiyo xa dizayini",
+      "ve": "Zwo vhewa nga mulimi kha Studio ya nyolo"
+    },
+    {
+      "english": "Structures placed",
+      "zu": "Izakhiwo ezibekiwe",
+      "st": "Meaho e behilweng",
+      "ts": "Miako leyi vekiweke",
+      "ve": "Zwifhaṱo zwo vhewaho"
+    },
+    {
+      "english": "Earthworks and routes",
+      "zu": "Imisebenzi yomhlabathi nemizila",
+      "st": "Mesebetsi ya mobu le ditsela",
+      "ts": "Mitirho ya misava ni tindlela",
+      "ve": "Mishumo ya mavu na nḓila"
+    },
+    {
+      "english": "Measured off the traced lines",
+      "zu": "Ilinganiswe emigqeni elandelwe ebalazweni",
+      "st": "Se lekantswe meleng e latetsweng mmapeng",
+      "ts": "Swi pimiwe eka milayeni leyi landzelerisiweke emepeni",
+      "ve": "Zwo pimiwa kha mitaladzi yo tevhedzelwaho kha mapa"
+    },
+    {
+      "english": "Permaculture zones drawn",
+      "zu": "Izindawo ze-permaculture ezidwetshiwe",
+      "st": "Dizone tsa permaculture tse takilweng",
+      "ts": "Tizoni ta permaculture leti dirowiweke",
+      "ve": "Zouni dza permaculture dzo oliwaho"
+    },
+    {
+      "english": "Zone {zone} {area}",
+      "zu": "Indawo {zone} {area}",
+      "st": "Sebaka {zone} {area}",
+      "ts": "Zoni {zone} {area}",
+      "ve": "Zouni {zone} {area}"
+    },
+    {
+      "english": "Rings drawn by the farmer",
+      "zu": "Izindilinga ezidwetshwe ngumlimi",
+      "st": "Didikadikwe tse takilweng ke molemi",
+      "ts": "Swirhendzevutana leswi dirowiweke hi murimi",
+      "ve": "Zwitendeledzi zwo oliwaho nga mulimi"
+    },
+    {
+      "english": "capacity not stated",
+      "zu": "umthamo awubhaliwe",
+      "st": "boholo ba polokelo ha bo bolelwe",
+      "ts": "mpimo wo khoma a wu vuriwanga",
+      "ve": "vhungomu a vhu ngo bulwa"
+    },
+    {
+      "english": "{value} (drawn as proposed)",
+      "zu": "{value} (kudwetshwe njengokuhleliwe)",
+      "st": "{value} (e takilwe e le tshisinyo)",
+      "ts": "{value} (swi dirowiwe swi ri leswi ringanyetiwaka)",
+      "ve": "{value} (zwo oliwa zwi tshi kha ḓi dzinginywa)"
+    },
+    {
+      "english": "Water storage on the plan",
+      "zu": "Ukugcina amanzi ohlelweni",
+      "st": "Polokelo ya metsi moralong",
+      "ts": "Vuhlayiselo bya mati eka pulani",
+      "ve": "Vhugalamaḓi kha pulane"
+    },
+    {
+      "english": "Design Studio",
+      "zu": "Isitudiyo somklamo",
+      "st": "Studio sa moralo",
+      "ts": "Xitudiyo xa dizayini",
+      "ve": "Studio ya nyolo"
+    },
+    {
+      "english": "Water points recorded",
+      "zu": "Izindawo zamanzi ezibhaliwe",
+      "st": "Dibaka tsa metsi tse ngotsweng",
+      "ts": "Tindhawu ta mati leti rhekhodiweke",
+      "ve": "Fhethu ha maḓi ho ṅwalwaho"
+    },
+    {
+      "english": "Pinned on the map by the farmer",
+      "zu": "Kumakwe ebalazweni ngumlimi",
+      "st": "Se tshwailwe mmapeng ke molemi",
+      "ts": "Swi funghiwe emepeni hi murimi",
+      "ve": "Ho swaiwa kha mapa nga mulimi"
+    },
+    {
+      "english": "Roof catchment traced",
+      "zu": "Uphahla lokuqoqa amanzi olulandelwe ebalazweni",
+      "st": "Marulelo a ho bokella metsi a latetsweng mmapeng",
+      "ts": "Lwangu ro hlengeleta mati leri landzelerisiweke emepeni",
+      "ve": "Ṱhanga ya u kuvhanganya maḓi yo tevhedzelwaho kha mapa"
+    },
+    {
+      "english": "{area} → {harvest}/yr at {coefficient} runoff",
+      "zu": "{area} → {harvest}/ngonyaka ngokugeleza okungu-{coefficient}",
+      "st": "{area} → {harvest}/ka selemo ka phallo ya {coefficient}",
+      "ts": "{area} → {harvest}/hi lembe hi ku khuluka ka {coefficient}",
+      "ve": "{area} → {harvest}/nga ṅwaha kha u elela ha {coefficient}"
+    },
+    {
+      "english": "Roof catchment",
+      "zu": "Uphahla lokuqoqa amanzi",
+      "st": "Marulelo a ho bokella metsi",
+      "ts": "Lwangu ro hlengeleta mati",
+      "ve": "Ṱhanga ya u kuvhanganya maḓi"
+    },
+    {
+      "english": "Not traced or measured",
+      "zu": "Akukalandelwa ebalazweni noma kukalwe",
+      "st": "Ha a so latelwe mmapeng kapa a lekanngwe",
+      "ts": "A swi si landzelerisiwa emepeni kumbe ku pimiwa",
+      "ve": "A zwi athu u tevhedzelwa kha mapa kana u pimiwa"
+    },
+    {
+      "english": "No roof outline on the map",
+      "zu": "Awukho umngcele wophahla ebalazweni",
+      "st": "Ha ho moedi wa marulelo mmapeng",
+      "ts": "Ku hava xivumbeko xa lwangu emepeni",
+      "ve": "A hu na mukano wa ṱhanga kha mapa"
+    },
+    {
+      "english": "Crop plan entered",
+      "zu": "Uhlelo lwezitshalo olufakiwe",
+      "st": "Moralo wa dijalo o kentsweng",
+      "ts": "Pulani ya swibyariwa leyi nghenisiweke",
+      "ve": "Pulane ya zwiliṅwa yo dzheniswaho"
+    },
+    {
+      "english": "{plantings} plantings, {crops} crops, across {beds} beds/plots",
+      "zu": "Ukutshala okungu-{plantings}, izitshalo ezingu-{crops}, emibhedeni / eziqeshini ezingu-{beds}",
+      "st": "Mela ya ho jala e {plantings}, dijalo tse {crops}, dibetheng / ditshimong tse {beds}",
+      "ts": "Mibyalo ya {plantings}, swibyariwa swa {crops}, eka mibedo / swiphemu swa {beds}",
+      "ve": "U ṱavha ha {plantings}, zwiliṅwa zwa {crops}, kha mibethe / zwipiḓa zwa {beds}"
+    },
+    {
+      "english": "Entered by the farmer in the crop planner",
+      "zu": "Kufakwe ngumlimi ohlelweni lokuhlela izitshalo",
+      "st": "Se kentswe ke molemi ho moralo wa dijalo",
+      "ts": "Swi nghenisiwe hi murimi eka xihleri xa swibyariwa",
+      "ve": "Zwo dzheniswa nga mulimi kha tshishumiswa tsha u pulana zwiliṅwa"
+    },
+    {
+      "english": "Farmer's scale correction",
+      "zu": "Ukulungiswa kwesilinganiso ngumlimi",
+      "st": "Tokiso ya sekala ya molemi",
+      "ts": "Ku lulamisiwa ka xikalo hi murimi",
+      "ve": "Ndulamiso ya tshikalo ya mulimi"
+    },
+    {
+      "english": "{factor}x applied to every area and length above",
+      "zu": "{factor}x isetshenziswe kuyo yonke indawo nobude obungenhla",
+      "st": "{factor}x e sebedisitswe sebakeng le boleleleng bo bong le bo bong bo ka hodimo",
+      "ts": "{factor}x yi tirhisiwile eka vukulu ni vulehi hinkwabyo leswi nga ehenhla",
+      "ve": "{factor}x yo shumiswa kha vhuhulu na vhulapfu hoṱhe zwi re afho nṱha"
+    },
+    {
+      "english": "Measured on site by the farmer",
+      "zu": "Ilinganiswe endaweni ngumlimi",
+      "st": "Se lekantswe sebakeng ke molemi",
+      "ts": "Swi pimiwe endhawini hi murimi",
+      "ve": "Zwo pimiwa henefho fhethu nga mulimi"
+    },
+    {
+      "english": "Wind observed on site",
+      "zu": "Umoya obonwe endaweni",
+      "st": "Moya o bonweng sebakeng",
+      "ts": "Moya lowu xiyisisiweke endhawini",
+      "ve": "Muya wo ṱhogomelwaho henefho fhethu"
+    },
+    {
+      "english": "From the {direction}",
+      "zu": "Uvela ku-{direction}",
+      "st": "O tswa ho {direction}",
+      "ts": "Wu huma eka {direction}",
+      "ve": "U bva kha {direction}"
+    },
+    {
+      "english": ", strongest from the {direction}",
+      "zu": ", unamandla kakhulu uma uvela ku-{direction}",
+      "st": ", o matla ka ho fetisisa ha o tswa ho {direction}",
+      "ts": ", wu ni ntamu swinene loko wu huma eka {direction}",
+      "ve": ", u na maanḓa vhukuma u tshi bva kha {direction}"
+    },
+    {
+      "english": "Farmer's own observation",
+      "zu": "Okubonwe ngumlimi ngokwakhe",
+      "st": "Se bonweng ke molemi ka boyena",
+      "ts": "Leswi xiyisisiweke hi murimi hi yexe",
+      "ve": "Zwo ṱhogomelwaho nga mulimi ene muṋe"
+    },
+    {
+      "english": "Annual rainfall",
+      "zu": "Imvula yonyaka",
+      "st": "Pula ya selemo",
+      "ts": "Mpfula ya lembe",
+      "ve": "Mvula ya ṅwaha"
+    },
+    {
+      "english": "{rainfall} mm — wet {wet}, dry {dry}",
+      "zu": "{rainfall} mm — isikhathi semvula {wet}, isikhathi esomile {dry}",
+      "st": "{rainfall} mm — nako ya pula {wet}, nako e ommeng {dry}",
+      "ts": "{rainfall} mm — nguva ya mpfula {wet}, nguva yo oma {dry}",
+      "ve": "{rainfall} mm — tshifhinga tsha mvula {wet}, tshifhinga tsho omaho {dry}"
+    },
+    {
+      "english": "Climate data service",
+      "zu": "Isevisi yedatha yesimo sezulu",
+      "st": "Tshebeletso ya data ya tlelaemete",
+      "ts": "Vukorhokeri bya data ya maxelo",
+      "ve": "Tshumelo ya data ya kilima"
+    },
+    {
+      "english": "Natural vegetation",
+      "zu": "Izitshalo zemvelo",
+      "st": "Dimela tsa tlhaho",
+      "ts": "Swimilana swa ntumbuluko",
+      "ve": "Zwimela zwa mupo"
+    },
+    {
+      "english": "Agro-ecological zone",
+      "zu": "Indawo yezolimo ngokwemvelo",
+      "st": "Sebaka sa temo ho ya ka tikoloho",
+      "ts": "Ndhawu ya vurimi hi ku ya hi mbango",
+      "ve": "Fhethu ha vhulimi u ya nga mupo"
+    },
+    {
+      "english": "Closest to {label}",
+      "zu": "Kusondelene kakhulu no-{label}",
+      "st": "Se haufi haholo le {label}",
+      "ts": "Swi le kusuhi swinene ni {label}",
+      "ve": "Hu tsini vhukuma na {label}"
+    },
+    {
+      "english": "KZN DARD bioresource units — a best-effort climate match, not a verified classification",
+      "zu": "Amayunithi ezinsiza zemvelo e-KZN DARD — ukuhambisana nesimo sezulu ngokusemandleni, hhayi ukuhlukaniswa okuqinisekisiwe",
+      "st": "Dikarolo tsa mehlodi ya tlhaho tsa KZN DARD — ho lekanya ho tshwana ha tlelaemete ka boiteko bo botle, ha se sehlopha se netefaditsweng",
+      "ts": "Tiyuniti ta switirhisiwa swa ntumbuluko ta KZN DARD — ku ringanisa maxelo hi vuswikoti hinkwabyo, a hi ku hambanisa loku tiyisisiweke",
+      "ve": "Yunithi dza zwiko zwa mupo dza KZN DARD — u vhambedza kilima nga hune zwa konadzea ngaho, hu si khethekanyo yo khwaṱhisedzwaho"
+    },
+    {
+      "english": "Soil (0-30 cm)",
+      "zu": "Umhlabathi (0-30 cm)",
+      "st": "Mobu (0-30 cm)",
+      "ts": "Misava (0-30 cm)",
+      "ve": "Mavu (0-30 cm)"
+    },
+    {
+      "english": "pH {ph} · {carbon}% organic carbon · {texture}",
+      "zu": "pH {ph} · {carbon}% ikhabhoni yemvelo · {texture}",
+      "st": "pH {ph} · {carbon}% khabone ya dimela le diphoofolo · {texture}",
+      "ts": "pH {ph} · {carbon}% khaboni ya swilo leswi hanyaka · {texture}",
+      "ve": "pH {ph} · {carbon}% khaboni ya zwithu zwi tshilaho · {texture}"
+    },
+    {
+      "english": "Soil test you uploaded",
+      "zu": "Ukuhlolwa komhlabathi okufakile",
+      "st": "Teko ya mobu eo o e kentseng",
+      "ts": "Ndzavisiso wa misava lowu u wu ngheniseke",
+      "ve": "Ndingo ya mavu ye na i dzhenisa"
+    },
+    {
+      "english": "ISRIC SoilGrids model (district-wide, not your field)",
+      "zu": "Imodeli ye-ISRIC SoilGrids (yesifunda sonke, hhayi insimu yakho)",
+      "st": "Mohlala wa ISRIC SoilGrids (wa setereke kaofela, eseng tshimo ya hao)",
+      "ts": "Modele ya ISRIC SoilGrids (ya xifundzatsongo hinkwaxo, ku nga ri nsimu ya wena)",
+      "ve": "Modele ya ISRIC SoilGrids (ya tshiṱiriki tshoṱhe, hu si tsimu yaṋu)"
+    },
+    {
+      "english": "NOT A READING — the app's generic defaults",
+      "zu": "AKUSONA ISILINGANISO — amanani ajwayelekile e-app",
+      "st": "HA SE TEKANYO — dipalo tse tlwaelehileng tsa app",
+      "ts": "A HI MPIMO — tinhlayo ta ntolovelo ta app",
+      "ve": "A SI MPIMO — nomboro dzo ḓoweleaho dza app"
+    },
+    {
+      "english": "Soil data source not recorded",
+      "zu": "Umthombo wedatha yomhlabathi awubhaliwe",
+      "st": "Mohlodi wa data ya mobu ha o a ngolwa",
+      "ts": "Xihlovo xa data ya misava a xi rhekhodiwanga",
+      "ve": "Tshiko tsha data ya mavu a tsho ngo ṅwalwa"
+    },
+    {
+      "english": "Elevation, slope, aspect",
+      "zu": "Ukuphakama, ukwehla, lapho kubheke khona",
+      "st": "Bophahamo, moepa, lehlakore le shebilweng",
+      "ts": "Ku tlakuka, ku rhelela, tlhelo leri ku languteke eka rona",
+      "ve": "Vhunṱha, mutsheṱo, sia ḽo livhiwaho"
+    },
+    {
+      "english": "{elevation} m · {slope}° · faces {aspect}",
+      "zu": "{elevation} m · {slope}° · kubheke ku-{aspect}",
+      "st": "{elevation} m · {slope}° · se shebile {aspect}",
+      "ts": "{elevation} m · {slope}° · ku langute eka {aspect}",
+      "ve": "{elevation} m · {slope}° · hu livha kha {aspect}"
+    },
+    {
+      "english": "SRTM elevation model",
+      "zu": "Imodeli yokuphakama ye-SRTM",
+      "st": "Mohlala wa bophahamo wa SRTM",
+      "ts": "Modele ya ku tlakuka ya SRTM",
+      "ve": "Modele ya vhunṱha ya SRTM"
+    },
+    {
+      "english": "Not on this site",
+      "zu": "Akukho kule ndawo",
+      "st": "Ha se sebakeng sena",
+      "ts": "A swi kona endhawini leyi",
+      "ve": "A zwi ho fhethu afha"
+    },
+    {
+      "english": "No {body}",
+      "zu": "Akukho {body}",
+      "st": "Ha ho na {body}",
+      "ts": "Ku hava {body}",
+      "ve": "A hu na {body}"
+    },
+    {
+      "english": "no {body}",
+      "zu": "akukho {body}",
+      "st": "ha ho na {body}",
+      "ts": "ku hava {body}",
+      "ve": "a hu na {body}"
+    },
+    {
+      "english": "Nothing of the kind drawn or recorded",
+      "zu": "Akukho okunjalo okudwetshiwe noma okubhaliwe",
+      "st": "Ha ho letho la mofuta oo le takilweng kapa le ngotsweng",
+      "ts": "Ku hava swo tano leswi dirowiweke kumbe ku rhekhodiwa",
+      "ve": "A hu na tshithu tsha lushaka ulwo tsho oliwaho kana u ṅwalwa"
+    },
+    {
+      "english": "dam",
+      "zu": "idamu",
+      "st": "letamo",
+      "ts": "damu",
+      "ve": "damu"
+    },
+    {
+      "english": "pond",
+      "zu": "ichibi",
+      "st": "letamo le lenyenyane",
+      "ts": "xidziva",
+      "ve": "tshidzivha"
+    },
+    {
+      "english": "reservoir",
+      "zu": "inqolobane yamanzi",
+      "st": "polokelo ya metsi",
+      "ts": "ndhawu yo hlayisa mati",
+      "ve": "vhugalamaḓi"
+    },
+    {
+      "english": "borehole",
+      "zu": "umgodi wamanzi obholiwe",
+      "st": "mosima wa metsi o tjhekilweng ka motjhine",
+      "ts": "xihlovo xa mati lexi boriweke",
+      "ve": "tshisima tsha maḓi tsho boriwaho"
+    },
+    {
+      "english": "well",
+      "zu": "umgodi wamanzi",
+      "st": "sediba",
+      "ts": "xihlovo xa mati lexi celiweke",
+      "ve": "tshisima tsha maḓi"
+    },
+    {
+      "english": "spring",
+      "zu": "umthombo wamanzi",
+      "st": "mohlodi wa metsi",
+      "ts": "xihlovo xa mati xa ntumbuluko",
+      "ve": "tshisima tsha mvelo"
+    },
+    {
+      "english": "river",
+      "zu": "umfula",
+      "st": "noka",
+      "ts": "nambu",
+      "ve": "mulambo"
+    },
+    {
+      "english": "perimeter",
+      "zu": "ubude bomngcele",
+      "st": "bolelele ba moedi",
+      "ts": "vulehi bya ndzilekano",
+      "ve": "vhulapfu ha mukano"
+    },
+    {
+      "english": "tank",
+      "zu": "ithangi",
+      "st": "tanka",
+      "ts": "thangi",
+      "ve": "thannga"
+    },
+    {
+      "english": "Traced on the map",
+      "zu": "Kulandelwe ebalazweni",
+      "st": "Se latetswe mmapeng",
+      "ts": "Swi landzelerisiwe emepeni",
+      "ve": "Ho tevhedzelwa kha mapa"
+    },
+    {
+      "english": "Traced by the farmer on the map",
+      "zu": "Kulandelwe ngumlimi ebalazweni",
+      "st": "Se latetswe mmapeng ke molemi",
+      "ts": "Swi landzelerisiwe emepeni hi murimi",
+      "ve": "Ho tevhedzelwa kha mapa nga mulimi"
+    },
+    {
+      "english": "Traced by the farmer in the Design Studio",
+      "zu": "Kulandelwe ngumlimi eSitudiyo somklamo",
+      "st": "Se latetswe ke molemi ho Studio sa moralo",
+      "ts": "Swi landzelerisiwe hi murimi eka Xitudiyo xa dizayini",
+      "ve": "Ho tevhedzelwa nga mulimi kha Studio ya nyolo"
+    },
+    {
+      "english": "Traced by the farmer in the Design Studio ({count} points)",
+      "zu": "Kulandelwe ngumlimi eSitudiyo somklamo (amaphoyinti angu-{count})",
+      "st": "Se latetswe ke molemi ho Studio sa moralo (dintlha tse {count})",
+      "ts": "Swi landzelerisiwe hi murimi eka Xitudiyo xa dizayini (tiphoyinti ta {count})",
+      "ve": "Ho tevhedzelwa nga mulimi kha Studio ya nyolo (phoindi dza {count})"
+    }
+  ],
+  "seasons": [
+    {
+      "english": "year-round",
+      "zu": "unyaka wonke",
+      "st": "selemo kaofela",
+      "ts": "lembe hinkwaro",
+      "ve": "ṅwaha woṱhe"
+    },
+    {
+      "english": "none",
+      "zu": "akukho",
+      "st": "ha ho letho",
+      "ts": "ku hava",
+      "ve": "a hu na tshithu"
+    }
+  ],
+  "preservedSourceIdentities": [
+    "NASA POWER",
+    "Open-Meteo",
+    "SANBI 2018 National Vegetation Map",
+    "pH",
+    "SRTM",
+    "ISRIC SoilGrids",
+    "KZN DARD"
+  ]
+}

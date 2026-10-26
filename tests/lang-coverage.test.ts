@@ -12,8 +12,7 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import { coverageOf, LANG_COVERAGE_COMPLETE_THRESHOLD } from '@/lib/lang-coverage';
-import { DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, REPORT_FOOTNOTE_ENGLISH_PENDING } from '@/lib/i18n-pending';
-import { LEARNER_UI_ENGLISH } from '@/lib/learner-ui-english';
+import { englishDictionary } from './translation-inventory.ts';
 
 test('coverageOf counts a key as translated only when the locale gives it a different value', () => {
   const english = { a: 'Apple', b: 'Banana', c: 'Carrot', d: 'Date' };
@@ -62,16 +61,7 @@ test('LANG_COVERAGE_COMPLETE_THRESHOLD is the owner-set ~95% bar', () => {
 // T_en's declaration is a plain object literal (spreads of already-importable pending blocks plus
 // string literals), so evaluating that literal text is exact, not an approximation of it.
 function realEnglishDict(): Record<string, string> {
-  const src = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
-  const start = src.indexOf('export const T_en: Dict = {');
-  assert.ok(start >= 0, 'lib/i18n.tsx must export T_en');
-  const end = src.indexOf('\n};', start);
-  const literal = src.slice(start, end + 3).replace('export const T_en: Dict = ', 'return ');
-  const build = new Function(
-    'DESIGN_STUDIO_ENGLISH_PENDING', 'JOURNAL_ENGLISH_PENDING', 'LIMA_ENGLISH_PENDING', 'MENTOR_ENGLISH_PENDING', 'REPORT_FOOTNOTE_ENGLISH_PENDING', 'LEARNER_UI_ENGLISH',
-    literal,
-  ) as (...args: unknown[]) => Record<string, string>;
-  return build(DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, LIMA_ENGLISH_PENDING, MENTOR_ENGLISH_PENDING, REPORT_FOOTNOTE_ENGLISH_PENDING, LEARNER_UI_ENGLISH);
+  return englishDictionary();
 }
 
 test('a dictionary compared against itself reads as untranslated, not complete', () => {
@@ -118,7 +108,7 @@ test('ThemePanel wires the generic partial-language notice through lib/lang-cove
   assert.match(src, /minHeight: 46, padding: '10px 12px', borderRadius: 8,/);
 });
 
-test('the new notice keys exist in English only — no un-reviewed translations were coined', () => {
+test('partial-language notices keep their source variables and the four target drafts keep an honest review notice', async () => {
   const i18nSrc = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
   assert.match(i18nSrc, /^\s*langPartialTag: '[^']+',$/m);
   assert.match(i18nSrc, /^\s*langPartialActiveNote: '[^']*\{lang\}[^']*',$/m, 'the active-language note must keep its {lang} placeholder');
@@ -126,10 +116,15 @@ test('the new notice keys exist in English only — no un-reviewed translations 
   const locales = ['af', 'zu', 'xh', 'nso', 'tn', 'st', 'ts', 've', 'ss', 'nr'];
   for (const code of locales) {
     const block = readFileSync(new URL(`../lib/locales/${code}.ts`, import.meta.url), 'utf8');
-    assert.doesNotMatch(
-      block,
-      /^\s*langPartial(Tag|ActiveNote):/m,
-      `${code} must not define langPartialTag/langPartialActiveNote until a first-language reviewer writes one — they should fall back to English`,
-    );
+    // Rory asked to translate the whole interface. Pinning these controls to English would
+    // prevent that work; the rule is now faithful placeholders plus explicit draft status.
+    if (['zu', 'st', 'ts', 've'].includes(code)) {
+      const { default: dict } = await import(`../lib/locales/${code}.ts`);
+      assert.match(dict.langPartialActiveNote, /\{lang\}/, `${code}: preserve the selected language name`);
+      assert.ok(dict.langPartialTag.trim() && dict.languageDraftNoticeText.trim(), `${code}: show the partial-language label and draft notice`);
+      assert.notEqual(dict.langPartialTag, realEnglishDict().langPartialTag, `${code}: the partial-language label is still English`);
+    } else {
+      assert.doesNotMatch(block, /^\s*langPartial(Tag|ActiveNote):/m, `${code}: this batch does not change other languages`);
+    }
   }
 });

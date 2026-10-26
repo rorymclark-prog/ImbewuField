@@ -1,0 +1,1783 @@
+{
+  "sourceSha": "991ab513fd7e0c579ec400ba4a3ed29353704375",
+  "status": "Unreviewed AI drafts. No fluent-speaker approval is claimed.",
+  "entries": [
+    {
+      "key": "offlineTitle",
+      "english": "Saved on this phone",
+      "st": "Tse bolokilweng fonong ena",
+      "ts": "Leswi hlayisiweke eka riqingho leri",
+      "ve": "Zwo vhulungwaho kha founu iyi",
+      "zu": "Okugcinwe kule foni"
+    },
+    {
+      "key": "offlineConnected",
+      "english": "Connected",
+      "st": "O hokahane",
+      "ts": "U hlanganile",
+      "ve": "No ṱumana"
+    },
+    {
+      "key": "offlineUsingSavedCopies",
+      "english": "Offline — using this device’s saved copies",
+      "st": "Ha ho kgokahano — ho sebediswa dikopi tse bolokilweng sesebedisweng sena",
+      "ts": "A ku na vuhlanganisi — ku tirhisiwa tikopi leti hlayisiweke eka xitirhisiwa lexi",
+      "ve": "A hu na vhuṱumani — hu shumiswa khophi dzo vhulungwaho kha tshishumiswa itshi"
+    },
+    {
+      "key": "offlineConnectedSentence",
+      "english": "You are online — pages saved for offline use are listed below.",
+      "st": "O hokahane le inthanete — maqephe a bolokilweng hore a sebetse ntle le kgokahano a thathamisitswe ka tlase.",
+      "ts": "U hlanganile na inthanete — matluka lama hlayisiweke ku tirhisiwa handle ka vuhlanganisi ma longoloxiwile laha hansi.",
+      "ve": "No ṱumana na inthanethe — masiaṱari o vhulungwaho uri a shume hu si na vhuṱumani o tevhekanywa afho fhasi.",
+      "zu": "Uxhumeke ku-inthanethi — amakhasi agcinelwe ukusetshenziswa ngaphandle koxhumano abhalwe ngezansi."
+    },
+    {
+      "key": "offlineEntriesWaiting",
+      "english": "{count} entries waiting to send",
+      "st": "Ho na le direkoto tse {count} tse emetseng ho romelwa",
+      "ts": "Ku na tirhekhodo ta {count} leti rindzeleke ku rhumeriwa",
+      "ve": "Hu na rekhodo dza {count} dzo lindelaho u rumelwa"
+    },
+    {
+      "key": "offlineBeforeLeavingSignal",
+      "english": "Before you leave signal",
+      "st": "Pele o tloha moo ho nang le kgokahano",
+      "ts": "U nga si suka laha ku nga na vuhlanganisi",
+      "ve": "Musi ni sa athu ṱuwa hune ha vha na vhuṱumani"
+    },
+    {
+      "key": "offlinePrepareDescription",
+      "english": "Prepare the pages and authorised records you need, including visit and training photos. This uses data and device storage. Stay signed in on this device.",
+      "st": "Lokisa maqephe le direkoto tseo o dumeletsweng ho di fumana tseo o di hlokang, ho kenyeletswa dinepe tsa maeto le tsa thupelo. Sena se sebedisa data le sebaka sa polokelo sesebedisweng. Dula o kene akhaonteng sesebedisweng sena.",
+      "ts": "Lulamisa matluka ni tirhekhodo leti u pfumeleriwaka ku ti kuma leti u ti lavaka, ku katsa swifaniso swa maendzo ni swa ndzetelo. Leswi swi tirhisa data ni ndhawu yo hlayisa eka xitirhisiwa. Tshama u nghenile eka akhawunti eka xitirhisiwa lexi.",
+      "ve": "Lugisani masiaṱari na rekhodo dze na tendelwa u dzi wana dzine na dzi ṱoḓa, hu tshi katelwa zwifanyiso zwa madalo na zwa vhugudisi. Izwi zwi shumisa data na fhethu ha u vhulunga kha tshishumiswa. Dzulani no dzhena kha akhaunthu kha tshishumiswa itshi."
+    },
+    {
+      "key": "offlineWorking",
+      "english": "Working…",
+      "st": "Ho a sebetswa…",
+      "ts": "Swi le ku tirheni…",
+      "ve": "Hu khou shumiwa…"
+    },
+    {
+      "key": "offlinePrepareButton",
+      "english": "Prepare fieldwork on this device",
+      "st": "Lokisa mosebetsi wa tshimo sesebedisweng sena",
+      "ts": "Lulamisa ntiro wa le masin'wini eka xitirhisiwa lexi",
+      "ve": "Lugisani mushumo wa masimuni kha tshishumiswa itshi"
+    },
+    {
+      "key": "offlineLessonDownloads",
+      "english": "Download lesson slides, narration and clips separately under",
+      "st": "Jarolla diselaete tsa dithuto, tlhaloso e buuwang le dikotwana ka thoko tlasa",
+      "ts": "Dawuniloda tilayidi ta tidyondzo, nhlamuselo ya rito ni swiphemu swa vhidiyo hi ku hambana ehansi ka",
+      "ve": "Dzhiani zwiselaidi zwa ngudo, ṱhalutshedzo nga ipfi na zwipiḓa zwa vidio nga thungo fhasi ha"
+    },
+    {
+      "key": "offlineStudyLink",
+      "english": "Study offline",
+      "st": "Ithute ntle le kgokahano",
+      "ts": "Dyondza handle ka vuhlanganisi",
+      "ve": "Gudani hu si na vhuṱumani"
+    },
+    {
+      "key": "offlineOpenToolsOnce",
+      "english": "Open your saved designs, crop plans and reports online once so their additional tools and images are available.",
+      "st": "Bula meralo ya hao e bolokilweng, merero ya dijalo le ditlaleho hang ha o hokahane, hore disebediswa le ditshwantsho tsa tsona tse ding di fumanehe.",
+      "ts": "Pfula tipulani ta wena leti hlayisiweke, tipulani ta swibyariwa ni swiviko kan'we loko u hlanganile, leswaku switirhisiwa ni swifaniso swa swona leswi engetelekeke swi kumeka.",
+      "ve": "Vulani nyolo dzaṋu dzo vhulungwaho, pulane dza zwiliṅwa na mivhigo luthihi no ṱumana, uri zwishumiswa na zwifanyiso zwazwo zwo engedzwaho zwi wanale."
+    },
+    {
+      "key": "offlinePageReadiness",
+      "english": "Page readiness · {ready} of {total}",
+      "st": "Boitokiso ba maqephe · a {ready} ho a {total}",
+      "ts": "Ku lungheka ka matluka · {ready} eka {total}",
+      "ve": "U lugela ha masiaṱari · {ready} kha {total}"
+    },
+    {
+      "key": "offlineStartupFilesSaved",
+      "english": "Startup files saved",
+      "st": "Difaele tsa ho qala di bolokilwe",
+      "ts": "Tifayili to sungula ti hlayisiwile",
+      "ve": "Faela dza u thoma dzo vhulungwa"
+    },
+    {
+      "key": "offlineNotConfirmed",
+      "english": "Not confirmed on this device",
+      "st": "Ha ho eso tiiswe sesebedisweng sena",
+      "ts": "A swi si tiyisisiwa eka xitirhisiwa lexi",
+      "ve": "A zwi athu khwaṱhisedzwa kha tshishumiswa itshi"
+    },
+    {
+      "key": "offlineReadinessLimit",
+      "english": "These checks cover startup files. They do not promise fresh map imagery, every report image, or every optional tool.",
+      "st": "Ditlhahlobo tsena di akaretsa difaele tsa ho qala. Ha di tshepise ditshwantsho tse ntjha tsa mmapa, setshwantsho se seng le se seng sa tlaleho, kapa sesebediswa se seng le se seng sa boikgethelo.",
+      "ts": "Minkambelo leyi yi katsa tifayili to sungula. A yi tiyisisi swifaniso leswintshwa swa mepe, xifaniso xin'wana ni xin'wana xa xiviko, kumbe xitirhisiwa xin'wana ni xin'wana xo hlawula.",
+      "ve": "U ṱola uhu hu katela faela dza u thoma. A hu fulufhedzisi zwifanyiso zwiswa zwa mapa, tshifanyiso tshiṅwe na tshiṅwe tsha muvhigo, kana tshishumiswa tshiṅwe na tshiṅwe tsha u tou nanga."
+    },
+    {
+      "key": "offlineSavedEntriesTitle",
+      "english": "Saved entries waiting to send",
+      "st": "Direkoto tse bolokilweng tse emetseng ho romelwa",
+      "ts": "Tirhekhodo leti hlayisiweke leti rindzeleke ku rhumeriwa",
+      "ve": "Rekhodo dzo vhulungwaho dzo lindelaho u rumelwa"
+    },
+    {
+      "key": "offlineSavedEntriesDescription",
+      "english": "Completed visits, training registers, signatures, feedback, photographs, garden observations and assessment responses can wait here. Sync runs when the app is open and a connection returns.",
+      "st": "Maeto a phethilweng, direjistara tsa thupelo, ditshaeno, maikutlo, dinepe, ditemoho tsa serapa le dikarabo tsa ditlhahlobo di ka ema mona. Ho romela ho sebetsa ha app e butswe mme kgokahano e kgutla.",
+      "ts": "Maendzo lama hetiweke, tirhejistara ta ndzetelo, minsayino, mavonelo, swifaniso, leswi xiyixiweke exirhapeni ni tinhlamulo ta makambelelo swi nga rindza laha. Ku rhumela ku tirha loko app yi pfuriwile naswona vuhlanganisi byi vuyile.",
+      "ve": "Madalo o fhedzwaho, redzhisiṱara dza vhugudisi, tsaino, mahumbulwa, zwifanyiso, zwo vhonwaho ngadeni na phindulo dza ndingo zwi nga lindela hafha. U rumela hu shuma musi app yo vulea nahone vhuṱumani vhu tshi vhuya."
+    },
+    {
+      "key": "offlineSyncNow",
+      "english": "Send now",
+      "st": "Romela hona jwale",
+      "ts": "Rhumela sweswi",
+      "ve": "Rumelani zwino"
+    },
+    {
+      "key": "offlineQueueEmpty",
+      "english": "Nothing waiting to send. My Records saves separately.",
+      "st": "Ha ho letho le emetseng ho romelwa. Direkoto tsa ka di bolokwa ka thoko.",
+      "ts": "A ku na lexi rindzeleke ku rhumeriwa. Tirhekhodo ta mina ti hlayisiwa hi ku hambana.",
+      "ve": "A hu na tsho lindelaho u rumelwa. Rekhodo dzanga dzi vhulungwa nga thungo."
+    },
+    {
+      "key": "offlineNeedsReview",
+      "english": "Needs review — server save not confirmed",
+      "st": "E hloka ho hlahlojwa — poloko ho seva ha e eso tiiswe",
+      "ts": "Swi lava ku kamberiwa — ku hlayisiwa eka sevha a ku si tiyisisiwa",
+      "ve": "Zwi ṱoḓa u ṱolwa — u vhulungwa kha seva a hu athu khwaṱhisedzwa"
+    },
+    {
+      "key": "offlineSending",
+      "english": "Sending / awaiting confirmation",
+      "st": "E a romelwa / ho emetswe tiiso",
+      "ts": "Swa rhumeriwa / ku rindzeriwa ku tiyisisiwa",
+      "ve": "Zwi khou rumelwa / hu lindelwa khwaṱhisedzo"
+    },
+    {
+      "key": "offlineWaitingToSend",
+      "english": "Saved on this device — waiting to send",
+      "st": "E bolokilwe sesebedisweng sena — e emetse ho romelwa",
+      "ts": "Swi hlayisiwile eka xitirhisiwa lexi — swi rindzele ku rhumeriwa",
+      "ve": "Zwo vhulungwa kha tshishumiswa itshi — zwo lindela u rumelwa"
+    },
+    {
+      "key": "offlineDownloadCopy",
+      "english": "Download a copy",
+      "st": "Jarolla kopi",
+      "ts": "Dawuniloda kopi",
+      "ve": "Dzhiani khophi"
+    },
+    {
+      "key": "offlineRemoveConfirm",
+      "english": "Remove this device’s queued change? This cannot be undone here. Download a copy first if you need to keep it. The server record is not deleted.",
+      "st": "Tlosa phetoho e emetseng ho romelwa sesebedisweng sena? Sena se ke ke sa etsollwa mona. Jarolla kopi pele haeba o hloka ho e boloka. Rekoto e ho seva ha e hlakolwe.",
+      "ts": "Susa ku cinca loku rindzeleke ku rhumeriwa eka xitirhisiwa lexi? A swi nge tlheriseriwi laha. Dawuniloda kopi ku sungula loko u lava ku swi hlayisa. Rhekhodo leyi nga eka sevha a yi susiwi.",
+      "ve": "Bvisani tshanduko yo lindelaho u rumelwa kha tshishumiswa itshi? Izwi a zwi nga humiswi hafha. Dzhiani khophi u thoma arali ni tshi ṱoḓa u zwi vhulunga. Rekhodo i re kha seva a i thuthiwi."
+    },
+    {
+      "key": "offlineRemoveQueuedChange",
+      "english": "Remove queued change",
+      "st": "Tlosa phetoho e emetseng ho romelwa",
+      "ts": "Susa ku cinca loku rindzeleke ku rhumeriwa",
+      "ve": "Bvisani tshanduko yo lindelaho u rumelwa"
+    },
+    {
+      "key": "offlineKeepEntry",
+      "english": "Keep it",
+      "st": "E boloke",
+      "ts": "Swi hlayise",
+      "ve": "Zwi vhulungeni"
+    },
+    {
+      "key": "offlineReviewRemove",
+      "english": "Review / remove",
+      "st": "Hlahloba / tlosa",
+      "ts": "Kambisisa / susa",
+      "ve": "Ṱolani / bvisani"
+    },
+    {
+      "key": "offlineConflictHelp",
+      "english": "For a conflict, keep a downloaded copy, remove this queued change, reconnect and reopen the current record. Compare the versions before saving your corrections. Permission or validation errors must be resolved before resubmitting.",
+      "st": "Ha diphetoho di thulana, boloka kopi e jarollotsweng, tlosa phetoho ena e emetseng ho romelwa, hokahana hape mme o bule rekoto ya hajwale hape. Bapisa mefuta eo pele o boloka ditokiso tsa hao. Diphoso tsa tumello kapa tsa ho netefatsa dintlha di lokela ho lokiswa pele o romela hape.",
+      "ts": "Loko ku cinca ku nga fambelani, hlayisa kopi leyi dawunilodiweke, susa ku cinca loku rindzeleke ku rhumeriwa, hlanganisa nakambe kutani u tlhela u pfula rhekhodo ya sweswi. Pimanisa tivhezheni u nga si hlayisa ku lulamisa ka wena. Swihoxo swa mpfumelelo kumbe swa ku tiyisisa vuxokoxoko swi fanele swi lulamisiwa ku nga si rhumeriwa nakambe.",
+      "ve": "Arali tshanduko dzi sa anḓani, vhulungani khophi yo dzhiwaho, bvisani tshanduko iyi yo lindelaho u rumelwa, ṱumanani hafhu ni dovhe ni vule rekhodo ya zwino. Vhambedzani zwivhumbeo izwo musi ni sa athu vhulunga ndulamiso dzaṋu. Vhukhakhi ha thendelo kana ha u khwaṱhisedza mafhungo vhu tea u lugiswa musi ni sa athu rumela hafhu."
+    },
+    {
+      "key": "offlineAvailableTitle",
+      "english": "What stays available",
+      "st": "Tse dulang di fumaneha",
+      "ts": "Leswi tshamaka swi kumeka",
+      "ve": "Zwine zwa dzula zwi tshi wanala"
+    },
+    {
+      "key": "offlineCachedCount",
+      "english": "{count} authorised information requests saved on this device. Their contents reflect the last successful download, plus your unsent changes.",
+      "st": "Dikopo tse {count} tsa tlhahisoleseding tseo o dumeletsweng ho di fumana di bolokilwe sesebedisweng sena. Di na le tse jarollotsweng la ho qetela ka katleho, hammoho le diphetoho tsa hao tse eso romelwe.",
+      "ts": "Swikombelo swa {count} swa vuxokoxoko leswi u pfumeleriwaka ku swi kuma swi hlayisiwile eka xitirhisiwa lexi. Swi ni leswi dawunilodiweke ro hetelela hi ku humelela, ku katsa ku cinca ka wena loku nga si rhumeriwaka.",
+      "ve": "Khumbelo dza {count} dza mafhungo e na tendelwa u a wana dzo vhulungwa kha tshishumiswa itshi. Dzi na zwo dzhiwaho lwa u fhedza nga u bvelela, khathihi na tshanduko dzaṋu dzi sa athu rumelwa."
+    },
+    {
+      "key": "offlineAvailableDescription",
+      "english": "Local crop planning, journal notes and downloaded lessons can work without signal. AI chat, AI reports, transcription, receipt scanning, new sign-in and fresh online maps still need a connection. The map offers an Offline canvas for saved drawings and pins without satellite or terrain layers. Receipt originals in the money book remain on their original device.",
+      "st": "Ho rera dijalo sesebedisweng, dintlha tsa bukana le dithuto tse jarollotsweng di ka sebetsa ntle le kgokahano. Moqoqo wa AI, ditlaleho tsa AI, ho fetola puo e rekotilweng hore e be mongolo, ho skena dirasiti, ho kena akhaonteng botjha le dimmapa tse ntjha tsa inthanete di ntse di hloka kgokahano. Mmapa o fana ka sebaka sa ho taka ntle le kgokahano bakeng sa metako le diphini tse bolokilweng, ntle le disetshwantsho tsa sathelaete kapa dikarolo tsa sebopeho sa naha. Dirasiti tsa pele tse bukeng ya ditjhelete di sala sesebedisweng seo di qalileng ho sona.",
+      "ts": "Ku pulana swibyariwa eka xitirhisiwa, tinotsi ta jenali ni tidyondzo leti dawunilodiweke swi nga tirha handle ka vuhlanganisi. Mbulo wa AI, swiviko swa AI, ku hundzula rito leri rhekhodiweke ri va tsalwa, ku skena tirisiti, ku nghena eka akhawunti hi vuntshwa ni mimepe leyintshwa ya inthanete swa ha lava vuhlanganisi. Mepe wu nyika ndhawu yo dirowa handle ka vuhlanganisi ya swifaniso leswi dirowiweke ni tiphini leti hlayisiweke, handle ka swifaniso swa sathelayiti kumbe swiphemu swa xivumbeko xa misava. Tirisiti ta masungulo leti nga ebukwini ya mali ti sala eka xitirhisiwa lexi a ti ri eka xona eku sunguleni.",
+      "ve": "U pulana zwiliṅwa kha tshishumiswa, notsi dza dayari na ngudo dzo dzhiwaho zwi nga shuma hu si na vhuṱumani. Nyambedzano ya AI, mivhigo ya AI, u shandukisa ipfi ḽo rekhodiwaho ḽa vha maṅwalwa, u sikena rasithi, u dzhena kha akhaunthu nga huswa na mimapa miswa ya inthanethe zwi kha ḓi ṱoḓa vhuṱumani. Mapa u ṋea fhethu ha u ola hu si na vhuṱumani ha nyolo na phini dzo vhulungwaho, hu si na zwifanyiso zwa sathelaithi kana zwipiḓa zwa tshivhumbeo tsha mavu. Rasithi dza u thoma dzi re kha bugu ya masheleni dzi sala kha tshishumiswa tshadzo tsha u thoma."
+    },
+    {
+      "key": "offlineDeviceSafety",
+      "english": "Use a normal browser window. Clearing site data removes downloads and unsent fieldwork. Keep this device protected, especially where it holds attendance signatures or photographs.",
+      "st": "Sebedisa fensetere e tlwaelehileng ya sebatli. Ho hlakola data ya sebaka sena ho tlosa tse jarollotsweng le mosebetsi wa tshimo o eso romelwe. Sireletsa sesebediswa sena, haholoholo haeba se na le ditshaeno tsa ba bileng teng kapa dinepe.",
+      "ts": "Tirhisa fasitere ra ntolovelo ra browser. Ku basisa data ya sayiti swi susa leswi dawunilodiweke ni ntiro wa le masin'wini lowu nga si rhumeriwaka. Sirhelela xitirhisiwa lexi, ngopfungopfu loko xi ri ni minsayino ya lava veke kona kumbe swifaniso.",
+      "ve": "Shumisani fasiṱere ḽa nḓowelo ḽa browser. U thutha data ya saithi zwi bvisa zwo dzhiwaho na mushumo wa masimuni u sa athu rumelwa. Tsireledzani tshishumiswa itshi, nga maanḓa arali tshi na tsaino dza vho ḓaho kana zwifanyiso."
+    },
+    {
+      "key": "offlinePreparingPages",
+      "english": "Preparing app pages…",
+      "st": "Ho lokiswa maqephe a app…",
+      "ts": "Ku lulamisiwa matluka ya app…",
+      "ve": "Hu lugiswa masiaṱari a app…"
+    },
+    {
+      "key": "offlinePreparingNamedPage",
+      "english": "Preparing {page}…",
+      "st": "Ho lokiswa {page}…",
+      "ts": "Ku lulamisiwa {page}…",
+      "ve": "Hu lugiswa {page}…"
+    },
+    {
+      "key": "offlineSavingFieldwork",
+      "english": "Saving authorised fieldwork information…",
+      "st": "Ho bolokwa tlhahisoleseding ya mosebetsi wa tshimo eo o dumeletsweng ho e fumana…",
+      "ts": "Ku hlayisiwa vuxokoxoko bya ntiro wa le masin'wini leri u pfumeleriwaka ku ri kuma…",
+      "ve": "Hu vhulungwa mafhungo a mushumo wa masimuni e na tendelwa u a wana…"
+    },
+    {
+      "key": "offlinePreparationGaps",
+      "english": "Preparation finished with gaps. Read the list below before leaving signal.",
+      "st": "Ho lokisa ho fedile empa ho na le tse siilweng. Bala lenane le ka tlase pele o tloha moo ho nang le kgokahano.",
+      "ts": "Ku lulamisa ku herile kambe ku ni leswi saleke. Hlaya nxaxamelo lowu nga laha hansi u nga si suka laha ku nga na vuhlanganisi.",
+      "ve": "U lugisa ho fhela fhedzi hu na zwi sa athu fhelaho. Vhalani mutevhe u re afho fhasi musi ni sa athu ṱuwa hune ha vha na vhuṱumani."
+    },
+    {
+      "key": "offlinePreparationComplete",
+      "english": "Pages and available fieldwork records are saved on this device. Test reopening without signal before travelling.",
+      "st": "Maqephe le direkoto tsa mosebetsi wa tshimo tse fumanehang di bolokilwe sesebedisweng sena. Leka ho di bula hape ntle le kgokahano pele o nka leeto.",
+      "ts": "Matluka ni tirhekhodo ta ntiro wa le masin'wini leti kumekaka ti hlayisiwile eka xitirhisiwa lexi. Ringeta ku swi pfula nakambe handle ka vuhlanganisi u nga si famba.",
+      "ve": "Masiaṱari na rekhodo dza mushumo wa masimuni dzi wanalaho dzo vhulungwa kha tshishumiswa itshi. Lingedzani u zwi vula hafhu hu si na vhuṱumani musi ni sa athu fara lwendo."
+    },
+    {
+      "key": "offlineSyncComplete",
+      "english": "Finished sending. Anything still listed below is kept on this phone.",
+      "st": "Ho romela ho fedile. Eng kapa eng e ntseng e thathamisitswe ka tlase e bolokilwe fonong ena.",
+      "ts": "Ku rhumela ku herile. Xin'wana ni xin'wana lexi xa ha longoloxiweke laha hansi xi hlayisiwile eka riqingho leri.",
+      "ve": "U rumela ho fhela. Tshiṅwe na tshiṅwe tshi kha ḓi tevhekanywa afho fhasi tsho vhulungwa kha founu iyi."
+    },
+    {
+      "key": "offlinePortfolio",
+      "english": "Portfolio",
+      "st": "Pokello ya mosebetsi",
+      "ts": "Nhlengeleto wa ntiro",
+      "ve": "Khuvhanganyo ya mushumo"
+    },
+    {
+      "key": "offlineErrorUnsupportedBrowser",
+      "english": "This browser cannot prepare the app for offline use.",
+      "st": "Sebatli sena ha se kgone ho lokisa app hore e sebetse ntle le kgokahano.",
+      "ts": "Browser leyi a yi koti ku lulamisa app ku tirhisiwa handle ka vuhlanganisi.",
+      "ve": "Browser iyi a i koni u lugisa app uri i shume hu si na vhuṱumani."
+    },
+    {
+      "key": "offlineErrorFirstStart",
+      "english": "The app is still preparing its first offline start. Keep it open with a connection and try again.",
+      "st": "App e sa ntse e lokisetsa ho qala la pele ntle le kgokahano. E boloke e butswe o hokahane mme o leke hape.",
+      "ts": "App ya ha lulamisa ku sungula ka yona ro sungula handle ka vuhlanganisi. Yi tshike yi pfuriwile yi ri ni vuhlanganisi kutani u ringeta nakambe.",
+      "ve": "App i kha ḓi lugisela u thoma hayo lwa u thoma hu si na vhuṱumani. I vhulungeni yo vulea ni na vhuṱumani ni dovhe ni lingedze."
+    },
+    {
+      "key": "offlineErrorPrepareTimeout",
+      "english": "Preparation timed out. Keep the app open with a connection and retry.",
+      "st": "Nako ya ho lokisa e fedile. Boloka app e butswe o hokahane mme o leke hape.",
+      "ts": "Nkarhi wa ku lulamisa wu herile. Tshika app yi pfuriwile yi ri ni vuhlanganisi kutani u ringeta nakambe.",
+      "ve": "Tshifhinga tsha u lugisa tsho fhela. Vhulungani app yo vulea ni na vhuṱumani ni dovhe ni lingedze."
+    },
+    {
+      "key": "offlineErrorWorkspaceChanged",
+      "english": "The workspace changed. Prepare again in the current account.",
+      "st": "Sebaka sa mosebetsi se fetohile. Lokisa hape akhaonteng ya hajwale.",
+      "ts": "Ndhawu ya ntiro yi cincile. Lulamisa nakambe eka akhawunti ya sweswi.",
+      "ve": "Fhethu ha mushumo ho shanduka. Lugisani hafhu kha akhaunthu ya zwino."
+    },
+    {
+      "key": "offlineErrorEntrySending",
+      "english": "This entry is sending. Wait before removing it.",
+      "st": "Rekoto ena e a romelwa. Ema pele o e tlosa.",
+      "ts": "Rhekhodo leyi ya rhumeriwa. Yima u nga si yi susa.",
+      "ve": "Rekhodo iyi i khou rumelwa. Lindelani musi ni sa athu i bvisa."
+    },
+    {
+      "key": "offlineErrorServiceUnavailable",
+      "english": "This service is not available for device saving.",
+      "st": "Tshebeletso ena ha e fumanehe bakeng sa ho boloka sesebedisweng.",
+      "ts": "Vukorhokeri bya kona a byi kumeki ku hlayisa eka xitirhisiwa.",
+      "ve": "Tshumelo iyi a i wanali u vhulunga kha tshishumiswa."
+    },
+    {
+      "key": "offlineErrorSignInRequired",
+      "english": "Sign in and open your workspace before saving fieldwork on this device.",
+      "st": "Kena akhaonteng mme o bule sebaka sa hao sa mosebetsi pele o boloka mosebetsi wa tshimo sesebedisweng sena.",
+      "ts": "Nghena eka akhawunti kutani u pfula ndhawu ya wena ya ntiro u nga si hlayisa ntiro wa le masin'wini eka xitirhisiwa lexi.",
+      "ve": "Dzhenani kha akhaunthu ni vule fhethu haṋu ha mushumo musi ni sa athu vhulunga mushumo wa masimuni kha tshishumiswa itshi."
+    },
+    {
+      "key": "offlineErrorAccountChanged",
+      "english": "The account or organisation changed. Reopen your workspace.",
+      "st": "Akhaonte kapa mokgatlo o fetohile. Bula sebaka sa hao sa mosebetsi hape.",
+      "ts": "Akhawunti kumbe nhlangano swi cincile. Pfula ndhawu ya wena ya ntiro nakambe.",
+      "ve": "Akhaunthu kana dzangano zwo shanduka. Vulani fhethu haṋu ha mushumo hafhu."
+    },
+    {
+      "key": "offlineErrorConnectionTimeout",
+      "english": "Connection timed out.",
+      "st": "Nako ya kgokahano e fedile.",
+      "ts": "Nkarhi wa vuhlanganisi wu herile.",
+      "ve": "Tshifhinga tsha vhuṱumani tsho fhela."
+    },
+    {
+      "key": "offlineUnknownPage",
+      "english": "Other page",
+      "st": "Leqephe le leng",
+      "ts": "Tluka rin'wana",
+      "ve": "Liṅwe siaṱari"
+    },
+    {
+      "key": "offlineLabelTrainingRegister",
+      "english": "Training register",
+      "st": "Rejistara ya thupelo",
+      "ts": "Rhejistara ya ndzetelo",
+      "ve": "Redzhisiṱara ya vhugudisi"
+    },
+    {
+      "key": "offlineLabelProgrammeIndicator",
+      "english": "Programme indicator",
+      "st": "Sesupo sa lenaneo",
+      "ts": "Xikombiso xa nongonoko",
+      "ve": "Tshisumbedzi tsha mbekanyamushumo"
+    },
+    {
+      "key": "offlineLabelGardenObservation",
+      "english": "Garden observation",
+      "st": "Temoho ya serapa",
+      "ts": "Leswi xiyixiweke exirhapeni",
+      "ve": "Zwo vhonwaho ngadeni"
+    },
+    {
+      "key": "offlineLabelAssessmentResponse",
+      "english": "Assessment response",
+      "st": "Karabo ya tlhahlobo",
+      "ts": "Nhlamulo ya nkambelo",
+      "ve": "Phindulo ya ndingo"
+    },
+    {
+      "key": "offlineLabelVisit",
+      "english": "Visit",
+      "st": "Leeto",
+      "ts": "Riendzo",
+      "ve": "Dalo"
+    },
+    {
+      "key": "offlinePageHome",
+      "english": "Home",
+      "st": "Qalong",
+      "ts": "Eka kaya",
+      "ve": "Hayani"
+    },
+    {
+      "key": "offlinePageOffline",
+      "english": "Saved on this phone",
+      "st": "Tse bolokilweng fonong ena",
+      "ts": "Leswi hlayisiweke eka riqingho leri",
+      "ve": "Zwo vhulungwaho kha founu iyi",
+      "zu": "Okugcinwe kule foni"
+    },
+    {
+      "key": "offlinePageFarmer",
+      "english": "Garden & site survey",
+      "st": "Serapa le dipotso tsa sebaka",
+      "ts": "Xirhapa ni swivutiso swa ndhawu",
+      "ve": "Ngade na mbudziso dza fhethu"
+    },
+    {
+      "key": "offlinePageLessons",
+      "english": "Lessons",
+      "st": "Dithuto",
+      "ts": "Tidyondzo",
+      "ve": "Ngudo"
+    },
+    {
+      "key": "offlinePageRecords",
+      "english": "My records",
+      "st": "Direkoto tsa ka",
+      "ts": "Tirhekhodo ta mina",
+      "ve": "Rekhodo dzanga"
+    },
+    {
+      "key": "offlinePageInvoices",
+      "english": "Invoices",
+      "st": "Di-invoice",
+      "ts": "Ti-invoyisi",
+      "ve": "Invoisi"
+    },
+    {
+      "key": "offlinePageJournal",
+      "english": "Field journal",
+      "st": "Bukana ya tshimo",
+      "ts": "Jenali ya le masin'wini",
+      "ve": "Dayari ya masimuni"
+    },
+    {
+      "key": "offlinePageCropPlan",
+      "english": "Production plan",
+      "st": "Morero wa tlhahiso",
+      "ts": "Pulani ya vuhumelerisi",
+      "ve": "Pulane ya mbveledzo"
+    },
+    {
+      "key": "offlinePageGardenTasks",
+      "english": "Garden tasks",
+      "st": "Mesebetsi ya serapa",
+      "ts": "Mintirho ya xirhapa",
+      "ve": "Mishumo ya ngade"
+    },
+    {
+      "key": "offlinePageReports",
+      "english": "Saved reports",
+      "st": "Ditlaleho tse bolokilweng",
+      "ts": "Swiviko leswi hlayisiweke",
+      "ve": "Mivhigo yo vhulungwaho"
+    },
+    {
+      "key": "offlinePageDesign",
+      "english": "Design studio",
+      "st": "Sebaka sa ho rala",
+      "ts": "Ndhawu yo pulana",
+      "ve": "Fhethu ha u dizaina"
+    },
+    {
+      "key": "offlinePageCalendar",
+      "english": "Planting calendar",
+      "st": "Khalendara ya ho jala",
+      "ts": "Khalendara yo byala",
+      "ve": "Khalenda ya u zwala"
+    },
+    {
+      "key": "offlinePageAssessments",
+      "english": "Assessments",
+      "st": "Ditlhahlobo",
+      "ts": "Makambelelo",
+      "ve": "Ndingo"
+    },
+    {
+      "key": "offlinePageMentor",
+      "english": "Mentor fieldwork",
+      "st": "Mosebetsi wa moeletsi tshimong",
+      "ts": "Ntiro wa mutsundzuxi wa le masin'wini",
+      "ve": "Mushumo wa mueletshedzi masimuni"
+    },
+    {
+      "key": "offlinePageOrganisation",
+      "english": "Organisation",
+      "st": "Mokgatlo",
+      "ts": "Nhlangano",
+      "ve": "Dzangano"
+    },
+    {
+      "key": "offlinePageFunder",
+      "english": "Funder reports",
+      "st": "Ditlaleho tsa mofani wa ditjhelete",
+      "ts": "Swiviko swa muphakeri wa mali",
+      "ve": "Mivhigo ya muṋetshedzi wa masheleni"
+    },
+    {
+      "key": "offlinePagePortfolio",
+      "english": "Garden portfolio",
+      "st": "Pokello ya mosebetsi wa serapa",
+      "ts": "Nhlengeleto wa ntiro wa xirhapa",
+      "ve": "Khuvhanganyo ya mushumo wa ngade"
+    },
+    {
+      "key": "offlineDraftNotice",
+      "english": "Unreviewed translation. Check the English source beside save, send and remove actions.",
+      "zu": "Lolu hlelo lokuhumusha alukabuyekezwa. Hlola umbhalo wesiNgisi oseduze kwezenzo zokugcina, ukuthumela nokususa.",
+      "st": "Phetolelo ha e eso hlahlojwe. Hlahloba mongolo wa Senyesemane pela diketso tsa ho boloka, ho romela le ho tlosa.",
+      "ts": "Vuhundzuluxi a byi si kamberiwa. Kambisisa tsalwa ra Xinghezi ekusuhi ni swiendlo swo hlayisa, ku rhumela ni ku susa.",
+      "ve": "Ṱhalutshedzo a i athu ṱolwa. Ṱolani maṅwalwa a English tsini na mishumo ya u vhulunga, u rumela na u bvisa."
+    },
+    {
+      "key": "offlineSourceLabel",
+      "english": "English source",
+      "zu": "Umbhalo wokuqala wesiNgisi",
+      "st": "Mongolo wa pele wa Senyesemane",
+      "ts": "Tsalwa ro sungula ra Xinghezi",
+      "ve": "Maṅwalwa a u thoma a English"
+    },
+    {
+      "key": "offlineBadgeOffline",
+      "english": "Offline",
+      "zu": "Akukho uxhumano",
+      "st": "Ha ho kgokahano",
+      "ts": "A ku na vuhlanganisi",
+      "ve": "A hu na vhuṱumani"
+    },
+    {
+      "key": "offlineBadgeWaiting",
+      "english": "{count} waiting",
+      "zu": "Kulinde {count}",
+      "st": "Ho emetse tse {count}",
+      "ts": "Ku na {count} leswi rindzeleke",
+      "ve": "Hu na {count} zwo lindelaho"
+    },
+    {
+      "key": "offlineErrorTimeoutSaved",
+      "english": "Connection timed out. Your saved entry remains on this device.",
+      "zu": "Isikhathi sokuxhumana siphelile. Irekhodi lakho eligciniwe lisekhona kule divayisi.",
+      "st": "Nako ya kgokahano e fedile. Rekoto ya hao e bolokilweng e ntse e le sesebedisweng sena.",
+      "ts": "Nkarhi wa vuhlanganisi wu herile. Rhekhodo ya wena leyi hlayisiweke ya ha ri eka xitirhisiwa lexi.",
+      "ve": "Tshifhinga tsha vhuṱumani tsho fhela. Rekhodo yaṋu yo vhulungwaho i kha ḓi vha kha tshishumiswa itshi."
+    },
+    {
+      "key": "offlineErrorDeviceBrowser",
+      "english": "This browser cannot save fieldwork on this device. Use a normal browser window.",
+      "zu": "Lesi siphequluli asikwazi ukugcina umsebenzi wasensimini kule divayisi. Sebenzisa iwindi elijwayelekile lesiphequluli.",
+      "st": "Sebatli sena ha se kgone ho boloka mosebetsi wa tshimo sesebedisweng sena. Sebedisa fensetere e tlwaelehileng ya sebatli.",
+      "ts": "Browser leyi a yi koti ku hlayisa ntiro wa le masin'wini eka xitirhisiwa lexi. Tirhisa fasitere ra ntolovelo ra browser.",
+      "ve": "Browser iyi a i koni u vhulunga mushumo wa masimuni kha tshishumiswa itshi. Shumisani fasiṱere ḽa nḓowelo ḽa browser."
+    },
+    {
+      "key": "offlineErrorCloseOtherTab",
+      "english": "Close another ImbewuField tab and try saving again.",
+      "zu": "Vala enye ithebhu ye-ImbewuField bese uzama ukugcina futhi.",
+      "st": "Kwala tab e nngwe ya ImbewuField mme o leke ho boloka hape.",
+      "ts": "Pfala tab yin'wana ya ImbewuField kutani u ringeta ku hlayisa nakambe.",
+      "ve": "Valani iṅwe tab ya ImbewuField ni lingedze u vhulunga hafhu."
+    },
+    {
+      "key": "offlineErrorDeviceSave",
+      "english": "The device could not save this entry. Keep the form open.",
+      "zu": "Idivayisi ayikwazanga ukugcina leli rekhodi. Gcina ifomu livuliwe.",
+      "st": "Sesebediswa ha se a kgona ho boloka rekoto ena. Boloka foromo e butswe.",
+      "ts": "Xitirhisiwa a xi kotanga ku hlayisa rhekhodo leyi. Tshika fomo yi pfuriwile.",
+      "ve": "Tshishumiswa a tsho ngo kona u vhulunga rekhodo iyi. Vhulungani fomo yo vulea."
+    },
+    {
+      "key": "offlineErrorStorageUnavailable",
+      "english": "Device storage is unavailable.",
+      "zu": "Indawo yokugcina kule divayisi ayitholakali.",
+      "st": "Polokelo ya sesebediswa ha e fumanehe.",
+      "ts": "Ndhawu yo hlayisa eka xitirhisiwa a yi kumeki.",
+      "ve": "Fhethu ha u vhulunga kha tshishumiswa a hu wanali."
+    },
+    {
+      "key": "offlineErrorRequest",
+      "english": "This request could not be completed.",
+      "zu": "Lesi sicelo asikwazanga ukuqedwa.",
+      "st": "Kopo ena ha e a kgona ho phethwa.",
+      "ts": "Xikombelo lexi a xi kotanga ku hetisiwa.",
+      "ve": "Khumbelo iyi a yo ngo kona u fhedziswa."
+    },
+    {
+      "key": "offlineErrorServerUnconfirmed",
+      "english": "The server did not confirm this save.",
+      "zu": "Iseva ayikuqinisekisanga lokhu kugcinwa.",
+      "st": "Seva ha e a tiisa poloko ena.",
+      "ts": "Sevha a yi tiyisisanga ku hlayisiwa loku.",
+      "ve": "Seva a yo ngo khwaṱhisedza u vhulungwa uhu."
+    },
+    {
+      "key": "offlineErrorWaitingConnection",
+      "english": "Waiting for a connection.",
+      "zu": "Kulindwe uxhumano.",
+      "st": "Ho emetswe kgokahano.",
+      "ts": "Ku rindzeriwa vuhlanganisi.",
+      "ve": "Hu lindelwa vhuṱumani."
+    }
+  ],
+  "beforeValues": {
+    "zu": {
+      "offlineConnectedSentence": null,
+      "offlineDraftNotice": null,
+      "offlineSourceLabel": null,
+      "offlineBadgeOffline": null,
+      "offlineBadgeWaiting": null,
+      "offlineErrorTimeoutSaved": null,
+      "offlineErrorDeviceBrowser": null,
+      "offlineErrorCloseOtherTab": null,
+      "offlineErrorDeviceSave": null,
+      "offlineErrorStorageUnavailable": null,
+      "offlineErrorRequest": null,
+      "offlineErrorServerUnconfirmed": null,
+      "offlineErrorWaitingConnection": null,
+      "offlineTitle": "Akukho uxhumano nokuvumelanisa",
+      "offlinePageOffline": "Ukungaxhunyiwe nokuvumelanisa"
+    },
+    "st": {
+      "offlineTitle": null,
+      "offlineConnected": null,
+      "offlineUsingSavedCopies": null,
+      "offlineConnectedSentence": null,
+      "offlineEntriesWaiting": null,
+      "offlineBeforeLeavingSignal": null,
+      "offlinePrepareDescription": null,
+      "offlineWorking": null,
+      "offlinePrepareButton": null,
+      "offlineLessonDownloads": null,
+      "offlineStudyLink": null,
+      "offlineOpenToolsOnce": null,
+      "offlinePageReadiness": null,
+      "offlineStartupFilesSaved": null,
+      "offlineNotConfirmed": null,
+      "offlineReadinessLimit": null,
+      "offlineSavedEntriesTitle": null,
+      "offlineSavedEntriesDescription": null,
+      "offlineSyncNow": null,
+      "offlineQueueEmpty": null,
+      "offlineNeedsReview": null,
+      "offlineSending": null,
+      "offlineWaitingToSend": null,
+      "offlineDownloadCopy": null,
+      "offlineRemoveConfirm": null,
+      "offlineRemoveQueuedChange": null,
+      "offlineKeepEntry": null,
+      "offlineReviewRemove": null,
+      "offlineConflictHelp": null,
+      "offlineAvailableTitle": null,
+      "offlineCachedCount": null,
+      "offlineAvailableDescription": null,
+      "offlineDeviceSafety": null,
+      "offlinePreparingPages": null,
+      "offlinePreparingNamedPage": null,
+      "offlineSavingFieldwork": null,
+      "offlinePreparationGaps": null,
+      "offlinePreparationComplete": null,
+      "offlineSyncComplete": null,
+      "offlinePortfolio": null,
+      "offlineErrorUnsupportedBrowser": null,
+      "offlineErrorFirstStart": null,
+      "offlineErrorPrepareTimeout": null,
+      "offlineErrorWorkspaceChanged": null,
+      "offlineErrorEntrySending": null,
+      "offlineErrorServiceUnavailable": null,
+      "offlineErrorSignInRequired": null,
+      "offlineErrorAccountChanged": null,
+      "offlineErrorConnectionTimeout": null,
+      "offlineUnknownPage": null,
+      "offlineLabelTrainingRegister": null,
+      "offlineLabelProgrammeIndicator": null,
+      "offlineLabelGardenObservation": null,
+      "offlineLabelAssessmentResponse": null,
+      "offlineLabelVisit": null,
+      "offlinePageHome": null,
+      "offlinePageOffline": null,
+      "offlinePageFarmer": null,
+      "offlinePageLessons": null,
+      "offlinePageRecords": null,
+      "offlinePageInvoices": null,
+      "offlinePageJournal": null,
+      "offlinePageCropPlan": null,
+      "offlinePageGardenTasks": null,
+      "offlinePageReports": null,
+      "offlinePageDesign": null,
+      "offlinePageCalendar": null,
+      "offlinePageAssessments": null,
+      "offlinePageMentor": null,
+      "offlinePageOrganisation": null,
+      "offlinePageFunder": null,
+      "offlinePagePortfolio": null,
+      "offlineDraftNotice": null,
+      "offlineSourceLabel": null,
+      "offlineBadgeOffline": null,
+      "offlineBadgeWaiting": null,
+      "offlineErrorTimeoutSaved": null,
+      "offlineErrorDeviceBrowser": null,
+      "offlineErrorCloseOtherTab": null,
+      "offlineErrorDeviceSave": null,
+      "offlineErrorStorageUnavailable": null,
+      "offlineErrorRequest": null,
+      "offlineErrorServerUnconfirmed": null,
+      "offlineErrorWaitingConnection": null
+    },
+    "ts": {
+      "offlineTitle": null,
+      "offlineConnected": null,
+      "offlineUsingSavedCopies": null,
+      "offlineConnectedSentence": null,
+      "offlineEntriesWaiting": null,
+      "offlineBeforeLeavingSignal": null,
+      "offlinePrepareDescription": null,
+      "offlineWorking": null,
+      "offlinePrepareButton": null,
+      "offlineLessonDownloads": null,
+      "offlineStudyLink": null,
+      "offlineOpenToolsOnce": null,
+      "offlinePageReadiness": null,
+      "offlineStartupFilesSaved": null,
+      "offlineNotConfirmed": null,
+      "offlineReadinessLimit": null,
+      "offlineSavedEntriesTitle": null,
+      "offlineSavedEntriesDescription": null,
+      "offlineSyncNow": null,
+      "offlineQueueEmpty": null,
+      "offlineNeedsReview": null,
+      "offlineSending": null,
+      "offlineWaitingToSend": null,
+      "offlineDownloadCopy": null,
+      "offlineRemoveConfirm": null,
+      "offlineRemoveQueuedChange": null,
+      "offlineKeepEntry": null,
+      "offlineReviewRemove": null,
+      "offlineConflictHelp": null,
+      "offlineAvailableTitle": null,
+      "offlineCachedCount": null,
+      "offlineAvailableDescription": null,
+      "offlineDeviceSafety": null,
+      "offlinePreparingPages": null,
+      "offlinePreparingNamedPage": null,
+      "offlineSavingFieldwork": null,
+      "offlinePreparationGaps": null,
+      "offlinePreparationComplete": null,
+      "offlineSyncComplete": null,
+      "offlinePortfolio": null,
+      "offlineErrorUnsupportedBrowser": null,
+      "offlineErrorFirstStart": null,
+      "offlineErrorPrepareTimeout": null,
+      "offlineErrorWorkspaceChanged": null,
+      "offlineErrorEntrySending": null,
+      "offlineErrorServiceUnavailable": null,
+      "offlineErrorSignInRequired": null,
+      "offlineErrorAccountChanged": null,
+      "offlineErrorConnectionTimeout": null,
+      "offlineUnknownPage": null,
+      "offlineLabelTrainingRegister": null,
+      "offlineLabelProgrammeIndicator": null,
+      "offlineLabelGardenObservation": null,
+      "offlineLabelAssessmentResponse": null,
+      "offlineLabelVisit": null,
+      "offlinePageHome": null,
+      "offlinePageOffline": null,
+      "offlinePageFarmer": null,
+      "offlinePageLessons": null,
+      "offlinePageRecords": null,
+      "offlinePageInvoices": null,
+      "offlinePageJournal": null,
+      "offlinePageCropPlan": null,
+      "offlinePageGardenTasks": null,
+      "offlinePageReports": null,
+      "offlinePageDesign": null,
+      "offlinePageCalendar": null,
+      "offlinePageAssessments": null,
+      "offlinePageMentor": null,
+      "offlinePageOrganisation": null,
+      "offlinePageFunder": null,
+      "offlinePagePortfolio": null,
+      "offlineDraftNotice": null,
+      "offlineSourceLabel": null,
+      "offlineBadgeOffline": null,
+      "offlineBadgeWaiting": null,
+      "offlineErrorTimeoutSaved": null,
+      "offlineErrorDeviceBrowser": null,
+      "offlineErrorCloseOtherTab": null,
+      "offlineErrorDeviceSave": null,
+      "offlineErrorStorageUnavailable": null,
+      "offlineErrorRequest": null,
+      "offlineErrorServerUnconfirmed": null,
+      "offlineErrorWaitingConnection": null
+    },
+    "ve": {
+      "offlineTitle": null,
+      "offlineConnected": null,
+      "offlineUsingSavedCopies": null,
+      "offlineConnectedSentence": null,
+      "offlineEntriesWaiting": null,
+      "offlineBeforeLeavingSignal": null,
+      "offlinePrepareDescription": null,
+      "offlineWorking": null,
+      "offlinePrepareButton": null,
+      "offlineLessonDownloads": null,
+      "offlineStudyLink": null,
+      "offlineOpenToolsOnce": null,
+      "offlinePageReadiness": null,
+      "offlineStartupFilesSaved": null,
+      "offlineNotConfirmed": null,
+      "offlineReadinessLimit": null,
+      "offlineSavedEntriesTitle": null,
+      "offlineSavedEntriesDescription": null,
+      "offlineSyncNow": null,
+      "offlineQueueEmpty": null,
+      "offlineNeedsReview": null,
+      "offlineSending": null,
+      "offlineWaitingToSend": null,
+      "offlineDownloadCopy": null,
+      "offlineRemoveConfirm": null,
+      "offlineRemoveQueuedChange": null,
+      "offlineKeepEntry": null,
+      "offlineReviewRemove": null,
+      "offlineConflictHelp": null,
+      "offlineAvailableTitle": null,
+      "offlineCachedCount": null,
+      "offlineAvailableDescription": null,
+      "offlineDeviceSafety": null,
+      "offlinePreparingPages": null,
+      "offlinePreparingNamedPage": null,
+      "offlineSavingFieldwork": null,
+      "offlinePreparationGaps": null,
+      "offlinePreparationComplete": null,
+      "offlineSyncComplete": null,
+      "offlinePortfolio": null,
+      "offlineErrorUnsupportedBrowser": null,
+      "offlineErrorFirstStart": null,
+      "offlineErrorPrepareTimeout": null,
+      "offlineErrorWorkspaceChanged": null,
+      "offlineErrorEntrySending": null,
+      "offlineErrorServiceUnavailable": null,
+      "offlineErrorSignInRequired": null,
+      "offlineErrorAccountChanged": null,
+      "offlineErrorConnectionTimeout": null,
+      "offlineUnknownPage": null,
+      "offlineLabelTrainingRegister": null,
+      "offlineLabelProgrammeIndicator": null,
+      "offlineLabelGardenObservation": null,
+      "offlineLabelAssessmentResponse": null,
+      "offlineLabelVisit": null,
+      "offlinePageHome": null,
+      "offlinePageOffline": null,
+      "offlinePageFarmer": null,
+      "offlinePageLessons": null,
+      "offlinePageRecords": null,
+      "offlinePageInvoices": null,
+      "offlinePageJournal": null,
+      "offlinePageCropPlan": null,
+      "offlinePageGardenTasks": null,
+      "offlinePageReports": null,
+      "offlinePageDesign": null,
+      "offlinePageCalendar": null,
+      "offlinePageAssessments": null,
+      "offlinePageMentor": null,
+      "offlinePageOrganisation": null,
+      "offlinePageFunder": null,
+      "offlinePagePortfolio": null,
+      "offlineDraftNotice": null,
+      "offlineSourceLabel": null,
+      "offlineBadgeOffline": null,
+      "offlineBadgeWaiting": null,
+      "offlineErrorTimeoutSaved": null,
+      "offlineErrorDeviceBrowser": null,
+      "offlineErrorCloseOtherTab": null,
+      "offlineErrorDeviceSave": null,
+      "offlineErrorStorageUnavailable": null,
+      "offlineErrorRequest": null,
+      "offlineErrorServerUnconfirmed": null,
+      "offlineErrorWaitingConnection": null
+    }
+  },
+  "beforeLines": {
+    "zu": {
+      "offlineConnectedSentence": [],
+      "offlineDraftNotice": [],
+      "offlineSourceLabel": [],
+      "offlineBadgeOffline": [],
+      "offlineBadgeWaiting": [],
+      "offlineErrorTimeoutSaved": [],
+      "offlineErrorDeviceBrowser": [],
+      "offlineErrorCloseOtherTab": [],
+      "offlineErrorDeviceSave": [],
+      "offlineErrorStorageUnavailable": [],
+      "offlineErrorRequest": [],
+      "offlineErrorServerUnconfirmed": [],
+      "offlineErrorWaitingConnection": [],
+      "offlineTitle": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 1642,
+          "text": "  offlineTitle: 'Akukho uxhumano nokuvumelanisa',\n"
+        }
+      ],
+      "offlinePageOffline": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 1697,
+          "text": "  offlinePageOffline: 'Ukungaxhunyiwe nokuvumelanisa',\n"
+        }
+      ]
+    },
+    "st": {
+      "offlineTitle": [],
+      "offlineConnected": [],
+      "offlineUsingSavedCopies": [],
+      "offlineConnectedSentence": [],
+      "offlineEntriesWaiting": [],
+      "offlineBeforeLeavingSignal": [],
+      "offlinePrepareDescription": [],
+      "offlineWorking": [],
+      "offlinePrepareButton": [],
+      "offlineLessonDownloads": [],
+      "offlineStudyLink": [],
+      "offlineOpenToolsOnce": [],
+      "offlinePageReadiness": [],
+      "offlineStartupFilesSaved": [],
+      "offlineNotConfirmed": [],
+      "offlineReadinessLimit": [],
+      "offlineSavedEntriesTitle": [],
+      "offlineSavedEntriesDescription": [],
+      "offlineSyncNow": [],
+      "offlineQueueEmpty": [],
+      "offlineNeedsReview": [],
+      "offlineSending": [],
+      "offlineWaitingToSend": [],
+      "offlineDownloadCopy": [],
+      "offlineRemoveConfirm": [],
+      "offlineRemoveQueuedChange": [],
+      "offlineKeepEntry": [],
+      "offlineReviewRemove": [],
+      "offlineConflictHelp": [],
+      "offlineAvailableTitle": [],
+      "offlineCachedCount": [],
+      "offlineAvailableDescription": [],
+      "offlineDeviceSafety": [],
+      "offlinePreparingPages": [],
+      "offlinePreparingNamedPage": [],
+      "offlineSavingFieldwork": [],
+      "offlinePreparationGaps": [],
+      "offlinePreparationComplete": [],
+      "offlineSyncComplete": [],
+      "offlinePortfolio": [],
+      "offlineErrorUnsupportedBrowser": [],
+      "offlineErrorFirstStart": [],
+      "offlineErrorPrepareTimeout": [],
+      "offlineErrorWorkspaceChanged": [],
+      "offlineErrorEntrySending": [],
+      "offlineErrorServiceUnavailable": [],
+      "offlineErrorSignInRequired": [],
+      "offlineErrorAccountChanged": [],
+      "offlineErrorConnectionTimeout": [],
+      "offlineUnknownPage": [],
+      "offlineLabelTrainingRegister": [],
+      "offlineLabelProgrammeIndicator": [],
+      "offlineLabelGardenObservation": [],
+      "offlineLabelAssessmentResponse": [],
+      "offlineLabelVisit": [],
+      "offlinePageHome": [],
+      "offlinePageOffline": [],
+      "offlinePageFarmer": [],
+      "offlinePageLessons": [],
+      "offlinePageRecords": [],
+      "offlinePageInvoices": [],
+      "offlinePageJournal": [],
+      "offlinePageCropPlan": [],
+      "offlinePageGardenTasks": [],
+      "offlinePageReports": [],
+      "offlinePageDesign": [],
+      "offlinePageCalendar": [],
+      "offlinePageAssessments": [],
+      "offlinePageMentor": [],
+      "offlinePageOrganisation": [],
+      "offlinePageFunder": [],
+      "offlinePagePortfolio": [],
+      "offlineDraftNotice": [],
+      "offlineSourceLabel": [],
+      "offlineBadgeOffline": [],
+      "offlineBadgeWaiting": [],
+      "offlineErrorTimeoutSaved": [],
+      "offlineErrorDeviceBrowser": [],
+      "offlineErrorCloseOtherTab": [],
+      "offlineErrorDeviceSave": [],
+      "offlineErrorStorageUnavailable": [],
+      "offlineErrorRequest": [],
+      "offlineErrorServerUnconfirmed": [],
+      "offlineErrorWaitingConnection": []
+    },
+    "ts": {
+      "offlineTitle": [],
+      "offlineConnected": [],
+      "offlineUsingSavedCopies": [],
+      "offlineConnectedSentence": [],
+      "offlineEntriesWaiting": [],
+      "offlineBeforeLeavingSignal": [],
+      "offlinePrepareDescription": [],
+      "offlineWorking": [],
+      "offlinePrepareButton": [],
+      "offlineLessonDownloads": [],
+      "offlineStudyLink": [],
+      "offlineOpenToolsOnce": [],
+      "offlinePageReadiness": [],
+      "offlineStartupFilesSaved": [],
+      "offlineNotConfirmed": [],
+      "offlineReadinessLimit": [],
+      "offlineSavedEntriesTitle": [],
+      "offlineSavedEntriesDescription": [],
+      "offlineSyncNow": [],
+      "offlineQueueEmpty": [],
+      "offlineNeedsReview": [],
+      "offlineSending": [],
+      "offlineWaitingToSend": [],
+      "offlineDownloadCopy": [],
+      "offlineRemoveConfirm": [],
+      "offlineRemoveQueuedChange": [],
+      "offlineKeepEntry": [],
+      "offlineReviewRemove": [],
+      "offlineConflictHelp": [],
+      "offlineAvailableTitle": [],
+      "offlineCachedCount": [],
+      "offlineAvailableDescription": [],
+      "offlineDeviceSafety": [],
+      "offlinePreparingPages": [],
+      "offlinePreparingNamedPage": [],
+      "offlineSavingFieldwork": [],
+      "offlinePreparationGaps": [],
+      "offlinePreparationComplete": [],
+      "offlineSyncComplete": [],
+      "offlinePortfolio": [],
+      "offlineErrorUnsupportedBrowser": [],
+      "offlineErrorFirstStart": [],
+      "offlineErrorPrepareTimeout": [],
+      "offlineErrorWorkspaceChanged": [],
+      "offlineErrorEntrySending": [],
+      "offlineErrorServiceUnavailable": [],
+      "offlineErrorSignInRequired": [],
+      "offlineErrorAccountChanged": [],
+      "offlineErrorConnectionTimeout": [],
+      "offlineUnknownPage": [],
+      "offlineLabelTrainingRegister": [],
+      "offlineLabelProgrammeIndicator": [],
+      "offlineLabelGardenObservation": [],
+      "offlineLabelAssessmentResponse": [],
+      "offlineLabelVisit": [],
+      "offlinePageHome": [],
+      "offlinePageOffline": [],
+      "offlinePageFarmer": [],
+      "offlinePageLessons": [],
+      "offlinePageRecords": [],
+      "offlinePageInvoices": [],
+      "offlinePageJournal": [],
+      "offlinePageCropPlan": [],
+      "offlinePageGardenTasks": [],
+      "offlinePageReports": [],
+      "offlinePageDesign": [],
+      "offlinePageCalendar": [],
+      "offlinePageAssessments": [],
+      "offlinePageMentor": [],
+      "offlinePageOrganisation": [],
+      "offlinePageFunder": [],
+      "offlinePagePortfolio": [],
+      "offlineDraftNotice": [],
+      "offlineSourceLabel": [],
+      "offlineBadgeOffline": [],
+      "offlineBadgeWaiting": [],
+      "offlineErrorTimeoutSaved": [],
+      "offlineErrorDeviceBrowser": [],
+      "offlineErrorCloseOtherTab": [],
+      "offlineErrorDeviceSave": [],
+      "offlineErrorStorageUnavailable": [],
+      "offlineErrorRequest": [],
+      "offlineErrorServerUnconfirmed": [],
+      "offlineErrorWaitingConnection": []
+    },
+    "ve": {
+      "offlineTitle": [],
+      "offlineConnected": [],
+      "offlineUsingSavedCopies": [],
+      "offlineConnectedSentence": [],
+      "offlineEntriesWaiting": [],
+      "offlineBeforeLeavingSignal": [],
+      "offlinePrepareDescription": [],
+      "offlineWorking": [],
+      "offlinePrepareButton": [],
+      "offlineLessonDownloads": [],
+      "offlineStudyLink": [],
+      "offlineOpenToolsOnce": [],
+      "offlinePageReadiness": [],
+      "offlineStartupFilesSaved": [],
+      "offlineNotConfirmed": [],
+      "offlineReadinessLimit": [],
+      "offlineSavedEntriesTitle": [],
+      "offlineSavedEntriesDescription": [],
+      "offlineSyncNow": [],
+      "offlineQueueEmpty": [],
+      "offlineNeedsReview": [],
+      "offlineSending": [],
+      "offlineWaitingToSend": [],
+      "offlineDownloadCopy": [],
+      "offlineRemoveConfirm": [],
+      "offlineRemoveQueuedChange": [],
+      "offlineKeepEntry": [],
+      "offlineReviewRemove": [],
+      "offlineConflictHelp": [],
+      "offlineAvailableTitle": [],
+      "offlineCachedCount": [],
+      "offlineAvailableDescription": [],
+      "offlineDeviceSafety": [],
+      "offlinePreparingPages": [],
+      "offlinePreparingNamedPage": [],
+      "offlineSavingFieldwork": [],
+      "offlinePreparationGaps": [],
+      "offlinePreparationComplete": [],
+      "offlineSyncComplete": [],
+      "offlinePortfolio": [],
+      "offlineErrorUnsupportedBrowser": [],
+      "offlineErrorFirstStart": [],
+      "offlineErrorPrepareTimeout": [],
+      "offlineErrorWorkspaceChanged": [],
+      "offlineErrorEntrySending": [],
+      "offlineErrorServiceUnavailable": [],
+      "offlineErrorSignInRequired": [],
+      "offlineErrorAccountChanged": [],
+      "offlineErrorConnectionTimeout": [],
+      "offlineUnknownPage": [],
+      "offlineLabelTrainingRegister": [],
+      "offlineLabelProgrammeIndicator": [],
+      "offlineLabelGardenObservation": [],
+      "offlineLabelAssessmentResponse": [],
+      "offlineLabelVisit": [],
+      "offlinePageHome": [],
+      "offlinePageOffline": [],
+      "offlinePageFarmer": [],
+      "offlinePageLessons": [],
+      "offlinePageRecords": [],
+      "offlinePageInvoices": [],
+      "offlinePageJournal": [],
+      "offlinePageCropPlan": [],
+      "offlinePageGardenTasks": [],
+      "offlinePageReports": [],
+      "offlinePageDesign": [],
+      "offlinePageCalendar": [],
+      "offlinePageAssessments": [],
+      "offlinePageMentor": [],
+      "offlinePageOrganisation": [],
+      "offlinePageFunder": [],
+      "offlinePagePortfolio": [],
+      "offlineDraftNotice": [],
+      "offlineSourceLabel": [],
+      "offlineBadgeOffline": [],
+      "offlineBadgeWaiting": [],
+      "offlineErrorTimeoutSaved": [],
+      "offlineErrorDeviceBrowser": [],
+      "offlineErrorCloseOtherTab": [],
+      "offlineErrorDeviceSave": [],
+      "offlineErrorStorageUnavailable": [],
+      "offlineErrorRequest": [],
+      "offlineErrorServerUnconfirmed": [],
+      "offlineErrorWaitingConnection": []
+    }
+  },
+  "sourceControls": [
+    {
+      "key": "offlineTitle",
+      "english": "Saved on this phone",
+      "zu": "Akukho uxhumano nokuvumelanisa",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineConnected",
+      "english": "Connected",
+      "zu": "Kuxhunyiwe",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineUsingSavedCopies",
+      "english": "Offline — using this device’s saved copies",
+      "zu": "Awukho ku-inthanethi — usebenzisa amakhophi agcinwe kule divayisi",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineConnectedSentence",
+      "english": "You are online — pages saved for offline use are listed below.",
+      "zu": null,
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineEntriesWaiting",
+      "english": "{count} entries waiting to send",
+      "zu": "Kusalindile ukuthumela okufakiwe okungu-{count}",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineBeforeLeavingSignal",
+      "english": "Before you leave signal",
+      "zu": "Ngaphambi kokulahlekelwa yinethiwekhi",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePrepareDescription",
+      "english": "Prepare the pages and authorised records you need, including visit and training photos. This uses data and device storage. Stay signed in on this device.",
+      "zu": "Lungiselela amakhasi namarekhodi agunyaziwe owadingayo, kuhlanganise nezithombe zokuvakasha nokuqeqesha. Lokhu kusebenzisa idatha nesikhala kule divayisi. Hlala ungenile kule divayisi.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineWorking",
+      "english": "Working…",
+      "zu": "Kuyasebenza…",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePrepareButton",
+      "english": "Prepare fieldwork on this device",
+      "zu": "Lungiselela umsebenzi wasensimini kule divayisi",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineLessonDownloads",
+      "english": "Download lesson slides, narration and clips separately under",
+      "zu": "Landa amaslayidi ezifundo, okulandiswayo neziqeshana ngokwehlukana ngaphansi kokuthi",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineStudyLink",
+      "english": "Study offline",
+      "zu": "Funda ungaxhunyiwe",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineOpenToolsOnce",
+      "english": "Open your saved designs, crop plans and reports online once so their additional tools and images are available.",
+      "zu": "Vula imiklamo, izinhlelo zezitshalo nemibiko yakho egciniwe kanye uxhumekile ukuze amathuluzi nezithombe ezengeziwe zitholakale.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePageReadiness",
+      "english": "Page readiness · {ready} of {total}",
+      "zu": "Ukulungela kwamakhasi · {ready} kwayi-{total}",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineStartupFilesSaved",
+      "english": "Startup files saved",
+      "zu": "Amafayela okuqalisa agciniwe",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineNotConfirmed",
+      "english": "Not confirmed on this device",
+      "zu": "Akuqinisekisiwe kule divayisi",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineReadinessLimit",
+      "english": "These checks cover startup files. They do not promise fresh map imagery, every report image, or every optional tool.",
+      "zu": "Lokhu kuhlola kuqinisekisa amafayela okuqalisa kuphela. Akuqinisekisi izithombe zemephu ezintsha, zonke izithombe zemibiko, noma wonke amathuluzi ongawakhetha.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineSavedEntriesTitle",
+      "english": "Saved entries waiting to send",
+      "zu": "Okufakiwe okugciniwe okulinde ukuthunyelwa",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineSavedEntriesDescription",
+      "english": "Completed visits, training registers, signatures, feedback, photographs, garden observations and assessment responses can wait here. Sync runs when the app is open and a connection returns.",
+      "zu": "Ukuvakasha okuqediwe, amarejista okuqeqesha, amasignesha, impendulo, izithombe, okubhekwe engadini nezimpendulo zokuhlola kungalinda lapha. Ukuvumelanisa kwenzeka uma uhlelo luvuliwe futhi uxhumano lubuya.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineSyncNow",
+      "english": "Send now",
+      "zu": "Vumelanisa manje",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineQueueEmpty",
+      "english": "Nothing waiting to send. My Records saves separately.",
+      "zu": "Akukho okufakiwe kulayini womsebenzi wasensimini. Incwadi yemali inesistimu yayo yokuvumelanisa.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineNeedsReview",
+      "english": "Needs review — server save not confirmed",
+      "zu": "Kudinga ukubuyekezwa — ukugcinwa kuseva akuqinisekisiwe",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineSending",
+      "english": "Sending / awaiting confirmation",
+      "zu": "Kuyathumela / kulindele ukuqinisekiswa",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineWaitingToSend",
+      "english": "Saved on this device — waiting to send",
+      "zu": "Kugcinwe kule divayisi — kulindele ukuthunyelwa",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineDownloadCopy",
+      "english": "Download a copy",
+      "zu": "Landa ikhophi",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineRemoveConfirm",
+      "english": "Remove this device’s queued change? This cannot be undone here. Download a copy first if you need to keep it. The server record is not deleted.",
+      "zu": "Susa ushintsho olulindile kule divayisi? Lokhu ngeke kuhlehliswe lapha. Landa ikhophi kuqala uma ufuna ukulugcina. Irekhodi elikuseva alisuswa.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineRemoveQueuedChange",
+      "english": "Remove queued change",
+      "zu": "Susa ushintsho olulindile",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineKeepEntry",
+      "english": "Keep it",
+      "zu": "Kugcine",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineReviewRemove",
+      "english": "Review / remove",
+      "zu": "Buyekeza / susa",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineConflictHelp",
+      "english": "For a conflict, keep a downloaded copy, remove this queued change, reconnect and reopen the current record. Compare the versions before saving your corrections. Permission or validation errors must be resolved before resubmitting.",
+      "zu": "Uma kunokungqubuzana, gcina ikhophi elandiwe, susa lolu shintsho olulindile, xhuma futhi bese uvula irekhodi lamanje. Qhathanisa izinhlobo ngaphambi kokugcina izilungiso. Lungisa amaphutha emvume noma okuqinisekisa ngaphambi kokuthumela futhi.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineAvailableTitle",
+      "english": "What stays available",
+      "zu": "Okusatholakala",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineCachedCount",
+      "english": "{count} authorised information requests saved on this device. Their contents reflect the last successful download, plus your unsent changes.",
+      "zu": "Izicelo zolwazi ezigunyaziwe ezingu-{count} zigcinwe kule divayisi. Ziqukethe ulwazi olwagcina ukulandwa ngempumelelo kanye nezinguquko zakho ezingakathunyelwa.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineAvailableDescription",
+      "english": "Local crop planning, journal notes and downloaded lessons can work without signal. AI chat, AI reports, transcription, receipt scanning, new sign-in and fresh online maps still need a connection. The map offers an Offline canvas for saved drawings and pins without satellite or terrain layers. Receipt originals in the money book remain on their original device.",
+      "zu": "Ukuhlela izitshalo kule divayisi, amanothi ephephabhuku nezifundo ezilandiwe kungasebenza ngaphandle kwenethiwekhi. Ingxoxo ye-AI, imibiko ye-AI, ukubhala okushiwo, ukuskena amarisidi, ukungena okusha namamephu aku-inthanethi adinga uxhumano. Imephu inendawo engaxhunyiwe enemidwebo nezikhonkwane ezigciniwe, ngaphandle kwezendlalelo zesathelayithi nezendawo. Amarisidi okuqala encwadini yemali ahlala kule divayisi yawo.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineDeviceSafety",
+      "english": "Use a normal browser window. Clearing site data removes downloads and unsent fieldwork. Keep this device protected, especially where it holds attendance signatures or photographs.",
+      "zu": "Sebenzisa iwindi lesiphequluli elivamile. Ukusula idatha yesayithi kususa okulandiwe nomsebenzi wasensimini ongakathunyelwa. Vikela le divayisi, ikakhulukazi uma igcina amasignesha okubakhona noma izithombe.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePreparingPages",
+      "english": "Preparing app pages…",
+      "zu": "Kulungiselelwa amakhasi ohlelo…",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePreparingNamedPage",
+      "english": "Preparing {page}…",
+      "zu": "Kulungiselelwa {page}…",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineSavingFieldwork",
+      "english": "Saving authorised fieldwork information…",
+      "zu": "Kugcinwa ulwazi olugunyaziwe lomsebenzi wasensimini…",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePreparationGaps",
+      "english": "Preparation finished with gaps. Read the list below before leaving signal.",
+      "zu": "Ukulungiselela kuqediwe kodwa kunezikhala. Funda uhlu olungezansi ngaphambi kokulahlekelwa yinethiwekhi.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePreparationComplete",
+      "english": "Pages and available fieldwork records are saved on this device. Test reopening without signal before travelling.",
+      "zu": "Amakhasi namarekhodi omsebenzi wasensimini atholakalayo agcinwe kule divayisi. Hlola ukuwavula ngaphandle kwenethiwekhi ngaphambi kohambo.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineSyncComplete",
+      "english": "Finished sending. Anything still listed below is kept on this phone.",
+      "zu": "Umzamo wokuvumelanisa uphelile. Okufakiwe okusaboniswe ngezansi kusese kule divayisi.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePortfolio",
+      "english": "Portfolio",
+      "zu": "Iphothifoliyo",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineErrorUnsupportedBrowser",
+      "english": "This browser cannot prepare the app for offline use.",
+      "zu": "Lesi siphequluli asikwazi ukulungiselela uhlelo ukuthi lusebenze lungaxhunyiwe.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineErrorFirstStart",
+      "english": "The app is still preparing its first offline start. Keep it open with a connection and try again.",
+      "zu": "Uhlelo lusalungiselela ukuqalisa kokuqala lungaxhunyiwe. Lushiye luvuliwe luxhumekile bese uzama futhi.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineErrorPrepareTimeout",
+      "english": "Preparation timed out. Keep the app open with a connection and retry.",
+      "zu": "Ukulungiselela kuthathe isikhathi eside kakhulu. Shiya uhlelo luvuliwe luxhumekile bese uzama futhi.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineErrorWorkspaceChanged",
+      "english": "The workspace changed. Prepare again in the current account.",
+      "zu": "Indawo yokusebenza ishintshile. Lungiselela futhi ku-akhawunti yamanje.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineErrorEntrySending",
+      "english": "This entry is sending. Wait before removing it.",
+      "zu": "Lokhu okufakiwe kuyathunyelwa. Linda ngaphambi kokukususa.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineErrorServiceUnavailable",
+      "english": "This service is not available for device saving.",
+      "zu": "Le sevisi ayitholakali ukuze igcinwe kule divayisi.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineErrorSignInRequired",
+      "english": "Sign in and open your workspace before saving fieldwork on this device.",
+      "zu": "Ngena bese uvula indawo yakho yokusebenza ngaphambi kokugcina umsebenzi wasensimini kule divayisi.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineErrorAccountChanged",
+      "english": "The account or organisation changed. Reopen your workspace.",
+      "zu": "I-akhawunti noma inhlangano ishintshile. Vula kabusha indawo yakho yokusebenza.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineErrorConnectionTimeout",
+      "english": "Connection timed out.",
+      "zu": "Isikhathi sokuxhuma siphelile.",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineUnknownPage",
+      "english": "Other page",
+      "zu": "Elinye ikhasi",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineLabelTrainingRegister",
+      "english": "Training register",
+      "zu": "Irejista yokuqeqesha",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineLabelProgrammeIndicator",
+      "english": "Programme indicator",
+      "zu": "Inkomba yohlelo",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineLabelGardenObservation",
+      "english": "Garden observation",
+      "zu": "Okubhekwe engadini",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineLabelAssessmentResponse",
+      "english": "Assessment response",
+      "zu": "Impendulo yokuhlola",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlineLabelVisit",
+      "english": "Visit",
+      "zu": "Ukuvakasha",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePageHome",
+      "english": "Home",
+      "zu": "Ikhaya",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePageOffline",
+      "english": "Saved on this phone",
+      "zu": "Ukungaxhunyiwe nokuvumelanisa",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePageFarmer",
+      "english": "Garden & site survey",
+      "zu": "Ingadi nokuhlolwa kwendawo",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePageLessons",
+      "english": "Lessons",
+      "zu": "Izifundo",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePageRecords",
+      "english": "My records",
+      "zu": "Incwadi yemali nokuvuna",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePageInvoices",
+      "english": "Invoices",
+      "zu": "Ama-invoyisi",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePageJournal",
+      "english": "Field journal",
+      "zu": "Ijenali Yasensimu",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePageCropPlan",
+      "english": "Production plan",
+      "zu": "Uhlelo lokukhiqiza",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePageGardenTasks",
+      "english": "Garden tasks",
+      "zu": "Imisebenzi yengadi",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePageReports",
+      "english": "Saved reports",
+      "zu": "Imibiko egciniwe",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePageDesign",
+      "english": "Design studio",
+      "zu": "Isitudiyo Sokuklama",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePageCalendar",
+      "english": "Planting calendar",
+      "zu": "Ikhalenda lokutshala",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePageAssessments",
+      "english": "Assessments",
+      "zu": "Ukuhlola",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePageMentor",
+      "english": "Mentor fieldwork",
+      "zu": "Umsebenzi wasensimini womeluleki",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePageOrganisation",
+      "english": "Organisation",
+      "zu": "Inhlangano",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePageFunder",
+      "english": "Funder reports",
+      "zu": "Imibiko yomxhasi",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "key": "offlinePagePortfolio",
+      "english": "Garden portfolio",
+      "zu": "Iphothifoliyo yezingadi",
+      "st": null,
+      "ts": null,
+      "ve": null
+    }
+  ],
+  "sourceSha256": {
+    "app/offline/page.tsx": "061a12094385e872fabd6186d15f53282b07dead582e9df6204dcb46db287863",
+    "components/FieldSyncBadge.tsx": "bb7d9d1882d2b35f9f45b140f1a814da732351ffe23b17347d219671f05e89c3",
+    "lib/i18n.tsx": "b926a4e185ed5d8b266004ad8f9e019aefadeca821f0d2567279406ab22e5be3",
+    "lib/locales/zu.ts": "3814be8ec62fc30a0f3f73b010b54d94a244e8f8e4e13111a2000982a0aef4aa",
+    "lib/locales/st.ts": "be1b845545187e9f8620b487dc9b3a51d4a8cc6cb7004a3a58cc59abe9964b56",
+    "lib/locales/ts.ts": "8157c959c3ca330cc548181977cfdb3a46c100cd33815e794bb3befa2b3aa963",
+    "lib/locales/ve.ts": "1fcf7c8376aad7d5479529a0b27bea6a56926e2bc5102d537538cfcdb428ed7b"
+  },
+  "scope": "The 72 device/offline page controls, two short sync-badge labels, draft/source labels and eight additional exact errors from field-api, field-api-core, field-device-store and the service worker. Study pack/media controls are outside this batch.",
+  "notes": [
+    "Original English UI and error sources remain exact. Existing isiZulu page wording remains exact except the absent connected sentence and two titles that retained the retired Offline & sync wording instead of Saved on this phone; their exact prior lines are recorded. The legacy bilingual draft-notice key remains unchanged.",
+    "Authorisation, account scopes, cache data, write bodies, operation IDs, leases, server acknowledgements, local-only removal and download bytes remain unchanged.",
+    "Known local error source strings are mapped exactly for display. Unknown server and user text is retained, never guessed or relabelled as reviewed.",
+    "Progress and error states retain language-independent identities; translation happens during rendering, including after changing language.",
+    "All four target languages retain English source disclosures next to save/send/remove guidance and separately tagged English on action controls. Source placeholders are filled using the actual counts/pages."
+  ],
+  "unchangedServiceSha256": {
+    "lib/field-api.ts": "569c7e8fc98772d258f3bad2c0f8bd1a8c15fe6b3c885f51cff96c0b7ad4393d",
+    "lib/field-api-core.ts": "12f4612c08ae711d18282ecc121979e462ccb04460f7245516ac47137c075e85",
+    "lib/field-device-store.ts": "022bc8b8dea2f887cae7da37ffc340df1a4c0c08096da10c02c22e549b72e07f",
+    "lib/field-request-model.ts": "a94c84cfbee1509c749f57170bed86095c2ca91dc46163dc1c1e1bdd87effdea",
+    "lib/field-page-downloads.ts": "1d0eab6104d1a5753431c57718fb87954c7735d86543461588d27e9b5c38fb2a",
+    "lib/field-session.ts": "f1979eac218dc2757a121e568fc6e980ef0786888883d4ce96d5ca6558d40d7f",
+    "app/sw.js/route.ts": "d6962bbda0e2568256d611060c4b421a70294a96993f7222900f0e6497eae781"
+  },
+  "reasons": {
+    "offlineTitle": "The existing isiZulu title still expressed the retired Offline & sync name; align it with the current exact English source Saved on this phone.",
+    "offlinePageOffline": "The readiness-list label names the same page; retain the same source meaning instead of the retired label."
+  }
+}

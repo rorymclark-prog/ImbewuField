@@ -1,0 +1,7 @@
+/* The dashboard hero hides every paragraph on phones, including the review warning.
+   A chooser must keep its access instructions and draft status readable at every width. */
+.hero{display:grid;gap:12px;margin:16px 0 24px;padding:20px;background:var(--bg-1);color:var(--text-primary);border:1px solid var(--border);border-radius:16px}
+.hero h1{font-family:var(--font-display),serif;font-size:28px;line-height:1.25;margin:0}
+.hero p{margin:0}
+.pair{display:inline-block;max-width:100%;overflow-wrap:anywhere}
+.source{font-size:max(12px,.82em);font-weight:400;line-height:1.5}

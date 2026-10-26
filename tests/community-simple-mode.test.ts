@@ -1,100 +1,37 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { actualCommunityConversation } from './community-conversations-renderer.ts';
+import { actualCommunityMember } from './community-member-renderer.ts';
+import { communityNodeText } from './community-profile-renderer.ts';
+import { controlT, type ControlLanguage } from './control-icon-renderers.ts';
+import { communityTimeAgo } from '../lib/community-time.ts';
 
-// swarm/w4-community-simple: Community board, messages and profiles — Simple mode. Source-text
-// guard style, same as tests/design-simple-mode.test.ts: these screens are not pure functions of
-// exported data, so the guard reads the real shipped files and asserts the wiring a farmer would
-// actually hit, rather than rendering the component tree.
-
-const BOARD = readFileSync(new URL('../app/community/page.tsx', import.meta.url), 'utf8');
-const THREAD = readFileSync(new URL('../app/community/messages/[threadId]/page.tsx', import.meta.url), 'utf8');
-const PROFILE = readFileSync(new URL('../app/community/u/[uid]/page.tsx', import.meta.url), 'utf8');
-const I18N = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
-const ZU = readFileSync(new URL('../lib/locales/zu.ts', import.meta.url), 'utf8');
-
-test('all three screens read Simple / All tools from lib/app-level.ts', () => {
-  for (const [name, source] of [['board', BOARD], ['messages thread', THREAD], ['other farmer profile', PROFILE]] as const) {
-    assert.match(source, /from '@\/lib\/app-level'/, `${name} must import useAppLevel`);
-    assert.match(source, /const simple = useAppLevel\(\) === 'simple'/, `${name} must compute a \`simple\` flag from useAppLevel()`);
-  }
+// Simple is a visibility/action contract, not a particular div, English literal or helper name.
+// Render the shipped components with isolated services so native labels and associated labels can evolve.
+const langs:ControlLanguage[]=['en','zu','st','ts','ve'];
+const read=(p:string)=>readFileSync(new URL('../'+p,import.meta.url),'utf8');
+test('all three screens read Simple / All tools from lib/app-level.ts',()=>{
+ for(const file of['app/community/page.tsx','app/community/messages/[threadId]/page.tsx','app/community/u/[uid]/page.tsx']){const source=read(file);assert.match(source,/from '@\/lib\/app-level'/,file);assert.match(source,/const simple = useAppLevel\(\) === 'simple'/,file);}
 });
-
-test('Board: Simple leads with the posts (defaults to the board tab) and drops Messages from the tab bar', () => {
-  assert.match(
-    BOARD,
-    /const TABS: Tab\[\] = simple \? \['board', 'nearby'\] : \['nearby', 'board', 'messages'\]/,
-    'Simple must show only the board and nearby tabs; All tools must keep all three, unchanged',
-  );
-  assert.match(BOARD, /const \[tab, setTab\] = useState<Tab>\(simple \? 'board' : 'nearby'\)/, 'Simple must open on the board, not nearby');
-  assert.match(BOARD, /\{TABS\.map\(\(tb\) => \(/, 'the tab bar must render the mode-aware TABS list, not a hardcoded three-tab array');
-  assert.match(
-    BOARD,
-    /useEffect\(\(\) => \{ if \(simple && tab === 'messages'\) setTab\('board'\); \}, \[simple, tab\]\)/,
-    'switching to Simple mid-session while on Messages must land somewhere still reachable, not a panel with no highlighted tab',
-  );
+test('Board: Simple leads with the posts (defaults to the board tab) and drops Messages from the tab bar',async()=>{
+ for(const lang of langs){const h=await actualCommunityConversation(lang,'hub',{simple:true});try{const tabs=()=>h.renderer.root.findAllByProps({role:'tab'});assert.deepEqual(tabs().map(n=>n.props.id),['community-tab-board','community-tab-nearby']);assert.equal(tabs()[0].props['aria-selected'],true);await h.level(false);assert.deepEqual(tabs().map(n=>n.props.id),['community-tab-nearby','community-tab-board','community-tab-messages']);await h.tab('messages');await h.level(true);assert.equal(h.renderer.root.findByProps({id:'community-tab-board'}).props['aria-selected'],true);}finally{await h.dispose();}}
 });
-
-test('Board: the New post button (Post) is not gated by simple — it is the one clear primary action in both modes', () => {
-  assert.match(BOARD, /onClick=\{onToggleNewPost\}[\s\S]{0,300}<Plus size=\{14\} \/> \{tr\('communityBoardNewPost'\)\}/, 'the New post toggle must render unconditionally');
-  assert.doesNotMatch(BOARD, /\{!simple &&[\s\S]{0,80}communityBoardNewPost/, 'New post must not be hidden behind All tools');
+test('Board: the New post button (Post) is not gated by simple — it is the one clear primary action in both modes',async()=>{
+ for(const lang of langs)for(const simple of[false,true]){const h=await actualCommunityConversation(lang,'hub',{simple}),t=controlT(lang);try{await h.tab('board');await h.button(t('communityBoardNewPost'));assert.equal(h.renderer.root.findAllByType('textarea').length,1);assert.ok(h.renderer.root.findAllByType('button').some(n=>communityNodeText(n).trim()===t('communityBoardPost')));}finally{await h.dispose();}}
 });
-
-test('Board: the new-post form keeps only the essentials in Simple — description, photo, Post — and defaults Type/Category/Area behind one disclosure', () => {
-  assert.match(BOARD, /function NewBoardPostForm\(\{ myAreaText, simple, onPosted, onCancel \}/, 'NewBoardPostForm must accept a simple prop');
-  assert.match(BOARD, /const optionsExpanded = !simple \|\| showMoreOptions/, 'Type/Category/Area must expand for All tools or once Simple asks for more options');
-  assert.match(BOARD, /\{optionsExpanded && \(\s*<div>\s*<div className="font-sans uppercase tracking-widest"[^>]*>\{tr\('communityBoardKind'\)\}/, 'the Type (have/want/free) picker must be gated by optionsExpanded');
-  assert.match(BOARD, /\{optionsExpanded && \(\s*<div>\s*<div className="font-sans uppercase tracking-widest"[^>]*>\{tr\('communityBoardCategory'\)\}/, 'the Category picker must be gated by optionsExpanded');
-  assert.match(BOARD, /\{optionsExpanded && \(\s*<div>\s*<div className="font-sans uppercase tracking-widest"[^>]*>\{tr\('communityAreaLabel'\)\}/, 'the Area field must be gated by optionsExpanded');
-  assert.match(BOARD, /\{!optionsExpanded && \(\s*<button[\s\S]{0,120}onClick=\{\(\) => setShowMoreOptions\(true\)\}/, 'a "More options" opener must exist for Simple');
-  // Description (what) and the photo picker stay outside the optionsExpanded gate — always visible.
-  assert.doesNotMatch(BOARD, /\{optionsExpanded && \([\s\S]{0,40}tr\('communityBoardDescription'\)/, 'the description field must not be gated — it is one of the kept essentials');
-  assert.match(BOARD, /copyCommunity\('Add photo \(optional\)', lang\)/, 'the photo picker must still exist unconditionally');
-  assert.match(BOARD, /onClick=\{handlePost\} disabled=\{posting \|\| !description\.trim\(\)\}/, 'the Post button (send) must remain reachable and ungated by simple in both modes');
+test('Board: the new-post form keeps only the essentials in Simple — description, photo, Post — and defaults Type/Category/Area behind one disclosure',async()=>{
+ for(const lang of langs){const h=await actualCommunityConversation(lang,'hub',{simple:true}),t=controlT(lang);try{await h.button(t('communityBoardNewPost'));assert.equal(h.renderer.root.findAllByProps({id:'community-board-description'}).length,1);assert.equal(h.renderer.root.findAllByProps({id:'community-board-area'}).length,0);assert.equal(h.renderer.root.findAllByType('select').length,0);assert.equal(h.renderer.root.findAllByType('button').filter(n=>n.props['aria-pressed']!==undefined).length,0);assert.ok(h.renderer.root.findAllByType('button').some(n=>communityNodeText(n).trim()===t('communityBoardAddPhoto')));await h.button('+ '+t('communityBoardMoreOptions'));assert.equal(h.renderer.root.findByProps({id:'community-board-area'}).props.value,'QA Own district');assert.equal(h.renderer.root.findByType('select').props.value,'seed');assert.equal(h.renderer.root.findAllByType('button').filter(n=>n.props['aria-pressed']!==undefined).length,3);await h.change('community-board-description','QA simple post');await h.button(t('communityBoardPost'));assert.deepEqual(h.calls.posts,[{category:'seed',kind:'have',description:'QA simple post',photo_url:null,area_text:'QA Own district'}]);}finally{await h.dispose();}}
 });
-
-test('Messages thread: Simple keeps the conversation and the send box, and tucks report/block behind a small More disclosure that never removes it', () => {
-  assert.match(
-    THREAD,
-    /\{simple \? \(\s*<button\s*\n\s*onClick=\{\(\) => setMoreOpen\(\(s\) => !s\)\}/,
-    'Simple must show a More control in the header instead of the direct Flag/report button',
-  );
-  assert.match(
-    THREAD,
-    /\) : \(\s*<button\s*\n\s*onClick=\{\(\) => setReportOpen\(\(s\) => !s\)\}\s*\n\s*aria-label=\{t\('communityReportButton'\)\}/,
-    'All tools must keep the direct Flag/report button exactly as before',
-  );
-  assert.match(
-    THREAD,
-    /\{simple && moreOpen && \(\s*<div className="flex justify-end"[\s\S]{0,400}<Flag size=\{13\} \/> \{t\('communityReportButton'\)\}/,
-    'the More disclosure must reveal a real Report control, not just a label',
-  );
-  // The send box itself (input + Send button) must not be gated by simple at all.
-  assert.doesNotMatch(THREAD, /\{!simple[\s\S]{0,60}placeholder=\{t\('communityMessageInputPlaceholder'\)\}/, 'the message input must not be hidden in Simple');
-  assert.match(THREAD, /onClick=\{handleSend\}[\s\S]{0,40}aria-label=\{sending/, 'the Send button must remain reachable and ungated by simple in both modes');
+test('Messages thread: Simple keeps the conversation and the send box, and tucks report/block behind a small More disclosure that never removes it',async()=>{
+ for(const lang of langs){const h=await actualCommunityConversation(lang,'thread',{simple:true}),t=controlT(lang);try{assert.ok(h.text().includes('QA received message'));assert.equal(h.renderer.root.findAllByProps({'aria-label':t('communityReportButton')}).length,0);assert.equal(h.renderer.root.findAllByProps({type:'text'}).length,1);await h.button(t('communityMoreLabel'));await h.button(t('communityReportButton'));assert.equal(h.renderer.root.findAllByType('textarea').length,1);await h.body('QA simple reply');await h.button(t('communitySend'));assert.deepEqual(h.calls.sends,[{id:'qa-thread',text:'QA simple reply'}]);await h.level(false);assert.ok(h.renderer.root.findAllByProps({'aria-label':t('communityReportButton')}).some(n=>typeof n.props.onClick==='function'));}finally{await h.dispose();}}
 });
-
-test('Messages thread: per-message timestamps (metadata not needed to read and reply) are hidden in Simple', () => {
-  assert.match(
-    THREAD,
-    /\{!simple && \(\s*<div className="font-sans" style=\{\{ fontSize: 12,[\s\S]{0,200}\{timeAgo\(m\.created_at, lang\)\}/,
-    'per-message timeAgo must be gated by !simple',
-  );
+test('Messages thread: per-message timestamps (metadata not needed to read and reply) are hidden in Simple',async()=>{
+ for(const lang of langs){const h=await actualCommunityConversation(lang,'thread',{simple:true}),t=controlT(lang);try{const time=communityTimeAgo(h.messages[0].created_at,lang,t,true,h.now);assert.ok(!h.text().includes(time));assert.ok(h.text().includes(h.messages[0].body));await h.level(false);assert.ok(h.text().includes(time));assert.equal(h.renderer.root.findAllByProps({type:'text'}).length,1);}finally{await h.dispose();}}
 });
-
-test('Other farmer profile: Simple shows name, place and crops plainly, with a clear Send action, and tucks bio/photos/report behind one More disclosure', () => {
-  assert.match(PROFILE, /\{simple && \(\s*<button\s*\n\s*type="button"\s*\n\s*onClick=\{\(\) => setMoreOpen\(\(s\) => !s\)\}/, 'a More toggle must exist, shown only in Simple');
-  assert.match(PROFILE, /\{\(!simple \|\| moreOpen\) && profile\.bio && \(/, 'bio must be gated behind the More disclosure in Simple');
-  assert.match(PROFILE, /\{\(!simple \|\| moreOpen\) && profile\.photos\?\.length > 0 && \(/, 'photos must be gated behind the More disclosure in Simple');
-  assert.match(PROFILE, /\{\(!simple \|\| moreOpen\) && \(\s*<button\s*\n\s*onClick=\{\(\) => setReportOpen\(\(s\) => !s\)\}/, 'the Report button must be gated behind the More disclosure in Simple, never removed');
-  // Crops and the Send-a-message action must not be gated by simple/moreOpen at all.
-  assert.doesNotMatch(PROFILE, /\{\(!simple \|\| moreOpen\)[\s\S]{0,40}profile\.crops/, 'crops must always be visible, not tucked behind More');
-  assert.match(PROFILE, /onClick=\{handleMessage\}[\s\S]{0,40}disabled=\{messaging\}/, 'the Send a message button must remain reachable and ungated by simple in both modes');
+test('Other farmer profile: Simple shows name, place and crops plainly, with a clear Send action, and tucks bio/photos/report behind one More disclosure',async()=>{
+ for(const lang of langs){const h=await actualCommunityMember(lang,{simple:true}),t=controlT(lang);try{assert.ok(h.text().includes(h.profile.display_name));assert.ok(h.text().includes(h.profile.area_text));assert.ok(h.text().includes(h.profile.crops[0]));assert.ok(h.renderer.root.findAllByType('button').some(n=>communityNodeText(n).trim()===t('communityMessageButton')));assert.ok(!h.text().includes(h.profile.bio));assert.equal(h.renderer.root.findAllByType('img').length,1);assert.ok(!h.renderer.root.findAllByType('button').some(n=>communityNodeText(n).trim()===t('communityReportButton')));await h.button(t('communityMoreLabel'));assert.ok(h.text().includes(h.profile.bio));assert.equal(h.renderer.root.findAllByType('img').length,h.profile.photos.length+1);await h.button(t('communityReportButton'));assert.equal(h.renderer.root.findAllByType('textarea').length,1);await h.button(t('communityLessLabel'));assert.ok(!h.text().includes(h.profile.bio));assert.ok(h.text().includes(h.profile.crops[0]));}finally{await h.dispose();}}
 });
-
-test('the new shared More/Less labels exist in English and have an isiZulu draft', () => {
-  for (const key of ['communityMoreLabel', 'communityLessLabel']) {
-    assert.match(I18N, new RegExp(`^  ${key}: '[^']+',`, 'm'), `${key} must exist in the English dictionary`);
-    assert.match(ZU, new RegExp(`^  ${key}: "[^"]+",`, 'm'), `${key} must have an isiZulu draft`);
-  }
+test('the new shared More/Less labels exist in English and have an isiZulu draft',()=>{
+ for(const key of['communityMoreLabel','communityLessLabel']){assert.match(read('lib/i18n.tsx'),new RegExp(`^  ${key}: '[^']+',`,'m'));assert.match(read('lib/locales/zu.ts'),new RegExp(`^  ${key}: "[^"]+",`,'m'));assert.notEqual(controlT('zu')(key),controlT('en')(key));}
 });

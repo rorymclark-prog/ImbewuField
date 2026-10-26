@@ -77,3 +77,43 @@ export function recordsDate(lang: string, date: Date, withYear: boolean): string
   const base = `${String(date.getDate()).padStart(2, '0')} ${recordsMonthShort(lang, date.getMonth() + 1)}`;
   return withYear ? `${base} ${date.getFullYear()}` : base;
 }
+
+
+/** Existing diagram month-range parser, shared with report tables so both keep the same months. */
+export function recordsMonthRangeIndices(label:string|undefined):number[] {
+  const match=/^\s*([A-Za-z]{3})[a-z]*\s*[–—-]\s*([A-Za-z]{3})[a-z]*\s*$/.exec(label??'');
+  if(!match)return [];
+  const at=(word:string)=>ENGLISH_SHORT.findIndex(month=>month.toLowerCase()===word.toLowerCase());
+  const from=at(match[1]),to=at(match[2]);
+  if(from<0||to<0)return [];
+  const months:number[]=[];
+  for(let i=from;months.length<12;i=(i+1)%12){months.push(i);if(i===to)break;}
+  return months;
+}
+
+/** Unreviewed AI drafts for source season values; calendar month identities never change. */
+export const RECORDS_SEASON_COPY:readonly {english:string;zu:string;st:string;ts:string;ve:string}[]=[
+  {
+    "english": "year-round",
+    "zu": "unyaka wonke",
+    "st": "selemo kaofela",
+    "ts": "lembe hinkwaro",
+    "ve": "ṅwaha woṱhe"
+  },
+  {
+    "english": "none",
+    "zu": "akukho",
+    "st": "ha ho letho",
+    "ts": "ku hava",
+    "ve": "a hu na tshithu"
+  }
+];
+
+/** Recognised source seasons only; a farmer's unknown recorded wording is returned verbatim. */
+export function recordsSeasonLabel(language:string,value:string):string {
+  if(!hasMonthNames(language))return value;
+  const named=RECORDS_SEASON_COPY.find(row=>row.english===value);
+  if(named)return named[language];
+  const months=recordsMonthRangeIndices(value);
+  return months.length?`${recordsMonthShort(language,months[0]+1)}–${recordsMonthShort(language,months[months.length-1]+1)}`:value;
+}

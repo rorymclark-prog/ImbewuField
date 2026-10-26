@@ -1,12 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useLanguage } from '@/lib/i18n';
+import { allowanceResetLabel,fillAccountText,isAccountDraftLanguage,type AccountCopy } from '@/lib/account-copy';
 import { Sparkles } from 'lucide-react';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import type { AiAllowance as Allowance } from '@/lib/ai-budget';
 
 /** "AI this month" — how much of the monthly allowance is left, and when it refills. */
-export default function AiAllowance({ copy }: { copy: (en: string, zu: string) => string }) {
+export default function AiAllowance({ copy }: { copy: AccountCopy }) {
+  const {lang,t}=useLanguage();
   const [a, setA] = useState<Allowance | null>(null);
   useEffect(() => {
     let live = true;
@@ -19,7 +22,11 @@ export default function AiAllowance({ copy }: { copy: (en: string, zu: string) =
   }, []);
   if (!a || a.kind !== 'user') return null;
   const used = a.capZar > 0 ? Math.min(1, a.spentZar / a.capZar) : 1;
-  const resets = new Date(`${a.resetsOn}T00:00:00Z`).toLocaleDateString(undefined, { day: 'numeric', month: 'long' });
+  const resets = allowanceResetLabel(lang,a.resetsOn);
+  const full = "This month's full AI allowance is used. AI still works, on a simpler model, until {date}.";
+  const remaining = 'R{remaining} of R{cap} left. Refills on {date}.';
+  const values = {remaining:a.remainingZar.toFixed(2),cap:a.capZar.toFixed(2),date:resets};
+  const source = fillAccountText(a.capped?full:remaining,{...values,date:allowanceResetLabel('en',a.resetsOn)});
   return (
     <div className="rounded-2xl px-4 py-4 space-y-2" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
       <div className="flex items-center gap-2 text-sm font-display" style={{ color: 'var(--text-primary)' }}>
@@ -32,11 +39,10 @@ export default function AiAllowance({ copy }: { copy: (en: string, zu: string) =
         <div className="h-full rounded-full" style={{ width: `${used * 100}%`, background: a.capped ? 'var(--gold)' : 'var(--emerald)' }} />
       </div>
       <p className="text-xs font-sans" style={{ color: 'var(--text-secondary)' }}>
-        {a.capped
-          ? copy(`This month's full AI allowance is used. AI still works, on a simpler model, until ${resets}.`,
-                 `Isabelo se-AI sale nyanga sesiphelile. I-AI isasebenza, ngohlobo olulula, kuze kube ngu-${resets}.`)
-          : copy(`R${a.remainingZar.toFixed(2)} of R${a.capZar.toFixed(2)} left. Refills on ${resets}.`,
-                 `Kusele u-R${a.remainingZar.toFixed(2)} ku-R${a.capZar.toFixed(2)}. Kugcwaliswa ngo-${resets}.`)}
+        <span lang={lang}>{a.capped
+          ? copy(full,'Isabelo se-AI sale nyanga sesiphelile. I-AI isasebenza, ngohlobo olulula, kuze kube ngu-{date}.',values)
+          : copy(remaining,'Kusele u-R{remaining} ku-R{cap}. Kugcwaliswa ngo-{date}.',values)}</span>
+        {isAccountDraftLanguage(lang)&&<small lang="en" style={{display:'block',fontSize:12,lineHeight:1.4}}><span lang={lang}>{t('offlineSourceLabel')}: </span>{source}</small>}
       </p>
     </div>
   );
