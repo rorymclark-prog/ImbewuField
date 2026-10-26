@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 October 2026', sha: 'd38b5ea4b', changes: [
+    'All nine map sheets use the same legend box, fonts and spacing.',
+    'New drawings keep the legend on the right; your saved maps stay available.',
+    'Long map headings wrap inside their legend box.',
+  ] },
   { when: '26 October 2026', sha: '12aee61ba', changes: [
     'Farm reports compare past months, seasons and years using your recorded entries.',
     'Visit, training and programme reports compare recorded delivery across periods.',
