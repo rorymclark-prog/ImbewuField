@@ -1,0 +1,1415 @@
+{
+  "base": "244b0fabfbc0114baf05fd241ff6f56934c7a480",
+  "scope": "All complete original animal legal source statements; faithful translation drafts, not a current-law certification. Source text and citations retained.",
+  "sourceCount": 55,
+  "rows": [
+    {
+      "english": "Register with the Department before beekeeping. Registration lasts 24 months from registration or renewal and must be renewed when it expires.",
+      "bindings": [
+        {
+          "enterpriseId": "bees",
+          "field": "legal",
+          "index": 0,
+          "source": {
+            "quote": "Every person who carries out any beekeeping activities shall register with the Department. ... Registration shall be for a period of twenty four months from the date of registration or renewal of registration and shall be renewable on expiry of the registration period.",
+            "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+            "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019, control measures 2(1) and 2(4)",
+            "page": 4
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "A beekeeper who fails to renew registration at expiry will be deregistered and face penalties under the Act.",
+      "bindings": [
+        {
+          "enterpriseId": "bees",
+          "field": "legal",
+          "index": 1,
+          "source": {
+            "quote": "In the case of failure to comply with control measure 2(4), a registered beekeeper shall be deregistered and shall face penalties in terms of the Act.",
+            "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+            "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019, control measure 2(5)",
+            "page": 4
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Beekeeping activities and hired beekeeping services require a valid registration certificate. Check the certificate before using a beekeeper.",
+      "bindings": [
+        {
+          "enterpriseId": "bees",
+          "field": "legal",
+          "index": 2,
+          "source": {
+            "quote": "No person may conduct any beekeeping activities unless they are in possession of a valid registration certificate issued in terms of control measure 2 (1). ... No person may utilise the services of a beekeeper for the purposes of carrying out any beekeeping activities unless the beekeeper is in possession of a valid registration certificate issued in terms of control measure 2 (1).",
+            "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+            "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019, control measures 2(8) and 2(9)",
+            "page": 5
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Every beehive must be clearly and legibly marked with the beekeeper's registration number.",
+      "bindings": [
+        {
+          "enterpriseId": "bees",
+          "field": "legal",
+          "index": 3,
+          "source": {
+            "quote": "Every beekeeper must mark his beehives to display clearly and legibly the registration number allocated to him in terms of control measure 2 (3).",
+            "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+            "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019",
+            "page": 5
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Keep written records of colonies, apiary locations, diseases, disease-control measures and colony losses with their reasons.",
+      "bindings": [
+        {
+          "enterpriseId": "bees",
+          "field": "legal",
+          "index": 4,
+          "source": {
+            "quote": "Every beekeeper shall, during the period of registration, keep written records of the— (a) number of colonies kept; (b) location of every apiary; (c) presence of any notifiable or other disease in the apiaries kept by the beekeeper; (d) management measures used to control any detected disease; and (e) number of colonies that ceased to exist, and the reasons for the loss.",
+            "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+            "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019",
+            "page": 5
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Do not move honeybees across the Cape bee line, or keep Cape bees north of it, without written approval.",
+      "bindings": [
+        {
+          "enterpriseId": "bees",
+          "field": "legal",
+          "index": 5,
+          "source": {
+            "quote": "No person may- (a)remove honey-bees across the line; ... (b)remove or keep Cape bees north of the line; (c)remove any Capensis-infected colony, without the prior written approval of executive officer.",
+            "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+            "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019",
+            "page": 6
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Report any suspected notifiable disease (American foulbrood is listed); officials can order an infected colony destroyed.",
+      "bindings": [
+        {
+          "enterpriseId": "bees",
+          "field": "legal",
+          "index": 6,
+          "source": {
+            "quote": "Every beekeeper shall notify the executive officer or area official of the presence or suspected presence of any notifiable disease or Capensis-infected colony ... instruct a beekeeper to destroy a colony, beehive or bee product.",
+            "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/PlantProductionHealth/PlantHealth/Legislation-and-Regulations/Regulations/Control-Measures-Honey-Bees/Consolidated%20Control%20Measures%20relating%20to%20honey-bees.pdf",
+            "doc": "Department of Agriculture: Control Measures relating to honey-bees R.858 of 2013, consolidated with R.1511 of 22 November 2019",
+            "page": 6
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: state Veterinary Services enforce isolation and movement restrictions.",
+      "bindings": [
+        {
+          "enterpriseId": "cattle-beef",
+          "field": "legal",
+          "index": 0,
+          "source": {
+            "quote": "FMD is classified as a controlled animal disease under the Animal Diseases Act, 1984 (Act No. 35 of 1984), which mandates specific control measures, such as isolation and movement restrictions, enforced by Veterinary Services.",
+            "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+            "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+            "page": null
+          }
+        },
+        {
+          "enterpriseId": "cattle-dairy",
+          "field": "legal",
+          "index": 0,
+          "source": {
+            "quote": "FMD is classified as a controlled animal disease under the Animal Diseases Act, 1984 (Act No. 35 of 1984), which mandates specific control measures, such as isolation and movement restrictions, enforced by Veterinary Services.",
+            "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+            "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+            "page": null
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Every cattle owner must register an official identification mark and brand or mark their cattle with it, under the Animal Identification Act.",
+      "bindings": [
+        {
+          "enterpriseId": "cattle-beef",
+          "field": "legal",
+          "index": 1,
+          "source": {
+            "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+            "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+            "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+            "page": 4
+          }
+        },
+        {
+          "enterpriseId": "cattle-dairy",
+          "field": "legal",
+          "index": 1,
+          "source": {
+            "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+            "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+            "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+            "page": 4
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Any suspected or confirmed brucellosis-related abortion in cattle must be reported to the State Veterinary office, as part of the national bovine brucellosis control scheme under the Animal Diseases Act.",
+      "bindings": [
+        {
+          "enterpriseId": "cattle-beef",
+          "field": "legal",
+          "index": 2,
+          "source": {
+            "quote": "all suspected and confirmed cases of abortion must be reported to the nearest State Veterinary office for zoo-sanitary actions as prescribed in the national bovine brucellosis control scheme",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10784229/",
+            "doc": "Marumo, Hlokwe & Kayoka-Kabongo, Seroprevalence of brucellosis in communal and smallholder cattle farming in North West Province, South Africa, Onderstepoort Journal of Veterinary Research (PMC10784229)",
+            "page": null
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "No animal may be slaughtered anywhere but a registered abattoir, with the exception below.",
+      "bindings": [
+        {
+          "enterpriseId": "cattle-beef",
+          "field": "legal",
+          "index": 3,
+          "source": {
+            "quote": "slaughter any animal at any place other than an abattoir;",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.7(1)(a)",
+            "page": 6
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Slaughter for the farmer's own household consumption, or for cultural or religious purposes, is exempt from the abattoir rule.",
+      "bindings": [
+        {
+          "enterpriseId": "cattle-beef",
+          "field": "legal",
+          "index": 4,
+          "source": {
+            "quote": "Subsection (1) does not apply to slaughter for own consumption or for cultural\nor religious purposes.",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+            "page": 6
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Dairy farmers are legally required to test their herds for bovine TB, mainly because of export requirements, so most dairy cattle in South Africa are tested.",
+      "bindings": [
+        {
+          "enterpriseId": "cattle-dairy",
+          "field": "legal",
+          "index": 2,
+          "source": {
+            "quote": "Dairy farmers are required by legislation to test their herds for TB, this mainly as a result of export requirements, so the majority of dairy cattle are tested.",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10369683/",
+            "doc": "Bovine tuberculosis / dairy herd testing study, PMC10369683",
+            "page": null
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Any suspected or confirmed brucellosis-related abortion in cattle must be reported to the State Veterinary office, under the national bovine brucellosis control scheme.",
+      "bindings": [
+        {
+          "enterpriseId": "cattle-dairy",
+          "field": "legal",
+          "index": 3,
+          "source": {
+            "quote": "all suspected and confirmed cases of abortion must be reported to the nearest State Veterinary office for zoo-sanitary actions as prescribed in the national bovine brucellosis control scheme",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10784229/",
+            "doc": "Marumo, Hlokwe & Kayoka-Kabongo, Seroprevalence of brucellosis in communal and smallholder cattle farming in North West Province, South Africa, Onderstepoort Journal of Veterinary Research (PMC10784229)",
+            "page": null
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "A cull cow may be slaughtered only at an abattoir, except for the farmer's own consumption or for cultural or religious purposes.",
+      "bindings": [
+        {
+          "enterpriseId": "cattle-dairy",
+          "field": "legal",
+          "index": 4,
+          "source": {
+            "quote": "slaughter any animal at any place other than an abattoir; ... Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+            "page": 6
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "An owner or manager whose animals are, or may be, infected with a controlled animal disease must report it to the state veterinary director immediately.",
+      "bindings": [
+        {
+          "enterpriseId": "chicken-broiler",
+          "field": "legal",
+          "index": 0,
+          "source": {
+            "quote": "have become or can reasonably be suspected of having become infected with any controlled\nanimal disease, immediately report such incidence in the prescribed manner to the director.",
+            "url": "https://www.eccogta.gov.za/wp-content/uploads/2025/01/Animal-Diseases-Act-No.-35-of-1984.pdf",
+            "doc": "Animal Diseases Act 35 of 1984, s.11(1)(b)(ii)",
+            "page": 9
+          }
+        },
+        {
+          "enterpriseId": "chicken-indigenous",
+          "field": "legal",
+          "index": 0,
+          "source": {
+            "quote": "have become or can reasonably be suspected of having become infected with any controlled\nanimal disease, immediately report such incidence in the prescribed manner to the director.",
+            "url": "https://www.eccogta.gov.za/wp-content/uploads/2025/01/Animal-Diseases-Act-No.-35-of-1984.pdf",
+            "doc": "Animal Diseases Act 35 of 1984, s.11(1)(b)(ii)",
+            "page": 9
+          }
+        },
+        {
+          "enterpriseId": "chicken-layer",
+          "field": "legal",
+          "index": 0,
+          "source": {
+            "quote": "have become or can reasonably be suspected of having become infected with any controlled\nanimal disease, immediately report such incidence in the prescribed manner to the director.",
+            "url": "https://www.eccogta.gov.za/wp-content/uploads/2025/01/Animal-Diseases-Act-No.-35-of-1984.pdf",
+            "doc": "Animal Diseases Act 35 of 1984, s.11(1)(b)(ii)",
+            "page": 9
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Newcastle disease and notifiable avian influenza are on the state list of controlled and notifiable animal diseases.",
+      "bindings": [
+        {
+          "enterpriseId": "chicken-broiler",
+          "field": "legal",
+          "index": 1,
+          "source": {
+            "quote": "Newcastle disease\n• Notifiable Avian Influenza (NAI)",
+            "url": "https://www.elsenburg.com/wp-content/uploads/2023/07/Print-CONTROLLED-AND-NOTIFIABLE-ANIMAL-DISEASES.pdf",
+            "doc": "Department of Agriculture, Forestry and Fisheries, Controlled and Notifiable Animal Diseases (factsheet)",
+            "page": 1
+          }
+        },
+        {
+          "enterpriseId": "chicken-indigenous",
+          "field": "legal",
+          "index": 1,
+          "source": {
+            "quote": "Newcastle disease\n• Notifiable Avian Influenza (NAI)",
+            "url": "https://www.elsenburg.com/wp-content/uploads/2023/07/Print-CONTROLLED-AND-NOTIFIABLE-ANIMAL-DISEASES.pdf",
+            "doc": "Department of Agriculture, Forestry and Fisheries, Controlled and Notifiable Animal Diseases (factsheet)",
+            "page": 1
+          }
+        },
+        {
+          "enterpriseId": "chicken-layer",
+          "field": "legal",
+          "index": 1,
+          "source": {
+            "quote": "Newcastle disease\n• Notifiable Avian Influenza (NAI)",
+            "url": "https://www.elsenburg.com/wp-content/uploads/2023/07/Print-CONTROLLED-AND-NOTIFIABLE-ANIMAL-DISEASES.pdf",
+            "doc": "Department of Agriculture, Forestry and Fisheries, Controlled and Notifiable Animal Diseases (factsheet)",
+            "page": 1
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "No animal may be slaughtered anywhere but an abattoir, with the exceptions below.",
+      "bindings": [
+        {
+          "enterpriseId": "chicken-broiler",
+          "field": "legal",
+          "index": 2,
+          "source": {
+            "quote": "slaughter any animal at any place other than an abattoir;",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.7(1)(a)",
+            "page": 6
+          }
+        },
+        {
+          "enterpriseId": "chicken-indigenous",
+          "field": "legal",
+          "index": 2,
+          "source": {
+            "quote": "slaughter any animal at any place other than an abattoir;",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.7(1)(a)",
+            "page": 6
+          }
+        },
+        {
+          "enterpriseId": "chicken-layer",
+          "field": "legal",
+          "index": 2,
+          "source": {
+            "quote": "slaughter any animal at any place other than an abattoir;",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.7(1)(a)",
+            "page": 6
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Slaughter for your own household, or for cultural or religious purposes, is exempt from the abattoir rule.",
+      "bindings": [
+        {
+          "enterpriseId": "chicken-broiler",
+          "field": "legal",
+          "index": 3,
+          "source": {
+            "quote": "Subsection (1) does not apply to slaughter for own consumption or for cultural\nor religious purposes.",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+            "page": 6
+          }
+        },
+        {
+          "enterpriseId": "chicken-indigenous",
+          "field": "legal",
+          "index": 3,
+          "source": {
+            "quote": "Subsection (1) does not apply to slaughter for own consumption or for cultural\nor religious purposes.",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+            "page": 6
+          }
+        },
+        {
+          "enterpriseId": "chicken-layer",
+          "field": "legal",
+          "index": 3,
+          "source": {
+            "quote": "Subsection (1) does not apply to slaughter for own consumption or for cultural\nor religious purposes.",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+            "page": 6
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ducks are one of the domesticated animal species listed in the Meat Safety Act, so its rules on registered abattoirs and hygiene apply to them.",
+      "bindings": [
+        {
+          "enterpriseId": "duck",
+          "field": "legal",
+          "index": 0,
+          "source": {
+            "quote": "Donkey Duck Farmed deer Fowl",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, Schedule 1 (Animals to which this Act applies)",
+            "page": 16
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ducks slaughtered to be sold must be slaughtered at a registered abattoir; slaughter for the farmer's own consumption is exempt but that meat may not be sold.",
+      "bindings": [
+        {
+          "enterpriseId": "duck",
+          "field": "legal",
+          "index": 1,
+          "source": {
+            "quote": "slaughter any animal at any place other than an abattoir; ... (2) (a) Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.7",
+            "page": 6
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "At the abattoir, ducks must be handled humanely during loading, transport, offloading, housing, immobilising and killing, under the Animals Protection Act.",
+      "bindings": [
+        {
+          "enterpriseId": "duck",
+          "field": "legal",
+          "index": 2,
+          "source": {
+            "quote": "an animal presented for slaughter at an abattoir must be handled humanely during loading, transportation, off-loading, housing, immobilizing and killing as prescribed in accordance with the requirements of the Animals Protection Act, 1962 (Act No. 71 of 1962)",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.9",
+            "page": 7
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ducks are birds/poultry, so an outbreak of avian influenza in a duck flock is a controlled animal disease under the Animal Diseases Act and must be reported to the state vet immediately.",
+      "bindings": [
+        {
+          "enterpriseId": "duck",
+          "field": "legal",
+          "index": 3,
+          "source": {
+            "quote": "It is also a controlled animal disease listed under the Animal Diseases Act, 1984 (Act No. 35 of 1984).",
+            "url": "https://www.westerncape.gov.za/agriculture/files/wcg-blob-files?file=2024-07%2Favian-infl_0.pdf&type=file",
+            "doc": "Western Cape Department of Agriculture, Avian Influenza (Bird Flu) factsheet",
+            "page": 2
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The indigenous Mozambique Tilapia (O. mossambicus) is not a listed invasive species and may be farmed without an alien-species permit; the faster-growing Nile Tilapia (O. niloticus) is.",
+      "bindings": [
+        {
+          "enterpriseId": "fish-tilapia",
+          "field": "legal",
+          "index": 0,
+          "source": {
+            "quote": "Legality of Production Allowed Allowed with Permits",
+            "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+            "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015), Table 8-3 (Mozambique vs. Nile Tilapia)",
+            "page": 69
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Nile Tilapia (Oreochromis niloticus) is a nationally listed invasive fish species: Category 1b inside National Parks, Provincial Reserves, Mountain Catchment Areas and Forestry Reserves, and Category 3 in all other areas.",
+      "bindings": [
+        {
+          "enterpriseId": "fish-tilapia",
+          "field": "legal",
+          "index": 1,
+          "source": {
+            "quote": "Oreochromis niloticus Nile tilapia See below\na. 1b in National Parks, Provincial Reserves, Mountain Catchment Areas and Forestry      \nReserves declared in terms of the Protected Areas Act. \nb. 3 for all other discrete catchment systems in which it occurs.",
+            "url": "https://invasives.org.za/wp-content/uploads/2022/05/South-Africa-Listed-Invasive-Species-A5-Booklet.pdf",
+            "doc": "Dept. of Environmental Affairs / invasives.org.za, National Listed Invasive Species (NEMBA AIS Regulations booklet), List 7 (National List of Invasive Fresh-water Fish Species)",
+            "page": 32
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Outside protected areas Nile tilapia is Category 3: it may remain in prescribed areas or provinces, but further propagation or trade is prohibited.",
+      "bindings": [
+        {
+          "enterpriseId": "fish-tilapia",
+          "field": "legal",
+          "index": 2,
+          "source": {
+            "quote": "Category 3:  Invasive species which may remain in prescribed areas or provinces. Further  \n   planting, propagation or trade, is however prohibited. Plants in riparian areas are Cat 1b.",
+            "url": "https://invasives.org.za/wp-content/uploads/2022/05/South-Africa-Listed-Invasive-Species-A5-Booklet.pdf",
+            "doc": "Dept. of Environmental Affairs / invasives.org.za, National Listed Invasive Species (NEMBA AIS Regulations booklet)",
+            "page": 3
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Nile Tilapia has been listed under the NEMBA Alien and Invasive Species Regulations as requiring a permit to produce.",
+      "bindings": [
+        {
+          "enterpriseId": "fish-tilapia",
+          "field": "legal",
+          "index": 3,
+          "source": {
+            "quote": "Nile Tila pia has now been included in \nthe latest NEMBA legislation as an alien and invasive species requiring a permit for production",
+            "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+            "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015)",
+            "page": 69
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Producing an alien or invasive species (such as Nile Tilapia) is prohibited in areas designated under the Protected Areas Act and the Fish Sanctuary Act; a permit is required to produce it elsewhere.",
+      "bindings": [
+        {
+          "enterpriseId": "fish-tilapia",
+          "field": "legal",
+          "index": 4,
+          "source": {
+            "quote": "Production involving the \nuse of an alien and/or \ninvasive species is \nprohibited in areas \ndesignated by the \nProtected Areas Act and \nthe Fish Sanctuary Act. A \npermit is required for \nproduction in other areas.",
+            "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+            "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015)",
+            "page": 74
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Producing tilapia in South Africa requires a water use licence under the National Water Act.",
+      "bindings": [
+        {
+          "enterpriseId": "fish-tilapia",
+          "field": "legal",
+          "index": 5,
+          "source": {
+            "quote": "Production of Tilapia in South Africa will require a \nwater use license.",
+            "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+            "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015)",
+            "page": 75
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: veterinary services enforce isolation and movement restrictions, and a suspected case must be reported.",
+      "bindings": [
+        {
+          "enterpriseId": "goat-dairy",
+          "field": "legal",
+          "index": 0,
+          "source": {
+            "quote": "FMD is classified as a controlled animal disease under the Animal Diseases Act, 1984 (Act No. 35 of 1984), which mandates specific control measures, such as isolation and movement restrictions, enforced by Veterinary Services.",
+            "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+            "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+            "page": null
+          }
+        },
+        {
+          "enterpriseId": "goat-indigenous",
+          "field": "legal",
+          "index": 0,
+          "source": {
+            "quote": "FMD is classified as a controlled animal disease under the Animal Diseases Act, 1984 (Act No. 35 of 1984), which mandates specific control measures, such as isolation and movement restrictions, enforced by Veterinary Services.",
+            "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+            "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+            "page": null
+          }
+        },
+        {
+          "enterpriseId": "goat-meat",
+          "field": "legal",
+          "index": 0,
+          "source": {
+            "quote": "FMD is classified as a controlled animal disease under the Animal Diseases Act, 1984 (Act No. 35 of 1984), which mandates specific control measures, such as isolation and movement restrictions, enforced by Veterinary Services.",
+            "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+            "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+            "page": null
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Inside a declared FMD-affected zone, goats and their products (including milk) cannot be moved into, out of, or within the zone without a state veterinary movement permit and compliance with its conditions.",
+      "bindings": [
+        {
+          "enterpriseId": "goat-dairy",
+          "field": "legal",
+          "index": 1,
+          "source": {
+            "quote": "No cloven-hoofed animals, their products, or genetic material may be moved from, to, or within the DMA unless authorised by a state veterinary permit and in full compliance with the stipulated conditions of such [a] permit.",
+            "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+            "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+            "page": null
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Every goat owner must register an official identification mark and mark their goats with it, under the Animal Identification Act.",
+      "bindings": [
+        {
+          "enterpriseId": "goat-dairy",
+          "field": "legal",
+          "index": 2,
+          "source": {
+            "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+            "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+            "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+            "page": 4
+          }
+        },
+        {
+          "enterpriseId": "goat-meat",
+          "field": "legal",
+          "index": 2,
+          "source": {
+            "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+            "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+            "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+            "page": 4
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "A goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act (relevant when culled dairy does or male kids are sold for meat); slaughtering for the farmer's own consumption, or for cultural/religious purposes, is exempt but that meat may not then be sold.",
+      "bindings": [
+        {
+          "enterpriseId": "goat-dairy",
+          "field": "legal",
+          "index": 3,
+          "source": {
+            "quote": "Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+            "page": 6
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Inside a declared FMD-affected zone, goats and their products cannot be moved into, out of, or within the zone without a state veterinary movement permit and compliance with its conditions.",
+      "bindings": [
+        {
+          "enterpriseId": "goat-indigenous",
+          "field": "legal",
+          "index": 1,
+          "source": {
+            "quote": "No cloven-hoofed animals, their products, or genetic material may be moved from, to, or within the DMA unless authorised by a state veterinary permit and in full compliance with the stipulated conditions of such [a] permit.",
+            "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+            "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+            "page": null
+          }
+        },
+        {
+          "enterpriseId": "goat-meat",
+          "field": "legal",
+          "index": 1,
+          "source": {
+            "quote": "No cloven-hoofed animals, their products, or genetic material may be moved from, to, or within the DMA unless authorised by a state veterinary permit and in full compliance with the stipulated conditions of such [a] permit.",
+            "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+            "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+            "page": null
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Every goat owner, including communal/smallholder owners, must register an official identification mark and mark their goats with it, under the Animal Identification Act.",
+      "bindings": [
+        {
+          "enterpriseId": "goat-indigenous",
+          "field": "legal",
+          "index": 2,
+          "source": {
+            "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+            "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+            "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+            "page": 4
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "A goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act; slaughtering it for the farmer's own consumption, or for cultural/religious purposes (including ceremonial slaughter, common with indigenous goats), is exempt from that rule, but that meat may not then be sold.",
+      "bindings": [
+        {
+          "enterpriseId": "goat-indigenous",
+          "field": "legal",
+          "index": 3,
+          "source": {
+            "quote": "Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+            "page": 6
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "A goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act; slaughtering it for the farmer's own consumption, or for cultural/religious purposes, is exempt from that rule, but that meat may not then be sold.",
+      "bindings": [
+        {
+          "enterpriseId": "goat-meat",
+          "field": "legal",
+          "index": 3,
+          "source": {
+            "quote": "Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+            "page": 6
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "African swine fever (ASF) is listed as a controlled animal disease pertaining to pigs under the Animal Diseases Act; warthogs and Ornithodorus ticks are carriers/vectors.",
+      "bindings": [
+        {
+          "enterpriseId": "pig-pork",
+          "field": "legal",
+          "index": 0,
+          "source": {
+            "quote": "Table 2   Controlled animal diseases (in terms of the Animal Disease Act, Act 35 of 1984) pertaining to pigs...African swine fever \n(ASF)...Carriers of ASF is warthog",
+            "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/10.pdf",
+            "doc": "ARC Climate-Smart Agriculture Training Manual, Module 10: Pig Production, Table 2",
+            "page": 15
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Foot-and-mouth disease (FMD) is also listed as a controlled animal disease pertaining to pigs under the Animal Diseases Act.",
+      "bindings": [
+        {
+          "enterpriseId": "pig-pork",
+          "field": "legal",
+          "index": 1,
+          "source": {
+            "quote": "Table 2   Controlled animal diseases (in terms of the Animal Disease Act, Act 35 of 1984) pertaining to pigs...Foot and mouth \ndisease (FMD)",
+            "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/10.pdf",
+            "doc": "ARC Climate-Smart Agriculture Training Manual, Module 10: Pig Production, Table 2",
+            "page": 15
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Swill (food waste) may not be fed to pigs unless it has been boiled for at least 60 minutes or sterilised by another equally effective method.",
+      "bindings": [
+        {
+          "enterpriseId": "pig-pork",
+          "field": "legal",
+          "index": 2,
+          "source": {
+            "quote": "Regulation 24 of the Animal Diseases Act, 1984 (Act 35 of 1984) prohibits the feeding of swill unless boiled for 60 min or sterilised by means of another efficient method",
+            "url": "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S1019-91282020000100012",
+            "doc": "Munzhelele et al., Investigation of African swine fever outbreaks in pigs outside the controlled areas of South Africa, 2012-2017 (Journal of the South African Veterinary Association, SciELO SA mirror)",
+            "page": null
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Pigs may only be moved into a biosecure compartment from another compartment that is officially certified/approved for that purpose.",
+      "bindings": [
+        {
+          "enterpriseId": "pig-pork",
+          "field": "legal",
+          "index": 3,
+          "source": {
+            "quote": "Only pigs certified to originate from another officially approved compartment are allowed to enter a compartment.",
+            "url": "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S1019-91282020000100012",
+            "doc": "Munzhelele et al., Investigation of African swine fever outbreaks in pigs outside the controlled areas of South Africa, 2012-2017 (Journal of the South African Veterinary Association, SciELO SA mirror)",
+            "page": null
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "A pig may not be slaughtered anywhere but a registered abattoir, except for own household consumption or cultural/religious purposes.",
+      "bindings": [
+        {
+          "enterpriseId": "pig-pork",
+          "field": "legal",
+          "index": 4,
+          "source": {
+            "quote": "slaughter any animal at any place other than an abattoir;",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.7(1)(a)",
+            "page": 6
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "A pig owner must apply to register an official identification mark and mark their pigs with it, under the Animal Identification Act.",
+      "bindings": [
+        {
+          "enterpriseId": "pig-pork",
+          "field": "legal",
+          "index": 5,
+          "source": {
+            "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+            "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+            "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+            "page": 4
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Rabbits are one of the domesticated animal species listed in the Meat Safety Act, so the Act's rules on abattoirs and hygiene apply to them, as they do to ducks and other listed species.",
+      "bindings": [
+        {
+          "enterpriseId": "rabbit",
+          "field": "legal",
+          "index": 0,
+          "source": {
+            "quote": "Pigeon Quail Rabbit Sheep Turkey",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, Schedule 1 (Animals to which this Act applies)",
+            "page": 16
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Rabbits slaughtered to be sold must be slaughtered at a registered abattoir; slaughter for the farmer's own consumption is exempt from this rule but the meat from it may not be sold.",
+      "bindings": [
+        {
+          "enterpriseId": "rabbit",
+          "field": "legal",
+          "index": 1,
+          "source": {
+            "quote": "slaughter any animal at any place other than an abattoir; ... (2) (a) Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.7",
+            "page": 6
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "At the abattoir, rabbits (like other listed animals) must be handled humanely during loading, transport, offloading, housing, immobilising and killing, under the Animals Protection Act.",
+      "bindings": [
+        {
+          "enterpriseId": "rabbit",
+          "field": "legal",
+          "index": 2,
+          "source": {
+            "quote": "an animal presented for slaughter at an abattoir must be handled humanely during loading, transportation, off-loading, housing, immobilizing and killing as prescribed in accordance with the requirements of the Animals Protection Act, 1962 (Act No. 71 of 1962)",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.9",
+            "page": 7
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The wild European rabbit (the same species as farmed New Zealand White/Californian rabbits) is only listed as an invasive species under NEMBA on South Africa's off-shore islands - it is not a listed/restricted species on the mainland.",
+      "bindings": [
+        {
+          "enterpriseId": "rabbit",
+          "field": "legal",
+          "index": 3,
+          "source": {
+            "quote": "28 Oryctolagus cuniculus European rabbit See below a. 1a for off-shore islands. b. Not listed elsewhere.",
+            "url": "https://invasives.org.za/wp-content/uploads/2022/05/South-Africa-Listed-Invasive-Species-A5-Booklet.pdf",
+            "doc": "South Africa's National Listed Invasive Species booklet (NEMBA Alien and Invasive Species Lists)",
+            "page": 27
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act; Veterinary Services enforce isolation and movement restrictions.",
+      "bindings": [
+        {
+          "enterpriseId": "sheep-mutton",
+          "field": "legal",
+          "index": 0,
+          "source": {
+            "quote": "FMD is classified as a controlled animal disease under the Animal Diseases Act, 1984 (Act No. 35 of 1984), which mandates specific control measures, such as isolation and movement restrictions, enforced by Veterinary Services.",
+            "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+            "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+            "page": null
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Inside a declared FMD zone, sheep and their products cannot be moved into, out of, or within it without a state veterinary permit.",
+      "bindings": [
+        {
+          "enterpriseId": "sheep-mutton",
+          "field": "legal",
+          "index": 1,
+          "source": {
+            "quote": "No cloven-hoofed animals, their products, or genetic material may be moved from, to, or within the DMA unless authorised by a state veterinary permit and in full compliance with the stipulated conditions of such [a] permit.",
+            "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+            "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+            "page": null
+          }
+        },
+        {
+          "enterpriseId": "sheep-wool",
+          "field": "legal",
+          "index": 1,
+          "source": {
+            "quote": "No cloven-hoofed animals, their products, or genetic material may be moved from, to, or within the DMA unless authorised by a state veterinary permit and in full compliance with the stipulated conditions of such [a] permit.",
+            "url": "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended",
+            "doc": "SAnews: KZN Foot and Mouth Disease boundaries extended (Dept of Agriculture statement)",
+            "page": null
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Sheep scab is a controlled disease by law: a suspected or positive case must be reported to the State Veterinarian immediately.",
+      "bindings": [
+        {
+          "enterpriseId": "sheep-mutton",
+          "field": "legal",
+          "index": 2,
+          "source": {
+            "quote": "Sheep scab is an extremely infectious disease, and by law, a positive case has to be immediately reported to the local State Veterinarian.",
+            "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/Research_and_Technology_Bulletin/Sheep-Scab.pdf",
+            "doc": "KZN Department of Agriculture and Rural Development, Research & Technology Bulletin 2017-18/01: Sheep Scab",
+            "page": 1
+          }
+        },
+        {
+          "enterpriseId": "sheep-wool",
+          "field": "legal",
+          "index": 2,
+          "source": {
+            "quote": "Sheep scab is an extremely infectious disease, and by law, a positive case has to be immediately reported to the local State Veterinarian.",
+            "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/Research_and_Technology_Bulletin/Sheep-Scab.pdf",
+            "doc": "KZN Department of Agriculture and Rural Development, Research & Technology Bulletin 2017-18/01: Sheep Scab",
+            "page": 1
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Against sheep scab, all small stock on the farm must be treated with a remedy registered under Act 36 of 1947, and infected sheep treated twice, eight to ten days apart.",
+      "bindings": [
+        {
+          "enterpriseId": "sheep-mutton",
+          "field": "legal",
+          "index": 3,
+          "source": {
+            "quote": "all small stock on the farm must be treated with a remedy that is registered for a specific breed under Law 36 of 1947. Infected sheep must be treated twice with an interval of eight to ten days.",
+            "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/Research_and_Technology_Bulletin/Sheep-Scab.pdf",
+            "doc": "KZN Department of Agriculture and Rural Development, Research & Technology Bulletin 2017-18/01: Sheep Scab",
+            "page": 3
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Every sheep owner must register an official identification mark and mark their sheep with it, under the Animal Identification Act.",
+      "bindings": [
+        {
+          "enterpriseId": "sheep-mutton",
+          "field": "legal",
+          "index": 4,
+          "source": {
+            "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+            "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+            "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+            "page": 4
+          }
+        },
+        {
+          "enterpriseId": "sheep-wool",
+          "field": "legal",
+          "index": 4,
+          "source": {
+            "quote": "Each owner of animals must- (a) apply for registration of an identification mark in terms of section 5 (1); (b) mark his or her animals in the prescribed manner",
+            "url": "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+            "doc": "Animal Identification Act 6 of 2002, s.7(1)",
+            "page": 4
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "A sheep may be slaughtered only at an abattoir, except for the farmer's own consumption or for cultural or religious purposes.",
+      "bindings": [
+        {
+          "enterpriseId": "sheep-mutton",
+          "field": "legal",
+          "index": 5,
+          "source": {
+            "quote": "slaughter any animal at any place other than an abattoir; ... Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+            "page": 6
+          }
+        },
+        {
+          "enterpriseId": "sheep-wool",
+          "field": "legal",
+          "index": 5,
+          "source": {
+            "quote": "slaughter any animal at any place other than an abattoir; ... Subsection (1) does not apply to slaughter for own consumption or for cultural or religious purposes.",
+            "url": "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+            "doc": "Meat Safety Act 40 of 2000, s.7(2)(a)",
+            "page": 6
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Despite foot-and-mouth disease (FMD) in South Africa, wool exports continue under the inactivation clause of the OIE (World Organisation for Animal Health) rules.",
+      "bindings": [
+        {
+          "enterpriseId": "sheep-wool",
+          "field": "legal",
+          "index": 0,
+          "source": {
+            "quote": "The foot and mouth disease (FMD) status for South Africa has not changed and wool exports are continuing under the inactivation clause of the OIE regulations.",
+            "url": "https://www.capewools.co.za/assets/annual_report/20202021annualreport.pdf",
+            "doc": "Cape Wools SA Annual Review 2020/2021",
+            "page": 8
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Wool from scab-infected sheep must be destroyed rather than sent to the buyer, where it would be marked as scab wool.",
+      "bindings": [
+        {
+          "enterpriseId": "sheep-wool",
+          "field": "legal",
+          "index": 3,
+          "source": {
+            "quote": "Wool from infected animals must be destroyed rather than send ing it to the buyer (i.e. BKB). If the wool is sent to the buyer, the wool will be marked as scab wool as it is heavier than normal wool.",
+            "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/Research_and_Technology_Bulletin/Sheep-Scab.pdf",
+            "doc": "KZN Department of Agriculture and Rural Development, Research & Technology Bulletin 2017-18/01: Sheep Scab",
+            "page": 3
+          }
+        }
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    }
+  ]
+}

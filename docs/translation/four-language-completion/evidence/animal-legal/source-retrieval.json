@@ -1,0 +1,23 @@
+{
+  "retrievedAt": "2026-10-26T03:10:52.023246+00:00",
+  "officialURL": "https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf",
+  "sha256": "4aa8653e3a1ec89844fa99242f8a139ba75af383249cdbed9dfda55000d71b50",
+  "printedPage": 71,
+  "PDFPage": 41,
+  "tableVisuallyInspected": true,
+  "limit": "This verifies the cited2020table, not latest2026permits or everylegalrequirement. No source/app edits applied yet.",
+  "otherReadSources": [
+    "https://www.gov.za/sites/default/files/gcis_document/201409/a40-000.pdf",
+    "https://www.eccogta.gov.za/wp-content/uploads/2025/01/Animal-Diseases-Act-No.-35-of-1984.pdf",
+    "https://www.kzndard.gov.za/images/Documents/AnimalHealth/VeterinaryActs/Act-No.-6-of-2002.pdf",
+    "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+    "https://www.elsenburg.com/wp-content/uploads/2023/07/Print-CONTROLLED-AND-NOTIFIABLE-ANIMAL-DISEASES.pdf",
+    "https://www.westerncape.gov.za/agriculture/files/wcg-blob-files?file=2024-07%2Favian-infl_0.pdf&type=file",
+    "https://www.sanews.gov.za/south-africa/kzn-foot-and-mouth-disease-boundaries-extended"
+  ],
+  "unavailableWebFetches": [
+    "NDAconsolidatedhoneybee PDF: timeout; existingimmutablequotedsource retained, no newcertificatefactinferred.",
+    "KZNsheepscab PDF: timeout; existingimmutablequotedsource retained, no newtreatmentfigureinferred.",
+    "CapeWools2020/2021AnnualReview: toolunavailable; current2026exportclaim notverified."
+  ]
+}

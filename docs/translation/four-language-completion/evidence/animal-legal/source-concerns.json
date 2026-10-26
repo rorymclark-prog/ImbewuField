@@ -1,0 +1,38 @@
+[
+  {
+    "id": "TLAG-001",
+    "rows": [
+      24,
+      25,
+      26,
+      27
+    ],
+    "status": "Open: must resolve source presentation before applying drafts.",
+    "evidence": "The official18September2020Gazette43726Notice1003,List7,item22,printedpage71,lists the relevant Oreochromis group as Category3 and Category2for permittedaquaculturefacilities, with hatchery-specific sale/transport/import conditions. The old row24asserts protected-area Category1b and allotherareas Category3; its categorical wording is not the same. Do not publish it as verifiedcurrentpermitadvice.",
+    "url": "https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf",
+    "verified": "Downloaded official gov.za full PDF and visually inspected printed page71 (PDFpage41): tilapia item22 has Category3 and Category2for permittedaquaculturefacilities; the adjacent perch item23has protected-area1b. The currentapp statement does not match the tilapia row. Latest2026applicability still not certified.",
+    "next": "Inspect the actual primary table, reconcile the fish statements and dated2015permit source without changing species identities or inventing permission; revise corresponding source/translation pairs and retain originalhistory."
+  },
+  {
+    "id": "TLAG-002",
+    "rows": [
+      53
+    ],
+    "status": "Open: historical assertion needs dated presentation.",
+    "evidence": "The cited source is explicitly CapeWoolsAnnualReview2020/2021. It does not by itself verify present2026exportavailability. The live app currently uses presenttense. Webfetch unavailable; sourcequote retained in immutablefixture.",
+    "url": "https://www.capewools.co.za/assets/annual_report/20202021annualreport.pdf",
+    "next": "Retain the historical source claim with explicitdate or replace currentstatus with honestlyunconfirmed information, and translate the resulting reviewed source wording."
+  },
+  {
+    "id": "TLAG-003",
+    "rows": [
+      23,
+      27,
+      28
+    ],
+    "status": "Needs source review before application.",
+    "evidence": "A statement excluding a species from a listed group is not by itself permission for every farmingactivity. The2015IDCsource may not establish allcurrentprotectedarea/waterauthorisationrequirements. No newwaterlicence/permitexemption is inferred.",
+    "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+    "next": "Check the exact primaryframework and expressunconfirmedsite-specific requirements honestly. Preserve the originaltext in evidence; do not inferfarmpermission."
+  }
+]

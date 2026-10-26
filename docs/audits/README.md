@@ -16,6 +16,8 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
+Latest legal translation source continuation: [26 October 2026](2026-10-26/animal-legal-translation-source-review.md). Draft-only; TLAG-001–003 remain open before runtime publication.
+
 Latest: [Production plan re-audit — 10 October 2026](2026-10-10/production-reaudit-codex.md).
 
 Previous: [Production by plant age and clearer graphics — 4 October 2026](2026-10-04/production-age-visuals-codex.md).

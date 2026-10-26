@@ -1,0 +1,13 @@
+{
+  "at": "2026-10-26T03:10:52.029743+00:00",
+  "files": {
+    "source-retrieval.json": "0f6659d6d4a25123259a7eb4be8e2274d0ad5c153e3da25b7f60b888d10ae451",
+    "draft-validation.json": "3370f2708dd76ebb3ec1161d10017f72d9239f9e1cd9a185eb3e3acf3da33397",
+    "source-inventory.json": "d8a8e13aadc6bb6c64c070defa61dc32604aaaed273ae5e7b94520a1ea17eebd",
+    "tilapia-gazette-page71.png": "35e88c7f2762ec6412d56d03c5d9338055eefcb2057d737217239090e0040079",
+    "refinement-journal.json": "a50bc063c71c1f3bf040e96730620791f44c0d79b04d4329d89b9323f8c9ea84",
+    "README.md": "07d95e532bbe6aac57b1a40122b3e71dd0fe32e0875217303e1381993ef595b3",
+    "source-concerns.json": "b8eb48843ed68594d6fdc850f64d828b31ae9016f14d66418b8301177feae7b9",
+    "check-drafts.mjs": "1e784991b1faed5b6a834cd9359a71005891ed368b2fdb38bf75b3f32fd840ed"
+  }
+}
