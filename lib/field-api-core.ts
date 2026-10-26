@@ -1,5 +1,6 @@
 import type { DeviceStore, DeviceRow } from './field-device-store';
 import { fieldUrl, writeIdentity, overlayFieldWrites, queuedResult, type FieldWrite } from './field-request-model';
+import { UserFacingError } from './user-facing-error';
 export type FieldClientOptions = { store: DeviceStore; scope: string; assertCurrent(): void; online(): boolean; send(url: string, body?: Record<string, any>): Promise<any>; now?: () => number; changed?(synced: boolean): void };
 export function createFieldClient(options: FieldClientOptions) {
   const { store, scope, assertCurrent } = options, now = options.now ?? Date.now;
@@ -36,7 +37,7 @@ export function createFieldClient(options: FieldClientOptions) {
           const withPhotos = overlayFieldWrites(url, {}, pending);
           if (Array.isArray(withPhotos.photos)) return { ...withPhotos, _device: { cached: true, pending: true } };
         }
-        throw Error('This information is not saved on this device yet. Open it with a connection or use Offline & sync to prepare it.');
+        throw new UserFacingError('This information is not saved on this device yet. Open it with a connection or use Offline & sync to prepare it.');
       }
       data = row.value.data; cached = true; savedAt = row.value.savedAt;
     }
@@ -56,7 +57,7 @@ export function createFieldClient(options: FieldClientOptions) {
     const write = row.value as FieldWrite;
     try {
       assertCurrent(); const result = await options.send(write.url, { ...write.body, clientOperationId: write.operationId }); assertCurrent();
-      if (result.saved !== true) throw Error('The server did not confirm this save.');
+      if (result.saved !== true) throw new UserFacingError('The server did not confirm this save.');
       // Store the acknowledged record locally before removing the durable queue item.
       // A lost acknowledgement is safe: the server recognises this operation ID on retry.
       const confirmed = structuredClone(write); confirmed.acknowledged = true;
@@ -92,16 +93,16 @@ export function createFieldClient(options: FieldClientOptions) {
     if (!body) return read(url);
     const type = writeIdentity(url, body);
     if (!type) {
-      if (!options.online()) throw Error('This action needs a connection. Your field records can still be saved on this device.');
+      if (!options.online()) throw new UserFacingError('This action needs a connection. Your field records can still be saved on this device.');
       const result = await options.send(url, body); assertCurrent(); return result;
     }
     const key = `${scope}|write|${url}|${type.resource}`;
-    if (new TextEncoder().encode(JSON.stringify(body)).length > 1550000) throw Error('This entry is too large. Use smaller photos or split the register.');
+    if (new TextEncoder().encode(JSON.stringify(body)).length > 1550000) throw new UserFacingError('This entry is too large. Use smaller photos or split the register.');
     try {
       await store.change(key, previous => {
         assertCurrent(); const old = previous?.value as FieldWrite | undefined;
-        if (old?.state === 'sending' && old.leaseUntil > now()) throw Error('This record is sending. Wait for it to finish before saving another edit.');
-        if (old?.state === 'review') throw Error('This saved entry needs review in Offline & sync before it can be replaced.');
+        if (old?.state === 'sending' && old.leaseUntil > now()) throw new UserFacingError('This record is sending. Wait for it to finish before saving another edit.');
+        if (old?.state === 'review') throw new UserFacingError('This saved entry needs review in Offline & sync before it can be replaced.');
         const value: FieldWrite = { url, body: { ...body, ...(old ? { expectedUpdatedAt: old.body.expectedUpdatedAt, expectedSubmittedAt: old.body.expectedSubmittedAt } : {}) },
           operationId: crypto.randomUUID(), label: type.label, createdAt: old?.createdAt ?? now(), state: 'waiting', leaseUntil: 0 };
         return { key, scope, kind: 'write', value };

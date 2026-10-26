@@ -1,5 +1,6 @@
 'use client';
 import { activeAccountLocalStorageKey } from './account-local-storage';
+import { UserFacingError } from './user-facing-error';
 
 // Lab PDFs must remain readable, without consuming the thumbnail store's small budget.
 // The owning account and site are captured before any asynchronous file work begins.
@@ -23,12 +24,12 @@ async function documentStore<T>(mode: IDBTransactionMode, run: (store: IDBObject
       const transaction = db.transaction('documents', mode);
       const request = run(transaction.objectStore('documents'));
       transaction.oncomplete = () => { const result = request.result; db.close(); resolve(result); };
-      transaction.onabort = transaction.onerror = () => { db.close(); reject(Error('The document could not be stored. Keep your original file.')); };
+      transaction.onabort = transaction.onerror = () => { db.close(); reject(new UserFacingError('The document could not be stored. Keep your original file.')); };
     };
   });
 }
 export async function saveEvidenceDocument(scope: string, file: File): Promise<string> {
-  if (!validEvidencePdf(await file.slice(0, 5).text(), file.size)) throw Error('Choose a PDF up to 10 MB. For a photograph, choose an image instead.');
+  if (!validEvidencePdf(await file.slice(0, 5).text(), file.size)) throw new UserFacingError('Choose a PDF up to 10 MB. For a photograph, choose an image instead.');
   const id = crypto.randomUUID();
   if (scope.startsWith('sample::')) sampleDocuments.set(scope + id, file);
   else await documentStore('readwrite', store => store.put(file, scope + id));

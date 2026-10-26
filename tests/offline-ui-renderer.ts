@@ -40,7 +40,7 @@ export async function actualOfflineUi(initialLanguage:ControlLanguage,options:Of
   let downloadBlob:Blob;
   const scope:Record<string,unknown>={React,...React,ChevronDown,Wifi,WifiOff,window,navigator,FIELD_PAGE_NAMES,FIELD_CHANGED,FIELD_SYNCED,fieldScope,canSeeNavLink,
     Link:({children,...props}:any)=>React.createElement('a',props,children),AppHeader:({title}:any)=>React.createElement('header',null,title),TabBar:()=>null,
-    useLanguage:()=>({lang,t:controlT(lang)}),translate:(language:ControlLanguage,key:string)=>controlT(language)(key),useAppLevel:()=>simple?'simple':'full',
+    useLanguage:()=>({lang,t:controlT(lang)}),networkFailureMessage:(t:(key:string)=>string)=>t('networkFailed'),translate:(language:ControlLanguage,key:string)=>controlT(language)(key),useAppLevel:()=>simple?'simple':'full',
     useAuth:()=>({user:identity?{uid:identity.uid}:null,profile:identity?{org_id:identity.org,role:identity.role}:null,role:identity?.role??null}),fieldIdentity:()=>identity,isSampleMode:()=>sample,
     fieldDeviceStore:{all:async()=>{if(options.readError)throw Error(options.readError);return [...values.values()];},change:async(key:string,update:(r:DeviceRow|undefined)=>DeviceRow|undefined)=>{changes.push(key);const next=update(values.get(key));if(next)values.set(key,next);else values.delete(key);return next;}},
     currentFieldClient:()=>({writes:async()=>[...values.values()].filter(r=>r.kind==='write'&&identity&&r.scope===fieldScope(identity)),sync:async()=>{await options.sync?.(values);}}),

@@ -6,12 +6,13 @@ import { isSampleMode } from './sample-mode';
 import { fieldIdentity, fieldScope } from './field-session';
 import { fieldDeviceStore } from './field-device-store';
 import { createFieldClient } from './field-api-core';
+import { UserFacingError } from './user-facing-error';
 import { FIELD_CHANGED, FIELD_SYNCED } from './field-request-model';
 export function currentFieldClient() {
   const actor = getFirebase()?.auth.currentUser, identity = fieldIdentity();
-  if (!actor || !identity || identity.uid !== actor.uid || isSampleMode()) throw Error('Sign in and open your workspace before saving fieldwork on this device.');
+  if (!actor || !identity || identity.uid !== actor.uid || isSampleMode()) throw new UserFacingError('Sign in and open your workspace before saving fieldwork on this device.');
   const scope = fieldScope(identity);
-  const assertCurrent = () => { if (isSampleMode() || getFirebase()?.auth.currentUser?.uid !== actor.uid || !fieldIdentity() || fieldScope(fieldIdentity()!) !== scope) throw Error('The account or organisation changed. Reopen your workspace.'); };
+  const assertCurrent = () => { if (isSampleMode() || getFirebase()?.auth.currentUser?.uid !== actor.uid || !fieldIdentity() || fieldScope(fieldIdentity()!) !== scope) throw new UserFacingError('The account or organisation changed. Reopen your workspace.'); };
   return createFieldClient({ store: fieldDeviceStore, scope, assertCurrent,
     online: () => typeof navigator !== 'undefined' && navigator.onLine,
     changed: synced => { window.dispatchEvent(new Event(FIELD_CHANGED)); if (synced) window.dispatchEvent(new Event(FIELD_SYNCED)); },
@@ -19,7 +20,7 @@ export function currentFieldClient() {
       assertCurrent();
       const controller = new AbortController();
       let timer: ReturnType<typeof setTimeout> | undefined;
-      const timeout = new Promise<never>((_, reject) => { timer = setTimeout(() => { controller.abort(); reject(Error('Connection timed out. Your saved entry remains on this device.')); }, 15000); });
+      const timeout = new Promise<never>((_, reject) => { timer = setTimeout(() => { controller.abort(); reject(new UserFacingError('Connection timed out. Your saved entry remains on this device.')); }, 15000); });
       try {
         return await Promise.race([timeout, (async () => {
           const headers = await paidApiHeaders(actor); assertCurrent();

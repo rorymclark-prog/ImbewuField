@@ -76,9 +76,9 @@ test('sending reports completion while unconfirmed rows stay visible, and guest/
  for(const options of [{guest:true},{sample:true}]){const x=await actualOfflineUi('ve',options);try{assert.equal(x.button('offlineSyncNow').props.disabled,true);assert.equal(x.renderer.root.findAllByType('article').length,0);}finally{await x.dispose();}}
 });
 
-test('every known device error reaches native display and unknown server text remains exact',async()=>{
+test('every known device error reaches native display and unknown server text is replaced by the shared friendly line',async()=>{
  for(const row of packet.entries.filter((r:any)=>r.key.startsWith('offlineError'))){const h=await actualOfflineUi('ts',{rows:[],readError:row.english});try{assert.ok(h.text().includes(row.ts),row.key);await h.language('ve');assert.ok(h.text().includes(row.ve));assert.ok(h.text().includes(row.english),'exact English source available');}finally{await h.dispose();}}
- const raw='Unmapped server detail / own saved text';const x=await actualOfflineUi('zu',{rows:[],readError:raw});try{assert.ok(x.text().includes(raw));await x.language('st');assert.ok(x.text().includes(raw));}finally{await x.dispose();}
+ const raw='Unmapped server detail / own saved text';const x=await actualOfflineUi('zu',{rows:[],readError:raw});try{assert.ok(!x.text().includes(raw));assert.ok(x.text().includes(controlT('zu')('networkFailed')));}finally{await x.dispose();}
 });
 
 test('the actual sync badge uses native labels and counts without losing offline or account behavior',async()=>{
