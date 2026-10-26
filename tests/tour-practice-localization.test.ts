@@ -100,9 +100,10 @@ for(const lang of allDrafts)test(`${lang}: the actual staff role selector keeps 
 });
 
 import { loadUpdateCopy, updateDescription } from '../lib/update-copy.ts';
-import { visibleNotes, visibleUpdateTour } from '../lib/release-notes.ts';
+import { RELEASE_NOTES, visibleUpdateTour } from '../lib/release-notes.ts';
 test('the announced practice change retains native source-bound release text and a real guide action in every language',async()=>{
- assert.ok(visibleNotes().includes(packet.releaseRows[0].english));assert.ok(visibleUpdateTour().some(s=>s.href==='/samples'&&s.title===packet.releaseRows[1].english));assert.ok(visibleUpdateTour().length>=2);
+ // Once a newer release is announced this entry moves into the update history; it keeps its text and /samples guide there.
+ const entry=RELEASE_NOTES.find(n=>n.changes.includes(packet.releaseRows[0].english));assert.ok(entry);assert.ok(entry.tour?.some(s=>s.href==='/samples'&&s.title===packet.releaseRows[1].english));assert.ok(visibleUpdateTour().length>=2);
  for(const lang of allDrafts){const copy=await loadUpdateCopy(lang);for(const row of packet.releaseRows)assert.equal(updateDescription(copy,row.english),row[lang]);}
 });
 

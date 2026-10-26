@@ -90,3 +90,31 @@ map, geometry, typography, Phasing, canvas, release-label and actual four-langua
 update-UI tests passed, zero failures/TODOs. Release-note drift and whitespace
 passed. The full suite and exact-head CI remain separate completion gates,
 reported in the PR/ledger once terminal results are available.
+
+## Release-history assertion continuation
+
+Claude's report integration review exposed a second stale release assertion in
+`tour-practice-localization`: it required the older practice announcement to stay
+among the five newest notice lines indefinitely. The named test was run directly
+on Node 24 and failed on `264342bed` at that assertion. This is an assertion about
+an expired position, while the announcement and its guide remain in history.
+
+The test now uses the identical correction already reviewed on Claude's report
+branch: require that announcement and its `/samples` guide in release history,
+retain the four source-bound native-copy checks, and retain the independent
+visible-guide checks. The newest-first notice policy is unchanged. In-memory
+negative probes against the actual test fail if the announcement is removed
+from history or its guide destination is broken. There are two historical
+copies of the announcement; removing just one correctly leaves the other valid,
+so the absence probe removes both. No fixture, locale or production source was
+changed for these probes.
+
+The earlier local full run was stopped after this independently reproduced
+failure, rather than reported as a pass. Fresh full-suite and exact-head CI
+results supersede that unfinished checkpoint. The rendered source and
+`PLAN_VERSION` remain unchanged by this test-only correction.
+
+Fresh Node 24 typecheck, all 61 release/practice/update checks and whitespace
+pass after that correction. Both deliberate absence/broken-link probes fail as
+required. The complete local suite and replacement-head CI are separate gates;
+their terminal totals belong in the final PR/ledger handover.
