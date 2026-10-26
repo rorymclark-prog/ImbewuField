@@ -1685,6 +1685,20 @@
       "st": "Dikakaretso tsa ditlaleho jwale di dumellana le dichate tsa tsona, mme dipalo tsa ditlaleho di ngotswe hantle.",
       "ts": "Mihlanganiso ya swiviko sweswi yi fambelana ni tichati ta yona, naswona tinhlayo ta swiviko ti tsariwe kahle.",
       "ve": "Tshoṱhe tsha mivhigo zwino tshi tendelana na tshati dzayo, nahone mbalo dza mivhigo dzo ṅwalwa zwavhuḓi."
+    },
+    {
+      "english": "Home, Map, Studies and Prices now open offline, even before you have visited them.",
+      "zu": "Ikhaya, iMephu, Izifundo naManani manje kuyavuleka ungaxhunyiwe, ngisho ungakakuvakasheli.",
+      "st": "Lehae, Mmapa, Dithuto le Ditheko jwale di a buleha ntle le marang-rang, leha o eso di etele.",
+      "ts": "Kaya, Mepe, Tidyondzo ni Minxavo sweswi swa pfuleka handle ka inthanete, hambi u nga si swi endzela.",
+      "ve": "Hayani, Mepe, Ngudo na Mitengo zwino zwi a vulea hu si na inthanete, naho ni sa athu u zwi dalela."
+    },
+    {
+      "english": "Error messages now explain the problem in plain words, not technical text.",
+      "zu": "Imilayezo yamaphutha manje ichaza inkinga ngamagama alula, hhayi ngombhalo wobuchwepheshe.",
+      "st": "Melaetsa ya diphoso jwale e hlalosa bothata ka mantswe a bonolo, eseng ka mongolo wa setheknoloji.",
+      "ts": "Marungula ya swihoxo sweswi ma hlamusela xiphiqo hi marito yo olova, ku nga ri hi matsalwa ya xithekiniki.",
+      "ve": "Milaedza ya vhukhakhi zwino i ṱalutshedza thaidzo nga maipfi a leluwaho, hu si nga maṅwalwa a thekhinikhaḽa."
     }
   ],
   "historyBefore": [

@@ -144,5 +144,7 @@ const copy:UpdateCopy={
   "Lima no longer covers the last buttons of a manual chapter.": "Lima a nga ha funengeti tikonopo to hetelela ta ndzima ya buku ya swiletelo.",
   "A practice message on Contact now says it was kept on this device, not sent.": "Rungula ro titoloveta eka Vulavurisana sweswi ri vula leswaku ri hlayisiwile eka xitirhisiwa lexi, a ri rhumeriwanga.",
   "Report totals now match their charts, and report counts read correctly.": "Mihlanganiso ya swiviko sweswi yi fambelana ni tichati ta yona, naswona tinhlayo ta swiviko ti tsariwe kahle.",
+  "Home, Map, Studies and Prices now open offline, even before you have visited them.": "Kaya, Mepe, Tidyondzo ni Minxavo sweswi swa pfuleka handle ka inthanete, hambi u nga si swi endzela.",
+  "Error messages now explain the problem in plain words, not technical text.": "Marungula ya swihoxo sweswi ma hlamusela xiphiqo hi marito yo olova, ku nga ri hi matsalwa ya xithekiniki.",
 };
 export default copy;

@@ -144,5 +144,7 @@ const copy:UpdateCopy={
   "Lima no longer covers the last buttons of a manual chapter.": "Lima a tsha khou fukedza dzibathoni dza u fhedza dza ndima ya bugu ya ndaela.",
   "A practice message on Contact now says it was kept on this device, not sent.": "Mulaedza wa u ḓigudisa kha Kwamani zwino u ri wo vhulungwa kha tshishumiswa itshi, a wo ngo rumelwa.",
   "Report totals now match their charts, and report counts read correctly.": "Tshoṱhe tsha mivhigo zwino tshi tendelana na tshati dzayo, nahone mbalo dza mivhigo dzo ṅwalwa zwavhuḓi.",
+  "Home, Map, Studies and Prices now open offline, even before you have visited them.": "Hayani, Mepe, Ngudo na Mitengo zwino zwi a vulea hu si na inthanete, naho ni sa athu u zwi dalela.",
+  "Error messages now explain the problem in plain words, not technical text.": "Milaedza ya vhukhakhi zwino i ṱalutshedza thaidzo nga maipfi a leluwaho, hu si nga maṅwalwa a thekhinikhaḽa.",
 };
 export default copy;

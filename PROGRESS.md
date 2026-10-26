@@ -52,6 +52,16 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 26 Oct 2026 — Wave 27: farmer-facing errors never show raw messages; offline track (w25-03/04/08) lands
+- **Offline (wave 25 track, Sonnet #1132):** the service worker's install also precaches each precached page's lazily
+  loaded chunks, so Home, Map, Studies, Prices and Saved open offline from a page that never loaded them (was:
+  ChunkLoadError). The error screen says "You're offline" with a link to saved screens. /farmer offline shows the
+  app's offline line, not "Failed to fetch" (`w25-08`). About 1.6 MB more on a first install (gzip).
+- **Wave 27 (Sonnet #1133, reviewed):** `lib/user-facing-error.ts`. 15 screens show only copy the app wrote. Network
+  failures use the translated network message; Firebase, storage and server internals fall back. Review kept the
+  fieldwork API's staff copy visible (`w27-03`) and /offline as Codex pinned it (`w27-04`) —
+  `docs/audits/2026-10-26/wave-27-raw-errors-claude.md`. DesignGlossy's 13 sites stay with Codex.
+
 ### 26 Oct 2026 — Wave 26: Codex hand-offs closed after #1121 merged, its report screens checked
 - **Hand-offs:** `w23-02` — cohort income and cost totals are summed from the unrounded months, so the card and the
   month-by-month chart both read R262 685 (was R262 686 on the chart). `w23-06` — farm report counts agree ("1 local

@@ -62,6 +62,7 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Wave 27 farmer-facing error messages: w27-01 to w27-04, no raw browser, Firebase or storage wording on 15 screens; fieldwork API copy kept — 26 October 2026](2026-10-26/wave-27-raw-errors-claude.md).
 - [Wave 26 Codex hand-offs closed after #1121 merged, and #1121's report screens checked: w26-01 to w26-04 — 26 October 2026](2026-10-26/wave-26-handoffs-claude.md).
 - [Wave 25 forms, offline and keyboard capture: w25-01 to w25-07, practice-mode contact copy, hidden-input focus, offline ChunkLoadError on unvisited routes — 26 October 2026](2026-10-26/wave-25-forms-offline-keyboard-claude.md).
 - [Wave 24 interaction capture behind clicks (drawer, forms, tabs, chat): w24-01 to w24-11, mostly dark-mode colours never seen on the dark page — 26 October 2026](2026-10-26/wave-24-interaction-claude.md).

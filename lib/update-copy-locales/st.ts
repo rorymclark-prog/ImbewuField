@@ -144,5 +144,7 @@ const copy:UpdateCopy={
   "Lima no longer covers the last buttons of a manual chapter.": "Lima ha a sa kwahela dikonopo tsa ho qetela tsa kgaolo ya bukana.",
   "A practice message on Contact now says it was kept on this device, not sent.": "Molaetsa wa boikwetliso ho Ikopanye le rona jwale o re o bolokilwe sesebedisweng sena, ha o a romellwa.",
   "Report totals now match their charts, and report counts read correctly.": "Dikakaretso tsa ditlaleho jwale di dumellana le dichate tsa tsona, mme dipalo tsa ditlaleho di ngotswe hantle.",
+  "Home, Map, Studies and Prices now open offline, even before you have visited them.": "Lehae, Mmapa, Dithuto le Ditheko jwale di a buleha ntle le marang-rang, leha o eso di etele.",
+  "Error messages now explain the problem in plain words, not technical text.": "Melaetsa ya diphoso jwale e hlalosa bothata ka mantswe a bonolo, eseng ka mongolo wa setheknoloji.",
 };
 export default copy;

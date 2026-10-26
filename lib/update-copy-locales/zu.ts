@@ -144,5 +144,7 @@ const copy:UpdateCopy={
   "Lima no longer covers the last buttons of a manual chapter.": "ULima akasamboze izinkinobho zokugcina zesahluko sencwadi yeziqondiso.",
   "A practice message on Contact now says it was kept on this device, not sent.": "Umlayezo wokuzilolonga kuThintana manje uthi ugcinwe kule divayisi, awuthunyelwanga.",
   "Report totals now match their charts, and report counts read correctly.": "Izingqikithi zemibiko manje ziyafana namashadi azo, futhi izibalo zemibiko zibhalwe kahle.",
+  "Home, Map, Studies and Prices now open offline, even before you have visited them.": "Ikhaya, iMephu, Izifundo naManani manje kuyavuleka ungaxhunyiwe, ngisho ungakakuvakasheli.",
+  "Error messages now explain the problem in plain words, not technical text.": "Imilayezo yamaphutha manje ichaza inkinga ngamagama alula, hhayi ngombhalo wobuchwepheshe.",
 };
 export default copy;

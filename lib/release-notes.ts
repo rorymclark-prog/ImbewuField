@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 October 2026', sha: '55526909', changes: [
+    'Home, Map, Studies and Prices now open offline, even before you have visited them.',
+    'Error messages now explain the problem in plain words, not technical text.',
+  ] },
   // The four-language stack reaches main here, so this entry announces it with lines that already
   // carry native drafts in every language (tests/update-notices-localization.test.ts).
   { when: '26 October 2026', sha: '8d84a518', changes: [
