@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Review production record drafts": "Hlahloba diphetolelo tsa pele tsa direkoto tsa tlhahiso",
+  "Open production records. Check unknown amounts and zero; translations still need review.": "Bula direkoto tsa tlhahiso. Hlahloba dipalo tse sa tsejweng le lefela; diphetolelo di ntse di hloka tlhahlobo.",
+  "Review food chart drafts": "Hlahloba diphetolelo tsa pele tsa ditjhate tsa dijo",
+  "Open food charts. Compare records and estimates; check the original English before acting.": "Bula ditjhate tsa dijo. Bapisa direkoto le dikhakanyo; hlahloba Senyesemane sa pele pele o nka kgato.",
+  "Production records and food charts now have four-language translation drafts.": "Direkoto tsa tlhahiso le ditjhate tsa dijo jwale di na le diphetolelo tsa pele tsa dipuo tse nne.",
+  "Recorded amounts, dates and private notes stay as entered.": "Dipalo tse rekotilweng, matsatsi le dintlha tsa hao di sala kamoo di kentsweng.",
   "Crop source headings and full notes now have four-language translation drafts.": "Dihlooho tsa mehlodi ya dijalo le dintlha tse felletseng jwale di na le diphetolelo tsa pele tsa dipuo tse nne.",
   "Translated PDFs now keep the ® mark in source names.": "Di-PDF tse fetoletsweng jwale di boloka letshwao la ® mabitsong a mehlodi.",
   "Planting ages and picking months now have four-language translation drafts.": "Dilemo tsa ho jala le dikgwedi tsa kotulo jwale di na le diphetolelo tsa pele tsa dipuo tse nne.",

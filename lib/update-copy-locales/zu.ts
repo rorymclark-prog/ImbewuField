@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Review production record drafts": "Buyekeza imibhalo yamarekhodi okukhiqiza",
+  "Open production records. Check unknown amounts and zero; translations still need review.": "Vula amarekhodi okukhiqiza. Hlola amanani angaziwa noziro; izinguqulo zisadinga ukubuyekezwa.",
+  "Review food chart drafts": "Buyekeza imibhalo yamashadi okudla",
+  "Open food charts. Compare records and estimates; check the original English before acting.": "Vula amashadi okudla. Qhathanisa amarekhodi nezilinganiso; hlola isiNgisi sokuqala ngaphambi kokwenza.",
+  "Production records and food charts now have four-language translation drafts.": "Amarekhodi okukhiqiza namashadi okudla manje anemibhalo yokuhumusha ngezilimi ezine.",
+  "Recorded amounts, dates and private notes stay as entered.": "Amanani aqoshiwe, izinsuku namanothi akho ahlala njengoba afakiwe.",
   "Crop source headings and full notes now have four-language translation drafts.": "Izihloko zemithombo yezitshalo namanothi aphelele manje kunemibhalo yokuhumusha ngezilimi ezine.",
   "Translated PDFs now keep the ® mark in source names.": "Ama-PDF ahunyushiwe manje agcina uphawu lwe-® emagameni emithombo.",
   "Planting ages and picking months now have four-language translation drafts.": "Iminyaka yezitshalo nezinyanga zokuvuna manje kunemibhalo yokuhumusha ngezilimi ezine.",

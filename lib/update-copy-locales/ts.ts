@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Review production record drafts": "Kambisisa matsalelo ya tirhekhodo ta vuhumelerisi",
+  "Open production records. Check unknown amounts and zero; translations still need review.": "Pfula tirhekhodo ta vuhumelerisi. Kambisisa tinhlayo leti nga tivekiki ni ziro; vuhundzuluxeri bya ha lava ku kambisisiwa.",
+  "Review food chart drafts": "Kambisisa matsalelo ya tichati ta swakudya",
+  "Open food charts. Compare records and estimates; check the original English before acting.": "Pfula tichati ta swakudya. Pimanisa tirhekhodo ni mimpimanyeto; kambisisa Xinghezi xo sungula u nga si endla.",
+  "Production records and food charts now have four-language translation drafts.": "Tirhekhodo ta vuhumelerisi ni tichati ta swakudya sweswi swi ni matsalelo ya vuhundzuluxeri hi tindzimi ta mune.",
+  "Recorded amounts, dates and private notes stay as entered.": "Tinhlayo leti rhekhodiweke, masiku ni tinotsi ta wena swi sala leswi swi nghenisiweke xiswona.",
   "Crop source headings and full notes now have four-language translation drafts.": "Tinhlokomhaka ta swihlovo swa swibyariwa ni tinotsi leti heleleke sweswi swi ni matsalelo ya vuhundzuluxeri hi tindzimi ta mune.",
   "Translated PDFs now keep the ® mark in source names.": "Ti-PDF leti hundzuluxeriweke sweswi ti hlayisa mfungho wa ® eka mavito ya swihlovo.",
   "Planting ages and picking months now have four-language translation drafts.": "Malembe ya ku byala ni tin’hweti to tshovela sweswi swi ni matsalelo ya vuhundzuluxeri hi tindzimi ta mune.",

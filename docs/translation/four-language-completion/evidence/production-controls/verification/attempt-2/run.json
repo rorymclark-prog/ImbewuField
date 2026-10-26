@@ -1,0 +1,51 @@
+{
+  "startedAt": "2026-10-26T14:51:46.467676+00:00",
+  "pid": 53342,
+  "base": "7f24f34959b20a0647cebf2732247f5ca240eec5",
+  "branch": "codex/four-language-production-controls",
+  "tmpdir": "/private/tmp/imbewufield-production-controls-attempt2-20261026-hupez_a_",
+  "frozenInputs": 1831,
+  "runtimeArtifacts": 115,
+  "registeredTestFiles": 577,
+  "commands": [
+    {
+      "name": "typecheck",
+      "command": [
+        "npx",
+        "tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "test",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "status": "passed",
+  "current": "diff",
+  "endedAt": "2026-10-26T15:54:18.999299+00:00",
+  "changedFrozenInputs": [],
+  "changedRuntimeArtifacts": [],
+  "totals": {
+    "tests": 5907,
+    "pass": 5906,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 1
+  }
+}

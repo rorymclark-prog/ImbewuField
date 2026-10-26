@@ -2,6 +2,9 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import ts from 'typescript';
+import * as React from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { PRODUCTION_CONTROL_FILES, productionControlPresenters } from './helpers/production-control-presenter.ts';
 
 import { cropByKey } from '@/lib/crop-catalog';
 import { wrapMonth } from '@/lib/crop-export-schedule';
@@ -133,19 +136,22 @@ test('existing October and November pickings cannot be contradicted by a separat
   assert.match(productionPage, /> Planned crop comparison<\/div>/);
   assert.match(productionPage, /New vegetable and staple crop cycles, using published yield benchmarks\./);
   const timingDestination = productionPage.match(/See ([^.]+) above for picking months and gaps\./)?.[1];
-  const foodCard = ts.createSourceFile('YearOfFoodCard.tsx', source('../components/crops/YearOfFoodCard.tsx'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
-  const headingLabels: string[] = [];
-  const findHeadings = (node: ts.Node) => {
-    if (ts.isJsxElement(node) && node.openingElement.attributes.properties.some(property =>
-      ts.isJsxAttribute(property) && property.name.getText(foodCard) === 'className'
-        && property.initializer?.getText(foodCard).includes('font-display'))) {
-      headingLabels.push(node.children.filter(ts.isJsxText).map(child => child.text.trim()).join(''));
-    }
-    ts.forEachChild(node, findHeadings);
-  };
-  findHeadings(foodCard);
+  // A visible heading can now come from the language helper rather than JSX text.
+  // Render the actual English card so this still rejects a destination the farmer cannot see.
+  const cardSources = Object.fromEntries(PRODUCTION_CONTROL_FILES.map(file => [file, source('../' + file)]));
+  const FoodCard = productionControlPresenters(cardSources, 'en')['components/crops/YearOfFoodCard.tsx'];
+  const foodMarkup = renderToStaticMarkup(React.createElement(FoodCard, {
+    year, gapFills: [], yearMode: 'fromToday', hasBeds: true, climateKnown: true, onPlan: () => {},
+  }));
+  const renderedHeadings = (markup: string) => Array.from(markup.matchAll(/<div class="[^"]*\bfont-display\b[^"]*"[^>]*>([\s\S]*?)<\/div>/g),
+    match => match[1].replace(/<[^>]+>/g, '').trim());
+  const headingLabels = renderedHeadings(foodMarkup);
   assert.ok(timingDestination && headingLabels.includes(timingDestination),
     'the comparison must direct the farmer to the actual visible food-timing heading');
+  const missingDestination = foodMarkup.replaceAll(timingDestination, 'Different food heading');
+  assert.notEqual(missingDestination, foodMarkup, 'the negative probe must remove a real rendered heading');
+  assert.throws(() => assert.ok(renderedHeadings(missingDestination).includes(timingDestination)),
+    'a missing or renamed destination heading must be rejected');
   assert.match(productionPage, /Add a planned bed or plot sowing to see its crop-cycle comparison\./);
   assert.doesNotMatch(productionPage, /Year ahead|year-ahead summary/, 'the remaining card must state its crop-cycle scope');
 });

@@ -1636,6 +1636,48 @@
       "st": "Di-PDF tse fetoletsweng jwale di boloka letshwao la ® mabitsong a mehlodi.",
       "ts": "Ti-PDF leti hundzuluxeriweke sweswi ti hlayisa mfungho wa ® eka mavito ya swihlovo.",
       "ve": "Dzi-PDF dzo ṱalutshedzelwaho zwino dzi vhulunga luswayo lwa ® kha madzina a zwiko."
+    },
+    {
+      "english": "Production records and food charts now have four-language translation drafts.",
+      "zu": "Amarekhodi okukhiqiza namashadi okudla manje anemibhalo yokuhumusha ngezilimi ezine.",
+      "st": "Direkoto tsa tlhahiso le ditjhate tsa dijo jwale di na le diphetolelo tsa pele tsa dipuo tse nne.",
+      "ts": "Tirhekhodo ta vuhumelerisi ni tichati ta swakudya sweswi swi ni matsalelo ya vuhundzuluxeri hi tindzimi ta mune.",
+      "ve": "Rekhodo dza vhubveledzi na tshati dza zwiḽiwa zwino dzi na mvetamveto ya ṱhalutshedzelo nga nyambo nṋa."
+    },
+    {
+      "english": "Recorded amounts, dates and private notes stay as entered.",
+      "zu": "Amanani aqoshiwe, izinsuku namanothi akho ahlala njengoba afakiwe.",
+      "st": "Dipalo tse rekotilweng, matsatsi le dintlha tsa hao di sala kamoo di kentsweng.",
+      "ts": "Tinhlayo leti rhekhodiweke, masiku ni tinotsi ta wena swi sala leswi swi nghenisiweke xiswona.",
+      "ve": "Zwivhalo zwo rekhodiwaho, maḓuvha na notsi dzaṋu zwi dzula nga nḓila ye zwa dzheniswa ngayo."
+    },
+    {
+      "english": "Review production record drafts",
+      "zu": "Buyekeza imibhalo yamarekhodi okukhiqiza",
+      "st": "Hlahloba diphetolelo tsa pele tsa direkoto tsa tlhahiso",
+      "ts": "Kambisisa matsalelo ya tirhekhodo ta vuhumelerisi",
+      "ve": "Ṱolisisani mvetamveto ya rekhodo dza vhubveledzi"
+    },
+    {
+      "english": "Open production records. Check unknown amounts and zero; translations still need review.",
+      "zu": "Vula amarekhodi okukhiqiza. Hlola amanani angaziwa noziro; izinguqulo zisadinga ukubuyekezwa.",
+      "st": "Bula direkoto tsa tlhahiso. Hlahloba dipalo tse sa tsejweng le lefela; diphetolelo di ntse di hloka tlhahlobo.",
+      "ts": "Pfula tirhekhodo ta vuhumelerisi. Kambisisa tinhlayo leti nga tivekiki ni ziro; vuhundzuluxeri bya ha lava ku kambisisiwa.",
+      "ve": "Vulani rekhodo dza vhubveledzi. Ṱolani zwivhalo zwi sa ḓivhei na zero; ṱhalutshedzelo dzi kha ḓi ṱoḓa u ṱolisiswa."
+    },
+    {
+      "english": "Review food chart drafts",
+      "zu": "Buyekeza imibhalo yamashadi okudla",
+      "st": "Hlahloba diphetolelo tsa pele tsa ditjhate tsa dijo",
+      "ts": "Kambisisa matsalelo ya tichati ta swakudya",
+      "ve": "Ṱolisisani mvetamveto ya tshati dza zwiḽiwa"
+    },
+    {
+      "english": "Open food charts. Compare records and estimates; check the original English before acting.",
+      "zu": "Vula amashadi okudla. Qhathanisa amarekhodi nezilinganiso; hlola isiNgisi sokuqala ngaphambi kokwenza.",
+      "st": "Bula ditjhate tsa dijo. Bapisa direkoto le dikhakanyo; hlahloba Senyesemane sa pele pele o nka kgato.",
+      "ts": "Pfula tichati ta swakudya. Pimanisa tirhekhodo ni mimpimanyeto; kambisisa Xinghezi xo sungula u nga si endla.",
+      "ve": "Vulani tshati dza zwiḽiwa. Vhambedzani rekhodo na u anganyela; ṱolani Tshiisimane tsha u thoma musi ni sa athu u dzhia vhukando."
     }
   ],
   "historyBefore": [

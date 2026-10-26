@@ -1,0 +1,36 @@
+exec(open('/private/tmp/imbewu-production-browser-verify.py').read())
+firstResult=result
+finalFolder=folder/'final-matrix';finalRows=[];finalPairs=[]
+for language in ['zu','st','ts','ve','en','xx']:
+ for device in (['phone','desktop']if language not in ['en','xx']else['phone']):
+  rows=json.loads((finalFolder/f'{language}-{device}.json').read_text());assert len(rows)==(12 if device=='desktop'else 30);assert '[MaxDepth]'not in json.dumps(rows)
+  finalRows.extend(rows)
+  for i in range(0,len(rows),2):
+   a,b=rows[i:i+2];valid(a);valid(b);assert a['state']['version']=='before'and b['state']['version']=='after';assert a['state']['id']==b['state']['id'];assert a['state']['language']==b['state']['language']==language
+   assert a['state']['provided']==b['state']['provided']==originalCases[a['state']['id']];assert not a['state']['events']and not b['state']['events'];assert controls(a)==controls(b);assert a['images']==b['images'];assert structure(a['html'])==structure(b['html']),(language,device,a['state']['id'],'final DOM drift')
+   if language in ['en','xx']:assert react(a['html'])==react(b['html']),'final full English/unknown DOM differs'
+   if language not in ['en','xx']and a['state']['id']=='projection-full':
+    for tree in originalCases['projection-full']['projection']['years'][0]['trees']:
+     for stage in tree['stage'].split('; '):
+      value=next(row[language]for row in json.loads((r/'docs/translation/four-language-completion/crop-export-drafts.json').read_text())['rows']if row['english']==stage);assert escape(value)in b['html'];assert stage not in b['text']
+   finalPairs.append({'language':language,'device':device,'id':a['state']['id'],'wholeEnglishExact':language in ['en','xx'],'completeOriginalPropsExact':True,'allNonTextStructureInputsGeometryExact':True,'imagesLoadedAndExact':len(a['images'])})
+assert len(finalRows)==228 and len(finalPairs)==114
+stageRows=[]
+for file in sorted((folder/'stage-repair-matrix').glob('*.json')):
+ if file.name!='console.json':stageRows.extend(json.loads(file.read_text()))
+stageByKey={(row['state']['language'],row['state']['id'],row['state']['version'],row['viewport']['width']):row for row in stageRows}
+assert len(stageByKey)==228
+for row in finalRows:
+ prior=stageByKey[(row['state']['language'],row['state']['id'],row['state']['version'],row['viewport']['width'])]
+ assert react(row['html'])==react(prior['html']),'punctuation-only formatting must preserve full rendered text and structure'
+ assert row['state']==prior['state']
+console=json.loads((finalFolder/'console.json').read_text());externalFinal=[row for row in console if row.get('url','').startswith('chrome-extension://')];appFinal=[row for row in console if row not in externalFinal];assert not appFinal,appFinal
+# A deliberately reverted combined stage must fail the whole-clause condition.
+sample=next(row for row in finalRows if row['state']['language']=='zu'and row['state']['id']=='projection-full'and row['state']['version']=='after');wording=next(row['zu']for row in json.loads((r/'docs/translation/four-language-completion/crop-export-drafts.json').read_text())['rows']if row['english']=='Farm yield schedule');assert escape(wording)in sample['html'];assert escape(wording)not in sample['html'].replace(escape(wording),'Farm yield schedule')
+visualFiles=[]
+for language in ['zu','st','ts','ve']:
+ for device in ['phone','desktop']:
+  for case in ['records-editable','graphs-full','projection-full','year-gaps','poultry-attention']:
+   file=(finalFolder if case=='projection-full'else folder)/f'{language}-{device}-{case}.png';assert file.exists();visualFiles.append(str(file.relative_to(folder)))
+result={**firstResult,'scope':firstResult['scope']+' Final 228-state recapture supersedes the first matrix after the observed composed-stage repair. The 49 interaction states predate only that text repair and four source-bound stage additions; focused actual-component tests recheck selection and all callback behaviors on current sources.','formattingEquivalentWholeMarkupStates':228,'matrixStates':228,'pairs':114,'pairChecks':finalPairs,'fullObservedPropStates':228,'finalMatrixImageChecks':sum(len(row['images'])for row in finalRows),'applicationConsoleErrors':appFinal,'unrelatedFinalExtensionErrors':externalFinal,'visualInspection':{'seen':visualFiles,'count':40,'observed':'All five priority widgets seen in each language at phone and desktop sizes; source text and native diacritics present, no card/paragraph collision seen. Existing charts intentionally scroll horizontally inside their containers; closed selects clip long labels as before. Initial English combined tree-stage fallback was observed, fixed, regression-tested and recaptured in eight native images. Earlier projection images are historical. No fluent-language approval.'},'cleanup':'Tab29032033 closed; temporary viewport reset; localhost server38452 stopping. Earlier29032031 also closed.'}
+(r/'output/production-controls-qa/browser-check.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');print({'finalStates':len(finalRows),'pairs':len(finalPairs),'imageChecks':result['finalMatrixImageChecks'],'nativeScreensSeen':len(visualFiles),'appErrors':appFinal})

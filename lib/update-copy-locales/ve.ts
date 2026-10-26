@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Review production record drafts": "Ṱolisisani mvetamveto ya rekhodo dza vhubveledzi",
+  "Open production records. Check unknown amounts and zero; translations still need review.": "Vulani rekhodo dza vhubveledzi. Ṱolani zwivhalo zwi sa ḓivhei na zero; ṱhalutshedzelo dzi kha ḓi ṱoḓa u ṱolisiswa.",
+  "Review food chart drafts": "Ṱolisisani mvetamveto ya tshati dza zwiḽiwa",
+  "Open food charts. Compare records and estimates; check the original English before acting.": "Vulani tshati dza zwiḽiwa. Vhambedzani rekhodo na u anganyela; ṱolani Tshiisimane tsha u thoma musi ni sa athu u dzhia vhukando.",
+  "Production records and food charts now have four-language translation drafts.": "Rekhodo dza vhubveledzi na tshati dza zwiḽiwa zwino dzi na mvetamveto ya ṱhalutshedzelo nga nyambo nṋa.",
+  "Recorded amounts, dates and private notes stay as entered.": "Zwivhalo zwo rekhodiwaho, maḓuvha na notsi dzaṋu zwi dzula nga nḓila ye zwa dzheniswa ngayo.",
   "Crop source headings and full notes now have four-language translation drafts.": "Ṱhoho dza zwiko zwa zwiliṅwa na notsi dzo fhelelaho zwino zwi na mvetamveto ya ṱhalutshedzelo nga nyambo nṋa.",
   "Translated PDFs now keep the ® mark in source names.": "Dzi-PDF dzo ṱalutshedzelwaho zwino dzi vhulunga luswayo lwa ® kha madzina a zwiko.",
   "Planting ages and picking months now have four-language translation drafts.": "Miṅwaha ya u ṱavha na miṅwedzi ya khaṋo zwino zwi na mvetamveto ya ṱhalutshedzelo nga nyambo nṋa.",
