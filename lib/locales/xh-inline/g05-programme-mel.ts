@@ -409,7 +409,7 @@ const drafts: Record<string, string> = {
   "Delivery & support": "Ukuhanjiswa nenkxaso",
   "Other agreed measures": "Eminye imilinganiselo ekuvunyelwene ngayo",
   "Gardens producing, vegetable beds, staple plots, harvests and food distributed.": "Iigadi ezivelisayo, imibhede yemifuno, iziza zokutya okuphambili, izivuno nokutya okwabiweyo.",
-  "Installed storage, reliable water access, water collected and commissioned solar.": "Indawo zokugcina ezifakiweyo, ufikelelo lwamanzi oluthembekileyo, amanzi aqokelelweyo nelanga elisebenzayo.",
+  "Installed storage, reliable water access, water collected and commissioned solar.": "Indawo zokugcina ezifakiweyo, ufikelelo lwamanzi oluthembekileyo, amanzi aqokelelweyo namandla elanga afakiweyo asebenzayo.",
   "Trees planted and surviving, soil condition, compost and land restored.": "Imithi etyaliweyo nesaphilayo, imeko yomhlaba, umgquba nomhlaba ovuselelweyo.",
   "Produce sold, recorded income and costs, paid work and market access.": "Imveliso ethengisiweyo, ingeniso neendleko ezirekhodiweyo, umsebenzi ohlawulelwayo nofikelelo kwimarike.",
   "Active growers, households reached, food access and completed follow-ups.": "Abatyali abasebenzayo, iintsapho ezifikelelweyo, ufikelelo kukutya nolandelelo olugqityiweyo.",

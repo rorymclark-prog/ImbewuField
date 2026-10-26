@@ -34,7 +34,7 @@ const drafts: Record<string, string> = {
   ". The mild, dry winter suits cool-season crops; the warm, frost-free conditions also carry ": ". Ubusika obuphakathi obomileyo bufanele izityalo zexesha elipholileyo; iimeko ezifudumeleyo ezingenaqabaka ziyakwazi ukuthwala nazo ",
   ". The warm, frost-free conditions also carry ": ". Iimeko ezifudumeleyo ezingenaqabaka ziyakwazi ukuthwala nazo ",
   " thrive. Mild winters keep frost-tender crops viable on protected aspects.": " ziyakhula kakuhle. Ubusika obuphakathi bugcina izityalo ezibuthathaka kwiqabaka zisenako ukukhula kwiindawo ezikhuselekileyo.",
-  ". High humidity — select disease-resistant varieties and maximise airflow.": ". Umswakama ophezulu — khetha iindidi ezinganyangekiyo zizifo uvule indlela yomoya ngokubanzi.",
+  ". High humidity — select disease-resistant varieties and maximise airflow.": ". Umswakama ophezulu — khetha iindidi ezimelana nezifo uze uvulele umoya uhambe kakuhle kangangoko.",
   ". Dry summers need drought-tolerant varieties: ": ". Amahlobo omileyo adinga iindidi ezinyamezela imbalela: ",
   " thrive. Summer heat demands irrigation for annuals; drought-tolerant trees fruit without it.": " ziyakhula kakuhle. Ubushushu behlobo bufuna ukunkcenkceshela izityalo zonyaka omnye; imithi enyamezela imbalela iyathwala ingakhange inkcenkceshelwe.",
   ". Water harvesting is a prerequisite for ": ". Ukuqokelela amanzi kuyimfuneko phambi kwezi: ",

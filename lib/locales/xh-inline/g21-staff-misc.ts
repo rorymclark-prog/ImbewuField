@@ -211,7 +211,7 @@ const drafts: Record<string, string> = {
   "Photographic evidence, not a claim": "Ubungqina bezifoto, hayi nje ibango",
   "Produce photos travel with the harvest record they belong to, so a reviewer sees the crop as well as the figure.": "Iifoto zemveliso zihamba nerekhodi yesivuno ezizezaso, ukuze umphononongi abone isityalo kunye nenani.",
   "On your phone in under a minute": "Efonini yakho ngaphantsi komzuzu",
-  "ImbewuField is a Progressive Web App — no app store, no download size. Open it once and add it to the home screen, and it opens like any other app from then on.": "I-ImbewuField yi-Progressive Web App — akukho stoko ye-app, akukho bukhulu bokukhuphela. Yivule kube kanye uyongeze kwiskrini sekhaya, kwaye ivuleka njengayo nayiphi enye i-app emva koko.",
+  "ImbewuField is a Progressive Web App — no app store, no download size. Open it once and add it to the home screen, and it opens like any other app from then on.": "I-ImbewuField yi-Progressive Web App — akukho venkile ye-app, akukho bukhulu bokukhuphela. Yivule kube kanye uyongeze kwiskrini sekhaya, kwaye ivuleka njengayo nayiphi enye i-app emva koko.",
   "Open imbewufield.vercel.app": "Vula imbewufield.vercel.app",
   "On Android (Chrome)": "Kwi-Android (Chrome)",
   "Open imbewufield.vercel.app in Chrome.": "Vula imbewufield.vercel.app kwi-Chrome.",

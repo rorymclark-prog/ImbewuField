@@ -217,6 +217,28 @@ records are in `dictionary-review/`.
   - The inline "True spinach (English spinach)" crop label is removed, so the English name shows.
   - A scan for lost or added bracketed Latin names over the dictionary and every shard found nothing else.
 
+**The original 694 keys** shipped before 23 Oct and had only had a non-blind meaning read. Now they have been back-translated blind, in two parts (`dictionary-review/old1`, `old2`).
+- **Totals:** 17 repairs applied, 2 proposals kept as drafted, 0 holds.
+- **Kept:** *umbona* for maize is the everyday word, and *isitiya* means garden.
+- **Repairs:**
+  - **Wrong action:** "Copied!" read "Downloaded!".
+  - **Reversed or harsher meaning:** "Shared with me" read as stolen, and "informal market" as illegal.
+  - **Lost meaning:** the no-dig and no-till labels lost their meaning. Compacted soil became "heavy", and culinary herbs were dropped.
+  - **Clarified:** grey water is now explicit.
+  - **Wrong verb:** "Zoom out" read "practise".
+
+**Safety second pass:** 482 safety-critical strings from the dictionary and the shards had already been reviewed blind once. An independent second reviewer checked them (`dictionary-review/safety1`).
+- **Totals:** 21 repairs, 0 holds.
+- **Safety:**
+  - Two warnings to supervise children near poisonous tuberous roots used *-phangela* (work for wages), so the supervision condition was lost.
+  - "Growing water is limited" could read as not scarce.
+  - "Keep unsafe or specialist work for appropriate help" lost its meaning.
+  - "Disease-resistant varieties" read as varieties diseases cannot cure.
+  - "Never infer safety from 'natural' or 'organic'" was softened.
+- **Money:** customers owing R200 read as "planting", and the business owing suppliers read as "eating". The relation between a price and its quantity changed, and a redacted quote read as a deleted application.
+- **Wrong terms:** nuts in shell, the potato family, and fertile versus sprouted.
+- **Check after applying:** every recorded repair from every review was compared with what the app now shows. The only differences are later, deliberate coordinator changes: the single fermentation term, the shared "Grow big vines" label, and two lines this second pass corrected again.
+
 ## Fluent-review hand-off (26 Oct 2026)
 `fluent-review-handoff-2026-10-26.csv` lists every isiXhosa UI draft, 10,656 rows after
 de-duplication, ordered for review:

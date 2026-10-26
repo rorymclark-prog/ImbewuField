@@ -5,7 +5,7 @@ const drafts: Record<string, string> = {
   "Shelled grain dried to ≤14% moisture, kept in a clean sealed container or silo with active weevil/larger-grain-borer control.":
     "Iinkozo ezixobuliweyo ezomiswe zaya kumswakama ongaphantsi okanye olingana ne-14%, zigcinwe kwisikhongozeli esihlambulukileyo esivaliweyo okanye kwi-silo, kunye nolawulo olusebenzayo lwezinambuzane zeenkozo ezigciniweyo (i-weevil/larger-grain-borer).",
   "Plant after frost danger: November to mid-January in frost areas, or March-April in frost-free areas. Leave pods to yellow and dry before shelling and storing.":
-    "Tyala emva kokuba ingozi yeqabaka idlulile: kuNovemba ukuya phakathi kukaJanyuwari kwiindawo ezineqabaka, okanye kuMatshi-Epreli kwiindawo ezingenaqabaka. Shiya iipodi zimthuphe zize zome phambi kokuzixobula nokuzigcina.",
+    "Tyala emva kokuba ingozi yeqabaka idlulile: kuNovemba ukuya phakathi kukaJanyuwari kwiindawo ezineqabaka, okanye kuMatshi-Epreli kwiindawo ezingenaqabaka. Shiya iipodi zibe mthubi zize zome phambi kokuzixobula nokuzigcina.",
   "Fully dried grain (12-15% moisture), clean sealed containers, cool and dry, with bruchid/weevil control (e.g. edible-oil admix at 5ml/kg, or storage in-pod).":
     "Iinkozo ezomileyo kakuhle (12-15% yomswakama), izikhongozeli ezihlambulukileyo ezivaliweyo, kwindawo epholileyo nenomileyo, kunye nolawulo lwe-bruchid/weevil (umzekelo ukuxuba ioli yokupheka ngo-5ml/kg, okanye ukugcina kweepodi).",
   "These figures are for bush green beans. Sow small batches 2–3 weeks apart to spread the picking windows; weather and crop growth still decide whether harvests join up without a gap.":
