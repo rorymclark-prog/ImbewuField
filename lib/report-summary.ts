@@ -23,6 +23,8 @@ export function preparedExampleNote(language = 'en'): string {
 }
 export function reportSummaryPages(facts: ReportSiteFacts | null, location: LocationData, pageCount: 1 | 5, language = 'en'): ReportSummaryPage[] {
   const t = (en: string, zulu: string) => reportSummaryText(en, language, {}, zulu);
+  // Only a supported translation labels its English notes; any other language falls back to English as written.
+  const translated = language === 'zu' || language === 'st' || language === 'ts' || language === 've';
   const unknown = t('Not recorded', 'Akubhaliwe');
   const area = (value?: number) => value === undefined ? unknown : `${numberLabel(value, 1)} m²`;
   const amount = (value: number) => `R ${numberLabel(value, 0)}`;
@@ -48,7 +50,7 @@ export function reportSummaryPages(facts: ReportSiteFacts | null, location: Loca
     return names.length ? `${names.slice(0, 5).join(', ')}${names.length > 5 ? '; more in the full calendar' : ''}` : 'No mapped product rows recorded';
   };
   const productionNotes = production ? [
-    `Annual food and product plan${language !== 'en' ? ' (English overview)' : ''}: ${production.months[0]} to ${production.months[11]}.`,
+    `Annual food and product plan${translated ? ' (English overview)' : ''}: ${production.months[0]} to ${production.months[11]}.`,
     `Food forest: ${productNames('food-forest')}.`,
     `Animal products: ${productNames('animal')}.`,
     'See the full report for dated picking and storage windows, proposed systems and source notes. These are plans, not recorded harvests or animal counts.',
@@ -67,9 +69,9 @@ export function reportSummaryPages(facts: ReportSiteFacts | null, location: Loca
     { title: t('Bill of quantities', 'Uhlu lobuningi nezindleko'), lines: [...costLines, ...boq.lines.map(l => `${summaryBoqDescription(l, language)} · ${l.quantity} · ${l.zar === null ? l.unpriced === 'existing' ? t('existing; excluded from new spend', 'ikhona; ayifakiwe ezindlekweni ezintsha') : t('quote / measurement needed', 'kudingeka intengo / isilinganiso') : amount(l.zar)}`)] },
     { title: t('Next actions and checks', 'Izinyathelo ezilandelayo nokuhlola'), lines: [
       ...(facts?.marketEvidence ? [
-        ...(language !== 'en' ? ['Local market evidence (English notes)'] : []),
+        ...(translated ? ['Local market evidence (English notes)'] : []),
         ...marketEvidenceLines(facts.marketEvidence),
-      ] : [`Local market evidence${language !== 'en' ? ' (English)' : ''}: buyer demand and prices are not recorded. Check buyers and selling costs before planning sales.`]),
+      ] : [`Local market evidence${translated ? ' (English)' : ''}: buyer demand and prices are not recorded. Check buyers and selling costs before planning sales.`]),
       t('Confirm what is already on the site and what is still proposed. Keep the saved design as the reference.', 'Qinisekisa okukhona endaweni nokusahleliwe. Sebenzisa umklamo ogciniwe njengereferensi.'),
       t('Check the crop plan against the real beds and seasonal conditions. A planned sowing is not proof of planting.', 'Qhathanisa uhlelo lwezitshalo nemibhede yangempela nezimo zesizini. Ukuhlwanyela okuhleliwe akubona ubufakazi bokuthi sekutshaliwe.'),
       t('Record harvest weight, food kept or donated, sales and costs with their dates.', 'Bhala isisindo sesivuno, ukudla okugciniwe noma okunikelwe, ukuthengisa nezindleko kanye nezinsuku zakho.'),
