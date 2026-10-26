@@ -6,6 +6,8 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Site survey: start here
 
+Latest map follow-up: [Ubhejane map recovery and current exact-sheet delivery — 26 October 2026](2026-10-26/ubhejane-map-recovery-codex.md).
+
 Latest implementation: [Survey draft recovery and signed-in Ubhejane check — 22 October 2026](2026-10-22/survey-draft-recovery-codex.md).
 
 1. [Previous continuation record — 2 October 2026](2026-10-02/site-survey-continuation.md).
@@ -61,6 +63,8 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [Ubhejane map recovery and current exact-sheet delivery — 26 October 2026](2026-10-26/ubhejane-map-recovery-codex.md).
 
 - [Wave 23 rendered re-capture of the live build 98c8a22 and the new report workspaces: w23-01 to w23-07, the isiZulu Home date regression fixed first — 26 October 2026](2026-10-26/wave-23-recapture-claude.md).
 - [Wave 22 rendered re-capture of the live build 8d2e1a9: w22-01 to w22-10, hydration errors on /home and /invoice, Lima clearance, weather card — 25 October 2026](2026-10-25/wave-22-recapture-claude.md).
