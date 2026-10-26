@@ -350,6 +350,16 @@ export function buildCohortSeries(
     comparableFarmers === productionFarmers &&
     comparableFarmers === salesFarmers;
 
+  // w23-02: the money totals come from the months BEFORE they are rounded to whole rand. Summing the
+  // rounded months drifted from the cohort card, which rounds the exact sum once: /funder showed
+  // "Farmer income R262 685" on the card and "R262 686" in this chart, one page, one figure.
+  const exactTotal = (pick: (m: CohortMonth) => number | null): number | null => {
+    const present = months.map(pick).filter((v): v is number => v !== null);
+    return present.length === 0 ? null : Math.round(present.reduce((a, b) => a + b, 0) * 100) / 100;
+  };
+  const exactIncomeZar = exactTotal((m) => m.incomeZar);
+  const exactExpensesZar = exactTotal((m) => m.expensesZar);
+
   for (const bucket of months) {
     if (bucket.producedKg !== null) bucket.producedKg = Math.round(bucket.producedKg * 10) / 10;
     if (bucket.soldKg !== null) bucket.soldKg = Math.round(bucket.soldKg * 10) / 10;
@@ -413,8 +423,8 @@ export function buildCohortSeries(
       && totalComparableSoldKg <= totalComparableProducedKg
         ? Math.round((totalComparableProducedKg - totalComparableSoldKg) * 10) / 10
         : null,
-    totalIncomeZar: sum((m) => m.incomeZar),
-    totalExpensesZar: sum((m) => m.expensesZar),
+    totalIncomeZar: exactIncomeZar,
+    totalExpensesZar: exactExpensesZar,
     keptComparable,
     activeMonths,
     maxKg,
