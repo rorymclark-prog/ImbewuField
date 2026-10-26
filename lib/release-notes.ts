@@ -53,6 +53,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     where: 'Organisation → Reports → MEL evidence', href: '/ngo',
     detail: 'Compare milestone dates and review linked donor definitions and evidence.',
   }] },
+  { when: '26 October 2026', sha: '98c8a22e', changes: [
+    'Home shows today\'s date in isiZulu again instead of placeholder words.',
+  ] },
   { when: '25 October 2026', sha: 'becd2a958', changes: [
     'Farmers can download production and finance reports from My records.',
     'Mentors and facilitators have reports for visits, training, feedback and follow-up.',
