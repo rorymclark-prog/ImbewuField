@@ -1,6 +1,18 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Menu → Site design": "Menyu → Puḽane ya fhethu",
+  "Check the new map lettering": "Ṱolani maṅwalwa maswa a mepe",
+  "Create a free exact map. Check the larger key and the buildings you traced.": "Itani mepe wo teaho wa mahala. Ṱolani ṱhalutshedzo khulwane ya zwiga na zwifhaṱo zwe na zwi ola.",
+  "Check the maps in your site report": "Ṱolani mimepe kha muvhigo wa fhethu haṋu",
+  "Review each included map before exporting. Saved older drawings stay available.": "Sedzulusani mepe muṅwe na muṅwe wo katelwaho musi ni sa athu u bvisa faela. Zwifanyiso zwa kale zwo vhulungwaho zwi kha ḓi wanala.",
+  // Map follow-up: docs/audits/2026-10-26/map-release-note-drafts.json; unreviewed.
+  "New map legends use spare margin space for larger, clearer lettering.": "Ṱhalutshedzo ntswa dza zwiga zwa mepe dzi shumisa tshikhala tshi sa shumiswiho thungo uri maṅwalwa a vhe mahulwane nahone a vhalege zwavhuḓi.",
+  "Paper base maps show each building you traced, with separate building names.": "Mimepe ya mutheo ya kha bammbiri i sumbedza tshifhaṱo tshiṅwe na tshiṅwe tshe na tshi ola, na madzina o fhambanaho a zwifhaṱo.",
+  "Saved maps stay available; create new drawings to see these improvements.": "Mimepe yo vhulungwaho i kha ḓi wanala; olani mimepe miswa uri ni vhone khwiniso idzi.",
+  "All nine map sheets use the same legend box, fonts and spacing.": "Masiaṱari oṱhe a ṱahe a mimepe a shumisa bogisi ḽithihi ḽa zwiga, fonto na zwikhala zwi fanaho.",
+  "New drawings keep the legend on the right; your saved maps stay available.": "Zwifanyiso zwiswa zwi vhea ṱhalutshedzo ya zwiga kha tsha u ḽa; mimepe yaṋu yo vhulungwaho i kha ḓi wanala.",
+  "Long map headings wrap inside their legend box.": "Ṱhoho ndapfu dza mepe dzi khethekanywa nga mitaladzi ngomu ha bogisi ḽa zwiga.",
   "Offline saving and sending messages now have drafts in all four languages.": "Milaedza ya u vhulunga hu si na vhuṱumani na u rumela zwino i na mvetomveto nga nyambo dzoṱhe nṋa.",
   "Consent choices now show draft translations and the English source in all four languages.": "Zwikhetho zwa thendelo zwino zwi sumbedza ṱhalutshedzelo dza mvetomveto na maṅwalwa a u thoma a English nga nyambo dzoṱhe nṋa.",
   "Full production and yield notes now have four draft translations.": "Notsi dzo fhelelaho dza mbveledzo na khaṋo zwino dzi na ṱhalutshedzelo dza mvetomveto nga nyambo nṋa.",

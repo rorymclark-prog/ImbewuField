@@ -41,11 +41,15 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '26 October 2026', changes: [
+  { when: '27 October 2026', sha: '8d3702b67', changes: [
     'New map legends use spare margin space for larger, clearer lettering.',
     'Paper base maps show each building you traced, with separate building names.',
     'Saved maps stay available; create new drawings to see these improvements.',
-  ] },
+  ], tour: [{ title: 'Check the new map lettering', where: 'Menu → Site design', href: '/design',
+    detail: 'Create a free exact map. Check the larger key and the buildings you traced.',
+  }, { title: 'Check the maps in your site report', where: 'Menu → Site reports', href: '/reports',
+    detail: 'Review each included map before exporting. Saved older drawings stay available.',
+  }] },
   { when: '26 October 2026', sha: 'd38b5ea4b', changes: [
     'All nine map sheets use the same legend box, fonts and spacing.',
     'New drawings keep the legend on the right; your saved maps stay available.',

@@ -1,0 +1,105 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "scope": "Six map release descriptions, four guide phrases and one destination label only; unreviewed. Existing native entries, course and farming instructions remain unchanged.",
+  "entries": [
+    {
+      "source": "New map legends use spare margin space for larger, clearer lettering.",
+      "drafts": {
+        "zu": "Izincazelo zezimpawu zemephu ezintsha zisebenzisa isikhala esiseceleni ukuze umbhalo ube mkhulu futhi ucace.",
+        "st": "Ditlhaloso tse ntjha tsa matshwao a dimmapa di sebedisa sebaka se se nang letho mahlakoreng hore mongolo o be moholo le ho hlaka.",
+        "ts": "Tinhlamuselo letintshwa ta swikombiso swa mepe ti tirhisa ndhawu leyi nga tirhisiwiki etlhelo leswaku marito ma va makulu ni ku hlayeka kahle.",
+        "ve": "Ṱhalutshedzo ntswa dza zwiga zwa mepe dzi shumisa tshikhala tshi sa shumiswiho thungo uri maṅwalwa a vhe mahulwane nahone a vhalege zwavhuḓi."
+      }
+    },
+    {
+      "source": "Paper base maps show each building you traced, with separate building names.",
+      "drafts": {
+        "zu": "Amamephu ayisisekelo asephepheni abonisa zonke izakhiwo ozidwebe, namagama azo ahlukene.",
+        "st": "Dimmapa tsa motheo tsa pampiri di bontsha moaho o mong le o mong oo o o thaletseng, ka mabitso a arohaneng a meaho.",
+        "ts": "Mimepe ya masungulo ya le papileni yi komba muako wun’wana ni wun’wana lowu u nga wu dirowa, ni mavito ya miako lama hambaneke.",
+        "ve": "Mimepe ya mutheo ya kha bammbiri i sumbedza tshifhaṱo tshiṅwe na tshiṅwe tshe na tshi ola, na madzina o fhambanaho a zwifhaṱo."
+      }
+    },
+    {
+      "source": "Saved maps stay available; create new drawings to see these improvements.",
+      "drafts": {
+        "zu": "Amamephu agciniwe ahlala etholakala; dala imidwebo emisha ukuze ubone lezi zinguquko.",
+        "st": "Dimmapa tse bolokilweng di ntse di fumaneha; etsa metako e metjha ho bona dintlafatso tsena.",
+        "ts": "Mimepe leyi hlayisiweke ya ha kumeka; endla swidirowiwa leswintshwa ku vona ku antswisiwa loku.",
+        "ve": "Mimepe yo vhulungwaho i kha ḓi wanala; olani mimepe miswa uri ni vhone khwiniso idzi."
+      }
+    },
+    {
+      "source": "All nine map sheets use the same legend box, fonts and spacing.",
+      "drafts": {
+        "zu": "Wonke amakhasi ayisishiyagalolunye amamephu asebenzisa ibhokisi elifanayo lezimpawu, amafonti nezikhala.",
+        "st": "Maqephe ohle a robong a dimmapa a sebedisa lebokose le tshwanang la matshwao, mekgwa ya mongolo le dikgeo.",
+        "ts": "Mapheji hinkwawo ya nkaye ya mimepe ma tirhisa bokisi rin’we ra swikombiso, tifonto ni swivandla leswi fanaka.",
+        "ve": "Masiaṱari oṱhe a ṱahe a mimepe a shumisa bogisi ḽithihi ḽa zwiga, fonto na zwikhala zwi fanaho."
+      }
+    },
+    {
+      "source": "New drawings keep the legend on the right; your saved maps stay available.",
+      "drafts": {
+        "zu": "Imidwebo emisha igcina incazelo yezimpawu ngakwesokudla; amamephu akho agciniwe ayatholakala.",
+        "st": "Metako e metjha e boloka tlhaloso ya matshwao ka ho le letona; dimmapa tse bolokilweng di ntse di fumaneha.",
+        "ts": "Swidirowiwa leswintshwa swi veka nhlamuselo ya swikombiso exineneni; mimepe ya wena leyi hlayisiweke ya ha kumeka.",
+        "ve": "Zwifanyiso zwiswa zwi vhea ṱhalutshedzo ya zwiga kha tsha u ḽa; mimepe yaṋu yo vhulungwaho i kha ḓi wanala."
+      }
+    },
+    {
+      "source": "Long map headings wrap inside their legend box.",
+      "drafts": {
+        "zu": "Izihloko ezinde zemephu zihlukaniswa ngemigqa ngaphakathi kwebhokisi lezimpawu.",
+        "st": "Dihlooho tse telele tsa dimmapa di arolwa ka mela ka hara lebokose la tlhaloso ya matshwao.",
+        "ts": "Tinhlokomhaka to leha ta mepe ti aviwa hi tilayini endzeni ka bokisi ra swikombiso.",
+        "ve": "Ṱhoho ndapfu dza mepe dzi khethekanywa nga mitaladzi ngomu ha bogisi ḽa zwiga."
+      }
+    },
+    {
+      "source": "Check the new map lettering",
+      "drafts": {
+        "zu": "Hlola umbhalo omusha wemephu",
+        "st": "Hlahloba mongolo o motjha wa mmapa",
+        "ts": "Kamba matsalelo lamantshwa ya mepe",
+        "ve": "Ṱolani maṅwalwa maswa a mepe"
+      }
+    },
+    {
+      "source": "Create a free exact map. Check the larger key and the buildings you traced.",
+      "drafts": {
+        "zu": "Dala imephu yamahhala enembile. Hlola incazelo yezimpawu enkulu nezakhiwo ozidwebe.",
+        "st": "Etsa mmapa o nepahetseng wa mahala. Hlahloba tlhaloso e kgolo ya matshwao le meaho eo o e thaletseng.",
+        "ts": "Endla mepe lowu kongomeke wa mahala. Kamba nhlamuselo leyikulu ya swikombiso ni miako leyi u nga yi dirowa.",
+        "ve": "Itani mepe wo teaho wa mahala. Ṱolani ṱhalutshedzo khulwane ya zwiga na zwifhaṱo zwe na zwi ola."
+      }
+    },
+    {
+      "source": "Check the maps in your site report",
+      "drafts": {
+        "zu": "Hlola amamephu embikweni wendawo yakho",
+        "st": "Hlahloba dimmapa tlalehong ya sebaka sa hao",
+        "ts": "Kamba mimepe eka xiviko xa ndhawu ya wena",
+        "ve": "Ṱolani mimepe kha muvhigo wa fhethu haṋu"
+      }
+    },
+    {
+      "source": "Review each included map before exporting. Saved older drawings stay available.",
+      "drafts": {
+        "zu": "Buyekeza imephu ngayinye efakiwe ngaphambi kokuthekelisa. Imidwebo emidala egciniwe isatholakala.",
+        "st": "Hlahloba mmapa o mong le o mong o kenyelleditsweng pele o o romela kantle. Metako ya kgale e bolokilweng e ntse e fumaneha.",
+        "ts": "Kamba mepe wun’wana ni wun’wana lowu katsiweke u nga si wu humesa. Swidirowiwa swa khale leswi hlayisiweke swa ha kumeka.",
+        "ve": "Sedzulusani mepe muṅwe na muṅwe wo katelwaho musi ni sa athu u bvisa faela. Zwifanyiso zwa kale zwo vhulungwaho zwi kha ḓi wanala."
+      }
+    },
+    {
+      "source": "Menu → Site design",
+      "drafts": {
+        "zu": "Imenyu → Ukuklama indawo",
+        "st": "Lenane → Moralo wa sebaka",
+        "ts": "Menyu → Pulani ya ndhawu",
+        "ve": "Menyu → Puḽane ya fhethu"
+      }
+    }
+  ]
+}

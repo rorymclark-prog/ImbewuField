@@ -1,6 +1,18 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Menu → Site design": "Lenane → Moralo wa sebaka",
+  "Check the new map lettering": "Hlahloba mongolo o motjha wa mmapa",
+  "Create a free exact map. Check the larger key and the buildings you traced.": "Etsa mmapa o nepahetseng wa mahala. Hlahloba tlhaloso e kgolo ya matshwao le meaho eo o e thaletseng.",
+  "Check the maps in your site report": "Hlahloba dimmapa tlalehong ya sebaka sa hao",
+  "Review each included map before exporting. Saved older drawings stay available.": "Hlahloba mmapa o mong le o mong o kenyelleditsweng pele o o romela kantle. Metako ya kgale e bolokilweng e ntse e fumaneha.",
+  // Map follow-up: docs/audits/2026-10-26/map-release-note-drafts.json; unreviewed.
+  "New map legends use spare margin space for larger, clearer lettering.": "Ditlhaloso tse ntjha tsa matshwao a dimmapa di sebedisa sebaka se se nang letho mahlakoreng hore mongolo o be moholo le ho hlaka.",
+  "Paper base maps show each building you traced, with separate building names.": "Dimmapa tsa motheo tsa pampiri di bontsha moaho o mong le o mong oo o o thaletseng, ka mabitso a arohaneng a meaho.",
+  "Saved maps stay available; create new drawings to see these improvements.": "Dimmapa tse bolokilweng di ntse di fumaneha; etsa metako e metjha ho bona dintlafatso tsena.",
+  "All nine map sheets use the same legend box, fonts and spacing.": "Maqephe ohle a robong a dimmapa a sebedisa lebokose le tshwanang la matshwao, mekgwa ya mongolo le dikgeo.",
+  "New drawings keep the legend on the right; your saved maps stay available.": "Metako e metjha e boloka tlhaloso ya matshwao ka ho le letona; dimmapa tse bolokilweng di ntse di fumaneha.",
+  "Long map headings wrap inside their legend box.": "Dihlooho tse telele tsa dimmapa di arolwa ka mela ka hara lebokose la tlhaloso ya matshwao.",
   "Offline saving and sending messages now have drafts in all four languages.": "Melaetsa ya ho boloka ntle le kgokahano le ho romela jwale e na le meralo ka dipuo tsohle tse nne.",
   "Consent choices now show draft translations and the English source in all four languages.": "Dikgetho tsa tumello jwale di bontsha diphetolelo tsa moralo le mongolo wa pele wa Senyesemane ka dipuo tsohle tse nne.",
   "Full production and yield notes now have four draft translations.": "Dintlha tse felletseng tsa tlhahiso le kotulo jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",

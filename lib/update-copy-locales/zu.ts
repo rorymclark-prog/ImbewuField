@@ -1,6 +1,18 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Menu → Site design": "Imenyu → Ukuklama indawo",
+  "Check the new map lettering": "Hlola umbhalo omusha wemephu",
+  "Create a free exact map. Check the larger key and the buildings you traced.": "Dala imephu yamahhala enembile. Hlola incazelo yezimpawu enkulu nezakhiwo ozidwebe.",
+  "Check the maps in your site report": "Hlola amamephu embikweni wendawo yakho",
+  "Review each included map before exporting. Saved older drawings stay available.": "Buyekeza imephu ngayinye efakiwe ngaphambi kokuthekelisa. Imidwebo emidala egciniwe isatholakala.",
+  // Map follow-up: docs/audits/2026-10-26/map-release-note-drafts.json; unreviewed.
+  "New map legends use spare margin space for larger, clearer lettering.": "Izincazelo zezimpawu zemephu ezintsha zisebenzisa isikhala esiseceleni ukuze umbhalo ube mkhulu futhi ucace.",
+  "Paper base maps show each building you traced, with separate building names.": "Amamephu ayisisekelo asephepheni abonisa zonke izakhiwo ozidwebe, namagama azo ahlukene.",
+  "Saved maps stay available; create new drawings to see these improvements.": "Amamephu agciniwe ahlala etholakala; dala imidwebo emisha ukuze ubone lezi zinguquko.",
+  "All nine map sheets use the same legend box, fonts and spacing.": "Wonke amakhasi ayisishiyagalolunye amamephu asebenzisa ibhokisi elifanayo lezimpawu, amafonti nezikhala.",
+  "New drawings keep the legend on the right; your saved maps stay available.": "Imidwebo emisha igcina incazelo yezimpawu ngakwesokudla; amamephu akho agciniwe ayatholakala.",
+  "Long map headings wrap inside their legend box.": "Izihloko ezinde zemephu zihlukaniswa ngemigqa ngaphakathi kwebhokisi lezimpawu.",
   "Offline saving and sending messages now have drafts in all four languages.": "Imilayezo yokugcina nokuthumela ungaxhunyiwe manje inohlaka kuzo zonke izilimi ezine.",
   "Consent choices now show draft translations and the English source in all four languages.": "Izinketho zemvume manje zibonisa ukuhumusha okusaluhlaka nombhalo wokuqala wesiNgisi kuzo zonke izilimi ezine.",
   "Full production and yield notes now have four draft translations.": "Amanothi aphelele okukhiqiza nesivuno manje anokuhumusha okusaluhlaka ngezilimi ezine.",

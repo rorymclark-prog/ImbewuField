@@ -36,13 +36,13 @@ omitted them. This sidebar is not the full underlying work schedule.
 ## Verification
 
 - Public fictional farm: all nine final PNGs are 3462 × 2448. Every panel occupies x=2549…3461, 913px wide, compared with 620px previously. No map scale or canvas envelope was enlarged to obtain this space.
-- Phasing detail: 33px versus 28px; shared titles: 58px versus 48px. All measured legend text fits within its content rectangle. Six complete hold points and both concluding sections were checked.
+- Phasing detail: 33px versus 28px; shared titles: 58px versus 48px. All measured right and bottom text bounds fit within the content rectangle; the left inset was also checked visually. Six complete hold points and both concluding sections were checked.
 - Before/after source was rendered in the same browser. Map-image pixels for sheets 02–08 match exactly after the compact masterplan's uniform paper offset is accounted for. Phasing's north marker moves to clear the wider key; 33 other edge pixels differ. No byte-identical Phasing claim is made.
 - All renderer calls retained the exact JSON of their input state, frame and reference geometry. The extra classroom exists only in a cloned synthetic probe; no saved farmer geometry or public fixture was edited.
 - Regression demonstration: the two new classroom/boundary tests failed against the prior selector (10 pass / 2 fail) before its correction.
 - Existing source-wiring checks were carried into the shared placement authority and strengthened with runtime margin arithmetic. The reason for replacing inline-variable pins is recorded in each test; no coverage was deleted.
 - Final ordered typecheck, full-suite and release-note/whitespace results belong in the PR and issue #35 after completion. An unfinished run is not a pass.
-- Output inspected: all-nine composition contact sheet; full base and Phasing views; separate classroom probe; measured text bounds for every panel. Further close inspection of the remaining keys is recorded in the final handover.
+- Output inspected: all-nine composition contact sheet; full base and Phasing views; separate classroom probe; measured text bounds for every panel. All remaining legend keys were also inspected as full-resolution crops.
 - Limits: local fictional rendering is not a new real-site plan, field approval, fluent-language review or physical phone/Safari evidence. No paid render or real-site Save.
 
 ![Nine-sheet public example](evidence-readable-legend/nine-sheet-review.jpg)
@@ -63,3 +63,30 @@ deployment, deliberately redraw the real site's free exact set and check the
 classroom against its saved trace, retaining its older exports and review status.
 Claude review/merge of #1099 then #1101 is separately requested in issue #35; a
 ledger request is not evidence that Claude has reviewed or merged them.
+
+## 27 October integration checkpoint
+
+Current main `55526909e` was integrated into the existing legend work. Only the
+release history conflicted; both sets of entries and tours were preserved. All
+six checked map-rendering/fixture modules retained their SHA-256 bytes across
+that merge, so the inspected drawing source is unchanged. The six map release
+descriptions have additive, unreviewed drafts in zu/st/ts/ve, preserving main’s
+native update-history contract. Their exact source pairs are in
+[the map release draft record](map-release-note-drafts.json); no fluent review is
+claimed and no existing translation bytes were rewritten.
+
+Ordered typecheck and 151 focused checks passed before the main integration.
+Final combined checks, full-suite totals and deployment status remain for the
+PR/issue handover after completion.
+
+The first combined update-UI run caught that the newly visible map notes had
+no guide stops: four refresh cases and four guide cases failed, one of each per language. Two concrete map
+and report destinations now accompany the release, with additive unreviewed
+phrase drafts. Existing localization assertions and manual-refresh behavior
+were retained. Final passing counts are recorded after rerunning the checks.
+
+Final combined pre-push checkpoint: Node 24 typecheck passed; all 195 focused
+map, geometry, typography, Phasing, canvas, release-label and actual four-language
+update-UI tests passed, zero failures/TODOs. Release-note drift and whitespace
+passed. The full suite and exact-head CI remain separate completion gates,
+reported in the PR/ledger once terminal results are available.
