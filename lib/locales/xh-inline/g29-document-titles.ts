@@ -9,6 +9,7 @@ const drafts: Record<string, string> = {
   // page parts (before " — ImbewuField")
   "Field journal": "Incwadi yemihla",
   "My Records": "Iirekhodi zam",
+  "My records": "Iirekhodi zam",
   "Design studio": "Isitudiyo soyilo",
   "What's new": "Okutsha",
   "Example farm": "Umzekelo wefama",

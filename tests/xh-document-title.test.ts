@@ -84,7 +84,7 @@ test('it is mounted once, inside the language provider, in the root layout', () 
 });
 
 test('the layouts keep their static English titles (page-titles.test.ts depends on them)', () => {
-  assert.match(read('app/records/layout.tsx'), /title: 'My Records — ImbewuField'/);
+  assert.match(read('app/records/layout.tsx'), /title: 'My records — ImbewuField'/);
   assert.doesNotMatch(read('app/records/layout.tsx'), /DocumentTitle|useLanguage/);
 });
 
@@ -110,7 +110,7 @@ test('titles listed as intentionally English really are static titles, and have 
 });
 
 test('the drafts the component relies on are present and keep the brand', () => {
-  assert.equal(XH_INLINE_SOURCE['My Records'], 'Iirekhodi zam');
+  assert.equal(XH_INLINE_SOURCE['My records'], 'Iirekhodi zam');
   assert.equal(XH_INLINE_SOURCE['Home'], 'Ikhaya');
   assert.equal(XH_INLINE_SOURCE['ImbewuField — partner deck'], 'ImbewuField — iislayidi zamaqabane');
   // A whole-title key is looked up before the suffix split, so the brand-first titles work.
