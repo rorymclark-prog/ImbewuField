@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { readErrorPageLang, errorPageCopy } from '@/lib/error-page-copy';
+import { readErrorPageLang, errorPageCopy, isOfflineError } from '@/lib/error-page-copy';
 
 export default function Error({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => { console.error(error); }, [error]);
@@ -13,6 +13,8 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
   // (matching server render) and reads the saved choice once mounted, same as LanguageProvider.
   const [copy, setCopy] = useState(() => errorPageCopy('en'));
   useEffect(() => { setCopy(errorPageCopy(readErrorPageLang())); }, []);
+  // Chunk-load failures and an offline phone get their own words (w25-04); still never error.message.
+  const offline = isOfflineError(error);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100dvh', background: 'var(--bg-0)', padding: 24, textAlign: 'center' }}>
@@ -21,9 +23,9 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
           <path d="M12 21V11" /><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z" /><path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z" />
         </svg>
       </div>
-      <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 22, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 8 }}>{copy.errorTitle}</h2>
+      <h2 style={{ fontFamily: 'Georgia, serif', fontSize: 22, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 8 }}>{offline ? copy.offlineTitle : copy.errorTitle}</h2>
       <p style={{ fontFamily: 'system-ui, sans-serif', fontSize: 14, color: 'var(--text-secondary)', marginBottom: copy.zuluDraftNotice ? 4 : 24 }}>
-        {copy.errorBody}
+        {offline ? copy.offlineBody : copy.errorBody}
       </p>
       {copy.zuluDraftNotice && (
         <p style={{ fontFamily: 'system-ui, sans-serif', fontSize: 11, color: 'var(--text-muted)', marginBottom: 24 }}>
@@ -36,6 +38,12 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
       >
         {copy.tryAgain}
       </button>
+      {offline && (
+        // A plain anchor, not <Link>: the router is what just failed to load its chunks.
+        <a href="/offline" style={{ marginTop: 16, minHeight: 44, display: 'inline-flex', alignItems: 'center', fontFamily: 'system-ui, sans-serif', fontSize: 14, fontWeight: 600, color: 'var(--emerald)', textDecoration: 'underline' }}>
+          {copy.offlineSaved}
+        </a>
+      )}
     </div>
   );
 }
