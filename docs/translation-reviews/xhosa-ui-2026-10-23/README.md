@@ -185,6 +185,14 @@ The coordinator also made these changes:
 - **"Assigned":** the verb form that read "stolen" (`ebelwe`) is fixed in g21, g24 and g27.
 - **One label:** the "Grow big vines" setting and the four notes that quote it now share one wording.
 
+**26 Oct follow-up (g32–g35):** the same method on the shards added that day.
+- **Scope:** 253 strings. 8 repairs were proposed and 7 applied, with 0 holds.
+- **Applied:**
+  - **Money (farm report):** missing costs had read as "lost" costs, and "never allocated to crop profit" was softened to "not allocated". Depreciation is now explicitly of equipment.
+  - **Crop advice:** "dossier" had been read as "dose". The irrigated groundnut spacing was garbled.
+  - **Smaller fixes:** "Supported by the case" had used *ikesi* (a crate). "Make the next entry count" had read as "have a price".
+- **Not applied:** the coordinator kept *iingobozi* for "baskets", because *ingobozi* is the isiXhosa word, rather than the proposed loanword.
+
 **For a fluent reviewer to confirm:**
 - `-fermenta`
 - "utolo" (arrow)

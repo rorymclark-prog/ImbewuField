@@ -1,0 +1,26 @@
+{
+  "unit": "g32-role-reports",
+  "shard": "g32-role-reports.ts",
+  "range": "all",
+  "okCount": 72,
+  "items": [
+    {
+      "index": 21,
+      "key": "Make the next entry count",
+      "verdict": "repair",
+      "draft": "Yenza ukuba irekhodi elilandelayo libe nexabiso",
+      "backtranslation": "Make the next record have a price",
+      "problem": "\"Make the next entry count\" (i.e. make it matter) rendered as \"have a price/value\" (ixabiso = price) - wrong idea in a money report.",
+      "corrected": "Yenza ukuba irekhodi elilandelayo libaluleke"
+    },
+    {
+      "index": 56,
+      "key": "Milestones use the selected observation cutoff. Assessment answers and action status remain current snapshots. Each measure shows its own coverage.",
+      "verdict": "repair",
+      "draft": "Amanqanaba abalulekileyo asebenzisa umhla wokuvala okhethiweyo wokuqwalasela. Iimpendulo zovavanyo nemeko yezenzo ziba yimeko yangoku. Isilinganiso ngasinye sibonisa ubungakanani baso.",
+      "backtranslation": "...Assessment answers and action status become the current state. Each measure shows its size.",
+      "problem": "\"remain current snapshots\" became \"become the current state\" (implies change); \"shows its own coverage\" became \"shows its size\" (coverage = who/what is included, not size).",
+      "corrected": "Amanqanaba abalulekileyo asebenzisa umhla wokuvala okhethiweyo wokuqwalasela. Iimpendulo zovavanyo nemeko yezenzo zihlala zibonisa imeko yangoku. Isilinganiso ngasinye sibonisa ukuba sigubungela ntoni ngokwaso."
+    }
+  ]
+}

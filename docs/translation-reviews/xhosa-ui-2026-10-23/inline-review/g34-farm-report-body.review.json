@@ -1,0 +1,26 @@
+{
+  "unit": "g34-farm-report-body",
+  "shard": "g34-farm-report-body.ts",
+  "range": "all",
+  "okCount": 106,
+  "items": [
+    {
+      "index": 65,
+      "key": "Check missing costs, unpaid invoices and supporting slips before sharing the report. Untagged costs are never allocated to crop profit.",
+      "verdict": "repair",
+      "draft": "Hlola iindleko ezilahlekileyo, ii-invoyisi ezingahlawulwanga neerisithi ezixhasayo phambi kokwabelana ngengxelo. Iindleko ezingaphawulwanga azabelwa kwinzuzo yesityalo.",
+      "backtranslation": "Check lost costs, unpaid invoices and supporting receipts... Costs not marked are not allocated to crop profit.",
+      "problem": "\"missing costs\" (not recorded) rendered as \"lost costs\" (ezilahlekileyo); \"never allocated\" softened to \"are not allocated\". Money text.",
+      "corrected": "Hlola iindleko ezingabhalwanga, ii-invoyisi ezingahlawulwanga neerisithi ezixhasayo phambi kokwabelana ngengxelo. Iindleko ezingaphawulwanga azisoze zabelwe kwinzuzo yesityalo."
+    },
+    {
+      "index": 96,
+      "key": "All logged categories are included. Missing labour, depreciation, stock and other costs are not estimated.",
+      "verdict": "repair",
+      "draft": "Zonke iindidi ezirekhodiweyo ziqukiwe. Umsebenzi, ukwehla kwexabiso, istokhwe nezinye iindleko ezilahlekileyo aziqikelelwanga.",
+      "backtranslation": "All recorded categories are included. Work, drop in price, stock and other lost costs are not estimated.",
+      "problem": "\"Missing ... costs\" (not logged) rendered as \"lost costs\"; \"depreciation\" rendered as \"ukwehla kwexabiso\" (a price drop, which could be read as market price). Money text.",
+      "corrected": "Zonke iindidi ezirekhodiweyo ziqukiwe. Umsebenzi, ukwehla kwexabiso lezixhobo, istokhwe nezinye iindleko ezingabhalwanga aziqikelelwanga."
+    }
+  ]
+}

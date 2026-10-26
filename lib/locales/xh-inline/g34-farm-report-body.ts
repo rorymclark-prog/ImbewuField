@@ -87,7 +87,7 @@ const drafts: Record<string, string> = {
   "{n} entries have future dates within this calendar selection. They remain included, as in Records; review their dates before sharing.": "Imibhalo engu-{n} inemihla yexesha elizayo ngaphakathi kolu khetho lwekhalenda. Iyaqhubeka ibandakanyiwe, njengakwiiRekhodi; hlola imihla yayo phambi kokwabelana.",
   "Record household use, donations, losses and stock movements separately before making a food-use balance. Those observations are not supplied by these books.": "Rekhoda ngokwahlukileyo ukusetyenziswa kwekhaya, izipho, ilahleko kunye nokuhamba kwestokhwe phambi kokwenza ibhalansi yokusetyenziswa kokutya. Ezo zinto ziqwalaselweyo azinikezelwa zezi ncwadi.",
   "Achieved yield per area needs a matching crop, measured growing area and crop-cycle dates. The current map or plan alone does not provide that comparison.": "Isivuno esifunyenweyo kwindawo nganye sifuna isityalo esihambelanayo, indawo yokutyala elinganisiweyo nemihla yomjikelo wesityalo. Imephu okanye isicwangciso sangoku sodwa asiniki oko kuthelekiswa.",
-  "Check missing costs, unpaid invoices and supporting slips before sharing the report. Untagged costs are never allocated to crop profit.": "Hlola iindleko ezilahlekileyo, ii-invoyisi ezingahlawulwanga neerisithi ezixhasayo phambi kokwabelana ngengxelo. Iindleko ezingaphawulwanga azabelwa kwinzuzo yesityalo.",
+  "Check missing costs, unpaid invoices and supporting slips before sharing the report. Untagged costs are never allocated to crop profit.": "Hlola iindleko ezingabhalwanga, ii-invoyisi ezingahlawulwanga neerisithi ezixhasayo phambi kokwabelana ngengxelo. Iindleko ezingaphawulwanga azisoze zabelwe kwinzuzo yesityalo.",
 
   // Metrics
   "Sale quantities": "Ubungakanani bentengiso",
@@ -128,7 +128,7 @@ const drafts: Record<string, string> = {
   "Issued": "Ikhutshiwe",
 
   // Costs table
-  "All logged categories are included. Missing labour, depreciation, stock and other costs are not estimated.": "Zonke iindidi ezirekhodiweyo ziqukiwe. Umsebenzi, ukwehla kwexabiso, istokhwe nezinye iindleko ezilahlekileyo aziqikelelwanga.",
+  "All logged categories are included. Missing labour, depreciation, stock and other costs are not estimated.": "Zonke iindidi ezirekhodiweyo ziqukiwe. Umsebenzi, ukwehla kwexabiso lezixhobo, istokhwe nezinye iindleko ezingabhalwanga aziqikelelwanga.",
   "Recorded costs": "Iindleko ezirekhodiweyo",
 
   // Month by month
