@@ -55,7 +55,7 @@ export default function ManualChapterPage({ params }: { params: { lang: string; 
   return (
     <div style={{ minHeight: '100dvh', background: 'var(--bg-0)' }}>
       <ManualHeader fallback={`/manual/${lang}`} label={ui.title} />
-      <main style={{ maxWidth: 760, margin: '0 auto', padding: '20px 16px 64px' }}>
+      <main style={{ maxWidth: 760, margin: '0 auto', padding: '20px 16px 0', paddingBottom: 'max(64px, var(--lima-fab-clearance, 0px))' }}>
         <LanguageSwitch current={lang} label={ui.language} hrefFor={(code) => `/manual/${code}/${slug}`} />
         <article lang={contentLang}>
           <p style={{ fontSize: 14, fontWeight: 600, letterSpacing: 0.3, color: 'var(--text-secondary)', margin: '0 0 6px' }}>
