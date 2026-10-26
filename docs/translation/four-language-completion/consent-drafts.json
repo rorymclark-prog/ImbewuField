@@ -276,7 +276,7 @@
     }
   ],
   "componentSha256": "c650ad79a429ebc46c71f6521858f9f359d3fb5ef38af8704d36010e999b7f5c",
-  "englishSourceSha256": "82fbab03fde3745bffee4465c986484af090884825f36ff2358156a19a764b37",
+  "englishSourceSha256": "b926a4e185ed5d8b266004ad8f9e019aefadeca821f0d2567279406ab22e5be3",
   "reasons": {
     "popiaShareLabel": "The English source says anonymised results, not just omitted names or unknown results. Plain native drafts now describe results that do not disclose whose they are. No data handling or policy is changed.",
     "popiaGoalFeedDesc": "The earlier Xitsonga phrase said vegetables never end. The source describes a steady spread through the year as a chosen goal; retain succession/availability without an endless-food promise.",
@@ -295,9 +295,9 @@
     "Tests must reverse only the complete exact declared locale layer before historical Study comparisons. Original hashes stay; changed/partial UI and unrelated learning text must remain detectable."
   ],
   "localeSourceSha256": {
-    "zu": "c4646cabe49d4ed55291c0327511751ba69b72b6ae81cac1766a4a34623218d9",
-    "st": "c26cb145d2032612893058ada8f9242da68c8d163a38ab9bf79516db1926cc2a",
-    "ts": "107ecc26f378ba12bfa1c128289855f7b4968a5cc6e14a67f661cc4f9a3fbadc",
-    "ve": "c4327c5434ce0f45b21f7e4d24ea94bd553d956909028fbfa11c9c21218bd43e"
+    "zu": "91ce21fba2e1cba529435ab0f393d6cead4a68dd4949b5c7960eb5ac9410f3bb",
+    "st": "2afbd970161c65e83800d05efd83047844968b2c54baab82a58458c273a69988",
+    "ts": "8d61e534f136345775ae5ce2dbf7830165b197021dd5fccbf5b9e4f13a00b3e6",
+    "ve": "ae9fb8afa1677309ba3c22acf462109454239649381a4a9db13e511ab2fd2b95"
   }
 }

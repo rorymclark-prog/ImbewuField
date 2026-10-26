@@ -41,11 +41,18 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  // The four-language stack reaches main here, so this entry announces it with lines that already
+  // carry native drafts in every language (tests/update-notices-localization.test.ts).
   { when: '26 October 2026', sha: 'a1b07580', changes: [
-    'Menus, the tour, reports and Community now have draft Sesotho, Xitsonga and Tshivenda.',
-    'These drafts are unreviewed; the English source stays one tap away.',
-  ], tour: [{ title: 'Open the menu in your language', where: 'Home → Settings', href: '/home',
-    detail: 'Choose a draft language in Settings, then open the menu and the tour.',
+    "Tour and practice controls now have draft translations in four languages.",
+    'App page titles now have four draft translations.',
+    'Account controls and messages now have four draft translations.',
+    'Community messages, board and map controls now have four draft translations.',
+    'Update notices and recent changes now have four draft translations.',
+  ], tour: [{ title: "Explore the practice views", where: "Menu → Practice views", href: '/samples',
+    detail: "Open the chooser and Tour. Instructions and controls have unreviewed drafts; the English source is available.",
+  }, { title: 'Read recent updates', where: "Menu → What's new", href: '/updates',
+    detail: 'The update notice and recent history use your language. Older entries still have English source text while their translations are completed.',
   }] },
   { when: '24 October 2026', sha: '0858cf13', changes: [
     'Exchange crop chips and the Home task board now read in isiZulu as well.',

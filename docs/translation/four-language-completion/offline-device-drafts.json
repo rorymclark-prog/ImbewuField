@@ -420,7 +420,7 @@
     },
     {
       "key": "offlinePageRecords",
-      "english": "My Records",
+      "english": "My records",
       "st": "Direkoto tsa ka",
       "ts": "Tirhekhodo ta mina",
       "ve": "Rekhodo dzanga"
@@ -1647,7 +1647,7 @@
     },
     {
       "key": "offlinePageRecords",
-      "english": "My Records",
+      "english": "My records",
       "zu": "Incwadi yemali nokuvuna",
       "st": null,
       "ts": null,
@@ -1753,11 +1753,11 @@
   "sourceSha256": {
     "app/offline/page.tsx": "061a12094385e872fabd6186d15f53282b07dead582e9df6204dcb46db287863",
     "components/FieldSyncBadge.tsx": "bb7d9d1882d2b35f9f45b140f1a814da732351ffe23b17347d219671f05e89c3",
-    "lib/i18n.tsx": "82fbab03fde3745bffee4465c986484af090884825f36ff2358156a19a764b37",
-    "lib/locales/zu.ts": "fd8fb4c4222af9c39d605c255e84551524a899ef4b5268d141f21542c0359c3c",
-    "lib/locales/st.ts": "dc132478c489fbce6802d2b5504ebc2f4c5e0e07b6fe4ff6c3a3e6d3c5c83944",
-    "lib/locales/ts.ts": "f9b1e3ab22adfcb6d900b3e3fc0d56e93f9cb3d8c9a9c3f31307de7fdec3626d",
-    "lib/locales/ve.ts": "66f46b4d36c63757fbf6c35592484cdff26fbb3a8181f2b467c1681fba1729d3"
+    "lib/i18n.tsx": "b926a4e185ed5d8b266004ad8f9e019aefadeca821f0d2567279406ab22e5be3",
+    "lib/locales/zu.ts": "3814be8ec62fc30a0f3f73b010b54d94a244e8f8e4e13111a2000982a0aef4aa",
+    "lib/locales/st.ts": "be1b845545187e9f8620b487dc9b3a51d4a8cc6cb7004a3a58cc59abe9964b56",
+    "lib/locales/ts.ts": "8157c959c3ca330cc548181977cfdb3a46c100cd33815e794bb3befa2b3aa963",
+    "lib/locales/ve.ts": "1fcf7c8376aad7d5479529a0b27bea6a56926e2bc5102d537538cfcdb428ed7b"
   },
   "scope": "The 72 device/offline page controls, two short sync-badge labels, draft/source labels and eight additional exact errors from field-api, field-api-core, field-device-store and the service worker. Study pack/media controls are outside this batch.",
   "notes": [

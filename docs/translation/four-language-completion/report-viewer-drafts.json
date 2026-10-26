@@ -2950,7 +2950,7 @@
       ]
     },
     {
-      "english": "ImbewuField Site Analysis",
+      "english": "ImbewuField site analysis",
       "key": "reportShareTitle",
       "locations": [
         "components/ReportView.tsx:860"
@@ -3328,7 +3328,7 @@
       ]
     },
     {
-      "english": "Permaculture Site Analysis Report",
+      "english": "Permaculture site analysis report",
       "key": "reportPrintSubtitle",
       "locations": [
         "components/ReportView.tsx:1248",
@@ -3459,7 +3459,7 @@
       ]
     },
     {
-      "english": "Site Satellite View",
+      "english": "Site satellite view",
       "key": "reportSatelliteViewHeader",
       "locations": [
         "components/ReportView.tsx:1314",
@@ -4083,14 +4083,14 @@
       ]
     },
     {
-      "english": "Saved Places · GPS Points",
+      "english": "Saved places · GPS points",
       "key": "reportSavedPlacesHeader",
       "locations": [
         "lib/report-localisation.ts:REPORT_ZU"
       ]
     },
     {
-      "english": "Monthly Rainfall Pattern",
+      "english": "Monthly rainfall pattern",
       "key": "reportMonthlyRainfallHeader",
       "locations": [
         "lib/report-localisation.ts:REPORT_ZU"
@@ -4104,7 +4104,7 @@
       ]
     },
     {
-      "english": "Executive Summary",
+      "english": "Executive summary",
       "key": "reportExecutiveSummaryHeading",
       "locations": [
         "lib/report-localisation.ts:REPORT_ZU"
@@ -4525,10 +4525,10 @@
     }
   ],
   "baseSourceSha256": {
-    "zu": "3ba91f80b4a4fdc4bce4550c7f414dd7a99322b141b2d0bba3610bdba1a00d06",
-    "st": "855e84002141cce0ef17e05d05bd68136e7bbc86944c34fc7b9f7aa7df559d70",
-    "ts": "0bb79d89921bc8cd8436151a58945a71cfca230868f6eb5524613a973670fede",
-    "ve": "3cb0242783318496fde5f460c12e51e5b4c18efd53b6ef887a115b3b2df0125f"
+    "zu": "192eab64bcd7fb7e334c0e688f906eb3c9419493fc83ad42eb3ec95b49a6d538",
+    "st": "65621c755f6c232a3f0de3ad1e04e96dac53c42a97ae75658a8bc01faf9915ba",
+    "ts": "b71b2e614f0015ca66095a291a2ef8cb03bda3b44ee9c6437adde53fb37dc6c8",
+    "ve": "e7498963c78d1b223e3db3bcbb56c49f748bccdd6f211b2ab65fad366e71944b"
   },
   "beforeValues": {
     "zu": {

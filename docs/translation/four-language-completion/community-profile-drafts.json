@@ -485,12 +485,12 @@
     "lib/community/flag.ts": "0d0361a64a6ae05451ed0e29fbee6f5d2a3eb771bef6b02385c35b7d9f0dc188",
     "lib/site-evidence.ts": "2c4059c7405412502bf5c831dae0d4c31b2ec8fc827759d1b770c2e1cc895740",
     "components/AppConfirm.tsx": "aa6a85118eb453554fa4375a8975af7b75e8b89d1d54efc7d25a6210556f3c1e",
-    "lib/i18n.tsx": "82fbab03fde3745bffee4465c986484af090884825f36ff2358156a19a764b37",
+    "lib/i18n.tsx": "b926a4e185ed5d8b266004ad8f9e019aefadeca821f0d2567279406ab22e5be3",
     "lib/i18n-pending.ts": "d0a3d00a62bd83768d47ab6547ad29dcb2a624031e4bd4d23c7f9aef5baff2d7",
-    "lib/locales/zu.ts": "4720c5cdc245e409e55a8cdb72bc29a4eb698d5c57f01df45b2ac43fecee49a9",
-    "lib/locales/st.ts": "d4f821ffb8689ee6129b10ac414acb953d61ee151cfbb964c0da726e65a8442e",
-    "lib/locales/ts.ts": "22232c0bf2ca4587d38dec6c89ca885530833311c3d966aa7b26108e871bdd8f",
-    "lib/locales/ve.ts": "7dc3cec884a28712bec824191101fa3d327c56d6bd4216b70448af89a8ec46eb"
+    "lib/locales/zu.ts": "d38b0c6e9f2cb83ac17308530cabd50e4964b2d14c132a80c5ce8c1da0a2b5e9",
+    "lib/locales/st.ts": "d247bc9876428a42c809eeab512859a816bc6a3298836ac450f5ea95e0116e4f",
+    "lib/locales/ts.ts": "a68c7bd7ecc768c68a2c93f2987653a179379709a0e3e642ee2330fdb6d75298",
+    "lib/locales/ve.ts": "eb7ee86429c78cf1a5b3d44e5c387860bfc27997704385b4bcd86c599cfdbabc"
   },
   "englishAdditions": {
     "communityLocationUnsupported": "This device can't share a location.",

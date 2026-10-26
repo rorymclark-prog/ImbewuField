@@ -205,12 +205,12 @@
     "app/community/u/[uid]/page.tsx": "70bc59cc62c8a0645003e6e6a00f300cec95e24465fdff3889e2504462989d90",
     "lib/db/community-queries.ts": "e926e09d4c8fc719a59b5d434d63cf7d71472fba6b8ccdcc775b0619aef9a10e",
     "lib/community/flag.ts": "0d0361a64a6ae05451ed0e29fbee6f5d2a3eb771bef6b02385c35b7d9f0dc188",
-    "lib/i18n.tsx": "82fbab03fde3745bffee4465c986484af090884825f36ff2358156a19a764b37",
+    "lib/i18n.tsx": "b926a4e185ed5d8b266004ad8f9e019aefadeca821f0d2567279406ab22e5be3",
     "lib/i18n-pending.ts": "459aab2af36273c52140e6d0a8b80c5835a11442e65af61360fd04dfe5e82d31",
-    "lib/locales/zu.ts": "8c792a0885ac933b373de42fbf5ad1d6f513b930ccbb5c072fd1cf5fba7761b4",
-    "lib/locales/st.ts": "6ec934a70e2b48b1123d6c2f823b650aa2bf65ea97ae66af2bdfc6e8edacbe9e",
-    "lib/locales/ts.ts": "2eb89008decf48506727a8a2582117960487818fb9ea4f4ada9126f965a2ac35",
-    "lib/locales/ve.ts": "e113f9b745c8a18bbe212c2c40ef44d7c200eee80d08e92934d3dd39e0436f8a"
+    "lib/locales/zu.ts": "15dccd940b3320fd458ee2bd2b610218e5d109e44eccbabf62ec73c8ae4806f0",
+    "lib/locales/st.ts": "3b728c2825559e793665ff961b71aa156cb8ef9b7734b6a7013387eabec1029c",
+    "lib/locales/ts.ts": "4029b8964e4cf78262f4a16d966d130f59be4cea663c82483109c36803e9a305",
+    "lib/locales/ve.ts": "25e561e338d998821a96c280fe0cd09d7b45d204ca04ba760e672a90e06cf372"
   },
   "englishAdditions": {
     "communityProfileUnavailable": "This profile is no longer available.",

@@ -1325,6 +1325,7 @@ export const REPORT_UI_KEYS: Readonly<Record<string, string>> = {
   "Choose up to 12 maps for this report.": "reportUiChooseUpTo12MapsForThisReport",
   "Could not save the map selection. Please try again.": "reportUiCouldNotSaveTheMapSelectionPleaseTry",
   "ImbewuField Site Analysis": "reportShareTitle",
+  "ImbewuField site analysis": "reportShareTitle", // main's sentence-case English source
   "Rainfall": "reportRainfallLabel",
   "Soil pH": "reportSoilPhLabel",
   "Mean temperature": "reportUiMeanTemperature",
@@ -1377,6 +1378,7 @@ export const REPORT_UI_KEYS: Readonly<Record<string, string>> = {
   "Close report → zoom into your site on the map → tap Capture → reopen": "reportUiCloseReportZoomIntoYourSiteOnThe",
   "In this report": "reportUiInThisReport",
   "Permaculture Site Analysis Report": "reportPrintSubtitle",
+  "Permaculture site analysis report": "reportPrintSubtitle", // main's sentence-case English source
   "Biome": "reportBiomeLabel",
   "Elevation": "reportElevationLabel",
   "Not measured — soil test needed": "reportUiNotMeasuredSoilTestNeeded",
@@ -1395,6 +1397,7 @@ export const REPORT_UI_KEYS: Readonly<Record<string, string>> = {
   "Captured site satellite view": "reportUiCapturedSiteSatelliteView",
   "Saved design": "reportUiSavedDesign",
   "Site Satellite View": "reportSatelliteViewHeader",
+  "Site satellite view": "reportSatelliteViewHeader", // main's sentence-case English source
   "Captured satellite view of the site": "reportSatelliteImageAlt",
   "Maxar satellite imagery": "reportUiMaxarSatelliteImagery",
   "The last attempt closed the app, so this report was made without sending your design maps to be read — everything else is complete, and your maps still show below and in the PDF. Generate again any time to retry with them.": "reportUiTheLastAttemptClosedTheAppSoThis",
@@ -1484,9 +1487,12 @@ export const REPORT_UI_KEYS: Readonly<Record<string, string>> = {
   "Share": "reportUiShare",
   "Copied!": "reportUiCopied",
   "Saved Places · GPS Points": "reportSavedPlacesHeader",
+  "Saved places · GPS points": "reportSavedPlacesHeader", // main's sentence-case English source
   "Monthly Rainfall Pattern": "reportMonthlyRainfallHeader",
+  "Monthly rainfall pattern": "reportMonthlyRainfallHeader", // main's sentence-case English source
   "Tap to open": "reportUiTapToOpen",
   "Executive Summary": "reportExecutiveSummaryHeading",
+  "Executive summary": "reportExecutiveSummaryHeading", // main's sentence-case English source
   "Site Conditions": "reportUiSiteConditions",
   "Natural Vegetation & Biome": "reportUiNaturalVegetationBiome",
   "Water Harvesting": "reportUiWaterHarvesting",

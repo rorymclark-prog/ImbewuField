@@ -211,7 +211,7 @@
     },
     {
       "key": "siteDesignOpenStudio",
-      "english": "Open the Design Studio",
+      "english": "Open the design studio",
       "st": "Bula sebaka sa ho rala",
       "ts": "Pfula ndhawu ya ku dizayina",
       "ve": "Vulani fhethu ha u pulana"
@@ -239,7 +239,7 @@
     },
     {
       "key": "siteDesignSketchHeader",
-      "english": "Sketch → AI Design",
+      "english": "Sketch → AI design",
       "st": "Setshwantsho se takilweng → Moralo wa AI",
       "ts": "Xiketsa → Dizayini ya AI",
       "ve": "Tshiketshe → Pulane ya AI"
@@ -484,7 +484,7 @@
     },
     {
       "key": "limaFieldGuideSubtitle",
-      "english": "Field Guide · ImbewuField",
+      "english": "Field guide · ImbewuField",
       "st": "Tataiso ya tshimo · ImbewuField",
       "ts": "Nkongomiso wa nsimu · ImbewuField",
       "ve": "Vhulivhisi ha tsimu · ImbewuField"

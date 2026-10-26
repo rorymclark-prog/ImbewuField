@@ -102,7 +102,9 @@ test('history recent groups translate, older history remains reachable source, a
  for(const lang of langs){const h=await actualUpdateUi(lang,{kind:'history'}),t=controlT(lang);try{
   assert.ok(h.text().includes(t('navWhatsNew')));assert.ok(h.text().includes(t('updatesIntro')));assert.ok(!h.text().includes(t('updatesEnglishGap')),'all default recent days are translated');
   assert.equal(h.renderer.root.findAllByType('section').length,5);await h.buttonText(t('updatesShowOlder'));assert.ok(h.text().includes(t('updatesEnglishGap')));assert.ok(h.renderer.root.findAllByType('section').length>5);assert.ok(h.text().includes(RELEASE_NOTES.at(-1)!.changes.at(-1)!));assert.deepEqual(h.renderer.root.findAllByType('li').map(li=>li.find(n=>typeof n.type==='function'&&typeof n.props.source==='string').props.source),RELEASE_NOTES.flatMap(n=>n.changes),'every archived description remains in its original order');
-  await h.level(true);assert.equal(h.renderer.root.findAllByType('section').length,3);assert.equal(h.renderer.root.findAllByType('button').some(b=>updateNodeText(b)===t('updatesShowOlder')||updateNodeText(b)===t('updatesShowFewer')),false);
+  // Wave 15 (ux-09) gives Simple the same disclosure, so an opened history stays open and Show fewer
+  // returns Simple to its original three-day limit.
+  await h.level(true);assert.ok(h.renderer.root.findAllByType('section').length>5);await h.buttonText(t('updatesShowFewer'));assert.equal(h.renderer.root.findAllByType('section').length,3);assert.ok(h.renderer.root.findAllByType('button').some(b=>updateNodeText(b)===t('updatesShowOlder')));
  }finally{await h.dispose();}}
 });
 

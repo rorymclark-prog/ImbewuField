@@ -5,7 +5,7 @@ export const PAGE_TITLE_CONTROLS:Readonly<Record<string,string>> = {
   'Funder — ImbewuField':'homeRoleFunderLabel',
   'Planting calendar — ImbewuField':'plantingCalendarHeader',
   'Network — ImbewuField':'navNetwork',
-  'My Records — ImbewuField':'myRecordsTitle',
+  'My records — ImbewuField':'myRecordsTitle',
   "What's new — ImbewuField":'navWhatsNew',
   'Example farm — ImbewuField':'demoBannerLabel',
   'Map — ImbewuField':'tabMap',
@@ -34,6 +34,7 @@ export type PageTitleLanguage='zu'|'st'|'ts'|'ve';
 export interface PageTitleDraft {english:string;zu?:string;st?:string;ts?:string;ve?:string}
 /** Unreviewed machine drafts. The packet records exact source metadata and reused UI authorities. */
 export const PAGE_TITLE_DRAFTS:readonly PageTitleDraft[]=[
+ {english:'Printable plan — ImbewuField',zu:'Uhlelo oluphrintekayo — ImbewuField',st:'Moralo o ka printwang — ImbewuField',ts:'Pulani leyi nga printiwaka — ImbewuField',ve:'Pulane ine ya nga gandiswa — ImbewuField'},
  {english:'Invoice — ImbewuField',zu:'I-invoyisi — ImbewuField',st:'Invoese — ImbewuField',ts:'Invhoyisi — ImbewuField',ve:'Invhoisi — ImbewuField'},
  {english:'Farm Finance — ImbewuField teaching preview',zu:'Izimali zepulazi — umbukiso wokufundisa we-ImbewuField',st:'Ditjhelete tsa polasi — ponelopele ya ho ruta ya ImbewuField',ts:'Timali ta purasi — nkombiso wo dyondzisa wa ImbewuField',ve:'Masheleni a bulasi — mbonelaphanḓa ya u funza ya ImbewuField'},
  {english:'Farmer exchange — ImbewuField',zu:'Ukuhwebelana kwabalimi — ImbewuField',st:'Phapanyetsano ya balemi — ImbewuField',ts:'Ku cincana ka varimi — ImbewuField',ve:'U tshintshana ha vhalimi — ImbewuField'},

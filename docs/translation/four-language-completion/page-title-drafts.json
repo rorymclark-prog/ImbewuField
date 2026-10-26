@@ -28,7 +28,7 @@
     },
     {
       "file": "app/records/layout.tsx",
-      "english": "My Records — ImbewuField"
+      "english": "My records — ImbewuField"
     },
     {
       "file": "app/updates/layout.tsx",
@@ -205,6 +205,10 @@
     {
       "file": "app/student/guides/[guide]/layout.tsx",
       "english": "Study — ImbewuField"
+    },
+    {
+      "file": "app/facilitator/print/layout.tsx",
+      "english": "Printable plan — ImbewuField"
     }
   ],
   "dynamicOwners": [
@@ -324,9 +328,9 @@
       "ve": "Netiweke"
     },
     {
-      "source": "My Records — ImbewuField",
+      "source": "My records — ImbewuField",
       "key": "myRecordsTitle",
-      "english": "My Records",
+      "english": "My records",
       "zu": "Amarekhodi Ami",
       "st": "Direkoto Tsa Ka",
       "ts": "Tirhekhodo ta Mina",
@@ -541,6 +545,13 @@
     }
   ],
   "entries": [
+    {
+      "english": "Printable plan — ImbewuField",
+      "zu": "Uhlelo oluphrintekayo — ImbewuField",
+      "st": "Moralo o ka printwang — ImbewuField",
+      "ts": "Pulani leyi nga printiwaka — ImbewuField",
+      "ve": "Pulane ine ya nga gandiswa — ImbewuField"
+    },
     {
       "english": "Invoice — ImbewuField",
       "zu": "I-invoyisi — ImbewuField",
