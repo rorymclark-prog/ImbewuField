@@ -193,6 +193,30 @@ The coordinator also made these changes:
   - **Smaller fixes:** "Supported by the case" had used *ikesi* (a crate). "Make the next entry count" had read as "have a price".
 - **Not applied:** the coordinator kept *iingobozi* for "baskets", because *ingobozi* is the isiXhosa word, rather than the proposed loanword.
 
+## Dictionary review (26 Oct 2026): the 1,815 newer keys in `lib/locales/xh.ts`
+These keys had been checked by script only, for placeholders and line breaks. They now got the
+blind method: four reviewers each back-translated a quarter before opening the English. The
+records are in `dictionary-review/`.
+- **Totals:** 1,815 keys, 25 repairs proposed, 21 applied, 0 holds.
+- **Most serious:**
+  - The water tank's "Min safe level" read as if a low level were safe.
+  - Contour spacing in metres was lost.
+  - "Trees south of beds so they don't shade them" could read as giving shade.
+  - "Seedlings" used the word for young animals.
+  - "Farm-gate prices" lost "gate".
+  - "Positive numbers or zero" used *iqanda*, which can also mean egg, on a form with eggs.
+  - "Previous" could read as "ahead", next to the "Next step" button.
+  - Isizulu plurals had slipped in: *izindlu* and *izinyanda*.
+- **Kept, not applied:**
+  - The reviewer misread *azize* ("never") in "never drawn by the model".
+  - *utolo* is the isiXhosa word for arrow.
+  - *yabelwana* is the right form for "shared".
+  - For "bunches" the coordinator used *iinyanda*, the isiXhosa plural, not the proposed loanword.
+- **Species names:**
+  - Eight `biomeSpecies*` lists had swapped English common names for local names (for example *Umphafa* for Buffalo Thorn) and added others. They are back to the exact English, under the rule against changing or adding a species name.
+  - The inline "True spinach (English spinach)" crop label is removed, so the English name shows.
+  - A scan for lost or added bracketed Latin names over the dictionary and every shard found nothing else.
+
 ## Fluent-review hand-off (26 Oct 2026)
 `fluent-review-handoff-2026-10-26.csv` lists every isiXhosa UI draft, 10,656 rows after
 de-duplication, ordered for review:

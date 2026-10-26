@@ -1,0 +1,86 @@
+{
+  "unit": "dictionary-part1",
+  "okCount": 446,
+  "items": [
+    {
+      "index": 14,
+      "key": "designGuidancePlanting",
+      "verdict": "repair",
+      "english": "Trees south of beds so they don't shade them. Tap a tree, then tap the map.",
+      "draft": "Imithi mayibe ngasemazantsi kweebhedi ukuze ingazenzeli umthunzi. Cofa umthi, uze ucofe imephu.",
+      "backtranslation": "Trees should be on the south side of the beds so they do not shade themselves (make shade for themselves). Tap a tree, then tap the map.",
+      "problem": "'ingazenzeli umthunzi' uses the applicative -el- with object concord 'zi' (the beds): it reads 'make shade FOR them', which can be read as giving shade rather than casting unwanted shade on the beds. The English means the trees must not shade the beds.",
+      "corrected": "Imithi mayibe ngasemazantsi kweebhedi ukuze ingenzi mthunzi phezu kwazo. Cofa umthi, uze ucofe imephu."
+    },
+    {
+      "index": 117,
+      "key": "designCanvasContourInterval",
+      "verdict": "repair",
+      "english": "Approx. contours ~{interval} m apart — lay swales/vetiver along these lines",
+      "draft": "Imigca yokuphakama eqikelelweyo ~{interval} m ukuqelelana — beka imisele/i-vetiver ilandela le migca",
+      "backtranslation": "Estimated contour lines ~{interval} m apart — place swales/vetiver following these lines",
+      "problem": "'ukuqelelana' (to be level/equal with one another) does not express 'apart'; the contour spacing in metres is a design number and the unit relationship is lost.",
+      "corrected": "Imigca yokuphakama eqikelelweyo ~{interval} m phakathi komgca nomgca — beka imisele/i-vetiver ilandela le migca"
+    },
+    {
+      "index": 143,
+      "key": "designCanvasMeasureOn",
+      "verdict": "repair",
+      "english": "Measuring — tap along a path",
+      "draft": "Kuyalinganiswa — cofa ecaleni kwendlela",
+      "backtranslation": "It is being measured — tap beside the path",
+      "problem": "'ecaleni kwendlela' means 'beside the path'; English is 'along a path' (tap points along the route).",
+      "corrected": "Kuyalinganiswa — cofa ulandela indlela"
+    },
+    {
+      "index": 144,
+      "key": "designCanvasMeasureHint",
+      "verdict": "repair",
+      "english": "Tap two points for a distance, or keep tapping to measure along a path.",
+      "draft": "Cofa iindawo ezimbini ukuze ufumane umgama, okanye uqhubeke ucofa ukuze ulinganise ecaleni kwendlela.",
+      "backtranslation": "Tap two places to get the distance, or keep tapping to measure along a path.",
+      "problem": "'ecaleni kwendlela' means 'beside the path'; English is 'along a path'.",
+      "corrected": "Cofa iindawo ezimbini ukuze ufumane umgama, okanye uqhubeke ucofa ukuze ulinganise ulandela indlela."
+    },
+    {
+      "index": 184,
+      "key": "designPaletteExistingHelp",
+      "verdict": "repair",
+      "english": "Draw what’s already here — tap a feature, then trace its corners.",
+      "draft": "Zoba okusele kukho apha — cofa into, uze ulandele iikona zayo.",
+      "backtranslation": "Draw what remains here — tap a thing, then follow its corners.",
+      "problem": "'okusele kukho' means 'what is left/remains'; English means what is ALREADY here (existing features).",
+      "corrected": "Zoba oko sele kukho apha — cofa into, uze ulandele iikona zayo."
+    },
+    {
+      "index": 203,
+      "key": "designPaletteSwaleLengthTitle",
+      "verdict": "repair",
+      "english": "Measured along the line you drew",
+      "draft": "Kulinganiswe ecaleni komgca owuzobileyo",
+      "backtranslation": "Measured along the line you drew",
+      "problem": "'ecaleni komgca' means 'beside the line'; English says swale length is measured ALONG the line drawn.",
+      "corrected": "Kulinganiswe ulandela umgca owuzobileyo"
+    },
+    {
+      "index": 264,
+      "key": "designPrintNorthArrow",
+      "verdict": "kept",
+      "english": "North arrow",
+      "draft": "Utolo lwasemantla",
+      "backtranslation": "North arrow (north interpretation)",
+      "problem": "'Utolo' normally means 'interpretation/explanation', not a map arrow; a reader will not recognise it as the north arrow (low-moderate confidence, check with a mapping-literate speaker). Coordinator: kept; \"azize zizotywe yimodeli\" already reads \"they are never drawn by the model\", and \"utolo\" is the isiXhosa word for arrow.",
+      "corrected": "Isalathisi sasemantla"
+    },
+    {
+      "index": 350,
+      "key": "designGlossyFinishHelp",
+      "verdict": "kept",
+      "english": "Exact Canvas is free and instant, and draws every label, legend and line at full sheet resolution. AI Polished saves that exact master first, then spends one paid AI render painting the map artwork — your boundary, labels, legend, title block, north arrow and scale bar are drawn back on top by the app afterwards, never by the model. Neither choice ever changes your canvas design.",
+      "draft": "Imephu yoyilo echanekileyo isimahla kwaye ikhawuleza, kwaye izoba yonke ileyibhile, isitshixo nomgca ngokucaca okupheleleyo kwephepha. Ipolishwe yi-AI iqala igcine loo mephu ichanekileyo eyintloko, emva koko isebenzise umzobo omnye we-AI ohlawulelwayo ukupeyinta umzobo wemephu — umda wakho, iileyibhile, isitshixo, ibhloko yesihloko, utolo lomntla nomgca wesikali zizotywa kwakhona ngaphezulu yi-app emva koko, azize zizotywe yimodeli. Akukho nokuba lunye ukhetho oluya kuze lutshintshe uyilo lwakho lwekhanvasi.",
+      "backtranslation": "The accurate design map is free and fast, and it will draw every label, key and line with full clarity of the page. Polished by AI first keeps that accurate main map, then uses one paid AI drawing to paint the drawing of the map — your boundary, labels, key, title block, north arrow and scale line will be drawn again on top by the app afterward, and not drawn by the model. Not even one choice will ever change your canvas design.",
+      "problem": "(1) 'azize zizotywe yimodeli' is a garbled negative and can be read as 'and let them be drawn by the model', reversing the claim that labels/legend are never drawn by the model. (2) 'utolo lomntla' for north arrow (see 'Utolo'). Coordinator: kept; \"azize zizotywe yimodeli\" already reads \"they are never drawn by the model\", and \"utolo\" is the isiXhosa word for arrow.",
+      "corrected": "Imephu yoyilo echanekileyo isimahla kwaye ikhawuleza, kwaye izoba yonke ileyibhile, isitshixo nomgca ngokucaca okupheleleyo kwephepha. Ipolishwe yi-AI iqala igcine loo mephu ichanekileyo eyintloko, emva koko isebenzise umzobo omnye we-AI ohlawulelwayo ukupeyinta umzobo wemephu — umda wakho, iileyibhile, isitshixo, ibhloko yesihloko, isalathisi sasemantla nomgca wesikali zizotywa kwakhona ngaphezulu yi-app emva koko, zingazotywa yimodeli. Akukho nokuba lunye ukhetho oluya kuze lutshintshe uyilo lwakho lwekhanvasi."
+    }
+  ]
+}

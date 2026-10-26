@@ -226,7 +226,6 @@ const drafts: Record<string, string> = {
   "Garlic": "Igalikhi",
   "Peas": "Iiphizi",
   "Swiss chard (spinach)": "Isipinatshi",
-  "True spinach (English spinach)": "Isipinatshi sesiNgesi",
   "Kale": "Ikheyili",
   "Groundnuts (peanuts)": "Amandongomane",
   "Cucumber": "Ikhukhamba",

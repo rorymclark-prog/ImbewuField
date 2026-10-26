@@ -1,0 +1,66 @@
+{
+  "unit": "dictionary-part2",
+  "okCount": 448,
+  "items": [
+    {
+      "index": 64,
+      "key": "mentorOwnerNeeded",
+      "verdict": "repair",
+      "english": "Owner needed",
+      "draft": "Kufuneka umphathi",
+      "backtranslation": "A manager/person in charge is required",
+      "problem": "\"Owner\" here is the person who owns the action (the responsible person), not a manager. \"umphathi\" (manager) is a wrong term and is inconsistent with \"Umntu onoxanduva\" used for \"Responsible person\" elsewhere.",
+      "corrected": "Kufuneka umntu onoxanduva"
+    },
+    {
+      "index": 87,
+      "key": "mentorFocusSeedlings",
+      "verdict": "repair",
+      "english": "Seedlings & seed saving",
+      "draft": "Izithole & ukugcina imbewu",
+      "backtranslation": "Young animals(?) & seed storage",
+      "problem": "\"Seedlings\" translated as \"Izithole\", which a farmer reads as the young of animals (calves, cubs), not young plants. Wrong term (plant vs animal).",
+      "corrected": "Izithole zezityalo & ukugcina imbewu"
+    },
+    {
+      "index": 102,
+      "key": "mentorPracticalSkillIntro",
+      "verdict": "repair",
+      "english": "Record a skill demonstrated in the garden separately from course completion or attendance.",
+      "draft": "Bhala isakhono esibonisiweyo egadini ngokwahlukileyo kukugqiba ikhosi okanye ukuzimasa.",
+      "backtranslation": "Record a skill shown in the garden separately from finishing a course or \"ukuzimasa\" (unclear word)",
+      "problem": "\"attendance\" is rendered as \"ukuzimasa\", which is not a word for attendance and is unintelligible; the fact that the skill record is separate from attendance is lost.",
+      "corrected": "Bhala isakhono esibonisiweyo egadini ngokwahlukileyo kukugqiba ikhosi okanye ukuba khona."
+    },
+    {
+      "index": 340,
+      "key": "assessmentState_shared",
+      "verdict": "kept",
+      "english": "shared",
+      "draft": "yabelwana",
+      "backtranslation": "shared (garbled verb form \"yabelwana\")",
+      "problem": "\"yabelwana\" is not a correct form (neither passive \"yabelwe\" nor reciprocal \"yabelana\"); grammar garbled for an assessment state label. Coordinator: kept; -abelwana (shared with others) is the right form for \"shared\"; \"yabelwe\" would read as \"was assigned\".",
+      "corrected": "yabelwe"
+    },
+    {
+      "index": 353,
+      "key": "mapPrintBaseTitle",
+      "verdict": "repair",
+      "english": "Print a clean base map (boundary, house outlines and contours, no hatching) to sketch your design by hand",
+      "draft": "Shicilela imephu esisiseko ecocekileyo (umda, imiphetho yezindlu nemigca yokuphakama, ngaphandle kwemigca yomthunzi) ukuze uzobe uyilo lwakho ngesandla",
+      "backtranslation": "Print a clean base map (boundary, edges of houses and contour lines, without shade lines) so that you draw your design by hand",
+      "problem": "isiZulu word \"izindlu\" used; isiXhosa is \"iindlu\" (house outlines).",
+      "corrected": "Shicilela imephu esisiseko ecocekileyo (umda, imiphetho yeendlu nemigca yokuphakama, ngaphandle kwemigca yomthunzi) ukuze uzobe uyilo lwakho ngesandla"
+    },
+    {
+      "index": 434,
+      "key": "waterBalanceLegendMinSafe",
+      "verdict": "repair",
+      "english": "Min safe level",
+      "draft": "Izinga eliphantsi elikhuselekileyo",
+      "backtranslation": "Safe low level",
+      "problem": "\"Min safe level\" (minimum safe tank level) rendered as \"safe low level\", which reads as if a low level is safe; the minimum/threshold meaning is lost (water safety). Inconsistent with \"Ubuncinci obukhuselekileyo\" used for \"Min safe\" in the next line.",
+      "corrected": "Ubuncinci obukhuselekileyo"
+    }
+  ]
+}
