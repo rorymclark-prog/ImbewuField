@@ -193,6 +193,21 @@ The coordinator also made these changes:
   - **Smaller fixes:** "Supported by the case" had used *ikesi* (a crate). "Make the next entry count" had read as "have a price".
 - **Not applied:** the coordinator kept *iingobozi* for "baskets", because *ingobozi* is the isiXhosa word, rather than the proposed loanword.
 
+## Fluent-review hand-off (26 Oct 2026)
+`fluent-review-handoff-2026-10-26.csv` lists every isiXhosa UI draft, 10,656 rows after
+de-duplication, ordered for review:
+
+| Order | Category | Rows |
+|---|---|---|
+| 1 | Safety | 486 |
+| 2 | Money | 1,238 |
+| 3 | Consent and privacy | 578 |
+| 4 | Everything else | 8,354 |
+
+- **Columns:** each row gives its source (the dictionary key, the inline shard or the money book), the English, the draft, and two blank columns for the reviewer's verdict and correction.
+- **What it covers:** the dictionary, the inline shards and the money book. Lessons, slides and the Manual have their own source-paired packets under `docs/study-translation-reviews/` and `research/manual/`.
+- **Refreshing it:** run `node --import ./tests/register-alias.mjs scripts/xh-review-handoff.mjs`. It is a snapshot; the app does not read it.
+
 **For a fluent reviewer to confirm:**
 - `-fermenta`
 - "utolo" (arrow)
