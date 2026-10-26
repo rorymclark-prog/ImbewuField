@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { CROP_EXPORT_COPY } from '../../lib/crop-export-copy-data.ts';
 import { cropExportText } from '../../lib/crop-export-copy.ts';
 import { productGuideText, type ProductGuideContext } from '../../lib/production-product-guidance.ts';
@@ -8,6 +9,7 @@ import type { ProductionGuideItem } from '../../lib/crop-export-schedule.ts';
 
 type Guide = { foodForest: ProductionGuideItem[]; animalProducts: ProductionGuideItem[] };
 const rows = (CROP_EXPORT_COPY as readonly {english:string;generatedScope?:string}[]).filter(row=>row.generatedScope==='product-guidance');
+const carePacket=JSON.parse(readFileSync(new URL('../../docs/translation/four-language-completion/animal-welfare-drafts.json',import.meta.url),'utf8')) as {rows:Array<Record<string,string>>;sourceBindings:Array<{english:string;bindings:Array<{enterpriseId:string;index:number;source:unknown}>}>};
 const escape=(text:string)=>text.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 const patterns=rows.filter(row=>row.english.includes('{')).map(row=>{const keys:string[]=[];const pattern=row.english.split(/(\{\w+\})/g).map(part=>{if(!/^\{\w+\}$/.test(part))return escape(part);keys.push(part.slice(1,-1));return '(.+?)';}).join('');return{source:row.english,keys,regex:new RegExp('^'+pattern+'$')};});
 
@@ -24,6 +26,15 @@ export function translateAdditionalProductPresentation(expected:Guide,original:G
   }
   item.lines=item.lines.map((current,i)=>{
    const sourceLine=source.lines[i];if(current!==sourceLine)return current;
+   // Welfare is its own source-bound layer. A global copy match must not hide a changed
+   // care field: bind the captured line to this housing's actual selected enterprise,
+   // or its original first-care choices, before allowing the complete draft here.
+   if(group==='animalProducts'){
+    const housing=context.animals[index].housing,options=enterprisesForHousing(housing),selected=options.find(option=>option.enterpriseId===context.animalChoices?.[housing]);
+    const points=(selected?[selected]:options).flatMap(option=>(selected?option.welfare:option.welfare.slice(0,1)).map((point,index)=>({option,point,index})));
+    const field=points.find(({point})=>point.point===sourceLine);
+    if(field){const bound=carePacket.sourceBindings.find(row=>row.english===sourceLine)?.bindings.find(binding=>binding.enterpriseId===field.option.enterpriseId&&binding.index===field.index);assert.ok(bound,'care wording must retain its original enterprise and field');assert.deepEqual(field.point.source,bound.source,'care citations cannot be replaced by a translated heading');const draft=carePacket.rows.find(row=>row.english===sourceLine);assert.ok(draft?.[language],'each complete care field needs its own bound draft');assert.equal(t(sourceLine),draft[language]);assert.notEqual(draft[language],sourceLine);assert.deepEqual(draft[language].match(/\d+(?:[.,]\d+)?/g)??[],sourceLine.match(/\d+(?:[.,]\d+)?/g)??[],'care limits retain source order');return draft[language];}
+   }
    if(rows.some(row=>row.english===sourceLine))return t(sourceLine);
    if(group==='foodForest'){const reference=context.trees[index].harvest.supplementaryReferences?.find(reference=>sourceLine===`${reference.title}: ${reference.note}`);if(reference)return `${t(reference.title)}: ${t(reference.note)}`;}
    if(group==='foodForest'&&sourceLine.startsWith('Reference only')){
