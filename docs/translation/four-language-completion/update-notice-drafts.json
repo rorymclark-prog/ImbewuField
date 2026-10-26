@@ -1510,6 +1510,34 @@
       "st": "Bula ntlha ya mohlodi wa palo ho bala phetolelo ya moralo le ya yona ya pele ya Senyesemane.",
       "ts": "Pfula notsi ya xihlovo xa nhlayo ku hlaya ndzimana ya vuhundzuluxeri ni ya yona ya Xinghezi yo sungula.",
       "ve": "Vulani notsi ya tshiko tsha mbalo ni vhale mushumo wa ṱhalutshedzelo na wa Luisimane wa u thoma."
+    },
+    {
+      "english": "Animal law notes have draft translations and English originals.",
+      "zu": "Amanothi emithetho yezilwane anemibhalo yokuhumusha neyokuqala yesiNgisi.",
+      "st": "Dintlha tsa melao ya diphoofolo di na le diphetolelo tsa pele le tsa Senyesemane tsa mantlha.",
+      "ts": "Tinotsi ta milawu ya swiharhi ti ni swikiro swa vuhundzuluxeri ni Xinghezi xo sungula.",
+      "ve": "Notsi dza milayo ya zwifuwo dzi na mvetamveto ya ṱhalutshedzo na Luisimane lwa u thoma."
+    },
+    {
+      "english": "Some legal sources are historical. Check current permits before acting.",
+      "zu": "Eminye imithombo yemithetho ingeyezikhathi ezedlule. Hlola izimvume zamanje ngaphambi kokwenza.",
+      "st": "Mehlodi e meng ya molao ke ya nako e fetileng. Hlahloba ditumello tsa hajwale pele o etsa.",
+      "ts": "Swihlovo swin'wana swa nawu i swa khale. Kambela mimpfumelelo ya sweswi u nga si endla.",
+      "ve": "Zwiṅwe zwiko zwa mulayo ndi zwa kale. Ṱolani thendelo dza zwino musi ni sa athu ita."
+    },
+    {
+      "english": "Review animal law drafts",
+      "zu": "Buyekeza imibhalo emithetho yezilwane",
+      "st": "Hlahloba dingolwa tsa pele tsa melao ya diphoofolo",
+      "ts": "Kambisisa swikiro swa milawu ya swiharhi",
+      "ve": "Sedzulusani mvetamveto ya milayo ya zwifuwo"
+    },
+    {
+      "english": "Open a legal note’s English original and check its source date and permit conditions.",
+      "zu": "Vula inothi lomthetho lokuqala lesiNgisi bese uhlola usuku lomthombo nemigomo yemvume.",
+      "st": "Bula ntlha ya molao ya pele ya Senyesemane mme o hlahlobe letsatsi la mohlodi le maemo a tumello.",
+      "ts": "Pfula notsi ya nawu ya Xinghezi xo sungula kutani u kambela siku ra xihlovo ni swipimelo swa mpfumelelo.",
+      "ve": "Vulani notsi ya mulayo ya Luisimane ya u thoma ni ṱole datumu ya tshiko na nyimele dza thendelo."
     }
   ],
   "historyBefore": [

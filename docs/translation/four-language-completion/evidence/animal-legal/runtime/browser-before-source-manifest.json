@@ -1,0 +1,116 @@
+{
+  "createdAt": "2026-10-26T03:34:15.424Z",
+  "cases": 53,
+  "sourceScope": [
+    {
+      "file": "lib/animal-enterprises-data.ts",
+      "sha256": "96262c70de1e8b039cb660051b53a7fed4b4d56061aac853c08fea6f09180657",
+      "declarations": [
+        "ANIMAL_ENTERPRISE_DATA"
+      ]
+    },
+    {
+      "file": "lib/animal-enterprises.ts",
+      "sha256": "469f100832290e2cbb978b16e2981e6eb20a4a20986415c1f1dc6e5f317ff134",
+      "declarations": [
+        "HOUSING_ANIMALS",
+        "HOUSING_LABEL",
+        "PRODUCT_LABEL",
+        "enterprisesForHousing",
+        "formatAmountRange",
+        "animalReferenceQualifier",
+        "isFoodProduct",
+        "sourcedProductMonths"
+      ]
+    },
+    {
+      "file": "lib/records-months.ts",
+      "sha256": "5ed01e34cc3bfacdc7758669a63459789a72a81c38f0f6177f00b69ac5d9b83c",
+      "declarations": [
+        "ENGLISH_SHORT",
+        "LONG",
+        "SHORT",
+        "hasMonthNames",
+        "validMonth",
+        "recordsMonthLong",
+        "recordsMonthShort"
+      ]
+    },
+    {
+      "file": "lib/crop-catalog.ts",
+      "sha256": "ce054474dd14ec0f1dc1e06773f2cc3bf1d331b255a46f5991eb5998fda13ff6",
+      "declarations": [
+        "MONTHS_SHORT"
+      ]
+    },
+    {
+      "file": "lib/crop-export-copy-data.ts",
+      "sha256": "1a595d20df21332b863cbde276b2ef30930ecc3b7f3d53a302f6cff40363ea6b",
+      "declarations": [
+        "CROP_EXPORT_COPY"
+      ]
+    },
+    {
+      "file": "lib/crop-export-copy.ts",
+      "sha256": "e91dbdad7e17da934ab54bf8c29ff6c11ca06b045e199369b19a1107c4ce469a",
+      "declarations": [
+        "CROP_EXPORT_DRAFT_LANGUAGES",
+        "isCropExportDraftLanguage",
+        "copyRows",
+        "exportCopy",
+        "cropExportText"
+      ]
+    },
+    {
+      "file": "lib/perennial-harvest.ts",
+      "sha256": "bb216efaa1f70db1d4abde4c98f2134eb4b6703610adc77d6bb343d6163f446f",
+      "declarations": [
+        "MONTH_ABBR",
+        "formatMonthSpan",
+        "formatRange"
+      ]
+    },
+    {
+      "file": "lib/production-product-guidance.ts",
+      "sha256": "0765af62e8f33a2eb7abcd8a1a17f7f8c3495d88787172fb049c9302afcf0ca0",
+      "declarations": [
+        "PRODUCT_GUIDE_COPY",
+        "PRODUCT_FIRST_CROP_COPY",
+        "PRODUCT_YIELD_COPY",
+        "productGuideCopy",
+        "productGuideText"
+      ]
+    },
+    {
+      "file": "lib/site-pdf-copy-data.ts",
+      "sha256": "b2f061995add90c09aa9a5f339eef1ca45d3dbe050ab991d7c263fe22e041af2",
+      "declarations": [
+        "SITE_PDF_COPY"
+      ]
+    },
+    {
+      "file": "lib/report-localisation.ts",
+      "sha256": "7f9103d0cd554c6a8ff791329303dc5248670dd8a014b5dc5961dc8296c859e5",
+      "declarations": [
+        "REPORT_DOCUMENT_COPY",
+        "REPORT_DOCUMENT_LANGUAGES",
+        "documentCopy",
+        "reportDocumentText"
+      ]
+    },
+    {
+      "file": "lib/animal-art.ts",
+      "sha256": "d0ee86021c25f426b88c122eefa9b3f3a5cd23249de39c26651ba6daf96fdbf5",
+      "declarations": [
+        "ANIMAL_ART",
+        "animalArtUrl"
+      ]
+    },
+    {
+      "file": "components/crops/AnimalEnterprisesCard.tsx",
+      "sha256": "065cf0e1ea1f013c7e0e6f9cf33315f0ff49eea8a47a7b5b236cfaeee8c853b2",
+      "scope": "complete actual component; import declarations only replaced by exact source authorities"
+    }
+  ],
+  "limits": "Isolated actual component, source AST authorities and actual React/Lucide. Harness replaces only context/provider and in-memory parent callbacks. No full production route or backend behavior claimed."
+}

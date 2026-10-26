@@ -1,3 +1,4 @@
+import {expectedGuideWithAnimalLegal} from './animal-legal-expectation.ts';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { CROP_EXPORT_COPY } from '../../lib/crop-export-copy-data.ts';
@@ -62,4 +63,5 @@ export function translateAdditionalProductPresentation(expected:Guide,original:G
    return current;
   });
  }}
+ const corrected=expectedGuideWithAnimalLegal(expected,context,language);Object.assign(expected,corrected);
 }

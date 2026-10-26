@@ -1,3 +1,4 @@
+import {expectedGuideWithAnimalLegal,expectedMarkdownWithAnimalLegal} from './helpers/animal-legal-expectation.ts';
 import { CROP_EXPORT_COPY } from '../lib/crop-export-copy-data.ts';
 import { translateAdditionalProductPresentation } from './helpers/product-guidance-expectation.ts';
 import { translatedSeasonExpectation, translateExpectedGuideSeason } from './helpers/season-translation-expectation.ts';
@@ -58,12 +59,12 @@ test('a new profile clause cannot silently fall back to English and saved words 
   assert.equal(productGuideText('Buying advice: {advice}','en',{advice:'Saved {month5}'}),'Buying advice: Saved {month5}');
 });
 
-test('every original English guide, purchasing document and season decision stays exact across plants, conditions and every livestock enterprise',()=>{
+test('whole English guides, purchases and season decisions retain every original field outside independently checked legal source corrections',()=>{
   for(const c of fx.cases){
-    const context=fx.contexts[c.context],before=JSON.stringify(context);
+    const context=fx.contexts[c.context],before=JSON.stringify(context),expectedEnglish=expectedGuideWithAnimalLegal(c.guide,context);
     for(const lang of['en','af']){
-      assert.deepEqual(buildProductGuidance(context,c.zones,c.conditions,lang),c.guide,c.name);
-      assert.equal(productPurchasingMarkdown(context,c.zones,c.conditions,lang),c.markdown,c.name);
+      assert.deepEqual(buildProductGuidance(context,c.zones,c.conditions,lang),expectedEnglish,c.name);
+      assert.equal(productPurchasingMarkdown(context,c.zones,c.conditions,lang),expectedMarkdownWithAnimalLegal(c.markdown,c.guide,expectedEnglish),c.name);
     }
     for(const[i,g]of context.trees.entries())assert.deepEqual(assumedProductSeason(g,c.zones,c.conditions)??null,c.seasons[i]);
     assert.equal(JSON.stringify(context),before);
@@ -113,10 +114,10 @@ test('declared profile, age, yield and bound animal-care wording preserve safety
     // line positions, source gates and every field outside their declared presentation.
     translateAdditionalProductPresentation(expected,c.guide,context,lang);
     assert.deepEqual(guide,expected,`${lang}/${c.name}: an undeclared research or husbandry field changed`);
-    assert.deepEqual(figures(JSON.stringify(guide)),figures(JSON.stringify(c.guide)));
+    assert.deepEqual(figures(JSON.stringify(guide)),figures(JSON.stringify(expectedGuideWithAnimalLegal(c.guide,context))));
     assert.equal(JSON.stringify(context),before,'translation cannot mutate source inventory');
     const markdown=productPurchasingMarkdown(context,c.zones,c.conditions,lang);
-    assert.deepEqual(figures(markdown),figures(c.markdown));
+    assert.deepEqual(figures(markdown),figures(expectedMarkdownWithAnimalLegal(c.markdown,c.guide,expectedGuideWithAnimalLegal(c.guide,context))));
     if(c.markdown){
       assert.ok(markdown.startsWith('## '+productGuideText('Production purchases and variety assumptions',lang)));
       assert.ok(markdown.includes(productGuideText(disclaimer,lang)),'remaining source-language research must be visible as an open gap');

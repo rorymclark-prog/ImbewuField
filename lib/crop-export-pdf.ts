@@ -2601,8 +2601,10 @@ function drawProductionGuidance(s: Sheet, input: CropPlanPdfInput): void {
     s.font(size, opts.bold);
     const lines = s.doc.splitTextToSize(printable(text), s.contentWidth) as string[];
     const height = lines.length * leading + (opts.gap ?? 3);
-    // Complete care conditions must not acquire a repeated header halfway through a short claim.
-    if (native && height <= s.bottom - s.margin - 170) ensure(height);
+    // A short legal condition split with its final words after the next page's header:
+    // preflight allowed a 3px gap, while the per-line check still required 4px.
+    const preflightHeight = lines.length * leading + Math.max(opts.gap ?? 3, 4);
+    if (native && preflightHeight <= s.bottom - s.margin - 170) ensure(preflightHeight);
     for (const line of lines) {
       ensure(leading + 4);
       s.text(line, s.margin, { size, bold: opts.bold, ink: opts.ink });

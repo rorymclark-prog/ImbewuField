@@ -190,8 +190,9 @@ function EnterpriseFacts({ e }: { e: AnimalEnterprise }) {
           <div className="font-sans font-semibold inline-flex items-center gap-1.5 mb-1" style={{ fontSize: 12, color: 'var(--text-primary)' }}>
             <Scale size={13} aria-hidden style={{ color: 'var(--gold-dim)' }} /> {productGuideText('The law', lang)}
           </div>
+          {nativeCare && <p className="font-sans mb-2" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5 }}>{productGuideText('Animal law translations are unreviewed drafts. English notes are available below. Some sources are historical; current requirements need confirmation.', lang)}</p>}
           <ul className="font-sans flex flex-col gap-1" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45, listStyle: 'disc', paddingInlineStart: 20 }}>
-            {e.legal.map((p, i) => <li key={i}>{enterpriseReferenceText(e, 'legal', i, p.point, lang)}</li>)}
+            {e.legal.map((p, i) => <li key={i}>{enterpriseReferenceText(e, 'legal', i, p.point, lang)}{nativeCare && enterpriseReferenceText(e, 'legal', i, p.point, lang) !== p.point && <details data-original-animal-legal="true" className="mt-1" style={{ fontSize: 11.5 }}><summary style={{ cursor: 'pointer', minHeight: 44, padding: '10px 0', boxSizing: 'border-box' }}>{productGuideText('Original animal law note', lang)}</summary><p lang="en" className="mt-1" style={{ overflowWrap: 'anywhere' }}>{p.point}</p></details>}</li>)}
           </ul>
         </div>
       )}

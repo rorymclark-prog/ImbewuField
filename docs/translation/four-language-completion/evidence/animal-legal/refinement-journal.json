@@ -1,0 +1,100 @@
+[
+  {
+    "index": 19,
+    "language": "ve",
+    "before": "vhutsila ha vhudele",
+    "after": "vhudele",
+    "reason": "Retain hygiene without adding an unsupported skill claim."
+  },
+  {
+    "index": 22,
+    "language": "ts",
+    "before": "ti huku",
+    "after": "tihuku",
+    "reason": "Correct the separated poultry noun; source meaning unchanged."
+  },
+  {
+    "index": 36,
+    "language": "st",
+    "before": "noma merero",
+    "after": "kapa merero",
+    "reason": "Use Sesotho conjunction consistently; retain both exceptions."
+  },
+  {
+    "index": 46,
+    "language": "zu",
+    "before": "ezisogwini lolwandle",
+    "after": "ezisolwandle ngaphandle kwezwekazi",
+    "reason": "Off-shore islands must remain distinct from the mainland and coastal land."
+  },
+  {
+    "index": 46,
+    "language": "st",
+    "before": "ha o lenaneng/laolwa naheng e kgolo",
+    "after": "ha se mofuta o lenaneng/o thibetsweng naheng e kgolo",
+    "reason": "Keep the source distinction between listed/restricted species and the mainland, without implying absence of all regulation."
+  },
+  {
+    "index": 50,
+    "language": "ts",
+    "before": "ematsheng ya matshungulelo",
+    "after": "exikarhini ka matshungulelo",
+    "reason": "Use the plain interval phrase; retain both treatments and eight-to-ten-day range."
+  },
+  {
+    "index": 49,
+    "language": "zu",
+    "before": "Utwayi lwezimvu",
+    "after": "Utwayi lwezimvu (sheep scab)",
+    "reason": "Retain the exact English disease identity alongside the unreviewed vernacular term."
+  },
+  {
+    "index": 49,
+    "language": "st",
+    "before": "Lekgwekgwe la dinku",
+    "after": "Lekgwekgwe la dinku (sheep scab)",
+    "reason": "Retain the exact English disease identity alongside the unreviewed vernacular term."
+  },
+  {
+    "index": 49,
+    "language": "ts",
+    "before": "Nhlokonho ya tinyimpfu",
+    "after": "Nhlokonho ya tinyimpfu (sheep scab)",
+    "reason": "Retain the exact English disease identity alongside the unreviewed vernacular term."
+  },
+  {
+    "index": 49,
+    "language": "ve",
+    "before": "Phori ya nngu",
+    "after": "Phori ya nngu (sheep scab)",
+    "reason": "Retain the exact English disease identity alongside the unreviewed vernacular term."
+  },
+  {
+    "index": 37,
+    "language": "zu",
+    "before": "izingulube zasendle nemikhaza ye-Ornithodorus",
+    "after": "izingulube zasendle (warthogs) nemikhaza ye-Ornithodorus (Ornithodorus ticks)",
+    "reason": "Retain the specific warthog and tick identities, rather than silently substituting a broader vernacular animal/insect group. Technical disease/vector terms remain visible for fluent review."
+  },
+  {
+    "index": 37,
+    "language": "st",
+    "before": "dikolobe tsa naha le dikgofa tsa Ornithodorus",
+    "after": "dikolobe tsa naha (warthogs) le dikgofa tsa Ornithodorus (Ornithodorus ticks)",
+    "reason": "Retain the specific warthog and tick identities, rather than silently substituting a broader vernacular animal/insect group. Technical disease/vector terms remain visible for fluent review."
+  },
+  {
+    "index": 37,
+    "language": "ts",
+    "before": "tinguluve ta nhova ni switsotswana swa Ornithodorus",
+    "after": "tinguluve ta nhova (warthogs) ni Ornithodorus ticks",
+    "reason": "Retain the specific warthog and tick identities, rather than silently substituting a broader vernacular animal/insect group. Technical disease/vector terms remain visible for fluent review."
+  },
+  {
+    "index": 37,
+    "language": "ve",
+    "before": "nguluvhe dza ḓaka na vhuṋa ha Ornithodorus",
+    "after": "nguluvhe dza ḓaka (warthogs) na Ornithodorus ticks",
+    "reason": "Retain the specific warthog and tick identities, rather than silently substituting a broader vernacular animal/insect group. Technical disease/vector terms remain visible for fluent review."
+  }
+]

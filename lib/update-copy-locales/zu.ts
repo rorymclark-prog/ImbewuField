@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Animal law notes have draft translations and English originals.": "Amanothi emithetho yezilwane anemibhalo yokuhumusha neyokuqala yesiNgisi.",
+  "Some legal sources are historical. Check current permits before acting.": "Eminye imithombo yemithetho ingeyezikhathi ezedlule. Hlola izimvume zamanje ngaphambi kokwenza.",
+  "Review animal law drafts": "Buyekeza imibhalo emithetho yezilwane",
+  "Open a legal note’s English original and check its source date and permit conditions.": "Vula inothi lomthetho lokuqala lesiNgisi bese uhlola usuku lomthombo nemigomo yemvume.",
   "Animal reference notes have full draft translations with English originals.": "Amanothi ezikhombo zezilwane anemibhalo yokuhumusha ephelele nemibhalo yokuqala yesiNgisi.",
   "Review the age, system and units before using an animal reference.": "Hlola ubudala, uhlelo lokufuya namayunithi ngaphambi kokusebenzisa isikhombo sesilwane.",
   "Read the full animal references": "Funda izikhombo eziphelele zezilwane",

@@ -1,3 +1,4 @@
+import {restoreAnimalLegalPresentation,stripDeclaredAnimalLegalOriginals,currentAnimalReferenceRow} from './animal-legal-expectation.ts';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import * as React from 'react';
@@ -12,13 +13,13 @@ const escaped=(s:string)=>renderToStaticMarkup(React.createElement('span',null,s
 /** Parent snapshots still compare the complete card. Only this new, independently
  * checked original-English disclosure is removed from their figure count. */
 export function stripDeclaredAnimalReferenceOriginals(html:string):string {
- return html.replace(/<details data-original-animal-reference="true"[^>]*>[\s\S]*?<\/details>/g,block=>{
-  assert.ok(packet.rows.some(row=>block.includes(escaped(row.english))),'an undeclared or changed original reference cannot be ignored');return '';
+ return stripDeclaredAnimalLegalOriginals(html).replace(/<details data-original-animal-reference="true"[^>]*>[\s\S]*?<\/details>/g,block=>{
+  assert.ok(packet.rows.some(row=>block.includes(escaped(row.english))||block.includes(escaped(currentAnimalReferenceRow(row).english))),'an undeclared or changed original reference cannot be ignored');return '';
  });
 }
 
 export function restoreAnimalReferencePresentation(source:string):string {
- for(const edit of [...packet.sourceChanges].reverse()){assert.ok(source.includes(edit.after),'the declared reference presentation edit must remain exact');source=source.replace(edit.after,edit.before);}return source;
+ source=restoreAnimalLegalPresentation(source);for(const edit of [...packet.sourceChanges].reverse()){assert.ok(source.includes(edit.after),'the declared reference presentation edit must remain exact');source=source.replace(edit.after,edit.before);}return source;
 }
 
 /** These expectations expand only complete original typed notes inside their
