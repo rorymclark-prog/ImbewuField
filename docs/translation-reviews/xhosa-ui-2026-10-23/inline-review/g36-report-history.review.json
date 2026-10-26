@@ -1,0 +1,35 @@
+{
+  "unit": "g36-report-history",
+  "shard": "g36-report-history.ts",
+  "range": "all",
+  "okCount": 48,
+  "items": [
+    {
+      "index": 21,
+      "key": "Earlier: {earlier}. Selected: {selected}. Absolute changes in recorded totals only; calendar periods can differ in length and season. Current periods are incomplete. No time normalisation or causal claim. Missing or invalid source entries withhold the affected comparison. Unpaid invoices are today's snapshot and are not compared.",
+      "verdict": "repair",
+      "draft": "Elangaphambili: {earlier}. Elikhethiweyo: {selected}. Lutshintsho olupheleleyo kwiitotali ezirekhodiweyo kuphela; amaxesha ekhalenda angahluka ngobude nangexesha lonyaka. Amaxesha angoku awakapheleli. Akukho kulungelelaniswa kwexesha okanye ibango lokuba yintoni ebangele utshintsho. Imibhalo yomthombo engekhoyo okanye engasebenziyo ibamba uthelekiso oluchaphazelekayo. Ii-invoyisi ezingahlawulwanga ziyimeko yanamhlanje kwaye azithelekiswa.",
+      "backtranslation": "It is a complete change in recorded totals only",
+      "problem": "'Absolute changes' (actual amounts, not percentages) rendered as 'olupheleleyo' = complete/total, which misstates what the figure is.",
+      "corrected": "Elangaphambili: {earlier}. Elikhethiweyo: {selected}. Utshintsho ngamanani kwiitotali ezirekhodiweyo kuphela; amaxesha ekhalenda angahluka ngobude nangexesha lonyaka. Amaxesha angoku awakapheleli. Akukho kulungelelaniswa kwexesha okanye ibango lokuba yintoni ebangele utshintsho. Imibhalo yomthombo engekhoyo okanye engasebenziyo ibamba uthelekiso oluchaphazelekayo. Ii-invoyisi ezingahlawulwanga ziyimeko yanamhlanje kwaye azithelekiswa."
+    },
+    {
+      "index": 26,
+      "key": "Earlier {earlierStart} to {earlierEnd}; selected {selectedStart} to {selectedEnd} (UTC). Only available monthly ledger history is compared. Missing months or unshared books withhold a result. A recorded zero does not establish no farming activity. Current months are incomplete. Current consent and membership apply; these totals are not a matched farmer panel or an impact estimate.",
+      "verdict": "repair",
+      "draft": "Elangaphambili {earlierStart} ukuya ku-{earlierEnd}; elikhethiweyo {selectedStart} ukuya ku-{selectedEnd} (UTC). Kuthelekiswa kuphela imbali ekhoyo yeencwadi zemali zenyanga. Iinyanga ezingekhoyo okanye iincwadi ezingabelwanga zibamba isiphumo. I-zero erekhodiweyo ayiqinisekisi ukuba akukho msebenzi wokulima. Iinyanga zangoku azikapheleli. Imvume nobulungu bangoku buyasebenza; ezi totali asizizo iqela labafama elingqamanisiweyo okanye uqikelelo lwempembelelo.",
+      "backtranslation": "Missing months or unassigned books hold up the result",
+      "problem": "'unshared books' rendered 'ezingabelwanga' (not allocated/assigned); sharing/consent meaning lost.",
+      "corrected": "Elangaphambili {earlierStart} ukuya ku-{earlierEnd}; elikhethiweyo {selectedStart} ukuya ku-{selectedEnd} (UTC). Kuthelekiswa kuphela imbali ekhoyo yeencwadi zemali zenyanga. Iinyanga ezingekhoyo okanye iincwadi ezingabelwananga zibamba isiphumo. I-zero erekhodiweyo ayiqinisekisi ukuba akukho msebenzi wokulima. Iinyanga zangoku azikapheleli. Imvume nobulungu bangoku buyasebenza; ezi totali asizizo iqela labafama elingqamanisiweyo okanye uqikelelo lwempembelelo."
+    },
+    {
+      "index": 35,
+      "key": "Measurement / reporting frequency",
+      "verdict": "repair",
+      "draft": "Amaxesha okulinganisa / okuxela",
+      "backtranslation": "Measurement / reporting periods",
+      "problem": "'frequency' rendered as 'amaxesha' (periods/times); frequency vs period distinction (separate period start/end fields follow) lost.",
+      "corrected": "Kangaphi ukulinganisa / ukuxela"
+    }
+  ]
+}
