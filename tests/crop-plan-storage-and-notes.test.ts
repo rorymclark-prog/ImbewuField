@@ -336,7 +336,7 @@ test('every crop with a sourced shelf life has its conditions and source reachab
   assert.match(PAGE, /href=\{crop\.storageSourceUrl\}/, 'the source must render as a link');
   assert.match(PAGE, /rel="noopener noreferrer"/, 'the source link keeps the page\'s existing link hygiene');
   // ...and it is mounted in the planting detail sheet, next to the sow/harvest line.
-  assert.match(PAGE, /<CropStorageLine crop=\{crop\} \/>\s*\n\s*<div>\{crop\.note\}<\/div>/,
+  assert.match(PAGE, /<CropStorageLine crop=\{crop\} \/>\s*\n\s*<div>\{(?:inlineText\(lang, crop\.note\)|crop\.note)\}<\/div>/,
     'the planting detail sheet must show the storage line');
 });
 

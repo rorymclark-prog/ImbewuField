@@ -747,7 +747,7 @@ function cropDurationLabel(crop: CropDef, lang = 'en'): string {
 }
 
 function pickingPeriodLabel(crop: CropDef, lang = 'en'): string | null {
-  if (crop.harvestPeriodNote) return crop.harvestPeriodNote;
+  if (crop.harvestPeriodNote) return inlineText(lang, crop.harvestPeriodNote);
   if (crop.harvestPeriodRangeWeeks) {
     const [minimum, maximum] = crop.harvestPeriodRangeWeeks;
     return minimum === maximum
@@ -3253,7 +3253,7 @@ function CropStorageLine({ crop }: { crop: CropDef }) {
   if (crop.storageMonths === undefined || !crop.storageConditions) return null;
   return (
     <div>
-      {inlineTemplate(lang, crop.storageMonths === 1 ? 'Keeps about {n} month in store — {conditions}' : 'Keeps about {n} months in store — {conditions}', null, { n: crop.storageMonths, conditions: crop.storageConditions })}
+      {inlineTemplate(lang, crop.storageMonths === 1 ? 'Keeps about {n} month in store — {conditions}' : 'Keeps about {n} months in store — {conditions}', null, { n: crop.storageMonths, conditions: inlineText(lang, crop.storageConditions) })}
       {crop.storageSourceUrl && (
         <>
           {' '}
@@ -5084,7 +5084,7 @@ function CropPickerModal({
                 ? ` · ${inlineText(lang, 'exact sow-to-finish timing is not verified')}`
                 : ` · ${inlineTemplate(lang, crop.yieldKgPerM2 === 0 ? '{duration} to flowering, then cut or roll down' : crop.transplant ? '{duration} from transplant to harvest' : '{duration} from sowing to harvest', null, { duration: cropDurationLabel(crop, lang) })}`}<br />
               {pickingPeriodLabel(crop, lang) && <>{inlineTemplate(lang, 'Usual picking period: {period}; the plan keeps the bed occupied through the upper end unless you finish it earlier.', null, { period: pickingPeriodLabel(crop, lang) ?? '' })}<br /></>}
-              {crop.note}
+              {inlineText(lang, crop.note)}
             </div>
             {isSpaceHungry(crop) && (
               <div className="font-sans mb-3 px-2.5 py-2 rounded-lg" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--gold)' }}>
@@ -5345,7 +5345,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
           {crop.transplant && <div>{inlineTemplate(lang, 'Field-readiness window: {from}–{to}; transplant when ready.', null, { from: monthLabel(bedEntryMonth(planting.sowMonth, crop), lang), to: monthLabel(latestBedEntryMonth(planting.sowMonth, crop), lang) })}</div>}
           {crop.transplant && <div>{inlineText(lang, TRANSPLANT_NURSERY_GUIDANCE)}</div>}
           <CropStorageLine crop={crop} />
-          <div>{crop.note}</div>
+          <div>{inlineText(lang, crop.note)}</div>
         </div>
         <div className="font-mono font-bold mb-3" style={{ fontSize: 18, color: 'var(--color-forest-800)' }}>
           {hasPlanningYield(crop)
