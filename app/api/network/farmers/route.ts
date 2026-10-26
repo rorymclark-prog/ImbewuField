@@ -57,7 +57,7 @@ import { runInBatches } from '@/lib/batch';
 import { canSeeOrg } from '@/lib/network-access';
 import { resolveNetworkCaller } from '@/lib/network-caller';
 import { applyConsent, consentState, hasConsent, type FarmerConsent } from '@/lib/consent';
-import { buildCohortSeries, type CohortLedger } from '@/lib/cohort-series';
+import { buildCohortSeries, portfolioHistoryMonths, type CohortLedger } from '@/lib/cohort-series';
 import { buildFarmerMetrics, coarsenFarmerLocation, withServerIdentity } from '@/lib/network';
 import type { ExpenseLog, ProductionLog, SalesLog } from '@/lib/db/types';
 
@@ -226,6 +226,6 @@ export async function GET(req: NextRequest) {
     // The cohort's own month-by-month totals. Summaries carry totals only, so without this the
     // dashboard could not draw a single honest point over time — and a dashboard that cannot draw
     // one is exactly the dashboard that invents one.
-    monthly: buildCohortSeries(ledgers, { months: 12 }),
+    monthly: buildCohortSeries(ledgers, { months: portfolioHistoryMonths(req.nextUrl.searchParams.get('history_months')) }),
   }, 200);
 }

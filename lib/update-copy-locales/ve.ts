@@ -135,5 +135,9 @@ const copy:UpdateCopy={
   "On a computer the Lima button sits bottom-right and no longer hides buttons.": "Kha khomphuthara bathoni ya Lima i dzula fhasi tshanḓani tsha vhuḓi, nahone a i tsha fhimba bathoni.",
   "The weather card reads in isiZulu (as a draft) and stays clear in dark mode.": "Khadi ya mutsho i vhalea nga isiZulu (sa mvetamveto) nahone i dzula i tshi vhonala kha mbonalo ya swiswi.",
   "Home shows today's date in isiZulu again instead of placeholder words.": "Hayani hu sumbedza ḓuvha ḽa ṋamusi nga isiZulu hafhu nṱhani ha maipfi a tshifhinganyana.",
+  "Farm reports compare past months, seasons and years using your recorded entries.": "Mivhigo ya bulasi i vhambedza miṅwedzi, khalaṅwaha na miṅwaha yo fhelaho nga u shumisa rekhodo dzaṋu.",
+  "Visit, training and programme reports compare recorded delivery across periods.": "Mivhigo ya u dalela, vhugudisi na mbekanyamushumo i vhambedza zwo itwaho zwo rekhodiwaho vhukati ha tshifhinga.",
+  "MEL reports compare dated readings and include agreed donor indicator details.": "Mivhigo ya MEL i vhambedza zwo vhalwaho zwi na maḓuvha, nahone i katela mafhungo a zwiga zwa vhalambedzi zwo tendelwaho.",
+  "Donor evidence, missing records and current snapshots stay clear in every PDF.": "Vhuṱanzi ha vhalambedzi, rekhodo dzo shayaho na zwifanyiso zwa zwino zwi dzula zwi tshi pfesesea kha PDF iṅwe na iṅwe.",
 };
 export default copy;

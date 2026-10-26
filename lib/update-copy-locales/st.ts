@@ -135,5 +135,9 @@ const copy:UpdateCopy={
   "On a computer the Lima button sits bottom-right and no longer hides buttons.": "Ho khomphutha konopo ya Lima e dula tlase ka letsohong le letona, mme ha e sa patela dikonopo.",
   "The weather card reads in isiZulu (as a draft) and stays clear in dark mode.": "Karete ya boemo ba leholimo e baleha ka isiZulu (e le moralo), mme e sala e hlakile mokgweng o lefifi.",
   "Home shows today's date in isiZulu again instead of placeholder words.": "Lehae le bontsha letsatsi la kajeno ka isiZulu hape sebakeng sa mantswe a nakwana.",
+  "Farm reports compare past months, seasons and years using your recorded entries.": "Ditlaleho tsa polasi di bapisa dikgwedi, dihla le dilemo tse fetileng ka direkoto tsa hao.",
+  "Visit, training and programme reports compare recorded delivery across periods.": "Ditlaleho tsa ketelo, thupelo le lenaneo di bapisa tse entsweng tse rekotilweng mahareng a dinako.",
+  "MEL reports compare dated readings and include agreed donor indicator details.": "Ditlaleho tsa MEL di bapisa dipalo tse nang le matsatsi, mme di kenyelletsa dintlha tsa matshwao a bafani tse dumellanweng.",
+  "Donor evidence, missing records and current snapshots stay clear in every PDF.": "Bopaki ba bafani, direkoto tse sieo le dinepe tsa jwale di sala di hlakile ho PDF e nngwe le e nngwe.",
 };
 export default copy;

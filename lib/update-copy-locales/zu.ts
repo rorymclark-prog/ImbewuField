@@ -135,5 +135,9 @@ const copy:UpdateCopy={
   "On a computer the Lima button sits bottom-right and no longer hides buttons.": "Kukhompyutha inkinobho ka-Lima ihlala phansi ngakwesokudla futhi ayisafihli izinkinobho.",
   "The weather card reads in isiZulu (as a draft) and stays clear in dark mode.": "Ikhadi lesimo sezulu lifundeka nangesiZulu (njengohlaka) futhi lihlala licacile kwimodi emnyama.",
   "Home shows today's date in isiZulu again instead of placeholder words.": "Ikhaya libonisa usuku lwanamuhla ngesiZulu futhi esikhundleni samagama esikhashana.",
+  "Farm reports compare past months, seasons and years using your recorded entries.": "Imibiko yepulazi iqhathanisa izinyanga, amasizini neminyaka edlule isebenzisa amarekhodi akho.",
+  "Visit, training and programme reports compare recorded delivery across periods.": "Imibiko yokuvakasha, yokuqeqeshwa neyohlelo iqhathanisa okwenziwe okuqoshiwe ezikhathini ezehlukene.",
+  "MEL reports compare dated readings and include agreed donor indicator details.": "Imibiko ye-MEL iqhathanisa ukufundwa okunezinsuku futhi ifaka imininingwane yezinkomba zabaxhasi esivunyelwene ngayo.",
+  "Donor evidence, missing records and current snapshots stay clear in every PDF.": "Ubufakazi babaxhasi, amarekhodi angekho nezithombe zamanje kuhlala kucacile kuyo yonke i-PDF.",
 };
 export default copy;

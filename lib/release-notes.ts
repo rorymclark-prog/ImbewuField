@@ -54,6 +54,18 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   }, { title: 'Read recent updates', where: "Menu → What's new", href: '/updates',
     detail: 'The update notice and recent history use your language. Older entries still have English source text while their translations are completed.',
   }] },
+  { when: '26 October 2026', sha: '12aee61ba', changes: [
+    'Farm reports compare past months, seasons and years using your recorded entries.',
+    'Visit, training and programme reports compare recorded delivery across periods.',
+    'MEL reports compare dated readings and include agreed donor indicator details.',
+    'Donor evidence, missing records and current snapshots stay clear in every PDF.',
+  ], tour: [{ title: 'Compare farm periods',
+    where: 'My records → Production & finance reports', href: '/records',
+    detail: 'Choose a historical date and compare the previous period or last year.',
+  }, { title: 'Review donor evidence',
+    where: 'Organisation → Reports → MEL evidence', href: '/ngo',
+    detail: 'Compare milestone dates and review linked donor definitions and evidence.',
+  }] },
   { when: '26 October 2026', sha: '98c8a22e', changes: [
     'Home shows today\'s date in isiZulu again instead of placeholder words.',
   ] },

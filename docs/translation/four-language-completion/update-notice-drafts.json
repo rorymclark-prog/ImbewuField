@@ -1622,6 +1622,34 @@
       "st": "Lehae le bontsha letsatsi la kajeno ka isiZulu hape sebakeng sa mantswe a nakwana.",
       "ts": "Kaya yi kombisa siku ra namuntlha hi isiZulu nakambe ematshan'wini ya marito ya nkarhinyana.",
       "ve": "Hayani hu sumbedza ḓuvha ḽa ṋamusi nga isiZulu hafhu nṱhani ha maipfi a tshifhinganyana."
+    },
+    {
+      "english": "Farm reports compare past months, seasons and years using your recorded entries.",
+      "zu": "Imibiko yepulazi iqhathanisa izinyanga, amasizini neminyaka edlule isebenzisa amarekhodi akho.",
+      "st": "Ditlaleho tsa polasi di bapisa dikgwedi, dihla le dilemo tse fetileng ka direkoto tsa hao.",
+      "ts": "Swiviko swa purasi swi pimanisa tinhweti, tinguva ni malembe lama hundzeke hi ku tirhisa tirhekhodo ta wena.",
+      "ve": "Mivhigo ya bulasi i vhambedza miṅwedzi, khalaṅwaha na miṅwaha yo fhelaho nga u shumisa rekhodo dzaṋu."
+    },
+    {
+      "english": "Visit, training and programme reports compare recorded delivery across periods.",
+      "zu": "Imibiko yokuvakasha, yokuqeqeshwa neyohlelo iqhathanisa okwenziwe okuqoshiwe ezikhathini ezehlukene.",
+      "st": "Ditlaleho tsa ketelo, thupelo le lenaneo di bapisa tse entsweng tse rekotilweng mahareng a dinako.",
+      "ts": "Swiviko swa ku endzela, vuleteri ni pulogirama swi pimanisa leswi endliweke leswi rhekhodiweke hi minkarhi.",
+      "ve": "Mivhigo ya u dalela, vhugudisi na mbekanyamushumo i vhambedza zwo itwaho zwo rekhodiwaho vhukati ha tshifhinga."
+    },
+    {
+      "english": "MEL reports compare dated readings and include agreed donor indicator details.",
+      "zu": "Imibiko ye-MEL iqhathanisa ukufundwa okunezinsuku futhi ifaka imininingwane yezinkomba zabaxhasi esivunyelwene ngayo.",
+      "st": "Ditlaleho tsa MEL di bapisa dipalo tse nang le matsatsi, mme di kenyelletsa dintlha tsa matshwao a bafani tse dumellanweng.",
+      "ts": "Swiviko swa MEL swi pimanisa leswi hlayiweke leswi ni masiku, naswona swi katsa vuxokoxoko bya swikombiso swa vafani leswi pfumeleriweke.",
+      "ve": "Mivhigo ya MEL i vhambedza zwo vhalwaho zwi na maḓuvha, nahone i katela mafhungo a zwiga zwa vhalambedzi zwo tendelwaho."
+    },
+    {
+      "english": "Donor evidence, missing records and current snapshots stay clear in every PDF.",
+      "zu": "Ubufakazi babaxhasi, amarekhodi angekho nezithombe zamanje kuhlala kucacile kuyo yonke i-PDF.",
+      "st": "Bopaki ba bafani, direkoto tse sieo le dinepe tsa jwale di sala di hlakile ho PDF e nngwe le e nngwe.",
+      "ts": "Vumbhoni bya vafani, tirhekhodo leti kayivelaka ni swifaniso swa sweswi swi sala swi twisiseka eka PDF yin'wana ni yin'wana.",
+      "ve": "Vhuṱanzi ha vhalambedzi, rekhodo dzo shayaho na zwifanyiso zwa zwino zwi dzula zwi tshi pfesesea kha PDF iṅwe na iṅwe."
     }
   ],
   "historyBefore": [

@@ -1,8 +1,9 @@
 import { trainingTotals, trainingFeedbackSummary, trainingEvidenceSummary, type TrainingRecord } from './programme-evidence';
 import type { MelMetric } from './mel';
 import type { ReportMetric, ReportSection, ReportTable } from './programme-report-pdf';
+import { previousReportDateRange } from './programme-report';
 
-export function buildTrainingReport(input: readonly TrainingRecord[], options: { project?: string; ownerId?: string; from?: string; to?: string; today: string; assessments?: { id: string; title: string }[] }) {
+export function buildTrainingReport(input: readonly TrainingRecord[], options: { project?: string; ownerId?: string; from?: string; to?: string; today: string; assessments?: { id: string; title: string }[]; comparePrevious?: boolean }) {
   const { project = '', ownerId = '', from = '', to = '', today } = options;
   const sessions = [...new Map(input.map(session => [session.id, session])).values()].filter(session => (!project || session.project === project) && (!ownerId || session.ownerId === ownerId) && (!from || session.date >= from) && (!to || session.date <= to) && session.date <= today).sort((a, b) => a.date.localeCompare(b.date) || a.id.localeCompare(b.id));
   const totals = trainingTotals(sessions, today);
@@ -56,5 +57,12 @@ export function buildTrainingReport(input: readonly TrainingRecord[], options: {
       'Attendance, course progress, self-reported learning, observed competence and sustained application are distinct evidence. This report makes no attribution or household-impact claim.',
     ], references: [{ label: 'FAO · Monitoring, evaluation and learning in farmer field school programmes', url: 'https://www.fao.org/family-farming/detail/en/c/1637407/' }] },
   ];
-  return { title: 'Facilitator delivery report', scope, sessions: sessions.map(session => ({ date: session.date, title: session.title, project: session.project })), metrics, tables, sections, filename: `ImbewuField-facilitator-delivery-${from || 'all'}-${to || today}-${ownerId ? 'selected-owner' : 'all-owners'}` };
+  const counts={sessions:sessions.length,attendances:totals.attendances,learners:stableLearners.size};
+  const earlier=options.comparePrevious?previousReportDateRange(from,to):null;
+  if(earlier){
+    const before=buildTrainingReport(input,{...options,from:earlier.from,to:earlier.to,comparePrevious:false});
+    const labels=[['Sessions recorded','sessions'],['Attendances','attendances'],['Identified learners','learners']] as const;
+    tables.unshift({title:'Historical training delivery comparison',keepAllRowsInSummary:true,note:`Earlier ${earlier.from} to ${earlier.to}; selected ${from} to ${to}. Equal numbers of calendar days, using saved records and the same project/record-owner filters. Period populations may differ. Repeated attendances and guest entries are not new identified learners. Recorded zeros do not establish no delivery. This is not a competence or impact comparison.`,columns:['Recorded measure','Earlier period','Selected period','Recorded change'],rows:labels.map(([label,key])=>{const b=before.counts[key],a=counts[key];return [label,String(b),String(a),`${a-b>0?'+':''}${a-b}`];})});
+  }
+  return { title: 'Facilitator delivery report', scope, counts, sessions: sessions.map(session => ({ date: session.date, title: session.title, project: session.project })), metrics, tables, sections, filename: `ImbewuField-facilitator-delivery-${from || 'all'}-${to || today}-${ownerId ? 'selected-owner' : 'all-owners'}${earlier?'-compared':''}` };
 }

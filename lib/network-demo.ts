@@ -953,12 +953,15 @@ export function demoFarmerById(id: string): DemoFarmerRecord | null {
  * that the sample portfolio can only ever be reached from the not-live branch. Reaching the series
  * through that constant would have added a mention and blunted the count.
  */
-export const DEMO_COHORT_MONTHLY: CohortSeries = buildCohortSeries(
+const demoCohortHistory = (months: 12 | 24): CohortSeries => buildCohortSeries(
   DEMO_NETWORK.records.map((record) => ({
     production: record.sources.production,
     sales: record.sources.sales,
     expenses: record.sources.expenses,
     joinedAt: record.farmer.joinedAt,
   })),
-  { months: 12, now: new Date(DEMO_NETWORK.generatedAt) },
+  { months, now: new Date(DEMO_NETWORK.generatedAt) },
 );
+
+export const DEMO_COHORT_MONTHLY = demoCohortHistory(12);
+export const DEMO_COHORT_REPORT_MONTHLY = demoCohortHistory(24);

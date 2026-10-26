@@ -1,6 +1,6 @@
 import type { ExpenseLog, ProductionLog, SalesLog } from './db/types';
 import type { SavedInvoice } from './invoices';
-import { isInFinancePeriod, type FinancePeriod } from './farm-metrics';
+import { financePeriodBounds, isInFinancePeriod, type FinancePeriod } from './farm-metrics';
 import { cashIncomeTotal, cashLedgerSales, invoiceSalesForPaidInvoice } from './invoice-sales';
 import { decimalQuantitySum, quantityTotals, recordQuantity, recordQuantityLabel, recordUnit, type RecordQuantityRow } from './farm-records';
 import { numberLabel, randCentsLabel } from './format-figures';
@@ -10,8 +10,10 @@ import { localTodayISODate } from './field-teams';
 import type { ReportChart, ReportMetric, ReportSection, ReportTable } from './programme-report-pdf';
 
 export type FarmReportKind = 'production' | 'finance';
+export type FarmReportComparison = 'none' | 'previous' | 'year';
 export type FarmReportOptions = {
   kind: FarmReportKind; period: FinancePeriod; now: Date; farm: string; sample: boolean;
+  reference?: Date; comparison?: FarmReportComparison;
   production: readonly ProductionLog[]; sales: readonly SalesLog[];
   expenses: readonly ExpenseLog[]; invoices: readonly SavedInvoice[];
 };
@@ -33,18 +35,58 @@ const quantityMetric = (rows: readonly RecordQuantityRow[]) => {
 };
 
 /** Name the exact calendar period the Records book uses, including summer across New Year. */
-export function farmReportPeriod(period: FinancePeriod, now: Date): string {
-  const year = now.getFullYear(), month = now.getMonth();
-  const firstMonth = period === 'year' ? 0 : period === 'month' ? month : month >= 8 && month <= 10 ? 8 : month === 11 || month <= 1 ? 11 : month >= 2 && month <= 4 ? 2 : 5;
-  const firstYear = period === 'season' && firstMonth === 11 && month <= 1 ? year - 1 : year;
-  const start = new Date(firstYear, firstMonth, 1), end = new Date(firstYear, firstMonth + (period === 'year' ? 12 : period === 'season' ? 3 : 1), 0);
-  const localDate = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-  return `${localDate(start)} to ${localDate(end)} · current period is incomplete`;
+export function farmReportPeriod(period: FinancePeriod, reference: Date, today = reference): string {
+  const { start, end } = financePeriodBounds(period, reference);
+  const last = new Date(end.getFullYear(), end.getMonth(), 0);
+  return `${localTodayISODate(start)} to ${localTodayISODate(last)} · ${end > today ? 'current period is incomplete' : 'past calendar period; record completeness unknown'}`;
+}
+
+export function farmComparisonReference(period: FinancePeriod, reference: Date, comparison: FarmReportComparison): Date {
+  const { start, months } = financePeriodBounds(period, reference);
+  return new Date(start.getFullYear(), start.getMonth() - (comparison === 'year' ? 12 : months), 1);
+}
+
+// Each column reuses the full report's invoice reconciliation and validity checks.
+// No-entry books cannot become an apparent fall in production or household income.
+function farmComparisonTable(options: FarmReportOptions, reference: Date): ReportTable {
+  const before = farmComparisonReference(options.period, reference, options.comparison!);
+  const reports = [before, reference].map(date => buildFarmReport({ ...options, reference: date, comparison: 'none' }));
+  const values = [before, reference].map(date => {
+    const inside = (value: string | undefined) => isInFinancePeriod(value, options.period, date);
+    const production = unique(options.production).filter(row => inside(row.logged_at));
+    const allInvoices = unique(options.invoices);
+    const invoices = allInvoices.filter(row => row.status === 'paid' && inside(row.paidAt));
+    const sales = cashLedgerSales(unique(options.sales), allInvoices.map(row => row.id)).filter(row => inside(row.sold_at));
+    const expenses = unique(options.expenses).filter(row => inside(row.spent_at));
+    const receipts = sales.length + invoices.length > 0 && sales.every(row => moneyKnown(row.amount)) && invoices.every(row => moneyKnown(row.total)) ? cashIncomeTotal(sales, invoices) : null;
+    const costs = expenses.length > 0 && expenses.every(row => moneyKnown(row.amount)) ? decimalQuantitySum(expenses.map(row => row.amount)) : null;
+    return { production, sold: [...sales, ...invoices.flatMap(invoiceSalesForPaidInvoice)], receipts: typeof receipts === 'number' && Number.isFinite(receipts) ? receipts : null, costs: typeof costs === 'number' ? costs : null };
+  });
+  const [b, a] = values;
+  const change = (x: number | null, y: number | null, unit: string) => x === null || y === null ? 'Not comparable' : `${y - x > 0 ? '+' : ''}${unit === 'R' ? randCentsLabel(y - x) : `${numberLabel(y - x)} ${unit}`}`;
+  const cash = (label: string, x: number | null, y: number | null) => [label, x === null ? 'No usable entries' : randCentsLabel(x), y === null ? 'No usable entries' : randCentsLabel(y), change(x, y, 'R')];
+  const quantityRows = (label: string, source: 'production' | 'sold') => {
+    const units = [...new Set(values.flatMap(value => value[source].map(recordUnit)))].filter((unit): unit is NonNullable<ReturnType<typeof recordUnit>> => unit !== null);
+    return units.map(unit => {
+      const reading = (value: typeof a) => {
+        const rows = value[source].filter(row => recordUnit(row) === unit);
+        return rows.length && rows.every(row => recordQuantity(row) !== null) ? quantityTotals(rows).find(row => row.unit === unit)?.quantity ?? null : null;
+      };
+      const x = reading(b), y = reading(a);
+      return [`${label} · ${unit}`, x === null ? 'No usable entries' : `${numberLabel(x)} ${unit}`, y === null ? 'No usable entries' : `${numberLabel(y)} ${unit}`, change(x, y, unit)];
+    });
+  };
+  return { title: 'Historical period comparison', keepAllRowsInSummary: true,
+    note: `Earlier: ${reports[0].period}. Selected: ${reports[1].period}. Absolute changes in recorded totals only; calendar periods can differ in length and season. Current periods are incomplete. No time normalisation or causal claim. Missing or invalid source entries withhold the affected comparison. Unpaid invoices are today's snapshot and are not compared.`,
+    columns: ['Measure', 'Earlier period', 'Selected period', 'Recorded change'], columnWeights: [1.5, 1.2, 1.2, 1.1],
+    rows: options.kind === 'production' ? [...quantityRows('Harvest', 'production'), ...quantityRows('Sale quantities', 'sold')] : [cash('Money received', b.receipts, a.receipts), cash('Costs recorded', b.costs, a.costs), cash('Recorded cash margin', b.receipts !== null && b.costs !== null ? b.receipts - b.costs : null, a.receipts !== null && a.costs !== null ? a.receipts - a.costs : null)] };
 }
 
 export function buildFarmReport(options: FarmReportOptions): FarmReport {
   const { now, period, kind } = options;
-  const inPeriod = (date: string | undefined) => isInFinancePeriod(date, period, now);
+  const reference = options.reference ?? now;
+  if (!Number.isFinite(reference.getTime()) || localTodayISODate(reference) > localTodayISODate(now)) throw Error('Choose a report date on or before today.');
+  const inPeriod = (date: string | undefined) => isInFinancePeriod(date, period, reference);
   const allProduction = unique(options.production), allSales = unique(options.sales), allExpenses = unique(options.expenses), allInvoices = unique(options.invoices);
   const production = allProduction.filter(row => inPeriod(row.logged_at));
   const invoices = allInvoices.filter(invoice => invoice.status === 'paid' && inPeriod(invoice.paidAt));
@@ -64,7 +106,7 @@ export function buildFarmReport(options: FarmReportOptions): FarmReport {
   const date = localTodayISODate(now);
   const selectedDates = [...production.map(row => row.logged_at), ...sales.map(row => row.sold_at), ...expenses.map(row => row.spent_at), ...invoices.map(row => row.paidAt!)];
   const futureDates = selectedDates.filter(value => Date.parse(value) > now.getTime());
-  const periodLabel = farmReportPeriod(period, now);
+  const periodLabel = farmReportPeriod(period, reference, now);
   const title = kind === 'production' ? 'Farm production report' : 'Farm finance report';
   const missingDates = allProduction.filter(row => !validDate(row.logged_at)).length + allSales.filter(row => !validDate(row.sold_at)).length
     + allExpenses.filter(row => !validDate(row.spent_at)).length + allInvoices.filter(row => !validDate(row.status === 'paid' ? row.paidAt : row.dateISO)).length;
@@ -150,8 +192,10 @@ export function buildFarmReport(options: FarmReportOptions): FarmReport {
   }) };
   // Records uses whole calendar periods. If an imported entry is future-dated,
   // its month must still appear here rather than silently disagreeing with totals.
-  const seriesEnd = new Date(Math.max(now.getTime(), ...futureDates.map(value => Date.parse(value))));
-  const monthly = buildFinanceSeries(production, sales, expenses, invoices, seriesEnd, 12).months.filter(month => isInFinancePeriod(new Date(month.year, month.month - 1, 1).toISOString(), period, now));
+  const bounds = financePeriodBounds(period, reference);
+  const seriesEnd = new Date(bounds.end.getFullYear(), bounds.end.getMonth(), 0);
+  const monthly = buildFinanceSeries(production, sales, expenses, invoices, seriesEnd, bounds.months).months
+    .filter(month => isInFinancePeriod(new Date(month.year, month.month - 1, 1).toISOString(), period, reference));
   const monthKey = (date: string) => { const parsed = new Date(date); return `${parsed.getFullYear()}-${String(parsed.getMonth() + 1).padStart(2, '0')}`; };
   const monthlyTable: ReportTable = { title: 'Month by month', note: 'The same local-calendar series as Records, restricted to this selection. No entries means no recorded result. The current month is incomplete. Any future-dated entries in this selection are included and must be checked. Recorded cash margin is not a bank balance or full profit.', columns: ['Month', 'Money received', 'Costs recorded', 'Cash margin'], rows: monthly.map(month => {
     const validReceipts = sales.filter(row => monthKey(row.sold_at) === month.key).every(row => moneyKnown(row.amount)) && invoices.filter(row => monthKey(row.paidAt!) === month.key).every(row => moneyKnown(row.total));
@@ -164,8 +208,9 @@ export function buildFarmReport(options: FarmReportOptions): FarmReport {
     return total ? [{ label: crop, value: total.quantity, display: `${numberLabel(total.quantity)} kg` }] : [];
   });
   const chartRows = [...knownWeights].sort((a, b) => b.value - a.value || a.label.localeCompare(b.label, 'en')).slice(0, 8);
-  return { title, period: periodLabel, date, filename: `ImbewuField-farm-${kind}-${period}-${date}`,
-    metrics, sections, tables: kind === 'production' ? [table, coverage, harvestLog] : [monthlyTable, costsTable, outstanding, coverage, ledger],
+  const comparison = options.comparison && options.comparison !== 'none' ? [farmComparisonTable(options, reference)] : [];
+  return { title, period: periodLabel, date, filename: `ImbewuField-farm-${kind}-${period}-${localTodayISODate(bounds.start)}-${options.comparison || 'none'}-${date}`,
+    metrics, sections, tables: [...comparison, ...(kind === 'production' ? [table, coverage, harvestLog] : [monthlyTable, costsTable, outstanding, coverage, ledger])],
     chart: kind === 'production' && knownWeights.length ? { title: 'Recorded harvest weight', note: `Showing ${chartRows.length} of ${knownWeights.length} recorded produce names with known weight, largest totals first. Every name and unit remains in the tables. These are recorded totals, not a performance ranking.`, rows: chartRows } : undefined,
   };
 }

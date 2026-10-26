@@ -23,7 +23,8 @@ export type TrainingRecord = {
   feedback?: TrainingFeedback[]; feedbackSummary?: ReturnType<typeof analyseAssessment>;
 };
 export type MilestoneObservation = { date: string; actual: number; evidence: string; recordedAt: string };
-export type ProgrammeMilestone = { id: string; project: string; title: string; category?: ProgressArea; unit: string; baseline: number | null; target: number | null; due: string; owner: string; method: string; published: boolean; observations: MilestoneObservation[]; updatedAt: string };
+export type DonorIndicator = { funder: string; agreement: string; code: string; periodStart: string; periodEnd: string; population: string; disaggregation: string; frequency: string; basis: 'snapshot' | 'cumulative' | 'period' };
+export type ProgrammeMilestone = { id: string; project: string; title: string; category?: ProgressArea; unit: string; baseline: number | null; target: number | null; due: string; owner: string; method: string; published: boolean; observations: MilestoneObservation[]; updatedAt: string; donor?: DonorIndicator };
 export type EvidenceData = { brandingOnly?: boolean; sessions: TrainingRecord[]; milestones: ProgrammeMilestone[]; branding: ProgrammeBranding; people: { id: string; name: string }[]; assessments: { id: string; title: string }[]; canManage: boolean; canRecord: boolean; canBrand: boolean; canAssess?: boolean; canAnalyse?: boolean; sample: boolean; revision: string };
 // A report across gardens must not acquire one garden's identity from global branding.
 export function aggregateProgrammeBranding(branding: ProgrammeBranding): ProgrammeBranding {
@@ -90,9 +91,21 @@ export function validProgrammeMilestone(s: unknown, today: string): s is Program
   if (!s || typeof s !== 'object') return false; const m=s as ProgrammeMilestone;
   return validFieldId(m.id) && text(m.project,120,true) && text(m.title,160,true) && text(m.unit,40,true) && (m.baseline===null || Number.isFinite(m.baseline) && m.baseline>=0)
     && (m.category === undefined || validProgressArea(m.category))
+    && (m.donor === undefined || validDonorIndicator(m.donor))
     && (m.target === null || Number.isFinite(m.target) && m.target>0) && validEvidenceDate(m.due) && text(m.owner,120,true) && text(m.method,1000,true) && typeof m.published==='boolean'
     && Array.isArray(m.observations) && m.observations.length<=100 && new Set(m.observations.map(o=>o?.date)).size===m.observations.length
     && m.observations.every(o=>!!o && validEvidenceDate(o.date) && o.date<=today && Number.isFinite(o.actual) && o.actual>=0 && text(o.evidence,1500,true));
+}
+export function validDonorIndicator(value: unknown): value is DonorIndicator {
+  if (!value || typeof value !== 'object') return false;
+  const d = value as DonorIndicator;
+  return text(d.funder,120,true) && text(d.agreement,160,true) && text(d.code,80,true)
+    && validEvidenceDate(d.periodStart) && validEvidenceDate(d.periodEnd) && d.periodStart <= d.periodEnd
+    && text(d.population,500,true) && text(d.disaggregation,500,true) && text(d.frequency,120,true)
+    && ['snapshot','cumulative','period'].includes(d.basis);
+}
+export function cleanDonorIndicator(d: DonorIndicator): DonorIndicator {
+  return { funder:d.funder.trim(), agreement:d.agreement.trim(), code:d.code.trim(), periodStart:d.periodStart, periodEnd:d.periodEnd, population:d.population.trim(), disaggregation:d.disaggregation.trim(), frequency:d.frequency.trim(), basis:d.basis };
 }
 export function milestoneAt(m: ProgrammeMilestone, date: string) {
   const observation=m.observations.filter(o=>o.date<=date).sort((a,b)=>a.date.localeCompare(b.date)).at(-1);
