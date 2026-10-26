@@ -1,0 +1,275 @@
+{
+  "sourceSha": "09b280efe5a7be82674af79dce70f238b7b07b1b",
+  "file": "lib/report-chapter-visuals.ts",
+  "prefix": "Concept illustration, the same in every report. It is not a picture of this site.",
+  "fields": [
+    {
+      "line": 16,
+      "field": "title",
+      "english": "Follow the water through the site"
+    },
+    {
+      "line": 16,
+      "field": "alt",
+      "english": "Rain runs off a roof into a gutter, through a first-flush pipe into a tank, and the overflow is led to a mulched basin around a fruit tree."
+    },
+    {
+      "line": 16,
+      "field": "note",
+      "english": "Concept illustration, the same in every report. It is not a picture of this site. It does not confirm a tank is installed, a pipe is correctly sized or water is safe to use."
+    },
+    {
+      "line": 17,
+      "field": "title",
+      "english": "How a swale holds water on a slope"
+    },
+    {
+      "line": 17,
+      "field": "alt",
+      "english": "Cut through a slope: runoff drops into a level ditch, soaks in and spreads under a fruit tree planted on the mound below it."
+    },
+    {
+      "line": 17,
+      "field": "note",
+      "english": "Concept illustration, the same in every report. It is not a picture of this site. A swale must be set out level on the contour and sized for the slope; on steep or unstable ground get advice before digging."
+    },
+    {
+      "line": 18,
+      "field": "title",
+      "english": "Water at the roots, not on the leaves"
+    },
+    {
+      "line": 18,
+      "field": "alt",
+      "english": "A raised tank feeds drip lines laid under mulch along rows of cabbage and spinach."
+    },
+    {
+      "line": 18,
+      "field": "note",
+      "english": "Concept illustration, the same in every report. It is not a picture of this site. Pipe sizes, tank height and watering times still have to be worked out for the real beds."
+    },
+    {
+      "line": 19,
+      "field": "title",
+      "english": "Look below the surface"
+    },
+    {
+      "line": 19,
+      "field": "alt",
+      "english": "Cut through garden soil: mulch on top, dark living topsoil with roots and earthworms, paler subsoil with stones below, and compost being added by hand."
+    },
+    {
+      "line": 19,
+      "field": "note",
+      "english": "Concept illustration, the same in every report. It is not a picture of this site. Use the site evidence checklist to add soil observations and laboratory results. This illustration does not describe measured conditions at this site."
+    },
+    {
+      "line": 20,
+      "field": "title",
+      "english": "Inside a trench bed"
+    },
+    {
+      "line": 20,
+      "field": "alt",
+      "english": "Cut through a trench bed: branches and bones at the bottom, then dry grass, green material, manure and topsoil, with cabbages growing in mulch on top."
+    },
+    {
+      "line": 20,
+      "field": "note",
+      "english": "Concept illustration, the same in every report. It is not a picture of this site. Depth and fill depend on what the household has to hand."
+    },
+    {
+      "line": 21,
+      "field": "title",
+      "english": "Compost in three stages"
+    },
+    {
+      "line": 21,
+      "field": "alt",
+      "english": "Three compost bays side by side: fresh material, a heap half broken down, and finished dark compost ready for the beds."
+    },
+    {
+      "line": 21,
+      "field": "note",
+      "english": "Concept illustration, the same in every report. It is not a picture of this site. Any container or heap works; the point is the three stages."
+    },
+    {
+      "line": 22,
+      "field": "title",
+      "english": "Move each crop family on, every season"
+    },
+    {
+      "line": 22,
+      "field": "alt",
+      "english": "Four beds seen from above — leaf crops, fruiting crops, legumes and root crops — with arrows showing each group moving to the next bed."
+    },
+    {
+      "line": 22,
+      "field": "note",
+      "english": "Concept illustration, the same in every report. It is not a picture of this site. The report's own calendar says what is planted where; this shows only the principle."
+    },
+    {
+      "line": 23,
+      "field": "title",
+      "english": "A guild, layer by layer"
+    },
+    {
+      "line": 23,
+      "field": "alt",
+      "english": "A fruit tree with a climber, a berry shrub, a clumping plant, ground cover and root crops sharing one mulched bed, roots drawn below ground."
+    },
+    {
+      "line": 23,
+      "field": "note",
+      "english": "Concept illustration, the same in every report. It is not a picture of this site. Species and spacing must be chosen for this site; this is not its planting plan."
+    },
+    {
+      "line": 24,
+      "field": "title",
+      "english": "How a windbreak lifts the wind"
+    },
+    {
+      "line": 24,
+      "field": "alt",
+      "english": "Wind meets a belt of tall trees, smaller trees and shrubs, rises over it and comes down well beyond the vegetable beds sheltered behind."
+    },
+    {
+      "line": 24,
+      "field": "note",
+      "english": "Concept illustration, the same in every report. It is not a picture of this site. Which side to plant follows the wind directions recorded for the site, not this drawing."
+    },
+    {
+      "line": 25,
+      "field": "title",
+      "english": "Low winter sun in, high summer sun out"
+    },
+    {
+      "line": 25,
+      "field": "alt",
+      "english": "A house with a wide eave: the high summer sun is stopped by the roof overhang while the low winter sun reaches in under it."
+    },
+    {
+      "line": 25,
+      "field": "note",
+      "english": "Concept illustration, the same in every report. It is not a picture of this site. The real sun angles for this latitude are in the sun and wind figure."
+    },
+    {
+      "line": 26,
+      "field": "title",
+      "english": "Zones: what you visit most sits closest"
+    },
+    {
+      "line": 26,
+      "field": "alt",
+      "english": "A homestead seen from above: herb and vegetable beds at the door, then chickens and fruit trees, then field crops, grazing and a belt of trees at the edge."
+    },
+    {
+      "line": 26,
+      "field": "note",
+      "english": "Concept illustration, the same in every report. It is not a picture of this site. The zones mapped for this site are in its own site plan."
+    },
+    {
+      "line": 27,
+      "field": "title",
+      "english": "Let the chickens prepare the next bed"
+    },
+    {
+      "line": 27,
+      "field": "alt",
+      "english": "A movable wire chicken run on wheels stands on one bed while the bed beside it, already cleared and manured, is ready for planting."
+    },
+    {
+      "line": 27,
+      "field": "note",
+      "english": "Concept illustration, the same in every report. It is not a picture of this site. Stock numbers, housing and by-laws still need checking locally."
+    },
+    {
+      "line": 28,
+      "field": "title",
+      "english": "Keep a bare or green ring between grass and home"
+    },
+    {
+      "line": 28,
+      "field": "alt",
+      "english": "A house and water tank on a green lawn, ringed by a bare cleared strip and a gravel road that separate them from dry grassland."
+    },
+    {
+      "line": 28,
+      "field": "note",
+      "english": "Concept illustration, the same in every report. It is not a picture of this site. Break widths and burning rules come from the local fire protection association."
+    },
+    {
+      "line": 29,
+      "field": "title",
+      "english": "Something to harvest in every season"
+    },
+    {
+      "line": 29,
+      "field": "alt",
+      "english": "Four beds side by side: maize, beans, pumpkin and sweet potato under a high summer sun; cabbage, carrots, onions, peas and young seedlings under a low winter sun."
+    },
+    {
+      "line": 29,
+      "field": "note",
+      "english": "Concept illustration, the same in every report. It is not a picture of this site. The crops and months for this site are in its planting calendar."
+    },
+    {
+      "line": 30,
+      "field": "title",
+      "english": "From the garden to a table at the gate"
+    },
+    {
+      "line": 30,
+      "field": "alt",
+      "english": "A shaded roadside table with crates of spinach, cabbage, tomatoes and pumpkins, seedling trays, eggs and a scale."
+    },
+    {
+      "line": 30,
+      "field": "note",
+      "english": "Concept illustration, the same in every report. It is not a picture of this site. Prices and demand have to be checked in the local market."
+    },
+    {
+      "line": 31,
+      "field": "title",
+      "english": "Bare plot to food garden, in stages"
+    },
+    {
+      "line": 31,
+      "field": "alt",
+      "english": "The same sloping plot three times: bare ground with a house and tank, then young contour beds and saplings, then a full garden with fruit trees."
+    },
+    {
+      "line": 31,
+      "field": "note",
+      "english": "Concept illustration, the same in every report. It is not a picture of this site. How fast the real site changes depends on water, labour and money."
+    },
+    {
+      "line": 85,
+      "field": "title",
+      "english": "A living landscape, layer by layer"
+    },
+    {
+      "line": 85,
+      "field": "note",
+      "english": "Concept illustration. Species, spacing and the layers present must be checked for this site; this is not its measured vegetation profile."
+    },
+    {
+      "line": 96,
+      "field": "title",
+      "english": "Trees mentioned in this section"
+    },
+    {
+      "line": 96,
+      "field": "note",
+      "english": "Catalogue illustrations, not site photographs or identification evidence. Read the advice and confirm local suitability before choosing plants."
+    }
+  ],
+  "labels": [
+    "Tree canopy",
+    "Upper growing layer",
+    "Shrubs & understory",
+    "Space below the canopy",
+    "Ground cover & leaf litter",
+    "Roots & living soil"
+  ]
+}

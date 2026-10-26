@@ -1,0 +1,1508 @@
+{
+  "sourceSha": "59a115b163260d48127a8008503027b55e260108",
+  "status": "Unreviewed AI drafts for fixed app controls. No fluent-speaker approval. Glyphs move to semantic Lucide markup; words, operation callbacks, placeholders, source qualifications and numeric inputs remain protected.",
+  "entries": [
+    {
+      "key": "designSectorSunRow",
+      "english": "Sun: strongest from the {direction} — put your beds on that side.",
+      "zu": "Ilanga linamandla kakhulu {direction} — beka imibhede yakho ngakulolo hlangothi.",
+      "st": "Letsatsi le matla haholo ho tswa {direction} — beha dibethe tsa hao ka lehlakoreng leo.",
+      "ts": "Dyambu ri ni ntamu swinene ku suka {direction} — veka mibedo ya wena eka tlhelo rero.",
+      "ve": "Ḓuvha ḽi na maanḓa nga maanḓa u bva {direction} — vheani mibethe yaṋu kha sia ḽeneḽo."
+    },
+    {
+      "key": "designSectorWindRow",
+      "english": "Coordinate climate-grid mean: wind FROM the {directions}. Confirm on site.",
+      "zu": "Isilinganiso segridi yesimo sezulu kulezi zixhumanisi: umoya UVELA {directions}. Qinisekisa endaweni.",
+      "st": "Karolelano ya gridi ya maemo a lehodimo sebakeng sa dikhokahanyo: moya O TSWA {directions}. Netefatsa setsheng.",
+      "ts": "Avhareji ya giridi ya maxelo eka tikhodinati leti: moya WU HUMA {directions}. Tiyisisa endhawini.",
+      "ve": "Ndinganyelo ya giridi ya kilima kha khoudinethe idzi: muya U BVA {directions}. Khwaṱhisedzani fhethu."
+    },
+    {
+      "key": "designSectorWaterRow",
+      "english": "Water flows downhill to the {direction} — swales go ACROSS that flow{frost}.",
+      "zu": "Amanzi ageleza ehla {direction}; ama-swale (imisele yokubamba amanzi) anqamula le ndlela{frost}.",
+      "st": "Metsi a phalla a theohela {direction} — diforo tse tshwarang metsi di TSHELA phallo eo{frost}.",
+      "ts": "Mati ma khuluka ma rhelela {direction} — misele yo khoma mati yi TLULA ndlela ya ku khuluka koloko{frost}.",
+      "ve": "Maḓi a elela a tshi tsela {direction} — migero ya u fara maḓi i PFUKA u elela honoho{frost}."
+    },
+    {
+      "key": "designCanvasCancel",
+      "english": "Cancel",
+      "zu": "Khansela",
+      "st": "Hlakola",
+      "ts": "Khansela",
+      "ve": "Khanselani"
+    },
+    {
+      "key": "designCanvasFinish",
+      "english": "Finish {thing}",
+      "zu": "Qeda {thing}",
+      "st": "Qetella {thing}",
+      "ts": "Hetisa {thing}",
+      "ve": "Fhedzisani {thing}"
+    },
+    {
+      "key": "designCanvasTidy",
+      "english": "Tidy outline",
+      "zu": "Lungisa umugqa wangaphandle",
+      "st": "Lokisa mola wa ka ntle",
+      "ts": "Lulamisa layini ya le handle",
+      "ve": "Lugisani mutalo wa nnḓa"
+    },
+    {
+      "key": "designCanvasSnap",
+      "english": "Snap to neighbour",
+      "zu": "Qondanisa nento eseduze",
+      "st": "Nyalanya le e pela yona",
+      "ts": "Fananisa ni lexi nga ekusuhi",
+      "ve": "Fananyisani na tshi re tsini"
+    },
+    {
+      "key": "designCanvasCleanup",
+      "english": "Clean up",
+      "zu": "Hlanza",
+      "st": "Hlwekisa",
+      "ts": "Basisa",
+      "ve": "Kunakisani"
+    },
+    {
+      "key": "designPaletteDelete",
+      "english": "Delete",
+      "zu": "Susa",
+      "st": "Phumula",
+      "ts": "Sula",
+      "ve": "Thuthani"
+    },
+    {
+      "key": "designPaletteTapCorners",
+      "english": "Tap corners, then Finish",
+      "zu": "Thepha amakhona, bese ukhetha Qeda",
+      "st": "Tobetsa dikgutlo, ebe o kgetha Qetella",
+      "ts": "Thinta tikhona, kutani u hlawula Hetisa",
+      "ve": "Kwamani khuḓa, ni kone u nanga Fhedzisani"
+    },
+    {
+      "key": "homeMainSiteLabel",
+      "english": "Main",
+      "zu": "Eyinhloko",
+      "st": "Se seholo",
+      "ts": "Ya nkoka",
+      "ve": "Ha ndeme"
+    },
+    {
+      "key": "designPaletteSelect",
+      "english": "Select",
+      "zu": "Khetha",
+      "st": "Kgetha",
+      "ts": "Hlawula",
+      "ve": "Nangani"
+    },
+    {
+      "key": "designPaletteUndo",
+      "english": "Undo",
+      "zu": "Buyisela emuva",
+      "st": "Busetsa morao",
+      "ts": "Tlherisela endzhaku",
+      "ve": "Humiselani murahu"
+    },
+    {
+      "key": "designPaletteRedo",
+      "english": "Redo",
+      "zu": "Phinda isenzo",
+      "st": "Etsa hape",
+      "ts": "Endla nakambe",
+      "ve": "Itani hafhu"
+    },
+    {
+      "key": "designPaletteDuplicate",
+      "english": "Duplicate",
+      "zu": "Yenza ikhophi",
+      "st": "Etsa khopi",
+      "ts": "Endla khopi",
+      "ve": "Itani khophi"
+    },
+    {
+      "key": "designPaletteTidy",
+      "english": "Tidy",
+      "zu": "Lungisa umugqa",
+      "st": "Lokisa mola",
+      "ts": "Lulamisa layini",
+      "ve": "Lugisani mutalo"
+    },
+    {
+      "key": "designPaletteSnap",
+      "english": "Snap",
+      "zu": "Qondanisa",
+      "st": "Nyalanya",
+      "ts": "Fananisa",
+      "ve": "Fananyisani"
+    },
+    {
+      "key": "designPaletteCleanup",
+      "english": "Clean up",
+      "zu": "Hlanza",
+      "st": "Hlwekisa",
+      "ts": "Basisa",
+      "ve": "Kunakisani"
+    },
+    {
+      "key": "designCanvasPoint",
+      "english": "Point",
+      "zu": "Iphuzu",
+      "st": "Ntlha",
+      "ts": "Poyinti",
+      "ve": "Tshithoma"
+    },
+    {
+      "key": "designCanvasLine",
+      "english": "line",
+      "zu": "umugqa",
+      "st": "mola",
+      "ts": "layini",
+      "ve": "mutalo"
+    },
+    {
+      "key": "designCanvasZone",
+      "english": "Zone {zone}",
+      "zu": "iZone {zone}",
+      "st": "Zoune {zone}",
+      "ts": "Zoni {zone}",
+      "ve": "Zouni {zone}"
+    },
+    {
+      "key": "designCanvasClose",
+      "english": "Close",
+      "zu": "Vala",
+      "st": "Kwala",
+      "ts": "Pfala",
+      "ve": "Valani"
+    },
+    {
+      "key": "designPaletteDuplicateTitle",
+      "english": "Duplicate the selected item(s) — Cmd/Ctrl+D",
+      "zu": "Yenza ikhophi yento noma izinto ezikhethiwe — Cmd/Ctrl+D",
+      "st": "Etsa khopi ya ntho kapa dintho tse kgethilweng — Cmd/Ctrl+D",
+      "ts": "Endla khopi ya nchumu kumbe swilo leswi hlawuriweke — Cmd/Ctrl+D",
+      "ve": "Itani khophi ya tshithu kana zwithu zwo nangwaho — Cmd/Ctrl+D"
+    },
+    {
+      "key": "designPaletteTidyTitle",
+      "english": "Preview a tidied version of the selected outline",
+      "zu": "Buka kuqala inguqulo elungisiwe yomugqa wangaphandle okhethiwe",
+      "st": "Sheba pele mofuta o lokisitsweng wa mola wa ka ntle o kgethilweng",
+      "ts": "Languta ku sungula layini ya le handle leyi hlawuriweke leyi lulamisiweke",
+      "ve": "Lavhelesani u thoma mutalo wa nnḓa wo nangwaho wo lugiswaho"
+    },
+    {
+      "key": "designPaletteSnapTitle",
+      "english": "Preview closing hairline seams with a neighbouring zone",
+      "zu": "Buka kuqala ukuvalwa kwezikhala ezincane kakhulu phakathi kwendawo ekhethiwe nenye eseduze",
+      "st": "Sheba pele ho kwalwa ha dikgeo tse tshesane haholo pakeng tsa zoune le e pela yona",
+      "ts": "Languta ku sungula ku pfariwa ka mavangwa lamatsongo swinene ni zoni leyi nga ekusuhi",
+      "ve": "Lavhelesani u thoma u valwa ha zwikhala zwiṱukusa na zouni i re tsini"
+    },
+    {
+      "key": "designPaletteCleanupTitle",
+      "english": "Preview straightening and evenly spacing the selected items",
+      "zu": "Buka kuqala ukuqondiswa kwezinto ezikhethiwe nokushiywa kwezikhala ezilinganayo phakathi kwazo",
+      "st": "Sheba pele ho otlollwa le ho siuwa ha dikgeo tse lekanang pakeng tsa dintho tse kgethilweng",
+      "ts": "Languta ku sungula ku ololoxiwa ni ku vekiwa ka mavangwa yo ringana eka swilo leswi hlawuriweke",
+      "ve": "Lavhelesani u thoma u otlollwa na u vhewa ha zwikhala zwi eḓanaho kha zwithu zwo nangwaho"
+    },
+    {
+      "key": "designSectorFireRow",
+      "english": "Regional fire context: {season} Possible approach from the {direction} — confirm locally.",
+      "zu": "Isimo somlilo sesifunda: {season} Umlilo ungavela {direction}; qinisekisa endaweni yangakini.",
+      "st": "Maemo a mollo a sebaka: {season} O ka atamela ho tswa {direction} — netefatsa sebakeng.",
+      "ts": "Xiyimo xa ndzilo xa ndhawu: {season} Wu nga tshinela ku suka {direction} — tiyisisa endhawini.",
+      "ve": "Nyimele ya mulilo ya dzingu: {season} U nga sendela u bva {direction} — khwaṱhisedzani henefho."
+    },
+    {
+      "key": "designSectorSunMixed",
+      "english": "north in winter, south in summer",
+      "zu": "enyakatho ebusika, eningizimu ehlobo",
+      "st": "leboya mariha, borwa hlabula",
+      "ts": "n'walungu hi xixika, dzonga hi ximumu",
+      "ve": "devhula vhuriha, tshipembe tshilimo"
+    },
+    {
+      "key": "designSectorWindSummer",
+      "english": "{direction} in summer",
+      "zu": "{direction} ehlobo",
+      "st": "{direction} hlabula",
+      "ts": "{direction} hi ximumu",
+      "ve": "{direction} tshilimo"
+    },
+    {
+      "key": "designSectorWindWinter",
+      "english": "{direction} in winter",
+      "zu": "{direction} ebusika",
+      "st": "{direction} mariha",
+      "ts": "{direction} hi xixika",
+      "ve": "{direction} vhuriha"
+    },
+    {
+      "key": "designSectorFrostNote",
+      "english": " · frost settles low there on still, cold nights",
+      "zu": " · Isithwathwa siqoqana endaweni ephansi lapho ebusuku obubandayo obungenamoya",
+      "st": " · leqhwa le dula tlase moo ka masiu a batang a se nang moya",
+      "ts": " · gwitsi ri tshamisa ehansi kwalaho hi vusiku byo titimela byo pfumala moya",
+      "ve": " · ṅwando u dzula fhasi henefho nga vhusiku vhu rotholelaho vhu si na muya"
+    },
+    {
+      "key": "designSectorTitle",
+      "english": "The land’s energies",
+      "zu": "Amandla omhlaba",
+      "st": "Matla a naha",
+      "ts": "Matimba ya misava",
+      "ve": "Maanḓa a shango"
+    },
+    {
+      "key": "designSectorSource",
+      "english": "site + regional",
+      "zu": "Indawo + nesifunda",
+      "st": "setsha + sebaka",
+      "ts": "ndhawu + xifundza",
+      "ve": "fhethu + dzingu"
+    },
+    {
+      "key": "designSectorOpenMap",
+      "english": "Open this place on the map first to read its energies.",
+      "zu": "Qala ngokuvula le ndawo ebalazweni ukuze ubone amandla ayo.",
+      "st": "Bula sebaka sena mmapeng pele ho bala matla a sona.",
+      "ts": "Pfula ndhawu leyi emepeni ku sungula leswaku u hlaya matimba ya yona.",
+      "ve": "Vulani fhethu afha kha mapa u thoma uri ni vhale maanḓa aho."
+    },
+    {
+      "key": "designSectorLooksRight",
+      "english": "Looks right",
+      "zu": "Kubukeka kulungile",
+      "st": "Ho bonahala ho nepahetse",
+      "ts": "Swi vonaka swi lulamile",
+      "ve": "Zwi vhonala zwo luga"
+    },
+    {
+      "key": "designSectorDirectionNorth",
+      "english": "north",
+      "zu": "enyakatho",
+      "st": "leboya",
+      "ts": "n'walungu",
+      "ve": "devhula"
+    },
+    {
+      "key": "designSectorDirectionNorthEast",
+      "english": "north-east",
+      "zu": "enyakatho-mpumalanga",
+      "st": "leboya-botjhabela",
+      "ts": "n'walungu-vuxa",
+      "ve": "devhula-vhubvaḓuvha"
+    },
+    {
+      "key": "designSectorDirectionEast",
+      "english": "east",
+      "zu": "empumalanga",
+      "st": "botjhabela",
+      "ts": "vuxa",
+      "ve": "vhubvaḓuvha"
+    },
+    {
+      "key": "designSectorDirectionSouthEast",
+      "english": "south-east",
+      "zu": "eningizimu-mpumalanga",
+      "st": "borwa-botjhabela",
+      "ts": "dzonga-vuxa",
+      "ve": "tshipembe-vhubvaḓuvha"
+    },
+    {
+      "key": "designSectorDirectionSouth",
+      "english": "south",
+      "zu": "eningizimu",
+      "st": "borwa",
+      "ts": "dzonga",
+      "ve": "tshipembe"
+    },
+    {
+      "key": "designSectorDirectionSouthWest",
+      "english": "south-west",
+      "zu": "eningizimu-ntshonalanga",
+      "st": "borwa-bophirimela",
+      "ts": "dzonga-vupeladyambu",
+      "ve": "tshipembe-vhukovhela"
+    },
+    {
+      "key": "designSectorDirectionWest",
+      "english": "west",
+      "zu": "entshonalanga",
+      "st": "bophirimela",
+      "ts": "vupeladyambu",
+      "ve": "vhukovhela"
+    },
+    {
+      "key": "designSectorDirectionNorthWest",
+      "english": "north-west",
+      "zu": "enyakatho-ntshonalanga",
+      "st": "leboya-bophirimela",
+      "ts": "n'walungu-vupeladyambu",
+      "ve": "devhula-vhukovhela"
+    },
+    {
+      "key": "designSectorWinterShadow",
+      "english": "Midwinter noon shadow ×{ratio}",
+      "zu": "Isithunzi sasemini ebusika phakathi ×{ratio}",
+      "st": "Moriti wa motshehare bohareng ba mariha ×{ratio}",
+      "ts": "Ndzhuti wa nhlikanhi exikarhini ka xixika ×{ratio}",
+      "ve": "Murunzi wa masiari vhukati ha vhuriha ×{ratio}"
+    },
+    {
+      "key": "designSectorSummer",
+      "english": "SUMMER",
+      "zu": "Ehlobo",
+      "st": "LEHLABULA",
+      "ts": "XIMUMU",
+      "ve": "TSHILIMO"
+    },
+    {
+      "key": "designSectorWinter",
+      "english": "WINTER",
+      "zu": "Ebusika",
+      "st": "MARIHA",
+      "ts": "XIXIKA",
+      "ve": "VHURIHA"
+    },
+    {
+      "key": "designSectorDownhill",
+      "english": "DOWNHILL",
+      "zu": "KWEHLA",
+      "st": "HO THEOHA",
+      "ts": "KU RHELELA",
+      "ve": "U TSELA"
+    },
+    {
+      "key": "designSectorDownhillApprox",
+      "english": "DOWNHILL ~",
+      "zu": "KWEHLA ~",
+      "st": "HO THEOHA ~",
+      "ts": "KU RHELELA ~",
+      "ve": "U TSELA ~"
+    },
+    {
+      "key": "designSectorFrost",
+      "english": "FROST",
+      "zu": "ISITHWATHWA",
+      "st": "LEQHWA",
+      "ts": "GWITSI",
+      "ve": "ṄWANDO"
+    },
+    {
+      "key": "designSectorSeasonWind",
+      "english": "{season} wind · {direction}",
+      "zu": "Umoya {season} · {direction}",
+      "st": "Moya wa {season} · {direction}",
+      "ts": "Moya wa {season} · {direction}",
+      "ve": "Muya wa {season} · {direction}"
+    }
+  ],
+  "beforeValues": {
+    "en": {
+      "designSectorSunRow": "☀️ Sun: strongest from the {direction} — put your beds on that side.",
+      "designSectorWindRow": "💨 Coordinate climate-grid mean: wind FROM the {directions}. Confirm on site.",
+      "designSectorWaterRow": "💧 Water flows downhill to the {direction} — swales go ACROSS that flow{frost}.",
+      "designCanvasCancel": "✕ Cancel",
+      "designCanvasFinish": "✓ Finish {thing}",
+      "designCanvasTidy": "✓ Tidy outline",
+      "designCanvasSnap": "✓ Snap to neighbour",
+      "designCanvasCleanup": "✓ Clean up",
+      "designPaletteDelete": "🗑️ Delete",
+      "designPaletteTapCorners": "Tap corners, then ✓ Finish",
+      "homeMainSiteLabel": "Main",
+      "designPaletteSelect": "↖️ Select",
+      "designPaletteUndo": "↩️ Undo",
+      "designPaletteRedo": "↪️ Redo",
+      "designPaletteDuplicate": "📋 Duplicate",
+      "designPaletteTidy": "🧹 Tidy",
+      "designPaletteSnap": "🧲 Snap",
+      "designPaletteCleanup": "📐 Clean up",
+      "designCanvasPoint": "↩ Point",
+      "designCanvasLine": "line",
+      "designCanvasZone": "Zone {zone}",
+      "designCanvasClose": "Close",
+      "designPaletteDuplicateTitle": "Duplicate the selected item(s) — Cmd/Ctrl+D",
+      "designPaletteTidyTitle": "Preview a tidied version of the selected outline",
+      "designPaletteSnapTitle": "Preview closing hairline seams with a neighbouring zone",
+      "designPaletteCleanupTitle": "Preview straightening and evenly spacing the selected items",
+      "designSectorFireRow": "🔥 Regional fire context: {season} Possible approach from the {direction} — confirm locally.",
+      "designSectorSunMixed": "north in winter, south in summer",
+      "designSectorWindSummer": "{direction} in summer",
+      "designSectorWindWinter": "{direction} in winter",
+      "designSectorFrostNote": " · frost settles low there on still, cold nights",
+      "designSectorTitle": "The land’s energies",
+      "designSectorSource": "site + regional",
+      "designSectorOpenMap": "Open this place on the map first to read its energies.",
+      "designSectorLooksRight": "Looks right",
+      "designSectorDirectionNorth": "north",
+      "designSectorDirectionNorthEast": "north-east",
+      "designSectorDirectionEast": "east",
+      "designSectorDirectionSouthEast": "south-east",
+      "designSectorDirectionSouth": "south",
+      "designSectorDirectionSouthWest": "south-west",
+      "designSectorDirectionWest": "west",
+      "designSectorDirectionNorthWest": "north-west",
+      "designSectorWinterShadow": "Midwinter noon shadow ×{ratio}",
+      "designSectorSummer": "SUMMER",
+      "designSectorWinter": "WINTER",
+      "designSectorDownhill": "DOWNHILL",
+      "designSectorDownhillApprox": "DOWNHILL ~",
+      "designSectorFrost": "FROST",
+      "designSectorSeasonWind": "{season} wind · {direction}"
+    },
+    "zu": {
+      "designSectorSunRow": "☀️ Ilanga linamandla kakhulu {direction} — beka imibhede yakho ngakulolo hlangothi.",
+      "designSectorWindRow": "💨 Umoya uvela kulezi zinkomba: {directions}. Isilinganiso sesimo sesifunda; qinisekisa endaweni yangakini.",
+      "designSectorWaterRow": "💧 Amanzi ageleza ehla {direction}; ama-swale (imisele yokubamba amanzi) anqamula le ndlela{frost}.",
+      "designCanvasCancel": "✕ Khansela · ✕ Cancel",
+      "designCanvasFinish": "✓ Qeda {thing} · ✓ Finish {thing}",
+      "designCanvasTidy": "✓ Lungisa umugqa wangaphandle · ✓ Tidy outline",
+      "designCanvasSnap": "✓ Qondanisa nento eseduze · ✓ Snap to neighbour",
+      "designCanvasCleanup": "✓ Hlanza · ✓ Clean up",
+      "designPaletteDelete": "🗑️ Susa · Delete",
+      "designPaletteTapCorners": "Thepha amakhona, bese ukhetha ✓ Qeda · Tap corners, then ✓ Finish",
+      "homeMainSiteLabel": "★ Eyinhloko",
+      "designPaletteSelect": "↖️ Khetha · Select",
+      "designPaletteUndo": "↩️ Undo",
+      "designPaletteRedo": "↪️ Redo",
+      "designPaletteDuplicate": "📋 Duplicate",
+      "designPaletteTidy": "🧹 Tidy",
+      "designPaletteSnap": "🧲 Snap",
+      "designPaletteCleanup": "📐 Clean up",
+      "designCanvasPoint": "↩ Iphuzu · ↩ Point",
+      "designCanvasLine": "umugqa · line",
+      "designCanvasZone": "iZone {zone} · Zone {zone}",
+      "designCanvasClose": "Vala · Close",
+      "designPaletteDuplicateTitle": "Duplicate the selected item(s) — Cmd/Ctrl+D",
+      "designPaletteTidyTitle": "Preview a tidied version of the selected outline",
+      "designPaletteSnapTitle": "Preview closing hairline seams with a neighbouring zone",
+      "designPaletteCleanupTitle": "Preview straightening and evenly spacing the selected items",
+      "designSectorFireRow": "Isimo somlilo sesifunda: {season} Umlilo ungavela {direction}; qinisekisa endaweni yangakini.",
+      "designSectorSunMixed": "enyakatho ebusika, eningizimu ehlobo",
+      "designSectorWindSummer": "{direction} ehlobo",
+      "designSectorWindWinter": "{direction} ebusika",
+      "designSectorFrostNote": " · Isithwathwa siqoqana endaweni ephansi lapho ebusuku obubandayo obungenamoya",
+      "designSectorTitle": "Amandla omhlaba",
+      "designSectorSource": "Indawo + nesifunda",
+      "designSectorOpenMap": "Qala ngokuvula le ndawo ebalazweni ukuze ubone amandla ayo.",
+      "designSectorLooksRight": "Kubukeka kulungile",
+      "designSectorDirectionNorth": "enyakatho",
+      "designSectorDirectionNorthEast": "enyakatho-mpumalanga",
+      "designSectorDirectionEast": "empumalanga",
+      "designSectorDirectionSouthEast": "eningizimu-mpumalanga",
+      "designSectorDirectionSouth": "eningizimu",
+      "designSectorDirectionSouthWest": "eningizimu-ntshonalanga",
+      "designSectorDirectionWest": "entshonalanga",
+      "designSectorDirectionNorthWest": "enyakatho-ntshonalanga",
+      "designSectorWinterShadow": "Isithunzi sasemini ebusika phakathi ×{ratio}",
+      "designSectorSummer": "Ehlobo",
+      "designSectorWinter": "Ebusika",
+      "designSectorDownhill": "DOWNHILL",
+      "designSectorDownhillApprox": "DOWNHILL ~",
+      "designSectorFrost": "ISITHWATHWA",
+      "designSectorSeasonWind": "Umoya {season} · {direction}"
+    },
+    "st": {
+      "designSectorSunRow": "☀️ Sun: strongest from the {direction} — put your beds on that side.",
+      "designSectorWindRow": "💨 Coordinate climate-grid mean: wind FROM the {directions}. Confirm on site.",
+      "designSectorWaterRow": "💧 Water flows downhill to the {direction} — swales go ACROSS that flow{frost}.",
+      "designCanvasCancel": "✕ Cancel",
+      "designCanvasFinish": "✓ Finish {thing}",
+      "designCanvasTidy": "✓ Tidy outline",
+      "designCanvasSnap": "✓ Snap to neighbour",
+      "designCanvasCleanup": "✓ Clean up",
+      "designPaletteDelete": "🗑️ Delete",
+      "designPaletteTapCorners": "Tap corners, then ✓ Finish",
+      "homeMainSiteLabel": "Se seholo",
+      "designPaletteSelect": "↖️ Select",
+      "designPaletteUndo": "↩️ Undo",
+      "designPaletteRedo": "↪️ Redo",
+      "designPaletteDuplicate": "📋 Duplicate",
+      "designPaletteTidy": "🧹 Tidy",
+      "designPaletteSnap": "🧲 Snap",
+      "designPaletteCleanup": "📐 Clean up",
+      "designCanvasPoint": "↩ Point",
+      "designCanvasLine": "line",
+      "designCanvasZone": "Zone {zone}",
+      "designCanvasClose": "Close",
+      "designPaletteDuplicateTitle": "Duplicate the selected item(s) — Cmd/Ctrl+D",
+      "designPaletteTidyTitle": "Preview a tidied version of the selected outline",
+      "designPaletteSnapTitle": "Preview closing hairline seams with a neighbouring zone",
+      "designPaletteCleanupTitle": "Preview straightening and evenly spacing the selected items",
+      "designSectorFireRow": "🔥 Regional fire context: {season} Possible approach from the {direction} — confirm locally.",
+      "designSectorSunMixed": "north in winter, south in summer",
+      "designSectorWindSummer": "{direction} in summer",
+      "designSectorWindWinter": "{direction} in winter",
+      "designSectorFrostNote": " · frost settles low there on still, cold nights",
+      "designSectorTitle": "The land’s energies",
+      "designSectorSource": "site + regional",
+      "designSectorOpenMap": "Open this place on the map first to read its energies.",
+      "designSectorLooksRight": "Looks right",
+      "designSectorDirectionNorth": "north",
+      "designSectorDirectionNorthEast": "north-east",
+      "designSectorDirectionEast": "east",
+      "designSectorDirectionSouthEast": "south-east",
+      "designSectorDirectionSouth": "south",
+      "designSectorDirectionSouthWest": "south-west",
+      "designSectorDirectionWest": "west",
+      "designSectorDirectionNorthWest": "north-west",
+      "designSectorWinterShadow": "Midwinter noon shadow ×{ratio}",
+      "designSectorSummer": "SUMMER",
+      "designSectorWinter": "WINTER",
+      "designSectorDownhill": "DOWNHILL",
+      "designSectorDownhillApprox": "DOWNHILL ~",
+      "designSectorFrost": "FROST",
+      "designSectorSeasonWind": "{season} wind · {direction}"
+    },
+    "ts": {
+      "designSectorSunRow": "☀️ Sun: strongest from the {direction} — put your beds on that side.",
+      "designSectorWindRow": "💨 Coordinate climate-grid mean: wind FROM the {directions}. Confirm on site.",
+      "designSectorWaterRow": "💧 Water flows downhill to the {direction} — swales go ACROSS that flow{frost}.",
+      "designCanvasCancel": "✕ Cancel",
+      "designCanvasFinish": "✓ Finish {thing}",
+      "designCanvasTidy": "✓ Tidy outline",
+      "designCanvasSnap": "✓ Snap to neighbour",
+      "designCanvasCleanup": "✓ Clean up",
+      "designPaletteDelete": "🗑️ Delete",
+      "designPaletteTapCorners": "Tap corners, then ✓ Finish",
+      "homeMainSiteLabel": "Ya nkoka",
+      "designPaletteSelect": "↖️ Select",
+      "designPaletteUndo": "↩️ Undo",
+      "designPaletteRedo": "↪️ Redo",
+      "designPaletteDuplicate": "📋 Duplicate",
+      "designPaletteTidy": "🧹 Tidy",
+      "designPaletteSnap": "🧲 Snap",
+      "designPaletteCleanup": "📐 Clean up",
+      "designCanvasPoint": "↩ Point",
+      "designCanvasLine": "line",
+      "designCanvasZone": "Zone {zone}",
+      "designCanvasClose": "Close",
+      "designPaletteDuplicateTitle": "Duplicate the selected item(s) — Cmd/Ctrl+D",
+      "designPaletteTidyTitle": "Preview a tidied version of the selected outline",
+      "designPaletteSnapTitle": "Preview closing hairline seams with a neighbouring zone",
+      "designPaletteCleanupTitle": "Preview straightening and evenly spacing the selected items",
+      "designSectorFireRow": "🔥 Regional fire context: {season} Possible approach from the {direction} — confirm locally.",
+      "designSectorSunMixed": "north in winter, south in summer",
+      "designSectorWindSummer": "{direction} in summer",
+      "designSectorWindWinter": "{direction} in winter",
+      "designSectorFrostNote": " · frost settles low there on still, cold nights",
+      "designSectorTitle": "The land’s energies",
+      "designSectorSource": "site + regional",
+      "designSectorOpenMap": "Open this place on the map first to read its energies.",
+      "designSectorLooksRight": "Looks right",
+      "designSectorDirectionNorth": "north",
+      "designSectorDirectionNorthEast": "north-east",
+      "designSectorDirectionEast": "east",
+      "designSectorDirectionSouthEast": "south-east",
+      "designSectorDirectionSouth": "south",
+      "designSectorDirectionSouthWest": "south-west",
+      "designSectorDirectionWest": "west",
+      "designSectorDirectionNorthWest": "north-west",
+      "designSectorWinterShadow": "Midwinter noon shadow ×{ratio}",
+      "designSectorSummer": "SUMMER",
+      "designSectorWinter": "WINTER",
+      "designSectorDownhill": "DOWNHILL",
+      "designSectorDownhillApprox": "DOWNHILL ~",
+      "designSectorFrost": "FROST",
+      "designSectorSeasonWind": "{season} wind · {direction}"
+    },
+    "ve": {
+      "designSectorSunRow": "☀️ Sun: strongest from the {direction} — put your beds on that side.",
+      "designSectorWindRow": "💨 Coordinate climate-grid mean: wind FROM the {directions}. Confirm on site.",
+      "designSectorWaterRow": "💧 Water flows downhill to the {direction} — swales go ACROSS that flow{frost}.",
+      "designCanvasCancel": "✕ Cancel",
+      "designCanvasFinish": "✓ Finish {thing}",
+      "designCanvasTidy": "✓ Tidy outline",
+      "designCanvasSnap": "✓ Snap to neighbour",
+      "designCanvasCleanup": "✓ Clean up",
+      "designPaletteDelete": "🗑️ Delete",
+      "designPaletteTapCorners": "Tap corners, then ✓ Finish",
+      "homeMainSiteLabel": "Ha ndeme",
+      "designPaletteSelect": "↖️ Select",
+      "designPaletteUndo": "↩️ Undo",
+      "designPaletteRedo": "↪️ Redo",
+      "designPaletteDuplicate": "📋 Duplicate",
+      "designPaletteTidy": "🧹 Tidy",
+      "designPaletteSnap": "🧲 Snap",
+      "designPaletteCleanup": "📐 Clean up",
+      "designCanvasPoint": "↩ Point",
+      "designCanvasLine": "line",
+      "designCanvasZone": "Zone {zone}",
+      "designCanvasClose": "Close",
+      "designPaletteDuplicateTitle": "Duplicate the selected item(s) — Cmd/Ctrl+D",
+      "designPaletteTidyTitle": "Preview a tidied version of the selected outline",
+      "designPaletteSnapTitle": "Preview closing hairline seams with a neighbouring zone",
+      "designPaletteCleanupTitle": "Preview straightening and evenly spacing the selected items",
+      "designSectorFireRow": "🔥 Regional fire context: {season} Possible approach from the {direction} — confirm locally.",
+      "designSectorSunMixed": "north in winter, south in summer",
+      "designSectorWindSummer": "{direction} in summer",
+      "designSectorWindWinter": "{direction} in winter",
+      "designSectorFrostNote": " · frost settles low there on still, cold nights",
+      "designSectorTitle": "The land’s energies",
+      "designSectorSource": "site + regional",
+      "designSectorOpenMap": "Open this place on the map first to read its energies.",
+      "designSectorLooksRight": "Looks right",
+      "designSectorDirectionNorth": "north",
+      "designSectorDirectionNorthEast": "north-east",
+      "designSectorDirectionEast": "east",
+      "designSectorDirectionSouthEast": "south-east",
+      "designSectorDirectionSouth": "south",
+      "designSectorDirectionSouthWest": "south-west",
+      "designSectorDirectionWest": "west",
+      "designSectorDirectionNorthWest": "north-west",
+      "designSectorWinterShadow": "Midwinter noon shadow ×{ratio}",
+      "designSectorSummer": "SUMMER",
+      "designSectorWinter": "WINTER",
+      "designSectorDownhill": "DOWNHILL",
+      "designSectorDownhillApprox": "DOWNHILL ~",
+      "designSectorFrost": "FROST",
+      "designSectorSeasonWind": "{season} wind · {direction}"
+    }
+  },
+  "beforeLines": {
+    "en": {
+      "designSectorSunRow": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 510,
+          "text": "  designSectorSunRow: '☀️ Sun: strongest from the {direction} — put your beds on that side.',\n"
+        }
+      ],
+      "designSectorWindRow": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 514,
+          "text": "  designSectorWindRow: '💨 Coordinate climate-grid mean: wind FROM the {directions}. Confirm on site.',\n"
+        }
+      ],
+      "designSectorWaterRow": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 516,
+          "text": "  designSectorWaterRow: '💧 Water flows downhill to the {direction} — swales go ACROSS that flow{frost}.',\n"
+        }
+      ],
+      "designCanvasCancel": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 312,
+          "text": "  designCanvasCancel: '✕ Cancel',\n"
+        }
+      ],
+      "designCanvasFinish": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 314,
+          "text": "  designCanvasFinish: '✓ Finish {thing}',\n"
+        }
+      ],
+      "designCanvasTidy": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 318,
+          "text": "  designCanvasTidy: '✓ Tidy outline',\n"
+        }
+      ],
+      "designCanvasSnap": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 319,
+          "text": "  designCanvasSnap: '✓ Snap to neighbour',\n"
+        }
+      ],
+      "designCanvasCleanup": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 320,
+          "text": "  designCanvasCleanup: '✓ Clean up',\n"
+        }
+      ],
+      "designPaletteDelete": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 351,
+          "text": "  designPaletteDelete: '🗑️ Delete',\n"
+        }
+      ],
+      "designPaletteTapCorners": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 380,
+          "text": "  designPaletteTapCorners: 'Tap corners, then ✓ Finish',\n"
+        }
+      ],
+      "homeMainSiteLabel": [
+        {
+          "file": "lib/i18n.tsx",
+          "line": 1140,
+          "text": "  homeMainSiteLabel: 'Main',   // the ★ that used to prefix this is a Lucide icon's job, not a string's\n"
+        }
+      ],
+      "designPaletteSelect": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 330,
+          "text": "  designPaletteSelect: '↖️ Select',\n"
+        }
+      ],
+      "designPaletteUndo": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 331,
+          "text": "  designPaletteUndo: '↩️ Undo',\n"
+        }
+      ],
+      "designPaletteRedo": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 332,
+          "text": "  designPaletteRedo: '↪️ Redo',\n"
+        }
+      ],
+      "designPaletteDuplicate": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 333,
+          "text": "  designPaletteDuplicate: '📋 Duplicate',\n"
+        }
+      ],
+      "designPaletteTidy": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 335,
+          "text": "  designPaletteTidy: '🧹 Tidy',\n"
+        }
+      ],
+      "designPaletteSnap": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 337,
+          "text": "  designPaletteSnap: '🧲 Snap',\n"
+        }
+      ],
+      "designPaletteCleanup": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 339,
+          "text": "  designPaletteCleanup: '📐 Clean up',\n"
+        }
+      ],
+      "designCanvasPoint": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 313,
+          "text": "  designCanvasPoint: '↩ Point',\n"
+        }
+      ],
+      "designCanvasLine": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 315,
+          "text": "  designCanvasLine: 'line',\n"
+        }
+      ],
+      "designCanvasZone": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 316,
+          "text": "  designCanvasZone: 'Zone {zone}',\n"
+        }
+      ],
+      "designCanvasClose": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 317,
+          "text": "  designCanvasClose: 'Close',\n"
+        }
+      ],
+      "designPaletteDuplicateTitle": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 334,
+          "text": "  designPaletteDuplicateTitle: 'Duplicate the selected item(s) — Cmd/Ctrl+D',\n"
+        }
+      ],
+      "designPaletteTidyTitle": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 336,
+          "text": "  designPaletteTidyTitle: 'Preview a tidied version of the selected outline',\n"
+        }
+      ],
+      "designPaletteSnapTitle": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 338,
+          "text": "  designPaletteSnapTitle: 'Preview closing hairline seams with a neighbouring zone',\n"
+        }
+      ],
+      "designPaletteCleanupTitle": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 340,
+          "text": "  designPaletteCleanupTitle: 'Preview straightening and evenly spacing the selected items',\n"
+        }
+      ],
+      "designSectorFireRow": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 515,
+          "text": "  designSectorFireRow: '🔥 Regional fire context: {season} Possible approach from the {direction} — confirm locally.',\n"
+        }
+      ],
+      "designSectorSunMixed": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 511,
+          "text": "  designSectorSunMixed: 'north in winter, south in summer',\n"
+        }
+      ],
+      "designSectorWindSummer": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 512,
+          "text": "  designSectorWindSummer: '{direction} in summer',\n"
+        }
+      ],
+      "designSectorWindWinter": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 513,
+          "text": "  designSectorWindWinter: '{direction} in winter',\n"
+        }
+      ],
+      "designSectorFrostNote": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 517,
+          "text": "  designSectorFrostNote: ' · frost settles low there on still, cold nights',\n"
+        }
+      ],
+      "designSectorTitle": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 518,
+          "text": "  designSectorTitle: 'The land’s energies',\n"
+        }
+      ],
+      "designSectorSource": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 519,
+          "text": "  designSectorSource: 'site + regional',\n"
+        }
+      ],
+      "designSectorOpenMap": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 520,
+          "text": "  designSectorOpenMap: 'Open this place on the map first to read its energies.',\n"
+        }
+      ],
+      "designSectorLooksRight": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 521,
+          "text": "  designSectorLooksRight: 'Looks right',\n"
+        }
+      ],
+      "designSectorDirectionNorth": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 502,
+          "text": "  designSectorDirectionNorth: 'north',\n"
+        }
+      ],
+      "designSectorDirectionNorthEast": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 503,
+          "text": "  designSectorDirectionNorthEast: 'north-east',\n"
+        }
+      ],
+      "designSectorDirectionEast": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 504,
+          "text": "  designSectorDirectionEast: 'east',\n"
+        }
+      ],
+      "designSectorDirectionSouthEast": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 505,
+          "text": "  designSectorDirectionSouthEast: 'south-east',\n"
+        }
+      ],
+      "designSectorDirectionSouth": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 506,
+          "text": "  designSectorDirectionSouth: 'south',\n"
+        }
+      ],
+      "designSectorDirectionSouthWest": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 507,
+          "text": "  designSectorDirectionSouthWest: 'south-west',\n"
+        }
+      ],
+      "designSectorDirectionWest": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 508,
+          "text": "  designSectorDirectionWest: 'west',\n"
+        }
+      ],
+      "designSectorDirectionNorthWest": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 509,
+          "text": "  designSectorDirectionNorthWest: 'north-west',\n"
+        }
+      ],
+      "designSectorWinterShadow": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 491,
+          "text": "  designSectorWinterShadow: 'Midwinter noon shadow ×{ratio}',\n"
+        }
+      ],
+      "designSectorSummer": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 492,
+          "text": "  designSectorSummer: 'SUMMER',\n"
+        }
+      ],
+      "designSectorWinter": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 493,
+          "text": "  designSectorWinter: 'WINTER',\n"
+        }
+      ],
+      "designSectorDownhill": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 494,
+          "text": "  designSectorDownhill: 'DOWNHILL',\n"
+        }
+      ],
+      "designSectorDownhillApprox": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 495,
+          "text": "  designSectorDownhillApprox: 'DOWNHILL ~',\n"
+        }
+      ],
+      "designSectorFrost": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 496,
+          "text": "  designSectorFrost: 'FROST',\n"
+        }
+      ],
+      "designSectorSeasonWind": [
+        {
+          "file": "lib/i18n-pending.ts",
+          "line": 501,
+          "text": "  designSectorSeasonWind: '{season} wind · {direction}',\n"
+        }
+      ]
+    },
+    "zu": {
+      "designSectorSunRow": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 684,
+          "text": "  designSectorSunRow: '☀️ Ilanga linamandla kakhulu {direction} — beka imibhede yakho ngakulolo hlangothi.',\n"
+        }
+      ],
+      "designSectorWindRow": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 688,
+          "text": "  designSectorWindRow: '💨 Umoya uvela kulezi zinkomba: {directions}. Isilinganiso sesimo sesifunda; qinisekisa endaweni yangakini.',\n"
+        }
+      ],
+      "designSectorWaterRow": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 690,
+          "text": "  designSectorWaterRow: '💧 Amanzi ageleza ehla {direction}; ama-swale (imisele yokubamba amanzi) anqamula le ndlela{frost}.',\n"
+        }
+      ],
+      "designCanvasCancel": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 793,
+          "text": "  designCanvasCancel: \"✕ Khansela · ✕ Cancel\",\n"
+        }
+      ],
+      "designCanvasFinish": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 795,
+          "text": "  designCanvasFinish: \"✓ Qeda {thing} · ✓ Finish {thing}\",\n"
+        }
+      ],
+      "designCanvasTidy": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 799,
+          "text": "  designCanvasTidy: \"✓ Lungisa umugqa wangaphandle · ✓ Tidy outline\",\n"
+        }
+      ],
+      "designCanvasSnap": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 800,
+          "text": "  designCanvasSnap: \"✓ Qondanisa nento eseduze · ✓ Snap to neighbour\",\n"
+        }
+      ],
+      "designCanvasCleanup": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 801,
+          "text": "  designCanvasCleanup: \"✓ Hlanza · ✓ Clean up\",\n"
+        }
+      ],
+      "designPaletteDelete": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 863,
+          "text": "  designPaletteDelete: '🗑️ Susa · Delete',\n"
+        }
+      ],
+      "designPaletteTapCorners": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 878,
+          "text": "  designPaletteTapCorners: 'Thepha amakhona, bese ukhetha ✓ Qeda · Tap corners, then ✓ Finish',\n"
+        }
+      ],
+      "homeMainSiteLabel": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 1828,
+          "text": "  homeMainSiteLabel: \"★ Eyinhloko\",\n"
+        }
+      ],
+      "designPaletteSelect": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 862,
+          "text": "  designPaletteSelect: '↖️ Khetha · Select',\n"
+        }
+      ],
+      "designPaletteUndo": [],
+      "designPaletteRedo": [],
+      "designPaletteDuplicate": [],
+      "designPaletteTidy": [],
+      "designPaletteSnap": [],
+      "designPaletteCleanup": [],
+      "designCanvasPoint": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 794,
+          "text": "  designCanvasPoint: \"↩ Iphuzu · ↩ Point\",\n"
+        }
+      ],
+      "designCanvasLine": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 796,
+          "text": "  designCanvasLine: \"umugqa · line\",\n"
+        }
+      ],
+      "designCanvasZone": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 797,
+          "text": "  designCanvasZone: \"iZone {zone} · Zone {zone}\",\n"
+        }
+      ],
+      "designCanvasClose": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 798,
+          "text": "  designCanvasClose: \"Vala · Close\",\n"
+        }
+      ],
+      "designPaletteDuplicateTitle": [],
+      "designPaletteTidyTitle": [],
+      "designPaletteSnapTitle": [],
+      "designPaletteCleanupTitle": [],
+      "designSectorFireRow": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 689,
+          "text": "  designSectorFireRow: 'Isimo somlilo sesifunda: {season} Umlilo ungavela {direction}; qinisekisa endaweni yangakini.',\n"
+        }
+      ],
+      "designSectorSunMixed": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 685,
+          "text": "  designSectorSunMixed: 'enyakatho ebusika, eningizimu ehlobo',\n"
+        }
+      ],
+      "designSectorWindSummer": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 686,
+          "text": "  designSectorWindSummer: '{direction} ehlobo',\n"
+        }
+      ],
+      "designSectorWindWinter": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 687,
+          "text": "  designSectorWindWinter: '{direction} ebusika',\n"
+        }
+      ],
+      "designSectorFrostNote": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 691,
+          "text": "  designSectorFrostNote: ' · Isithwathwa siqoqana endaweni ephansi lapho ebusuku obubandayo obungenamoya',\n"
+        }
+      ],
+      "designSectorTitle": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 692,
+          "text": "  designSectorTitle: 'Amandla omhlaba',\n"
+        }
+      ],
+      "designSectorSource": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 693,
+          "text": "  designSectorSource: 'Indawo + nesifunda',\n"
+        }
+      ],
+      "designSectorOpenMap": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 694,
+          "text": "  designSectorOpenMap: 'Qala ngokuvula le ndawo ebalazweni ukuze ubone amandla ayo.',\n"
+        }
+      ],
+      "designSectorLooksRight": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 695,
+          "text": "  designSectorLooksRight: 'Kubukeka kulungile',\n"
+        }
+      ],
+      "designSectorDirectionNorth": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 676,
+          "text": "  designSectorDirectionNorth: 'enyakatho',\n"
+        }
+      ],
+      "designSectorDirectionNorthEast": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 677,
+          "text": "  designSectorDirectionNorthEast: 'enyakatho-mpumalanga',\n"
+        }
+      ],
+      "designSectorDirectionEast": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 678,
+          "text": "  designSectorDirectionEast: 'empumalanga',\n"
+        }
+      ],
+      "designSectorDirectionSouthEast": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 679,
+          "text": "  designSectorDirectionSouthEast: 'eningizimu-mpumalanga',\n"
+        }
+      ],
+      "designSectorDirectionSouth": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 680,
+          "text": "  designSectorDirectionSouth: 'eningizimu',\n"
+        }
+      ],
+      "designSectorDirectionSouthWest": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 681,
+          "text": "  designSectorDirectionSouthWest: 'eningizimu-ntshonalanga',\n"
+        }
+      ],
+      "designSectorDirectionWest": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 682,
+          "text": "  designSectorDirectionWest: 'entshonalanga',\n"
+        }
+      ],
+      "designSectorDirectionNorthWest": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 683,
+          "text": "  designSectorDirectionNorthWest: 'enyakatho-ntshonalanga',\n"
+        }
+      ],
+      "designSectorWinterShadow": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 669,
+          "text": "  designSectorWinterShadow: 'Isithunzi sasemini ebusika phakathi ×{ratio}',\n"
+        }
+      ],
+      "designSectorSummer": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 670,
+          "text": "  designSectorSummer: 'Ehlobo',\n"
+        }
+      ],
+      "designSectorWinter": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 671,
+          "text": "  designSectorWinter: 'Ebusika',\n"
+        }
+      ],
+      "designSectorDownhill": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 672,
+          "text": "  designSectorDownhill: 'DOWNHILL',\n"
+        }
+      ],
+      "designSectorDownhillApprox": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 673,
+          "text": "  designSectorDownhillApprox: 'DOWNHILL ~',\n"
+        }
+      ],
+      "designSectorFrost": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 674,
+          "text": "  designSectorFrost: 'ISITHWATHWA',\n"
+        }
+      ],
+      "designSectorSeasonWind": [
+        {
+          "file": "lib/locales/zu.ts",
+          "line": 675,
+          "text": "  designSectorSeasonWind: 'Umoya {season} · {direction}',\n"
+        }
+      ]
+    },
+    "st": {
+      "designSectorSunRow": [],
+      "designSectorWindRow": [],
+      "designSectorWaterRow": [],
+      "designCanvasCancel": [],
+      "designCanvasFinish": [],
+      "designCanvasTidy": [],
+      "designCanvasSnap": [],
+      "designCanvasCleanup": [],
+      "designPaletteDelete": [],
+      "designPaletteTapCorners": [],
+      "homeMainSiteLabel": [
+        {
+          "file": "lib/locales/st.ts",
+          "line": 928,
+          "text": "  homeMainSiteLabel: \"Se seholo\",\n"
+        }
+      ],
+      "designPaletteSelect": [],
+      "designPaletteUndo": [],
+      "designPaletteRedo": [],
+      "designPaletteDuplicate": [],
+      "designPaletteTidy": [],
+      "designPaletteSnap": [],
+      "designPaletteCleanup": [],
+      "designCanvasPoint": [],
+      "designCanvasLine": [],
+      "designCanvasZone": [],
+      "designCanvasClose": [],
+      "designPaletteDuplicateTitle": [],
+      "designPaletteTidyTitle": [],
+      "designPaletteSnapTitle": [],
+      "designPaletteCleanupTitle": [],
+      "designSectorFireRow": [],
+      "designSectorSunMixed": [],
+      "designSectorWindSummer": [],
+      "designSectorWindWinter": [],
+      "designSectorFrostNote": [],
+      "designSectorTitle": [],
+      "designSectorSource": [],
+      "designSectorOpenMap": [],
+      "designSectorLooksRight": [],
+      "designSectorDirectionNorth": [],
+      "designSectorDirectionNorthEast": [],
+      "designSectorDirectionEast": [],
+      "designSectorDirectionSouthEast": [],
+      "designSectorDirectionSouth": [],
+      "designSectorDirectionSouthWest": [],
+      "designSectorDirectionWest": [],
+      "designSectorDirectionNorthWest": [],
+      "designSectorWinterShadow": [],
+      "designSectorSummer": [],
+      "designSectorWinter": [],
+      "designSectorDownhill": [],
+      "designSectorDownhillApprox": [],
+      "designSectorFrost": [],
+      "designSectorSeasonWind": []
+    },
+    "ts": {
+      "designSectorSunRow": [],
+      "designSectorWindRow": [],
+      "designSectorWaterRow": [],
+      "designCanvasCancel": [],
+      "designCanvasFinish": [],
+      "designCanvasTidy": [],
+      "designCanvasSnap": [],
+      "designCanvasCleanup": [],
+      "designPaletteDelete": [],
+      "designPaletteTapCorners": [],
+      "homeMainSiteLabel": [
+        {
+          "file": "lib/locales/ts.ts",
+          "line": 914,
+          "text": "  homeMainSiteLabel: \"Ya nkoka\",\n"
+        }
+      ],
+      "designPaletteSelect": [],
+      "designPaletteUndo": [],
+      "designPaletteRedo": [],
+      "designPaletteDuplicate": [],
+      "designPaletteTidy": [],
+      "designPaletteSnap": [],
+      "designPaletteCleanup": [],
+      "designCanvasPoint": [],
+      "designCanvasLine": [],
+      "designCanvasZone": [],
+      "designCanvasClose": [],
+      "designPaletteDuplicateTitle": [],
+      "designPaletteTidyTitle": [],
+      "designPaletteSnapTitle": [],
+      "designPaletteCleanupTitle": [],
+      "designSectorFireRow": [],
+      "designSectorSunMixed": [],
+      "designSectorWindSummer": [],
+      "designSectorWindWinter": [],
+      "designSectorFrostNote": [],
+      "designSectorTitle": [],
+      "designSectorSource": [],
+      "designSectorOpenMap": [],
+      "designSectorLooksRight": [],
+      "designSectorDirectionNorth": [],
+      "designSectorDirectionNorthEast": [],
+      "designSectorDirectionEast": [],
+      "designSectorDirectionSouthEast": [],
+      "designSectorDirectionSouth": [],
+      "designSectorDirectionSouthWest": [],
+      "designSectorDirectionWest": [],
+      "designSectorDirectionNorthWest": [],
+      "designSectorWinterShadow": [],
+      "designSectorSummer": [],
+      "designSectorWinter": [],
+      "designSectorDownhill": [],
+      "designSectorDownhillApprox": [],
+      "designSectorFrost": [],
+      "designSectorSeasonWind": []
+    },
+    "ve": {
+      "designSectorSunRow": [],
+      "designSectorWindRow": [],
+      "designSectorWaterRow": [],
+      "designCanvasCancel": [],
+      "designCanvasFinish": [],
+      "designCanvasTidy": [],
+      "designCanvasSnap": [],
+      "designCanvasCleanup": [],
+      "designPaletteDelete": [],
+      "designPaletteTapCorners": [],
+      "homeMainSiteLabel": [
+        {
+          "file": "lib/locales/ve.ts",
+          "line": 920,
+          "text": "  homeMainSiteLabel: \"Ha ndeme\",\n"
+        }
+      ],
+      "designPaletteSelect": [],
+      "designPaletteUndo": [],
+      "designPaletteRedo": [],
+      "designPaletteDuplicate": [],
+      "designPaletteTidy": [],
+      "designPaletteSnap": [],
+      "designPaletteCleanup": [],
+      "designCanvasPoint": [],
+      "designCanvasLine": [],
+      "designCanvasZone": [],
+      "designCanvasClose": [],
+      "designPaletteDuplicateTitle": [],
+      "designPaletteTidyTitle": [],
+      "designPaletteSnapTitle": [],
+      "designPaletteCleanupTitle": [],
+      "designSectorFireRow": [],
+      "designSectorSunMixed": [],
+      "designSectorWindSummer": [],
+      "designSectorWindWinter": [],
+      "designSectorFrostNote": [],
+      "designSectorTitle": [],
+      "designSectorSource": [],
+      "designSectorOpenMap": [],
+      "designSectorLooksRight": [],
+      "designSectorDirectionNorth": [],
+      "designSectorDirectionNorthEast": [],
+      "designSectorDirectionEast": [],
+      "designSectorDirectionSouthEast": [],
+      "designSectorDirectionSouth": [],
+      "designSectorDirectionSouthWest": [],
+      "designSectorDirectionWest": [],
+      "designSectorDirectionNorthWest": [],
+      "designSectorWinterShadow": [],
+      "designSectorSummer": [],
+      "designSectorWinter": [],
+      "designSectorDownhill": [],
+      "designSectorDownhillApprox": [],
+      "designSectorFrost": [],
+      "designSectorSeasonWind": []
+    }
+  },
+  "notes": [
+    "A glyph is presentation, never the translated action identity. Source English changes only remove icon code points; the application renders the same operation with an aria-hidden Lucide SVG.",
+    "The earlier isiZulu confirmation strings duplicated the English clause/placeholders. Native controls now carry one translated action. Unchanged native clauses are preserved exactly.",
+    "Wind wording retains the actual English coordinate climate-grid mean and on-site confirmation qualification. Sector model calculations, geometry and source data do not change. Model-owned provenance/season text may still be English; this is not a complete Design Studio translation claim.",
+    "Historical guards may reverse only this complete exact declared UI layer. Changed, partial or extra learning content must still fail the original hashes."
+  ],
+  "lexicalChecks": [
+    {
+      "term": "Poyinti / tshithoma",
+      "meaning": "geometric point",
+      "source": "Department of Arts and Culture, Multilingual Mathematics Dictionary, Grade R–6, second edition (2013), point entry, printed p.105 / PDF p.120",
+      "url": "https://ulspace.ul.ac.za/server/api/core/bitstreams/a1a05d26-ee2d-49d5-9be8-4a33ebd145e8/content"
+    },
+    {
+      "term": "fananyisa / fhambanyisa",
+      "meaning": "match / differentiate: use fananyisa for Snap-to-neighbour, not the opposite operation",
+      "source": "Department of Arts and Culture, Multilingual Mathematics Dictionary, Grade R–6, second edition (2013), match entry, printed p.80; differentiate entry, printed p.43",
+      "url": "https://ulspace.ul.ac.za/server/api/core/bitstreams/a1a05d26-ee2d-49d5-9be8-4a33ebd145e8/content"
+    }
+  ]
+}

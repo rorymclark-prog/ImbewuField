@@ -7,7 +7,8 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Camera, Loader2, Check, Trash2, X } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
-import { useLanguage } from '@/lib/i18n';
+import LanguageDraftNote from '@/components/LanguageDraftNote';
+import { translate,useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
 import { useAppConfirm } from '@/components/AppConfirm';
 import { communityEnabled } from '@/lib/community/flag';
@@ -33,6 +34,7 @@ function Chip({ label, on, onClick }: { label: string; on: boolean; onClick: () 
   return (
     <button
       type="button"
+      lang="en"
       onClick={onClick}
       className="font-sans font-semibold transition-all"
       style={{
@@ -47,7 +49,7 @@ function Chip({ label, on, onClick }: { label: string; on: boolean; onClick: () 
   );
 }
 
-function Toggle({ label, sub, on, onChange }: { label: string; sub?: string; on: boolean; onChange: (v: boolean) => void }) {
+function Toggle({ label, sub, on, onChange }: { label: string; sub?: React.ReactNode; on: boolean; onChange: (v: boolean) => void }) {
   return (
     <div className="flex items-center justify-between" style={{ background: 'rgba(226,216,196,0.3)', borderRadius: 12, padding: '12px 14px', border: '1px solid var(--border)' }}>
       <div className="flex-1 min-w-0 pr-3">
@@ -57,6 +59,7 @@ function Toggle({ label, sub, on, onChange }: { label: string; sub?: string; on:
       <button
         type="button"
         onClick={() => onChange(!on)}
+        role="switch" aria-checked={on} aria-label={label}
         className="flex items-center rounded-full transition-all flex-shrink-0"
         style={{ width: 44, height: 26, padding: 3, background: on ? 'var(--color-forest-800)' : 'rgba(32,25,15,0.15)', justifyContent: on ? 'flex-end' : 'flex-start', border: 'none', cursor: 'pointer' }}
       >
@@ -69,7 +72,8 @@ function Toggle({ label, sub, on, onChange }: { label: string; sub?: string; on:
 export default function CommunityProfilePage() {
   const { user, loading } = useAuth();
   const { t, lang } = useLanguage();
-  const privacyText = (english: string, key: string) => lang === 'zu' ? `${t(key)} / ${english}` : english;
+  const draft=['zu','st','ts','ve'].includes(lang);
+  const paired=(key:string)=><><span lang={t(key)===translate('en',key)?'en':lang}>{t(key)}</span>{draft&&<small lang="en" style={{display:'block',fontSize:12,lineHeight:1.4,marginTop:4}}><span lang={lang}>{t('offlineSourceLabel')}: </span>{translate('en',key)}</small>}</>;
   const appConfirm = useAppConfirm();
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -89,13 +93,19 @@ export default function CommunityProfilePage() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [locating, setLocating] = useState(false);
-  const [error, setError] = useState('');
+  const [errorKey, setErrorKey] = useState<'communityLocationUnsupported'|'communityLocationDenied'|'communityProfileSaveError'|'communityPhotoUploadError'|'communityProfileDeleteError'|null>(null);
+  const [loadError,setLoadError]=useState(false);
+  const [loadAttempt,setLoadAttempt]=useState(0);
+  const [deleting,setDeleting]=useState(false);
 
   useEffect(() => {
     if (!communityEnabled()) { router.replace('/home'); return; }
     if (!loading && !user) { router.replace('/login'); return; }
+    let active=true;
     if (user) {
+      setReady(false);setLoadError(false);
       getMyCommunityProfile().then((p) => {
+        if(!active)return;
         if (p) {
           setDisplayName(p.display_name ?? '');
           setAreaText(p.area_text ?? '');
@@ -106,12 +116,16 @@ export default function CommunityProfilePage() {
           setCoarseLat(p.coarse_lat ?? null);
           setCoarseLon(p.coarse_lon ?? null);
         } else {
+          // An acknowledged empty profile must not inherit a previous draft's sharing fields.
           setDisplayName(user.displayName ?? '');
+          setAreaText('');setBio('');setCrops([]);setPhotos([]);
+          setShowOnMap(false);setCoarseLat(null);setCoarseLon(null);
         }
         setReady(true);
-      }).catch(() => setReady(true));
+      }).catch(() => {if(active){setLoadError(true);setReady(false);}});
     }
-  }, [user, loading, router]);
+    return()=>{active=false;};
+  }, [user, loading, router, loadAttempt]);
 
   function toggleCrop(c: string) {
     setCrops((prev) => prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c]);
@@ -120,14 +134,14 @@ export default function CommunityProfilePage() {
   async function handleShowOnMapToggle(next: boolean) {
     setShowOnMap(next);
     if (!next || coarseLat !== null) return;
-    if (!navigator.geolocation) { setError(privacyText('This device can\'t share a location.', 'communityLocationUnsupported')); setShowOnMap(false); return; }
+    if (!navigator.geolocation) { setErrorKey('communityLocationUnsupported'); setShowOnMap(false); return; }
     setLocating(true);
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const { lat, lon } = jitterToNeighbourhood(pos.coords.latitude, pos.coords.longitude);
         setCoarseLat(lat); setCoarseLon(lon); setLocating(false);
       },
-      () => { setError(privacyText('Could not get your location — map visibility left off.', 'communityLocationDenied')); setShowOnMap(false); setLocating(false); },
+      () => { setErrorKey('communityLocationDenied'); setShowOnMap(false); setLocating(false); },
       { enableHighAccuracy: false, timeout: 8000 },
     );
   }
@@ -135,10 +149,12 @@ export default function CommunityProfilePage() {
   async function handlePhotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file || photos.length >= 4) return;
-    setUploading(true);
+    setUploading(true);setErrorKey(null);
     try {
       const url = await uploadPhoto(await resizeFileForUpload(file), 'community');
-      if (url) setPhotos((p) => [...p, url]);
+      if (url) setPhotos((p) => [...p, url]);else setErrorKey('communityPhotoUploadError');
+    } catch {
+      setErrorKey('communityPhotoUploadError');
     } finally {
       setUploading(false);
       if (fileRef.current) fileRef.current.value = '';
@@ -147,7 +163,7 @@ export default function CommunityProfilePage() {
 
   async function handleSave() {
     setSaving(true);
-    setError('');
+    setErrorKey(null);
     try {
       await upsertCommunityProfile({
         display_name: displayName.trim() || 'A farmer',
@@ -162,7 +178,7 @@ export default function CommunityProfilePage() {
       setSaved(true);
       setTimeout(() => setSaved(false), 2500);
     } catch {
-      setError(lang === 'zu' ? t('communityProfileSaveError') : 'Could not save — try again.');
+      setErrorKey('communityProfileSaveError');
     } finally {
       setSaving(false);
     }
@@ -170,39 +186,40 @@ export default function CommunityProfilePage() {
 
   async function handleDelete() {
     const proceed = await appConfirm({
-      message: privacyText('Delete your community profile? This removes your profile and map pin. Your board posts stay until you close them individually.', 'communityDeleteProfileConfirm'),
-      confirmLabel: privacyText('Delete my community profile', 'communityDeleteProfile'),
-      cancelLabel: t('cancelBtn'),
-      destructive: true,
+      message:t('communityDeleteProfileConfirm'), confirmLabel:t('communityDeleteProfile'), cancelLabel:t('cancelBtn'),
+      language:lang, englishSource:draft?{message:translate('en','communityDeleteProfileConfirm'),confirmLabel:translate('en','communityDeleteProfile'),cancelLabel:translate('en','cancelBtn')}:undefined,
+      destructive:true,
     });
     if (!proceed) return;
-    await deleteCommunityProfile();
-    router.push('/community');
+    setDeleting(true);setErrorKey(null);
+    try {await deleteCommunityProfile();router.push('/community');}
+    catch {setErrorKey('communityProfileDeleteError');}
+    finally {setDeleting(false);}
   }
 
+  const header=<AppHeader backFallback="/community" title={t('communityEditProfileTitle')} right={<LessonLink id="community:profile" label={t('homeLearnAction')}/>}/>;
+  const notice=<div className="px-4 pt-3"><LanguageDraftNote lang={lang} scope="community-profile"/></div>;
+
   if (!ready) {
-    return (
-      <div role="status" aria-label={lang === 'zu' ? t('communityLoadingStatus') : 'Loading community profile'} className="h-[100dvh] flex items-center justify-center" style={{ background: 'var(--bg-0)' }}>
-        <Loader2 size={24} className="animate-spin" style={{ color: 'var(--color-forest-800)' }} />
-      </div>
-    );
+    return <div lang={lang} className="h-[100dvh] flex flex-col" style={{background:'var(--bg-0)'}}>
+      {header}{notice}
+      <main className="flex-1 flex flex-col items-center justify-center gap-4 px-6 text-center">
+        <h1 className="font-display font-bold m-0" style={{fontSize:20}}>{t('communityEditProfileTitle')}</h1>
+        {loadError?<><p role="alert">{paired('communityProfileLoadError')}</p><button type="button" onClick={()=>setLoadAttempt(n=>n+1)} className="rounded-xl px-4 py-2 font-semibold" style={{minHeight:44,background:'var(--color-forest-800)',color:'var(--on-forest)'}}>{t('communityRetry')}</button></>:<div role="status" aria-label={t('communityLoadingStatus')}><Loader2 size={24} className="animate-spin" style={{color:'var(--color-forest-800)'}} aria-hidden/><p>{t('communityLoadingStatus')}</p></div>}
+      </main><TabBar hideAtDesktop/>
+    </div>;
   }
 
   return (
-    <div className="h-[100dvh] flex flex-col font-sans" style={{ background: 'var(--bg-0)', color: 'var(--text-primary)' }}>
-      <AppHeader
-        backFallback="/community"
-        title={t('communityEditProfileTitle')}
-        right={<LessonLink id="community:profile" label={lang === 'zu' ? 'Funda' : 'Learn'} />}
-      />
+    <div lang={lang} className="h-[100dvh] flex flex-col font-sans" style={{ background: 'var(--bg-0)', color: 'var(--text-primary)' }}>
+      {header}{notice}
 
       <main className={`${workspace.workspace} ${workspace.formWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}>
         {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own
             real, visible <h1> now that the old header's h1 is gone. */}
         <h1 className="font-display font-bold m-0" style={{ fontSize: 20, color: 'var(--text-primary)', marginBottom: 12 }}>{t('communityEditProfileTitle')}</h1>
         <p className="font-sans" style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: 20 }}>
-          {lang === 'zu' && <span className="block font-sans" style={{ marginBottom: 8, color: 'var(--text-muted)' }}>{t('communityDraftReviewNotice')} / isiZulu draft — not reviewed by a fluent speaker</span>}
-          {privacyText('Share as much or as little as you like. Nothing here is visible until you save it.', 'communityEditProfileIntro')}
+          {paired('communityEditProfileIntro')}
         </p>
 
         <div className={workspace.twoColumns}>
@@ -234,7 +251,7 @@ export default function CommunityProfilePage() {
               className="w-full rounded-xl px-3 py-2.5 font-sans focus-visible:ring-2 focus-visible:ring-[var(--gold)]"
               style={{ fontSize: 14, background: 'var(--bg-1)', border: '1px solid var(--border)', color: 'var(--text-primary)', outline: 'none' }}
             />
-            <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>{privacyText('Town or district — not your exact address', 'communityAreaHint')}</div>
+            <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 4 }}>{paired('communityAreaHint')}</div>
           </div>
 
           <div>
@@ -278,7 +295,7 @@ export default function CommunityProfilePage() {
                         background: 'transparent', color: 'var(--color-forest-800)', border: '1px dashed var(--color-forest-800)',
                       }}
                     >
-                      + More crops
+                      {t('communityMoreCrops')}
                     </button>
                   )}
                 </div>
@@ -293,8 +310,9 @@ export default function CommunityProfilePage() {
             <div className="flex flex-wrap gap-2">
               {photos.map((url, i) => (
                 <div key={i} style={{ position: 'relative', width: 72, height: 72, borderRadius: 10, overflow: 'hidden' }}>
-                  <img src={url} alt={`Profile photo ${i + 1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={url} alt={t('communityProfilePhotoAlt').replace('{number}',String(i+1))} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   <button
+                    aria-label={t('communityRemovePhotoAria').replace('{number}',String(i+1))}
                     onClick={() => setPhotos((p) => p.filter((_, idx) => idx !== i))}
                     style={{ position: 'absolute', top: 2, right: 2, background: 'rgba(0,0,0,0.55)', border: 'none', borderRadius: '50%', width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
                   >
@@ -305,7 +323,7 @@ export default function CommunityProfilePage() {
               {photos.length < 4 && (
                 <button
                   onClick={() => fileRef.current?.click()}
-                  disabled={uploading}
+                  disabled={uploading} aria-busy={uploading} aria-label={t(uploading?'communityPhotoUploading':'communityAddPhotoAria')}
                   style={{ width: 72, height: 72, borderRadius: 10, background: 'var(--bg-1)', border: '1px dashed var(--border-strong)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
                 >
                   {uploading ? <Loader2 size={18} className="animate-spin" style={{ color: 'var(--text-muted)' }} /> : <Camera size={20} style={{ color: 'var(--text-muted)' }} strokeWidth={1.6} />}
@@ -317,14 +335,14 @@ export default function CommunityProfilePage() {
 
           <div>
             <Toggle
-              label={privacyText('Show me on the community map', 'communityShowOnMapLabel')}
-              sub={locating ? (lang === 'zu' ? t('communityLocationPending') : 'Getting your approximate area…') : privacyText('Your location shows as an approximate ~1km area, never your exact homestead', 'communityShowOnMapHint')}
+              label={t('communityShowOnMapLabel')}
+              sub={locating?t('communityLocationPending'):paired('communityShowOnMapHint')}
               on={showOnMap}
               onChange={handleShowOnMapToggle}
             />
           </div>
 
-          {error && <p className={`${workspace.fullRow} font-sans`} style={{ fontSize: 13, color: 'var(--danger)' }}>{error}</p>}
+          {errorKey && <p role="alert" className={`${workspace.fullRow} font-sans`} style={{ fontSize: 13, color: 'var(--danger)' }}>{paired(errorKey)}</p>}
 
           <button
             onClick={handleSave}
@@ -333,15 +351,15 @@ export default function CommunityProfilePage() {
             style={{ background: 'var(--color-forest-800)', color: 'var(--color-canvas)', border: 'none', cursor: 'pointer', padding: '13px 20px', fontSize: 15 }}
           >
             {saving ? <Loader2 size={16} className="animate-spin" /> : saved ? <Check size={16} /> : null}
-            {saved ? (lang === 'zu' ? t('communityProfileSaved') : 'Saved') : t('communitySaveProfile')}
+            {t(saved?'communityProfileSaved':'communitySaveProfile')}
           </button>
 
           <button
-            onClick={handleDelete}
+            onClick={handleDelete} disabled={deleting} aria-busy={deleting}
             className="flex items-center justify-center gap-2 font-sans font-semibold rounded-xl"
             style={{ background: 'transparent', color: 'var(--danger)', border: '1px solid color-mix(in srgb, var(--danger) 30%, transparent)', cursor: 'pointer', padding: '11px 20px', fontSize: 13.5 }}
           >
-            <Trash2 size={14} /> {privacyText('Delete my community profile', 'communityDeleteProfile')}
+            <Trash2 size={14} /> {t(deleting?'communityProfileDeleting':'communityDeleteProfile')}
           </button>
         </div>
       </main>

@@ -167,3 +167,34 @@
 .sidebar fieldset { border:0; padding:0; margin:0; min-width:0; }
 .sidebar button[aria-pressed='true'] { box-shadow:inset 3px 0 0 var(--report-green); font-weight:700; }
 @media (max-width:767px) { .versionDetails { margin:10px; } .versionDetails dl > div { grid-template-columns:1fr; gap:0; } }
+
+/* The full checklist is read field by field on phones; no action column may sit off screen. */
+@media (max-width: 640px) {
+  .body :global(table[data-native-checklist]) { display: block; width: 100%; }
+  .body :global(table[data-native-checklist]) thead {
+    position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%);
+  }
+  .body :global(table[data-native-checklist]) tbody { display: block; }
+  .body :global(table[data-native-checklist]) tbody tr {
+    display: block; margin-bottom: 16px; padding: 12px; border: 1px solid var(--report-border);
+    border-radius: 10px;
+  }
+  .body :global(table[data-native-checklist]) td {
+    display: block; padding: 8px 0; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere;
+  }
+  .body :global(table[data-native-checklist]) td::before {
+    content: attr(data-label); display: block; margin-bottom: 4px; font-weight: 600;
+    color: var(--report-muted);
+  }
+}
+
+/* Empty cost-group cells carry no values; keep their heading separate from priced row cards. */
+@media (max-width: 640px) {
+  .body :global(table[data-native-costs]) tr[data-section-row] {
+    padding: 10px 0; margin: 20px 0 8px; border: 0; border-bottom: 2px solid var(--report-border);
+    border-radius: 0;
+  }
+  .body :global(table[data-native-costs]) tr[data-section-row] th {
+    display: block; padding: 0; font-size: 15px; overflow-wrap: anywhere;
+  }
+}

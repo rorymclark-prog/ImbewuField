@@ -1,0 +1,714 @@
+{
+  "zu": [
+    {
+      "size": "phone",
+      "state": "actual-guest",
+      "lines": 2,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-normal",
+      "lines": 50,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-edit",
+      "lines": 54,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-password",
+      "lines": 52,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-profileerror",
+      "lines": 58,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-admin",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-capped",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sample",
+      "lines": 18,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-signedout",
+      "lines": 7,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-slowauth",
+      "lines": 7,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-confirm",
+      "lines": 4,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "actual-guest",
+      "lines": 2,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-normal",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-edit",
+      "lines": 44,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-password",
+      "lines": 44,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-profileerror",
+      "lines": 47,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-admin",
+      "lines": 28,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-capped",
+      "lines": 4,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sample",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-signedout",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-slowauth",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-confirm",
+      "lines": 4,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    }
+  ],
+  "st": [
+    {
+      "size": "phone",
+      "state": "actual-guest",
+      "lines": 2,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-normal",
+      "lines": 50,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-edit",
+      "lines": 55,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-password",
+      "lines": 52,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-profileerror",
+      "lines": 59,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-admin",
+      "lines": 40,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-capped",
+      "lines": 7,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sample",
+      "lines": 17,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-signedout",
+      "lines": 7,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-slowauth",
+      "lines": 7,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-confirm",
+      "lines": 4,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "actual-guest",
+      "lines": 2,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-normal",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-edit",
+      "lines": 44,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-password",
+      "lines": 44,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-profileerror",
+      "lines": 47,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-admin",
+      "lines": 28,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-capped",
+      "lines": 4,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sample",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-signedout",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-slowauth",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-confirm",
+      "lines": 4,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    }
+  ],
+  "ts": [
+    {
+      "size": "phone",
+      "state": "actual-guest",
+      "lines": 2,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-normal",
+      "lines": 50,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-edit",
+      "lines": 54,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-password",
+      "lines": 52,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-profileerror",
+      "lines": 58,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-admin",
+      "lines": 40,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-capped",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sample",
+      "lines": 17,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-signedout",
+      "lines": 7,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-slowauth",
+      "lines": 7,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-confirm",
+      "lines": 4,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "actual-guest",
+      "lines": 2,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-normal",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-edit",
+      "lines": 44,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-password",
+      "lines": 44,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-profileerror",
+      "lines": 47,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-admin",
+      "lines": 28,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-capped",
+      "lines": 4,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sample",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-signedout",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-slowauth",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-confirm",
+      "lines": 4,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    }
+  ],
+  "ve": [
+    {
+      "size": "phone",
+      "state": "actual-guest",
+      "lines": 2,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-normal",
+      "lines": 50,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-edit",
+      "lines": 54,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-password",
+      "lines": 52,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-profileerror",
+      "lines": 59,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-admin",
+      "lines": 40,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-capped",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sample",
+      "lines": 18,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-signedout",
+      "lines": 7,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-slowauth",
+      "lines": 8,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-confirm",
+      "lines": 4,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "actual-guest",
+      "lines": 2,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-normal",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-edit",
+      "lines": 45,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-password",
+      "lines": 44,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-profileerror",
+      "lines": 48,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-admin",
+      "lines": 28,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-capped",
+      "lines": 4,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sample",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-signedout",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-slowauth",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-confirm",
+      "lines": 4,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    }
+  ]
+}

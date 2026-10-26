@@ -1,0 +1,4864 @@
+[
+  {
+    "lang": "zu",
+    "size": "phone",
+    "font": "__Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", system-ui, sans-serif",
+    "overflow": false,
+    "scenes": [
+      {
+        "name": "tools",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Khetha",
+            "title": "Khetha",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 24,
+            "right": 64
+          },
+          {
+            "name": "Buyisela emuva",
+            "title": "Buyisela emuva",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 74,
+            "right": 114
+          },
+          {
+            "name": "Phinda isenzo",
+            "title": "Phinda isenzo",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 124,
+            "right": 164
+          },
+          {
+            "name": "Yenza ikhophi",
+            "title": "Yenza ikhophi yento noma izinto ezikhethiwe — Cmd/Ctrl+D",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 174,
+            "right": 214
+          },
+          {
+            "name": "Lungisa umugqa",
+            "title": "Buka kuqala inguqulo elungisiwe yomugqa wangaphandle okhethiwe",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 224,
+            "right": 264
+          },
+          {
+            "name": "Qondanisa",
+            "title": "Buka kuqala ukuvalwa kwezikhala ezincane kakhulu phakathi kwendawo ekhethiwe nenye eseduze",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 274,
+            "right": 314
+          },
+          {
+            "name": "Hlanza",
+            "title": "Buka kuqala ukuqondiswa kwezinto ezikhethiwe nokushiywa kwezikhala ezilinganayo phakathi kwazo",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 324,
+            "right": 364
+          },
+          {
+            "name": "Susa",
+            "title": "Susa",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 374,
+            "right": 414
+          },
+          {
+            "name": "Izendlalelo · Layers",
+            "title": "",
+            "width": 150.65625,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 212.34375,
+            "right": 363
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "hint",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Vala icebiso · Close tip",
+            "title": "Vala icebiso · Close tip",
+            "width": 30,
+            "height": 30,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 330,
+            "right": 360
+          }
+        ],
+        "longText": [
+          {
+            "lang": "zu",
+            "text": "Thepha amakhona, bese ukhetha Qeda",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Tap corners, then Finish",
+            "clip": false,
+            "lines": 1
+          }
+        ]
+      },
+      {
+        "name": "line",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 81.4921875,
+            "right": 198.171875
+          },
+          {
+            "name": "Iphuzu",
+            "title": "",
+            "width": 99.328125,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 206.171875,
+            "right": 305.5
+          },
+          {
+            "name": "Qeda umugqa",
+            "title": "",
+            "width": 173.7734375,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 106.609375,
+            "right": 280.3828125
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "zone",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 81.4921875,
+            "right": 198.171875
+          },
+          {
+            "name": "Iphuzu",
+            "title": "",
+            "width": 99.328125,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 206.171875,
+            "right": 305.5
+          },
+          {
+            "name": "Qeda iZone 1",
+            "title": "",
+            "width": 164.9375,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 111.03125,
+            "right": 275.96875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "tidy",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 135.15625,
+            "right": 251.8359375
+          },
+          {
+            "name": "Lungisa umugqa wangaphandle",
+            "title": "",
+            "width": 308.6875,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 39.15625,
+            "right": 347.84375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "tidy-empty",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Vala",
+            "title": "",
+            "width": 84.03125,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 151.48046875,
+            "right": 235.51171875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "snap",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 135.15625,
+            "right": 251.8359375
+          },
+          {
+            "name": "Qondanisa nento eseduze",
+            "title": "",
+            "width": 262.6875,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 62.15625,
+            "right": 324.84375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "snap-empty",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Vala",
+            "title": "",
+            "width": 84.03125,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 151.48046875,
+            "right": 235.51171875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "cleanup",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 70.578125,
+            "right": 187.2578125
+          },
+          {
+            "name": "Hlanza",
+            "title": "",
+            "width": 121.1640625,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 195.2578125,
+            "right": 316.421875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "cleanup-empty",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Vala",
+            "title": "",
+            "width": 84.03125,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 151.48046875,
+            "right": 235.51171875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "sector",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Vala",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 318,
+            "right": 342
+          },
+          {
+            "name": "English",
+            "title": "",
+            "width": 41.21875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 45,
+            "right": 86.21875
+          },
+          {
+            "name": "Kubukeka kulungile",
+            "title": "",
+            "width": 185.2109375,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 43.5,
+            "right": 228.7109375
+          }
+        ],
+        "longText": [
+          {
+            "lang": "zu",
+            "text": "Lolu hlaka lwesiZulu alukabuyekezwa — uwuhlaka oluvela emshinini.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "The isiZulu wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "zu",
+            "text": "Ilanga linamandla kakhulu ENYAKATHO — beka imibhede yakho ngakulolo hlangothi.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "Sun: strongest from the NORTH — put your beds on that side.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "zu",
+            "text": "Isilinganiso segridi yesimo sezulu kulezi zixhumanisi: umoya UVELA empumalanga ehlobo, enyakatho-ntshonalanga ebusika. Qinisekisa endaweni.",
+            "clip": false,
+            "lines": 4
+          },
+          {
+            "lang": "en",
+            "text": "Coordinate climate-grid mean: wind FROM the east in summer, north-west in winter. Confirm on site.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "zu",
+            "text": "Amanzi ageleza ehla enyakatho; ama-swale (imisele yokubamba amanzi) anqamula le ndlela · Isithwathwa siqoqana endaweni ephansi lapho ebusuku obubandayo obungenamoya.",
+            "clip": false,
+            "lines": 4
+          },
+          {
+            "lang": "en",
+            "text": "Water flows downhill to the north — swales go ACROSS that flow · frost settles low there on still, cold nights.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "en",
+            "text": "This site’s own wind data reads 90° off the regional pattern — a bimodal wind rose average can land between its two real lobes, not on either one; trust the regional sectors over this site’s single mean.",
+            "clip": false,
+            "lines": 4
+          }
+        ]
+      },
+      {
+        "name": "sector-mixed",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Vala",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 318,
+            "right": 342
+          },
+          {
+            "name": "English",
+            "title": "",
+            "width": 41.21875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 45,
+            "right": 86.21875
+          },
+          {
+            "name": "Kubukeka kulungile",
+            "title": "",
+            "width": 185.2109375,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 43.5,
+            "right": 228.7109375
+          }
+        ],
+        "longText": [
+          {
+            "lang": "zu",
+            "text": "Lolu hlaka lwesiZulu alukabuyekezwa — uwuhlaka oluvela emshinini.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "The isiZulu wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "zu",
+            "text": "Ilanga linamandla kakhulu ENYAKATHO EBUSIKA, ENINGIZIMU EHLOBO — beka imibhede yakho ngakulolo hlangothi.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "en",
+            "text": "Sun: strongest from the NORTH IN WINTER, SOUTH IN SUMMER — put your beds on that side.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "No regional fire-wind pattern for this area — walk the boundary and ask neighbours which side fires come from.",
+            "clip": false,
+            "lines": 3
+          }
+        ]
+      },
+      {
+        "name": "sector-missing",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Vala",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 318,
+            "right": 342
+          },
+          {
+            "name": "English",
+            "title": "",
+            "width": 41.21875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 45,
+            "right": 86.21875
+          },
+          {
+            "name": "Kubukeka kulungile",
+            "title": "",
+            "width": 185.2109375,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 43.5,
+            "right": 228.7109375
+          }
+        ],
+        "longText": [
+          {
+            "lang": "zu",
+            "text": "Lolu hlaka lwesiZulu alukabuyekezwa — uwuhlaka oluvela emshinini.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "The isiZulu wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "zu",
+            "text": "Qala ngokuvula le ndawo ebalazweni ukuze ubone amandla ayo.",
+            "clip": false,
+            "lines": 2
+          }
+        ]
+      }
+    ],
+    "scrollResult": {
+      "scrollWidth": 390,
+      "clientWidth": 181,
+      "scrollLeft": 208.5,
+      "lastReachable": true
+    }
+  },
+  {
+    "lang": "zu",
+    "size": "desktop",
+    "font": "__Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", system-ui, sans-serif",
+    "overflow": false,
+    "scenes": [
+      {
+        "name": "tools",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Khetha",
+            "title": "Khetha",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 192.5,
+            "right": 232.5
+          },
+          {
+            "name": "Buyisela emuva",
+            "title": "Buyisela emuva",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 242.5,
+            "right": 282.5
+          },
+          {
+            "name": "Phinda isenzo",
+            "title": "Phinda isenzo",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 292.5,
+            "right": 332.5
+          },
+          {
+            "name": "Yenza ikhophi",
+            "title": "Yenza ikhophi yento noma izinto ezikhethiwe — Cmd/Ctrl+D",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 342.5,
+            "right": 382.5
+          },
+          {
+            "name": "Lungisa umugqa",
+            "title": "Buka kuqala inguqulo elungisiwe yomugqa wangaphandle okhethiwe",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 392.5,
+            "right": 432.5
+          },
+          {
+            "name": "Qondanisa",
+            "title": "Buka kuqala ukuvalwa kwezikhala ezincane kakhulu phakathi kwendawo ekhethiwe nenye eseduze",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 442.5,
+            "right": 482.5
+          },
+          {
+            "name": "Hlanza",
+            "title": "Buka kuqala ukuqondiswa kwezinto ezikhethiwe nokushiywa kwezikhala ezilinganayo phakathi kwazo",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 492.5,
+            "right": 532.5
+          },
+          {
+            "name": "Susa",
+            "title": "Susa",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 542.5,
+            "right": 582.5
+          },
+          {
+            "name": "Izendlalelo · Layers",
+            "title": "",
+            "width": 150.65625,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 1093.84375,
+            "right": 1244.5
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "hint",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Vala icebiso · Close tip",
+            "title": "Vala icebiso · Close tip",
+            "width": 30,
+            "height": 30,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 1211.5,
+            "right": 1241.5
+          }
+        ],
+        "longText": [
+          {
+            "lang": "zu",
+            "text": "Thepha amakhona, bese ukhetha Qeda",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Tap corners, then Finish",
+            "clip": false,
+            "lines": 1
+          }
+        ]
+      },
+      {
+        "name": "line",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 515.609375,
+            "right": 632.2890625
+          },
+          {
+            "name": "Iphuzu",
+            "title": "",
+            "width": 99.328125,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 640.2890625,
+            "right": 739.6171875
+          },
+          {
+            "name": "Qeda umugqa",
+            "title": "",
+            "width": 173.7734375,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 747.6171875,
+            "right": 921.390625
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "zone",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 520.02734375,
+            "right": 636.70703125
+          },
+          {
+            "name": "Iphuzu",
+            "title": "",
+            "width": 99.328125,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 644.70703125,
+            "right": 744.03515625
+          },
+          {
+            "name": "Qeda iZone 1",
+            "title": "",
+            "width": 164.9375,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 752.03515625,
+            "right": 916.97265625
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "tidy",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 501.81640625,
+            "right": 618.49609375
+          },
+          {
+            "name": "Lungisa umugqa wangaphandle",
+            "title": "",
+            "width": 308.6875,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 626.49609375,
+            "right": 935.18359375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "tidy-empty",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Vala",
+            "title": "",
+            "width": 84.03125,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 676.48046875,
+            "right": 760.51171875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "snap",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 524.81640625,
+            "right": 641.49609375
+          },
+          {
+            "name": "Qondanisa nento eseduze",
+            "title": "",
+            "width": 262.6875,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 649.49609375,
+            "right": 912.18359375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "snap-empty",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Vala",
+            "title": "",
+            "width": 84.03125,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 676.48046875,
+            "right": 760.51171875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "cleanup",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 595.578125,
+            "right": 712.2578125
+          },
+          {
+            "name": "Hlanza",
+            "title": "",
+            "width": 121.1640625,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 720.2578125,
+            "right": 841.421875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "cleanup-empty",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Vala",
+            "title": "",
+            "width": 84.03125,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 676.48046875,
+            "right": 760.51171875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "sector",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Vala",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 1199.5,
+            "right": 1223.5
+          },
+          {
+            "name": "English",
+            "title": "",
+            "width": 41.21875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 213.5,
+            "right": 254.71875
+          },
+          {
+            "name": "Kubukeka kulungile",
+            "title": "",
+            "width": 185.2109375,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 212,
+            "right": 397.2109375
+          }
+        ],
+        "longText": [
+          {
+            "lang": "zu",
+            "text": "Lolu hlaka lwesiZulu alukabuyekezwa — uwuhlaka oluvela emshinini.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "The isiZulu wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "zu",
+            "text": "Ilanga linamandla kakhulu ENYAKATHO — beka imibhede yakho ngakulolo hlangothi.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Sun: strongest from the NORTH — put your beds on that side.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "zu",
+            "text": "Isilinganiso segridi yesimo sezulu kulezi zixhumanisi: umoya UVELA empumalanga ehlobo, enyakatho-ntshonalanga ebusika. Qinisekisa endaweni.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Coordinate climate-grid mean: wind FROM the east in summer, north-west in winter. Confirm on site.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "zu",
+            "text": "Amanzi ageleza ehla enyakatho; ama-swale (imisele yokubamba amanzi) anqamula le ndlela · Isithwathwa siqoqana endaweni ephansi lapho ebusuku obubandayo obungenamoya.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "Water flows downhill to the north — swales go ACROSS that flow · frost settles low there on still, cold nights.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "This site’s own wind data reads 90° off the regional pattern — a bimodal wind rose average can land between its two real lobes, not on either one; trust the regional sectors over this site’s single mean.",
+            "clip": false,
+            "lines": 2
+          }
+        ]
+      },
+      {
+        "name": "sector-mixed",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Vala",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 1199.5,
+            "right": 1223.5
+          },
+          {
+            "name": "English",
+            "title": "",
+            "width": 41.21875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 213.5,
+            "right": 254.71875
+          },
+          {
+            "name": "Kubukeka kulungile",
+            "title": "",
+            "width": 185.2109375,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 212,
+            "right": 397.2109375
+          }
+        ],
+        "longText": [
+          {
+            "lang": "zu",
+            "text": "Lolu hlaka lwesiZulu alukabuyekezwa — uwuhlaka oluvela emshinini.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "The isiZulu wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "zu",
+            "text": "Ilanga linamandla kakhulu ENYAKATHO EBUSIKA, ENINGIZIMU EHLOBO — beka imibhede yakho ngakulolo hlangothi.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Sun: strongest from the NORTH IN WINTER, SOUTH IN SUMMER — put your beds on that side.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "No regional fire-wind pattern for this area — walk the boundary and ask neighbours which side fires come from.",
+            "clip": false,
+            "lines": 1
+          }
+        ]
+      },
+      {
+        "name": "sector-missing",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Vala",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 1199.5,
+            "right": 1223.5
+          },
+          {
+            "name": "English",
+            "title": "",
+            "width": 41.21875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 213.5,
+            "right": 254.71875
+          },
+          {
+            "name": "Kubukeka kulungile",
+            "title": "",
+            "width": 185.2109375,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 212,
+            "right": 397.2109375
+          }
+        ],
+        "longText": [
+          {
+            "lang": "zu",
+            "text": "Lolu hlaka lwesiZulu alukabuyekezwa — uwuhlaka oluvela emshinini.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "The isiZulu wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "zu",
+            "text": "Qala ngokuvula le ndawo ebalazweni ukuze ubone amandla ayo.",
+            "clip": false,
+            "lines": 1
+          }
+        ]
+      }
+    ],
+    "scrollResult": {
+      "scrollWidth": 891,
+      "clientWidth": 891,
+      "scrollLeft": 0,
+      "lastReachable": true
+    }
+  },
+  {
+    "lang": "st",
+    "size": "phone",
+    "font": "__Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", system-ui, sans-serif",
+    "overflow": false,
+    "scenes": [
+      {
+        "name": "tools",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Kgetha",
+            "title": "Kgetha",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 24,
+            "right": 64
+          },
+          {
+            "name": "Busetsa morao",
+            "title": "Busetsa morao",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 74,
+            "right": 114
+          },
+          {
+            "name": "Etsa hape",
+            "title": "Etsa hape",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 124,
+            "right": 164
+          },
+          {
+            "name": "Etsa khopi",
+            "title": "Etsa khopi ya ntho kapa dintho tse kgethilweng — Cmd/Ctrl+D",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 174,
+            "right": 214
+          },
+          {
+            "name": "Lokisa mola",
+            "title": "Sheba pele mofuta o lokisitsweng wa mola wa ka ntle o kgethilweng",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 224,
+            "right": 264
+          },
+          {
+            "name": "Nyalanya",
+            "title": "Sheba pele ho kwalwa ha dikgeo tse tshesane haholo pakeng tsa zoune le e pela yona",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 274,
+            "right": 314
+          },
+          {
+            "name": "Hlwekisa",
+            "title": "Sheba pele ho otlollwa le ho siuwa ha dikgeo tse lekanang pakeng tsa dintho tse kgethilweng",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 324,
+            "right": 364
+          },
+          {
+            "name": "Phumula",
+            "title": "Phumula",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 374,
+            "right": 414
+          },
+          {
+            "name": "Layers",
+            "title": "",
+            "width": 82.5625,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 280.4375,
+            "right": 363
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "hint",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Close tip",
+            "title": "Close tip",
+            "width": 30,
+            "height": 30,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 330,
+            "right": 360
+          }
+        ],
+        "longText": [
+          {
+            "lang": "st",
+            "text": "Tobetsa dikgutlo, ebe o kgetha Qetella",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Tap corners, then Finish",
+            "clip": false,
+            "lines": 1
+          }
+        ]
+      },
+      {
+        "name": "line",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Hlakola",
+            "title": "",
+            "width": 106.0859375,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 90.4765625,
+            "right": 196.5625
+          },
+          {
+            "name": "Ntlha",
+            "title": "",
+            "width": 91.953125,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 204.5625,
+            "right": 296.515625
+          },
+          {
+            "name": "Qetella mola",
+            "title": "",
+            "width": 165.3828125,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 110.8046875,
+            "right": 276.1875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "zone",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Hlakola",
+            "title": "",
+            "width": 106.0859375,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 90.4765625,
+            "right": 196.5625
+          },
+          {
+            "name": "Ntlha",
+            "title": "",
+            "width": 91.953125,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 204.5625,
+            "right": 296.515625
+          },
+          {
+            "name": "Qetella Zoune 1",
+            "title": "",
+            "width": 186.0078125,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 100.4921875,
+            "right": 286.5
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "tidy",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Hlakola",
+            "title": "",
+            "width": 106.0859375,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 140.453125,
+            "right": 246.5390625
+          },
+          {
+            "name": "Lokisa mola wa ka ntle",
+            "title": "",
+            "width": 238.8671875,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 74.0625,
+            "right": 312.9296875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "tidy-empty",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Kwala",
+            "title": "",
+            "width": 95.25,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 145.87109375,
+            "right": 241.12109375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "snap",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Hlakola",
+            "title": "",
+            "width": 106.0859375,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 140.453125,
+            "right": 246.5390625
+          },
+          {
+            "name": "Nyalanya le e pela yona",
+            "title": "",
+            "width": 246.5390625,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 70.2265625,
+            "right": 316.765625
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "snap-empty",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Kwala",
+            "title": "",
+            "width": 95.25,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 145.87109375,
+            "right": 241.12109375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "cleanup",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Hlakola",
+            "title": "",
+            "width": 106.0859375,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 67.5234375,
+            "right": 173.609375
+          },
+          {
+            "name": "Hlwekisa",
+            "title": "",
+            "width": 137.8671875,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 181.609375,
+            "right": 319.4765625
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "cleanup-empty",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Kwala",
+            "title": "",
+            "width": 95.25,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 145.87109375,
+            "right": 241.12109375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "sector",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Pata",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 318,
+            "right": 342
+          },
+          {
+            "name": "Senyesemane",
+            "title": "",
+            "width": 78.2109375,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 45,
+            "right": 123.2109375
+          },
+          {
+            "name": "Ho bonahala ho nepahetse",
+            "title": "",
+            "width": 227.609375,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 43.5,
+            "right": 271.109375
+          }
+        ],
+        "longText": [
+          {
+            "lang": "st",
+            "text": "Phetolelo ena ya Sesotho ke moralo wa mochini o so hlahlojweng.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "The Sesotho wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "st",
+            "text": "Letsatsi le matla haholo ho tswa LEBOYA — beha dibethe tsa hao ka lehlakoreng leo.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "Sun: strongest from the NORTH — put your beds on that side.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "st",
+            "text": "Karolelano ya gridi ya maemo a lehodimo sebakeng sa dikhokahanyo: moya O TSWA botjhabela hlabula, leboya-bophirimela mariha. Netefatsa setsheng.",
+            "clip": false,
+            "lines": 4
+          },
+          {
+            "lang": "en",
+            "text": "Coordinate climate-grid mean: wind FROM the east in summer, north-west in winter. Confirm on site.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "st",
+            "text": "Metsi a phalla a theohela leboya — diforo tse tshwarang metsi di TSHELA phallo eo · leqhwa le dula tlase moo ka masiu a batang a se nang moya.",
+            "clip": false,
+            "lines": 4
+          },
+          {
+            "lang": "en",
+            "text": "Water flows downhill to the north — swales go ACROSS that flow · frost settles low there on still, cold nights.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "en",
+            "text": "This site’s own wind data reads 90° off the regional pattern — a bimodal wind rose average can land between its two real lobes, not on either one; trust the regional sectors over this site’s single mean.",
+            "clip": false,
+            "lines": 4
+          }
+        ]
+      },
+      {
+        "name": "sector-mixed",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Pata",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 318,
+            "right": 342
+          },
+          {
+            "name": "Senyesemane",
+            "title": "",
+            "width": 78.2109375,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 45,
+            "right": 123.2109375
+          },
+          {
+            "name": "Ho bonahala ho nepahetse",
+            "title": "",
+            "width": 227.609375,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 43.5,
+            "right": 271.109375
+          }
+        ],
+        "longText": [
+          {
+            "lang": "st",
+            "text": "Phetolelo ena ya Sesotho ke moralo wa mochini o so hlahlojweng.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "The Sesotho wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "st",
+            "text": "Letsatsi le matla haholo ho tswa LEBOYA MARIHA, BORWA HLABULA — beha dibethe tsa hao ka lehlakoreng leo.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "en",
+            "text": "Sun: strongest from the NORTH IN WINTER, SOUTH IN SUMMER — put your beds on that side.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "No regional fire-wind pattern for this area — walk the boundary and ask neighbours which side fires come from.",
+            "clip": false,
+            "lines": 3
+          }
+        ]
+      },
+      {
+        "name": "sector-missing",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Pata",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 318,
+            "right": 342
+          },
+          {
+            "name": "Senyesemane",
+            "title": "",
+            "width": 78.2109375,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 45,
+            "right": 123.2109375
+          },
+          {
+            "name": "Ho bonahala ho nepahetse",
+            "title": "",
+            "width": 227.609375,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 43.5,
+            "right": 271.109375
+          }
+        ],
+        "longText": [
+          {
+            "lang": "st",
+            "text": "Phetolelo ena ya Sesotho ke moralo wa mochini o so hlahlojweng.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "The Sesotho wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "st",
+            "text": "Bula sebaka sena mmapeng pele ho bala matla a sona.",
+            "clip": false,
+            "lines": 2
+          }
+        ]
+      }
+    ],
+    "scrollResult": {
+      "scrollWidth": 390,
+      "clientWidth": 249,
+      "scrollLeft": 140.5,
+      "lastReachable": true
+    }
+  },
+  {
+    "lang": "st",
+    "size": "desktop",
+    "font": "__Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", system-ui, sans-serif",
+    "overflow": false,
+    "scenes": [
+      {
+        "name": "tools",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Kgetha",
+            "title": "Kgetha",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 192.5,
+            "right": 232.5
+          },
+          {
+            "name": "Busetsa morao",
+            "title": "Busetsa morao",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 242.5,
+            "right": 282.5
+          },
+          {
+            "name": "Etsa hape",
+            "title": "Etsa hape",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 292.5,
+            "right": 332.5
+          },
+          {
+            "name": "Etsa khopi",
+            "title": "Etsa khopi ya ntho kapa dintho tse kgethilweng — Cmd/Ctrl+D",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 342.5,
+            "right": 382.5
+          },
+          {
+            "name": "Lokisa mola",
+            "title": "Sheba pele mofuta o lokisitsweng wa mola wa ka ntle o kgethilweng",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 392.5,
+            "right": 432.5
+          },
+          {
+            "name": "Nyalanya",
+            "title": "Sheba pele ho kwalwa ha dikgeo tse tshesane haholo pakeng tsa zoune le e pela yona",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 442.5,
+            "right": 482.5
+          },
+          {
+            "name": "Hlwekisa",
+            "title": "Sheba pele ho otlollwa le ho siuwa ha dikgeo tse lekanang pakeng tsa dintho tse kgethilweng",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 492.5,
+            "right": 532.5
+          },
+          {
+            "name": "Phumula",
+            "title": "Phumula",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 542.5,
+            "right": 582.5
+          },
+          {
+            "name": "Layers",
+            "title": "",
+            "width": 82.5625,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 1161.9375,
+            "right": 1244.5
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "hint",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Close tip",
+            "title": "Close tip",
+            "width": 30,
+            "height": 30,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 1211.5,
+            "right": 1241.5
+          }
+        ],
+        "longText": [
+          {
+            "lang": "st",
+            "text": "Tobetsa dikgutlo, ebe o kgetha Qetella",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Tap corners, then Finish",
+            "clip": false,
+            "lines": 1
+          }
+        ]
+      },
+      {
+        "name": "line",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Hlakola",
+            "title": "",
+            "width": 106.0859375,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 528.7890625,
+            "right": 634.875
+          },
+          {
+            "name": "Ntlha",
+            "title": "",
+            "width": 91.953125,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 642.875,
+            "right": 734.828125
+          },
+          {
+            "name": "Qetella mola",
+            "title": "",
+            "width": 165.3828125,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 742.828125,
+            "right": 908.2109375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "zone",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Hlakola",
+            "title": "",
+            "width": 106.0859375,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 518.4765625,
+            "right": 624.5625
+          },
+          {
+            "name": "Ntlha",
+            "title": "",
+            "width": 91.953125,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 632.5625,
+            "right": 724.515625
+          },
+          {
+            "name": "Qetella Zoune 1",
+            "title": "",
+            "width": 186.0078125,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 732.515625,
+            "right": 918.5234375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "tidy",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Hlakola",
+            "title": "",
+            "width": 106.0859375,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 542.0234375,
+            "right": 648.109375
+          },
+          {
+            "name": "Lokisa mola wa ka ntle",
+            "title": "",
+            "width": 238.8671875,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 656.109375,
+            "right": 894.9765625
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "tidy-empty",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Kwala",
+            "title": "",
+            "width": 95.25,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 670.87109375,
+            "right": 766.12109375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "snap",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Hlakola",
+            "title": "",
+            "width": 106.0859375,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 538.1875,
+            "right": 644.2734375
+          },
+          {
+            "name": "Nyalanya le e pela yona",
+            "title": "",
+            "width": 246.5390625,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 652.2734375,
+            "right": 898.8125
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "snap-empty",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Kwala",
+            "title": "",
+            "width": 95.25,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 670.87109375,
+            "right": 766.12109375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "cleanup",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Hlakola",
+            "title": "",
+            "width": 106.0859375,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 592.5234375,
+            "right": 698.609375
+          },
+          {
+            "name": "Hlwekisa",
+            "title": "",
+            "width": 137.8671875,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 706.609375,
+            "right": 844.4765625
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "cleanup-empty",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Kwala",
+            "title": "",
+            "width": 95.25,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 670.87109375,
+            "right": 766.12109375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "sector",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Pata",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 1199.5,
+            "right": 1223.5
+          },
+          {
+            "name": "Senyesemane",
+            "title": "",
+            "width": 78.2109375,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 213.5,
+            "right": 291.7109375
+          },
+          {
+            "name": "Ho bonahala ho nepahetse",
+            "title": "",
+            "width": 227.609375,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 212,
+            "right": 439.609375
+          }
+        ],
+        "longText": [
+          {
+            "lang": "st",
+            "text": "Phetolelo ena ya Sesotho ke moralo wa mochini o so hlahlojweng.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "The Sesotho wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "st",
+            "text": "Letsatsi le matla haholo ho tswa LEBOYA — beha dibethe tsa hao ka lehlakoreng leo.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Sun: strongest from the NORTH — put your beds on that side.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "st",
+            "text": "Karolelano ya gridi ya maemo a lehodimo sebakeng sa dikhokahanyo: moya O TSWA botjhabela hlabula, leboya-bophirimela mariha. Netefatsa setsheng.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Coordinate climate-grid mean: wind FROM the east in summer, north-west in winter. Confirm on site.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "st",
+            "text": "Metsi a phalla a theohela leboya — diforo tse tshwarang metsi di TSHELA phallo eo · leqhwa le dula tlase moo ka masiu a batang a se nang moya.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Water flows downhill to the north — swales go ACROSS that flow · frost settles low there on still, cold nights.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "This site’s own wind data reads 90° off the regional pattern — a bimodal wind rose average can land between its two real lobes, not on either one; trust the regional sectors over this site’s single mean.",
+            "clip": false,
+            "lines": 2
+          }
+        ]
+      },
+      {
+        "name": "sector-mixed",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Pata",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 1199.5,
+            "right": 1223.5
+          },
+          {
+            "name": "Senyesemane",
+            "title": "",
+            "width": 78.2109375,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 213.5,
+            "right": 291.7109375
+          },
+          {
+            "name": "Ho bonahala ho nepahetse",
+            "title": "",
+            "width": 227.609375,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 212,
+            "right": 439.609375
+          }
+        ],
+        "longText": [
+          {
+            "lang": "st",
+            "text": "Phetolelo ena ya Sesotho ke moralo wa mochini o so hlahlojweng.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "The Sesotho wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "st",
+            "text": "Letsatsi le matla haholo ho tswa LEBOYA MARIHA, BORWA HLABULA — beha dibethe tsa hao ka lehlakoreng leo.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Sun: strongest from the NORTH IN WINTER, SOUTH IN SUMMER — put your beds on that side.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "No regional fire-wind pattern for this area — walk the boundary and ask neighbours which side fires come from.",
+            "clip": false,
+            "lines": 1
+          }
+        ]
+      },
+      {
+        "name": "sector-missing",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Pata",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 1199.5,
+            "right": 1223.5
+          },
+          {
+            "name": "Senyesemane",
+            "title": "",
+            "width": 78.2109375,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 213.5,
+            "right": 291.7109375
+          },
+          {
+            "name": "Ho bonahala ho nepahetse",
+            "title": "",
+            "width": 227.609375,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 212,
+            "right": 439.609375
+          }
+        ],
+        "longText": [
+          {
+            "lang": "st",
+            "text": "Phetolelo ena ya Sesotho ke moralo wa mochini o so hlahlojweng.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "The Sesotho wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "st",
+            "text": "Bula sebaka sena mmapeng pele ho bala matla a sona.",
+            "clip": false,
+            "lines": 1
+          }
+        ]
+      }
+    ],
+    "scrollResult": {
+      "scrollWidth": 959,
+      "clientWidth": 959,
+      "scrollLeft": 0,
+      "lastReachable": true
+    }
+  },
+  {
+    "lang": "ts",
+    "size": "phone",
+    "font": "__Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", system-ui, sans-serif",
+    "overflow": false,
+    "scenes": [
+      {
+        "name": "tools",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Hlawula",
+            "title": "Hlawula",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 24,
+            "right": 64
+          },
+          {
+            "name": "Tlherisela endzhaku",
+            "title": "Tlherisela endzhaku",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 74,
+            "right": 114
+          },
+          {
+            "name": "Endla nakambe",
+            "title": "Endla nakambe",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 124,
+            "right": 164
+          },
+          {
+            "name": "Endla khopi",
+            "title": "Endla khopi ya nchumu kumbe swilo leswi hlawuriweke — Cmd/Ctrl+D",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 174,
+            "right": 214
+          },
+          {
+            "name": "Lulamisa layini",
+            "title": "Languta ku sungula layini ya le handle leyi hlawuriweke leyi lulamisiweke",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 224,
+            "right": 264
+          },
+          {
+            "name": "Fananisa",
+            "title": "Languta ku sungula ku pfariwa ka mavangwa lamatsongo swinene ni zoni leyi nga ekusuhi",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 274,
+            "right": 314
+          },
+          {
+            "name": "Basisa",
+            "title": "Languta ku sungula ku ololoxiwa ni ku vekiwa ka mavangwa yo ringana eka swilo leswi hlawuriweke",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 324,
+            "right": 364
+          },
+          {
+            "name": "Sula",
+            "title": "Sula",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 374,
+            "right": 414
+          },
+          {
+            "name": "Layers",
+            "title": "",
+            "width": 82.5625,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 280.4375,
+            "right": 363
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "hint",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Close tip",
+            "title": "Close tip",
+            "width": 30,
+            "height": 30,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 330,
+            "right": 360
+          }
+        ],
+        "longText": [
+          {
+            "lang": "ts",
+            "text": "Thinta tikhona, kutani u hlawula Hetisa",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Tap corners, then Finish",
+            "clip": false,
+            "lines": 1
+          }
+        ]
+      },
+      {
+        "name": "line",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 80.890625,
+            "right": 197.5703125
+          },
+          {
+            "name": "Poyinti",
+            "title": "",
+            "width": 100.5390625,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 205.5703125,
+            "right": 306.109375
+          },
+          {
+            "name": "Hetisa layini",
+            "title": "",
+            "width": 162.1953125,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 112.3984375,
+            "right": 274.59375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "zone",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 80.890625,
+            "right": 197.5703125
+          },
+          {
+            "name": "Poyinti",
+            "title": "",
+            "width": 100.5390625,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 205.5703125,
+            "right": 306.109375
+          },
+          {
+            "name": "Hetisa Zoni 1",
+            "title": "",
+            "width": 165.140625,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 110.9296875,
+            "right": 276.0703125
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "tidy",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 135.15625,
+            "right": 251.8359375
+          },
+          {
+            "name": "Lulamisa layini ya le handle",
+            "title": "",
+            "width": 276.25,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 55.375,
+            "right": 331.625
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "tidy-empty",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Pfala",
+            "title": "",
+            "width": 90.0546875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 148.47265625,
+            "right": 238.52734375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "snap",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 135.15625,
+            "right": 251.8359375
+          },
+          {
+            "name": "Fananisa ni lexi nga ekusuhi",
+            "title": "",
+            "width": 279.65625,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 53.671875,
+            "right": 333.328125
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "snap-empty",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Pfala",
+            "title": "",
+            "width": 90.0546875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 148.47265625,
+            "right": 238.52734375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "cleanup",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 72.06640625,
+            "right": 188.74609375
+          },
+          {
+            "name": "Basisa",
+            "title": "",
+            "width": 118.1875,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 196.74609375,
+            "right": 314.93359375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "cleanup-empty",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Pfala",
+            "title": "",
+            "width": 90.0546875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 148.47265625,
+            "right": 238.52734375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "sector",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Pfala",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 318,
+            "right": 342
+          },
+          {
+            "name": "Xinghezi",
+            "title": "",
+            "width": 47.9921875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 45,
+            "right": 92.9921875
+          },
+          {
+            "name": "Swi vonaka swi lulamile",
+            "title": "",
+            "width": 209.46875,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 43.5,
+            "right": 252.96875
+          }
+        ],
+        "longText": [
+          {
+            "lang": "ts",
+            "text": "Vuhundzuluxi bya Xitsonga i xitsalwana xa muchini lexi nga si kamberiwaka.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "The Xitsonga wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "ts",
+            "text": "Dyambu ri ni ntamu swinene ku suka N'WALUNGU — veka mibedo ya wena eka tlhelo rero.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "en",
+            "text": "Sun: strongest from the NORTH — put your beds on that side.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "ts",
+            "text": "Avhareji ya giridi ya maxelo eka tikhodinati leti: moya WU HUMA vuxa hi ximumu, n'walungu-vupeladyambu hi xixika. Tiyisisa endhawini.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "en",
+            "text": "Coordinate climate-grid mean: wind FROM the east in summer, north-west in winter. Confirm on site.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "ts",
+            "text": "Mati ma khuluka ma rhelela n'walungu — misele yo khoma mati yi TLULA ndlela ya ku khuluka koloko · gwitsi ri tshamisa ehansi kwalaho hi vusiku byo titimela byo pfumala moya.",
+            "clip": false,
+            "lines": 4
+          },
+          {
+            "lang": "en",
+            "text": "Water flows downhill to the north — swales go ACROSS that flow · frost settles low there on still, cold nights.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "en",
+            "text": "This site’s own wind data reads 90° off the regional pattern — a bimodal wind rose average can land between its two real lobes, not on either one; trust the regional sectors over this site’s single mean.",
+            "clip": false,
+            "lines": 4
+          }
+        ]
+      },
+      {
+        "name": "sector-mixed",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Pfala",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 318,
+            "right": 342
+          },
+          {
+            "name": "Xinghezi",
+            "title": "",
+            "width": 47.9921875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 45,
+            "right": 92.9921875
+          },
+          {
+            "name": "Swi vonaka swi lulamile",
+            "title": "",
+            "width": 209.46875,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 43.5,
+            "right": 252.96875
+          }
+        ],
+        "longText": [
+          {
+            "lang": "ts",
+            "text": "Vuhundzuluxi bya Xitsonga i xitsalwana xa muchini lexi nga si kamberiwaka.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "The Xitsonga wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "ts",
+            "text": "Dyambu ri ni ntamu swinene ku suka N'WALUNGU HI XIXIKA, DZONGA HI XIMUMU — veka mibedo ya wena eka tlhelo rero.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "en",
+            "text": "Sun: strongest from the NORTH IN WINTER, SOUTH IN SUMMER — put your beds on that side.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "No regional fire-wind pattern for this area — walk the boundary and ask neighbours which side fires come from.",
+            "clip": false,
+            "lines": 3
+          }
+        ]
+      },
+      {
+        "name": "sector-missing",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Pfala",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 318,
+            "right": 342
+          },
+          {
+            "name": "Xinghezi",
+            "title": "",
+            "width": 47.9921875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 45,
+            "right": 92.9921875
+          },
+          {
+            "name": "Swi vonaka swi lulamile",
+            "title": "",
+            "width": 209.46875,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 43.5,
+            "right": 252.96875
+          }
+        ],
+        "longText": [
+          {
+            "lang": "ts",
+            "text": "Vuhundzuluxi bya Xitsonga i xitsalwana xa muchini lexi nga si kamberiwaka.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "The Xitsonga wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "ts",
+            "text": "Pfula ndhawu leyi emepeni ku sungula leswaku u hlaya matimba ya yona.",
+            "clip": false,
+            "lines": 2
+          }
+        ]
+      }
+    ],
+    "scrollResult": {
+      "scrollWidth": 390,
+      "clientWidth": 249,
+      "scrollLeft": 140.5,
+      "lastReachable": true
+    }
+  },
+  {
+    "lang": "ts",
+    "size": "desktop",
+    "font": "__Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", system-ui, sans-serif",
+    "overflow": false,
+    "scenes": [
+      {
+        "name": "tools",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Hlawula",
+            "title": "Hlawula",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 192.5,
+            "right": 232.5
+          },
+          {
+            "name": "Tlherisela endzhaku",
+            "title": "Tlherisela endzhaku",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 242.5,
+            "right": 282.5
+          },
+          {
+            "name": "Endla nakambe",
+            "title": "Endla nakambe",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 292.5,
+            "right": 332.5
+          },
+          {
+            "name": "Endla khopi",
+            "title": "Endla khopi ya nchumu kumbe swilo leswi hlawuriweke — Cmd/Ctrl+D",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 342.5,
+            "right": 382.5
+          },
+          {
+            "name": "Lulamisa layini",
+            "title": "Languta ku sungula layini ya le handle leyi hlawuriweke leyi lulamisiweke",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 392.5,
+            "right": 432.5
+          },
+          {
+            "name": "Fananisa",
+            "title": "Languta ku sungula ku pfariwa ka mavangwa lamatsongo swinene ni zoni leyi nga ekusuhi",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 442.5,
+            "right": 482.5
+          },
+          {
+            "name": "Basisa",
+            "title": "Languta ku sungula ku ololoxiwa ni ku vekiwa ka mavangwa yo ringana eka swilo leswi hlawuriweke",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 492.5,
+            "right": 532.5
+          },
+          {
+            "name": "Sula",
+            "title": "Sula",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 542.5,
+            "right": 582.5
+          },
+          {
+            "name": "Layers",
+            "title": "",
+            "width": 82.5625,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 1161.9375,
+            "right": 1244.5
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "hint",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Close tip",
+            "title": "Close tip",
+            "width": 30,
+            "height": 30,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 1211.5,
+            "right": 1241.5
+          }
+        ],
+        "longText": [
+          {
+            "lang": "ts",
+            "text": "Thinta tikhona, kutani u hlawula Hetisa",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Tap corners, then Finish",
+            "clip": false,
+            "lines": 1
+          }
+        ]
+      },
+      {
+        "name": "line",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 520.79296875,
+            "right": 637.47265625
+          },
+          {
+            "name": "Poyinti",
+            "title": "",
+            "width": 100.5390625,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 645.47265625,
+            "right": 746.01171875
+          },
+          {
+            "name": "Hetisa layini",
+            "title": "",
+            "width": 162.1953125,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 754.01171875,
+            "right": 916.20703125
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "zone",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 519.3203125,
+            "right": 636
+          },
+          {
+            "name": "Poyinti",
+            "title": "",
+            "width": 100.5390625,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 644,
+            "right": 744.5390625
+          },
+          {
+            "name": "Hetisa Zoni 1",
+            "title": "",
+            "width": 165.140625,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 752.5390625,
+            "right": 917.6796875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "tidy",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 518.03515625,
+            "right": 634.71484375
+          },
+          {
+            "name": "Lulamisa layini ya le handle",
+            "title": "",
+            "width": 276.25,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 642.71484375,
+            "right": 918.96484375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "tidy-empty",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Pfala",
+            "title": "",
+            "width": 90.0546875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 673.47265625,
+            "right": 763.52734375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "snap",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 516.33203125,
+            "right": 633.01171875
+          },
+          {
+            "name": "Fananisa ni lexi nga ekusuhi",
+            "title": "",
+            "width": 279.65625,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 641.01171875,
+            "right": 920.66796875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "snap-empty",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Pfala",
+            "title": "",
+            "width": 90.0546875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 673.47265625,
+            "right": 763.52734375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "cleanup",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Khansela",
+            "title": "",
+            "width": 116.6796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 597.06640625,
+            "right": 713.74609375
+          },
+          {
+            "name": "Basisa",
+            "title": "",
+            "width": 118.1875,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 721.74609375,
+            "right": 839.93359375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "cleanup-empty",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Pfala",
+            "title": "",
+            "width": 90.0546875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 673.47265625,
+            "right": 763.52734375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "sector",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Pfala",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 1199.5,
+            "right": 1223.5
+          },
+          {
+            "name": "Xinghezi",
+            "title": "",
+            "width": 47.9921875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 213.5,
+            "right": 261.4921875
+          },
+          {
+            "name": "Swi vonaka swi lulamile",
+            "title": "",
+            "width": 209.46875,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 212,
+            "right": 421.46875
+          }
+        ],
+        "longText": [
+          {
+            "lang": "ts",
+            "text": "Vuhundzuluxi bya Xitsonga i xitsalwana xa muchini lexi nga si kamberiwaka.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "The Xitsonga wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "ts",
+            "text": "Dyambu ri ni ntamu swinene ku suka N'WALUNGU — veka mibedo ya wena eka tlhelo rero.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Sun: strongest from the NORTH — put your beds on that side.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "ts",
+            "text": "Avhareji ya giridi ya maxelo eka tikhodinati leti: moya WU HUMA vuxa hi ximumu, n'walungu-vupeladyambu hi xixika. Tiyisisa endhawini.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Coordinate climate-grid mean: wind FROM the east in summer, north-west in winter. Confirm on site.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "ts",
+            "text": "Mati ma khuluka ma rhelela n'walungu — misele yo khoma mati yi TLULA ndlela ya ku khuluka koloko · gwitsi ri tshamisa ehansi kwalaho hi vusiku byo titimela byo pfumala moya.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "Water flows downhill to the north — swales go ACROSS that flow · frost settles low there on still, cold nights.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "This site’s own wind data reads 90° off the regional pattern — a bimodal wind rose average can land between its two real lobes, not on either one; trust the regional sectors over this site’s single mean.",
+            "clip": false,
+            "lines": 2
+          }
+        ]
+      },
+      {
+        "name": "sector-mixed",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Pfala",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 1199.5,
+            "right": 1223.5
+          },
+          {
+            "name": "Xinghezi",
+            "title": "",
+            "width": 47.9921875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 213.5,
+            "right": 261.4921875
+          },
+          {
+            "name": "Swi vonaka swi lulamile",
+            "title": "",
+            "width": 209.46875,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 212,
+            "right": 421.46875
+          }
+        ],
+        "longText": [
+          {
+            "lang": "ts",
+            "text": "Vuhundzuluxi bya Xitsonga i xitsalwana xa muchini lexi nga si kamberiwaka.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "The Xitsonga wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "ts",
+            "text": "Dyambu ri ni ntamu swinene ku suka N'WALUNGU HI XIXIKA, DZONGA HI XIMUMU — veka mibedo ya wena eka tlhelo rero.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Sun: strongest from the NORTH IN WINTER, SOUTH IN SUMMER — put your beds on that side.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "No regional fire-wind pattern for this area — walk the boundary and ask neighbours which side fires come from.",
+            "clip": false,
+            "lines": 1
+          }
+        ]
+      },
+      {
+        "name": "sector-missing",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Pfala",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 1199.5,
+            "right": 1223.5
+          },
+          {
+            "name": "Xinghezi",
+            "title": "",
+            "width": 47.9921875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 213.5,
+            "right": 261.4921875
+          },
+          {
+            "name": "Swi vonaka swi lulamile",
+            "title": "",
+            "width": 209.46875,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 212,
+            "right": 421.46875
+          }
+        ],
+        "longText": [
+          {
+            "lang": "ts",
+            "text": "Vuhundzuluxi bya Xitsonga i xitsalwana xa muchini lexi nga si kamberiwaka.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "The Xitsonga wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "ts",
+            "text": "Pfula ndhawu leyi emepeni ku sungula leswaku u hlaya matimba ya yona.",
+            "clip": false,
+            "lines": 1
+          }
+        ]
+      }
+    ],
+    "scrollResult": {
+      "scrollWidth": 959,
+      "clientWidth": 959,
+      "scrollLeft": 0,
+      "lastReachable": true
+    }
+  },
+  {
+    "lang": "ve",
+    "size": "phone",
+    "font": "__Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", system-ui, sans-serif",
+    "overflow": false,
+    "scenes": [
+      {
+        "name": "tools",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Nangani",
+            "title": "Nangani",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 24,
+            "right": 64
+          },
+          {
+            "name": "Humiselani murahu",
+            "title": "Humiselani murahu",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 74,
+            "right": 114
+          },
+          {
+            "name": "Itani hafhu",
+            "title": "Itani hafhu",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 124,
+            "right": 164
+          },
+          {
+            "name": "Itani khophi",
+            "title": "Itani khophi ya tshithu kana zwithu zwo nangwaho — Cmd/Ctrl+D",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 174,
+            "right": 214
+          },
+          {
+            "name": "Lugisani mutalo",
+            "title": "Lavhelesani u thoma mutalo wa nnḓa wo nangwaho wo lugiswaho",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 224,
+            "right": 264
+          },
+          {
+            "name": "Fananyisani",
+            "title": "Lavhelesani u thoma u valwa ha zwikhala zwiṱukusa na zouni i re tsini",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 274,
+            "right": 314
+          },
+          {
+            "name": "Kunakisani",
+            "title": "Lavhelesani u thoma u otlollwa na u vhewa ha zwikhala zwi eḓanaho kha zwithu zwo nangwaho",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 324,
+            "right": 364
+          },
+          {
+            "name": "Thuthani",
+            "title": "Thuthani",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 374,
+            "right": 414
+          },
+          {
+            "name": "Layers",
+            "title": "",
+            "width": 82.5625,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 280.4375,
+            "right": 363
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "hint",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Close tip",
+            "title": "Close tip",
+            "width": 30,
+            "height": 30,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 330,
+            "right": 360
+          }
+        ],
+        "longText": [
+          {
+            "lang": "ve",
+            "text": "Kwamani khuḓa, ni kone u nanga Fhedzisani",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Tap corners, then Finish",
+            "clip": false,
+            "lines": 1
+          }
+        ]
+      },
+      {
+        "name": "line",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Khanselani",
+            "title": "",
+            "width": 128.4921875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 63.3515625,
+            "right": 191.84375
+          },
+          {
+            "name": "Tshithoma",
+            "title": "",
+            "width": 123.796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 199.84375,
+            "right": 323.640625
+          },
+          {
+            "name": "Fhedzisani mutalo",
+            "title": "",
+            "width": 206.9140625,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 90.0390625,
+            "right": 296.953125
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "zone",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Khanselani",
+            "title": "",
+            "width": 128.4921875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 63.3515625,
+            "right": 191.84375
+          },
+          {
+            "name": "Tshithoma",
+            "title": "",
+            "width": 123.796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 199.84375,
+            "right": 323.640625
+          },
+          {
+            "name": "Fhedzisani Zouni 1",
+            "title": "",
+            "width": 206.890625,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 90.0546875,
+            "right": 296.9453125
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "tidy",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Khanselani",
+            "title": "",
+            "width": 128.4921875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 129.25,
+            "right": 257.7421875
+          },
+          {
+            "name": "Lugisani mutalo wa nnḓa",
+            "title": "",
+            "width": 255.5,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 65.75,
+            "right": 321.25
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "tidy-empty",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Valani",
+            "title": "",
+            "width": 95.84375,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 145.57421875,
+            "right": 241.41796875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "snap",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Khanselani",
+            "title": "",
+            "width": 128.4921875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 129.25,
+            "right": 257.7421875
+          },
+          {
+            "name": "Fananyisani na tshi re tsini",
+            "title": "",
+            "width": 269.578125,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 58.7109375,
+            "right": 328.2890625
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "snap-empty",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Valani",
+            "title": "",
+            "width": 95.84375,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 145.57421875,
+            "right": 241.41796875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "cleanup",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Khanselani",
+            "title": "",
+            "width": 128.4921875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 49.33984375,
+            "right": 177.83203125
+          },
+          {
+            "name": "Kunakisani",
+            "title": "",
+            "width": 151.828125,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 185.83203125,
+            "right": 337.66015625
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "cleanup-empty",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Valani",
+            "title": "",
+            "width": 95.84375,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 145.57421875,
+            "right": 241.41796875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "sector",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Valani",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 318,
+            "right": 342
+          },
+          {
+            "name": "English",
+            "title": "",
+            "width": 41.21875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 45,
+            "right": 86.21875
+          },
+          {
+            "name": "Zwi vhonala zwo luga",
+            "title": "",
+            "width": 193.75,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 43.5,
+            "right": 237.25
+          }
+        ],
+        "longText": [
+          {
+            "lang": "ve",
+            "text": "Maipfi aya a Tshivenḓa ndi mvetamveto ya mutshini i sa athu ṱolwa.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "The Tshivenda wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "ve",
+            "text": "Ḓuvha ḽi na maanḓa nga maanḓa u bva DEVHULA — vheani mibethe yaṋu kha sia ḽeneḽo.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "en",
+            "text": "Sun: strongest from the NORTH — put your beds on that side.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "ve",
+            "text": "Ndinganyelo ya giridi ya kilima kha khoudinethe idzi: muya U BVA vhubvaḓuvha tshilimo, devhula-vhukovhela vhuriha. Khwaṱhisedzani fhethu.",
+            "clip": false,
+            "lines": 4
+          },
+          {
+            "lang": "en",
+            "text": "Coordinate climate-grid mean: wind FROM the east in summer, north-west in winter. Confirm on site.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "ve",
+            "text": "Maḓi a elela a tshi tsela devhula — migero ya u fara maḓi i PFUKA u elela honoho · ṅwando u dzula fhasi henefho nga vhusiku vhu rotholelaho vhu si na muya.",
+            "clip": false,
+            "lines": 4
+          },
+          {
+            "lang": "en",
+            "text": "Water flows downhill to the north — swales go ACROSS that flow · frost settles low there on still, cold nights.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "en",
+            "text": "This site’s own wind data reads 90° off the regional pattern — a bimodal wind rose average can land between its two real lobes, not on either one; trust the regional sectors over this site’s single mean.",
+            "clip": false,
+            "lines": 4
+          }
+        ]
+      },
+      {
+        "name": "sector-mixed",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Valani",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 318,
+            "right": 342
+          },
+          {
+            "name": "English",
+            "title": "",
+            "width": 41.21875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 45,
+            "right": 86.21875
+          },
+          {
+            "name": "Zwi vhonala zwo luga",
+            "title": "",
+            "width": 193.75,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 43.5,
+            "right": 237.25
+          }
+        ],
+        "longText": [
+          {
+            "lang": "ve",
+            "text": "Maipfi aya a Tshivenḓa ndi mvetamveto ya mutshini i sa athu ṱolwa.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "The Tshivenda wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "ve",
+            "text": "Ḓuvha ḽi na maanḓa nga maanḓa u bva DEVHULA VHURIHA, TSHIPEMBE TSHILIMO — vheani mibethe yaṋu kha sia ḽeneḽo.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "en",
+            "text": "Sun: strongest from the NORTH IN WINTER, SOUTH IN SUMMER — put your beds on that side.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "No regional fire-wind pattern for this area — walk the boundary and ask neighbours which side fires come from.",
+            "clip": false,
+            "lines": 3
+          }
+        ]
+      },
+      {
+        "name": "sector-missing",
+        "width": 363,
+        "buttons": [
+          {
+            "name": "Valani",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 318,
+            "right": 342
+          },
+          {
+            "name": "English",
+            "title": "",
+            "width": 41.21875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 45,
+            "right": 86.21875
+          },
+          {
+            "name": "Zwi vhonala zwo luga",
+            "title": "",
+            "width": 193.75,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 43.5,
+            "right": 237.25
+          }
+        ],
+        "longText": [
+          {
+            "lang": "ve",
+            "text": "Maipfi aya a Tshivenḓa ndi mvetamveto ya mutshini i sa athu ṱolwa.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "en",
+            "text": "The Tshivenda wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 3
+          },
+          {
+            "lang": "ve",
+            "text": "Vulani fhethu afha kha mapa u thoma uri ni vhale maanḓa aho.",
+            "clip": false,
+            "lines": 2
+          }
+        ]
+      },
+      {
+        "name": "matching-verb",
+        "width": 363,
+        "buttons": [],
+        "longText": [
+          {
+            "lang": "",
+            "text": "Fananyisani lushaka lwa tshimela u ya nga kilima ya fhethu honoho; iledzani ṅwando muhulwane na mavu a sa bvumisaho maḓi zwavhuḓi.",
+            "clip": false,
+            "lines": 4
+          },
+          {
+            "lang": "",
+            "text": "Fananyisani tshilimo tshi dudelaho na vhuriha vhu rotholelaho vhu si na ṅwando uri hu vhe na maluvha; tsireledzani kha muya ni sheledze zwimela zwiṱuku.",
+            "clip": false,
+            "lines": 4
+          },
+          {
+            "lang": "",
+            "text": "Fananyisani lushaka lwa tsimu ya nḓirivhe na dzingu ḽa u bveledza, maḓi na maitele a u tikedza. Tshifhinga tsha mphakelo wa lushaka tshi ṱanganya madzingu manzhi.",
+            "clip": false,
+            "lines": 4
+          },
+          {
+            "lang": "",
+            "text": "Shumisani matavhi a navhaho o kunaho ni fananyise lushaka na maitele a u bveledza na fhethu. U sheledza hu fulufhedzeaho na u langa malwadze ndi zwa ndeme.",
+            "clip": false,
+            "lines": 4
+          },
+          {
+            "lang": "",
+            "text": "Fananyisani u rothola na tshaka dzi tshimbidzanaho kha luvhanda. Lushaka lwa vhuvhili lu tea u vha na maluvha nga tshifhinga tshi tshimbidzanaho, hu si u sokou vhibva nga tshifhinga tsho fhambanaho.",
+            "clip": false,
+            "lines": 5
+          },
+          {
+            "lang": "",
+            "text": "Fananyisani na vhudzulo ha henefho ha mavhiḓa/ḓaka ḽi re na matombo; maḓuvha a maluvha a si maḓuvha a khaṋo.",
+            "clip": false,
+            "lines": 3
+          }
+        ]
+      }
+    ],
+    "scrollResult": {
+      "scrollWidth": 390,
+      "clientWidth": 249,
+      "scrollLeft": 140.5,
+      "lastReachable": true
+    }
+  },
+  {
+    "lang": "ve",
+    "size": "desktop",
+    "font": "__Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", system-ui, sans-serif",
+    "overflow": false,
+    "scenes": [
+      {
+        "name": "tools",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Nangani",
+            "title": "Nangani",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 192.5,
+            "right": 232.5
+          },
+          {
+            "name": "Humiselani murahu",
+            "title": "Humiselani murahu",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 242.5,
+            "right": 282.5
+          },
+          {
+            "name": "Itani hafhu",
+            "title": "Itani hafhu",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 292.5,
+            "right": 332.5
+          },
+          {
+            "name": "Itani khophi",
+            "title": "Itani khophi ya tshithu kana zwithu zwo nangwaho — Cmd/Ctrl+D",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 342.5,
+            "right": 382.5
+          },
+          {
+            "name": "Lugisani mutalo",
+            "title": "Lavhelesani u thoma mutalo wa nnḓa wo nangwaho wo lugiswaho",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 392.5,
+            "right": 432.5
+          },
+          {
+            "name": "Fananyisani",
+            "title": "Lavhelesani u thoma u valwa ha zwikhala zwiṱukusa na zouni i re tsini",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 442.5,
+            "right": 482.5
+          },
+          {
+            "name": "Kunakisani",
+            "title": "Lavhelesani u thoma u otlollwa na u vhewa ha zwikhala zwi eḓanaho kha zwithu zwo nangwaho",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 492.5,
+            "right": 532.5
+          },
+          {
+            "name": "Thuthani",
+            "title": "Thuthani",
+            "width": 40,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 542.5,
+            "right": 582.5
+          },
+          {
+            "name": "Layers",
+            "title": "",
+            "width": 82.5625,
+            "height": 40,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 1161.9375,
+            "right": 1244.5
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "hint",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Close tip",
+            "title": "Close tip",
+            "width": 30,
+            "height": 30,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 1211.5,
+            "right": 1241.5
+          }
+        ],
+        "longText": [
+          {
+            "lang": "ve",
+            "text": "Kwamani khuḓa, ni kone u nanga Fhedzisani",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Tap corners, then Finish",
+            "clip": false,
+            "lines": 1
+          }
+        ]
+      },
+      {
+        "name": "line",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Khanselani",
+            "title": "",
+            "width": 128.4921875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 480.8984375,
+            "right": 609.390625
+          },
+          {
+            "name": "Tshithoma",
+            "title": "",
+            "width": 123.796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 617.390625,
+            "right": 741.1875
+          },
+          {
+            "name": "Fhedzisani mutalo",
+            "title": "",
+            "width": 206.9140625,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 749.1875,
+            "right": 956.1015625
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "zone",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Khanselani",
+            "title": "",
+            "width": 128.4921875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 480.91015625,
+            "right": 609.40234375
+          },
+          {
+            "name": "Tshithoma",
+            "title": "",
+            "width": 123.796875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 617.40234375,
+            "right": 741.19921875
+          },
+          {
+            "name": "Fhedzisani Zouni 1",
+            "title": "",
+            "width": 206.890625,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 749.19921875,
+            "right": 956.08984375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "tidy",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Khanselani",
+            "title": "",
+            "width": 128.4921875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 522.50390625,
+            "right": 650.99609375
+          },
+          {
+            "name": "Lugisani mutalo wa nnḓa",
+            "title": "",
+            "width": 255.5,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 658.99609375,
+            "right": 914.49609375
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "tidy-empty",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Valani",
+            "title": "",
+            "width": 95.84375,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 670.57421875,
+            "right": 766.41796875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "snap",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Khanselani",
+            "title": "",
+            "width": 128.4921875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 515.46484375,
+            "right": 643.95703125
+          },
+          {
+            "name": "Fananyisani na tshi re tsini",
+            "title": "",
+            "width": 269.578125,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 651.95703125,
+            "right": 921.53515625
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "snap-empty",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Valani",
+            "title": "",
+            "width": 95.84375,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 670.57421875,
+            "right": 766.41796875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "cleanup",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Khanselani",
+            "title": "",
+            "width": 128.4921875,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 574.33984375,
+            "right": 702.83203125
+          },
+          {
+            "name": "Kunakisani",
+            "title": "",
+            "width": 151.828125,
+            "height": 52,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 710.83203125,
+            "right": 862.66015625
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "cleanup-empty",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Valani",
+            "title": "",
+            "width": 95.84375,
+            "height": 44,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 670.57421875,
+            "right": 766.41796875
+          }
+        ],
+        "longText": []
+      },
+      {
+        "name": "sector",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Valani",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 1199.5,
+            "right": 1223.5
+          },
+          {
+            "name": "English",
+            "title": "",
+            "width": 41.21875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 213.5,
+            "right": 254.71875
+          },
+          {
+            "name": "Zwi vhonala zwo luga",
+            "title": "",
+            "width": 193.75,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 212,
+            "right": 405.75
+          }
+        ],
+        "longText": [
+          {
+            "lang": "ve",
+            "text": "Maipfi aya a Tshivenḓa ndi mvetamveto ya mutshini i sa athu ṱolwa.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "The Tshivenda wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "ve",
+            "text": "Ḓuvha ḽi na maanḓa nga maanḓa u bva DEVHULA — vheani mibethe yaṋu kha sia ḽeneḽo.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Sun: strongest from the NORTH — put your beds on that side.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "ve",
+            "text": "Ndinganyelo ya giridi ya kilima kha khoudinethe idzi: muya U BVA vhubvaḓuvha tshilimo, devhula-vhukovhela vhuriha. Khwaṱhisedzani fhethu.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Coordinate climate-grid mean: wind FROM the east in summer, north-west in winter. Confirm on site.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "ve",
+            "text": "Maḓi a elela a tshi tsela devhula — migero ya u fara maḓi i PFUKA u elela honoho · ṅwando u dzula fhasi henefho nga vhusiku vhu rotholelaho vhu si na muya.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Water flows downhill to the north — swales go ACROSS that flow · frost settles low there on still, cold nights.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "This site’s own wind data reads 90° off the regional pattern — a bimodal wind rose average can land between its two real lobes, not on either one; trust the regional sectors over this site’s single mean.",
+            "clip": false,
+            "lines": 2
+          }
+        ]
+      },
+      {
+        "name": "sector-mixed",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Valani",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 1199.5,
+            "right": 1223.5
+          },
+          {
+            "name": "English",
+            "title": "",
+            "width": 41.21875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 213.5,
+            "right": 254.71875
+          },
+          {
+            "name": "Zwi vhonala zwo luga",
+            "title": "",
+            "width": 193.75,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 212,
+            "right": 405.75
+          }
+        ],
+        "longText": [
+          {
+            "lang": "ve",
+            "text": "Maipfi aya a Tshivenḓa ndi mvetamveto ya mutshini i sa athu ṱolwa.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "The Tshivenda wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "ve",
+            "text": "Ḓuvha ḽi na maanḓa nga maanḓa u bva DEVHULA VHURIHA, TSHIPEMBE TSHILIMO — vheani mibethe yaṋu kha sia ḽeneḽo.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "Sun: strongest from the NORTH IN WINTER, SOUTH IN SUMMER — put your beds on that side.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "No regional fire-wind pattern for this area — walk the boundary and ask neighbours which side fires come from.",
+            "clip": false,
+            "lines": 1
+          }
+        ]
+      },
+      {
+        "name": "sector-missing",
+        "width": 1076,
+        "buttons": [
+          {
+            "name": "Valani",
+            "title": "",
+            "width": 24,
+            "height": 24,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 1199.5,
+            "right": 1223.5
+          },
+          {
+            "name": "English",
+            "title": "",
+            "width": 41.21875,
+            "height": 44,
+            "disabled": false,
+            "icon": 0,
+            "clip": false,
+            "x": 213.5,
+            "right": 254.71875
+          },
+          {
+            "name": "Zwi vhonala zwo luga",
+            "title": "",
+            "width": 193.75,
+            "height": 42,
+            "disabled": false,
+            "icon": 1,
+            "clip": false,
+            "x": 212,
+            "right": 405.75
+          }
+        ],
+        "longText": [
+          {
+            "lang": "ve",
+            "text": "Maipfi aya a Tshivenḓa ndi mvetamveto ya mutshini i sa athu ṱolwa.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "en",
+            "text": "The Tshivenda wording on this page is an unreviewed machine draft. Read the English before relying on it for a farming or account decision.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "ve",
+            "text": "Vulani fhethu afha kha mapa u thoma uri ni vhale maanḓa aho.",
+            "clip": false,
+            "lines": 1
+          }
+        ]
+      },
+      {
+        "name": "matching-verb",
+        "width": 1076,
+        "buttons": [],
+        "longText": [
+          {
+            "lang": "",
+            "text": "Fananyisani lushaka lwa tshimela u ya nga kilima ya fhethu honoho; iledzani ṅwando muhulwane na mavu a sa bvumisaho maḓi zwavhuḓi.",
+            "clip": false,
+            "lines": 1
+          },
+          {
+            "lang": "",
+            "text": "Fananyisani tshilimo tshi dudelaho na vhuriha vhu rotholelaho vhu si na ṅwando uri hu vhe na maluvha; tsireledzani kha muya ni sheledze zwimela zwiṱuku.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "",
+            "text": "Fananyisani lushaka lwa tsimu ya nḓirivhe na dzingu ḽa u bveledza, maḓi na maitele a u tikedza. Tshifhinga tsha mphakelo wa lushaka tshi ṱanganya madzingu manzhi.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "",
+            "text": "Shumisani matavhi a navhaho o kunaho ni fananyise lushaka na maitele a u bveledza na fhethu. U sheledza hu fulufhedzeaho na u langa malwadze ndi zwa ndeme.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "",
+            "text": "Fananyisani u rothola na tshaka dzi tshimbidzanaho kha luvhanda. Lushaka lwa vhuvhili lu tea u vha na maluvha nga tshifhinga tshi tshimbidzanaho, hu si u sokou vhibva nga tshifhinga tsho fhambanaho.",
+            "clip": false,
+            "lines": 2
+          },
+          {
+            "lang": "",
+            "text": "Fananyisani na vhudzulo ha henefho ha mavhiḓa/ḓaka ḽi re na matombo; maḓuvha a maluvha a si maḓuvha a khaṋo.",
+            "clip": false,
+            "lines": 1
+          }
+        ]
+      }
+    ],
+    "scrollResult": {
+      "scrollWidth": 959,
+      "clientWidth": 959,
+      "scrollLeft": 0,
+      "lastReachable": true
+    }
+  }
+]

@@ -32,8 +32,29 @@ export function coverageOf(englishDict: Dict, localeDict: Dict): LangCoverage {
   let translated = 0;
   for (const key of keys) {
     const value = localeDict[key];
-    if (value !== undefined && value !== englishDict[key]) translated += 1;
+    if (value?.trim() && value !== englishDict[key]) translated += 1;
   }
   const ratio = translated / total;
   return { translated, total, ratio, complete: ratio >= LANG_COVERAGE_COMPLETE_THRESHOLD };
+}
+
+export interface TranslationGap {
+  key: string;
+  reason: 'missing' | 'empty' | 'english' | 'placeholders';
+}
+
+/** A dictionary percentage cannot tell us which buttons still fall back, or lost their values. */
+export function translationGaps(englishDict: Dict, localeDict: Dict): TranslationGap[] {
+  const placeholders = (value: string) => (value.match(/\{[A-Za-z][A-Za-z0-9_]*\}/g) ?? []).sort();
+  const gaps: TranslationGap[] = [];
+  for (const [key, english] of Object.entries(englishDict)) {
+    const value = localeDict[key];
+    if (value === undefined) gaps.push({ key, reason: 'missing' });
+    else if (!value.trim()) gaps.push({ key, reason: 'empty' });
+    else if (value === english) gaps.push({ key, reason: 'english' });
+    else if (JSON.stringify(placeholders(value)) !== JSON.stringify(placeholders(english))) {
+      gaps.push({ key, reason: 'placeholders' });
+    }
+  }
+  return gaps;
 }

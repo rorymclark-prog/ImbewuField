@@ -1,0 +1,202 @@
+{
+  "date": "2026-10-21",
+  "branch": "codex/four-language-home-reports",
+  "stackedOn": "#1029",
+  "results": [
+    {
+      "route": "home",
+      "lang": "zu",
+      "size": "phone",
+      "documentLang": "zu",
+      "overflow": false,
+      "date": "ULWESITHATHU · 21 OKTHOBA",
+      "notes": 1
+    },
+    {
+      "route": "home",
+      "lang": "zu",
+      "size": "desktop",
+      "documentLang": "zu",
+      "overflow": false,
+      "date": "ULWESITHATHU · 21 OKTHOBA",
+      "notes": 1
+    },
+    {
+      "route": "reports",
+      "lang": "zu",
+      "size": "phone",
+      "documentLang": "zu",
+      "overflow": false,
+      "notes": 1,
+      "buttons": [
+        "",
+        "",
+        "Izindawo ezigciniwe · 0",
+        "Imibiko egciniwe · 0"
+      ]
+    },
+    {
+      "route": "reports",
+      "lang": "zu",
+      "size": "desktop",
+      "documentLang": "zu",
+      "overflow": false,
+      "notes": 1,
+      "buttons": [
+        "",
+        "",
+        "Izindawo ezigciniwe · 0",
+        "Imibiko egciniwe · 0"
+      ]
+    },
+    {
+      "route": "home",
+      "lang": "st",
+      "size": "phone",
+      "documentLang": "st",
+      "overflow": false,
+      "date": "LABORARO · 21 MPHALANE",
+      "notes": 1
+    },
+    {
+      "route": "home",
+      "lang": "st",
+      "size": "desktop",
+      "documentLang": "st",
+      "overflow": false,
+      "date": "LABORARO · 21 MPHALANE",
+      "notes": 1
+    },
+    {
+      "route": "reports",
+      "lang": "st",
+      "size": "phone",
+      "documentLang": "st",
+      "overflow": false,
+      "notes": 1,
+      "buttons": [
+        "",
+        "",
+        "Dibaka tse bolokilweng · 0",
+        "Ditlaleho tse bolokilweng · 0"
+      ]
+    },
+    {
+      "route": "reports",
+      "lang": "st",
+      "size": "desktop",
+      "documentLang": "st",
+      "overflow": false,
+      "notes": 1,
+      "buttons": [
+        "",
+        "",
+        "Dibaka tse bolokilweng · 0",
+        "Ditlaleho tse bolokilweng · 0"
+      ]
+    },
+    {
+      "route": "home",
+      "lang": "ts",
+      "size": "phone",
+      "documentLang": "ts",
+      "overflow": false,
+      "date": "RAVUNHARHU · 21 NHLANGULA",
+      "notes": 1
+    },
+    {
+      "route": "home",
+      "lang": "ts",
+      "size": "desktop",
+      "documentLang": "ts",
+      "overflow": false,
+      "date": "RAVUNHARHU · 21 NHLANGULA",
+      "notes": 1
+    },
+    {
+      "route": "reports",
+      "lang": "ts",
+      "size": "phone",
+      "documentLang": "ts",
+      "overflow": false,
+      "notes": 1,
+      "buttons": [
+        "",
+        "",
+        "Tindhawu leti hlayisiweke · 0",
+        "Swiviko leswi hlayisiweke · 0"
+      ]
+    },
+    {
+      "route": "reports",
+      "lang": "ts",
+      "size": "desktop",
+      "documentLang": "ts",
+      "overflow": false,
+      "notes": 1,
+      "buttons": [
+        "",
+        "",
+        "Tindhawu leti hlayisiweke · 0",
+        "Swiviko leswi hlayisiweke · 0"
+      ]
+    },
+    {
+      "route": "home",
+      "lang": "ve",
+      "size": "phone",
+      "documentLang": "ve",
+      "overflow": false,
+      "date": "ḼAVHURARU · 21 TSHIMEDZI",
+      "notes": 1
+    },
+    {
+      "route": "home",
+      "lang": "ve",
+      "size": "desktop",
+      "documentLang": "ve",
+      "overflow": false,
+      "date": "ḼAVHURARU · 21 TSHIMEDZI",
+      "notes": 1
+    },
+    {
+      "route": "reports",
+      "lang": "ve",
+      "size": "phone",
+      "documentLang": "ve",
+      "overflow": false,
+      "notes": 1,
+      "buttons": [
+        "",
+        "",
+        "Fhethu ho vhulungwaho · 0",
+        "Mivhigo yo vhulungwaho · 0"
+      ]
+    },
+    {
+      "route": "reports",
+      "lang": "ve",
+      "size": "desktop",
+      "documentLang": "ve",
+      "overflow": false,
+      "notes": 1,
+      "buttons": [
+        "",
+        "",
+        "Fhethu ho vhulungwaho · 0",
+        "Mivhigo yo vhulungwaho · 0"
+      ]
+    }
+  ],
+  "interaction": "Restored each language preference, opened Home and empty Reports, opened the progress tooltip. No paid tool, saved-report generation or form submission.",
+  "visualLimit": "Existing floating Lima button partly overlaps the empty-sites help paragraph on phone.",
+  "reviewStatus": "Unreviewed AI drafts, no fluent-speaker approval.",
+  "finalExampleLinkCheck": {
+    "ts": "N’kombise xikombiso ku sungula",
+    "ve": "Ntsumbedzeni tsumbo u thoma",
+    "viewports": [
+      "phone",
+      "desktop"
+    ]
+  }
+}

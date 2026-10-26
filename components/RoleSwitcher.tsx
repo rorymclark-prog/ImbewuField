@@ -6,6 +6,7 @@ import { useLanguage } from '@/lib/i18n';
 import { useRouter } from 'next/navigation';
 import { useRoleNavigation, startRolePreview } from '@/lib/use-role-navigation';
 import { visibleRoleTabs } from '@/lib/role-navigation';
+import { sampleWorkspaceText } from '@/lib/sample-tour-localization';
 
 const ROLES: { key: string; labelKey: string; Icon: LucideIcon; href: string; ready: boolean }[] = [
   { key: 'farmer',  labelKey: 'homeRoleFarmerLabel',  Icon: Sprout,        href: '/farmer',  ready: true },
@@ -20,7 +21,8 @@ const ROLES: { key: string; labelKey: string; Icon: LucideIcon; href: string; re
 const ROLE_ALIASES: Record<string, string> = { facilitator: 'mentor' };
 
 export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { current: string; inMenu?: boolean; onNavigate?: () => void }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const ui = (english:string,zulu:string,values:Record<string,string|number>={}) => sampleWorkspaceText(lang,english,zulu,values);
   const router = useRouter();
   const { accountRole, navigationRole, sample } = useRoleNavigation();
   const visible = visibleRoleTabs(navigationRole);
@@ -38,11 +40,11 @@ export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { 
           : r.ready
           ? { background: 'transparent', border: '1px solid transparent', color: 'var(--text-primary)' }
           : { background: 'transparent', border: '1px solid transparent', color: 'var(--text-secondary)', opacity: 0.5, cursor: 'not-allowed' };
-        const ariaLabel = `${t(r.labelKey)}${active ? ' (current)' : ''}`;
+        const ariaLabel = active ? ui('{label} (current)', '{label} (yamanje)', {label:t(r.labelKey)}) : t(r.labelKey);
 
         if (!r.ready) {
           return (
-            <span key={r.key} className={base} style={style} title="Coming soon" aria-label={`${t(r.labelKey)} (coming soon)`}>
+            <span key={r.key} className={base} style={style} title={ui('Coming soon', 'Iyeza maduze')} aria-label={ui('{label} (coming soon)', '{label} (iyeza maduze)', {label:t(r.labelKey)})}>
               <r.Icon size={16} />
               <span data-header-label className={inMenu ? undefined : 'hidden md:inline'}>{t(r.labelKey)}</span>
             </span>
@@ -57,17 +59,17 @@ export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { 
             style={style}
             aria-label={ariaLabel}
             aria-current={active ? 'page' : undefined}
-            title={isAliasMatch ? 'Design map is the Mentor toolkit' : undefined}
+            title={isAliasMatch ? ui('Design map is the Mentor toolkit', 'Imephu yomklamo iyithuluzi lomeluleki') : undefined}
           >
             <r.Icon size={16} />
             <span data-header-label className={inMenu ? undefined : 'hidden md:inline'}>{t(r.labelKey)}</span>
           </Link>
         );
       })}
-      {(accountRole === 'ngo' || accountRole === 'admin') && <label className="font-sans text-sm" style={{ padding: '4px 8px', color: '#243d2d' }}>
-        <span className="sr-only">View as with demonstration records</span>
-        <select aria-label="View as with demonstration records" value="" onChange={e => { const target = ROLES.find(r => r.key === e.target.value); if (target && startRolePreview(target.key)) { onNavigate?.(); router.push(target.href); } }} style={{ minHeight: 44, maxWidth: 180, background: 'white', color: '#243d2d', borderRadius: 8, padding: 6 }}>
-          <option value="">{sample ? 'Switch view…' : 'Switch practice view…'}</option>
+      {(accountRole === 'ngo' || accountRole === 'admin') && <label className="font-sans text-sm" style={{ padding: '4px 8px', color: 'var(--text-primary)' }}>
+        <span className="sr-only">{ui('View as with demonstration records', 'Buka njengendima ethile ngamarekhodi okubonisa')}</span>
+        <select aria-label={ui('View as with demonstration records', 'Buka njengendima ethile ngamarekhodi okubonisa')} value="" onChange={e => { const target = ROLES.find(r => r.key === e.target.value); if (target && startRolePreview(target.key)) { onNavigate?.(); router.push(target.href); } }} style={{ minHeight: 44, maxWidth: 180, background: 'var(--bg-1)', color: 'var(--text-primary)', borderRadius: 8, padding: 6 }}>
+          <option value="">{sample ? ui('Switch view…', 'Shintsha isikrini…') : ui('Switch practice view…', 'Shintsha isikrini sokuzilolonga…')}</option>
           {ROLES.map(r => <option key={r.key} value={r.key}>{t(r.labelKey)}</option>)}
         </select>
       </label>}

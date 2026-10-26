@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import { actualOfflineUi, offlineNodeText } from './offline-ui-renderer.ts';
+import { controlT } from './control-icon-renderers.ts';
 
 // app/offline/page.tsx: the isiZulu "English source" <summary> toggles were 32px tall (below the
 // 44px tap-target floor every other control in this app uses), and Simple mode showed a raw JSON
@@ -9,13 +11,17 @@ import test from 'node:test';
 
 const source = readFileSync(new URL('../app/offline/page.tsx', import.meta.url), 'utf8');
 
-test('the isiZulu source toggle meets the 44px tap-target floor', () => {
-  const at = source.indexOf('English source');
-  assert.ok(at > -1, 'the English-source <summary> toggle is gone — this test needs updating, not deleting');
-  const summaryOpen = source.lastIndexOf('<summary', at);
-  const summaryTag = source.slice(summaryOpen, at);
-  assert.match(summaryTag, /minHeight:\s*44/, 'the source toggle must be at least 44px tall');
-  assert.doesNotMatch(summaryTag, /minHeight:\s*32/, 'the old 32px height must be gone');
+// The source prefix is now translated in every target. Guard the rendered tap target,
+// rather than pinning the old English literal or a fixed JSX character distance.
+test('every target source toggle meets the 44px tap-target floor', async () => {
+  for (const lang of ['zu','st','ts','ve'] as const) {
+    const h = await actualOfflineUi(lang);
+    try {
+      const summaries = h.renderer.root.findAllByType('summary').filter(s => offlineNodeText(s) === controlT(lang)('offlineSourceLabel'));
+      assert.ok(summaries.length, 'the English-source disclosures must remain available');
+      for (const summary of summaries) assert.ok(summary.props.style.minHeight >= 44, 'the source toggle must be at least 44px tall');
+    } finally { await h.dispose(); }
+  }
 });
 
 test('offline page reads the Simple/All tools switch', () => {
@@ -23,11 +29,14 @@ test('offline page reads the Simple/All tools switch', () => {
   assert.match(source, /useAppLevel\(\)\s*===\s*'simple'/);
 });
 
-test('Simple mode hides the raw JSON download of a queued entry', () => {
-  const at = source.indexOf('onClick={()=>download(row)}');
-  assert.ok(at > -1, 'the per-entry JSON download button is gone — this test needs updating, not deleting');
-  const before = source.slice(Math.max(0, at - 40), at);
-  assert.match(before, /\{!simple&&/, 'the download button must be gated on Simple mode');
+test('Simple mode hides the raw JSON download of a queued entry while All tools retains it', async () => {
+  for (const simple of [false,true]) {
+    const h = await actualOfflineUi('st', { simple });
+    try {
+      const downloads = h.renderer.root.findAllByProps({ 'aria-label': controlT('st')('offlineDownloadCopy') });
+      assert.equal(downloads.length > 0, !simple, 'technical downloads follow the real display-level gate');
+    } finally { await h.dispose(); }
+  }
 });
 
 test('Simple mode hides the page-readiness details block', () => {

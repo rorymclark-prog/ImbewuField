@@ -1,0 +1,499 @@
+[
+  {
+    "english": "Keep roots well drained; water matters during flowering.",
+    "paths": [
+      "PRODUCT_PROFILES.persea-americana.care.0"
+    ]
+  },
+  {
+    "english": "KZN sequence: earlier Fuerte (May–Nov), middle Hass (Aug–Dec), later Ryan (Nov–Feb). These seasons overlap. Buy labelled grafted trees; confirm rootstock and pollination partners.",
+    "paths": [
+      "PRODUCT_PROFILES.persea-americana.purchase.0"
+    ]
+  },
+  {
+    "english": "Warm, frost-free conditions and dependable water are needed. Keep a replacement follower after the fruiting stem is removed.",
+    "paths": [
+      "PRODUCT_PROFILES.musa-acuminata-aaa-group.care.0"
+    ]
+  },
+  {
+    "english": "Cooler KZN: Williams; warmer valleys: Grand Nain; windy coast: Chinese Cavendish. Buy clean planting material. These are climate choices, not early/middle/late seasons.",
+    "paths": [
+      "PRODUCT_PROFILES.musa-acuminata-aaa-group.purchase.0"
+    ]
+  },
+  {
+    "english": "Avoid frost and waterlogging. Honey Gold needs male and female plants; Sunrise Solo is hermaphrodite.",
+    "paths": [
+      "PRODUCT_PROFILES.carica-papaya.care.0"
+    ]
+  },
+  {
+    "english": "Planning choice for warm sites: Sunrise Solo. Confirm plant sex/form with the nursery.",
+    "paths": [
+      "PRODUCT_PROFILES.carica-papaya.purchase.0"
+    ]
+  },
+  {
+    "english": "Nuts: record nut-in-shell separately from kernels.",
+    "paths": [
+      "PRODUCT_PROFILES.macadamia-integrifolia.products"
+    ]
+  },
+  {
+    "english": "Match the cultivar to the microclimate; avoid hard frost and poorly drained ground.",
+    "paths": [
+      "PRODUCT_PROFILES.macadamia-integrifolia.care.0"
+    ]
+  },
+  {
+    "english": "Collect fallen nuts frequently, dehusk promptly and dry with clean ventilation. Keep poultry and manure away from harvesting nuts.",
+    "paths": [
+      "PRODUCT_PROFILES.macadamia-integrifolia.care.1"
+    ]
+  },
+  {
+    "english": "KZN coastal 90–300 m shortlist: Beaumont (695), Purvis (294), Makai (800), 660. Confirm site elevation and current pollination/maturity advice.",
+    "paths": [
+      "PRODUCT_PROFILES.macadamia-integrifolia.purchase.0"
+    ]
+  },
+  {
+    "english": "Check frost, drainage and flowering-season disease pressure. Heat and sunburn sensitivity differ between cultivars.",
+    "paths": [
+      "PRODUCT_PROFILES.mangifera-indica.care.0"
+    ]
+  },
+  {
+    "english": "ARC identifies Tommy Atkins and Kent among more heat/sunburn-tolerant options; Sensation and Keitt are more susceptible. Confirm local harvest dates before choosing a succession.",
+    "paths": [
+      "PRODUCT_PROFILES.mangifera-indica.purchase.0"
+    ]
+  },
+  {
+    "english": "Check the actual cultivar, rootstock, winter chilling and compatible pollen source before buying. A warm or cold climate-zone label alone does not establish these conditions.",
+    "paths": [
+      "PRODUCT_PROFILES.malus-domestica.care.0"
+    ]
+  },
+  {
+    "english": "Afri-Star is an ARC-bred low-chill candidate with a stated 300–500 Infruitec Chilling Unit requirement; its December–January dates were obtained at Bien Donne, Simondium, Western Cape and need local checking elsewhere. Granny Smith has an Elgin first-pick reference in late March; SAPO names Golden Delicious or Hillieri as pollen partners. These are separate cultivar references, not a continuous picking season or a warm KZN recommendation. Confirm current nursery stock and local performance.",
+    "paths": [
+      "PRODUCT_PROFILES.malus-domestica.purchase.0"
+    ]
+  },
+  {
+    "english": "Check drainage, water and cultivar/rootstock fit. Main crop timing differs between warm and cool areas; smaller additional crops are not a full-year promise.",
+    "paths": [
+      "PRODUCT_PROFILES.citrus-limon.care.0"
+    ]
+  },
+  {
+    "english": "Request labelled lemon stock and rootstock advice from a reputable citrus nursery. A locally validated named cultivar shortlist is not established here.",
+    "paths": [
+      "PRODUCT_PROFILES.citrus-limon.purchase.0"
+    ]
+  },
+  {
+    "english": "Match warm summers with cool, frost-free winter conditions for flowering; protect from wind and keep young plants watered.",
+    "paths": [
+      "PRODUCT_PROFILES.litchi-chinensis.care.0"
+    ]
+  },
+  {
+    "english": "KZN candidates: earlier Fay Zee Siu (mid-November–mid-December), middle Mauritius (mid-November–early-January), later Wai Chee (end-January–end-February), using SALGA/ARC cultivar references. Confirm local dates, nursery stock and flowering conditions.",
+    "paths": [
+      "PRODUCT_PROFILES.litchi-chinensis.purchase.0"
+    ]
+  },
+  {
+    "english": "Provide trellising and pruning; avoid waterlogging and inspect for root rot and virus problems.",
+    "paths": [
+      "PRODUCT_PROFILES.passiflora-edulis.care.0"
+    ]
+  },
+  {
+    "english": "Purple granadilla is the KZN fresh-fruit reference; yellow forms are more acidic and used for juice. Confirm stock health and local season.",
+    "paths": [
+      "PRODUCT_PROFILES.passiflora-edulis.purchase.0"
+    ]
+  },
+  {
+    "english": "Match the vineyard variety to its production region, water and support system. The national supply season combines several regions.",
+    "paths": [
+      "PRODUCT_PROFILES.vitis-vinifera.care.0"
+    ]
+  },
+  {
+    "english": "DAFF industry reference: earlier Prime Seedless, Sugraone and Flame Seedless; later Dauphine and Crimson Seedless. SATI identifies Orange River choices including Prime, Thompson Seedless and Sugraone. Confirm local dates and stock; the industry sequence is not a KZN farm calendar.",
+    "paths": [
+      "PRODUCT_PROFILES.vitis-vinifera.purchase.0"
+    ]
+  },
+  {
+    "english": "Use clean runners and match the variety and production system to the area. Reliable irrigation and disease control matter.",
+    "paths": [
+      "PRODUCT_PROFILES.fragaria-x-ananassa.care.0"
+    ]
+  },
+  {
+    "english": "KZN guide names Chandler and Selecta. Current local availability and performance need checking; tunnel and outdoor seasons must remain separate.",
+    "paths": [
+      "PRODUCT_PROFILES.fragaria-x-ananassa.purchase.0"
+    ]
+  },
+  {
+    "english": "Fruit: record whole fruit separately from arils or juice.",
+    "paths": [
+      "PRODUCT_PROFILES.punica-granatum.products"
+    ]
+  },
+  {
+    "english": "Check fruit maturity and post-harvest handling. Sunburn, cracking and rot vary by cultivar.",
+    "paths": [
+      "PRODUCT_PROFILES.punica-granatum.care.0"
+    ]
+  },
+  {
+    "english": "Wonderful is an SA industry cultivar. Treat it as a candidate, not proof of fit for a humid KZN site; no locally validated early/middle succession is sourced here.",
+    "paths": [
+      "PRODUCT_PROFILES.punica-granatum.purchase.0"
+    ]
+  },
+  {
+    "english": "Leaves and green pods; keep their records separate.",
+    "paths": [
+      "PRODUCT_PROFILES.moringa-oleifera.products"
+    ]
+  },
+  {
+    "english": "Choose a sunny, well-drained growing position, protect establishment and plan pruning for leaf harvest.",
+    "paths": [
+      "PRODUCT_PROFILES.moringa-oleifera.care.0"
+    ]
+  },
+  {
+    "english": "Use correctly identified local planting material. No locally validated named cultivar shortlist is sourced; this plan does not claim nitrogen fixation or medicinal effects.",
+    "paths": [
+      "PRODUCT_PROFILES.moringa-oleifera.purchase.0"
+    ]
+  },
+  {
+    "english": "Soft citrus generally favours cooler, drier conditions. Confirm rootstock and pollination/seediness requirements before mixing varieties.",
+    "paths": [
+      "PRODUCT_PROFILES.citrus-reticulata.care.0"
+    ]
+  },
+  {
+    "english": "For a suitable site: early Miho Wase satsuma (from mid-March); middle clementines (late March–mid-June); later Nadorcott mandarin (mid-May–September). Dates are broad SA references, not a local calendar. Order labelled nursery trees.",
+    "paths": [
+      "PRODUCT_PROFILES.citrus-reticulata.purchase.0"
+    ]
+  },
+  {
+    "english": "Check chilling, support and pruning system before planting. Autumn-bearing varieties must not inherit a spring-bearing calendar.",
+    "paths": [
+      "PRODUCT_PROFILES.rubus-idaeus.care.0"
+    ]
+  },
+  {
+    "english": "KZN guide: low-chill autumn bearers Heritage or Autumn Bliss; spring bearers Glen Prosen, Glen Lyon or Tulameen need more chilling. Confirm local dates.",
+    "paths": [
+      "PRODUCT_PROFILES.rubus-idaeus.purchase.0"
+    ]
+  },
+  {
+    "english": "Check soil acidity, cultivar chilling, irrigation and pollination requirements before buying.",
+    "paths": [
+      "PRODUCT_PROFILES.vaccinium-corymbosum.care.0"
+    ]
+  },
+  {
+    "english": "Warm-climate candidate: Biloxi, a low-chill southern highbush cultivar, reported by a nursery producing stock in South Africa. Obtain a compatible southern highbush pollination partner. Early flowering can suffer spring frost; local soil, chill and harvest dates still need checking. Do not substitute rabbiteye plants as a highbush cultivar.",
+    "paths": [
+      "PRODUCT_PROFILES.vaccinium-corymbosum.purchase.0"
+    ]
+  },
+  {
+    "english": "Use compatible pollen-shedding and receptive varieties. Wet-summer areas need scab-resistant choices; early nut maturity alone does not establish pollination compatibility.",
+    "paths": [
+      "PRODUCT_PROFILES.carya-illinoinensis.care.0"
+    ]
+  },
+  {
+    "english": "SAPPA shortlist: wetter KZN/Lowveld — Ukulinga, Cape Fear, Choctaw; wet, colder KZN — Barton; drier Highveld — Barton, Pawnee, Wichita; dry western areas — Wichita, Choctaw, Western Schley. The inferred climate group alone cannot distinguish all these areas. Confirm local humidity, soils and the pollination pair before buying.",
+    "paths": [
+      "PRODUCT_PROFILES.carya-illinoinensis.purchase.0"
+    ]
+  },
+  {
+    "english": "Confirm cultivar-specific chilling and spring frost risk. Mean winter temperature is not a chill-hour measurement.",
+    "paths": [
+      "PRODUCT_PROFILES.prunus-persica.care.0"
+    ]
+  },
+  {
+    "english": "Low-to-medium chill candidate: Earligold (200–400 Infruitec units), with a December first-pick reference from Bien Donne, Western Cape. Later Cederberg has a January reference. Confirm actual chilling, stock and local dates before staging varieties.",
+    "paths": [
+      "PRODUCT_PROFILES.prunus-persica.purchase.0"
+    ]
+  },
+  {
+    "english": "Match chilling and pollination partners. A second variety must flower compatibly, not merely ripen at a different time.",
+    "paths": [
+      "PRODUCT_PROFILES.prunus-salicina.care.0"
+    ]
+  },
+  {
+    "english": "Candidate: African Delight (200–400 Infruitec units). Pollinators listed by ARC/Culdevco: Pioneer or African Rose. Late-February first-pick data is from the Western Cape reference site, not a promise for warm KZN.",
+    "paths": [
+      "PRODUCT_PROFILES.prunus-salicina.purchase.0"
+    ]
+  },
+  {
+    "english": "Ripe fruit for fresh use or preserves.",
+    "paths": [
+      "PRODUCT_PROFILES.harpephyllum-caffrum.products"
+    ]
+  },
+  {
+    "english": "Frost-free regional reference; male and female trees are separate.",
+    "paths": [
+      "PRODUCT_PROFILES.harpephyllum-caffrum.care.0"
+    ]
+  },
+  {
+    "english": "Request correctly identified local fruiting stock and pollination provision; no named cultivar is sourced.",
+    "paths": [
+      "PRODUCT_PROFILES.harpephyllum-caffrum.purchase.0"
+    ]
+  },
+  {
+    "english": "Ripe fruit.",
+    "paths": [
+      "PRODUCT_PROFILES.englerophytum-magalismontanum.products",
+      "PRODUCT_PROFILES.carpobrotus-edulis.products",
+      "PRODUCT_PROFILES.garcinia-livingstonei.products",
+      "PRODUCT_PROFILES.mimusops-zeyheri.products",
+      "PRODUCT_PROFILES.phoenix-reclinata.products"
+    ]
+  },
+  {
+    "english": "Match the local rocky woodland/forest habitat; flowering dates are not harvest dates.",
+    "paths": [
+      "PRODUCT_PROFILES.englerophytum-magalismontanum.care.0"
+    ]
+  },
+  {
+    "english": "Request correctly identified local fruiting material; no named cultivar is sourced.",
+    "paths": [
+      "PRODUCT_PROFILES.englerophytum-magalismontanum.purchase.0"
+    ]
+  },
+  {
+    "english": "Ripe fruit, fresh or dried.",
+    "paths": [
+      "PRODUCT_PROFILES.vangueria-infausta.products",
+      "PRODUCT_PROFILES.grewia-occidentalis.products"
+    ]
+  },
+  {
+    "english": "Confirm local establishment conditions before relying on the regional fruiting reference.",
+    "paths": [
+      "PRODUCT_PROFILES.vangueria-infausta.care.0"
+    ]
+  },
+  {
+    "english": "Request locally appropriate fruiting stock; no named cultivar is sourced.",
+    "paths": [
+      "PRODUCT_PROFILES.vangueria-infausta.purchase.0"
+    ]
+  },
+  {
+    "english": "Ripe fruit pulp only.",
+    "paths": [
+      "PRODUCT_PROFILES.strychnos-spinosa.products"
+    ]
+  },
+  {
+    "english": "Seeds and unripe fruit are toxic. Keep children away from unsupervised harvesting and preparation.",
+    "paths": [
+      "PRODUCT_PROFILES.strychnos-spinosa.care.0"
+    ]
+  },
+  {
+    "english": "Confirm identity and appropriate handling before including it in a food plan; no named cultivar is sourced.",
+    "paths": [
+      "PRODUCT_PROFILES.strychnos-spinosa.purchase.0"
+    ]
+  },
+  {
+    "english": "Ripe fruit, fresh or preserved.",
+    "paths": [
+      "PRODUCT_PROFILES.carissa-macrocarpa.products"
+    ]
+  },
+  {
+    "english": "Coastal plant; allow for thorns near children and paths.",
+    "paths": [
+      "PRODUCT_PROFILES.carissa-macrocarpa.care.0"
+    ]
+  },
+  {
+    "english": "Ask for a locally suitable fruiting plant; no named food cultivar is established by this source.",
+    "paths": [
+      "PRODUCT_PROFILES.carissa-macrocarpa.purchase.0"
+    ]
+  },
+  {
+    "english": "Full sun and well-drained ground; a waterwise Cape groundcover. Flowering dates are not picking dates.",
+    "paths": [
+      "PRODUCT_PROFILES.carpobrotus-edulis.care.0"
+    ]
+  },
+  {
+    "english": "Use correctly identified local planting material; no named cultivar is sourced.",
+    "paths": [
+      "PRODUCT_PROFILES.carpobrotus-edulis.purchase.0"
+    ]
+  },
+  {
+    "english": "Fruit for preserves.",
+    "paths": [
+      "PRODUCT_PROFILES.dovyalis-afra.products"
+    ]
+  },
+  {
+    "english": "Thorny hedge; plan male and female plants for fruit.",
+    "paths": [
+      "PRODUCT_PROFILES.dovyalis-afra.care.0"
+    ]
+  },
+  {
+    "english": "Request identified fruiting material and a compatible male plant; no named cultivar is sourced.",
+    "paths": [
+      "PRODUCT_PROFILES.dovyalis-afra.purchase.0"
+    ]
+  },
+  {
+    "english": "Fruit and kernels.",
+    "paths": [
+      "PRODUCT_PROFILES.sclerocarya-birrea-subsp-caffra.products"
+    ]
+  },
+  {
+    "english": "Male and female trees are separate. Preserve space for the mature tree.",
+    "paths": [
+      "PRODUCT_PROFILES.sclerocarya-birrea-subsp-caffra.care.0"
+    ]
+  },
+  {
+    "english": "Ask for a known fruiting female and pollination provision; nationality alone does not establish local fit.",
+    "paths": [
+      "PRODUCT_PROFILES.sclerocarya-birrea-subsp-caffra.purchase.0"
+    ]
+  },
+  {
+    "english": "Cold-sensitive; check a warm, sheltered site.",
+    "paths": [
+      "PRODUCT_PROFILES.garcinia-livingstonei.care.0"
+    ]
+  },
+  {
+    "english": "Confirm local fruiting stock and provenance; no named cultivar is sourced.",
+    "paths": [
+      "PRODUCT_PROFILES.garcinia-livingstonei.purchase.0"
+    ]
+  },
+  {
+    "english": "Frost- and drought-hardy; establishment care still matters.",
+    "paths": [
+      "PRODUCT_PROFILES.grewia-occidentalis.care.0"
+    ]
+  },
+  {
+    "english": "Choose locally appropriate, correctly identified material; no named cultivar is sourced.",
+    "paths": [
+      "PRODUCT_PROFILES.grewia-occidentalis.purchase.0"
+    ]
+  },
+  {
+    "english": "Ripe fruit pulp for fresh use or preserves.",
+    "paths": [
+      "PRODUCT_PROFILES.pappea-capensis.products"
+    ]
+  },
+  {
+    "english": "Growth is slower in cold or dry conditions. Seed oil is not presented here as cooking oil.",
+    "paths": [
+      "PRODUCT_PROFILES.pappea-capensis.care.0"
+    ]
+  },
+  {
+    "english": "Confirm local fruiting material; no named cultivar is sourced.",
+    "paths": [
+      "PRODUCT_PROFILES.pappea-capensis.purchase.0"
+    ]
+  },
+  {
+    "english": "Best in summer-rain areas with little frost; protect young trees in colder sites.",
+    "paths": [
+      "PRODUCT_PROFILES.mimusops-zeyheri.care.0"
+    ]
+  },
+  {
+    "english": "Confirm local suitability and fruiting stock; no named cultivar is sourced.",
+    "paths": [
+      "PRODUCT_PROFILES.mimusops-zeyheri.purchase.0"
+    ]
+  },
+  {
+    "english": "Ripe berries.",
+    "paths": [
+      "PRODUCT_PROFILES.syzygium-cordatum.products"
+    ]
+  },
+  {
+    "english": "Water-loving: a dry site needs a dependable moisture source. Flowering for bees is not a honey-harvest forecast.",
+    "paths": [
+      "PRODUCT_PROFILES.syzygium-cordatum.care.0"
+    ]
+  },
+  {
+    "english": "Choose a moist position and local provenance; no named cultivar is sourced.",
+    "paths": [
+      "PRODUCT_PROFILES.syzygium-cordatum.purchase.0"
+    ]
+  },
+  {
+    "english": "Male and female plants are separate. Allow for the clump and sharp leaf bases.",
+    "paths": [
+      "PRODUCT_PROFILES.phoenix-reclinata.care.0"
+    ]
+  },
+  {
+    "english": "Confirm fruiting female stock and a male pollination source; no named cultivar is sourced.",
+    "paths": [
+      "PRODUCT_PROFILES.phoenix-reclinata.purchase.0"
+    ]
+  },
+  {
+    "english": "Ripe fruit for preserves.",
+    "paths": [
+      "PRODUCT_PROFILES.rhoicissus-tomentosa.products"
+    ]
+  },
+  {
+    "english": "Provide climbing support. Tuberous roots are poisonous; children should not forage unsupervised.",
+    "paths": [
+      "PRODUCT_PROFILES.rhoicissus-tomentosa.care.0"
+    ]
+  },
+  {
+    "english": "Use correctly identified local material; no named cultivar is sourced.",
+    "paths": [
+      "PRODUCT_PROFILES.rhoicissus-tomentosa.purchase.0"
+    ]
+  }
+]

@@ -1,0 +1,84 @@
+{
+  "results": [
+    {
+      "lang": "zu",
+      "theme": "light",
+      "initialCloseFocus": true,
+      "buttonClose": true,
+      "backdropClose": true,
+      "restoredFocus": true,
+      "noticeEnglishSwitchPreservedCaption": true
+    },
+    {
+      "lang": "zu",
+      "theme": "dark",
+      "initialCloseFocus": true,
+      "buttonClose": true,
+      "backdropClose": true,
+      "restoredFocus": true,
+      "noticeEnglishSwitchPreservedCaption": true
+    },
+    {
+      "lang": "st",
+      "theme": "light",
+      "initialCloseFocus": true,
+      "buttonClose": true,
+      "backdropClose": true,
+      "restoredFocus": true,
+      "noticeEnglishSwitchPreservedCaption": true
+    },
+    {
+      "lang": "st",
+      "theme": "dark",
+      "initialCloseFocus": true,
+      "buttonClose": true,
+      "backdropClose": true,
+      "restoredFocus": true,
+      "noticeEnglishSwitchPreservedCaption": true
+    },
+    {
+      "lang": "ts",
+      "theme": "light",
+      "initialCloseFocus": true,
+      "buttonClose": true,
+      "backdropClose": true,
+      "restoredFocus": true,
+      "noticeEnglishSwitchPreservedCaption": true
+    },
+    {
+      "lang": "ts",
+      "theme": "dark",
+      "initialCloseFocus": true,
+      "buttonClose": true,
+      "backdropClose": true,
+      "restoredFocus": true,
+      "noticeEnglishSwitchPreservedCaption": true
+    },
+    {
+      "lang": "ve",
+      "theme": "light",
+      "initialCloseFocus": true,
+      "buttonClose": true,
+      "backdropClose": true,
+      "restoredFocus": true,
+      "noticeEnglishSwitchPreservedCaption": true
+    },
+    {
+      "lang": "ve",
+      "theme": "dark",
+      "initialCloseFocus": true,
+      "buttonClose": true,
+      "backdropClose": true,
+      "restoredFocus": true,
+      "noticeEnglishSwitchPreservedCaption": true
+    }
+  ],
+  "negative": {
+    "correctedCloseReachable": true,
+    "restoredOldCss": {
+      "right": 1553.34375,
+      "width": 390
+    },
+    "detected": true
+  }
+}

@@ -1,0 +1,237 @@
+{
+  "sourceSha": "6446f1cbb42deda5b1b480da885ba884e89f1c9c",
+  "status": "Unreviewed AI drafts; no fluent-speaker approval. First-crop reference wording only. No new timing, rate, yield, calendar month, species or cultivar claim.",
+  "sourceDataSha256": "7633063a5a6cb2decd0ad66ee99062bc2e19148de27fa7bb6c22be9318ac2ed7",
+  "entries": [
+    {
+      "english": "Hluhluwe production-cycle reference: 18 months / 12 = 1.5 years. The source explicitly says cycle length varies greatly. Starting material, cultivar, weather and flower initiation matter; this is neither a universal first-harvest date nor a 12-month annual yield.",
+      "paths": [
+        "ananas-comosus.yearsToFirstCrop.note"
+      ],
+      "zu": "Isikhombo somjikelezo wokukhiqiza e-Hluhluwe: izinyanga ezingu-18 / 12 = iminyaka engu-1.5. Umthombo usho ngokucacile ukuthi ubude bomjikelezo buhluka kakhulu. Impahla yokuqala, uhlobo, isimo sezulu nokuqala kokuqhakaza kubalulekile; lokhu akulona usuku lokuqala lokuvuna olusebenza yonke indawo noma isivuno sonyaka wezinyanga ezingu-12.",
+      "st": "Tshupiso ya potoloho ya tlhahiso ya Hluhluwe: dikgwedi tse 18 / 12 = dilemo tse 1.5. Mohlodi o bolela ka ho hlaka hore bolelele ba potoloho bo fapana haholo. Thepa ya ho qala, mofuta, maemo a lehodimo le ho qala ha dipalesa di bohlokwa; sena ha se letsatsi la kotulo ya pele le sebetsang hohle kapa chai ya selemo sa dikgwedi tse 12.",
+      "ts": "Xikombiso xa ndzhendzheleko wa vuhumelerisi eHluhluwe: tin’hweti ta 18 / 12 = malembe ya 1.5. Xihlovo xi vula hi ku kongoma leswaku ku leha ka ndzhendzheleko ku hambana swinene. Swilo swo sungula ku byala, muxaka, maxelo ni ku sungula ka swiluva i swa nkoka; lowu a hi nkarhi wa kotulo yo sungula lowu tirhaka hinkwako kumbe mbuyelo wa lembe ra tin’hweti ta 12.",
+      "ve": "Tshiko tsha mutengelele wa u bveledza wa Hluhluwe: miṅwedzi ya 18 / 12 = miṅwaha ya 1.5. Tshiko tshi amba nga ho livhaho uri vhulapfu ha mutengelele vhu a fhambana nga maanḓa. Zwithu zwa u thoma ngazwo, lushaka, mutsho na u thoma ha maluvha ndi zwa ndeme; itshi a si tshifhinga tsha khaṋo ya u thoma tshi shumaho hoṱhe kana khaṋo ya ṅwaha wa miṅwedzi ya 12."
+    },
+    {
+      "english": "First commercial cutting readiness at 12–18 months in the described Cape production system. The account discusses sowing and transfer to plantations but does not explicitly define whether the clock starts at sowing or planting out. Confirm starting stock and timing locally. This is tea-shoot establishment, not fruit-tree bearing.",
+      "paths": [
+        "aspalathus-linearis.yearsToFirstCrop.note"
+      ],
+      "zu": "Ukulungela ukusikwa kokuqala kokudayisa ngezinyanga ezingu-12–18 ohlelweni lokukhiqiza lwase-Cape oluchaziwe. Incazelo ikhuluma ngokuhlwanyela nokudlulisela emasimini kodwa ayicacisi ukuthi isikhathi siqala ekuhlwanyeleni noma ekutshaleni ngaphandle. Qinisekisa impahla yokuqala nesikhathi endaweni. Lokhu ukusimama kwamahlumela etiye, akukhona ukuqala kokuthela kwesihlahla sezithelo.",
+      "st": "Ho lokela ho sehwa la pele bakeng sa kgwebo ka dikgwedi tse 12–18 tsamaisong e hlalositsweng ya tlhahiso ya Cape. Tlhaloso e bua ka ho jala peo le ho fetisetsa masimong empa ha e hlalose ka ho hlaka hore nako e qala ha ho jalwa peo kapa ha ho jalwa kantle. Netefatsa thepa ya ho qala le nako sebakeng seo. Sena ke ho tsitsisa mahlomela a tee, ha se ho qala ho beha ha sefate sa ditholwana.",
+      "ts": "Ku lunghekela ku tsemiwa ro sungula ka bindzu eka tin’hweti ta 12–18 eka sisiteme ya vuhumelerisi ya Cape leyi hlamuseriweke. Nhlamuselo yi bula hi ku byala mbewu ni ku yisa emasin’weni kambe a yi hlamuseli hi ku kongoma loko nkarhi wu sungula eku byaleni mbewu kumbe eku byaleni ehandle. Tiyisisa swibyariwa swo sungula ni nkarhi endhawini. Loku i ku simeka swihluke swa tiya, a hi ku tswala ka murhi wa mihandzu.",
+      "ve": "U lugela u geriwa lwa u thoma kha zwa vhubindudzi nga miṅwedzi ya 12–18 kha maitele a u bveledza a Cape o ṱalutshedzwaho. Muvhigo u amba nga ha u zwala na u pfukisela masimuni fhedzi a u ṱalutshedzi nga ho livhaho uri tshifhinga tshi thoma musi hu tshi zwalwa kana hu tshi ṱavhiwa nnḓa. Khwaṱhisedzani zwithu zwa u thoma ngazwo na tshifhinga henefho. Izwi ndi u khwaṱhisa matavhi a tie, a si u aṋwa ha muri wa mitshelo."
+    },
+    {
+      "english": "KZN typical first crop after planting, about 18 months. The same paragraph reports 9–11 months under favourable Makhathini Flats conditions. This is a typical regional reference, not a minimum or guarantee.",
+      "paths": [
+        "carica-papaya.yearsToFirstCrop.note"
+      ],
+      "zu": "Isivuno sokuqala esivamile e-KZN emva kokutshala, cishe izinyanga ezingu-18. Isigaba esifanayo sibika izinyanga ezingu-9–11 ezimweni ezinhle zase-Makhathini Flats. Lesi isikhombo sesifunda esivamile, akusona isikhathi esincane kunazo zonke noma isiqinisekiso.",
+      "st": "Kotulo ya pele e tlwaelehileng KZN ka mora ho jala, hoo e ka bang dikgwedi tse 18. Serapa sona seo se tlaleha dikgwedi tse 9–11 tlasa maemo a matle a Makhathini Flats. Sena ke tshupiso e tlwaelehileng ya sebaka, ha se nako e nyenyane ka ho fetisisa kapa tiiso.",
+      "ts": "Kotulo yo sungula leyi tolovelekeke eKZN endzhaku ko byala, kwalomu ka tin’hweti ta 18. Ndzimana yoleyo yi vika tin’hweti ta 9–11 ehansi ka swiyimo leswinene swa Makhathini Flats. Lexi i xikombiso lexi tolovelekeke xa xifundzha, a hi nkarhi lowutsongo swinene kumbe xitiyisiso.",
+      "ve": "Khaṋo ya u thoma yo ḓoweleaho KZN nga murahu ha u ṱavha, hu ṱoḓaho u vha miṅwedzi ya 18. Phara yeneyo i vhiga miṅwedzi ya 9–11 kha nyimele dzavhuḓi dza Makhathini Flats. Itshi ndi tshiko tsho ḓoweleaho tsha dzingu, a si tshifhinga tshiṱukusa kana khwaṱhisedzo."
+    },
+    {
+      "english": "Light cropping at about year 5 in the KZN guide, for irrigated areas with hot summers, cold winters and low growing-season humidity. It identifies dry Zululand/Lowveld river valleys as suitable regional areas. Propagation, cultivar and nursery age are not specified; this is a qualified general reference, not an expected farm quantity.",
+      "paths": [
+        "carya-illinoinensis.yearsToFirstCrop.note"
+      ],
+      "zu": "Ukuthela okuncane cishe ngonyaka wesi-5 encwadini yase-KZN, ezindaweni eziniselwayo ezinehlobo elishisayo, ubusika obubandayo nomswakama ophansi ngesikhathi sokukhula. Ikhomba izigodi zemifula ezomile zase-Zululand/Lowveld njengezindawo zesifunda ezifanelekile. Indlela yokwandisa, uhlobo nobudala basenkulisa akucacisiwe; lesi isikhombo esijwayelekile esinemibandela, akulona inani elilindelekile epulazini.",
+      "st": "Kotulo e nyenyane hoo e ka bang selemong sa 5 tataisong ya KZN, bakeng sa dibaka tse nosetswang tse nang le lehlabula le tjhesang, mariha a batang le mongobo o tlase nakong ya kgolo. E supa dikgohlo tse ommeng tsa dinoka tsa Zululand/Lowveld e le dibaka tse loketseng tsa sebaka. Mokgwa wa ho atisa, mofuta le dilemo tsa sethopo ha di a bolelwa; sena ke tshupiso e akaretsang e nang le dipehelo, ha se bongata bo lebelletsweng polasing.",
+      "ts": "Ku tswala katsongo kwalomu ka lembe ra 5 eka nkongomiso wa KZN, eka tindhawu leti cheletiwaka leti nga ni ximumu xo hisa, xixika xo titimela ni ndzhongho lowutsongo hi nguva yo kula. Wu komba minkova yo oma ya milambu ya Zululand/Lowveld yi ri tindhawu leti faneleke ta xifundzha. Ndlela yo andzisa, muxaka ni vukhale bya ximilana enxaviselweni a swi vuriwanga; lexi i xikombiso xo angarhela lexi nga ni swipimelo, a hi nhlayo leyi languteriweke epurasini.",
+      "ve": "U aṋwa zwiṱuku hu ṱoḓaho u vha kha ṅwaha wa 5 kha nyendedzi ya KZN, fhethu hu sheledzwaho hu re na tshilimo tshi fhisaho, vhuriha vhu rotholelaho na ṅukelo ya fhasi nga tshifhinga tsha u aluwa. I bula mikovhe yo omaho ya milambo ya Zululand/Lowveld sa madzingu o teaho. Maitele a u andisa, lushaka na miṅwaha ya tshimela fhethu ha zwiraba a zwo ngo bulwa; itshi ndi tshiko nga u angaredza tshi re na nyimele, a si tshivhalo tsho lavhelelwaho bulasini."
+    },
+    {
+      "english": "KZN citrus guide; first crop means initial fruit, not full production. The same table gives an expected orchard lifespan of 23 years.",
+      "paths": [
+        "citrus-limon.yearsToFirstCrop.note"
+      ],
+      "zu": "Incwadi yezithelo ze-citrus yase-KZN; isivuno sokuqala sisho izithelo zokuqala, hhayi ukukhiqiza okugcwele. Ithebula elifanayo linikeza iminyaka engu-23 njengobude bempilo obulindelekile bensimu yezihlahla zezithelo.",
+      "st": "Tataiso ya citrus ya KZN; kotulo ya pele e bolela ditholwana tsa pele, e seng tlhahiso e felletseng. Tafole yona eo e fana ka bophelo bo lebelletsweng ba serapa sa ditholwana ba dilemo tse 23.",
+      "ts": "Nkongomiso wa citrus wa KZN; kotulo yo sungula yi vula mihandzu yo sungula, ku nga ri vuhumelerisi byo helela. Tafula rero ri nyika nkarhi wa ku hanya lowu languteriweke wa ntanga wa mihandzu wa malembe ya 23.",
+      "ve": "Nyendedzi ya citrus ya KZN; khaṋo ya u thoma i amba mitshelo ya u thoma, hu si u bveledza ho fhelelaho. Thebulu yeneyo i ṋea miṅwaha ya 23 sa tshifhinga tsho lavhelelwaho tsha u tshila ha tsimu ya mitshelo."
+    },
+    {
+      "english": "The source states at least three years. This is the earliest age, not a typical age or an upper limit; no later bound is supplied.",
+      "paths": [
+        "dovyalis-afra.yearsToFirstCrop.note"
+      ],
+      "zu": "Umthombo uthi okungenani iminyaka emithathu. Lobu ubudala bokuqala kakhulu, akubona ubudala obuvamile noma umkhawulo ongaphezulu; awukho umkhawulo wakamuva onikeziwe.",
+      "st": "Mohlodi o bolela bonyane dilemo tse tharo. Ena ke nako ya pele ka ho fetisisa, ha se dilemo tse tlwaelehileng kapa moedi o ka hodimo; ha ho moedi wa morao o fanoeng.",
+      "ts": "Xihlovo xi vula malembe manharhu kumbe ku hundza. Lebyi i vukhale byo sungula swinene, a hi vukhale byo toloveleka kumbe mpimo wa le henhla; a ku nyikiwanga mpimo wa nkarhi wa le ndzhaku.",
+      "ve": "Tshiko tshi amba miṅwaha miraru kana u fhira. Iyi ndi miṅwaha ya u thoma nga maanḓa, a si miṅwaha yo ḓoweleaho kana mukano wa nṱha; a hu na mukano wa murahu wo ṋewaho."
+    },
+    {
+      "english": "About years 4–5 in the KZN horticultural guide. Context is frost-free warm, humid subtropical production areas; cultivar, propagation age and field establishment are not specified. This is a first-crop reference, not a guaranteed local quantity or full-bearing age.",
+      "paths": [
+        "litchi-chinensis.yearsToFirstCrop.note"
+      ],
+      "zu": "Cishe iminyaka engu-4–5 encwadini yezolimo lwengadi yase-KZN. Isimo esichaziwe yizindawo ezingenasithwathwa, ezifudumele, ezinomswakama zesimo esiseduze nesasezindaweni ezishisayo; uhlobo, ubudala ngesikhathi sokwandiswa nokuqala ensimini akucacisiwe. Lesi isikhombo sesivuno sokuqala, akulona inani lasendaweni eliqinisekisiwe noma ubudala bokuthela ngokugcwele.",
+      "st": "Hoo e ka bang dilemo tse 4–5 tataisong ya temo ya dirapa ya KZN. Maemo ke dibaka tse futhumetseng, tse mongobo tsa subtropical tse se nang serame se bakang leqhwa; mofuta, dilemo tsa ho atisa le ho tsitsisa tshimong ha di a bolelwa. Sena ke tshupiso ya kotulo ya pele, ha se bongata ba sebakeng seo bo tiisitsweng kapa dilemo tsa ho beha ka botlalo.",
+      "ts": "Kwalomu ka malembe ya 4–5 eka nkongomiso wa horticulture wa KZN. Ndhawu leyi hlamuseriweke i ya vuhumelerisi bya subtropical byo kufumela ni ndzhongho leyi nga riki na gwitsi; muxaka, vukhale loko xi andzisiwa ni ku simekiwa ensin’weni a swi vuriwanga. Lexi i xikombiso xa kotulo yo sungula, a hi nhlayo ya laha kaya leyi tiyisisiweke kumbe vukhale bya ku tswala hi ku helela.",
+      "ve": "Hu ṱoḓaho u vha miṅwaha ya 4–5 kha nyendedzi ya u lima zwiraba ya KZN. Nyimele ndi madzingu a u bveledza a subtropical a dudelaho a re na ṅukelo a si na ṅwando; lushaka, miṅwaha musi hu tshi andiswa na u khwaṱhisa tsimu a zwo ngo bulwa. Itshi ndi tshiko tsha khaṋo ya u thoma, a si tshivhalo tsha henefho tsho khwaṱhisedzwaho kana miṅwaha ya u aṋwa nga vhuḓalo."
+    },
+    {
+      "english": "KZN establishment reference; this source also describes later bearing at higher elevations. Not a promise for all cultivars or every SA site.",
+      "paths": [
+        "macadamia-integrifolia.yearsToFirstCrop.note"
+      ],
+      "zu": "Isikhombo sokuqala ukukhula sase-KZN; lo mthombo uchaza nokuthela kamuva ezindaweni eziphakeme. Akusona isithembiso kuzo zonke izinhlobo noma kuyo yonke indawo yase-SA.",
+      "st": "Tshupiso ya ho tsitsisa dimela ya KZN; mohlodi ona o boetse o hlalosa ho beha hamorao dibakeng tse phahameng. Ha se tshepiso bakeng sa mefuta yohle kapa sebaka se seng le se seng sa SA.",
+      "ts": "Xikombiso xa ku simeka eKZN; xihlovo lexi xi tlhela xi hlamusela ku tswala endzhaku eka tindhawu leti tlakukeke. A hi xitshembiso eka mixaka hinkwato kumbe ndhawu yin’wana ni yin’wana ya SA.",
+      "ve": "Tshiko tsha u khwaṱhisa zwimela tsha KZN; tshiko itshi tshi dovha tsha ṱalutshedza u aṋwa nga murahu fhethu hu re nṱha. A si fulufhedziso kha tshaka dzoṱhe kana fhethu hoṱhe ha SA."
+    },
+    {
+      "english": "KZN guide reference for light cropping at year 3, in temperate apple conditions best adapted there to Dry Highland Sourveld. Rootstock, cultivar and nursery starting age are not specified. A named low-chill cultivar still needs adequate local winter chilling and establishment; this is not a warm-coast guarantee.",
+      "paths": [
+        "malus-domestica.yearsToFirstCrop.note"
+      ],
+      "zu": "Isikhombo sencwadi yase-KZN sokuthela okuncane ngonyaka wesi-3, ezimweni zama-apula zesimo esipholile ezifaneleka kakhulu lapho kuyi-Dry Highland Sourveld. Isiphunzi, uhlobo nobudala bokuqala basenkulisa akucacisiwe. Uhlobo olubiziwe oludinga amakhaza ambalwa lusadinga amakhaza anele ebusika endaweni nokusimama; lokhu akusona isiqinisekiso sogu olufudumele.",
+      "st": "Tshupiso ya tataiso ya KZN ya kotulo e nyenyane selemong sa 3, maemong a diapole a phodileng a loketseng haholo Dry Highland Sourveld moo. Kutu ya motso, mofuta le dilemo tsa ho qala sethopong ha di a bolelwa. Mofuta o bitsitsweng ka lebitso o hlokang mohatsela o monyenyane o ntse o hloka mohatsela o lekaneng wa mariha sebakeng seo le ho tsitsisa; sena ha se tiiso bakeng sa lebopo le futhumetseng.",
+      "ts": "Xikombiso xa nkongomiso wa KZN wa ku tswala katsongo eka lembe ra 3, eka swiyimo swa maapula swa maxelo yo ringanisela leswi faneleke swinene eDry Highland Sourveld kwalaho. Nsinya wa timitsu, muxaka ni vukhale byo sungula enxaviselweni a swi vuriwanga. Muxaka lowu boxiweke lowu lavaka ku titimela kutsongo wa ha lava ku titimela loku eneleke ka xixika endhawini ni ku simekiwa; lexi a hi xitiyisiso xa ribuwa ro kufumela.",
+      "ve": "Tshiko tsha nyendedzi ya KZN tsha u aṋwa zwiṱuku kha ṅwaha wa 3, kha nyimele dza maapula dza fhethu hu rotholelaho dzi teaho nga maanḓa Dry Highland Sourveld henefho. Mudzi wa mutheo, lushaka na miṅwaha ya u thoma fhethu ha zwiraba a zwo ngo bulwa. Lushaka lwo bulwaho lu ṱoḓaho u rothola huṱuku lu kha ḓi ṱoḓa u rothola ha vhuriha ho eḓanaho henefho na u khwaṱhisa; itshi a si khwaṱhisedzo ya khunzikhunzi i dudelaho."
+    },
+    {
+      "english": "Grafted mango stock in the KZN guide generally begins bearing after 3–4 years. Context is frost-free tropical/warm subtropical production with low humidity at flowering, including dry Zululand, Valley Bushveld and Lowveld. The text distinguishes grafted stock from seed-raised Peach/Sabre; do not apply this age to an unrecorded seedling or infer yearly kg.",
+      "paths": [
+        "mangifera-indica.yearsToFirstCrop.note"
+      ],
+      "zu": "Izitshalo zomango ezixhunyelelwe encwadini yase-KZN ngokuvamile ziqala ukuthela emva kweminyaka engu-3–4. Isimo esichaziwe ukukhiqiza endaweni engenasithwathwa, eshisayo/efudumele eseduze nesimo sasezindaweni ezishisayo, enomswakama ophansi ngesikhathi sokuqhakaza, kuhlanganisa i-Zululand eyomile, i-Valley Bushveld ne-Lowveld. Umbhalo uhlukanisa izitshalo ezixhunyelelwe ne-Peach/Sabre ekhuliswe ngembewu; ungasebenzisi lobu budala esithombeni esingaqoshiwe noma ucabange ama-kg onyaka.",
+      "st": "Ka tataiso ya KZN, dimela tsa mango tse hlomathisitsweng hangata di qala ho beha ka mora dilemo tse 3–4. Maemo ke tlhahiso ya tropical/subtropical e futhumetseng e se nang serame se bakang leqhwa, e nang le mongobo o tlase nakong ya dipalesa, ho akarelletsa Zululand e ommeng, Valley Bushveld le Lowveld. Mongolo o kgetholla dimela tse hlomathisitsweng ho Peach/Sabre e hodisitsweng ka peo; o se ke wa sebedisa dilemo tsena ho sethopo se sa ngolwang kapa wa hakanya kg tsa selemo.",
+      "ts": "Swibyariwa swa mango leswi tlhomiweke eka nkongomiso wa KZN hi ntolovelo swi sungula ku tswala endzhaku ka malembe ya 3–4. Ndhawu leyi hlamuseriweke i ya vuhumelerisi bya tropical/subtropical byo kufumela leyi nga riki na gwitsi ni ndzhongho lowutsongo loko ku huma swiluva, ku katsa Zululand yo oma, Valley Bushveld ni Lowveld. Tsalwa ri hambanisa swibyariwa leswi tlhomiweke ni Peach/Sabre leyi kurisiweke hi mbewu; u nga tirhisi vukhale byebyo eka ximilana xa mbewu lexi nga rhekhodiwangiki kumbe u kumbetela kg ta lembe.",
+      "ve": "Zwimela zwa mango zwo ṱumetshedzwaho kha nyendedzi ya KZN nga u ḓowela zwi thoma u aṋwa nga murahu ha miṅwaha ya 3–4. Nyimele ndi u bveledza kha tropical/subtropical hu dudelaho hu si na ṅwando na ṅukelo ya fhasi nga tshifhinga tsha maluvha, hu tshi katelwa Zululand ho omaho, Valley Bushveld na Lowveld. Maṅwalwa a fhambanyisa zwimela zwo ṱumetshedzwaho na Peach/Sabre yo aluwaho nga mbeu; ni songo shumisa miṅwaha iyi kha tshimela tsha mbeu tshi songo rekhodiwaho kana u humbulela kg dza ṅwaha."
+    },
+    {
+      "english": "The 6–12-month reference concerns the first leaf harvest after planting. Flowers and pods are normally produced during the second year of growth in the same North West guide. Leaf readiness does not establish pod production or picking months.",
+      "paths": [
+        "moringa-oleifera.yearsToFirstCrop.note"
+      ],
+      "zu": "Isikhombo sezinyanga ezingu-6–12 siphathelene nokuvunwa kokuqala kwamaqabunga emva kokutshala. Izimbali nama-pod ngokuvamile kukhiqizwa ngonyaka wesibili wokukhula encwadini efanayo yase-North West. Ukulungela kwamaqabunga akusho ukukhiqiza ama-pod noma izinyanga zokuwakha.",
+      "st": "Tshupiso ya dikgwedi tse 6–12 e mabapi le kotulo ya pele ya mahlaku ka mora ho jala. Dipalesa le diphotlwa hangata di hlahiswa selemong sa bobedi sa kgolo tataisong yona eo ya North West. Ho lokela ha mahlaku ha ho tiise tlhahiso ya diphotlwa kapa dikgwedi tsa ho di kga.",
+      "ts": "Xikombiso xa tin’hweti ta 6–12 xi khumba kotulo yo sungula ya matluka endzhaku ko byala. Swiluva ni tinyawa ta kona hi ntolovelo swi humesiwa eka lembe ra vumbirhi ra ku kula eka nkongomiso wolowo wa North West. Ku lungheka ka matluka a ku tiyisisi vuhumelerisi bya tinyawa kumbe tin’hweti ta ku ti kha.",
+      "ve": "Tshiko tsha miṅwedzi ya 6–12 tshi amba khaṋo ya u thoma ya maṱari nga murahu ha u ṱavha. Maluvha na khavhi nga u ḓowela zwi bveledzwa kha ṅwaha wa vhuvhili wa u aluwa kha nyendedzi yeneyo ya North West. U lugela ha maṱari a hu khwaṱhisedzi u bveledza khavhi kana miṅwedzi ya u ka."
+    },
+    {
+      "english": "KZN DARD explicitly states the planting-to-harvest and harvest-to-harvest range. Converted months to years (13/12 to 20/12). This is not a dated forecast or an annual all-month harvest window.",
+      "paths": [
+        "musa-acuminata-aaa-group.yearsToFirstCrop.note"
+      ],
+      "zu": "I-KZN DARD isho ngokucacile ibanga lesikhathi kusukela ekutshaleni kuya ekuvuneni nokusukela ekuvuneni kuya ekuvuneni okulandelayo. Izinyanga ziguqulwe zaba iminyaka (13/12 kuya ku-20/12). Lokhu akusona isibikezelo esinedethi noma isikhathi sokuvuna sonyaka sezinyanga zonke.",
+      "st": "KZN DARD e bolela ka ho hlaka nako ho tloha ho jaleng ho ya kotulong le ho tloha kotulong ho ya kotulong. Dikgwedi di fetotswe ho ba dilemo (13/12 ho ya ho 20/12). Sena ha se ponelopele e nang le letsatsi kapa nako ya kotulo ya selemo dikgweding tsohle.",
+      "ts": "KZN DARD yi vula hi ku kongoma mpimo wa nkarhi wa ku suka eku byaleni ku ya eku kotuleni ni ku suka eka kotulo ku ya eka kotulo. Tin’hweti ti hundzuriwile ti va malembe (13/12 ku ya eka 20/12). Lexi a hi mvhumbo wa masiku kumbe nguva ya kotulo ya lembe eka tin’hweti hinkwato.",
+      "ve": "KZN DARD i bula nga ho livhaho tshifhinga u bva kha u ṱavha u ya kha khaṋo na u bva kha khaṋo u ya kha iṅwe. Miṅwedzi yo shandulwa ya vha miṅwaha (13/12 u ya kha 20/12). Itshi a si mbonelaphanḓa i re na datumu kana tshifhinga tsha khaṋo ya ṅwaha kha miṅwedzi yoṱhe."
+    },
+    {
+      "english": "KZN reference: 6–8 months after transplanting, about 0.5–0.67 years. This is a first-harvest interval, not a regional picking calendar.",
+      "paths": [
+        "passiflora-edulis.yearsToFirstCrop.note"
+      ],
+      "zu": "Isikhombo sase-KZN: izinyanga ezingu-6–8 emva kokutshala izithombo, cishe iminyaka engu-0.5–0.67. Lesi isikhathi esiphakathi kokutshala nokuvuna kokuqala, akulona ikhalenda lokukha lesifunda.",
+      "st": "Tshupiso ya KZN: dikgwedi tse 6–8 ka mora ho jala dithopo, hoo e ka bang dilemo tse 0.5–0.67. Ena ke nako pele ho kotulo ya pele, ha se khalendara ya ho kga ya sebaka.",
+      "ts": "Xikombiso xa KZN: tin’hweti ta 6–8 endzhaku ko hundzisela swibyariwa, kwalomu ka malembe ya 0.5–0.67. Lowu i nkarhi wo ya eka kotulo yo sungula, a hi khalendara ya ku kha ya xifundzha.",
+      "ve": "Tshiko tsha KZN: miṅwedzi ya 6–8 nga murahu ha u ṱavhulula, hu ṱoḓaho u vha miṅwaha ya 0.5–0.67. Itshi ndi tshifhinga u ya kha khaṋo ya u thoma, a si khalenda ya u ka ya dzingu."
+    },
+    {
+      "english": "Bruyns Hill, Natal Midlands bioclimatic group 2; irrigated Hass on clonal Duke 7 rootstock, 7 x 7 m (200 trees/ha), planted 1982–1984. The paper reports Hass starting in its second season and Fuerte in its third. The two-to-three-year reference describes those trial cultivars, not every avocado or nursery starting age.",
+      "paths": [
+        "persea-americana.yearsToFirstCrop.note"
+      ],
+      "zu": "Bruyns Hill, iqembu lesimo sezulu nokuphila lase-Natal Midlands lesi-2; i-Hass eniselwayo esiphunzini se-Duke 7 esiphindwe ngendlela ye-clone, 7 x 7 m (izihlahla ezingu-200/ha), yatshalwa ngo-1982–1984. Iphepha libika ukuthi i-Hass yaqala ngesizini yayo yesibili ne-Fuerte ngeyesithathu. Isikhombo seminyaka emibili kuya kwemithathu sichaza lezo zinhlobo ezavivinywa, hhayi wonke ama-avocado noma ubudala bokuqala basenkulisa.",
+      "st": "Bruyns Hill, sehlopha sa bioclimatic sa Natal Midlands sa 2; Hass e nosetswang kutung ya motso ya clone ya Duke 7, 7 x 7 m (difate tse 200/ha), e jadilweng ka 1982–1984. Pampiri e tlaleha hore Hass e qalile nakong ya yona ya bobedi mme Fuerte ya qala nakong ya boraro. Tshupiso ya dilemo tse pedi ho isa ho tse tharo e hlalosa mefuta eo ya teko, e seng avocado e nngwe le e nngwe kapa dilemo tsa ho qala sethopong.",
+      "ts": "Bruyns Hill, ntlawa wa bioclimatic wa Natal Midlands wa 2; Hass leyi cheletiwaka eka nsinya wa timitsu wa clone wa Duke 7, 7 x 7 m (mirhi ya 200/ha), yi byariwe hi 1982–1984. Papila ri vika leswaku Hass yi sungule eka nguva ya yona ya vumbirhi ni Fuerte eka ya vunharhu. Xikombiso xa malembe mambirhi ku ya eka manharhu xi hlamusela mixaka yoleyo ya ndzingo, ku nga ri avocado yin’wana ni yin’wana kumbe vukhale byo sungula enxaviselweni.",
+      "ve": "Bruyns Hill, tshigwada tsha bioclimatic tsha Natal Midlands tsha 2; Hass yo sheledzwaho kha mudzi wa mutheo wa clone wa Duke 7, 7 x 7 m (miri ya 200/ha), yo ṱavhiwaho nga 1982–1984. Bammbiri ḽi vhiga uri Hass yo thoma kha tshifhinga tshayo tsha vhuvhili na Fuerte kha tsha vhuraru. Tshiko tsha miṅwaha mivhili u ya kha miraru tshi ṱalutshedza tshaka dzenedzo dza ndingo, hu si avocado iṅwe na iṅwe kana miṅwaha ya u thoma fhethu ha zwiraba."
+    },
+    {
+      "english": "General KZN peach guide; the section identifies Muden, Middelrus and Weenen river valleys as low-chill growing areas. Confirm the cultivar and nursery starting age.",
+      "paths": [
+        "prunus-persica.yearsToFirstCrop.note"
+      ],
+      "zu": "Incwadi ejwayelekile yamapentshisi yase-KZN; lesi sigaba sikhomba izigodi zemifula zase-Muden, Middelrus nase-Weenen njengezindawo zokukhula ezidinga amakhaza ambalwa. Qinisekisa uhlobo nobudala bokuqala basenkulisa.",
+      "st": "Tataiso e akaretsang ya diperekisi ya KZN; karolo ena e supa dikgohlo tsa dinoka tsa Muden, Middelrus le Weenen e le dibaka tsa ho lema tse hlokang mohatsela o monyenyane. Netefatsa mofuta le dilemo tsa ho qala sethopong.",
+      "ts": "Nkongomiso wo angarhela wa maperekisi wa KZN; xiyenge xi komba minkova ya milambu ya Muden, Middelrus ni Weenen yi ri tindhawu to byala leti lavaka ku titimela kutsongo. Tiyisisa muxaka ni vukhale byo sungula enxaviselweni.",
+      "ve": "Nyendedzi nga u angaredza ya maperegisi ya KZN; tshipiḓa itshi tshi bula mikovhe ya milambo ya Muden, Middelrus na Weenen sa fhethu ha u ṱavha hu ṱoḓaho u rothola huṱuku. Khwaṱhisedzani lushaka na miṅwaha ya u thoma fhethu ha zwiraba."
+    },
+    {
+      "english": "Stated for African Delight® specifically, an ARC-bred Japanese plum cultivar; 'third growth season' interpreted as year 3.",
+      "paths": [
+        "prunus-salicina.yearsToFirstCrop.note"
+      ],
+      "zu": "Kushiwo nge-African Delight® kuphela, uhlobo lweplamu lwase-Japan olwakhiwa yi-ARC; “isizini yesithathu yokukhula” ithathwe njengonyaka wesi-3.",
+      "st": "Ho boletswe ka African Delight® feela, mofuta wa plum ya Japanese o hlahisitsweng ke ARC; “nako ya boraro ya kgolo” e hlalositswe e le selemo sa 3.",
+      "ts": "Swi vuriwe hi African Delight® ntsena, muxaka wa Japanese plum lowu humesiweke hi ARC; “nguva ya vunharhu ya ku kula” yi tekiwe yi ri lembe ra 3.",
+      "ve": "Zwo bulwa nga African Delight® fhedzi, lushaka lwa Japanese plum lwo bveledzwaho nga ARC; “tshifhinga tsha vhuraru tsha u aluwa” tsho dzhiiwa sa ṅwaha wa 3."
+    },
+    {
+      "english": "International ICRAF reference for clonally propagated stock only: trees often begin bearing during the first year after planting. The seedling timing in the source concerns flowering, so no seed-grown first fruit age is assigned. This is not confirmed for South African sites.",
+      "paths": [
+        "psidium-guajava.yearsToFirstCrop.note"
+      ],
+      "zu": "Isikhombo samazwe ngamazwe se-ICRAF sezitshalo ezandiswe njenge-clone kuphela: izihlahla zivame ukuqala ukuthela ngonyaka wokuqala emva kokutshala. Isikhathi sezithombo emthonjeni siphathelene nokuqhakaza, ngakho abukho ubudala bezithelo zokuqala obabelwe izitshalo ezikhuliswe ngembewu. Lokhu akuqinisekisiwe ezindaweni zaseNingizimu Afrika.",
+      "st": "Tshupiso ya matjhaba ya ICRAF bakeng sa dimela tse atisitsweng ka clone feela: hangata difate di qala ho beha selemong sa pele ka mora ho jala. Nako ya dithopo mohloding e mabapi le dipalesa, kahoo ha ho dilemo tsa ditholwana tsa pele tse abetsweng dimela tse hodisitsweng ka peo. Sena ha se a tiisetswa dibakeng tsa Afrika Borwa.",
+      "ts": "Xikombiso xa matiko xa ICRAF xa swibyariwa leswi andzisiweke hi clone ntsena: mirhi yi tala ku sungula ku tswala eka lembe ro sungula endzhaku ko byala. Nkarhi wa swimilana swa mbewu eka xihlovo wu khumba ku huma swiluva, kutani a ku vekiwanga vukhale bya mihandzu yo sungula eka leswi kurisiweke hi mbewu. Lexi a xi tiyisisiwanga eka tindhawu ta Afrika Dzonga.",
+      "ve": "Tshiko tsha mashango tsha ICRAF tsha zwimela zwo andiswaho nga clone fhedzi: miri i anzela u thoma u aṋwa kha ṅwaha wa u thoma nga murahu ha u ṱavha. Tshifhinga tsha zwimela zwa mbeu kha tshiko tshi amba maluvha, ngauralo a hu na miṅwaha ya mitshelo ya u thoma yo avhelwaho zwimela zwo aluwaho nga mbeu. Izwi a zwo ngo khwaṱhisedzwa kha fhethu ha Afrika Tshipembe."
+    },
+    {
+      "english": "The review attributes this 3–5-year age to Avakoudjo et al.'s study in Benin, West Africa, rather than a South African bearing trial. Propagation method and local conditions must be confirmed before using it at a South African site; it is not a locally validated age or a yield-by-age curve.",
+      "paths": [
+        "strychnos-spinosa.yearsToFirstCrop.note"
+      ],
+      "zu": "Ukubuyekezwa kubeka lobu budala beminyaka engu-3–5 ocwaningweni luka-Avakoudjo et al. e-Benin, eNtshonalanga Afrika, hhayi esivivinyweni sokuthela saseNingizimu Afrika. Indlela yokwandisa nezimo zendawo kufanele kuqinisekiswe ngaphambi kokusebenzisa lesi sikhombo endaweni yaseNingizimu Afrika; akubona ubudala obuqinisekisiwe endaweni noma igrafu yesivuno ngokobudala.",
+      "st": "Tlhahlobo e amahanya dilemo tsena tse 3–5 le thuto ya Avakoudjo et al. naheng ya Benin, Afrika Bophirimela, e seng teko ya ho beha Afrika Borwa. Mokgwa wa ho atisa le maemo a sebaka di lokela ho netefatswa pele e sebediswa sebakeng sa Afrika Borwa; ha se dilemo tse netefaditsweng sebakeng seo kapa mothalo wa chai ho ya ka dilemo.",
+      "ts": "Nkambisiso wu hlanganisa vukhale byebyo bya malembe ya 3–5 ni ndzavisiso wa Avakoudjo et al. eBenin, Afrika Vupeladyambu, ku nga ri ndzingo wa ku tswala wa Afrika Dzonga. Ndlela yo andzisa ni swiyimo swa ndhawu swi fanele ku tiyisisiwa ku nga si tirhisiwa endhawini ya Afrika Dzonga; a hi vukhale byo tiyisisiwa endhawini kumbe girafu ya mbuyelo hi vukhale.",
+      "ve": "Tsedzuluso i livhisa miṅwaha iyi ya 3–5 kha ngudo ya Avakoudjo et al. ngei Benin, Afrika Vhukovhela, hu si ndingo ya u aṋwa ya Afrika Tshipembe. Maitele a u andisa na nyimele dza henefho zwi tea u khwaṱhisedzwa musi zwi sa athu shumiswa fhethu ha Afrika Tshipembe; iyi a si miṅwaha yo khwaṱhisedzwaho henefho kana girafu ya khaṋo u ya nga miṅwaha."
+    },
+    {
+      "english": "The USDA FAS industry reference concerns fruit of export quality after up to two to three years. Earlier light fruiting is not excluded; this is not a guaranteed first harvest date.",
+      "paths": [
+        "vaccinium-corymbosum.yearsToFirstCrop.note"
+      ],
+      "zu": "Isikhombo semboni se-USDA FAS siphathelene nezithelo ezisezingeni lokuthekelisa emva kwesikhathi esingafika eminyakeni emibili kuya kwemithathu. Ukuthela okuncane ngaphambi kwalokho akukhishelwanga ngaphandle; lokhu akulona usuku lwesivuno sokuqala oluqinisekisiwe.",
+      "st": "Tshupiso ya indasteri ya USDA FAS e mabapi le ditholwana tsa boleng ba ho romelwa kantle ka mora nako e ka fihlang dilemong tse pedi ho isa ho tse tharo. Ho beha ho honyenyane pele ho moo ha ho qhelelwe ka thoko; sena ha se letsatsi la kotulo ya pele le tiisitsweng.",
+      "ts": "Xikombiso xa indasitiri xa USDA FAS xi khumba mihandzu ya xiyimo xo rhumela ematikweni ya le handle endzhaku ka nkarhi lowu fikaka eka malembe mambirhi ku ya eka manharhu. Ku tswala katsongo ka le mahlweni a ku siyiwi ehandle; lexi a hi siku ra kotulo yo sungula leri tiyisisiweke.",
+      "ve": "Tshiko tsha ndowetshumo tsha USDA FAS tshi amba mitshelo ya khwaḽithi ya u rumela mashangoni nga murahu ha tshifhinga tshi swikaho kha miṅwaha mivhili u ya kha miraru. U aṋwa zwiṱuku nga phanḓa a zwo ngo bviswa; itshi a si ḓuvha ḽa khaṋo ya u thoma ḽo khwaṱhisedzwaho."
+    },
+    {
+      "english": "First crop reference: {age}. {note} Actual timing depends on variety and site care.",
+      "zu": "Isikhombo sesivuno sokuqala: {age}. {note} Isikhathi sangempela sincike ohlotsheni nasekunakekelweni kwendawo.",
+      "st": "Tshupiso ya kotulo ya pele: {age}. {note} Nako ya nnete e itshetlehile ka mofuta le tlhokomelo ya sebaka.",
+      "ts": "Xikombiso xa kotulo yo sungula: {age}. {note} Nkarhi wa xiviri wu titshege hi muxaka ni nhlayiso wa ndhawu.",
+      "ve": "Tshiko tsha khaṋo ya u thoma: {age}. {note} Tshifhinga tsha vhukuma tshi ya nga lushaka na ṱhogomelo ya fhethu."
+    },
+    {
+      "english": "Check the source conditions and starting stock.",
+      "zu": "Hlola izimo zomthombo nezitshalo zokuqala.",
+      "st": "Hlahloba maemo a mohlodi le dimela tsa ho qala.",
+      "ts": "Kambela swiyimo swa xihlovo ni swibyariwa swo sungula.",
+      "ve": "Ṱolani nyimele dza tshiko na zwimela zwa u thoma ngazwo."
+    },
+    {
+      "english": "Time to first crop: not sourced; do not rely on newly planted stock for immediate food.",
+      "zu": "Isikhathi sesivuno sokuqala: asitholakali emthonjeni; ungathembeli ezitshalweni ezisanda kutshalwa ukuze uthole ukudla ngokushesha.",
+      "st": "Nako ya kotulo ya pele: ha e a fumanwa mohloding; o se ke wa itshetleha ka dimela tse sa tswa jalwa bakeng sa dijo hanghang.",
+      "ts": "Nkarhi wa kotulo yo sungula: a wu kumekanga eka xihlovo; u nga titshegi hi swimilana leswi swa ha ku byariwaka leswaku u kuma swakudya hi ku hatlisa.",
+      "ve": "Tshifhinga tsha khaṋo ya u thoma: a tsho ngo wanala tshikoni; ni songo ḓitika nga zwimela zwi sa athu bva u ṱavhiwa uri ni wane zwiḽiwa nga u ṱavhanya."
+    },
+    {
+      "english": "{age} months",
+      "zu": "izinyanga ezingu-{age}",
+      "st": "dikgwedi tse {age}",
+      "ts": "tin’hweti ta {age}",
+      "ve": "miṅwedzi ya {age}"
+    },
+    {
+      "english": "{age} years",
+      "zu": "iminyaka engu-{age}",
+      "st": "dilemo tse {age}",
+      "ts": "malembe ya {age}",
+      "ve": "miṅwaha ya {age}"
+    }
+  ],
+  "notes": [
+    "The nineteen note sources are copied before implementation from the verified harvest records. Source data, citations, figures and age conversion stay unchanged.",
+    "Native units use the original firstCropAgeLabel arithmetic through an optional presentation formatter. The default English API remains exact.",
+    "This does not complete purchasing translation: established-production/yield/supplementary/region/animal wording and source bibliography still contain English. The native gap notice remains."
+  ]
+}

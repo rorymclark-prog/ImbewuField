@@ -1,0 +1,497 @@
+{
+  "sourceSha": "25c83e2d4cb14f4fd75a11bf297de334dff6e312",
+  "pairs": [
+    {
+      "line": 252,
+      "english": "House",
+      "zu": "Indlu"
+    },
+    {
+      "line": 252,
+      "english": "Patio",
+      "zu": "Isitubhi"
+    },
+    {
+      "line": 252,
+      "english": "Driveway",
+      "zu": "Indlela yemoto"
+    },
+    {
+      "line": 252,
+      "english": "Lawn",
+      "zu": "Utshani"
+    },
+    {
+      "line": 252,
+      "english": "Veg garden",
+      "zu": "Ingadi yemifino"
+    },
+    {
+      "line": 252,
+      "english": "Orchard",
+      "zu": "Insimu yezithelo"
+    },
+    {
+      "line": 252,
+      "english": "Cleared ground",
+      "zu": "Indawo evulekile"
+    },
+    {
+      "line": 281,
+      "english": "Swale",
+      "zu": "Umsele wokubamba amanzi"
+    },
+    {
+      "line": 281,
+      "english": "Fence",
+      "zu": "Uthango"
+    },
+    {
+      "line": 281,
+      "english": "Path",
+      "zu": "Indlela"
+    },
+    {
+      "line": 281,
+      "english": "Bed path",
+      "zu": "Indlela yemibhede"
+    },
+    {
+      "line": 281,
+      "english": "Water pipe",
+      "zu": "Ipayipi lamanzi"
+    },
+    {
+      "line": 281,
+      "english": "Drip line",
+      "zu": "Ipayipi lokuconsa"
+    },
+    {
+      "line": 281,
+      "english": "Windbreak",
+      "zu": "Isivikelo somoya"
+    },
+    {
+      "line": 281,
+      "english": "Greywater line",
+      "zu": "Amanzi asetshenzisiwe"
+    },
+    {
+      "line": 281,
+      "english": "Driveway",
+      "zu": "Indlela yemoto"
+    },
+    {
+      "line": 388,
+      "english": "North",
+      "zu": "INyakatho"
+    },
+    {
+      "line": 401,
+      "english": "Site boundary",
+      "zu": "Umngcele wendawo"
+    },
+    {
+      "line": 402,
+      "english": "Buildings",
+      "zu": "Izakhiwo"
+    },
+    {
+      "line": 403,
+      "english": "vegetable bed, numbered",
+      "zu": "umbhede wemifino, unenombolo"
+    },
+    {
+      "line": 403,
+      "english": "vegetable beds, numbered",
+      "zu": "imibhede yemifino, inezinombolo"
+    },
+    {
+      "line": 404,
+      "english": "1 staple plot (P1)",
+      "zu": "isiza esiyisisekelo esi-1 (P1)"
+    },
+    {
+      "line": 405,
+      "english": "tree or planting, to scale",
+      "zu": "isihlahla noma isitshalo, ngesikali"
+    },
+    {
+      "line": 405,
+      "english": "trees and plantings, to scale",
+      "zu": "izihlahla nezitshalo, ngesikali"
+    },
+    {
+      "line": 406,
+      "english": "water tank or water point",
+      "zu": "ithangi noma indawo yamanzi"
+    },
+    {
+      "line": 406,
+      "english": "water tanks and points",
+      "zu": "amathangi nezindawo zamanzi"
+    },
+    {
+      "line": 407,
+      "english": "Paving and driveway",
+      "zu": "Indawo egandayiwe"
+    },
+    {
+      "line": 408,
+      "english": "Terrace bank",
+      "zu": "Udonga lwethala"
+    },
+    {
+      "line": 409,
+      "english": "structure",
+      "zu": "isakhiwo esincane"
+    },
+    {
+      "line": 409,
+      "english": "structures",
+      "zu": "izakhiwo ezincane"
+    },
+    {
+      "line": 410,
+      "english": "soil or earthworks item",
+      "zu": "into yomhlabathi"
+    },
+    {
+      "line": 410,
+      "english": "soil and earthworks items",
+      "zu": "izinto zomhlabathi"
+    },
+    {
+      "line": 411,
+      "english": "animal shelter",
+      "zu": "indawo yezilwane"
+    },
+    {
+      "line": 411,
+      "english": "animal shelters",
+      "zu": "izindawo zezilwane"
+    },
+    {
+      "line": 412,
+      "english": "gate or access item",
+      "zu": "isango noma indlela"
+    },
+    {
+      "line": 412,
+      "english": "gates and access items",
+      "zu": "amasango nezindlela"
+    },
+    {
+      "line": 421,
+      "english": "Solid = already there.  Dashed outline = planned, not built yet.",
+      "zu": "Okugcwele = sekukhona.  Umugqa onamachashaza = kuhleliwe, akukakhiwa."
+    },
+    {
+      "line": 421,
+      "english": "Dashed outlines: everything on this plan is planned, not built yet.",
+      "zu": "Imigqa enamachashaza: konke okukuleli pulani kuhleliwe, akukakhiwa."
+    },
+    {
+      "line": 427,
+      "english": "Plant codes",
+      "zu": "Amakhodi ezitshalo"
+    },
+    {
+      "line": 428,
+      "english": "Bed names",
+      "zu": "Amagama emibhede"
+    },
+    {
+      "line": 430,
+      "english": "vegetable bed",
+      "zu": "umbhede wemifino"
+    },
+    {
+      "line": 430,
+      "english": "vegetable beds",
+      "zu": "imibhede yemifino"
+    },
+    {
+      "line": 430,
+      "english": "staple plot",
+      "zu": "isiza esiyisisekelo"
+    },
+    {
+      "line": 430,
+      "english": "staple plots",
+      "zu": "iziza eziyisisekelo"
+    },
+    {
+      "line": 430,
+      "english": "tree or planting",
+      "zu": "isihlahla"
+    },
+    {
+      "line": 430,
+      "english": "trees and plantings",
+      "zu": "izihlahla nezitshalo"
+    },
+    {
+      "line": 430,
+      "english": "water item",
+      "zu": "into yamanzi"
+    },
+    {
+      "line": 430,
+      "english": "water items",
+      "zu": "izinto zamanzi"
+    },
+    {
+      "line": 434,
+      "english": "Site plan",
+      "zu": "Ipulani lendawo"
+    },
+    {
+      "line": 435,
+      "english": "Drawn to scale from the saved design.",
+      "zu": "Kudwetshwe ngesikali kusuka kumklamo ogciniwe."
+    },
+    {
+      "line": 435,
+      "english": "North is up. ",
+      "zu": "INyakatho iphezulu. "
+    },
+    {
+      "line": 435,
+      "english": "Bed numbers match the bed list. ",
+      "zu": "Izinombolo zemibhede ziyafana nezasohlwini lwemibhede. "
+    },
+    {
+      "line": 435,
+      "english": "The boundary runs beyond this drawing, which closes in on the designed area. ",
+      "zu": "Umngcele udlulela ngale kwalo mdwebo, osondele endaweni eklanyiwe. "
+    },
+    {
+      "line": 435,
+      "english": "Very small items are drawn larger so they can be seen. ",
+      "zu": "Izinto ezincane kakhulu zidwetshwe zaba zinkulu ukuze zibonakale. "
+    },
+    {
+      "line": 435,
+      "english": "It is not a land survey.",
+      "zu": "Akusikho ukuhlolwa komhlaba."
+    },
+    {
+      "line": 436,
+      "english": "Saved design",
+      "zu": "Umklamo ogciniwe"
+    },
+    {
+      "line": 436,
+      "english": "; boundary and buildings as traced on the map",
+      "zu": "; umngcele nezakhiwo njengoba kudwetshwe kumephu"
+    },
+    {
+      "line": 437,
+      "english": "Site plan drawn from the saved design",
+      "zu": "Ipulani lendawo elidwetshwe kumklamo ogciniwe"
+    },
+    {
+      "line": 437,
+      "english": "Scale bar",
+      "zu": "Isikali"
+    },
+    {
+      "line": 1000,
+      "english": "Vegetable beds",
+      "zu": "Imibhede yemifino"
+    },
+    {
+      "line": 1001,
+      "english": "Staple crop plots",
+      "zu": "Iziza zezitshalo eziyisisekelo"
+    },
+    {
+      "line": 1002,
+      "english": "Roof",
+      "zu": "Uphahla"
+    },
+    {
+      "line": 1008,
+      "english": "Everything else: paths, trees, yard, open ground",
+      "zu": "Konke okunye: izindlela, izihlahla, igceke, umhlaba ovulekile"
+    },
+    {
+      "line": 1010,
+      "english": "The whole site",
+      "zu": "Indawo yonke"
+    },
+    {
+      "line": 1023,
+      "english": "How the ground is used",
+      "zu": "Ukuthi umhlaba usetshenziswa kanjani"
+    },
+    {
+      "line": 1024,
+      "english": "Areas as drawn on the saved design and traced on the map, whether built yet or not. Trees, paths and tanks are not counted as areas.",
+      "zu": "Izindawo njengoba zidwetshwe kumklamo ogciniwe nakumephu, noma sezakhiwe noma cha. Izihlahla, izindlela namathangi akubalwa njengezindawo."
+    },
+    {
+      "line": 1025,
+      "english": "Boundary",
+      "zu": "Umngcele"
+    },
+    {
+      "line": 1025,
+      "english": "traced on the map",
+      "zu": "udwetshwe kumephu"
+    },
+    {
+      "line": 1025,
+      "english": "Beds and plots: saved design.",
+      "zu": "Imibhede neziza: umklamo ogciniwe."
+    },
+    {
+      "line": 1026,
+      "english": "Land use",
+      "zu": "Ukusetshenziswa komhlaba"
+    },
+    {
+      "line": 1037,
+      "english": "Vegetable beds",
+      "zu": "Imibhede yemifino"
+    },
+    {
+      "line": 1037,
+      "english": "Staple crop plots",
+      "zu": "Iziza zezitshalo eziyisisekelo"
+    },
+    {
+      "line": 1037,
+      "english": "Trees and plants",
+      "zu": "Izihlahla nezitshalo"
+    },
+    {
+      "line": 1037,
+      "english": "Water",
+      "zu": "Amanzi"
+    },
+    {
+      "line": 1038,
+      "english": "Structures",
+      "zu": "Izakhiwo"
+    },
+    {
+      "line": 1038,
+      "english": "Earthworks",
+      "zu": "Imisebenzi yomhlaba"
+    },
+    {
+      "line": 1038,
+      "english": "Animals",
+      "zu": "Izilwane"
+    },
+    {
+      "line": 1038,
+      "english": "Access",
+      "zu": "Ukufinyelela"
+    },
+    {
+      "line": 1038,
+      "english": "Paths, swales and pipes",
+      "zu": "Izindlela, imisele namapayipi"
+    },
+    {
+      "line": 1050,
+      "english": "already there",
+      "zu": "sekukhona"
+    },
+    {
+      "line": 1050,
+      "english": "still to build or plant",
+      "zu": "kusazokwakhiwa noma kutshalwe"
+    },
+    {
+      "line": 1062,
+      "english": "Already there",
+      "zu": "Sekukhona"
+    },
+    {
+      "line": 1063,
+      "english": "Planned, not built or planted yet",
+      "zu": "Kuhleliwe, akukakhiwa noma kutshalwe"
+    },
+    {
+      "line": 1064,
+      "english": "Numbers: there now / total",
+      "zu": "Izinombolo: okukhona manje / isamba"
+    },
+    {
+      "line": 1068,
+      "english": "Built, and still to build",
+      "zu": "Okwakhiwe, nokusazokwakhiwa"
+    },
+    {
+      "line": 1069,
+      "english": "One mark for each thing on the saved design, as it was marked there. Change an item to \"existing\" in the Design Studio once it is in the ground.",
+      "zu": "Uphawu olulodwa lwento ngayinye esemklamweni ogciniwe, njengoba yaphawulwa khona. Shintsha into ibe \"ekhona\" ku-Design Studio uma isisemhlabathini."
+    },
+    {
+      "line": 1070,
+      "english": "Saved design",
+      "zu": "Umklamo ogciniwe"
+    },
+    {
+      "line": 1071,
+      "english": "Built and planned",
+      "zu": "Okwakhiwe nokuhleliwe"
+    },
+    {
+      "line": 1099,
+      "english": "The design has changed since this report was written. This picture shows the design as it is today.",
+      "zu": "Umklamo ushintshile selokhu kwabhalwa lo mbiko. Lesi sithombe sikhombisa umklamo njengoba unjalo namuhla."
+    }
+  ],
+  "catalogueSources": [
+    "JoJo Tank 1000L",
+    "JoJo Tank 2500L",
+    "JoJo Tank 5000L",
+    "JoJo Tank 10000L",
+    "Rain Barrel",
+    "Small Pond",
+    "Farm Dam",
+    "Borehole",
+    "Tap Point",
+    "Water Trough",
+    "First-Flush Filter",
+    "Pump & Filter",
+    "Greywater Basin",
+    "Greywater Outlet",
+    "Greywater Diverter & Filter",
+    "Infiltration Basin",
+    "Half-moon",
+    "Berm / Contour Bank",
+    "Terrace / Retaining Bank",
+    "Shed",
+    "Polytunnel",
+    "Shade Tunnel",
+    "Chicken Coop",
+    "Chicken Tractor",
+    "Kraal",
+    "Compost Bay (3-bin)",
+    "Worm Farm",
+    "Nursery Table",
+    "Playground",
+    "Market Stall",
+    "Other water thing",
+    "Other structure",
+    "Beehive",
+    "Goat Pen",
+    "Pig Pen",
+    "Duck Pond",
+    "Rabbit Hutch",
+    "Livestock Trough",
+    "Biodigester",
+    "Shade Sail",
+    "Gate",
+    "Bench",
+    "Sign",
+    "Ground Solar Panel",
+    "Washing Line"
+  ]
+}
