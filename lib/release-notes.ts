@@ -43,7 +43,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 export const RELEASE_NOTES: ReleaseNote[] = [
   // The four-language stack reaches main here, so this entry announces it with lines that already
   // carry native drafts in every language (tests/update-notices-localization.test.ts).
-  { when: '26 October 2026', sha: 'a1b07580', changes: [
+  { when: '26 October 2026', sha: 'f9892ed6', changes: [
     "Tour and practice controls now have draft translations in four languages.",
     'App page titles now have four draft translations.',
     'Account controls and messages now have four draft translations.',
