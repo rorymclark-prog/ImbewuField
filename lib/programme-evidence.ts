@@ -25,6 +25,10 @@ export type TrainingRecord = {
 export type MilestoneObservation = { date: string; actual: number; evidence: string; recordedAt: string };
 export type ProgrammeMilestone = { id: string; project: string; title: string; category?: ProgressArea; unit: string; baseline: number | null; target: number | null; due: string; owner: string; method: string; published: boolean; observations: MilestoneObservation[]; updatedAt: string };
 export type EvidenceData = { brandingOnly?: boolean; sessions: TrainingRecord[]; milestones: ProgrammeMilestone[]; branding: ProgrammeBranding; people: { id: string; name: string }[]; assessments: { id: string; title: string }[]; canManage: boolean; canRecord: boolean; canBrand: boolean; canAssess?: boolean; canAnalyse?: boolean; sample: boolean; revision: string };
+// A report across gardens must not acquire one garden's identity from global branding.
+export function aggregateProgrammeBranding(branding: ProgrammeBranding): ProgrammeBranding {
+  return { ...branding, garden: { label: '', image: '' } };
+}
 export const blankBranding = (): ProgrammeBranding => ({ organisation: { label: '', image: '' }, garden: { label: '', image: '' }, funder: { label: '', image: '' } });
 const text = (v: unknown, max: number, required = false): v is string => typeof v === 'string' && v.length <= max && (!required || v.trim().length > 0);
 export const validEvidenceDate = (s: unknown): s is string => typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s) && Number.isFinite(Date.parse(s)) && new Date(s).toISOString().slice(0, 10) === s;

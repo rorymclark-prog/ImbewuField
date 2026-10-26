@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server';
 import { getApps, getApp, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import { guardPaidApiRequest } from '@/lib/api-auth';
-import { analyseAssessment, canChangeOrgRole, memberAccessSummary, matchedChange, melCan, validAnswers, MEL_STAGES, type MelAssessment, type MelPermission, type MelResponse, type MelStage } from '@/lib/mel';
+import { analyseAssessment, canChangeOrgRole, memberAccessSummary, compareAssessmentMeasures, compatibleMelStages, melCan, validAnswers, MEL_STAGES, type MelAssessment, type MelPermission, type MelResponse, type MelStage } from '@/lib/mel';
 import { MEL_TEMPLATES } from '@/lib/mel-templates';
 import type { UserRole } from '@/lib/db/types';
 
@@ -83,9 +83,21 @@ async function handle(req: NextRequest, write: boolean) {
         } else if (target !== orgId || !can('analyse')) fail('Access denied.', 403);
         const published = await db.collection('mel_assessments').where('orgId', '==', target).where('published', '==', true).limit(201).get();
         if (published.size > 200) fail('Choose a smaller reporting portfolio.', 422);
+        const afterId = req.nextUrl.searchParams.get('id'), beforeId = req.nextUrl.searchParams.get('compare');
+        if (afterId || beforeId) {
+          if (!safeId(afterId) || !safeId(beforeId)) fail('Choose both published assessments.');
+          // Both documents come from the same authorised published projection.
+          // A private baseline must never be fetched by its ID as a funder shortcut.
+          const records = published.docs.map(doc => ({ ...doc.data(), id: doc.id } as MelAssessment));
+          const before = records.find(record => record.id === beforeId), after = records.find(record => record.id === afterId);
+          if (!before || !after || before.state !== 'closed' || after.state !== 'closed' || !before.published || !after.published) fail('Both assessments must be closed and published.', 403);
+          if (before.project !== after.project || before.version !== after.version || !compatibleMelStages(before.stage, after.stage)) fail('Compare matching stages from the same project.');
+          const [beforeRows, afterRows] = await Promise.all([responseRows(before), responseRows(after)]);
+          return json({ comparison: compareAssessmentMeasures(before, after, MEL_TEMPLATES[before.stage], MEL_TEMPLATES[after.stage], beforeRows, afterRows, true) });
+        }
         return json({ assessments: await Promise.all(published.docs.map(async d => {
           const a = { ...d.data(), id: d.id } as MelAssessment;
-          return { id: a.id, title: a.title, project: a.project, stage: a.stage, due: a.due, updatedAt: a.updatedAt, ...analyseAssessment(a, MEL_TEMPLATES[a.stage], await responseRows(a), true) };
+          return { id: a.id, title: a.title, project: a.project, stage: a.stage, version: a.version, state: a.state, published: a.published, due: a.due, updatedAt: a.updatedAt, ...analyseAssessment(a, MEL_TEMPLATES[a.stage], await responseRows(a), true) };
         })) });
       }
       if (mode === 'people') {
@@ -106,10 +118,9 @@ async function handle(req: NextRequest, write: boolean) {
         let comparison = null;
         if (compareId) {
           const b = await assessment(compareId);
-          const allowed = (b.stage === 'baseline' && ['midpoint', 'closeout'].includes(a.stage)) || (b.stage === 'course_before' && a.stage === 'course_after') || (b.stage === 'app_midpoint' && a.stage === 'app_closeout');
-          if (!allowed || b.project !== a.project) fail('Compare matching stages from the same project.');
+          if (!compatibleMelStages(b.stage, a.stage) || b.project !== a.project || b.version !== a.version) fail('Compare matching stages and instrument versions from the same project.');
           const earlier = await responseRows(b);
-          comparison = MEL_TEMPLATES[a.stage].questions.filter(q => q.kind === 'number' || (q.options?.every(o => o.value === 'na' || Number.isFinite(Number(o.value))) ?? false)).map(q => ({ id: q.id, en: q.en + (q.kind === 'choice' ? ' (self-reported score)' : ''), ...matchedChange(b, a, earlier, rows, q.id) }));
+          comparison = compareAssessmentMeasures(b, a, MEL_TEMPLATES[b.stage], MEL_TEMPLATES[a.stage], earlier, rows).map(metric => ({ ...metric, en: metric.en + (metric.score ? ' (self-reported score)' : '') }));
         }
         return json({ assessment: a, ...analyseAssessment(a, MEL_TEMPLATES[a.stage], rows), comparison,
           comments: rows.flatMap(r => MEL_TEMPLATES[a.stage].questions.filter(q => q.kind === 'text' && r.answers[q.id]?.trim()).map(q => ({ question: q.en, text: r.answers[q.id] }))),

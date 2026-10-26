@@ -38,11 +38,13 @@ export function freshSampleProgramme(): SampleProgrammeControls {
 }
 export function samplePublishedAssessments(controls: SampleProgrammeControls) {
   if (!controls.funderAccess) return [];
-  return sampleAssessments(controls).filter(x => x.assessment.state === 'closed' && controls.published.includes(x.assessment.id)).map(x => ({ ...x.assessment, ...analyseAssessment(x.assessment, MEL_TEMPLATES[x.assessment.stage], x.rows, true) }));
+  return sampleAssessments(controls).filter(x => x.assessment.state === 'closed' && controls.published.includes(x.assessment.id)).map(x => ({ ...x.assessment, published: true, ...analyseAssessment(x.assessment, MEL_TEMPLATES[x.assessment.stage], x.rows, true) }));
 }
 
 export function sampleAssessments(controls: SampleProgrammeControls) {
-  return controls.assessments ?? buildSampleAssessments();
+  // The sharing control is the authority; fixture flags cannot override a
+  // summary that the person exploring the practice workspace just shared.
+  return (controls.assessments ?? buildSampleAssessments()).map(record => ({ ...record, assessment: { ...record.assessment, published: controls.published.includes(record.assessment.id) } }));
 }
 export function changeSampleAssessment(controls: SampleProgrammeControls, id: string, patch: Partial<MelAssessment>): SampleProgrammeControls {
   const data = sampleAssessments(controls);

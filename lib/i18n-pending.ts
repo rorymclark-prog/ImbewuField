@@ -1553,3 +1553,38 @@ export const REPORT_UI_KEYS: Readonly<Record<string, string>> = {
   "The server returned code {status}.": "reportUiServerStatus",
   "Could not generate the report. Please try again.": "reportUiGenerationFailed"
 };
+
+/*
+ * The weather card (components/WeatherWidget.tsx) — wave 22, w22-04. Day labels, the three hazard
+ * sentences, the evapotranspiration line, the "no rain" label and the weather descriptions were
+ * English in every language. English stays the source and the fallback. The isiZulu drafts live in
+ * lib/weather-copy.ts (WEATHER_ZU_DRAFTS, same keys), are shown with the English beside them, and
+ * are listed here so the translator hand-off CSV carries them for review. {days} and {mm} are
+ * filled at render time; keep them in the translation.
+ */
+export const WEATHER_ENGLISH_PENDING: Dict = {
+  weatherToday: 'Today',
+  weatherDaySun: 'Sun',
+  weatherDayMon: 'Mon',
+  weatherDayTue: 'Tue',
+  weatherDayWed: 'Wed',
+  weatherDayThu: 'Thu',
+  weatherDayFri: 'Fri',
+  weatherDaySat: 'Sat',
+  weatherNoRain: 'No rain',
+  weatherFrostBanner: 'Frost expected {days} — protect seedlings',
+  weatherHeatBanner: 'Heat warning {days} — water early morning, shade seedlings',
+  weatherHeavyRainBanner: 'Heavy rain expected {days} — check drainage, delay planting',
+  weatherWaterLoss: "Crops will lose about {mm}mm of water today — water roughly that much if there's no rain",
+  weatherDescClear: 'Clear',
+  weatherDescPartlyCloudy: 'Partly cloudy',
+  weatherDescOvercast: 'Overcast',
+  weatherDescFog: 'Fog',
+  weatherDescDrizzle: 'Drizzle',
+  weatherDescRain: 'Rain',
+  weatherDescSnow: 'Snow',
+  weatherDescShowers: 'Showers',
+  weatherDescSnowShowers: 'Snow showers',
+  weatherDescThunderstorm: 'Thunderstorm',
+  weatherDescUnsettled: 'Unsettled',
+};

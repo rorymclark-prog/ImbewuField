@@ -8,7 +8,8 @@ const fin = read('components/studies/FinanceCourse.module.css');
 
 test('w18-19: English-source line follows the theme and inherits inside filled buttons', () => {
   assert.doesNotMatch(read('components/studies/DesignDraftCopy.module.css'), /#536257/);
-  assert.match(read('components/studies/DesignDraftCopy.module.css'), /color:\s*var\(--text-muted\)/);
+  // w22-06 moved this from --text-muted to --text-secondary (muted was 4.37:1 on the dark notice); still a theme token.
+  assert.match(read('components/studies/DesignDraftCopy.module.css'), /color:\s*var\(--text-secondary\)/);
   assert.match(fin, /\.actions \.primary small \{[^}]*color: inherit/);
 });
 

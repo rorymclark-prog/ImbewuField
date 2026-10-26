@@ -323,6 +323,12 @@ function FarmPlanCard({ places, mainSite, staffRole = null }: { places: SavedPla
 
 function HomeLandingInner() {
   const { t, lang } = useLanguage();
+  // w22-01: /home is prerendered at build time, so a date computed during render baked the build
+  // day into the HTML ("Saturday" on a Sunday visit). Every visit on a later day — and any visit
+  // where the server's UTC day differs from the farmer's — threw React #425 and re-rendered the
+  // whole page in the browser. The date is the visitor's, so it is computed after mount.
+  const [dayDate, setDayDate] = useState('');
+  useEffect(() => { setDayDate(getDayDate(lang)); }, [lang]);
   const router = useRouter();
   const { navigationRole, sample: roleSample } = useRoleNavigation();
   const showTourInvitation = useTourInvitation();
@@ -443,7 +449,7 @@ function HomeLandingInner() {
           the phone-only bar; the h1 moves into the page body below. */}
       {staffRole && (
         <AppHeader
-          title={getDayDate(lang)}
+          title={dayDate || '\u00a0'}
           right={<LessonLink id="home:overview" label={t('homeLearnAction')} />}
         />
       )}
@@ -456,7 +462,7 @@ function HomeLandingInner() {
 
         <div className="flex flex-col justify-center min-w-0">
           <span className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-harvest)', letterSpacing: '0.12em', lineHeight: 1 }}>
-            {getDayDate(lang)}
+            {dayDate || '\u00a0'}
           </span>
           {/* The app's own name, or the farmer's greeting — the first screen's title, and until now
               a <span>, so /home rendered no <h1> and an outline view or a screen reader had no page

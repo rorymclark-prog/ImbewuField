@@ -55,6 +55,7 @@ test('sample sharing respects the master switch, publication and closed state', 
   assert.equal(samplePublishedAssessments({ ...controls, published: [] }).length, 0);
   const all = samplePublishedAssessments({ ...controls, published: buildSampleAssessments().map(x => x.assessment.id) });
   assert.ok(all.every(a => a.state === 'closed'));
+  assert.ok(all.every(a => a.published), 'newly shared fictional summaries must carry the same publication state as the sharing control');
   for (const a of all) for (const m of a.metrics) assert.ok(!MEL_TEMPLATES[a.stage].questions.find(q => q.id === m.id)?.private);
 });
 test('reset rebuilds independent sample controls', () => {
