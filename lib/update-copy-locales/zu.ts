@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Crop source headings and full notes now have four-language translation drafts.": "Izihloko zemithombo yezitshalo namanothi aphelele manje kunemibhalo yokuhumusha ngezilimi ezine.",
+  "Translated PDFs now keep the ® mark in source names.": "Ama-PDF ahunyushiwe manje agcina uphawu lwe-® emagameni emithombo.",
   "Planting ages and picking months now have four-language translation drafts.": "Iminyaka yezitshalo nezinyanga zokuvuna manje kunemibhalo yokuhumusha ngezilimi ezine.",
   "Farm-condition guide controls now have unreviewed translations.": "Izinkinobho neziyalezo zomhlahlandlela wezimo zepulazi manje kunezinguqulo ezingakabuyekezwa.",
   "Review tree and harvest controls": "Buyekeza izilawuli zezihlahla nesivuno",

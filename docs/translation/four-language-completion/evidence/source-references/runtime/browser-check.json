@@ -1,0 +1,925 @@
+{
+  "states": 152,
+  "nativePhone": 104,
+  "nativeDesktop": 32,
+  "englishUnknownControls": 16,
+  "switches": 6,
+  "pairs": 76,
+  "checks": [
+    {
+      "id": "guide-macadamia-integrifolia",
+      "language": "zu",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 4,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-malus-domestica",
+      "language": "zu",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 8,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-persea-americana",
+      "language": "zu",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-prunus-avium",
+      "language": "zu",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 6,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-strychnos-spinosa",
+      "language": "zu",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 4,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-zingiber-officinale",
+      "language": "zu",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 6,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-morella-cordifolia",
+      "language": "zu",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-moringa-oleifera",
+      "language": "zu",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-rhoicissus-tridentata",
+      "language": "zu",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 1,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-macadamia-integrifolia",
+      "language": "zu",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 4,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-malus-domestica",
+      "language": "zu",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 8,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-persea-americana",
+      "language": "zu",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-zingiber-officinale",
+      "language": "zu",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 6,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-persea-americana",
+      "language": "zu",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-prunus-avium",
+      "language": "zu",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 6,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-strychnos-spinosa",
+      "language": "zu",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 4,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-morella-cordifolia",
+      "language": "zu",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-macadamia-integrifolia",
+      "language": "st",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 4,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-malus-domestica",
+      "language": "st",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 8,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-persea-americana",
+      "language": "st",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-prunus-avium",
+      "language": "st",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 6,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-strychnos-spinosa",
+      "language": "st",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 4,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-zingiber-officinale",
+      "language": "st",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 6,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-morella-cordifolia",
+      "language": "st",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-moringa-oleifera",
+      "language": "st",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-rhoicissus-tridentata",
+      "language": "st",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 1,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-macadamia-integrifolia",
+      "language": "st",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 4,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-malus-domestica",
+      "language": "st",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 8,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-persea-americana",
+      "language": "st",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-zingiber-officinale",
+      "language": "st",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 6,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-persea-americana",
+      "language": "st",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-prunus-avium",
+      "language": "st",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 6,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-strychnos-spinosa",
+      "language": "st",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 4,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-morella-cordifolia",
+      "language": "st",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-macadamia-integrifolia",
+      "language": "ts",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 4,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-malus-domestica",
+      "language": "ts",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 8,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-persea-americana",
+      "language": "ts",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-prunus-avium",
+      "language": "ts",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 6,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-strychnos-spinosa",
+      "language": "ts",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 4,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-zingiber-officinale",
+      "language": "ts",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 6,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-morella-cordifolia",
+      "language": "ts",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-moringa-oleifera",
+      "language": "ts",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-rhoicissus-tridentata",
+      "language": "ts",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 1,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-macadamia-integrifolia",
+      "language": "ts",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 4,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-malus-domestica",
+      "language": "ts",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 8,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-persea-americana",
+      "language": "ts",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-zingiber-officinale",
+      "language": "ts",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 6,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-persea-americana",
+      "language": "ts",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-prunus-avium",
+      "language": "ts",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 6,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-strychnos-spinosa",
+      "language": "ts",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 4,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-morella-cordifolia",
+      "language": "ts",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-macadamia-integrifolia",
+      "language": "ve",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 4,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-malus-domestica",
+      "language": "ve",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 8,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-persea-americana",
+      "language": "ve",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-prunus-avium",
+      "language": "ve",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 6,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-strychnos-spinosa",
+      "language": "ve",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 4,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-zingiber-officinale",
+      "language": "ve",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 6,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-morella-cordifolia",
+      "language": "ve",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-moringa-oleifera",
+      "language": "ve",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-rhoicissus-tridentata",
+      "language": "ve",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 1,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-macadamia-integrifolia",
+      "language": "ve",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 4,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-malus-domestica",
+      "language": "ve",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 8,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-persea-americana",
+      "language": "ve",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-zingiber-officinale",
+      "language": "ve",
+      "viewport": {
+        "height": 844,
+        "width": 390
+      },
+      "declaredFields": 6,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-persea-americana",
+      "language": "ve",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-prunus-avium",
+      "language": "ve",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 6,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-strychnos-spinosa",
+      "language": "ve",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 4,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-morella-cordifolia",
+      "language": "ve",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 2,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-malus-domestica",
+      "language": "en",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 0,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-persea-americana",
+      "language": "en",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 0,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-zingiber-officinale",
+      "language": "en",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 0,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-persea-americana",
+      "language": "en",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 0,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-malus-domestica",
+      "language": "xx",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 0,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-persea-americana",
+      "language": "xx",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 0,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "guide-zingiber-officinale",
+      "language": "xx",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 0,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    },
+    {
+      "id": "age-persea-americana",
+      "language": "xx",
+      "viewport": {
+        "height": 1000,
+        "width": 1440
+      },
+      "declaredFields": 0,
+      "completeMarkupExact": true,
+      "inputsAndContextExact": true,
+      "callbacks": 0
+    }
+  ],
+  "outsideScopeStyleAndTruncatedConditionNegativesRejected": true,
+  "consoleErrors": [],
+  "scope": "Actual three unchanged components and original helper bodies with before/current registries and typed guide output. Isolated synthetic records; not account routes,backend,physical devices or fluent approval."
+}

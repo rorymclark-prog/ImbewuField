@@ -1,0 +1,43 @@
+from pathlib import Path
+import json,html,copy,hashlib
+r=Path('/Users/roryclark/.codex/worktrees/four-language-weather/ImbewuField');folder=Path('/private/tmp/imbewu-source-reference-browser-proof');packet=json.loads((r/'docs/translation/four-language-completion/source-reference-drafts.json').read_text());entries={a['english']:a for a in packet['rows']};escape=lambda v:html.escape(v,quote=False);checks=[]
+def check(a,b):
+ sa,sb=a['state'],b['state'];lang=sa['language'];assert sa['version']=='before' and sb['version']=='after';assert(sa['id'],lang)==(sb['id'],sb['language']);assert sa['context']==sb['context'];assert a['inputs']==b['inputs'];assert not sa['events'] and not sb['events'];assert a['open'] and b['open'] and not a['overflow'] and not b['overflow'];expected=a['html'];count=0
+ if lang in ['en','xx']:assert a['html']==b['html'];assert sa['provided']==sb['provided']
+ elif sa['id'].startswith('guide-'):
+  want=copy.deepcopy(sa['provided']);group=sa['context']['trees'][0];item=want['guide']['foodForest'][0]
+  for index,ref in enumerate(group['harvest'].get('supplementaryReferences',[])):
+   fields=[x['field']for row in packet['fieldBindings']for x in row['fields']if x['speciesId']==group['harvest']['speciesId'] and x['referenceIndex']==index]
+   if not fields:continue
+   candidates=[i for i,line in enumerate(item['lines'])if (line.endswith(ref['note'])if 'note'in fields else line.startswith(ref['title']+': '))];assert len(candidates)==1,(sa['id'],fields,candidates);i=candidates[0];old=item['lines'][i];new=old
+   if 'note'in fields:new=new[:-len(ref['note'])]+entries[ref['note']][lang]
+   if 'title'in fields:assert new.startswith(ref['title']+': ');new=entries[ref['title']][lang]+new[len(ref['title']):]
+   assert expected.count(escape(old))==1,(sa['id'],old);expected=expected.replace(escape(old),escape(new));item['lines'][i]=new;count+=len(fields)
+  assert want==sb['provided'],'complete supplied guide differs beyond declared complete references'
+ else:
+  assert sa['provided']==sb['provided'];group=sa['context']['group']
+  for index,ref in enumerate(group['harvest'].get('supplementaryReferences',[])):
+   fields=[x['field']for row in packet['fieldBindings']for x in row['fields']if x['speciesId']==group['harvest']['speciesId'] and x['referenceIndex']==index]
+   for field in fields:
+    old=('<strong>'+escape(ref['title'])+':</strong>')if field=='title'else escape(ref['note']);new=('<strong>'+escape(entries[ref['title']][lang])+':</strong>')if field=='title'else escape(entries[ref['note']][lang]);assert expected.count(old)==1,(sa['id'],field);expected=expected.replace(old,new);count+=1
+ assert expected==b['html'],(sa['id'],lang,'whole rendered markup changed outside declared complete bound fields')
+ assert count or lang in ['en','xx'];checks.append({'id':sa['id'],'language':lang,'viewport':a['viewport'],'declaredFields':count,'completeMarkupExact':True,'inputsAndContextExact':True,'callbacks':0})
+for lang in ['zu','st','ts','ve']:
+ for device in ['phone','desktop']:
+  rows=json.loads((folder/f'{lang}-{device}.json').read_text());assert len(rows)==(26 if device=='phone'else 8)
+  for i in range(0,len(rows),2):check(rows[i],rows[i+1])
+rows=json.loads((folder/'en-xx-controls.json').read_text());assert len(rows)==16
+for i in range(0,len(rows),2):check(rows[i],rows[i+1])
+switch=json.loads((folder/'language-switches.json').read_text());assert len(switch)==6
+for row in switch:
+ assert row['state']['context']==switch[0]['state']['context']and row['state']['provided']==switch[0]['state']['provided'];assert not row['state']['events'];assert [{k:v for k,v in i.items()if k!='label'}for i in row['inputs']]==[{k:v for k,v in i.items()if k!='label'}for i in switch[0]['inputs']]
+# These negative probes must fail the same whole-markup rule.
+valid=json.loads((folder/'st-phone.json').read_text());bad=copy.deepcopy(valid[1]);bad['html']=bad['html'].replace('var(--text-primary)','red',1)
+try:check(valid[0],bad)
+except AssertionError:pass
+else:raise AssertionError('outside-scope style mutation was missed')
+bad=copy.deepcopy(valid[1]);note=next(row['st']for row in packet['rows']if row['st']in bad['html']and len(row['st'])>150);bad['html']=bad['html'].replace(note,note[:-35])
+try:check(valid[0],bad)
+except AssertionError:pass
+else:raise AssertionError('truncated complete condition was missed')
+result={'states':152,'nativePhone':104,'nativeDesktop':32,'englishUnknownControls':16,'switches':6,'pairs':len(checks),'checks':checks,'outsideScopeStyleAndTruncatedConditionNegativesRejected':True,'consoleErrors':[],'scope':'Actual three unchanged components and original helper bodies with before/current registries and typed guide output. Isolated synthetic records; not account routes,backend,physical devices or fluent approval.'};(r/'output/source-reference-qa/browser-check.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');print({k:v for k,v in result.items()if k!='checks'})

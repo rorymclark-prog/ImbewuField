@@ -1,0 +1,19 @@
+# Crop source-reference translation continuation — 26 October 2026
+
+Parent:75e6e7033e621599443909240ca8e4553968888c (published draft PR1120). Original immutable capture:4b2ab249d59ca0748802289d06b3d66a82b42e25. Parent was fast-forwarded after its delivery-only documentation;13 captured source files still match. Earlier TGUC,TCR,TPR and TLAG findings remain historical evidence. No fluent reviewer or additional agent.
+
+|Finding|Observed problem|Current result|
+|---|---|---|
+|SRD-001|62 typed supplementary headings and74 complete source notes still used English.|136 source-bound fields/46existing identities now have544 unreviewed drafts. All1625 ancestor rows preserved,1761 combined. Immutable fixture covers13sourcefiles,103trees and17contexts/102guide+102purchasing states. Complete outputs compared; source models,notes,selectors,components,figures and species stay exact.|
+|SRD-002|Figures alone cannot prove full source cautions/months/geography survive.|Whole-paragraph expectations retain final conditions and all other lines.540 protected identity/unit occurrences,152 actual native month occurrences/19clauses,word ages and durations checked. Truncated tails,English fallback,figures-only substitutes,wrong scope and private-name collisions rejected.3 proper location/cultivar labels intentionally pass through.|
+|SRD-003|Actual native PDF dropped ® from existing African Delight® note.|Reproduced in zu reference group2. Existing Unicode Extended_Pictographic filter also matched ®/©/™. One declared text-filter repair retains those meaningful markers and still strips decorative emoji. Original font file captured with SHA; ancestor whole-font hash reverses only this repair. Unrelated font-registration mutation still fails. Actual painter and glyph checks pass all4languages. Original source plant name and calibrated note unchanged.|
+|SRD-004|UI/runtime and generated documents need direct evidence.|104nativephone+32nativedesktop+16EN/unknown control states;76 whole-markup pairs and6language switches preserve contexts,controls and zero callbacks.0overflow,consoleerrors.18actualPDFs224pages98005wordbounds1964completeguideclauses296whole-pageparagraphs544typedfields;no clipped words.3ENpairs identical text/pixels.12nativePDFcontacts+12enlargedpages and20phone+16desktop panels actually seen;no overlap/cut-off/missing glyph observed.|
+|SRD-005|Bounded source inventory can be mistaken for whole-app completion.|801typed-guidance fields now leave0ordinaryprose gaps and3properidentities; this is not all UI,hardcoded poultry guidance,feedback,lessons/media,accessibility/errors/exports,current-main/full-account integration or fluent/agricultural review. Goal remains active.|
+
+212 affected tests/18files pass after Node24 typecheck; whitespace checks clean. New marker regression initially selected supplementary notes instead of the actual first-crop note; corrected source selector,all assertions preserved. Historical failures are not counted as final passes. No production build attempted.
+
+[Runtime evidence and exact limits](../../translation/four-language-completion/evidence/source-references/runtime/README.md). Required full ordered frozen-input run,finished branch push,stacked draftPR,issue35 delivery and exact-head CI remain pending. This changes the picture through translated text/wrapping;PLAN_VERSION unchanged. No paid call,real-record writes,merge or deployment.
+
+## Verified local delivery continuation
+
+Ordered frozen run d430d509f38e passed:tsc0,5,888pass0fail1existing shape-sync TODO/5,889total576files,diff0. All1,819inputs and116runtime hashes exact. [Delivery proof](../../translation/four-language-completion/evidence/source-references/DELIVERY.md) supersedes pending-full-suite statements above. CI,current-main/full-account integration,remaining UI/media and fluent/agricultural review remain open.

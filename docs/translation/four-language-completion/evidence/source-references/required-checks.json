@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-26T12:18:40.971368+00:00",
+  "sourceCommit": "d430d509f38ef50d039a775c868ea8b139aa8dd3",
+  "orderedRun": {
+    "startedAt": "2026-10-26T10:11:19.899321+00:00",
+    "pid": 85584,
+    "base": "d430d509f38ef50d039a775c868ea8b139aa8dd3",
+    "branch": "codex/four-language-source-references",
+    "tmpdir": "/private/tmp/imbewufield-source-reference-checks-20261026-flkloby2",
+    "frozenInputs": 1819,
+    "registeredTestFiles": 576,
+    "commands": [
+      {
+        "name": "typecheck",
+        "command": [
+          "npx",
+          "tsc",
+          "--noEmit"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "test",
+        "command": [
+          "npm",
+          "test"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "diff",
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "status": "passed",
+    "current": "diff",
+    "endedAt": "2026-10-26T12:08:31.489800+00:00",
+    "changedFrozenInputs": []
+  },
+  "totals": {
+    "tests": 5889,
+    "pass": 5888,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 1
+  },
+  "existingTodo": "tests/shape-sync-loss.test.ts:59, documented whole-collection shape sync loss; not introduced or hidden.",
+  "frozenInputsRecheckedAtDelivery": 1819,
+  "changedFrozenInputs": [],
+  "runtimeArtifactHashesRechecked": 116,
+  "newRuntimeEdits": "None. This proof is outside the preserved runtime snapshot.",
+  "wholeApp": "INCOMPLETE;drafts unreviewed,current-main/role integration and other UI/media work remain. CI must be read after push."
+}

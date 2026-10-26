@@ -1,3 +1,4 @@
+import {originalSourceReferenceFont} from './helpers/source-reference-font-expectation.ts';
 import { controlT } from './control-icon-renderers.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -24,7 +25,7 @@ test('programme drafts bind the actual source phrases, numbers and earlier isiZu
  audit(PROGRAMME_REPORT_COPY);assert.deepEqual(PROGRAMME_PDF_ZU,packet.programmeSource.pdfZulu);assert.deepEqual(PROGRAMME_METRIC_ZU,packet.programmeSource.composerZulu);assert.deepEqual(TRAINING_FEEDBACK_TEMPLATE,packet.programmeSource.feedbackTemplate);
  for(const row of PROGRAMME_REPORT_COPY)for(const lang of languages){assert.equal(programmeReportText(row.english,lang),row[lang]);assert.equal(reportVisualText(row.english,lang),row[lang]);}
  for(const source of packet.programmeSource.rows.filter((s:any)=>s.reuse))for(const lang of languages)assert.equal(programmeReportText(source.english,lang),source.reuse[lang]);
- for(const file of ['lib/sample-gardens.ts','lib/sample-orchard.ts','lib/mel-templates.ts','lib/programme-evidence.ts','lib/report-pdf-font.ts'])assert.equal(createHash('sha256').update(read(file)).digest('hex'),packet.sourceFileSha256[file],file);
+ for(const file of ['lib/sample-gardens.ts','lib/sample-orchard.ts','lib/mel-templates.ts','lib/programme-evidence.ts','lib/report-pdf-font.ts'])assert.equal(createHash('sha256').update(file==='lib/report-pdf-font.ts'?originalSourceReferenceFont(read(file)):read(file)).digest('hex'),packet.sourceFileSha256[file],file);
 });
 test('the report inventory guard actually rejects a missing error, missing review disclosure and wrong quantity',()=>{
  for(const source of ['The PDF could not be created. Your records have not changed.','These translated headings and controls are unreviewed. Evidence and participant answers remain in the language recorded.'])assert.throws(()=>audit(PROGRAMME_REPORT_COPY.filter(r=>r.english!==source)));

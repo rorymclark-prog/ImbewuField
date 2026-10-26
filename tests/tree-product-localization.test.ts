@@ -1,3 +1,4 @@
+import {applyExpectedSourceReferences} from './helpers/source-reference-expectation.ts';
 import {restoreTreeGuideControlSource} from './helpers/tree-guide-control-expectation.ts';
 import {applyExpectedTreeCareGuide} from './helpers/tree-care-expectation.ts';
 import assert from 'node:assert/strict';
@@ -26,6 +27,7 @@ function expectedGuide(row:typeof before.rows[number],language:string){
   expected.foodForest[index].lines[0]=productGuideText(frame,language,{...values,products:draft[language].replace(/\.$/,'')});
  }
  applyExpectedTreeCareGuide(expected.foodForest,row.context,language);
+ applyExpectedSourceReferences(expected.foodForest,row.context,language);
  return expected;
 }
 function expectedMarkdown(row:typeof before.rows[number],language:string,expected:ReturnType<typeof buildProductGuidance>){
@@ -49,7 +51,7 @@ test('product drafts retain every captured source byte, inherited row, food-use 
  }
 });
 
-test('complete guides and purchasing text preserve every field outside declared product and bound care/purchase drafts in all captured growing conditions',()=>{
+test('complete guides and purchasing text preserve every field outside declared product and bound care/purchase and reference drafts in all captured growing conditions',()=>{
  let fields=0;for(const row of before.rows){const snapshot=JSON.stringify(row.context);
   for(const language of['en','xx',...CROP_EXPORT_DRAFT_LANGUAGES]){const expected=expectedGuide(row,language),actual=buildProductGuidance(row.context,row.zones,row.conditions,language);assert.deepEqual(actual,expected,'all complete conditions, citations, legal source statements, ages, figures and inventory stay in the comparison');assert.equal(productPurchasingMarkdown(row.context,row.zones,row.conditions,language),expectedMarkdown(row,language,expected));if(CROP_EXPORT_DRAFT_LANGUAGES.some(l=>l===language))fields+=expected.foodForest.filter((item,i)=>item.lines[0]!==row.outputs[language].foodForest[i].lines[0]).length;}
   assert.equal(JSON.stringify(row.context),snapshot);

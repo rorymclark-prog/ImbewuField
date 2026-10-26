@@ -1,3 +1,4 @@
+import {applyExpectedSourceReferences} from './helpers/source-reference-expectation.ts';
 import {restoreTreeGuideControlSource} from './helpers/tree-guide-control-expectation.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
@@ -16,7 +17,7 @@ const read=(file:string)=>readFileSync(new URL('../'+file,import.meta.url),'utf8
 const packed=readFileSync(new URL('./fixtures/tree-care-translation/before.json.gz',import.meta.url)),raw=gunzipSync(packed),before=JSON.parse(raw.toString())as{registry:unknown[];profiles:typeof PRODUCT_PROFILES;sources:Array<{file:string;source:string;sha256:string}>;rows:Array<{id:string;context:ProductGuideContext;zones:GrowingZoneId[];conditions?:SiteProductionConditions;outputs:Record<string,ReturnType<typeof buildProductGuidance>>;markdown:Record<string,string>}>};
 const p=JSON.parse(read('docs/translation/four-language-completion/tree-care-drafts.json'))as{status:string;applied:boolean;rows:Array<Record<string,string>>;sourceBindings:Array<{english:string;scopes:string[];identities:string[]}>;fieldBindings:Array<{english:string;fields:Array<{speciesId:string;field:'care'|'purchase';index:number}>}>;monthBindings:Array<{row:number;months:number[]}>;literalCultivarMonthBindings:Array<{row:number;literal:string}>};
 const figures=(s:string)=>s.match(/\d+(?:[.,]\d+)?/g)??[],tokens=(s:string)=>s.match(/\{\w+\}/g)??[];
-function expected(row:typeof before.rows[number],language:string){const guide=structuredClone(row.outputs[language]);applyExpectedTreeCareGuide(guide.foodForest,row.context,language);return guide;}
+function expected(row:typeof before.rows[number],language:string){const guide=structuredClone(row.outputs[language]);applyExpectedTreeCareGuide(guide.foodForest,row.context,language);applyExpectedSourceReferences(guide.foodForest,row.context,language);return guide;}
 function markdown(row:typeof before.rows[number],language:string,guide:ReturnType<typeof buildProductGuidance>){let value=row.markdown[language];const block=(item:ProductionGuideItem)=>['### '+item.title,...item.lines,...(item.sources??[]).map(source=>productGuideText('Source: [{label}]({url})',language,{label:source.label,url:String(source.url)}))].join('\n\n');for(const[index,item]of guide.foodForest.entries()){const old=block(row.outputs[language].foodForest[index]),next=block(item);if(old===next)continue;assert.equal(value.split(old).length-1,1,'only the complete captured species section may receive the bound draft');value=value.replace(old,next);}return value;}
 
 test('care and nursery drafts retain every source byte, inherited row and exact species/array/index binding',()=>{
@@ -35,7 +36,7 @@ test('scientific/cultivar identities, true calendar months and the five-year sha
  requireTerms(p.rows);for(const mutate of[(rows:typeof p.rows)=>rows[40].ve=rows[40].ve.replace('Sweetheart','Stella'),(rows:typeof p.rows)=>rows[37].ts=rows[37].ts.replace(recordsMonthLong('ts',12),recordsMonthLong('ts',11)),(rows:typeof p.rows)=>rows[45].st=rows[45].st.replace('December',recordsMonthLong('st',12)),(rows:typeof p.rows)=>rows[59].ts=rows[59].ts.replace('ntlhanu','tsevu')]){const bad=structuredClone(p.rows);mutate(bad);assert.throws(()=>requireTerms(bad),'same digits cannot hide a changed species/cultivar, month or word-number');}
 });
 
-test('whole guides and purchasing sections translate only complete typed care/purchase clauses while preserving every other captured field',()=>{
+test('whole guides and purchasing sections translate only complete typed care/purchase and reference clauses while preserving every other captured field',()=>{
  let translated=0;for(const row of before.rows){const snapshot=JSON.stringify(row.context);for(const language of['en','xx',...CROP_EXPORT_DRAFT_LANGUAGES]){const want=expected(row,language),actual=buildProductGuidance(row.context,row.zones,row.conditions,language);assert.deepEqual(actual,want,'all food holds, figures, seasons, citations, product labels, ages and item order remain in the complete comparison');assert.equal(productPurchasingMarkdown(row.context,row.zones,row.conditions,language),markdown(row,language,want));translated+=actual.foodForest.reduce((n,item,i)=>n+item.lines.filter((line,j)=>line!==row.outputs[language].foodForest[i].lines[j]).length,0);}assert.equal(JSON.stringify(row.context),snapshot);}assert.ok(translated>=91*4*15,'all91 fields must be exercised through every captured climate/observation scenario');
 });
 

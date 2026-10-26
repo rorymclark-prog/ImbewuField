@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Crop source headings and full notes now have four-language translation drafts.": "Tinhlokomhaka ta swihlovo swa swibyariwa ni tinotsi leti heleleke sweswi swi ni matsalelo ya vuhundzuluxeri hi tindzimi ta mune.",
+  "Translated PDFs now keep the ® mark in source names.": "Ti-PDF leti hundzuluxeriweke sweswi ti hlayisa mfungho wa ® eka mavito ya swihlovo.",
   "Planting ages and picking months now have four-language translation drafts.": "Malembe ya ku byala ni tin’hweti to tshovela sweswi swi ni matsalelo ya vuhundzuluxeri hi tindzimi ta mune.",
   "Farm-condition guide controls now have unreviewed translations.": "Swilawuri swa nkongomiso wa swiyimo swa purasi sweswi swi ni vuhundzuluxeri lexi nga si kambisisiwaka.",
   "Review tree and harvest controls": "Kambisisa swilawuri swa misinya ni ntshovelo",

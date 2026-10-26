@@ -1550,3 +1550,7 @@ An old Study guard pinned the whole shared Tshivenda dictionary. Its original ha
 new app-control entries before that historical comparison. Overrides and undeclared changes
 still fail; calibrated Study data remains protected. This is not a replacement of old hashes
 with whatever the current implementation happens to contain.
+
+## Crop source-reference continuation
+
+136 supplementary source headings/notes now have544 unreviewed drafts. Original farming sources,identities and figures remain unchanged. Actual browser and PDF checks include complete paragraphs,English preservation and a repaired source-marker filter. See [audit](../../audits/2026-10-26/source-reference-drafts.md) and [runtime evidence](evidence/source-references/runtime/README.md). Full ordered suite,CI,current-main/role integration,remaining UI/media and fluent/agricultural review remain open.

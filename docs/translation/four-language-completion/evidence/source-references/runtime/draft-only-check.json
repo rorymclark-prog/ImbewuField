@@ -1,0 +1,258 @@
+{
+  "status": "passed: draft-only source binding,figures,units,months,complete output preservation",
+  "draftRows": 136,
+  "nativeDrafts": 544,
+  "typedBindings": 136,
+  "sourceFiles": 13,
+  "inheritedRuntimeRowsUnchanged": 1625,
+  "completeGuideStatesUnchanged": 102,
+  "completePurchasingStatesUnchanged": 102,
+  "protectedIdentityOccurrences": 540,
+  "nativeSourceMonthOccurrences": 152,
+  "monthBindings": [
+    {
+      "english": "This botanical description discusses pods that become brown at maturity. The separate harvesting section requires young, tender, green pods for food and supplies no calendar for that stage. March–April is retained as pod-development phenology, not a confirmed young-pod picking season or leaf calendar.",
+      "months": [
+        {
+          "month": 3,
+          "occurrences": 1
+        },
+        {
+          "month": 4,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "Wild olive is distinct from a named commercial olive cultivar. March–July describes fruit following flowers; no exact ripe-picking start/end is established.",
+      "months": [
+        {
+          "month": 3,
+          "occurrences": 1
+        },
+        {
+          "month": 7,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "SANBI describes green fruits that later split to expose edible red flesh. Its December–July fruit-production interval does not state when the fruit is ripe. Retain this as a general southern African phenology reference; local ripe picking months remain unknown.",
+      "months": [
+        {
+          "month": 7,
+          "occurrences": 1
+        },
+        {
+          "month": 12,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "Table is fruit-set-to-maturation duration, not months of ripe harvest. Its separate table lists July–August flowering. Neither becomes a food-availability bar.",
+      "months": [
+        {
+          "month": 7,
+          "occurrences": 1
+        },
+        {
+          "month": 8,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "Conventional commercial cherry reference: more than 1,000 Positive Utah Chill Units, not 1,000 chill hours. Low-chill candidates need their own verified requirements. Most cultivars need compatible cross-pollination; the named self-fertile choices differ. The September flowering reference is not a picking-month array.",
+      "months": [
+        {
+          "month": 9,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "Ceres growers reported the start of the 2025 cherry harvest in late October, seven to ten days earlier than the prior year. This is an observed season in a named region, not a fixed future duration, KZN calendar or all-variety season.",
+      "months": [
+        {
+          "month": 10,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "December–June berries are documented in the ecology account as wildlife food; this is not a verified human berry-picking window.",
+      "months": [
+        {
+          "month": 6,
+          "occurrences": 1
+        },
+        {
+          "month": 12,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "Food is the berry; the same SANBI account reports poisonous tuberous roots. September–June describes berry occurrence, not a measured ripe-picking interval.",
+      "months": [
+        {
+          "month": 6,
+          "occurrences": 1
+        },
+        {
+          "month": 9,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "September–January describes fruit production; exact ripe-picking dates are not stated. Do not count leaves used as livestock fodder as household food.",
+      "months": [
+        {
+          "month": 1,
+          "occurrences": 1
+        },
+        {
+          "month": 9,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "The primary account establishes edible ripe fruit and October–June fruit appearance. That interval includes developing fruit and is retained only as phenology, not a ripe picking calendar. No annual food kg or bearing age is supplied.",
+      "months": [
+        {
+          "month": 6,
+          "occurrences": 1
+        },
+        {
+          "month": 10,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "The primary account establishes edible ripe fruit and February–July fruit appearance. That interval includes developing fruit and is retained only as phenology, not a ripe picking calendar. No annual food kg or bearing age is supplied.",
+      "months": [
+        {
+          "month": 2,
+          "occurrences": 1
+        },
+        {
+          "month": 7,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "SANBI qualifies the food statement; it is about ripe berries, not latex, bark or roots. Fruit presence February–September does not establish ripe picking throughout.",
+      "months": [
+        {
+          "month": 2,
+          "occurrences": 1
+        },
+        {
+          "month": 9,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "The review states August–December but does not identify a locality for that interval. Related monkey-orange literature discusses this interval in Zimbabwe and more than one Strychnos species; it does not establish a South African spinosa picking calendar. The former South Africa (general) window is withheld. Record the farm's own ripe-pulp months; seeds and unripe pulp are not ordinary food.",
+      "months": [
+        {
+          "month": 8,
+          "occurrences": 1
+        },
+        {
+          "month": 12,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "The original PROTA account dates flowering and fruiting but does not date ripening. SANBI describes red to dark-purple ripe berries without ripe picking months. The November–March observation is retained as southern African phenology; local food-ready picking months remain unknown.",
+      "months": [
+        {
+          "month": 3,
+          "occurrences": 1
+        },
+        {
+          "month": 11,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "New rainy-season growth gives the best tops; wash off coastal sand thoroughly and boil for the documented vegetable preparation. August–November flowering is not leaf availability.",
+      "months": [
+        {
+          "month": 8,
+          "occurrences": 1
+        },
+        {
+          "month": 11,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "The account describes boiling young shoots until tender. September–January flowering is not a shoot harvest calendar; fodder output is not household food kg.",
+      "months": [
+        {
+          "month": 1,
+          "occurrences": 1
+        },
+        {
+          "month": 9,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "Coastal-sand perennial with edible congested flower buds. The stated July–September flowering interval does not identify exact unopened-bud picking months.",
+      "months": [
+        {
+          "month": 7,
+          "occurrences": 1
+        },
+        {
+          "month": 9,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "This account separately distinguishes green unripe and brown ripe fruit, but its November–April biology sentence does not date that ripening change. The wider interval remains southern African phenology. SANBI's January–April description of ripe edible fruit supplies the food-ready regional reference.",
+      "months": [
+        {
+          "month": 1,
+          "occurrences": 1
+        },
+        {
+          "month": 4,
+          "occurrences": 2
+        },
+        {
+          "month": 11,
+          "occurrences": 1
+        }
+      ]
+    },
+    {
+      "english": "SANBI describes dry, slightly sweet ripe pulp. Fruit remaining on leafless trees March–August is persistence, not a verified six-month picking season.",
+      "months": [
+        {
+          "month": 3,
+          "occurrences": 1
+        },
+        {
+          "month": 8,
+          "occurrences": 1
+        }
+      ]
+    }
+  ],
+  "limits": "Unapplied drafts only;not fluent/agricultural approval. Full runtime/browser/PDF/full-suite/CI/whole-app work remains."
+}
