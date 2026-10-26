@@ -14,3 +14,5 @@ The existing source and presentation modules remain byte-exact. Only the canonic
 - Bounded801-source inventory now has227 prose and3 classification candidates. This is not a whole-app percentage; other UI, feedback, lessons/media, exports, accessibility/errors, current-main integration and review remain.
 
 Temporary browser tab11 closed, viewport reset and GET-only server65146 stopped. This changes the picture. PLAN_VERSION unchanged. No paid calls or real records used.
+
+The required local suite is now complete. [Delivery proof](DELIVERY.md) supersedes the historical full-suite-pending statements above. Final-head CI and review remain pending.

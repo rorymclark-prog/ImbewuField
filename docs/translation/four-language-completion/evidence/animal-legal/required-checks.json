@@ -1,0 +1,55 @@
+{
+  "fullRun": {
+    "startedAt": "2026-10-26T04:36:29.762318+00:00",
+    "pid": 37792,
+    "base": "6247d4a1e1db42b77805ec89819fad0ef7bf5ee6",
+    "branch": "codex/four-language-animal-legal",
+    "tmpdir": "/private/tmp/imbewufield-animal-legal-checks-20261026-8ejlwku_",
+    "frozenInputs": 1756,
+    "registeredTestFiles": 572,
+    "commands": [
+      {
+        "name": "typecheck",
+        "command": [
+          "npx",
+          "tsc",
+          "--noEmit"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "test",
+        "command": [
+          "npm",
+          "test"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "diff",
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "status": "passed",
+    "current": "diff",
+    "endedAt": "2026-10-26T05:50:04.682416+00:00",
+    "changedFrozenInputs": []
+  },
+  "result": {
+    "tests": 5865,
+    "pass": 5864,
+    "fail": 0,
+    "existingTodo": 1,
+    "registeredFiles": 572
+  },
+  "sourceCheckpoint": "6247d4a1e1db42b77805ec89819fad0ef7bf5ee6",
+  "deliveryFrozenInputsChecked": 1756,
+  "changedFrozenInputsAtDelivery": [],
+  "review": "Unreviewed drafts; no fluent/current-permission/full-account/production claim",
+  "postRunChanges": "New delivery proof and Markdown pointers only; code, tests, source dossiers and all1756frozen inputs unchanged."
+}
