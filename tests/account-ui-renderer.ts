@@ -6,6 +6,7 @@ import{act,create,type ReactTestRenderer,type ReactTestInstance}from'react-test-
 import{CONSENT_PANEL_HEADING,CONSENT_SCOPES,emptyConsent,hasConsent,grantedScopes,setScope,revokeAll}from'../lib/consent.ts';
 import{controlT,type ControlLanguage}from'./control-icon-renderers.ts';
 import{accountText,accountRoleName,accountErrorText,allowanceResetLabel,fillAccountText,isAccountDraftLanguage}from'../lib/account-copy.ts';
+import{userFacingMessage}from'../lib/user-facing-error.ts';
 const read=(p:string)=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const cache=new Map<string,string>();
 function compile(path:string,result:string,scope:Record<string,unknown>):any {
@@ -37,7 +38,7 @@ export async function actualAccountUi(initial:ControlLanguage,options:AccountUiO
   useRouter:()=>router,useAppLevel:()=>simple?'simple':'full',useSampleRole:()=>options.sample?'ngo':'',isBackendConfigured:()=>options.backend??false,
   useAuth:()=>({user,profile,loading,signOutUser:async()=>{calls.signOut++;},changePassword:async(...values:string[])=>{calls.passwords.push(values);return options.passwordError??null;},refreshProfile:async()=>{calls.refresh++;if(options.refreshError)throw Error('refresh failure');}}),
   updateMyProfile:async(payload:any)=>{calls.updates.push(payload);if(options.saveError)throw options.saveError;},uploadPhoto:async(file:any,kind:string)=>{calls.uploads.push({file,kind});if(options.photoError)throw options.photoError;return'qa-photo-url';},
-  resizeFileForUpload:async(file:any)=>{calls.resize.push({kind:'photo',file});return'qa-resized-photo';},resizeLogoForStorage:async(file:any)=>{calls.resize.push({kind:'logo',file});return'qa-logo-data';},getOrganizationName:async()=>'QA organisation',
+  userFacingMessage,resizeFileForUpload:async(file:any)=>{calls.resize.push({kind:'photo',file});return'qa-resized-photo';},resizeLogoForStorage:async(file:any)=>{calls.resize.push({kind:'logo',file});return'qa-logo-data';},getOrganizationName:async()=>'QA organisation',
   getMyConsent:async()=>{calls.consentReads++;if(options.consentLoading)return new Promise(()=>{});if(loadFailures-->0)throw Error('consent read failed');return structuredClone(currentConsent);},
   setMyConsentScope:async(scope:any,next:boolean)=>{calls.consentWrites.push({scope,next});if(options.consentWriteDelay)await new Promise<void>(resolve=>{finishConsentWrite=resolve;});if(options.consentWriteError)throw Error('consent write failed');currentConsent=setScope(currentConsent,scope,next,'2026-01-02T00:00:00Z');return structuredClone(currentConsent);},
   revokeAllMyConsent:async()=>{calls.revocations++;if(options.consentRevokeError)throw Error('revoke failed');currentConsent=revokeAll(currentConsent,'2026-01-03T00:00:00Z');return structuredClone(currentConsent);},

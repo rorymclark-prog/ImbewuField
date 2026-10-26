@@ -1,3 +1,4 @@
+import{UserFacingError}from'../lib/user-facing-error.ts';
 import test from'node:test';
 import assert from'node:assert/strict';
 import fs from'node:fs';
@@ -42,7 +43,7 @@ for(const lang of langs)test(`${lang}: actual profile controls save the same typ
 
 test('blank profile fields keep the original omission/null meanings and errors retain edited values across language changes',async()=>{
  const h=await actualAccountUi('st',{saveError:'failed'});try{await h.button(local('st','Edit'));await h.change(h.renderer.root.findByProps({placeholder:local('st','Your full name')}),'  ');await h.change(h.renderer.root.findByProps({type:'tel'}),'  ');await h.change(h.renderer.root.findByProps({placeholder:local('st','e.g. Ubhejane Creche')}),'  ');await h.button(local('st','Save'));assert.deepEqual(h.calls.updates[0],{full_name:undefined,phone:null,farm_name:null,language:'en'});assert.ok(h.text().includes(local('st','Could not save. Try again.')));await h.language('ve');assert.ok(h.text().includes(local('ve','Could not save. Try again.')));assert.equal(h.renderer.root.findByType('select').props.value,'en');assert.equal(h.renderer.root.findByProps({type:'tel'}).props.value,'  ');}finally{await h.dispose();}
- const x=await actualAccountUi('ts',{saveError:Error('Saved error in an unknown language')});try{await x.button(local('ts','Edit'));await x.button(local('ts','Save'));assert.equal(x.renderer.root.findAllByType('bdi').find(n=>accountNodeText(n)==='Saved error in an unknown language')?.props.lang,'');}finally{await x.dispose();}
+ const x=await actualAccountUi('ts',{saveError:new UserFacingError('Saved error in an unknown language')});try{await x.button(local('ts','Edit'));await x.button(local('ts','Save'));assert.equal(x.renderer.root.findAllByType('bdi').find(n=>accountNodeText(n)==='Saved error in an unknown language')?.props.lang,'');}finally{await x.dispose();}
 });
 
 for(const lang of langs)test(`${lang}: password validation and backend messages repaint without changing the request or closing a failed form`,async()=>{
