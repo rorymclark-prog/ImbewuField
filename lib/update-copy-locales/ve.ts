@@ -127,5 +127,12 @@ const copy:UpdateCopy={
   "Sign in, Map, Prices and Account have headings; Prices and Calendar share one header.": "U dzhena, Mmapa, Mitengo na Akhaunthu zwi na ṱhoho; Mitengo na Khaḽenda zwi shumisa ṱhoho nthihi.",
   "Resume an unfinished site survey after reopening this browser, or discard its draft.": "Dovholani tsedzuluso ya fhethu ye ya sa fhela musi ni tshi vula browser hafhu, kana ni bvise mvetamveto yayo.",
   "Close and keep draft lets you pause. Your report uses answers you explicitly save.": "U Vala na u vhulunga ṱhaluso zwi ni tendela u imisa. Muvhigo waṋu u shumisa phindulo dzine na dzi vhulunga.",
+  "Farmers can download production and finance reports from My records.": "Vhalimi vha nga ḓownilodisa mivhigo ya mabveledzele na ya masheleni kha Rekhodo dzanga.",
+  "Mentors and facilitators have reports for visits, training, feedback and follow-up.": "Vhaeletshedzi na vhathusi vha na mivhigo ya u dalela, vhugudisi, phindulo na u tevhela.",
+  "MEL reports compare matched responses and show evidence dates and missing data.": "Mivhigo ya MEL i vhambedza phindulo dzi fanaho, nahone i sumbedza maḓuvha a vhuṱanzi na data i shayaho.",
+  "Reports share full, brief and ink-saving layouts; funders see published evidence.": "Mivhigo i kovhela zwivhumbeo zwo fhelelaho, zwi pfufhi na zwa u londa inki; vhalambedzi vha vhona vhuṱanzi ho phaḓaladzwaho.",
+  "Home and Invoice open faster and no longer redraw the day after an update.": "Hayani na Invoisi zwi vhuliwa nga u ṱavhanya, nahone a zwi tsha ṅwalwa hafhu ḓuvha lo tevhelaho nga murahu ha khwiniso.",
+  "On a computer the Lima button sits bottom-right and no longer hides buttons.": "Kha khomphuthara bathoni ya Lima i dzula fhasi tshanḓani tsha vhuḓi, nahone a i tsha fhimba bathoni.",
+  "The weather card reads in isiZulu (as a draft) and stays clear in dark mode.": "Khadi ya mutsho i vhalea nga isiZulu (sa mvetamveto) nahone i dzula i tshi vhonala kha mbonalo ya swiswi.",
 };
 export default copy;

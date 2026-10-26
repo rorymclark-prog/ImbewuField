@@ -127,5 +127,12 @@ const copy:UpdateCopy={
   "Sign in, Map, Prices and Account have headings; Prices and Calendar share one header.": "Kena, Mmapa, Ditheko le Akhaonto di na le dihlooho; Ditheko le Khalendara di arolelana hlooho e le nngwe.",
   "Resume an unfinished site survey after reopening this browser, or discard its draft.": "Tswela pele patlisiso ya sebaka e sa phethwang kamora ho bula sebatli sena hape, kapa lahla moralo wa yona.",
   "Close and keep draft lets you pause. Your report uses answers you explicitly save.": "Kwala 'me o boloke moralo' e o dumella ho ema. Tlaleho ya hao e sebedisa dikarabo tseo o di bolokang ka ho hlaka feela.",
+  "Farmers can download production and finance reports from My records.": "Balemi ba ka jarolla ditlaleho tsa tlhahiso le tsa ditjhelete ho Direkoto tsa ka.",
+  "Mentors and facilitators have reports for visits, training, feedback and follow-up.": "Bathusi le batataisi ba na le ditlaleho tsa ketelo, thupelo, maikutlo le ho latela.",
+  "MEL reports compare matched responses and show evidence dates and missing data.": "Ditlaleho tsa MEL di bapisa dikarabo tse tshwanang, mme di bontsha matsatsi a bopaki le datha e sieo.",
+  "Reports share full, brief and ink-saving layouts; funders see published evidence.": "Ditlaleho di arolelana meralo e felletseng, e kgutshwane le e boloka enke; bafani ba bona bopaki bo phatlaladitsweng.",
+  "Home and Invoice open faster and no longer redraw the day after an update.": "Qalong le Invoice di bulwa kapele, mme ha di sa tshwantshwa botjha letsatsi le latelang kamora ntlafatso.",
+  "On a computer the Lima button sits bottom-right and no longer hides buttons.": "Ho khomphutha konopo ya Lima e dula tlase ka letsohong le letona, mme ha e sa patela dikonopo.",
+  "The weather card reads in isiZulu (as a draft) and stays clear in dark mode.": "Karete ya boemo ba leholimo e baleha ka isiZulu (e le moralo), mme e sala e hlakile mokgweng o lefifi.",
 };
 export default copy;

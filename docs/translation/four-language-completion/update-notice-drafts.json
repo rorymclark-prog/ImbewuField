@@ -1566,6 +1566,55 @@
       "st": "Kwala 'me o boloke moralo' e o dumella ho ema. Tlaleho ya hao e sebedisa dikarabo tseo o di bolokang ka ho hlaka feela.",
       "ts": "Pfala u hlayisa xikombiso swi ku pfumelela ku wisa. Xiviko xa wena xi tirhisa tinhlamulo leti u ti hlayiseke hi ku kongomisa.",
       "ve": "U Vala na u vhulunga ṱhaluso zwi ni tendela u imisa. Muvhigo waṋu u shumisa phindulo dzine na dzi vhulunga."
+    },
+    {
+      "english": "Farmers can download production and finance reports from My records.",
+      "zu": "Abalimi bangalanda imibiko yokukhiqiza neyezimali ku-Amarekhodi ami.",
+      "st": "Balemi ba ka jarolla ditlaleho tsa tlhahiso le tsa ditjhelete ho Direkoto tsa ka.",
+      "ts": "Varimi va nga dowunilodha swiviko swa ku humesa ni swa timali eka Tirhekhodo ta mina.",
+      "ve": "Vhalimi vha nga ḓownilodisa mivhigo ya mabveledzele na ya masheleni kha Rekhodo dzanga."
+    },
+    {
+      "english": "Mentors and facilitators have reports for visits, training, feedback and follow-up.",
+      "zu": "Abeluleki nabaququzeleli banemibiko yokuvakasha, yokuqeqeshwa, yempendulo neyokulandelela.",
+      "st": "Bathusi le batataisi ba na le ditlaleho tsa ketelo, thupelo, maikutlo le ho latela.",
+      "ts": "Vatsundzuxi ni vahlanganisi va ni swiviko swa ku endzela, vuleteri, mavonelo ni ku landzelela.",
+      "ve": "Vhaeletshedzi na vhathusi vha na mivhigo ya u dalela, vhugudisi, phindulo na u tevhela."
+    },
+    {
+      "english": "MEL reports compare matched responses and show evidence dates and missing data.",
+      "zu": "Imibiko ye-MEL iqhathanisa izimpendulo ezifanayo futhi ibonisa izinsuku zobufakazi nedatha engekho.",
+      "st": "Ditlaleho tsa MEL di bapisa dikarabo tse tshwanang, mme di bontsha matsatsi a bopaki le datha e sieo.",
+      "ts": "Swiviko swa MEL swi pimanisa tinhlamulo leti fanaka, naswona swi komba masiku ya vumbhoni ni datha leyi kayivelaka.",
+      "ve": "Mivhigo ya MEL i vhambedza phindulo dzi fanaho, nahone i sumbedza maḓuvha a vhuṱanzi na data i shayaho."
+    },
+    {
+      "english": "Reports share full, brief and ink-saving layouts; funders see published evidence.",
+      "zu": "Imibiko yabelana ngezakhiwo eziphelele, ezifushane nezonga uyinki; abaxhasi babona ubufakazi obushicilelwe.",
+      "st": "Ditlaleho di arolelana meralo e felletseng, e kgutshwane le e boloka enke; bafani ba bona bopaki bo phatlaladitsweng.",
+      "ts": "Swiviko swi avelana swivumbeko leswi heleleke, swo koma ni swo hlayisa inki; vafani va vona vumbhoni lebyi andlariweke.",
+      "ve": "Mivhigo i kovhela zwivhumbeo zwo fhelelaho, zwi pfufhi na zwa u londa inki; vhalambedzi vha vhona vhuṱanzi ho phaḓaladzwaho."
+    },
+    {
+      "english": "Home and Invoice open faster and no longer redraw the day after an update.",
+      "zu": "Ikhaya ne-Invoyisi zivula ngokushesha futhi azisadwebi kabusha ngosuku olulandela isibuyekezo.",
+      "st": "Qalong le Invoice di bulwa kapele, mme ha di sa tshwantshwa botjha letsatsi le latelang kamora ntlafatso.",
+      "ts": "Kaya ni Invoyisi swi pfuleka hi ku hatlisa, naswona a swi ha lulamisiwi nakambe hi siku ro landza ku antswisiwa.",
+      "ve": "Hayani na Invoisi zwi vhuliwa nga u ṱavhanya, nahone a zwi tsha ṅwalwa hafhu ḓuvha lo tevhelaho nga murahu ha khwiniso."
+    },
+    {
+      "english": "On a computer the Lima button sits bottom-right and no longer hides buttons.",
+      "zu": "Kukhompyutha inkinobho ka-Lima ihlala phansi ngakwesokudla futhi ayisafihli izinkinobho.",
+      "st": "Ho khomphutha konopo ya Lima e dula tlase ka letsohong le letona, mme ha e sa patela dikonopo.",
+      "ts": "Eka khompyuta batheni ra Lima ri tshama ehansi evokweni ra xinene, naswona a ri ha fihli tibatheni.",
+      "ve": "Kha khomphuthara bathoni ya Lima i dzula fhasi tshanḓani tsha vhuḓi, nahone a i tsha fhimba bathoni."
+    },
+    {
+      "english": "The weather card reads in isiZulu (as a draft) and stays clear in dark mode.",
+      "zu": "Ikhadi lesimo sezulu lifundeka nangesiZulu (njengohlaka) futhi lihlala licacile kwimodi emnyama.",
+      "st": "Karete ya boemo ba leholimo e baleha ka isiZulu (e le moralo), mme e sala e hlakile mokgweng o lefifi.",
+      "ts": "Khadi ra maxelo ya tilo ri hlayeka hi isiZulu (tanihi xikombiso), naswona ri sala ri twisiseka eka mawonekelo ya munyama.",
+      "ve": "Khadi ya mutsho i vhalea nga isiZulu (sa mvetamveto) nahone i dzula i tshi vhonala kha mbonalo ya swiswi."
     }
   ],
   "historyBefore": [

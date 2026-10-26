@@ -127,5 +127,12 @@ const copy:UpdateCopy={
   "Sign in, Map, Prices and Account have headings; Prices and Calendar share one header.": "Ku nghena, Mepe, Minxavo ni Akhawunti swi ni tinhlokomhaka; Minxavo ni Khalendara swi tirhisa nhlokomhaka yin'we.",
   "Resume an unfinished site survey after reopening this browser, or discard its draft.": "Sungula nakambe mpapa wa swivutiso wa ndhawu lowu nga heliki endzhaku ka ku pfula browser leyi, kumbe u lahla xikombiso xa wona.",
   "Close and keep draft lets you pause. Your report uses answers you explicitly save.": "Pfala u hlayisa xikombiso swi ku pfumelela ku wisa. Xiviko xa wena xi tirhisa tinhlamulo leti u ti hlayiseke hi ku kongomisa.",
+  "Farmers can download production and finance reports from My records.": "Varimi va nga dowunilodha swiviko swa ku humesa ni swa timali eka Tirhekhodo ta mina.",
+  "Mentors and facilitators have reports for visits, training, feedback and follow-up.": "Vatsundzuxi ni vahlanganisi va ni swiviko swa ku endzela, vuleteri, mavonelo ni ku landzelela.",
+  "MEL reports compare matched responses and show evidence dates and missing data.": "Swiviko swa MEL swi pimanisa tinhlamulo leti fanaka, naswona swi komba masiku ya vumbhoni ni datha leyi kayivelaka.",
+  "Reports share full, brief and ink-saving layouts; funders see published evidence.": "Swiviko swi avelana swivumbeko leswi heleleke, swo koma ni swo hlayisa inki; vafani va vona vumbhoni lebyi andlariweke.",
+  "Home and Invoice open faster and no longer redraw the day after an update.": "Kaya ni Invoyisi swi pfuleka hi ku hatlisa, naswona a swi ha lulamisiwi nakambe hi siku ro landza ku antswisiwa.",
+  "On a computer the Lima button sits bottom-right and no longer hides buttons.": "Eka khompyuta batheni ra Lima ri tshama ehansi evokweni ra xinene, naswona a ri ha fihli tibatheni.",
+  "The weather card reads in isiZulu (as a draft) and stays clear in dark mode.": "Khadi ra maxelo ya tilo ri hlayeka hi isiZulu (tanihi xikombiso), naswona ri sala ri twisiseka eka mawonekelo ya munyama.",
 };
 export default copy;

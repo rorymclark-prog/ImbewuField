@@ -127,5 +127,12 @@ const copy:UpdateCopy={
   "Sign in, Map, Prices and Account have headings; Prices and Calendar share one header.": "Ngena, Imephu, Amanani ne-akhawunti kunezihloko; Amanani neKhalenda kusebenzisa isihloko esisodwa.",
   "Resume an unfinished site survey after reopening this browser, or discard its draft.": "Qhubeka nocwaningo lwendawo olungaqediwe ngemva kokuvula leli siphequluli futhi, noma ulahle uhlaka lwalo.",
   "Close and keep draft lets you pause. Your report uses answers you explicitly save.": "Vala ugcine uhlaka kukuvumela ukuphumula. Umbiko wakho usebenzisa izimpendulo ozigcine ngokucacile kuphela.",
+  "Farmers can download production and finance reports from My records.": "Abalimi bangalanda imibiko yokukhiqiza neyezimali ku-Amarekhodi ami.",
+  "Mentors and facilitators have reports for visits, training, feedback and follow-up.": "Abeluleki nabaququzeleli banemibiko yokuvakasha, yokuqeqeshwa, yempendulo neyokulandelela.",
+  "MEL reports compare matched responses and show evidence dates and missing data.": "Imibiko ye-MEL iqhathanisa izimpendulo ezifanayo futhi ibonisa izinsuku zobufakazi nedatha engekho.",
+  "Reports share full, brief and ink-saving layouts; funders see published evidence.": "Imibiko yabelana ngezakhiwo eziphelele, ezifushane nezonga uyinki; abaxhasi babona ubufakazi obushicilelwe.",
+  "Home and Invoice open faster and no longer redraw the day after an update.": "Ikhaya ne-Invoyisi zivula ngokushesha futhi azisadwebi kabusha ngosuku olulandela isibuyekezo.",
+  "On a computer the Lima button sits bottom-right and no longer hides buttons.": "Kukhompyutha inkinobho ka-Lima ihlala phansi ngakwesokudla futhi ayisafihli izinkinobho.",
+  "The weather card reads in isiZulu (as a draft) and stays clear in dark mode.": "Ikhadi lesimo sezulu lifundeka nangesiZulu (njengohlaka) futhi lihlala licacile kwimodi emnyama.",
 };
 export default copy;
