@@ -17,3 +17,7 @@ This current runtime record supersedes the historical draft-only and APPLIED-IN-
 Required ordered full typecheck/test/diff verification and final-head CI are pending. Fluent and agricultural review, current-main integration and full production-route verification remain open. The bounded 801-source inventory still has 136 prose and three classification candidates; this is not a whole-app percentage. Supplementary research and component headings remain partly English. Other UI, feedback, lessons/media, accessibility/errors and exports still require whole-app work.
 
 Browser tab 12 is closed, the viewport override reset and GET-only server 95588 stopped. Reproduction scripts are stored as text to avoid accidental TypeScript discovery. Local runtime paths in those scripts describe the isolated evidence setup; no QA route was added to production. This changes the picture; PLAN_VERSION is unchanged. No paid calls or real farmer records were used.
+
+## Local full-run delivery continuation
+
+The ordered full suite now passes:5,873pass0fail1existingTODO/5,874total574files;typecheck/diff0;all1,792 frozen inputs exact. [Delivery proof](../DELIVERY.md) supersedes the historical full-suite-pending wording above. Exact-head CI and review remain pending.

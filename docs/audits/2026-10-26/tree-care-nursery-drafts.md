@@ -21,3 +21,7 @@ Next:inspect already-rendered8nativecontacts+12prioritypages, package actual evi
 ## Completed printed visual inspection
 
 All eight native PDF contacts and twelve enlarged actual pages were inspected after the partial checkpoint above. Cherry conditions, the literal December cultivar and the five-year shade caveat are complete and readable in all four languages, with no overlap or cut-off observed. [Current runtime evidence](../../translation/four-language-completion/evidence/tree-care/runtime/README.md) supersedes PDF-visual-pending status above; full ordered verification, CI, integration and language/agricultural review remain pending. All source/geometry/species/figure guards remain unchanged.
+
+## Verified local delivery continuation
+
+The full ordered Node24 run atde2b46ca8 completed: typecheck0,5,873pass0fail1existingTODO/5,874total574files,diff0. All1,792 frozen inputs remain exact. [Delivery proof](../../translation/four-language-completion/evidence/tree-care/DELIVERY.md) supersedes full-suite-pending wording above. Exact-head CI,current-main/full-account integration and fluent/agricultural review remain pending.
