@@ -184,6 +184,18 @@ test('a historical milestone reading is not summed or presented as interval prod
   assert.match(carry.rows[0][3],/No new dated observation.*withheld/);
 });
 
+test('missing donor readings explain absent evidence rather than implying an observation outside the agreement',()=>{
+  for(const observations of [[],[milestone().observations[1]]]){
+    const report=buildMelEvidenceReport(mel({milestones:[milestone({observations})]}));
+    const row=report.tables.find(t=>t.title==='Historical milestone comparison')!.rows[0];
+    assert.match(row[3],/No observation at one cutoff; change withheld/);
+    assert.ok(!row[3].includes('Outside the agreed'));
+  }
+  const outside=milestone({donor:{...donor,periodStart:'2026-09-01'}});
+  const row=buildMelEvidenceReport(mel({milestones:[outside]})).tables.find(t=>t.title==='Historical milestone comparison')!.rows[0];
+  assert.match(row[3],/Outside the agreed measurement period; change withheld/);
+});
+
 test('funder donor filters cannot recover private indicators or widen a vanished donor selection',()=>{
   const privateRecord=milestone({id:'private',title:'PRIVATE-INDICATOR',published:false});
   const report=buildMelEvidenceReport(mel({funder:true,donorName:donor.funder,milestones:[privateRecord]}));

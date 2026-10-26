@@ -55,7 +55,7 @@ export function buildMelEvidenceReport(options: MelReportOptions) {
         const withinPeriod=!d || b.observedOn! >= d.periodStart && a.observedOn! <= d.periodEnd;
         const comparable=b.actual!==null && a.actual!==null && b.observedOn!==a.observedOn && withinPeriod;
         const interpretation=d?.basis==='cumulative' ? 'Change in recorded cumulative total; corrections may change it.' : d?.basis==='period' ? 'Difference between separately defined period totals; check period lengths and scope.' : 'Difference in readings; not output during the interval.';
-        const difference=!withinPeriod ? 'Outside the agreed measurement period; change withheld.' : b.actual===null || a.actual===null ? 'No observation at one cutoff; change withheld.' : b.observedOn===a.observedOn ? 'No new dated observation; change withheld.' : interpretation;
+        const difference=b.actual===null || a.actual===null ? 'No observation at one cutoff; change withheld.' : !withinPeriod ? 'Outside the agreed measurement period; change withheld.' : b.observedOn===a.observedOn ? 'No new dated observation; change withheld.' : interpretation;
         return [`${m.title}${d?` · ${d.code} · ${d.basis}`:''}`,`${progressValue(b.actual,m.unit)} · ${b.observedOn || 'unreported'}`,`${progressValue(a.actual,m.unit)} · ${a.observedOn || 'unreported'}`,`${comparable?`${a.actual!-b.actual!>0?'+':''}${progressValue(a.actual!-b.actual!,m.unit)}. `:''}${difference}`];
       }) });
   }
