@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Planting ages and picking months now have four-language translation drafts.": "Dilemo tsa ho jala le dikgwedi tsa kotulo jwale di na le diphetolelo tsa pele tsa dipuo tse nne.",
+  "Farm-condition guide controls now have unreviewed translations.": "Ditaolo tsa tataiso ya maemo a polasi jwale di na le diphetolelo tse eso hlahlojwe.",
+  "Review tree and harvest controls": "Hlahloba ditaolo tsa difate le kotulo",
+  "Check planting dates, picking months and source notes. Translations still need review.": "Hlahloba matsatsi a ho jala, dikgwedi tsa kotulo le dintlha tsa mehlodi. Diphetolelo di ntse di hloka tlhahlobo.",
   "Tree care and nursery advice now have four-language draft translations.": "Tlhokomelo ya difate le keletso ya ditsi tsa dimela jwale di na le diphetolelo tsa pele tsa dipuo tse nne.",
   "Original food-use cautions and source conditions stay in the advice.": "Ditemoso tsa pele tsa tshebediso e le dijo le dipehelo tsa mehlodi di dula keletsong.",
   "Review tree care drafts": "Hlahloba dingolwa tsa pele tsa tlhokomelo ya difate",

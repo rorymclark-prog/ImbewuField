@@ -1,3 +1,4 @@
+import {restoreTreeGuideControlSource} from './helpers/tree-guide-control-expectation.ts';
 import {applyExpectedTreeCareGuide} from './helpers/tree-care-expectation.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
@@ -37,7 +38,7 @@ function expectedMarkdown(row:typeof before.rows[number],language:string,expecte
 
 test('product drafts retain every captured source byte, inherited row, food-use gate and scientific identity',()=>{
  const manifest=JSON.parse(read('tests/fixtures/tree-product-translation/capture-manifest.json'));assert.equal(hash(packed),manifest.compressedSha256);assert.equal(hash(raw),manifest.uncompressedSha256);assert.deepEqual(PRODUCT_PROFILES,before.profiles);
- for(const source of before.sources){assert.equal(hash(source.source),source.sha256);if(source.file!=='lib/crop-export-copy-data.ts')assert.equal(read(source.file),source.source,'translation cannot edit an existing source, renderer, selector or UI component');}
+ for(const source of before.sources){assert.equal(hash(source.source),source.sha256);if(source.file!=='lib/crop-export-copy-data.ts')assert.equal(restoreTreeGuideControlSource(source.file,read(source.file)),source.source,'translation cannot edit an existing source, renderer, selector or UI component outside the declared control presentation');}
  assert.deepEqual(CROP_EXPORT_COPY.slice(0,before.registry.length),before.registry);assert.deepEqual(CROP_EXPORT_COPY.slice(before.registry.length,before.registry.length+p.rows.length),p.rows);assert.equal(new Set(CROP_EXPORT_COPY.map(row=>row.english)).size,CROP_EXPORT_COPY.length);
  assert.match(p.status,/IN PROGRESS.*Unreviewed/);assert.equal(p.sourceCount,21);assert.equal(p.rows.length,p.sourceBindings.length);
  const context=before.rows.find(row=>row.context.trees.length===103)!.context;

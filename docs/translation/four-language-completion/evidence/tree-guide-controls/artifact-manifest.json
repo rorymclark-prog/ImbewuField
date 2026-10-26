@@ -1,0 +1,402 @@
+[
+  {
+    "file": "README.md",
+    "bytes": 4488,
+    "sha256": "258cc86e4755234ab08a114b1848a504541bed044db6a7317f7152fc8b3021bf"
+  },
+  {
+    "file": "browser/age-interactions.json.gz",
+    "bytes": 16059,
+    "sha256": "d98eea4d35b1b92227355773ab681c79ac5d3600de51a469a63f1952f50a8f19"
+  },
+  {
+    "file": "browser/calendar-verification.json.gz",
+    "bytes": 163,
+    "sha256": "905b1af38fc7cb0f17174f9e5f2634ea22beaa303237e2cd3d06280d9a09544c"
+  },
+  {
+    "file": "browser/calendars.json.gz",
+    "bytes": 65725,
+    "sha256": "d9f2d68ef4aa81dfb565620101e2c57467920cd3a72ad11deda295bf43367a9c"
+  },
+  {
+    "file": "browser/current-compiled-styles.css",
+    "bytes": 94150,
+    "sha256": "1921cfbc06059d340cc746183bc7aae8ba8aeb1a51ab1a07d8579d11a59ee83c"
+  },
+  {
+    "file": "browser/english-phone.json.gz",
+    "bytes": 82431,
+    "sha256": "2779dfc42136688f5b537e401d9cb736ecae767b94549220b7de4ed968862c25"
+  },
+  {
+    "file": "browser/language-switches.json.gz",
+    "bytes": 20380,
+    "sha256": "2203e46e346ed44b7b4c27f14d156b017cce44ad678b26c4e08318c0c8eec4a5"
+  },
+  {
+    "file": "browser/manifest.json",
+    "bytes": 1543,
+    "sha256": "4c1c2d8f004b920316c72f9828e83765db5171432b4be6c67becda2825f4c95c"
+  },
+  {
+    "file": "browser/picking-interactions.json.gz",
+    "bytes": 52835,
+    "sha256": "a3a424e9aa57a749b98ce58cabd0763e0811444c6cae2a3c7ff9f987580d1dc5"
+  },
+  {
+    "file": "browser/st-desktop.json.gz",
+    "bytes": 28000,
+    "sha256": "24029d98048e8a6358dc5b74842a306b1a58016835dbe25359e09627c7ad7f47"
+  },
+  {
+    "file": "browser/st-phone.json.gz",
+    "bytes": 48082,
+    "sha256": "32ffc8c533b071b80a2760cb58f59ad2c40b3b7b1aa3604306d20f4d606eb6fb"
+  },
+  {
+    "file": "browser/survey-interactions.json.gz",
+    "bytes": 10443,
+    "sha256": "bb227ab90d4da94bcf785e33ec4ebfc1804ce3e53c5f096500f792ecbd06ecbb"
+  },
+  {
+    "file": "browser/ts-desktop.json.gz",
+    "bytes": 28852,
+    "sha256": "d27c0e7999f3741d65df0303422727e372641685145a7cf6e873e8f4099be596"
+  },
+  {
+    "file": "browser/ts-phone.json.gz",
+    "bytes": 49895,
+    "sha256": "86772bbcb5214e8791f8ec8c46e9cd0453bc3f8c7d87189a14f5e56e2866ff61"
+  },
+  {
+    "file": "browser/ve-desktop.json.gz",
+    "bytes": 28992,
+    "sha256": "a0393f4b5e58fd8e242920fd023b65829b174ad45ce447f57f3284bd7928f9d2"
+  },
+  {
+    "file": "browser/ve-phone.json.gz",
+    "bytes": 50083,
+    "sha256": "5f72ffbae7b802042eb63e788d977bc4e159cef644724a1c0e4d2db7a3821f54"
+  },
+  {
+    "file": "browser/verification.json.gz",
+    "bytes": 560,
+    "sha256": "354fc5d75c9b22abb8087fbf61ac52d51add60f191e709db632720bd17a7cbf0"
+  },
+  {
+    "file": "browser/zu-desktop.json.gz",
+    "bytes": 28262,
+    "sha256": "5c2af902a8a9c1a51a6eff8868db8e90093a2da0cfc58f7e674a91438edfb5b0"
+  },
+  {
+    "file": "browser/zu-phone.json.gz",
+    "bytes": 48350,
+    "sha256": "8b832c3651908e968b387e688d18b922ffc92a45f0a2ce6599b17872e5f280dc"
+  },
+  {
+    "file": "contacts/desktop-calendar-ts-ve.png",
+    "bytes": 2232579,
+    "sha256": "ebf9631dce0a90a9e45ba8eb64ef304920d31a32b9f8ad0cda47182c5fc6dc90"
+  },
+  {
+    "file": "contacts/desktop-calendar-zu-st.png",
+    "bytes": 2044696,
+    "sha256": "f9d2737abec66d61a07b030bb6c8bfae29dabc38f537decb537bae81b3526c7d"
+  },
+  {
+    "file": "contacts/desktop-guide-frost-disabled-ts-ve.png",
+    "bytes": 1784676,
+    "sha256": "9ecdfa77b2148af42eec0ae5904c73ec30904bd6fec21873137799a1aa0630b1"
+  },
+  {
+    "file": "contacts/desktop-guide-frost-disabled-zu-st.png",
+    "bytes": 1765590,
+    "sha256": "d6e5b9b2bc80a613fbcf0664a5e8788fb2503977cd9d6a2598f2620378db4e07"
+  },
+  {
+    "file": "contacts/desktop-guide-unselected-disabled-ts-ve.png",
+    "bytes": 1346183,
+    "sha256": "ccc1d1efe48709fcb1725d53e9203adf84c88155d2c25e59c8bdfcfce4a5fa84"
+  },
+  {
+    "file": "contacts/desktop-guide-unselected-disabled-zu-st.png",
+    "bytes": 1393443,
+    "sha256": "e7cc85c7e78280bd21141ba7943886035826a35205aa5ccd6920fdf23d36a4d1"
+  },
+  {
+    "file": "contacts/desktop-seasons-proposed-ts-ve.png",
+    "bytes": 1387612,
+    "sha256": "1428adb43b0842f454213775ddac16762ee81cc23753a0c65fc0e5e0ba9fc6fb"
+  },
+  {
+    "file": "contacts/desktop-seasons-proposed-zu-st.png",
+    "bytes": 1307756,
+    "sha256": "c63d119af7db9f8cf64c56a848a288ab94a4b11fa4730b440ca48925e6d33477"
+  },
+  {
+    "file": "contacts/phone-age-musa-acuminata-aaa-group-recorded-1.png",
+    "bytes": 1377538,
+    "sha256": "51b8040e270c5f9cfdbe012706ee3797c596a0518178c497cb59afe1474feda3"
+  },
+  {
+    "file": "contacts/phone-age-musa-acuminata-aaa-group-recorded-2.png",
+    "bytes": 784263,
+    "sha256": "ffe2505c67e3c2ac8f146ec7ef5ad6400263d2d666d168ff306012fb7620e9db"
+  },
+  {
+    "file": "contacts/phone-calendar-top.png",
+    "bytes": 1751474,
+    "sha256": "cd7e6d35037367b27ebf379b504a15263db8b65e5d843fb54401c4d73834bbbb"
+  },
+  {
+    "file": "contacts/phone-guide-trees-coast-1.png",
+    "bytes": 1675166,
+    "sha256": "d4da9ff10002dc5e416737be9b97e0c92afde7db9d968cb137251a6ca777a2f2"
+  },
+  {
+    "file": "contacts/phone-guide-trees-coast-2.png",
+    "bytes": 2401792,
+    "sha256": "8c3307432f2ddcae021c3153ab65deacbc8d73b760324ecbe6d1f7f5e6a81863"
+  },
+  {
+    "file": "contacts/phone-guide-trees-coast-3.png",
+    "bytes": 2498072,
+    "sha256": "3eb4edfa9854e325c3b6ec956b7461b84e90b342f66f9830a2d646d4b909b9ed"
+  },
+  {
+    "file": "contacts/phone-guide-trees-coast-4.png",
+    "bytes": 2172797,
+    "sha256": "f3388f4865621e1253d891da10b3d7798b7370e13c8a916ec4bf4a6380732943"
+  },
+  {
+    "file": "contacts/phone-guide-trees-coast-5.png",
+    "bytes": 739259,
+    "sha256": "993572664a22e4de816e88ea417f57240f77e15b19a806ecc0a14495846f993d"
+  },
+  {
+    "file": "contacts/phone-seasons-four-identities-1.png",
+    "bytes": 1648637,
+    "sha256": "f3da12534efc2773d20bdc97e2cce7d792abf3f92ac1198a836a37dc02bc7932"
+  },
+  {
+    "file": "contacts/phone-seasons-four-identities-2.png",
+    "bytes": 1625617,
+    "sha256": "cdd40a047995414763b101e7079e08a1a452fc8161fe8f3e296c402e5ce24123"
+  },
+  {
+    "file": "contacts/phone-seasons-four-identities-3.png",
+    "bytes": 1795237,
+    "sha256": "be84537a897579fcf8e2043cdd7bafc4afe9b65b5431588c61237ad404c2baeb"
+  },
+  {
+    "file": "contacts/phone-seasons-four-identities-4.png",
+    "bytes": 1615936,
+    "sha256": "a0f8fe03139bc27bc66842a6e49da07c2244ddc926c36ed396296e1578adb33c"
+  },
+  {
+    "file": "contacts/phone-seasons-four-identities-5.png",
+    "bytes": 1034479,
+    "sha256": "e10d8831592c6617496ab3aaf94c3ddf6199e9274e8bdf4643df8ec164cdbaf6"
+  },
+  {
+    "file": "reproduce/build-browser.mjs.txt",
+    "bytes": 9530,
+    "sha256": "de93d024b1c1febf8db1831b3cd1c3cb1e7523b5615f0319f1f2185c081962fc"
+  },
+  {
+    "file": "reproduce/capture-before.mjs.txt",
+    "bytes": 5161,
+    "sha256": "339538f60da134d0c27e0e000f38b2e001024b7dab5e013012b91e539a3fca7e"
+  },
+  {
+    "file": "reproduce/make-contacts.py.txt",
+    "bytes": 1353,
+    "sha256": "5c64c4df9ae7e8ed42d84ac9684aa1f2fcc294ee23b38e46998479299c9a96e7"
+  },
+  {
+    "file": "reproduce/verify-browser.py.txt",
+    "bytes": 3568,
+    "sha256": "bd03cd7289005c55807fa57311ea1dac11cd7238417efc8d56ac6aee66601748"
+  },
+  {
+    "file": "reproduce/verify-calendars.mjs.txt",
+    "bytes": 1981,
+    "sha256": "499893e265c8389140e26b9be7cdf8786556473bd5b86617c483238b05e30ee5"
+  },
+  {
+    "file": "screenshots/st-desktop-calendar.png",
+    "bytes": 386465,
+    "sha256": "6917b69eb47fc0176df0218b03c4b99d72483d727cf44f4ebcad69c96afc97f3"
+  },
+  {
+    "file": "screenshots/st-desktop-guide-frost-disabled.png",
+    "bytes": 632742,
+    "sha256": "364fa0fc5a3479acee857d8b22f207c3e97e520b063d489451b12377221e4130"
+  },
+  {
+    "file": "screenshots/st-desktop-guide-unselected-disabled.png",
+    "bytes": 509845,
+    "sha256": "5194075cdf5a80cf631e5f5b63b48f0da2d5c217246bf6315d2519bed66f4072"
+  },
+  {
+    "file": "screenshots/st-desktop-seasons-proposed.png",
+    "bytes": 363787,
+    "sha256": "78e6955823d42849731619ef49f6706e4d118e731ec62ec684f6e45e3e27d41a"
+  },
+  {
+    "file": "screenshots/st-phone-age-musa-acuminata-aaa-group-recorded.png",
+    "bytes": 143779,
+    "sha256": "15e5dc8096f93254dbc0908fdae15f8b674ac2d5e73d26c48bfe7ec016fa7366"
+  },
+  {
+    "file": "screenshots/st-phone-calendar.png",
+    "bytes": 369383,
+    "sha256": "a3d2db2bc00db96d4a805d3bf203f2e2e802a503af8477286ef1453665478cfb"
+  },
+  {
+    "file": "screenshots/st-phone-guide-trees-coast.png",
+    "bytes": 601482,
+    "sha256": "3df9ea0f19565271e19aa9395136221321aae3e4b5750deeb137093ab567d21a"
+  },
+  {
+    "file": "screenshots/st-phone-seasons-four-identities.png",
+    "bytes": 471477,
+    "sha256": "02665039f58940a953660a774d10414f5b77923dc9f34e88e8882017812ad39f"
+  },
+  {
+    "file": "screenshots/ts-desktop-calendar.png",
+    "bytes": 397887,
+    "sha256": "abdf74c11e96b6778c23155c065d125b178da2902aa2be9eb8eb9743a91c3129"
+  },
+  {
+    "file": "screenshots/ts-desktop-guide-frost-disabled.png",
+    "bytes": 649509,
+    "sha256": "4a690fac9608c4a372b602ba7fb4c784845811b4d900d0b168ac1f7b800d2c1c"
+  },
+  {
+    "file": "screenshots/ts-desktop-guide-unselected-disabled.png",
+    "bytes": 521870,
+    "sha256": "69fe981020de2dcf29eb983dbc42d3c9d04ffabb18d01e8554ded75df8ec40cf"
+  },
+  {
+    "file": "screenshots/ts-desktop-seasons-proposed.png",
+    "bytes": 389977,
+    "sha256": "2aac4acb1df83faca5120bf1f04eb3d0431b1034c07787da1a36d9ceba39e2ad"
+  },
+  {
+    "file": "screenshots/ts-phone-age-musa-acuminata-aaa-group-recorded.png",
+    "bytes": 156579,
+    "sha256": "6c7493f9a2cd6220afbbfd94a4b26afb80970b574f59aeea0fe4861fa286ec0d"
+  },
+  {
+    "file": "screenshots/ts-phone-calendar.png",
+    "bytes": 394545,
+    "sha256": "cac57f52c6d0e06c9eed70112cb4b53d44205902b2d70970b5be51623d0dad67"
+  },
+  {
+    "file": "screenshots/ts-phone-corrected-viewport.png",
+    "bytes": 36083,
+    "sha256": "bec36bee1dd612118c3dae5de1e7cf009cdcc6783823913743cc69b073007816"
+  },
+  {
+    "file": "screenshots/ts-phone-guide-trees-coast.png",
+    "bytes": 638764,
+    "sha256": "332e3e3485630f6912b7182d60021200bddefc2f09f49e154de03c92853270f8"
+  },
+  {
+    "file": "screenshots/ts-phone-seasons-four-identities.png",
+    "bytes": 507315,
+    "sha256": "fabb5f85363e7a95af391896d0c3cbdfb30601c7a87b8df6c0613af369e516a2"
+  },
+  {
+    "file": "screenshots/ve-desktop-calendar.png",
+    "bytes": 398075,
+    "sha256": "706b31364d41761d3df2100bce1b8f86c6a70903bac2047ef78e7481f39d5168"
+  },
+  {
+    "file": "screenshots/ve-desktop-guide-frost-disabled.png",
+    "bytes": 657489,
+    "sha256": "c695f4b8e680bf446f0026bc009c2493713a9109a957e3c87a4c764ab450a8d3"
+  },
+  {
+    "file": "screenshots/ve-desktop-guide-unselected-disabled.png",
+    "bytes": 534357,
+    "sha256": "30d300b54ad1b48444a6619989cdaf55f00086f61d1c6d7b13ed13f2f15f82c8"
+  },
+  {
+    "file": "screenshots/ve-desktop-seasons-proposed.png",
+    "bytes": 389213,
+    "sha256": "191fe4caf77eed2e08b997fbdb3d32b4793066cc15adbc41d212997d0781b10a"
+  },
+  {
+    "file": "screenshots/ve-phone-age-musa-acuminata-aaa-group-recorded.png",
+    "bytes": 156968,
+    "sha256": "af175e6d15372d9bf30e561e69b9197be08b9026074ccd508836f15c25b536c0"
+  },
+  {
+    "file": "screenshots/ve-phone-calendar.png",
+    "bytes": 389746,
+    "sha256": "424db91cbc5bf9802f994629be02a6cab20b45e5492abebed4cdb755f0b3aaa9"
+  },
+  {
+    "file": "screenshots/ve-phone-guide-trees-coast.png",
+    "bytes": 633694,
+    "sha256": "f571556087751a13b87222a1680ece1d6b2201f6440c99e65b4dc52cec18b9b6"
+  },
+  {
+    "file": "screenshots/ve-phone-seasons-four-identities.png",
+    "bytes": 506872,
+    "sha256": "15bbffea2ed90a557a3e6aed1ea85fc9e69943b46d541ddc28b35c49e96247e3"
+  },
+  {
+    "file": "screenshots/zu-desktop-calendar.png",
+    "bytes": 376243,
+    "sha256": "17cb36e41239eed8b7fe6dc2e8f9dc04010bb8de23a06277e9c076d6919e2e4f"
+  },
+  {
+    "file": "screenshots/zu-desktop-guide-frost-disabled.png",
+    "bytes": 631435,
+    "sha256": "586f60e408fade8fdd3bf4469bda3a076944fbcd54cba12d3a272d8b5894382f"
+  },
+  {
+    "file": "screenshots/zu-desktop-guide-unselected-disabled.png",
+    "bytes": 512447,
+    "sha256": "67ee5a5d9a4c6c42ff63c2d6bb6f9bb24971e3f36a4eac0db24021033b031c65"
+  },
+  {
+    "file": "screenshots/zu-desktop-seasons-proposed.png",
+    "bytes": 362198,
+    "sha256": "d1084758ad8503753e1fd2b659363e94f5240510c62bd474791448eba870677d"
+  },
+  {
+    "file": "screenshots/zu-phone-age-musa-acuminata-aaa-group-recorded.png",
+    "bytes": 146484,
+    "sha256": "86a67d0d8eebf0888d847c7280ffd17c91587da0d1de3625d2acfc2c946f5782"
+  },
+  {
+    "file": "screenshots/zu-phone-calendar.png",
+    "bytes": 366210,
+    "sha256": "b7ef7bddce3f9c46fe36291c8c48c535dd27c0d3e4df718237c527ea8b285e04"
+  },
+  {
+    "file": "screenshots/zu-phone-guide-trees-coast.png",
+    "bytes": 605132,
+    "sha256": "5d348793dcd6bc1dfc119edca65c3b1e8859ae76de3966124584b31f4e7647cf"
+  },
+  {
+    "file": "screenshots/zu-phone-seasons-four-identities.png",
+    "bytes": 474194,
+    "sha256": "74fb1cfc95e785e13396e8d51255b30bb78eebb89533d99533edaf5b80d83872"
+  },
+  {
+    "file": "verification.json",
+    "bytes": 4712,
+    "sha256": "bc93de79a8ee8aab7da3dc8358dc0f4062ff9699f8c621b34855e02ee1342cdc"
+  },
+  {
+    "file": "visual-inspection.json",
+    "bytes": 1900,
+    "sha256": "6f2389557eea08bf4050cca881a7b3b407a20fff7f9eb4ac17504d99c640b36b"
+  }
+]

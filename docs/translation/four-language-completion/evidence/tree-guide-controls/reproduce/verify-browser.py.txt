@@ -1,0 +1,23 @@
+from pathlib import Path
+import json,collections,gzip
+q=Path('/private/tmp/imbewu-tree-controls-browser-proof');result={}
+for kind,files in [('phone',[q/(l+'-phone.json')for l in ['zu','st','ts','ve']]),('desktop',[q/(l+'-desktop.json')for l in ['zu','st','ts','ve']]),('englishPhone',[q/'english-phone.json'])]:
+ rows=[row for f in files for row in json.loads(f.read_text())];pairs=collections.defaultdict(dict)
+ for row in rows:
+  s=row['state'];assert not row['overflow'] and row['open'] and s['events']==[];assert s['props']==s['provided'];pairs[(s['id'],s['language'])][s['version']]=row
+ for key,pair in pairs.items():
+  assert set(pair)=={'before','after'};a,b=pair['before'],pair['after'];assert a['state']['provided']==b['state']['provided'];strip=lambda rows:[{k:v for k,v in r.items()if k!='label'}for r in rows];assert strip(a['inputs'])==strip(b['inputs']),key;assert [r['pressed']for r in a['monthButtons']]==[r['pressed']for r in b['monthButtons']],key
+  if key[1]in['en','xx']:assert a['html']==b['html'],'complete English DOM changes: '+str(key)
+  else:assert a['html']!=b['html'],'native draft must change the actual presenter'
+ result[kind]={'states':len(rows),'pairs':len(pairs),'allExpanded':True,'providedValuesUnchanged':True,'callbackEvents':0,'horizontalOverflows':0,'inputValuesAndDisabledStatesUnchanged':True}
+assert result['phone']['states']==48 and result['desktop']['states']==24 and result['englishPhone']['states']==24
+ages=json.loads((q/'age-interactions.json').read_text());assert len(ages)==4
+for row in ages:
+ s=row['state'];expect=json.loads(json.dumps(s['provided']));expect['choice']['production'][0].update(planted='2020-02',plants=2.75);expect['choice']['production'][0]['yields'][0]['kg']=.125;assert s['props']==expect;assert len(s['events'])==3;assert all(e['kind']=='Age'for e in s['events']);assert not row['overflow']
+switches=json.loads((q/'language-switches.json').read_text());assert len(switches)==6
+for row in switches:assert row['state']['props']==ages[-1]['state']['props'] and row['state']['events']==ages[-1]['state']['events'] and not row['overflow']
+picks=json.loads((q/'picking-interactions.json').read_text());assert len(picks)==4
+for row in picks:
+ s=row['state'];expect=json.loads(json.dumps(s['provided']));assert s['events'][0]['value']['choices']['musa-acuminata-aaa-group']['months']==[2,12];expect['choices']['musa-acuminata-aaa-group'].update(months=[2,11,12],bearing=False);assert s['props']==expect;assert len(s['events'])==3;assert not row['overflow']
+survey=json.loads((q/'survey-interactions.json').read_text());assert survey['enabled']['state']['events']==[{'kind':'survey'}];assert survey['enabled']['state']['props']==survey['enabled']['state']['provided'];assert survey['disabled']['enabled']is False
+result.update({'status':'passed','ageEdits':{'languages':4,'eventsPerLanguage':3,'exactFields':['2020-12 →2020-02','plants1→2.75','kg0→0.125']},'languageSwitches':6,'pickingEdits':{'languages':4,'eventsPerLanguage':3,'exactChoices':'January removed;November added ascending;bearing false;all other fields exact'},'surveyCallback':1,'disabledSurveyButton':True,'sourceCapture':'Immutable actual-component sources and synthetic inputs. Current actual context/helpers;isolated parent only.','limits':'No full production route, persistence, backend, physical-device or fluent-language approval. Supplementary research remains partly English.'});(q/'verification.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');print(json.dumps(result,ensure_ascii=False,indent=2))

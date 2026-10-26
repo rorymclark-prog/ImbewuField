@@ -1,0 +1,17 @@
+from PIL import Image,ImageDraw
+from pathlib import Path
+q=Path('/private/tmp/imbewu-tree-controls-browser-proof');o=q/'contacts';o.mkdir(exist_ok=True)
+for name in ['age-musa-acuminata-aaa-group-recorded','seasons-four-identities','guide-trees-coast']:
+ images=[Image.open(q/(l+'-phone-'+name+'.png')).convert('RGB')for l in ['zu','st','ts','ve']];step=1400
+ for index,y in enumerate(range(0,max(im.height for im in images),step)):
+  canvas=Image.new('RGB',(1560,step+30),'white');d=ImageDraw.Draw(canvas)
+  for col,(lang,im)in enumerate(zip(['zu','st','ts','ve'],images)):
+   d.text((col*390+5,6),lang+' / '+name+' / '+str(index+1),fill='black');canvas.paste(im.crop((0,y,min(390,im.width),min(y+step,im.height))),(col*390,30))
+  canvas.save(o/('phone-'+name+'-'+str(index+1)+'.png'))
+for scenario in ['seasons-proposed','guide-frost-disabled','guide-unselected-disabled']:
+ for pair in [('zu','st'),('ts','ve')]:
+  canvas=Image.new('RGB',(2048,1300),'white');d=ImageDraw.Draw(canvas)
+  for col,lang in enumerate(pair):
+   im=Image.open(q/(lang+'-desktop-'+scenario+'.png')).convert('RGB');canvas.paste(im.crop((128,260,1152,min(1528,im.height))),(col*1024,32));d.text((col*1024+6,6),lang+' desktop / '+scenario+' / top1280px',fill='black')
+  canvas.save(o/('desktop-'+scenario+'-'+'-'.join(pair)+'.png'))
+print('contacts',len(list(o.glob('*.png'))))
