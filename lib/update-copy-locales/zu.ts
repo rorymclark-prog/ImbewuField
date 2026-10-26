@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Planting ages and picking months now have four-language translation drafts.": "Iminyaka yezitshalo nezinyanga zokuvuna manje kunemibhalo yokuhumusha ngezilimi ezine.",
+  "Farm-condition guide controls now have unreviewed translations.": "Izinkinobho neziyalezo zomhlahlandlela wezimo zepulazi manje kunezinguqulo ezingakabuyekezwa.",
+  "Review tree and harvest controls": "Buyekeza izilawuli zezihlahla nesivuno",
+  "Check planting dates, picking months and source notes. Translations still need review.": "Hlola izinsuku zokutshala, izinyanga zokuvuna namanothi emithombo. Izinguqulo zisadinga ukubuyekezwa.",
   "Tree care and nursery advice now have four-language draft translations.": "Ukunakekelwa kwezihlahla nezeluleko zezinkulisa manje kunemibhalo yokuhumusha ngezilimi ezine.",
   "Original food-use cautions and source conditions stay in the advice.": "Izixwayiso zokuqala zokusetshenziswa njengokudla nemibandela yemithombo kuhlala ezelulekweni.",
   "Review tree care drafts": "Buyekeza imibhalo yokunakekelwa kwezihlahla",

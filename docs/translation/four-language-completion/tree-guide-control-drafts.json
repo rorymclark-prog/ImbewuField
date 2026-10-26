@@ -1,0 +1,1128 @@
+{
+  "status": "IN PROGRESS: Unreviewed source-bound UI drafts applied; actual browser/affected checks complete. Required full suite,fluent review,current-main/full-account integration and whole-app work remain pending.",
+  "base": "de2b46ca827eb5f7e7727b3afeaeb9b049a5bcf7",
+  "rows": [
+    {
+      "english": "Plant ages & future harvest",
+      "zu": "Iminyaka yezitshalo nesivuno esizayo",
+      "st": "Dilemo tsa dimela le kotulo ya nako e tlang",
+      "ts": "Malembe ya swimila ni ntshovelo wa nkarhi lowu taka",
+      "ve": "Miṅwaha ya zwimela na khaṋo ya tshifhinga tshi ḓaho",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Put plants planted together in one group. Keep older and younger plants separate. Dates and expected kg stay on this device with your picking months.",
+      "zu": "Hlanganisa izitshalo ezatshalwa ngesikhathi esisodwa eqenjini elilodwa. Hlukanisa ezindala nezincane. Izinsuku nama-kg alindelwe kugcinwa kule divayisi kanye nezinyanga zakho zokuvuna.",
+      "st": "Beha dimela tse jetsweng ka nako e le nngwe sehlopheng se le seng. Arola dimela tsa kgale le tse nyane. Matsatsi le kg tse lebeletsweng di dula sesebedisweng sena le dikgwedi tsa hao tsa kotulo.",
+      "ts": "Veka swimila leswi byariweke hi nkarhi wun’we eka ntlawa wun’we. Hambanisa swa khale ni leswitsongo. Masiku ni kg leti languteriweke swi hlayisiwa eka xitirhisiwa lexi ni tin’hweti ta wena to tshovela.",
+      "ve": "Vheani zwimela zwo ṱavhiwaho nga tshifhinga tshithihi kha tshigwada tshithihi. Fhambanyani zwa kale na zwiṱuku. Maḓuvha na kg dzo lavhelelwaho zwi dzula kha tshishumiswa itshi na miṅwedzi yaṋu ya khaṋo.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "First-crop reference: {age} after planting.",
+      "zu": "Umthombo ngesivuno sokuqala: {age} ngemva kokutshala.",
+      "st": "Tshupiso ya kotulo ya pele: {age} kamora ho jala.",
+      "ts": "Vuxokoxoko bya xihlovo bya ntshovelo wo sungula: {age} endzhaku ko byala.",
+      "ve": "Tshiko tsha khaṋo ya u thoma: {age} nga murahu ha u ṱavha.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "First-crop age is not sourced. Add a locally checked yield schedule.",
+      "zu": "Akukho mthombo weminyaka yesivuno sokuqala. Faka uhlelo lwesivuno oluhloliwe endaweni.",
+      "st": "Ha ho mohlodi wa dilemo tsa kotulo ya pele. Kenya lenaneo la chai le hlahlobilweng sebakeng sena.",
+      "ts": "Malembe ya ntshovelo wo sungula a ma na xihlovo. Engetela nongonoko wa ntshovelo lowu kambisisiweke laha kaya.",
+      "ve": "A hu na tshiko tsha miṅwaha ya khaṋo ya u thoma. Engedzani mbekanyamushumo ya khaṋo yo ṱolwaho henefho.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Established production reference: {age} years. Check the source's cultivar and conditions.",
+      "zu": "Umthombo ngokukhiqiza uma izitshalo sezikhulile: iminyaka engu-{age}. Hlola uhlobo olutshalwayo nezimo ezisemthonjeni.",
+      "st": "Tshupiso ya tlhahiso ha dimela di hodile: dilemo tse {age}. Hlahloba mofuta o lengwang le maemo a mohlodi.",
+      "ts": "Vuxokoxoko bya xihlovo bya vuhumelerisi loko swimila swi kurile: {age} wa malembe. Kambisisa muxaka lowu byariwaka ni swiyimo swa xihlovo.",
+      "ve": "Tshiko tsha vhubveledzi musi zwimela zwo no aluwa: miṅwaha ya {age}. Ṱolani lushaka lu ṱavhiwaho na nyimele dza tshiko.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Age & production references",
+      "zu": "Imithombo yeminyaka nokukhiqiza",
+      "st": "Ditshupiso tsa dilemo le tlhahiso",
+      "ts": "Swihlovo swa malembe ni vuhumelerisi",
+      "ve": "Zwiko zwa miṅwaha na vhubveledzi",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Check variety, planting stock, site and units before using a reference. Your entered kg schedule supplies the projection.",
+      "zu": "Hlola uhlobo, izithombo, indawo namayunithi ngaphambi kokusebenzisa umthombo. Uhlelo lwama-kg olufakile lusetshenziselwa ukubala isibikezelo.",
+      "st": "Hlahloba mofuta, dimela tsa ho jala, sebaka le diyuniti pele o sebedisa tshupiso. Lenaneo la kg leo o le kentseng le fana ka dipalo tsa ponelopele.",
+      "ts": "Kambisisa muxaka, swimilana swo byala, ndhawu ni tiyuniti u nga si tirhisa xihlovo. Nongonoko wa kg lowu u wu ngheniseke hi wona wu nyikaka tinhlayo ta mvhumbo.",
+      "ve": "Ṱolani lushaka, zwimela zwa u ṱavha, fhethu na yuniti musi ni sa athu u shumisa tshiko. Mbekanyamushumo ya kg ye na dzhenisa i yone ine ya ṋea mbalo dza mbonelaphanḓa.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "First crop:",
+      "zu": "Isivuno sokuqala:",
+      "st": "Kotulo ya pele:",
+      "ts": "Ntshovelo wo sungula:",
+      "ve": "Khaṋo ya u thoma:",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Established production:",
+      "zu": "Ukukhiqiza uma izitshalo sezikhulile:",
+      "st": "Tlhahiso ha dimela di hodile:",
+      "ts": "Vuhumelerisi loko swimila swi kurile:",
+      "ve": "Vhubveledzi musi zwimela zwo no aluwa:",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Source production:",
+      "zu": "Ukukhiqiza okusemthonjeni:",
+      "st": "Tlhahiso e mohloding:",
+      "ts": "Vuhumelerisi bya xihlovo:",
+      "ve": "Vhubveledzi ha tshiko:",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "{range} kg/plant.",
+      "zu": "{range} kg/isitshalo.",
+      "st": "{range} kg/semela.",
+      "ts": "{range} kg/ximila.",
+      "ve": "{range} kg/tshimela.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Age group {number}",
+      "zu": "Iqembu leminyaka {number}",
+      "st": "Sehlopha sa dilemo {number}",
+      "ts": "Ntlawa wa malembe {number}",
+      "ve": "Tshigwada tsha miṅwaha {number}",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "On the map",
+      "zu": "Ebalazweni",
+      "st": "Mmapeng",
+      "ts": "Eka mepe",
+      "ve": "Kha mapa",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Already planted",
+      "zu": "Sezitshaliwe",
+      "st": "Di se di jetswe",
+      "ts": "Se swi byariwile",
+      "ve": "Zwo no ṱavhiwa",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "To be planted",
+      "zu": "Ezisazotshalwa",
+      "st": "Tse tla jalwa",
+      "ts": "Leswi nga ta byariwa",
+      "ve": "Zwine zwa ḓo ṱavhiwa",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Number of plants",
+      "zu": "Inani lezitshalo",
+      "st": "Palo ya dimela",
+      "ts": "Nhlayo ya swimila",
+      "ve": "Tshivhalo tsha zwimela",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Month planted",
+      "zu": "Inyanga ezatshalwa ngayo",
+      "st": "Kgwedi e jetsweng ka yona",
+      "ts": "N’hweti leyi swi byariweke ha yona",
+      "ve": "Ṅwedzi we zwa ṱavhiwa ngawo",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Intended planting month",
+      "zu": "Inyanga okuhlelwe ukutshala ngayo",
+      "st": "Kgwedi e reretsweng ho jala",
+      "ts": "N’hweti leyi kunguhatiweke ku byala",
+      "ve": "Ṅwedzi wo dzudzanyelwaho u ṱavha",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Choose month",
+      "zu": "Khetha inyanga",
+      "st": "Kgetha kgwedi",
+      "ts": "Hlawula n’hweti",
+      "ve": "Nangani ṅwedzi",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Year planted",
+      "zu": "Unyaka ezatshalwa ngawo",
+      "st": "Selemo se jetsweng ka sona",
+      "ts": "Lembe leri swi byariweke ha rona",
+      "ve": "Ṅwaha we zwa ṱavhiwa ngawo",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Choose year",
+      "zu": "Khetha unyaka",
+      "st": "Kgetha selemo",
+      "ts": "Hlawula lembe",
+      "ve": "Nangani ṅwaha",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "{plant} group {number} status",
+      "zu": "Isimo seqembu {number} le-{plant}",
+      "st": "Boemo ba sehlopha {number} sa {plant}",
+      "ts": "Xiyimo xa ntlawa {number} wa {plant}",
+      "ve": "Vhuimo ha tshigwada {number} tsha {plant}",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "{plant} group {number} plants",
+      "zu": "Izitshalo eqenjini {number} le-{plant}",
+      "st": "Dimela sehlopheng {number} sa {plant}",
+      "ts": "Swimila eka ntlawa {number} wa {plant}",
+      "ve": "Zwimela kha tshigwada {number} tsha {plant}",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "{plant} group {number} planting month",
+      "zu": "Inyanga yokutshala yeqembu {number} le-{plant}",
+      "st": "Kgwedi ya ho jala ya sehlopha {number} sa {plant}",
+      "ts": "N’hweti yo byala ya ntlawa {number} wa {plant}",
+      "ve": "Ṅwedzi wa u ṱavha wa tshigwada {number} tsha {plant}",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "{plant} group {number} planting year",
+      "zu": "Unyaka wokutshala weqembu {number} le-{plant}",
+      "st": "Selemo sa ho jala sa sehlopha {number} sa {plant}",
+      "ts": "Lembe ro byala ra ntlawa {number} wa {plant}",
+      "ve": "Ṅwaha wa u ṱavha wa tshigwada {number} tsha {plant}",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Expected harvest per plant in a year at each age. Use your records or a nursery's advice for this site. A value holds until the next age you enter; change it if older plants produce less.",
+      "zu": "Isivuno esilindelwe esitshalweni ngasinye ngonyaka eminyakeni ngayinye. Sebenzisa amarekhodi akho noma iseluleko senkulisa yezitshalo ngale ndawo. Inani lisebenza kuze kube yiminyaka elandelayo oyifakayo; lishintshe uma izitshalo ezindala zikhiqiza kancane.",
+      "st": "Kotulo e lebeletsweng semeleng ka seng ka selemo dilemong ka ding. Sebedisa direkoto tsa hao kapa keletso ya sebaka sa dipeo bakeng sa sebaka sena. Palo e sebetsa ho fihlela dilemong tse latelang tseo o di kenyang; e fetole haeba dimela tsa kgale di hlahisa hanyane.",
+      "ts": "Ntshovelo lowu languteriweke eka ximilana xin’wana ni xin’wana hi lembe eka malembe man’wana ni man’wana ya xona. Tirhisa tirhekhodo ta wena kumbe switsundzuxo swa ndhawu yo kurisa swimilana swa ndhawu leyi. Nhlayo yi tirha ku fika eka malembe lama landzelaka lama u ma nghenisaka; yi cinca loko swimila swa khale swi humesa switsongo.",
+      "ve": "Khaṋo yo lavhelelwaho kha tshimela tshiṅwe na tshiṅwe nga ṅwaha kha miṅwaha yatsho yo fhambanaho. Shumisani rekhodo dzaṋu kana nyeletshedzo ya fhethu ha u alusa zwimela nga ha fhethu afha. Mbalo i shuma u swika kha miṅwaha i tevhelaho ine na i dzhenisa; i shanduleni arali zwimela zwa kale zwi tshi bveledza zwiṱuku.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Age in years",
+      "zu": "Iminyaka",
+      "st": "Dilemo",
+      "ts": "Malembe",
+      "ve": "Miṅwaha",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "kg / plant / year",
+      "zu": "kg / isitshalo / unyaka",
+      "st": "kg / semela / selemo",
+      "ts": "kg / ximilana / lembe",
+      "ve": "kg / tshimela / ṅwaha",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "{plant} group {number} yield {yield} age",
+      "zu": "Iminyaka yesivuno {yield} seqembu {number} le-{plant}",
+      "st": "Dilemo tsa chai {yield} ya sehlopha {number} sa {plant}",
+      "ts": "Malembe ya ntshovelo {yield} wa ntlawa {number} wa {plant}",
+      "ve": "Miṅwaha ya khaṋo {yield} ya tshigwada {number} tsha {plant}",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "{plant} group {number} yield {yield} kg",
+      "zu": "Ama-kg esivuno {yield} seqembu {number} le-{plant}",
+      "st": "Kg tsa chai {yield} ya sehlopha {number} sa {plant}",
+      "ts": "Kg ta ntshovelo {yield} wa ntlawa {number} wa {plant}",
+      "ve": "Kg dza khaṋo {yield} ya tshigwada {number} tsha {plant}",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Remove {plant} yield {yield} from group {number}",
+      "zu": "Susa isivuno {yield} se-{plant} eqenjini {number}",
+      "st": "Tlosa chai {yield} ya {plant} sehlopheng {number}",
+      "ts": "Susa ntshovelo {yield} wa {plant} eka ntlawa {number}",
+      "ve": "Bvisani khaṋo {yield} ya {plant} kha tshigwada {number}",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "+ Add age & yield",
+      "zu": "+ Faka iminyaka nesivuno",
+      "st": "+ Kenya dilemo le chai",
+      "ts": "+ Engetela malembe ni ntshovelo",
+      "ve": "+ Engedzani miṅwaha na khaṋo",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Remove age group",
+      "zu": "Susa iqembu leminyaka",
+      "st": "Tlosa sehlopha sa dilemo",
+      "ts": "Susa ntlawa wa malembe",
+      "ve": "Bvisani tshigwada tsha miṅwaha",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "These groups have more plants than your map. Correct the numbers before using the projection.",
+      "zu": "La maqembu anezitshalo eziningi kunalezo ezisebalazweni lakho. Lungisa amanani ngaphambi kokusebenzisa isibikezelo.",
+      "st": "Dihlopha tsena di na le dimela tse ngata ho feta tse mmapeng wa hao. Lokisa dipalo pele o sebedisa ponelopele.",
+      "ts": "Mintlawa leyi yi ni swimila swo tala ku hundza leswi nga eka mepe wa wena. Lulamisa tinhlayo u nga si tirhisa mvhumbo.",
+      "ve": "Zwigwada izwi zwi na zwimela zwinzhi u fhira zwi re kha mapa waṋu. Lulamisani mbalo musi ni sa athu u shumisa mbonelaphanḓa.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "{count} plants still need an age group.",
+      "zu": "Izitshalo ezingu-{count} zisadinga iqembu leminyaka.",
+      "st": "Dimela tse {count} di ntse di hloka sehlopha sa dilemo.",
+      "ts": "Swimila swa {count} swa ha lava ntlawa wa malembe.",
+      "ve": "Zwimela zwa {count} zwi kha ḓi ṱoḓa tshigwada tsha miṅwaha.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "+ Add age group",
+      "zu": "+ Faka iqembu leminyaka",
+      "st": "+ Kenya sehlopha sa dilemo",
+      "ts": "+ Engetela ntlawa wa malembe",
+      "ve": "+ Engedzani tshigwada tsha miṅwaha",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Fruit, nuts & berries on your map",
+      "zu": "Izithelo, amantongomane namajikijolo ebalazweni lakho",
+      "st": "Ditholwana, matokomane le monokotshwai mmapeng wa hao",
+      "ts": "Mihandzu, timanga ta misinya ni tibere eka mepe wa wena",
+      "ve": "Mitshelo, nḓuhu dza miri na mitshelo ya zwisusu kha mapa waṋu",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Picking months vary by place and variety. Outlined calendar marks are planning references when established. Confirm months for plants that already give food here to count them in food totals. Plants stay on the printed plan while dates are unknown.",
+      "zu": "Izinyanga zokuvuna ziyahlukahluka ngendawo nohlobo. Izimpawu ezinohlaka ekhalendeni ziyimithombo yokuhlela uma izitshalo sezikhulile. Qinisekisa izinyanga zezitshalo esezivele zinikeza ukudla lapha ukuze zibalwe esambeni sokudla. Izitshalo zihlala ohlelweni oluphrintiwe ngisho izinsuku zingakaziwa.",
+      "st": "Dikgwedi tsa kotulo di fapana ka sebaka le mofuta. Matshwao a nang le moedi khalendareng ke ditshupiso tsa ho rera ha dimela di hodile. Netefatsa dikgwedi tsa dimela tse seng di fana ka dijo mona hore di balwe palong yohle ya dijo. Dimela di sala moralong o hatisitsweng ha matsatsi a sa tsejwe.",
+      "ts": "Tin’hweti to tshovela ti hambana hi ndhawu ni muxaka. Mimfungho ya khalendara leyi nga ni ndzilakano i swihlovo swo kunguhata loko swimila swi kurile. Tiyisisa tin’hweti ta swimila leswi se swi nyikaka swakudya laha leswaku swi hlayiwa eka ntsengo wa swakudya. Swimila swi sala eka pulani leyi kandziyisiweke loko masiku ma nga si tiveka.",
+      "ve": "Miṅwedzi ya khaṋo i fhambana nga fhethu na lushaka. Maswayo a khaḽenda a re na mikano ndi zwiko zwa u dzudzanya musi zwimela zwo no aluwa. Khwaṱhisedzani miṅwedzi ya zwimela zwine zwa khou ṋea zwiḽiwa afha uri zwi vhalelwe kha ṱhanganyelo ya zwiḽiwa. Zwimela zwi dzula kha pulani yo gandiswaho musi maḓuvha a sa athu u ḓivhea.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "{count} existing",
+      "zu": "ezingu-{count} ezikhona",
+      "st": "tse {count} tse teng",
+      "ts": "swa {count} leswi nga kona",
+      "ve": "zwa {count} zwi re hone",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": ", {count} proposed",
+      "zu": ", ezingu-{count} ezihlongozwayo",
+      "st": ", tse {count} tse rerilweng",
+      "ts": ", swa {count} leswi kunguhatiweke",
+      "ve": ", zwa {count} zwo dzudzanywaho",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "{name} · {existing}{proposed} on your map. {check}",
+      "zu": "{name} · {existing}{proposed} ebalazweni lakho. {check}",
+      "st": "{name} · {existing}{proposed} mmapeng wa hao. {check}",
+      "ts": "{name} · {existing}{proposed} eka mepe wa wena. {check}",
+      "ve": "{name} · {existing}{proposed} kha mapa waṋu. {check}",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Choose the species in the Design Studio; picking dates are not yet known.",
+      "zu": "Khetha uhlobo lwesitshalo ku-Design Studio; izinsuku zokuvuna azikaziwa.",
+      "st": "Kgetha mofuta wa semela ho Design Studio; matsatsi a kotulo ha a eso tsejwe.",
+      "ts": "Hlawula muxaka wa ximilana eka Design Studio; masiku yo tshovela a ma si tiveka.",
+      "ve": "Nangani lushaka lwa tshimela kha Design Studio; maḓuvha a khaṋo ha athu u ḓivhea.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "food use needs review",
+      "zu": "ukusetshenziswa njengokudla kudinga ukubuyekezwa",
+      "st": "tshebediso e le dijo e hloka tlhahlobo",
+      "ts": "ku tirhisiwa tani hi swakudya swi lava ku kambisisiwa",
+      "ve": "u shumiswa sa zwiḽiwa zwi ṱoḓa u ṱolisiswa",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "confirm picking months",
+      "zu": "qinisekisa izinyanga zokuvuna",
+      "st": "netefatsa dikgwedi tsa kotulo",
+      "ts": "tiyisisa tin’hweti to tshovela",
+      "ve": "khwaṱhisedzani miṅwedzi ya khaṋo",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Kept as mapped inventory. Check the sourced food-use guidance below before planning household harvest. This plant is held out of ordinary food totals and picking jobs.",
+      "zu": "Sigcinwa ohlwini lwezitshalo ezisebalazweni. Hlola iziqondiso zokusetshenziswa njengokudla ezinomthombo ngezansi ngaphambi kokuhlela isivuno sasekhaya. Lesi sitshalo asibalwa ezambeni ezivamile zokudla nasemisebenzini yokuvuna.",
+      "st": "Se bolokwa lenaneng la tse mmapeng. Hlahloba tataiso ya mohlodi ya tshebediso e le dijo ka tlase pele o rera kotulo ya lelapa. Semela sena ha se kenyelletswe dipalong tse tlwaelehileng tsa dijo le mesebetsing ya kotulo.",
+      "ts": "Xi hlayisiwa eka nxaxamelo wa leswi nga eka mepe. Kambisisa nkongomiso lowu nga ni xihlovo wa ku tirhisiwa tani hi swakudya laha hansi u nga si kunguhata ntshovelo wa le kaya. Ximilana lexi a xi hlayiwi eka mitsengo ya ntolovelo ya swakudya ni mintirho yo tshovela.",
+      "ve": "Tshi vhulungwa kha mutevhe wa zwi re kha mapa. Ṱolani nyeletshedzo i re na tshiko ya u shumiswa sa zwiḽiwa afho fhasi musi ni sa athu u dzudzanya khaṋo ya muṱa. Tshimela itshi a tshi vhalelwi kha ṱhanganyelo dzo ḓoweleaho dza zwiḽiwa na mishumo ya khaṋo.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "All existing plants of this kind already give food here.",
+      "zu": "Zonke izitshalo ezikhona zalolu hlobo sezinikeza ukudla lapha.",
+      "st": "Dimela tsohle tse teng tsa mofuta ona di se di fana ka dijo mona.",
+      "ts": "Swimila hinkwaswo leswi nga kona swa muxaka lowu se swi nyika swakudya laha.",
+      "ve": "Zwimela zwoṱhe zwi re hone zwa lushaka ulu zwi vho ṋea zwiḽiwa afha.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Only proposed plants: no current picking dates.",
+      "zu": "Izitshalo ezihlongozwayo kuphela: azikho izinsuku zokuvuna zamanje.",
+      "st": "Ke dimela tse rerilweng feela: ha ho matsatsi a hona jwale a kotulo.",
+      "ts": "I swimila leswi kunguhatiweke ntsena: ku hava masiku ya sweswi yo tshovela.",
+      "ve": "Ndi zwimela zwo dzudzanywaho fhedzi: a hu na maḓuvha a zwino a khaṋo.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Tap the months you pick from these plants here:",
+      "zu": "Thepha izinyanga ovuna ngazo kulezi zitshalo lapha:",
+      "st": "Tobetsa dikgwedi tseo o kotulang dimeleng tsena mona ka tsona:",
+      "ts": "Tshikelela tin’hweti leti u tshovelaka swimila leswi laha ha tona:",
+      "ve": "Kwatamidzani miṅwedzi ine na kaṋa zwimela izwi afha ngayo:",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "{plant} local picking months",
+      "zu": "Izinyanga zokuvuna ze-{plant} endaweni",
+      "st": "Dikgwedi tsa kotulo tsa {plant} sebakeng sena",
+      "ts": "Tin’hweti to tshovela {plant} laha kaya",
+      "ve": "Miṅwedzi ya khaṋo ya {plant} henefho",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "No harvest reference is available in this plan:",
+      "zu": "Awukho umthombo wesivuno otholakalayo kulolu hlelo:",
+      "st": "Ha ho tshupiso ya kotulo e fumanehang moralong ona:",
+      "ts": "Ku hava xihlovo xa ntshovelo lexi kumekaka eka pulani leyi:",
+      "ve": "A hu na tshiko tsha khaṋo tshi wanalaho kha pulani iyi:",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Reference seasons — check place and variety:",
+      "zu": "Izikhathi ezisemthonjeni — hlola indawo nohlobo:",
+      "st": "Dihla tsa mohlodi — hlahloba sebaka le mofuta:",
+      "ts": "Tinguva ta xihlovo — kambisisa ndhawu ni muxaka:",
+      "ve": "Zwifhinga zwa tshiko — ṱolani fhethu na lushaka:",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "No food picking calendar is assigned while food use needs review.",
+      "zu": "Alikho ikhalenda lokuvuna ukudla elinikeziwe uma ukusetshenziswa njengokudla kusadinga ukubuyekezwa.",
+      "st": "Ha ho khalendara ya kotulo ya dijo e abetsweng ha tshebediso e le dijo e ntse e hloka tlhahlobo.",
+      "ts": "Ku hava khalendara yo tshovela swakudya leyi nyikiweke loko ku tirhisiwa tani hi swakudya swi ha lava ku kambisisiwa.",
+      "ve": "A hu na khaḽenda ya khaṋo ya zwiḽiwa yo avhelwaho musi u shumiswa sa zwiḽiwa zwi kha ḓi ṱoḓa u ṱolisiswa.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "No picking months are verified in the source record. Local observations can still be recorded above.",
+      "zu": "Azikho izinyanga zokuvuna eziqinisekisiwe kurekhodi lomthombo. Usengabhala okubonwe endaweni ngenhla.",
+      "st": "Ha ho dikgwedi tsa kotulo tse netefaditsweng rekotong ya mohlodi. Tse bonweng sebakeng sena di ntse di ka rekotwa ka hodimo.",
+      "ts": "Ku hava tin’hweti to tshovela leti tiyisisiweke eka rhekhodo ya xihlovo. Leswi voniweke laha kaya swa ha nga rhekhodiwa laha henhla.",
+      "ve": "A hu na miṅwedzi ya khaṋo yo khwaṱhisedzwaho kha rekhodo ya tshiko. Zwo vhonwaho henefho zwi kha ḓi kona u rekhodiwa afho nṱha.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "{label} · expected when established",
+      "zu": "{label} · kulindelwe uma izitshalo sezikhulile",
+      "st": "{label} · ho lebeletswe ha dimela di hodile",
+      "ts": "{label} · swi languteriwile loko swimila swi kurile",
+      "ve": "{label} · zwo lavhelelwa musi zwimela zwo no aluwa",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Care and what to buy",
+      "zu": "Ukunakekela nokufanele ukuthenge",
+      "st": "Tlhokomelo le seo o lokelang ho se reka",
+      "ts": "Nhlayiso ni leswi u faneleke ku xava",
+      "ve": "Ndondolo na zwine na tea u renga",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Check your farm conditions",
+      "zu": "Hlola izimo zepulazi lakho",
+      "st": "Hlahloba maemo a polasi ya hao",
+      "ts": "Kambisisa swiyimo swa purasi ra wena",
+      "ve": "Ṱolani nyimele dza bulasi yaṋu",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Update site survey",
+      "zu": "Buyekeza ukuhlolwa kwendawo",
+      "st": "Ntjhafatsa tlhahlobo ya sebaka",
+      "ts": "Pfuxeta nkambisiso wa ndhawu",
+      "ve": "Khwinifhadzani ṱhoḓisiso ya fhethu",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Climate area: {area}. {observation}",
+      "zu": "Indawo yesimo sezulu: {area}. {observation}",
+      "st": "Sebaka sa tlelaemete: {area}. {observation}",
+      "ts": "Ndhawu ya maxelo: {area}. {observation}",
+      "ve": "Ngingo ya kilima: {area}. {observation}",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Your survey supplies the observations below.",
+      "zu": "Ukuhlolwa kwakho kunikeza okubonwe ngezansi.",
+      "st": "Tlhahlobo ya hao e fana ka tse bonweng ka tlase.",
+      "ts": "Nkambisiso wa wena wu nyika leswi voniweke laha hansi.",
+      "ve": "Ṱhoḓisiso yaṋu i ṋea zwo vhonwaho afho fhasi.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Choose a mapped site before recording farm observations.",
+      "zu": "Khetha indawo esebalazweni ngaphambi kokubhala okubonwe epulazini.",
+      "st": "Kgetha sebaka se mmapeng pele o rekota tse bonweng polasing.",
+      "ts": "Hlawula ndhawu leyi nga eka mepe u nga si rhekhoda leswi voniweke epurasini.",
+      "ve": "Nangani fhethu hu re kha mapa musi ni sa athu u rekhoda zwo vhonwaho bulasini.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Bars use a labelled variety assumption or regional reference. New plants need time to produce. Only locally confirmed months enter your food totals.",
+      "zu": "Amabha asebenzisa ukucatshangwa kohlobo olubhalwe ngokucacile noma umthombo wesifunda. Izitshalo ezintsha zidinga isikhathi ngaphambi kokukhiqiza. Izinyanga eziqinisekiswe endaweni kuphela ezibalwa ezambeni zakho zokudla.",
+      "st": "Meballo e sebedisa kgakanyo ya mofuta e ngotsweng kapa tshupiso ya lebatowa. Dimela tse ntjha di hloka nako pele di hlahisa. Ke dikgwedi tse netefaditsweng sebakeng sena feela tse kenang dipalong tsohle tsa dijo tsa hao.",
+      "ts": "Mibara yi tirhisa ku ringanyeta ka muxaka loku tsariweke kumbe xihlovo xa xifundzha. Swimila leswintshwa swi lava nkarhi leswaku swi humesa ntshovelo. I tin’hweti leti tiyisisiweke laha kaya ntsena leti nghenaka eka mitsengo ya swakudya swa wena.",
+      "ve": "Mabari a shumisa khumbulelo ya lushaka yo ṅwalwaho kana tshiko tsha dzingu. Zwimela zwiswa zwi ṱoḓa tshifhinga u bveledza. Ndi miṅwedzi yo khwaṱhisedzwaho henefho fhedzi ine ya dzheniswa kha ṱhanganyelo dzaṋu dza zwiḽiwa.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Crop varieties to check locally ({count} {unit})",
+      "zu": "Izinhlobo zezitshalo okufanele uzihlole endaweni ({count} {unit})",
+      "st": "Mefuta ya dijalo e lokelang ho hlahlojwa sebakeng sena ({count} {unit})",
+      "ts": "Mixaka ya swibyariwa leyi faneleke ku kambisisiwa laha kaya ({count} {unit})",
+      "ve": "Tshaka dza zwiliṅwa dzine dza tea u ṱolwa henefho ({count} {unit})",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "crop",
+      "zu": "isitshalo",
+      "st": "sejalo",
+      "ts": "xibyariwa",
+      "ve": "tshiliṅwa",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "crops",
+      "zu": "izitshalo",
+      "st": "dijalo",
+      "ts": "swibyariwa",
+      "ve": "zwiliṅwa",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Research groupings can infer climate fit. Confirm the season, soil, water and current stock with a local grower or extension officer. A recorded variety does not change this plan’s crop timing.",
+      "zu": "Ukuhlukaniswa ngamaqembu ocwaningweni kungasiza ukucabangela ukufaneleka kwesimo sezulu. Qinisekisa isikhathi, inhlabathi, amanzi nezithombo ezitholakalayo nomlimi wendawo noma isikhulu sezolimo. Uhlobo olurekhodiwe alushintshi izikhathi zokutshala nokuvuna zalolu hlelo.",
+      "st": "Dihlopha tsa dipatlisiso di ka fana ka kgakanyo ya ho tshwaneleha ha tlelaemete. Netefatsa sehla, mobu, metsi le dimela tse fumanehang hona jwale le molemi wa lehae kapa ofisiri ya katoloso ya temo. Mofuta o rekotilweng ha o fetole dinako tsa dijalo tsa moralo ona.",
+      "ts": "Mintlawa ya ndzavisiso yi nga pfuna ku ringanyeta ku faneleka ka maxelo. Tiyisisa nguva, misava, mati ni swimilana leswi kumekaka sweswi ni murimi wa laha kaya kumbe muofisiri wa switsundzuxo swa vurimi. Muxaka lowu rhekhodiweke a wu cinci minkarhi ya swibyariwa ya pulani leyi.",
+      "ve": "Zwigwada zwa ṱhoḓisiso zwi nga thusa u humbulela u tea ha kilima. Khwaṱhisedzani tshifhinga, mavu, maḓi na zwimela zwi re hone zwino na mulimi wa henefho kana muofisiri wa nyeletshedzo ya vhulimi. Lushaka lwo rekhodiwaho a lu shanduli zwifhinga zwa zwiliṅwa zwa pulani iyi.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Past production recorded in your survey",
+      "zu": "Ukukhiqiza kwangaphambilini okurekhodwe ekuhlolweni kwakho",
+      "st": "Tlhahiso ya nakong e fetileng e rekotilweng tlhahlobong ya hao",
+      "ts": "Vuhumelerisi bya khale byi rhekhodiweke eka nkambisiso wa wena",
+      "ve": "Vhubveledzi ha tshifhingani tsho fhiraho ho rekhodiwaho kha ṱhoḓisiso yaṋu",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Use these records to compare with what you actually collect. They do not predict the coming year or set picking dates.",
+      "zu": "Sebenzisa la marekhodi ukuqhathanisa nalokho okuvuna ngempela. Awabikezeli unyaka ozayo futhi awabeki izinsuku zokuvuna.",
+      "st": "Sebedisa direkoto tsena ho bapisa le seo o se bokellang ka nnete. Ha di bolele esale pele selemo se tlang kapa ho beha matsatsi a kotulo.",
+      "ts": "Tirhisa tirhekhodo leti ku pimanisa ni leswi u swi hlengeletaka hakunene. A ti vhumbhi lembe leri taka kumbe ku veka masiku yo tshovela.",
+      "ve": "Shumisani rekhodo idzi u vhambedza na zwine na zwi kuvhanganya zwa vhukuma. A dzi bvumbi ṅwaha u ḓaho kana u vhea maḓuvha a khaṋo.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Tree and harvest translations are unreviewed drafts. Some source references remain in English.",
+      "zu": "Izinguqulo zezihlahla nesivuno ziyimibhalo engakabuyekezwa. Eminye imithombo isesiNgisini.",
+      "st": "Diphetolelo tsa difate le kotulo ke dingolwa tse eso hlahlojwe. Ditshupiso tse ding tsa mohlodi di ntse di le ka Senyesemane.",
+      "ts": "Vuhundzuluxeri bya misinya ni ntshovelo i matsalelo lama nga si kambisisiwaka. Swihlovo swin’wana swa ha ri hi Xinghezi.",
+      "ve": "Ṱhalutshedzelo dza miri na khaṋo ndi mvetamveto i sa athu u ṱolisiswa. Zwiṅwe zwiko zwi kha ḓi vha nga Luisimane.",
+      "generatedScope": "tree-guide-control"
+    },
+    {
+      "english": "Source",
+      "zu": "Umthombo",
+      "st": "Mohlodi",
+      "ts": "Xihlovo",
+      "ve": "Tshiko",
+      "generatedScope": "tree-guide-control"
+    }
+  ],
+  "scope": [
+    "components/crops/TreeAgeEditor.tsx",
+    "components/crops/TreeSeasonsCard.tsx",
+    "components/crops/ProductionGuideCard.tsx"
+  ],
+  "preservation": "Only display labels and source-bound guidance; saved enums, dates, counts, yields, food gates, source IDs, citations, geometry, callback expressions and source English remain unchanged. All farming figures inherited.",
+  "review": "Unreviewed AI drafts; no fluent approval claimed.",
+  "sourceCount": 69,
+  "reused": [
+    "Remove",
+    "These confirmations are kept on this device for this design.",
+    "Fruit, nuts and indigenous foods",
+    "Animal products"
+  ],
+  "sourceEdits": [
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "'use client';",
+      "after": "'use client';\nimport { useLanguage } from '@/lib/i18n';\nimport { cropExportText, isCropExportDraftLanguage } from '@/lib/crop-export-copy';\nimport { productGuideText } from '@/lib/production-product-guidance';\nimport { recordsMonthShort } from '@/lib/records-months';",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "before": "'use client';",
+      "after": "'use client';\nimport { useLanguage } from '@/lib/i18n';\nimport { cropExportText, isCropExportDraftLanguage } from '@/lib/crop-export-copy';\nimport { productGuideText } from '@/lib/production-product-guidance';\nimport { recordsMonthShort } from '@/lib/records-months';",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": "'use client';",
+      "after": "'use client';\nimport { useLanguage } from '@/lib/i18n';\nimport { cropExportText, isCropExportDraftLanguage } from '@/lib/crop-export-copy';\nimport { productGuideText } from '@/lib/production-product-guidance';\nimport { recordsMonthShort } from '@/lib/records-months';",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "  const groups = choice.production ?? [];",
+      "after": "  const { lang } = useLanguage();\n  const t = (source: string, values?: Record<string, string | number>) => cropExportText(source, lang, values);\n  const groups = choice.production ?? [];",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "before": "  if (groups.length === 0",
+      "after": "  const { lang } = useLanguage();\n  const t = (source: string, values?: Record<string, string | number>) => cropExportText(source, lang, values);\n  if (groups.length === 0",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": "function GuideItem({ item, product = false }: { item: ProductionGuideItem; product?: boolean }) {",
+      "after": "function GuideItem({ item, product = false }: { item: ProductionGuideItem; product?: boolean }) {\n  const { lang } = useLanguage();\n  const t = (source: string, values?: Record<string, string | number>) => cropExportText(source, lang, values);",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": "}) {\n  return <section",
+      "after": "}) {\n  const { lang } = useLanguage();\n  const t = (source: string, values?: Record<string, string | number>) => cropExportText(source, lang, values);\n  return <section",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "/>} Plant ages &amp; future harvest",
+      "after": "/>} {t(\"Plant ages & future harvest\")}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">Put plants planted together in one group. Keep older and younger plants separate. Dates and expected kg stay on this device with your picking months.<",
+      "after": ">{t(\"Put plants planted together in one group. Keep older and younger plants separate. Dates and expected kg stay on this device with your picking months.\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">First-crop age is not sourced. Add a locally checked yield schedule.<",
+      "after": ">{t(\"First-crop age is not sourced. Add a locally checked yield schedule.\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">Age &amp; production references<",
+      "after": ">{t(\"Age & production references\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">Check variety, planting stock, site and units before using a reference. Your entered kg schedule supplies the projection.<",
+      "after": ">{t(\"Check variety, planting stock, site and units before using a reference. Your entered kg schedule supplies the projection.\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">First crop:<",
+      "after": ">{t(\"First crop:\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">Established production:<",
+      "after": ">{t(\"Established production:\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">Source production:<",
+      "after": ">{t(\"Source production:\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">Already planted<",
+      "after": ">{t(\"Already planted\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">To be planted<",
+      "after": ">{t(\"To be planted\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">Choose month<",
+      "after": ">{t(\"Choose month\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">Choose year<",
+      "after": ">{t(\"Choose year\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">Expected harvest per plant in a year at each age. Use your records or a nursery&apos;s advice for this site. A value holds until the next age you enter; change it if older plants produce less.<",
+      "after": ">{t(\"Expected harvest per plant in a year at each age. Use your records or a nursery's advice for this site. A value holds until the next age you enter; change it if older plants produce less.\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">Remove<",
+      "after": ">{t(\"Remove\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">+ Add age &amp; yield<",
+      "after": ">{t(\"+ Add age & yield\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">Remove age group<",
+      "after": ">{t(\"Remove age group\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">These groups have more plants than your map. Correct the numbers before using the projection.<",
+      "after": ">{t(\"These groups have more plants than your map. Correct the numbers before using the projection.\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">+ Add age group<",
+      "after": ">{t(\"+ Add age group\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "First-crop reference: {firstCropAgeLabel(group.harvest.yearsToFirstCrop.value)} after planting.",
+      "after": "{t('First-crop reference: {age} after planting.', { age: firstCropAgeLabel(group.harvest.yearsToFirstCrop.value, (age, unit) => productGuideText(`{age} ${unit}`, lang, { age })) })}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "Established production reference: {formatRange(group.harvest.yearsToFullBearing.value)} years. Check the source&apos;s cultivar and conditions.",
+      "after": "{t(\"Established production reference: {age} years. Check the source's cultivar and conditions.\", { age: formatRange(group.harvest.yearsToFullBearing.value) })}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">Source",
+      "after": ">{t('Source')}",
+      "count": 4
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "{group.harvest.yearsToFirstCrop.note}",
+      "after": "{productGuideText(group.harvest.yearsToFirstCrop.note, lang)}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "{group.harvest.yearsToFullBearing.note}",
+      "after": "{productGuideText(group.harvest.yearsToFullBearing.note, lang)}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "{reference.title}",
+      "after": "{productGuideText(reference.title, lang)}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "{reference.note}",
+      "after": "{productGuideText(reference.note, lang)}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "{group.harvest.yieldKgPerTree.note}",
+      "after": "{group.harvest.yieldKgPerTree.note && productGuideText(group.harvest.yieldKgPerTree.note, lang)}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "{formatRange(group.harvest.yieldKgPerTree.value)} kg/plant.",
+      "after": "{t('{range} kg/plant.', { range: formatRange(group.harvest.yieldKgPerTree.value) })}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">Age group {index + 1}<",
+      "after": ">{t('Age group {number}', { number: index + 1 })}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">On the map<",
+      "after": ">{t(\"On the map\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">Number of plants<",
+      "after": ">{t(\"Number of plants\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">Year planted<",
+      "after": ">{t(\"Year planted\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">Age in years<",
+      "after": ">{t(\"Age in years\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">kg / plant / year<",
+      "after": ">{t(\"kg / plant / year\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "{g.status === 'existing' ? 'Month planted' : 'Intended planting month'}",
+      "after": "{t(g.status === 'existing' ? 'Month planted' : 'Intended planting month')}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "{`${group.harvest.name} group ${index + 1} status`}",
+      "after": "{t('{plant} group {number} status', { plant: group.harvest.name, number: index + 1 })}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "{`${group.harvest.name} group ${index + 1} plants`}",
+      "after": "{t('{plant} group {number} plants', { plant: group.harvest.name, number: index + 1 })}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "{`${group.harvest.name} group ${index + 1} planting month`}",
+      "after": "{t('{plant} group {number} planting month', { plant: group.harvest.name, number: index + 1 })}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "{`${group.harvest.name} group ${index + 1} planting year`}",
+      "after": "{t('{plant} group {number} planting year', { plant: group.harvest.name, number: index + 1 })}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "{`${group.harvest.name} group ${index + 1} yield ${i + 1} age`}",
+      "after": "{t('{plant} group {number} yield {yield} age', { plant: group.harvest.name, number: index + 1, yield: i + 1 })}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "{`${group.harvest.name} group ${index + 1} yield ${i + 1} kg`}",
+      "after": "{t('{plant} group {number} yield {yield} kg', { plant: group.harvest.name, number: index + 1, yield: i + 1 })}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "{`Remove ${group.harvest.name} yield ${i + 1} from group ${index + 1}`}",
+      "after": "{t('Remove {plant} yield {yield} from group {number}', { plant: group.harvest.name, number: index + 1, yield: i + 1 })}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">{name}</option>",
+      "after": ">{recordsMonthShort(lang, month + 1)}</option>",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": ">{remaining} plants still need an age group.<",
+      "after": ">{t('{count} plants still need an age group.', { count: remaining })}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "    <div style={{ fontSize: 12,",
+      "after": "    {isCropExportDraftLanguage(lang) && <p className=\"font-sans mt-2 mb-2\" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5 }}>{t('Tree and harvest translations are unreviewed drafts. Some source references remain in English.')}</p>}\n    <div style={{ fontSize: 12,",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "before": "/> Fruit, nuts &amp; berries on your map",
+      "after": "/> {t(\"Fruit, nuts & berries on your map\")}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "before": ">Picking months vary by place and variety. Outlined calendar marks are planning references when established. Confirm months for plants that already give food here to count them in food totals. Plants stay on the printed plan while dates are unknown.<",
+      "after": ">{t(\"Picking months vary by place and variety. Outlined calendar marks are planning references when established. Confirm months for plants that already give food here to count them in food totals. Plants stay on the printed plan while dates are unknown.\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "before": ">These confirmations are kept on this device for this design.<",
+      "after": ">{t(\"These confirmations are kept on this device for this design.\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "before": ">Kept as mapped inventory. Check the sourced food-use guidance below before planning household harvest. This plant is held out of ordinary food totals and picking jobs.<",
+      "after": ">{t(\"Kept as mapped inventory. Check the sourced food-use guidance below before planning household harvest. This plant is held out of ordinary food totals and picking jobs.\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "before": ">Only proposed plants: no current picking dates.<",
+      "after": ">{t(\"Only proposed plants: no current picking dates.\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "before": ">Tap the months you pick from these plants here:<",
+      "after": ">{t(\"Tap the months you pick from these plants here:\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "before": "{g.label} · {g.existing} existing{g.proposed ? `, ${g.proposed} proposed` : ''} on your map. {g.legalCheck ?? 'Choose the species in the Design Studio; picking dates are not yet known.'}",
+      "after": "{t('{name} · {existing}{proposed} on your map. {check}', { name: g.label, existing: t('{count} existing', { count: g.existing }), proposed: g.proposed ? t(', {count} proposed', { count: g.proposed }) : '', check: g.legalCheck ?? t('Choose the species in the Design Studio; picking dates are not yet known.') })}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "before": "{g.harvest.name} · {g.existing} existing{g.proposed ? `, ${g.proposed} proposed` : ''} · {foodHeld ? 'food use needs review' : choice.bearing && choice.months.length ? formatMonthSpan(choice.months) : 'confirm picking months'}",
+      "after": "{g.harvest.name} · {t('{count} existing', { count: g.existing })}{g.proposed ? t(', {count} proposed', { count: g.proposed }) : ''} · {foodHeld ? t('food use needs review') : choice.bearing && choice.months.length ? formatMonthSpan(choice.months, lang) : t('confirm picking months')}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "before": "/> All existing plants of this kind already give food here.",
+      "after": "/> {t(\"All existing plants of this kind already give food here.\")}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "before": "{`${g.harvest.name} local picking months`}",
+      "after": "{t('{plant} local picking months', { plant: g.harvest.name })}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "before": ">{name}</button>",
+      "after": ">{recordsMonthShort(lang, i + 1)}</button>",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "before": "{g.referenceMissing ? 'No harvest reference is available in this plan:' : 'Reference seasons — check place and variety:'}",
+      "after": "{t(g.referenceMissing ? 'No harvest reference is available in this plan:' : 'Reference seasons — check place and variety:')}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "before": "{w.region}: {formatMonthSpan(w.months)}.",
+      "after": "{productGuideText(w.region, lang)}: {formatMonthSpan(w.months, lang)}.",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "before": "{foodHeld ? 'No food picking calendar is assigned while food use needs review.' : 'No picking months are verified in the source record. Local observations can still be recorded above.'}",
+      "after": "{t(foodHeld ? 'No food picking calendar is assigned while food use needs review.' : 'No picking months are verified in the source record. Local observations can still be recorded above.')}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "before": "    {unidentified.map",
+      "after": "    {isCropExportDraftLanguage(lang) && <p className=\"font-sans mt-2 mb-2\" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5 }}>{t('Tree and harvest translations are unreviewed drafts. Some source references remain in English.')}</p>}\n    {unidentified.map",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": "item.expectedSeason.months.map(m => ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][m - 1])",
+      "after": "item.expectedSeason.months.map(m => recordsMonthShort(lang, m))",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": "{item.expectedSeason.label} · expected when established",
+      "after": "{t('{label} · expected when established', { label: item.expectedSeason.label })}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": "className=\"grid grid-cols-12 gap-0.5\"",
+      "after": "className={isCropExportDraftLanguage(lang) ? \"grid grid-cols-6 sm:grid-cols-12 gap-0.5\" : \"grid grid-cols-12 gap-0.5\"}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": ">{label}</div>)",
+      "after": ">{recordsMonthShort(lang, i + 1)}</div>)",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": ".map((label, i) => <div",
+      "after": ".map((_, i) => <div",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": ">Care and what to buy<",
+      "after": ">{t(\"Care and what to buy\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": ">Update site survey<",
+      "after": ">{t(\"Update site survey\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": ">Fruit, nuts and indigenous foods<",
+      "after": ">{t(\"Fruit, nuts and indigenous foods\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": ">Bars use a labelled variety assumption or regional reference. New plants need time to produce. Only locally confirmed months enter your food totals.<",
+      "after": ">{t(\"Bars use a labelled variety assumption or regional reference. New plants need time to produce. Only locally confirmed months enter your food totals.\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": ">Animal products<",
+      "after": ">{t(\"Animal products\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": ">Research groupings can infer climate fit. Confirm the season, soil, water and current stock with a local grower or extension officer. A recorded variety does not change this plan’s crop timing.<",
+      "after": ">{t(\"Research groupings can infer climate fit. Confirm the season, soil, water and current stock with a local grower or extension officer. A recorded variety does not change this plan’s crop timing.\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": ">Past production recorded in your survey<",
+      "after": ">{t(\"Past production recorded in your survey\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": ">Use these records to compare with what you actually collect. They do not predict the coming year or set picking dates.<",
+      "after": ">{t(\"Use these records to compare with what you actually collect. They do not predict the coming year or set picking dates.\")}<",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": "/> Check your farm conditions",
+      "after": "/> {t(\"Check your farm conditions\")}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": "Climate area: {guide.area}. {canSurvey ? 'Your survey supplies the observations below.' : 'Choose a mapped site before recording farm observations.'}",
+      "after": "{t('Climate area: {area}. {observation}', { area: guide.area, observation: t(canSurvey ? 'Your survey supplies the observations below.' : 'Choose a mapped site before recording farm observations.') })}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": "Crop varieties to check locally ({guide.cropChoices.length} {guide.cropChoices.length === 1 ? 'crop' : 'crops'})",
+      "after": "{t('Crop varieties to check locally ({count} {unit})', { count: guide.cropChoices.length, unit: t(guide.cropChoices.length === 1 ? 'crop' : 'crops') })}",
+      "count": 1
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "before": "    {!!guide.foodForest?.length",
+      "after": "    {isCropExportDraftLanguage(lang) && <p className=\"font-sans mt-2 mb-2\" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5 }}>{t('Tree and harvest translations are unreviewed drafts. Some source references remain in English.')}</p>}\n    {!!guide.foodForest?.length",
+      "count": 1
+    },
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "before": "gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))'",
+      "after": "gridTemplateColumns: isCropExportDraftLanguage(lang) ? 'repeat(auto-fit, minmax(180px, 1fr))' : 'repeat(auto-fit, minmax(130px, 1fr))'",
+      "count": 1
+    }
+  ],
+  "beforeManifest": "tests/fixtures/tree-guide-control-translation/capture-manifest.json",
+  "applied": true,
+  "layoutCorrection": "Actual phone inspection showed long native status choices shortened inside two narrow fields. Native age fields now use min180px so the phone stacks them; English min130px is unchanged.",
+  "releaseCopy": [
+    {
+      "english": "Planting ages and picking months now have four-language translation drafts.",
+      "zu": "Iminyaka yezitshalo nezinyanga zokuvuna manje kunemibhalo yokuhumusha ngezilimi ezine.",
+      "st": "Dilemo tsa ho jala le dikgwedi tsa kotulo jwale di na le diphetolelo tsa pele tsa dipuo tse nne.",
+      "ts": "Malembe ya ku byala ni tin’hweti to tshovela sweswi swi ni matsalelo ya vuhundzuluxeri hi tindzimi ta mune.",
+      "ve": "Miṅwaha ya u ṱavha na miṅwedzi ya khaṋo zwino zwi na mvetamveto ya ṱhalutshedzelo nga nyambo nṋa."
+    },
+    {
+      "english": "Farm-condition guide controls now have unreviewed translations.",
+      "zu": "Izinkinobho neziyalezo zomhlahlandlela wezimo zepulazi manje kunezinguqulo ezingakabuyekezwa.",
+      "st": "Ditaolo tsa tataiso ya maemo a polasi jwale di na le diphetolelo tse eso hlahlojwe.",
+      "ts": "Swilawuri swa nkongomiso wa swiyimo swa purasi sweswi swi ni vuhundzuluxeri lexi nga si kambisisiwaka.",
+      "ve": "Zwilangi zwa nyeletshedzo ya nyimele dza bulasi zwino zwi na ṱhalutshedzelo dzi sa athu u ṱolisiswa."
+    },
+    {
+      "english": "Review tree and harvest controls",
+      "zu": "Buyekeza izilawuli zezihlahla nesivuno",
+      "st": "Hlahloba ditaolo tsa difate le kotulo",
+      "ts": "Kambisisa swilawuri swa misinya ni ntshovelo",
+      "ve": "Ṱolisisani zwilangi zwa miri na khaṋo"
+    },
+    {
+      "english": "Check planting dates, picking months and source notes. Translations still need review.",
+      "zu": "Hlola izinsuku zokutshala, izinyanga zokuvuna namanothi emithombo. Izinguqulo zisadinga ukubuyekezwa.",
+      "st": "Hlahloba matsatsi a ho jala, dikgwedi tsa kotulo le dintlha tsa mehlodi. Diphetolelo di ntse di hloka tlhahlobo.",
+      "ts": "Kambisisa masiku yo byala, tin’hweti to tshovela ni tinotsi ta swihlovo. Vuhundzuluxeri bya ha lava ku kambisisiwa.",
+      "ve": "Ṱolani maḓuvha a u ṱavha, miṅwedzi ya khaṋo na notsi dza zwiko. Ṱhalutshedzelo dzi kha ḓi ṱoḓa u ṱolisiswa."
+    }
+  ],
+  "releaseEntry": {
+    "when": "26 October 2026",
+    "sha": "295426720",
+    "changes": [
+      "Planting ages and picking months now have four-language translation drafts.",
+      "Farm-condition guide controls now have unreviewed translations."
+    ],
+    "tour": [
+      {
+        "title": "Review tree and harvest controls",
+        "where": "Farm → Production plan",
+        "href": "/facilitator/crops",
+        "detail": "Check planting dates, picking months and source notes. Translations still need review."
+      }
+    ]
+  },
+  "evidence": "evidence/tree-guide-controls/README.md"
+}

@@ -1,3 +1,4 @@
+import {restoreTreeGuideControlSource} from './helpers/tree-guide-control-expectation.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFileSync} from 'node:fs';
@@ -20,7 +21,7 @@ function markdown(row:typeof before.rows[number],language:string,guide:ReturnTyp
 
 test('care and nursery drafts retain every source byte, inherited row and exact species/array/index binding',()=>{
  const manifest=JSON.parse(read('tests/fixtures/tree-care-translation/capture-manifest.json'));assert.equal(hash(packed),manifest.compressedSha256);assert.equal(hash(raw),manifest.uncompressedSha256);assert.deepEqual(PRODUCT_PROFILES,before.profiles);
- for(const s of before.sources){assert.equal(hash(s.source),s.sha256);if(s.file!=='lib/crop-export-copy-data.ts')assert.equal(read(s.file),s.source,'drafts cannot rewrite a model, source field, selector, renderer or component');}
+ for(const s of before.sources){assert.equal(hash(s.source),s.sha256);if(s.file!=='lib/crop-export-copy-data.ts')assert.equal(restoreTreeGuideControlSource(s.file,read(s.file)),s.source,'drafts cannot rewrite a model, source field, selector, renderer or component outside the declared control presentation');}
  assert.equal(p.applied,true);assert.match(p.status,/IN PROGRESS.*Unreviewed/);assert.equal(p.rows.length,91);assert.deepEqual(CROP_EXPORT_COPY.slice(0,before.registry.length),before.registry);assert.deepEqual(CROP_EXPORT_COPY.slice(before.registry.length,before.registry.length+p.rows.length),p.rows);assert.equal(new Set(CROP_EXPORT_COPY.map(row=>row.english)).size,CROP_EXPORT_COPY.length);
  const context=before.rows.find(row=>row.context.trees.length===103)!.context,fields=new Map<string,Array<{speciesId:string;field:'care'|'purchase';index:number}>>();
  for(const group of context.trees){const h=group.harvest,profile=PRODUCT_PROFILES[h.speciesId]??h.productionGuidance;for(const field of['care','purchase']as const)for(const[index,english]of(profile?.[field]??[]).entries()){if(!p.rows.some(row=>row.english===english))continue;const list=fields.get(english)??[];list.push({speciesId:h.speciesId,field,index});fields.set(english,list);}}

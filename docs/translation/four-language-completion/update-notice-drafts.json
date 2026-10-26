@@ -1594,6 +1594,34 @@
       "st": "Bala keletso e felletseng ya tlhokomelo le ho reka. Hlahloba Senyesemane pele o etsa.",
       "ts": "Hlaya switsundzuxo leswi heleleke swa nhlayiso ni ku xava. Kambela Xinghezi u nga si endla.",
       "ve": "Vhalani nyeletshedzo yo fhelelaho ya ndondolo na u renga. Ṱolani Luisimane musi ni sa athu ita."
+    },
+    {
+      "english": "Planting ages and picking months now have four-language translation drafts.",
+      "zu": "Iminyaka yezitshalo nezinyanga zokuvuna manje kunemibhalo yokuhumusha ngezilimi ezine.",
+      "st": "Dilemo tsa ho jala le dikgwedi tsa kotulo jwale di na le diphetolelo tsa pele tsa dipuo tse nne.",
+      "ts": "Malembe ya ku byala ni tin’hweti to tshovela sweswi swi ni matsalelo ya vuhundzuluxeri hi tindzimi ta mune.",
+      "ve": "Miṅwaha ya u ṱavha na miṅwedzi ya khaṋo zwino zwi na mvetamveto ya ṱhalutshedzelo nga nyambo nṋa."
+    },
+    {
+      "english": "Farm-condition guide controls now have unreviewed translations.",
+      "zu": "Izinkinobho neziyalezo zomhlahlandlela wezimo zepulazi manje kunezinguqulo ezingakabuyekezwa.",
+      "st": "Ditaolo tsa tataiso ya maemo a polasi jwale di na le diphetolelo tse eso hlahlojwe.",
+      "ts": "Swilawuri swa nkongomiso wa swiyimo swa purasi sweswi swi ni vuhundzuluxeri lexi nga si kambisisiwaka.",
+      "ve": "Zwilangi zwa nyeletshedzo ya nyimele dza bulasi zwino zwi na ṱhalutshedzelo dzi sa athu u ṱolisiswa."
+    },
+    {
+      "english": "Review tree and harvest controls",
+      "zu": "Buyekeza izilawuli zezihlahla nesivuno",
+      "st": "Hlahloba ditaolo tsa difate le kotulo",
+      "ts": "Kambisisa swilawuri swa misinya ni ntshovelo",
+      "ve": "Ṱolisisani zwilangi zwa miri na khaṋo"
+    },
+    {
+      "english": "Check planting dates, picking months and source notes. Translations still need review.",
+      "zu": "Hlola izinsuku zokutshala, izinyanga zokuvuna namanothi emithombo. Izinguqulo zisadinga ukubuyekezwa.",
+      "st": "Hlahloba matsatsi a ho jala, dikgwedi tsa kotulo le dintlha tsa mehlodi. Diphetolelo di ntse di hloka tlhahlobo.",
+      "ts": "Kambisisa masiku yo byala, tin’hweti to tshovela ni tinotsi ta swihlovo. Vuhundzuluxeri bya ha lava ku kambisisiwa.",
+      "ve": "Ṱolani maḓuvha a u ṱavha, miṅwedzi ya khaṋo na notsi dza zwiko. Ṱhalutshedzelo dzi kha ḓi ṱoḓa u ṱolisiswa."
     }
   ],
   "historyBefore": [

@@ -1,0 +1,59 @@
+{
+  "sources": [
+    {
+      "file": "components/crops/TreeAgeEditor.tsx",
+      "sha256": "551149e18b7d5938d503f1dfb44d7b7487a06ff19eaddbfbf61423fb3dbf5079"
+    },
+    {
+      "file": "components/crops/TreeSeasonsCard.tsx",
+      "sha256": "6bf11bd761e8c4b08a3ef4e1e25899b489a3f87de448ceb2032a135590614729"
+    },
+    {
+      "file": "components/crops/ProductionGuideCard.tsx",
+      "sha256": "9f25274cda8abc0ef6db15e7b52f2fe288a003c1bc8d2132fa2e0a51c0405d4b"
+    }
+  ],
+  "cases": [
+    {
+      "id": "age-musa-acuminata-aaa-group-recorded",
+      "kind": "Age"
+    },
+    {
+      "id": "age-prunus-avium-overassigned",
+      "kind": "Age"
+    },
+    {
+      "id": "age-pyrus-communis-empty",
+      "kind": "Age"
+    },
+    {
+      "id": "seasons-four-identities",
+      "kind": "Seasons"
+    },
+    {
+      "id": "seasons-private",
+      "kind": "Seasons"
+    },
+    {
+      "id": "guide-trees-coast",
+      "kind": "Guide"
+    },
+    {
+      "id": "seasons-proposed",
+      "kind": "Seasons"
+    },
+    {
+      "id": "guide-frost-disabled",
+      "kind": "Guide"
+    },
+    {
+      "id": "guide-unselected-disabled",
+      "kind": "Guide"
+    },
+    {
+      "id": "guide-calendar-reference",
+      "kind": "Guide"
+    }
+  ],
+  "scope": "Actual three components with real React, Lucide, i18n-context provider and unchanged helper function bodies. i18n provider/account boundary replaced with isolated context; default dictionary empty. Synthetic in-memory parent only; no backend, storage, account, production route or fluent approval."
+}
