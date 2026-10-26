@@ -13,3 +13,7 @@ Parent:75e6e7033e621599443909240ca8e4553968888c (published draft PR1120). Origin
 212 affected tests/18files pass after Node24 typecheck; whitespace checks clean. New marker regression initially selected supplementary notes instead of the actual first-crop note; corrected source selector,all assertions preserved. Historical failures are not counted as final passes. No production build attempted.
 
 [Runtime evidence and exact limits](../../translation/four-language-completion/evidence/source-references/runtime/README.md). Required full ordered frozen-input run,finished branch push,stacked draftPR,issue35 delivery and exact-head CI remain pending. This changes the picture through translated text/wrapping;PLAN_VERSION unchanged. No paid call,real-record writes,merge or deployment.
+
+## Verified local delivery continuation
+
+Ordered frozen run d430d509f38e passed:tsc0,5,888pass0fail1existing shape-sync TODO/5,889total576files,diff0. All1,819inputs and116runtime hashes exact. [Delivery proof](../../translation/four-language-completion/evidence/source-references/DELIVERY.md) supersedes pending-full-suite statements above. CI,current-main/full-account integration,remaining UI/media and fluent/agricultural review remain open.
