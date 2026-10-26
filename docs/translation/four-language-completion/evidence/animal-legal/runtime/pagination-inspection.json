@@ -1,0 +1,112 @@
+{
+  "scope": "Every current legal catalogue-field occurrence plus all inherited care/reference field occurrences printed by the guide builder, each whole on one actual page. Counts are bindings, including repeated clauses across enterprises; older176care checks counted unique clauses within review groups, not every binding. Card-only notes remain excluded exactly as in the source builder.",
+  "completeLegalFieldsOnSinglePages": 292,
+  "completeCareFieldsOnSinglePages": 224,
+  "completeReferenceFieldsOnSinglePages": 140,
+  "rows": [
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "legalFieldsOnSinglePages": 39,
+      "careFieldsOnSinglePages": 30,
+      "referenceFieldsOnSinglePages": 20
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "legalFieldsOnSinglePages": 34,
+      "careFieldsOnSinglePages": 26,
+      "referenceFieldsOnSinglePages": 15
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "legalFieldsOnSinglePages": 39,
+      "careFieldsOnSinglePages": 30,
+      "referenceFieldsOnSinglePages": 20
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "legalFieldsOnSinglePages": 34,
+      "careFieldsOnSinglePages": 26,
+      "referenceFieldsOnSinglePages": 15
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "legalFieldsOnSinglePages": 39,
+      "careFieldsOnSinglePages": 30,
+      "referenceFieldsOnSinglePages": 20
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "legalFieldsOnSinglePages": 34,
+      "careFieldsOnSinglePages": 26,
+      "referenceFieldsOnSinglePages": 15
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "legalFieldsOnSinglePages": 39,
+      "careFieldsOnSinglePages": 30,
+      "referenceFieldsOnSinglePages": 20
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "legalFieldsOnSinglePages": 34,
+      "careFieldsOnSinglePages": 26,
+      "referenceFieldsOnSinglePages": 15
+    }
+  ],
+  "priorityPages": [
+    {
+      "language": "zu",
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "label": "fish-category",
+      "page": 16
+    },
+    {
+      "language": "zu",
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "label": "wool-historical",
+      "page": 14
+    },
+    {
+      "language": "st",
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "label": "fish-category",
+      "page": 16
+    },
+    {
+      "language": "st",
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "label": "wool-historical",
+      "page": 14
+    },
+    {
+      "language": "ts",
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "label": "fish-category",
+      "page": 16
+    },
+    {
+      "language": "ts",
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "label": "fish-complete-permit",
+      "page": 17
+    },
+    {
+      "language": "ts",
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "label": "wool-historical",
+      "page": 14
+    },
+    {
+      "language": "ve",
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "label": "fish-category",
+      "page": 16
+    },
+    {
+      "language": "ve",
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "label": "wool-historical",
+      "page": 14
+    }
+  ]
+}

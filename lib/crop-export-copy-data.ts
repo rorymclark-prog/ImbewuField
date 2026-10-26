@@ -10386,5 +10386,411 @@ export const CROP_EXPORT_COPY = [
     "st": "Moedi wa makgulo a batlang a omme/a maholo (4-5 kg greasy wool/sheep/year) o sebediswa e le palo e ka sehloohong; palo ya 8 kg/year polelong e tshwanang ke ya mokgwa o fapaneng (dinku tse fulang makgulong a LENGWENG) mme e tlohetswe ka boomo moeding ho ena le ho kenngwa karolelanong. Tekanyetso e fapaneng ya kgwebo ya Dohne Merino Extensive ya Western Cape Government (Elsenburg) (Ceres-Karoo, 2024) e tlaleha ka thoko boya bohle ba mohlape bo rekisitsweng ba 4439.64 kg ho tswa mohlapeng wa '1 519' Smallstock Units, ke hore 4439.64/1519 = 2.92 kg per Smallstock Unit/year - ha e sebediswe e le palo e ka sehloohong hobane mohlodi ha o bolele hore 1 Smallstock Unit = 1 nku (SSU ke boima bo lekantsweng ba sehlopha sa diphoofolo, eseng palo ya nnete ya dihlooho), kahoo ho fetolela ho kg/sheep ho ka hloka ntlha ya phetoho e sa bolelwang. Pampiri e nngwe ya NWGA/Mandela Initiative ka Eastern Cape communal Wool Sheep Development Program e tlaleha teko ya bana ya Grootfontein ADI ya 'Greasy fleece weight (kg) 2.8 [dipheleu tsa kgwebo] 2.4 [dipheleu tsa kopanelo]' bakeng sa mehlape ya kopanelo ya Eastern Cape - ha e kopantswe le palo e ka sehloohong hobane tafole eo e bolela ka ho hlaka 'dikonyana tsa dikgwedi tse 6' (mohato wa bophelo o fapaneng le boya bohle ba selemo ba nku e hodileng), ho tsamaellana le molao wa ho se kopanye dipalo tsa mekgahlelo e fapaneng ya bophelo; e bolokilwe mona feela e le moelelo wa kopanelo wa EC: dikonyana tsa dipheleu tsa kgwebo tsa dikgwedi tse 6 di ne di na le karolelano ya 2.8 kg, tsa dipheleu tsa kopanelo 2.4 kg, phapang ya +16%.",
     "ts": "Mpimo wa madyelo lama omeke hi xiphemu/lama anameke (4-5 kg greasy wool/sheep/year) wu tirhisiwa wu ri nhlayo leyikulu; nhlayo ya 8 kg/year ya xivulwa xin'we i ya mafambiselo man'wana (tinyimpfu leti dyaka madyelo lama RIMIWEKE) naswona yi susiwa hi vomu eka mpimo ematshan'wini yo hlanganisiwa eka avhareji. Mpimanyeto wun'wana wa bindzu wa Dohne Merino Extensive wa Western Cape Government (Elsenburg) (Ceres-Karoo, 2024) wu vika hi ku hambana voya hinkwabyo bya ntlhambi byi xavisiweke bya 4439.64 kg ku suka eka ntlhambi wa '1 519' Smallstock Units, hi leswaku 4439.64/1519 = 2.92 kg per Smallstock Unit/year - a swi tirhisiwi swi ri nhlayo leyikulu hikuva xihlovo a xi vuli leswaku 1 Smallstock Unit = 1 nyimpfu (SSU i ntikelo lowu ringanisiweke wa ntlawa wa swifuwo, ku nga ri nhlayo ya xiviri ya tinhloko), hikokwalaho ku hundzurulela eka kg/sheep swi ta lava mpimo wo hundzula lowu nga boxiwangiki. Phepha rin'wana ra NWGA/Mandela Initiative ra Eastern Cape communal Wool Sheep Development Program ri vika ndzavisiso wa vana wa Grootfontein ADI wa 'Greasy fleece weight (kg) 2.8 [makhuna ya mabindzu] 2.4 [makhuna ya vaaki]' eka mintlhambi ya vaaki ya Eastern Cape - a swi hlanganisiwi ni nhlayo leyikulu hikuva tafula rero ri vula hi ku kongoma 'swinyimpfana swa tin'hweti ta 6' (xiyimo xa ku hanya lexi hambaneke ni voya hinkwabyo bya lembe bya nyimpfu leyi kuleke), swi fambelanaka ni nawu wo ka ku nga hlanganisiwi tinhlayo ta swiyimo swo hambana swa ku hanya; swi hlayisiwa laha ntsena swi ri mongo wa vaaki wa EC: swinyimpfana leswi tswariweke hi makhuna ya mabindzu eka tin'hweti ta 6 a swi ri ni avhareji ya 2.8 kg, leswi tswariweke hi makhuna ya vaaki 2.4 kg, ku hambana ka +16%.",
     "ve": "Mikhano ya mafulo o omaho zwiṱuku/mahulwane (4-5 kg greasy wool/sheep/year) i shumiswa sa mbalo khulwane; mbalo ya 8 kg/year ya fhungo ḽithihi ndi ya maitele o fhambanaho (nngu dzi fulaho mafulo O ṰAVHIWAHO) nahone yo litshwa nga khole kha mikhano nṱhani ha u ṱanganyiswa kha avhareji. Iṅwe mugaganyagwama wa bindu wa Dohne Merino Extensive wa Western Cape Government (Elsenburg) (Ceres-Karoo, 2024) i vhiga nga thungo vhukuse hoṱhe ha muṱambi ho rengiswaho ha 4439.64 kg hu bvaho kha muṱambi wa '1 519' Smallstock Units, zwine zwa amba 4439.64/1519 = 2.92 kg per Smallstock Unit/year - a zwi shumiswi sa mbalo khulwane ngauri tshiko a tshi buli uri 1 Smallstock Unit = 1 nngu (SSU ndi tshileme tsho linganyiswaho tsha tshigwada tsha zwipuka, hu si tshivhalo tsha vhukuma tsha ṱhoho), ngauralo u shandukisela kha kg/sheep zwi ḓo ṱoḓa tshikalo tsha u shandukisa tshi songo bulwaho. Ḽiṅwe bammbiri ḽa NWGA/Mandela Initiative ḽa Eastern Cape communal Wool Sheep Development Program ḽi vhiga mulingo wa vhana wa Grootfontein ADI wa 'Greasy fleece weight (kg) 2.8 [khonḓo dza mabindu] 2.4 [khonḓo dza tshitshavha]' kha miṱambi ya tshitshavha ya Eastern Cape - a zwi ṱanganyiswi na mbalo khulwane ngauri thebuḽa iḽo ḽi bula nga ho livhaho 'zwingwana zwa miṅwedzi ya 6' (ḽiga ḽa vhutshilo ḽo fhambanaho na vhukuse hoṱhe ha ṅwaha ha nngu yo aluwaho), zwi anḓanaho na mulayo wa u sa ṱanganyisa mbalo dza zwiga zwa vhutshilo zwo fhambanaho; zwi vhulungwa afha fhedzi sa mafhungo a tshitshavha a EC: zwingwana zwo bebwaho nga khonḓo dza mabindu kha miṅwedzi ya 6 zwo vha na avhareji ya 2.8 kg, zwo bebwaho nga khonḓo dza tshitshavha 2.4 kg, phambano ya +16%."
+  },
+  {
+    "english": "Register with the Department before beekeeping. Registration lasts 24 months from registration or renewal and must be renewed when it expires.",
+    "zu": "Bhalisa noMnyango ngaphambi kokufuya izinyosi. Ukubhaliswa kuhlala izinyanga ezingu-24 kusukela ekubhaliseni noma ekuvuseleleni futhi kufanele kuvuselelwe lapho kuphelelwa isikhathi.",
+    "st": "Ingolise Lefapheng pele o rua dinotshi. Ngodiso e nka dikgwedi tse 24 ho tloha ha o ingodisa kapa o e ntjhafatsa mme e tlameha ho ntjhafatswa ha e fela.",
+    "ts": "Tsarisela eka Ndzawulo u nga si sungula ku fuwa tinyoxi. Ntsariso wu tirha tin'hweti ta 24 ku sukela loko wu tsarisiwa kumbe wu pfuxetiwa naswona wu fanele ku pfuxetiwa loko wu hela.",
+    "ve": "Ḓiṅwaliseni kha Muhasho musi ni sa athu fuwa ṋotshi. Vhuḓiṅwalisi vhu shuma miṅwedzi ya 24 u bva musi hu tshi ṅwaliswa kana hu tshi vusuludzwa nahone vhu tea u vusuludzwa musi vhu tshi fhela."
+  },
+  {
+    "english": "A beekeeper who fails to renew registration at expiry will be deregistered and face penalties under the Act.",
+    "zu": "Umfuyi wezinyosi ongavuseleli ukubhaliswa lapho kuphelelwa isikhathi uzosuswa ohlwini lwababhalisiwe futhi abhekane nezijeziso ngaphansi koMthetho.",
+    "st": "Morui wa dinotshi ya sa ntjhafatseng ngodiso ha e fela o tla hlakolwa ngodisong mme a tobane le dikotlo tlasa Molao.",
+    "ts": "Mufuwi wa tinyoxi loyi a nga pfuxetiki ntsariso loko wu hela u ta susiwa eka ntsariso naswona a langutana ni swigwevo ehansi ka Nawu.",
+    "ve": "Mufuwi wa ṋotshi a sa vusuludzi vhuḓiṅwalisi musi vhu tshi fhela u ḓo bviswa kha vho ṅwaliswaho nahone a livhana na zwigwevho nga fhasi ha Mulayo."
+  },
+  {
+    "english": "Beekeeping activities and hired beekeeping services require a valid registration certificate. Check the certificate before using a beekeeper.",
+    "zu": "Imisebenzi yokufuya izinyosi nezinsizakalo zokufuya izinyosi eziqashwayo zidinga isitifiketi sokubhaliswa esisebenzayo. Hlola isitifiketi ngaphambi kokusebenzisa umfuyi wezinyosi.",
+    "st": "Mesebetsi ya ho rua dinotshi le ditshebeletso tsa morui wa dinotshi ya hirwang di hloka setifikeiti sa ngodiso se sebetsang. Hlahloba setifikeiti pele o sebedisa morui wa dinotshi.",
+    "ts": "Mintirho yo fuwa tinyoxi ni vukorhokeri byo fuwa tinyoxi byo hirhiwa swi lava xitifikheti xa ntsariso lexi tirhaka. Kambela xitifikheti u nga si tirhisa mufuwi wa tinyoxi.",
+    "ve": "Mishumo ya u fuwa ṋotshi na tshumelo dza u fuwa ṋotshi dzi badelwaho zwi ṱoḓa ṱhanziela ya vhuḓiṅwalisi i shumaho. Ṱolani ṱhanziela musi ni sa athu shumisa mufuwi wa ṋotshi."
+  },
+  {
+    "english": "Every beehive must be clearly and legibly marked with the beekeeper's registration number.",
+    "zu": "Isidleke ngasinye sezinyosi kufanele simakwe ngenombolo yokubhaliswa komfuyi wezinyosi ngendlela ecacile nefundekayo.",
+    "st": "Mokoko o mong le o mong wa dinotshi o tlameha ho tshwauwa ka nomoro ya ngodiso ya morui wa dinotshi ka ho hlaka le ka tsela e balehang.",
+    "ts": "Xisaka xin'wana ni xin'wana xa tinyoxi xi fanele ku funghiwa hi nomboro ya ntsariso ya mufuwi wa tinyoxi hi ndlela leyi vonakaka kahle ni ku hlayeka.",
+    "ve": "Ḓulu ḽiṅwe na ḽiṅwe ḽa ṋotshi ḽi tea u swaiwa nga nomboro ya vhuḓiṅwalisi ya mufuwi wa ṋotshi nga nḓila i vhonalaho zwavhuḓi nahone i vhaleaho."
+  },
+  {
+    "english": "Keep written records of colonies, apiary locations, diseases, disease-control measures and colony losses with their reasons.",
+    "zu": "Gcina amarekhodi abhaliwe emihlambi yezinyosi, ezindawo zezidleke, ezifo, ezinyathelo zokulawula izifo nezokulahleka kwemihlambi nezizathu zako.",
+    "st": "Boloka direkoto tse ngotsweng tsa dihlopha tsa dinotshi, dibaka tsa mekoko, mafu, mehato ya taolo ya mafu le dihlopha tsa dinotshi tse lahlehileng hammoho le mabaka.",
+    "ts": "Hlayisa tirhekhodo leti tsariweke ta mintlawa ya tinyoxi, tindhawu ta swisaka, mavabyi, magoza yo lawula mavabyi ni ku lahlekeriwa hi mintlawa ya tinyoxi ni swivangelo swa kona.",
+    "ve": "Vhulungani rekhodo dzo ṅwalwaho dza zwigwada zwa ṋotshi, fhethu ha maḓulu, malwadze, maga a u langa malwadze na u xelelwa nga zwigwada zwa ṋotshi khathihi na zwiitisi zwazwo."
+  },
+  {
+    "english": "Do not move honeybees across the Cape bee line, or keep Cape bees north of it, without written approval.",
+    "zu": "Ungadlulisi izinyosi ngaphesheya komugqa wezinyosi zaseKapa, noma ugcine izinyosi zaseKapa enyakatho yawo, ngaphandle kwemvume ebhaliwe.",
+    "st": "O se ke wa tsamaisa dinotshi ho tshela moedi wa dinotshi tsa Kapa, kapa wa boloka dinotshi tsa Kapa ka leboya ho wona, ntle le tumello e ngotsweng.",
+    "ts": "U nga fambisi tinyoxi u tsemakanya ndzilakana wa tinyoxi ta Kapa, kumbe u hlayisa tinyoxi ta Kapa en'walungwini wa wona, handle ka mpfumelelo lowu tsariweke.",
+    "ve": "Ni songo pfukisa ṋotshi mutalo wa ṋotshi dza Kapa, kana na vhulunga ṋotshi dza Kapa devhula ha mutalo wonoyo, hu si na thendelo yo ṅwalwaho."
+  },
+  {
+    "english": "Report any suspected notifiable disease (American foulbrood is listed); officials can order an infected colony destroyed.",
+    "zu": "Bika noma yisiphi isifo okusoleka ukuthi sikhona esidinga ukubikwa (i-American foulbrood isohlwini); izikhulu zingayala ukuba umhlambi wezinyosi onegciwane ubhujiswe.",
+    "st": "Tlaleha lefu lefe kapa lefe le belaellwang le lokelang ho tlalehwa (American foulbrood e lenaneng); bahlanka ba ka laela hore sehlopha sa dinotshi se tshwaeditsweng se fediswe.",
+    "ts": "Vika vuvabyi byihi kumbe byihi byo ehleketeleriwa ku va kona leri faneleke ku vikiwa (American foulbrood yi xaxametiwile); vatirhela-mfumo va nga lerisa leswaku ntlawa wa tinyoxi lowu tluleriweke wu lovisiwa.",
+    "ve": "Vhigani vhulwadze vhuṅwe na vhuṅwe vhu humbulelwaho vhune ha tea u vhigwa (American foulbrood i kha mutevhe); vhaofisiri vha nga laedza uri tshigwada tsha ṋotshi tsho kavhiwaho tshi fheliswe."
+  },
+  {
+    "english": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: state Veterinary Services enforce isolation and movement restrictions.",
+    "zu": "Isifo samatele (FMD) siyisifo sezilwane esilawulwayo ngaphansi kwe-Animal Diseases Act: abezinsizakalo zikahulumeni zokwelapha izilwane baphoqelela ukuhlukaniswa nezithiyo zokuthutha.",
+    "st": "Lefu la tlhako le molomo (FMD) ke lefu la diphoofolo le laolwang tlasa Animal Diseases Act: ditshebeletso tsa mmuso tsa bongaka ba diphoofolo di qobella karohano le dithibelo tsa motsamao.",
+    "ts": "Vuvabyi bya nomu ni swondzo (FMD) i vuvabyi bya swiharhi leri lawuriwaka ehansi ka Animal Diseases Act: Vukorhokeri bya Mfumo bya Vutshunguri bya Swiharhi byi sindzisa ku hambanisa ni swipimelo swa ku fambisa.",
+    "ve": "Vhulwadze ha milenzhe na mulomo (FMD) ndi vhulwadze ha zwifuwo vhu langiwaho nga fhasi ha Animal Diseases Act: Tshumelo dza Muvhuso dza Vhulafhi ha Zwifuwo dzi kombetshedza u khethekanya na thivhelo dza u tshimbidza."
+  },
+  {
+    "english": "Every cattle owner must register an official identification mark and brand or mark their cattle with it, under the Animal Identification Act.",
+    "zu": "Wonke umnikazi wezinkomo kufanele abhalise uphawu olusemthethweni lokuhlonza bese eshisa noma emaka izinkomo zakhe ngalo, ngaphansi kwe-Animal Identification Act.",
+    "st": "Mong le e mong wa dikgomo o tlameha ho ngodisa letshwao la semmuso la boitsebahatso mme a tjhese kapa a tshwaye dikgomo tsa hae ka lona, tlasa Animal Identification Act.",
+    "ts": "N'wini un'wana ni un'wana wa tihomu u fanele ku tsarisa mfungho wa ximfumo wo ti tivekisa kutani a hisa kumbe a fungha tihomu ta yena ha wona, ehansi ka Animal Identification Act.",
+    "ve": "Muṋe muṅwe na muṅwe wa kholomo u tea u ṅwalisa luswayo lwa tshiofisi lwa u dzi ṱalula na u fhisa kana u swaya kholomo dzawe ngalwo, nga fhasi ha Animal Identification Act."
+  },
+  {
+    "english": "Any suspected or confirmed brucellosis-related abortion in cattle must be reported to the State Veterinary office, as part of the national bovine brucellosis control scheme under the Animal Diseases Act.",
+    "zu": "Noma yikuphi ukuphunza kwezinkomo okusoleka noma okuqinisekisiwe ukuthi kuhlobene ne-brucellosis kufanele kubikwe ehhovisi likaDokotela Wezilwane Kahulumeni, njengengxenye yohlelo lukazwelonke lokulawula i-brucellosis yezinkomo ngaphansi kwe-Animal Diseases Act.",
+    "st": "Ho ntsha mpa ha dikgomo ho belaellwang kapa ho netefaditsweng hore ho amana le brucellosis ho tlameha ho tlalehwa ofising ya Ngaka ya Diphoofolo ya Mmuso, e le karolo ya leano la naha la taolo ya brucellosis ya dikgomo tlasa Animal Diseases Act.",
+    "ts": "Ku onhaka ka khwiri eka tihomu loku ehleketeleriweke kumbe ku tiyisisiweke leswaku ku fambisana na brucellosis ku fanele ku vikiwa ehofisini ya Dokodela wa Swiharhi wa Mfumo, ku ri xiphemu xa xikimi xa rixaka xo lawula brucellosis ya tihomu ehansi ka Animal Diseases Act.",
+    "ve": "U redza ha kholomo hu humbulelwaho kana ho khwaṱhisedzwaho uri hu tshimbidzana na brucellosis hu tea u vhigwa ofisini ya Dokotela wa Zwifuwo wa Muvhuso, sa tshipiḓa tsha tshikimu tsha lushaka tsha u langa brucellosis ya kholomo nga fhasi ha Animal Diseases Act."
+  },
+  {
+    "english": "No animal may be slaughtered anywhere but a registered abattoir, with the exception below.",
+    "zu": "Asikho isilwane esingahlatshwa kwenye indawo ngaphandle kwendawo yokuhlabela ebhalisiwe, ngaphandle kwalokhu okuchazwe ngezansi.",
+    "st": "Ha ho phoofolo e ka hlajwang sebakeng se seng ntle le sehlabelo se ngodisitsweng, ntle le mokgelo o ka tlase.",
+    "ts": "A ku na xifuwo lexi nga tlhaviwaka kun'wana handle ka laha ku tlhaveriwaka kona loku tsarisiweke, handle ka xiyimo lexi nga laha hansi.",
+    "ve": "A hu na tshifuwo tshi no tendelwa u ṱhavhiwa huṅwe hu si fhethu ha u ṱhavhela zwifuwo ho ṅwaliswaho, nga nnḓa ha zwi re afho fhasi."
+  },
+  {
+    "english": "Slaughter for the farmer's own household consumption, or for cultural or religious purposes, is exempt from the abattoir rule.",
+    "zu": "Ukuhlaba ukuze kudle umndeni womfuyi uqobo, noma ngezinjongo zamasiko noma zenkolo, akuboshwa umthetho wokusebenzisa indawo yokuhlabela.",
+    "st": "Ho hlaba bakeng sa dijo tsa lelapa la morui ka bolona, kapa bakeng sa merero ya setso kapa ya bodumedi, ho lokollotswe molaong wa sehlabelo.",
+    "ts": "Ku tlhava leswaku ku dya ndyangu wa murimi hi woxe, kumbe hi swikongomelo swa ndhavuko kumbe vukhongeri, a swi boheki hi nawu wa laha ku tlhaveriwaka kona.",
+    "ve": "U ṱhavhela zwiḽiwa zwa muṱa wa mulimi nga woṱhe, kana ndivho dza mvelele kana vhurereli, a zwi vhofhiwi nga mulayo wa fhethu ha u ṱhavhela zwifuwo."
+  },
+  {
+    "english": "Dairy farmers are legally required to test their herds for bovine TB, mainly because of export requirements, so most dairy cattle in South Africa are tested.",
+    "zu": "Abafuyi bezinkomo zobisi baphoqwa ngumthetho ukuba bahlolele imihlambi yabo i-TB yezinkomo, ikakhulu ngenxa yezidingo zokuthumela imikhiqizo emazweni angaphandle, ngakho izinkomo eziningi zobisi eNingizimu Afrika ziyahlolwa.",
+    "st": "Barui ba dikgomo tsa lebese ba tlamehile ka molao ho hlahloba mehlape ya bona bakeng sa TB ya dikgomo, haholo ka lebaka la ditlhoko tsa diyantle, kahoo dikgomo tse ngata tsa lebese Afrika Borwa di a hlahlojwa.",
+    "ts": "Vafuwi va tihomu ta masi va boheka hi nawu ku kambela mintlhambi ya vona TB ya tihomu, ngopfungopfu hikokwalaho ka swilaveko swo rhumela ematikweni mambe, kutani tihomu to tala ta masi eAfrika-Dzonga ta kamberiwa.",
+    "ve": "Vhafuwi vha kholomo dza mafhi vha vhofhiwa nga mulayo u ṱola masambi avho TB ya kholomo, nga maanḓa nga ṅwambo wa ṱhoḓea dza u rengisela kha maṅwe mashango, ngauralo kholomo nnzhi dza mafhi Afrika Tshipembe dzi a ṱolwa."
+  },
+  {
+    "english": "Any suspected or confirmed brucellosis-related abortion in cattle must be reported to the State Veterinary office, under the national bovine brucellosis control scheme.",
+    "zu": "Noma yikuphi ukuphunza kwezinkomo okusoleka noma okuqinisekisiwe ukuthi kuhlobene ne-brucellosis kufanele kubikwe ehhovisi likaDokotela Wezilwane Kahulumeni, ngaphansi kohlelo lukazwelonke lokulawula i-brucellosis yezinkomo.",
+    "st": "Ho ntsha mpa ha dikgomo ho belaellwang kapa ho netefaditsweng hore ho amana le brucellosis ho tlameha ho tlalehwa ofising ya Ngaka ya Diphoofolo ya Mmuso, tlasa leano la naha la taolo ya brucellosis ya dikgomo.",
+    "ts": "Ku onhaka ka khwiri eka tihomu loku ehleketeleriweke kumbe ku tiyisisiweke leswaku ku fambisana na brucellosis ku fanele ku vikiwa ehofisini ya Dokodela wa Swiharhi wa Mfumo, ehansi ka xikimi xa rixaka xo lawula brucellosis ya tihomu.",
+    "ve": "U redza ha kholomo hu humbulelwaho kana ho khwaṱhisedzwaho uri hu tshimbidzana na brucellosis hu tea u vhigwa ofisini ya Dokotela wa Zwifuwo wa Muvhuso, nga fhasi ha tshikimu tsha lushaka tsha u langa brucellosis ya kholomo."
+  },
+  {
+    "english": "A cull cow may be slaughtered only at an abattoir, except for the farmer's own consumption or for cultural or religious purposes.",
+    "zu": "Inkomo esuswa emhlambini ingahlatshwa kuphela endaweni yokuhlabela, ngaphandle uma kungokokudla komfuyi uqobo noma ngezinjongo zamasiko noma zenkolo.",
+    "st": "Kgomo e tloswang mohlapeng e ka hlajwa feela sehlabelong, ntle le bakeng sa dijo tsa morui ka boyena kapa merero ya setso kapa ya bodumedi.",
+    "ts": "Homu leyi susiwaka entlhambini yi nga tlhaviwa ntsena laha ku tlhaveriwaka kona, handle ka loko ku ri swakudya swa murimi hi yexe kumbe hi swikongomelo swa ndhavuko kumbe vukhongeri.",
+    "ve": "Kholomo i bviswaho kha sambi i nga ṱhavhiwa fhedzi fhethu ha u ṱhavhela zwifuwo, nga nnḓa ha zwiḽiwa zwa mulimi nga ene muṋe kana ndivho dza mvelele kana vhurereli."
+  },
+  {
+    "english": "An owner or manager whose animals are, or may be, infected with a controlled animal disease must report it to the state veterinary director immediately.",
+    "zu": "Umnikazi noma umphathi onezilwane ezinesifo sezilwane esilawulwayo, noma okungenzeka zibe naso, kufanele akubike masinyane kumqondisi kahulumeni wezokwelapha izilwane.",
+    "st": "Mong kapa mookamedi eo diphoofolo tsa hae di tshwaeditsweng, kapa di ka bang di tshwaeditswe, ke lefu la diphoofolo le laolwang o tlameha ho tlaleha hanghang ho motsamaisi wa mmuso wa bongaka ba diphoofolo.",
+    "ts": "N'wini kumbe mufambisi loyi swifuwo swa yena swi tluleriweke, kumbe swi nga ha vaka swi tluleriwile, hi vuvabyi bya swiharhi leri lawuriwaka u fanele ku swi vika hi ku hatlisa eka mulawuri wa mfumo wa vutshunguri bya swiharhi.",
+    "ve": "Muṋe kana mulanguli ane zwifuwo zwawe zwa vha zwo kavhiwa, kana zwi tshi nga vha zwo kavhiwa, nga vhulwadze ha zwifuwo vhu langiwaho u tea u vhiga zwenezwo nga u ṱavhanya kha mulanguli wa muvhuso wa vhulafhi ha zwifuwo."
+  },
+  {
+    "english": "Newcastle disease and notifiable avian influenza are on the state list of controlled and notifiable animal diseases.",
+    "zu": "Isifo se-Newcastle nomkhuhlane wezinyoni odinga ukubikwa zisohlwini lukahulumeni lwezifo zezilwane ezilawulwayo nezidinga ukubikwa.",
+    "st": "Lefu la Newcastle le mokgohlane wa dinonyana o lokelang ho tlalehwa di lenaneng la mmuso la mafu a diphoofolo a laolwang le a lokelang ho tlalehwa.",
+    "ts": "Vuvabyi bya Newcastle ni fluu ya tinyenyana leyi faneleke ku vikiwa swi le ka nxaxamelo wa mfumo wa mavabyi ya swiharhi lama lawuriwaka ni lama faneleke ku vikiwa.",
+    "ve": "Vhulwadze ha Newcastle na flu ya zwiṋoni ine ya tea u vhigwa zwi kha mutevhe wa muvhuso wa malwadze a zwifuwo a langiwaho na ane a tea u vhigwa."
+  },
+  {
+    "english": "No animal may be slaughtered anywhere but an abattoir, with the exceptions below.",
+    "zu": "Asikho isilwane esingahlatshwa kwenye indawo ngaphandle kwendawo yokuhlabela, ngaphandle kwezimo ezichazwe ngezansi.",
+    "st": "Ha ho phoofolo e ka hlajwang sebakeng se seng ntle le sehlabelo, ntle le mekgelo e ka tlase.",
+    "ts": "A ku na xifuwo lexi nga tlhaviwaka kun'wana handle ka laha ku tlhaveriwaka kona, handle ka swiyimo leswi nga laha hansi.",
+    "ve": "A hu na tshifuwo tshi no tendelwa u ṱhavhiwa huṅwe hu si fhethu ha u ṱhavhela zwifuwo, nga nnḓa ha zwi re afho fhasi."
+  },
+  {
+    "english": "Slaughter for your own household, or for cultural or religious purposes, is exempt from the abattoir rule.",
+    "zu": "Ukuhlaba ukuze kudle umndeni wakho uqobo, noma ngezinjongo zamasiko noma zenkolo, akuboshwa umthetho wokusebenzisa indawo yokuhlabela.",
+    "st": "Ho hlaba bakeng sa lelapa la hao ka bolona, kapa bakeng sa merero ya setso kapa ya bodumedi, ho lokollotswe molaong wa sehlabelo.",
+    "ts": "Ku tlhavela ndyangu wa wena hi woxe, kumbe hi swikongomelo swa ndhavuko kumbe vukhongeri, a swi boheki hi nawu wa laha ku tlhaveriwaka kona.",
+    "ve": "U ṱhavhela muṱa waṋu nga woṱhe, kana ndivho dza mvelele kana vhurereli, a zwi vhofhiwi nga mulayo wa fhethu ha u ṱhavhela zwifuwo."
+  },
+  {
+    "english": "Ducks are one of the domesticated animal species listed in the Meat Safety Act, so its rules on registered abattoirs and hygiene apply to them.",
+    "zu": "Amadada angolunye lwezinhlobo zezilwane ezifuywayo ezisohlwini lwe-Meat Safety Act, ngakho imithetho yawo yezindawo zokuhlabela ezibhalisiwe nenhlanzeko iyasebenza kuwo.",
+    "st": "Matata ke o mong wa mefuta ya diphoofolo tse ruuwang e lenaneng la Meat Safety Act, kahoo melao ya wona ya mahlabelo a ngodisitsweng le bohlweki e a a ama.",
+    "ts": "Masekwa i yin'wana ya tinxaka ta swifuwo leswi fuwwaka leswi xaxametiweke eka Meat Safety Act, kutani milawu ya wona ya tindhawu to tlhavela leti tsarisiweke ni mbhasiso yi tirha eka wona.",
+    "ve": "Masekwa ndi luṅwe lwa tshaka dza zwifuwo zwi fuwiwaho dzi re kha mutevhe wa Meat Safety Act, ngauralo milayo yawo ya fhethu ha u ṱhavhela zwifuwo ho ṅwaliswaho na vhudele i a shuma khazwo."
+  },
+  {
+    "english": "Ducks slaughtered to be sold must be slaughtered at a registered abattoir; slaughter for the farmer's own consumption is exempt but that meat may not be sold.",
+    "zu": "Amadada ahlatshwa ngenhloso yokuthengiswa kufanele ahlatshwe endaweni yokuhlabela ebhalisiwe; ukuhlaba ukuze kudle umfuyi uqobo akuboshwa yilokhu kodwa leyo nyama akufanele ithengiswe.",
+    "st": "Matata a hlajwang ho rekiswa a tlameha ho hlajwa sehlabelong se ngodisitsweng; ho hlaba bakeng sa dijo tsa morui ka boyena ho lokollotswe empa nama eo e ke ke ya rekiswa.",
+    "ts": "Masekwa lama tlhaveriwaka ku xavisiwa ma fanele ku tlhaveriwa laha ku tlhaveriwaka kona loku tsarisiweke; ku tlhavela swakudya swa murimi hi yexe a swi boheki hi leswi kambe nyama ya kona a yi fanelanga ku xavisiwa.",
+    "ve": "Masekwa a ṱhavhelwaho u rengiswa a tea u ṱhavhiwa fhethu ha u ṱhavhela zwifuwo ho ṅwaliswaho; u ṱhavhela zwiḽiwa zwa mulimi nga ene muṋe a zwi vhofhiwi nga zwenezwi fhedzi ṋama yeneyo a i tei u rengiswa."
+  },
+  {
+    "english": "At the abattoir, ducks must be handled humanely during loading, transport, offloading, housing, immobilising and killing, under the Animals Protection Act.",
+    "zu": "Endaweni yokuhlabela, amadada kufanele aphathwe ngobuntu ngesikhathi elayishwa, ethuthwa, ethululwa, ehlaliswa, eboshwa ukuba anganyakazi nalapho ebulawa, ngaphansi kwe-Animals Protection Act.",
+    "st": "Sehlabelong, matata a tlameha ho tshwarwa ka mosa nakong ya ho laelwa, ho tsamaiswa, ho theolwa, ho bolokwa, ho thibelwa ho sisinyeha le ho bolawa, tlasa Animals Protection Act.",
+    "ts": "Laha ku tlhaveriwaka kona, masekwa ma fanele ku khomiwa hi tintswalo loko ma layichiwa, ma fambisiwa, ma chichiwa, ma tshamisiwa, ma siveliwa ku famba ni ku dlayiwa, ehansi ka Animals Protection Act.",
+    "ve": "Fhethu ha u ṱhavhela zwifuwo, masekwa a tea u farwa nga vhulenda musi a tshi laiwa, a tshi tshimbidzwa, a tshi tsitswa, a tshi dzudzwa, a tshi thivhelwa u tshimbila na u vhulawa, nga fhasi ha Animals Protection Act."
+  },
+  {
+    "english": "Ducks are birds/poultry, so an outbreak of avian influenza in a duck flock is a controlled animal disease under the Animal Diseases Act and must be reported to the state vet immediately.",
+    "zu": "Amadada ayizinyoni/izinkukhu ezifuywayo, ngakho ukuqubuka komkhuhlane wezinyoni emhlambini wamadada kuyisifo sezilwane esilawulwayo ngaphansi kwe-Animal Diseases Act futhi kufanele kubikwe masinyane kudokotela wezilwane kahulumeni.",
+    "st": "Matata ke dinonyana/dikgoho tse ruuwang, kahoo ho qhoma ha mokgohlane wa dinonyana mohlapeng wa matata ke lefu la diphoofolo le laolwang tlasa Animal Diseases Act mme le tlameha ho tlalehwa hanghang ho ngaka ya diphoofolo ya mmuso.",
+    "ts": "Masekwa i tinyenyana/tihuku leti fuwwaka, kutani ku hangalaka ka fluu ya tinyenyana entlhambini wa masekwa i vuvabyi bya swiharhi leri lawuriwaka ehansi ka Animal Diseases Act naswona byi fanele ku vikiwa hi ku hatlisa eka dokodela wa swiharhi wa mfumo.",
+    "ve": "Masekwa ndi zwiṋoni/kuku dzi fuwiwaho, ngauralo u phadalala ha flu ya zwiṋoni kha sambi ḽa masekwa ndi vhulwadze ha zwifuwo vhu langiwaho nga fhasi ha Animal Diseases Act nahone vhu tea u vhigwa nga u ṱavhanya kha dokotela wa zwifuwo wa muvhuso."
+  },
+  {
+    "english": "The 2020 NEMBA list excludes the indigenous Mozambique Tilapia (O. mossambicus) from its listed Oreochromis group, which includes Nile Tilapia (O. niloticus). This listing distinction alone does not establish permission for every farming activity or site.",
+    "zu": "Uhlu lwe-NEMBA lwango-2020 alufaki i-Mozambique Tilapia yomdabu (O. mossambicus) eqenjini lalo le-Oreochromis elisohlwini, elihlanganisa i-Nile Tilapia (O. niloticus). Lo mehluko wohlu uwodwa awuqinisekisi imvume yawo wonke umsebenzi wokufuya noma indawo.",
+    "st": "Lenane la NEMBA la 2020 le qhelela Mozambique Tilapia ya tlhaho (O. mossambicus) ka thoko ho sehlopha sa lona sa Oreochromis se lenaneng, se kenyeletsang Nile Tilapia (O. niloticus). Phapang ena ya lenane feela ha e netefatse tumello bakeng sa mosebetsi o mong le o mong wa ho rua kapa sebaka.",
+    "ts": "Nxaxamelo wa NEMBA wa 2020 a wu katsi Mozambique Tilapia ya laha kaya (O. mossambicus) eka ntlawa wa wona wa Oreochromis lowu xaxametiweke, lowu katsaka Nile Tilapia (O. niloticus). Ku hambana loku ka nxaxamelo ku ri koxe a ku tiyisisi mpfumelelo wa muxaka wun'wana ni wun'wana wa vufuwi kumbe ndhawu.",
+    "ve": "Mutevhe wa NEMBA wa 2020 a u kateli Mozambique Tilapia ya henefha (O. mossambicus) kha tshigwada tshawo tsha Oreochromis tshi re kha mutevhe, tshi katelaho Nile Tilapia (O. niloticus). Phambano iyi ya mutevhe i yoṱhe a i khwaṱhisedzi thendelo ya mushumo muṅwe na muṅwe wa u fuwa kana fhethu."
+  },
+  {
+    "english": "The 2020 NEMBA list places Nile Tilapia (Oreochromis niloticus) in Category 3, or Category 2 for permitted aquaculture facilities. Confirm the applicable species, facility and permit conditions before stocking.",
+    "zu": "Uhlu lwe-NEMBA lwango-2020 lubeka i-Nile Tilapia (Oreochromis niloticus) kuSigaba 3, noma kuSigaba 2 ezikhungweni zokufuya izilwane zasemanzini ezinemvume. Qinisekisa uhlobo, isikhungo nemigomo yemvume esebenzayo ngaphambi kokufaka izinhlanzi.",
+    "st": "Lenane la NEMBA la 2020 le beha Nile Tilapia (Oreochromis niloticus) Sehlopheng 3, kapa Sehlopheng 2 bakeng sa dibaka tsa temo ya diphoofolo tsa metsing tse nang le tumello. Netefatsa mofuta, sebaka le maemo a tumello a amehang pele o kenya ditlhapi.",
+    "ts": "Nxaxamelo wa NEMBA wa 2020 wu veka Nile Tilapia (Oreochromis niloticus) eka Ntlawa 3, kumbe Ntlawa 2 eka tindhawu to fuwa swiharhi swa le matini leti nga ni mpfumelelo. Tiyisisa muxaka, ndhawu ni swipimelo swa mpfumelelo leswi tirhaka u nga si nghenisa tinhlampfi.",
+    "ve": "Mutevhe wa NEMBA wa 2020 u vhea Nile Tilapia (Oreochromis niloticus) kha Tshigwada 3, kana Tshigwada 2 kha fhethu ha u fuwa zwipuka zwa maḓini hu re na thendelo. Khwaṱhisedzani lushaka, fhethu na nyimele dza thendelo dzi shumaho musi ni sa athu dzhenisa khovhe."
+  },
+  {
+    "english": "In the 2020 NEMBA list, sale and transport of live tilapia are prohibited except from accredited hatcheries. Category 2 for permitted aquaculture facilities is distinct from Category 3; do not treat an existing fish or pond as production permission.",
+    "zu": "Ohlwini lwe-NEMBA lwango-2020, ukuthengiswa nokuthuthwa kwe-tilapia ephilayo kuvinjelwe ngaphandle kwaleyo evela ezikhungweni ezigunyaziwe zokuchamisela. ISigaba 2 sezikhungo zokufuya izilwane zasemanzini ezinemvume sihlukile kuSigaba 3; ungathathi inhlanzi noma ichibi elivele likhona njengemvume yokukhiqiza.",
+    "st": "Lenaneng la NEMBA la 2020, thekiso le tsamaiso ya tilapia e phelang di thibetswe ntle le e tswang dibakeng tse amohetsweng tsa ho qhotsisa. Sehlopha 2 bakeng sa dibaka tsa temo ya diphoofolo tsa metsing tse nang le tumello se fapane le Sehlopha 3; o se ke wa nka tlhapi kapa letamo le seng le le teng e le tumello ya tlhahiso.",
+    "ts": "Eka nxaxamelo wa NEMBA wa 2020, ku xavisa ni ku fambisa tilapia leyi hanyaka swa yirisiwa handle ka leyi humaka eka tindhawu to tlhotlhorhela leti amukeriweke ximfumo. Ntlawa 2 wa tindhawu to fuwa swiharhi swa le matini leti nga ni mpfumelelo wu hambanile na Ntlawa 3; u nga teki nhlampfi kumbe damu leri se ri nga kona ku va mpfumelelo wo humelerisa.",
+    "ve": "Kha mutevhe wa NEMBA wa 2020, u rengisa na u tshimbidza tilapia i tshilaho zwo thivhelwa nga nnḓa ha i bvaho fhethu ha u thothonya ho themendelwaho. Tshigwada 2 tsha fhethu ha u fuwa zwipuka zwa maḓini hu re na thendelo tsho fhambana na Tshigwada 3; ni songo dzhia khovhe kana damu ḽi re hone sa thendelo ya u bveledza."
+  },
+  {
+    "english": "The 2015 IDC report describes Nile Tilapia production as requiring a permit under NEMBA. This is a dated source statement; confirm current permits and their conditions with the responsible authority before production.",
+    "zu": "Umbiko we-IDC wango-2015 uchaza ukukhiqizwa kwe-Nile Tilapia njengokudinga imvume ngaphansi kwe-NEMBA. Lesi isitatimende somthombo waleyo nkathi; qinisekisa izimvume zamanje nemigomo yazo nesiphathimandla esibhekele lokhu ngaphambi kokukhiqiza.",
+    "st": "Tlaleho ya IDC ya 2015 e hlalosa tlhahiso ya Nile Tilapia e le e hlokang tumello tlasa NEMBA. Ena ke polelo ya mohlodi ya nako eo; netefatsa ditumello tsa hajwale le maemo a tsona le bolaodi bo ikarabellang pele ho tlhahiso.",
+    "ts": "Xiviko xa IDC xa 2015 xi hlamusela vuhumelerisi bya Nile Tilapia leswaku byi lava mpfumelelo ehansi ka NEMBA. Lexi i xitatimende xa xihlovo xa nkarhi wolowo; tiyisisa mimpfumelelo ya sweswi ni swipimelo swa yona ni vulawuri bya kona u nga si humelerisa.",
+    "ve": "Muvhigo wa IDC wa 2015 u ṱalusa u bveledza Nile Tilapia sa zwi ṱoḓaho thendelo nga fhasi ha NEMBA. Itshi ndi tshitatamennde tsha tshiko tsha tshifhinga tshenetsho; khwaṱhisedzani thendelo dza zwino na nyimele dzadzo na maanḓalanga a kwameaho musi ni sa athu bveledza."
+  },
+  {
+    "english": "The 2015 IDC report describes protected-area restrictions under the Protected Areas Act and the Fish Sanctuary Act, and a permit requirement elsewhere. This historical summary does not establish current site permission; confirm applicable restrictions with the responsible authority before producing Nile Tilapia.",
+    "zu": "Umbiko we-IDC wango-2015 uchaza imingcele yezindawo ezivikelwe ngaphansi kwe-Protected Areas Act ne-Fish Sanctuary Act, nesidingo semvume kwenye indawo. Lesi sifinyezo saleyo nkathi asiqinisekisi imvume yamanje yendawo; qinisekisa imingcele esebenzayo nesiphathimandla esibhekele lokhu ngaphambi kokukhiqiza i-Nile Tilapia.",
+    "st": "Tlaleho ya IDC ya 2015 e hlalosa dithibelo tsa dibaka tse sireleditsweng tlasa Protected Areas Act le Fish Sanctuary Act, le tlhoko ya tumello sebakeng se seng. Kakaretso ena ya nako e fetileng ha e netefatse tumello ya hajwale ya sebaka; netefatsa dithibelo tse amehang le bolaodi bo ikarabellang pele o hlahisa Nile Tilapia.",
+    "ts": "Xiviko xa IDC xa 2015 xi hlamusela swipimelo swa tindhawu leti sirhelelekeke ehansi ka Protected Areas Act na Fish Sanctuary Act, ni xilaveko xa mpfumelelo kun'wana. Nkatsakanyo lowu wa khale a wu tiyisisi mpfumelelo wa sweswi wa ndhawu; tiyisisa swipimelo leswi tirhaka ni vulawuri bya kona u nga si humelerisa Nile Tilapia.",
+    "ve": "Muvhigo wa IDC wa 2015 u ṱalusa thivhelo dza fhethu ho tsireledzwaho nga fhasi ha Protected Areas Act na Fish Sanctuary Act, na ṱhoḓea ya thendelo huṅwe. Manweledzo aya a tshifhinga tsho fhiraho ha khwaṱhisedzi thendelo ya zwino ya fhethu; khwaṱhisedzani thivhelo dzi shumaho na maanḓalanga a kwameaho musi ni sa athu bveledza Nile Tilapia."
+  },
+  {
+    "english": "The 2015 IDC report states that producing tilapia requires a water use licence under the National Water Act. Current water authorisation for a particular site is not established here; confirm requirements with the responsible water authority before production.",
+    "zu": "Umbiko we-IDC wango-2015 uthi ukukhiqiza i-tilapia kudinga ilayisensi yokusebenzisa amanzi ngaphansi kwe-National Water Act. Imvume yamanje yamanzi yendawo ethile ayiqinisekisiwe lapha; qinisekisa izidingo nesiphathimandla samanzi esibhekele lokhu ngaphambi kokukhiqiza.",
+    "st": "Tlaleho ya IDC ya 2015 e re ho hlahisa tilapia ho hloka laesense ya tshebediso ya metsi tlasa National Water Act. Tumello ya hajwale ya metsi bakeng sa sebaka se itseng ha e a netefatswa mona; netefatsa ditlhoko le bolaodi ba metsi bo ikarabellang pele ho tlhahiso.",
+    "ts": "Xiviko xa IDC xa 2015 xi vula leswaku ku humelerisa tilapia swi lava layisense yo tirhisa mati ehansi ka National Water Act. Mpfumelelo wa sweswi wa mati wa ndhawu yo karhi a wu tiyisisiwanga laha; tiyisisa swilaveko ni vulawuri bya mati bya kona u nga si humelerisa.",
+    "ve": "Muvhigo wa IDC wa 2015 u amba uri u bveledza tilapia zwi ṱoḓa ḽaisentsi ya u shumisa maḓi nga fhasi ha National Water Act. Thendelo ya zwino ya maḓi ya fhethu ho khetheaho a yo ngo khwaṱhisedzwa afha; khwaṱhisedzani ṱhoḓea na maanḓalanga a maḓi a kwameaho musi ni sa athu bveledza."
+  },
+  {
+    "english": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: veterinary services enforce isolation and movement restrictions, and a suspected case must be reported.",
+    "zu": "Isifo samatele (FMD) siyisifo sezilwane esilawulwayo ngaphansi kwe-Animal Diseases Act: abezinsizakalo zokwelapha izilwane baphoqelela ukuhlukaniswa nezithiyo zokuthutha, futhi isigameko okusoleka ukuthi sikhona kufanele sibikwe.",
+    "st": "Lefu la tlhako le molomo (FMD) ke lefu la diphoofolo le laolwang tlasa Animal Diseases Act: ditshebeletso tsa bongaka ba diphoofolo di qobella karohano le dithibelo tsa motsamao, mme ketsahalo e belaellwang e tlameha ho tlalehwa.",
+    "ts": "Vuvabyi bya nomu ni swondzo (FMD) i vuvabyi bya swiharhi leri lawuriwaka ehansi ka Animal Diseases Act: vukorhokeri bya vutshunguri bya swiharhi byi sindzisa ku hambanisa ni swipimelo swa ku fambisa, naswona xiendlakalo lexi ehleketeleriwaka xi fanele ku vikiwa.",
+    "ve": "Vhulwadze ha milenzhe na mulomo (FMD) ndi vhulwadze ha zwifuwo vhu langiwaho nga fhasi ha Animal Diseases Act: tshumelo dza vhulafhi ha zwifuwo dzi kombetshedza u khethekanya na thivhelo dza u tshimbidza, nahone zwi humbulelwaho zwi tea u vhigwa."
+  },
+  {
+    "english": "Inside a declared FMD-affected zone, goats and their products (including milk) cannot be moved into, out of, or within the zone without a state veterinary movement permit and compliance with its conditions.",
+    "zu": "Endaweni emenyezelwe njengethinteke yi-FMD, izimbuzi nemikhiqizo yazo (kuhlanganise nobisi) azikwazi ukuthuthelwa ngaphakathi, ngaphandle, noma ngaphakathi kuleyo ndawo ngaphandle kwemvume yokuthutha kadokotela wezilwane kahulumeni nokulandela imigomo yayo.",
+    "st": "Sebakeng se phatlaladitsweng se amehileng ke FMD, dipodi le dihlahiswa tsa tsona (ho kenyeletswa lebese) di ke ke tsa iswa kahare, kantle, kapa kahare ho sebaka ntle le tumello ya motsamao ya ngaka ya diphoofolo ya mmuso le ho latela maemo a yona.",
+    "ts": "Endhawini leyi tivisiweke leswaku yi khumbekile hi FMD, timbuti ni swikumiwa swa tona (ku katsa masi) a swi nge fambisiwi ku nghena, ku huma, kumbe endzeni ka ndhawu handle ka mpfumelelo wo fambisa wa dokodela wa swiharhi wa mfumo ni ku landzela swipimelo swa wona.",
+    "ve": "Kha dzingu ḽo ḓivhadzwaho uri ḽo kwamiwa nga FMD, mbudzi na zwibveledzwa zwadzo (hu tshi katelwa mafhi) a zwi tei u tshimbidzwa u dzhena, u bva, kana ngomu ha dzingu hu si na thendelo ya u tshimbidza ya dokotela wa zwifuwo wa muvhuso na u tevhedza nyimele dzayo."
+  },
+  {
+    "english": "Every goat owner must register an official identification mark and mark their goats with it, under the Animal Identification Act.",
+    "zu": "Wonke umnikazi wezimbuzi kufanele abhalise uphawu olusemthethweni lokuhlonza bese emaka izimbuzi zakhe ngalo, ngaphansi kwe-Animal Identification Act.",
+    "st": "Mong le e mong wa dipodi o tlameha ho ngodisa letshwao la semmuso la boitsebahatso mme a tshwaye dipodi tsa hae ka lona, tlasa Animal Identification Act.",
+    "ts": "N'wini un'wana ni un'wana wa timbuti u fanele ku tsarisa mfungho wa ximfumo wo ti tivekisa kutani a fungha timbuti ta yena ha wona, ehansi ka Animal Identification Act.",
+    "ve": "Muṋe muṅwe na muṅwe wa mbudzi u tea u ṅwalisa luswayo lwa tshiofisi lwa u dzi ṱalula na u swaya mbudzi dzawe ngalwo, nga fhasi ha Animal Identification Act."
+  },
+  {
+    "english": "A goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act (relevant when culled dairy does or male kids are sold for meat); slaughtering for the farmer's own consumption, or for cultural/religious purposes, is exempt but that meat may not then be sold.",
+    "zu": "Imbuzi ingahlatshwa ngenhloso yokuthengiswa kuphela endaweni yokuhlabela ebhalisiwe ngaphansi kwe-Meat Safety Act (lokhu kubalulekile lapho izinsikazi zobisi ezisuswa emhlambini noma amazinyane esilisa ethengiselwa inyama); ukuhlaba ukuze kudle umfuyi uqobo, noma ngezinjongo zamasiko/zenkolo, akuboshwa yilokhu kodwa leyo nyama akufanele ithengiswe.",
+    "st": "Podi e ka hlajwa ho rekiswa feela sehlabelong se ngodisitsweng tlasa Meat Safety Act (ho amang tse tshehadi tsa lebese tse tloswang mohlapeng kapa madinyane a matona a rekiswang bakeng sa nama); ho hlaba bakeng sa dijo tsa morui ka boyena, kapa merero ya setso/bodumedi, ho lokollotswe empa nama eo e ke ke ya rekiswa.",
+    "ts": "Mbuti yi nga tlhaveriwa ku xavisiwa ntsena laha ku tlhaveriwaka kona loku tsarisiweke ehansi ka Meat Safety Act (leswi khumbaka timbuti ta masi ta xisati leti susiwaka entlhambini kumbe swimbutana swa xinuna leswi xavisiwaka ku va nyama); ku tlhavela swakudya swa murimi hi yexe, kumbe hi swikongomelo swa ndhavuko/vukhongeri, a swi boheki hi leswi kambe nyama ya kona a yi fanelanga ku xavisiwa.",
+    "ve": "Mbudzi i nga ṱhavhelwa u rengiswa fhedzi fhethu ha u ṱhavhela zwifuwo ho ṅwaliswaho nga fhasi ha Meat Safety Act (zwenezwi zwi a kwama tsadzi dza mafhi dzi bviswaho kha sambi kana vhana vha tshiduna vha tshi rengiselwa ṋama); u ṱhavhela zwiḽiwa zwa mulimi nga ene muṋe, kana ndivho dza mvelele/vhurereli, a zwi vhofhiwi nga zwenezwi fhedzi ṋama yeneyo a i tei u rengiswa."
+  },
+  {
+    "english": "Inside a declared FMD-affected zone, goats and their products cannot be moved into, out of, or within the zone without a state veterinary movement permit and compliance with its conditions.",
+    "zu": "Endaweni emenyezelwe njengethinteke yi-FMD, izimbuzi nemikhiqizo yazo azikwazi ukuthuthelwa ngaphakathi, ngaphandle, noma ngaphakathi kuleyo ndawo ngaphandle kwemvume yokuthutha kadokotela wezilwane kahulumeni nokulandela imigomo yayo.",
+    "st": "Sebakeng se phatlaladitsweng se amehileng ke FMD, dipodi le dihlahiswa tsa tsona di ke ke tsa iswa kahare, kantle, kapa kahare ho sebaka ntle le tumello ya motsamao ya ngaka ya diphoofolo ya mmuso le ho latela maemo a yona.",
+    "ts": "Endhawini leyi tivisiweke leswaku yi khumbekile hi FMD, timbuti ni swikumiwa swa tona a swi nge fambisiwi ku nghena, ku huma, kumbe endzeni ka ndhawu handle ka mpfumelelo wo fambisa wa dokodela wa swiharhi wa mfumo ni ku landzela swipimelo swa wona.",
+    "ve": "Kha dzingu ḽo ḓivhadzwaho uri ḽo kwamiwa nga FMD, mbudzi na zwibveledzwa zwadzo a zwi tei u tshimbidzwa u dzhena, u bva, kana ngomu ha dzingu hu si na thendelo ya u tshimbidza ya dokotela wa zwifuwo wa muvhuso na u tevhedza nyimele dzayo."
+  },
+  {
+    "english": "Every goat owner, including communal/smallholder owners, must register an official identification mark and mark their goats with it, under the Animal Identification Act.",
+    "zu": "Wonke umnikazi wezimbuzi, kuhlanganise nabanikazi bomphakathi/abafuyi abancane, kufanele abhalise uphawu olusemthethweni lokuhlonza bese emaka izimbuzi zakhe ngalo, ngaphansi kwe-Animal Identification Act.",
+    "st": "Mong le e mong wa dipodi, ho kenyeletswa beng ba diphoofolo tsa setjhaba/barui ba banyenyane, o tlameha ho ngodisa letshwao la semmuso la boitsebahatso mme a tshwaye dipodi tsa hae ka lona, tlasa Animal Identification Act.",
+    "ts": "N'wini un'wana ni un'wana wa timbuti, ku katsa vini va le migangeni/vafuwi lavatsongo, u fanele ku tsarisa mfungho wa ximfumo wo ti tivekisa kutani a fungha timbuti ta yena ha wona, ehansi ka Animal Identification Act.",
+    "ve": "Muṋe muṅwe na muṅwe wa mbudzi, hu tshi katelwa vhaṋe vha zwifuwo zwa tshitshavha/vhafuwi vhaṱuku, u tea u ṅwalisa luswayo lwa tshiofisi lwa u dzi ṱalula na u swaya mbudzi dzawe ngalwo, nga fhasi ha Animal Identification Act."
+  },
+  {
+    "english": "A goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act; slaughtering it for the farmer's own consumption, or for cultural/religious purposes (including ceremonial slaughter, common with indigenous goats), is exempt from that rule, but that meat may not then be sold.",
+    "zu": "Imbuzi ingahlatshwa ngenhloso yokuthengiswa kuphela endaweni yokuhlabela ebhalisiwe ngaphansi kwe-Meat Safety Act; ukuyihlabela ukudla komfuyi uqobo, noma ngezinjongo zamasiko/zenkolo (kuhlanganise nokuhlabela imikhosi, okuvamile ngezimbuzi zomdabu), akuboshwa yilowo mthetho, kodwa leyo nyama akufanele ithengiswe.",
+    "st": "Podi e ka hlajwa ho rekiswa feela sehlabelong se ngodisitsweng tlasa Meat Safety Act; ho e hlaba bakeng sa dijo tsa morui ka boyena, kapa merero ya setso/bodumedi (ho kenyeletswa ho hlaba meketeng, ho tlwaelehileng ka dipodi tsa tlhaho), ho lokollotswe molaong oo, empa nama eo e ke ke ya rekiswa.",
+    "ts": "Mbuti yi nga tlhaveriwa ku xavisiwa ntsena laha ku tlhaveriwaka kona loku tsarisiweke ehansi ka Meat Safety Act; ku yi tlhavela swakudya swa murimi hi yexe, kumbe hi swikongomelo swa ndhavuko/vukhongeri (ku katsa ku tlhavela mikhuvo, leswi tolovelekeke hi timbuti ta laha kaya), a swi boheki hi nawu wolowo, kambe nyama ya kona a yi fanelanga ku xavisiwa.",
+    "ve": "Mbudzi i nga ṱhavhelwa u rengiswa fhedzi fhethu ha u ṱhavhela zwifuwo ho ṅwaliswaho nga fhasi ha Meat Safety Act; u i ṱhavhela zwiḽiwa zwa mulimi nga ene muṋe, kana ndivho dza mvelele/vhurereli (hu tshi katelwa u ṱhavhela vhuṱambo, zwo ḓoweleaho kha mbudzi dza henefha), a zwi vhofhiwi nga mulayo wonoyo, fhedzi ṋama yeneyo a i tei u rengiswa."
+  },
+  {
+    "english": "A goat may only be slaughtered for sale at a registered abattoir under the Meat Safety Act; slaughtering it for the farmer's own consumption, or for cultural/religious purposes, is exempt from that rule, but that meat may not then be sold.",
+    "zu": "Imbuzi ingahlatshwa ngenhloso yokuthengiswa kuphela endaweni yokuhlabela ebhalisiwe ngaphansi kwe-Meat Safety Act; ukuyihlabela ukudla komfuyi uqobo, noma ngezinjongo zamasiko/zenkolo, akuboshwa yilowo mthetho, kodwa leyo nyama akufanele ithengiswe.",
+    "st": "Podi e ka hlajwa ho rekiswa feela sehlabelong se ngodisitsweng tlasa Meat Safety Act; ho e hlaba bakeng sa dijo tsa morui ka boyena, kapa merero ya setso/bodumedi, ho lokollotswe molaong oo, empa nama eo e ke ke ya rekiswa.",
+    "ts": "Mbuti yi nga tlhaveriwa ku xavisiwa ntsena laha ku tlhaveriwaka kona loku tsarisiweke ehansi ka Meat Safety Act; ku yi tlhavela swakudya swa murimi hi yexe, kumbe hi swikongomelo swa ndhavuko/vukhongeri, a swi boheki hi nawu wolowo, kambe nyama ya kona a yi fanelanga ku xavisiwa.",
+    "ve": "Mbudzi i nga ṱhavhelwa u rengiswa fhedzi fhethu ha u ṱhavhela zwifuwo ho ṅwaliswaho nga fhasi ha Meat Safety Act; u i ṱhavhela zwiḽiwa zwa mulimi nga ene muṋe, kana ndivho dza mvelele/vhurereli, a zwi vhofhiwi nga mulayo wonoyo, fhedzi ṋama yeneyo a i tei u rengiswa."
+  },
+  {
+    "english": "African swine fever (ASF) is listed as a controlled animal disease pertaining to pigs under the Animal Diseases Act; warthogs and Ornithodorus ticks are carriers/vectors.",
+    "zu": "I-African swine fever (ASF) isohlwini lwezifo zezilwane ezilawulwayo ezithinta izingulube ngaphansi kwe-Animal Diseases Act; izingulube zasendle (warthogs) nemikhaza ye-Ornithodorus (Ornithodorus ticks) kuyizithwali/abasabalalisi.",
+    "st": "African swine fever (ASF) e lenaneng la mafu a diphoofolo a laolwang a amang dikolobe tlasa Animal Diseases Act; dikolobe tsa naha (warthogs) le dikgofa tsa Ornithodorus (Ornithodorus ticks) ke bajari/bafetisi.",
+    "ts": "African swine fever (ASF) yi xaxametiwile ku va vuvabyi bya swiharhi leri lawuriwaka leri khumbaka tinguluve ehansi ka Animal Diseases Act; tinguluve ta nhova (warthogs) ni Ornithodorus ticks i swirhwali/swihangalasi.",
+    "ve": "African swine fever (ASF) i kha mutevhe sa vhulwadze ha zwifuwo vhu langiwaho vhu kwamaho nguluvhe nga fhasi ha Animal Diseases Act; nguluvhe dza ḓaka (warthogs) na Ornithodorus ticks ndi zwithwali/zwiphaḓaladzi."
+  },
+  {
+    "english": "Foot-and-mouth disease (FMD) is also listed as a controlled animal disease pertaining to pigs under the Animal Diseases Act.",
+    "zu": "Isifo samatele (FMD) naso sisohlwini lwezifo zezilwane ezilawulwayo ezithinta izingulube ngaphansi kwe-Animal Diseases Act.",
+    "st": "Lefu la tlhako le molomo (FMD) le lona le lenaneng la mafu a diphoofolo a laolwang a amang dikolobe tlasa Animal Diseases Act.",
+    "ts": "Vuvabyi bya nomu ni swondzo (FMD) na byona byi xaxametiwile ku va vuvabyi bya swiharhi leri lawuriwaka leri khumbaka tinguluve ehansi ka Animal Diseases Act.",
+    "ve": "Vhulwadze ha milenzhe na mulomo (FMD) na hone vhu kha mutevhe sa vhulwadze ha zwifuwo vhu langiwaho vhu kwamaho nguluvhe nga fhasi ha Animal Diseases Act."
+  },
+  {
+    "english": "Swill (food waste) may not be fed to pigs unless it has been boiled for at least 60 minutes or sterilised by another equally effective method.",
+    "zu": "Izinsalela zokudla akufanele ziphiwe izingulube ngaphandle uma zibiliswe okungenani imizuzu engu-60 noma zenziwe zangaba namagciwane ngenye indlela esebenza ngokulinganayo.",
+    "st": "Masalla a dijo a ke ke a fepjwa dikolobe ntle le haeba a bedisitswe bonyane metsotso e 60 kapa a bolailwe dikokwanahloko ka mokgwa o mong o sebetsang ka ho lekana.",
+    "ts": "Masalela ya swakudya a ma fanelanga ku phameriwa tinguluve handle ka loko ma virisiwile ku ringana kwalomu ka timinete ta 60 kumbe ma dlayiwile switsongwatsongwana hi ndlela yin'wana leyi tirhaka hi ku ringana.",
+    "ve": "Masalela a zwiḽiwa ha tei u ṋewa nguluvhe nga nnḓa ha musi o vhiliswa lwa tshifhinga tshi si fhasi ha minetse ya 60 kana o vhulahwa zwitshili nga iṅwe nḓila i shumaho nga nḓila i linganaho."
+  },
+  {
+    "english": "Pigs may only be moved into a biosecure compartment from another compartment that is officially certified/approved for that purpose.",
+    "zu": "Izingulube zingathuthelwa egumbini elivikelwe ezifweni kuphela zivela kwelinye igumbi elinesitifiketi/elivunyelwe ngokusemthethweni ngaleyo njongo.",
+    "st": "Dikolobe di ka iswa karolong e sireleditsweng kgahlanong le mafu feela di tswa karolong e nngwe e netefaditsweng/amohetsweng ka molao bakeng sa morero oo.",
+    "ts": "Tinguluve ti nga nghenisiwa eka xiyenge lexi sirhelelekeke eka mavabyi ntsena ti huma eka xiyenge xin'wana lexi nga ni xitifikheti lexi nga xa ximfumo/lexi pfumeleriweke hi xikongomelo xexo.",
+    "ve": "Nguluvhe dzi nga tshimbidzelwa kha tshipiḓa tsho tsireledzwaho kha malwadze fhedzi dzi tshi bva kha tshiṅwe tshipiḓa tsho ṱhanzielwaho/tsho tendelwaho nga tshiofisi u itela ndivho yeneyo."
+  },
+  {
+    "english": "A pig may not be slaughtered anywhere but a registered abattoir, except for own household consumption or cultural/religious purposes.",
+    "zu": "Ingulube akufanele ihlatshwe kwenye indawo ngaphandle kwendawo yokuhlabela ebhalisiwe, ngaphandle uma kungokokudla komndeni womuntu uqobo noma ngezinjongo zamasiko/zenkolo.",
+    "st": "Kolobe e ke ke ya hlajwa sebakeng se seng ntle le sehlabelo se ngodisitsweng, ntle le bakeng sa dijo tsa lelapa la motho ka bolona kapa merero ya setso/bodumedi.",
+    "ts": "Nguluve a yi fanelanga ku tlhaviwa kun'wana handle ka laha ku tlhaveriwaka kona loku tsarisiweke, handle ka loko ku ri swakudya swa ndyangu wa munhu hi woxe kumbe hi swikongomelo swa ndhavuko/vukhongeri.",
+    "ve": "Nguluvhe a i tei u ṱhavhiwa huṅwe hu si fhethu ha u ṱhavhela zwifuwo ho ṅwaliswaho, nga nnḓa ha zwiḽiwa zwa muṱa wa muthu nga woṱhe kana ndivho dza mvelele/vhurereli."
+  },
+  {
+    "english": "A pig owner must apply to register an official identification mark and mark their pigs with it, under the Animal Identification Act.",
+    "zu": "Umnikazi wezingulube kufanele afake isicelo sokubhalisa uphawu olusemthethweni lokuhlonza bese emaka izingulube zakhe ngalo, ngaphansi kwe-Animal Identification Act.",
+    "st": "Mong wa dikolobe o tlameha ho etsa kopo ya ho ngodisa letshwao la semmuso la boitsebahatso mme a tshwaye dikolobe tsa hae ka lona, tlasa Animal Identification Act.",
+    "ts": "N'wini wa tinguluve u fanele ku endla xikombelo xo tsarisa mfungho wa ximfumo wo ti tivekisa kutani a fungha tinguluve ta yena ha wona, ehansi ka Animal Identification Act.",
+    "ve": "Muṋe wa nguluvhe u tea u ita khumbelo ya u ṅwalisa luswayo lwa tshiofisi lwa u dzi ṱalula na u swaya nguluvhe dzawe ngalwo, nga fhasi ha Animal Identification Act."
+  },
+  {
+    "english": "Rabbits are one of the domesticated animal species listed in the Meat Safety Act, so the Act's rules on abattoirs and hygiene apply to them, as they do to ducks and other listed species.",
+    "zu": "Onogwaja bangolunye lwezinhlobo zezilwane ezifuywayo ezisohlwini lwe-Meat Safety Act, ngakho imithetho yawo yezindawo zokuhlabela nenhlanzeko iyasebenza kubo, njengoba isebenza emadadeni nakwezinye izinhlobo ezisohlwini.",
+    "st": "Mebutlanyana ke o mong wa mefuta ya diphoofolo tse ruuwang e lenaneng la Meat Safety Act, kahoo melao ya wona ya mahlabelo le bohlweki e a e ama, jwaloka ha e ama matata le mefuta e meng e lenaneng.",
+    "ts": "Mimpfundla i yin'wana ya tinxaka ta swifuwo leswi fuwwaka leswi xaxametiweke eka Meat Safety Act, kutani milawu ya wona ya tindhawu to tlhavela ni mbhasiso yi tirha eka yona, ku fana ni le ka masekwa ni tinxaka tin'wana leti xaxametiweke.",
+    "ve": "Mivhuḓa ndi luṅwe lwa tshaka dza zwifuwo zwi fuwiwaho dzi re kha mutevhe wa Meat Safety Act, ngauralo milayo yawo ya fhethu ha u ṱhavhela zwifuwo na vhudele i a shuma khayo, sa zwine ya shuma kha masekwa na dziṅwe tshaka dzi re kha mutevhe."
+  },
+  {
+    "english": "Rabbits slaughtered to be sold must be slaughtered at a registered abattoir; slaughter for the farmer's own consumption is exempt from this rule but the meat from it may not be sold.",
+    "zu": "Onogwaja abahlatshwa ngenhloso yokuthengiswa kufanele bahlatshwe endaweni yokuhlabela ebhalisiwe; ukuhlaba ukuze kudle umfuyi uqobo akuboshwa yilowo mthetho kodwa inyama yakhona akufanele ithengiswe.",
+    "st": "Mebutlanyana e hlajwang ho rekiswa e tlameha ho hlajwa sehlabelong se ngodisitsweng; ho hlaba bakeng sa dijo tsa morui ka boyena ho lokollotswe molaong oo empa nama ya hona e ke ke ya rekiswa.",
+    "ts": "Mimpfundla leyi tlhaveriwaka ku xavisiwa yi fanele ku tlhaveriwa laha ku tlhaveriwaka kona loku tsarisiweke; ku tlhavela swakudya swa murimi hi yexe a swi boheki hi nawu wolowo kambe nyama ya kona a yi fanelanga ku xavisiwa.",
+    "ve": "Mivhuḓa i ṱhavhelwaho u rengiswa i tea u ṱhavhiwa fhethu ha u ṱhavhela zwifuwo ho ṅwaliswaho; u ṱhavhela zwiḽiwa zwa mulimi nga ene muṋe a zwi vhofhiwi nga mulayo wonoyo fhedzi ṋama yayo a i tei u rengiswa."
+  },
+  {
+    "english": "At the abattoir, rabbits (like other listed animals) must be handled humanely during loading, transport, offloading, housing, immobilising and killing, under the Animals Protection Act.",
+    "zu": "Endaweni yokuhlabela, onogwaja (njengezinye izilwane ezisohlwini) kufanele baphathwe ngobuntu ngesikhathi belayishwa, bethuthwa, bethululwa, behlaliswa, beboshwa ukuba banganyakazi nalapho bebulawa, ngaphansi kwe-Animals Protection Act.",
+    "st": "Sehlabelong, mebutlanyana (jwaloka diphoofolo tse ding tse lenaneng) e tlameha ho tshwarwa ka mosa nakong ya ho laelwa, ho tsamaiswa, ho theolwa, ho bolokwa, ho thibelwa ho sisinyeha le ho bolawa, tlasa Animals Protection Act.",
+    "ts": "Laha ku tlhaveriwaka kona, mimpfundla (ku fana ni swifuwo swin'wana leswi xaxametiweke) yi fanele ku khomiwa hi tintswalo loko yi layichiwa, yi fambisiwa, yi chichiwa, yi tshamisiwa, yi siveliwa ku famba ni ku dlayiwa, ehansi ka Animals Protection Act.",
+    "ve": "Fhethu ha u ṱhavhela zwifuwo, mivhuḓa (sa zwiṅwe zwifuwo zwi re kha mutevhe) i tea u farwa nga vhulenda musi i tshi laiwa, i tshi tshimbidzwa, i tshi tsitswa, i tshi dzudzwa, i tshi thivhelwa u tshimbila na u vhulawa, nga fhasi ha Animals Protection Act."
+  },
+  {
+    "english": "The wild European rabbit (the same species as farmed New Zealand White/Californian rabbits) is only listed as an invasive species under NEMBA on South Africa's off-shore islands - it is not a listed/restricted species on the mainland.",
+    "zu": "Unogwaja wasendle waseYurophu (uhlobo olufanayo nonogwaja abafuywayo be-New Zealand White/Californian) usohlwini lwezinhlobo ezihlaselayo ngaphansi kwe-NEMBA kuphela eziqhingini zaseNingizimu Afrika ezisolwandle ngaphandle kwezwekazi - awulona uhlobo olusohlwini/olubekelwe imingcele ezwenikazi.",
+    "st": "Mmutlanyana wa naha wa Yuropa (mofuta o tshwanang le mebutlanyana ya New Zealand White/Californian e ruuwang) o lenaneng la mefuta e hlaselang tlasa NEMBA feela dihlekehlekeng tsa Afrika Borwa tse hole le lebopo - ha se mofuta o lenaneng/o thibetsweng naheng e kgolo.",
+    "ts": "Mpfundla wa nhova wa Yuropa (muxaka lowu fanaka ni mimpfundla ya New Zealand White/Californian leyi fuwwaka) wu xaxametiwile ntsena ku va muxaka lowu hlaselaka ehansi ka NEMBA eswihlaleni swa Afrika-Dzonga swa le lwandle - a hi muxaka lowu xaxametiweke/wu pimeriweke etikweni lerikulu.",
+    "ve": "Muvhuḓa wa ḓaka wa Yuropa (lushaka lu fanaho na mivhuḓa ya New Zealand White/Californian i fuwiwaho) u kha mutevhe wa tshaka dzi dzhenelelaho nga fhasi ha NEMBA fhedzi kha zwiṱangadzime zwa Afrika Tshipembe zwi re lwanzheni - a si lushaka lu re kha mutevhe/lu thivhelwaho kha shango ḽihulwane."
+  },
+  {
+    "english": "Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act; Veterinary Services enforce isolation and movement restrictions.",
+    "zu": "Isifo samatele (FMD) siyisifo sezilwane esilawulwayo ngaphansi kwe-Animal Diseases Act; abezinsizakalo zokwelapha izilwane baphoqelela ukuhlukaniswa nezithiyo zokuthutha.",
+    "st": "Lefu la tlhako le molomo (FMD) ke lefu la diphoofolo le laolwang tlasa Animal Diseases Act; Ditshebeletso tsa Bongaka ba Diphoofolo di qobella karohano le dithibelo tsa motsamao.",
+    "ts": "Vuvabyi bya nomu ni swondzo (FMD) i vuvabyi bya swiharhi leri lawuriwaka ehansi ka Animal Diseases Act; Vukorhokeri bya Vutshunguri bya Swiharhi byi sindzisa ku hambanisa ni swipimelo swa ku fambisa.",
+    "ve": "Vhulwadze ha milenzhe na mulomo (FMD) ndi vhulwadze ha zwifuwo vhu langiwaho nga fhasi ha Animal Diseases Act; Tshumelo dza Vhulafhi ha Zwifuwo dzi kombetshedza u khethekanya na thivhelo dza u tshimbidza."
+  },
+  {
+    "english": "Inside a declared FMD zone, sheep and their products cannot be moved into, out of, or within it without a state veterinary permit.",
+    "zu": "Endaweni emenyezelwe njengeyokulawula i-FMD, izimvu nemikhiqizo yazo azikwazi ukuthuthelwa ngaphakathi, ngaphandle, noma ngaphakathi kuyo ngaphandle kwemvume kadokotela wezilwane kahulumeni.",
+    "st": "Sebakeng se phatlaladitsweng sa FMD, dinku le dihlahiswa tsa tsona di ke ke tsa iswa kahare, kantle, kapa kahare ho sona ntle le tumello ya ngaka ya diphoofolo ya mmuso.",
+    "ts": "Endhawini ya FMD leyi tivisiweke, tinyimpfu ni swikumiwa swa tona a swi nge fambisiwi ku nghena, ku huma, kumbe endzeni ka yona handle ka mpfumelelo wa dokodela wa swiharhi wa mfumo.",
+    "ve": "Kha dzingu ḽa FMD ḽo ḓivhadzwaho, nngu na zwibveledzwa zwadzo a zwi tei u tshimbidzwa u dzhena, u bva, kana ngomu haḽo hu si na thendelo ya dokotela wa zwifuwo wa muvhuso."
+  },
+  {
+    "english": "Sheep scab is a controlled disease by law: a suspected or positive case must be reported to the State Veterinarian immediately.",
+    "zu": "Utwayi lwezimvu (sheep scab) luyisifo esilawulwayo ngokomthetho: isigameko esisolekayo noma esiqinisekisiwe kufanele sibikwe masinyane kuDokotela Wezilwane Kahulumeni.",
+    "st": "Lekgwekgwe la dinku (sheep scab) ke lefu le laolwang ka molao: ketsahalo e belaellwang kapa e netefaditsweng e tlameha ho tlalehwa hanghang ho Ngaka ya Diphoofolo ya Mmuso.",
+    "ts": "Nhlokonho ya tinyimpfu (sheep scab) i vuvabyi leri lawuriwaka hi nawu: xiendlakalo lexi ehleketeleriwaka kumbe lexi tiyisisiweke xi fanele ku vikiwa hi ku hatlisa eka Dokodela wa Swiharhi wa Mfumo.",
+    "ve": "Phori ya nngu (sheep scab) ndi vhulwadze vhu langiwaho nga mulayo: zwi humbulelwaho kana zwo khwaṱhisedzwaho zwi tea u vhigwa nga u ṱavhanya kha Dokotela wa Zwifuwo wa Muvhuso."
+  },
+  {
+    "english": "Against sheep scab, all small stock on the farm must be treated with a remedy registered under Act 36 of 1947, and infected sheep treated twice, eight to ten days apart.",
+    "zu": "Ukulwa notwayi lwezimvu, yonke imfuyo encane epulazini kufanele yelashwe ngomuthi obhaliswe ngaphansi koMthetho 36 ka-1947, futhi izimvu ezinalesi sifo zelashwe kabili, ngezikhathi eziqhelelene ngezinsuku eziyisishiyagalombili kuya kweziyishumi.",
+    "st": "Ho lwantsha lekgwekgwe la dinku, diphoofolo tsohle tse nyenyane tsa polasi di tlameha ho phekolwa ka moriana o ngodisitsweng tlasa Molao 36 wa 1947, mme dinku tse tshwaeditsweng di phekolwe habedi, ka matsatsi a robedi ho isa ho a leshome pakeng tsa diphekolo.",
+    "ts": "Ku lwisana ni nhlokonho ya tinyimpfu, swifuwo leswitsongo hinkwato swa le purasini swi fanele ku tshunguriwa hi murhi lowu tsarisiweke ehansi ka Nawu 36 wa 1947, naswona tinyimpfu leti tluleriweke ti tshunguriwa kambirhi, ku hundza masiku ya nhungu ku ya eka khume exikarhini ka matshungulelo.",
+    "ve": "U lwa na phori ya nngu, zwifuwo zwiṱuku zwoṱhe bulasini zwi tea u lafhiwa nga mushonga wo ṅwaliswaho nga fhasi ha Mulayo 36 wa 1947, nahone nngu dzo kavhiwaho dzi lafhiwe luvhili, hu tshi fhambana maḓuvha a malo u swika fumi vhukati ha u lafha."
+  },
+  {
+    "english": "Every sheep owner must register an official identification mark and mark their sheep with it, under the Animal Identification Act.",
+    "zu": "Wonke umnikazi wezimvu kufanele abhalise uphawu olusemthethweni lokuhlonza bese emaka izimvu zakhe ngalo, ngaphansi kwe-Animal Identification Act.",
+    "st": "Mong le e mong wa dinku o tlameha ho ngodisa letshwao la semmuso la boitsebahatso mme a tshwaye dinku tsa hae ka lona, tlasa Animal Identification Act.",
+    "ts": "N'wini un'wana ni un'wana wa tinyimpfu u fanele ku tsarisa mfungho wa ximfumo wo ti tivekisa kutani a fungha tinyimpfu ta yena ha wona, ehansi ka Animal Identification Act.",
+    "ve": "Muṋe muṅwe na muṅwe wa nngu u tea u ṅwalisa luswayo lwa tshiofisi lwa u dzi ṱalula na u swaya nngu dzawe ngalwo, nga fhasi ha Animal Identification Act."
+  },
+  {
+    "english": "A sheep may be slaughtered only at an abattoir, except for the farmer's own consumption or for cultural or religious purposes.",
+    "zu": "Imvu ingahlatshwa kuphela endaweni yokuhlabela, ngaphandle uma kungokokudla komfuyi uqobo noma ngezinjongo zamasiko noma zenkolo.",
+    "st": "Nku e ka hlajwa feela sehlabelong, ntle le bakeng sa dijo tsa morui ka boyena kapa merero ya setso kapa ya bodumedi.",
+    "ts": "Nyimpfu yi nga tlhaviwa ntsena laha ku tlhaveriwaka kona, handle ka loko ku ri swakudya swa murimi hi yexe kumbe hi swikongomelo swa ndhavuko kumbe vukhongeri.",
+    "ve": "Nngu i nga ṱhavhiwa fhedzi fhethu ha u ṱhavhela zwifuwo, nga nnḓa ha zwiḽiwa zwa mulimi nga ene muṋe kana ndivho dza mvelele kana vhurereli."
+  },
+  {
+    "english": "Cape Wools' 2020/2021 annual review reports that wool exports continued despite foot-and-mouth disease (FMD), under the inactivation clause of the OIE (World Organisation for Animal Health) rules. This historical report does not establish current export permission; confirm current requirements before sale or export.",
+    "zu": "Umbiko wonyaka ka-Cape Wools ka-2020/2021 ubika ukuthi ukuthunyelwa koboya emazweni angaphandle kwaqhubeka naphezu kwesifo samatele (FMD), ngaphansi kwesigatshana sokwenza igciwane lingasebenzi semithetho ye-OIE (World Organisation for Animal Health). Lo mbiko waleyo nkathi awuqinisekisi imvume yamanje yokuthumela emazweni angaphandle; qinisekisa izidingo zamanje ngaphambi kokuthengisa noma ukuthumela emazweni angaphandle.",
+    "st": "Tlaleho ya selemo ya Cape Wools ya 2020/2021 e tlaleha hore diyantle tsa boya di ile tsa tswela pele leha ho ne ho na le lefu la tlhako le molomo (FMD), tlasa karolo ya ho etsa hore kokwanahloko e se hlole e sebetsa ya melao ya OIE (World Organisation for Animal Health). Tlaleho ena ya nako e fetileng ha e netefatse tumello ya hajwale ya diyantle; netefatsa ditlhoko tsa hajwale pele o rekisa kapa o romela kantle.",
+    "ts": "Xiviko xa lembe xa Cape Wools xa 2020/2021 xi vika leswaku ku rhumeriwa ka voya ematikweni mambe ku yile mahlweni hambiloko a ku ri ni vuvabyi bya nomu ni swondzo (FMD), ehansi ka xiyenge xo endla leswaku xitsongwatsongwana xi nga ha tirhi xa milawu ya OIE (World Organisation for Animal Health). Xiviko lexi xa khale a xi tiyisisi mpfumelelo wa sweswi wo rhumela ematikweni mambe; tiyisisa swilaveko swa sweswi u nga si xavisa kumbe ku rhumela ematikweni mambe.",
+    "ve": "Muvhigo wa ṅwaha wa Cape Wools wa 2020/2021 u vhiga uri u rengisela vhukuse kha maṅwe mashango zwo bvela phanḓa naho ho vha hu na vhulwadze ha milenzhe na mulomo (FMD), nga fhasi ha tshipiḓa tsha u ita uri tshitshili tshi si tsha shuma tsha milayo ya OIE (World Organisation for Animal Health). Muvhigo uyu wa tshifhinga tsho fhiraho a u khwaṱhisedzi thendelo ya zwino ya u rengisela kha maṅwe mashango; khwaṱhisedzani ṱhoḓea dza zwino musi ni sa athu rengisa kana u rengisela kha maṅwe mashango."
+  },
+  {
+    "english": "Wool from scab-infected sheep must be destroyed rather than sent to the buyer, where it would be marked as scab wool.",
+    "zu": "Uboya bezimvu ezinotwayi kufanele bubhujiswe kunokuba buthunyelwe kumthengi, lapho bebungamakwa njengoboya obunotwayi.",
+    "st": "Boya ba dinku tse tshwaeditsweng ke lekgwekgwe bo tlameha ho senngwa ho ena le ho romelwa moreking, moo bo neng bo tla tshwauwa e le boya ba lekgwekgwe.",
+    "ts": "Voya bya tinyimpfu leti tluleriweke hi nhlokonho byi fanele ku lovisiwa ematshan'weni yo rhumeriwa eka muxavi, laha byi nga ta funghiwa ku va voya bya nhlokonho.",
+    "ve": "Vhukuse ha nngu dzo kavhiwaho nga phori vhu tea u fheliswa nṱhani ha u rumelwa kha murengi, hune ha vha ho ḓo swaiwa sa vhukuse ha phori."
+  },
+  {
+    "english": "Table 8-3 gives the Mozambique Tilapia's harvestable size as an approximate single figure ('+- 800g'), not a range, so [800, 800] is used rather than inventing a spread. The same table cell wraps '10-12' across a line break in the PDF ('10-\\n12'), kept verbatim. The table's Nile Tilapia row gives the same approximate weight (+-800g) reached faster, in 6-10 months — not used here because this dossier is framed around the indigenous Mozambique Tilapia; this choice does not establish current farming permission, which must be checked separately; see 'legal' for why Nile Tilapia is treated separately. No SA source was found giving a feed-conversion-based or per-hectare yield figure specific to O. mossambicus that could be converted to this per-fish unit without stitching numbers across documents, so outputUnit follows the source's own unit (grams harvest weight per fish) rather than being converted.",
+    "zu": "Ithebula 8-3 linikeza usayizi ovunekayo we-Mozambique Tilapia njengenani elilodwa elilinganiselwayo ('+- 800g'), hhayi ububanzi, ngakho kusetshenziswa [800, 800] kunokuba kusungulwe ukusabalala. Iseli elifanayo lethebula lihlukanisa u-'10-12' ngekhefu lomugqa ku-PDF ('10-\\n12'), kugcinwa njengalokho. Umugqa we-Nile Tilapia ethebuleni unikeza isisindo esifanayo esilinganiselwayo (+-800g) esifinyelelwa ngokushesha, ngezinyanga ezingu-6-10 — akusetshenziswa lapha ngoba lo mbhalo ugxile ku-Mozambique Tilapia yendabuko; lokhu kukhetha akuqinisekisi imvume yamanje yokufuya, okufanele ihlolwe ngokwehlukana; bheka 'umthetho' ukuthi kungani i-Nile Tilapia ibhekwa ngokwehlukana. Awutholakalanga umthombo waseNingizimu Afrika onikeza isibalo esiqondene ne-O. mossambicus esisuselwa ekuguqulweni kokudla noma isivuno ngehektha esingaguqulelwa kule yunithi ngenhlanzi ngaphandle kokuthunga izinombolo zemibhalo ehlukene, ngakho i-outputUnit ilandela iyunithi yomthombo uqobo (amagremu esisindo sokuvuna ngenhlanzi) kunokuba iguqulwe.",
+    "st": "Tafole 8-3 e fana ka boholo bo ka kotulwang ba Mozambique Tilapia e le palo e le nngwe e hakanyeditsweng ('+- 800g'), eseng moedi, kahoo [800, 800] e sebediswa ho ena le ho iqapela pharallo. Sele e tshwanang ya tafole e arola '10-12' ka kgefutso ya mola ho PDF ('10-\\n12'), e bolokilwe e le jwalo. Mola wa Nile Tilapia tafoleng o fana ka boima bo tshwanang bo hakanyeditsweng (+-800g) bo fihlelwang kapele, ka dikgwedi tse 6-10 — ha o sebediswe mona hobane dosiye ena e thehilwe ho Mozambique Tilapia ya tlhaho; kgetho ena ha e netefatse tumello ya hajwale ya ho rua, e tlamehang ho hlahlojwa ka thoko; sheba 'molao' bakeng sa lebaka leo Nile Tilapia e tshwarwang ka thoko. Ha ho mohlodi wa Afrika Borwa o fumanweng o fanang ka palo ya phetoho ya dijo kapa chai ka hektare e tobileng O. mossambicus e ka fetolelwang yuniti ena ka tlhapi ntle le ho kopanya dipalo tsa ditokomane tse fapaneng, kahoo outputUnit e latela yuniti ya mohlodi ka boyona (digeramo tsa boima ha ho kotulwa ka tlhapi) ho ena le ho fetolwa.",
+    "ts": "Tafula 8-3 ri nyika vukulu byo tshovela bya Mozambique Tilapia byi ri nhlayo yin'we ya mpimanyeto ('+- 800g'), ku nga ri mpimo wo suka laha ku ya hala, hikokwalaho ku tirhisiwa [800, 800] ematshan'wini yo tumbuluxa ku hambana. Xibokisana xin'we xa tafula xi avanyisa '10-12' hi ku tshoveka ka layini eka PDF ('10-\\n12'), leswi hlayisiweke hi ku kongoma. Layini ya Nile Tilapia eka tafula yi nyika ntikelo wun'we wa mpimanyeto (+-800g) lowu fikeleriwaka hi ku hatlisa, eka tin'hweti ta 6-10 — a wu tirhisiwi laha hikuva dosiyere leyi yi kongomisa eka Mozambique Tilapia ya ndhavuko; nhlawulo lowu a wu tiyisisi mpfumelelo wa sweswi wo fuwa, lowu faneleke ku kamberiwa hi ku hambana; vona 'nawu' ku tiva leswaku hikokwalaho ka yini Nile Tilapia yi tekiwa hi ku hambana. A ku kumekanga xihlovo xa Afrika-Dzonga lexi nyikaka nhlayo leyi sekeriweke eka ku hundzuluka ka swakudya kumbe ntshovelo hi hektara leyi kongomaka eka O. mossambicus leyi nga hundzuriwaka yi va yuniti leyi hi nhlampfi handle ko hlanganisa tinhlayo ta matsalwa, hikokwalaho outputUnit yi landzela yuniti ya xihlovo hi xoxe (tigiramu ta ntikelo wo tshovela hi nhlampfi) ematshan'wini yo hundzuriwa.",
+    "ve": "Thebuḽa 8-3 ḽi ṋea vhuhulwane ha u kaṋiwa ha Mozambique Tilapia sa mbalo nthihi ya nyanganyelo ('+- 800g'), hu si mikhano, ngauralo hu shumiswa [800, 800] nṱhani ha u tou humbulela phambano. Tshipiḓa tshithihi tsha thebuḽa tshi khethekanya '10-12' nga u khethekanywa ha mutalo kha PDF ('10-\\n12'), zwe zwa vhulungwa zwo ralo. Mutalo wa Nile Tilapia kha thebuḽa u ṋea tshileme tshithihi tsha nyanganyelo (+-800g) tshi swikiwaho nga u ṱavhanya, kha miṅwedzi ya 6-10 — a u shumiswi afha ngauri dosiye iyi yo livha kha Mozambique Tilapia ya henefha; u nanga uhu a hu khwaṱhisedzi thendelo ya zwino ya u fuwa, ine ya tea u ṱolwa nga thungo; sedzani 'mulayo' u itela uri ndi ngani Nile Tilapia i dzhiiwa nga thungo. A hu na tshiko tsha Afrika Tshipembe tsho wanalaho tshi ṋeaho mbalo yo ḓitikaho nga u shandukiswa ha zwiḽiwa kana khaṋo nga hekithara yo livhaho kha O. mossambicus ine ya nga shandukiswa ya vha yuniti iyi nga khovhe hu sa ṱanganyiswi mbalo dza maṅwalwa o fhambanaho, ngauralo outputUnit i tevhela yuniti ya tshiko tshone tshiṋe (gireme dza tshileme tsha khaṋo nga khovhe) nṱhani ha u shandukiswa."
+  },
+  {
+    "english": "Animal law translations are unreviewed drafts. English notes are available below. Some sources are historical; current requirements need confirmation.",
+    "zu": "Ukuhunyushwa kwemithetho yezilwane kuyimibhalo esalungiswa engakabuyekezwa. Amanothi esiNgisi ayatholakala ngezansi. Eminye imithombo ingeyezikhathi ezedlule; izidingo zamanje zidinga ukuqinisekiswa.",
+    "st": "Diphetolelo tsa melao ya diphoofolo ke dingolwa tsa pele tse sa hlahlojwang. Dintlha tsa Senyesemane di fumaneha ka tlase. Mehlodi e meng ke ya nako e fetileng; ditlhoko tsa hajwale di hloka ho netefatswa.",
+    "ts": "Vuhundzuluxeri bya milawu ya swiharhi i swikiro swa matsalwa leswi nga si kambisisiwaka. Tinhla ta Xinghezi ta kumeka laha hansi. Swihlovo swin'wana i swa khale; swilaveko swa sweswi swi lava ku tiyisisiwa.",
+    "ve": "Ṱhalutshedzo dza milayo ya zwifuwo ndi mvetamveto i sa athu sedzuluswa. Notsi dza Luisimane dzi wanala afho fhasi. Zwiṅwe zwiko ndi zwa kale; ṱhoḓea dza zwino dzi ṱoḓa u khwaṱhisedzwa."
+  },
+  {
+    "english": "Original animal law note",
+    "zu": "Inothi lokuqala lomthetho wezilwane",
+    "st": "Ntlha ya pele ya molao wa diphoofolo",
+    "ts": "Nhlamuselo yo sungula ya nawu wa swiharhi",
+    "ve": "Notsi ya u thoma ya mulayo wa zwifuwo"
   }
 ] as const;

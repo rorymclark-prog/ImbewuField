@@ -1155,7 +1155,7 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
         "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015), Table 8-3 (Mozambique vs. Nile Tilapia)",
         "page": 69
       },
-      "note": "Table 8-3 gives the Mozambique Tilapia's harvestable size as an approximate single figure ('+- 800g'), not a range, so [800, 800] is used rather than inventing a spread. The same table cell wraps '10-12' across a line break in the PDF ('10-\\n12'), kept verbatim. The table's Nile Tilapia row gives the same approximate weight (+-800g) reached faster, in 6-10 months — not used here because this dossier is framed around the indigenous, legally unrestricted Mozambique Tilapia per task instruction; see 'legal' for why Nile Tilapia is treated separately. No SA source was found giving a feed-conversion-based or per-hectare yield figure specific to O. mossambicus that could be converted to this per-fish unit without stitching numbers across documents, so outputUnit follows the source's own unit (grams harvest weight per fish) rather than being converted."
+      "note": "Table 8-3 gives the Mozambique Tilapia's harvestable size as an approximate single figure ('+- 800g'), not a range, so [800, 800] is used rather than inventing a spread. The same table cell wraps '10-12' across a line break in the PDF ('10-\\n12'), kept verbatim. The table's Nile Tilapia row gives the same approximate weight (+-800g) reached faster, in 6-10 months — not used here because this dossier is framed around the indigenous Mozambique Tilapia; this choice does not establish current farming permission, which must be checked separately; see 'legal' for why Nile Tilapia is treated separately. No SA source was found giving a feed-conversion-based or per-hectare yield figure specific to O. mossambicus that could be converted to this per-fish unit without stitching numbers across documents, so outputUnit follows the source's own unit (grams harvest weight per fish) rather than being converted."
     },
     "windows": [
       {
@@ -1224,34 +1224,34 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     "welfare": [],
     "legal": [
       {
-        "point": "The indigenous Mozambique Tilapia (O. mossambicus) is not a listed invasive species and may be farmed without an alien-species permit; the faster-growing Nile Tilapia (O. niloticus) is.",
+        "point": "The 2020 NEMBA list excludes the indigenous Mozambique Tilapia (O. mossambicus) from its listed Oreochromis group, which includes Nile Tilapia (O. niloticus). This listing distinction alone does not establish permission for every farming activity or site.",
         "source": {
-          "quote": "Legality of Production Allowed Allowed with Permits",
-          "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
-          "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015), Table 8-3 (Mozambique vs. Nile Tilapia)",
-          "page": 69
+          "quote": "Oreochromis species excluding Oreochromis mossambicus and Oreochromis placidus ... a. 3 b. 2 for permitted aquaculture facilities",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf",
+          "doc": "Department of Environment, Forestry and Fisheries, Alien and Invasive Species Lists, 2020, Gazette 43726, Notice 1003, List 7, item 22",
+          "page": 71
         }
       },
       {
-        "point": "Nile Tilapia (Oreochromis niloticus) is a nationally listed invasive fish species: Category 1b inside National Parks, Provincial Reserves, Mountain Catchment Areas and Forestry Reserves, and Category 3 in all other areas.",
+        "point": "The 2020 NEMBA list places Nile Tilapia (Oreochromis niloticus) in Category 3, or Category 2 for permitted aquaculture facilities. Confirm the applicable species, facility and permit conditions before stocking.",
         "source": {
-          "quote": "Oreochromis niloticus Nile tilapia See below\na. 1b in National Parks, Provincial Reserves, Mountain Catchment Areas and Forestry      \nReserves declared in terms of the Protected Areas Act. \nb. 3 for all other discrete catchment systems in which it occurs.",
-          "url": "https://invasives.org.za/wp-content/uploads/2022/05/South-Africa-Listed-Invasive-Species-A5-Booklet.pdf",
-          "doc": "Dept. of Environmental Affairs / invasives.org.za, National Listed Invasive Species (NEMBA AIS Regulations booklet), List 7 (National List of Invasive Fresh-water Fish Species)",
-          "page": 32
+          "quote": "Oreochromis species excluding Oreochromis mossambicus and Oreochromis placidus ... a. 3 b. 2 for permitted aquaculture facilities",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf",
+          "doc": "Department of Environment, Forestry and Fisheries, Alien and Invasive Species Lists, 2020, Gazette 43726, Notice 1003, List 7, item 22",
+          "page": 71
         }
       },
       {
-        "point": "Outside protected areas Nile tilapia is Category 3: it may remain in prescribed areas or provinces, but further propagation or trade is prohibited.",
+        "point": "In the 2020 NEMBA list, sale and transport of live tilapia are prohibited except from accredited hatcheries. Category 2 for permitted aquaculture facilities is distinct from Category 3; do not treat an existing fish or pond as production permission.",
         "source": {
-          "quote": "Category 3:  Invasive species which may remain in prescribed areas or provinces. Further  \n   planting, propagation or trade, is however prohibited. Plants in riparian areas are Cat 1b.",
-          "url": "https://invasives.org.za/wp-content/uploads/2022/05/South-Africa-Listed-Invasive-Species-A5-Booklet.pdf",
-          "doc": "Dept. of Environmental Affairs / invasives.org.za, National Listed Invasive Species (NEMBA AIS Regulations booklet)",
-          "page": 3
+          "quote": "The sale and transport of live tilapia is prohibited, except from accredited hatcheries.",
+          "url": "https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf",
+          "doc": "Department of Environment, Forestry and Fisheries, Alien and Invasive Species Lists, 2020, Gazette 43726, Notice 1003, List 7, item 22",
+          "page": 71
         }
       },
       {
-        "point": "Nile Tilapia has been listed under the NEMBA Alien and Invasive Species Regulations as requiring a permit to produce.",
+        "point": "The 2015 IDC report describes Nile Tilapia production as requiring a permit under NEMBA. This is a dated source statement; confirm current permits and their conditions with the responsible authority before production.",
         "source": {
           "quote": "Nile Tila pia has now been included in \nthe latest NEMBA legislation as an alien and invasive species requiring a permit for production",
           "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
@@ -1260,7 +1260,7 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
         }
       },
       {
-        "point": "Producing an alien or invasive species (such as Nile Tilapia) is prohibited in areas designated under the Protected Areas Act and the Fish Sanctuary Act; a permit is required to produce it elsewhere.",
+        "point": "The 2015 IDC report describes protected-area restrictions under the Protected Areas Act and the Fish Sanctuary Act, and a permit requirement elsewhere. This historical summary does not establish current site permission; confirm applicable restrictions with the responsible authority before producing Nile Tilapia.",
         "source": {
           "quote": "Production involving the \nuse of an alien and/or \ninvasive species is \nprohibited in areas \ndesignated by the \nProtected Areas Act and \nthe Fish Sanctuary Act. A \npermit is required for \nproduction in other areas.",
           "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
@@ -1269,7 +1269,7 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
         }
       },
       {
-        "point": "Producing tilapia in South Africa requires a water use licence under the National Water Act.",
+        "point": "The 2015 IDC report states that producing tilapia requires a water use licence under the National Water Act. Current water authorisation for a particular site is not established here; confirm requirements with the responsible water authority before production.",
         "source": {
           "quote": "Production of Tilapia in South Africa will require a \nwater use license.",
           "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
@@ -2173,7 +2173,7 @@ export const ANIMAL_ENTERPRISE_DATA: Record<string, AnimalEnterprise> = {
     ],
     "legal": [
       {
-        "point": "Despite foot-and-mouth disease (FMD) in South Africa, wool exports continue under the inactivation clause of the OIE (World Organisation for Animal Health) rules.",
+        "point": "Cape Wools' 2020/2021 annual review reports that wool exports continued despite foot-and-mouth disease (FMD), under the inactivation clause of the OIE (World Organisation for Animal Health) rules. This historical report does not establish current export permission; confirm current requirements before sale or export.",
         "source": {
           "quote": "The foot and mouth disease (FMD) status for South Africa has not changed and wool exports are continuing under the inactivation clause of the OIE regulations.",
           "url": "https://www.capewools.co.za/assets/annual_report/20202021annualreport.pdf",

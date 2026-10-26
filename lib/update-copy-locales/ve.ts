@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Animal law notes have draft translations and English originals.": "Notsi dza milayo ya zwifuwo dzi na mvetamveto ya ṱhalutshedzo na Luisimane lwa u thoma.",
+  "Some legal sources are historical. Check current permits before acting.": "Zwiṅwe zwiko zwa mulayo ndi zwa kale. Ṱolani thendelo dza zwino musi ni sa athu ita.",
+  "Review animal law drafts": "Sedzulusani mvetamveto ya milayo ya zwifuwo",
+  "Open a legal note’s English original and check its source date and permit conditions.": "Vulani notsi ya mulayo ya Luisimane ya u thoma ni ṱole datumu ya tshiko na nyimele dza thendelo.",
   "Animal reference notes have full draft translations with English originals.": "Notsi dza zwikombo zwa zwipuka dzi na mishumo yo fhelelaho ya ṱhalutshedzelo na dza u thoma dza Luisimane.",
   "Review the age, system and units before using an animal reference.": "Sedzulusani miṅwaha, maitele na yuniti phanḓa ha u shumisa tshikombo tsha tshipuka.",
   "Read the full animal references": "Vhalani zwikombo zwo fhelelaho zwa zwipuka",
