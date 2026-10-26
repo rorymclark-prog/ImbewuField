@@ -1,0 +1,2091 @@
+{
+  "scope": "Authored typed product/animal fields from103catalogue trees and all15enterprise authorities. These include proper source-region names and physical unit codes needing classification; counts are not a missing-UI percentage. No publication identities, species names, private fields or figures changed.",
+  "allSourceFields": 801,
+  "remaining": [
+    {
+      "english": "KwaZulu-Natal",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "carica-papaya"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Tierhoek Organic Farm, Robertson, Breede River Valley, Western Cape — Portuguese quince",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "cydonia-oblonga"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Western Cape",
+      "scopes": [
+        "source-region-needs-review"
+      ],
+      "identities": [
+        "fragaria-x-ananassa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Exact identity; no confirmed household food part",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "lycium-cinereum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The checked primary assessment establishes exact identity and South African distribution only. It does not establish edible parts, food-use preparation, picking dates or yield; claims for a different Lycium species are not transferred.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "lycium-cinereum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Documented berry-use caution",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "lycium-ferocissimum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "This explicit caution prevents routine household-food forecasting. Sporadic all-year fruiting is not promoted to an edible-food availability calendar.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "lycium-ferocissimum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Macadamia output at named ages — approximate WIS references",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "macadamia-integrifolia"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Year 4 Beaumont: approximately 0.6–0.8 kg/tree (the year-4 basis is not explicit); year 5: 2–10 kg/tree Wet In Shell (WIS); year 8: about 16 kg/tree; year 13–14: up to 35 kg/tree WIS. SAMAC says area differences are guaranteed. This is a source reference, not a validated local schedule; it cannot seed edible kernel kg or a universal interpolated curve.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "macadamia-integrifolia"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Macadamia establishment depends on propagation",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "macadamia-integrifolia"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Grafted stock: first nuts around 3–5 years, depending on variety; seedlings usually 10–12 years and sometimes longer. SAMAC recommends removing flowers until year 3 during establishment. The existing KZN guide 4–5-year first-bearing reference remains qualified; nursery propagation must be recorded before applying it.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "macadamia-integrifolia"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Apple year 3 — Langkloof enterprise-budget output",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "malus-domestica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Langkloof, Little Karoo, sandy loam: budgeted year 3 product quantity 10,000 kg/ha. This is a commercial enterprise-budget assumption, not a field measurement. The budget gives no matched tree density, rootstock or cultivar; do not convert to kg/tree, apply it to an isolated young tree or interpolate other ages. Citation uses table excerpts: the total is in the Quantity column, and the apple product-income rows use Kg; the one-hectare land basis is stated in the heading.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "malus-domestica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Apple year 4–5 — Langkloof enterprise-budget output",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "malus-domestica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Langkloof, Little Karoo, sandy loam: budgeted year 4–5 product quantity 25,000 kg/ha. This is a commercial enterprise-budget assumption, not a field measurement. The budget gives no matched tree density, rootstock or cultivar; do not convert to kg/tree, apply it to an isolated young tree or interpolate other ages. Citation uses table excerpts: the total is in the Quantity column, and the apple product-income rows use Kg; the one-hectare land basis is stated in the heading.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "malus-domestica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Apple year 6–7 — Langkloof enterprise-budget output",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "malus-domestica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Langkloof, Little Karoo, sandy loam: budgeted year 6–7 product quantity 48,590 kg/ha. This is a commercial enterprise-budget assumption, not a field measurement. The budget gives no matched tree density, rootstock or cultivar; do not convert to kg/tree, apply it to an isolated young tree or interpolate other ages. Citation uses table excerpts: the total is in the Quantity column, and the apple product-income rows use Kg; the one-hectare land basis is stated in the heading.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "malus-domestica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Apple year 8 — Langkloof enterprise-budget output",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "malus-domestica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Langkloof, Little Karoo, sandy loam: budgeted year 8 product quantity 64,000 kg/ha. This is a commercial enterprise-budget assumption, not a field measurement. The budget gives no matched tree density, rootstock or cultivar; do not convert to kg/tree, apply it to an isolated young tree or interpolate other ages. Citation uses table excerpts: the total is in the Quantity column, and the apple product-income rows use Kg; the one-hectare land basis is stated in the heading.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "malus-domestica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Grafted mango establishment — regional guide",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "mangifera-indica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Grafted stock generally first bears around 3–4 years and may remain productive 20 years or longer under the guide conditions. Seed-raised trees are a separate planting-material case. Frost, wet spring flowering conditions, cultivar and field establishment must be checked; longevity is not an age-yield curve.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "mangifera-indica"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Annual edible leaf and fruit crop",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "mesembryanthemum-crystallinum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "This is an annual, not a fruit tree. The account describes boiled leaves as a spinach substitute and pickling. It supplies no food harvest duration, kg/plant or exact leaf calendar.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "mesembryanthemum-crystallinum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The source describes bright orange-red mature fruit. It does not give a picking calendar.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "mimusops-afra"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "SANBI reports culinary uses but also toxic constituents and poisoning concerns. A preparation report is not a complete safe household recipe.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "momordica-balsamina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Historical processed fat, not a fresh-fruit forecast",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "morella-cordifolia"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Historical food use concerns the fatty berry coating, not a generic fresh sweet berry. No validated household extraction method, recovered food yield or storage life is established. Source coating/oil percentages are not assigned as processing conversion factors.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "morella-cordifolia"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Pod development, not a young green-pod picking calendar",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "moringa-oleifera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "This botanical description discusses pods that become brown at maturity. The separate harvesting section requires young, tender, green pods for food and supplies no calendar for that stage. March–April is retained as pod-development phenology, not a confirmed young-pod picking season or leaf calendar.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "moringa-oleifera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Exact fruit identity and variability",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "morus-nigra"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The institutional species reference distinguishes fruiting forms and variable breeding systems. Ripe fruits are used as food; a black-fruited tree must not silently inherit this identity or the legal status of another Morus species.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "morus-nigra"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South African taxonomic cultivation record",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "morus-nigra"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The museum lists M. nigra as cultivated in southern Africa and distinguishes naturalised Morus taxa. It gives no ripe-harvest months or quantified yield.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "morus-nigra"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Fruit maturity and water context",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "morus-nigra"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Institutional management reference links dry roots to early fruit drop. It contains a non-local 15-year substantial-bearing statement; that is not a South African first-crop age and is not used as a forecast.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "morus-nigra"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Annual plantation output",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "musa-acuminata-aaa-group"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "KZN plantation reference per year: conservative 20–25 t/ha, average 25–30 t/ha, good 40+ t/ha. This is annual area production; it is not the weight of one bunch or a measured age-yield curve for three plants in a banana circle.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "musa-acuminata-aaa-group"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Cultivar, planting and crop cycle",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "musa-acuminata-aaa-group"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The KZN guide gives 13–20 months for both the first planting-to-harvest cycle and subsequent harvest-to-harvest cycles. It lists different commercial densities for Williams, Grand Nain and Chinese Cavendish. A banana circle counts as three planted bananas here; replacement followers are stages of those mats, not extra mapped trees or guaranteed year-round supply.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "musa-acuminata-aaa-group"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Wild olive is distinct from a named commercial olive cultivar. March–July describes fruit following flowers; no exact ripe-picking start/end is established.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "olea-europaea-subsp-africana"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Cultivar and product choice",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "olea-europaea-subsp-europaea"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Frantoio is described as an oil and cross-pollen candidate. Mission suits black table olives and oil; Kalamata black table, Manzanilla and Barouni green table. Climate fit and pollen needs depend on cultivar.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "olea-europaea-subsp-europaea"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Regional orchard budget is not per-tree yield evidence",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "olea-europaea-subsp-europaea"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "This is a historical one-hectare financial model; it does not provide matched per-tree kg or a measured biological maturity curve. No financial values or pesticide recipes are copied.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "olea-europaea-subsp-europaea"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Food is the ripe fruit. Main flowering in autumn/winter and fruit shortly afterwards do not establish named picking months.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "osteospermum-moniliferum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Fruit appearance, not a dated ripe picking interval",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "pappea-capensis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "SANBI describes green fruits that later split to expose edible red flesh. Its December–July fruit-production interval does not state when the fruit is ripe. Retain this as a general southern African phenology reference; local ripe picking months remain unknown.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "pappea-capensis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Hass age benchmarks — irrigated Natal Midlands trial",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "persea-americana"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Hass on Duke 7, initially 200 trees/ha at Bruyns Hill (Natal Midlands bioclimatic group 2), with intensive irrigation and nutrition. Age 3: 10,000 kg/ha; age 6: 20,000 kg/ha; sustainable average about 22,500 kg/ha. Same-study density permits equivalents of 50 kg/tree at age 3 and 100 kg/tree at age 6; there is no reference for every intermediate age. These orchard benchmarks are conditional on good resources, comparable climate and timely orchard management, including Phytophthora control and thinning; do not auto-fill farm quantities.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "persea-americana"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Kakamas phenology is not a picking calendar",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "phoenix-dactylifera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Table is fruit-set-to-maturation duration, not months of ripe harvest. Its separate table lists July–August flowering. Neither becomes a food-availability bar.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "phoenix-dactylifera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Southern Hemisphere reference, awaiting local confirmation",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "phoenix-dactylifera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Broad hemispheric context, not a measured cultivar/site calendar. Kept outside the structured local harvest windows.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "phoenix-dactylifera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Western Cape Medjool ripening and spoilage trial",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "phoenix-dactylifera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "2022 trial at Kleinplasie near Hermon concerns Medjool. Abstract treatment dates label ripening stages inconsistently; no harvest months are inferred. Full university handle returned HTTP 403 during checking.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "phoenix-dactylifera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Producer's own cultivars",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "pistacia-vera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The same questionnaire confirms the nuts are grown on the producer's farm. Cultivar names are reproduced as written; spelling is not a taxonomy or catalogue change.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "pistacia-vera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Prince Albert establishment and maturity expectation",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "pistacia-vera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "An expectation for the newly established Platberg project, not a measured universal age curve. Its planted cultivars are Shufra, Ariyeh and Sirora; irrigated Karoo context retained.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "pistacia-vera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The food is the tart leaf; flowers do not define leaf picking months.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "portulacaria-afra"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Primary food-processing research",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "portulacaria-afra"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The study analyses processed spekboom leaves. Its laboratory method and composition are not a farm harvest rate, storage life or household food-safety recipe.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "portulacaria-afra"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Solitaire winter and pollen context",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "prunus-armeniaca"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Solitaire is listed as self-compatible. Its chilling units are named-cultivar requirements and are not a numeric range for every apricot.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "prunus-armeniaca"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Irrigated Robertson trial context",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "prunus-armeniaca"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The field experiment used managed organic orchards and found trade-offs in mulch effects; it does not justify a universal yield improvement from mulch.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "prunus-armeniaca"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Production at age six",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "prunus-avium"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The guide reports 4–6 kg/tree in year 6 and warns that yields are difficult to predict because of pollination and fruit set. The separate good result at year 8–9 is 9 t/ha. Do not connect them into a made-up growth curve or convert the later hectare result to arbitrary tree spacing.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "prunus-avium"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Chilling and pollen partners",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "prunus-avium"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Conventional commercial cherry reference: more than 1,000 Positive Utah Chill Units, not 1,000 chill hours. Low-chill candidates need their own verified requirements. Most cultivars need compatible cross-pollination; the named self-fertile choices differ. The September flowering reference is not a picking-month array.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "prunus-avium"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Observed Ceres season start",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "prunus-avium"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ceres growers reported the start of the 2025 cherry harvest in late October, seven to ten days earlier than the prior year. This is an observed season in a named region, not a fixed future duration, KZN calendar or all-variety season.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "prunus-avium"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Texas Mission pollen, chill and weight context",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "prunus-dulcis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Texas Mission is classified high chill and names Nonpareil as pollinator. Its 5 kg/tree production entry does not state tree age, management, trial region or whether weight is kernel or in-shell; it is not a mature annual food forecast.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "prunus-dulcis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Texas Mission named production entry",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "prunus-dulcis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The Texas Mission table's Production (kg/tree) row gives 5 kg/tree. It does not state tree age, reporting period, trial region or whether this means kernels or nuts in shell. Retained as a cultivar source claim to investigate; numeric mature annual kg remains null.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "prunus-dulcis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "African Delight yield by orchard age — native hectare unit",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "prunus-salicina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "African Delight: age 3, 12,000–20,000 kg/ha; age 4, 20,000–35,000 kg/ha; mature orchards, 35,000–50,000 kg/ha. Full-bearing age and matched planting density are not stated; do not convert using Ruby Crisp spacing or interpolate a per-tree curve.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "prunus-salicina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ruby Crisp achievable yield — age unspecified",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "prunus-salicina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ruby Crisp achievable output is 30,000 kg/ha. Table 1 on PDF p.5 lists Ruby Crisp trial spacing 4 x 1.25 m and 2,000 trees/ha; the derived equivalent is 15 kg/tree, but the achievable claim is not explicitly the trial measurement or a mature-age benchmark. Keep native kg/ha and the qualification.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "prunus-salicina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "African Delight cultivar chilling reference",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "prunus-salicina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Named requirement only: 200–400 Infruitec Chilling Units. The source data is from Bien Donne, Simondium, Western Cape and may not represent other areas. Confirm local chill, rootstock and pollen compatibility before buying.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "prunus-salicina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Ruby Crisp cultivar chilling reference",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "prunus-salicina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Named requirement only: 400–600 Infruitec Chilling Units. The source data is from Bien Donne, Simondium, Western Cape and may not represent other areas. Confirm local chill, rootstock and pollen compatibility before buying.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "prunus-salicina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Flavour Star cultivar chilling reference",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "prunus-salicina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Named requirement only: 500–600 Infruitec Chilling Units. The source data is from Bien Donne, Simondium, Western Cape and may not represent other areas. Confirm local chill, rootstock and pollen compatibility before buying.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "prunus-salicina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "African Delight named production — age unspecified",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "prunus-salicina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Direct named production reference: 25 kg/tree at 4 × 1.5 m, Bien Donne, Simondium, Western Cape. Tree age and reporting period are not stated, so it is retained as an unaged cultivar reference, not generic annual mature output.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "prunus-salicina"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Rosemarie Select pollen partners",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "pyrus-communis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "These are cultivar-specific compatible-pollen candidates, not a guarantee that any two pear trees pollinate one another.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "pyrus-communis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Packham's Triumph pollen partners",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "pyrus-communis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "SAPO describes chilling qualitatively as low and production as high; neither supplies a numeric age or kg/tree.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "pyrus-communis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Documented food-processing use is leaf bittering",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "rhamnus-prinoides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The Ethiopian gesho-leaf brewing context establishes a specialist processed flavour use, not ordinary fresh fruit nutrition or a South African household recipe. No leaf kg/plant, food storage life or local harvest date is assigned.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "rhamnus-prinoides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South African berry phenology concerns wildlife food",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "rhamnus-prinoides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "December–June berries are documented in the ecology account as wildlife food; this is not a verified human berry-picking window.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "rhamnus-prinoides"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The source gives a ripe-berry interval. This does not establish stored jam months or safe shelf life.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "rhoicissus-digitata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Food is the berry; the same SANBI account reports poisonous tuberous roots. September–June describes berry occurrence, not a measured ripe-picking interval.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "rhoicissus-tridentata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Food-leaf product distinct from essential oil",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "salvia-rosmarinus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The brochure uses the older botanical name Rosmarinus officinalis; catalogue identity is preserved. It documents food seasoning leaves and separate essential oil uses, without a food-leaf yield, first cut age or local picking calendar.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "salvia-rosmarinus"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Edibility is recorded for this exact variety; do not apply the common name boer-bean to every species as food evidence.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "schotia-afra-var-afra"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "September–January describes fruit production; exact ripe-picking dates are not stated. Do not count leaves used as livestock fodder as household food.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "searsia-lancea-rhus-lancea"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Currant fruit food use and phenology",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "searsia-lucida"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The primary account establishes edible ripe fruit and October–June fruit appearance. That interval includes developing fruit and is retained only as phenology, not a ripe picking calendar. No annual food kg or bearing age is supplied.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "searsia-lucida"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Edible Natal currant fruit and local phenology",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "searsia-natalensis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The primary account establishes edible ripe fruit and February–July fruit appearance. That interval includes developing fruit and is retained only as phenology, not a ripe picking calendar. No annual food kg or bearing age is supplied.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "searsia-natalensis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Named traditional dried-fruit food use",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "searsia-undulata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The discussion explicitly includes S. undulata among edible dried ripe currant fruits and traditional fermentation uses. Its host article species calendar is not transferred to S. undulata.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "searsia-undulata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Exact species and habitat",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "searsia-undulata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Assessment identifies the catalogue species and Northern/Western Cape distribution; it does not provide a harvest calendar or food yield.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "searsia-undulata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "SANBI qualifies the food statement; it is about ripe berries, not latex, bark or roots. Fruit presence February–September does not establish ripe picking throughout.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "sideroxylon-inerme"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Species identification in KwaZulu-Natal",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "sideroxylon-inerme"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The primary study records confusion with Bridelia micrantha. It does not supply a safe harvest calendar or kg/tree.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "sideroxylon-inerme"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Harvest interval with unverified South African geography",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "strychnos-spinosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The review states August–December but does not identify a locality for that interval. Related monkey-orange literature discusses this interval in Zimbabwe and more than one Strychnos species; it does not establish a South African spinosa picking calendar. The former South Africa (general) window is withheld. Record the farm's own ripe-pulp months; seeds and unripe pulp are not ordinary food.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "strychnos-spinosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Geography of the review's bearing-age citation",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "strychnos-spinosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The 2021 review cites this Benin study for its 3–5-year bearing-age statement. The cited source's geography is West Africa, not a South African orchard. Retain the review's numeric statement with this condition; no local annual yield curve is supplied.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "strychnos-spinosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Flowering and fruit appearance, not a ripe picking calendar",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "syzygium-cordatum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The original PROTA account dates flowering and fruiting but does not date ripening. SANBI describes red to dark-purple ripe berries without ripe picking months. The November–March observation is retained as southern African phenology; local food-ready picking months remain unknown.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "syzygium-cordatum"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Leaf vegetable harvesting and preparation",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "tetragonia-decumbens"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "New rainy-season growth gives the best tops; wash off coastal sand thoroughly and boil for the documented vegetable preparation. August–November flowering is not leaf availability.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "tetragonia-decumbens"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Young-shoot vegetable use",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "tetragonia-fruticosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The account describes boiling young shoots until tender. September–January flowering is not a shoot harvest calendar; fodder output is not household food kg.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "tetragonia-fruticosa"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Edible bud identity",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "trachyandra-ciliata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Coastal-sand perennial with edible congested flower buds. The stated July–September flowering interval does not identify exact unopened-bud picking months.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "trachyandra-ciliata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Documented young-leaf food use",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "trema-orientalis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The human food product is young leaves. Berries described as bird/bat food are not promoted to a human fruit harvest. No leaf cutting age, exact months or household leaf kg is given.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "trema-orientalis"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Leaves and flowers are documented culinary parts. Medicinal bulb use does not make every part a food.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "tulbaghia-violacea"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Wider fruiting observations, not a ripe picking interval",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "vangueria-infausta"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "This account separately distinguishes green unripe and brown ripe fruit, but its November–April biology sentence does not date that ripening change. The wider interval remains southern African phenology. SANBI's January–April description of ripe edible fruit supplies the food-ready regional reference.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "vangueria-infausta"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Flame Seedless year 4 — Hex River Valley enterprise budget",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "vitis-vinifera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Year 4 commercial budget: 4,400 cartons/ha at 4.5 kg/carton = 19,800 kg/ha. The source does not provide matched vines/ha or row/vine spacing, so no kg/vine is derived. This is a budget assumption for one cultivar and region, not a generic full-bearing age or a local mapped-vine production record.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "vitis-vinifera"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "South African trial harvest duration and native yields",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "zingiber-officinale"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Pretoria Hillcrest rain-shelter trial, 2015/16 and 2016/17, drip irrigation on sandy clay loam. Commercial ginger Z. officinale at eight months: 38.3 t/ha fresh and 8.8 t/ha dry rhizomes in the well-watered treatment; African ginger was a different species with different values. No matched plant density is supplied, so no kg/plant or household drying conversion is derived. The abstract says open field, while Methods specifies rain shelter; conditions are retained.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "zingiber-officinale"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Confirmed culinary species and product",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "zingiber-officinale"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Extension identifies culinary ginger rhizomes used as spice, preserves and beverages. Florida planting and harvest months are not imported into the South African calendar.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "zingiber-officinale"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "Harvest recommendation",
+      "scopes": [
+        "tree-supplementary-title"
+      ],
+      "identities": [
+        "zingiber-officinale"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "The author abstract recommends harvest seven to eight months after planting; it is a rhizome crop-cycle duration, not a full-bearing tree age.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "zingiber-officinale"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    },
+    {
+      "english": "SANBI describes dry, slightly sweet ripe pulp. Fruit remaining on leafless trees March–August is persistence, not a verified six-month picking season.",
+      "scopes": [
+        "tree-supplementary-note"
+      ],
+      "identities": [
+        "ziziphus-mucronata"
+      ],
+      "missingLanguages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ]
+    }
+  ]
+}

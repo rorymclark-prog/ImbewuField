@@ -1,5 +1,5 @@
 {
-  "status": "IN PROGRESS: Unreviewed source-bound care and nursery-advice drafts. Incomplete and not applied. Fluent and agricultural review pending.",
+  "status": "IN PROGRESS: Unreviewed source-bound care and nursery-advice drafts applied locally. Fluent and agricultural review, runtime visual checks and full verification remain pending. Whole app incomplete.",
   "base": "64b39585de1a52139991cbbf4b198c21ace84add",
   "plannedSourceCount": 91,
   "rows": [
@@ -2099,13 +2099,14 @@
       ]
     }
   ],
-  "applied": false,
+  "applied": true,
   "review": {
     "fluent": "pending",
     "agricultural": "pending",
-    "runtime": "not applied",
-    "fullSuite": "not started",
-    "draftSourceProbe": "Passed91complete bindings /34existingidentities,1465runtime registry rows and all8source modules unchanged,102wholeguide+102purchasingstates unchanged. Cultivar/scientific terms,units,calendar-month identities and cultivarDecember checked. Not applied; no fluent approval."
+    "runtime": "Applied locally.226affectedtests18files andNode24tsc/diff pass. Actual272expandedphone+16desktop+8EN/xxcontrols+6switches preserve allprovidedcontexts andwholemarkupoutside91boundparagraphs;0callbacks0overflow. Actual12PDFs125pages54435bounds1400wholeguideclauses364care/purchasebindingoccurrencespass,ENcontrolpixelstextexact. Completecherry/shadephoneandprovenance/peardesktopcontactsseen. PDFvisualcontact/prioritypageinspection andrequiredfullsuitepending.",
+    "fullSuite": "not started; finish PDF visual review and evidence packaging before freezing.",
+    "draftSourceProbe": "Passed91complete bindings /34existingidentities,1465runtime registry rows and all8source modules unchanged,102wholeguide+102purchasingstates unchanged. Cultivar/scientific terms,units,calendar-month identities and cultivarDecember checked. Not applied; no fluent approval.",
+    "focused": "87465TERMINALPASSED226tests18files,tsc/diff0. Earlier94257failed222pass4helper-profile-scopefailures; allassertionsretained andmandatorybindingprofilerulecorrected. Reproducedoldparentwhole-guideexpectationfailurebeforeextendingdeclaredcarelayer."
   },
   "monthBindings": [
     {
@@ -3068,6 +3069,36 @@
         "ts": "ntlhanu",
         "ve": "miṱanu"
       }
+    }
+  ],
+  "releaseCopy": [
+    {
+      "english": "Tree care and nursery advice now have four-language draft translations.",
+      "zu": "Ukunakekelwa kwezihlahla nezeluleko zezinkulisa manje kunemibhalo yokuhumusha ngezilimi ezine.",
+      "st": "Tlhokomelo ya difate le keletso ya ditsi tsa dimela jwale di na le diphetolelo tsa pele tsa dipuo tse nne.",
+      "ts": "Nhlayiso wa mirhi ni switsundzuxo swa tindhawu to kurisa swimilana sweswi swi ni swikiro swa vuhundzuluxeri bya tindzimi ta mune.",
+      "ve": "Ndondolo ya miri na nyeletshedzo ya neseḽi zwino zwi na mvetamveto ya ṱhalutshedzo nga nyambo nṋa."
+    },
+    {
+      "english": "Original food-use cautions and source conditions stay in the advice.",
+      "zu": "Izixwayiso zokuqala zokusetshenziswa njengokudla nemibandela yemithombo kuhlala ezelulekweni.",
+      "st": "Ditemoso tsa pele tsa tshebediso e le dijo le dipehelo tsa mehlodi di dula keletsong.",
+      "ts": "Switsundzuxo swo sungula swa ku tirhisiwa tani hi swakudya ni swipimelo swa swihlovo swi sala eka switsundzuxo.",
+      "ve": "Nyeletshedzo dza u thoma dza u shumiswa sa zwiḽiwa na nyimele dza zwiko zwi dzula kha nyeletshedzo."
+    },
+    {
+      "english": "Review tree care drafts",
+      "zu": "Buyekeza imibhalo yokunakekelwa kwezihlahla",
+      "st": "Hlahloba dingolwa tsa pele tsa tlhokomelo ya difate",
+      "ts": "Kambisisa swikiro swa nhlayiso wa mirhi",
+      "ve": "Sedzulusani mvetamveto ya ndondolo ya miri"
+    },
+    {
+      "english": "Read the full care and buying advice. Check the English before acting.",
+      "zu": "Funda izeluleko eziphelele zokunakekela nokuthenga. Hlola isiNgisi ngaphambi kokwenza.",
+      "st": "Bala keletso e felletseng ya tlhokomelo le ho reka. Hlahloba Senyesemane pele o etsa.",
+      "ts": "Hlaya switsundzuxo leswi heleleke swa nhlayiso ni ku xava. Kambela Xinghezi u nga si endla.",
+      "ve": "Vhalani nyeletshedzo yo fhelelaho ya ndondolo na u renga. Ṱolani Luisimane musi ni sa athu ita."
     }
   ]
 }

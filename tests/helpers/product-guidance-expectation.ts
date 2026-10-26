@@ -53,6 +53,12 @@ export function translateAdditionalProductPresentation(expected:Guide,original:G
     assert.equal(sourceLine,productGuideText(template,'en',{range:formatRange(reference.value),note}));return t(template,{range:formatRange(reference.value),note:t(note)});
    }
    for(const row of patterns){const found=row.regex.exec(sourceLine);if(!found)continue;const values:Record<string,string>=Object.fromEntries(row.keys.map((key,i)=>[key,found[i+1]]));
+    if(values.advice){
+     assert.equal(group,'foodForest','buying advice belongs only to a captured tree purchase field');
+     const h=context.trees[index].harvest,profile=PRODUCT_PROFILES[h.speciesId]??h.productionGuidance;
+     assert.ok(profile?.purchase.includes(values.advice),'a private word or another clause cannot acquire a public buying translation');
+     values.advice=t(values.advice);
+    }
     if(values.products){
      assert.equal(group,'foodForest','product descriptions belong only to typed tree guide fields');
      const h=context.trees[index].harvest,profile=PRODUCT_PROFILES[h.speciesId]??h.productionGuidance,product=profile?.products??h.product;
