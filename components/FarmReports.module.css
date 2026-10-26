@@ -1,0 +1,9 @@
+.root{padding:0;min-height:0;border:1px solid var(--border);border-radius:16px;overflow:visible;background:var(--bg-1)}
+.root .toggle{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:16px 20px;border:0;background:transparent;min-height:64px;color:var(--text-primary)}
+.toggle > span{display:flex;flex:1;flex-direction:column;gap:4px}.toggle strong{font-size:16px}.toggle small{font-size:13px;color:var(--text-secondary)}.toggle > svg:first-child{color:var(--emerald);flex-shrink:0}.up{transform:rotate(180deg)}
+.root > div{padding:20px;padding-bottom:16px;border-top:1px solid var(--border)}
+.root header h2{font:500 clamp(28px,4vw,40px)/1.15 var(--font-display),Georgia,serif;margin:8px 0 12px;letter-spacing:-.02em}.root header p{font-size:15px}
+.root .choices{grid-template-columns:repeat(2,minmax(0,1fr))}.root label select{width:min(100%,340px)}
+.root a{display:inline-flex;align-items:center;min-height:44px;color:var(--emerald);font-size:14px;padding:8px;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:700px){.root > div{padding:12px}.root .toggle{padding:14px}.root .choices{gap:10px}.root .choices button{min-height:84px}.root .choices strong{font-size:20px}}
+@media print{.toggle,.root header{display:none}.root{border:0}.root > div{padding:0;border:0}}

@@ -63,6 +63,7 @@ import {
 import { APP_HEADER_INSET } from '@/lib/app-header';
 import RecordQuantityFields from '@/components/records/RecordQuantityFields';
 import RecordQuantitySummary from '@/components/records/RecordQuantitySummary';
+import FarmReports from '@/components/FarmReports';
 import { recordQuantity, recordUnit, recordQuantityPayload, recordWeightKg, quantityTotals, type RecordUnit } from '@/lib/farm-records';
 import { parseDecimalInput } from '@/lib/decimal-input';
 import { recordsFill, recordsPaired, recordsTemplate, recordsQuantityLabel, isRecordsRegionalLang, recordsDraftNotice } from '@/lib/records-regional-drafts';
@@ -269,12 +270,12 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
             </>
           ) : (
             <>
-              <p
+              <div
                 className="font-display font-bold text-sm leading-tight whitespace-nowrap"
                 style={{ color: 'var(--color-ink)' }}
               >
                 {card.value}
-              </p>
+              </div>
               <p className="text-xs leading-tight break-words hyphens-auto min-w-0" style={{ color: 'var(--color-muted-strong)' }}>
                 {card.label}
               </p>
@@ -1644,6 +1645,7 @@ export default function RecordsPage() {
         ) : (
           <>
             <LanguageDraftNote lang={lang} scope="records" />
+            <FarmReports key={sampling ? 'sample' : user?.uid} production={production} sales={sales} expenses={expenses} invoices={invoices} sample={sampling} loading={dataLoading} readError={listError} online={online} onRetry={() => { void loadData(); }} />
 
             {/* THE ANSWER, ABOVE THE TABS.
                 "She cannot answer how much did I make this season" was the finding, and a number

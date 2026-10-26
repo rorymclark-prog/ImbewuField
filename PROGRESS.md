@@ -52,6 +52,20 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+- **2026-10-26 — Stacked site-report compatibility (Codex).** #1101 carries prerequisite `6bf5396b4` and current main `201d57f5f`; market/date/soil and selling-intent code is unchanged from `9ddf7d399`. Typecheck clean, 439 focused checks pass, whitespace clean. [Current audit and verification scope](docs/audits/2026-10-26/site-report-role-integration-codex.md). Fresh full CI/preview is required; older green runs remain source-specific checkpoints.
+
+- **2026-10-26 — Site reports with published role reports (Codex).** Continued from the verified #1099/#1101 heads. Main now includes #1100, #1121 and wave 23; retain their record-based period comparisons, donor metadata and report typography alongside site potential, complete site plans, annual products and Record plan. Conflicts are audit/progress/release history only. [Dated integration audit](docs/audits/2026-10-26/site-report-role-integration-codex.md); fresh combined checks/preview required. Existing field/language/device limits remain.
+
+### 26 Oct 2026 — Wave 23: re-capture of 98c8a22, isiZulu Home date regression fixed first
+- **Re-capture:** the wave 22 script on the live build (Codex's #1100 reports on top of wave 22), clock two days on,
+  plus click-through captures of the new report workspaces and hand-read contact sheets —
+  `docs/audits/2026-10-26/wave-23-recapture-claude.md` (`w23-01`…`w23-07`). Automated pass clean.
+- **w23-01 (regression from w22-01):** isiZulu Home read "HOMEWEEKDAYWED · 28 HOMEMONTHOCT" — the date effect ran before
+  the lazily loaded dictionary. Now computed during render behind a mounted flag; shipped on its own.
+- **Report previews (follow-up PR):** figures in Newsreader that no longer break mid-number on phones, the isiZulu draft
+  note styled in both report layouts, one partner per line on phones. `w23-02` (R1 income rounding) and `w23-06` handed to
+  Codex — both sit in files its open #1121 is changing.
+
 - **2026-10-25 — Stacked wave 22 report verification (Codex).** #1101 carries prerequisite `61b110d47` and main `cfb75437c`; its survey/report source is unchanged from the fully tested `4b88d5559`. Typecheck clean, 323 focused checks pass, whitespace clean. Final combined CI/preview results belong in the [integration handover](docs/audits/2026-10-25/site-report-main-integration-codex.md) and PR/issue #35, preserving all earlier evidence and limits.
 
 - **2026-10-25 — Wave 22 report integration (Codex).** All four preceding report test/rules CI runs passed (5,562 / 5,572 passing tests plus the existing TODO). Main then advanced to `cfb75437c`; reconciled audit/progress/release histories without changing report logic. [Current integration record](docs/audits/2026-10-25/site-report-main-integration-codex.md). Read final PR/issue #35 results for the refreshed heads.

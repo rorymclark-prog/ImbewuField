@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '25 October 2026', sha: '5f64d1fe5', changes: [
+  { when: '26 October 2026', sha: '6069e0207', changes: [
     'Market notes keep their source and date. Selling plans stay separate from recorded sales.',
     'Full report headers keep unsourced soil values unknown.',
     'Survey and reports now show crops, food-forest and animal products through the year.',
@@ -53,6 +53,36 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     { title: 'Open Design Studio', where: 'Menu → Design Studio', href: '/design',
       detail: 'Open Preview & export, then Record plan for the scaled diagram and its legend.' }] },
 
+  { when: '26 October 2026', sha: '12aee61ba', changes: [
+    'Farm reports compare past months, seasons and years using your recorded entries.',
+    'Visit, training and programme reports compare recorded delivery across periods.',
+    'MEL reports compare dated readings and include agreed donor indicator details.',
+    'Donor evidence, missing records and current snapshots stay clear in every PDF.',
+  ], tour: [{ title: 'Compare farm periods',
+    where: 'My records → Production & finance reports', href: '/records',
+    detail: 'Choose a historical date and compare the previous period or last year.',
+  }, { title: 'Review donor evidence',
+    where: 'Organisation → Reports → MEL evidence', href: '/ngo',
+    detail: 'Compare milestone dates and review linked donor definitions and evidence.',
+  }] },
+  { when: '26 October 2026', sha: '98c8a22e', changes: [
+    'Home shows today\'s date in isiZulu again instead of placeholder words.',
+  ] },
+  { when: '25 October 2026', sha: 'becd2a958', changes: [
+    'Farmers can download production and finance reports from My records.',
+    'Mentors and facilitators have reports for visits, training, feedback and follow-up.',
+    'MEL reports compare matched responses and show evidence dates and missing data.',
+    'Reports share full, brief and ink-saving layouts; funders see published evidence.',
+  ], tour: [{ title: 'Open your farm reports',
+    where: 'My records → Production & finance reports', href: '/records',
+    detail: 'Choose production or finances, set the period and download the matching PDF.',
+  }, { title: 'Review visits and training',
+    where: 'Mentor → Field report or Training', href: '/mentor',
+    detail: 'Review follow-up actions or open the facilitator delivery report in Training.',
+  }, { title: 'Review MEL evidence',
+    where: 'Organisation → Reports → MEL evidence', href: '/ngo',
+    detail: 'Choose a project, assessment and compatible earlier stage to review matched change.',
+  }] },
   { when: '25 October 2026', sha: '8d2e1a9a', changes: [
     'Home and Invoice open faster and no longer redraw the day after an update.',
     'On a computer the Lima button sits bottom-right and no longer hides buttons.',
