@@ -1,0 +1,60 @@
+{
+  "startedAt": "2026-10-26T00:32:46.549941+00:00",
+  "pid": 95928,
+  "base": "70cb1d26d18fbe281818fa9efe5bc1c94817a444",
+  "branch": "codex/four-language-animal-care",
+  "tmpdir": "/private/tmp/imbewufield-animal-care-whole-guide-rule-20261026-jr9ah4eb",
+  "frozenInputs": 1699,
+  "registeredTestFiles": 569,
+  "commands": [
+    {
+      "name": "typecheck",
+      "command": [
+        "npx",
+        "tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "test",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "status": "passed",
+  "current": "diff",
+  "endedAt": "2026-10-26T01:55:10.078073+00:00",
+  "changedFrozenInputs": [],
+  "currentSourceCheckpoint": "abbd927bdc1aa01ca559dcb252bf39dbf75f62d4",
+  "totalTests": 5843,
+  "passing": 5842,
+  "failing": 0,
+  "existingTodo": 1,
+  "todoReason": "Existing shape-sync-loss listener-race TODO; unrelated to this translation batch. No test disabled or removed.",
+  "frozenInputCount": 1699,
+  "frozenManifestSha256": "9a14da2fcdf15a0d83432a7e236186565f382de02e89e3708b0c31a33de9c224",
+  "frozenInputsStillExactAfterNotesDeliveryAlignment": true,
+  "earlierRun": {
+    "status": "failed",
+    "passing": 5840,
+    "failing": 1,
+    "todo": 1,
+    "failedClaim": "The older whole-guide native expectation pinned all animal care prose to English.",
+    "repair": "Only complete original typed care fields receive their source-bound drafts; whole-object, citations, ordered values, inventory and remaining-source assertions are retained, with independent missing-care, clipped-condition, swapped-limit and replaced-citation counterexamples."
+  },
+  "publicationScope": "Animal care only:44unique complete welfare statements and3care UI labels/notices. Remaining whole-app and language review work is not complete.",
+  "baseAlignment": "Merged notes delivery937f4cac; only two new notes delivery documents. All1699frozen inputs remain exact."
+}
