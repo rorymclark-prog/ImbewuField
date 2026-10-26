@@ -17,3 +17,7 @@ Actual browser272phone+16desktop+8EN/xxcontrols+6switches preserve suppliedvalue
 [Applied progress and limits](../../translation/four-language-completion/evidence/tree-care/APPLIED-IN-PROGRESS.md). Sourcefixtureimmutable. No species, source lessons/quizzes, geometry, farming figure, sourceURL, paidcall, merge/deploy or PLAN_VERSION changes. This changes the picture; printed visual result still pending review.
 
 Next:inspect already-rendered8nativecontacts+12prioritypages, package actual evidence, freeze finalsource once and run requiredNode24tsc/fullnpmtest/diff in order. Do not restart live parent fullrun5376 dueelapsedtime. Read actual terminal/CI outcomes before finished/green claims.
+
+## Completed printed visual inspection
+
+All eight native PDF contacts and twelve enlarged actual pages were inspected after the partial checkpoint above. Cherry conditions, the literal December cultivar and the five-year shade caveat are complete and readable in all four languages, with no overlap or cut-off observed. [Current runtime evidence](../../translation/four-language-completion/evidence/tree-care/runtime/README.md) supersedes PDF-visual-pending status above; full ordered verification, CI, integration and language/agricultural review remain pending. All source/geometry/species/figure guards remain unchanged.

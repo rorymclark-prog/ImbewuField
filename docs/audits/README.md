@@ -16,7 +16,7 @@ is historical; it does not describe the current release status.
 
 ## Crop and production planning: start here
 
-Latest care/nursery translation continuation:[26October2026](2026-10-26/tree-care-nursery-drafts.md).91complete clauses applied as unreviewed drafts;PDFvisual/fullsuite pending.
+Latest care/nursery translation continuation:[26October2026](2026-10-26/tree-care-nursery-drafts.md).91 complete clauses applied as unreviewed drafts; printed visual inspection complete, full suite pending.
 
 Latest tree-product translation continuation: [26 October 2026](2026-10-26/tree-product-description-drafts.md).21 complete product descriptions applied as unreviewed drafts; full suite pending.
 

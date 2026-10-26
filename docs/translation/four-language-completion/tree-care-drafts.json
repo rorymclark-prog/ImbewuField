@@ -2103,8 +2103,8 @@
   "review": {
     "fluent": "pending",
     "agricultural": "pending",
-    "runtime": "Applied locally.226affectedtests18files andNode24tsc/diff pass. Actual272expandedphone+16desktop+8EN/xxcontrols+6switches preserve allprovidedcontexts andwholemarkupoutside91boundparagraphs;0callbacks0overflow. Actual12PDFs125pages54435bounds1400wholeguideclauses364care/purchasebindingoccurrencespass,ENcontrolpixelstextexact. Completecherry/shadephoneandprovenance/peardesktopcontactsseen. PDFvisualcontact/prioritypageinspection andrequiredfullsuitepending.",
-    "fullSuite": "not started; finish PDF visual review and evidence packaging before freezing.",
+    "runtime": "Verified isolated actual browser and PDFs; all eight native contacts and twelve enlarged actual PDF pages inspected. See evidence/tree-care/runtime/verification.json. Not a fluent or production-route approval.",
+    "fullSuite": "pending: final runtime evidence now packaged before required source freeze",
     "draftSourceProbe": "Passed91complete bindings /34existingidentities,1465runtime registry rows and all8source modules unchanged,102wholeguide+102purchasingstates unchanged. Cultivar/scientific terms,units,calendar-month identities and cultivarDecember checked. Not applied; no fluent approval.",
     "focused": "87465TERMINALPASSED226tests18files,tsc/diff0. Earlier94257failed222pass4helper-profile-scopefailures; allassertionsretained andmandatorybindingprofilerulecorrected. Reproducedoldparentwhole-guideexpectationfailurebeforeextendingdeclaredcarelayer."
   },
@@ -3100,5 +3100,6 @@
       "ts": "Hlaya switsundzuxo leswi heleleke swa nhlayiso ni ku xava. Kambela Xinghezi u nga si endla.",
       "ve": "Vhalani nyeletshedzo yo fhelelaho ya ndondolo na u renga. Ṱolani Luisimane musi ni sa athu ita."
     }
-  ]
+  ],
+  "evidence": "evidence/tree-care/runtime/README.md"
 }

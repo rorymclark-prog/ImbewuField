@@ -1,0 +1,84 @@
+{
+  "createdAt": "2026-10-26T06:12:30.551328+00:00",
+  "status": "Unreviewed drafts; required ordered full suite pending. Whole-app goal incomplete.",
+  "sourceClauses": 91,
+  "nativeDrafts": 364,
+  "typedFields": {
+    "care": 55,
+    "purchase": 36
+  },
+  "existingIdentities": 34,
+  "inheritedRegistryRowsExact": 1465,
+  "combinedRegistryRows": 1556,
+  "focused": {
+    "tests": 226,
+    "pass": 226,
+    "fail": 0,
+    "files": 18,
+    "typecheck": 0,
+    "diff": 0
+  },
+  "browser": {
+    "status": "passed",
+    "rows": {
+      "phone": {
+        "states": 272,
+        "pairs": 136,
+        "completeNativeCarePurchaseFields": 364
+      },
+      "desktop": {
+        "states": 16,
+        "pairs": 8,
+        "completeNativeCarePurchaseFields": 20
+      },
+      "englishPhone": {
+        "states": 8,
+        "pairs": 4,
+        "completeNativeCarePurchaseFields": 0
+      }
+    },
+    "nativePairs": 144,
+    "languageSwitches": 6,
+    "allExpanded": true,
+    "providedContextsUnchanged": true,
+    "callbackEvents": 0,
+    "horizontalOverflows": 0,
+    "wholeMarkup": "Only complete typed care/purchase paragraphs change; all English/unsupported markup stays exact.",
+    "visualInspection": "Both complete four-language phone-card contacts (cherry and shade caveat), both four-language desktop contacts (provenance and pear) and all eight native PDF contacts/twelve enlarged actual pages inspected. Layout/glyph visibility only; no fluent approval.",
+    "cleanup": "Temporary tab12 closed; viewport override reset; GET-only server95588 stopped.",
+    "limits": "Actual unchanged component and real React/Lucide with generated complete guides and synthetic parents. No full account route, backend save, physical device, current legal permission or language approval."
+  },
+  "PDF": {
+    "comparisons": [
+      {
+        "case": "care-a",
+        "sameText": true,
+        "samePixels": true
+      },
+      {
+        "case": "care-b",
+        "sameText": true,
+        "samePixels": true
+      }
+    ],
+    "totalPDFs": 12,
+    "totalPages": 125,
+    "totalWordBounds": 54435,
+    "completeGuideClauses": 1400,
+    "completeCarePurchaseFieldOccurrences": 364,
+    "visualInspection": "All eight native PDF contacts and twelve enlarged priority pages were inspected. No overlap, cut-off or stranded final condition observed. Complete cherry, literal December cultivar and five-year shade clauses remain readable. Browser phone and desktop contacts were already inspected. Visual layout/glyph inspection does not establish fluent-speaker, agricultural, current-permission, production-route or physical-device approval. Supplementary research and component headings remain partly English."
+  },
+  "fullSuite": "pending",
+  "CI": "not pushed",
+  "review": {
+    "fluent": "pending",
+    "agricultural": "pending",
+    "currentMainIntegration": "pending",
+    "fullAccountProductionRoute": "unverified"
+  },
+  "remainingBounded801SourceInventory": {
+    "proseCandidates": 136,
+    "classificationCandidates": 3,
+    "notWholeAppPercentage": true
+  }
+}

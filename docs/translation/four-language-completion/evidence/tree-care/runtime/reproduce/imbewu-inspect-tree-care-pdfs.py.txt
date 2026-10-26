@@ -1,0 +1,41 @@
+from pathlib import Path
+from PIL import Image,ImageDraw
+import subprocess,json,hashlib,unicodedata,xml.etree.ElementTree as ET
+root=Path.cwd();folder=root/'output/tree-care-qa/pdf';generation=json.loads((root/'output/tree-care-qa/generation.json').read_text());flat=lambda s:''.join(unicodedata.normalize('NFC',s).replace('≥','>=').replace('≤','<=').replace('→','->').split());rows=[]
+for entry in generation['rows']:
+ pdf=folder/entry['file'];out=folder/pdf.stem;out.mkdir(exist_ok=True)
+ for stale in out.glob('page-*.png'):stale.unlink()
+ run=subprocess.run(['pdftoppm','-r','65','-png',str(pdf),str(out/'page')],capture_output=True,text=True);assert run.returncode==0 and not run.stderr.strip(),run.stderr
+ pages=sorted(out.glob('page-*.png'),key=lambda p:int(p.stem.split('-')[-1]));grid=Image.new('RGB',(1520,((len(pages)+1)//2)*600),'#eeeae1');draw=ImageDraw.Draw(grid)
+ for i,p in enumerate(pages):
+  im=Image.open(p).convert('RGB');im.thumbnail((748,572));x=i%2*760;y=i//2*600;grid.paste(im,(x+6,y+22));draw.text((x+8,y+5),p.name,fill='black')
+ grid.save(folder/(pdf.stem+'-contact.png'))
+ # Smaller contact parts let each page actually be inspected without one huge image being downscaled.
+ for first in range(0,len(pages),4):
+  part=Image.new('RGB',(1200,1720),'#eeeae1');d=ImageDraw.Draw(part)
+  for j,p in enumerate(pages[first:first+4]):
+   im=Image.open(p).convert('RGB');im.thumbnail((586,825));x=j%2*600;y=j//2*860;part.paste(im,(x+7,y+25));d.text((x+8,y+5),pdf.stem+' '+p.name,fill='black')
+  part.save(folder/(pdf.stem+f'-contact-part-{first//4+1}.png'))
+ parsed=subprocess.run(['pdftotext','-bbox',str(pdf),'-'],capture_output=True,text=True);assert parsed.returncode==0 and not parsed.stderr.strip(),parsed.stderr
+ xml=ET.fromstring(parsed.stdout);bad=[];words=0
+ for i,page in enumerate(xml.findall('.//{*}page')):
+  for word in page.findall('.//{*}word'):
+   words+=1;a={k:float(word.attrib[k])for k in ['xMin','xMax','yMin','yMax']}
+   if a['xMin']<12 or a['xMax']>float(page.attrib['width'])-12 or a['yMin']<12 or a['yMax']>float(page.attrib['height'])-12:bad.append({'page':i+1,'word':word.text,**a})
+ text=subprocess.check_output(['pdftotext','-layout',str(pdf),'-'],text=True);(folder/(pdf.stem+'.txt')).write_text(text);checked=0
+ if entry['language']!='en':
+  guide=entry['guide'];clauses=[guide['area']]+[s for group in ['siteObservations','recordedProduction','cropChoices','foodForest','animalProducts']for item in guide.get(group,[])for s in [item['title'],*item['lines']]]
+  for clause in clauses:assert flat(clause) in flat(text),(pdf.name,'incomplete whole guide clause',clause);checked+=1
+  for clause in entry['expectedCareClauses']:assert flat(clause) in flat(text),(pdf.name,'missing complete care/purchase field',clause)
+  pageTexts=text.split('\f');legalCounts={}
+  for clause in entry['expectedCareClauses']:legalCounts[flat(clause)]=legalCounts.get(flat(clause),0)+1
+  for clause,required in legalCounts.items():assert sum(flat(page).count(clause)for page in pageTexts)>=required,(pdf.name,'complete care/purchase condition split or missing',required,clause)
+  counts={}
+  for clause in clauses:counts[flat(clause)]=counts.get(flat(clause),0)+1
+  for clause,required in counts.items():assert flat(text).count(clause)>=required,(pdf.name,'repeated field missing',clause,required)
+ assert not bad,(pdf.name,bad)
+ rows.append({'file':pdf.name,'language':entry['language'],'version':entry['version'],'pages':len(pages),'wordBounds':words,'clipped':bad,'parserErrors':parsed.stderr.strip(),'completeGuideClauses':checked,'completeCarePurchaseFieldOccurrences':len(entry['expectedCareClauses']) if entry['language']!='en' else 0,'pixelHashes':[hashlib.sha256(Image.open(p).tobytes()).hexdigest()for p in pages],'PDFSha256':hashlib.sha256(pdf.read_bytes()).hexdigest()})
+comparisons=[]
+for group in ['care-a','care-b']:
+ a=next(x for x in rows if x['file']==f'en-before-{group}.pdf');b=next(x for x in rows if x['file']==f'en-after-{group}.pdf');sameText=(folder/f'en-before-{group}.txt').read_text()==(folder/f'en-after-{group}.txt').read_text();samePixels=a['pixelHashes']==b['pixelHashes'];assert sameText and samePixels;comparisons.append({'case':group,'sameText':sameText,'samePixels':samePixels})
+result={'scope':generation['scope'],'rows':rows,'comparisons':comparisons,'totalPDFs':len(rows),'totalPages':sum(r['pages']for r in rows),'totalWordBounds':sum(r['wordBounds']for r in rows),'completeGuideClauses':sum(r['completeGuideClauses']for r in rows),'completeCarePurchaseFieldOccurrences':sum(r['completeCarePurchaseFieldOccurrences']for r in rows),'visualInspection':'Pending actual contact-sheet and enlarged-page inspection. Text and bounds checks cannot establish visual quality.'};(root/'output/tree-care-qa/inspection.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n');print(json.dumps({k:v for k,v in result.items() if k not in ['rows','scope']},ensure_ascii=False))
