@@ -32,7 +32,7 @@
 // All the numbers come from lib/crop-export-benchmark.ts. Nothing in this file
 // computes a quantity — it only decides what things look like.
 
-import { cropExportText, cropPreservedMethodText, cropProductionIssueText, cropProjectionPeriodText, cropProjectionDetailText, cropProjectionAgeText, cropPoultryGuidance } from './crop-export-copy';
+import { cropExportText, cropPlanNoteText, cropPreservedMethodText, cropProductionIssueText, cropProjectionPeriodText, cropProjectionDetailText, cropProjectionAgeText, cropPoultryGuidance } from './crop-export-copy';
 import { isStapleCropKey } from '@/lib/staple-crops';
 import { numberLabel } from '@/lib/format-figures';
 import type { CropTask, FoodAvailabilityItem, PlanBed, Planting } from '@/lib/crop-plan';
@@ -802,8 +802,9 @@ function drawNativeDashboard(
       s.font(9.5);
       const lines = s.doc.splitTextToSize(s.safe(paragraph), s.contentWidth - 16) as string[];
       const wholeH = lines.length * 13.3 + 4;
-      // Short cautions belong with their conditions, not a trailing line on another sheet.
-      if (wholeH <= s.height / 2 && !s.fits(wholeH)) { s.page('portrait'); continued(); heading(true); }
+      // The native note proof left the final maize-layout condition alone on the next page:
+      // capacity below reserves 8pt, while wholeH includes only 4pt. Match that same room.
+      if (wholeH <= s.height / 2 && !s.fits(wholeH + 4)) { s.page('portrait'); continued(); heading(true); }
       let offset = 0;
       while (offset < lines.length) {
         const capacity = Math.floor((s.bottom - s.y - 8) / 13.3);
@@ -874,9 +875,14 @@ function drawNativeDashboard(
     const intro = input.planNotesAt
       ? copy('From the plan suggested in {date}. Anything changed by hand since is not described here.', { date: planNotesDateLabel(input.planNotesAt, s.language) })
       : copy('From the suggested plan that was accepted. Anything changed by hand since is not described here.');
-    block(copy('How this plan was put together'), [intro]);
+    block(copy('How this plan was put together'), [intro, copy('Saved plan-note translations are unreviewed drafts. Original English is available below each translated note. Notes that have not been translated stay in English.')]);
     for (const kind of PLAN_NOTE_PANEL_ORDER) {
-      const body = input.planNotes.filter(note => note.kind === kind).map(note => note.text);
+      const body = input.planNotes.filter(note => note.kind === kind).map(note => {
+        const text = cropPlanNoteText(note.text, s.language, note);
+        const originalOnly = text === copy('Original saved plan note: {note}', { note: note.text });
+        // A source-only last page made the draft and its check impossible to read together.
+        return originalOnly ? text : text + '\n' + copy('Original English plan note') + ': ' + note.text;
+      });
       if (body.length) block(copy(PLAN_NOTE_PANEL_TITLES[kind]), body);
     }
   }

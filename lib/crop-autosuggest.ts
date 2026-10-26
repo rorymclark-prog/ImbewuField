@@ -3675,9 +3675,10 @@ function reportStillRestingBeds(
  * Why a staple plot rests, in the farmer's terms. Deliberately says what the
  * planner WILL NOT do and why, rather than implying a setting would fix it.
  */
+// An entirely unplanted plot also reaches this explanation; only a used course can bar a second staple.
 const PLOT_REST_EXPLANATION = 'A staple plot grows one crop across the whole '
-  + 'block, and its course for the year is already spent, so no second staple '
-  + 'may follow it and no declared winter cover reaches those months. A '
+  + 'block. Once its course for the year is used, no second staple may follow '
+  + 'it. No declared winter cover reaches these months. A '
   + 'vegetable crop could cover them, but the planner will not put a vegetable '
   + 'on a traced field on its own — planted at full block width that is a '
   + 'sizeable commitment, so it is left as your decision. Sowing one by hand, '

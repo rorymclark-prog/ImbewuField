@@ -1,0 +1,16 @@
+{
+  "parent": "17d6f047d7fe918c8ebda5fda5f22ecd4d3490bd",
+  "sourceCaptureBase": "9f34866fa14ebd216cbe8c513bf70962d60534ba",
+  "unchangedPresentationFunctions": "Every full after-source in presentationChanges remains present verbatim after alignment. PDF renderer, formatter and both planner modules match their prealignment SHA256 values. Both inherited page preservation guards and independent note model tests pass.",
+  "unchangedFiles": {
+    "lib/crop-autosuggest.ts": "290504d964a3da5d86675ad1ff8129fcaa7c91bcbf1389062a6be3a57c3968fd",
+    "lib/crop-plan-ideal.ts": "d5ce72fe37f993961c180525a97a6e9f8e99d6072b6efff03f2fde8c71765e2a",
+    "lib/crop-export-copy.ts": "e91dbdad7e17da934ab54bf8c29ff6c11ca06b045e199369b19a1107c4ce469a",
+    "lib/crop-export-pdf.ts": "654b625c0190303166736ffc02542dd9bfa74d6f11d9413bef20bb521bbace9f"
+  },
+  "ownRows": 40,
+  "parentRows": 1119,
+  "combinedRows": 1159,
+  "browserScope": "Actual isolated AcceptedPlanNotesCard/PlanNoteGroups/SavedPlanNote components with substituted language hook, existing compiled common CSS and system fonts. Synthetic source-bound scenarios; no-area and plots cards use the complete actual planner result, while choice and vines are source-message examples. Native PDFs include20complete source notes:4real catalogue missing-window examples,10saved-space variants,5helper/basis messages and the corrected actual plot-rest explanation. English/unsupported controls use8mixed-kind representative notes. Full production/account route and linguistic approval remain unverified.",
+  "fullSuite": "Pending; no full-branch success claim."
+}

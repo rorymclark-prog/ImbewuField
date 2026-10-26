@@ -1,3 +1,4 @@
+import { cropByKey } from './crop-catalog';
 import type { PoultryGuidance } from './animal-enterprises';
 import { CROP_EXPORT_COPY } from './crop-export-copy-data';
 import { recordsMonthShort } from './records-months';
@@ -98,4 +99,52 @@ export function cropPoultryGuidance(source: PoultryGuidance, language = 'en'): P
     options: source.options.map(option => ({ ...option, name: option.kind === 'management-system' ? authored(option.name) : option.name, detail: authored(option.detail) })),
     localCheck: authored(source.localCheck),
   };
+}
+
+const planNoteSources = new Set<string>(copyRows.filter(row => (row.generatedScope === 'plan-note' || row.generatedScope === 'plan-note-authored')).map(row => row.english));
+const planNoteFrames = new Map<string, string>(copyRows.filter(row => row.generatedScope?.startsWith('plan-note-') && row.generatedScope !== 'plan-note-calendar').map(row => [row.generatedScope!, row.english]));
+const planNoteCalendars = copyRows.filter(row => row.generatedScope === 'plan-note-calendar').map(row => row.english);
+type SavedPlanNoteContext = Readonly<{ unplacedCropKeys?: readonly string[]; bedIds?: readonly string[] }>;
+
+/** Saved reasons describe the accepted snapshot; never rebuild them from today's edited plan. */
+export function cropPlanNoteText(source: string, language = 'en', context?: SavedPlanNoteContext): string {
+  if (!isCropExportDraftLanguage(language)) return source;
+  if (planNoteSources.has(source)) return cropExportText(source, language);
+  const rest = planNoteFrames.get('plan-note-rest-year-one'), reason = planNoteFrames.get('plan-note-plot-rest-reason');
+  if (rest && reason && Array.isArray(context?.bedIds) && context.bedIds.length === 1) {
+    const prefix = '1 growing area has a stretch with no new sowing: ', suffix = ' (all year). ' + reason;
+    if (source.startsWith(prefix) && source.endsWith(suffix)) {
+      const place = source.slice(prefix.length, -suffix.length);
+      if (source === cropExportText(rest, 'en', { count: '1', place, period: 'all year', reason })) {
+        return cropExportText(rest, language, { count: '1', place, period: cropExportText('All year', language).toLowerCase(), reason: cropExportText(reason, language) });
+      }
+    }
+  }
+  const keys = context?.unplacedCropKeys;
+  if (Array.isArray(keys) && keys.length) {
+    const crops = keys.map(key => typeof key === 'string' ? cropByKey(key) : undefined);
+    if (crops.every(crop => crop !== undefined)) {
+      const names = crops.map(crop => crop.name).join(', '), count = crops.length === 1 ? 'one' : 'many';
+      const window = planNoteFrames.get('plan-note-window-' + count);
+      if (window) for (const calendar of planNoteCalendars) {
+        if (source === cropExportText(window, 'en', { crops: names, calendar })) {
+          return cropExportText(window, language, { crops: names, calendar: cropExportText(calendar, language) });
+        }
+      }
+      const unplaced = planNoteFrames.get('plan-note-unplaced-' + count);
+      if (unplaced) {
+        const head = cropExportText(unplaced, 'en', { crops: names });
+        if (source === head) return cropExportText(unplaced, language, { crops: names });
+        if (source.startsWith(head)) {
+          // This count and rounded area belong to the saved suggestion, even after the map changes.
+          const tail = /^ This plan had ([1-9]\d*) veg bed(s?) \((0|[1-9]\d*) m² in all\) — add beds on the map to fit more of your choices\.$/.exec(source.slice(head.length));
+          if (tail && tail[2] === (tail[1] === '1' ? '' : 's')) {
+            const space = planNoteFrames.get('plan-note-space-' + (tail[1] === '1' ? 'one' : 'many'));
+            if (space) return cropExportText(unplaced, language, { crops: names }) + cropExportText(space, language, { beds: tail[1], area: tail[3] });
+          }
+        }
+      }
+    }
+  }
+  return cropExportText('Original saved plan note: {note}', language, { note: source });
 }

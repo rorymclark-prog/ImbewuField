@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Some saved plan notes now have unreviewed translations in four languages.": "Dinoto tse ding tsa moralo tse bolokilweng jwale di na le diphetolelo tse eso hlahlojwe ka dipuo tse nne.",
+  "Original notes stay available; untranslated notes still use English.": "Dinoto tsa pele di dula di fumaneha; tse eso fetolelwe di ntse di le ka Senyesemane.",
   "Crop task panels now use unreviewed translations in four languages.": "Diphanele tsa mesebetsi ya dijalo jwale di sebedisa diphetolelo tse eso hlahlojwe ka dipuo tse nne.",
   "Crop search and month controls have more unreviewed translation drafts.": "Patlo ya dijalo le ditaolo tsa dikgwedi di na le meralo e meng ya diphetolelo tse eso hlahlojwe.",
   "Review crop task drafts": "Hlahloba meralo ya mesebetsi ya dijalo",

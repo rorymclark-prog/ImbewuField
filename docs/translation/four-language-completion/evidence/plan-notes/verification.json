@@ -1,0 +1,139 @@
+{
+  "pdfs": [
+    {
+      "language": "zu",
+      "version": "after",
+      "file": "plan-notes-zu-after.pdf",
+      "pages": 4,
+      "inputSha256": "3671c5f84d0396db9a5b1c7b55eb6bbc5b2cad7ada56f397fecbe6c7328f42b9",
+      "words": 1524,
+      "clipped": [],
+      "pdfSha256": "9e0bb0a94526e7e8b47ee71755e405f09ef8622a8e265e15ed1ea8aa694add30",
+      "bytes": 242347
+    },
+    {
+      "language": "st",
+      "version": "after",
+      "file": "plan-notes-st-after.pdf",
+      "pages": 4,
+      "inputSha256": "ab29fb9ff0158618a5f5f171e0699502b1bbc0ae735bae968c5b008cce91e8dd",
+      "words": 2292,
+      "clipped": [],
+      "pdfSha256": "9344697c6d82c9d52ea06e012a282dae567ab3b0ddeb49396f108042b709a480",
+      "bytes": 242141
+    },
+    {
+      "language": "ts",
+      "version": "after",
+      "file": "plan-notes-ts-after.pdf",
+      "pages": 4,
+      "inputSha256": "a8f2476e944b92be27f4008f0e82e0178631c5d8bdde0f62fec44ab015c81ba2",
+      "words": 2301,
+      "clipped": [],
+      "pdfSha256": "0b1e64c44d767b18c7c203d21b0998d0cd3968fb944a92090c9f0c33d66fe6ee",
+      "bytes": 246066
+    },
+    {
+      "language": "ve",
+      "version": "after",
+      "file": "plan-notes-ve-after.pdf",
+      "pages": 5,
+      "inputSha256": "2b4e620602dd61bafee0b5b05c19a1ead0dae1df2b30bd23cdef41a2ed8ac428",
+      "words": 2441,
+      "clipped": [],
+      "pdfSha256": "0bff7e3d2565b4a675ef27547a8ab22560a6f47266682e3dc1f5d6a73739a028",
+      "bytes": 250209
+    },
+    {
+      "language": "en",
+      "version": "before",
+      "file": "plan-notes-en-before.pdf",
+      "pages": 2,
+      "inputSha256": "3b960d4becb2890ad68ce7cc8cd42346276cca7cbe79efc41450712849e3ce8f",
+      "words": 1078,
+      "clipped": [],
+      "pdfSha256": "75d56856cf3f52960048c3826031701a7bd06b0183d7ed574004cebdff519e23",
+      "bytes": 17345
+    },
+    {
+      "language": "en",
+      "version": "after",
+      "file": "plan-notes-en-after.pdf",
+      "pages": 2,
+      "inputSha256": "3b960d4becb2890ad68ce7cc8cd42346276cca7cbe79efc41450712849e3ce8f",
+      "words": 1078,
+      "clipped": [],
+      "pdfSha256": "43aaa479a179dbe8f6321f2b97505b195695d864423e5cf5a854bff592d2a6ad",
+      "bytes": 17345
+    },
+    {
+      "language": "xx",
+      "version": "before",
+      "file": "plan-notes-xx-before.pdf",
+      "pages": 2,
+      "inputSha256": "d71efae991b1af42fcec9277f1648720eb7e886bce8e94173aaeda331e93dafa",
+      "words": 1078,
+      "clipped": [],
+      "pdfSha256": "7a5b7fff55f086061d3c16138d3796178b7fc8103e20c0784722d5d22c4043a8",
+      "bytes": 17345
+    },
+    {
+      "language": "xx",
+      "version": "after",
+      "file": "plan-notes-xx-after.pdf",
+      "pages": 2,
+      "inputSha256": "d71efae991b1af42fcec9277f1648720eb7e886bce8e94173aaeda331e93dafa",
+      "words": 1078,
+      "clipped": [],
+      "pdfSha256": "ddbece44fb8d375d53726e6fd199513fdef759a95ac9f92643b9d56e9de5e963",
+      "bytes": 17345
+    }
+  ],
+  "comparisons": [
+    {
+      "language": "en",
+      "pages": 2,
+      "samePixels": true,
+      "sameExtractedText": true
+    },
+    {
+      "language": "xx",
+      "pages": 2,
+      "samePixels": true,
+      "sameExtractedText": true
+    }
+  ],
+  "browserCases": 8,
+  "completeNativePDFClauses": 52,
+  "completeOriginalPDFClauses": 52,
+  "completeBrowserClauses": 104,
+  "pdfClippedWords": 0,
+  "scope": "Actual isolated accepted-note components with original language context substituted; existing common CSS/system fallback fonts. Actual native dashboard PDF renderer. Synthetic notes and one real irrigation-gate result; no full app/account, stored farmer plan, send or paid calls.",
+  "status": "IN PROGRESS: source-bound unreviewed drafts; typecheck and76affected tests pass. Full ordered verification not started for this plan-note branch. Whole note corpus/app incomplete.",
+  "visuallyInspected": [
+    "Four current native PDF contact sheets covering17native pages",
+    "Twelve phone/desktop screenshots in three contact sheets; actual Ts and Ve phone images also enlarged"
+  ],
+  "browserVisibilityCorrection": "Initial bounding-height heuristic counted closed English paragraphs. Exact open-attribute checks through every details ancestor confirmed one open English disclosure in all eight final cases. The prior observation remains in rect-visibility-before.json.gz.",
+  "harnessCorrection": "Initial QA registered an unused native font in core-font English comparisons, producing parser warnings. Harness now registers native font only for native languages, matching production; all final text/raster parser stderr empty.",
+  "nativePictureChange": "This changes the picture: short saved-note paragraphs reserve the same bottom room as the chunker, and each native note stays with its original on the same page. PLAN_VERSION untouched.",
+  "codeAndSourceSha256": {
+    "lib/crop-export-copy.ts": "343c8eaca48bfb0270b6bb642b34856dc61c0664f4231d7dfa636e4f9a22bc99",
+    "lib/crop-export-copy-data.ts": "d44ed09eecc46a3bdc1be8dfecf424bd360a8e4bfe02d0b3e7a1b89857175e4c",
+    "lib/crop-export-pdf.ts": "1b9b5bad1d6b180b711b1e16ed9ceb910fc1fa50fd8d5d99032fd4b869ecec10",
+    "app/facilitator/crops/page.tsx": "128c131790a88d77648b2d69657c8686f046109d021a69efeefdf40046d78f28",
+    "tests/plan-note-localization.test.ts": "252fe422f6e729a2fdf622e2e6211587290cd2eb51e7e36e35a116867652bb22"
+  },
+  "checks": {
+    "typecheck": "Node24 exit0, session18091; later no code edits",
+    "focused": {
+      "tests": 76,
+      "pass": 76,
+      "fail": 0,
+      "files": 3,
+      "session": 22211,
+      "duration_ms": 15146.630833
+    },
+    "full": "NOT STARTED; do not infer from focused or ancestor passes"
+  }
+}

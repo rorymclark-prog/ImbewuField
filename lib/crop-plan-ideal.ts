@@ -1,3 +1,4 @@
+import { cropExportText } from './crop-export-copy';
 /**
  * Whole-year crop-plan sweep — "Best whole-year plan".
  *
@@ -123,8 +124,8 @@ export const IDEAL_PLAN_COPY = {
   // happened yet in the farmer's first year, so ground they would cover
   // stands bare. Starters bridge what can honestly be bridged; each runs
   // exactly once and never recurs.
-  starterLine: (crops: string) =>
-    `To cover ground that would stand empty in your first months, one-time starter sowings are included: ${crops}. Each runs once — from next year the repeating plan covers those months itself.`,
+  starterLine: (crops: string, language = 'en') =>
+    cropExportText("To cover ground that would stand empty in your first months, one-time starter sowings are included: {crops}. Each runs once. Check the repeating plan before next year: these months may need another one-time sowing unless the plan changes.", language, { crops }),
   starterBadge: 'first season only',
   // The whole-year plan is now the default, so the card has to say out loud
   // what it is before the farmer reads a thin first year as a broken plan.

@@ -1,0 +1,56 @@
+{
+  "startedAt": "2026-10-25T22:22:38.750849+00:00",
+  "pid": 12300,
+  "base": "17d6f047d7fe918c8ebda5fda5f22ecd4d3490bd",
+  "branch": "codex/four-language-plan-notes",
+  "tmpdir": "/private/tmp/imbewufield-plan-notes-checks-20261025-9hjq80yd",
+  "frozenInputs": 1683,
+  "registeredTestFiles": 568,
+  "commands": [
+    {
+      "name": "typecheck",
+      "command": [
+        "npx",
+        "tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "test",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "status": "passed",
+  "current": "diff",
+  "endedAt": "2026-10-25T23:38:04.984417+00:00",
+  "changedFrozenInputs": [],
+  "localSourceHead": "acbb7be00533ff2935fa51775aa72ea57686f39f",
+  "tests": 5836,
+  "pass": 5835,
+  "fail": 0,
+  "existingTodo": 1,
+  "todo": "Existing shape-sync-loss collection-write race remains marked TODO; no assertion removed.",
+  "sourceHashesExactAtDelivery": 1683,
+  "verifiedAt": "2026-10-26T00:17:20.097514+00:00",
+  "logSha256": {
+    "typecheck.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test.log": "c5bd01a86ebb37a34ebc628051b37b8fc48ab346fdf19efce1a71e7e3eb05eae",
+    "diff.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "frozenInputManifestSha256": "daee0dfbdcf007dae77d85c0ca33e246191860d7518f1b81764fbf731c1cf5d2",
+  "scope": "Required ordered checks for this saved-note branch only; not a whole-app or fluent-language completion claim."
+}

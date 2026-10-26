@@ -1,0 +1,45 @@
+{
+  "startedAt": "2026-10-25T22:19:33.331551+00:00",
+  "tmpdir": "/private/tmp/imbewufield-notes-aligned-focused-eiweg0uw",
+  "commands": [
+    {
+      "name": "typecheck",
+      "command": [
+        "npx",
+        "tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "focused",
+      "command": [
+        "node",
+        "--import",
+        "./tests/register-alias.mjs",
+        "--test",
+        "tests/plan-note-localization.test.ts",
+        "tests/crop-screen-localization.test.ts",
+        "tests/crop-export-instruction-localization.test.ts",
+        "tests/update-notices-localization.test.ts",
+        "tests/crop-plan-notes.test.ts",
+        "tests/update-tour.test.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "endedAt": "2026-10-25T22:20:50.168181+00:00",
+  "testCount": 114,
+  "pass": 114,
+  "fail": 0,
+  "scope": "6affected files; not the full suite."
+}

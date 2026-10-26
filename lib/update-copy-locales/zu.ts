@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Some saved plan notes now have unreviewed translations in four languages.": "Amanye amanothi ohlelo agciniwe manje anezinguqulo ezingakabuyekezwa ngezilimi ezine.",
+  "Original notes stay available; untranslated notes still use English.": "Amanothi okuqala ahlala etholakala; angakahunyushwa asabhalwe ngesiNgisi.",
   "Crop task panels now use unreviewed translations in four languages.": "Amaphaneli emisebenzi yezitshalo manje anokuhumusha okungakabuyekezwa ngezilimi ezine.",
   "Crop search and month controls have more unreviewed translation drafts.": "Ukusesha izitshalo nezinkinobho zezinyanga kunokuhumusha okwengeziwe okusenguhlaka okungakabuyekezwa.",
   "Review crop task drafts": "Buyekeza imisebenzi yezitshalo esenguhlaka",

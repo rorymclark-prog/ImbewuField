@@ -1,0 +1,8 @@
+Browser tab: 4, Title: "Saved plan note translation QA", URL: "http://127.0.0.1:31819/st.html".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 15-16
++			85 container
++				86 button (expanded) Noto ya pele ya moralo ka Senyesemane, Secondary Actions: Collapse
++					87 text Noto ya pele ya moralo ka Senyesemane
++				88 text Commercial ranking compares conservative fresh-weight kg/m² per crop cycle only. It does not estimate profit, nutrition, buyer demand or a global annual maximum; use your own buyer and price information before committing land.
+The focused UI element is 86 button (expanded) Noto ya pele ya moralo ka Senyesemane, Secondary Actions: Collapse

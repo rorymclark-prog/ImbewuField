@@ -1412,6 +1412,20 @@
       "st": "Bula mesebetsi, patlo ya dijalo le dintlha tsa kgwedi. Hlahloba mohlodi wa Senyesemane pele o nka kgato.",
       "ts": "Pfula mintirho, ku lava swibyariwa ni vuxokoxoko bya n’hweti. Kambela xihlovo xa Xinghezi u nga si teka goza.",
       "ve": "Vulani mishumo, u ṱoḓa zwiliṅwa na zwidodombedzwa zwa ṅwedzi. Sedzani tshiko tsha Luisimane musi ni sa athu u dzhia vhukando."
+    },
+    {
+      "english": "Some saved plan notes now have unreviewed translations in four languages.",
+      "zu": "Amanye amanothi ohlelo agciniwe manje anezinguqulo ezingakabuyekezwa ngezilimi ezine.",
+      "st": "Dinoto tse ding tsa moralo tse bolokilweng jwale di na le diphetolelo tse eso hlahlojwe ka dipuo tse nne.",
+      "ts": "Tinotsi tin’wana ta pulani leti hlayisiweke sweswi ti ni vuhundzuluxeri bya tindzimi ta mune leswi nga si kamberiwaka.",
+      "ve": "Dziṅwe notsi dza pulane dzo vhulungwaho zwino dzi na ṱhalutshedzelo dza nyambo nṋa dzi sa athu sedzuluswaho."
+    },
+    {
+      "english": "Original notes stay available; untranslated notes still use English.",
+      "zu": "Amanothi okuqala ahlala etholakala; angakahunyushwa asabhalwe ngesiNgisi.",
+      "st": "Dinoto tsa pele di dula di fumaneha; tse eso fetolelwe di ntse di le ka Senyesemane.",
+      "ts": "Tinotsi to sungula ta ha kumeka; leti nga si hundzuluxeriwaka ta ha ri hi Xinghezi.",
+      "ve": "Notsi dza u thoma dzi dzula dzi tshi wanala; dzi sa athu ṱalutshedzelwaho dzi kha ḓi vha nga Luisimane."
     }
   ],
   "historyBefore": [

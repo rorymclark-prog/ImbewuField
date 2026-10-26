@@ -21,7 +21,7 @@ import LimaBar from '@/components/LimaBar';
 import { useRegisterBackControl } from '@/components/BackControl';
 import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
-import { cropExportText } from '@/lib/crop-export-copy';
+import { cropExportText, cropPlanNoteText, isCropExportDraftLanguage } from '@/lib/crop-export-copy';
 import ProductionAvailabilityGraphs from '@/components/crops/ProductionAvailabilityGraphs';
 import ProductionRecordsEditor from '@/components/crops/ProductionRecordsEditor';
 import ProductionGuideCard from '@/components/crops/ProductionGuideCard';
@@ -3023,7 +3023,34 @@ function MonthAvailabilityDetail({
 // copy of this markup is how the two drift until the persisted one quietly
 // becomes the flat amber wall this grouping was written to kill.
 
+function StarterPlanNote({ plantings, lineStyle }: { plantings: Planting[]; lineStyle: React.CSSProperties }) {
+  const { lang } = useLanguage();
+  // Read the one-time rows already chosen; translating the review never reruns the planner.
+  const names = (language: string) => plantings.filter(p => typeof p.once === 'string').map(p => {
+    const crop = cropByKey(p.cropKey);
+    return crop ? `${crop.name} (${monthShort(p.sowMonth, language)})` : null;
+  }).filter((name): name is string => Boolean(name)).join(', ');
+  const english = names('en');
+  if (!english) return null;
+  if (!isCropExportDraftLanguage(lang)) return <p className="font-sans" style={lineStyle}>{IDEAL_PLAN_COPY.starterLine(english)}</p>;
+  return <div>
+    <p className="font-sans" style={lineStyle}>{IDEAL_PLAN_COPY.starterLine(names(lang), lang)}</p>
+    <details className="font-sans" style={lineStyle}><summary>{cropExportText('Unreviewed draft — original English plan note', lang)}</summary><p lang="en">{IDEAL_PLAN_COPY.starterLine(english)}</p></details>
+  </div>;
+}
+
+function SavedPlanNote({ note, language }: { note: PlanNote; language: string }) {
+  const text = cropPlanNoteText(note.text, language, note);
+  const originalOnly = text === cropExportText('Original saved plan note: {note}', language, { note: note.text });
+  return <>
+    <span>{text}</span>
+    {!originalOnly && <details style={{ marginTop: 4 }}><summary style={{ cursor: 'pointer' }}>{cropExportText('Original English plan note', language)}</summary><p lang="en" style={{ marginTop: 4 }}>{note.text}</p></details>}
+  </>;
+}
+
 function PlanNoteGroups({ notes }: { notes: PlanNote[] }) {
+  const { lang } = useLanguage();
+  const native = isCropExportDraftLanguage(lang);
   // Grouped by kind, not stacked into one amber wall: the two load-bearing
   // vine warnings used to sit at positions 5-6 under twenty-six copies of a
   // per-bed rest note.
@@ -3033,16 +3060,17 @@ function PlanNoteGroups({ notes }: { notes: PlanNote[] }) {
   const basis = notes.filter((n) => n.kind === 'basis');
   return (
     <div className="flex flex-col gap-2">
+      {native && <p className="font-sans" style={{ fontSize: 11.5, lineHeight: 1.5 }}>{cropExportText('Saved plan-note translations are unreviewed drafts. Original English is available below each translated note. Notes that have not been translated stay in English.', lang)}</p>}
       {warnings.length > 0 && (
         <div className="px-3 py-2 rounded-lg font-sans flex flex-col gap-1.5" style={{ fontSize: 12.5, background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.4)', color: 'var(--gold-dim)' }}>
-          {warnings.map((n, i) => <div key={i}>{n.text}</div>)}
+          {warnings.map((n, i) => <div key={i}>{native ? <SavedPlanNote note={n} language={lang} /> : n.text}</div>)}
         </div>
       )}
       {choices.length > 0 && (
         <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }}>
-          <summary style={{ cursor: 'pointer' }}>What the planner chose, bed by bed ({choices.length})</summary>
+          <summary style={{ cursor: 'pointer' }}>{native ? cropExportText('What the planner chose, bed by bed ({count})', lang, { count: choices.length }) : <>What the planner chose, bed by bed ({choices.length})</>}</summary>
           <ul className="flex flex-col gap-1 pt-1.5" style={{ listStyle: 'disc', paddingInlineStart: 26 }}>
-            {choices.map((n, i) => <li key={i}>{n.text}</li>)}
+            {choices.map((n, i) => <li key={i}>{native ? <SavedPlanNote note={n} language={lang} /> : n.text}</li>)}
           </ul>
         </details>
       )}
@@ -3052,7 +3080,7 @@ function PlanNoteGroups({ notes }: { notes: PlanNote[] }) {
             {/* Count BEDS, deduped: one bed can be named by two gap notes (a
                 stranded-bed note plus a grouped rest one), and summing bedIds
                 lengths counted it twice. */}
-            {PLAN_NOTES_PANEL_COPY.gapsHeading} ({(() => {
+            {native ? cropExportText(PLAN_NOTES_PANEL_COPY.gapsHeading, lang) : PLAN_NOTES_PANEL_COPY.gapsHeading} ({(() => {
               const seen = new Set<string>();
               let unattributed = 0;
               for (const n of gaps) {
@@ -3063,15 +3091,15 @@ function PlanNoteGroups({ notes }: { notes: PlanNote[] }) {
             })()})
           </summary>
           <div className="flex flex-col gap-1.5 pt-1.5">
-            {gaps.map((n, i) => <div key={i}>{n.text}</div>)}
+            {gaps.map((n, i) => <div key={i}>{native ? <SavedPlanNote note={n} language={lang} /> : n.text}</div>)}
           </div>
         </details>
       )}
       {basis.length > 0 && (
         <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 10.5, background: 'var(--bg-2)', border: '1px solid var(--border)', color: 'var(--text-muted)' }}>
-          <summary style={{ cursor: 'pointer' }}>{PLAN_NOTES_PANEL_COPY.basisHeading}</summary>
+          <summary style={{ cursor: 'pointer' }}>{native ? cropExportText(PLAN_NOTES_PANEL_COPY.basisHeading, lang) : PLAN_NOTES_PANEL_COPY.basisHeading}</summary>
           <div className="flex flex-col gap-1.5 pt-1.5">
-            {basis.map((n, i) => <div key={i}>{n.text}</div>)}
+            {basis.map((n, i) => <div key={i}>{native ? <SavedPlanNote note={n} language={lang} /> : n.text}</div>)}
           </div>
         </details>
       )}
@@ -3089,12 +3117,14 @@ function PlanNoteGroups({ notes }: { notes: PlanNote[] }) {
  * exactly when a farmer started changing things).
  */
 function AcceptedPlanNotesCard({ notes, generatedAt }: { notes: PlanNote[]; generatedAt: number }) {
+  const { lang } = useLanguage();
+  const native = isCropExportDraftLanguage(lang);
   return (
     <div className="rounded-2xl p-4 mt-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-      <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><Compass size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> Why this plan chose what it chose</div>
+      <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><Compass size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {native ? cropExportText('Why this plan chose what it chose', lang) : 'Why this plan chose what it chose'}</div>
       <p className="font-sans mb-3 mt-0.5" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>
-        From the plan suggested in {planNotesDateLabel(generatedAt)}. Anything you have changed by hand since is not
-        described here.
+        {native ? cropExportText('From the plan suggested in {date}. Anything you have changed by hand since is not described here.', lang, { date: planNotesDateLabel(generatedAt, lang) }) : <>From the plan suggested in {planNotesDateLabel(generatedAt)}. Anything you have changed by hand since is not
+        described here.</>}
       </p>
       <PlanNoteGroups notes={notes} />
     </div>
@@ -5423,23 +5453,7 @@ function AutoSuggestModal({
                           {IDEAL_PLAN_COPY.rampInLine(idealMeta.rampInMonths.length, monthLabel(idealMeta.fullCycleByMonth))}
                         </p>
                       )}
-                      {(() => {
-                        // One-time starters ride the plantings list itself (the
-                        // `once` stamp), so the card derives rather than stores.
-                        // Not gated on sameAsToday: a from-now-optimal cycle has
-                        // the same first-year holes and gets the same starters.
-                        const starterNames = idealMeta.best.result.plantings
-                          .filter((p) => typeof p.once === 'string')
-                          .map((p) => {
-                            const crop = cropByKey(p.cropKey);
-                            return crop ? `${crop.name} (${monthLabel(p.sowMonth)})` : null;
-                          })
-                          .filter((name): name is string => Boolean(name))
-                          .join(', ');
-                        return starterNames
-                          ? <p className="font-sans" style={line}>{IDEAL_PLAN_COPY.starterLine(starterNames)}</p>
-                          : null;
-                      })()}
+                      <StarterPlanNote plantings={idealMeta.best.result.plantings} lineStyle={line} />
                       {idealMeta.best.score.zeroFreshMonths.length > 0 && (
                         <p className="font-sans" style={line}>
                           {IDEAL_PLAN_COPY.residualGapLine(idealMeta.best.score.zeroFreshMonths.map(monthLabel).join(', '))}

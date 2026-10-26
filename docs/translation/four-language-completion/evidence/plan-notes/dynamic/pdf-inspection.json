@@ -1,0 +1,129 @@
+{
+  "status": "Current contact sheets for all4native PDFs and the enlarged Tshivenda final page inspected. Text and bounds checks pass. Full ordered branch verification remains required.",
+  "scope": "Actual isolated AcceptedPlanNotesCard/PlanNoteGroups/SavedPlanNote components with substituted language hook, existing compiled common CSS and system fonts. Synthetic source-bound scenarios; no-area and plots cards use the complete actual planner result, while choice and vines are source-message examples. Native PDFs include20complete source notes:4real catalogue missing-window examples,10saved-space variants,5helper/basis messages and the corrected actual plot-rest explanation. English/unsupported controls use8mixed-kind representative notes. Full production/account route and linguistic approval remain unverified.",
+  "pdfs": [
+    {
+      "language": "zu",
+      "version": "after",
+      "file": "chosen-notes-zu-after.pdf",
+      "pages": 6,
+      "notes": 20,
+      "completeNativeClauses": 20,
+      "completeOriginalClauses": 20,
+      "words": 2694,
+      "clippedWords": 0,
+      "pdfSha256": "6d74678b656702030553201ab09af142447658c5c9534e513ee1fdc60e91c5f9",
+      "inputSha256": "c549dc444b8155c4d8d72abf765e724a5988bae5ca5b81d8e16681f3c2ab1fae"
+    },
+    {
+      "language": "st",
+      "version": "after",
+      "file": "chosen-notes-st-after.pdf",
+      "pages": 6,
+      "notes": 20,
+      "completeNativeClauses": 20,
+      "completeOriginalClauses": 20,
+      "words": 3874,
+      "clippedWords": 0,
+      "pdfSha256": "3ec27fced2da24ad5e9a140ed898fd2ea1fc16dd28766cf1ee9941be46205e9d",
+      "inputSha256": "7c6ae3d2416029c6371120d4ce200233eaa71c995f963e9bae9bab43bb0ccfd3"
+    },
+    {
+      "language": "ts",
+      "version": "after",
+      "file": "chosen-notes-ts-after.pdf",
+      "pages": 6,
+      "notes": 20,
+      "completeNativeClauses": 20,
+      "completeOriginalClauses": 20,
+      "words": 3808,
+      "clippedWords": 0,
+      "pdfSha256": "c2ac62869e90c9ff7ed0271dd1c9c66a2fbd38befe6977c634d592c688b3fb44",
+      "inputSha256": "de02184889313a66b7592088dc1b7aa174c238b910b7b6c08d93903879961260"
+    },
+    {
+      "language": "ve",
+      "version": "after",
+      "file": "chosen-notes-ve-after.pdf",
+      "pages": 6,
+      "notes": 20,
+      "completeNativeClauses": 20,
+      "completeOriginalClauses": 20,
+      "words": 3900,
+      "clippedWords": 0,
+      "pdfSha256": "0460f35a3b0b313a3a2f838ae392c2084db2ae4c2a204ddaabcdb2927ed4b3ea",
+      "inputSha256": "f061b5aaec4d7a1cc99ecabb3aed6a3a1c3a562da6344fda28b05863e6fbf6da"
+    },
+    {
+      "language": "en",
+      "version": "before",
+      "file": "chosen-notes-en-before.pdf",
+      "pages": 2,
+      "notes": 8,
+      "completeNativeClauses": 0,
+      "completeOriginalClauses": 8,
+      "words": 967,
+      "clippedWords": 0,
+      "pdfSha256": "241ad621ce49fd7acb116d15a24e20708685071bfa9cffd66307f499f5edb538",
+      "inputSha256": "ce6cf008e261a36c36c32fd509f29c093f43c110713eaa786fb5bccef9bfb696"
+    },
+    {
+      "language": "en",
+      "version": "after",
+      "file": "chosen-notes-en-after.pdf",
+      "pages": 2,
+      "notes": 8,
+      "completeNativeClauses": 0,
+      "completeOriginalClauses": 8,
+      "words": 967,
+      "clippedWords": 0,
+      "pdfSha256": "65cc6cec0b36a5dd24b0c00945e742dd28e33deb0560c8fffa66eae710459cad",
+      "inputSha256": "ce6cf008e261a36c36c32fd509f29c093f43c110713eaa786fb5bccef9bfb696"
+    },
+    {
+      "language": "xx",
+      "version": "before",
+      "file": "chosen-notes-xx-before.pdf",
+      "pages": 2,
+      "notes": 8,
+      "completeNativeClauses": 0,
+      "completeOriginalClauses": 8,
+      "words": 967,
+      "clippedWords": 0,
+      "pdfSha256": "ddd95f4fbd0c1599f14a1d53fdc7c824fc6d575a2b7ece1c8cf84051adb99650",
+      "inputSha256": "2949b864e154df786ca3c405257285cfa66af9aec8c6890a0e710a83222713bb"
+    },
+    {
+      "language": "xx",
+      "version": "after",
+      "file": "chosen-notes-xx-after.pdf",
+      "pages": 2,
+      "notes": 8,
+      "completeNativeClauses": 0,
+      "completeOriginalClauses": 8,
+      "words": 967,
+      "clippedWords": 0,
+      "pdfSha256": "117e77d1017486be2b711abf79ffc06b9db2549b6f335aaad197ec1776e673a7",
+      "inputSha256": "2949b864e154df786ca3c405257285cfa66af9aec8c6890a0e710a83222713bb"
+    }
+  ],
+  "comparisons": [
+    {
+      "language": "en",
+      "pages": 2,
+      "samePixels": true,
+      "sameExtractedText": true
+    },
+    {
+      "language": "xx",
+      "pages": 2,
+      "samePixels": true,
+      "sameExtractedText": true
+    }
+  ],
+  "totalPages": 32,
+  "totalWords": 18144,
+  "completeNativeClauses": 80,
+  "clippedWords": 0,
+  "parserErrors": 0
+}
