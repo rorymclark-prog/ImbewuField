@@ -104,7 +104,9 @@ async function isolatedGuard() {
     // The wave 16 layer sits on the wave 14 one the same way.
     'tests/wave-16-history-checks.ts','tests/fixtures/student-page-before-wave-16.tsx.txt',
     // The wave 17 layer sits on the wave 16 one the same way.
-    'tests/wave-17-history-checks.ts','tests/fixtures/student-page-before-wave-17.tsx.txt']);
+    'tests/wave-17-history-checks.ts','tests/fixtures/student-page-before-wave-17.tsx.txt',
+    // The wave 25 offline layer is imported by the WebP layer for app/sw.js/route.ts, so the fixture carries it and its predecessor.
+    'tests/wave-25-offline-history-checks.ts','tests/fixtures/sw-route-before-w25-offline.ts.txt']);
   for (const file of files) { if (retiredJpegs.has(file)) continue;const destination=join(fixture,file);mkdirSync(dirname(destination),{recursive:true});copyFileSync(file,destination,constants.COPYFILE_FICLONE); }
   cpSync(folder,join(fixture,folder),{recursive:true});
   cpSync(webpFolder,join(fixture,webpFolder),{recursive:true});
