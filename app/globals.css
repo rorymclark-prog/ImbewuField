@@ -961,6 +961,13 @@ body.is-sample-mode .pwa-update-notifier {
   outline-offset: 1px !important;
 }
 
+/* w25-02: a control drawn as its <label> with the real input visually hidden (the produce photo picker,
+   custom file and choice tiles) put the ring on a 1px input nobody can see. Ring the label instead. */
+label:has(> input.sr-only:focus-visible) {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
 /* Photo previews are keyboard controls as well as tap targets. */
 img[data-photo-preview]:focus-visible { outline: 3px solid var(--accent, #b87924); outline-offset: 3px; }
 
