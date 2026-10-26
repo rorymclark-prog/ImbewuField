@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Review animal care drafts": "Hlahloba meralo ya tlhokomelo ya diphoofolo",
+  "Choose an animal enterprise. Review care notes and open the English source.": "Kgetha kgwebo ya diphoofolo. Hlahloba dinoto tsa tlhokomelo mme o bule mohlodi wa Senyesemane.",
+  "Animal care notes now have unreviewed translations in four languages.": "Dinoto tsa tlhokomelo ya diphoofolo jwale di na le diphetolelo tse eso hlahlojwe ka dipuo tse nne.",
+  "Original care limits and source references stay available for checking.": "Meedi ya pele ya tlhokomelo le ditshupiso tsa mehlodi di ntse di fumaneha bakeng sa ho di hlahloba.",
   "Some saved plan notes now have unreviewed translations in four languages.": "Dinoto tse ding tsa moralo tse bolokilweng jwale di na le diphetolelo tse eso hlahlojwe ka dipuo tse nne.",
   "Original notes stay available; untranslated notes still use English.": "Dinoto tsa pele di dula di fumaneha; tse eso fetolelwe di ntse di le ka Senyesemane.",
   "Crop task panels now use unreviewed translations in four languages.": "Diphanele tsa mesebetsi ya dijalo jwale di sebedisa diphetolelo tse eso hlahlojwe ka dipuo tse nne.",

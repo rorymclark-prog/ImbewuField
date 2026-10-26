@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Review animal care drafts": "Kambela tindzimana ta nhlayiseko wa swifuwo",
+  "Choose an animal enterprise. Review care notes and open the English source.": "Hlawula bindzu ra swifuwo. Kambela tinotsi ta nhlayiseko kutani u pfula xihlovo xa Xinghezi.",
+  "Animal care notes now have unreviewed translations in four languages.": "Tinotsi ta nhlayiseko wa swifuwo sweswi ti ni vuhundzuluxeri bya tindzimi ta mune leswi nga si kamberiwaka.",
+  "Original care limits and source references stay available for checking.": "Swipimelo swo sungula swa nhlayiseko ni swikombo swa swihlovo swa ha kumeka leswaku swi kamberiwa.",
   "Some saved plan notes now have unreviewed translations in four languages.": "Tinotsi tin’wana ta pulani leti hlayisiweke sweswi ti ni vuhundzuluxeri bya tindzimi ta mune leswi nga si kamberiwaka.",
   "Original notes stay available; untranslated notes still use English.": "Tinotsi to sungula ta ha kumeka; leti nga si hundzuluxeriwaka ta ha ri hi Xinghezi.",
   "Crop task panels now use unreviewed translations in four languages.": "Tiphanele ta mintirho ya swibyariwa sweswi ti tirhisa vuhundzuluxeri bya tindzimi ta mune byo ka byi nga si kamberiwa.",

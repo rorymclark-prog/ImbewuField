@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Review animal care drafts": "Buyekeza imibhalo yokunakekela izilwane",
+  "Choose an animal enterprise. Review care notes and open the English source.": "Khetha uhlobo lokukhiqiza ngezilwane. Buyekeza amanothi okunakekela bese uvula isiNgisi sokuqala.",
+  "Animal care notes now have unreviewed translations in four languages.": "Amanothi okunakekela izilwane manje anezinguqulo ezingakabuyekezwa ngezilimi ezine.",
+  "Original care limits and source references stay available for checking.": "Imikhawulo yokuqala yokunakekela nezikhombo zemithombo kusatholakala ukuze kuhlolwe.",
   "Some saved plan notes now have unreviewed translations in four languages.": "Amanye amanothi ohlelo agciniwe manje anezinguqulo ezingakabuyekezwa ngezilimi ezine.",
   "Original notes stay available; untranslated notes still use English.": "Amanothi okuqala ahlala etholakala; angakahunyushwa asabhalwe ngesiNgisi.",
   "Crop task panels now use unreviewed translations in four languages.": "Amaphaneli emisebenzi yezitshalo manje anokuhumusha okungakabuyekezwa ngezilimi ezine.",

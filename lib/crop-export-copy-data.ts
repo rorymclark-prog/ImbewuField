@@ -8613,5 +8613,381 @@ export const CROP_EXPORT_COPY = [
     "ts": "Ku ni {count} wa tindhawu to byala leyi nga ni nkarhi lowu nga riki na ku byala lokuntshwa: {place} ({period}). {reason}",
     "ve": "Fhethu ha u lima hu re {count} hu na tshifhinga tshi si na u zwala huswa: {place} ({period}). {reason}",
     "generatedScope": "plan-note-rest-year-one"
+  },
+  {
+    "english": "Keep hives away from playgrounds, provide fresh water and use a dry site. Ask a registered beekeeper to check safe local placement before adding a hive.",
+    "zu": "Beka izidleke zezinyosi kude nezindawo zokudlala, unikeze amanzi ahlanzekile futhi usebenzise indawo eyomile. Cela umfuyi wezinyosi obhalisiwe ahlole ukubekwa okuphephile kwendawo ngaphambi kokwengeza isidleke.",
+    "st": "Beha matlo a dinotshi hole le mabala a ho bapala, fana ka metsi a hlwekileng mme o sebedise sebaka se ommeng. Kopa morui wa dinotshi ya ngodisitsweng ho hlahloba ho bewa ho bolokehileng sebakeng sa heno pele o eketsa ntlo ya dinotshi.",
+    "ts": "Veka tindlu ta tinyoxi ekule ni tindhawu to tlangela, nyika mati yo tenga naswona tirhisa ndhawu yo oma. Kombela mufuwi wa tinyoxi loyi a tsarisiweke ku kambela ku vekiwa loku hlayisekeke ka laha u nga si engetela yindlu ya tinyoxi.",
+    "ve": "Veani miṱa ya ṋotshi kule na fhethu ha u tambela, ni ṋee maḓi o kunaho nahone ni shumise fhethu ho omaho. Humbelani mufuwi wa ṋotshi o ḓiṅwalisaho a sedzuluse u vhewa ho tsireledzeaho ha henefho phanḓa ha u engedza muṱa wa ṋotshi.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Inspect every colony regularly for signs of notifiable bee disease and Cape-bee (Capensis) infection.",
+    "zu": "Hlola iqoqo ngalinye lezinyosi njalo ukuze uthole izimpawu zesifo sezinyosi okufanele sibikwe kanye nokutheleleka nge-Cape-bee (Capensis).",
+    "st": "Hlahloba sehlopha ka seng sa dinotshi kgafetsa bakeng sa matshwao a lefu la dinotshi le tlamehang ho tlalehwa le tshwaetso ya Cape-bee (Capensis).",
+    "ts": "Kambela ntlawa wun’wana ni wun’wana wa tinyoxi nkarhi na nkarhi ku kuma swikombiso swa vuvabyi bya tinyoxi leswi faneleke ku vikiwa ni ku tluleriwa hi Cape-bee (Capensis).",
+    "ve": "Sedzulusani tshigwada tshiṅwe na tshiṅwe tsha ṋotshi tshifhinga tshoṱhe u vhona tsumbo dza vhulwadze ha ṋotshi vhune ha tea u vhigiwa na u kavhiwa nga Cape-bee (Capensis).",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Site and secure hives against theft and vandalism, which is one of the biggest challenges facing South African beekeepers.",
+    "zu": "Beka futhi uvikele izidleke ekwebiweni nasekucekelweni phansi, okungenye yezinselelo ezinkulu kakhulu kubafuyi bezinyosi baseNingizimu Afrika.",
+    "st": "Beha le ho sireletsa matlo a dinotshi kgahlanong le boshodu le tshenyo ya ka boomo, e leng e nngwe ya diphephetso tse kgolo ka ho fetisisa ho barui ba dinotshi ba Afrika Borwa.",
+    "ts": "Veka ni ku sirhelela tindlu ta tinyoxi eka ku yiviwa ni ku onhiwa hi vomu, leswi nga xin’wana xa swiphiqo leswikulu leswi langutaneke ni vafuwi va tinyoxi va Afrika-Dzonga.",
+    "ve": "Veani ni tsireledze miṱa ya ṋotshi kha vhuvhava na u tshinywa nga khole, zwine zwa vha iṅwe ya khaedu khulwane kha vhafuwi vha ṋotshi vha Afrika Tshipembe.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Cattle pens must not be overcrowded: there must be enough floor space for every animal to lie down at the same time.",
+    "zu": "Izibaya zezinkomo akufanele zigcwale ngokweqile: kufanele kube nendawo eyanele yaphansi ukuze zonke izilwane zilale ngesikhathi esisodwa.",
+    "st": "Masaka a dikgomo ha a tshwanela ho tlala haholo: ho tshwanetse ho ba le sebaka se lekaneng sa fatshe hore phoofolo e nngwe le e nngwe e robale ka nako e le nngwe.",
+    "ts": "Masaka ya tihomu a ya fanelanga ku tala ku tlurisa: ku fanele ku va ni ndhawu leyi eneleke ehansi leswaku xifuwo xin’wana ni xin’wana xi etlela hi nkarhi wun’we.",
+    "ve": "Zwitanga zwa kholomo a zwo ngo tea u ḓala u fhirisa: hu tea u vha na tshikhala tsho eḓanaho fhasi uri tshipuka tshiṅwe na tshiṅwe tshi kone u eḓela nga tshifhinga tshithihi.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "During transport, cattle must have at least 1.4 m² of floor space each so loading is neither too tight nor too loose.",
+    "zu": "Ngesikhathi zithuthwa, inkomo ngayinye kufanele ibe nendawo yaphansi okungenani engu-1.4 m² ukuze ukulayishwa kungabi kuminyene kakhulu noma kube nesikhala esikhulu kakhulu.",
+    "st": "Nakong ya dipalangwang, kgomo ka nngwe e tshwanetse ho ba le bonyane 1.4 m² ya sebaka sa fatshe hore ho laiswa ho se ke ha petetsana haholo kapa ha ba le sebaka se seholo haholo.",
+    "ts": "Hi nkarhi wo fambisiwa, homu yin’wana ni yin’wana yi fanele ku va ni kwalomu ka 1.4 m² ya ndhawu ehansi leswaku ku layicha ku nga yi phusumeti ngopfu kumbe ku siya ndhawu yo anama ngopfu.",
+    "ve": "Nga tshifhinga tsha u endedzwa, kholomo iṅwe na iṅwe i tea u vha na tshikhala tsha fhasi tshi si ho fhasi ha 1.4 m² uri u laḓa zwi songo tsikeledza nga maanḓa kana u sia tshikhala tshihulwane nga maanḓa.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Cattle may not be transported for more than 18 hours without being off-loaded and given feed, water and shelter.",
+    "zu": "Izinkomo akufanele zithuthwe amahora angaphezu kwangu-18 zingakehliswa zinikezwe ukudla, amanzi nendawo yokukhosela.",
+    "st": "Dikgomo ha di a tshwanela ho tsamaiswa dihora tse fetang 18 di sa theolwe mme tsa fuwa dijo, metsi le bodulo bo di sireletsang.",
+    "ts": "Tihomu a ti fanelanga ku fambisiwa nkarhi wo hundza 18 wa tiawara ti nga si rhelerisiwa ti nyikiwa swakudya, mati ni vutumbelo.",
+    "ve": "Kholomo a dzo ngo tea u endedzwa tshifhinga tshi fhiraho awara dza 18 dzi sa athu u tsitswa dza ṋewa zwiḽiwa, maḓi na vhudzumbamo.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "It is an offence to starve, under-feed, or deny water or food to cattle.",
+    "zu": "Kuyicala ukulambisa, ukunikeza ukudla okunganele, noma ukunqabela izinkomo amanzi noma ukudla.",
+    "st": "Ke tlolo ya molao ho bolaisa dikgomo tlala, ho di fepa hanyane haholo, kapa ho di hanela metsi kapa dijo.",
+    "ts": "I nandzu ku dlaya tihomu hi ndlala, ku ti nyika swakudya leswi nga enelangiki, kumbe ku ti tsona mati kumbe swakudya.",
+    "ve": "Ndi mulandu u tambudza kholomo nga nḓala, u dzi ṋea zwiḽiwa zwi sa eḓani, kana u dzi dzima maḓi kana zwiḽiwa.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Cows must not be loaded for transport if their udders are distended with milk.",
+    "zu": "Izinkomazi akufanele zilayishwe ukuze zithuthwe uma amabele azo egcwele ubisi avuvukala.",
+    "st": "Dikgomo tse tshehadi ha di a tshwanela ho laiswa bakeng sa dipalangwang haeba matswele a tsona a ruruhile ka lebese.",
+    "ts": "Tihomu ta xisati a ti fanelanga ku layichiwa leswaku ti fambisiwa loko matswele ya tona ya pfimbile hi masi.",
+    "ve": "Kholomo dza tsadzi a dzo ngo tea u laḓiwa uri dzi endedzwe arali maḓamu adzo o ḓala mafhi a vho mboḓa.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "It is an offence to starve, under-feed, or deny water or food to a dairy cow.",
+    "zu": "Kuyicala ukulambisa, ukunikeza ukudla okunganele, noma ukunqabela inkomazi yobisi amanzi noma ukudla.",
+    "st": "Ke tlolo ya molao ho bolaisa kgomo ya lebese tlala, ho e fepa hanyane haholo, kapa ho e hanela metsi kapa dijo.",
+    "ts": "I nandzu ku dlaya homu ya masi hi ndlala, ku yi nyika swakudya leswi nga enelangiki, kumbe ku yi tsona mati kumbe swakudya.",
+    "ve": "Ndi mulandu u tambudza kholomo ya mafhi nga nḓala, u i ṋea zwiḽiwa zwi sa eḓani, kana u i dzima maḓi kana zwiḽiwa.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Cows on pasture or in open camps need shade: shade structures should give at least 4 to 5 m² of shade per cow.",
+    "zu": "Izinkomazi ezisemadlelweni noma ezinkanjini ezivulekile zidinga umthunzi: izakhiwo zomthunzi kufanele zinikeze okungenani u-4 kuya ku-5 m² womthunzi ngenkomazi ngayinye.",
+    "st": "Dikgomo tse tshehadi makgulong kapa dikampong tse bulehileng di hloka moriti: meaho ya moriti e tshwanetse ho fana ka bonyane 4 ho isa ho 5 m² ya moriti ka kgomo.",
+    "ts": "Tihomu ta xisati emadyelweni kumbe etinkampeni leti pfulekeke ti lava ndzhuti: swivumbeko swa ndzhuti swi fanele ku nyika kwalomu ka 4 ku fika eka 5 m² ya ndzhuti hi homu.",
+    "ve": "Kholomo dza tsadzi dzi re mafuloni kana gammbeni dzo vuleaho dzi ṱoḓa murunzi: zwifhaṱo zwa murunzi zwi tea u ṋea murunzi u si ho fhasi ha 4 u swika kha 5 m² nga kholomo.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Floor-housed broilers: no more than 40 kg of bird per square metre.",
+    "zu": "Izinkukhu zenyama ezigcinwa phansi endlini: kungabi ngaphezu kuka-40 kg wesisindo sezinkukhu ngemitha eyisikwele ngayinye.",
+    "st": "Dikgoho tsa nama tse dulang fatshe ka tlung: boima ba dikgoho bo se ke ba feta 40 kg ka mithara ya sekwere.",
+    "ts": "Tihuku ta nyama leti tshamaka ehansi endlwini: ku nga vi ni ntiko wa tihuku wo hundza 40 kg hi mitara ya xikwere.",
+    "ve": "Khuhu dza ṋama dzi dzulaho fhasi nḓuni: tshileme tsha khuhu tshi songo fhira 40 kg nga mitara ya tshikwea.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Newly hatched chicks must be given feed within 24 hours of hatching.",
+    "zu": "Amatshwele asanda kuchanyuselwa kufanele anikwe ukudla engakapheli amahora angu-24 echanyuselwe.",
+    "st": "Madinyane a dikgoho a sa tswa qhotswa a tshwanetse ho fuwa dijo nakong ya dihora tse 24 ka mora ho qhotswa.",
+    "ts": "Swiciwana leswi nga ha ku tlhotlhoriwaka swi fanele ku nyikiwa swakudya ku nga si hundza 24 wa tiawara endzhaku ka ku tlhotlhoriwa.",
+    "ve": "Zwikukwana zwi kha ḓi bva u thothonya zwi tea u ṋewa zwiḽiwa hu sa athu u fhira awara dza 24 zwi tshi bva u thothonya.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Newly hatched chicks must be given access to water within 24 hours of hatching, sooner in hot weather.",
+    "zu": "Amatshwele asanda kuchanyuselwa kufanele akwazi ukuthola amanzi engakapheli amahora angu-24 echanyuselwe, futhi ngokushesha kakhulu uma kushisa.",
+    "st": "Madinyane a dikgoho a sa tswa qhotswa a tshwanetse ho fumana metsi nakong ya dihora tse 24 ka mora ho qhotswa, kapele ho feta moo ha ho tjhesa.",
+    "ts": "Swiciwana leswi nga ha ku tlhotlhoriwaka swi fanele ku kota ku kuma mati ku nga si hundza 24 wa tiawara endzhaku ka ku tlhotlhoriwa, hi ku hatlisa ku tlurisa loko ku hisa.",
+    "ve": "Zwikukwana zwi kha ḓi bva u thothonya zwi tea u kona u wana maḓi hu sa athu u fhira awara dza 24 zwi tshi bva u thothonya, nga u ṱavhanya u fhira zwenezwo musi hu tshi fhisa.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Fresh water and the right feed always available, so birds are free from hunger and thirst.",
+    "zu": "Amanzi ahlanzekile nokudla okufanele kuhlale kutholakala, ukuze izinkukhu zingalambi futhi zingomi.",
+    "st": "Metsi a hlwekileng le dijo tse nepahetseng di dule di fumaneha, hore dikgoho di se ke tsa lapa kapa tsa nyorwa.",
+    "ts": "Mati yo tenga ni swakudya leswi faneleke swi fanele ku va kona minkarhi hinkwayo, leswaku tihuku ti nga vi ni ndlala ni torha.",
+    "ve": "Maḓi o kunaho na zwiḽiwa zwo teaho zwi dzule zwi hone, uri khuhu dzi si vhe na nḓala na ḓora.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Broiler houses need a minimum ventilation/airflow rate of 5 cubic metres per hour for every kilogram of bird mass in the house.",
+    "zu": "Izindlu zezinkukhu zenyama zidinga ukungena nokugeleza komoya okungenani okungamamitha ayi-cubic angu-5 ngehora ngekhilogremu ngayinye yesisindo sezinkukhu ezisendlini.",
+    "st": "Matlo a dikgoho tsa nama a hloka tekanyo ya moya o kenang le o phallang ya bonyane dimithara tse 5 tsa khubiki ka hora bakeng sa khilograma ka nngwe ya boima ba dikgoho tse ka tlung.",
+    "ts": "Tindlu ta tihuku ta nyama ti lava mpimo wa ku nghena ni ku famba ka moya wa kwalomu ka 5 wa timitara ta khubiki hi awara eka khilogiramu yin’wana ni yin’wana ya ntiko wa tihuku leti nga endlwini.",
+    "ve": "Nnḓu dza khuhu dza ṋama dzi ṱoḓa mpimo wa u dzhena na u tshimbila ha muya u si ho fhasi ha mitara dza khubiki dza 5 nga awara kha khilogireme iṅwe na iṅwe ya tshileme tsha khuhu dzi re nḓuni.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "In free-range broiler production, indoor stocking must not exceed 15 birds per square metre of floor space.",
+    "zu": "Ekufuyeni izinkukhu zenyama ezihamba ngaphandle, inani eligcinwa ngaphakathi akufanele lidlule izinkukhu ezingu-15 ngemitha eyisikwele yendawo yaphansi.",
+    "st": "Tlhahisong ya dikgoho tsa nama tse itsamaelang kantle, palo e bolokwang ka tlung ha e a tshwanela ho feta dikgoho tse 15 ka mithara ya sekwere ya fatshe.",
+    "ts": "Eka ku fuwa tihuku ta nyama leti fambafambaka ehandle, nhlayo leyi tshamaka endzeni a yi fanelanga ku hundza 15 wa tihuku hi mitara ya xikwere ya ndhawu ya le hansi.",
+    "ve": "Kha u fuwa khuhu dza ṋama dzi tshimbilaho nnḓa, tshivhalo tshi dzulaho nḓuni a tsho ngo tea u fhira khuhu dza 15 nga mitara ya tshikwea ya vhupo ha fhasi.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "In extensive village systems the chickens have to find their own water and food.",
+    "zu": "Ezinhlelweni zasemakhaya zokufuya endaweni evulekile, izinkukhu kufanele zizifunele amanzi nokudla.",
+    "st": "Mekgweng ya metseng ya ho rua sebakeng se seholo se bulehileng, dikgoho di tshwanetse ho ipatlela metsi le dijo.",
+    "ts": "Eka maendlelo ya le migangeni yo fuwa endhawini yo anama leyi pfulekeke, tihuku ti fanele ku tihlotela mati ni swakudya.",
+    "ve": "Kha maitele a mahayani a u fuwa fhethu ho vuleaho hu hulwane, khuhu dzi tea u ḓiwanela maḓi na zwiḽiwa.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Scavenging village chickens grow more slowly than commercially-farmed birds and are more vulnerable to disease, parasites and predators.",
+    "zu": "Izinkukhu zasemakhaya ezizifunela ukudla zikhula kancane kunezinkukhu ezifuywa ngokuhweba futhi zisengozini enkulu yezifo, izilokazane eziphila kuzo nezilwane ezizizingelayo.",
+    "st": "Dikgoho tsa metseng tse ipatlelang dijo di hola butle ho feta tse ruwang kgwebong mme di kotsing e kgolo ya mafu, dikokwana-hloko tse phelang ho tsona le dibatana.",
+    "ts": "Tihuku ta le migangeni leti tihlotelaka swakudya ti kula hi ku nonoka ku tlurisa leti fuyiwaka hi mabindzu naswona ti le khombyeni lerikulu ra mavabyi, swivumbiwa leswi hanyaka hi ku tswonga miri wa tona (parasites) ni swiharhi leswi ti hlaselaka.",
+    "ve": "Khuhu dza mahayani dzi ḓiṱoḓelaho zwiḽiwa dzi aluwa nga u ongolowa u fhira dzi fuwaho kha mabindu nahone dzi khomboni khulwane ya malwadze, zwilumi zwi dzulaho khadzo na zwipuka zwi dzi ḽaho.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "In the Limpopo and KwaZulu-Natal survey, 94.9% of farmers housed their chickens at night.",
+    "zu": "Ocwaningweni lwaseLimpopo naseKwaZulu-Natal, abalimi abangu-94.9% babefaka izinkukhu zabo ezindlini ebusuku.",
+    "st": "Phuputsong ya Limpopo le KwaZulu-Natal, 94.9% ya balemi ba ne ba kenya dikgoho tsa bona ka matlung bosiu.",
+    "ts": "Eka ndzavisiso wa Limpopo na KwaZulu-Natal, 94.9% ya varimi a va nghenisa tihuku ta vona etindlwini nivusiku.",
+    "ve": "Kha ṱhoḓisiso ya Limpopo na KwaZulu-Natal, 94.9% ya vhalimi vho vha vha tshi dzhenisa khuhu dzavho nḓuni vhusiku.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "What free-ranging hens forage met their needs for maintenance and growth but not for laying: protein in every season, calcium and phosphorus in winter.",
+    "zu": "Lokho izikhukhukazi ezizihambelayo ezazikuthola ngokuzifunela ukudla kwakwanele ukugcina umzimba nokukhula, kodwa kunganele ukuzalela amaqanda: amaprotheni kuzo zonke izinkathi zonyaka, i-calcium ne-phosphorus ebusika.",
+    "st": "Dijo tseo dikgoho tse tshehadi tse itsamaelang di neng di ipatlela tsona di ne di lekana ho hlokomela mmele le kgolo empa di sa lekane bakeng sa ho behela mahe: protheine dihleng tsohle, calcium le phosphorus mariha.",
+    "ts": "Leswi tihuku ta xisati leti tifambafambelaka a ti swi kuma hi ku tihlotela swakudya a swi enela ku hlayisa miri ni ku kula kambe swi nga eneli ku tshikela: phurotheyini eka tinguva hinkwato, calcium na phosphorus hi xixika.",
+    "ve": "Zwe khuhu dza tsadzi dzi ḓitshimbilelaho dza vha dzi tshi ḓiwanela sa zwiḽiwa zwo vha zwi tshi eḓana u tshidza muvhili na u aluwa, fhedzi zwi sa eḓani u kudzela makumba: phurotheini kha khalaṅwaha dzoṱhe, calcium na phosphorus vhuria.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "In free-range systems, hens must have access to the outdoor range for at least 8 hours a day in daylight.",
+    "zu": "Ezinhlelweni zokufuya okuvumela ukuhamba ngaphandle, izikhukhukazi kufanele zithole indawo yangaphandle okungenani amahora angu-8 ngosuku emini.",
+    "st": "Mekgweng ya ho rua e dumellang ho itsamaela kantle, dikgoho tse tshehadi di tshwanetse ho fumana sebaka sa kantle bonyane dihora tse 8 ka letsatsi ha ho kganya.",
+    "ts": "Eka maendlelo yo fuwa lama pfumelelaka ku fambafamba ehandle, tihuku ta xisati ti fanele ku kota ku ya endhawini ya le handle ku ringana kwalomu ka 8 wa tiawara hi siku ku ri nhlikanhi.",
+    "ve": "Kha maitele a u fuwa a tendelaho u tshimbila nnḓa, khuhu dza tsadzi dzi tea u kona u ya fhethu ha nnḓa tshifhinga tshi si ho fhasi ha awara dza 8 nga ḓuvha hu masiari.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Where individual nest boxes are used, at least one nest for every 8 hens.",
+    "zu": "Lapho kusetshenziswa amabhokisi ezidleke ahlukene, kube okungenani nesidleke esisodwa ngezikhukhukazi ezingu-8.",
+    "st": "Moo ho sebediswang mabokose a dihlaha ka bonngwe, ho be le bonyane sehlaha se le seng bakeng sa dikgoho tse tshehadi tse 8.",
+    "ts": "Laha ku tirhisiwaka mabokisi ya swisaka swa xin’we-xin’we, ku fanele ku va ni kwalomu ka xisaka xin’we eka 8 wa tihuku ta xisati.",
+    "ve": "Hune ha shumiswa mabogisi a zwiṱaha zwa khuhu nga tshithihi, hu vhe na tshiṱaha tshithihi kana u fhira kha khuhu dza tsadzi dza 8.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Hens need at least 8 hours of continuous darkness in every 24-hour cycle to rest properly.",
+    "zu": "Izikhukhukazi zidinga okungenani amahora angu-8 obumnyama obungaphazanyiswa kuwo wonke umjikelezo wamahora angu-24 ukuze ziphumule kahle.",
+    "st": "Dikgoho tse tshehadi di hloka bonyane dihora tse 8 tsa lefifi le sa kgaotsweng potolohong e nngwe le e nngwe ya dihora tse 24 hore di phomole hantle.",
+    "ts": "Tihuku ta xisati ti lava kwalomu ka 8 wa tiawara ta munyama lowu nga kavanyetiwiki eka ndzhendzeleko wun’wana ni wun’wana wa 24 wa tiawara leswaku ti wisa kahle.",
+    "ve": "Khuhu dza tsadzi dzi ṱoḓa tshifhinga tshi si ho fhasi ha awara dza 8 dza swiswi ḽi sa ṱhukhuwi kha mutevhe muṅwe na muṅwe wa awara dza 24 uri dzi awele zwavhuḓi.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Floor housing needs litter on at least a third (33%) of the floor.",
+    "zu": "Ukugcinwa phansi endlini kudinga okokwandlalela okungenani engxenyeni eyodwa kwezintathu (33%) yendawo yaphansi.",
+    "st": "Ho rua fatshe ka tlung ho hloka dintho tsa ho ala bonyane karolong e le nngwe ho tse tharo (33%) ya fatshe.",
+    "ts": "Ku tshamisa ehansi endlwini swi lava swo andlala eka kwalomu ka xiphemu xin’we xa swinharhu (33%) xa ndhawu ya le hansi.",
+    "ve": "U dzudza fhasi nḓuni zwi ṱoḓa zwa u andadza kha tshipiḓa tshithihi kha zwiraru (33%) tsha vhupo ha fhasi kana u fhira.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "The outdoor free-range area must not be overstocked: no more than 5 birds per square metre of range.",
+    "zu": "Indawo yangaphandle yokuzihambela akufanele igcwale ngokweqile: kungabi ngaphezu kwezinkukhu ezingu-5 ngemitha eyisikwele yendawo.",
+    "st": "Sebaka sa kantle sa ho itsamaela ha se a tshwanela ho tlala haholo: ho se be le dikgoho tse fetang 5 ka mithara ya sekwere ya sebaka seo.",
+    "ts": "Ndhawu ya le handle yo fambafamba a yi fanelanga ku tala ku tlurisa: ku nga vi ni tihuku to hundza 5 hi mitara ya xikwere ya ndhawu yoleyo.",
+    "ve": "Fhethu ha nnḓa ha u tshimbila a ho ngo tea u ḓala nga maanḓa: khuhu dzi songo fhira 5 nga mitara ya tshikwea ya fhethu afho.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "It is an offence to deny a duck food or water, or keep it somewhere lacking adequate space, ventilation, light or shelter from heat and cold.",
+    "zu": "Kuyicala ukunqabela idada ukudla noma amanzi, noma ukuligcina endaweni engenayo indawo eyanele, umoya owanele, ukukhanya noma indawo yokukhosela ekushiseni nasemakhazeni.",
+    "st": "Ke tlolo ya molao ho hanela letata dijo kapa metsi, kapa ho le boloka moo ho se nang sebaka se lekaneng, moya o lekaneng, kganya kapa tshireletso mochesong le serameng.",
+    "ts": "I nandzu ku tsona sekwa swakudya kumbe mati, kumbe ku xi hlayisa laha ku nga riki na ndhawu leyi eneleke, moya lowu eneleke, ku vonakala kumbe vutumbelo eka ku hisa ni xirhami.",
+    "ve": "Ndi mulandu u dzima sekwa zwiḽiwa kana maḓi, kana u ḽi vhea hune ha shaya tshikhala tsho eḓanaho, muya wo eḓanaho, tshedza kana vhudzumbamo kha mufhiso na phepho.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Watch flocks for sudden deaths, ruffled feathers, swollen wattles/combs or a sudden drop in egg production - these are signs of avian influenza and should be reported at once.",
+    "zu": "Bheka emihlambini ukufa okungazelelwe, izimpaphe ezimahliphihliphi, ukuvuvukala kwezicubu ezilenga ngaphansi koqhwaku noma amagekle, noma ukwehla okungazelelwe kokuzalela amaqanda - lezi yizimpawu zomkhuhlane wezinyoni futhi kufanele zibikwe ngokushesha.",
+    "st": "Sheba mehlapeng ho shwa ha tshohanyetso, masiba a hlakorileng, ho ruruha ha dinama tse leketlang tlasa molomo kapa dikama tsa hloohong, kapa ho theoha ha tshohanyetso ha tlhahiso ya mahe - ana ke matshwao a mokakallane wa dinonyana mme a tshwanetse ho tlalehwa hang-hang.",
+    "ts": "Languta mitlhambi ku vona ku fa ka xitshuketa, tinsiva leti phaphamaleke, ku pfimba ka swiphemu swa nyama leswi lengalengaka ehansi ka nomo kumbe swa le nhlokweni, kumbe ku hunguteka ka ku tshikela hi xitshuketa - leswi i swikombiso swa mukhuhlwana wa tinyenyana naswona swi fanele ku vikiwa hi ku hatlisa.",
+    "ve": "Sedzani miṱambi u vhona u fa nga khathihi, mithenga yo ṱhilinganyaho, u zwimba ha zwiṋama zwo nembelelaho fhasi ha mulomo kana kha ṱhoho, kana u fhungudzea ha makumba nga khathihi - hezwi ndi tsumbo dza mugunyuso wa zwiṋoni nahone dzi tea u vhigiwa nga u ṱavhanya.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Keep ducks away from wild birds and open water/feed that attracts them, and control visitors' access to duck housing, to reduce avian-influenza risk.",
+    "zu": "Gcina amadada kude nezinyoni zasendle namanzi noma ukudla okuvulekile okuzidonsayo, futhi ulawule ukungena kwezivakashi ezindlini zamadada, ukuze unciphise ingozi yomkhuhlane wezinyoni.",
+    "st": "Boloka matata hole le dinonyana tse hlaha le metsi kapa dijo tse pepeneneng tse di hohelang, mme o laole ho kena ha baeti matlong a matata, ho fokotsa kotsi ya mokakallane wa dinonyana.",
+    "ts": "Hlayisa masekwa ekule ni tinyenyana ta nhova ni mati kumbe swakudya leswi nga funengetiwangiki leswi ti kokaka, naswona lawula ku nghena ka vaendzi etindlwini ta masekwa, ku hunguta khombo ra mukhuhlwana wa tinyenyana.",
+    "ve": "Veani masekwa kule na zwiṋoni zwa ḓaka na maḓi kana zwiḽiwa zwo vuleaho zwi zwi kokodzaho, ni lange u dzhena ha vhaeni nḓuni dza masekwa, u fhungudza khombo ya mugunyuso wa zwiṋoni.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "It is an offence to keep a goat somewhere with inadequate space, ventilation, light or shelter from heat, cold or weather, or to confine/tether it in a way that causes unnecessary suffering.",
+    "zu": "Kuyicala ukugcina imbuzi endaweni enendawo enganele, umoya onganele, ukukhanya okunganele noma indawo yokukhosela enganele ekushiseni, emakhazeni noma esimweni sezulu, noma ukuyivalela noma ukuyibopha ngendlela eyibangela ukuhlupheka okungadingekile.",
+    "st": "Ke tlolo ya molao ho boloka podi moo sebaka, moya, kganya kapa tshireletso mochesong, serameng kapa maemong a lehodimo di sa lekaneng, kapa ho e kwalla kapa ho e tlama ka tsela e bakang mahlomola a sa hlokahaleng.",
+    "ts": "I nandzu ku hlayisa mbuti laha ndhawu, moya, ku vonakala kumbe vutumbelo eka ku hisa, xirhami kumbe maxelo swi nga enelangiki, kumbe ku yi pfalela kumbe ku yi boha hi ndlela leyi vangaka ku xaniseka loku nga lavekiki.",
+    "ve": "Ndi mulandu u vhea mbudzi hune tshikhala, muya, tshedza kana vhudzumbamo kha mufhiso, phepho kana mutsho zwa sa eḓane, kana u i valela kana u i vhofha nga nḓila i vhangaho u tambula hu sa ṱoḓei.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "It is an offence to starve, under-feed, or deny water or food to a goat.",
+    "zu": "Kuyicala ukulambisa, ukunikeza ukudla okunganele, noma ukunqabela imbuzi amanzi noma ukudla.",
+    "st": "Ke tlolo ya molao ho bolaisa podi tlala, ho e fepa hanyane haholo, kapa ho e hanela metsi kapa dijo.",
+    "ts": "I nandzu ku dlaya mbuti hi ndlala, ku yi nyika swakudya leswi nga enelangiki, kumbe ku yi tsona mati kumbe swakudya.",
+    "ve": "Ndi mulandu u tambudza mbudzi nga nḓala, u i ṋea zwiḽiwa zwi sa eḓani, kana u i dzima maḓi kana zwiḽiwa.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "An owner must not let a goat stay in a dirty or parasite-infested condition, and must get veterinary or other treatment for a sick, injured or diseased animal when able to.",
+    "zu": "Umnikazi akufanele avumele imbuzi ihlale ingcolile noma inezilokazane eziphila kuyo, futhi kufanele ayitholele ukwelashwa ngudokotela wezilwane noma okunye ukwelashwa uma igula, ilimele noma inesifo lapho ekwazi.",
+    "st": "Mong a se ke a tlohela podi e le ditshila kapa e tletse dikokwana-hloko tse phelang ho yona, mme o tshwanetse ho batlela phoofolo e kulang, e lemetseng kapa e tshwerweng ke lefu kalafo ya ngaka ya diphoofolo kapa kalafo e nngwe ha a kgona.",
+    "ts": "N’winyi a nga fanelanga ku tshika mbuti yi ri ni thyaka kumbe yi tele hi swivumbiwa leswi hanyaka hi ku tswonga miri wa yona (parasites), naswona u fanele ku kumela xifuwo lexi vabyaka, lexi vavisekeke kumbe lexi nga ni vuvabyi vutshunguri bya dokodela wa swifuwo kumbe vutshunguri byin’wana loko a kota.",
+    "ve": "Muṋe ha ngo tea u litsha mbudzi yo tshikafhala kana yo ḓala zwilumi zwi dzulaho khayo, nahone u tea u ṱoḓela tshipuka tshi lwalaho, tsho huvhalaho kana tshi re na vhulwadze dzilafho ḽa dokotela wa zwipuka kana ḽiṅwe dzilafho musi a tshi kona.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Winter feed shortage on communal sourveld is a known welfare/production risk: does that kid in autumn must feed kids through winter, and does that kid in spring suffer poor nutrition during late pregnancy, so winter feed supplementation matters.",
+    "zu": "Ukushoda kokudla ebusika emadlelweni omphakathi otshani obumuncu (sourveld) kuyingozi eyaziwayo enhlalakahleni nasekukhiqizeni: izinsikazi ezizala ekwindla kufanele zondle amazinyane ebusika, kanti ezizala entwasahlobo zithola ukudla okunganele lapho ukukhulelwa sekusekupheleni, ngakho ukwengeza ukudla ebusika kubalulekile.",
+    "st": "Kgaello ya dijo mariha makgulong a kopanelo a sourveld ke kotsi e tsejwang ya boiketlo le tlhahiso: dipodi tse tshehadi tse tswalang ka hwetla di tshwanetse ho fepa madinyane mariha, mme tse tswalang ka selemo di haellwa ke phepo qetellong ya bokhachane, kahoo ho tlatsetsa dijo mariha ho bohlokwa.",
+    "ts": "Ku kayivela ka swakudya hi xixika emadyelweni ya mani na mani ya sourveld i khombo leri tivekaka eka nhlayiseko ni vuhumelerisi: timbuti ta xisati leti tswalaka hi xixikana ti fanele ku phamela swimbutani hi xixika, kasi leti tswalaka hi ximun’wana ti pfumala swakudya leswi faneleke loko ku biha emirini ku ri ekusuhi ni ku hela, kutani ku engetela swakudya hi xixika i swa nkoka.",
+    "ve": "U ṱahela ha zwiḽiwa vhuria mafuloni a tshitshavha a sourveld ndi khombo i ḓivheaho kha mutakalo na vhubveledzi: mbudzi dza tsadzi dzi bebaho tshifhefho dzi tea u mamisa zwibudzana vhuria, ngeno dzi bebaho luṱavula dzi tshi shaya pfushi kha magumo a u ḓihwala, ngauralo zwiḽiwa zwa u engedza vhuria ndi zwa ndeme.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "When pigs are trucked, the SA code of practice for handling and transporting animals recommends 0.3 m² per porker, 0.4 m² per baconer and 0.8 m² per adult pig.",
+    "zu": "Uma izingulube zithuthwa ngamaloli, ikhodi yaseNingizimu Afrika yokuphatha nokuthutha izilwane incoma u-0.3 m² nge-porker, u-0.4 m² nge-baconer no-0.8 m² ngengulube endala ngayinye.",
+    "st": "Ha dikolobe di tsamaiswa ka diteraka, khoutu ya Afrika Borwa ya ho tshwara le ho tsamaisa diphoofolo e kgothaletsa 0.3 m² ka porker, 0.4 m² ka baconer le 0.8 m² ka kolobe e kgolo.",
+    "ts": "Loko tinguluve ti fambisiwa hi tilori, khodi ya Afrika-Dzonga ya ku khoma ni ku fambisa swifuwo yi ringanyeta 0.3 m² hi porker, 0.4 m² hi baconer ni 0.8 m² hi nguluve yin’wana ni yin’wana leyikulu.",
+    "ve": "Musi nguluvhe dzi tshi endedzwa nga ṱhiraka, khoudu ya Afrika Tshipembe ya u fara na u endedza zwipuka i themendela 0.3 m² nga porker, 0.4 m² nga baconer na 0.8 m² nga nguluvhe iṅwe na iṅwe yo no aluwaho.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "It is an offence to keep a pig somewhere with inadequate space, ventilation, light or shelter from heat, cold or weather, or to confine/tether it in a way that causes unnecessary suffering.",
+    "zu": "Kuyicala ukugcina ingulube endaweni enendawo enganele, umoya onganele, ukukhanya okunganele noma indawo yokukhosela enganele ekushiseni, emakhazeni noma esimweni sezulu, noma ukuyivalela noma ukuyibopha ngendlela eyibangela ukuhlupheka okungadingekile.",
+    "st": "Ke tlolo ya molao ho boloka kolobe moo sebaka, moya, kganya kapa tshireletso mochesong, serameng kapa maemong a lehodimo di sa lekaneng, kapa ho e kwalla kapa ho e tlama ka tsela e bakang mahlomola a sa hlokahaleng.",
+    "ts": "I nandzu ku hlayisa nguluve laha ndhawu, moya, ku vonakala kumbe vutumbelo eka ku hisa, xirhami kumbe maxelo swi nga enelangiki, kumbe ku yi pfalela kumbe ku yi boha hi ndlela leyi vangaka ku xaniseka loku nga lavekiki.",
+    "ve": "Ndi mulandu u vhea nguluvhe hune tshikhala, muya, tshedza kana vhudzumbamo kha mufhiso, phepho kana mutsho zwa sa eḓane, kana u i valela kana u i vhofha nga nḓila i vhangaho u tambula hu sa ṱoḓei.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "It is an offence to starve, under-feed, or deny water or food to a pig.",
+    "zu": "Kuyicala ukulambisa, ukunikeza ukudla okunganele, noma ukunqabela ingulube amanzi noma ukudla.",
+    "st": "Ke tlolo ya molao ho bolaisa kolobe tlala, ho e fepa hanyane haholo, kapa ho e hanela metsi kapa dijo.",
+    "ts": "I nandzu ku dlaya nguluve hi ndlala, ku yi nyika swakudya leswi nga enelangiki, kumbe ku yi tsona mati kumbe swakudya.",
+    "ve": "Ndi mulandu u tambudza nguluvhe nga nḓala, u i ṋea zwiḽiwa zwi sa eḓani, kana u i dzima maḓi kana zwiḽiwa.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "In heat waves, pig houses need better ventilation/airflow and lower stocking density, and outdoor pigs need shade and shelter.",
+    "zu": "Ngesikhathi sokushisa okukhulu, izindlu zezingulube zidinga ukungena nokugeleza komoya okungcono nokuncishiswa kwenani lezingulube endaweni, kanti izingulube zangaphandle zidinga umthunzi nendawo yokukhosela.",
+    "st": "Nakong ya maqhubu a motjheso, matlo a dikolobe a hloka moya o kenang le o phallang hantle ho feta le palo e tlase ya dikolobe sebakeng, mme dikolobe tsa kantle di hloka moriti le bodulo bo di sireletsang.",
+    "ts": "Hi nkarhi wa ku hisa swinene, tindlu ta tinguluve ti lava ku nghena ni ku famba ka moya loku antswaka ni nhlayo leyi hungutiweke ya tinguluve endhawini, naswona tinguluve ta le handle ti lava ndzhuti ni vutumbelo.",
+    "ve": "Nga zwifhinga zwa mufhiso muhulu, nnḓu dza nguluvhe dzi ṱoḓa u dzhena na u tshimbila ha muya hu khwine na tshivhalo tsho fhungudzwaho tsha nguluvhe fhethu huthihi, nahone nguluvhe dza nnḓa dzi ṱoḓa murunzi na vhudzumbamo.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "It is an offence to deny a rabbit food or water, or keep it somewhere lacking adequate space, ventilation, light or shelter from heat and cold.",
+    "zu": "Kuyicala ukunqabela unogwaja ukudla noma amanzi, noma ukuwugcina endaweni engenayo indawo eyanele, umoya owanele, ukukhanya noma indawo yokukhosela ekushiseni nasemakhazeni.",
+    "st": "Ke tlolo ya molao ho hanela mmutla dijo kapa metsi, kapa ho o boloka moo ho se nang sebaka se lekaneng, moya o lekaneng, kganya kapa tshireletso mochesong le serameng.",
+    "ts": "I nandzu ku tsona mpfundla swakudya kumbe mati, kumbe ku wu hlayisa laha ku nga riki na ndhawu leyi eneleke, moya lowu eneleke, ku vonakala kumbe vutumbelo eka ku hisa ni xirhami.",
+    "ve": "Ndi mulandu u dzima muvhuḓa zwiḽiwa kana maḓi, kana u u vhea hune ha shaya tshikhala tsho eḓanaho, muya wo eḓanaho, tshedza kana vhudzumbamo kha mufhiso na phepho.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Give breeding rabbits roughly 0.48-0.70 m2 of hutch floor space each, 50-60 cm high, not a cramped cage.",
+    "zu": "Nikeza onogwaja abazalisayo indawo yaphansi yendlu engaba ngu-0.48-0.70 m2 ngamunye, ukuphakama kube ngu-50-60 cm, kungabi ikheji eliminyene.",
+    "st": "Fa mebutla ya ho ikatisa sebaka sa fatshe sa ntlo se ka bang 0.48-0.70 m2 ka nngwe, se be bolelele ba 50-60 cm, eseng lesaka le petetsaneng.",
+    "ts": "Nyika mimpfundla yo tswalisa kwalomu ka 0.48-0.70 m2 ya ndhawu ehansi ka yindlu hi wun’we, ku tlakuka ku va 50-60 cm, ku nga ri kheji leri phusumetaka.",
+    "ve": "Ṋeani mivhuḓa ya u bebisa tshikhala tsha fhasi ha nnḓu tshi ṱoḓaho u vha 0.48-0.70 m2 nga muthihi, vhulapfu vhu vhe 50-60 cm, hu si kheidzhi yo tsikeledzeaho.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Sheep must not be penned overcrowded: at least 0.56 square metres of floor space per sheep so every animal can lie down.",
+    "zu": "Izimvu akufanele ziminyaniswe esibayeni: okungenani u-0.56 wamamitha ayisikwele wendawo yaphansi ngemvu ngayinye ukuze sonke isilwane sikwazi ukulala.",
+    "st": "Dinku ha di a tshwanela ho petetswa masakeng: bonyane dimithara tse 0.56 tsa sekwere tsa fatshe ka nku hore phoofolo e nngwe le e nngwe e kgone ho robala.",
+    "ts": "Tinyimpfu a ti fanelanga ku phusumetiwa esakeni: kwalomu ka 0.56 wa timitara ta xikwere ta ndhawu ya le hansi hi nyimpfu leswaku xifuwo xin’wana ni xin’wana xi kota ku etlela.",
+    "ve": "Nngu a dzo ngo tea u tsikeledzwa zwitangani: tshikhala tsha fhasi tshi si ho fhasi ha mitara dza tshikwea dza 0.56 nga nngu uri tshipuka tshiṅwe na tshiṅwe tshi kone u eḓela.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Electric prodders, sticks or goads may not be used on sheep.",
+    "zu": "Izinduku zikagesi ezithusayo, izinduku noma izikhonkwane zokugqugquzela akufanele zisetshenziswe ezimvini.",
+    "st": "Dithupa tsa motlakase tse hlabang, dithupa kapa dintho tse hlabang tsa ho kganna diphoofolo ha di a tshwanela ho sebediswa dinkung.",
+    "ts": "Switlhavi swa gezi, tinhonga kumbe switlhavi swo susumeta a swi fanelanga ku tirhisiwa eka tinyimpfu.",
+    "ve": "Zwibaya zwa muḓagasi, ṱhamu kana zwibaya zwa u khada a zwo ngo tea u shumiswa kha nngu.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Sheep driven on the hoof may not be moved more than 20 km in a single day (25 km is regarded as excessive).",
+    "zu": "Izimvu eziqhutshwa ngezinyawo akufanele zihanjiswe ibanga elingaphezu kuka-20 km ngosuku olulodwa (u-25 km uthathwa njengokweqile).",
+    "st": "Dinku tse kgannwang ka maoto ha di a tshwanela ho tsamaiswa ho feta 20 km ka letsatsi le le leng (25 km e nkuwa e le ho fetelletsa).",
+    "ts": "Tinyimpfu leti fambisiwaka hi milenge a ti fanelanga ku fambisiwa ku hundza 20 km hi siku rin’we (25 km yi tekiwa yi ri ku tlurisa).",
+    "ve": "Nngu dzi khadzwaho nga milenzhe a dzo ngo tea u endedzwa u fhira 20 km nga ḓuvha ḽithihi (25 km i dzhiiwa i nnzhi u fhirisa).",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Livestock must be given water and fed as soon as they reach their night camp or final destination.",
+    "zu": "Imfuyo kufanele inikwe amanzi nokudla ngokushesha lapho ifika enkanjini yasebusuku noma lapho eya khona ekugcineni.",
+    "st": "Diphoofolo tsa polasi di tshwanetse ho fuwa metsi le dijo hang ha di fihla kampong ya bosiu kapa moo di yang teng qetellong.",
+    "ts": "Swifuwo swi fanele ku nyikiwa mati ni swakudya hi ku hatlisa loko swi fika enkampeni ya vusiku kumbe emakumu ya laha swi yaka kona.",
+    "ve": "Zwe zwa fuwiwa zwi tea u ṋewa maḓi na zwiḽiwa nga u ṱavhanya musi zwi tshi swika gammbeni ya vhusiku kana fhethu ha magumo hune zwa khou ya hone.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "Injured, disabled or blind sheep must be given priority slaughter, or emergency slaughter, to prevent further pain or distress.",
+    "zu": "Izimvu ezilimele, ezikhubazekile noma eziyizimpumputhe kufanele zibekwe phambili ekuhlatshweni, noma zihlatshwe ngokuphuthumayo, ukuze kuvinjelwe ubuhlungu noma ukuhlupheka okwengeziwe.",
+    "st": "Dinku tse lemetseng, tse holofetseng kapa tse foufetseng di tshwanetse ho etellwa pele ha ho hlajwa, kapa ho hlajwa ka tshohanyetso, ho thibela bohloko kapa mahlomola a eketsehileng.",
+    "ts": "Tinyimpfu leti vavisekeke, leti lamaleke kumbe leti nga voniki ti fanele ku rhangisiwa eku tlhaviweni, kumbe ti tlhaviwa hi xihatla, ku sivela ku vava kumbe ku xaniseka loku engetelekeke.",
+    "ve": "Nngu dzo huvhalaho, dzo holefhalaho kana dzi sa vhoni dzi tea u rangiswa kha u ṱhavhiwa, kana dza ṱhavhiwa nga shishi, u thivhela vhuṱungu kana u tambula ho engedzeaho.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "A sheep-scab treatment plan should be in place: the disease carries a high economic and welfare cost.",
+    "zu": "Kufanele kube nohlelo lokwelapha utwayi lwezimvu (sheep scab): lesi sifo sinezindleko eziphezulu zomnotho nenhlalakahle yezilwane.",
+    "st": "Ho tshwanetse ho ba le moralo wa kalafo ya lefu la letlalo la dinku (sheep scab): lefu lena le na le ditjeho tse kgolo moruong le boiketlong ba diphoofolo.",
+    "ts": "Ku fanele ku va ni pulani yo tshungula vuvabyi bya nhlonge ya tinyimpfu (sheep scab): vuvabyi byi ni ntsengo wa le henhla eka ikhonomi ni nhlayiseko bya swifuwo.",
+    "ve": "Hu tea u vha na pulane ya u lafha vhulwadze ha lukanda lwa nngu (sheep scab): vhulwadze uhu vhu na tshinyalelo khulwane kha ikonomi na mutakalo wa zwipuka.",
+    "generatedScope": "animal-welfare"
+  },
+  {
+    "english": "What they need",
+    "zu": "Lokho ezikudingayo",
+    "st": "Seo di se hlokang",
+    "ts": "Leswi swi swi lavaka",
+    "ve": "Zwine zwa zwi ṱoḓa",
+    "generatedScope": "animal-welfare-control"
+  },
+  {
+    "english": "Original animal care note",
+    "zu": "Inothi lokuqala lokunakekela izilwane",
+    "st": "Noto ya pele ya tlhokomelo ya diphoofolo",
+    "ts": "Notsi yo sungula ya nhlayiseko wa swifuwo",
+    "ve": "Notsi ya u thoma ya ndondolo ya zwipuka",
+    "generatedScope": "animal-welfare-control"
+  },
+  {
+    "english": "Animal care translations are unreviewed drafts. English care notes are available below. Other animal details may still be in English.",
+    "zu": "Ukuhumushwa kokunakekelwa kwezilwane kuyimibhalo engakabuyekezwa. Amanothi okunakekela esiNgisi ayatholakala ngezansi. Eminye imininingwane yezilwane isengaba ngesiNgisi.",
+    "st": "Diphetolelo tsa tlhokomelo ya diphoofolo ke meralo e eso hlahlojwe. Dinoto tsa tlhokomelo tsa Senyesemane di fumaneha ka tlase. Dintlha tse ding tsa diphoofolo di ka nna tsa ba ka Senyesemane.",
+    "ts": "Vuhundzuluxeri bya nhlayiseko wa swifuwo i tindzimana leti nga si kamberiwaka. Tinotsi ta nhlayiseko ta Xinghezi ta kumeka laha hansi. Vuxokoxoko byin’wana bya swifuwo byi nga ha va hi Xinghezi.",
+    "ve": "Ṱhalutshedzelo dza ndondolo ya zwipuka ndi mishumo i sa athu sedzuluswaho. Notsi dza ndondolo dza Luisimane dzi wanala afho fhasi. Maṅwe mafhungo a zwipuka dzi nga vha dzi kha ḓi vha nga Luisimane.",
+    "generatedScope": "animal-welfare-control"
   }
 ] as const;

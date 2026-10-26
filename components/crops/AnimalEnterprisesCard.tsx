@@ -9,6 +9,9 @@
 // Every figure opens onto the sentence it came from; a figure no source states reads "not sourced".
 
 import type { LucideIcon } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n';
+import { productGuideText } from '@/lib/production-product-guidance';
+import { isCropExportDraftLanguage } from '@/lib/crop-export-copy';
 import { PawPrint, Egg, Milk, Hexagon, Drumstick, Fish, Scissors, Scale, ShieldCheck, HeartHandshake, ExternalLink } from 'lucide-react';
 import {
   HOUSING_LABEL,
@@ -100,6 +103,8 @@ function Fact({ label, value, source, qualifier, note }: { label: string; value:
 const rangeText = (r: SourcedRange | null, unit: string) => (r ? `${formatAmountRange(r.value)} ${unit}` : null);
 
 function EnterpriseFacts({ e }: { e: AnimalEnterprise }) {
+  const { lang } = useLanguage();
+  const nativeCare = isCropExportDraftLanguage(lang);
   const months = sourcedProductMonths(e);
   const firstWindow = e.windows[0];
   // Every quote the card rests on, in one place: a phone never shows a link's hover text.
@@ -142,10 +147,11 @@ function EnterpriseFacts({ e }: { e: AnimalEnterprise }) {
       {e.welfare.length > 0 && (
         <div className="mt-3">
           <div className="font-sans font-semibold inline-flex items-center gap-1.5 mb-1" style={{ fontSize: 12, color: 'var(--text-primary)' }}>
-            <HeartHandshake size={13} aria-hidden style={{ color: 'var(--emerald)' }} /> What they need
+            <HeartHandshake size={13} aria-hidden style={{ color: 'var(--emerald)' }} /> {productGuideText('What they need', lang)}
           </div>
+          {nativeCare && <p className="font-sans mb-2" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.5 }}>{productGuideText("Animal care translations are unreviewed drafts. English care notes are available below. Other animal details may still be in English.", lang)}</p>}
           <ul className="font-sans flex flex-col gap-1" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45, listStyle: 'disc', paddingInlineStart: 20 }}>
-            {e.welfare.map((p, i) => <li key={i}>{p.point}</li>)}
+            {e.welfare.map((p, i) => <li key={i}>{productGuideText(p.point, lang)}{nativeCare && productGuideText(p.point, lang) !== p.point && <details className="mt-1" style={{ fontSize: 11.5 }}><summary style={{ cursor: 'pointer', minHeight: 44, padding: '10px 0', boxSizing: 'border-box' }}>{productGuideText('Original animal care note', lang)}</summary><p lang="en" className="mt-1">{p.point}</p></details>}</li>)}
           </ul>
         </div>
       )}
@@ -165,7 +171,7 @@ function EnterpriseFacts({ e }: { e: AnimalEnterprise }) {
           <ul className="flex flex-col gap-2 pt-2">
             {sources.map((c, i) => (
               <li key={i} style={{ lineHeight: 1.45 }}>
-                <span style={{ color: 'var(--text-primary)' }}>&ldquo;{c.quote}&rdquo;</span>{' '}
+                <span style={{ color: 'var(--text-primary)', overflowWrap: 'anywhere' }}>&ldquo;{c.quote}&rdquo;</span>{' '}
                 <SourceLink source={c} />
               </li>
             ))}

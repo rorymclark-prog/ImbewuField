@@ -1,0 +1,302 @@
+[
+  {
+    "language": "zu",
+    "id": "bees",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "zu",
+    "id": "cattle-beef",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "zu",
+    "id": "cattle-dairy",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "zu",
+    "id": "chicken-broiler",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "zu",
+    "id": "chicken-indigenous",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "zu",
+    "id": "chicken-layer",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "zu",
+    "id": "duck",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "zu",
+    "id": "fish-tilapia",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "zu",
+    "id": "goat-dairy",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "zu",
+    "id": "goat-indigenous",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "zu",
+    "id": "goat-meat",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "zu",
+    "id": "pig-pork",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "zu",
+    "id": "rabbit",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "zu",
+    "id": "sheep-mutton",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "zu",
+    "id": "sheep-wool",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "st",
+    "id": "bees",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "st",
+    "id": "cattle-beef",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "st",
+    "id": "cattle-dairy",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "st",
+    "id": "chicken-broiler",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "st",
+    "id": "chicken-indigenous",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "st",
+    "id": "chicken-layer",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "st",
+    "id": "duck",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "st",
+    "id": "fish-tilapia",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "st",
+    "id": "goat-dairy",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "st",
+    "id": "goat-indigenous",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "st",
+    "id": "goat-meat",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "st",
+    "id": "pig-pork",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "st",
+    "id": "rabbit",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "st",
+    "id": "sheep-mutton",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "st",
+    "id": "sheep-wool",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ts",
+    "id": "bees",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ts",
+    "id": "cattle-beef",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ts",
+    "id": "cattle-dairy",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ts",
+    "id": "chicken-broiler",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ts",
+    "id": "chicken-indigenous",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ts",
+    "id": "chicken-layer",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ts",
+    "id": "duck",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ts",
+    "id": "fish-tilapia",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ts",
+    "id": "goat-dairy",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ts",
+    "id": "goat-indigenous",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ts",
+    "id": "goat-meat",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ts",
+    "id": "pig-pork",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ts",
+    "id": "rabbit",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ts",
+    "id": "sheep-mutton",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ts",
+    "id": "sheep-wool",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ve",
+    "id": "bees",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ve",
+    "id": "cattle-beef",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ve",
+    "id": "cattle-dairy",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ve",
+    "id": "chicken-broiler",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ve",
+    "id": "chicken-indigenous",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ve",
+    "id": "chicken-layer",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ve",
+    "id": "duck",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ve",
+    "id": "fish-tilapia",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ve",
+    "id": "goat-dairy",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ve",
+    "id": "goat-indigenous",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ve",
+    "id": "goat-meat",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ve",
+    "id": "pig-pork",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ve",
+    "id": "rabbit",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ve",
+    "id": "sheep-mutton",
+    "onlyQuoteWrapStyleChanged": true
+  },
+  {
+    "language": "ve",
+    "id": "sheep-wool",
+    "onlyQuoteWrapStyleChanged": true
+  }
+]

@@ -1,0 +1,47 @@
+{
+  "startedAt": "2026-10-25T23:12:44.696483+00:00",
+  "tmpdir": "/private/tmp/imbewufield-animal-care-focused-1548hyrq",
+  "commands": [
+    {
+      "name": "typecheck",
+      "command": [
+        "npx",
+        "tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "focused",
+      "command": [
+        "node",
+        "--import",
+        "./tests/register-alias.mjs",
+        "--test",
+        "tests/animal-welfare-localization.test.ts",
+        "tests/guidance-localization.test.ts",
+        "tests/plan-note-localization.test.ts",
+        "tests/crop-screen-localization.test.ts",
+        "tests/crop-export-instruction-localization.test.ts",
+        "tests/update-notices-localization.test.ts",
+        "tests/update-tour.test.ts",
+        "tests/animal-enterprises.test.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "endedAt": "2026-10-25T23:13:02.134763+00:00",
+  "pass": 147,
+  "fail": 0,
+  "testFiles": 8,
+  "scope": "Focused checks only; the required full ordered suite remains pending."
+}

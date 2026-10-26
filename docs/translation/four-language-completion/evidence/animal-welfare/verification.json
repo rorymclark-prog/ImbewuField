@@ -1,0 +1,47 @@
+{
+  "status": "Current focused checks, actual isolated browser states and rendered PDFs verified; full ordered branch checks and fluent review remain required.",
+  "base": "acbb7be00533ff2935fa51775aa72ea57686f39f",
+  "newWelfareRows": 44,
+  "newCareUiRows": 3,
+  "combinedRegistryRows": 1206,
+  "originalEnterprises": 15,
+  "nativePhoneCases": 60,
+  "nativeDesktopCases": 4,
+  "completeBrowserDraftSourcePairs": 248,
+  "sourceQuoteOpenedCases": 4,
+  "beforeQuoteWidth": {
+    "client": 357,
+    "scroll": 543
+  },
+  "afterQuoteWidth": {
+    "client": 357,
+    "scroll": 357
+  },
+  "quoteTextPreserved": true,
+  "careMarkupEquivalenceStates": 60,
+  "PDFs": 12,
+  "PDFPages": 174,
+  "PDFWordBounds": 79414,
+  "fullGuideClauses": 1176,
+  "completeWelfareFieldOccurrences": 176,
+  "careClausesWithFinalQualifierOnOnePage": 176,
+  "clippedWords": 0,
+  "parserErrors": 0,
+  "EnglishControls": "Both original English guide sets retain the same pixels and extracted text.",
+  "visualInspection": {
+    "nativePdfContacts": 8,
+    "enlargedTshivendaPdfPages": 4,
+    "browserScreenshots": [
+      "ve-chicken-broiler-desktop.png",
+      "st-goat-indigenous-phone.png",
+      "zu-chicken-layer-phone.png",
+      "ts-pig-pork-phone.png",
+      "ve-source-quote-wrapped-viewport.png"
+    ],
+    "limits": "Four representative care screenshots and the repaired quotation viewport were inspected.64browser states have complete visible-clause and layout evidence; this is not a fluent-language or full-account/production-route review."
+  },
+  "scope": "Actual isolated EnterpriseFacts and original source/fact helpers compiled from the current component, with a substituted language context and existing compiled common CSS/system fonts. All15original enterprise objects in all4languages; original animal art is served locally. Only native disclosure controls are interactive here; selection/season callbacks, whole production/account route and fluent review are not exercised by this browser harness.",
+  "inheritedCheckClaimCorrection": "The older unit-only native snapshot rule was expanded only for exact typed care fields from this packet. Its original whole-object, source-citation, missing-yield, unit/period and private-record assertions remain; no assertion was deleted.",
+  "sourceQuotePictureChange": "Only the quotation span wrapping changes its picture; every source character, selector, quantity and season callback remains guarded. PLAN_VERSION is unchanged.",
+  "fullSuite": "Not started yet for this batch. The separate frozen note full run68547remains active."
+}

@@ -1426,6 +1426,34 @@
       "st": "Dinoto tsa pele di dula di fumaneha; tse eso fetolelwe di ntse di le ka Senyesemane.",
       "ts": "Tinotsi to sungula ta ha kumeka; leti nga si hundzuluxeriwaka ta ha ri hi Xinghezi.",
       "ve": "Notsi dza u thoma dzi dzula dzi tshi wanala; dzi sa athu ṱalutshedzelwaho dzi kha ḓi vha nga Luisimane."
+    },
+    {
+      "english": "Animal care notes now have unreviewed translations in four languages.",
+      "zu": "Amanothi okunakekela izilwane manje anezinguqulo ezingakabuyekezwa ngezilimi ezine.",
+      "st": "Dinoto tsa tlhokomelo ya diphoofolo jwale di na le diphetolelo tse eso hlahlojwe ka dipuo tse nne.",
+      "ts": "Tinotsi ta nhlayiseko wa swifuwo sweswi ti ni vuhundzuluxeri bya tindzimi ta mune leswi nga si kamberiwaka.",
+      "ve": "Notsi dza ndondolo ya zwipuka zwino dzi na ṱhalutshedzelo dza nyambo nṋa dzi sa athu sedzuluswaho."
+    },
+    {
+      "english": "Original care limits and source references stay available for checking.",
+      "zu": "Imikhawulo yokuqala yokunakekela nezikhombo zemithombo kusatholakala ukuze kuhlolwe.",
+      "st": "Meedi ya pele ya tlhokomelo le ditshupiso tsa mehlodi di ntse di fumaneha bakeng sa ho di hlahloba.",
+      "ts": "Swipimelo swo sungula swa nhlayiseko ni swikombo swa swihlovo swa ha kumeka leswaku swi kamberiwa.",
+      "ve": "Mikano ya u thoma ya ndondolo na zwiko zwa mafhungo zwi kha ḓi wanala uri zwi sedzuluswe."
+    },
+    {
+      "english": "Review animal care drafts",
+      "zu": "Buyekeza imibhalo yokunakekela izilwane",
+      "st": "Hlahloba meralo ya tlhokomelo ya diphoofolo",
+      "ts": "Kambela tindzimana ta nhlayiseko wa swifuwo",
+      "ve": "Sedzulusani mishumo ya ndondolo ya zwipuka"
+    },
+    {
+      "english": "Choose an animal enterprise. Review care notes and open the English source.",
+      "zu": "Khetha uhlobo lokukhiqiza ngezilwane. Buyekeza amanothi okunakekela bese uvula isiNgisi sokuqala.",
+      "st": "Kgetha kgwebo ya diphoofolo. Hlahloba dinoto tsa tlhokomelo mme o bule mohlodi wa Senyesemane.",
+      "ts": "Hlawula bindzu ra swifuwo. Kambela tinotsi ta nhlayiseko kutani u pfula xihlovo xa Xinghezi.",
+      "ve": "Nangani bindu ḽa zwipuka. Sedzulusani notsi dza ndondolo ni vule tshiko tsha Luisimane."
     }
   ],
   "historyBefore": [
