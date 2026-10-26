@@ -17,7 +17,7 @@ export default function ProgrammeReports({ funder = false, onOpenProgress, onOpe
   const { lang } = useLanguage();
   const ui = (en: string, zu: string) => lang === 'zu' ? zu : en;
   const { user, profile } = useAuth();
-  const portfolio = useNetworkPortfolio(Boolean(user));
+  const portfolio = useNetworkPortfolio(Boolean(user), 24);
   const [kind, setKind] = useState<ProgrammeReportKind | 'mel'>('overview');
   const [cohortId, setCohortId] = useState('');
   const [basis, setBasis] = useState<ProgrammeReportBasis>('cumulative');

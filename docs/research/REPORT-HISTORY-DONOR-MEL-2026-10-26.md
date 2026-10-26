@@ -40,7 +40,10 @@ Donor filters narrow milestones only; assessments retain their project scope.
   boundaries reuse the Records authority, including summer across New Year.
   Paid invoices replace linked sales once. Units stay separate. Missing/invalid
   entries withhold the affected comparison. Current periods are incomplete.
-- Programme comparisons use the existing authorised UTC monthly series. Missing
+- Programme comparisons request 24 months of the existing authorised UTC monthly
+  series, so both years are available for year-on-year comparisons. The network
+  views retain their existing 12-month default. No new source collections or consent
+  bypass is added; the same consent-filtered ledgers are bucketed for longer. Missing
   months and unreadable books are unavailable. No organisation-wide series is
   relabelled as a cohort, and current consent is not a historical participant panel.
 - Mentor and facilitator comparisons use an equal preceding number of inclusive

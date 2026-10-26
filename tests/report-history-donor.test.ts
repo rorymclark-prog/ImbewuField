@@ -8,7 +8,8 @@ import type { SavedInvoice } from '../lib/invoices';
 import { buildMelEvidenceReport, type MelReportOptions } from '../lib/mel-report';
 import { cleanDonorIndicator, freshEvidenceData, validProgrammeMilestone, type DonorIndicator, type ProgrammeMilestone } from '../lib/programme-evidence';
 import { buildProgrammeReport, previousReportDateRange, programmeComparisonRange, programmeReportFilename, type ProgrammeReportOptions } from '../lib/programme-report';
-import { DEMO_NETWORK, DEMO_COHORT_MONTHLY } from '../lib/network-demo';
+import { DEMO_NETWORK, DEMO_COHORT_MONTHLY, DEMO_COHORT_REPORT_MONTHLY } from '../lib/network-demo';
+import { buildCohortSeries, portfolioHistoryMonths } from '../lib/cohort-series';
 import { buildTrainingReport } from '../lib/training-report';
 import { buildFieldReport } from '../lib/field-report';
 import { freshFieldWorkspace } from '../lib/field-teams';
@@ -114,6 +115,29 @@ test('comparison exports cannot overwrite a different baseline under the same do
   const plain=buildProgrammeReport(o),previous=buildProgrammeReport({...o,comparison:{startMonth:'2026-08',endMonth:'2026-08'}}),year=buildProgrammeReport({...o,comparison:{startMonth:'2025-09',endMonth:'2025-09'}});
   const names=[plain,previous,year].map(r=>programmeReportFilename(r,o.date));
   assert.equal(new Set(names).size,3);assert.match(names[1],/vs-2026-08-to-2026-08/);
+});
+
+test('year-on-year programme reports include both years of the same authorised ledger',()=>{
+  const ledgers=[{production:[harvest('earlier','2025-09-10',10),harvest('later','2026-09-10',20)],sales:null,expenses:null,joinedAt:'2024-01-01'}];
+  const reportFor=(months:number)=>buildProgrammeReport(programme({monthly:buildCohortSeries(ledgers,{months,now}),startMonth:'2026-09',endMonth:'2026-09',comparison:{startMonth:'2025-09',endMonth:'2025-09'}}));
+  const row=(months:number)=>reportFor(months).tables.find(t=>t.title==='Historical ledger comparison')!.rows[0];
+  assert.equal(row(12)[3],'Not comparable');
+  assert.deepEqual(row(24),['Harvest logged','10 kg','20 kg','+10 kg']);
+  const sales=reportFor(24).tables.find(t=>t.title==='Historical ledger comparison')!.rows[2];
+  assert.equal(sales[1],'Not available');assert.equal(sales[3],'Not comparable');
+});
+
+test('requesting report history cannot create an unbounded or malformed portfolio axis',()=>{
+  assert.equal(portfolioHistoryMonths('24'),24);assert.equal(portfolioHistoryMonths(24),24);
+  for(const value of [null,undefined,'12','2400','all',0,2400,Number.NaN]) assert.equal(portfolioHistoryMonths(value),12);
+});
+
+test('the longer demonstration report history preserves the existing latest-year results and consent coverage',()=>{
+  assert.equal(DEMO_COHORT_MONTHLY.windowMonths,12);assert.equal(DEMO_COHORT_REPORT_MONTHLY.windowMonths,24);
+  const values=(months:typeof DEMO_COHORT_MONTHLY.months)=>months.map(m=>[m.key,m.producedKg,m.incomeZar,m.expensesZar]);
+  assert.deepEqual(values(DEMO_COHORT_REPORT_MONTHLY.months.slice(-DEMO_COHORT_MONTHLY.months.length)),values(DEMO_COHORT_MONTHLY.months));
+  assert.equal(DEMO_COHORT_REPORT_MONTHLY.productionFarmers,DEMO_COHORT_MONTHLY.productionFarmers);
+  assert.equal(DEMO_COHORT_REPORT_MONTHLY.salesFarmers,DEMO_COHORT_MONTHLY.salesFarmers);
 });
 
 test('staff comparison dates use inclusive calendar days across leap day',()=>{
