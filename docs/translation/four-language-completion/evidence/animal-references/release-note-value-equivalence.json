@@ -1,0 +1,10 @@
+{
+  "at": "2026-10-26T04:23:18.738Z",
+  "file": "lib/release-notes.ts",
+  "beforeSha256": "87d61a59c00d8d2b353461e23d2e4ccba9869b0c1668080d4b0167d9ca99c15d",
+  "afterSha256": "8b614952125ee5bbd2b80b762871fc298fe15c6bf490d49ef57b58bb3a533848",
+  "completeReleaseNoteValuesExact": true,
+  "noteCount": 624,
+  "sourceChange": "Only SHA property quoting changed to the existing gate's accepted bare-key/single-quoted literal. All runtime object values remain identical.",
+  "gateStamp": "878fb20f"
+}

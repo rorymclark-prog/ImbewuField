@@ -1,0 +1,92 @@
+[
+  {
+    "index": 2,
+    "language": "ts",
+    "change": "Corrected accidental Cyrillic e in the Xitsonga word malembe to Latin e; source and figures unchanged."
+  },
+  {
+    "index": 5,
+    "language": "ts",
+    "change": "Corrected accidental Cyrillic e in the Xitsonga word malembe to Latin e; source and figures unchanged."
+  },
+  {
+    "index": 28,
+    "language": "ts",
+    "before": "malembе",
+    "after": "malembe",
+    "reason": "Correct accidental Cyrillic e to the Latin letter in the Xitsonga word; no source content or figures change."
+  },
+  {
+    "index": 33,
+    "language": "ts",
+    "before": "malembе",
+    "after": "malembe",
+    "reason": "Correct accidental Cyrillic e to the Latin letter in the Xitsonga word; no source content or figures change."
+  },
+  {
+    "index": 37,
+    "language": "ts",
+    "before": "malembе",
+    "after": "malembe",
+    "reason": "Correct accidental Cyrillic e to the Latin letter in the Xitsonga word; no source content or figures change."
+  },
+  {
+    "index": 25,
+    "language": "ts",
+    "before": "nti­rho",
+    "after": "ntirho",
+    "reason": "Remove accidental soft hyphen in the authored word; the literal source PDF line-break notation remains exact."
+  },
+  {
+    "index": 7,
+    "language": "zu",
+    "before": "ezipholile",
+    "after": "ezinethezekile",
+    "reason": "Translate comfortable as comfortable, avoiding an added claim that the reference condition is cool."
+  },
+  {
+    "index": 26,
+    "language": "ve",
+    "before": "u aluwa hu a shaya fhasi ha",
+    "after": "u aluwa a hu vhi havhuḓi fhasi ha",
+    "reason": "State poor growth plainly; retain both temperature limits and the possible-mortality condition."
+  },
+  {
+    "index": 31,
+    "language": "ve",
+    "before": "mafhi/mamvele",
+    "after": "mafhi/vhukuse",
+    "reason": "Reuse the existing canonical Vhukuse fibre/wool term instead of an unsupported alternative."
+  },
+  {
+    "index": 42,
+    "language": "zu",
+    "before": "ATZHALIWE",
+    "after": "ATSHALIWE",
+    "reason": "Correct the spelling of cultivated/planted pastures; preserve the alternative-system exclusion."
+  },
+  {
+    "index": 36,
+    "language": "ts",
+    "reason": "Use the explicit young-rabbit phrase rather than a generic infant noun; original quantities and survival/age conditions unchanged."
+  },
+  {
+    "index": 36,
+    "language": "ve",
+    "reason": "Use the explicit young-rabbit phrase and its matching agreement, preserving FAO target, survival, age and non-combination conditions."
+  },
+  {
+    "index": 11,
+    "language": "zu",
+    "before": "hhayi amakhilogremu enyama elungisiwe",
+    "after": "hhayi ama-kg enyama elungisiwe",
+    "reason": "Retain the original written kg symbol in its second occurrence; no dimension or meat qualification changes."
+  },
+  {
+    "index": 26,
+    "language": "zu",
+    "before": "noma amakhilogremu okudla",
+    "after": "noma ama-kg okudla",
+    "reason": "Retain the original written kg symbol for food quantities; no temperature or harvest condition changes."
+  }
+]

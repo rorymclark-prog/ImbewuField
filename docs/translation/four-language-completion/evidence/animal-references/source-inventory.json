@@ -1,0 +1,812 @@
+{
+  "base": "878fb20f112b9ebcddb0fff8e59f9b8c6c894dc9",
+  "sourceCount": 43,
+  "rows": [
+    {
+      "english": "From a 2008 national postal survey of 112 SABIO-member beekeepers (22.4% response rate) managing an estimated 19,520 hives at 2,094 apiary sites; figure is self-reported and un-weighted. Table 7 (same doc, p.13-14) shows wide variance by region/operation-focus/size for the same year: e.g. 'All' region, honey-focused, all-size operations = 25.1-26.9 kg/hive/yr across 3 survey sites; Western Cape honey-focused = 23.6-27.9 kg/hive/yr; Western Cape pollination-focused, small operations = only 7.0-7.5 kg/hive/yr. The same document also quotes an earlier, more rigorously validated study: 'Their average reported yield is very low, at just 13.4 kilograms per hive' for Western Cape hives (Allsopp & Cherry 2004, cited p.2 of this working paper), and historical national bee-census data of 8.3 kg/hive/annum (1911-1988 average) rising to 24 kg/hive in the 1974/5 census (same doc, p.1). No single number can be called definitive; 25 kg/hive/yr is used as the document's own headline national estimate.",
+      "bindings": [
+        {
+          "enterpriseId": "bees",
+          "field": "outputPerAnimal",
+          "source": {
+            "quote": "The national average honey yield of in the region of 25 kilograms of honey per hive per year in Table 7 is un-weighted across beekeepers.",
+            "url": "https://open.uct.ac.za/bitstreams/5d2ecb2c-3a9d-4560-aa17-b4774df6b5e2/download",
+            "doc": "Survey of Beekeeping in South Africa, CSSR Working Paper No. 221 (Conradie & Nortje, 2008, UCT Centre for Social Science Research)",
+            "page": 14
+          },
+          "sourceValue": [
+            25,
+            25
+          ],
+          "sourceUnit": "kg honey/hive/year"
+        }
+      ]
+    },
+    {
+      "english": "Table 5 gives weaning weight (WW) across four agro-ecological zones for the same nine Nguni communal herds: arid 114.51 kg (lowest), semi-arid 119.98 kg, dry sub-humid 117.91 kg, humid 121.21 kg (highest). The range recorded here spans this one study's own arid-to-humid zone means; it is not merged with any other paper's weaning-weight figures (other SA studies report different ranges for different systems - e.g. research-station or stud herds - and were deliberately excluded to avoid mixing systems). 826 Nguni calves from nine herds that the paper itself says were 'kept under extensive grazing system' in Limpopo Province - a genuine communal/extensive veld system matching this enterprise.",
+      "bindings": [
+        {
+          "enterpriseId": "cattle-beef",
+          "field": "outputPerAnimal",
+          "source": {
+            "quote": "Calves’ in humid zone had higher performance with 121.21 kg for WW, 96.83 kg for P-WG and 0.477 kg/day for P-ADG. The lowest WW (114.51 kg)...were observed in arid zone.",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5203849/",
+            "doc": "Mpofu, Ginindza, Siwendu, Nephawe & Mtileni (2016). Effect of agro-ecological zone, season of birth and sex on pre-weaning performance of Nguni calves in Limpopo Province, South Africa. Tropical Animal Health and Production 49:187-194 (PMC5203849), Table 5",
+            "page": null
+          },
+          "sourceValue": [
+            114.51,
+            121.21
+          ],
+          "sourceUnit": "kg weaning weight/calf"
+        }
+      ]
+    },
+    {
+      "english": "2354 days / 365.25 = 6.44 years. 'Failure time' is the length of productive herd life for the 580 uncensored (fully-observed) records in the combined dataset; the dissertation itself defines productive herd life as 'the time interval between first calving date to culling date'. Combined data from three extensively-grazed Nguni stud herds, animals born 1968-2015.",
+      "bindings": [
+        {
+          "enterpriseId": "cattle-beef",
+          "field": "productiveLifeYears",
+          "source": {
+            "quote": "Average failure time (days) 2 354",
+            "url": "https://scholar.ufs.ac.za/bitstreams/80aad384-ea22-4242-b763-f218826c11ec/download",
+            "doc": "Ngayo, M. (2017). Factors Affecting Productive Life and Fertility in Nguni Cows (MSc dissertation, University of the Free State), Table 5.1",
+            "page": 58
+          },
+          "sourceValue": [
+            6.44,
+            6.44
+          ]
+        }
+      ]
+    },
+    {
+      "english": "Table 1, AFC column, rows in the table's order Holstein-Friesland Reg./Grade, Jersey Reg./Grade, Ayrshire Reg./Grade: 28, 30, 25, 28, 29, 32 months. The Grade rows used here are Holstein-Friesland 30 and Jersey 28 (Grade Ayrshire 32 is not used: the enterprise is Jersey or Holstein type). 28 x 4.35 = 121.8 weeks; 30 x 4.35 = 130.5 weeks. Milk begins at first calving, so age at first calving is the time to first product.",
+      "bindings": [
+        {
+          "enterpriseId": "cattle-dairy",
+          "field": "weeksToFirstProduct",
+          "source": {
+            "quote": "28 30 25 28 29 32 ... AFC : Mean age at first calving, months.",
+            "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/PRODUCTION_GUIDELINES/Dairying_in_KwaZulu-Natal/Breeds%20of%20Dairy%20Cattle.pdf",
+            "doc": "Gertenbach, W.D., Dairying in KwaZulu-Natal: Breeds of Dairy Cattle, Cedara Agricultural Development Institute, KZN Department of Agriculture and Rural Development, Table 1",
+            "page": 1
+          },
+          "sourceValue": [
+            121.8,
+            130.5
+          ]
+        }
+      ]
+    },
+    {
+      "english": "Table 1 ('Comparison of number of cows, production and fertility in the main dairy breeds in South Africa'), Milk column, Grade rows: Jersey 3840 kg and Holstein-Friesland 5422 kg per lactation (Registered rows: 4468 and 6426 kg). The document says these are National Milk Recording Scheme herds, which 'have been shown to be better managed than those outside the scheme, with their performance per lactation being 50 % greater than that of the national herd', so a smallholder herd should expect less.",
+      "bindings": [
+        {
+          "enterpriseId": "cattle-dairy",
+          "field": "outputPerAnimal",
+          "source": {
+            "quote": "Milk FCM BF \n% ... 6426 \n5422 \n4468 \n3840",
+            "url": "https://www.kzndard.gov.za/images/Documents/RESOURCE_CENTRE/GUIDELINE_DOCUMENTS/PRODUCTION_GUIDELINES/Dairying_in_KwaZulu-Natal/Breeds%20of%20Dairy%20Cattle.pdf",
+            "doc": "Gertenbach, W.D., Dairying in KwaZulu-Natal: Breeds of Dairy Cattle, Cedara Agricultural Development Institute, KZN Department of Agriculture and Rural Development, Table 1",
+            "page": 1
+          },
+          "sourceValue": [
+            3840,
+            5422
+          ],
+          "sourceUnit": "kg milk/cow/lactation"
+        }
+      ]
+    },
+    {
+      "english": "Holstein 739.33 and Jersey 696.81 days of productive life (first calving to culling) in South African milk-recorded herds, 2000-2019: 696.81/365.25 = 1.91 and 739.33/365.25 = 2.02 years.",
+      "bindings": [
+        {
+          "enterpriseId": "cattle-dairy",
+          "field": "productiveLifeYears",
+          "source": {
+            "quote": "Table 2 indicates that the average length of productive life was 739.33 ± 434.31 and 696.81 ± 415.44 days",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12560872/",
+            "doc": "Cow Longevity and Reasons and Risk Factors for Culling in South African Holstein and Jersey Dairy Herds, Animals 2025 (PMC12560872)",
+            "page": null
+          },
+          "sourceValue": [
+            1.91,
+            2.02
+          ]
+        }
+      ]
+    },
+    {
+      "english": "Dry-matter (DM) intake for lactating dairy cows: Jersey 14-16 kg DM/day, Holstein 24-28 kg DM/day. Full span across both breeds used here (14 to 28 kg/day) since the enterprise covers Jersey, Holstein or crossbred cows generically.",
+      "bindings": [
+        {
+          "enterpriseId": "cattle-dairy",
+          "field": "feedKgPerDay",
+          "source": {
+            "quote": "The daily feed intake of Jersey \ncows is about 14 to 16 kg DM, while Holstein \ncows consume about 24 to 28 kg DM per day.",
+            "url": "https://www.elsenburg.com/wp-content/uploads/2022/01/The-Dairy-Farming-Handbook-2017-Web-version_0.pdf",
+            "doc": "Muller, C.J.C., The Dairy Farming Handbook (2017), Western Cape Department of Agriculture (Elsenburg)",
+            "page": 10
+          },
+          "sourceValue": [
+            14,
+            28
+          ]
+        }
+      ]
+    },
+    {
+      "english": "Table 21.1 gives water intake for a lactating Holstein-type cow under comfortable versus hot conditions: 58 L/day (comfortable) to 75 L/day (hot). Used as the general lactating-cow range; not broken out by breed since the table's other columns are for comfort/heat-stress states rather than breed.",
+      "bindings": [
+        {
+          "enterpriseId": "cattle-dairy",
+          "field": "waterLPerDay",
+          "source": {
+            "quote": "Water intake per day (l) 58 75",
+            "url": "https://www.elsenburg.com/wp-content/uploads/2022/01/The-Dairy-Farming-Handbook-2017-Web-version_0.pdf",
+            "doc": "Muller, C.J.C., The Dairy Farming Handbook (2017), Western Cape Department of Agriculture (Elsenburg), Table 21.1",
+            "page": 122
+          },
+          "sourceValue": [
+            58,
+            75
+          ]
+        }
+      ]
+    },
+    {
+      "english": "In hotter, humid KZN, KZN DARD describes Nguni × Jersey dairy trials at Makhathini to combine milk potential with local adaptation. Hand milking with the calf present highlights competition between household milk and calf growth. Discuss adapted stock and feeding locally; commercial milk-recording totals do not forecast this system. Record calving, lactation stage and milk available after calf needs.",
+      "bindings": [
+        {
+          "enterpriseId": "cattle-dairy",
+          "field": "productionReferences",
+          "index": 0,
+          "source": {
+            "quote": "adapted cross- bred animals instead of the traditional dairy breeds offers distinct advantages in the hotter humid areas",
+            "url": "https://www.kzndard.gov.za/subsistence-dairying-in-kzn",
+            "doc": "KZN DARD: Subsistence Dairying in KZN, Makhathini Research Station trials",
+            "page": null
+          }
+        }
+      ]
+    },
+    {
+      "english": "32 days / 7 = 4.57 weeks; 33 days / 7 = 4.71 weeks. This enterprise has a single grow-out cycle ending in slaughter, so 'time to first product' = age at slaughter. South Africa, commercial industry average.",
+      "bindings": [
+        {
+          "enterpriseId": "chicken-broiler",
+          "field": "weeksToFirstProduct",
+          "source": {
+            "quote": "Average slaughter age is \nnow 32 – 33 days at a weight of 1.8 – 1.85 kg.",
+            "url": "https://www.sapoultry.co.za/wp-content/uploads/2024/02/SAPA-INDUSTRY-PROFILE-2022.pdf",
+            "doc": "SAPA Industry Profile 2022, section 6.9 Performance efficiency",
+            "page": 79
+          },
+          "sourceValue": [
+            4.57,
+            4.71
+          ]
+        }
+      ]
+    },
+    {
+      "english": "National commercial broiler industry average, South Africa, 2022. A separate breed-trial table (Table 4b, same document, p.39) gives named-strain 'Cumulative FI (kg)' and 'Body weight (kg)' at exactly 35 days: Arbor Acres Plus 2.29kg, Cobb 500 2.52kg, Indian River 2.30kg, Ross 308 2.30kg (cumulative feed intake 3.21-3.64kg) - a slightly older age (35 vs 32-33 days) and higher weight than the industry-wide average quoted above; not merged into the primary figure since it is a different (breed-standard trial) dataset, but used below for the feed-intake figure.",
+      "bindings": [
+        {
+          "enterpriseId": "chicken-broiler",
+          "field": "outputPerAnimal",
+          "source": {
+            "quote": "Average slaughter age is \nnow 32 – 33 days at a weight of 1.8 – 1.85 kg.",
+            "url": "https://www.sapoultry.co.za/wp-content/uploads/2024/02/SAPA-INDUSTRY-PROFILE-2022.pdf",
+            "doc": "SAPA Industry Profile 2022, section 6.9 Performance efficiency",
+            "page": 79
+          },
+          "sourceValue": [
+            1.8,
+            1.85
+          ],
+          "sourceUnit": "kg/bird at slaughter (32–33 days)"
+        }
+      ]
+    },
+    {
+      "english": "Newer South African commercial reference: SAPA 2024 reports average slaughter at 30–31 days with bird weight 1.8–1.85 kg. The primary range above remains the earlier 2022 reference at 32–33 days. These are commercial bird weights, not dressed meat kg or a village flock target. Record hatch or purchase age, feeding system, actual harvest date and weighed product basis.",
+      "bindings": [
+        {
+          "enterpriseId": "chicken-broiler",
+          "field": "productionReferences",
+          "index": 0,
+          "source": {
+            "quote": "Average slaughter age is now 30 – 31 days at a weight of 1.8 – 1.85 kg.",
+            "url": "https://www.sapoultry.co.za/wp-content/uploads/2026/01/SAPA-INDUSTRY-PROFILE-2024.pdf",
+            "doc": "SAPA Industry Profile 2024, section 7.9 Performance efficiency",
+            "page": 82
+          }
+        }
+      ]
+    },
+    {
+      "english": "Free-range village chickens, KwaZulu-Natal; dry-environment birds started laying earlier (15.74 weeks) than wet-environment birds (27.78 weeks), difference flagged significant ('*') in the source table. Wide range reflects genuine dry/wet-season environmental variation reported by the source, not measurement uncertainty.",
+      "bindings": [
+        {
+          "enterpriseId": "chicken-indigenous",
+          "field": "weeksToFirstProduct",
+          "source": {
+            "quote": "Age at first lay (weeks)  15.74 27.78 *",
+            "url": "https://www.scielo.org.za/pdf/sajas/v53n6/06.pdf",
+            "doc": "Tenza, Mhlongo & Chimonyo (2023), 'Village chicken production and egg quality in dry and wet, resource-limited environments in KwaZulu-Natal, South Africa', South African Journal of Animal Science 53(6)",
+            "page": 5
+          },
+          "sourceValue": [
+            15.74,
+            27.78
+          ]
+        }
+      ]
+    },
+    {
+      "english": "Free-range/scavenging village chickens, KwaZulu-Natal: dry (40.43) vs wet (49.91) environment, difference not significant ('NS'). A managed-system ARC Irene trial of named indigenous breeds (Grobbelaar, Sutherland & Molalakgotla 2010, Animal Genetic Resources 46: 25-32) reports far higher counts, now separately verified and retained in productionReferences; managed conditions cannot replace this village range.",
+      "bindings": [
+        {
+          "enterpriseId": "chicken-indigenous",
+          "field": "outputPerAnimal",
+          "source": {
+            "quote": "Egg number per year  40.43 49.91 NS",
+            "url": "https://www.scielo.org.za/pdf/sajas/v53n6/06.pdf",
+            "doc": "Tenza, Mhlongo & Chimonyo (2023), 'Village chicken production and egg quality in dry and wet, resource-limited environments in KwaZulu-Natal, South Africa', South African Journal of Animal Science 53(6)",
+            "page": 5
+          },
+          "sourceValue": [
+            40.43,
+            49.91
+          ],
+          "sourceUnit": "eggs/hen/year"
+        }
+      ]
+    },
+    {
+      "english": "The ARC Irene trial compared Potchefstroom Koekoek, Venda, Ovambo and Naked Neck under commercial feed, water and controlled lighting. Mean eggs/hen in a 52-week cycle were 195.9, 153.7, 125.5 and 138.9 respectively; first-egg ages were 138.5, 139.0, 134.5 and 129.0 days from hatch, with no significant first-egg age difference among breeds. This is managed breed context, not the yield of scavenging hens in KZN. Match feeding and housing before using a benchmark.",
+      "bindings": [
+        {
+          "enterpriseId": "chicken-indigenous",
+          "field": "productionReferences",
+          "index": 0,
+          "source": {
+            "quote": "a trial was conducted over two consecutive egg production cycles of 52 weeks each",
+            "url": "https://www.fao.org/4/i1353t/i1353t04.pdf",
+            "doc": "Grobbelaar, Sutherland & Molalakgotla (2010), Egg production potentials of certain indigenous chicken breeds from South Africa: methods pp27–28, first-egg p29, Table 4 p31",
+            "page": 31
+          }
+        }
+      ]
+    },
+    {
+      "english": "Commercial layer reference: bird age from hatch, not weeks after buying point-of-lay pullets or building housing. Supplier strain, rearing and actual onset can differ. The former 16–17 week figure was the SAPA receiving/housing age, not evidence of first eggs.",
+      "bindings": [
+        {
+          "enterpriseId": "chicken-layer",
+          "field": "weeksToFirstProduct",
+          "source": {
+            "quote": "The first eggs, which are small in size, are laid at 21 weeks of age.",
+            "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/11.pdf",
+            "doc": "ARC Climate-Smart Agriculture Training Manual, Poultry production",
+            "page": 8
+          },
+          "sourceValue": [
+            21,
+            21
+          ]
+        }
+      ]
+    },
+    {
+      "english": "Table 4a's cumulative 'Eggs/hen housed' for five commercial strains; the same table gives 'Age at depop. weeks 90.0' for every strain. Commercial barn/cage average, not a free-range smallholder trial. Kept as the source gives it: a per-year rate would need a point-of-lay age from another document.",
+      "bindings": [
+        {
+          "enterpriseId": "chicken-layer",
+          "field": "outputPerAnimal",
+          "source": {
+            "quote": "Eggs/hen housed  428.6 422.5 424.6 407.1 428.2 421.0",
+            "url": "https://www.sapoultry.co.za/wp-content/uploads/2024/02/SAPA-INDUSTRY-PROFILE-2022.pdf",
+            "doc": "SAPA Industry Profile 2022, Table 4a (Breed standards in laying hens)",
+            "page": 39
+          },
+          "sourceValue": [
+            407.1,
+            428.6
+          ],
+          "sourceUnit": "eggs/hen housed, laying cycle to 90 weeks"
+        }
+      ]
+    },
+    {
+      "english": "Source states water intake is twice the WEIGHT of feed consumed, and gives water as approximately 220 ml/day. Feed weight = 220 ml (treated as 220 g, water density) / 2 = 110 g/day = 0.11 kg/day. Cross-check: SAPA Industry Profile 2022 Table 4a (p.39) gives cumulative 'Feed intake kg' of 53.5-58.1 kg per hen over the ~73-74 week laying period (511-518 days): 53500/511 = 104.7 g/day to 58100/518 = 112.2 g/day, i.e. approximately 0.105-0.112 kg/day - consistent with the 0.11 kg/day figure used here. Commercial system, South Africa.",
+      "bindings": [
+        {
+          "enterpriseId": "chicken-layer",
+          "field": "feedKgPerDay",
+          "source": {
+            "quote": "Layers under normal circumstances would drink twice the amount of water than the weight of feed \nthey consume, approximately 220 ml per day.",
+            "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
+            "doc": "SAPA Layer Notes, Commercial Layers (training module, November 2013)",
+            "page": 13
+          },
+          "sourceValue": [
+            0.11,
+            0.11
+          ]
+        }
+      ]
+    },
+    {
+      "english": "220 ml/day = 0.22 L/day. Commercial system, South Africa.",
+      "bindings": [
+        {
+          "enterpriseId": "chicken-layer",
+          "field": "waterLPerDay",
+          "source": {
+            "quote": "Layers under normal circumstances would drink twice the amount of water than the weight of feed \nthey consume, approximately 220 ml per day.",
+            "url": "https://sapoultry.co.za/pdf-training/commercial-layers.pdf",
+            "doc": "SAPA Layer Notes, Commercial Layers (training module, November 2013)",
+            "page": 13
+          },
+          "sourceValue": [
+            0.22,
+            0.22
+          ]
+        }
+      ]
+    },
+    {
+      "english": "Indoor/house floor space in a Free Range or Barn system with perches: 12 birds/m2 = 1/12 = 0.083 m2/bird. The same Code's external range limit is much larger (5 birds/m2 = 0.2 m2/bird outdoors, see welfare) - not mixed into this indoor figure, per the instruction not to combine different systems. A separate cage-system table in the same document (Table 3.1) gives a different, more confined figure for battery cages, also not used here since this enterprise is framed as free-range/barn. South Africa.",
+      "bindings": [
+        {
+          "enterpriseId": "chicken-layer",
+          "field": "spaceM2",
+          "source": {
+            "quote": "In \nhouses with appropriate perching/roosting facilities, stocking densities may be \nincreased to 12 birds per square meter.",
+            "url": "https://www.sapoultry.co.za/pdf-docs/code-practice-commercial-layers.pdf",
+            "doc": "SAPA Abridged Code of Practice: Commercial Layers",
+            "page": 1
+          },
+          "sourceValue": [
+            0.083,
+            0.083
+          ]
+        }
+      ]
+    },
+    {
+      "english": "SAPA 2024 commercial strain standards cumulative to 90 weeks: Dekalb Amberlink 429 eggs/hen housed, Dekalb Brown 428, Hy-Line Silver Brown 435, Hy-Line Brown 434 and Lohmann Brown Lite 413. These are full-cycle objectives, not eggs per calendar year or a smallholder forecast. Purchase age, actual onset of lay, surviving laying hens, feed, water and lighting need separate records.",
+      "bindings": [
+        {
+          "enterpriseId": "chicken-layer",
+          "field": "productionReferences",
+          "index": 0,
+          "source": {
+            "quote": "Breed standards in laying hens",
+            "url": "https://www.sapoultry.co.za/wp-content/uploads/2026/01/SAPA-INDUSTRY-PROFILE-2024.pdf",
+            "doc": "SAPA Industry Profile 2024, Table 4: commercial standards cumulative to 90 weeks",
+            "page": 39
+          }
+        }
+      ]
+    },
+    {
+      "english": "P44 = Pekin (7 weeks to slaughter); MR71 = Muscovy (10 weeks for ducks/hens, 12 weeks for drakes). Treated as 'time to first product' = age to slaughter, since this is a single-cycle meat enterprise (no repeat product like eggs). Non-South-African trial by Warsaw researchers, published in SAJAS; journal location does not establish local applicability.",
+      "bindings": [
+        {
+          "enterpriseId": "duck",
+          "field": "weeksToFirstProduct",
+          "source": {
+            "quote": "P44 ducks and drakes were kept until 7 weeks of age, whereas the MR71 ducks until 10 weeks of age, and MR71 drakes until 12 weeks of age.",
+            "url": "https://www.scielo.org.za/scielo.php?script=sci_arttext&pid=S0375-15892014000200001",
+            "doc": "Damaziak et al. (2014), Influence of housing system on the growth and histological structure of duck muscles, S. Afr. J. Anim. Sci. 44(2): Poland trial",
+            "page": null
+          },
+          "sourceValue": [
+            7,
+            12
+          ]
+        }
+      ]
+    },
+    {
+      "english": "Non-SA (Guyana study reporting a citation to Steklenev 1990); no SA-specific absolute slaughter live-weight figure was found (see gaps). 2.93 kg = Pekin at 8-10 weeks, 2.29 kg = Muscovy at 8-10 weeks - matches this enterprise's two breeds. The same LRRD paper's own experiment (Table 2, intensive system, Guyana) measured live weight at slaughter (8 weeks) as: Pekin drakes 2.53 kg, Pekin hens 2.29 kg, Muscovy drakes 2.47 kg, Muscovy hens 1.51 kg - broadly consistent with, but not merged into, the cited range above since it is a separate dataset/table in the same source. No sourced eggs/duck/year figure was found for either breed (see gaps); the LRRD and SAJAS sources used here studied ducks reared only for meat.",
+      "bindings": [
+        {
+          "enterpriseId": "duck",
+          "field": "outputPerAnimal",
+          "source": {
+            "quote": "Steklenev (1990) reported live weight at slaughter at 8-10 weeks for the Pekin and Muscovy to be 2.93 and 2.29 kg respectively.",
+            "url": "https://www.lrrd.org/lrrd18/11/solo18154.htm",
+            "doc": "Livestock Research for Rural Development 18(11) 2006 - Solomon et al. (Guyana; not an SA figure), citing Steklenev 1990",
+            "page": null
+          },
+          "sourceValue": [
+            2.29,
+            2.93
+          ],
+          "sourceUnit": "kg live weight/bird at slaughter"
+        }
+      ]
+    },
+    {
+      "english": "0.08 bird/m2 (outdoor/free-range system) = 1/0.08 = 12.5 m2/bird - used here as the primary figure since smallholder/backyard duck-keeping is closer to this free-range system than to intensive deep-litter housing. The same source's INTENSIVE deep-litter system gives 2.9 bird/m2 = 1/2.9 = 0.34 m2/bird (a very different, much more confined figure) - noted here for context but NOT merged into the range above, per the instruction not to mix figures from different systems. Non-South-African trial by Warsaw researchers, published in SAJAS; journal location does not establish local applicability.",
+      "bindings": [
+        {
+          "enterpriseId": "duck",
+          "field": "spaceM2",
+          "source": {
+            "quote": "birds were kept according to the guidelines for intensive production system on deep litter and at a stocking density of 2.9 bird/m 2 . Thereafter, half the ducks and drakes of each genetic group was allowed to use free ranges, at a stock density of 0.08 bird/m 2 (outdoor system - OS).",
+            "url": "https://www.scielo.org.za/scielo.php?script=sci_arttext&pid=S0375-15892014000200001",
+            "doc": "Damaziak et al. (2014), Influence of housing system on the growth and histological structure of duck muscles, S. Afr. J. Anim. Sci. 44(2): Poland trial",
+            "page": null
+          },
+          "sourceValue": [
+            12.5,
+            12.5
+          ]
+        }
+      ]
+    },
+    {
+      "english": "10 months x 4.35 = 43.5 weeks; 12 months x 4.35 = 52.2 weeks. This is Mozambique Tilapia (O. mossambicus) grow-out time to harvestable size; the source separately states Nile Tilapia (O. niloticus) reaches harvestable maturity faster, in 6-10 months (= 26.1-43.5 weeks) — not used here as it is a different species with a different legal status (see 'legal').",
+      "bindings": [
+        {
+          "enterpriseId": "fish-tilapia",
+          "field": "weeksToFirstProduct",
+          "source": {
+            "quote": "Relative to the Nile Tilapia, the Mozambique Tilapia is slower growing, reaching full  harvestable \nsize in approximately 10 – 12 months (depending on temperatures, feeding regimes, etcetera).",
+            "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+            "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015)",
+            "page": 69
+          },
+          "sourceValue": [
+            43.5,
+            52.2
+          ]
+        }
+      ]
+    },
+    {
+      "english": "Table 8-3 gives the Mozambique Tilapia's harvestable size as an approximate single figure ('+- 800g'), not a range, so [800, 800] is used rather than inventing a spread. The same table cell wraps '10-12' across a line break in the PDF ('10-\\n12'), kept verbatim. The table's Nile Tilapia row gives the same approximate weight (+-800g) reached faster, in 6-10 months — not used here because this dossier is framed around the indigenous, legally unrestricted Mozambique Tilapia per task instruction; see 'legal' for why Nile Tilapia is treated separately. No SA source was found giving a feed-conversion-based or per-hectare yield figure specific to O. mossambicus that could be converted to this per-fish unit without stitching numbers across documents, so outputUnit follows the source's own unit (grams harvest weight per fish) rather than being converted.",
+      "bindings": [
+        {
+          "enterpriseId": "fish-tilapia",
+          "field": "outputPerAnimal",
+          "source": {
+            "quote": "Harvestable size (+- 800g) in 10-\n12 months",
+            "url": "https://www.idc.co.za/wp-content/uploads/2018/11/Tilapia-Research-Report-2015.pdf",
+            "doc": "IDC, Research into the Potential for the Production, Processing and Export of Tilapia for the Southern African Market (2015), Table 8-3 (Mozambique vs. Nile Tilapia)",
+            "page": 69
+          },
+          "sourceValue": [
+            800,
+            800
+          ],
+          "sourceUnit": "g harvest weight/fish"
+        }
+      ]
+    },
+    {
+      "english": "ARC makes tilapia suitability depend on water temperature: summer grow-out can be suitable anywhere in South Africa when water exceeds 20°C; growth is poor below 18°C and winter water below 13°C can kill farmed tilapia. The Highveld reference is a summer crop; tunnels can widen the range. Measure pond water and confirm stocking species and dates. Air climate or a mapped pond does not prove harvest months, fish numbers or food kg.",
+      "bindings": [
+        {
+          "enterpriseId": "fish-tilapia",
+          "field": "productionReferences",
+          "index": 0,
+          "source": {
+            "quote": "they will not grow well at temperatures below 18˚C",
+            "url": "https://www.arc.agric.za/arc-api/AquacultureProductionApp/Pages/FAQs.aspx",
+            "doc": "ARC Aquaculture Production App: General FAQ, Can I grow tilapia on the Highveld?",
+            "page": null
+          }
+        }
+      ]
+    },
+    {
+      "english": "Lowest (≥7th parity) and highest (3rd parity) group means for milk yield per 305-day standardised lactation in 16,407 analysed South African ARC Saanen lactation records, 1955–2018, mostly intensive/semi-intensive stud herds. Original PDF Table 3 labels the last group ≥7th; HTML renders it >7th. Kept in kg, without litres conversion, annualisation or yield-by-age interpolation.",
+      "bindings": [
+        {
+          "enterpriseId": "goat-dairy",
+          "field": "outputPerAnimal",
+          "source": {
+            "quote": "Third parity dams gave the highest lactation yields",
+            "url": "https://www.scielo.org.za/pdf/sajas/v54n5/09.pdf",
+            "doc": "Malemela, Nemutandani & Tada (2024), South African Saanen goats: Table 3, 305-day milk yield by parity",
+            "page": 625
+          },
+          "sourceValue": [
+            775.4,
+            1073.4
+          ],
+          "sourceUnit": "kg milk/doe/305-day lactation"
+        }
+      ]
+    },
+    {
+      "english": "South African Saanen reference by lactation number, not age in years: mean milk mass per standardised 305-day lactation was 947.3 kg at first parity, 1043.2 at second, 1073.4 at third, 1020.3 at fourth, 972.8 at fifth, 901.6 at sixth and 775.4 at ≥7th. These ARC milk-recorded groups were mostly intensive/semi-intensive stud herds. Record actual kidding date, lactation number and collected milk; do not divide these totals evenly into months.",
+      "bindings": [
+        {
+          "enterpriseId": "goat-dairy",
+          "field": "productionReferences",
+          "index": 0,
+          "source": {
+            "quote": "Table 3 Average lactation performance",
+            "url": "https://www.scielo.org.za/pdf/sajas/v54n5/09.pdf",
+            "doc": "Malemela, Nemutandani & Tada (2024), South African Saanen goats, Table 3",
+            "page": 625
+          }
+        }
+      ]
+    },
+    {
+      "english": "At Putukwane near Polokwane, 179 lactating does under extensive feeding with irregular supplementation were observed for 210 days after kidding. Mean milk mass was 1.45 kg/day for Saanen, 0.75 for British Alpine and 0.56 for Toggenburg during observed lactation. Early lactation exceeded mid and late lactation; March–April kidding outperformed October–November in this cohort. These conditions differ from stud-herd records. Discuss adapted stock and feed locally; these are not litres/day or year-round promises.",
+      "bindings": [
+        {
+          "enterpriseId": "goat-dairy",
+          "field": "productionReferences",
+          "index": 1,
+          "source": {
+            "quote": "Stage of lactation, kidding season and parity had an influence on milk yield.",
+            "url": "https://scialert.net/fulltext/?doi=ajava.2011.274.281",
+            "doc": "Norris et al. (2011), Milk Production of Three Exotic Dairy Goat Genotypes in Limpopo Province, South Africa: methods, results and Table 2",
+            "page": null
+          }
+        }
+      ]
+    },
+    {
+      "english": "This is age at first KIDDING (birth of first kids), not first weaned kids. 16 months x 4.35 = 69.6 weeks; 18 months x 4.35 = 78.3 weeks, from doe birth to her giving birth for the first time. Adding the source's own ~150-day (~5-month, ~21.75-week) weaning assumption would put first WEANED kids at roughly 91-100 weeks of doe age, but that compound figure is not shown as the primary value since the field is documented as 'age/time from start (hatch, birth) to first product' and first kidding is the clearer, directly-stated milestone; the weaning offset is noted here for transparency.",
+      "bindings": [
+        {
+          "enterpriseId": "goat-indigenous",
+          "field": "weeksToFirstProduct",
+          "source": {
+            "quote": "the indigenous goats in Mpumalanga are early breeders, reaching puberty at 6 to 7 months of age. The age at first kidding varied between 16 to 18 months of age",
+            "url": "https://scielo.org.za/scielo.php?script=sci_arttext&pid=S0375-15892004000500070&lng=pt&nrm=iso",
+            "doc": "Webb, E.C. & Mamabolo, M.J. (2004). Production and reproduction characteristics of South African indigenous goats in communal farming systems. S. Afr. J. Anim. Sci. 34(5):236-239",
+            "page": null
+          },
+          "sourceValue": [
+            69.6,
+            78.3
+          ]
+        }
+      ]
+    },
+    {
+      "english": "The 2016 government goat manual distinguishes indigenous, Boer, Savanna and Kalahari Red meat-purpose stock from milk/fibre breeds, with breeding objectives and individual birth, weaning, weight and sale records. Uncontrolled communal mating can produce births at any time; that does not establish meat or weaned-kid availability all year. Choose stock for the local system and record survival and product stage before forecasting quantities.",
+      "bindings": [
+        {
+          "enterpriseId": "goat-indigenous",
+          "field": "productionReferences",
+          "index": 0,
+          "source": {
+            "quote": "Mating occurs throughout the year. Kids are born anytime.",
+            "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/genetic-resources/goat-training-manual-book_a4-layout_.pdf",
+            "doc": "DAFF (2016), Goat Training Manual: breeds p2, records pp4–5, uncontrolled mating section 2.4.6 p7",
+            "page": 7
+          }
+        },
+        {
+          "enterpriseId": "goat-meat",
+          "field": "productionReferences",
+          "index": 0,
+          "source": {
+            "quote": "Mating occurs throughout the year. Kids are born anytime.",
+            "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/genetic-resources/goat-training-manual-book_a4-layout_.pdf",
+            "doc": "DAFF (2016), Goat Training Manual: breeds p2, records pp4–5, uncontrolled mating section 2.4.6 p7",
+            "page": 7
+          }
+        }
+      ]
+    },
+    {
+      "english": "In KZN Highland Sourveld smallholder systems, winter and early-spring feed shortage can restrict goats. Autumn-kidding does feed kids through winter; spring-kidding does face late-pregnancy feed shortage, especially with late rains. Plan local winter feed and monitor weights with extension support; this is regional care context, not kg or a universal kidding calendar.",
+      "bindings": [
+        {
+          "enterpriseId": "goat-indigenous",
+          "field": "productionReferences",
+          "index": 1,
+          "source": {
+            "quote": "Winter nutrition is thus a definite constraint to goat production in the sourveld areas.",
+            "url": "https://www.kzndard.gov.za/goat-production-in-kwazulu-natal",
+            "doc": "KZN DARD: Goat Production in KwaZulu-Natal, Highland Sourveld research and winter nutrition",
+            "page": null
+          }
+        }
+      ]
+    },
+    {
+      "english": "The reported weaning rate is 149%, or 1.49 kids weaned per doe mated. The source describes observations over twenty years for extensive Boer does at 295 mm rainfall; it does not state kids weaned per doe per calendar year. This is a reproductive outcome, not kg of live animals or dressed meat. A separate mean litter size of 1.93 kids born per parturition has a different denominator and stage and is not merged into this figure.",
+      "bindings": [
+        {
+          "enterpriseId": "goat-meat",
+          "field": "outputPerAnimal",
+          "source": {
+            "quote": "According to the National Department of Agriculture, Boer goat females under extensive conditions with a precipitation of 295 mm, have an average conception rate of 90%, kidding rate of 187%, fecundity (kids born/does kidded) of 210%, and weaning rate (kids weaned/doe mated) of 149% over a twenty year period (Malan, 2000).",
+            "url": "https://scholar.ufs.ac.za/server/api/core/bitstreams/46b48d9c-608a-40b2-bcbd-c429533189ef/content",
+            "doc": "King, F.J.M. (2009). Production Parameters for Boer Goats in South Africa (MSc dissertation, University of the Free State), citing National Dept of Agriculture data via Malan, S.W. (2000)",
+            "page": null
+          },
+          "sourceValue": [
+            1.49,
+            1.49
+          ],
+          "sourceUnit": "kids weaned/doe mated"
+        }
+      ]
+    },
+    {
+      "english": "Table 1 gives separate ranges by physiological class of the same animal (sow): pregnant sows 10-18 L/day and lactating sows 18-23 L/day. Combined here into a single sow-herd range [10,23] spanning both states, rather than mixing in the table's other classes (nursery, grower, finishing pigs, boars), which are a different animalUnit. South Africa (general smallholder/commercial training-manual figure, not tied to one system).",
+      "bindings": [
+        {
+          "enterpriseId": "pig-pork",
+          "field": "waterLPerDay",
+          "source": {
+            "quote": "Pregnant sows 10-18...Lactating sows 18-23",
+            "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/10.pdf",
+            "doc": "ARC Climate-Smart Agriculture Training Manual, Module 10: Pig Production, Table 1 (Water requirements of pigs, litres/pig/day)",
+            "page": 10
+          },
+          "sourceValue": [
+            10,
+            23
+          ]
+        }
+      ]
+    },
+    {
+      "english": "ARC Table 1 lists pregnant sows at 10–18 L drinking water/day and lactating sows at 18–23 L/day. These are breeding-sow stages, not one amount for every pig. Farrowing care separates sow cooling from piglet warmth; outdoor systems need locally adapted hardy stock, shade and shelter. Confirm stage, reliable clean water, feed and housing locally. The manual supplies no verified edible kg per breeding sow for this plan.",
+      "bindings": [
+        {
+          "enterpriseId": "pig-pork",
+          "field": "productionReferences",
+          "index": 0,
+          "source": {
+            "quote": "Temperature, feedstuffs, stage of production, and health all influence the amount of water required",
+            "url": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/CSA%20Pig%20Production/Manual/10-Pig%20production.pdf",
+            "doc": "ARC Climate-Smart Agriculture: Pig production, farrowing/adaptation pp442–445, Table 1 p446",
+            "page": 446
+          }
+        }
+      ]
+    },
+    {
+      "english": "FAO general backyard target, not a South African observed rate. The 30–35 young per doe annually have reached slaughter or reproduction age after allowance for post-weaning loss; they are not merely weaned and are not kg of meat. The source models six litters and 5.5 surviving young per litter, describing a 30-rabbit objective; an extra litter raises its stated objective to 35. Do not combine this backyard target with grower-house carcass weight from a different trial.",
+      "bindings": [
+        {
+          "enterpriseId": "rabbit",
+          "field": "outputPerAnimal",
+          "source": {
+            "quote": "For backyard rabbitries, it is as- sumed that weaning takes place at 42 days, servicing at 24 days after kindling, and the average conception rate is 70 percent. This gives an average of six litters per doe per year. ... If an average six young per litter are weaned and 5.5 reach slaughter or reproduction age, the objective is then 30 rabbits per doe annually. This modest goal is realistic for back- yard rabbitries not based exclusively on pelleted feed. ... This would give an additional litter per doe, raising the annual goal to 35 rabbits per doe.",
+            "url": "https://www.fao.org/4/t1690e/t1690e.pdf",
+            "doc": "FAO Animal Production and Health Series No.21 - The Rabbit: Husbandry, Health and Production (Lebas et al.)",
+            "page": 107
+          },
+          "sourceValue": [
+            30,
+            35
+          ],
+          "sourceUnit": "young reaching slaughter/reproduction age/doe/year"
+        }
+      ]
+    },
+    {
+      "english": "279 days / 365 = 0.76 years. This figure is from French INTENSIVE commercial rabbitries (average of 1992 national recording-scheme data), NOT backyard/extensive hutches - the source gives no separate productive-life figure for backyard systems (see gaps). Treat as a lower-bound / industrial-system reference only.",
+      "bindings": [
+        {
+          "enterpriseId": "rabbit",
+          "field": "productiveLifeYears",
+          "source": {
+            "quote": "The yearly renewal rate of does of 131 percent means that in order to maintain 100 breeding females year-round, 131 new does must be introduced each year, i.e. the average produc- tive life of a doe is just over nine months (365 days ÷ 1.31 = 279 days) between the first mating and withdrawal (culled or dead).",
+            "url": "https://www.fao.org/4/t1690e/t1690e.pdf",
+            "doc": "FAO Animal Production and Health Series No.21 - The Rabbit: Husbandry, Health and Production (Lebas et al.)",
+            "page": 201
+          },
+          "sourceValue": [
+            0.76,
+            0.76
+          ]
+        }
+      ]
+    },
+    {
+      "english": "0.60x0.80=0.48 m2 to 0.70x1.00=0.70 m2, indoor/hutch cage per single breeding adult (one buck or doe per cage), 50-60 cm high. FAO (general, not SA-specific). A separate FAO table (p.174, Fort & Martin 1981) gives a doe's cage as 65-70 cm (front) x 50 cm (depth) = 0.325-0.35 m2 and a buck's cage as 40x50 cm = 0.20 m2 - a narrower alternative figure from the same book, not merged into the range above to avoid mixing two different tabulated sources.",
+      "bindings": [
+        {
+          "enterpriseId": "rabbit",
+          "field": "spaceM2",
+          "source": {
+            "quote": "Cages for breeding animals usually have at least a 60 to 70 cm x 80 to 100 cm floor space and are 50 to 60 cm high.",
+            "url": "https://www.fao.org/4/t1690e/t1690e.pdf",
+            "doc": "FAO Animal Production and Health Series No.21 - The Rabbit: Husbandry, Health and Production (Lebas et al.)",
+            "page": 172
+          },
+          "sourceValue": [
+            0.48,
+            0.7
+          ]
+        }
+      ]
+    },
+    {
+      "english": "South African grower reference: New Zealand White and Phendula rabbits in the 2017 Stellenbosch trial were slaughtered at about 11 weeks from birth. Overall means were 2.62 kg live slaughter weight, 1.55 kg hot carcass, 1.48 kg chilled carcass and 1.26 kg reference carcass with head and red offal removed, still including bones. Balanced pellets and water were freely available in a grower house. These weights are not boneless meat or annual doe output; do not multiply them by the unrelated FAO backyard target.",
+      "bindings": [
+        {
+          "enterpriseId": "rabbit",
+          "field": "productionReferences",
+          "index": 0,
+          "source": {
+            "quote": "The rabbits were slaughtered at approximately 11 weeks old",
+            "url": "https://www.scielo.org.za/pdf/sajas/v49n5/04.pdf",
+            "doc": "North et al. (2019), Growth, carcass and meat quality traits of two South African meat rabbit breeds: methods p816, Table 2 p819",
+            "page": 819
+          }
+        }
+      ]
+    },
+    {
+      "english": "outputUnit is 'lambs born/ewe/year' rather than the suggested 'kg live weight/lamb at weaning or slaughter' or 'lambs weaned/ewe/year': the source explains 'Measuring accurate lambing percentages for smallholder sheep farmers is challenging as these farmers mostly farm extensively and do not keep records', and instead calculates 'Lambs born per ewe (as recorded from the surveys based on interviews with individual respondents)' - a lambing (born), not weaning, figure, self-reported by smallholder farmers rather than measured/weighed. 139%=1.39, 83%=0.83, 61%=0.61 lambs born/ewe/year; the range [0.61, 1.39] spans the three Western Cape smallholder districts surveyed (Eden, Central Karoo, West Coast), all from this one study/quote - not merged with any other document. The same paper separately states a COMMERCIAL extensive benchmark of 110-156% lambing and 94-132% weaning (Snyman & Herselman, 2005), explicitly 'expressed over ewes joined' (a different denominator/system) - not merged into this smallholder range.",
+      "bindings": [
+        {
+          "enterpriseId": "sheep-mutton",
+          "field": "outputPerAnimal",
+          "source": {
+            "quote": "Lambing percentages averaged 139 ± 38% for the Eden District, 83 ± 15% for the Karoo District, and 61± 12% for the West Coast District.",
+            "url": "https://www.scielo.org.za/scielo.php?script=sci_arttext&pid=S0301-603X2019000300007",
+            "doc": "Factors influencing off-take rates of smallholder sheep farming systems in the Western Cape Province of South Africa (South African Journal of Agricultural Extension, 47(3), 2019)",
+            "page": null
+          },
+          "sourceValue": [
+            0.61,
+            1.39
+          ],
+          "sourceUnit": "lambs born per ewe"
+        }
+      ]
+    },
+    {
+      "english": "The government sheep manual describes controlled breeding at Mara Research Station, Limpopo: June–July mating and November–December lambing to match rain and grass. This is one station breeding calendar, not mutton harvest months. Match adapted meat-purpose stock and feed locally, then record birth, survival, weaning and actual slaughter or sale; lambs born per ewe are not edible kg.",
+      "bindings": [
+        {
+          "enterpriseId": "sheep-mutton",
+          "field": "productionReferences",
+          "index": 0,
+          "source": {
+            "quote": "the sheep and goat breeding season in Mara Research Station is in winter (June/July)",
+            "url": "https://www.nda.gov.za/images/Branches/AgricProducHealthFoodSafety/genetic-resources/sheep-training-manual.pdf",
+            "doc": "DAFF: Sheep General Information Manual, Final Draft, section 3.4.6",
+            "page": 12
+          }
+        }
+      ]
+    },
+    {
+      "english": "Semi-arid/extensive-veld range (4-5 kg greasy wool/sheep/year) used as the primary value; the same sentence's 8 kg/year figure is for a different system (sheep grazing CULTIVATED pastures) and is deliberately excluded from the range rather than averaged in. A Western Cape Government (Elsenburg) Dohne Merino Extensive enterprise budget (Ceres-Karoo, 2024) separately reports total flock wool sold as 4439.64 kg from a flock of '1 519' Smallstock Units, i.e. 4439.64/1519 = 2.92 kg per Smallstock Unit/year - not used as the primary value because the source does not state that 1 Smallstock Unit = 1 sheep (SSU is a standardised stock-class weighting, not a literal head count), so converting it to kg/sheep would require an unstated conversion factor. A separate NWGA/Mandela Initiative paper on the Eastern Cape communal Wool Sheep Development Program reports a Grootfontein ADI progeny-test 'Greasy fleece weight (kg) 2.8 [commercial rams] 2.4 [communal rams]' for communal Eastern Cape flocks - not merged into the primary value because that table is explicitly for '6-month old lambs' (a different life stage from a mature sheep's full annual clip), consistent with the rule against mixing figures across life stages; kept here only as EC-communal context: commercial-ram-sired lambs at 6 months averaged 2.8 kg, communal-ram-sired lambs 2.4 kg, a +16% difference.",
+      "bindings": [
+        {
+          "enterpriseId": "sheep-wool",
+          "field": "outputPerAnimal",
+          "source": {
+            "quote": "Average Merino fleece weights vary from 4 kg to 5 kg per year in the semi-arid regions, to up to 8 kg per year from sheep grazing on cultivated pastures.",
+            "url": "https://www.scielo.org.za/scielo.php?script=sci_arttext&pid=S0301-603X2019000400006",
+            "doc": "Assessing Socio-economic Factors Influencing Wool Production in Kolomana Villages of Eastern Cape, South Africa (South African Journal of Agricultural Extension), citing Bot et al., 2004",
+            "page": null
+          },
+          "sourceValue": [
+            4,
+            5
+          ],
+          "sourceUnit": "kg greasy wool/sheep/year"
+        }
+      ]
+    }
+  ],
+  "scope": "Every still-untranslated complete original numeric-reference note and age/system statement across all15animal enterprises, including feed,water andspace notes omitted from the narrower801-field overview. Legal statements remain a distinct outstanding source set; no source data edits."
+}

@@ -1,0 +1,52 @@
+{
+  "startedAt": "2026-10-26T02:16:02.038100+00:00",
+  "tmpdir": "/private/tmp/imbewufield-animal-controls-focused-ebylzlil",
+  "commands": [
+    {
+      "name": "typecheck",
+      "command": [
+        "npx",
+        "tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "focused",
+      "command": [
+        "node",
+        "--import",
+        "./tests/register-alias.mjs",
+        "--test",
+        "tests/animal-reference-localization.test.ts",
+        "tests/animal-control-localization.test.ts",
+        "tests/animal-welfare-localization.test.ts",
+        "tests/guidance-localization.test.ts",
+        "tests/plan-note-localization.test.ts",
+        "tests/crop-screen-localization.test.ts",
+        "tests/crop-export-instruction-localization.test.ts",
+        "tests/update-notices-localization.test.ts",
+        "tests/update-tour.test.ts",
+        "tests/animal-enterprises.test.ts",
+        "tests/product-profile-localization.test.ts",
+        "tests/first-crop-localization.test.ts",
+        "tests/product-yield-localization.test.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "endedAt": "2026-10-26T02:16:20.553945+00:00",
+  "pass": 182,
+  "fail": 0,
+  "testFiles": 13,
+  "scope": "Focused checks only; the required complete ordered branch suite remains pending."
+}

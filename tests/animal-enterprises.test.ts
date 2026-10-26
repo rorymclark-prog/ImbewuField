@@ -1,3 +1,4 @@
+import {restoreAnimalReferencePresentation} from './helpers/animal-reference-expectation.ts';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
@@ -264,7 +265,7 @@ test('every numeric animal card exposes its full source conditions as well as th
   // Localization wraps these arguments. Restore only its exact declared edits for
   // the original wiring check, then verify the actual current Fact props below.
   const controls = JSON.parse(readFileSync(new URL('../docs/translation/four-language-completion/animal-control-drafts.json', import.meta.url), 'utf8')) as {sourceChanges:Array<{before:string;after:string}>};
-  let originalWiring = component;
+  let originalWiring = restoreAnimalReferencePresentation(component);
   for (const edit of [...controls.sourceChanges].reverse()) originalWiring = originalWiring.replace(edit.after, edit.before);
   for (const field of RANGES) {
     assert.ok(originalWiring.includes(`qualifier={animalReferenceQualifier(e, '${field}')}`), `${field}: essential conditions disappeared from the fact`);
