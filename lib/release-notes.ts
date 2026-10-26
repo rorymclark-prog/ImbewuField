@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '26 October 2026', sha: '51b2217e2', changes: [
+  { when: '26 October 2026', sha: '12aee61ba', changes: [
     'Farm reports compare past months, seasons and years using your recorded entries.',
     'Visit, training and programme reports compare recorded delivery across periods.',
     'MEL reports compare dated readings and include agreed donor indicator details.',
