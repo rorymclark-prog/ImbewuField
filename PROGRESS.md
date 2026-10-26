@@ -52,6 +52,15 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 26 Oct 2026 — Wave 23: re-capture of 98c8a22, isiZulu Home date regression fixed first
+- **Re-capture:** the wave 22 script on the live build (Codex's #1100 reports on top of wave 22), clock two days on,
+  plus click-through captures of the new report workspaces and hand-read contact sheets —
+  `docs/audits/2026-10-26/wave-23-recapture-claude.md` (`w23-01`…`w23-07`). Automated pass clean.
+- **w23-01 (regression from w22-01):** isiZulu Home read "HOMEWEEKDAYWED · 28 HOMEMONTHOCT" — the date effect ran before
+  the lazily loaded dictionary. Now computed during render behind a mounted flag; shipped on its own.
+- **Open on the same branch:** one rounding for farmer income on /funder and /ngo, report figures that break mid-number,
+  the bare isiZulu note in the report composer, the facilitator report's partner labels. `w23-06` handed to Codex.
+
 ### 25 Oct 2026 — Wave 22: re-capture of the live build, hydration errors, Lima clearance, weather card
 - **Re-capture:** 41 routes × phone/desktop × light/dark × English/isiZulu, plus 768/1024px, with a checker that now
   composites translucent backgrounds, collects page errors and measures what the Lima button covers —
