@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { FileText, Sprout, GraduationCap, ShieldCheck, ArrowUpRight, SlidersHorizontal, ClipboardList } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useNetworkPortfolio } from '@/lib/use-network-portfolio';
-import { buildProgrammeReport, programmeReportCohortChoices, programmeReportFilename, PROGRAMME_REPORT_SOURCES, type ProgrammeReportKind, type ProgrammeReportBasis } from '@/lib/programme-report';
+import { buildProgrammeReport, programmeComparisonRange, programmeReportCohortChoices, programmeReportFilename, PROGRAMME_REPORT_SOURCES, type ProgrammeReportKind, type ProgrammeReportBasis } from '@/lib/programme-report';
 import ReportComposer from './ReportComposer';
 import MelEvidenceReport from './MelEvidenceReport';
 import { SAMPLE_BRANDING } from '@/lib/sample-branding';
@@ -18,10 +18,11 @@ export default function ProgrammeReports({ funder = false, onOpenProgress, onOpe
   const { lang } = useLanguage();
   const ui = (en: string, zu: string) => inlineText(lang, en, zu);
   const { user, profile } = useAuth();
-  const portfolio = useNetworkPortfolio(Boolean(user));
+  const portfolio = useNetworkPortfolio(Boolean(user), 24);
   const [kind, setKind] = useState<ProgrammeReportKind | 'mel'>('overview');
   const [cohortId, setCohortId] = useState('');
   const [basis, setBasis] = useState<ProgrammeReportBasis>('cumulative');
+  const [comparison,setComparison]=useState<'none'|'previous'|'year'>('none');
   const [range, setRange] = useState({ start: '', end: '' });
   const [date] = useState(() => new Date().toISOString().slice(0, 10));
   const cohorts = programmeReportCohortChoices(portfolio.rows, cohortId);
@@ -36,7 +37,7 @@ export default function ProgrammeReports({ funder = false, onOpenProgress, onOpe
   // Fixed labels follow the reader's language; a real organisation name is data and stays as recorded.
   const organisation = portfolio.isDemo || !portfolio.orgs.find(o => o.id === portfolio.orgId) ? inlineText(lang, organisationName) : organisationName;
   const reportOptions = { rows: portfolio.rows, monthly: portfolio.monthly, kind: kind === 'mel' ? 'overview' : kind, funder, sample: portfolio.isDemo,
-    cohortId: selectedCohort, basis, startMonth: start, endMonth: end, withheldForConsent: portfolio.withheldForConsent, date };
+    cohortId: selectedCohort, basis, startMonth: start, endMonth: end, comparison: comparison !== 'none' && start && end ? programmeComparisonRange(start, end, comparison) : undefined, withheldForConsent: portfolio.withheldForConsent, date };
   const report = buildProgrammeReport({ ...reportOptions, organisation, language: lang });
   // The file name is built from the English title/scope/period so it stays stable across languages.
   const filenameBase = programmeReportFilename(lang === 'xh' ? buildProgrammeReport({ ...reportOptions, organisation: organisationName }) : report, date);
@@ -60,11 +61,12 @@ export default function ProgrammeReports({ funder = false, onOpenProgress, onOpe
         <label>{ui('Ledger period', 'Isikhathi samarekhodi')}<select value={selectedCohort ? 'cumulative' : basis} onChange={e => setBasis(e.target.value as ProgrammeReportBasis)}><option value="cumulative">{ui('All available records', 'Wonke amarekhodi atholakalayo')}</option><option value="window" disabled={Boolean(selectedCohort) || !months.length}>{ui('Choose recorded months', 'Khetha izinyanga eziqoshiwe')}</option></select></label></>}
       </div>
       {kind !== 'mel' && basis === 'window' && !selectedCohort && <div className={reports.months}><label>{ui('From month', 'Kusukela enyangeni')}<select value={start} onChange={e => setRange({ start: e.target.value, end: end < e.target.value ? e.target.value : end })}>{months.map(m => <option key={m.key} value={m.key}>{m.longLabel}</option>)}</select></label><label>{ui('To month', 'Kuze kube enyangeni')}<select value={end} onChange={e => setRange({ start: start > e.target.value ? e.target.value : start, end: e.target.value })}>{months.filter(m => m.key >= start).map(m => <option key={m.key} value={m.key}>{m.longLabel}</option>)}</select></label></div>}
+      {kind !== 'mel' && kind !== 'training' && basis === 'window' && !selectedCohort && <label>{inlineText(lang, 'Compare recorded months')}<select value={comparison} onChange={e=>setComparison(e.target.value as 'none'|'previous'|'year')}><option value="none">{inlineText(lang, 'No comparison')}</option><option value="previous">{inlineText(lang, 'Previous range of calendar months')}</option><option value="year">{inlineText(lang, 'Same months last year')}</option></select></label>}
       <p>{kind === 'mel' ? ui('Choose project and assessment scope in the MEL workspace below.', 'Khetha iphrojekthi nokuhlola endaweni ye-MEL engezansi.') : selectedCohort ? ui('Monthly ledgers are available for the whole organisation only. This cohort report uses cumulative records.', 'Amarekhodi ezinyanga atholakala enhlanganweni yonke kuphela. Lo mbiko weqembu usebenzisa amarekhodi aqoqiwe.') : ui('Ledger dates apply to harvest, sales and costs. Learning and membership remain current snapshots.', 'Izinsuku zamarekhodi zisebenza ekuvuneni, ukuthengisa nezindleko. Ukufunda nobulungu kusalokhu kuyimininingwane yamanje.')}</p>
     </section>
     {kind === 'mel' ? <MelEvidenceReport key={`${portfolio.orgId ?? profile?.org_id}:${user?.uid}:${funder}`} orgId={portfolio.orgId ?? (profile?.role !== 'funder' ? profile?.org_id : null) ?? (portfolio.isDemo ? 'sample-ngo' : '')} organisation={organisation} funder={funder} sample={portfolio.isDemo} /> : portfolio.error ? <div className={reports.state} role="alert"><h2>{ui('Report data is unavailable', 'Idatha yombiko ayitholakali')}</h2><p>{portfolio.error}</p><button type="button" onClick={portfolio.reload}>{ui('Try again', 'Zama futhi')}</button></div> : portfolio.loading || !scopeReady ? <div className={reports.state} role="status">{ui('Loading authorised report data…', 'Kusalayishwa idatha yemibiko egunyaziwe…')}</div> : <>
       {!report.rows.length && <p className={reports.sample} role="note">{ui('No farmer records are visible. The report describes this gap; it does not imply zero programme activity.', 'Awekho amarekhodi abalimi abonakalayo. Umbiko uchaza lesi sikhala; awusho ukuthi akukho msebenzi wohlelo.')}</p>}
-      <ReportComposer aggregate key={`${kind}:${portfolio.orgId}:${selectedCohort}:${basis}:${start}:${end}:${portfolio.isDemo}`} title={report.title} filenameBase={filenameBase} branding={portfolio.isDemo ? SAMPLE_BRANDING : undefined} sample={portfolio.isDemo} funder={funder} orgId={portfolio.orgId} sections={report.sections} metrics={report.metrics} chart={report.chart} tables={report.tables} reportDate={date} subtitle={`${report.scope} · ${report.period}`} deviceData={portfolio.deviceData} />
+      <ReportComposer aggregate key={`${kind}:${portfolio.orgId}:${selectedCohort}:${basis}:${start}:${end}:${comparison}:${portfolio.isDemo}`} title={report.title} filenameBase={filenameBase} branding={portfolio.isDemo ? SAMPLE_BRANDING : undefined} sample={portfolio.isDemo} funder={funder} orgId={portfolio.orgId} sections={report.sections} metrics={report.metrics} chart={report.chart} tables={report.tables} reportDate={date} subtitle={`${report.scope} · ${report.period}`} deviceData={portfolio.deviceData} />
     </>}
     {(onOpenProgress || onOpenCohort) && <section className={reports.nextReview}><div><h2>{ui('Take the review forward', 'Qhubekisela ukubuyekeza phambili')}</h2><p>{ui('Use the existing records and progress workspace to check gaps and agree the next action.', 'Sebenzisa amarekhodi nendawo yenqubekelaphambili ukuhlola izikhala nokuvumelana ngesinyathelo esilandelayo.')}</p></div><div>{onOpenCohort && <button type="button" onClick={onOpenCohort}>{ui('Review cohort records', 'Buyekeza amarekhodi eqembu')} <ArrowUpRight size={16} aria-hidden="true" /></button>}{onOpenProgress && <button type="button" onClick={onOpenProgress}>{funder ? ui('Review shared progress', 'Buyekeza inqubekelaphambili eyabiwe') : ui('Record targets & follow-up', 'Qopha imigomo nokulandelela')} <ArrowUpRight size={16} aria-hidden="true" /></button>}</div></section>}
     <aside className={reports.method}><div><h2>{ui('Designed for an honest review', 'Yenzelwe ukubuyekezwa okuthembekile')}</h2><p>{ui('Evidence comes before claims. These reporting references inform the structure; they do not certify this programme or replace an evaluation.', 'Ubufakazi buza ngaphambi kwezimangalo. Le mithombo isekela ukwakheka kombiko; ayiqinisekisi uhlelo futhi ayithathi indawo yokuhlola.')}</p></div><div>{PROGRAMME_REPORT_SOURCES.map(s => <a href={s.url} target="_blank" rel="noreferrer" key={s.url}>{s.label}<ArrowUpRight size={16} aria-hidden="true" /></a>)}</div></aside>
