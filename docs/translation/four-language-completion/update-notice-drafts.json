@@ -1454,6 +1454,34 @@
       "st": "Kgetha kgwebo ya diphoofolo. Hlahloba dinoto tsa tlhokomelo mme o bule mohlodi wa Senyesemane.",
       "ts": "Hlawula bindzu ra swifuwo. Kambela tinotsi ta nhlayiseko kutani u pfula xihlovo xa Xinghezi.",
       "ve": "Nangani bindu ḽa zwipuka. Sedzulusani notsi dza ndondolo ni vule tshiko tsha Luisimane."
+    },
+    {
+      "english": "Animal choices, source links and month controls have new translation drafts.",
+      "zu": "Izinketho zezilwane, izixhumanisi zemithombo nezilawuli zezinyanga zinemibhalo emisha yokuhumusha.",
+      "st": "Dikgetho tsa diphoofolo, dihokelo tsa mehlodi le ditaolo tsa dikgwedi di na le meralo e metjha ya diphetolelo.",
+      "ts": "Swihlawuriwa swa swifuwo, swihlanganisi swa swihlovo ni swilawuri swa tin’hweti swi ni tindzimana tintshwa ta vuhundzuluxeri.",
+      "ve": "Zwinangwaho zwa zwipuka, vhuṱumani ha zwiko na zwilangi zwa miṅwedzi zwi na mishumo miswa ya ṱhalutshedzelo."
+    },
+    {
+      "english": "Animal reference headings and conditions now have clearer draft labels.",
+      "zu": "Izihloko nemibandela yezikhombo zezilwane manje zinemibhalo yokuhumusha ecace kakhudlwana.",
+      "st": "Dihlooho le maemo a ditshupiso tsa diphoofolo jwale di na le mabitso a meralo a hlakileng ho feta.",
+      "ts": "Tinhlokomhaka ni swiyimo swa swikombo swa swifuwo sweswi swi ni malebulu ya tindzimana lama nga erivaleni ku tlurisa.",
+      "ve": "Ṱhoho na nyimele dza zwikombo zwa zwipuka zwino zwi na dziḽebuḽu dza mishumo dzi pfalaho khwine."
+    },
+    {
+      "english": "Review animal choices and months",
+      "zu": "Buyekeza izinketho zezilwane nezinyanga",
+      "st": "Hlahloba dikgetho tsa diphoofolo le dikgwedi",
+      "ts": "Kambela swihlawuriwa swa swifuwo ni tin’hweti",
+      "ve": "Sedzulusani zwinangwaho zwa zwipuka na miṅwedzi"
+    },
+    {
+      "english": "Choose an animal, check its reference units, then review your confirmed months.",
+      "zu": "Khetha isilwane, uhlole amayunithi ezikhombo zaso, bese ubuyekeza izinyanga oziqinisekisile.",
+      "st": "Kgetha phoofolo, hlahloba diyuniti tsa ditshupiso tsa yona, ebe o hlahloba dikgwedi tseo o di netefaditseng.",
+      "ts": "Hlawula xifuwo, kambela tiyuniti ta swikombo swa xona, kutani u kambela tin’hweti leti u ti tiyisiseke.",
+      "ve": "Nangani tshipuka, ni sedzuluse yuniti dza zwikombo zwatsho, ni kone u sedzulusa miṅwedzi ye na khwaṱhisedza."
     }
   ],
   "historyBefore": [

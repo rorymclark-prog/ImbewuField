@@ -1,0 +1,93 @@
+[
+  {
+    "english": "Commercial dairy processors require an even year-round milk supply. This is a herd supply reference, not year-round milk from each cow. Confirm your farm's calving and milking months.",
+    "language": "ts",
+    "before": "Vaproṣesi va masi va mabindzu",
+    "after": "Vabindzu lava lulamisaka masi",
+    "reason": "Remove a malformed borrowing and use an explicit dairy-processing phrase."
+  },
+  {
+    "english": "Pig (small-scale / emerging-farmer sow herd)",
+    "language": "ts",
+    "before": "ntlambi",
+    "after": "ntlhambi",
+    "reason": "Correct the herd term spelling; retain the female-pig meaning."
+  },
+  {
+    "english": "Breeding is not controlled and happens all year, but in one Mpumalanga communal study kidding rates were highest in autumn (96%) and spring (93%), lower in winter (63%) and nil in summer.",
+    "language": "st",
+    "before": "diteko tsa ho tswala",
+    "after": "ditekanyo tsa ho tswala",
+    "reason": "The source reports rates, not tests."
+  },
+  {
+    "english": "In hot, humid wet-season conditions rabbit reproduction rates fall; artificial lighting in managed hutches can largely offset this.",
+    "language": "st",
+    "before": "diteko tsa ho ikatisa",
+    "after": "ditekanyo tsa ho ikatisa",
+    "reason": "The source reports reproductive rates, not tests."
+  },
+  {
+    "english": "Wool sheep (Merino / Dohne Merino, incl. communal wool growers)",
+    "language": "ve",
+    "before": "mamvele",
+    "after": "vhukuse",
+    "reason": "Reuse the existing canonical Wool terminology instead of introducing another term."
+  },
+  {
+    "english": "Semi-arid Merino reference; pasture and management affect the clip.",
+    "language": "ve",
+    "before": "mamvele a gerwaho",
+    "after": "vhukuse vhu gerwaho",
+    "reason": "Keep the existing canonical wool term and matching grammar."
+  },
+  {
+    "english": "In hot, humid wet-season conditions rabbit reproduction rates fall; artificial lighting in managed hutches can largely offset this.",
+    "language": "ve",
+    "before": "nyimele dza u fhisa na u ṋukala",
+    "after": "nyimele dza mufhiso na muṋuṋu wa nṱha",
+    "reason": "The official SAWS Tshivenda brochure uses muṋuṋu for humidity; preserve humid air rather than only wetness."
+  },
+  {
+    "english": "The all-year source is for commercial layers with managed feeding and lighting.",
+    "language": "ve",
+    "before": "dzi re na u fhaṱeliwa zwiḽiwa na tshedza zwo langwaho",
+    "after": "dzine u dzi fha zwiḽiwa na u dzi vhonetshela zwa langwa",
+    "reason": "Preserve controlled feeding and lighting with an explicit feeding phrase."
+  },
+  {
+    "english": "In this South African Saanen milk-recording study, does kidding in spring had the highest average lactation milk yield. Table 1 defines spring as August–October for this study. These are kidding-season categories, not confirmed milk collection months.",
+    "language": "st",
+    "before": "Phato–Mphalane",
+    "after": "Phata–Mphalane",
+    "reason": "Use the existing canonical August label."
+  },
+  {
+    "english": "In this South African Saanen milk-recording study, does kidding in spring had the highest average lactation milk yield. Table 1 defines spring as August–October for this study. These are kidding-season categories, not confirmed milk collection months.",
+    "language": "ve",
+    "before": "Thangule–Tshimedzi",
+    "after": "Ṱhangule–Tshimedzi",
+    "reason": "Use the existing canonical August diacritic."
+  },
+  {
+    "english": "Breeding/kidding is not confined to one season - Boer does kid throughout the year - but kidding is concentrated in three peaks: March-April, June-July and September-October, with an overall peak in autumn.",
+    "language": "st",
+    "before": "Tlhakubele–Mmesa",
+    "after": "Hlakubele–Mmesa",
+    "reason": "Use canonical March spelling."
+  },
+  {
+    "english": "Breeding/kidding is not confined to one season - Boer does kid throughout the year - but kidding is concentrated in three peaks: March-April, June-July and September-October, with an overall peak in autumn.",
+    "language": "st",
+    "before": "Phuptjane–Phupu",
+    "after": "Phupjane–Phupu",
+    "reason": "Use canonical June spelling."
+  },
+  {
+    "english": "Breeding/kidding is not confined to one season - Boer does kid throughout the year - but kidding is concentrated in three peaks: March-April, June-July and September-October, with an overall peak in autumn.",
+    "language": "st",
+    "before": "Lwetse–Mphalane",
+    "after": "Leotshe–Mphalane",
+    "reason": "Use canonical September spelling; do not introduce a second month authority."
+  }
+]

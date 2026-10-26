@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Animal choices, source links and month controls have new translation drafts.": "Izinketho zezilwane, izixhumanisi zemithombo nezilawuli zezinyanga zinemibhalo emisha yokuhumusha.",
+  "Animal reference headings and conditions now have clearer draft labels.": "Izihloko nemibandela yezikhombo zezilwane manje zinemibhalo yokuhumusha ecace kakhudlwana.",
+  "Review animal choices and months": "Buyekeza izinketho zezilwane nezinyanga",
+  "Choose an animal, check its reference units, then review your confirmed months.": "Khetha isilwane, uhlole amayunithi ezikhombo zaso, bese ubuyekeza izinyanga oziqinisekisile.",
   "Review animal care drafts": "Buyekeza imibhalo yokunakekela izilwane",
   "Choose an animal enterprise. Review care notes and open the English source.": "Khetha uhlobo lokukhiqiza ngezilwane. Buyekeza amanothi okunakekela bese uvula isiNgisi sokuqala.",
   "Animal care notes now have unreviewed translations in four languages.": "Amanothi okunakekela izilwane manje anezinguqulo ezingakabuyekezwa ngezilimi ezine.",

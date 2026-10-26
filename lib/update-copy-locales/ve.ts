@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Animal choices, source links and month controls have new translation drafts.": "Zwinangwaho zwa zwipuka, vhuṱumani ha zwiko na zwilangi zwa miṅwedzi zwi na mishumo miswa ya ṱhalutshedzelo.",
+  "Animal reference headings and conditions now have clearer draft labels.": "Ṱhoho na nyimele dza zwikombo zwa zwipuka zwino zwi na dziḽebuḽu dza mishumo dzi pfalaho khwine.",
+  "Review animal choices and months": "Sedzulusani zwinangwaho zwa zwipuka na miṅwedzi",
+  "Choose an animal, check its reference units, then review your confirmed months.": "Nangani tshipuka, ni sedzuluse yuniti dza zwikombo zwatsho, ni kone u sedzulusa miṅwedzi ye na khwaṱhisedza.",
   "Review animal care drafts": "Sedzulusani mishumo ya ndondolo ya zwipuka",
   "Choose an animal enterprise. Review care notes and open the English source.": "Nangani bindu ḽa zwipuka. Sedzulusani notsi dza ndondolo ni vule tshiko tsha Luisimane.",
   "Animal care notes now have unreviewed translations in four languages.": "Notsi dza ndondolo ya zwipuka zwino dzi na ṱhalutshedzelo dza nyambo nṋa dzi sa athu sedzuluswaho.",

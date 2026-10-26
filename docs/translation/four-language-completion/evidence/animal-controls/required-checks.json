@@ -1,0 +1,52 @@
+{
+  "startedAt": "2026-10-26T00:51:37.818164+00:00",
+  "pid": 29934,
+  "base": "878fb20f112b9ebcddb0fff8e59f9b8c6c894dc9",
+  "branch": "codex/four-language-animal-controls",
+  "tmpdir": "/private/tmp/imbewufield-animal-controls-checks-20261026-_9h1mws7",
+  "frozenInputs": 1713,
+  "registeredTestFiles": 570,
+  "commands": [
+    {
+      "name": "typecheck",
+      "command": [
+        "npx",
+        "tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "test",
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "status": "passed",
+  "current": "diff",
+  "endedAt": "2026-10-26T02:09:05.952204+00:00",
+  "changedFrozenInputs": [],
+  "sourceCheckpoint": "878fb20f112b9ebcddb0fff8e59f9b8c6c894dc9",
+  "passing": 5849,
+  "failing": 0,
+  "totalTests": 5850,
+  "existingTodo": 1,
+  "todoReason": "Existing shape-sync-loss listener-race TODO; unchanged and unrelated.",
+  "frozenManifestSha256": "bbde5e46921cd79e1282b22b6916128a28e81ad28ee0560e355e651ac18765fd",
+  "frozenInputCount": 1713,
+  "frozenInputsStillExactAfterParentDeliveryAlignment": true,
+  "parentDelivery": "e29a0eb40af86a8af08e8463ceece8ae0acd958b /draftPR1114; only four new notes/care delivery documents since existing parentabbd927.",
+  "publicationScope": "137source-bound unreviewed native control rows, complete source qualifiers/seasons, original catalogue names, canonical month labels, typed/private guards, measured native-value wrapping and the neutral Production reference heading. Whole-app/fluent review incomplete."
+}

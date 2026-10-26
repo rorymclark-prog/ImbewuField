@@ -1,5 +1,5 @@
 {
-  "status": "IN PROGRESS:1206source drafts;animal care and whole app unfinished;language unreviewed.",
+  "status": "IN PROGRESS: 1343 source drafts; animal controls and the whole app are unfinished; languages unreviewed.",
   "sourceSha": "dc9ade0cc9a208de55c7d0cccc6393f79257769d",
   "sourceBaseline": "output/crop-pdf-qa/baseline.json (immutable17files)",
   "instructionEnglishBaseline": "output/crop-pdf-qa/instruction-english-baseline.json: original49cataloguecrops/166tasks beforeedits",
@@ -8993,6 +8993,1102 @@
       "ts": "Vuhundzuluxeri bya nhlayiseko wa swifuwo i tindzimana leti nga si kamberiwaka. Tinotsi ta nhlayiseko ta Xinghezi ta kumeka laha hansi. Vuxokoxoko byin’wana bya swifuwo byi nga ha va hi Xinghezi.",
       "ve": "Ṱhalutshedzelo dza ndondolo ya zwipuka ndi mishumo i sa athu sedzuluswaho. Notsi dza ndondolo dza Luisimane dzi wanala afho fhasi. Maṅwe mafhungo a zwipuka dzi nga vha dzi kha ḓi vha nga Luisimane.",
       "generatedScope": "animal-welfare-control"
+    },
+    {
+      "english": "{range} weeks",
+      "zu": "amasonto angu-{range}",
+      "st": "dibeke tse {range}",
+      "ts": "{range} wa mavhiki",
+      "ve": "vhege dza {range}",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "about {range} months",
+      "zu": "cishe izinyanga ezingu-{range}",
+      "st": "dikgwedi tse ka bang {range}",
+      "ts": "kwalomu ka {range} wa tin’hweti",
+      "ve": "miṅwedzi i ṱoḓaho u vha {range}",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "Read source: {citation}",
+      "zu": "Funda umthombo: {citation}",
+      "st": "Bala mohlodi: {citation}",
+      "ts": "Hlaya xihlovo: {citation}",
+      "ve": "Vhalani tshiko: {citation}",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "Read source",
+      "zu": "Funda umthombo",
+      "st": "Bala mohlodi",
+      "ts": "Hlaya xihlovo",
+      "ve": "Vhalani tshiko",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "Not sourced",
+      "zu": "Akukho mthombo",
+      "st": "Ha ho mohlodi",
+      "ts": "A ku na xihlovo",
+      "ve": "A hu na tshiko",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "Where this number comes from",
+      "zu": "Lapho kuvela khona leli nani",
+      "st": "Moo palo ena e tswang teng",
+      "ts": "Laha nhlayo leyi yi humaka kona",
+      "ve": "Hune mbalo iyi ya bva hone",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "These are research references per animal. Check the age, system and units before using a figure for your farm.",
+      "zu": "Lezi yizikhombo zocwaningo ngesilwane ngasinye. Hlola ubudala, uhlelo lokufuya namayunithi ngaphambi kokusebenzisa inani epulazini lakho.",
+      "st": "Tsena ke ditshupiso tsa dipatlisiso ka phoofolo. Hlahloba dilemo, mokgwa wa ho rua le diyuniti pele o sebedisa palo polasing ya hao.",
+      "ts": "Leswi i swikombo swa ndzavisiso hi xifuwo. Kambela vukhale, fambiselo ro fuwa ni tiyuniti u nga si tirhisa nhlayo eka purasi ra wena.",
+      "ve": "Hezwi ndi zwikombo zwa ṱhoḓisiso nga tshipuka. Sedzulusani miṅwaha, maitele a u fuwa na yuniti phanḓa ha u shumisa mbalo kha bulasi yaṋu.",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "Production reference",
+      "zu": "Isikhombo sokukhiqiza",
+      "st": "Tshupiso ya tlhahiso",
+      "ts": "Xikombo xa vuhumelerisi",
+      "ve": "Tshikombo tsha vhubveledzi",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "When",
+      "zu": "Nini",
+      "st": "Neng",
+      "ts": "Rini",
+      "ve": "Lini",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "{months} across SA sources",
+      "zu": "{months} emithonjeni yaseNingizimu Afrika",
+      "st": "{months} mehloding ya Afrika Borwa",
+      "ts": "{months} eka swihlovo swa Afrika-Dzonga",
+      "ve": "{months} kha zwiko zwa Afrika Tshipembe",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "First product",
+      "zu": "Umkhiqizo wokuqala",
+      "st": "Sehlahiswa sa pele",
+      "ts": "Xibveledzwa xo sungula",
+      "ve": "Tshibveledzwa tsha u thoma",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "Productive life",
+      "zu": "Isikhathi sokukhiqiza",
+      "st": "Nako ya bophelo ba tlhahiso",
+      "ts": "Nkarhi wa ku humesa swibveledzwa",
+      "ve": "Tshifhinga tsha vhubveledzi",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "years",
+      "zu": "iminyaka",
+      "st": "dilemo",
+      "ts": "malembe",
+      "ve": "miṅwaha",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "kg a day",
+      "zu": "kg ngosuku",
+      "st": "kg ka letsatsi",
+      "ts": "kg hi siku",
+      "ve": "kg nga ḓuvha",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "L a day",
+      "zu": "L ngosuku",
+      "st": "L ka letsatsi",
+      "ts": "L hi siku",
+      "ve": "L nga ḓuvha",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "{product} is not food, so it stays off the availability chart and the year of food.",
+      "zu": "{product} akukhona ukudla, ngakho akufakwa eshadini lokutholakala nasohlelweni lokudla lonyaka.",
+      "st": "{product} ha se dijo, kahoo ha e kenngwe tjhateng ya ho fumaneha le selemong sa dijo.",
+      "ts": "{product} a hi swakudya, kutani a xi ngheni eka chati ya ku kumeka ni lembe ra swakudya.",
+      "ve": "{product} a si zwiḽiwa, ngauralo a zwi dzheni kha tshathi ya u wanala na ṅwaha wa zwiḽiwa.",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "Production by age & system",
+      "zu": "Ukukhiqiza ngokobudala nohlelo lokufuya",
+      "st": "Tlhahiso ho ya ka dilemo le mokgwa wa ho rua",
+      "ts": "Vuhumelerisi hi ku ya hi vukhale ni fambiselo ro fuwa",
+      "ve": "Vhubveledzi u ya nga miṅwaha na maitele a u fuwa",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "Match breed, stage and units to your stock. Enter your farm's expected or actual output separately.",
+      "zu": "Fanisa uhlobo, isigaba sokukhula namayunithi nezilwane zakho. Faka ngokuhlukile okulindele ukukhiqizwa epulazini lakho noma okukhiqizwe ngempela.",
+      "st": "Bapisa mofuta, mokgahlelo wa bophelo le diyuniti le diphoofolo tsa hao. Kenya tlhahiso e lebelletsweng kapa ya nnete ya polasi ya hao ka thoko.",
+      "ts": "Fananisa muxaka, xiyimo xa ku kula ni tiyuniti ni swifuwo swa wena. Nghenisa vuhumelerisi bya purasi ra wena leswi languteriweke kumbe swa xiviri hi ku hambana.",
+      "ve": "Fanyisani lushaka, ḽiga ḽa vhutshilo na yuniti na zwipuka zwaṋu. Dzhenisani vhubveledzi ho lavhelelwaho kana ha vhukuma ha bulasi yaṋu nga thungo.",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "The law",
+      "zu": "Umthetho",
+      "st": "Molao",
+      "ts": "Nawu",
+      "ve": "Mulayo",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "What the sources say ({count})",
+      "zu": "Okushiwo yimithombo ({count})",
+      "st": "Seo mehlodi e se buang ({count})",
+      "ts": "Leswi swihlovo swi swi vulaka ({count})",
+      "ve": "Zwine zwiko zwa amba ({count})",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "Animals on your map",
+      "zu": "Izilwane ezisemephini yakho",
+      "st": "Diphoofolo tse mmapeng wa hao",
+      "ts": "Swifuwo leswi nga eka mepe wa wena",
+      "ve": "Zwipuka zwi re kha mapa waṋu",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "The map shows housing, not animal numbers. Choose what you keep, then confirm the months it gives food here. Housing stays on the printed plan even when dates are unknown.",
+      "zu": "Imephu ikhombisa izindawo zokugcina izilwane, hhayi izibalo zezilwane. Khetha okufuyayo, bese uqinisekisa izinyanga okukhiqiza ngazo ukudla lapha. Izindawo zokugcina izilwane zihlala ohlelweni oluphrintiwe noma izinsuku zingaziwa.",
+      "st": "Mmapa o bontsha bodulo ba diphoofolo, eseng palo ya tsona. Kgetha tseo o di ruileng, ebe o netefatsa dikgwedi tseo di fanang ka dijo mona. Bodulo bo dula moralong o hatisitsweng le ha matsatsi a sa tsejwe.",
+      "ts": "Mepe wu komba tindlu ta swifuwo, ku nga ri nhlayo ya swifuwo. Hlawula leswi u swi fuwaka, kutani u tiyisisa tin’hweti leti swi humesaka swakudya ha tona laha. Tindlu ta swifuwo ti sala eka pulani leyi kandziyisiweke hambiloko masiku ya nga tiveki.",
+      "ve": "Mapa u sumbedza vhudzulo ha zwipuka, hu si tshivhalo tsha zwipuka. Nangani zwine na zwi fuwa, ni kone u khwaṱhisedza miṅwedzi ine zwa ṋea zwiḽiwa khayo afha. Vhudzulo vhu sala kha pulane yo gandiswaho naho datumu dzi sa ḓivhei.",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "These confirmations are kept on this device for this design.",
+      "zu": "Lezi ziqinisekiso zigcinwa kule divayisi kulo mklamo.",
+      "st": "Dinetefatso tsena di bolokwa sesebedisweng sena bakeng sa moralo ona.",
+      "ts": "Switiyisiso leswi swi hlayisiwa eka xitirhisiwa lexi eka dizayini leyi.",
+      "ve": "Khwaṱhisedzo idzi dzi vhulungwa kha tshishumiswa itshi u itela uyu mudzulo wa pulane.",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "Some animal source notes and quotations remain in English.",
+      "zu": "Amanye amanothi emithombo yezilwane namazwi acashuniwe ahlala ngesiNgisi.",
+      "st": "Dinoto tse ding tsa mehlodi ya diphoofolo le ditsopolwa di sala ka Senyesemane.",
+      "ts": "Tinotsi tin’wana ta swihlovo swa swifuwo ni mintshaho swi sala hi Xinghezi.",
+      "ve": "Dziṅwe notsi dza zwiko zwa zwipuka na maipfi o redzwaho zwi sala nga Luisimane.",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "What the {housing} are for",
+      "zu": "Inhloso yalezi {housing}",
+      "st": "Morero wa {housing}",
+      "ts": "Xikongomelo xa {housing}",
+      "ve": "Ndivho ya {housing}",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "Tap months when your animals already give {product} here. A reference season is not a promise for this farm.",
+      "zu": "Thepha izinyanga lapho izilwane zakho sezivele zinikeza khona {product} lapha. Isikhathi sonyaka sesikhombo asisona isithembiso saleli pulazi.",
+      "st": "Tobetsa dikgwedi tseo diphoofolo tsa hao di seng di fana ka {product} mona. Sehla sa tshupiso ha se tshepiso bakeng sa polasi ena.",
+      "ts": "Thinta tin’hweti leti swifuwo swa wena se swi humesaka {product} ha tona laha. Nguva ya xikombo a hi xitshembiso xa purasi leri.",
+      "ve": "Kwandani miṅwedzi ine zwipuka zwaṋu zwa ṋea ngayo {product} afha zwino. Khalaṅwaha ya tshikombo a si fulufhedziso ḽa bulasi iyi.",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "The all-year source is for commercial layers with managed feeding and lighting.",
+      "zu": "Umthombo wonyaka wonke ungowezikhukhukazi zamaqanda ezokuhweba ezinokudla nokukhanyisa okulawulwayo.",
+      "st": "Mohlodi wa selemo sohle ke wa dikgoho tsa mahe tsa kgwebo tseo dijo le kganya di laolwang.",
+      "ts": "Xihlovo xa lembe hinkwaro i xa tihuku ta matandza ta mabindzu leti swakudya ni ku voninga swi lawuriwaka.",
+      "ve": "Tshiko tsha ṅwaha woṱhe ndi tsha khuhu dza makumba dza mabindu dzine u dzi fha zwiḽiwa na u dzi vhonetshela zwa langwa.",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "{housing} local production months",
+      "zu": "Izinyanga zendawo zokukhiqiza ze-{housing}",
+      "st": "Dikgwedi tsa tlhahiso ya lehae tsa {housing}",
+      "ts": "Tin’hweti ta vuhumelerisi bya laha ta {housing}",
+      "ve": "Miṅwedzi ya vhubveledzi ha henefho ya {housing}",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "Only proposed housing: no animals giving food yet.",
+      "zu": "Kuyizindawo zokugcina izilwane ezihlongozwayo kuphela: azikabi khona izilwane ezinikeza ukudla.",
+      "st": "Ke bodulo bo rerilweng feela: ha ho diphoofolo tse fanang ka dijo hona jwale.",
+      "ts": "I tindlu ta swifuwo leti ringanyetiweke ntsena: a ku si va ni swifuwo leswi humesaka swakudya.",
+      "ve": "Ndi vhudzulo ho themendelwaho fhedzi: a hu na zwipuka zwi ṋeaho zwiḽiwa zwino.",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "Reference seasons, care and sources",
+      "zu": "Izikhathi zonyaka zesikhombo, ukunakekela nemithombo",
+      "st": "Dihla tsa tshupiso, tlhokomelo le mehlodi",
+      "ts": "Tinguva ta xikombo, nhlayiseko ni swihlovo",
+      "ve": "Khalaṅwaha dza tshikombo, ndondolo na zwiko",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "Choose what they are kept for. Production months need local confirmation.",
+      "zu": "Khetha ukuthi zifuyelwani. Izinyanga zokukhiqiza zidinga ukuqinisekiswa endaweni.",
+      "st": "Kgetha hore di ruilweng. Dikgwedi tsa tlhahiso di hloka netefatso ya lehae.",
+      "ts": "Hlawula leswi swi fuyeriwaka swona. Tin’hweti ta vuhumelerisi ti lava ku tiyisisiwa laha kaya.",
+      "ve": "Nangani uri zwi fuwelwa mini. Miṅwedzi ya vhubveledzi i ṱoḓa u khwaṱhisedzwa henefho.",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "coop or tractor",
+      "zu": "indlu yezinkukhu noma indlu yezinkukhu ehambayo",
+      "st": "ntlo ya dikgoho kapa ntlo ya dikgoho e tsamaiswang",
+      "ts": "yindlu ya tihuku kumbe yindlu ya tihuku leyi fambisiwaka",
+      "ve": "nnḓu ya khuhu kana nnḓu ya khuhu i tshimbidzwaho",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "coops and tractors",
+      "zu": "izindlu zezinkukhu nezindlu zezinkukhu ezihambayo",
+      "st": "matlo a dikgoho le matlo a dikgoho a tsamaiswang",
+      "ts": "tindlu ta tihuku ni tindlu ta tihuku leti fambisiwaka",
+      "ve": "nnḓu dza khuhu na nnḓu dza khuhu dzi tshimbidzwaho",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "goat pen",
+      "zu": "isibaya sezimbuzi",
+      "st": "lesaka la dipodi",
+      "ts": "saka ra timbuti",
+      "ve": "tshitanga tsha mbudzi",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "goat pens",
+      "zu": "izibaya zezimbuzi",
+      "st": "masaka a dipodi",
+      "ts": "masaka ya timbuti",
+      "ve": "zwitanga zwa mbudzi",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "hive",
+      "zu": "isidleke sezinyosi",
+      "st": "ntlo ya dinotshi",
+      "ts": "yindlu ya tinyoxi",
+      "ve": "muṱa wa ṋotshi",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "hives",
+      "zu": "izidleke zezinyosi",
+      "st": "matlo a dinotshi",
+      "ts": "tindlu ta tinyoxi",
+      "ve": "miṱa ya ṋotshi",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "hutch",
+      "zu": "indlu yonogwaja",
+      "st": "ntlo ya mebutla",
+      "ts": "yindlu ya mimpfundla",
+      "ve": "nnḓu ya mivhuḓa",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "hutches",
+      "zu": "izindlu zonogwaja",
+      "st": "matlo a mebutla",
+      "ts": "tindlu ta mimpfundla",
+      "ve": "nnḓu dza mivhuḓa",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "duck pond",
+      "zu": "ichibi lamadada",
+      "st": "letamo la matata",
+      "ts": "xidziva xa masekwa",
+      "ve": "dzivha ḽa masekwa",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "duck ponds",
+      "zu": "amachibi amadada",
+      "st": "matamo a matata",
+      "ts": "swidziva swa masekwa",
+      "ve": "madzivha a masekwa",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "pig pen",
+      "zu": "isibaya sezingulube",
+      "st": "lesaka la dikolobe",
+      "ts": "saka ra tinguluve",
+      "ve": "tshitanga tsha nguluvhe",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "pig pens",
+      "zu": "izibaya zezingulube",
+      "st": "masaka a dikolobe",
+      "ts": "masaka ya tinguluve",
+      "ve": "zwitanga zwa nguluvhe",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "kraal",
+      "zu": "isibaya",
+      "st": "lesaka",
+      "ts": "saka",
+      "ve": "tshitanga",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "kraals",
+      "zu": "izibaya",
+      "st": "masaka",
+      "ts": "masaka",
+      "ve": "zwitanga",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "small pond",
+      "zu": "ichibi elincane",
+      "st": "letamo le lenyane",
+      "ts": "xidziva lexitsongo",
+      "ve": "dzivha ḽiṱuku",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "small ponds",
+      "zu": "amachibi amancane",
+      "st": "matamo a manyane",
+      "ts": "swidziva leswitsongo",
+      "ve": "madzivha maṱuku",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "What is the kraal for?",
+      "zu": "Isibaya singesani?",
+      "st": "Lesaka le etseditsweng?",
+      "ts": "Saka leri i ra yini?",
+      "ve": "Tshitanga ndi tsha mini?",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "Keeping fish in it?",
+      "zu": "Ufuye izinhlanzi kulo?",
+      "st": "O ruile ditlhapi ho lona?",
+      "ts": "U fuwa tinhlampfi eka xona?",
+      "ve": "Ni fuwa khovhe khaḽo?",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "What are they for?",
+      "zu": "Zifuyelwani?",
+      "st": "Di ruilweng?",
+      "ts": "Swi fuyeriwa yini?",
+      "ve": "Zwi fuwelwa mini?",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "{count} {structures} on the map",
+      "zu": "Emephini: {structures} — {count}",
+      "st": "Mmapeng: {structures} — {count}",
+      "ts": "Eka mepe: {structures} — {count}",
+      "ve": "Kha mapa: {structures} — {count}",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "{count} {structures} on the map ({proposed} proposed)",
+      "zu": "Emephini: {structures} — {count} ({proposed} okuhlongozwayo)",
+      "st": "Mmapeng: {structures} — {count} ({proposed} tse rerilweng)",
+      "ts": "Eka mepe: {structures} — {count} ({proposed} leswi ringanyetiweke)",
+      "ve": "Kha mapa: {structures} — {count} ({proposed} zwo themendelwaho)",
+      "generatedScope": "animal-control"
+    },
+    {
+      "english": "Honeybee (managed hives)",
+      "zu": "Izinyosi zoju (izidleke ezinakekelwayo)",
+      "st": "Dinotshi tsa tlhahiso ya mahe a dinotshi (matlo a laolwang)",
+      "ts": "Tinyoxi ta vulombe (tindlu leti lawuriwaka)",
+      "ve": "Ṋotshi dza mutoli (miṱa i langwaho)",
+      "generatedScope": "animal-control-name"
+    },
+    {
+      "english": "Nguni / crossbred beef cattle (communal and extensive veld)",
+      "zu": "Izinkomo zenyama ze-Nguni / ezixutshiwe (ezomphakathi nezamadlelo abanzi emvelo)",
+      "st": "Dikgomo tsa nama tsa Nguni / tse tswakaneng (tsa kopanelo le makgulo a maholo a tlhaho)",
+      "ts": "Tihomu ta nyama ta Nguni / leti hlanganisiweke (ta miganga ni madyelo yo anama ya ntumbuluko)",
+      "ve": "Kholomo dza ṋama dza Nguni / dzo ṱanganyiswaho (dza tshitshavha na mafulo mahulwane a mupo)",
+      "generatedScope": "animal-control-name"
+    },
+    {
+      "english": "Small-scale dairy cow (Jersey, Holstein or crossbred)",
+      "zu": "Inkomazi yobisi yokufuya ngezinga elincane (Jersey, Holstein noma exutshiwe)",
+      "st": "Kgomo ya lebese ya tlhahiso e nyane (Jersey, Holstein kapa e tswakaneng)",
+      "ts": "Homu ya masi ya vufuwi byitsongo (Jersey, Holstein kumbe leyi hlanganisiweke)",
+      "ve": "Kholomo ya mafhi ya vhubveledzi vhuṱuku (Jersey, Holstein kana yo ṱanganyiswaho)",
+      "generatedScope": "animal-control-name"
+    },
+    {
+      "english": "Broilers (commercial)",
+      "zu": "Izinkukhu zenyama (zokuhweba)",
+      "st": "Dikgoho tsa nama (tsa kgwebo)",
+      "ts": "Tihuku ta nyama (ta mabindzu)",
+      "ve": "Khuhu dza ṋama (dza mabindu)",
+      "generatedScope": "animal-control-name"
+    },
+    {
+      "english": "Village chickens (indigenous, free-range)",
+      "zu": "Izinkukhu zasemakhaya (zendabuko, ezizihambelayo)",
+      "st": "Dikgoho tsa metseng (tsa lehae, tse itsamaelang)",
+      "ts": "Tihuku ta le migangeni (ta ndhavuko, leti tifambafambelaka)",
+      "ve": "Khuhu dza mahayani (dza sialala, dzi ḓitshimbilelaho)",
+      "generatedScope": "animal-control-name"
+    },
+    {
+      "english": "Laying hens (commercial)",
+      "zu": "Izikhukhukazi zamaqanda (zokuhweba)",
+      "st": "Dikgoho tsa mahe (tsa kgwebo)",
+      "ts": "Tihuku ta matandza (ta mabindzu)",
+      "ve": "Khuhu dza makumba (dza mabindu)",
+      "generatedScope": "animal-control-name"
+    },
+    {
+      "english": "Meat duck (Pekin / Muscovy, backyard)",
+      "zu": "Idada lenyama (Pekin / Muscovy, egcekeni)",
+      "st": "Letata la nama (Pekin / Muscovy, la ka jareteng)",
+      "ts": "Sekwa ra nyama (Pekin / Muscovy, ra le jarateni)",
+      "ve": "Sekwa ḽa ṋama (Pekin / Muscovy, ḽa muḓini)",
+      "generatedScope": "animal-control-name"
+    },
+    {
+      "english": "Tilapia (Mozambique tilapia, small pond or tank)",
+      "zu": "Tilapia (Mozambique tilapia, ichibi elincane noma ithangi)",
+      "st": "Tilapia (Mozambique tilapia, letamo le lenyane kapa tanka)",
+      "ts": "Tilapia (Mozambique tilapia, xidziva lexitsongo kumbe thangi)",
+      "ve": "Tilapia (Mozambique tilapia, dzivha ḽiṱuku kana thangi)",
+      "generatedScope": "animal-control-name"
+    },
+    {
+      "english": "Dairy goat (Saanen / Toggenburg / British Alpine)",
+      "zu": "Imbuzi yobisi (Saanen / Toggenburg / British Alpine)",
+      "st": "Podi ya lebese (Saanen / Toggenburg / British Alpine)",
+      "ts": "Mbuti ya masi (Saanen / Toggenburg / British Alpine)",
+      "ve": "Mbudzi ya mafhi (Saanen / Toggenburg / British Alpine)",
+      "generatedScope": "animal-control-name"
+    },
+    {
+      "english": "Indigenous veld / communal goat (e.g. Nguni, Tankwa, Xhosa lob-ear)",
+      "zu": "Imbuzi yendabuko yasemadlelweni / yomphakathi (isb. Nguni, Tankwa, Xhosa lob-ear)",
+      "st": "Podi ya lehae ya makgulo / ya kopanelo (mohl. Nguni, Tankwa, Xhosa lob-ear)",
+      "ts": "Mbuti ya ndhavuko ya le madyelweni / ya miganga (xik. Nguni, Tankwa, Xhosa lob-ear)",
+      "ve": "Mbudzi ya sialala ya mafuloni / ya tshitshavha (tsumbo Nguni, Tankwa, Xhosa lob-ear)",
+      "generatedScope": "animal-control-name"
+    },
+    {
+      "english": "Boer goat (meat enterprise)",
+      "zu": "Imbuzi ye-Boer (uhlobo lokukhiqiza inyama)",
+      "st": "Podi ya Boer (kgwebo ya nama)",
+      "ts": "Mbuti ya Boer (bindzu ra nyama)",
+      "ve": "Mbudzi ya Boer (bindu ḽa ṋama)",
+      "generatedScope": "animal-control-name"
+    },
+    {
+      "english": "Pig (small-scale / emerging-farmer sow herd)",
+      "zu": "Ingulube (umhlambi wezingulube zezinsikazi womlimi omncane / osathuthuka)",
+      "st": "Kolobe (mohlape wa dikolobe tse tshehadi wa molemi e monyane / ya ntseng a hola)",
+      "ts": "Nguluve (ntlhambi wa tinguluve ta xisati wa murimi lontsongo / loyi a ha hluvukaka)",
+      "ve": "Nguluvhe (muṱambi wa nguluvhe dza tsadzi wa mulimi muṱuku / a kha ḓi bvelelaho)",
+      "generatedScope": "animal-control-name"
+    },
+    {
+      "english": "Meat rabbit (New Zealand White / Californian, backyard hutches)",
+      "zu": "Unogwaja wenyama (New Zealand White / Californian, izindlu zasegcekeni)",
+      "st": "Mmutla wa nama (New Zealand White / Californian, matlo a ka jareteng)",
+      "ts": "Mpfundla wa nyama (New Zealand White / Californian, tindlu ta le jarateni)",
+      "ve": "Muvhuḓa wa ṋama (New Zealand White / Californian, nnḓu dza muḓini)",
+      "generatedScope": "animal-control-name"
+    },
+    {
+      "english": "Meat sheep (Dorper, Damara, indigenous fat-tailed and crossbred)",
+      "zu": "Izimvu zenyama (Dorper, Damara, zendabuko ezinomsila onamafutha nezixutshiwe)",
+      "st": "Dinku tsa nama (Dorper, Damara, tsa lehae tse mehatla e mafura le tse tswakaneng)",
+      "ts": "Tinyimpfu ta nyama (Dorper, Damara, ta ndhavuko ta micila ya mafurha ni leti hlanganisiweke)",
+      "ve": "Nngu dza ṋama (Dorper, Damara, dza sialala dza mitshila ya mapfura na dzo ṱanganyiswaho)",
+      "generatedScope": "animal-control-name"
+    },
+    {
+      "english": "Wool sheep (Merino / Dohne Merino, incl. communal wool growers)",
+      "zu": "Izimvu zoboya (Merino / Dohne Merino, kuhlanganisa nabafuyi boboya bomphakathi)",
+      "st": "Dinku tsa boya (Merino / Dohne Merino, ho kenyeletswa barui ba boya ba kopanelo)",
+      "ts": "Tinyimpfu ta voya (Merino / Dohne Merino, ku katsa vafuwi va voya va miganga)",
+      "ve": "Nngu dza vhukuse (Merino / Dohne Merino, hu tshi katelwa vhafuwi vha vhukuse vha tshitshavha)",
+      "generatedScope": "animal-control-name"
+    },
+    {
+      "english": "National survey reference from 2008; not a forecast for this hive.",
+      "zu": "Isikhombo socwaningo lukazwelonke lwango-2008; akusona isibikezelo salesi sidleke.",
+      "st": "Tshupiso ya phuputso ya naha ya 2008; ha se ponelopele ya ntlo ena ya dinotshi.",
+      "ts": "Xikombo xa ndzavisiso wa tiko wa 2008; a hi mvhumbo wa yindlu leyi ya tinyoxi.",
+      "ve": "Tshikombo tsha ṱhoḓisiso ya lushaka ya 2008; a si mbonelaphanḓa ya muṱa uyu wa ṋotshi.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Live calf weaning weight from communal Nguni herds in Limpopo; not meat weight.",
+      "zu": "Isisindo sethole eliphilayo lapho liyekiswa ubisi emihlambini yama-Nguni yomphakathi eLimpopo; hhayi isisindo senyama.",
+      "st": "Boima ba namane e phelang ha e kgweswa, ho tswa mehlapeng ya Nguni ya kopanelo Limpopo; eseng boima ba nama.",
+      "ts": "Ntiko wa rhole leri hanyaka loko ri lumuriwa, eka mitlhambi ya Nguni ya miganga eLimpopo; ku nga ri ntiko wa nyama.",
+      "ve": "Tshileme tsha ṋamana i tshilaho musi i tshi lumulwa, kha miṱambi ya Nguni ya tshitshavha ngei Limpopo; hu si tshileme tsha ṋama.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "From first calving to culling in the study; not lifespan from birth.",
+      "zu": "Kusukela ekuzaleni ithole lokuqala kuya ekukhishweni emhlambini ocwaningweni; akusona isikhathi sokuphila kusukela ekuzalweni.",
+      "st": "Ho tloha ho tswaleng namane ya pele ho fihlela ho tloswa mohlapeng phuputsong; eseng bolele ba bophelo ho tloha tswalong.",
+      "ts": "Ku suka eku tswaleni rhole ro sungula ku fika eku susiweni entlhambini eka ndzavisiso; ku nga ri nkarhi wa ku hanya ku sukela eku velekiweni.",
+      "ve": "U bva kha u beba ṋamana ya u thoma u swika kha u bviswa muṱambini kha ṱhoḓisiso; hu si tshifhinga tsha vhutshilo u bva mabeboni.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Milk-recorded Jersey and Holstein herds, per lactation; not an annual total.",
+      "zu": "Imihlambi yama-Jersey nama-Holstein erekhodelwa ubisi, ngesikhathi ngasinye sokukhiqiza ubisi; hhayi isamba sonyaka.",
+      "st": "Mehlape ya Jersey le Holstein eo lebese la yona le rekotwang, ka nako ka nngwe ya tlhahiso ya lebese; eseng kakaretso ya selemo.",
+      "ts": "Mitlhambi ya Jersey na Holstein leyi masi ya yona ya rhekhodiwaka, eka nkarhi wun’wana ni wun’wana wo humesa masi; ku nga ri ntsengo wa lembe.",
+      "ve": "Miṱambi ya Jersey na Holstein ine mafhi ayo a rekhodiwa, nga tshifhinga tshiṅwe na tshiṅwe tsha u bveledza mafhi; hu si ṱhanganyelo ya ṅwaha.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Age at first calving; not time after buying a cow.",
+      "zu": "Ubudala lapho izala ithole lokuqala; akusona isikhathi ngemva kokuthenga inkomazi.",
+      "st": "Dilemo ha e tswala namane ya pele; eseng nako ka mora ho reka kgomo.",
+      "ts": "Vukhale loko yi tswala rhole ro sungula; ku nga ri nkarhi endzhaku ka ku xava homu.",
+      "ve": "Miṅwaha musi i tshi beba ṋamana ya u thoma; hu si tshifhinga nga murahu ha u renga kholomo.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "From first calving to culling in recorded herds; not lifespan from birth.",
+      "zu": "Kusukela ekuzaleni ithole lokuqala kuya ekukhishweni emhlambini emihlambini erekhodiwe; akusona isikhathi sokuphila kusukela ekuzalweni.",
+      "st": "Ho tloha ho tswaleng namane ya pele ho fihlela ho tloswa mohlapeng mehlapeng e rekotilweng; eseng bolele ba bophelo ho tloha tswalong.",
+      "ts": "Ku suka eku tswaleni rhole ro sungula ku fika eku susiweni entlhambini eka mitlhambi leyi rhekhodiweke; ku nga ri nkarhi wa ku hanya ku sukela eku velekiweni.",
+      "ve": "U bva kha u beba ṋamana ya u thoma u swika kha u bviswa muṱambini kha miṱambi yo rekhodiwaho; hu si tshifhinga tsha vhutshilo u bva mabeboni.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Dry-matter intake for lactating cows; not the weight of fresh feed.",
+      "zu": "Ingxenye eyomile yokudla edliwa izinkomazi ezikhiqiza ubisi; hhayi isisindo sokudla okusha.",
+      "st": "Karolo e ommeng ya dijo e jewang ke dikgomo tse hlahisang lebese; eseng boima ba dijo tse foreshe.",
+      "ts": "Xiphemu xo oma xa swakudya lexi dyiwaka hi tihomu leti humesaka masi; ku nga ri ntiko wa swakudya leswintshwa.",
+      "ve": "Tshipiḓa tsho omaho tsha zwiḽiwa tshi ḽiwaho nga kholomo dzi re na mafhi; hu si tshileme tsha zwiḽiwa zwi re zwiswa.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Lactating Holstein-type cow reference; heat and animal stage affect demand.",
+      "zu": "Isikhombo senkomazi yohlobo lwe-Holstein ekhiqiza ubisi; ukushisa nesigaba sokuphila sesilwane kuthinta isidingo.",
+      "st": "Tshupiso ya kgomo ya mofuta wa Holstein e hlahisang lebese; motjheso le mokgahlelo wa bophelo ba phoofolo di ama tlhoko.",
+      "ts": "Xikombo xa homu ya muxaka wa Holstein leyi humesaka masi; ku hisa ni xiyimo xa ku kula xa xifuwo swi khumba xilaveko.",
+      "ve": "Tshikombo tsha kholomo ya lushaka lwa Holstein i re na mafhi; mufhiso na ḽiga ḽa vhutshilo ha tshipuka zwi kwama ṱhoḓea.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Commercial industry reference at slaughter; not a household flock forecast.",
+      "zu": "Isikhombo somkhakha wezokuhweba ngesikhathi sokuhlatshwa; akusona isibikezelo somhlambi wasekhaya.",
+      "st": "Tshupiso ya indasteri ya kgwebo nakong ya ho hlajwa; ha se ponelopele ya mohlape wa lelapa.",
+      "ts": "Xikombo xa indasitiri ya mabindzu loko ku tlhaviwa; a hi mvhumbo wa ntlhambi wa le kaya.",
+      "ve": "Tshikombo tsha sekhithara ya mabindu nga tshifhinga tsha u ṱhavhiwa; a si mbonelaphanḓa ya muṱambi wa muḓini.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Village-chicken reference from dry and wet KZN environments.",
+      "zu": "Isikhombo sezinkukhu zasemakhaya ezindaweni ezomile nezimanzi zase-KZN.",
+      "st": "Tshupiso ya dikgoho tsa metseng tse tswang dibakeng tse ommeng le tse mongobo tsa KZN.",
+      "ts": "Xikombo xa tihuku ta miganga eka tindhawu to oma ni to tsakama ta KZN.",
+      "ve": "Tshikombo tsha khuhu dza mahayani kha vhupo ho omaho na ho ṋukalaho ha KZN.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Commercial laying-cycle reference; not eggs per year.",
+      "zu": "Isikhombo somjikelezo wokuzalela wezokuhweba; akuwona amaqanda ngonyaka.",
+      "st": "Tshupiso ya potoloho ya ho behela mahe ya kgwebo; eseng mahe ka selemo.",
+      "ts": "Xikombo xa ndzhendzeleko wo tshikela wa mabindzu; ku nga ri matandza hi lembe.",
+      "ve": "Tshikombo tsha mutevhe wa u kudzela makumba wa mabindu; hu si makumba nga ṅwaha.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Bird age from hatch; not time after buying point-of-lay birds.",
+      "zu": "Ubudala benkukhu kusukela ekuchanyuselweni; akusona isikhathi ngemva kokuthenga izikhukhukazi ezisondela ekuzaleleni.",
+      "st": "Dilemo tsa kgogo ho tloha ho qhotsweng; eseng nako ka mora ho reka dikgoho tse haufi le ho qala ho behela.",
+      "ts": "Vukhale bya huku ku sukela eku tlhotlhoriweni; ku nga ri nkarhi endzhaku ka ku xava tihuku leti nga kusuhi ni ku sungula ku tshikela.",
+      "ve": "Miṅwaha ya khuhu u bva kha u thothonya; hu si tshifhinga nga murahu ha u renga khuhu dzi re tsini na u thoma u kudzela.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Commercial-system reference; confirm a suitable ration locally.",
+      "zu": "Isikhombo sohlelo lwezokuhweba; qinisekisa isabelo sokudla esifanele endaweni.",
+      "st": "Tshupiso ya mokgwa wa kgwebo; netefatsa tekanyo e loketseng ya dijo sebakeng sa heno.",
+      "ts": "Xikombo xa fambiselo ra mabindzu; tiyisisa mpimo wa swakudya lowu faneleke laha kaya.",
+      "ve": "Tshikombo tsha maitele a mabindu; khwaṱhisedzani mugavho wa zwiḽiwa wo teaho henefho.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Commercial reference under normal conditions; water must stay available.",
+      "zu": "Isikhombo sezokuhweba ngaphansi kwezimo ezijwayelekile; amanzi kufanele ahlale etholakala.",
+      "st": "Tshupiso ya kgwebo tlasa maemo a tlwaelehileng; metsi a tshwanetse ho dula a fumaneha.",
+      "ts": "Xikombo xa mabindzu eka swiyimo swa ntolovelo; mati ya fanele ku tshamela ku va kona.",
+      "ve": "Tshikombo tsha mabindu kha nyimele dzo ḓoweleaho; maḓi a tea u dzula a tshi wanala.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Indoor house space with suitable perches; not outdoor ranging space.",
+      "zu": "Indawo yangaphakathi endlini enamapulangwe afanele okuhlala izinkukhu; akusona isikhala sangaphandle sokuzihambela.",
+      "st": "Sebaka sa ka tlung se nang le dithupa tse loketseng tsa ho dula; eseng sebaka sa kantle sa ho itsamaela.",
+      "ts": "Ndhawu ya le ndzeni ka yindlu leyi nga ni tindhawu leti faneleke to khokhumela; ku nga ri ndhawu ya le handle yo fambafamba.",
+      "ve": "Tshikhala tsha nḓuni tshi re na fhethu ho teaho ha u dzula ha khuhu; hu si tshikhala tsha nnḓa tsha u tshimbila.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Non-South African study reference; live weight, not meat weight.",
+      "zu": "Isikhombo socwaningo olungelona olwaseNingizimu Afrika; isisindo sesilwane siphila, hhayi isisindo senyama.",
+      "st": "Tshupiso ya phuputso e seng ya Afrika Borwa; boima ba phoofolo e phelang, eseng boima ba nama.",
+      "ts": "Xikombo xa ndzavisiso lowu nga riki wa Afrika-Dzonga; ntiko wa xifuwo lexi hanyaka, ku nga ri ntiko wa nyama.",
+      "ve": "Tshikombo tsha ṱhoḓisiso i si ya Afrika Tshipembe; tshileme tsha tshipuka tshi tshilaho, hu si tshileme tsha ṋama.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Outdoor free-range space in the study; not indoor housing space.",
+      "zu": "Isikhala sangaphandle sokuzihambela ocwaningweni; akusona isikhala sendlu yangaphakathi.",
+      "st": "Sebaka sa kantle sa ho itsamaela phuputsong; eseng sebaka sa bodulo ba ka tlung.",
+      "ts": "Ndhawu ya le handle yo fambafamba eka ndzavisiso; ku nga ri ndhawu ya le ndzeni ka yindlu.",
+      "ve": "Tshikhala tsha nnḓa tsha u tshimbila kha ṱhoḓisiso; hu si tshikhala tsha vhudzulo ha nḓuni.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Harvest weight per Mozambique tilapia; not yield per pond.",
+      "zu": "Isisindo lapho kuvunwa i-Mozambique tilapia ngayinye; akusona isivuno sechibi ngalinye.",
+      "st": "Boima ba kotulo ka Mozambique tilapia; eseng tlhahiso ka letamo.",
+      "ts": "Ntiko wa ntshovelo hi Mozambique tilapia; ku nga ri ntshovelo hi xidziva.",
+      "ve": "Tshileme tsha khaṋo nga Mozambique tilapia; hu si khaṋo nga dzivha.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Mozambique tilapia grow-out reference; confirm starting stock and water conditions.",
+      "zu": "Isikhombo sokukhulisa i-Mozambique tilapia kuze kuvunwe; qinisekisa izinhlanzi zokuqala nezimo zamanzi.",
+      "st": "Tshupiso ya ho hodisa Mozambique tilapia ho fihlela kotulong; netefatsa ditlhapi tsa ho qala le maemo a metsi.",
+      "ts": "Xikombo xa ku kurisa Mozambique tilapia ku fika eka ntshovelo; tiyisisa tinhlampfi to sungula ni swiyimo swa mati.",
+      "ve": "Tshikombo tsha u alusa Mozambique tilapia u swika kha khaṋo; khwaṱhisedzani khovhe dza u thoma na nyimele dza maḓi.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Milk-recorded Saanen herds, per lactation; not an annual total.",
+      "zu": "Imihlambi yama-Saanen erekhodelwa ubisi, ngesikhathi ngasinye sokukhiqiza ubisi; hhayi isamba sonyaka.",
+      "st": "Mehlape ya Saanen eo lebese la yona le rekotwang, ka nako ka nngwe ya tlhahiso ya lebese; eseng kakaretso ya selemo.",
+      "ts": "Mitlhambi ya Saanen leyi masi ya yona ya rhekhodiwaka, eka nkarhi wun’wana ni wun’wana wo humesa masi; ku nga ri ntsengo wa lembe.",
+      "ve": "Miṱambi ya Saanen ine mafhi ayo a rekhodiwa, nga tshifhinga tshiṅwe na tshiṅwe tsha u bveledza mafhi; hu si ṱhanganyelo ya ṅwaha.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Age at first kidding; not age of the first weaned kids.",
+      "zu": "Ubudala lapho izala izinyane lokuqala; akubona ubudala bamazinyane okuqala aseyekiswe ubisi.",
+      "st": "Dilemo ha e tswala ledinyane la pele; eseng dilemo tsa madinyane a pele a kgwesitsweng.",
+      "ts": "Vukhale loko yi tswala ximbutani xo sungula; ku nga ri vukhale bya swimbutani swo sungula leswi lumuriweke.",
+      "ve": "Miṅwaha musi i tshi beba tshibudzana tsha u thoma; hu si miṅwaha ya zwibudzana zwa u thoma zwo lumulwaho.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Extensive Boer-goat reference for kids weaned; not meat weight.",
+      "zu": "Isikhombo sezimbuzi ze-Boer ezifuywa emadlelweni abanzi samazinyane aseyekiswe ubisi; hhayi isisindo senyama.",
+      "st": "Tshupiso ya dipodi tsa Boer tse ruwang makgulong a maholo bakeng sa madinyane a kgwesitsweng; eseng boima ba nama.",
+      "ts": "Xikombo xa timbuti ta Boer leti fuyiwaka emadyelweni yo anama xa swimbutani leswi lumuriweke; ku nga ri ntiko wa nyama.",
+      "ve": "Tshikombo tsha mbudzi dza Boer dzi fuwaho mafuloni mahulwane tsha zwibudzana zwo lumulwaho; hu si tshileme tsha ṋama.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Pregnant and lactating sow reference; not a rate for growing pigs.",
+      "zu": "Isikhombo sezingulube zezinsikazi ezikhulelwe nezincelisayo; akulona izinga lezingulube ezisakhulayo.",
+      "st": "Tshupiso ya dikolobe tse tshehadi tse emereng le tse anyesang; eseng tekanyo ya dikolobe tse ntseng di hola.",
+      "ts": "Xikombo xa tinguluve ta xisati leti bihaka emirini ni leti mamisaka; ku nga ri mpimo wa tinguluve leti ha kulaka.",
+      "ve": "Tshikombo tsha nguluvhe dza tsadzi dzi re mirini na dzi mamisaho; hu si mpimo wa nguluvhe dzi kha ḓi aluwaho.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "FAO backyard-system reference; not a South African farm forecast.",
+      "zu": "Isikhombo se-FAO sohlelo lwasegcekeni; akusona isibikezelo sepulazi laseNingizimu Afrika.",
+      "st": "Tshupiso ya FAO ya mokgwa wa ka jareteng; ha se ponelopele ya polasi ya Afrika Borwa.",
+      "ts": "Xikombo xa FAO xa fambiselo ra le jarateni; a hi mvhumbo wa purasi ra Afrika-Dzonga.",
+      "ve": "Tshikombo tsha FAO tsha maitele a muḓini; a si mbonelaphanḓa ya bulasi ya Afrika Tshipembe.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "French intensive commercial reference; not a backyard-doe lifespan.",
+      "zu": "Isikhombo saseFrance sohlelo lokuhweba olunokufuya okuqinile; akusona isikhathi sokuphila sikanogwaja wensikazi wasegcekeni.",
+      "st": "Tshupiso ya kgwebo e matla ya Fora; eseng bolele ba bophelo ba mmutla o tshehadi wa ka jareteng.",
+      "ts": "Xikombo xa mabindzu lama fuweke hi ndlela yo tiyisisa ya le Furwa; ku nga ri nkarhi wa ku hanya wa mpfundla wa xisati wa le jarateni.",
+      "ve": "Tshikombo tsha mabindu a maitele a u fuwa nga vhunzhi tsha Furansi; hu si tshifhinga tsha vhutshilo ha muvhuḓa wa tsadzi wa muḓini.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Hutch cage for one breeding adult; not floor space for a group.",
+      "zu": "Ikheji lendlu kanogwaja elilodwa lesilwane esidala esizalisayo; akusona isikhala saphansi seqembu.",
+      "st": "Lesaka la ntlo ya mmutla bakeng sa phoofolo e le nngwe e kgolo ya ho ikatisa; eseng sebaka sa fatshe sa sehlopha.",
+      "ts": "Kheji ra yindlu ya mpfundla wa wun’we lowukulu wo tswalisa; ku nga ri ndhawu ya le hansi ya ntlawa.",
+      "ve": "Kheidzhi ya nnḓu ya muvhuḓa muthihi wo no aluwaho wa u bebisa; hu si tshikhala tsha fhasi tsha tshigwada.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Farmer-reported lambs born; not lambs weaned or meat weight.",
+      "zu": "Amazinyane ezimvu azelwe abikwe abalimi; akuwona aseyekiswe ubisi noma isisindo senyama.",
+      "st": "Madinyane a dinku a tswetsweng a tlalehilweng ke balemi; eseng a kgwesitsweng kapa boima ba nama.",
+      "ts": "Swinyimpfana leswi tswariweke leswi vikiweke hi varimi; ku nga ri leswi lumuriweke kumbe ntiko wa nyama.",
+      "ve": "Zwingu zwo bebwaho zwo vhigiwaho nga vhalimi; hu si zwo lumulwaho kana tshileme tsha ṋama.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Semi-arid Merino reference; pasture and management affect the clip.",
+      "zu": "Isikhombo sama-Merino ezindaweni ezomile kancane; amadlelo nokuphathwa kuthinta uboya obugundwayo.",
+      "st": "Tshupiso ya Merino ya dibaka tse batlang di omme; makgulo le taolo di ama boya bo kutwang.",
+      "ts": "Xikombo xa Merino eka tindhawu leti omeke hi mpimo; madyelo ni vulawuri swi khumba voya leyi tsemiwaka.",
+      "ve": "Tshikombo tsha Merino tsha fhethu hu re na u oma ha vhukati; mafulo na ndangulo zwi kwama vhukuse vhu gerwaho.",
+      "generatedScope": "animal-control-qualifier"
+    },
+    {
+      "english": "Commercial dairy processors require an even year-round milk supply. This is a herd supply reference, not year-round milk from each cow. Confirm your farm's calving and milking months.",
+      "zu": "Abacubunguli bobisi bezokuhweba badinga ubisi olutholakala ngokulinganayo unyaka wonke. Lesi yisikhombo sokunikezwa ubisi komhlambi, hhayi ubisi lonyaka wonke lwenkomazi ngayinye. Qinisekisa izinyanga zokuzala nokusenga epulazini lakho.",
+      "st": "Basebetsi ba kgwebo ba sebetsanang le lebese ba hloka phepelo e lekanang ya lebese selemo sohle. Ena ke tshupiso ya phepelo ya mohlape, eseng lebese la selemo sohle la kgomo ka nngwe. Netefatsa dikgwedi tsa ho tswala le ho hama tsa polasi ya hao.",
+      "ts": "Vabindzu lava lulamisaka masi va lava mphakelo lowu ringanaka wa masi lembe hinkwaro. Lexi i xikombo xa mphakelo wa ntlhambi, ku nga ri masi ya lembe hinkwaro eka homu yin’wana ni yin’wana. Tiyisisa tin’hweti ta ku tswala ni ku senga eka purasi ra wena.",
+      "ve": "Vhabveledzi vha u shuma nga mafhi vha mabindu vha ṱoḓa mphakelo wa mafhi u linganaho ṅwaha woṱhe. Hetshi ndi tshikombo tsha mphakelo wa muṱambi, hu si mafhi a ṅwaha woṱhe a kholomo iṅwe na iṅwe. Khwaṱhisedzani miṅwedzi ya u beba na u hama ya bulasi yaṋu.",
+      "generatedScope": "animal-control-season"
+    },
+    {
+      "english": "With a constant 14–16 hour light day, commercial hens keep laying at a high rate all year.",
+      "zu": "Uma ukukhanya kosuku kugcinwa kumahora angu-14–16 njalo, izikhukhukazi zezokuhweba ziqhubeka nokuzalela ngezinga eliphezulu unyaka wonke.",
+      "st": "Ka letsatsi la kganya le sa fetoheng la dihora tse 14–16, dikgoho tsa mahe tsa kgwebo di tswela pele ho behela ka tekanyo e phahameng selemo sohle.",
+      "ts": "Loko siku ra ku voninga ri hlayisiwa ri ri 14–16 wa tiawara nkarhi na nkarhi, tihuku ta matandza ta mabindzu ti ya mahlweni ti tshikela hi mpimo wa le henhla lembe hinkwaro.",
+      "ve": "Nga ḓuvha ḽa tshedza ḽi dzulaho ḽi awara dza 14–16, khuhu dza makumba dza mabindu dzi bvela phanḓa na u kudzela nga mpimo wa nṱha ṅwaha woṱhe.",
+      "generatedScope": "animal-control-season"
+    },
+    {
+      "english": "Winter water temperatures halt tilapia growth over most of South Africa; only the sub-tropical North-East supports year-round unheated grow-out.",
+      "zu": "Amazinga okushisa amanzi ebusika amisa ukukhula kwe-tilapia ezingxenyeni eziningi zeNingizimu Afrika; yiNyakatho-Mpumalanga eshisayo kancane kuphela evumela ukukhulisa unyaka wonke ngaphandle kokufudumeza amanzi.",
+      "st": "Motjheso wa metsi mariha o emisa kgolo ya tilapia dibakeng tse ngata tsa Afrika Borwa; ke Leboya-Botjhabela la boemo bo mofuthu ba subtropical feela le dumellang ho hodisa selemo sohle ntle le ho futhumatsa metsi.",
+      "ts": "Mahiselo ya mati hi xixika ya yimisa ku kula ka tilapia eka tindhawu to tala ta Afrika-Dzonga; i N’walungu-Vuxa ya subtropical ntsena leyi pfumelelaka ku kurisa lembe hinkwaro handle ko kufumeta mati.",
+      "ve": "Mufhiso wa maḓi vhuria u imisa u aluwa ha tilapia kha vhunzhi ha Afrika Tshipembe; ndi devhula-vhubvaḓuvha ḽa subtropical fhedzi ḽi tendelaho u alusa ṅwaha woṱhe hu sa fhisedzwi maḓi.",
+      "generatedScope": "animal-control-season"
+    },
+    {
+      "english": "In this South African Saanen milk-recording study, does kidding in spring had the highest average lactation milk yield. Table 1 defines spring as August–October for this study. These are kidding-season categories, not confirmed milk collection months.",
+      "zu": "Kulolu cwaningo lwaseNingizimu Afrika lokurekhoda ubisi lwama-Saanen, izinsikazi ezazizala entwasahlobo zazinesivuno sobisi esiyisilinganiso esiphezulu kakhulu ngesikhathi sokukhiqiza ubisi. Ithebula 1 lichaza intwasahlobo njengo-Agasti–Okthoba kulolu cwaningo. Lezi yizigaba zesikhathi sonyaka sokuzala amazinyane, hhayi izinyanga eziqinisekisiwe zokuqoqwa kobisi.",
+      "st": "Phuputsong ena ya Afrika Borwa ya ho rekota lebese la Saanen, dipodi tse tshehadi tse neng di tswala nakong ya selemo di ne di na le karolelano e phahameng ka ho fetisisa ya lebese nakong ya tlhahiso ya lebese. Tafole 1 e hlalosa selemo e le Phata–Mphalane bakeng sa phuputso ena. Tsena ke dikarolo tsa dihla tsa ho tswala, eseng dikgwedi tse netefaditsweng tsa ho bokella lebese.",
+      "ts": "Eka ndzavisiso lowu wa Afrika-Dzonga wo rhekhoda masi ya Saanen, timbuti ta xisati leti tswaleke hi ximun’wana a ti ri ni avhareji ya le henhla swinene ya masi eka nkarhi wo humesa masi. Tafula 1 ri hlamusela ximun’wana tani hi Mhawuri–Nhlangula eka ndzavisiso lowu. Leswi i swiyenge swa nguva yo tswala, ku nga ri tin’hweti leti tiyisisiweke to hlengeleta masi.",
+      "ve": "Kha ṱhoḓisiso iyi ya Afrika Tshipembe ya u rekhoda mafhi a Saanen, mbudzi dza tsadzi dzo bebaho luṱavula dzo vha na avhareji ya nṱhesa ya mafhi kha tshifhinga tsha u bveledza mafhi. Thebuḽu 1 i ṱalusa luṱavula sa Ṱhangule–Tshimedzi kha iyi ṱhoḓisiso. Hezwi ndi zwigwada zwa khalaṅwaha dza u beba zwibudzana, hu si miṅwedzi yo khwaṱhisedzwaho ya u kuvhanganya mafhi.",
+      "generatedScope": "animal-control-season"
+    },
+    {
+      "english": "Breeding is not controlled and happens all year, but in one Mpumalanga communal study kidding rates were highest in autumn (96%) and spring (93%), lower in winter (63%) and nil in summer.",
+      "zu": "Ukuzalanisa akulawulwa futhi kwenzeka unyaka wonke, kodwa ocwaningweni olulodwa lomphakathi eMpumalanga amazinga okuzala amazinyane ayephakeme kakhulu ekwindla (96%) nasentwasahlobo (93%), ephansi ebusika (63%) futhi kungekho ehlobo.",
+      "st": "Ho ikatisa ha ho laolwe mme ho etsahala selemo sohle, empa phuputsong e le nngwe ya kopanelo Mpumalanga ditekanyo tsa ho tswala di ne di phahame ka ho fetisisa ka hwetla (96%) le nakong ya selemo (93%), di le tlase mariha (63%) mme ho se na ho tswala lehlabula.",
+      "ts": "Ku tswalisa a ku lawuriwi naswona ku humelela lembe hinkwaro, kambe eka ndzavisiso wun’we wa miganga eMpumalanga mimpimo ya ku tswala a yi ri ya le henhla swinene hi xixikana (96%) ni ximun’wana (93%), yi ri ehansi hi xixika (63%) naswona ku nga ri na ku tswala hi ximumu.",
+      "ve": "U bebisa a hu langwi nahone hu itea ṅwaha woṱhe, fhedzi kha ṱhoḓisiso nthihi ya tshitshavha ngei Mpumalanga mipimo ya u beba zwibudzana yo vha ya nṱhesa tshifhefho (96%) na luṱavula (93%), ya fhasi vhuria (63%) nahone hu si na u beba tshilimo.",
+      "generatedScope": "animal-control-season"
+    },
+    {
+      "english": "Breeding/kidding is not confined to one season - Boer does kid throughout the year - but kidding is concentrated in three peaks: March-April, June-July and September-October, with an overall peak in autumn.",
+      "zu": "Ukuzalanisa nokuzala amazinyane akugcini esikhathini sonyaka esisodwa - izinsikazi ze-Boer zizala unyaka wonke - kodwa ukuzala kugxila ezikhathini ezintathu eziphakeme: Mashi–Ephreli, Juni–Julayi noSepthemba–Okthoba, kanti inani eliphakeme kakhulu lilonke lisekwindla.",
+      "st": "Ho ikatisa le ho tswala ha ho felle sehleng se le seng - dipodi tse tshehadi tsa Boer di tswala selemo sohle - empa ho tswala ho bokellana dinakong tse tharo tse phahameng: Hlakubele–Mmesa, Phupjane–Phupu le Leotshe–Mphalane, mme tlhoro ka kakaretso e ka hwetla.",
+      "ts": "Ku tswalisa ni ku tswala a swi pimiwi eka nguva yin’we - timbuti ta xisati ta Boer ti tswala lembe hinkwaro - kambe ku tswala ku tala eka tinhlohlorhi tinharhu: Nyenyankulu–Dzivamisoko, Khotavuxika–Mawuwani na Ndzhati–Nhlangula, ni nhlohlorhi ya le henhla hi ku angarhela hi xixikana.",
+      "ve": "U bebisa na u beba zwibudzana a zwi gumi kha khalaṅwaha nthihi - mbudzi dza tsadzi dza Boer dzi beba ṅwaha woṱhe - fhedzi u beba hu ḓalesa nga zwifhinga zwiraru: Ṱhafamuhwe–Lambamai, Fulwi–Fulwana na Khubvumedzi–Tshimedzi, hu na ṱhora ḽa u angaredza tshifhefho.",
+      "generatedScope": "animal-control-season"
+    },
+    {
+      "english": "In hot, humid wet-season conditions rabbit reproduction rates fall; artificial lighting in managed hutches can largely offset this.",
+      "zu": "Ezimweni ezishisayo nezinomswakama zesikhathi semvula, amazinga okuzala onogwaja ayehla; ukukhanyisa okwenziwayo ezindlini zonogwaja ezinakekelwayo kungakunciphisa kakhulu lokhu kwehla.",
+      "st": "Maemong a tjhesang le a mongobo a sehla sa dipula, ditekanyo tsa ho ikatisa ha mebutla di a theoha; kganya ya maiketsetso matlong a laolwang e ka fokotsa ho theoha hona haholo.",
+      "ts": "Eka swiyimo swo hisa ni ku tsakama swa nguva ya timpfula mimpimo ya ku tswalana ka mimpfundla ya hunguteka; ku voninga loku endliweke hi vanhu etindlwini leti lawuriwaka ku nga hunguta ku wa loku hi mpimo lowukulu.",
+      "ve": "Kha nyimele dza mufhiso na muṋuṋu wa nṱha dza khalaṅwaha ya mvula mipimo ya u bebana ha mivhuḓa i a fhungudzea; tshedza tsha u itelwa kha nnḓu dzi langwaho tshi nga fhungudza u wa uhu nga maanḓa.",
+      "generatedScope": "animal-control-season"
+    },
+    {
+      "english": "Nationally sheep are shorn from around end-July to mid-May (aggregate across sheds); many farms now shear every 6-8 months rather than once a year.",
+      "zu": "Kuzwelonke izimvu zigundwa kusukela ngasekupheleni kukaJulayi kuya maphakathi noMeyi (izindawo zokugunda zihlanganisiwe); amapulazi amaningi manje agunda njalo ezinyangeni ezingu-6-8 kunokuba kube kanye ngonyaka.",
+      "st": "Naheng ka kakaretso dinku di kutwa ho tloha mafelong a Phupu ho isa bohareng ba Motsheanong (ho kopantswe dibaka tsa ho kuta); mapolasi a mangata jwale a kuta ka mora dikgwedi tse 6-8 ho ena le hang ka selemo.",
+      "ts": "Etikweni hinkwaro tinyimpfu ti tsemiwa voya ku sukela kwalomu ka ku hela ka Mawuwani ku fika eka xikari xa Mudyaxihi (tindhawu to tsema ti katsiwile); mapurasi yo tala sweswi ya tsema endzhaku ka 6-8 wa tin’hweti ematshan’weni ya kan’we hi lembe.",
+      "ve": "Kha lushaka nngu dzi gerwa u bva tsini na magumo a Fulwana u swika vhukati ha Shundunthule (hu tshi ṱanganyiswa fhethu ha u gera); bulasi nnzhi zwino dzi gera nga murahu ha miṅwedzi ya 6-8 hu si luthihi nga ṅwaha.",
+      "generatedScope": "animal-control-season"
+    },
+    {
+      "english": "Feed per hive",
+      "zu": "Ukudla ngesidleke sezinyosi",
+      "st": "Dijo ka ntlo ya dinotshi",
+      "ts": "Swakudya hi yindlu ya tinyoxi",
+      "ve": "Zwiḽiwa nga muṱa wa ṋotshi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Water per hive",
+      "zu": "Amanzi ngesidleke sezinyosi",
+      "st": "Metsi ka ntlo ya dinotshi",
+      "ts": "Mati hi yindlu ya tinyoxi",
+      "ve": "Maḓi nga muṱa wa ṋotshi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Space per hive",
+      "zu": "Indawo ngesidleke sezinyosi",
+      "st": "Sebaka ka ntlo ya dinotshi",
+      "ts": "Ndhawu hi yindlu ya tinyoxi",
+      "ve": "Tshikhala nga muṱa wa ṋotshi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Feed per cow",
+      "zu": "Ukudla ngenkomazi",
+      "st": "Dijo ka kgomo e tshehadi",
+      "ts": "Swakudya hi homu ya xisati",
+      "ve": "Zwiḽiwa nga kholomo ya tsadzi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Water per cow",
+      "zu": "Amanzi ngenkomazi",
+      "st": "Metsi ka kgomo e tshehadi",
+      "ts": "Mati hi homu ya xisati",
+      "ve": "Maḓi nga kholomo ya tsadzi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Space per cow",
+      "zu": "Indawo ngenkomazi",
+      "st": "Sebaka ka kgomo e tshehadi",
+      "ts": "Ndhawu hi homu ya xisati",
+      "ve": "Tshikhala nga kholomo ya tsadzi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Feed per broiler",
+      "zu": "Ukudla ngenkukhu yenyama",
+      "st": "Dijo ka kgogo ya nama",
+      "ts": "Swakudya hi huku ya nyama",
+      "ve": "Zwiḽiwa nga khuhu ya ṋama",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Water per broiler",
+      "zu": "Amanzi ngenkukhu yenyama",
+      "st": "Metsi ka kgogo ya nama",
+      "ts": "Mati hi huku ya nyama",
+      "ve": "Maḓi nga khuhu ya ṋama",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Space per broiler",
+      "zu": "Indawo ngenkukhu yenyama",
+      "st": "Sebaka ka kgogo ya nama",
+      "ts": "Ndhawu hi huku ya nyama",
+      "ve": "Tshikhala nga khuhu ya ṋama",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Feed per hen",
+      "zu": "Ukudla ngesikhukhukazi",
+      "st": "Dijo ka kgogo e tshehadi",
+      "ts": "Swakudya hi huku ya xisati",
+      "ve": "Zwiḽiwa nga khuhu ya tsadzi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Water per hen",
+      "zu": "Amanzi ngesikhukhukazi",
+      "st": "Metsi ka kgogo e tshehadi",
+      "ts": "Mati hi huku ya xisati",
+      "ve": "Maḓi nga khuhu ya tsadzi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Space per hen",
+      "zu": "Indawo ngesikhukhukazi",
+      "st": "Sebaka ka kgogo e tshehadi",
+      "ts": "Ndhawu hi huku ya xisati",
+      "ve": "Tshikhala nga khuhu ya tsadzi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Feed per bird",
+      "zu": "Ukudla ngenyoni",
+      "st": "Dijo ka nonyana",
+      "ts": "Swakudya hi nyenyana",
+      "ve": "Zwiḽiwa nga tshiṋoni",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Water per bird",
+      "zu": "Amanzi ngenyoni",
+      "st": "Metsi ka nonyana",
+      "ts": "Mati hi nyenyana",
+      "ve": "Maḓi nga tshiṋoni",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Space per bird",
+      "zu": "Indawo ngenyoni",
+      "st": "Sebaka ka nonyana",
+      "ts": "Ndhawu hi nyenyana",
+      "ve": "Tshikhala nga tshiṋoni",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Feed per fish",
+      "zu": "Ukudla ngenhlanzi",
+      "st": "Dijo ka tlhapi",
+      "ts": "Swakudya hi nhlampfi",
+      "ve": "Zwiḽiwa nga khovhe",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Water per fish",
+      "zu": "Amanzi ngenhlanzi",
+      "st": "Metsi ka tlhapi",
+      "ts": "Mati hi nhlampfi",
+      "ve": "Maḓi nga khovhe",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Space per fish",
+      "zu": "Indawo ngenhlanzi",
+      "st": "Sebaka ka tlhapi",
+      "ts": "Ndhawu hi nhlampfi",
+      "ve": "Tshikhala nga khovhe",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Feed per doe",
+      "zu": "Ukudla ngensikazi",
+      "st": "Dijo ka phoofolo e tshehadi",
+      "ts": "Swakudya hi xifuwo xa xisati",
+      "ve": "Zwiḽiwa nga tshipuka tsha tsadzi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Water per doe",
+      "zu": "Amanzi ngensikazi",
+      "st": "Metsi ka phoofolo e tshehadi",
+      "ts": "Mati hi xifuwo xa xisati",
+      "ve": "Maḓi nga tshipuka tsha tsadzi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Space per doe",
+      "zu": "Indawo ngensikazi",
+      "st": "Sebaka ka phoofolo e tshehadi",
+      "ts": "Ndhawu hi xifuwo xa xisati",
+      "ve": "Tshikhala nga tshipuka tsha tsadzi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Feed per sow",
+      "zu": "Ukudla ngengulube yensikazi",
+      "st": "Dijo ka kolobe e tshehadi",
+      "ts": "Swakudya hi nguluve ya xisati",
+      "ve": "Zwiḽiwa nga nguluvhe ya tsadzi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Water per sow",
+      "zu": "Amanzi ngengulube yensikazi",
+      "st": "Metsi ka kolobe e tshehadi",
+      "ts": "Mati hi nguluve ya xisati",
+      "ve": "Maḓi nga nguluvhe ya tsadzi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Space per sow",
+      "zu": "Indawo ngengulube yensikazi",
+      "st": "Sebaka ka kolobe e tshehadi",
+      "ts": "Ndhawu hi nguluve ya xisati",
+      "ve": "Tshikhala nga nguluvhe ya tsadzi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Feed per ewe",
+      "zu": "Ukudla ngemvu yensikazi",
+      "st": "Dijo ka nku e tshehadi",
+      "ts": "Swakudya hi nyimpfu ya xisati",
+      "ve": "Zwiḽiwa nga nngu ya tsadzi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Water per ewe",
+      "zu": "Amanzi ngemvu yensikazi",
+      "st": "Metsi ka nku e tshehadi",
+      "ts": "Mati hi nyimpfu ya xisati",
+      "ve": "Maḓi nga nngu ya tsadzi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Space per ewe",
+      "zu": "Indawo ngemvu yensikazi",
+      "st": "Sebaka ka nku e tshehadi",
+      "ts": "Ndhawu hi nyimpfu ya xisati",
+      "ve": "Tshikhala nga nngu ya tsadzi",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Feed per sheep",
+      "zu": "Ukudla ngemvu",
+      "st": "Dijo ka nku",
+      "ts": "Swakudya hi nyimpfu",
+      "ve": "Zwiḽiwa nga nngu",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Water per sheep",
+      "zu": "Amanzi ngemvu",
+      "st": "Metsi ka nku",
+      "ts": "Mati hi nyimpfu",
+      "ve": "Maḓi nga nngu",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "Space per sheep",
+      "zu": "Indawo ngemvu",
+      "st": "Sebaka ka nku",
+      "ts": "Ndhawu hi nyimpfu",
+      "ve": "Tshikhala nga nngu",
+      "generatedScope": "animal-control-fact-caption"
+    },
+    {
+      "english": "South Africa (commercial and small-commercial dairy, general)",
+      "zu": "INingizimu Afrika (ukukhiqiza ubisi kwezokuhweba nokwezokuhweba okuncane, jikelele)",
+      "st": "Afrika Borwa (tlhahiso ya lebese ya kgwebo le ya kgwebo e nyane, ka kakaretso)",
+      "ts": "Afrika-Dzonga (vuhumelerisi bya masi bya mabindzu ni bya mabindzu lamatsongo, hi ku angarhela)",
+      "ve": "Afrika Tshipembe (vhubveledzi ha mafhi ha mabindu na ha mabindu maṱuku, nga u angaredza)",
+      "generatedScope": "animal-control-source-region"
+    },
+    {
+      "english": "SA commercial houses with 14–16 h lighting",
+      "zu": "Izindlu zezokuhweba zaseNingizimu Afrika ezinokukhanyisa okungu-14–16 h",
+      "st": "Matlo a kgwebo a Afrika Borwa a nang le kganya ya 14–16 h",
+      "ts": "Tindlu ta mabindzu ta Afrika-Dzonga leti nga ni ku voninga ka 14–16 h",
+      "ve": "Nnḓu dza mabindu dza Afrika Tshipembe dzi re na tshedza tsha 14–16 h",
+      "generatedScope": "animal-control-source-region"
+    },
+    {
+      "english": "North-Eastern South Africa (sub-tropical climate, unheated water)",
+      "zu": "INyakatho-Mpumalanga yeNingizimu Afrika (isimo sezulu esishisayo kancane se-subtropical, amanzi angafudunyezwa)",
+      "st": "Leboya-Botjhabela la Afrika Borwa (boemo ba lehodimo ba subtropical, metsi a sa futhumatswang)",
+      "ts": "N’walungu-Vuxa wa Afrika-Dzonga (maxelo ya subtropical, mati lama nga kufumetiwangiki)",
+      "ve": "Devhula-vhubvaḓuvha ḽa Afrika Tshipembe (kilima ya subtropical, maḓi a sa fhisedzwaho)",
+      "generatedScope": "animal-control-source-region"
+    },
+    {
+      "english": "South Africa (national wool industry aggregate, all shearing sheds/regions combined)",
+      "zu": "INingizimu Afrika (umkhakha woboya kazwelonke uhlanganisiwe, zonke izindawo zokugunda nezifunda zihlanganiswe ndawonye)",
+      "st": "Afrika Borwa (kakaretso ya indasteri ya boya ya naha, dibaka tsohle tsa ho kuta le dibaka tsa naha di kopantswe)",
+      "ts": "Afrika-Dzonga (nhlengeleto wa indasitiri ya voya ya tiko, tindhawu hinkwato to tsema voya ni swifundzha swi katsiwile)",
+      "ve": "Afrika Tshipembe (ṱhanganyelo ya sekhithara ya vhukuse ya lushaka, fhethu hoṱhe ha u gera na madzingu o ṱanganyiswa)",
+      "generatedScope": "animal-control-source-region"
     }
   ],
   "preservation": "Default English, private and recorded values, task/event identities, dates, source figures/units, source URLs and farming gates retain immutable original comparisons. No species facts or saved geometry changed; new language remains unreviewed.",
@@ -9357,7 +10453,7 @@
     ]
   },
   "deliveryScope": "Calendar, field, buying, task, plan/dashboard summaries, ICS and generated food-calendar presentation:495 sources. Separate graph/projection/guidance descendants continue production work. This changes the picture; PLAN_VERSION is unchanged. Whole-app goal remains active.",
-  "sourceCount": 1206,
+  "sourceCount": 1343,
   "initialFullSuite": {
     "files": 563,
     "passed": 5770,

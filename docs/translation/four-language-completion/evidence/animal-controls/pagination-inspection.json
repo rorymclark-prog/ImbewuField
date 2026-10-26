@@ -1,0 +1,78 @@
+{
+  "rows": [
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "careFieldsOnSinglePages": 28,
+      "seasonalManagementParagraphs": [
+        {
+          "sourceEnterprise": "chicken-layer",
+          "pages": [
+            12
+          ],
+          "completeLine": "Inkomba yesikhathi: Uma ukukhanya kosuku kugcinwa kumahora angu-14–16 njalo, izikhukhukazi zezokuhweba ziqhubeka nokuzalela ngezinga eliphezulu unyaka wonke. Le nkomba yokuphatha kwezohwebo ayisho ukutholakala kwamaqanda kwasekhaya okulinganayo ngokwemvelo."
+        }
+      ]
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "careFieldsOnSinglePages": 16,
+      "seasonalManagementParagraphs": []
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "careFieldsOnSinglePages": 28,
+      "seasonalManagementParagraphs": [
+        {
+          "sourceEnterprise": "chicken-layer",
+          "pages": [
+            12
+          ],
+          "completeLine": "Tshupiso ya nako: Ka letsatsi la kganya le sa fetoheng la dihora tse 14–16, dikgoho tsa mahe tsa kgwebo di tswela pele ho behela ka tekanyo e phahameng selemo sohle. Tshupiso ena ya taolo ya kgwebo ha e bolele phepelo ya mahe ya lelapa e lekanang ka tlhaho."
+        }
+      ]
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "careFieldsOnSinglePages": 16,
+      "seasonalManagementParagraphs": []
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "careFieldsOnSinglePages": 28,
+      "seasonalManagementParagraphs": [
+        {
+          "sourceEnterprise": "chicken-layer",
+          "pages": [
+            12
+          ],
+          "completeLine": "Xikombo xa nguva: Loko siku ra ku voninga ri hlayisiwa ri ri 14–16 wa tiawara nkarhi na nkarhi, tihuku ta matandza ta mabindzu ti ya mahlweni ti tshikela hi mpimo wa le henhla lembe hinkwaro. Xikombo lexi xa mafambiselo ya bindzu a xi vuli mphakelo wa matandza wa le kaya lowu ringanaka hi ntumbuluko."
+        }
+      ]
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "careFieldsOnSinglePages": 16,
+      "seasonalManagementParagraphs": []
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "careFieldsOnSinglePages": 28,
+      "seasonalManagementParagraphs": [
+        {
+          "sourceEnterprise": "chicken-layer",
+          "pages": [
+            12
+          ],
+          "completeLine": "Ndaedzi ya khalaṅwaha: Nga ḓuvha ḽa tshedza ḽi dzulaho ḽi awara dza 14–16, khuhu dza makumba dza mabindu dzi bvela phanḓa na u kudzela nga mpimo wa nṱha ṅwaha woṱhe. Ndaedzi iyi ya ndangulo ya vhubindudzi a si mphakelo wa makumba wa muṱa u linganaho nga mvelo."
+        }
+      ]
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "careFieldsOnSinglePages": 16,
+      "seasonalManagementParagraphs": []
+    }
+  ],
+  "completeCareFieldsOnSinglePages": 176,
+  "completeSeasonalManagementParagraphs": 4
+}
