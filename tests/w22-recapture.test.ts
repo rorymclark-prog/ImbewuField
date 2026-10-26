@@ -6,11 +6,13 @@ const read = (p: string) => readFileSync(new URL(`../${p}`, import.meta.url), 'u
 
 test('w22-01: /home computes the day and date after mount, never during the prerendered render', () => {
   const home = read('app/home/page.tsx');
-  assert.match(home, /const \[dayDate, setDayDate\] = useState\(''\);/);
-  assert.match(home, /useEffect\(\(\) => \{ setDayDate\(getDayDate\(lang\)\); \}, \[lang\]\);/);
-  // getDayDate may only be called from that effect; a call in JSX bakes the build day into the HTML.
+  // w23-01 re-pin: computed during render behind a mounted flag (an effect froze the raw keys
+  // while the isiZulu dictionary was still loading). Still never part of the prerendered HTML.
+  assert.match(home, /const \[mounted, setMounted\] = useState\(false\);/);
+  assert.match(home, /useEffect\(\(\) => \{ setMounted\(true\); \}, \[\]\);/);
+  assert.match(home, /const dayDate = mounted \? getDayDate\(lang\) : '';/);
   const calls = home.match(/getDayDate\(lang\)/g) ?? [];
-  assert.equal(calls.length, 1, 'getDayDate(lang) must appear exactly once, inside the effect');
+  assert.equal(calls.length, 1, 'getDayDate(lang) must appear exactly once, behind the mounted flag');
 });
 
 test('w22-05/06: isiZulu draft source labels use the secondary text token on tinted panels', () => {

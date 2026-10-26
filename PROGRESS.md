@@ -135,6 +135,16 @@ and isiZulu output are unchanged.
 - **Marked as draft everywhere:** `LanguageDraftNote`, Settings, survey, Studies and per-screen notices name isiXhosa.
 - **Not translated:** slides with burned-in text and narration audio (no xh media), the printed invoice (English by
   design), staff training-feedback form (answer language stored as en/zu). Record: `docs/translation-reviews/xhosa-ui-2026-10-23/`.
+### 26 Oct 2026 — Wave 23: re-capture of 98c8a22, isiZulu Home date regression fixed first
+- **Re-capture:** the wave 22 script on the live build (Codex's #1100 reports on top of wave 22), clock two days on,
+  plus click-through captures of the new report workspaces and hand-read contact sheets —
+  `docs/audits/2026-10-26/wave-23-recapture-claude.md` (`w23-01`…`w23-07`). Automated pass clean.
+- **w23-01 (regression from w22-01):** isiZulu Home read "HOMEWEEKDAYWED · 28 HOMEMONTHOCT" — the date effect ran before
+  the lazily loaded dictionary. Now computed during render behind a mounted flag; shipped on its own.
+- **Report previews (follow-up PR):** figures in Newsreader that no longer break mid-number on phones, the isiZulu draft
+  note styled in both report layouts, one partner per line on phones. `w23-02` (R1 income rounding) and `w23-06` handed to
+  Codex — both sit in files its open #1121 is changing.
+
 ### 25 Oct 2026 — Wave 22: re-capture of the live build, hydration errors, Lima clearance, weather card
 - **Re-capture:** 41 routes × phone/desktop × light/dark × English/isiZulu, plus 768/1024px, with a checker that now
   composites translucent backgrounds, collects page errors and measures what the Lima button covers —

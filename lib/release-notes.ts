@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 October 2026', sha: '98c8a22e', changes: [
+    'Home shows today\'s date in isiZulu again instead of placeholder words.',
+  ] },
   { when: '25 October 2026', sha: 'becd2a958', changes: [
     'Farmers can download production and finance reports from My records.',
     'Mentors and facilitators have reports for visits, training, feedback and follow-up.',
