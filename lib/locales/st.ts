@@ -955,7 +955,7 @@ const dict: Dict = {
   loginSubtitleCreate: "Theha akhaonto e ntjha.",
   loginSubtitleReset: "Beha phasewete ya hao botjha.",
   loginContinueToMap: "Kena ho tswela pele mmapeng wa hao",
-  loginBackendUnavailableNotice: "Ho kena ha ho fumanehe mofuteng ona wa boikwetliso. Tsohle tseo o di lekang mona di bolokwa fonong ena.",
+  loginBackendUnavailableNotice: "Ho kena ha ho fumanehe mofuteng ona wa boikwetliso. Tsohle tseo o di lekang mona di bolokwa sesebedisweng sena.",
   loginSignIn: "Kena",
   loginCreateAccount: "Theha akhaonto",
   loginResetEmailSent: "Imeile ya ho beha phasewete botjha e rometswe ho",

@@ -170,7 +170,7 @@
     },
     {
       "key": "navPlantingCalendar",
-      "english": "Planting Calendar",
+      "english": "Planting calendar",
       "st": "Khalendara ya ho lema",
       "ts": "Khalendara ya ku byala",
       "ve": "Khaḽenda ya u ṱavha"
@@ -352,10 +352,10 @@
     },
     {
       "key": "loginBackendUnavailableNotice",
-      "english": "Sign-in is not available in this practice version. Everything you try here is kept on this phone.",
-      "st": "Ho kena ha ho fumanehe mofuteng ona wa boikwetliso. Tsohle tseo o di lekang mona di bolokwa fonong ena.",
-      "ts": "Ku nghena a ku kumeki eka nkandziyiso lowu wa ku titoloveta. Hinkwaswo leswi u swi ringetaka laha swi hlayisiwa eka riqingho leri.",
-      "ve": "U dzhena a hu wanali kha nzudzanyo iyi ya u ḓiḓowedza. Zwoṱhe zwine na lingedza hafha zwi vhulungwa kha founu iyi."
+      "english": "Sign-in is not available in this practice version. Everything you try here is kept on this device.",
+      "st": "Ho kena ha ho fumanehe mofuteng ona wa boikwetliso. Tsohle tseo o di lekang mona di bolokwa sesebedisweng sena.",
+      "ts": "Ku nghena a ku kumeki eka nkandziyiso lowu wa ku titoloveta. Hinkwaswo leswi u swi ringetaka laha swi hlayisiwa eka xitirhisiwa lexi.",
+      "ve": "U dzhena a hu wanali kha nzudzanyo iyi ya u ḓiḓowedza. Zwoṱhe zwine na lingedza hafha zwi vhulungwa kha tshishumiswa itshi."
     },
     {
       "key": "loginSignIn",

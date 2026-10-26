@@ -947,7 +947,7 @@ const dict: Dict = {
   loginSubtitleCreate: "Vhulani akhaunthu ntswa.",
   loginSubtitleReset: "Vhekanyani hafhu phasiwede yaṋu.",
   loginContinueToMap: "Dzhenani uri ni bvele phanḓa kha mmapa waṋu",
-  loginBackendUnavailableNotice: "U dzhena a hu wanali kha nzudzanyo iyi ya u ḓiḓowedza. Zwoṱhe zwine na lingedza hafha zwi vhulungwa kha founu iyi.",
+  loginBackendUnavailableNotice: "U dzhena a hu wanali kha nzudzanyo iyi ya u ḓiḓowedza. Zwoṱhe zwine na lingedza hafha zwi vhulungwa kha tshishumiswa itshi.",
   loginSignIn: "Dzhenani",
   loginCreateAccount: "Vhulani akhaunthu",
   loginResetEmailSent: "Imeili ya u vhekanya hafhu phasiwede yo rumelwa kha",

@@ -941,7 +941,7 @@ const dict: Dict = {
   loginSubtitleCreate: "Endla akhawunti leyintshwa.",
   loginSubtitleReset: "Vekela phasiwedi ya wena nakambe.",
   loginContinueToMap: "Nghena leswaku u ya mahlweni eka mepe wa wena",
-  loginBackendUnavailableNotice: "Ku nghena a ku kumeki eka nkandziyiso lowu wa ku titoloveta. Hinkwaswo leswi u swi ringetaka laha swi hlayisiwa eka riqingho leri.",
+  loginBackendUnavailableNotice: "Ku nghena a ku kumeki eka nkandziyiso lowu wa ku titoloveta. Hinkwaswo leswi u swi ringetaka laha swi hlayisiwa eka xitirhisiwa lexi.",
   loginSignIn: "Nghena",
   loginCreateAccount: "Endla akhawunti",
   loginResetEmailSent: "Imeyili yo vekela phasiwedi nakambe yi rhumeriwile eka",
