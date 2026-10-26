@@ -115,3 +115,12 @@ test('error.tsx links to /offline when offline and still never prints the raw er
   assert.match(page, /copy\.tryAgain/);
   assert.doesNotMatch(page, /\{\s*error\.message\s*\}/);
 });
+
+// w25-08: offline, /farmer's site load rejects with the browser's own "Failed to fetch", and the page
+// used to put that text in its alert banner. Only the page's own mismatch message is shown as written.
+test('/farmer shows its own words, not the browser\'s, when a site load cannot reach the network', () => {
+  const page = readFileSync(new URL('../app/farmer/page.tsx', import.meta.url), 'utf8');
+  assert.match(page, /throw Error\(SITE_MISMATCH\)/);
+  assert.match(page, /err instanceof Error && err\.message === SITE_MISMATCH \? err\.message : networkFailureMessage\(t\)/);
+  assert.doesNotMatch(page, /setError\(err instanceof Error \? err\.message/);
+});

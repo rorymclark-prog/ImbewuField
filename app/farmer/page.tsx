@@ -37,6 +37,10 @@ import { designSiteIdFromLocation } from '@/lib/design-studio';
 import type { Profile } from '@/lib/db/types';
 import type { PeopleMarker } from '@/components/Map';
 
+// The one failure message this page writes for itself; anything else thrown while loading a site
+// (a fetch with no signal rejects with the browser's own "Failed to fetch") goes through
+// networkFailureMessage (w25-08).
+const SITE_MISMATCH = 'The loaded location did not match the selected site. Please select it again.';
 const VALID_PANELS = ['Overview','Ask','Water','Soil','Climate','Area','Photos','Design','AI','Places','Reports','Farm','People','Nature'];
 import { setLastSite } from '@/lib/last-site';
 import { announceOverlay } from '@/lib/overlay-signal';
@@ -304,11 +308,11 @@ function HomeInner() {
       }
       const json = await res.json();
       if (request !== locationRequest.current) return;
-      if (designSiteIdFromLocation(json) !== designSiteIdFromLocation({ lat, lon })) throw Error('The loaded location did not match the selected site. Please select it again.');
+      if (designSiteIdFromLocation(json) !== designSiteIdFromLocation({ lat, lon })) throw Error(SITE_MISMATCH);
       setData(json);
       try { localStorage.setItem(cacheKey, JSON.stringify(json)); } catch { /* quota exceeded */ }
     } catch (err: unknown) {
-      if (request === locationRequest.current) setError(err instanceof Error ? err.message : networkFailureMessage(t));
+      if (request === locationRequest.current) setError(err instanceof Error && err.message === SITE_MISMATCH ? err.message : networkFailureMessage(t));
     } finally {
       if (request === locationRequest.current) setLoading(false);
     }
