@@ -22,6 +22,7 @@ export interface ProgrammeReportOptions {
   basis?: ProgrammeReportBasis;
   startMonth?: string;
   endMonth?: string;
+  comparison?: { startMonth: string; endMonth: string };
   withheldForConsent: number;
   date: string;
 }
@@ -36,6 +37,7 @@ export interface ProgrammeReportModel {
   chart?: ReportChart;
   coverage: { label: string; available: number; total: number }[];
   rows: NetworkFarmerSummary[];
+  comparison?: { startMonth: string; endMonth: string };
 }
 /** Keep a vanished selection visible: a consent/data refresh must not widen a cohort export. */
 export function programmeReportCohortChoices(rows: NetworkFarmerSummary[], selectedId = '') {
@@ -56,6 +58,35 @@ const sum = (values: (number | null)[]) => {
   const known = values.filter((v): v is number => v !== null && Number.isFinite(v));
   return known.length ? Math.round(known.reduce((a, b) => a + b, 0) * 100) / 100 : null;
 };
+export function programmeComparisonRange(start: string, end: string, mode: 'previous' | 'year') {
+  const ordinal=(value:string)=>{const [y,m]=value.split('-').map(Number);return y*12+m-1;};
+  const label=(value:number)=>`${Math.floor(value/12)}-${String(value%12+1).padStart(2,'0')}`;
+  const length=ordinal(end)-ordinal(start)+1, offset=mode==='year'?12:length;
+  return {startMonth:label(ordinal(start)-offset),endMonth:label(ordinal(end)-offset)};
+}
+
+export function previousReportDateRange(from: string, to: string) {
+  const day=(value:string)=>/^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(Date.parse(value)) && new Date(value).toISOString().slice(0,10)===value;
+  if(!day(from)||!day(to)||from>to)return null;
+  const duration=Date.parse(to)-Date.parse(from)+86400000;
+  return {from:new Date(Date.parse(from)-duration).toISOString().slice(0,10),to:new Date(Date.parse(from)-86400000).toISOString().slice(0,10)};
+}
+
+function programmeComparisonTable(o: ProgrammeReportOptions): ReportTable {
+  const before=o.comparison!, after={startMonth:o.startMonth!,endMonth:o.endMonth!};
+  const total=(range:typeof before,key:'producedKg'|'soldKg'|'incomeZar'|'expensesZar')=>{
+    const months=o.monthly.months.filter(m=>m.key>=range.startMonth&&m.key<=range.endMonth);
+    const [sy,sm]=range.startMonth.split('-').map(Number),[ey,em]=range.endMonth.split('-').map(Number);
+    const expected=(ey-sy)*12+em-sm+1;
+    if(months.length!==expected || !months.some(m=>m.hasRecords) || months.some(m=>m[key]===null || !Number.isFinite(m[key])))return null;
+    return sum(months.map(m=>m[key]));
+  };
+  return {title:'Historical ledger comparison',keepAllRowsInSummary:true,
+    note:`Earlier ${before.startMonth} to ${before.endMonth}; selected ${after.startMonth} to ${after.endMonth} (UTC). Only available monthly ledger history is compared. Missing months or unshared books withhold a result. A recorded zero does not establish no farming activity. Current months are incomplete. Current consent and membership apply; these totals are not a matched farmer panel or an impact estimate.`,
+    columns:['Measure','Earlier months','Selected months','Recorded change'],rows:([
+      ['Harvest logged','producedKg','kg'],['Produce sold','soldKg','kg'],['Sales recorded','incomeZar','R'],['Costs recorded','expensesZar','R'],
+    ] as const).map(([label,key,unit])=>{const b=total(before,key),a=total(after,key);const display=(v:number|null)=>v===null?'Not available':unit==='R'?money(v):format(v,' kg');return [label,display(b),display(a),a===null||b===null?'Not comparable':`${a-b>0?'+':''}${display(a-b)}`];})};
+}
 
 /** Snapshot metrics have no event dates. Only the server's dated ledger can answer a period query;
  * a cohort filter must never relabel organisation-wide monthly totals as that cohort's results. */
@@ -153,6 +184,7 @@ export function buildProgrammeReport(o: ProgrammeReportOptions): ProgrammeReport
     cohortGroups.set(key, [...(cohortGroups.get(key) ?? []), row]);
   }
   const tables: ReportTable[] = [];
+  if(scoped && o.comparison && o.startMonth && o.endMonth && o.kind!=='training') tables.push(programmeComparisonTable(o));
   if (o.kind !== 'training') tables.push({ title: 'Recorded results', note: `${basis}. ${scoped ? 'Coverage = current readable books / visible farmers; the number contributing known weights in this period is not available.' : 'Coverage = farmers with an available value / visible farmers.'} Readable books do not guarantee complete records.`, columns: ['Measure', 'Recorded value', 'Coverage', 'Evidence / interpretation'], rows: resultRows });
   if (o.kind !== 'production') tables.push({ title: 'Learning & participation', note: 'Current snapshot. Participation and course progress are outputs, not measured livelihood outcomes.', columns: ['Measure', 'Recorded value', 'Coverage / meaning'], rows: [
     ['Average course completion', format(totals.averageTrainingPct, '%'), `${coverage[4].available} / ${rows.length} ${countedNoun(rows.length, 'farmer')}`],
@@ -186,11 +218,11 @@ export function buildProgrammeReport(o: ProgrammeReportOptions): ProgrammeReport
       return value === null ? [] : [{ label: group[0].farmer.cohortName || 'Unassigned cohort', value }];
     }),
   };
-  return { title, subtitle: o.funder ? 'Recorded results, evidence coverage and questions for the next review.' : 'Delivery evidence, reporting gaps and practical follow-up priorities.', period, scope, sections, metrics, tables, chart, coverage, rows };
+  return { title, subtitle: o.funder ? 'Recorded results, evidence coverage and questions for the next review.' : 'Delivery evidence, reporting gaps and practical follow-up priorities.', period: `${period}${scoped&&o.comparison&&o.kind!=='training'?` · compared with ${o.comparison.startMonth} to ${o.comparison.endMonth}`:''}`, scope, sections, metrics, tables, chart, coverage, rows, comparison:scoped&&o.kind!=='training'?o.comparison:undefined };
 }
 
 /** Scope in the filename keeps two reports from different cohorts distinguishable after sharing. */
-export function programmeReportFilename(report: Pick<ProgrammeReportModel, 'title' | 'scope' | 'period'>, date: string): string {
+export function programmeReportFilename(report: Pick<ProgrammeReportModel, 'title' | 'scope' | 'period' | 'comparison'>, date: string): string {
   const slug = (value: string) => value.normalize('NFKD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
   const fullIdentity = slug(`${report.title}-${report.scope}`);
   // Long project names can share their first hundred characters. Keep a compact
@@ -199,5 +231,6 @@ export function programmeReportFilename(report: Pick<ProgrammeReportModel, 'titl
   for (const char of `${report.title}\u0000${report.scope}`) fingerprint = Math.imul(fingerprint ^ char.charCodeAt(0), 16777619);
   const identity = fullIdentity.length > 80 ? `${fullIdentity.slice(0, 70).replace(/-$/, '')}-${(fingerprint >>> 0).toString(36)}` : fullIdentity;
   const period = report.period.startsWith('Cumulative') ? 'cumulative' : slug(report.period.split('(')[0]).slice(0,50).replace(/-$/,'');
-  return `ImbewuField-${identity || 'programme-report'}-${period || 'no-period'}-${/^\d{4}-\d{2}-\d{2}$/.test(date) ? date : 'undated'}`;
+  const comparison=report.comparison?`-vs-${slug(report.comparison.startMonth)}-to-${slug(report.comparison.endMonth)}`:'';
+  return `ImbewuField-${identity || 'programme-report'}-${period || 'no-period'}${comparison}-${/^\d{4}-\d{2}-\d{2}$/.test(date) ? date : 'undated'}`;
 }

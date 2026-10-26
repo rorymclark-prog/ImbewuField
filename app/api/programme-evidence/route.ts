@@ -5,7 +5,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { melCan, programmeCapabilities, type MelPermission } from '@/lib/mel';
 import { validFieldId } from '@/lib/field-teams';
-import { blankBranding, trainingForStorage, trainingFromStorage, publishedTraining, sharedTrainingPhotos, validProgrammeBranding, validProgrammeMilestone, validTrainingRecord, type TrainingRecord, type ProgrammeMilestone, type ProgrammeBranding } from '@/lib/programme-evidence';
+import { blankBranding, cleanDonorIndicator, trainingForStorage, trainingFromStorage, publishedTraining, sharedTrainingPhotos, validProgrammeBranding, validProgrammeMilestone, validTrainingRecord, type TrainingRecord, type ProgrammeMilestone, type ProgrammeBranding } from '@/lib/programme-evidence';
 import type { UserRole } from '@/lib/db/types';
 
 export const runtime = 'nodejs';
@@ -120,7 +120,7 @@ async function handle(req: NextRequest, write: boolean) {
         const replay=await readFieldReceipt(tx,receipt);
         if(replay){acknowledgedAt=replay.updatedAt;return;}
         const old=await tx.get(ref); if(old.exists && old.data()?.updatedAt!==b.expectedUpdatedAt) fail('This milestone changed. Reload before saving.',409);
-        const next:ProgrammeMilestone={id:m.id,project:m.project.trim(),title:m.title.trim(),...(m.category?{category:m.category}:{}),unit:m.unit.trim(),baseline:m.baseline,target:m.target,due:m.due,owner:m.owner.trim(),method:m.method.trim(),published:m.published,observations:m.observations.map(o=>{const prior=(old.data()?.observations as ProgrammeMilestone['observations'] | undefined)?.find(p=>p.date===o.date&&p.actual===o.actual&&p.evidence===o.evidence.trim());return {date:o.date,actual:o.actual,evidence:o.evidence.trim(),recordedAt:prior?.recordedAt ?? now};}),updatedAt:now};
+        const next:ProgrammeMilestone={id:m.id,project:m.project.trim(),title:m.title.trim(),...(m.category?{category:m.category}:{}),...(m.donor?{donor:cleanDonorIndicator(m.donor)}:{}),unit:m.unit.trim(),baseline:m.baseline,target:m.target,due:m.due,owner:m.owner.trim(),method:m.method.trim(),published:m.published,observations:m.observations.map(o=>{const prior=(old.data()?.observations as ProgrammeMilestone['observations'] | undefined)?.find(p=>p.date===o.date&&p.actual===o.actual&&p.evidence===o.evidence.trim());return {date:o.date,actual:o.actual,evidence:o.evidence.trim(),recordedAt:prior?.recordedAt ?? now};}),updatedAt:now};
         writeFieldReceipt(tx,receipt,now);
         tx.set(ref,next);tx.create(root.collection('history').doc(),{kind:'milestone',id:m.id,previous:old.data() ?? null,next,actor:auth.uid,at:now});
       });

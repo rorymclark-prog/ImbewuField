@@ -41,6 +41,18 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 October 2026', sha: '98c8a22e2', changes: [
+    'Farm reports compare past months, seasons and years using your recorded entries.',
+    'Visit, training and programme reports compare recorded delivery across periods.',
+    'MEL reports compare dated readings and include agreed donor indicator details.',
+    'Donor evidence, missing records and current snapshots stay clear in every PDF.',
+  ], tour: [{ title: 'Compare farm periods',
+    where: 'My records → Production & finance reports', href: '/records',
+    detail: 'Choose a historical date and compare the previous period or last year.',
+  }, { title: 'Review donor evidence',
+    where: 'Organisation → Reports → MEL evidence', href: '/ngo',
+    detail: 'Compare milestone dates and review linked donor definitions and evidence.',
+  }] },
   { when: '25 October 2026', sha: 'becd2a958', changes: [
     'Farmers can download production and finance reports from My records.',
     'Mentors and facilitators have reports for visits, training, feedback and follow-up.',
