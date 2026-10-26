@@ -1,0 +1,1199 @@
+{
+  "rows": [
+    {
+      "file": "zu-after-bees-cattle-poultry-fish.pdf",
+      "language": "zu",
+      "references": [
+        {
+          "sourceIndex": 0,
+          "enterpriseId": "bees",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            2
+          ]
+        },
+        {
+          "sourceIndex": 1,
+          "enterpriseId": "cattle-beef",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            4
+          ]
+        },
+        {
+          "sourceIndex": 2,
+          "enterpriseId": "cattle-beef",
+          "field": "productiveLifeYears",
+          "singlePages": [
+            4
+          ]
+        },
+        {
+          "sourceIndex": 3,
+          "enterpriseId": "cattle-dairy",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 4,
+          "enterpriseId": "cattle-dairy",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 5,
+          "enterpriseId": "cattle-dairy",
+          "field": "productiveLifeYears",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 8,
+          "enterpriseId": "cattle-dairy",
+          "field": "productionReferences",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 9,
+          "enterpriseId": "chicken-broiler",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            8
+          ]
+        },
+        {
+          "sourceIndex": 10,
+          "enterpriseId": "chicken-broiler",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            8
+          ]
+        },
+        {
+          "sourceIndex": 11,
+          "enterpriseId": "chicken-broiler",
+          "field": "productionReferences",
+          "singlePages": [
+            8
+          ]
+        },
+        {
+          "sourceIndex": 12,
+          "enterpriseId": "chicken-indigenous",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 13,
+          "enterpriseId": "chicken-indigenous",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 14,
+          "enterpriseId": "chicken-indigenous",
+          "field": "productionReferences",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 16,
+          "enterpriseId": "chicken-layer",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            12
+          ]
+        },
+        {
+          "sourceIndex": 20,
+          "enterpriseId": "chicken-layer",
+          "field": "productionReferences",
+          "singlePages": [
+            12
+          ]
+        },
+        {
+          "sourceIndex": 21,
+          "enterpriseId": "duck",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            14
+          ]
+        },
+        {
+          "sourceIndex": 22,
+          "enterpriseId": "duck",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            14
+          ]
+        },
+        {
+          "sourceIndex": 24,
+          "enterpriseId": "fish-tilapia",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            16
+          ]
+        },
+        {
+          "sourceIndex": 25,
+          "enterpriseId": "fish-tilapia",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            16
+          ]
+        },
+        {
+          "sourceIndex": 26,
+          "enterpriseId": "fish-tilapia",
+          "field": "productionReferences",
+          "singlePages": [
+            16
+          ]
+        }
+      ],
+      "completeReferenceOccurrences": 20,
+      "careFieldsOnSinglePages": 28
+    },
+    {
+      "file": "zu-after-goats-pigs-rabbits-sheep.pdf",
+      "language": "zu",
+      "references": [
+        {
+          "sourceIndex": 27,
+          "enterpriseId": "goat-dairy",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            2
+          ]
+        },
+        {
+          "sourceIndex": 28,
+          "enterpriseId": "goat-dairy",
+          "field": "productionReferences",
+          "singlePages": [
+            2
+          ]
+        },
+        {
+          "sourceIndex": 29,
+          "enterpriseId": "goat-dairy",
+          "field": "productionReferences",
+          "singlePages": [
+            2
+          ]
+        },
+        {
+          "sourceIndex": 30,
+          "enterpriseId": "goat-indigenous",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            4
+          ]
+        },
+        {
+          "sourceIndex": 31,
+          "enterpriseId": "goat-indigenous",
+          "field": "productionReferences",
+          "singlePages": [
+            4,
+            6
+          ]
+        },
+        {
+          "sourceIndex": 31,
+          "enterpriseId": "goat-meat",
+          "field": "productionReferences",
+          "singlePages": [
+            4,
+            6
+          ]
+        },
+        {
+          "sourceIndex": 32,
+          "enterpriseId": "goat-indigenous",
+          "field": "productionReferences",
+          "singlePages": [
+            4
+          ]
+        },
+        {
+          "sourceIndex": 33,
+          "enterpriseId": "goat-meat",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 35,
+          "enterpriseId": "pig-pork",
+          "field": "productionReferences",
+          "singlePages": [
+            8
+          ]
+        },
+        {
+          "sourceIndex": 36,
+          "enterpriseId": "rabbit",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 37,
+          "enterpriseId": "rabbit",
+          "field": "productiveLifeYears",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 39,
+          "enterpriseId": "rabbit",
+          "field": "productionReferences",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 40,
+          "enterpriseId": "sheep-mutton",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            12
+          ]
+        },
+        {
+          "sourceIndex": 41,
+          "enterpriseId": "sheep-mutton",
+          "field": "productionReferences",
+          "singlePages": [
+            12
+          ]
+        },
+        {
+          "sourceIndex": 42,
+          "enterpriseId": "sheep-wool",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            14
+          ]
+        }
+      ],
+      "completeReferenceOccurrences": 15,
+      "careFieldsOnSinglePages": 16
+    },
+    {
+      "file": "st-after-bees-cattle-poultry-fish.pdf",
+      "language": "st",
+      "references": [
+        {
+          "sourceIndex": 0,
+          "enterpriseId": "bees",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            2
+          ]
+        },
+        {
+          "sourceIndex": 1,
+          "enterpriseId": "cattle-beef",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            4
+          ]
+        },
+        {
+          "sourceIndex": 2,
+          "enterpriseId": "cattle-beef",
+          "field": "productiveLifeYears",
+          "singlePages": [
+            4
+          ]
+        },
+        {
+          "sourceIndex": 3,
+          "enterpriseId": "cattle-dairy",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 4,
+          "enterpriseId": "cattle-dairy",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 5,
+          "enterpriseId": "cattle-dairy",
+          "field": "productiveLifeYears",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 8,
+          "enterpriseId": "cattle-dairy",
+          "field": "productionReferences",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 9,
+          "enterpriseId": "chicken-broiler",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            8
+          ]
+        },
+        {
+          "sourceIndex": 10,
+          "enterpriseId": "chicken-broiler",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            8
+          ]
+        },
+        {
+          "sourceIndex": 11,
+          "enterpriseId": "chicken-broiler",
+          "field": "productionReferences",
+          "singlePages": [
+            8
+          ]
+        },
+        {
+          "sourceIndex": 12,
+          "enterpriseId": "chicken-indigenous",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 13,
+          "enterpriseId": "chicken-indigenous",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 14,
+          "enterpriseId": "chicken-indigenous",
+          "field": "productionReferences",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 16,
+          "enterpriseId": "chicken-layer",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            12
+          ]
+        },
+        {
+          "sourceIndex": 20,
+          "enterpriseId": "chicken-layer",
+          "field": "productionReferences",
+          "singlePages": [
+            12
+          ]
+        },
+        {
+          "sourceIndex": 21,
+          "enterpriseId": "duck",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            14
+          ]
+        },
+        {
+          "sourceIndex": 22,
+          "enterpriseId": "duck",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            14
+          ]
+        },
+        {
+          "sourceIndex": 24,
+          "enterpriseId": "fish-tilapia",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            16
+          ]
+        },
+        {
+          "sourceIndex": 25,
+          "enterpriseId": "fish-tilapia",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            16
+          ]
+        },
+        {
+          "sourceIndex": 26,
+          "enterpriseId": "fish-tilapia",
+          "field": "productionReferences",
+          "singlePages": [
+            16
+          ]
+        }
+      ],
+      "completeReferenceOccurrences": 20,
+      "careFieldsOnSinglePages": 28
+    },
+    {
+      "file": "st-after-goats-pigs-rabbits-sheep.pdf",
+      "language": "st",
+      "references": [
+        {
+          "sourceIndex": 27,
+          "enterpriseId": "goat-dairy",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            2
+          ]
+        },
+        {
+          "sourceIndex": 28,
+          "enterpriseId": "goat-dairy",
+          "field": "productionReferences",
+          "singlePages": [
+            2
+          ]
+        },
+        {
+          "sourceIndex": 29,
+          "enterpriseId": "goat-dairy",
+          "field": "productionReferences",
+          "singlePages": [
+            2
+          ]
+        },
+        {
+          "sourceIndex": 30,
+          "enterpriseId": "goat-indigenous",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            4
+          ]
+        },
+        {
+          "sourceIndex": 31,
+          "enterpriseId": "goat-indigenous",
+          "field": "productionReferences",
+          "singlePages": [
+            4,
+            6
+          ]
+        },
+        {
+          "sourceIndex": 31,
+          "enterpriseId": "goat-meat",
+          "field": "productionReferences",
+          "singlePages": [
+            4,
+            6
+          ]
+        },
+        {
+          "sourceIndex": 32,
+          "enterpriseId": "goat-indigenous",
+          "field": "productionReferences",
+          "singlePages": [
+            4
+          ]
+        },
+        {
+          "sourceIndex": 33,
+          "enterpriseId": "goat-meat",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 35,
+          "enterpriseId": "pig-pork",
+          "field": "productionReferences",
+          "singlePages": [
+            8
+          ]
+        },
+        {
+          "sourceIndex": 36,
+          "enterpriseId": "rabbit",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 37,
+          "enterpriseId": "rabbit",
+          "field": "productiveLifeYears",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 39,
+          "enterpriseId": "rabbit",
+          "field": "productionReferences",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 40,
+          "enterpriseId": "sheep-mutton",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            12
+          ]
+        },
+        {
+          "sourceIndex": 41,
+          "enterpriseId": "sheep-mutton",
+          "field": "productionReferences",
+          "singlePages": [
+            12
+          ]
+        },
+        {
+          "sourceIndex": 42,
+          "enterpriseId": "sheep-wool",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            14
+          ]
+        }
+      ],
+      "completeReferenceOccurrences": 15,
+      "careFieldsOnSinglePages": 16
+    },
+    {
+      "file": "ts-after-bees-cattle-poultry-fish.pdf",
+      "language": "ts",
+      "references": [
+        {
+          "sourceIndex": 0,
+          "enterpriseId": "bees",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            2
+          ]
+        },
+        {
+          "sourceIndex": 1,
+          "enterpriseId": "cattle-beef",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            4
+          ]
+        },
+        {
+          "sourceIndex": 2,
+          "enterpriseId": "cattle-beef",
+          "field": "productiveLifeYears",
+          "singlePages": [
+            4
+          ]
+        },
+        {
+          "sourceIndex": 3,
+          "enterpriseId": "cattle-dairy",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 4,
+          "enterpriseId": "cattle-dairy",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 5,
+          "enterpriseId": "cattle-dairy",
+          "field": "productiveLifeYears",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 8,
+          "enterpriseId": "cattle-dairy",
+          "field": "productionReferences",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 9,
+          "enterpriseId": "chicken-broiler",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            8
+          ]
+        },
+        {
+          "sourceIndex": 10,
+          "enterpriseId": "chicken-broiler",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            8
+          ]
+        },
+        {
+          "sourceIndex": 11,
+          "enterpriseId": "chicken-broiler",
+          "field": "productionReferences",
+          "singlePages": [
+            8
+          ]
+        },
+        {
+          "sourceIndex": 12,
+          "enterpriseId": "chicken-indigenous",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 13,
+          "enterpriseId": "chicken-indigenous",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 14,
+          "enterpriseId": "chicken-indigenous",
+          "field": "productionReferences",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 16,
+          "enterpriseId": "chicken-layer",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            12
+          ]
+        },
+        {
+          "sourceIndex": 20,
+          "enterpriseId": "chicken-layer",
+          "field": "productionReferences",
+          "singlePages": [
+            12
+          ]
+        },
+        {
+          "sourceIndex": 21,
+          "enterpriseId": "duck",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            14
+          ]
+        },
+        {
+          "sourceIndex": 22,
+          "enterpriseId": "duck",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            14
+          ]
+        },
+        {
+          "sourceIndex": 24,
+          "enterpriseId": "fish-tilapia",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            16
+          ]
+        },
+        {
+          "sourceIndex": 25,
+          "enterpriseId": "fish-tilapia",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            16
+          ]
+        },
+        {
+          "sourceIndex": 26,
+          "enterpriseId": "fish-tilapia",
+          "field": "productionReferences",
+          "singlePages": [
+            16
+          ]
+        }
+      ],
+      "completeReferenceOccurrences": 20,
+      "careFieldsOnSinglePages": 28
+    },
+    {
+      "file": "ts-after-goats-pigs-rabbits-sheep.pdf",
+      "language": "ts",
+      "references": [
+        {
+          "sourceIndex": 27,
+          "enterpriseId": "goat-dairy",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            2
+          ]
+        },
+        {
+          "sourceIndex": 28,
+          "enterpriseId": "goat-dairy",
+          "field": "productionReferences",
+          "singlePages": [
+            2
+          ]
+        },
+        {
+          "sourceIndex": 29,
+          "enterpriseId": "goat-dairy",
+          "field": "productionReferences",
+          "singlePages": [
+            2
+          ]
+        },
+        {
+          "sourceIndex": 30,
+          "enterpriseId": "goat-indigenous",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            4
+          ]
+        },
+        {
+          "sourceIndex": 31,
+          "enterpriseId": "goat-indigenous",
+          "field": "productionReferences",
+          "singlePages": [
+            4,
+            6
+          ]
+        },
+        {
+          "sourceIndex": 31,
+          "enterpriseId": "goat-meat",
+          "field": "productionReferences",
+          "singlePages": [
+            4,
+            6
+          ]
+        },
+        {
+          "sourceIndex": 32,
+          "enterpriseId": "goat-indigenous",
+          "field": "productionReferences",
+          "singlePages": [
+            4
+          ]
+        },
+        {
+          "sourceIndex": 33,
+          "enterpriseId": "goat-meat",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 35,
+          "enterpriseId": "pig-pork",
+          "field": "productionReferences",
+          "singlePages": [
+            8
+          ]
+        },
+        {
+          "sourceIndex": 36,
+          "enterpriseId": "rabbit",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 37,
+          "enterpriseId": "rabbit",
+          "field": "productiveLifeYears",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 39,
+          "enterpriseId": "rabbit",
+          "field": "productionReferences",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 40,
+          "enterpriseId": "sheep-mutton",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            12
+          ]
+        },
+        {
+          "sourceIndex": 41,
+          "enterpriseId": "sheep-mutton",
+          "field": "productionReferences",
+          "singlePages": [
+            12
+          ]
+        },
+        {
+          "sourceIndex": 42,
+          "enterpriseId": "sheep-wool",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            14
+          ]
+        }
+      ],
+      "completeReferenceOccurrences": 15,
+      "careFieldsOnSinglePages": 16
+    },
+    {
+      "file": "ve-after-bees-cattle-poultry-fish.pdf",
+      "language": "ve",
+      "references": [
+        {
+          "sourceIndex": 0,
+          "enterpriseId": "bees",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            2
+          ]
+        },
+        {
+          "sourceIndex": 1,
+          "enterpriseId": "cattle-beef",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            4
+          ]
+        },
+        {
+          "sourceIndex": 2,
+          "enterpriseId": "cattle-beef",
+          "field": "productiveLifeYears",
+          "singlePages": [
+            4
+          ]
+        },
+        {
+          "sourceIndex": 3,
+          "enterpriseId": "cattle-dairy",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 4,
+          "enterpriseId": "cattle-dairy",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 5,
+          "enterpriseId": "cattle-dairy",
+          "field": "productiveLifeYears",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 8,
+          "enterpriseId": "cattle-dairy",
+          "field": "productionReferences",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 9,
+          "enterpriseId": "chicken-broiler",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            8
+          ]
+        },
+        {
+          "sourceIndex": 10,
+          "enterpriseId": "chicken-broiler",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            8
+          ]
+        },
+        {
+          "sourceIndex": 11,
+          "enterpriseId": "chicken-broiler",
+          "field": "productionReferences",
+          "singlePages": [
+            8
+          ]
+        },
+        {
+          "sourceIndex": 12,
+          "enterpriseId": "chicken-indigenous",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 13,
+          "enterpriseId": "chicken-indigenous",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 14,
+          "enterpriseId": "chicken-indigenous",
+          "field": "productionReferences",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 16,
+          "enterpriseId": "chicken-layer",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            12
+          ]
+        },
+        {
+          "sourceIndex": 20,
+          "enterpriseId": "chicken-layer",
+          "field": "productionReferences",
+          "singlePages": [
+            12
+          ]
+        },
+        {
+          "sourceIndex": 21,
+          "enterpriseId": "duck",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            14
+          ]
+        },
+        {
+          "sourceIndex": 22,
+          "enterpriseId": "duck",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            14
+          ]
+        },
+        {
+          "sourceIndex": 24,
+          "enterpriseId": "fish-tilapia",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            16
+          ]
+        },
+        {
+          "sourceIndex": 25,
+          "enterpriseId": "fish-tilapia",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            16
+          ]
+        },
+        {
+          "sourceIndex": 26,
+          "enterpriseId": "fish-tilapia",
+          "field": "productionReferences",
+          "singlePages": [
+            16
+          ]
+        }
+      ],
+      "completeReferenceOccurrences": 20,
+      "careFieldsOnSinglePages": 28
+    },
+    {
+      "file": "ve-after-goats-pigs-rabbits-sheep.pdf",
+      "language": "ve",
+      "references": [
+        {
+          "sourceIndex": 27,
+          "enterpriseId": "goat-dairy",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            2
+          ]
+        },
+        {
+          "sourceIndex": 28,
+          "enterpriseId": "goat-dairy",
+          "field": "productionReferences",
+          "singlePages": [
+            2
+          ]
+        },
+        {
+          "sourceIndex": 29,
+          "enterpriseId": "goat-dairy",
+          "field": "productionReferences",
+          "singlePages": [
+            2
+          ]
+        },
+        {
+          "sourceIndex": 30,
+          "enterpriseId": "goat-indigenous",
+          "field": "weeksToFirstProduct",
+          "singlePages": [
+            4
+          ]
+        },
+        {
+          "sourceIndex": 31,
+          "enterpriseId": "goat-indigenous",
+          "field": "productionReferences",
+          "singlePages": [
+            4,
+            6
+          ]
+        },
+        {
+          "sourceIndex": 31,
+          "enterpriseId": "goat-meat",
+          "field": "productionReferences",
+          "singlePages": [
+            4,
+            6
+          ]
+        },
+        {
+          "sourceIndex": 32,
+          "enterpriseId": "goat-indigenous",
+          "field": "productionReferences",
+          "singlePages": [
+            4
+          ]
+        },
+        {
+          "sourceIndex": 33,
+          "enterpriseId": "goat-meat",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            6
+          ]
+        },
+        {
+          "sourceIndex": 35,
+          "enterpriseId": "pig-pork",
+          "field": "productionReferences",
+          "singlePages": [
+            8
+          ]
+        },
+        {
+          "sourceIndex": 36,
+          "enterpriseId": "rabbit",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 37,
+          "enterpriseId": "rabbit",
+          "field": "productiveLifeYears",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 39,
+          "enterpriseId": "rabbit",
+          "field": "productionReferences",
+          "singlePages": [
+            10
+          ]
+        },
+        {
+          "sourceIndex": 40,
+          "enterpriseId": "sheep-mutton",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            12
+          ]
+        },
+        {
+          "sourceIndex": 41,
+          "enterpriseId": "sheep-mutton",
+          "field": "productionReferences",
+          "singlePages": [
+            12
+          ]
+        },
+        {
+          "sourceIndex": 42,
+          "enterpriseId": "sheep-wool",
+          "field": "outputPerAnimal",
+          "singlePages": [
+            14
+          ]
+        }
+      ],
+      "completeReferenceOccurrences": 15,
+      "careFieldsOnSinglePages": 16
+    }
+  ],
+  "completeReferenceOccurrencesOnSinglePages": 140,
+  "completeCareFieldsOnSinglePages": 176,
+  "scope": "Every original numeric-note/age-system binding this unchanged export builder prints, plus inherited welfare conditions. Feed/water/space dossier notes and the separate layer first-product dossier note stay in the card, as in the original source design; their translations do not create new export output."
+}

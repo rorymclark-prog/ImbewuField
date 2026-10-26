@@ -1,0 +1,429 @@
+{
+  "states": [
+    {
+      "language": "zu",
+      "scenario": "bees-existing",
+      "completeReferencePairs": 1,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "zu",
+      "scenario": "cattle-beef-existing",
+      "completeReferencePairs": 2,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "zu",
+      "scenario": "cattle-dairy-existing",
+      "completeReferencePairs": 6,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "zu",
+      "scenario": "chicken-broiler-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "zu",
+      "scenario": "chicken-indigenous-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "zu",
+      "scenario": "chicken-layer-existing",
+      "completeReferencePairs": 6,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "zu",
+      "scenario": "duck-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "zu",
+      "scenario": "fish-tilapia-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "zu",
+      "scenario": "goat-dairy-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "zu",
+      "scenario": "goat-indigenous-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "zu",
+      "scenario": "goat-meat-existing",
+      "completeReferencePairs": 2,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "zu",
+      "scenario": "pig-pork-existing",
+      "completeReferencePairs": 2,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "zu",
+      "scenario": "rabbit-existing",
+      "completeReferencePairs": 4,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "zu",
+      "scenario": "sheep-mutton-existing",
+      "completeReferencePairs": 2,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "zu",
+      "scenario": "sheep-wool-existing",
+      "completeReferencePairs": 1,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "st",
+      "scenario": "bees-existing",
+      "completeReferencePairs": 1,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "st",
+      "scenario": "cattle-beef-existing",
+      "completeReferencePairs": 2,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "st",
+      "scenario": "cattle-dairy-existing",
+      "completeReferencePairs": 6,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "st",
+      "scenario": "chicken-broiler-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "st",
+      "scenario": "chicken-indigenous-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "st",
+      "scenario": "chicken-layer-existing",
+      "completeReferencePairs": 6,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "st",
+      "scenario": "duck-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "st",
+      "scenario": "fish-tilapia-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "st",
+      "scenario": "goat-dairy-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "st",
+      "scenario": "goat-indigenous-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "st",
+      "scenario": "goat-meat-existing",
+      "completeReferencePairs": 2,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "st",
+      "scenario": "pig-pork-existing",
+      "completeReferencePairs": 2,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "st",
+      "scenario": "rabbit-existing",
+      "completeReferencePairs": 4,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "st",
+      "scenario": "sheep-mutton-existing",
+      "completeReferencePairs": 2,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "st",
+      "scenario": "sheep-wool-existing",
+      "completeReferencePairs": 1,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ts",
+      "scenario": "bees-existing",
+      "completeReferencePairs": 1,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ts",
+      "scenario": "cattle-beef-existing",
+      "completeReferencePairs": 2,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ts",
+      "scenario": "cattle-dairy-existing",
+      "completeReferencePairs": 6,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ts",
+      "scenario": "chicken-broiler-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ts",
+      "scenario": "chicken-indigenous-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ts",
+      "scenario": "chicken-layer-existing",
+      "completeReferencePairs": 6,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ts",
+      "scenario": "duck-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ts",
+      "scenario": "fish-tilapia-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ts",
+      "scenario": "goat-dairy-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ts",
+      "scenario": "goat-indigenous-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ts",
+      "scenario": "goat-meat-existing",
+      "completeReferencePairs": 2,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ts",
+      "scenario": "pig-pork-existing",
+      "completeReferencePairs": 2,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ts",
+      "scenario": "rabbit-existing",
+      "completeReferencePairs": 4,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ts",
+      "scenario": "sheep-mutton-existing",
+      "completeReferencePairs": 2,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ts",
+      "scenario": "sheep-wool-existing",
+      "completeReferencePairs": 1,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ve",
+      "scenario": "bees-existing",
+      "completeReferencePairs": 1,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ve",
+      "scenario": "cattle-beef-existing",
+      "completeReferencePairs": 2,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ve",
+      "scenario": "cattle-dairy-existing",
+      "completeReferencePairs": 6,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ve",
+      "scenario": "chicken-broiler-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ve",
+      "scenario": "chicken-indigenous-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ve",
+      "scenario": "chicken-layer-existing",
+      "completeReferencePairs": 6,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ve",
+      "scenario": "duck-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ve",
+      "scenario": "fish-tilapia-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ve",
+      "scenario": "goat-dairy-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ve",
+      "scenario": "goat-indigenous-existing",
+      "completeReferencePairs": 3,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ve",
+      "scenario": "goat-meat-existing",
+      "completeReferencePairs": 2,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ve",
+      "scenario": "pig-pork-existing",
+      "completeReferencePairs": 2,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ve",
+      "scenario": "rabbit-existing",
+      "completeReferencePairs": 4,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ve",
+      "scenario": "sheep-mutton-existing",
+      "completeReferencePairs": 2,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    },
+    {
+      "language": "ve",
+      "scenario": "sheep-wool-existing",
+      "completeReferencePairs": 1,
+      "onlyNativeNoteStyleChanged": true,
+      "overflow": []
+    }
+  ],
+  "distinctCases": 60,
+  "completeNativeOriginalPairs": 176,
+  "onlyNativeNoteStyleChangedStates": 60,
+  "overflowCases": 0,
+  "collectionRepair": "An initial after-result array was empty because the helper retained its previous closure. Empty and mixed raw captures retained; final after states use explicit returned DOM results in a fresh collection. The initial source-page observations and the actual pre/post screenshots are retained."
+}

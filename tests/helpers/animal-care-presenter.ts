@@ -11,7 +11,7 @@ import {isCropExportDraftLanguage} from '../../lib/crop-export-copy.ts';
 /** Compile the unchanged real helpers with only the language context substituted.
  * Source links, facts, animal art and numeric formatting keep their actual authorities. */
 export function animalCarePresenter(source:string,language:string):React.ComponentType<{e:AnimalEnterprise}>{
- const file=ts.createSourceFile('card.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX),names=['formatWeeks','SourceLink','Fact','EnterpriseFacts'];if(source.includes('function enterpriseSourceText('))names.unshift('enterpriseSourceText','enterpriseReferenceText');
+ const file=ts.createSourceFile('card.tsx',source,ts.ScriptTarget.Latest,true,ts.ScriptKind.TSX),names=['formatWeeks','SourceLink','Fact','EnterpriseFacts'];if(source.includes('function enterpriseSourceText('))names.unshift('enterpriseSourceText','enterpriseReferenceText');if(source.includes('function OriginalReferenceNote('))names.unshift('OriginalReferenceNote');
  const functions=names.map(name=>{const node=file.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text===name);assert.ok(node,'missing actual card helper: '+name);return node.getText(file);});
  const range=file.statements.find(n=>ts.isVariableStatement(n)&&n.declarationList.declarations.some(d=>d.name.getText(file)==='rangeText'));assert.ok(range);
  const code=ts.transpileModule(range.getText(file)+'\n'+functions.join('\n'),{compilerOptions:{jsx:ts.JsxEmit.React,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;

@@ -1,3 +1,4 @@
+import {translateExpectedAnimalReferenceNotes} from './helpers/animal-reference-expectation.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {readFileSync} from 'node:fs';
@@ -208,6 +209,9 @@ test('native guide references preserve source values and every field outside dec
    // The only season text this builder inserts is the typed layer-pattern frame.
    // Its conditions now have a bound draft; other rows remain in the original comparison.
    if(source.id==='chicken-layer'&&e.seasonalPattern){const frame='Season reference: {pattern} This commercial management reference is not a naturally flat household egg supply.',oldPattern=productGuideText(frame,language,{pattern:e.seasonalPattern.text}),newPattern=productGuideText(frame,language,{pattern:productGuideText(e.seasonalPattern.text,language)});let replaced=0;for(const item of want)item.lines=item.lines.map(line=>{if(line!==oldPattern)return line;replaced++;return newPattern;});assert.equal(replaced,1,'only the complete original layer-pattern frame receives its new typed draft');}
+   // Only complete original typed reference-note frames receive the declared new drafts.
+   // Keep the immutable source objects, missing yields, units, periods and private data checks.
+   translateExpectedAnimalReferenceNotes(want,e,language,e.outputUnit);
    if(e.outputPerAnimal){const template='Production reference: {range} {unit}. {note}',values={range:formatRange(e.outputPerAnimal.value),unit:e.outputUnit,note:productGuideText(e.outputPerAnimal.note??'Check the source conditions and reporting period.',language)},old=productGuideText(template,language,values),replacement=productGuideText(template,language,{...values,unit:productGuideText(e.outputUnit,language)});let replaced=0;for(const item of want)item.lines=item.lines.map(line=>{if(line!==old)return line;replaced++;return replacement;});assert.equal(replaced,1,'one source reference receives one native unit, never a guessed total');assert.deepEqual(native,want,'every field outside declared unit/care presentation, including gates, values, source labels and URLs, retains its captured output');
     const requireReference=(body:string)=>assert.ok(flat(body).includes(flat(replacement)),'the complete source unit and period must remain with its own reference range');const text=native.flatMap(item=>item.lines).join(' ');requireReference(text);assert.throws(()=>requireReference(text.replace(replacement,old)),'leaving the authored unit in English must fail');
     if(source.id==='cattle-dairy')assert.throws(()=>requireReference(text.replace(replacement,replacement.replace('kg','L'))),'a milk weight cannot turn into a volume');if(source.id==='chicken-layer')assert.throws(()=>requireReference(text.replace(replacement,replacement.replace('90','365'))),'the laying-cycle reference cannot become a365day annual total');

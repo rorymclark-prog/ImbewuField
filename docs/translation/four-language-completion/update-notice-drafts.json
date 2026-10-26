@@ -1482,6 +1482,34 @@
       "st": "Kgetha phoofolo, hlahloba diyuniti tsa ditshupiso tsa yona, ebe o hlahloba dikgwedi tseo o di netefaditseng.",
       "ts": "Hlawula xifuwo, kambela tiyuniti ta swikombo swa xona, kutani u kambela tin’hweti leti u ti tiyisiseke.",
       "ve": "Nangani tshipuka, ni sedzuluse yuniti dza zwikombo zwatsho, ni kone u sedzulusa miṅwedzi ye na khwaṱhisedza."
+    },
+    {
+      "english": "Animal reference notes have full draft translations with English originals.",
+      "zu": "Amanothi ezikhombo zezilwane anemibhalo yokuhumusha ephelele nemibhalo yokuqala yesiNgisi.",
+      "st": "Dintlha tsa ditshupiso tsa diphoofolo di na le diphetolelo tsa moralo tse felletseng le tsa pele tsa Senyesemane.",
+      "ts": "Tinotsi ta swikombo swa swifuwo ti ni tindzimana leti heleleke ta vuhundzuluxeri ni ta Xinghezi to sungula.",
+      "ve": "Notsi dza zwikombo zwa zwipuka dzi na mishumo yo fhelelaho ya ṱhalutshedzelo na dza u thoma dza Luisimane."
+    },
+    {
+      "english": "Review the age, system and units before using an animal reference.",
+      "zu": "Hlola ubudala, uhlelo lokufuya namayunithi ngaphambi kokusebenzisa isikhombo sesilwane.",
+      "st": "Hlahloba dilemo, mokgwa le diyuniti pele o sebedisa tshupiso ya phoofolo.",
+      "ts": "Kambela vukhale, mafambiselo ni tiyuniti u nga si tirhisa xikombo xa xifuwo.",
+      "ve": "Sedzulusani miṅwaha, maitele na yuniti phanḓa ha u shumisa tshikombo tsha tshipuka."
+    },
+    {
+      "english": "Read the full animal references",
+      "zu": "Funda izikhombo eziphelele zezilwane",
+      "st": "Bala ditshupiso tse felletseng tsa diphoofolo",
+      "ts": "Hlaya swikombo leswi heleleke swa swifuwo",
+      "ve": "Vhalani zwikombo zwo fhelelaho zwa zwipuka"
+    },
+    {
+      "english": "Open a number’s source note to read the draft and its original English.",
+      "zu": "Vula inothi lomthombo wenani ukuze ufunde umbhalo wokuhumusha nombhalo wawo wokuqala wesiNgisi.",
+      "st": "Bula ntlha ya mohlodi wa palo ho bala phetolelo ya moralo le ya yona ya pele ya Senyesemane.",
+      "ts": "Pfula notsi ya xihlovo xa nhlayo ku hlaya ndzimana ya vuhundzuluxeri ni ya yona ya Xinghezi yo sungula.",
+      "ve": "Vulani notsi ya tshiko tsha mbalo ni vhale mushumo wa ṱhalutshedzelo na wa Luisimane wa u thoma."
     }
   ],
   "historyBefore": [

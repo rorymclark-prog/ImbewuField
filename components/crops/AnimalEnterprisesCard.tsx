@@ -86,7 +86,15 @@ function SourceLink({ source, short = false }: { source: HarvestCitation; short?
   );
 }
 
-function Fact({ label, value, source, qualifier, note }: { label: string; value: string | null; source?: HarvestCitation; qualifier?: string; note?: string }) {
+function OriginalReferenceNote({ source, translated, language }: { source?: string; translated?: string; language: string }) {
+  if (!source || !isCropExportDraftLanguage(language) || translated === source) return null;
+  return <details data-original-animal-reference="true" className="mt-1" style={{ fontSize: 11.5 }}>
+    <summary style={{ cursor: 'pointer', minHeight: 44, padding: '10px 0', boxSizing: 'border-box' }}>{productGuideText('Original source note: {note}', language, { note: '' }).trim()}</summary>
+    <p lang="en" className="mt-1" style={{ overflowWrap: 'anywhere' }}>{source}</p>
+  </details>;
+}
+
+function Fact({ label, value, source, qualifier, note, originalNote }: { label: string; value: string | null; source?: HarvestCitation; qualifier?: string; note?: string; originalNote?: string }) {
   const { lang } = useLanguage();
   return (
     <div style={{ minWidth: 0 }}>
@@ -98,7 +106,8 @@ function Fact({ label, value, source, qualifier, note }: { label: string; value:
       {value && source && <SourceLink source={source} short />}
       {value && (note || source) && <details className="font-sans mt-1" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.45 }}>
         <summary style={{ cursor: 'pointer', minHeight: 44, padding: '10px 0', boxSizing: 'border-box' }}>{productGuideText('Where this number comes from', lang)}</summary>
-        {note && <p className="mt-1">{note}</p>}
+        {note && <p className="mt-1" style={isCropExportDraftLanguage(lang) ? { overflowWrap: 'anywhere' } : undefined}>{note}</p>}
+        <OriginalReferenceNote source={originalNote} translated={note} language={lang} />
         {source && <p className="mt-1"><SourceLink source={source} /></p>}
       </details>}
     </div>
@@ -142,13 +151,13 @@ function EnterpriseFacts({ e }: { e: AnimalEnterprise }) {
       )}
       <p className="font-sans mb-3" style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5 }}>{productGuideText("These are research references per animal. Check the age, system and units before using a figure for your farm.", lang)}</p>
       <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))' }}>
-        <Fact label={productGuideText('Production reference', lang)} value={rangeText(e.outputPerAnimal, enterpriseSourceText(e, 'outputUnit', e.outputUnit, lang) ?? e.outputUnit)} source={e.outputPerAnimal?.source} qualifier={productGuideText(animalReferenceQualifier(e, 'outputPerAnimal') ?? '', lang) || undefined} note={enterpriseSourceText(e, 'outputPerAnimal', e.outputPerAnimal?.note, lang)} />
+        <Fact label={productGuideText('Production reference', lang)} value={rangeText(e.outputPerAnimal, enterpriseSourceText(e, 'outputUnit', e.outputUnit, lang) ?? e.outputUnit)} source={e.outputPerAnimal?.source} qualifier={productGuideText(animalReferenceQualifier(e, 'outputPerAnimal') ?? '', lang) || undefined} note={enterpriseSourceText(e, 'outputPerAnimal', e.outputPerAnimal?.note, lang)} originalNote={e.outputPerAnimal?.note} />
         <Fact label={productGuideText('When', lang)} value={months.length ? e.windows.length === 1 ? `${formatMonthSpan(months, lang)} · ${enterpriseSourceText(e, 'region', firstWindow.region, lang)}` : productGuideText('{months} across SA sources', lang, { months: formatMonthSpan(months, lang) }) : null} source={firstWindow?.source} />
-        <Fact label={productGuideText('First product', lang)} value={e.weeksToFirstProduct ? formatWeeks(e.weeksToFirstProduct.value, lang) : null} source={e.weeksToFirstProduct?.source} qualifier={productGuideText(animalReferenceQualifier(e, 'weeksToFirstProduct') ?? '', lang) || undefined} note={enterpriseSourceText(e, 'weeksToFirstProduct', e.weeksToFirstProduct?.note, lang)} />
-        <Fact label={productGuideText('Productive life', lang)} value={rangeText(e.productiveLifeYears, productGuideText('years', lang))} source={e.productiveLifeYears?.source} qualifier={productGuideText(animalReferenceQualifier(e, 'productiveLifeYears') ?? '', lang) || undefined} note={enterpriseSourceText(e, 'productiveLifeYears', e.productiveLifeYears?.note, lang)} />
-        <Fact label={factLabel('Feed')} value={rangeText(e.feedKgPerDay, productGuideText('kg a day', lang))} source={e.feedKgPerDay?.source} qualifier={productGuideText(animalReferenceQualifier(e, 'feedKgPerDay') ?? '', lang) || undefined} note={enterpriseSourceText(e, 'feedKgPerDay', e.feedKgPerDay?.note, lang)} />
-        <Fact label={factLabel('Water')} value={rangeText(e.waterLPerDay, productGuideText('L a day', lang))} source={e.waterLPerDay?.source} qualifier={productGuideText(animalReferenceQualifier(e, 'waterLPerDay') ?? '', lang) || undefined} note={enterpriseSourceText(e, 'waterLPerDay', e.waterLPerDay?.note, lang)} />
-        <Fact label={factLabel('Space')} value={rangeText(e.spaceM2, 'm²')} source={e.spaceM2?.source} qualifier={productGuideText(animalReferenceQualifier(e, 'spaceM2') ?? '', lang) || undefined} note={enterpriseSourceText(e, 'spaceM2', e.spaceM2?.note, lang)} />
+        <Fact label={productGuideText('First product', lang)} value={e.weeksToFirstProduct ? formatWeeks(e.weeksToFirstProduct.value, lang) : null} source={e.weeksToFirstProduct?.source} qualifier={productGuideText(animalReferenceQualifier(e, 'weeksToFirstProduct') ?? '', lang) || undefined} note={enterpriseSourceText(e, 'weeksToFirstProduct', e.weeksToFirstProduct?.note, lang)} originalNote={e.weeksToFirstProduct?.note} />
+        <Fact label={productGuideText('Productive life', lang)} value={rangeText(e.productiveLifeYears, productGuideText('years', lang))} source={e.productiveLifeYears?.source} qualifier={productGuideText(animalReferenceQualifier(e, 'productiveLifeYears') ?? '', lang) || undefined} note={enterpriseSourceText(e, 'productiveLifeYears', e.productiveLifeYears?.note, lang)} originalNote={e.productiveLifeYears?.note} />
+        <Fact label={factLabel('Feed')} value={rangeText(e.feedKgPerDay, productGuideText('kg a day', lang))} source={e.feedKgPerDay?.source} qualifier={productGuideText(animalReferenceQualifier(e, 'feedKgPerDay') ?? '', lang) || undefined} note={enterpriseSourceText(e, 'feedKgPerDay', e.feedKgPerDay?.note, lang)} originalNote={e.feedKgPerDay?.note} />
+        <Fact label={factLabel('Water')} value={rangeText(e.waterLPerDay, productGuideText('L a day', lang))} source={e.waterLPerDay?.source} qualifier={productGuideText(animalReferenceQualifier(e, 'waterLPerDay') ?? '', lang) || undefined} note={enterpriseSourceText(e, 'waterLPerDay', e.waterLPerDay?.note, lang)} originalNote={e.waterLPerDay?.note} />
+        <Fact label={factLabel('Space')} value={rangeText(e.spaceM2, 'm²')} source={e.spaceM2?.source} qualifier={productGuideText(animalReferenceQualifier(e, 'spaceM2') ?? '', lang) || undefined} note={enterpriseSourceText(e, 'spaceM2', e.spaceM2?.note, lang)} originalNote={e.spaceM2?.note} />
       </div>
       {!isFoodProduct(e.product) && (
         <p className="font-sans mt-3" style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.45 }}>
@@ -163,7 +172,7 @@ function EnterpriseFacts({ e }: { e: AnimalEnterprise }) {
       {!!e.productionReferences?.length && <details className="mt-3 p-3 rounded-xl font-sans" style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--text-secondary)', background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
         <summary style={{ cursor: 'pointer', minHeight: 44, paddingTop: 10, color: 'var(--text-primary)', fontWeight: 600 }}>{productGuideText('Production by age & system', lang)}</summary>
         <p className="mt-2">{productGuideText("Match breed, stage and units to your stock. Enter your farm's expected or actual output separately.", lang)}</p>
-        <ul className="mt-2 flex flex-col gap-2" style={{ listStyle: 'disc', paddingInlineStart: 20 }}>{e.productionReferences.map((reference, index) => <li key={index}>{enterpriseReferenceText(e, 'productionReferences', index, reference.point, lang)} <SourceLink source={reference.source} /></li>)}</ul>
+        <ul className="mt-2 flex flex-col gap-2" style={{ listStyle: 'disc', paddingInlineStart: 20 }}>{e.productionReferences.map((reference, index) => <li key={index}>{enterpriseReferenceText(e, 'productionReferences', index, reference.point, lang)} <SourceLink source={reference.source} /><OriginalReferenceNote source={reference.point} translated={enterpriseReferenceText(e, 'productionReferences', index, reference.point, lang)} language={lang} /></li>)}</ul>
       </details>}
       {e.welfare.length > 0 && (
         <div className="mt-3">

@@ -1,0 +1,12 @@
+{
+  "base": "878fb20f112b9ebcddb0fff8e59f9b8c6c894dc9",
+  "sourceCount": 43,
+  "originalEnterprises": 15,
+  "capturedCardScenarios": 53,
+  "capturedMarkupStates": 318,
+  "guideContexts": 15,
+  "guideLanguageStates": 90,
+  "compressedSha256": "2c5d40fa8efa3e913926c19f89e9812dab5ae9309574ce2fb0e70b699d6e2290",
+  "uncompressedSha256": "c73d3cacac39adf20f02116baa3fd084374499d1f882c8007a4eec6cb2fe138a",
+  "status": "Immutable pre-change complete source capture. No translations authored or app changes applied yet. No whole-app completion claim."
+}
