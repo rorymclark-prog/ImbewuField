@@ -1,0 +1,960 @@
+{
+  "status": "Draft-only source preservation probe passed; not applied, no runtime translation claim.",
+  "uniqueSources": 91,
+  "nativeDrafts": 364,
+  "typedBindings": 91,
+  "existingPlantIdentities": 34,
+  "unchangedRegistryRows": 1465,
+  "unchangedGuideStates": 102,
+  "unchangedPurchasingStates": 102,
+  "sourceModules": 8,
+  "monthBindings": [
+    {
+      "row": 30,
+      "months": [
+        2
+      ]
+    },
+    {
+      "row": 36,
+      "months": [
+        11
+      ]
+    },
+    {
+      "row": 37,
+      "months": [
+        12
+      ]
+    },
+    {
+      "row": 44,
+      "months": [
+        1,
+        2
+      ]
+    }
+  ],
+  "literalCultivarMonthBindings": [
+    {
+      "row": 45,
+      "literal": "December"
+    },
+    {
+      "row": 46,
+      "literal": "December"
+    }
+  ],
+  "fieldBindings": [
+    {
+      "english": "Record the exact identity and obtain local expert food-use advice before counting it as household food.",
+      "fields": [
+        {
+          "speciesId": "lycium-cinereum",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Confirm exact species with a qualified indigenous nursery. Do not substitute genus-level berry claims for identification.",
+      "fields": [
+        {
+          "speciesId": "lycium-cinereum",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Keep this as an identified hedge/inventory plant. Seek expert local food-use review before treating berries as household food.",
+      "fields": [
+        {
+          "speciesId": "lycium-ferocissimum",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Confirm the exact species and intended hedge use with a local indigenous nursery.",
+      "fields": [
+        {
+          "speciesId": "lycium-ferocissimum",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Record planting batches and harvested leaves/fruit separately.",
+      "fields": [
+        {
+          "speciesId": "mesembryanthemum-crystallinum",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Match this frost-sensitive plant to dry saline/coastal conditions. Its accumulated salts can return to the soil as plants die.",
+      "fields": [
+        {
+          "speciesId": "mesembryanthemum-crystallinum",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Obtain exact-species seed or plants and assess the bed soil; no regional food cultivar or annual food yield is verified.",
+      "fields": [
+        {
+          "speciesId": "mesembryanthemum-crystallinum",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "SANBI records this tree in east-coast dune forest from Eastern Cape through KwaZulu-Natal, with tolerance of salty sea spray.",
+      "fields": [
+        {
+          "speciesId": "mimusops-afra",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Confirm Mimusops afra and lawful nursery provenance. Check current protected-tree collection requirements before taking plants or products from existing trees.",
+      "fields": [
+        {
+          "speciesId": "mimusops-afra",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Retain this climber in mapped inventory, but do not count it as normal household food until a qualified local specialist confirms identity, edible part and safe preparation.",
+      "fields": [
+        {
+          "speciesId": "momordica-balsamina",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "SANBI records it across South Africa except Western Cape, in varied habitats.",
+      "fields": [
+        {
+          "speciesId": "momordica-balsamina",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Resolve food-use and preparation with an experienced local food-plant specialist before buying it as a household crop.",
+      "fields": [
+        {
+          "speciesId": "momordica-balsamina",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Treat edible-fat preparation as a specialist process requiring local validation.",
+      "fields": [
+        {
+          "speciesId": "morella-cordifolia",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Use well-drained coastal sand with sun or semi-shade; fruit production needs correctly sexed planting material.",
+      "fields": [
+        {
+          "speciesId": "morella-cordifolia",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Confirm the exact species and male/female stock with an indigenous nursery. Keep landscape use separate from an unverified household food process.",
+      "fields": [
+        {
+          "speciesId": "morella-cordifolia",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Confirm the exact mulberry species and that the chosen plant is a fruiting form. Fruit colour alone cannot identify it.",
+      "fields": [
+        {
+          "speciesId": "morus-nigra",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Watch water stress during fruit development and record the actual ripe picking months.",
+      "fields": [
+        {
+          "speciesId": "morus-nigra",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Ask for identified Morus nigra fruiting material with a locally observed season. Do not use a generic black-fruited mulberry or fruitless ornamental as proof of this product.",
+      "fields": [
+        {
+          "speciesId": "morus-nigra",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "SANBI records this slow-growing tree in summer and winter rainfall areas, with frost, drought and wind resistance.",
+      "fields": [
+        {
+          "speciesId": "olea-europaea-subsp-africana",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Keep its roots away from walls, patios and pools; SANBI notes that they can be aggressive.",
+      "fields": [
+        {
+          "speciesId": "olea-europaea-subsp-africana",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Ask for the wild-olive taxon in the catalogue, rather than substituting a commercial olive cultivar. Record actual local picking.",
+      "fields": [
+        {
+          "speciesId": "olea-europaea-subsp-africana",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Match the cultivar to table olives or oil. Check drainage, irrigation and winter conditions; humid summer rainfall can bring disease problems.",
+      "fields": [
+        {
+          "speciesId": "olea-europaea-subsp-europaea",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Pick at the intended green, black or oil stage. Processing and safe kept-stock conditions must be recorded separately.",
+      "fields": [
+        {
+          "speciesId": "olea-europaea-subsp-europaea",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Mission is a source-backed black-table and oil candidate; Kalamata is for black table olives; Manzanilla and Barouni for green table olives; Frantoio for oil and compatible pollen. Confirm regional fit through SA Olive's registered nurseries.",
+      "fields": [
+        {
+          "speciesId": "olea-europaea-subsp-europaea",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "SANBI describes a spreading pioneer shrub for sun and well-drained soil, including coastal and inland habitats. Leave room for its spread.",
+      "fields": [
+        {
+          "speciesId": "osteospermum-moniliferum",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Confirm the exact species and local provenance; the checked source gives no named fruit cultivar.",
+      "fields": [
+        {
+          "speciesId": "osteospermum-moniliferum",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Female palms need suitable male pollen. Record sex, cultivar and pollination management before forecasting fruit.",
+      "fields": [
+        {
+          "speciesId": "phoenix-dactylifera",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Check heat, water and rain during ripening. The Hermon trial found uneven ripening and spoilage, so regional success alone does not establish a local crop.",
+      "fields": [
+        {
+          "speciesId": "phoenix-dactylifera",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Medjool is documented in the Hermon study. Obtain known fruiting female material and compatible pollen advice; a seedling's sex and eventual fruit quality are not established by its appearance.",
+      "fields": [
+        {
+          "speciesId": "phoenix-dactylifera",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Female trees bear nuts and need pollen from suitable male trees. The Prieska reference comes from a dry, irrigated Karoo farm.",
+      "fields": [
+        {
+          "speciesId": "pistacia-vera",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Confirm male and female planting material, irrigation and local winter/summer conditions; a February producer reference does not validate a humid coast.",
+      "fields": [
+        {
+          "speciesId": "pistacia-vera",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Discuss Shufrah and Ariyeh from the Prieska producer evidence, or Shufra, Ariyeh and Sirora from the Prince Albert project, with a specialist nursery. Select a compatible male and confirm local fit.",
+      "fields": [
+        {
+          "speciesId": "pistacia-vera",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Protect young plants from heavy browsing. SANBI reports warm rocky and semi-arid habitats; ground-level goat browsing can prevent vegetative spread and reduce regeneration.",
+      "fields": [
+        {
+          "speciesId": "portulacaria-afra",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Ask for correctly identified spekboom and record whether it is planted for food, browse or restoration. No measured household leaf yield is supplied.",
+      "fields": [
+        {
+          "speciesId": "portulacaria-afra",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Keep each cultivar's picking reference separate. The Robertson example used summer irrigation.",
+      "fields": [
+        {
+          "speciesId": "prunus-armeniaca",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Confirm winter chilling, water and the actual planting material before using a reference as a local plan.",
+      "fields": [
+        {
+          "speciesId": "prunus-armeniaca",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Solitaire has a sourced November first-pick reference and named chilling context at Simondium; discuss its local fit with the nursery.",
+      "fields": [
+        {
+          "speciesId": "prunus-armeniaca",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Imperial has a December reference at Robertson. This is a local trial candidate, not advice for frost-free coastal KZN.",
+      "fields": [
+        {
+          "speciesId": "prunus-armeniaca",
+          "field": "purchase",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Check measured winter chilling, spring frost, drainage and rain near picking. The older KZN guide regarded commercial suitability there as still under trial; a broad climate-zone label does not replace current local advice.",
+      "fields": [
+        {
+          "speciesId": "prunus-avium",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Pollination depends on the selected cultivar. Compatible flowering and pollen sources are separate from early or late fruit ripening.",
+      "fields": [
+        {
+          "speciesId": "prunus-avium",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Regional guide candidates include Bing, Van, Rainier, Burlat and Vista, which generally need compatible pollen partners. It explicitly lists Lapins, Stella and Sweetheart as self-fertile. Minnie Royal, Royal Lee, Royal Dawn and Early Sweet are lower-chill candidates. Confirm current stock, exact rootstock, compatibility and measured local chilling before purchase; this is not a warm-coast recommendation.",
+      "fields": [
+        {
+          "speciesId": "prunus-avium",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Check the named cultivar's winter needs and compatible pollen before planting. Texas Mission is self-incompatible.",
+      "fields": [
+        {
+          "speciesId": "prunus-dulcis",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Record whether nut weights mean kernels or nuts in shell; these are different quantities.",
+      "fields": [
+        {
+          "speciesId": "prunus-dulcis",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Texas Mission is a documented SAPO cultivar; its sheet names Nonpareil as pollen partner and describes a high chilling requirement. Confirm local suitability with the nursery.",
+      "fields": [
+        {
+          "speciesId": "prunus-dulcis",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Record the named cultivar and actual first and last picking months. January and February references are alternatives, not a mixed-orchard calendar for every tree.",
+      "fields": [
+        {
+          "speciesId": "pyrus-communis",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Rosemarie Select is a source-backed Western Cape candidate to discuss with the nursery. Ask about December or Packham's Triumph as compatible pollen partners.",
+      "fields": [
+        {
+          "speciesId": "pyrus-communis",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "For Packham's Triumph, ask about Clapp's Favourite, December or Starkrimson and check local winter conditions.",
+      "fields": [
+        {
+          "speciesId": "pyrus-communis",
+          "field": "purchase",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Confirm exact identity and the intended food preparation with an experienced local adviser.",
+      "fields": [
+        {
+          "speciesId": "rhamnus-prinoides",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "The South African account describes stream-bank/forest-slope growth and frost resistance; its berries are described as bird food.",
+      "fields": [
+        {
+          "speciesId": "rhamnus-prinoides",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Buy exact-species stock for the verified intended use. Do not treat medicinal or wildlife-fruit evidence as a fresh household-food forecast.",
+      "fields": [
+        {
+          "speciesId": "rhamnus-prinoides",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Provide climbing support and control its spread where space is limited. SANBI records coastal dunes and forest margins from Western Cape to KwaZulu-Natal and Mpumalanga.",
+      "fields": [
+        {
+          "speciesId": "rhoicissus-digitata",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Confirm Rhoicissus digitata; other wild-grape species have different descriptions and cannot supply its dates.",
+      "fields": [
+        {
+          "speciesId": "rhoicissus-digitata",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Provide a trellis or other support. Young plants need water until established; SANBI describes later drought tolerance and sun to semi-shade use.",
+      "fields": [
+        {
+          "speciesId": "rhoicissus-tridentata",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Ask for Rhoicissus tridentata and record local ripe-fruit months. Do not use medicinal or animal root use as food evidence.",
+      "fields": [
+        {
+          "speciesId": "rhoicissus-tridentata",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Use well-drained soil and adequate water during establishment; avoid waterlogging and root rot.",
+      "fields": [
+        {
+          "speciesId": "salvia-rosmarinus",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Record fresh leaves, dried seasoning and essential oil as different products.",
+      "fields": [
+        {
+          "speciesId": "salvia-rosmarinus",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Obtain identified healthy rosemary material and local growing advice; no regional culinary-leaf yield variety is verified.",
+      "fields": [
+        {
+          "speciesId": "salvia-rosmarinus",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Its natural setting includes dry stream banks in the Little Karoo and drier Eastern and southern Western Cape.",
+      "fields": [
+        {
+          "speciesId": "schotia-afra-var-afra",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "The pods disperse seeds when dry. Record your local seed collection and use; this is not a measured food yield.",
+      "fields": [
+        {
+          "speciesId": "schotia-afra-var-afra",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Ask for Schotia afra var. afra, with botanical identity confirmed. The source's five-year shade claim is not a first-food age.",
+      "fields": [
+        {
+          "speciesId": "schotia-afra-var-afra",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "SANBI records this frost- and drought-resistant shade tree in Karoo and Kalahari conditions.",
+      "fields": [
+        {
+          "speciesId": "searsia-lancea-rhus-lancea",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Large amounts of its leaves can taint dairy milk, according to SANBI; this is not a ration recommendation.",
+      "fields": [
+        {
+          "speciesId": "searsia-lancea-rhus-lancea",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Ask about male and female plants if fruit is intended. Natural distribution in the source excludes KwaZulu-Natal; broad hardiness is not a local fruit guarantee.",
+      "fields": [
+        {
+          "speciesId": "searsia-lancea-rhus-lancea",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Pick ripe fruit and record drying separately.",
+      "fields": [
+        {
+          "speciesId": "searsia-lucida",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "This shrub suits exposed coastal gardens and dune stabilisation; confirm local provenance.",
+      "fields": [
+        {
+          "speciesId": "searsia-lucida",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Ask an indigenous nursery for exact species and local material. No regional high-yield food cultivar is verified.",
+      "fields": [
+        {
+          "speciesId": "searsia-lucida",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Allow fruit to ripen. This drought-resistant shrub can form a hedge; prune to suit the space.",
+      "fields": [
+        {
+          "speciesId": "searsia-natalensis",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Confirm the exact species with a local indigenous-plant nursery; no tested regional cultivar or quantified yield selection is established.",
+      "fields": [
+        {
+          "speciesId": "searsia-natalensis",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Record ripe fruit picking and drying separately. No storage duration or fermentation recipe is assigned.",
+      "fields": [
+        {
+          "speciesId": "searsia-undulata",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Confirm the exact species and local provenance; the SANBI assessment places it on stony fynbos/karroid slopes of the Northern and Western Cape.",
+      "fields": [
+        {
+          "speciesId": "searsia-undulata",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Shelter this coastal tree from direct salt-laden sea wind; SANBI reports salt burn despite its coastal habitat.",
+      "fields": [
+        {
+          "speciesId": "sideroxylon-inerme",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Ask a nursery to confirm the species and lawful provenance. Check current collection requirements before taking plants or products from existing trees.",
+      "fields": [
+        {
+          "speciesId": "sideroxylon-inerme",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Harvest young leafy tops; wash off sand before cooking.",
+      "fields": [
+        {
+          "speciesId": "tetragonia-decumbens",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Use well-drained coastal sand and keep divided plants moist until established.",
+      "fields": [
+        {
+          "speciesId": "tetragonia-decumbens",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Obtain correctly identified coastal planting material; record local growth and leaf-picking months because rainy seasons differ across South Africa.",
+      "fields": [
+        {
+          "speciesId": "tetragonia-decumbens",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Harvest young shoots for cooking. Record food harvest separately from animal fodder.",
+      "fields": [
+        {
+          "speciesId": "tetragonia-fruticosa",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Use a sunny, well-drained coastal, fynbos or Karoo position suited to this water-wise pioneer.",
+      "fields": [
+        {
+          "speciesId": "tetragonia-fruticosa",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Obtain correctly identified local planting material; no named food cultivar or annual kg/plant benchmark is sourced.",
+      "fields": [
+        {
+          "speciesId": "tetragonia-fruticosa",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Record picking of young flower buds separately from open flowers.",
+      "fields": [
+        {
+          "speciesId": "trachyandra-ciliata",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Match the plant to well-drained coastal sandy conditions and its seasonal growth.",
+      "fields": [
+        {
+          "speciesId": "trachyandra-ciliata",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Use exact-species nursery identification; no first bud harvest age or food kg/plant benchmark is verified.",
+      "fields": [
+        {
+          "speciesId": "trachyandra-ciliata",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Match this fast pioneer to warm, moist eastern/northern conditions; protect damp, shaded seedlings.",
+      "fields": [
+        {
+          "speciesId": "trema-orientalis",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Record young-leaf harvest separately from fruit consumed by wildlife.",
+      "fields": [
+        {
+          "speciesId": "trema-orientalis",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Use correctly identified local planting material; no named leaf-food cultivar or quantified annual food output is verified.",
+      "fields": [
+        {
+          "speciesId": "trema-orientalis",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "It tolerates prolonged drought but grows better with regular water. SANBI records its eastern South African distribution.",
+      "fields": [
+        {
+          "speciesId": "tulbaghia-violacea",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Ask for Tulbaghia violacea, rather than a plant identified only as wild garlic. Record local leaf and flower picking separately.",
+      "fields": [
+        {
+          "speciesId": "tulbaghia-violacea",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Use the planting date to record the rhizome harvest cycle. The Pretoria trial reference is conditional, not a fixed calendar across climates.",
+      "fields": [
+        {
+          "speciesId": "zingiber-officinale",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Record fresh rhizome and dried spice weights separately; keep edible ginger distinct from ornamental or African ginger species.",
+      "fields": [
+        {
+          "speciesId": "zingiber-officinale",
+          "field": "care",
+          "index": 1
+        }
+      ]
+    },
+    {
+      "english": "Ask a local supplier for healthy, identified Zingiber officinale planting rhizomes; no South African cultivar-specific yield curve is verified.",
+      "fields": [
+        {
+          "speciesId": "zingiber-officinale",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "SANBI records a wide range from frost-free coast to winter-frost regions. Its hooked and straight thorns matter when choosing access routes.",
+      "fields": [
+        {
+          "speciesId": "ziziphus-mucronata",
+          "field": "care",
+          "index": 0
+        }
+      ]
+    },
+    {
+      "english": "Ask for an identified buffalo-thorn plant suited to local conditions; the checked source supplies no named food cultivar.",
+      "fields": [
+        {
+          "speciesId": "ziziphus-mucronata",
+          "field": "purchase",
+          "index": 0
+        }
+      ]
+    }
+  ]
+}

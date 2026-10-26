@@ -1,0 +1,197 @@
+{
+  "status": "Draft refinement only; no fluent approval, source edits or runtime application.",
+  "edits": [
+    {
+      "index": 1,
+      "english": "Confirm exact species with a qualified indigenous nursery. Do not substitute genus-level berry claims for identification.",
+      "language": "zu",
+      "before": "Qinisekisa uhlobo oluqondile ngenkulisa yezitshalo zomdabu enobungcweti. Ungasebenzisi izimangalo zamajikijolo zohlobo-jikelele esikhundleni sokuqinisekisa ubunikazi.",
+      "after": "Qinisekisa uhlobo oluqondile ngenkulisa yezitshalo zomdabu enobungcweti. Ungasebenzisi izimangalo zamajikijolo ezingeni le-genus esikhundleni sokuhlonza uhlobo.",
+      "reason": "Retain the source genus-level distinction explicitly, rather than generic wording."
+    },
+    {
+      "index": 1,
+      "english": "Confirm exact species with a qualified indigenous nursery. Do not substitute genus-level berry claims for identification.",
+      "language": "st",
+      "before": "Netefatsa mofuta o nepahetseng setsing sa dimela tsa tlhaho se nang le tsebo e loketseng. O se ke wa sebedisa ditlaleho tsa monokotshwai tsa sehlopha sa mefuta ho ena le ho hlwaya mofuta hantle.",
+      "after": "Netefatsa mofuta o nepahetseng setsing sa dimela tsa tlhaho se nang le tsebo e loketseng. O se ke wa sebedisa ditlaleho tsa monokotshwai boemong ba genus ho ena le ho hlwaya mofuta hantle.",
+      "reason": "Retain genus as the specific taxonomic level."
+    },
+    {
+      "index": 1,
+      "english": "Confirm exact species with a qualified indigenous nursery. Do not substitute genus-level berry claims for identification.",
+      "language": "ts",
+      "before": "Tiyisisa muxaka lowu kongomeke eka ndhawu yo kurisa swimilana swa ndhavuko leyi nga ni vuswikoti. U nga siveli ku tiyisisa muxaka hi swiviko swa mihandzu leyitsongo leswi khumbaka ntlawa wa mixaka ntsena.",
+      "after": "Tiyisisa muxaka lowu kongomeke eka ndhawu yo kurisa swimilana swa ndhavuko leyi nga ni vuswikoti. U nga siveli ku tiva muxaka hi swiviko swa mihandzu leyitsongo swa xiyimo xa genus.",
+      "reason": "Retain genus as the specific taxonomic level."
+    },
+    {
+      "index": 1,
+      "english": "Confirm exact species with a qualified indigenous nursery. Do not substitute genus-level berry claims for identification.",
+      "language": "ve",
+      "before": "Khwaṱhisedzani lushaka lwo teaho na neseḽi ya zwimela zwa henefho i re na ndalukanyo. Ni songo shumisa zwine zwa ambiwa nga mitshelo miṱuku kha tshigwada tsha tshaka sa u dzhiela vhudzulo u topola lushaka nga vhuḓalo.",
+      "after": "Khwaṱhisedzani lushaka lwo teaho na neseḽi ya zwimela zwa henefho i re na ndalukanyo. Ni songo dzhia zwine zwa ambiwa nga mitshelo miṱuku kha vhuimo ha genus sa u dzhiela vhudzulo u topola lushaka nga vhuḓalo.",
+      "reason": "Retain genus as the specific taxonomic level."
+    },
+    {
+      "index": 13,
+      "english": "Use well-drained coastal sand with sun or semi-shade; fruit production needs correctly sexed planting material.",
+      "language": "ve",
+      "before": "Shumisani muṱavha wa khunzi u bvisaho maḓi zwavhuḓi, ḓuvhani kana murunzini u sa fhelelaho; u bveledza mitshelo zwi ṱoḓa zwimela zwa u ṱavha zwo topolwaho mbeu yazwo ya tshiduna kana tshisadzi zwavhuḓi.",
+      "after": "Shumisani muṱavha wa khunzi u bvisaho maḓi zwavhuḓi, ḓuvhani kana murunzini u sa fhelelaho; u bveledza mitshelo zwi ṱoḓa zwimela zwa u ṱavha zwo topolwaho zwavhuḓi uri ndi zwa tshiduna kana tshisadzi.",
+      "reason": "Make plant sex explicit without an ambiguous seed term."
+    },
+    {
+      "index": 21,
+      "english": "Match the cultivar to table olives or oil. Check drainage, irrigation and winter conditions; humid summer rainfall can bring disease problems.",
+      "language": "ts",
+      "before": "Fananisa muxaka lowu hlawuriweke ni tiolive to dyiwa kumbe mafurha. Kambela ku huma ka mati emunyuveni wa misava, ku cheleta ni swiyimo swa xixika; mpfula ya ximumu leyi nga ni ndzhongo yi nga tisa swiphiqo swa mavabyi.",
+      "after": "Fananisa muxaka lowu hlawuriweke ni tiolive to dyiwa kumbe mafurha. Kambela ku huma ka mati emisaveni, ku cheleta ni swiyimo swa xixika; mpfula ya ximumu leyi nga ni ndzhongo yi nga tisa swiphiqo swa mavabyi.",
+      "reason": "Remove an incorrect drainage-location word; source says drainage without another condition."
+    },
+    {
+      "index": 48,
+      "english": "The South African account describes stream-bank/forest-slope growth and frost resistance; its berries are described as bird food.",
+      "language": "ve",
+      "before": "Mafhungo a South Africa a ṱalusa u aluwa mativhani a milambwana na mithavhani ya maḓaka na u konḓelela murotholo wa gwanda; mitshelo yatsho miṱuku i ṱaluswa sa zwiḽiwa zwa zwiṋoni.",
+      "after": "Mafhungo a South Africa a ṱalusa u aluwa mathungoni a milambwana na fhethu ho sendamaho ha maḓaka na u konḓelela murotholo wa gwanda; mitshelo yatsho miṱuku i ṱaluswa sa zwiḽiwa zwa zwiṋoni.",
+      "reason": "Stream banks and forest slopes, rather than pools or entire mountains."
+    },
+    {
+      "index": 50,
+      "english": "Provide climbing support and control its spread where space is limited. SANBI records coastal dunes and forest margins from Western Cape to KwaZulu-Natal and Mpumalanga.",
+      "language": "ve",
+      "before": "Ṋeani tshitsigiso tsha u gonyelela ni lange u phaḓalala hatsho hune tshikhala tsha vha tshiṱuku. SANBI i tshi rekhoda kha zwikwara zwa muṱavha zwa khunzi na mathomoni a maḓaka u bva Western Cape u ya KwaZulu-Natal na Mpumalanga.",
+      "after": "Ṋeani tshitsigiso tsha u gonyelela ni lange u phaḓalala hatsho hune tshikhala tsha vha tshiṱuku. SANBI i tshi rekhoda kha zwikwara zwa muṱavha zwa khunzi na mathungoni a maḓaka u bva Western Cape u ya KwaZulu-Natal na Mpumalanga.",
+      "reason": "Forest margins remain edges, not a different habitat."
+    },
+    {
+      "index": 55,
+      "english": "Record fresh leaves, dried seasoning and essential oil as different products.",
+      "language": "zu",
+      "before": "Bhala amaqabunga amasha, isinongo esomisiwe namafutha abalulekile ezitshalo njengemikhiqizo ehlukene.",
+      "after": "Bhala amaqabunga amasha, isinongo esomisiwe namafutha ephunga lesitshalo (essential oil) njengemikhiqizo ehlukene.",
+      "reason": "Preserve the technical essential-oil product; do not mistranslate essential as important or a nutritional requirement."
+    },
+    {
+      "index": 55,
+      "english": "Record fresh leaves, dried seasoning and essential oil as different products.",
+      "language": "st",
+      "before": "Rekota makgasi a foreshe, senoko se omisitsweng le oli ya monko wa semela e le dihlahiswa tse fapaneng.",
+      "after": "Rekota makgasi a foreshe, senoko se omisitsweng le oli ya monko wa semela (essential oil) e le dihlahiswa tse fapaneng.",
+      "reason": "Preserve the technical essential-oil product; do not mistranslate essential as important or a nutritional requirement."
+    },
+    {
+      "index": 55,
+      "english": "Record fresh leaves, dried seasoning and essential oil as different products.",
+      "language": "ts",
+      "before": "Rhekhoda matluka lamantshwa, swo nandzihisa leswi omisiweke ni mafurha ya risuna ra ximilana tani hi swikumiwa leswi hambaneke.",
+      "after": "Rhekhoda matluka lamantshwa, swo nandzihisa leswi omisiweke ni mafurha ya risuna ra ximilana (essential oil) tani hi swikumiwa leswi hambaneke.",
+      "reason": "Preserve the technical essential-oil product; do not mistranslate essential as important or a nutritional requirement."
+    },
+    {
+      "index": 55,
+      "english": "Record fresh leaves, dried seasoning and essential oil as different products.",
+      "language": "ve",
+      "before": "Rekhodani maṱari maswa, tshinaki tsho omiswaho na mapfura a munukhelelo wa tshimela sa zwibveledzwa zwo fhambanaho.",
+      "after": "Rekhodani maṱari maswa, tshinaki tsho omiswaho na mapfura a munukhelelo wa tshimela (essential oil) sa zwibveledzwa zwo fhambanaho.",
+      "reason": "Preserve the technical essential-oil product; do not mistranslate essential as important or a nutritional requirement."
+    },
+    {
+      "index": 57,
+      "english": "Its natural setting includes dry stream banks in the Little Karoo and drier Eastern and southern Western Cape.",
+      "language": "zu",
+      "before": "Indawo yaso yemvelo ihlanganisa osebeni lwemifudlana eyomile e-Little Karoo nasezindaweni ezomile kakhulu zase-Eastern Cape naseningizimu ye-Western Cape.",
+      "after": "Indawo yaso yemvelo ihlanganisa osebeni olomile lwemifudlana e-Little Karoo nasezindaweni ezomile kakhulu zase-Eastern Cape naseningizimu ye-Western Cape.",
+      "reason": "Source dryness qualifies the banks, not necessarily the streams."
+    },
+    {
+      "index": 57,
+      "english": "Its natural setting includes dry stream banks in the Little Karoo and drier Eastern and southern Western Cape.",
+      "language": "st",
+      "before": "Tikoloho ya sona ya tlhaho e kenyelletsa mabopo a melatswana a ommeng Little Karoo le dibakeng tse ommeng ho feta tsa Eastern Cape le borwa ba Western Cape.",
+      "after": "Tikoloho ya sona ya tlhaho e kenyelletsa mabopo a ommeng a melatswana Little Karoo le dibakeng tse ommeng ho feta tsa Eastern Cape le borwa ba Western Cape.",
+      "reason": "Source dryness qualifies the banks, not necessarily the streams."
+    },
+    {
+      "index": 57,
+      "english": "Its natural setting includes dry stream banks in the Little Karoo and drier Eastern and southern Western Cape.",
+      "language": "ts",
+      "before": "Ndhawu ya xona ya ntumbuluko yi katsa maribuwa ya milambu leyitsongo leyi omeke eLittle Karoo ni le tindhawini leti omeke swinene ta Eastern Cape ni le dzongeni ra Western Cape.",
+      "after": "Ndhawu ya xona ya ntumbuluko yi katsa maribuwa lama omeke ya milambu leyitsongo eLittle Karoo ni le tindhawini leti omeke swinene ta Eastern Cape ni le dzongeni ra Western Cape.",
+      "reason": "Source dryness qualifies the banks, not necessarily the streams."
+    },
+    {
+      "index": 58,
+      "english": "The pods disperse seeds when dry. Record your local seed collection and use; this is not a measured food yield.",
+      "language": "zu",
+      "before": "Amahlanga embewu asabalalisa imbewu lapho esomile. Bhala ukuqoqwa nokusetshenziswa kwembewu endaweni yakini; lokhu akusona isivuno sokudla esilinganisiwe.",
+      "after": "Imidumba isabalalisa imbewu lapho yomile. Bhala ukuqoqwa nokusetshenziswa kwembewu endaweni yakini; lokhu akusona isivuno sokudla esilinganisiwe.",
+      "reason": "Pods remain seed pods, not stalks or flower heads; preserve the technical loan where native terminology remains unreviewed."
+    },
+    {
+      "index": 58,
+      "english": "The pods disperse seeds when dry. Record your local seed collection and use; this is not a measured food yield.",
+      "language": "st",
+      "before": "Mahlaka a peo a hasanya dipeo ha a omme. Rekota ho bokella le ho sebedisa peo sebakeng sa heno; sena ha se kotulo ya dijo e lekantsweng.",
+      "after": "Li-pod (mekotlana ya peo) di hasanya dipeo ha di omme. Rekota ho bokella le ho sebedisa peo sebakeng sa heno; sena ha se kotulo ya dijo e lekantsweng.",
+      "reason": "Pods remain seed pods, not stalks or flower heads; preserve the technical loan where native terminology remains unreviewed."
+    },
+    {
+      "index": 58,
+      "english": "The pods disperse seeds when dry. Record your local seed collection and use; this is not a measured food yield.",
+      "language": "ts",
+      "before": "Swiphotso swi hangalasa mbewu loko swi omile. Rhekhoda ku hlengeleta ni ku tirhisa mbewu ka laha kaya; leswi a hi ntshovelo wa swakudya lowu pimiweke.",
+      "after": "Ti-pod (swikhwama swa mbewu) ti hangalasa mbewu loko ti omile. Rhekhoda ku hlengeleta ni ku tirhisa mbewu ka laha kaya; leswi a hi ntshovelo wa swakudya lowu pimiweke.",
+      "reason": "Pods remain seed pods, not stalks or flower heads; preserve the technical loan where native terminology remains unreviewed."
+    },
+    {
+      "index": 58,
+      "english": "The pods disperse seeds when dry. Record your local seed collection and use; this is not a measured food yield.",
+      "language": "ve",
+      "before": "Makhanda a mbeu a phaḓaladza mbeu musi o oma. Rekhodani u kuvhanganya na u shumisa mbeu ha henefho; izwi a si khaṋo yo kaliwaho ya zwiḽiwa.",
+      "after": "Dzi-pod (zwikwama zwa mbeu) dzi phaḓaladza mbeu musi dzo oma. Rekhodani u kuvhanganya na u shumisa mbeu ha henefho; izwi a si khaṋo yo kaliwaho ya zwiḽiwa.",
+      "reason": "Pods remain seed pods, not stalks or flower heads; preserve the technical loan where native terminology remains unreviewed."
+    },
+    {
+      "index": 59,
+      "english": "Ask for Schotia afra var. afra, with botanical identity confirmed. The source's five-year shade claim is not a first-food age.",
+      "language": "ts",
+      "before": "Kombela Schotia afra var. afra, muxaka wa xona wa xibotani wu tiyisisiwile. Rungula ra xihlovo ra ndzhuti hi ntlhanu wa tindzava ta lembe a ri vuli vukhale bya swakudya swo sungula.",
+      "after": "Kombela Schotia afra var. afra, muxaka wa xona wa xibotani wu tiyisisiwile. Rungula ra xihlovo ra ndzhuti hi nkarhi wa malembe ya ntlhanu a ri vuli vukhale bya swakudya swo sungula.",
+      "reason": "Correct the five-year wording without introducing a digit or first-food age."
+    },
+    {
+      "index": 61,
+      "english": "Large amounts of its leaves can taint dairy milk, according to SANBI; this is not a ration recommendation.",
+      "language": "zu",
+      "before": "Ngokusho kwe-SANBI, amaqabunga aso amaningi angashintsha ukunambitheka kobisi lwezilwane zobisi; lokhu akusona isincomo sesabelo sokudla.",
+      "after": "Ngokusho kwe-SANBI, amaqabunga aso amaningi angonakalisa ukunambitheka kobisi lwezilwane zobisi; lokhu akusona isincomo sesabelo sokudla.",
+      "reason": "Taint is adverse taste, not a neutral flavour change or a feeding recommendation."
+    },
+    {
+      "index": 61,
+      "english": "Large amounts of its leaves can taint dairy milk, according to SANBI; this is not a ration recommendation.",
+      "language": "ts",
+      "before": "Hi ku ya hi SANBI, matluka ya xona yo tala ya nga cinca nantswo wa ntswamba wa swifuwo swa masi; leswi a hi swibumabumelo swa mpimo wa swakudya.",
+      "after": "Hi ku ya hi SANBI, matluka ya xona yo tala ya nga onha nantswo wa ntswamba wa swifuwo swa masi; leswi a hi swibumabumelo swa mpimo wa swakudya.",
+      "reason": "Retain adverse taste without claiming milk decomposition or a ration."
+    },
+    {
+      "index": 61,
+      "english": "Large amounts of its leaves can taint dairy milk, according to SANBI; this is not a ration recommendation.",
+      "language": "ve",
+      "before": "U ya nga SANBI, maṱari atsho manzhi a nga shandula muthetshelo wa mafhi a zwifuwo zwa mafhi; izwi a si themendelo ya mukovhe wa zwiḽiwa.",
+      "after": "U ya nga SANBI, maṱari atsho manzhi a nga tshinya muthetshelo wa mafhi a zwifuwo zwa mafhi; izwi a si themendelo ya mukovhe wa zwiḽiwa.",
+      "reason": "Retain adverse taste without claiming milk decomposition or a ration."
+    },
+    {
+      "index": 88,
+      "english": "Ask a local supplier for healthy, identified Zingiber officinale planting rhizomes; no South African cultivar-specific yield curve is verified.",
+      "language": "st",
+      "before": "Kopa mofani wa lehae di-rhizome tsa ho lema tsa Zingiber officinale tse phetseng hantle tse hlwauweng; ha ho lekhalo la tlhahiso la mofuta o itseng wa South Africa le netefaditsweng.",
+      "after": "Kopa mofani wa lehae di-rhizome tsa ho lema tsa Zingiber officinale tse phetseng hantle tse hlwauweng; ha ho kerafo ya kotulo ya mofuta o itseng wa South Africa e netefaditsweng.",
+      "reason": "A yield curve is a graph, not a gap."
+    }
+  ]
+}

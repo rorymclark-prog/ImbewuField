@@ -1,0 +1,10 @@
+{
+  "base": "64b39585de1a52139991cbbf4b198c21ace84add",
+  "compressedSha256": "4303e5c16ac36368506d5329596207f5b8b6e655dbd0add3af4e0321bf9c25dd",
+  "uncompressedSha256": "2c049e1137311977b0e1386ce5c75d41009998a41a6dd63d6a5456dacb260317",
+  "contexts": 17,
+  "guideStates": 102,
+  "markdownStates": 102,
+  "species": 103,
+  "status": "Immutable before-capture; source, figures, species and all complete guide decisions retained."
+}
