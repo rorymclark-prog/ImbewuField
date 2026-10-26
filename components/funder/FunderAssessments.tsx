@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/lib/auth';
 import { translate, useLanguage } from '@/lib/i18n';
-import { userFacingMessage } from '@/lib/user-facing-error';
+import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 import { isSampleMode } from '@/lib/sample-mode';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { MelMetrics, melRequest } from '@/components/MelDashboard';
@@ -30,7 +30,7 @@ export default function FunderAssessments() {
     void (async () => {
       try {
         const res = await fetch('/api/network/orgs', { headers: await paidApiHeaders() });
-        const body = await res.json(); if (!res.ok) throw new Error(body.error);
+        const body = await res.json(); if (!res.ok) throw new UserFacingError(typeof body.error === 'string' ? body.error : translate(lang, 'networkFailed'));
         if (!cancelled) { setOrgs(body.orgs); setOrg(body.orgs[0]?.id ?? ''); }
       } catch (e) { if (!cancelled) setError(failure(e)); }
     })();

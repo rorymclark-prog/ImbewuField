@@ -24,10 +24,12 @@ export function currentFieldClient() {
       try {
         return await Promise.race([timeout, (async () => {
           const headers = await paidApiHeaders(actor); assertCurrent();
-          if (controller.signal.aborted) throw Error('Connection timed out.');
+          if (controller.signal.aborted) throw new UserFacingError('Connection timed out.');
           const response = await fetch(url, { method: body ? 'POST' : 'GET', headers: { ...headers, 'Content-Type': 'application/json' }, body: body ? JSON.stringify(body) : undefined, cache: 'no-store', signal: controller.signal });
           assertCurrent(); const data = await response.json();
-          if (!response.ok) throw Object.assign(Error(data.error ?? 'This request could not be completed.'), { status: response.status });
+          // The fieldwork routes write their error bodies for staff ("This organisation is outside your access.",
+          // "Check the site code, date, areas…"), and /offline already shows them as written (w25-09).
+          if (!response.ok) throw Object.assign(new UserFacingError(typeof data.error === 'string' ? data.error : 'This request could not be completed.'), { status: response.status });
           return data;
         })()]);
       } finally { clearTimeout(timer); }

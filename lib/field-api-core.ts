@@ -7,7 +7,8 @@ export function createFieldClient(options: FieldClientOptions) {
   const cacheKey = (url: string) => `${scope}|cache|${url}`;
   const all = async () => { assertCurrent(); const rows = await store.all(scope); assertCurrent(); return rows; };
   const writes = async () => (await all()).filter(row => row.kind === 'write');
-  function durableError(error: unknown) { return Error(`Could not save on this device. Keep the form open. ${error instanceof Error ? error.message : ''}`); }
+  // The storage engine's own wording (IndexedDB, quota) is not for the farmer; an app-written reason is kept (w25-09).
+  function durableError(error: unknown) { return new UserFacingError(`Could not save on this device. Keep the form open. ${error instanceof UserFacingError ? error.message : ''}`.trim()); }
   async function saveRow(row: DeviceRow) { assertCurrent(); await store.change(row.key, () => { assertCurrent(); return row; }); assertCurrent(); }
   async function cacheRead(url: string, value: any) {
     try { await saveRow({ key: cacheKey(url), scope, kind: 'cache', value: { url, data: value, savedAt: now() } }); } catch { /* A live read can work even when device storage is unavailable. */ }
@@ -112,7 +113,7 @@ export function createFieldClient(options: FieldClientOptions) {
     const acknowledgement = options.online() ? await syncOne(key) : undefined;
     assertCurrent(); const remaining = await store.get(key); assertCurrent();
     if (remaining) {
-      if (remaining.value.state === 'review') throw Error(`Saved on this device; server confirmation needs review: ${remaining.value.error} Open Offline & sync to review it.`);
+      if (remaining.value.state === 'review') throw new UserFacingError(`Saved on this device; server confirmation needs review: ${remaining.value.error} Open Offline & sync to review it.`);
       return queuedResult(remaining.value);
     }
     // The UI needs the canonical visit shape immediately; then a fresh GET refreshes it.

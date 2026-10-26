@@ -56,3 +56,16 @@ test('no listed screen passes a caught error message straight into a setter', ()
     assert.doesNotMatch(source, /\.catch\(\s*\(?\w+\)?\s*=>\s*\{?\s*(if \([^)]*\)\s*)?set\w*\(\w+\.message\)/, `${file} shows a raw error message`);
   }
 });
+
+// Review fix: the fieldwork routes write their error bodies as staff copy ("This organisation is
+// outside your access.", "Check the site code, date, areas…"); they stay visible rather than
+// becoming "check your connection", and a storage failure keeps only the app's own reason.
+test('fieldwork API copy is still shown; the storage engine wording is not', () => {
+  const api = readFileSync(new URL('../lib/field-api.ts', import.meta.url), 'utf8');
+  assert.match(api, /if \(!response\.ok\) throw Object\.assign\(new UserFacingError\(/);
+  const core = readFileSync(new URL('../lib/field-api-core.ts', import.meta.url), 'utf8');
+  assert.match(core, /function durableError\(error: unknown\) \{ return new UserFacingError\(/);
+  assert.match(core, /error instanceof UserFacingError \? error\.message : ''/);
+  const funder = readFileSync(new URL('../components/funder/FunderAssessments.tsx', import.meta.url), 'utf8');
+  assert.match(funder, /if \(!res\.ok\) throw new UserFacingError\(/);
+});
