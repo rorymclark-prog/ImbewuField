@@ -52,6 +52,16 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 26 Oct 2026 — Wave 24: the screens behind clicks, mostly dark mode (swarm #1126–#1128)
+- **Interaction capture:** 35 click paths (drawer, settings, Lima chat, forms, every staff tab, a lesson, a crop
+  price, a manual chapter) at phone and desktop, light English and dark isiZulu —
+  `docs/audits/2026-10-26/wave-24-interaction-claude.md` (`w24-01`…`w24-12`).
+- **Fixed:** the drawer's active item and role chip in dark (1.84 and 1.27:1), the field-visit location panel
+  (1.16:1), the exchange form's error text, Records' Log harvest and invoice links, the crop price card in dark
+  (1.8:1), the Messages practice note, the Lima chat tag, the "demo sample" chip, Lima over "Next" in manual chapters,
+  and the offline-map note in dark (1.36:1).
+- **Map error after in-app navigation:** sandbox-only (no Mapbox token); token-less builds now use the offline canvas.
+
 ### 26 Oct 2026 — Wave 23: re-capture of 98c8a22, isiZulu Home date regression fixed first
 - **Re-capture:** the wave 22 script on the live build (Codex's #1100 reports on top of wave 22), clock two days on,
   plus click-through captures of the new report workspaces and hand-read contact sheets —

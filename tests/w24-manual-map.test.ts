@@ -19,3 +19,8 @@ test('w24-10: a missing Mapbox token never mounts a mapbox:// style', () => {
   assert.match(map, /const offlineCanvas=!connected\|\|canvasOnly\|\|!TOKEN;/);
   assert.match(map, /mapStyle=\{offlineCanvas \? OFFLINE_MAP_STYLE : `mapbox:\/\/styles/);
 });
+
+test('w24-12: the offline-canvas status note follows the theme (was fixed #203127, 1.36:1 on the dark panel)', () => {
+  const map = readFileSync(new URL('../components/Map.tsx', import.meta.url), 'utf8');
+  assert.match(map, /background:'var\(--bg-1\)',color:'var\(--text-primary\)',fontSize:14,pointerEvents:'none'\}\}>\{t\('mapOfflineCanvasStatus'\)\}/);
+});

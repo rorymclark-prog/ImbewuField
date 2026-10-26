@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 October 2026', sha: '72434e1e', changes: [
+    'The menu, field-visit form and crop prices are easy to read in dark mode.',
+    'Messages, the exchange form and Records links are clearer, in light and dark.',
+    'Lima no longer covers Next at the end of a manual chapter.',
+  ] },
   { when: '26 October 2026', sha: '98c8a22e', changes: [
     'Home shows today\'s date in isiZulu again instead of placeholder words.',
   ] },
