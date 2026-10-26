@@ -1,0 +1,1927 @@
+{
+  "sourceSha": "af151ab440b84a9ff1d2c7aa930ed1493b4acd90",
+  "status": "Unreviewed AI translation drafts; no fluent-speaker approval. Mocked API bodies intentionally contain English placeholders.",
+  "screenshots": [
+    "zu-final-tables-contact.png",
+    "zu-final-api-contact.png",
+    "static-zu-saved-design-phone.png",
+    "static-zu-no-facts-phone.png",
+    "static-zu-soil-lab-phone.png",
+    "static-zu-farmer-observations-phone.png",
+    "static-zu-source-words-in-name-phone.png",
+    "static-zu-crop-plan-phone.png",
+    "static-zu-water-categories-phone.png",
+    "static-zu-saved-design-desktop.png",
+    "api-zu-desktop-top.png",
+    "api-zu-phone-top.png",
+    "api-zu-phone-source.png",
+    "api-zu-caption-land.png",
+    "api-zu-caption-water.png",
+    "zu-year-round-diagram.png",
+    "st-final-tables-contact.png",
+    "st-final-api-contact.png",
+    "static-st-saved-design-phone.png",
+    "static-st-no-facts-phone.png",
+    "static-st-soil-lab-phone.png",
+    "static-st-farmer-observations-phone.png",
+    "static-st-source-words-in-name-phone.png",
+    "static-st-crop-plan-phone.png",
+    "static-st-water-categories-phone.png",
+    "static-st-saved-design-desktop.png",
+    "api-st-desktop-top.png",
+    "api-st-phone-top.png",
+    "api-st-phone-source.png",
+    "api-st-caption-land.png",
+    "api-st-caption-water.png",
+    "st-year-round-diagram.png",
+    "ts-final-tables-contact.png",
+    "ts-final-api-contact.png",
+    "static-ts-saved-design-phone.png",
+    "static-ts-no-facts-phone.png",
+    "static-ts-soil-lab-phone.png",
+    "static-ts-farmer-observations-phone.png",
+    "static-ts-source-words-in-name-phone.png",
+    "static-ts-crop-plan-phone.png",
+    "static-ts-water-categories-phone.png",
+    "static-ts-saved-design-desktop.png",
+    "api-ts-desktop-top.png",
+    "api-ts-phone-top.png",
+    "api-ts-phone-source.png",
+    "api-ts-caption-land.png",
+    "api-ts-caption-water.png",
+    "ts-year-round-diagram.png",
+    "ve-final-tables-contact.png",
+    "ve-final-api-contact.png",
+    "static-ve-saved-design-phone.png",
+    "static-ve-no-facts-phone.png",
+    "static-ve-soil-lab-phone.png",
+    "static-ve-farmer-observations-phone.png",
+    "static-ve-source-words-in-name-phone.png",
+    "static-ve-crop-plan-phone.png",
+    "static-ve-water-categories-phone.png",
+    "static-ve-saved-design-desktop.png",
+    "api-ve-desktop-top.png",
+    "api-ve-phone-top.png",
+    "api-ve-phone-source.png",
+    "api-ve-caption-land.png",
+    "api-ve-caption-water.png",
+    "ve-year-round-diagram.png",
+    "final-desktop-contact.png",
+    "final-seasons-contact.png"
+  ],
+  "appCases": [
+    {
+      "lang": "zu",
+      "name": "saved-design",
+      "expectedRows": 15,
+      "tableWidth": 351.609375,
+      "viewport": 351,
+      "scrollRange": 1,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 15,
+      "scrollReachable": false,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "zu",
+      "name": "standalone",
+      "expectedRows": 15,
+      "tableWidth": 351.609375,
+      "viewport": 351,
+      "scrollRange": 1,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "zu",
+      "name": "no-facts",
+      "expectedRows": 9,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 9,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "zu",
+      "name": "map-fallback",
+      "expectedRows": 9,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 9,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "zu",
+      "name": "map-water",
+      "expectedRows": 8,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 8,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "zu",
+      "name": "unknown-capacity",
+      "expectedRows": 15,
+      "tableWidth": 351.609375,
+      "viewport": 351,
+      "scrollRange": 1,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "zu",
+      "name": "farmer-observations",
+      "expectedRows": 17,
+      "tableWidth": 351.609375,
+      "viewport": 351,
+      "scrollRange": 1,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 17,
+      "scrollReachable": false,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "zu",
+      "name": "source-words-in-name",
+      "expectedRows": 16,
+      "tableWidth": 351.609375,
+      "viewport": 351,
+      "scrollRange": 1,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 16,
+      "scrollReachable": false,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "zu",
+      "name": "soil-lab",
+      "expectedRows": 15,
+      "tableWidth": 351.609375,
+      "viewport": 351,
+      "scrollRange": 1,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 15,
+      "scrollReachable": false,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "zu",
+      "name": "soil-soilgrids",
+      "expectedRows": 15,
+      "tableWidth": 351.609375,
+      "viewport": 351,
+      "scrollRange": 1,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "zu",
+      "name": "soil-estimate",
+      "expectedRows": 15,
+      "tableWidth": 351.609375,
+      "viewport": 351,
+      "scrollRange": 1,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "zu",
+      "name": "soil-undefined",
+      "expectedRows": 15,
+      "tableWidth": 351.609375,
+      "viewport": 351,
+      "scrollRange": 1,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "zu",
+      "name": "rainfall-nasa-power",
+      "expectedRows": 15,
+      "tableWidth": 351.609375,
+      "viewport": 351,
+      "scrollRange": 1,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "zu",
+      "name": "rainfall-open-meteo",
+      "expectedRows": 15,
+      "tableWidth": 351.609375,
+      "viewport": 351,
+      "scrollRange": 1,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "zu",
+      "name": "rainfall-undefined",
+      "expectedRows": 15,
+      "tableWidth": 351.609375,
+      "viewport": 351,
+      "scrollRange": 1,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "zu",
+      "name": "crop-plan",
+      "expectedRows": 16,
+      "tableWidth": 351.609375,
+      "viewport": 351,
+      "scrollRange": 1,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 16,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "zu",
+      "name": "water-categories",
+      "expectedRows": 16,
+      "tableWidth": 351.609375,
+      "viewport": 351,
+      "scrollRange": 1,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 16,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "zu",
+      "name": "single-bed-and-plot",
+      "expectedRows": 15,
+      "tableWidth": 351.609375,
+      "viewport": 351,
+      "scrollRange": 1,
+      "clippedCells": [],
+      "headers": [
+        "Okulinganiswayo",
+        "Inani",
+        "Lapho kuvela khona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "zu"
+    },
+    {
+      "lang": "st",
+      "name": "saved-design",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "st",
+      "name": "standalone",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "st",
+      "name": "no-facts",
+      "expectedRows": 9,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 9,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "st",
+      "name": "map-fallback",
+      "expectedRows": 9,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 9,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "st",
+      "name": "map-water",
+      "expectedRows": 8,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 8,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "st",
+      "name": "unknown-capacity",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "st",
+      "name": "farmer-observations",
+      "expectedRows": 17,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 17,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "st",
+      "name": "source-words-in-name",
+      "expectedRows": 16,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 16,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "st",
+      "name": "soil-lab",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "st",
+      "name": "soil-soilgrids",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "st",
+      "name": "soil-estimate",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "st",
+      "name": "soil-undefined",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "st",
+      "name": "rainfall-nasa-power",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "st",
+      "name": "rainfall-open-meteo",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "st",
+      "name": "rainfall-undefined",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "st",
+      "name": "crop-plan",
+      "expectedRows": 16,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 16,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "st",
+      "name": "water-categories",
+      "expectedRows": 16,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 16,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "st",
+      "name": "single-bed-and-plot",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Se lekanywang",
+        "Boleng",
+        "Moo se tswang teng"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "st"
+    },
+    {
+      "lang": "ts",
+      "name": "saved-design",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ts",
+      "name": "standalone",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ts",
+      "name": "no-facts",
+      "expectedRows": 9,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 9,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ts",
+      "name": "map-fallback",
+      "expectedRows": 9,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 9,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ts",
+      "name": "map-water",
+      "expectedRows": 8,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 8,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ts",
+      "name": "unknown-capacity",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ts",
+      "name": "farmer-observations",
+      "expectedRows": 17,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 17,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ts",
+      "name": "source-words-in-name",
+      "expectedRows": 16,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 16,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ts",
+      "name": "soil-lab",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ts",
+      "name": "soil-soilgrids",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ts",
+      "name": "soil-estimate",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ts",
+      "name": "soil-undefined",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ts",
+      "name": "rainfall-nasa-power",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ts",
+      "name": "rainfall-open-meteo",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ts",
+      "name": "rainfall-undefined",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ts",
+      "name": "crop-plan",
+      "expectedRows": 16,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 16,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ts",
+      "name": "water-categories",
+      "expectedRows": 16,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 16,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ts",
+      "name": "single-bed-and-plot",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Lexi pimiwaka",
+        "Nhlayo",
+        "Laha swi humaka kona"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ts"
+    },
+    {
+      "lang": "ve",
+      "name": "saved-design",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    },
+    {
+      "lang": "ve",
+      "name": "standalone",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    },
+    {
+      "lang": "ve",
+      "name": "no-facts",
+      "expectedRows": 9,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 9,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    },
+    {
+      "lang": "ve",
+      "name": "map-fallback",
+      "expectedRows": 9,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 9,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    },
+    {
+      "lang": "ve",
+      "name": "map-water",
+      "expectedRows": 8,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 8,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    },
+    {
+      "lang": "ve",
+      "name": "unknown-capacity",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    },
+    {
+      "lang": "ve",
+      "name": "farmer-observations",
+      "expectedRows": 17,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 17,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    },
+    {
+      "lang": "ve",
+      "name": "source-words-in-name",
+      "expectedRows": 16,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 16,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    },
+    {
+      "lang": "ve",
+      "name": "soil-lab",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    },
+    {
+      "lang": "ve",
+      "name": "soil-soilgrids",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    },
+    {
+      "lang": "ve",
+      "name": "soil-estimate",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    },
+    {
+      "lang": "ve",
+      "name": "soil-undefined",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    },
+    {
+      "lang": "ve",
+      "name": "rainfall-nasa-power",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    },
+    {
+      "lang": "ve",
+      "name": "rainfall-open-meteo",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    },
+    {
+      "lang": "ve",
+      "name": "rainfall-undefined",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    },
+    {
+      "lang": "ve",
+      "name": "crop-plan",
+      "expectedRows": 16,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 16,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    },
+    {
+      "lang": "ve",
+      "name": "water-categories",
+      "expectedRows": 16,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 16,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    },
+    {
+      "lang": "ve",
+      "name": "single-bed-and-plot",
+      "expectedRows": 15,
+      "tableWidth": 351,
+      "viewport": 351,
+      "scrollRange": 0,
+      "clippedCells": [],
+      "headers": [
+        "Tshine tsha pimiwa",
+        "Ndeme",
+        "Hune zwa bva hone"
+      ],
+      "rows": 15,
+      "scrollReachable": true,
+      "documentOverflow": false,
+      "storedReportUnchanged": true,
+      "contentLanguage": "ve"
+    }
+  ],
+  "static": {
+    "results": [
+      {
+        "lang": "zu",
+        "name": "saved-design",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 15,
+        "clipped": []
+      },
+      {
+        "lang": "zu",
+        "name": "no-facts",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 9,
+        "clipped": []
+      },
+      {
+        "lang": "zu",
+        "name": "soil-lab",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 15,
+        "clipped": []
+      },
+      {
+        "lang": "zu",
+        "name": "farmer-observations",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 17,
+        "clipped": []
+      },
+      {
+        "lang": "zu",
+        "name": "source-words-in-name",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 16,
+        "clipped": []
+      },
+      {
+        "lang": "zu",
+        "name": "crop-plan",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 16,
+        "clipped": []
+      },
+      {
+        "lang": "zu",
+        "name": "water-categories",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 16,
+        "clipped": []
+      },
+      {
+        "lang": "st",
+        "name": "saved-design",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 15,
+        "clipped": []
+      },
+      {
+        "lang": "st",
+        "name": "no-facts",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 9,
+        "clipped": []
+      },
+      {
+        "lang": "st",
+        "name": "soil-lab",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 15,
+        "clipped": []
+      },
+      {
+        "lang": "st",
+        "name": "farmer-observations",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 17,
+        "clipped": []
+      },
+      {
+        "lang": "st",
+        "name": "source-words-in-name",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 16,
+        "clipped": []
+      },
+      {
+        "lang": "st",
+        "name": "crop-plan",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 16,
+        "clipped": []
+      },
+      {
+        "lang": "st",
+        "name": "water-categories",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 16,
+        "clipped": []
+      },
+      {
+        "lang": "ts",
+        "name": "saved-design",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 15,
+        "clipped": []
+      },
+      {
+        "lang": "ts",
+        "name": "no-facts",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 9,
+        "clipped": []
+      },
+      {
+        "lang": "ts",
+        "name": "soil-lab",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 15,
+        "clipped": []
+      },
+      {
+        "lang": "ts",
+        "name": "farmer-observations",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 17,
+        "clipped": []
+      },
+      {
+        "lang": "ts",
+        "name": "source-words-in-name",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 16,
+        "clipped": []
+      },
+      {
+        "lang": "ts",
+        "name": "crop-plan",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 16,
+        "clipped": []
+      },
+      {
+        "lang": "ts",
+        "name": "water-categories",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 16,
+        "clipped": []
+      },
+      {
+        "lang": "ve",
+        "name": "saved-design",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 15,
+        "clipped": []
+      },
+      {
+        "lang": "ve",
+        "name": "no-facts",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 9,
+        "clipped": []
+      },
+      {
+        "lang": "ve",
+        "name": "soil-lab",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 15,
+        "clipped": []
+      },
+      {
+        "lang": "ve",
+        "name": "farmer-observations",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 17,
+        "clipped": []
+      },
+      {
+        "lang": "ve",
+        "name": "source-words-in-name",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 16,
+        "clipped": []
+      },
+      {
+        "lang": "ve",
+        "name": "crop-plan",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 16,
+        "clipped": []
+      },
+      {
+        "lang": "ve",
+        "name": "water-categories",
+        "width": 354,
+        "viewport": 354,
+        "scrollRange": 0,
+        "rows": 16,
+        "clipped": []
+      }
+    ],
+    "svgs": [
+      {
+        "lang": "zu",
+        "bounds": [
+          {
+            "id": "source",
+            "outside": [],
+            "overlaps": []
+          },
+          {
+            "id": "year-round",
+            "outside": [],
+            "overlaps": []
+          }
+        ]
+      },
+      {
+        "lang": "st",
+        "bounds": [
+          {
+            "id": "source",
+            "outside": [],
+            "overlaps": []
+          },
+          {
+            "id": "year-round",
+            "outside": [],
+            "overlaps": []
+          }
+        ]
+      },
+      {
+        "lang": "ts",
+        "bounds": [
+          {
+            "id": "source",
+            "outside": [],
+            "overlaps": []
+          },
+          {
+            "id": "year-round",
+            "outside": [],
+            "overlaps": []
+          }
+        ]
+      },
+      {
+        "lang": "ve",
+        "bounds": [
+          {
+            "id": "source",
+            "outside": [],
+            "overlaps": []
+          },
+          {
+            "id": "year-round",
+            "outside": [],
+            "overlaps": []
+          }
+        ]
+      }
+    ]
+  },
+  "apiCases": [
+    {
+      "lang": "zu",
+      "name": "api-empty",
+      "captions": [],
+      "fullNativeCover": true,
+      "nativeTableHeading": true,
+      "contentLanguage": "zu",
+      "rows": 9,
+      "scrollRange": 0,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "zu",
+      "name": "api-facts",
+      "captions": [
+        {
+          "title": "Ukuthi umhlaba usetshenziswa kanjani",
+          "nativeKnownOrigin": true,
+          "text": "Izindawo njengoba zidwetshwe kumklamo ogciniwe nakumephu, noma sezakhiwe noma cha. Izihlahla, izindlela namathangi akubalwa njengezindawo. Umthombo: Umngcele: Kulandelwe ebalazweni. Imibhede neziza: umklamo ogciniwe."
+        },
+        {
+          "title": "Amanzi ophahla: okungenayo nokuphumayo",
+          "nativeKnownOrigin": true,
+          "text": "Izibalo zonyaka ojwayelekile, akusona isithembiso semvula. Kubalwa kuphela uphahla oludwetshiwe namathangi asepulanini; akusho lutho ngokuphepha kwamanzi okuphuzwa. Umthombo: Uphahla: Kulandelwe ebalazweni. Imvula: NASA POWER (igridi yesimo sezulu engu-50 km). Ukusetshenziswa kwansuku zonke: njengoba kuqoshwe ku-Design Studio."
+        }
+      ],
+      "fullNativeCover": true,
+      "nativeTableHeading": true,
+      "contentLanguage": "zu",
+      "rows": 15,
+      "scrollRange": 1,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "st",
+      "name": "api-empty",
+      "captions": [],
+      "fullNativeCover": true,
+      "nativeTableHeading": true,
+      "contentLanguage": "st",
+      "rows": 9,
+      "scrollRange": 0,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "st",
+      "name": "api-facts",
+      "captions": [
+        {
+          "title": "Kamoo mobu o sebediswang kateng",
+          "nativeKnownOrigin": true,
+          "text": "Dibaka jwalokaha di takilwe moralong o bolokilweng le mmapeng, ho sa tsotellehe hore di se di ahuwe kapa tjhe. Difate, ditsela le ditanka ha di balwe e le dibaka. Mohlodi: Moedi: Se latetswe mmapeng. Dibethe le masimo: moralo o bolokilweng."
+        },
+        {
+          "title": "Metsi a marulelo: a kenang le a tswang",
+          "nativeKnownOrigin": true,
+          "text": "Dipalo tsa selemo se tlwaelehileng, ha se tshepiso ya pula. Ho balwa feela marulelo a takilweng mmapeng le ditanka tse takilweng polaneng; ha ho bolelwe hore metsi a bolokehile ho ka nowa. Mohlodi: Marulelo: Se latetswe mmapeng. Pula: NASA POWER (keriti ya boemo ba lehodimo ya 50 km). Tshebediso ya letsatsi: jwalokaha e ngotswe ho Design Studio."
+        }
+      ],
+      "fullNativeCover": true,
+      "nativeTableHeading": true,
+      "contentLanguage": "st",
+      "rows": 15,
+      "scrollRange": 0,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ts",
+      "name": "api-empty",
+      "captions": [],
+      "fullNativeCover": true,
+      "nativeTableHeading": true,
+      "contentLanguage": "ts",
+      "rows": 9,
+      "scrollRange": 0,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ts",
+      "name": "api-facts",
+      "captions": [
+        {
+          "title": "Ndlela leyi misava yi tirhisiwaka ha yona",
+          "nativeKnownOrigin": true,
+          "text": "Tindhawu hi laha ti dirowiweke eka dizayini leyi hlayisiweke ni ku landzelerisiwa emepeni, hambi ti se ti akiwile kumbe a ti si akiwa. Mirhi, tindlela ni tithangi a swi hlayiwi tani hi tindhawu. Xihlovo: Ndzelekano: Swi landzelerisiwe emepeni. Mibedo ni masimu: dizayini leyi hlayisiweke."
+        },
+        {
+          "title": "Mati ya lwangu: lama nghenaka ni lama humaka",
+          "nativeKnownOrigin": true,
+          "text": "I tinhlayo ta lembe ra ntolovelo, a hi xitshembiso xa mpfula. Ku hlayiwa ntsena lwangu leri landzelerisiweke emepeni ni tithangi leti dirowiweke eka pulani; a swi vuli leswaku mati ma hlayisekile ku ma nwa. Xihlovo: Lwangu: Swi landzelerisiwe emepeni. Mpfula: NASA POWER (giridi ya maxelo ya 50 km). Matirhiselo ya siku: hi laha ma rhekhodiweke eka Design Studio."
+        }
+      ],
+      "fullNativeCover": true,
+      "nativeTableHeading": true,
+      "contentLanguage": "ts",
+      "rows": 15,
+      "scrollRange": 0,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ve",
+      "name": "api-empty",
+      "captions": [],
+      "fullNativeCover": true,
+      "nativeTableHeading": true,
+      "contentLanguage": "ve",
+      "rows": 9,
+      "scrollRange": 0,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    },
+    {
+      "lang": "ve",
+      "name": "api-facts",
+      "captions": [
+        {
+          "title": "Nḓila ine mavu a shumiswa ngayo",
+          "nativeKnownOrigin": true,
+          "text": "Fhethu sa ho oliwa kha dizaini yo vhulungwaho na u olelwa kha mapa, naho ho no fhaṱiwa kana hu sa athu. Miri, nḓila na thannga a zwi vhaliwi sa vhupo. Tshiko: Mukanoni: Ho tevhedzelwa kha mapa. Mibethe na tsimu: dizaini yo vhulungwaho."
+        },
+        {
+          "title": "Maḓi a ṱhanga: a dzhenaho na a bvaho",
+          "nativeKnownOrigin": true,
+          "text": "Ndi mbalo dza ṅwaha wo ḓoweleaho, a si fulufhedziso ḽa mvula. Hu vhaliwa fhedzi ṱhanga yo olelwaho na thannga dzo oliwaho kha pulane; a zwi ambi tshithu nga ha uri maḓi o tsireledzea u a nwa. Tshiko: Ṱhanga: Ho tevhedzelwa kha mapa. Mvula: NASA POWER (giridi ya kilima ya 50 km). U shumiswa nga ḓuvha: sa zwo rekhodiwa kha Design Studio."
+        }
+      ],
+      "fullNativeCover": true,
+      "nativeTableHeading": true,
+      "contentLanguage": "ve",
+      "rows": 15,
+      "scrollRange": 0,
+      "documentOverflow": false,
+      "savedBytesUnchanged": true
+    }
+  ],
+  "checks": {
+    "typecheck": "pass",
+    "focusedNode24": {
+      "pass": 235,
+      "fail": 0
+    },
+    "whitespace": "pass",
+    "fullSuite": {
+      "sha": "09b280efe5a7be82674af79dce70f238b7b07b1b",
+      "registeredFiles": 538,
+      "pass": 5380,
+      "fail": 0,
+      "todo": 1,
+      "exitStatus": 0,
+      "includesThisBatch": false,
+      "todoReason": "Existing whole-collection shape sync TODO, docs/SHAPE-SYNC-ANALYSIS-2026-08-10.md."
+    }
+  },
+  "limitations": [
+    "Phone native table rounding can measure a 1px scroll range; no clipped cells or meaningful overflow detected.",
+    "Full API covers/tables exercised in all four languages; screenshots are scrolled to the table and source captions, not whole-document proof.",
+    "Table static captures use the actual reader function and served app CSS outside its fixed scrolling pane to show every row.",
+    "Catalogue equipment/route/tank names remain raw pending identity-aware translation. Species identities, custom names, source identifiers and lab text are retained.",
+    "No full-report or crop-plan PDF produced; wider app/workflow/learning/media and non-isiZulu back matter remain."
+  ]
+}

@@ -1,0 +1,4795 @@
+{
+  "sourceSha": "af151ab440b84a9ff1d2c7aa930ed1493b4acd90",
+  "cases": [
+    {
+      "name": "saved-design",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Moringa Tree",
+                "category": "growing",
+                "count": 2,
+                "status": "proposed",
+                "defId": "tree_moringa"
+              },
+              {
+                "name": "Avocado Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_avocado"
+              },
+              {
+                "name": "Compost bays",
+                "category": "structure",
+                "count": 1,
+                "status": "proposed",
+                "defId": "compost_bay"
+              },
+              {
+                "name": "Mango Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_mango"
+              },
+              {
+                "name": "Natal Plum",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_natal_plum"
+              },
+              {
+                "name": "Rainwater tank (2500 L)",
+                "category": "water",
+                "count": 1,
+                "status": "proposed",
+                "defId": "jojo_2500"
+              }
+            ],
+            "routes": [
+              {
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34,
+                "kind": "swale"
+              },
+              {
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 18.5,
+                "kind": "path"
+              },
+              {
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 10.5,
+                "kind": "greywater"
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          }
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Loam",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "expected": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 7 beds 44 m² + 4 staple plots 84 m² | Measured off the farmer's plan |\n| Trees and perennials placed | 5 — Moringa Tree x2, Avocado Tree x1, Mango Tree x1, Natal Plum x1 | Placed by the farmer in the Design Studio |\n| Structures placed | Compost bays x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Swale 34 m · Path 18.5 m · Greywater line 10.5 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | 2 500 L — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Loam | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n"
+    },
+    {
+      "name": "standalone",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Moringa Tree",
+                "category": "growing",
+                "count": 2,
+                "status": "proposed",
+                "defId": "tree_moringa"
+              },
+              {
+                "name": "Avocado Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_avocado"
+              },
+              {
+                "name": "Compost bays",
+                "category": "structure",
+                "count": 1,
+                "status": "proposed",
+                "defId": "compost_bay"
+              },
+              {
+                "name": "Mango Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_mango"
+              },
+              {
+                "name": "Natal Plum",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_natal_plum"
+              },
+              {
+                "name": "Rainwater tank (2500 L)",
+                "category": "water",
+                "count": 1,
+                "status": "proposed",
+                "defId": "jojo_2500"
+              }
+            ],
+            "routes": [
+              {
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34,
+                "kind": "swale"
+              },
+              {
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 18.5,
+                "kind": "path"
+              },
+              {
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 10.5,
+                "kind": "greywater"
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          }
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Loam",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": false
+      },
+      "expected": "# Permaculture Site Report\n\nThukela Thornveld (Grassland) · Recorded district · 27.7262°S, 31.9630°E · 21 October 2026\n\n## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 7 beds 44 m² + 4 staple plots 84 m² | Measured off the farmer's plan |\n| Trees and perennials placed | 5 — Moringa Tree x2, Avocado Tree x1, Mango Tree x1, Natal Plum x1 | Placed by the farmer in the Design Studio |\n| Structures placed | Compost bays x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Swale 34 m · Path 18.5 m · Greywater line 10.5 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | 2 500 L — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Loam | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n"
+    },
+    {
+      "name": "no-facts",
+      "input": {
+        "facts": null,
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Loam",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "expected": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | Not traced | Nothing drawn on the map yet |\n| Roof catchment | Not traced or measured | No roof outline on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Loam | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n"
+    },
+    {
+      "name": "map-fallback",
+      "input": {
+        "facts": null,
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Loam",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true,
+        "siteAreaM2": 123.45,
+        "sitePerimeterM": 34.5
+      },
+      "expected": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Mapped site area | 123 m², 34.5 m perimeter | Sum of every shape drawn on the map (not a single traced boundary) |\n| Roof catchment | Not traced or measured | No roof outline on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Loam | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n"
+    },
+    {
+      "name": "map-water",
+      "input": {
+        "facts": null,
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Loam",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": true,
+        "omitTitle": true
+      },
+      "expected": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | Not traced | Nothing drawn on the map yet |\n| Roof catchment | Not traced or measured | No roof outline on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Loam | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n"
+    },
+    {
+      "name": "unknown-capacity",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Moringa Tree",
+                "category": "growing",
+                "count": 2,
+                "status": "proposed",
+                "defId": "tree_moringa"
+              },
+              {
+                "name": "Avocado Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_avocado"
+              },
+              {
+                "name": "Compost bays",
+                "category": "structure",
+                "count": 1,
+                "status": "proposed",
+                "defId": "compost_bay"
+              },
+              {
+                "name": "Mango Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_mango"
+              },
+              {
+                "name": "Natal Plum",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_natal_plum"
+              },
+              {
+                "name": "Rainwater tank (2500 L)",
+                "category": "water",
+                "count": 1,
+                "status": "proposed",
+                "defId": "jojo_2500"
+              }
+            ],
+            "routes": [
+              {
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34,
+                "kind": "swale"
+              },
+              {
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 18.5,
+                "kind": "path"
+              },
+              {
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 10.5,
+                "kind": "greywater"
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 0,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          }
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Loam",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "expected": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 7 beds 44 m² + 4 staple plots 84 m² | Measured off the farmer's plan |\n| Trees and perennials placed | 5 — Moringa Tree x2, Avocado Tree x1, Mango Tree x1, Natal Plum x1 | Placed by the farmer in the Design Studio |\n| Structures placed | Compost bays x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Swale 34 m · Path 18.5 m · Greywater line 10.5 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | capacity not stated — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Loam | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n"
+    },
+    {
+      "name": "farmer-observations",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Moringa Tree",
+                "category": "growing",
+                "count": 2,
+                "status": "proposed",
+                "defId": "tree_moringa"
+              },
+              {
+                "name": "Avocado Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_avocado"
+              },
+              {
+                "name": "Compost bays",
+                "category": "structure",
+                "count": 1,
+                "status": "proposed",
+                "defId": "compost_bay"
+              },
+              {
+                "name": "Mango Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_mango"
+              },
+              {
+                "name": "Natal Plum",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_natal_plum"
+              },
+              {
+                "name": "Rainwater tank (2500 L)",
+                "category": "water",
+                "count": 1,
+                "status": "proposed",
+                "defId": "jojo_2500"
+              }
+            ],
+            "routes": [
+              {
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34,
+                "kind": "swale"
+              },
+              {
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 18.5,
+                "kind": "path"
+              },
+              {
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 10.5,
+                "kind": "greywater"
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200,
+            "scaleFactor": 1.25,
+            "localWindFrom": "ENE",
+            "localWindStrongestFrom": "SSW"
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          }
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Loam",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "expected": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 7 beds 44 m² + 4 staple plots 84 m² | Measured off the farmer's plan |\n| Trees and perennials placed | 5 — Moringa Tree x2, Avocado Tree x1, Mango Tree x1, Natal Plum x1 | Placed by the farmer in the Design Studio |\n| Structures placed | Compost bays x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Swale 34 m · Path 18.5 m · Greywater line 10.5 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | 2 500 L — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Farmer's scale correction | 1.25x applied to every area and length above | Measured on site by the farmer |\n| Wind observed on site | From the ENE, strongest from the SSW | Farmer's own observation |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Loam | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n"
+    },
+    {
+      "name": "source-words-in-name",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Moringa Tree",
+                "category": "growing",
+                "count": 2,
+                "status": "proposed",
+                "defId": "tree_moringa"
+              },
+              {
+                "name": "Avocado Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_avocado"
+              },
+              {
+                "name": "Compost bays",
+                "category": "structure",
+                "count": 1,
+                "status": "proposed",
+                "defId": "compost_bay"
+              },
+              {
+                "name": "Mango Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_mango"
+              },
+              {
+                "name": "Natal Plum",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_natal_plum"
+              },
+              {
+                "name": "Rainwater tank (2500 L)",
+                "category": "water",
+                "count": 1,
+                "status": "proposed",
+                "defId": "jojo_2500"
+              }
+            ],
+            "routes": [
+              {
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34,
+                "kind": "swale"
+              },
+              {
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 18.5,
+                "kind": "path"
+              },
+              {
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 10.5,
+                "kind": "greywater"
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          },
+          "farmName": "Site {value} — Original"
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Loam",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "expected": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Site | Site {value} — Original | Named by the farmer |\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 7 beds 44 m² + 4 staple plots 84 m² | Measured off the farmer's plan |\n| Trees and perennials placed | 5 — Moringa Tree x2, Avocado Tree x1, Mango Tree x1, Natal Plum x1 | Placed by the farmer in the Design Studio |\n| Structures placed | Compost bays x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Swale 34 m · Path 18.5 m · Greywater line 10.5 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | 2 500 L — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Loam | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n"
+    },
+    {
+      "name": "soil-lab",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Moringa Tree",
+                "category": "growing",
+                "count": 2,
+                "status": "proposed",
+                "defId": "tree_moringa"
+              },
+              {
+                "name": "Avocado Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_avocado"
+              },
+              {
+                "name": "Compost bays",
+                "category": "structure",
+                "count": 1,
+                "status": "proposed",
+                "defId": "compost_bay"
+              },
+              {
+                "name": "Mango Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_mango"
+              },
+              {
+                "name": "Natal Plum",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_natal_plum"
+              },
+              {
+                "name": "Rainwater tank (2500 L)",
+                "category": "water",
+                "count": 1,
+                "status": "proposed",
+                "defId": "jojo_2500"
+              }
+            ],
+            "routes": [
+              {
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34,
+                "kind": "swale"
+              },
+              {
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 18.5,
+                "kind": "path"
+              },
+              {
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 10.5,
+                "kind": "greywater"
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          }
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Recorded laboratory texture",
+        "soilSource": "lab",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "expected": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 7 beds 44 m² + 4 staple plots 84 m² | Measured off the farmer's plan |\n| Trees and perennials placed | 5 — Moringa Tree x2, Avocado Tree x1, Mango Tree x1, Natal Plum x1 | Placed by the farmer in the Design Studio |\n| Structures placed | Compost bays x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Swale 34 m · Path 18.5 m · Greywater line 10.5 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | 2 500 L — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Recorded laboratory texture | Soil test you uploaded |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n"
+    },
+    {
+      "name": "soil-soilgrids",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Moringa Tree",
+                "category": "growing",
+                "count": 2,
+                "status": "proposed",
+                "defId": "tree_moringa"
+              },
+              {
+                "name": "Avocado Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_avocado"
+              },
+              {
+                "name": "Compost bays",
+                "category": "structure",
+                "count": 1,
+                "status": "proposed",
+                "defId": "compost_bay"
+              },
+              {
+                "name": "Mango Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_mango"
+              },
+              {
+                "name": "Natal Plum",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_natal_plum"
+              },
+              {
+                "name": "Rainwater tank (2500 L)",
+                "category": "water",
+                "count": 1,
+                "status": "proposed",
+                "defId": "jojo_2500"
+              }
+            ],
+            "routes": [
+              {
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34,
+                "kind": "swale"
+              },
+              {
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 18.5,
+                "kind": "path"
+              },
+              {
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 10.5,
+                "kind": "greywater"
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          }
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Recorded laboratory texture",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "expected": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 7 beds 44 m² + 4 staple plots 84 m² | Measured off the farmer's plan |\n| Trees and perennials placed | 5 — Moringa Tree x2, Avocado Tree x1, Mango Tree x1, Natal Plum x1 | Placed by the farmer in the Design Studio |\n| Structures placed | Compost bays x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Swale 34 m · Path 18.5 m · Greywater line 10.5 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | 2 500 L — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Recorded laboratory texture | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n"
+    },
+    {
+      "name": "soil-estimate",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Moringa Tree",
+                "category": "growing",
+                "count": 2,
+                "status": "proposed",
+                "defId": "tree_moringa"
+              },
+              {
+                "name": "Avocado Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_avocado"
+              },
+              {
+                "name": "Compost bays",
+                "category": "structure",
+                "count": 1,
+                "status": "proposed",
+                "defId": "compost_bay"
+              },
+              {
+                "name": "Mango Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_mango"
+              },
+              {
+                "name": "Natal Plum",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_natal_plum"
+              },
+              {
+                "name": "Rainwater tank (2500 L)",
+                "category": "water",
+                "count": 1,
+                "status": "proposed",
+                "defId": "jojo_2500"
+              }
+            ],
+            "routes": [
+              {
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34,
+                "kind": "swale"
+              },
+              {
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 18.5,
+                "kind": "path"
+              },
+              {
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 10.5,
+                "kind": "greywater"
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          }
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Recorded laboratory texture",
+        "soilSource": "estimate",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "expected": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 7 beds 44 m² + 4 staple plots 84 m² | Measured off the farmer's plan |\n| Trees and perennials placed | 5 — Moringa Tree x2, Avocado Tree x1, Mango Tree x1, Natal Plum x1 | Placed by the farmer in the Design Studio |\n| Structures placed | Compost bays x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Swale 34 m · Path 18.5 m · Greywater line 10.5 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | 2 500 L — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Recorded laboratory texture | NOT A READING — the app's generic defaults |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n"
+    },
+    {
+      "name": "soil-undefined",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Moringa Tree",
+                "category": "growing",
+                "count": 2,
+                "status": "proposed",
+                "defId": "tree_moringa"
+              },
+              {
+                "name": "Avocado Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_avocado"
+              },
+              {
+                "name": "Compost bays",
+                "category": "structure",
+                "count": 1,
+                "status": "proposed",
+                "defId": "compost_bay"
+              },
+              {
+                "name": "Mango Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_mango"
+              },
+              {
+                "name": "Natal Plum",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_natal_plum"
+              },
+              {
+                "name": "Rainwater tank (2500 L)",
+                "category": "water",
+                "count": 1,
+                "status": "proposed",
+                "defId": "jojo_2500"
+              }
+            ],
+            "routes": [
+              {
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34,
+                "kind": "swale"
+              },
+              {
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 18.5,
+                "kind": "path"
+              },
+              {
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 10.5,
+                "kind": "greywater"
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          }
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Recorded laboratory texture",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "expected": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 7 beds 44 m² + 4 staple plots 84 m² | Measured off the farmer's plan |\n| Trees and perennials placed | 5 — Moringa Tree x2, Avocado Tree x1, Mango Tree x1, Natal Plum x1 | Placed by the farmer in the Design Studio |\n| Structures placed | Compost bays x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Swale 34 m · Path 18.5 m · Greywater line 10.5 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | 2 500 L — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Recorded laboratory texture | Soil data source not recorded |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n"
+    },
+    {
+      "name": "rainfall-nasa-power",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Moringa Tree",
+                "category": "growing",
+                "count": 2,
+                "status": "proposed",
+                "defId": "tree_moringa"
+              },
+              {
+                "name": "Avocado Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_avocado"
+              },
+              {
+                "name": "Compost bays",
+                "category": "structure",
+                "count": 1,
+                "status": "proposed",
+                "defId": "compost_bay"
+              },
+              {
+                "name": "Mango Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_mango"
+              },
+              {
+                "name": "Natal Plum",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_natal_plum"
+              },
+              {
+                "name": "Rainwater tank (2500 L)",
+                "category": "water",
+                "count": 1,
+                "status": "proposed",
+                "defId": "jojo_2500"
+              }
+            ],
+            "routes": [
+              {
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34,
+                "kind": "swale"
+              },
+              {
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 18.5,
+                "kind": "path"
+              },
+              {
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 10.5,
+                "kind": "greywater"
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          }
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Loam",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "expected": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 7 beds 44 m² + 4 staple plots 84 m² | Measured off the farmer's plan |\n| Trees and perennials placed | 5 — Moringa Tree x2, Avocado Tree x1, Mango Tree x1, Natal Plum x1 | Placed by the farmer in the Design Studio |\n| Structures placed | Compost bays x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Swale 34 m · Path 18.5 m · Greywater line 10.5 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | 2 500 L — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Loam | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n"
+    },
+    {
+      "name": "rainfall-open-meteo",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Moringa Tree",
+                "category": "growing",
+                "count": 2,
+                "status": "proposed",
+                "defId": "tree_moringa"
+              },
+              {
+                "name": "Avocado Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_avocado"
+              },
+              {
+                "name": "Compost bays",
+                "category": "structure",
+                "count": 1,
+                "status": "proposed",
+                "defId": "compost_bay"
+              },
+              {
+                "name": "Mango Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_mango"
+              },
+              {
+                "name": "Natal Plum",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_natal_plum"
+              },
+              {
+                "name": "Rainwater tank (2500 L)",
+                "category": "water",
+                "count": 1,
+                "status": "proposed",
+                "defId": "jojo_2500"
+              }
+            ],
+            "routes": [
+              {
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34,
+                "kind": "swale"
+              },
+              {
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 18.5,
+                "kind": "path"
+              },
+              {
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 10.5,
+                "kind": "greywater"
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          }
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "open-meteo",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Loam",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "expected": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 7 beds 44 m² + 4 staple plots 84 m² | Measured off the farmer's plan |\n| Trees and perennials placed | 5 — Moringa Tree x2, Avocado Tree x1, Mango Tree x1, Natal Plum x1 | Placed by the farmer in the Design Studio |\n| Structures placed | Compost bays x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Swale 34 m · Path 18.5 m · Greywater line 10.5 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | 2 500 L — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | Open-Meteo |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Loam | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n"
+    },
+    {
+      "name": "rainfall-undefined",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Moringa Tree",
+                "category": "growing",
+                "count": 2,
+                "status": "proposed",
+                "defId": "tree_moringa"
+              },
+              {
+                "name": "Avocado Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_avocado"
+              },
+              {
+                "name": "Compost bays",
+                "category": "structure",
+                "count": 1,
+                "status": "proposed",
+                "defId": "compost_bay"
+              },
+              {
+                "name": "Mango Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_mango"
+              },
+              {
+                "name": "Natal Plum",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_natal_plum"
+              },
+              {
+                "name": "Rainwater tank (2500 L)",
+                "category": "water",
+                "count": 1,
+                "status": "proposed",
+                "defId": "jojo_2500"
+              }
+            ],
+            "routes": [
+              {
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34,
+                "kind": "swale"
+              },
+              {
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 18.5,
+                "kind": "path"
+              },
+              {
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 10.5,
+                "kind": "greywater"
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          }
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Loam",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "expected": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 7 beds 44 m² + 4 staple plots 84 m² | Measured off the farmer's plan |\n| Trees and perennials placed | 5 — Moringa Tree x2, Avocado Tree x1, Mango Tree x1, Natal Plum x1 | Placed by the farmer in the Design Studio |\n| Structures placed | Compost bays x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Swale 34 m · Path 18.5 m · Greywater line 10.5 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | 2 500 L — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | Climate data service |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Loam | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n"
+    },
+    {
+      "name": "crop-plan",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Moringa Tree",
+                "category": "growing",
+                "count": 2,
+                "status": "proposed",
+                "defId": "tree_moringa"
+              },
+              {
+                "name": "Avocado Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_avocado"
+              },
+              {
+                "name": "Compost bays",
+                "category": "structure",
+                "count": 1,
+                "status": "proposed",
+                "defId": "compost_bay"
+              },
+              {
+                "name": "Mango Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_mango"
+              },
+              {
+                "name": "Natal Plum",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_natal_plum"
+              },
+              {
+                "name": "Rainwater tank (2500 L)",
+                "category": "water",
+                "count": 1,
+                "status": "proposed",
+                "defId": "jojo_2500"
+              }
+            ],
+            "routes": [
+              {
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34,
+                "kind": "swale"
+              },
+              {
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 18.5,
+                "kind": "path"
+              },
+              {
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 10.5,
+                "kind": "greywater"
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          },
+          "crop": {
+            "snapshot": {
+              "siteId": "header-source-crop-check",
+              "capturedAt": "2026-10-21T15:27:26.119Z",
+              "planUpdatedAt": 1792596446117,
+              "beds": [
+                {
+                  "id": "demo-bed-1",
+                  "label": "Bed 1",
+                  "areaM2": 6,
+                  "minDimM": 1.5,
+                  "kind": "bed"
+                },
+                {
+                  "id": "demo-bed-2",
+                  "label": "Bed 2",
+                  "areaM2": 6,
+                  "minDimM": 1.5,
+                  "kind": "bed"
+                },
+                {
+                  "id": "demo-bed-3",
+                  "label": "Bed 3",
+                  "areaM2": 6,
+                  "minDimM": 1.5,
+                  "kind": "bed"
+                },
+                {
+                  "id": "demo-bed-4",
+                  "label": "Bed 4",
+                  "areaM2": 6,
+                  "minDimM": 1.5,
+                  "kind": "bed"
+                },
+                {
+                  "id": "demo-bed-5",
+                  "label": "Bed 5",
+                  "areaM2": 6,
+                  "minDimM": 1.5,
+                  "kind": "bed"
+                },
+                {
+                  "id": "demo-bed-6",
+                  "label": "Bed 6",
+                  "areaM2": 8,
+                  "minDimM": 2,
+                  "kind": "bed"
+                },
+                {
+                  "id": "demo-hugel-1",
+                  "label": "Bed 7",
+                  "areaM2": 6,
+                  "minDimM": 2,
+                  "kind": "bed"
+                },
+                {
+                  "id": "demo-staple-1",
+                  "label": "Plot 1",
+                  "areaM2": 21,
+                  "minDimM": 3.500016094024488,
+                  "kind": "plot"
+                },
+                {
+                  "id": "demo-staple-2",
+                  "label": "Plot 2",
+                  "areaM2": 21,
+                  "minDimM": 4.200019263199479,
+                  "kind": "plot"
+                },
+                {
+                  "id": "demo-staple-3",
+                  "label": "Plot 3",
+                  "areaM2": 21,
+                  "minDimM": 3.500017285142505,
+                  "kind": "plot"
+                },
+                {
+                  "id": "demo-staple-4",
+                  "label": "Plot 4",
+                  "areaM2": 21,
+                  "minDimM": 3.500017285142505,
+                  "kind": "plot"
+                }
+              ],
+              "plantings": [
+                {
+                  "id": "demo-planting-1",
+                  "bedId": "demo-bed-6",
+                  "cropKey": "garlic",
+                  "sowMonth": 5,
+                  "areaFraction": 0.5,
+                  "existing": true
+                },
+                {
+                  "id": "demo-planting-2",
+                  "bedId": "demo-bed-1",
+                  "cropKey": "onions",
+                  "sowMonth": 3,
+                  "areaFraction": 0.6116666666666667,
+                  "existing": true
+                },
+                {
+                  "id": "demo-planting-3",
+                  "bedId": "demo-bed-3",
+                  "cropKey": "butternut",
+                  "sowMonth": 12
+                },
+                {
+                  "id": "demo-planting-4",
+                  "bedId": "demo-bed-5",
+                  "cropKey": "swiss-chard",
+                  "sowMonth": 4,
+                  "areaFraction": 0.945,
+                  "existing": true
+                },
+                {
+                  "id": "demo-planting-5",
+                  "bedId": "demo-bed-4",
+                  "cropKey": "tomatoes",
+                  "sowMonth": 10,
+                  "areaFraction": 0.75
+                },
+                {
+                  "id": "demo-planting-6",
+                  "bedId": "demo-hugel-1",
+                  "cropKey": "maize",
+                  "sowMonth": 10,
+                  "areaFraction": 0.8333333333333334
+                },
+                {
+                  "id": "demo-planting-7",
+                  "bedId": "demo-bed-5",
+                  "cropKey": "green-beans",
+                  "sowMonth": 10,
+                  "areaFraction": 0.6883333333333334
+                },
+                {
+                  "id": "demo-planting-8",
+                  "bedId": "demo-bed-2",
+                  "cropKey": "lettuce",
+                  "sowMonth": 9,
+                  "areaFraction": 0.6166666666666667
+                },
+                {
+                  "id": "demo-planting-9",
+                  "bedId": "demo-bed-6",
+                  "cropKey": "broccoli",
+                  "sowMonth": 2,
+                  "areaFraction": 0.46875
+                },
+                {
+                  "id": "demo-planting-10",
+                  "bedId": "demo-bed-6",
+                  "cropKey": "sweet-potato",
+                  "sowMonth": 10,
+                  "areaFraction": 0.45875
+                },
+                {
+                  "id": "demo-planting-11",
+                  "bedId": "demo-bed-1",
+                  "cropKey": "cabbage",
+                  "sowMonth": 3,
+                  "areaFraction": 0.38833333333333336,
+                  "existing": true
+                },
+                {
+                  "id": "demo-planting-12",
+                  "bedId": "demo-bed-2",
+                  "cropKey": "cabbage",
+                  "sowMonth": 3,
+                  "areaFraction": 0.145,
+                  "existing": true
+                },
+                {
+                  "id": "demo-planting-13",
+                  "bedId": "demo-bed-2",
+                  "cropKey": "carrots",
+                  "sowMonth": 4,
+                  "areaFraction": 0.855
+                },
+                {
+                  "id": "demo-planting-14",
+                  "bedId": "demo-bed-4",
+                  "cropKey": "carrots",
+                  "sowMonth": 4,
+                  "areaFraction": 0.20166666666666666
+                },
+                {
+                  "id": "demo-planting-15",
+                  "bedId": "demo-bed-3",
+                  "cropKey": "lettuce",
+                  "sowMonth": 5,
+                  "areaFraction": 0.6166666666666667,
+                  "existing": true
+                }
+              ],
+              "outlines": [
+                {
+                  "bedId": "demo-bed-1",
+                  "points": [
+                    [
+                      28.408028475047697,
+                      27.605398947841227
+                    ],
+                    [
+                      29.908028475047697,
+                      27.605398947841227
+                    ],
+                    [
+                      29.908028475047697,
+                      31.605398947841227
+                    ],
+                    [
+                      28.408028475047697,
+                      31.605398947841227
+                    ]
+                  ]
+                },
+                {
+                  "bedId": "demo-bed-2",
+                  "points": [
+                    [
+                      30.908039941631746,
+                      27.605398947841227
+                    ],
+                    [
+                      32.40803994163174,
+                      27.605398947841227
+                    ],
+                    [
+                      32.40803994163174,
+                      31.605398947841227
+                    ],
+                    [
+                      30.908039941631746,
+                      31.605398947841227
+                    ]
+                  ]
+                },
+                {
+                  "bedId": "demo-bed-3",
+                  "points": [
+                    [
+                      33.4080514082158,
+                      27.605398947841227
+                    ],
+                    [
+                      34.9080514082158,
+                      27.605398947841227
+                    ],
+                    [
+                      34.9080514082158,
+                      31.605398947841227
+                    ],
+                    [
+                      33.4080514082158,
+                      31.605398947841227
+                    ]
+                  ]
+                },
+                {
+                  "bedId": "demo-bed-4",
+                  "points": [
+                    [
+                      28.408028475047697,
+                      32.605422912208724
+                    ],
+                    [
+                      29.908028475047697,
+                      32.605422912208724
+                    ],
+                    [
+                      29.908028475047697,
+                      36.605422912208724
+                    ],
+                    [
+                      28.408028475047697,
+                      36.605422912208724
+                    ]
+                  ]
+                },
+                {
+                  "bedId": "demo-bed-5",
+                  "points": [
+                    [
+                      30.908039941631746,
+                      32.605422912208724
+                    ],
+                    [
+                      32.40803994163174,
+                      32.605422912208724
+                    ],
+                    [
+                      32.40803994163174,
+                      36.605422912208724
+                    ],
+                    [
+                      30.908039941631746,
+                      36.605422912208724
+                    ]
+                  ]
+                },
+                {
+                  "bedId": "demo-bed-6",
+                  "points": [
+                    [
+                      33.40805255542564,
+                      32.605422912208724
+                    ],
+                    [
+                      35.40805255542564,
+                      32.605422912208724
+                    ],
+                    [
+                      35.40805255542564,
+                      36.605422912208724
+                    ],
+                    [
+                      33.40805255542564,
+                      36.605422912208724
+                    ]
+                  ]
+                },
+                {
+                  "bedId": "demo-hugel-1",
+                  "points": [
+                    [
+                      36.40806631642939,
+                      28.60540125328979
+                    ],
+                    [
+                      38.40806631642939,
+                      28.60540125328979
+                    ],
+                    [
+                      38.40806631642939,
+                      31.60540125328979
+                    ],
+                    [
+                      36.40806631642939,
+                      31.60540125328979
+                    ]
+                  ]
+                },
+                {
+                  "bedId": "demo-staple-1",
+                  "points": [
+                    [
+                      41.80808649574241,
+                      28.005391718192676
+                    ],
+                    [
+                      47.8081140177499,
+                      28.005391718192676
+                    ],
+                    [
+                      47.8081140177499,
+                      31.505407812217165
+                    ],
+                    [
+                      41.80808649574241,
+                      31.505407812217165
+                    ]
+                  ]
+                },
+                {
+                  "bedId": "demo-staple-2",
+                  "points": [
+                    [
+                      55.40814887418021,
+                      26.205383831609037
+                    ],
+                    [
+                      59.60816813737969,
+                      26.205383831609037
+                    ],
+                    [
+                      59.60816813737969,
+                      31.205406392552753
+                    ],
+                    [
+                      55.40814887418021,
+                      31.205406392552753
+                    ]
+                  ]
+                },
+                {
+                  "bedId": "demo-staple-3",
+                  "points": [
+                    [
+                      46.40810759668341,
+                      32.10541067084652
+                    ],
+                    [
+                      52.40813511317648,
+                      32.10541067084652
+                    ],
+                    [
+                      52.40813511317648,
+                      35.60542795598902
+                    ],
+                    [
+                      46.40810759668341,
+                      35.60542795598902
+                    ]
+                  ]
+                },
+                {
+                  "bedId": "demo-staple-4",
+                  "points": [
+                    [
+                      53.40813970201586,
+                      32.10541067084652
+                    ],
+                    [
+                      59.40816721850893,
+                      32.10541067084652
+                    ],
+                    [
+                      59.40816721850893,
+                      35.60542795598902
+                    ],
+                    [
+                      53.40813970201586,
+                      35.60542795598902
+                    ]
+                  ]
+                }
+              ]
+            },
+            "plantingCount": 15,
+            "bedsPlanted": 7,
+            "crops": [
+              {
+                "name": "Garlic",
+                "sowMonths": [
+                  "May"
+                ],
+                "bedLabels": [
+                  "Bed 6"
+                ],
+                "alreadyGrowing": true,
+                "firstSeasonOnlyMonths": [
+                  "May"
+                ]
+              },
+              {
+                "name": "Onions",
+                "sowMonths": [
+                  "Mar"
+                ],
+                "bedLabels": [
+                  "Bed 1"
+                ],
+                "alreadyGrowing": true,
+                "firstSeasonOnlyMonths": [
+                  "Mar"
+                ]
+              },
+              {
+                "name": "Butternut",
+                "sowMonths": [
+                  "Dec"
+                ],
+                "bedLabels": [
+                  "Bed 3"
+                ],
+                "alreadyGrowing": false,
+                "firstSeasonOnlyMonths": []
+              },
+              {
+                "name": "Swiss chard (spinach)",
+                "sowMonths": [
+                  "Apr"
+                ],
+                "bedLabels": [
+                  "Bed 5"
+                ],
+                "alreadyGrowing": true,
+                "firstSeasonOnlyMonths": [
+                  "Apr"
+                ]
+              },
+              {
+                "name": "Tomatoes",
+                "sowMonths": [
+                  "Oct"
+                ],
+                "bedLabels": [
+                  "Bed 4"
+                ],
+                "alreadyGrowing": false,
+                "firstSeasonOnlyMonths": []
+              },
+              {
+                "name": "Maize (mielies)",
+                "sowMonths": [
+                  "Oct"
+                ],
+                "bedLabels": [
+                  "Bed 7"
+                ],
+                "alreadyGrowing": false,
+                "firstSeasonOnlyMonths": []
+              },
+              {
+                "name": "Green beans",
+                "sowMonths": [
+                  "Oct"
+                ],
+                "bedLabels": [
+                  "Bed 5"
+                ],
+                "alreadyGrowing": false,
+                "firstSeasonOnlyMonths": []
+              },
+              {
+                "name": "Lettuce",
+                "sowMonths": [
+                  "May",
+                  "Sep"
+                ],
+                "bedLabels": [
+                  "Bed 2",
+                  "Bed 3"
+                ],
+                "alreadyGrowing": true,
+                "firstSeasonOnlyMonths": [
+                  "May"
+                ]
+              },
+              {
+                "name": "Broccoli",
+                "sowMonths": [
+                  "Feb"
+                ],
+                "bedLabels": [
+                  "Bed 6"
+                ],
+                "alreadyGrowing": false,
+                "firstSeasonOnlyMonths": []
+              },
+              {
+                "name": "Sweet potato",
+                "sowMonths": [
+                  "Oct"
+                ],
+                "bedLabels": [
+                  "Bed 6"
+                ],
+                "alreadyGrowing": false,
+                "firstSeasonOnlyMonths": []
+              },
+              {
+                "name": "Cabbage",
+                "sowMonths": [
+                  "Mar"
+                ],
+                "bedLabels": [
+                  "Bed 1",
+                  "Bed 2"
+                ],
+                "alreadyGrowing": true,
+                "firstSeasonOnlyMonths": [
+                  "Mar"
+                ]
+              },
+              {
+                "name": "Carrots",
+                "sowMonths": [
+                  "Apr"
+                ],
+                "bedLabels": [
+                  "Bed 2",
+                  "Bed 4"
+                ],
+                "alreadyGrowing": false,
+                "firstSeasonOnlyMonths": []
+              }
+            ]
+          }
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Loam",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "expected": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 7 beds 44 m² + 4 staple plots 84 m² | Measured off the farmer's plan |\n| Trees and perennials placed | 5 — Moringa Tree x2, Avocado Tree x1, Mango Tree x1, Natal Plum x1 | Placed by the farmer in the Design Studio |\n| Structures placed | Compost bays x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Swale 34 m · Path 18.5 m · Greywater line 10.5 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | 2 500 L — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Crop plan entered | 15 plantings, 12 crops, across 7 beds/plots | Entered by the farmer in the crop planner |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Loam | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n"
+    },
+    {
+      "name": "water-categories",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 7,
+            "bedAreaM2": 44,
+            "plotCount": 4,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Moringa Tree",
+                "category": "growing",
+                "count": 2,
+                "status": "proposed",
+                "defId": "tree_moringa"
+              },
+              {
+                "name": "Avocado Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_avocado"
+              },
+              {
+                "name": "Compost bays",
+                "category": "structure",
+                "count": 1,
+                "status": "proposed",
+                "defId": "compost_bay"
+              },
+              {
+                "name": "Mango Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_mango"
+              },
+              {
+                "name": "Natal Plum",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_natal_plum"
+              },
+              {
+                "name": "Rainwater tank (2500 L)",
+                "category": "water",
+                "count": 1,
+                "status": "proposed",
+                "defId": "jojo_2500"
+              }
+            ],
+            "routes": [
+              {
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34,
+                "kind": "swale"
+              },
+              {
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 18.5,
+                "kind": "path"
+              },
+              {
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 10.5,
+                "kind": "greywater"
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [
+              {
+                "name": "Recorded Dam",
+                "category": "Dam"
+              },
+              {
+                "name": "Recorded Pond",
+                "category": "Pond"
+              },
+              {
+                "name": "Recorded Borehole",
+                "category": "Borehole"
+              },
+              {
+                "name": "Recorded Spring",
+                "category": "Spring"
+              },
+              {
+                "name": "Recorded Well",
+                "category": "Well"
+              },
+              {
+                "name": "Recorded Tank",
+                "category": "Tank"
+              },
+              {
+                "name": "Recorded Other",
+                "category": "Other"
+              }
+            ],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          }
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Loam",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "expected": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 7 beds 44 m² + 4 staple plots 84 m² | Measured off the farmer's plan |\n| Trees and perennials placed | 5 — Moringa Tree x2, Avocado Tree x1, Mango Tree x1, Natal Plum x1 | Placed by the farmer in the Design Studio |\n| Structures placed | Compost bays x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Swale 34 m · Path 18.5 m · Greywater line 10.5 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | 2 500 L — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Water points recorded | Recorded Dam [Dam] · Recorded Pond [Pond] · Recorded Borehole [Borehole] · Recorded Spring [Spring] · Recorded Well [Well] · Recorded Tank [Tank] · Recorded Other | Pinned on the map by the farmer |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Loam | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No reservoir, no river | Nothing of the kind drawn or recorded |\n"
+    },
+    {
+      "name": "single-bed-and-plot",
+      "input": {
+        "facts": {
+          "productionEnterpriseChoices": {},
+          "productionItems": [
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "veg_bed"
+            },
+            {
+              "defId": "jojo_2500"
+            },
+            {
+              "defId": "compost_bay"
+            },
+            {
+              "defId": "tree_mango"
+            },
+            {
+              "defId": "tree_avocado"
+            },
+            {
+              "defId": "tree_natal_plum"
+            },
+            {
+              "defId": "tree_moringa"
+            },
+            {
+              "defId": "tree_moringa"
+            }
+          ],
+          "design": {
+            "beds": [
+              {
+                "label": "Bed 1",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 2",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 3",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 4",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 5",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 6",
+                "areaM2": 8,
+                "kind": "bed"
+              },
+              {
+                "label": "Bed 7",
+                "areaM2": 6,
+                "kind": "bed"
+              },
+              {
+                "label": "Plot 1",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 2",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 3",
+                "areaM2": 21,
+                "kind": "plot"
+              },
+              {
+                "label": "Plot 4",
+                "areaM2": 21,
+                "kind": "plot"
+              }
+            ],
+            "bedCount": 1,
+            "bedAreaM2": 44,
+            "plotCount": 1,
+            "plotAreaM2": 84,
+            "growingAreaM2": 128,
+            "elements": [
+              {
+                "name": "Moringa Tree",
+                "category": "growing",
+                "count": 2,
+                "status": "proposed",
+                "defId": "tree_moringa"
+              },
+              {
+                "name": "Avocado Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_avocado"
+              },
+              {
+                "name": "Compost bays",
+                "category": "structure",
+                "count": 1,
+                "status": "proposed",
+                "defId": "compost_bay"
+              },
+              {
+                "name": "Mango Tree",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_mango"
+              },
+              {
+                "name": "Natal Plum",
+                "category": "growing",
+                "count": 1,
+                "status": "proposed",
+                "defId": "tree_natal_plum"
+              },
+              {
+                "name": "Rainwater tank (2500 L)",
+                "category": "water",
+                "count": 1,
+                "status": "proposed",
+                "defId": "jojo_2500"
+              }
+            ],
+            "routes": [
+              {
+                "label": "Swale (on-contour earthwork)",
+                "count": 1,
+                "totalLengthM": 34,
+                "kind": "swale"
+              },
+              {
+                "label": "Path",
+                "count": 1,
+                "totalLengthM": 18.5,
+                "kind": "path"
+              },
+              {
+                "label": "Greywater line",
+                "count": 1,
+                "totalLengthM": 10.5,
+                "kind": "greywater"
+              }
+            ],
+            "zones": [
+              {
+                "zone": 1,
+                "label": "Daily garden",
+                "areaM2": 143,
+                "contains": [
+                  "Rainwater tank (2500 L)",
+                  "Compost bays"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 2,
+                "label": "Garden & orchard",
+                "areaM2": 137,
+                "contains": [
+                  "Bed 1",
+                  "Bed 2",
+                  "Bed 3",
+                  "Bed 4",
+                  "Bed 5",
+                  "Bed 6",
+                  "Bed 7"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 3,
+                "label": "Field crops",
+                "areaM2": 180,
+                "contains": [
+                  "Mango Tree",
+                  "Avocado Tree",
+                  "Natal Plum",
+                  "Moringa Tree x2"
+                ],
+                "staplePlots": 0
+              },
+              {
+                "zone": 5,
+                "label": "Natural habitat",
+                "areaM2": 60,
+                "contains": [],
+                "staplePlots": 0
+              }
+            ],
+            "savedAt": "2026-10-21"
+          },
+          "water": {
+            "tanks": [
+              {
+                "name": "Rainwater tank (2500 L)",
+                "count": 1,
+                "statedLitres": 2500,
+                "status": "proposed"
+              }
+            ],
+            "statedStorageLitres": 2500,
+            "tanksOfUnknownCapacity": 0,
+            "mapPoints": [],
+            "bodies": []
+          },
+          "measurements": {
+            "dailyWaterUseL": 200
+          },
+          "roof": {
+            "areaM2": 144,
+            "source": "Traced on the map"
+          },
+          "boundary": {
+            "areaM2": 1037,
+            "source": "Traced on the map"
+          }
+        },
+        "biomeName": "Grassland",
+        "vegUnit": "Thukela Thornveld",
+        "bruLabel": "Dry Tall Grassveld",
+        "adminLabel": "Recorded district",
+        "lat": -27.726231,
+        "lon": 31.963044,
+        "dateLabel": "21 October 2026",
+        "rainfallMm": 791,
+        "rainfallSource": "nasa-power",
+        "wetSeason": "Oct–Mar",
+        "drySeason": "May–Aug",
+        "soilPh": 6.5,
+        "soilOrganicCarbon": 1.2,
+        "soilTexture": "Loam",
+        "soilSource": "soilgrids",
+        "elevationM": 962,
+        "slopeDeg": 1.3,
+        "aspectLabel": "N",
+        "hasMapWaterPolygons": false,
+        "omitTitle": true
+      },
+      "expected": "## Site at a Glance\n\nNothing in this table was written by the report generator. Each figure is either measured off this farm's own map or read from the data source named beside it.\n\n| Measure | Value | Where it comes from |\n|---------|-------|---------------------|\n| Property boundary | 1 037 m² (0.104 ha) | Traced on the map |\n| Growing area drawn | 128 m² — 1 bed 44 m² + 1 staple plot 84 m² | Measured off the farmer's plan |\n| Trees and perennials placed | 5 — Moringa Tree x2, Avocado Tree x1, Mango Tree x1, Natal Plum x1 | Placed by the farmer in the Design Studio |\n| Structures placed | Compost bays x1 | Placed by the farmer in the Design Studio |\n| Earthworks and routes | Swale 34 m · Path 18.5 m · Greywater line 10.5 m | Measured off the traced lines |\n| Permaculture zones drawn | Zone 1 143 m² · Zone 2 137 m² · Zone 3 180 m² · Zone 5 60 m² | Rings drawn by the farmer |\n| Water storage on the plan | 2 500 L — Rainwater tank (2500 L) x1 (drawn as proposed) | Design Studio |\n| Roof catchment traced | 144 m² → 91 123 L/yr at 0.8 runoff | Traced on the map |\n| Annual rainfall | 791 mm — wet Oct–Mar, dry May–Aug | NASA POWER |\n| Natural vegetation | Thukela Thornveld | SANBI 2018 National Vegetation Map |\n| Agro-ecological zone | Closest to Dry Tall Grassveld | KZN DARD bioresource units — a best-effort climate match, not a verified classification |\n| Soil (0-30 cm) | pH 6.5 · 1.2% organic carbon · Loam | ISRIC SoilGrids model (district-wide, not your field) |\n| Elevation, slope, aspect | 962 m · 1.3° · faces N | SRTM elevation model |\n| Not on this site | No dam, no pond, no reservoir, no borehole, no well, no spring, no river | Nothing of the kind drawn or recorded |\n"
+    }
+  ]
+}

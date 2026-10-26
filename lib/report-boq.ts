@@ -1,3 +1,6 @@
+import { reportDocumentText } from './report-localisation';
+import { reportElementDisplayName, reportRouteDisplayName, reportVisualText } from './report-visuals';
+import { summaryBoqDescription } from './report-summary';
 /**
  * report-boq.ts — the BILL OF QUANTITIES and COST SUMMARY for the site report.
  *
@@ -72,6 +75,8 @@ export interface BoqLine {
   /** Section of the bill: what kind of work this is. */
   group: 'Water' | 'Earthworks & routes' | 'Growing area' | 'Structures & planting';
   description: string;
+  /** Only code-authored descriptions are translated; a farmer may use the same words as a label. */
+  descriptionSource?: { kind: 'beds' | 'plots'; count: number } | { kind: 'listed-plant' };
   /** The measured quantity, already formatted with its unit ("42.5 m", "3 no.", "18 m²"). */
   quantity: string;
   /** Rate as printed ("R250/m"), or null when unpriced. */
@@ -186,15 +191,15 @@ const UNPRICED_TEXT: Record<UnpricedReason, string> = {
   'listed-plant': 'listed plant on saved plan — obtain local legal and ecological advice; do not buy or propagate from this bill',
 };
 
-function rateText(entry: PriceEntry): string {
-  if (entry.unit === 'each') return `${formatZar(entry.zar)} each`;
+function rateText(entry: PriceEntry,language='en'): string {
+  if (entry.unit === 'each') return reportDocumentText('{amount} each',language,{amount:formatZar(entry.zar)});
   if (entry.unit === 'per_m') return `${formatZar(entry.zar)}/m`;
   return `${formatZar(entry.zar)}/m²`;
 }
 
 /** "3 no." — a count, in the bill-of-quantities convention. */
-function countQty(n: number): string {
-  return `${n} no.`;
+function countQty(n: number,language='en'): string {
+  return reportDocumentText('{count} no.',language,{count:n});
 }
 
 function metresQty(n: number): string {
@@ -226,7 +231,8 @@ function isExisting(status: FactStatus): boolean {
  * Every line here traces to something the farmer drew. Nothing is added because a permaculture
  * design "usually has one".
  */
-export function buildBillOfQuantities(facts: ReportSiteFacts | null | undefined): BillOfQuantities {
+export function buildBillOfQuantities(facts: ReportSiteFacts | null | undefined,language='en'): BillOfQuantities {
+  const t=(source:string)=>reportDocumentText(source,language);
   const lines: BoqLine[] = [];
   let existingCount = 0;
 
@@ -237,8 +243,9 @@ export function buildBillOfQuantities(facts: ReportSiteFacts | null | undefined)
     entry: PriceEntry,
     zar: number,
     source: string,
+    descriptionSource?: BoqLine['descriptionSource'],
   ): void => {
-    lines.push({ group, description, quantity, rate: rateText(entry), zar, source });
+    lines.push({ group, description, quantity, rate: rateText(entry,language), zar, source, ...(descriptionSource ? { descriptionSource } : {}) });
   };
 
   const unpriced = (
@@ -247,41 +254,44 @@ export function buildBillOfQuantities(facts: ReportSiteFacts | null | undefined)
     quantity: string,
     reason: UnpricedReason,
     source: string,
+    descriptionSource?: BoqLine['descriptionSource'],
   ): void => {
-    lines.push({ group, description, quantity, rate: null, zar: null, unpriced: reason, source });
+    lines.push({ group, description, quantity, rate: null, zar: null, unpriced: reason, source, ...(descriptionSource ? { descriptionSource } : {}) });
   };
 
   // ── Water: tanks ──
   for (const tank of facts?.water?.tanks ?? []) {
     if (isExisting(tank.status)) { existingCount += tank.count; continue; }
-    const source = 'Placed in the Design Studio';
+    const source = t('Placed in the Design Studio');
+    const name = reportElementDisplayName(tank.name,tank.defId,language);
     // A tank's price follows its STATED capacity, and an unstated capacity stays unpriced —
     // FactTank.statedLitres is null precisely so a size is never guessed from a name.
     if (tank.statedLitres === null) {
-      unpriced('Water', tank.name, countQty(tank.count), 'no-rate', source);
+      unpriced('Water', name, countQty(tank.count,language), 'no-rate', source);
       continue;
     }
     const key = TANK_RATE_BY_DEF_ID[tankKeyFor(tank.statedLitres)];
     if (!key) {
-      unpriced('Water', `${tank.name} (${groupDigits(tank.statedLitres)} L)`, countQty(tank.count), 'out-of-range', source);
+      unpriced('Water', `${name} (${groupDigits(tank.statedLitres)} L)`, countQty(tank.count,language), 'out-of-range', source);
       continue;
     }
     const entry = PRICE_BOOK[key];
-    priced('Water', `${tank.name} (${groupDigits(tank.statedLitres)} L)`, countQty(tank.count), entry, entry.zar * tank.count, source);
+    priced('Water', `${name} (${groupDigits(tank.statedLitres)} L)`, countQty(tank.count,language), entry, entry.zar * tank.count, source);
   }
 
   // ── Earthworks and routes ──
   for (const route of facts?.design?.routes ?? []) {
-    const source = 'Measured off the traced line';
+    const source = t('Measured off the traced line');
+    const label = reportRouteDisplayName(route.label,route.kind,language);
     const key = route.kind ? ROUTE_RATE_BY_KIND[route.kind] : undefined;
     if (!key) {
-      unpriced('Earthworks & routes', route.label, metresQty(route.totalLengthM), 'no-rate', source);
+      unpriced('Earthworks & routes', label, metresQty(route.totalLengthM), 'no-rate', source);
       continue;
     }
     const entry = PRICE_BOOK[key];
     priced(
       'Earthworks & routes',
-      route.label,
+      label,
       metresQty(route.totalLengthM),
       entry,
       Math.round(route.totalLengthM * entry.zar),
@@ -299,7 +309,8 @@ export function buildBillOfQuantities(facts: ReportSiteFacts | null | undefined)
       areaQty(design.bedAreaM2),
       entry,
       Math.round(design.bedAreaM2 * entry.zar),
-      'Measured off the farmer\'s plan',
+      t('Measured off the farmer\'s plan'),
+      { kind: 'beds', count: design.bedCount },
     );
   }
   if (design && design.plotAreaM2 > 0) {
@@ -318,17 +329,19 @@ export function buildBillOfQuantities(facts: ReportSiteFacts | null | undefined)
       `Staple plots established (${design.plotCount} plot${design.plotCount === 1 ? '' : 's'})`,
       areaQty(design.plotAreaM2),
       'no-rate',
-      'Measured off the farmer\'s plan',
+      t('Measured off the farmer\'s plan'),
+      { kind: 'plots', count: design.plotCount },
     );
   }
 
   // ── Everything else placed on the plan ──
   for (const group of design?.elements ?? []) {
     if (isExisting(group.status)) { existingCount += group.count; continue; }
-    const source = 'Placed in the Design Studio';
+    const source = t('Placed in the Design Studio');
     const defId = group.defId;
+    const name = reportElementDisplayName(group.name,defId,language);
     if (defId === 'tree_guava' || listedPlantMentions(group.name).length > 0) {
-      unpriced('Structures & planting', 'Listed plant on saved plan', countQty(group.count), 'listed-plant', source);
+      unpriced('Structures & planting', 'Listed plant on saved plan', countQty(group.count,language), 'listed-plant', source, { kind: 'listed-plant' });
       continue;
     }
     // Tanks are billed above from FactWater, which is the only place their capacity is known.
@@ -337,25 +350,26 @@ export function buildBillOfQuantities(facts: ReportSiteFacts | null | undefined)
     if (defId && BED_DEF_ID_SET.has(defId)) continue;
 
     if (!defId) {
-      unpriced('Structures & planting', group.name, countQty(group.count), 'no-rate', source);
+      unpriced('Structures & planting', name, countQty(group.count,language), 'no-rate', source);
       continue;
     }
     if (defId in AREA_RATED_DEF_IDS) {
-      unpriced('Structures & planting', group.name, countQty(group.count), 'no-area', source);
+      unpriced('Structures & planting', name, countQty(group.count,language), 'no-area', source);
       continue;
     }
     const key = ITEM_RATE_BY_DEF_ID[defId];
     if (!key) {
-      unpriced('Structures & planting', group.name, countQty(group.count), 'no-rate', source);
+      unpriced('Structures & planting', name, countQty(group.count,language), 'no-rate', source);
       continue;
     }
     const entry = PRICE_BOOK[key];
-    priced('Structures & planting', group.name, countQty(group.count), entry, entry.zar * group.count, source);
+    priced('Structures & planting', name, countQty(group.count,language), entry, entry.zar * group.count, source);
   }
 
   const subtotalZar = lines.reduce((sum, line) => sum + (line.zar ?? 0), 0);
   const unpricedCount = lines.filter((line) => line.zar === null).length;
-  return { lines, subtotalZar, unpricedCount, existingCount };
+  // Authored bed/plot and regulated-plant labels share the summary's existing source drafts.
+  return { lines:lines.map(line=>({...line,description:summaryBoqDescription(line,language)})), subtotalZar, unpricedCount, existingCount };
 }
 
 /**
@@ -382,48 +396,49 @@ const GROUP_ORDER: BoqLine['group'][] = ['Water', 'Earthworks & routes', 'Growin
  * Deliberately not generated: a model asked to price a build will produce a total, and a total
  * a model produced is indistinguishable on the page from one measured off the plan.
  */
-export function billOfQuantitiesMarkdown(boq: BillOfQuantities): string {
+export function billOfQuantitiesMarkdown(boq: BillOfQuantities,language='en'): string {
+  const t=(source:string,values?:Record<string,string|number>)=>reportDocumentText(source,language,values);
   const out: string[] = [];
-  out.push('## Cost & Bill of Quantities');
+  out.push(`## ${t('Cost & Bill of Quantities')}`);
   out.push('');
 
   if (!boq.lines.length) {
-    out.push('No priced work can be listed yet: nothing has been drawn on the plan to measure. Draw the beds, tanks, fences and paths in the Design Studio and this bill fills itself from those measurements.');
+    out.push(t('No priced work can be listed yet: nothing has been drawn on the plan to measure. Draw the beds, tanks, fences and paths in the Design Studio and this bill fills itself from those measurements.'));
     out.push('');
     return out.join('\n');
   }
 
-  out.push('Every quantity below is measured off this farm\'s own plan. Nothing here was estimated from a typical farm, and no line was added because a design "usually has one".');
+  out.push(t('Every quantity below is measured off this farm\'s own plan. Nothing here was estimated from a typical farm, and no line was added because a design "usually has one".'));
   out.push('');
-  out.push('| Item | Quantity | Rate | Amount | Measured from |');
+  out.push(`| ${t('Item')} | ${t('Quantity')} | ${t('Rate')} | ${t('Amount')} | ${t('Measured from')} |`);
   out.push('|------|----------|------|--------|---------------|');
 
   for (const group of GROUP_ORDER) {
     const groupLines = boq.lines.filter((line) => line.group === group);
     if (!groupLines.length) continue;
-    out.push(`| **${group}** | | | | |`);
+    out.push(`| **${reportVisualText(group,language)}** | | | | |`);
     for (const line of groupLines) {
       const amount = line.zar === null
-        ? `_${UNPRICED_TEXT[line.unpriced ?? 'no-rate']}_`
+        ? `_${t(UNPRICED_TEXT[line.unpriced ?? 'no-rate'])}_`
         : formatZar(line.zar);
       out.push(`| ${line.description} | ${line.quantity} | ${line.rate ?? '—'} | ${amount} | ${line.source} |`);
     }
   }
 
   out.push('');
-  out.push(`**Subtotal of the priced lines: ${formatZar(boq.subtotalZar)}**`);
+  out.push(`**${t('Subtotal of the priced lines: {subtotal}',{subtotal:formatZar(boq.subtotalZar)})}**`);
   out.push('');
 
   if (boq.unpricedCount > 0) {
-    out.push(`This subtotal is NOT the cost of the build. ${boq.unpricedCount} line${boq.unpricedCount === 1 ? ' carries' : 's carry'} a measured quantity but no rate, so the real figure is higher by whatever those cost. They are listed above with the reason, rather than left out or costed at zero — a bill that hides what it could not price reads as complete when it is not.`);
+    out.push(t("This subtotal is NOT the cost of the build. {unpriced} a measured quantity but no rate, so the real figure is higher by whatever those cost. They are listed above with the reason, rather than left out or costed at zero \u2014 a bill that hides what it could not price reads as complete when it is not.",{unpriced:t(boq.unpricedCount===1?'{count} line carries':'{count} lines carry',{count:boq.unpricedCount})}));
     out.push('');
   }
   if (boq.existingCount > 0) {
-    out.push(`${boq.existingCount} item${boq.existingCount === 1 ? '' : 's'} marked as already on the farm ${boq.existingCount === 1 ? 'is' : 'are'} excluded from this bill. They are part of the design and not part of the spend.`);
+    out.push(t('{items} excluded from this bill. They are part of the design and not part of the spend.',{items:t(boq.existingCount===1?'{count} item marked as already on the farm is':'{count} items marked as already on the farm are',{count:boq.existingCount})}));
     out.push('');
   }
 
-  out.push(`_${DISCLAIMER}_`);
+  out.push(`_${t(DISCLAIMER)}_`);
   out.push('');
   return out.join('\n');
 }

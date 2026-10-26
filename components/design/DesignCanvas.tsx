@@ -10,7 +10,7 @@
 // mirrors HybridRender.tsx's touch-up overlay pattern.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Camera, Check, Eye, EyeOff, CopyCheck, Move, Pencil, Ruler, Satellite, Square, Sun, X } from 'lucide-react';
+import { Camera, Check, Eye, EyeOff, CopyCheck, Move, Pencil, Ruler, Satellite, Square, Sun, Undo2, X } from 'lucide-react';
 import type { CanvasFrame, DesignBaseMode, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { newId, groundFillPolys, groundFeatureLayer, nearestPointOnRing, normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE, clampBaseOpacity, normaliseAreaFill, parseSwaleWidthM, type AreaFillStyle } from '@/lib/design-canvas';
 import { layoutBedBlock, bedBlockPaths, bedBlockFootprintM, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
@@ -4662,6 +4662,7 @@ export default function DesignCanvas({
             justifyContent: 'center',
             gap: 8,
             flexWrap: 'wrap',
+            width: 'max-content',
             maxWidth: 'calc(100% - 24px)',
             zIndex: 20,
           }}
@@ -4672,14 +4673,14 @@ export default function DesignCanvas({
             onClick={() => setDraftPoints([])}
             style={{ minHeight: 44, padding: '0 14px', borderRadius: 22, border: '1px solid rgba(0,0,0,0.15)', background: 'rgba(255,254,250,0.92)', color: '#0B120B', fontWeight: 600, fontSize: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}
           >
-            {t('designCanvasCancel')}
+            <X size={16} aria-hidden style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: 6 }} /> {t('designCanvasCancel')}
           </button>
           <button
             type="button"
             onClick={() => setDraftPoints((prev) => prev.slice(0, -1))}
             style={{ minHeight: 44, padding: '0 14px', borderRadius: 22, border: '1px solid rgba(0,0,0,0.15)', background: 'rgba(255,254,250,0.92)', color: '#0B120B', fontWeight: 600, fontSize: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}
           >
-            {t('designCanvasPoint')}
+            <Undo2 size={16} aria-hidden style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: 6 }} /> {t('designCanvasPoint')}
           </button>
           {draftPoints.length >= (tool === 'zone' ? 3 : 2) && (
             <button
@@ -4700,7 +4701,7 @@ export default function DesignCanvas({
                 animation: 'imbewuFinishPulse 1.8s ease-in-out infinite',
               }}
             >
-              {formatDesignTranslation(t('designCanvasFinish'), {
+              <Check size={18} aria-hidden style={{ flexShrink: 0 }} /> {formatDesignTranslation(t('designCanvasFinish'), {
                 thing: tool === 'line'
                   ? t('designCanvasLine')
                   : areaFeature
@@ -4729,6 +4730,7 @@ export default function DesignCanvas({
             flexDirection: 'column',
             alignItems: 'center',
             gap: 8,
+            width: 'max-content',
             maxWidth: 'calc(100% - 24px)',
             zIndex: 20,
           }}
@@ -4753,7 +4755,7 @@ export default function DesignCanvas({
               onClick={() => onCancelTidy?.()}
               style={{ minHeight: 44, padding: '0 14px', borderRadius: 22, border: '1px solid rgba(0,0,0,0.15)', background: 'rgba(255,254,250,0.92)', color: '#0B120B', fontWeight: 600, fontSize: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}
             >
-              {tidyPreview.canConfirm ? t('designCanvasCancel') : t('designCanvasClose')}
+              <X size={16} aria-hidden style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: 6 }} /> {tidyPreview.canConfirm ? t('designCanvasCancel') : t('designCanvasClose')}
             </button>
             {tidyPreview.canConfirm && (
               <button
@@ -4773,7 +4775,7 @@ export default function DesignCanvas({
                   gap: 6,
                 }}
               >
-                {t('designCanvasTidy')}
+                <Check size={18} aria-hidden style={{ flexShrink: 0 }} /> {t('designCanvasTidy')}
               </button>
             )}
           </div>
@@ -4796,6 +4798,7 @@ export default function DesignCanvas({
             flexDirection: 'column',
             alignItems: 'center',
             gap: 8,
+            width: 'max-content',
             maxWidth: 'calc(100% - 24px)',
             zIndex: 20,
           }}
@@ -4820,7 +4823,7 @@ export default function DesignCanvas({
               onClick={() => onCancelSnap?.()}
               style={{ minHeight: 44, padding: '0 14px', borderRadius: 22, border: '1px solid rgba(0,0,0,0.15)', background: 'rgba(255,254,250,0.92)', color: '#0B120B', fontWeight: 600, fontSize: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}
             >
-              {snapPreview.canConfirm ? t('designCanvasCancel') : t('designCanvasClose')}
+              <X size={16} aria-hidden style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: 6 }} /> {snapPreview.canConfirm ? t('designCanvasCancel') : t('designCanvasClose')}
             </button>
             {snapPreview.canConfirm && (
               <button
@@ -4840,7 +4843,7 @@ export default function DesignCanvas({
                   gap: 6,
                 }}
               >
-                {t('designCanvasSnap')}
+                <Check size={18} aria-hidden style={{ flexShrink: 0 }} /> {t('designCanvasSnap')}
               </button>
             )}
           </div>
@@ -4863,6 +4866,7 @@ export default function DesignCanvas({
             flexDirection: 'column',
             alignItems: 'center',
             gap: 8,
+            width: 'max-content',
             maxWidth: 'calc(100% - 24px)',
             zIndex: 20,
           }}
@@ -4887,7 +4891,7 @@ export default function DesignCanvas({
               onClick={() => onCancelCleanup?.()}
               style={{ minHeight: 44, padding: '0 14px', borderRadius: 22, border: '1px solid rgba(0,0,0,0.15)', background: 'rgba(255,254,250,0.92)', color: '#0B120B', fontWeight: 600, fontSize: 14, boxShadow: '0 2px 8px rgba(0,0,0,0.25)' }}
             >
-              {cleanupPreview.canConfirm ? t('designCanvasCancel') : t('designCanvasClose')}
+              <X size={16} aria-hidden style={{ display: 'inline-block', verticalAlign: 'middle', marginRight: 6 }} /> {cleanupPreview.canConfirm ? t('designCanvasCancel') : t('designCanvasClose')}
             </button>
             {cleanupPreview.canConfirm && (
               <button
@@ -4907,7 +4911,7 @@ export default function DesignCanvas({
                   gap: 6,
                 }}
               >
-                {t('designCanvasCleanup')}
+                <Check size={18} aria-hidden style={{ flexShrink: 0 }} /> {t('designCanvasCleanup')}
               </button>
             )}
           </div>

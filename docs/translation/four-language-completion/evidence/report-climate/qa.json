@@ -1,0 +1,632 @@
+{
+  "sourceSha": "792493f3c70e45517c6ae8000c5716f436befd26",
+  "reviewStatus": "unreviewed AI drafts; no fluent-speaker approval",
+  "screenshots": 44,
+  "svgCases": [
+    {
+      "lang": "zu",
+      "cases": [
+        {
+          "id": "climate",
+          "width": 640,
+          "height": 465,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "sectors",
+          "width": 640,
+          "height": 696,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "water-budget",
+          "width": 640,
+          "height": 547,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "soil",
+          "width": 640,
+          "height": 475,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "timeline",
+          "width": 640,
+          "height": 466,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "soil-unmeasured",
+          "width": 640,
+          "height": 150,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "soil-lab",
+          "width": 640,
+          "height": 439,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "soil-missing-values",
+          "width": 640,
+          "height": 439,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "water-no-use",
+          "width": 640,
+          "height": 476,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "water-unknown-tank",
+          "width": 640,
+          "height": 547,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "water-installed",
+          "width": 640,
+          "height": 547,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "sectors-flat-observed",
+          "width": 640,
+          "height": 717,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "sectors-equator",
+          "width": 640,
+          "height": 550,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "climate-no-temp",
+          "width": 640,
+          "height": 299,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "timeline-sequential",
+          "width": 640,
+          "height": 466,
+          "outside": [],
+          "overlaps": []
+        }
+      ],
+      "imagesLoaded": true
+    },
+    {
+      "lang": "st",
+      "cases": [
+        {
+          "id": "climate",
+          "width": 640,
+          "height": 483,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "sectors",
+          "width": 640,
+          "height": 697,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "water-budget",
+          "width": 640,
+          "height": 547,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "soil",
+          "width": 640,
+          "height": 475,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "timeline",
+          "width": 640,
+          "height": 506,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "soil-unmeasured",
+          "width": 640,
+          "height": 150,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "soil-lab",
+          "width": 640,
+          "height": 439,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "soil-missing-values",
+          "width": 640,
+          "height": 439,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "water-no-use",
+          "width": 640,
+          "height": 476,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "water-unknown-tank",
+          "width": 640,
+          "height": 565,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "water-installed",
+          "width": 640,
+          "height": 547,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "sectors-flat-observed",
+          "width": 640,
+          "height": 718,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "sectors-equator",
+          "width": 640,
+          "height": 566,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "climate-no-temp",
+          "width": 640,
+          "height": 317,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "timeline-sequential",
+          "width": 640,
+          "height": 506,
+          "outside": [],
+          "overlaps": []
+        }
+      ],
+      "imagesLoaded": true
+    },
+    {
+      "lang": "ts",
+      "cases": [
+        {
+          "id": "climate",
+          "width": 640,
+          "height": 483,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "sectors",
+          "width": 640,
+          "height": 757,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "water-budget",
+          "width": 640,
+          "height": 565,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "soil",
+          "width": 640,
+          "height": 475,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "timeline",
+          "width": 640,
+          "height": 545,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "soil-unmeasured",
+          "width": 640,
+          "height": 150,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "soil-lab",
+          "width": 640,
+          "height": 439,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "soil-missing-values",
+          "width": 640,
+          "height": 439,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "water-no-use",
+          "width": 640,
+          "height": 476,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "water-unknown-tank",
+          "width": 640,
+          "height": 583,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "water-installed",
+          "width": 640,
+          "height": 565,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "sectors-flat-observed",
+          "width": 640,
+          "height": 778,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "sectors-equator",
+          "width": 640,
+          "height": 566,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "climate-no-temp",
+          "width": 640,
+          "height": 317,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "timeline-sequential",
+          "width": 640,
+          "height": 527,
+          "outside": [],
+          "overlaps": []
+        }
+      ],
+      "imagesLoaded": true
+    },
+    {
+      "lang": "ve",
+      "cases": [
+        {
+          "id": "climate",
+          "width": 640,
+          "height": 483,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "sectors",
+          "width": 640,
+          "height": 727,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "water-budget",
+          "width": 640,
+          "height": 565,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "soil",
+          "width": 640,
+          "height": 455,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "timeline",
+          "width": 640,
+          "height": 563,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "soil-unmeasured",
+          "width": 640,
+          "height": 150,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "soil-lab",
+          "width": 640,
+          "height": 419,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "soil-missing-values",
+          "width": 640,
+          "height": 419,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "water-no-use",
+          "width": 640,
+          "height": 476,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "water-unknown-tank",
+          "width": 640,
+          "height": 583,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "water-installed",
+          "width": 640,
+          "height": 565,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "sectors-flat-observed",
+          "width": 640,
+          "height": 748,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "sectors-equator",
+          "width": 640,
+          "height": 566,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "climate-no-temp",
+          "width": 640,
+          "height": 317,
+          "outside": [],
+          "overlaps": []
+        },
+        {
+          "id": "timeline-sequential",
+          "width": 640,
+          "height": 545,
+          "outside": [],
+          "overlaps": []
+        }
+      ],
+      "imagesLoaded": true
+    }
+  ],
+  "actualViewer": [
+    {
+      "lang": "zu",
+      "figures": [
+        {
+          "id": "climate",
+          "title": "Imvula nokufudumala phakathi nonyaka",
+          "alt": "Imvula ngenyanga: 791 mm ngonyaka; enemvula kakhulu Jan 134 mm, eyome kakhulu Mey 12 mm. Inyanga efudumele kakhulu Jan 22.7 °C, ebanda kakhulu Jul 11.5 °C.",
+          "lang": "zu"
+        },
+        {
+          "id": "water-budget",
+          "title": "Amanzi ophahla: okungenayo nokuphumayo",
+          "alt": "Okubanjwa uphahla ngenyanga: 91 123 L ngonyaka; kuyashoda ngo Eph–Sep; isitoreji esikupulani 2 500 L; isitoreji esidingekayo 20 600 L.",
+          "lang": "zu"
+        },
+        {
+          "id": "sectors",
+          "title": "Ilanga, umoya nomthambeka",
+          "alt": "Umdwebo wamasekta. Ilanga lasehlobo: liphuma ESE, lishona WSW, 86° ngaphezu komkhathizwe emini, enyakatho. Ilanga lasebusika: liphuma ENE, lishona WNW, 39° ngaphezu komkhathizwe emini, enyakatho. Umoya opholisa ehlobo: uvela e NE, Sep–Mas (iphethini yesifunda). Ingaphambili elibandayo — imvula ephephethwayo: uvela e SW, Mas–Aga (iphethini yesifunda). Umoya oshisayo owomileyo ovela ezintabeni (berg): uvela e NW, Mey–Aga, ngezikhathi ezithile (iphethini yesifunda). Umlilo kungenzeka ufike uvela e NW. Ingozi yomlilo wotshani / yamalahle avuthayo ebusika ilandela umoya oshisayo owomileyo ovela ezintabeni, hhayi umoya opholisa ehlobo. Umhlaba ubonakala ucishe ube yisicaba, ngakho akukho ndlela yokwehla edwetshiwe.",
+          "lang": "zu"
+        },
+        {
+          "id": "soil",
+          "title": "Umhlabathi ngamafuphi",
+          "alt": "Umhlabathi: pH 6.5; Isihlabathi 45 %, Udaka olucolekile 30 %, Ubumba 25 %; ikhabhoni yemvelo 1.2 % (isilinganiso se-SoilGrids).",
+          "lang": "zu"
+        },
+        {
+          "id": "timeline",
+          "title": "Ukulandelana komsebenzi",
+          "alt": "Ukulandelana komsebenzi: 1. Qinisekisa, maka indawo bese uyiphephisa (Iviki 0–1); 2. Ukufinyelela okuphephile nolayini omkhulu wamanzi (Amaviki 1–4); 3. Imisebenzi yomhlaba nokwakha umhlabathi (Amaviki 3–6); 4. Imibhede, ukuconsa nezakhiwo zokusebenza (Amaviki 5–9); 5. Izitshalo eziphila iminyaka namaqembu ezitshalo asekelanayo (Amaviki 8–12); 6. Ukuqalisa ukusebenza nokunikezela (Inyanga 3+).",
+          "lang": "zu"
+        }
+      ],
+      "requestedLanguage": "en",
+      "originalBytesUnchanged": true,
+      "designBytesUnchanged": true,
+      "originalBody": true,
+      "originalContentLanguage": "en",
+      "overflow": false
+    },
+    {
+      "lang": "st",
+      "figures": [
+        {
+          "id": "climate",
+          "title": "Pula le mofuthu ho pholletsa le selemo",
+          "alt": "Pula ka kgwedi: 791 mm ka selemo; e nang le pula e ngata ka ho fetisisa Phe 134 mm, e ommeng ka ho fetisisa Mot 12 mm. Kgwedi e futhumetseng ka ho fetisisa Phe 22.7 °C, e batang ka ho fetisisa Phu 11.5 °C.",
+          "lang": "st"
+        },
+        {
+          "id": "water-budget",
+          "title": "Metsi a marulelo: a kenang le a tswang",
+          "alt": "Metsi a tshwarwang ke marulelo ka kgwedi: 91 123 L ka selemo; kgaello ka Mme–Leo; polokelo e polaneng 2 500 L; polokelo e hlokahalang 20 600 L.",
+          "lang": "st"
+        },
+        {
+          "id": "sectors",
+          "title": "Letsatsi, moya le moepa",
+          "alt": "Setshwantsho sa diseketara. Letsatsi la lehlabula: le tjhaba ESE, le dikela WSW, 86° ka hodima mola wa mahodimo motshehare, ka leboya. Letsatsi la mariha: le tjhaba ENE, le dikela WNW, 39° ka hodima mola wa mahodimo motshehare, ka leboya. Moya o phodisang wa lehlabula: o tswa NE, Leo–Hlb (mokgwa wa sebaka se seholo). Moya o batang o fihlang — pula e kgannwang ke moya: o tswa SW, Hlb–Pha (mokgwa wa sebaka se seholo). Moya o tjhesang o ommeng o tswang dithabeng (berg): o tswa NW, Mot–Pha, nako le nako (mokgwa wa sebaka se seholo). Mollo o ka nna wa fihla haholo ho tswa NW. Kotsi ya mollo wa jwang / mashala a tukang mariha e latela moya o ommeng o tjhesang o tswang dithabeng, eseng moya o phodisang wa lehlabula. Mobu o bonahala o batla o bataletse, kahoo ha ho tsela ya ho theoha e takilweng.",
+          "lang": "st"
+        },
+        {
+          "id": "soil",
+          "title": "Mobu ka ho habanya",
+          "alt": "Mobu: pH 6.5; Lehlabathe 45 %, Seretse se sesesane 30 %, Letsopa 25 %; khabone ya tlhaho 1.2 % (kakanyo ya SoilGrids).",
+          "lang": "st"
+        },
+        {
+          "id": "timeline",
+          "title": "Tatelano ya mosebetsi",
+          "alt": "Tatelano ya mosebetsi: 1. Netefatsa, tshwaya sebaka mme o se boloke se bolokehile (Beke 0–1); 2. Tsela e bolokehileng le peipi e kgolo ya metsi (Dibeke 1–4); 3. Mosebetsi wa mobu le ho ntlafatsa mobu (Dibeke 3–6); 4. Dibethe, nosetso e rothelang le meaho ya mosebetsi (Dibeke 5–9); 5. Dimela tse phelang dilemo le dihlopha tsa dimela tse thusanang (Dibeke 8–12); 6. Ho qala tshebetso le ho nehelana (Kgwedi 3+).",
+          "lang": "st"
+        }
+      ],
+      "requestedLanguage": "en",
+      "originalBytesUnchanged": true,
+      "designBytesUnchanged": true,
+      "originalBody": true,
+      "originalContentLanguage": "en",
+      "overflow": false
+    },
+    {
+      "lang": "ts",
+      "figures": [
+        {
+          "id": "climate",
+          "title": "Mpfula ni ku kufumela lembe hinkwaro",
+          "alt": "Mpfula hi n'weti: 791 mm hi lembe; lowu nga ni mpfula yo tala swinene Sung 134 mm, lowu omeke swinene Mudy 12 mm. N'weti lowu hisaka swinene Sung 22.7 °C, lowu titimelaka swinene Maw 11.5 °C.",
+          "lang": "ts"
+        },
+        {
+          "id": "water-budget",
+          "title": "Mati ya lwangu: lama nghenaka ni lama humaka",
+          "alt": "Mati lama lwangu ri ma khomaka hi n'weti: 91 123 L hi lembe; ku kayivela hi Dziv–Ndzh; vuhlayiselo eka pulani 2 500 L; vuhlayiselo leswi lavekaka 20 600 L.",
+          "lang": "ts"
+        },
+        {
+          "id": "sectors",
+          "title": "Dyambu, moya ni ku rhelela",
+          "alt": "Xifaniso xa tisekitara. Dyambu ra ximumu: ri huma ESE, ri pela WSW, 86° ehenhla ka laha tilo ni misava swi hlanganaka hi nhlikanhi, en'walungwini. Dyambu ra xixika: ri huma ENE, ri pela WNW, 39° ehenhla ka laha tilo ni misava swi hlanganaka hi nhlikanhi, en'walungwini. Moya wo horisa wa ximumu: wu huma NE, Ndzh–Nyku (maendlelo ya xifundzha). Moya wo titimela lowu fikaka — mpfula leyi biwaka hi moya: wu huma SW, Nyku–Mhaw (maendlelo ya xifundzha). Moya wo hisa wo oma lowu humaka etintshaveni (berg): wu huma NW, Mudy–Mhaw, hi minkarhi yo karhi (maendlelo ya xifundzha). Ndzilo wu nga ha fika ngopfu wu huma NW. Khombo ra ndzilo wa byanyi / makala lama pfurhaka hi xixika ri landzela moya wo oma wo hisa wa le tintshaveni, ku nga ri moya wo horisa wa ximumu. Misava yi vonaka yi lava ku va xiphepherhele, kutani a ku dirowiwi tlhelo ro rhelela.",
+          "lang": "ts"
+        },
+        {
+          "id": "soil",
+          "title": "Misava hi ku languta ntsena",
+          "alt": "Misava: pH 6.5; Sava 45 %, Sava leritsongo swinene 30 %, Vumba 25 %; khaboni ya ntumbuluko 1.2 % (ndzinganyeto wa SoilGrids).",
+          "lang": "ts"
+        },
+        {
+          "id": "timeline",
+          "title": "Nandzelelano wa mintirho",
+          "alt": "Nandzelelano wa mintirho: 1. Tiyisisa, fungha ndhawu u yi endla yi hlayiseka (Vhiki 0–1); 2. Ku nghena loku hlayisekeke ni layini leyikulu ya mati (Mavhiki 1–4); 3. Mintirho ya misava ni ku aka misava (Mavhiki 3–6); 4. Mibedo, ku cheleta hi mathonsi ni miako yo tirhela (Mavhiki 5–9); 5. Swimilana leswi hanyaka malembenyana ni mintlawa ya swimilana leswi pfunanaka (Mavhiki 8–12); 6. Ku sungula ku tirha ni ku nyiketa (N'weti 3+).",
+          "lang": "ts"
+        }
+      ],
+      "requestedLanguage": "en",
+      "originalBytesUnchanged": true,
+      "designBytesUnchanged": true,
+      "originalBody": true,
+      "originalContentLanguage": "en",
+      "overflow": false
+    },
+    {
+      "lang": "ve",
+      "figures": [
+        {
+          "id": "climate",
+          "title": "Mvula na mufhiso kha ṅwaha woṱhe",
+          "alt": "Mvula nga ṅwedzi: 791 mm nga ṅwaha; u re na mvula nnzhi vhukuma Phan 134 mm, wo oma vhukuma Shun 12 mm. Ṅwedzi u fhisaho vhukuma Phan 22.7 °C, u rotholesaho vhukuma Fwan 11.5 °C.",
+          "lang": "ve"
+        },
+        {
+          "id": "water-budget",
+          "title": "Maḓi a ṱhanga: a dzhenaho na a bvaho",
+          "alt": "Maḓi a farwaho nga ṱhanga nga ṅwedzi: 91 123 L nga ṅwaha; ṱhahelelo nga Lamb–Khub; vhugalelo kha pulane 2 500 L; vhugalelo vhune ha ṱoḓea 20 600 L.",
+          "lang": "ve"
+        },
+        {
+          "id": "sectors",
+          "title": "Ḓuvha, muya na mutsheṱo",
+          "alt": "Tshifanyiso tsha sekithara. Ḓuvha ḽa tshilimo: ḽi ṱavha ESE, ḽi kovhela WSW, 86° nṱha ha vhukavhange nga masiari, devhula. Ḓuvha ḽa vhuria: ḽi ṱavha ENE, ḽi kovhela WNW, 39° nṱha ha vhukavhange nga masiari, devhula. Muya wa u rothodza wa tshilimo: u bva NE, Khub–Ṱhaf (maitele a dzingu). Muya u rotholelaho u swikaho — mvula i sukumedzwaho nga muya: u bva SW, Ṱhaf–Ṱhan (maitele a dzingu). Muya u fhisaho wo oma u bvaho thavhani (berg): u bva NW, Shun–Ṱhan, nga zwiṅwe zwifhinga (maitele a dzingu). Mulilo u nga kha ḓi swika u bva NW. Khombo ḽa mulilo wa hatsi / maxale a fhisaho nga vhuria ḽi tevhela muya wo oma u fhisaho wa thavhani, hu si muya wa u rothodza wa tshilimo. Mavu a vhonala a tshi ṱoḓou vha a phaphathi, ngauralo a hu na sia ḽa u tsitsa ḽo oliwaho.",
+          "lang": "ve"
+        },
+        {
+          "id": "soil",
+          "title": "Mavu nga u tou lavhelesa",
+          "alt": "Mavu: pH 6.5; Muṱavha 45 %, Mavu masekene 30 %, Vumba 25 %; khaboni ya mvelo 1.2 % (ndinganyelo ya SoilGrids).",
+          "lang": "ve"
+        },
+        {
+          "id": "timeline",
+          "title": "U tevhekana ha mushumo",
+          "alt": "U tevhekana ha mushumo: 1. Khwaṱhisedzani, swayani fhethu ni hu tsireledze (Vhege 0–1); 2. U dzhena ho tsireledzeaho na bommbo ḽihulwane ḽa maḓi (Vhege 1–4); 3. Mishumo ya mavu na u fhaṱa mavu (Vhege 3–6); 4. Mibethe, u sheledza nga marotha na zwifhaṱo zwa mushumo (Vhege 5–9); 5. Zwimela zwa miṅwaha minzhi na zwigwada zwa zwimela zwi thusanaho (Vhege 8–12); 6. U thoma u shumisa na u ṋekedza (Ṅwedzi 3+).",
+          "lang": "ve"
+        }
+      ],
+      "requestedLanguage": "en",
+      "originalBytesUnchanged": true,
+      "designBytesUnchanged": true,
+      "originalBody": true,
+      "originalContentLanguage": "en",
+      "overflow": false
+    }
+  ],
+  "observedAndCorrected": [
+    "The initial native cold-temperature label touched the month axis in all four targets. It now stays above the point.",
+    "The initial long Xitsonga NW wind caption ran above the SVG/header. Shared caption measurement now reserves headroom for the existing placement search."
+  ],
+  "canonicalDataPreserved": [
+    "Compass bearing codes and latitude suffixes",
+    "Saved geometry, names and all readings",
+    "Phase numbers, source week/month ranges, bar widths and dependency order",
+    "Laboratory texture text and arbitrary source strings"
+  ],
+  "limitations": [
+    "Draft translations have not been approved by fluent speakers.",
+    "Concept-art captions, full-report/crop-plan PDF paths and wider app flows remain.",
+    "No PDF or paid request was made. Full-suite CI is pending."
+  ]
+}

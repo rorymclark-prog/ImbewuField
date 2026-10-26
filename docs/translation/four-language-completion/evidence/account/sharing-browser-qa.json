@@ -1,0 +1,458 @@
+{
+  "zu": [
+    {
+      "size": "phone",
+      "state": "fixture-sharing",
+      "lines": 66,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-load-error",
+      "lines": 24,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-write-error",
+      "lines": 71,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-busy",
+      "lines": 66,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-revoke-error",
+      "lines": 71,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-loading",
+      "lines": 19,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-org-profile",
+      "lines": 117,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing",
+      "lines": 49,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-load-error",
+      "lines": 13,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-write-error",
+      "lines": 52,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-busy",
+      "lines": 49,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-revoke-error",
+      "lines": 52,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-loading",
+      "lines": 10,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-org-profile",
+      "lines": 97,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    }
+  ],
+  "st": [
+    {
+      "size": "phone",
+      "state": "fixture-sharing",
+      "lines": 67,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-load-error",
+      "lines": 24,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-write-error",
+      "lines": 72,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-busy",
+      "lines": 67,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-revoke-error",
+      "lines": 72,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-loading",
+      "lines": 18,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-org-profile",
+      "lines": 121,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing",
+      "lines": 49,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-load-error",
+      "lines": 13,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-write-error",
+      "lines": 52,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-busy",
+      "lines": 49,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-revoke-error",
+      "lines": 52,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-loading",
+      "lines": 10,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-org-profile",
+      "lines": 97,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    }
+  ],
+  "ts": [
+    {
+      "size": "phone",
+      "state": "fixture-sharing",
+      "lines": 68,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-load-error",
+      "lines": 24,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-write-error",
+      "lines": 73,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-busy",
+      "lines": 68,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-revoke-error",
+      "lines": 73,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-loading",
+      "lines": 18,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-org-profile",
+      "lines": 120,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing",
+      "lines": 49,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-load-error",
+      "lines": 13,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-write-error",
+      "lines": 52,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-busy",
+      "lines": 49,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-revoke-error",
+      "lines": 52,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-loading",
+      "lines": 10,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-org-profile",
+      "lines": 97,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    }
+  ],
+  "ve": [
+    {
+      "size": "phone",
+      "state": "fixture-sharing",
+      "lines": 69,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-load-error",
+      "lines": 24,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-write-error",
+      "lines": 74,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-busy",
+      "lines": 69,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-revoke-error",
+      "lines": 74,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-sharing-loading",
+      "lines": 19,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "fixture-org-profile",
+      "lines": 122,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing",
+      "lines": 50,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-load-error",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-write-error",
+      "lines": 53,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-busy",
+      "lines": 50,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-revoke-error",
+      "lines": 53,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-sharing-loading",
+      "lines": 11,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "fixture-org-profile",
+      "lines": 98,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    }
+  ]
+}

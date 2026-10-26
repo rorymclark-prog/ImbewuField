@@ -1,0 +1,1729 @@
+{
+  "sourceHead": "40b81b7880c05b19619be1212c2f468d14af5f57",
+  "languages": [
+    "zu",
+    "st",
+    "ts",
+    "ve"
+  ],
+  "browserStates": 128,
+  "realSignedOutRedirectStates": 8,
+  "isolatedActualComponentStates": 120,
+  "scrolledReadingLines": 4174,
+  "fieldCaptures": [
+    {
+      "lang": "zu",
+      "mode": "four-photos",
+      "path": "community-profile-zu-phone-four-photos-fields.png",
+      "photoNames": [
+        "Isithombe sephrofayela 1",
+        "Isithombe sephrofayela 2",
+        "Isithombe sephrofayela 3",
+        "Isithombe sephrofayela 4"
+      ],
+      "switchName": "Ngibonise emephini yomphakathi",
+      "error": []
+    },
+    {
+      "lang": "zu",
+      "mode": "location-denied",
+      "path": "community-profile-zu-phone-location-denied-fields.png",
+      "photoNames": [],
+      "switchName": "Ngibonise emephini yomphakathi",
+      "error": [
+        "Indawo yakho ayitholakalanga \u2014 ukubonakala emephini kuvaliwe.Umbhalo wokuqala wesiNgisi: Could not get your location \u2014 map visibility left off."
+      ]
+    },
+    {
+      "lang": "zu",
+      "mode": "photo-error",
+      "path": "community-profile-zu-phone-photo-error-fields.png",
+      "photoNames": [],
+      "switchName": "Ngibonise emephini yomphakathi",
+      "error": [
+        "Akukwazanga ukufaka leso sithombe. Zama futhi.Umbhalo wokuqala wesiNgisi: Could not add that photo. Try again."
+      ]
+    },
+    {
+      "lang": "zu",
+      "mode": "save-error",
+      "path": "community-profile-zu-phone-save-error-fields.png",
+      "photoNames": [],
+      "switchName": "Ngibonise emephini yomphakathi",
+      "error": [
+        "Iphrofayela ayilondolozekanga \u2014 zama futhi.Umbhalo wokuqala wesiNgisi: Could not save \u2014 try again."
+      ]
+    },
+    {
+      "lang": "st",
+      "mode": "four-photos",
+      "path": "community-profile-st-phone-four-photos-fields.png",
+      "photoNames": [
+        "Setshwantsho sa profaele 1",
+        "Setshwantsho sa profaele 2",
+        "Setshwantsho sa profaele 3",
+        "Setshwantsho sa profaele 4"
+      ],
+      "switchName": "Mpontshe mmapeng wa setjhaba",
+      "error": []
+    },
+    {
+      "lang": "st",
+      "mode": "location-denied",
+      "path": "community-profile-st-phone-location-denied-fields.png",
+      "photoNames": [],
+      "switchName": "Mpontshe mmapeng wa setjhaba",
+      "error": [
+        "Ha ho a kgoneha ho fumana sebaka sa hao \u2014 ho bonahala mmapeng ho siilwe ho timilwe.Mongolo wa pele wa Senyesemane: Could not get your location \u2014 map visibility left off."
+      ]
+    },
+    {
+      "lang": "st",
+      "mode": "photo-error",
+      "path": "community-profile-st-phone-photo-error-fields.png",
+      "photoNames": [],
+      "switchName": "Mpontshe mmapeng wa setjhaba",
+      "error": [
+        "Ha ho a kgoneha ho kenya setshwantsho seo. Leka hape.Mongolo wa pele wa Senyesemane: Could not add that photo. Try again."
+      ]
+    },
+    {
+      "lang": "st",
+      "mode": "save-error",
+      "path": "community-profile-st-phone-save-error-fields.png",
+      "photoNames": [],
+      "switchName": "Mpontshe mmapeng wa setjhaba",
+      "error": [
+        "Ha ho a kgoneha ho boloka \u2014 leka hape.Mongolo wa pele wa Senyesemane: Could not save \u2014 try again."
+      ]
+    },
+    {
+      "lang": "ts",
+      "mode": "four-photos",
+      "path": "community-profile-ts-phone-four-photos-fields.png",
+      "photoNames": [
+        "Xifaniso xa phurofayili 1",
+        "Xifaniso xa phurofayili 2",
+        "Xifaniso xa phurofayili 3",
+        "Xifaniso xa phurofayili 4"
+      ],
+      "switchName": "Nkombise emepeni wa vaaki",
+      "error": []
+    },
+    {
+      "lang": "ts",
+      "mode": "location-denied",
+      "path": "community-profile-ts-phone-location-denied-fields.png",
+      "photoNames": [],
+      "switchName": "Nkombise emepeni wa vaaki",
+      "error": [
+        "A swi kotekanga ku kuma ndhawu ya wena \u2014 ku vonakala emepeni ku siyiwe ku timiwile.Tsalwa ro sungula ra Xinghezi: Could not get your location \u2014 map visibility left off."
+      ]
+    },
+    {
+      "lang": "ts",
+      "mode": "photo-error",
+      "path": "community-profile-ts-phone-photo-error-fields.png",
+      "photoNames": [],
+      "switchName": "Nkombise emepeni wa vaaki",
+      "error": [
+        "A swi kotekanga ku engetela xifaniso xexo. Ringeta nakambe.Tsalwa ro sungula ra Xinghezi: Could not add that photo. Try again."
+      ]
+    },
+    {
+      "lang": "ts",
+      "mode": "save-error",
+      "path": "community-profile-ts-phone-save-error-fields.png",
+      "photoNames": [],
+      "switchName": "Nkombise emepeni wa vaaki",
+      "error": [
+        "A swi kotekanga ku hlayisa \u2014 ringeta nakambe.Tsalwa ro sungula ra Xinghezi: Could not save \u2014 try again."
+      ]
+    },
+    {
+      "lang": "ve",
+      "mode": "four-photos",
+      "path": "community-profile-ve-phone-four-photos-fields.png",
+      "photoNames": [
+        "Tshifanyiso tsha phurofai\u1e3di 1",
+        "Tshifanyiso tsha phurofai\u1e3di 2",
+        "Tshifanyiso tsha phurofai\u1e3di 3",
+        "Tshifanyiso tsha phurofai\u1e3di 4"
+      ],
+      "switchName": "Ntsumbedzeni kha mapa wa tshitshavha",
+      "error": []
+    },
+    {
+      "lang": "ve",
+      "mode": "location-denied",
+      "path": "community-profile-ve-phone-location-denied-fields.png",
+      "photoNames": [],
+      "switchName": "Ntsumbedzeni kha mapa wa tshitshavha",
+      "error": [
+        "A zwo ngo konadzea u wana fhethu ha\u1e4bu \u2014 u vhonala kha mapa ho siiwa ho dzimiwa.Ma\u1e45walwa a u thoma a English: Could not get your location \u2014 map visibility left off."
+      ]
+    },
+    {
+      "lang": "ve",
+      "mode": "photo-error",
+      "path": "community-profile-ve-phone-photo-error-fields.png",
+      "photoNames": [],
+      "switchName": "Ntsumbedzeni kha mapa wa tshitshavha",
+      "error": [
+        "A zwo ngo konadzea u engedza tshifanyiso itsho. Lingedzani hafhu.Ma\u1e45walwa a u thoma a English: Could not add that photo. Try again."
+      ]
+    },
+    {
+      "lang": "ve",
+      "mode": "save-error",
+      "path": "community-profile-ve-phone-save-error-fields.png",
+      "photoNames": [],
+      "switchName": "Ntsumbedzeni kha mapa wa tshitshavha",
+      "error": [
+        "A zwo ngo konadzea u vhulunga \u2014 lingedzani hafhu.Ma\u1e45walwa a u thoma a English: Could not save \u2014 try again."
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "actual-guest",
+      "loginRedirect": true
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-editor",
+      "lines": 46,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-simple",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-selected-extra",
+      "lines": 46,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-four-photos",
+      "lines": 46,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-loading",
+      "lines": 7,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-load-error",
+      "lines": 13,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-map-pending",
+      "lines": 40,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-location-denied",
+      "lines": 51,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-unsupported",
+      "lines": 50,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-photo-error",
+      "lines": 50,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-save-error",
+      "lines": 49,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-confirm",
+      "lines": 15,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Khansela\nCancel",
+          "background": "rgb(255, 254, 250)",
+          "color": "rgb(106, 80, 64)",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Susa iphrofayela yami yomphakathi\nDelete my community profile",
+          "background": "rgb(179, 58, 58)",
+          "color": "rgb(255, 255, 255)",
+          "ratio": 5.8609101478603876
+        }
+      ]
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-delete-error",
+      "lines": 51,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-deleting",
+      "lines": 46,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "phone",
+      "state": "fixture-confirm-dark",
+      "lines": 15,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Khansela\nCancel",
+          "background": "rgb(24, 18, 8)",
+          "color": "rgb(168, 144, 108)",
+          "ratio": 6.086467630589121
+        },
+        {
+          "text": "Susa iphrofayela yami yomphakathi\nDelete my community profile",
+          "background": "rgb(179, 58, 58)",
+          "color": "rgb(255, 255, 255)",
+          "ratio": 5.8609101478603876
+        }
+      ]
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "actual-guest",
+      "loginRedirect": true
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-editor",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-simple",
+      "lines": 32,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-selected-extra",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-four-photos",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-loading",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-load-error",
+      "lines": 9,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-map-pending",
+      "lines": 35,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-location-denied",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-unsupported",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-photo-error",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-save-error",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-confirm",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Khansela\nCancel",
+          "background": "rgb(255, 254, 250)",
+          "color": "rgb(106, 80, 64)",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Susa iphrofayela yami yomphakathi\nDelete my community profile",
+          "background": "rgb(179, 58, 58)",
+          "color": "rgb(255, 255, 255)",
+          "ratio": 5.8609101478603876
+        }
+      ]
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-delete-error",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-deleting",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "state": "fixture-confirm-dark",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Khansela\nCancel",
+          "background": "rgb(24, 18, 8)",
+          "color": "rgb(168, 144, 108)",
+          "ratio": 6.086467630589121
+        },
+        {
+          "text": "Susa iphrofayela yami yomphakathi\nDelete my community profile",
+          "background": "rgb(179, 58, 58)",
+          "color": "rgb(255, 255, 255)",
+          "ratio": 5.8609101478603876
+        }
+      ]
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "actual-guest",
+      "loginRedirect": true
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-editor",
+      "lines": 47,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-simple",
+      "lines": 40,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-selected-extra",
+      "lines": 47,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-four-photos",
+      "lines": 47,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-loading",
+      "lines": 7,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-load-error",
+      "lines": 13,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-map-pending",
+      "lines": 41,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-location-denied",
+      "lines": 52,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-unsupported",
+      "lines": 51,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-photo-error",
+      "lines": 51,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-save-error",
+      "lines": 51,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-confirm",
+      "lines": 15,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Hlakola\nCancel",
+          "background": "rgb(255, 254, 250)",
+          "color": "rgb(106, 80, 64)",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Hlakola profaele ya ka ya setjhaba\nDelete my community profile",
+          "background": "rgb(179, 58, 58)",
+          "color": "rgb(255, 255, 255)",
+          "ratio": 5.8609101478603876
+        }
+      ]
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-delete-error",
+      "lines": 52,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-deleting",
+      "lines": 47,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "state": "fixture-confirm-dark",
+      "lines": 15,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Hlakola\nCancel",
+          "background": "rgb(24, 18, 8)",
+          "color": "rgb(168, 144, 108)",
+          "ratio": 6.086467630589121
+        },
+        {
+          "text": "Hlakola profaele ya ka ya setjhaba\nDelete my community profile",
+          "background": "rgb(179, 58, 58)",
+          "color": "rgb(255, 255, 255)",
+          "ratio": 5.8609101478603876
+        }
+      ]
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "actual-guest",
+      "loginRedirect": true
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-editor",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-simple",
+      "lines": 32,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-selected-extra",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-four-photos",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-loading",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-load-error",
+      "lines": 9,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-map-pending",
+      "lines": 35,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-location-denied",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-unsupported",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-photo-error",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-save-error",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-confirm",
+      "lines": 15,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Hlakola\nCancel",
+          "background": "rgb(255, 254, 250)",
+          "color": "rgb(106, 80, 64)",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Hlakola profaele ya ka ya setjhaba\nDelete my community profile",
+          "background": "rgb(179, 58, 58)",
+          "color": "rgb(255, 255, 255)",
+          "ratio": 5.8609101478603876
+        }
+      ]
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-delete-error",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-deleting",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "state": "fixture-confirm-dark",
+      "lines": 15,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Hlakola\nCancel",
+          "background": "rgb(24, 18, 8)",
+          "color": "rgb(168, 144, 108)",
+          "ratio": 6.086467630589121
+        },
+        {
+          "text": "Hlakola profaele ya ka ya setjhaba\nDelete my community profile",
+          "background": "rgb(179, 58, 58)",
+          "color": "rgb(255, 255, 255)",
+          "ratio": 5.8609101478603876
+        }
+      ]
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "actual-guest",
+      "loginRedirect": true
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-editor",
+      "lines": 46,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-simple",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-selected-extra",
+      "lines": 46,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-four-photos",
+      "lines": 46,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-loading",
+      "lines": 7,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-load-error",
+      "lines": 13,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-map-pending",
+      "lines": 41,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-location-denied",
+      "lines": 51,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-unsupported",
+      "lines": 50,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-photo-error",
+      "lines": 51,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-save-error",
+      "lines": 49,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-confirm",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Tshika\nCancel",
+          "background": "rgb(255, 254, 250)",
+          "color": "rgb(106, 80, 64)",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Susa phurofayili ya mina ya vaaki\nDelete my community profile",
+          "background": "rgb(179, 58, 58)",
+          "color": "rgb(255, 255, 255)",
+          "ratio": 5.8609101478603876
+        }
+      ]
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-delete-error",
+      "lines": 51,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-deleting",
+      "lines": 46,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "state": "fixture-confirm-dark",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Tshika\nCancel",
+          "background": "rgb(24, 18, 8)",
+          "color": "rgb(168, 144, 108)",
+          "ratio": 6.086467630589121
+        },
+        {
+          "text": "Susa phurofayili ya mina ya vaaki\nDelete my community profile",
+          "background": "rgb(179, 58, 58)",
+          "color": "rgb(255, 255, 255)",
+          "ratio": 5.8609101478603876
+        }
+      ]
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "actual-guest",
+      "loginRedirect": true
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-editor",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-simple",
+      "lines": 32,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-selected-extra",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-four-photos",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-loading",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-load-error",
+      "lines": 9,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-map-pending",
+      "lines": 35,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-location-denied",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-unsupported",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-photo-error",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-save-error",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-confirm",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Tshika\nCancel",
+          "background": "rgb(255, 254, 250)",
+          "color": "rgb(106, 80, 64)",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Susa phurofayili ya mina ya vaaki\nDelete my community profile",
+          "background": "rgb(179, 58, 58)",
+          "color": "rgb(255, 255, 255)",
+          "ratio": 5.8609101478603876
+        }
+      ]
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-delete-error",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-deleting",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "state": "fixture-confirm-dark",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Tshika\nCancel",
+          "background": "rgb(24, 18, 8)",
+          "color": "rgb(168, 144, 108)",
+          "ratio": 6.086467630589121
+        },
+        {
+          "text": "Susa phurofayili ya mina ya vaaki\nDelete my community profile",
+          "background": "rgb(179, 58, 58)",
+          "color": "rgb(255, 255, 255)",
+          "ratio": 5.8609101478603876
+        }
+      ]
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "actual-guest",
+      "loginRedirect": true
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-editor",
+      "lines": 46,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-simple",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-selected-extra",
+      "lines": 46,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-four-photos",
+      "lines": 46,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-loading",
+      "lines": 7,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-load-error",
+      "lines": 13,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-map-pending",
+      "lines": 41,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-location-denied",
+      "lines": 51,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-unsupported",
+      "lines": 50,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-photo-error",
+      "lines": 51,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-save-error",
+      "lines": 49,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-confirm",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Litshani\nCancel",
+          "background": "rgb(255, 254, 250)",
+          "color": "rgb(106, 80, 64)",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Bvisani phurofai\u1e3di yanga ya tshitshavha\nDelete my community profile",
+          "background": "rgb(179, 58, 58)",
+          "color": "rgb(255, 255, 255)",
+          "ratio": 5.8609101478603876
+        }
+      ]
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-delete-error",
+      "lines": 51,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-deleting",
+      "lines": 46,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "state": "fixture-confirm-dark",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Litshani\nCancel",
+          "background": "rgb(24, 18, 8)",
+          "color": "rgb(168, 144, 108)",
+          "ratio": 6.086467630589121
+        },
+        {
+          "text": "Bvisani phurofai\u1e3di yanga ya tshitshavha\nDelete my community profile",
+          "background": "rgb(179, 58, 58)",
+          "color": "rgb(255, 255, 255)",
+          "ratio": 5.8609101478603876
+        }
+      ]
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "actual-guest",
+      "loginRedirect": true
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-editor",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-simple",
+      "lines": 32,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-selected-extra",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-four-photos",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-loading",
+      "lines": 6,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-load-error",
+      "lines": 9,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-map-pending",
+      "lines": 35,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-location-denied",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-unsupported",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-photo-error",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-save-error",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-confirm",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Litshani\nCancel",
+          "background": "rgb(255, 254, 250)",
+          "color": "rgb(106, 80, 64)",
+          "ratio": 7.341818944692099
+        },
+        {
+          "text": "Bvisani phurofai\u1e3di yanga ya tshitshavha\nDelete my community profile",
+          "background": "rgb(179, 58, 58)",
+          "color": "rgb(255, 255, 255)",
+          "ratio": 5.8609101478603876
+        }
+      ]
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-delete-error",
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-deleting",
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": []
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "state": "fixture-confirm-dark",
+      "lines": 14,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false,
+      "contrast": [
+        {
+          "text": "Litshani\nCancel",
+          "background": "rgb(24, 18, 8)",
+          "color": "rgb(168, 144, 108)",
+          "ratio": 6.086467630589121
+        },
+        {
+          "text": "Bvisani phurofai\u1e3di yanga ya tshitshavha\nDelete my community profile",
+          "background": "rgb(179, 58, 58)",
+          "color": "rgb(255, 255, 255)",
+          "ratio": 5.8609101478603876
+        }
+      ]
+    }
+  ],
+  "unchangedServiceHashes": {
+    "lib/db/community-queries.ts": "e926e09d4c8fc719a59b5d434d63cf7d71472fba6b8ccdcc775b0619aef9a10e",
+    "lib/community/flag.ts": "0d0361a64a6ae05451ed0e29fbee6f5d2a3eb771bef6b02385c35b7d9f0dc188",
+    "lib/site-evidence.ts": "2c4059c7405412502bf5c831dae0d4c31b2ec8fc827759d1b770c2e1cc895740",
+    "lib/i18n.tsx": "82fbab03fde3745bffee4465c986484af090884825f36ff2358156a19a764b37"
+  },
+  "limitations": "Native sentences are unreviewed AI drafts. The real signed-out route uses synthetic onboarding/consent preconditions and a documented browser-only community preview flag. Editor fixtures render actual component/hooks/dialog with original source CSS, isolated services, code-native QA photo placeholders, and stub header/navigation. No real Firebase writes, device location, consent-flow or signed-in E2E. Canonical catalogue names remain English with lang=en; owned text remains verbatim. Dark modal Cancel contrast was corrected after visual inspection; native captions and source gloss both use the same checked foreground/background. No PLAN_VERSION change, no main merge.",
+  "guideCases": [
+    {
+      "lang": "zu",
+      "size": "phone",
+      "file": "community-profile-guide-zu-phone.png",
+      "lines": 29,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "lang": "zu",
+      "size": "desktop",
+      "file": "community-profile-guide-zu-desktop.png",
+      "lines": 29,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "lang": "st",
+      "size": "phone",
+      "file": "community-profile-guide-st-phone.png",
+      "lines": 32,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "lang": "st",
+      "size": "desktop",
+      "file": "community-profile-guide-st-desktop.png",
+      "lines": 32,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "lang": "ts",
+      "size": "phone",
+      "file": "community-profile-guide-ts-phone.png",
+      "lines": 31,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "lang": "ts",
+      "size": "desktop",
+      "file": "community-profile-guide-ts-desktop.png",
+      "lines": 31,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "lang": "ve",
+      "size": "phone",
+      "file": "community-profile-guide-ve-phone.png",
+      "lines": 29,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "lang": "ve",
+      "size": "desktop",
+      "file": "community-profile-guide-ve-desktop.png",
+      "lines": 29,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    }
+  ],
+  "guideReadingLines": 242,
+  "totalBrowserStates": 136,
+  "totalScrolledReadingLines": 4416
+}

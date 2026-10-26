@@ -1,0 +1,206 @@
+[
+  {
+    "english": "Not recorded",
+    "zu": "Akubhaliwe"
+  },
+  {
+    "english": "Site summary",
+    "zu": "Isifinyezo sendawo"
+  },
+  {
+    "english": "Mapped boundary",
+    "zu": "Umngcele obalazwe"
+  },
+  {
+    "english": "Mapped growing area",
+    "zu": "Indawo yokutshala ebalazwe"
+  },
+  {
+    "english": "Vegetable beds",
+    "zu": "Imibhede yemifino"
+  },
+  {
+    "english": "Staple plots",
+    "zu": "Iziza zezitshalo eziyisisekelo"
+  },
+  {
+    "english": "Mapped space is not confirmation that all of it is currently in production.",
+    "zu": "Indawo ebalazwe ayiqinisekisi ukuthi yonke isatshaliwe njengamanje."
+  },
+  {
+    "english": "Annual rainfall estimate",
+    "zu": "Isilinganiso semvula yonyaka"
+  },
+  {
+    "english": "Soil",
+    "zu": "Umhlabathi"
+  },
+  {
+    "english": "lab result",
+    "zu": "umphumela wokuhlolwa"
+  },
+  {
+    "english": "SoilGrids model; confirm on site",
+    "zu": "imodeli ye-SoilGrids; qinisekisa endaweni"
+  },
+  {
+    "english": "Not measured. Arrange a soil test.",
+    "zu": "Awukahlolwa. Hlela ukuhlolwa komhlabathi."
+  },
+  {
+    "english": "Stated tank capacity in the design",
+    "zu": "Umthamo wamathangi obhalwe emklamweni"
+  },
+  {
+    "english": "Capacity is not water currently available; check which tanks are already installed.",
+    "zu": "Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe."
+  },
+  {
+    "english": "sow",
+    "zu": "hlwanyela"
+  },
+  {
+    "english": "once only",
+    "zu": "kanye kuphela"
+  },
+  {
+    "english": "includes an existing crop",
+    "zu": "kufaka isitshalo esesikhona"
+  },
+  {
+    "english": "No crop rows linked to this site were saved with this report.",
+    "zu": "Ayikho imigqa yezitshalo exhunywe kule ndawo egcinwe nalo mbiko."
+  },
+  {
+    "english": "This is the saved planting plan, not a harvest or sales record. Check actual bed clearance before each next planting.",
+    "zu": "Lolu uhlelo lokutshala olugciniwe, alulona irekhodi lesivuno noma ukuthengisa. Hlola ukuthi umbhede usukhululekile ngaphambi kokutshala okulandelayo."
+  },
+  {
+    "english": "For seed quantities, use the crop planner’s seed list. Do not buy seed from an inferred yield or monthly availability chart.",
+    "zu": "Ngobuningi bembewu, sebenzisa uhlu lwembewu kuhlelo lwezitshalo. Ungathengi imbewu ngokwesivuno esiqageliwe noma ishadi lokutholakala kwenyanga."
+  },
+  {
+    "english": "Priced infrastructure subtotal",
+    "zu": "Isamba sezindleko zengqalasizinda ezinentengo"
+  },
+  {
+    "english": "Lines awaiting a price or measurement",
+    "zu": "Imigqa elinde intengo noma isilinganiso"
+  },
+  {
+    "english": "Planned budget, not actual spending. A missing price is not zero. Obtain current local quotes.",
+    "zu": "Lena ibhajethi ehleliwe, akuzona izimali esezisetshenzisiwe. Intengo engekho ayisho uziro. Thola amanani akamuva endaweni."
+  },
+  {
+    "english": "Crop rows",
+    "zu": "Imigqa yezitshalo"
+  },
+  {
+    "english": "More crop rows are listed in the five-page or full report.",
+    "zu": "Eminye imigqa yezitshalo isembikweni wamakhasi amahlanu noma ogcwele."
+  },
+  {
+    "english": "Next: verify the land measurements, soil and water supply; confirm the crop plan and obtain missing quotes.",
+    "zu": "Okulandelayo: qinisekisa izilinganiso zomhlaba, umhlabathi namanzi; qinisekisa uhlelo lwezitshalo uthole namanani angekho."
+  },
+  {
+    "english": "Crop plan",
+    "zu": "Uhlelo lwezitshalo"
+  },
+  {
+    "english": "Water, soil and the mapped site",
+    "zu": "Amanzi, umhlabathi nendawo ebalazwe"
+  },
+  {
+    "english": "Traced roof",
+    "zu": "Uphahla olulinganisiwe"
+  },
+  {
+    "english": "existing",
+    "zu": "ikhona"
+  },
+  {
+    "english": "planned",
+    "zu": "ihleliwe"
+  },
+  {
+    "english": "mixed status",
+    "zu": "isimo esixubile"
+  },
+  {
+    "english": "Confirm water reliability, drainage and soil condition on the ground before construction or amendment purchases.",
+    "zu": "Qinisekisa ukutholakala kwamanzi, ukuphuma kwamanzi nesimo somhlabathi ngaphambi kokwakha noma ukuthenga izinto zokulungisa umhlabathi."
+  },
+  {
+    "english": "Bill of quantities",
+    "zu": "Uhlu lobuningi nezindleko"
+  },
+  {
+    "english": "existing; excluded from new spend",
+    "zu": "ikhona; ayifakiwe ezindlekweni ezintsha"
+  },
+  {
+    "english": "quote / measurement needed",
+    "zu": "kudingeka intengo / isilinganiso"
+  },
+  {
+    "english": "Next actions and checks",
+    "zu": "Izinyathelo ezilandelayo nokuhlola"
+  },
+  {
+    "english": "Confirm what is already on the site and what is still proposed. Keep the saved design as the reference.",
+    "zu": "Qinisekisa okukhona endaweni nokusahleliwe. Sebenzisa umklamo ogciniwe njengereferensi."
+  },
+  {
+    "english": "Check the crop plan against the real beds and seasonal conditions. A planned sowing is not proof of planting.",
+    "zu": "Qhathanisa uhlelo lwezitshalo nemibhede yangempela nezimo zesizini. Ukuhlwanyela okuhleliwe akubona ubufakazi bokuthi sekutshaliwe."
+  },
+  {
+    "english": "Record harvest weight, food kept or donated, sales and costs with their dates.",
+    "zu": "Bhala isisindo sesivuno, ukudla okugciniwe noma okunikelwe, ukuthengisa nezindleko kanye nezinsuku zakho."
+  },
+  {
+    "english": "Check production area on site before reporting hectares to a funder. Count each physical bed once.",
+    "zu": "Hlola indawo ekhiqizayo ngaphambi kokubika amahektha kumxhasi. Bala umbhede ngamunye kanye."
+  },
+  {
+    "english": "Agree support actions with the farmer. At review, record what improved, what did not and what needs to change.",
+    "zu": "Vumelana nomlimi ngezinyathelo zosizo. Ekubuyekezeni, bhala okuthuthukile, okungathuthukanga nokudinga ukushintsha."
+  },
+  {
+    "english": "This summary uses saved measurements and plan quantities. Read the full report for detailed advice, assumptions and source notes.",
+    "zu": "Lesi sifinyezo sisebenzisa izilinganiso ezigciniwe nobuningi bohlelo. Funda umbiko ogcwele ngezeluleko eziningiliziwe, okucatshangiwe namanothi emithombo."
+  },
+  {
+    "english": "report basis",
+    "zu": "Isisekelo sombiko"
+  },
+  {
+    "english": "This ready-to-read sample is assembled from the saved site and design records. It is not a new AI analysis or an independently verified assessment. Sample finances, soil examples and household examples remain illustrative wherever labelled. Planned areas and infrastructure do not establish completed work.",
+    "zu": "Lesi yisibonelo esilungiselelwe ukufundeka, esakhiwe ngamarekhodi agciniwe endawo nawomklamo. Asikona ukuhlaziywa okusha kwe-AI noma ukuhlolwa okuzimele okuqinisekisiwe. Izibonelo zezimali, zomhlabathi nezasekhaya ziyizibonelo zokubonisa kuphela uma zibhalwe kanjalo. Izindawo nengqalasizinda okuhleliwe akufakazeli ukuthi umsebenzi usuqediwe."
+  },
+  {
+    "english": "Full design inventory",
+    "zu": "Uhlu oluphelele lomklamo"
+  },
+  {
+    "english": "No placed elements recorded.",
+    "zu": "Akukho zinto ezibekiwe ezirekhodiwe."
+  },
+  {
+    "english": "Production spaces",
+    "zu": "Izindawo zokukhiqiza"
+  },
+  {
+    "english": "No production spaces recorded.",
+    "zu": "Azikho izindawo zokukhiqiza ezirekhodiwe."
+  },
+  {
+    "english": "Evidence and limitations",
+    "zu": "Ubufakazi nemikhawulo"
+  },
+  {
+    "english": "Site photos and map plates, where available, are shown separately in this report. An AI-generated reference photograph is not evidence of the real site. Missing measurements, quotes or records remain missing. Review the site, dates and evidence with the implementing organisation before using this example for a funding decision.",
+    "zu": "Izithombe zendawo namamephu, uma zikhona, ziboniswa ngokwehlukana kulo mbiko. Isithombe esiyisibonelo esikhiqizwe yi-AI asibona ubufakazi bendawo yangempela. Izilinganiso, amanani noma amarekhodi angekho zihlala zingekho. Buyekeza indawo, izinsuku nobufakazi nenhlangano ezosebenzisa uhlelo ngaphambi kokusebenzisa lesi sibonelo esinqumweni sokuxhasa ngezimali."
+  }
+]

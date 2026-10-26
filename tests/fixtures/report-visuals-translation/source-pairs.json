@@ -1,0 +1,167 @@
+[
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Mapped site",
+    "zu": "Indawo ebalazwe"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Growing space",
+    "zu": "Indawo yokutshala"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Mapped beds and staple plots",
+    "zu": "Imibhede neziza ezibalazwe"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Space for growing",
+    "zu": "Indawo yokutshala"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Mapped area, not confirmation of land in production.",
+    "zu": "Indawo ebalazwe; akusona isiqinisekiso sendawo ekhiqizayo."
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Vegetable beds",
+    "zu": "Imibhede yemifino"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Staple plots",
+    "zu": "Iziza eziyisisekelo"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Annual rainfall",
+    "zu": "Imvula yonyaka"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Climate estimate",
+    "zu": "Isilinganiso sesimo sezulu"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Storage in the plan",
+    "zu": "Amanzi ohlelweni"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Not stated",
+    "zu": "Akubhaliwe"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "tanks have no stated capacity",
+    "zu": "amathangi awunawo umthamo obhaliwe"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Stated capacity; check installation",
+    "zu": "Umthamo obhaliwe; hlola ukufakwa"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Rain through the year",
+    "zu": "Imvula phakathi nonyaka"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Climate estimate",
+    "zu": "Isilinganiso sesimo sezulu"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Monthly rainfall, not a weather forecast.",
+    "zu": "Imvula yenyanga, akusona isibikezelo sezulu."
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Water storage",
+    "zu": "Ukugcina amanzi"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Capacity is not water currently available.",
+    "zu": "Umthamo awusho amanzi akhona manje."
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "tanks have no stated capacity.",
+    "zu": "amathangi awunawo umthamo obhaliwe."
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Your sowing calendar",
+    "zu": "Ikhalenda lokuhlwanyela"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "● Saved sowing month · ○ First season only. Sowing dates are not harvest dates. Month labels follow the saved plan.",
+    "zu": "● Inyanga yokuhlwanyela · ○ Isizini yokuqala kuphela. Izinsuku zokuhlwanyela akuzona ezokuvuna. Amagama ezinyanga alandela uhlelo olugciniwe."
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "What has been priced",
+    "zu": "Okunamanani"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Planned priced subtotal",
+    "zu": "Isamba esinentengo esihleliwe"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "lines still need a price or measurement. Existing items are excluded. Confirm current local quotes.",
+    "zu": "imigqa isadinga intengo noma isilinganiso. Izinto ezikhona azifakiwe. Qinisekisa amanani endawo."
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "The site at a glance",
+    "zu": "Indawo ngamafuphi"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Space, seasons and the resources behind the plan.",
+    "zu": "Indawo, izinkathi zonyaka nezinsiza zohlelo."
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Your land, your plan",
+    "zu": "Umhlaba wakho, uhlelo lwakho"
+  },
+  {
+    "file": "lib/report-visuals.ts",
+    "english": "Saved design quantities and site data. Planned work remains distinct from completed work.",
+    "zu": "Ubuningi bomklamo obugciniwe nedatha yendawo. Umsebenzi ohleliwe uhlukile kosewuqediwe."
+  },
+  {
+    "file": "components/report/ReportVisualOverview.tsx",
+    "english": "No priced or measured values available.",
+    "zu": "Alukho ulwazi lwamanani noma lwezilinganiso olutholakalayo."
+  },
+  {
+    "file": "components/report/ReportVisualOverview.tsx",
+    "english": "View full size",
+    "zu": "Buka ngosayizi ogcwele"
+  },
+  {
+    "file": "components/report/ReportVisualOverview.tsx",
+    "english": "IMBEWUFIELD / SITE REPORT",
+    "zu": "IMBEWUFIELD / UMBIKO WESIZA"
+  },
+  {
+    "file": "components/report/ReportVisualOverview.tsx",
+    "english": "The site at a glance",
+    "zu": "Indawo le njengoba injalo"
+  },
+  {
+    "file": "components/report/ReportVisualOverview.tsx",
+    "english": "Space, seasons and the resources behind the plan.",
+    "zu": "Indawo, izinkathi nezinsiza ezisekela uhlelo."
+  }
+]

@@ -1,0 +1,728 @@
+{
+  "sourceSha": "3ba05f1029928a9bd95b2f19d1daaf7de23db7e3",
+  "status": "Unreviewed machine drafts; no fluent-speaker review. Existing UI words retain their existing review status.",
+  "sources": [
+    {
+      "file": "app/invoice/layout.tsx",
+      "english": "Invoice — ImbewuField"
+    },
+    {
+      "file": "app/reports/layout.tsx",
+      "english": "Reports — ImbewuField"
+    },
+    {
+      "file": "app/offline/layout.tsx",
+      "english": "Saved on this phone — ImbewuField"
+    },
+    {
+      "file": "app/funder/layout.tsx",
+      "english": "Funder — ImbewuField"
+    },
+    {
+      "file": "app/calendar/layout.tsx",
+      "english": "Planting calendar — ImbewuField"
+    },
+    {
+      "file": "app/network/layout.tsx",
+      "english": "Network — ImbewuField"
+    },
+    {
+      "file": "app/records/layout.tsx",
+      "english": "My records — ImbewuField"
+    },
+    {
+      "file": "app/updates/layout.tsx",
+      "english": "What's new — ImbewuField"
+    },
+    {
+      "file": "app/example/layout.tsx",
+      "english": "Example farm — ImbewuField"
+    },
+    {
+      "file": "app/farmer/layout.tsx",
+      "english": "Map — ImbewuField"
+    },
+    {
+      "file": "app/contact/layout.tsx",
+      "english": "Contact — ImbewuField"
+    },
+    {
+      "file": "app/login/layout.tsx",
+      "english": "Sign in — ImbewuField"
+    },
+    {
+      "file": "app/prices/layout.tsx",
+      "english": "Farm-gate prices — ImbewuField"
+    },
+    {
+      "file": "app/community/layout.tsx",
+      "english": "Community — ImbewuField"
+    },
+    {
+      "file": "app/student/finance/page.tsx",
+      "english": "Farm Finance — ImbewuField teaching preview"
+    },
+    {
+      "file": "app/exchange/page.tsx",
+      "english": "Farmer exchange — ImbewuField"
+    },
+    {
+      "file": "app/student/finance/[lesson]/page.tsx",
+      "english": "Farm Finance lesson — ImbewuField teaching preview"
+    },
+    {
+      "file": "app/vision/layout.tsx",
+      "english": "Lima Vision — ImbewuField"
+    },
+    {
+      "file": "app/community/profile/layout.tsx",
+      "english": "Profile — ImbewuField"
+    },
+    {
+      "file": "app/assessments/layout.tsx",
+      "english": "Project assessments — ImbewuField"
+    },
+    {
+      "file": "app/tour/layout.tsx",
+      "english": "Take a tour — ImbewuField"
+    },
+    {
+      "file": "app/design/layout.tsx",
+      "english": "Design studio — ImbewuField"
+    },
+    {
+      "file": "app/student/teach-the-teachers/page.tsx",
+      "english": "ACT Teach the Teachers | two-day facilitator refresher"
+    },
+    {
+      "file": "app/community/u/[uid]/layout.tsx",
+      "english": "Profile — ImbewuField"
+    },
+    {
+      "file": "app/tips/layout.tsx",
+      "english": "Tips and help — ImbewuField"
+    },
+    {
+      "file": "app/layout.tsx",
+      "english": "ImbewuField — permaculture planning for South African farmers"
+    },
+    {
+      "file": "app/design/lite/layout.tsx",
+      "english": "Design studio — ImbewuField"
+    },
+    {
+      "file": "app/student/finance/project/[case]/page.tsx",
+      "english": "Farm Finance practical project — teaching preview"
+    },
+    {
+      "file": "app/student/layout.tsx",
+      "english": "Study — ImbewuField"
+    },
+    {
+      "file": "app/partners/page.tsx",
+      "english": "ImbewuField for NGOs and funders"
+    },
+    {
+      "file": "app/student/design/page.tsx",
+      "english": "Design a working homestead — teaching preview"
+    },
+    {
+      "file": "app/home/layout.tsx",
+      "english": "Home — ImbewuField"
+    },
+    {
+      "file": "app/mentor/layout.tsx",
+      "english": "Mentor — ImbewuField"
+    },
+    {
+      "file": "app/student/design/case/page.tsx",
+      "english": "The busy yard — design practice case"
+    },
+    {
+      "file": "app/feedback/layout.tsx",
+      "english": "Report a bug or suggest a feature — ImbewuField"
+    },
+    {
+      "file": "app/manual/layout.tsx",
+      "english": "Permaculture manual — ImbewuField"
+    },
+    {
+      "file": "app/student/design/[lesson]/page.tsx",
+      "english": "Permaculture design lesson — teaching preview"
+    },
+    {
+      "file": "app/surveys/layout.tsx",
+      "english": "Surveys — ImbewuField"
+    },
+    {
+      "file": "app/samples/layout.tsx",
+      "english": "Choose a view — ImbewuField"
+    },
+    {
+      "file": "app/journal/layout.tsx",
+      "english": "Field journal — ImbewuField"
+    },
+    {
+      "file": "app/samples/gardens/layout.tsx",
+      "english": "Example gardens — ImbewuField"
+    },
+    {
+      "file": "app/student/design/folder/page.tsx",
+      "english": "Your design learning folder — ImbewuField"
+    },
+    {
+      "file": "app/samples/production/layout.tsx",
+      "english": "Example production — ImbewuField"
+    },
+    {
+      "file": "app/student/design/worked/page.tsx",
+      "english": "Worked design demonstration — teaching preview"
+    },
+    {
+      "file": "app/samples/farm/layout.tsx",
+      "english": "Example farm — ImbewuField"
+    },
+    {
+      "file": "app/student/design/scale/page.tsx",
+      "english": "Read the scale, check the space — design practice"
+    },
+    {
+      "file": "app/community/messages/[threadId]/layout.tsx",
+      "english": "Messages — ImbewuField"
+    },
+    {
+      "file": "app/atlas/layout.tsx",
+      "english": "Atlas — ImbewuField"
+    },
+    {
+      "file": "app/ngo/layout.tsx",
+      "english": "Organisation — ImbewuField"
+    },
+    {
+      "file": "app/account/layout.tsx",
+      "english": "Account — ImbewuField"
+    },
+    {
+      "file": "app/student/guides/[guide]/layout.tsx",
+      "english": "Study — ImbewuField"
+    },
+    {
+      "file": "app/facilitator/print/layout.tsx",
+      "english": "Printable plan — ImbewuField"
+    }
+  ],
+  "dynamicOwners": [
+    {
+      "file": "app/manual/[lang]/page.tsx",
+      "reason": "Dynamic document metadata retains its existing route/output-language owner."
+    },
+    {
+      "file": "app/manual/[lang]/[slug]/page.tsx",
+      "reason": "Dynamic document metadata retains its existing route/output-language owner."
+    },
+    {
+      "file": "app/manual/[lang]/book/page.tsx",
+      "reason": "Dynamic document metadata retains its existing route/output-language owner."
+    }
+  ],
+  "originalSourceSha256": {
+    "app/invoice/layout.tsx": "73ce3c5fabdbcf1af64a4d4ae2f89c3f49771c2b8dacc5fca46975afd905c9a9",
+    "app/reports/layout.tsx": "14b4c71a2cac20406b6fe959e692151cdab40610182e31c2925ffa7650551204",
+    "app/offline/layout.tsx": "ad55a21271b8fe55378f177f97d8ef8f53dd16c49d5adeaea92282e90efe7f7c",
+    "app/funder/layout.tsx": "d4041279bf75731984baddbec1c55e71c2429c3a91691c99af52489a0b08f9eb",
+    "app/calendar/layout.tsx": "21507eec5f673d9396834cd8e884204c30a79e3fdbca59c54ece8bad9bb87c6d",
+    "app/network/layout.tsx": "ed106b663c581b3a15d819224e222268eee39e70036bbdcf578e9fcaf6523aec",
+    "app/records/layout.tsx": "1511440e8d909528df7ae15bd6508dc0e840838b01100b73b5c6dcadce43867f",
+    "app/updates/layout.tsx": "d81f5b0ea0772d18caa95e9979cb5dd6c5a3f2fbb339ee60a13b0f85a27d916f",
+    "app/example/layout.tsx": "dfe4dcd414e92c95b92f291bc15b443677b0c3e68b16f2a92fd6edb090e80150",
+    "app/farmer/layout.tsx": "dc91765bf4ff871743e3a41a62cd6a0ef978a81cbb50951193891e62dca08eca",
+    "app/contact/layout.tsx": "54b62d18bb7a730e2f4a9ee8730e3e506b25f48d35a9d6aab18a802db17c2dda",
+    "app/login/layout.tsx": "774029897273e585ad7f9480e570be056e10bb3ae69484e0100d4984c9280655",
+    "app/prices/layout.tsx": "aa5e6ef9fa055eeb9082675670c14aa9acb3484647791bc7b896ea6353b5ad67",
+    "app/community/layout.tsx": "939efa1b640efa9631f2a15f82e46998ffd33ed60fab2ab6843fdb5c3d949d23",
+    "app/student/finance/page.tsx": "60a9eb5b91cb451d5aa99e5ebe1b0b27fe72725b270529ff472ea2fe8a625143",
+    "app/exchange/page.tsx": "d2edfc150963699904e4df1b5f6a23d3824238e03750c81514f0bff0bcb840ac",
+    "app/student/finance/[lesson]/page.tsx": "652e684eb6277dd90c1a66e98df2ccf7eaca99c7a396ce7387945ae3dfeb1723",
+    "app/vision/layout.tsx": "193c8f2e8a01d78934136a0972ed49a2f4627fe6d4e0fa8b036c0309b58f9e32",
+    "app/community/profile/layout.tsx": "88681adc105d35c902f0ae98dc760e25b2bf961f4fd7cfe3ea58458f3033c09a",
+    "app/assessments/layout.tsx": "00c651737d8c080e73840050b029f222c23d29ec64a0c3954c395118e85d81ac",
+    "app/tour/layout.tsx": "cc59b5379d3ba0b3bba80a8349a351d395c4f2e49a5bdc9af35d83502d96ba0d",
+    "app/design/layout.tsx": "519627cb0bef03f299334bc4a27ade82fcaf81aab86dd00fb4e93af23ce9e386",
+    "app/student/teach-the-teachers/page.tsx": "708e44c22e46e7fa73870c06b8d83bfb8d14d989afa38a0c885aa86707db17fc",
+    "app/community/u/[uid]/layout.tsx": "77d88c9e7d803a20e3c1806db567c13fbee5218e30997b75ef92f27d7b047dfe",
+    "app/tips/layout.tsx": "8ff4d256d29d7bade7b4cd503e3091c38b64d9090ac26ee4e6d37f30d56fe960",
+    "app/layout.tsx": "dab49568f2a7dd16ea15fe57a0bb0226362f174bf722d2e5cd1e9a63ea871d40",
+    "app/design/lite/layout.tsx": "e16a0da4feb6bc7238005e643950a297cc80b3678bd6154ffbaa7fd7cc44ae8c",
+    "app/student/finance/project/[case]/page.tsx": "72210b26f3f7fb5f7fb893ae6112fc23136af8a0783a67d305b91cc39ccc5865",
+    "app/student/layout.tsx": "3e99687db576dbc372588ba41578a9b02855a7327192753e9d9155158303a1ee",
+    "app/partners/page.tsx": "78c4b84182ccf1155ec6e8e45906aa02c41b5fb5906dfc02a751791a8f1ba413",
+    "app/student/design/page.tsx": "223fa1ea114a71cacdfafcb6cae880d8b1f3e722b8dbed7fa93fcc6292a7f59b",
+    "app/home/layout.tsx": "95c472b223dc9215bb99fe995bc540cd55d4345704ce25d141d1a71f8873f25d",
+    "app/mentor/layout.tsx": "f9eedef54a99d0622dcb90990de9e1905b44b5aac03a1f7df78d0f2cd2b74c9b",
+    "app/student/design/case/page.tsx": "9624ef598f0f0377822d9f035e98f72c344dbb99532bc425eb5574a8c300c58f",
+    "app/feedback/layout.tsx": "6d42f297636363d94439f3f80fd783104a07881f9cae4f3cae58b57728622b18",
+    "app/manual/layout.tsx": "a268d4fe3745e3891ca456923a6167d4d944222fc9eff97ec9450aa1eefac0a3",
+    "app/student/design/[lesson]/page.tsx": "c1b7d3aec6058c79a9466156412e10a82e4557f849ab4fcb76ed4f29fea93dc6",
+    "app/surveys/layout.tsx": "f78d72d0041c58d697e20a233aa7d6973677ebdd0f4a00652374c04f14b3f46f",
+    "app/samples/layout.tsx": "fd2aca7bb8a321aaa1ba3ca44334a8b69f27619f0d83662efdcda461f8031eec",
+    "app/journal/layout.tsx": "08cf3b6a70ed8fb358b6727f1256a0ed24b2428429396e0118a827843573b98b",
+    "app/samples/gardens/layout.tsx": "2dbdb0b7f113524d2adfa1bc7b05943d362de97195eb3c639e207d68f385365e",
+    "app/student/design/folder/page.tsx": "17c4e099a435c5c9df195693f70330410e762b9021f0c86b36fbd63e6b56d3f5",
+    "app/samples/production/layout.tsx": "a5c98e0dd405fc7dbadda72f0c50912f4782a31fad1a2acca93bc39d818ec27f",
+    "app/student/design/worked/page.tsx": "f447887307ec1ab6b31fdb5aa04e500e0f2e9c9338fea8427606f7067ec29ec8",
+    "app/manual/[lang]/page.tsx": "4e2a9ff3417e8fb518e0e3f5387cd14e8c2d9463e220635d75c0600b1a1024d1",
+    "app/manual/[lang]/[slug]/page.tsx": "f1694b0563c7f4616a25b0b5794fa23f921ac80d1693a504de3e3a4dbb87379e",
+    "app/samples/farm/layout.tsx": "5866f8b8d23efff0b531c8eef513fb4451e6f27de949309be1de409e6e7319ea",
+    "app/student/design/scale/page.tsx": "458db4a10b41fc83343877f8001bea93c72ea2a7673dbbdc69c557d76659ddc2",
+    "app/manual/[lang]/book/page.tsx": "87d52d702ad4097e3b75d06e458640bbb4b05f4c1d57d687478a31b28849ee46",
+    "app/community/messages/[threadId]/layout.tsx": "a5b9f73b42af64c987487c59ba3fc1e6e8b956f6121daad3f1c97d9422ddcbcd",
+    "app/atlas/layout.tsx": "993d3b582c4202d3cdb1fbd3361a0a3746f140883e6337836d382be04f9a2263",
+    "app/ngo/layout.tsx": "502bbb0b79a7c3c9dc2938d101825c8a5ebee64790c8333e01101d43b82261b2",
+    "app/account/layout.tsx": "97b1a794f55a1362f5924936a5c3d9910d232fb2ceea25f1805434dbbc5361da",
+    "app/student/guides/[guide]/layout.tsx": "214b92056fbff1dd319c523641e2b6a82743f90b5256aa789632dff86ba8834e"
+  },
+  "controls": [
+    {
+      "source": "Reports — ImbewuField",
+      "key": "tabReports",
+      "english": "Reports",
+      "zu": "Imibiko",
+      "st": "Ditlaleho",
+      "ts": "Swiviko",
+      "ve": "Mivhigo"
+    },
+    {
+      "source": "Saved on this phone — ImbewuField",
+      "key": "offlineTitle",
+      "english": "Saved on this phone",
+      "zu": "Okugcinwe kule foni",
+      "st": "Tse bolokilweng fonong ena",
+      "ts": "Leswi hlayisiweke eka riqingho leri",
+      "ve": "Zwo vhulungwaho kha founu iyi"
+    },
+    {
+      "source": "Funder — ImbewuField",
+      "key": "homeRoleFunderLabel",
+      "english": "Funder",
+      "zu": "Umxhasi",
+      "st": "Motshehetsi",
+      "ts": "Museketeri wa mali",
+      "ve": "Mulambedzi"
+    },
+    {
+      "source": "Planting calendar — ImbewuField",
+      "key": "plantingCalendarHeader",
+      "english": "Planting calendar",
+      "zu": "Ikhalenda lokutshala",
+      "st": "Khalendara ya ho lema",
+      "ts": "Khalendara yo byala",
+      "ve": "Khalanḓara ya u zwala"
+    },
+    {
+      "source": "Network — ImbewuField",
+      "key": "navNetwork",
+      "english": "Network",
+      "zu": "Inethiwekhi",
+      "st": "Marangrang",
+      "ts": "Netiweke",
+      "ve": "Netiweke"
+    },
+    {
+      "source": "My records — ImbewuField",
+      "key": "myRecordsTitle",
+      "english": "My records",
+      "zu": "Amarekhodi Ami",
+      "st": "Direkoto Tsa Ka",
+      "ts": "Tirhekhodo ta Mina",
+      "ve": "Rekhodo dzanga"
+    },
+    {
+      "source": "What's new — ImbewuField",
+      "key": "navWhatsNew",
+      "english": "What's new",
+      "zu": "Yini entsha",
+      "st": "Tse ntjha",
+      "ts": "Leswintshwa",
+      "ve": "Zwiswa"
+    },
+    {
+      "source": "Example farm — ImbewuField",
+      "key": "demoBannerLabel",
+      "english": "Example farm",
+      "zu": "Ipulazi eliyisibonelo",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "source": "Map — ImbewuField",
+      "key": "tabMap",
+      "english": "Map",
+      "zu": "Imephu",
+      "st": "Mmapa",
+      "ts": "Mepe",
+      "ve": "Mmapa"
+    },
+    {
+      "source": "Contact — ImbewuField",
+      "key": "homeQuickContact",
+      "english": "Contact",
+      "zu": "Xhumana",
+      "st": "Ikopanya",
+      "ts": "Vulavurisana",
+      "ve": "Kwamani"
+    },
+    {
+      "source": "Sign in — ImbewuField",
+      "key": "loginSignIn",
+      "english": "Sign in",
+      "zu": "Ngena",
+      "st": "Kena",
+      "ts": "Nghena",
+      "ve": "Dzhenani"
+    },
+    {
+      "source": "Farm-gate prices — ImbewuField",
+      "key": "pricesFarmGateTitle",
+      "english": "Farm-gate prices",
+      "zu": "Amanani asesangweni lepulazi",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "source": "Community — ImbewuField",
+      "key": "communityHubTitle",
+      "english": "Community",
+      "zu": "Umphakathi",
+      "st": "Setjhaba",
+      "ts": "Vaaki",
+      "ve": "Tshitshavha"
+    },
+    {
+      "source": "Lima Vision — ImbewuField",
+      "key": "homeLimaVisionLabel",
+      "english": "Lima Vision",
+      "zu": "Lima Vision",
+      "st": "Lima Vision",
+      "ts": "Lima Vision",
+      "ve": "Lima Vision"
+    },
+    {
+      "source": "Profile — ImbewuField",
+      "key": "communityMemberTitle",
+      "english": "Profile",
+      "zu": "Iphrofayela",
+      "st": "Profaele",
+      "ts": "Phurofayili",
+      "ve": "Phurofaiḽi"
+    },
+    {
+      "source": "Project assessments — ImbewuField",
+      "key": "navAssessments",
+      "english": "Project assessments",
+      "zu": "Ukuhlolwa kwamaphrojekthi",
+      "st": "Ditekolo tsa projeke",
+      "ts": "Mikambelo ya phurojeke",
+      "ve": "Ṱhaṱhuvho dza thandela"
+    },
+    {
+      "source": "Take a tour — ImbewuField",
+      "key": "navTour",
+      "english": "Take a tour",
+      "zu": "Buka uhambo lokufundisa",
+      "st": "Etela app ka tataiso",
+      "ts": "Valanga app hi ku kongomisiwa",
+      "ve": "Dalelani app nga vhulivhisi"
+    },
+    {
+      "source": "Design studio — ImbewuField",
+      "key": "navDesignStudio",
+      "english": "Design studio",
+      "zu": "Isitudiyo Sokuklama",
+      "st": "Sebaka sa ho rala",
+      "ts": "Ndhawu ya ku dizayina",
+      "ve": "Fhethu ha u pulana"
+    },
+    {
+      "source": "Tips and help — ImbewuField",
+      "key": "navTipsHelp",
+      "english": "Tips and help",
+      "zu": "Amacebo nosizo",
+      "st": "Dikeletso le thuso",
+      "ts": "Switsundzuxo ni mpfuno",
+      "ve": "Ngeletshedzo na thuso"
+    },
+    {
+      "source": "Study — ImbewuField",
+      "key": "homeQuickStudy",
+      "english": "Study",
+      "zu": "Funda",
+      "st": "Ithuta",
+      "ts": "Dyondza",
+      "ve": "Gudani"
+    },
+    {
+      "source": "Home — ImbewuField",
+      "key": "tabHome",
+      "english": "Home",
+      "zu": "Ikhaya",
+      "st": "Lehae",
+      "ts": "Kaya",
+      "ve": "Hayani"
+    },
+    {
+      "source": "Mentor — ImbewuField",
+      "key": "homeRoleMentorLabel",
+      "english": "Mentor",
+      "zu": "Imeluleki",
+      "st": "Moeletsi",
+      "ts": "Muleteri",
+      "ve": "Mueletshedzi"
+    },
+    {
+      "source": "Permaculture manual — ImbewuField",
+      "key": "navManual",
+      "english": "Permaculture manual",
+      "zu": "Incwadi ye-Permaculture",
+      "st": "Buka ya Permaculture",
+      "ts": "Buku ya Permaculture",
+      "ve": "Bugu ya Permaculture"
+    },
+    {
+      "source": "Surveys — ImbewuField",
+      "key": "homeSurveysLabel",
+      "english": "Surveys",
+      "zu": "Izinhlolovo",
+      "st": "Dipatlisiso",
+      "ts": "Mipapa ya swivutiso",
+      "ve": "Tsedzuluso"
+    },
+    {
+      "source": "Field journal — ImbewuField",
+      "key": "navFieldJournal",
+      "english": "Field journal",
+      "zu": "Ijenali Yasensimu",
+      "st": "Buka ya Masimo",
+      "ts": "Buku ya Nsimu",
+      "ve": "Bugu ya tsimuni"
+    },
+    {
+      "source": "Messages — ImbewuField",
+      "key": "communityTabMessages",
+      "english": "Messages",
+      "zu": "Imiyalezo",
+      "st": "Melaetsa",
+      "ts": "Marungula",
+      "ve": "Milaedza"
+    },
+    {
+      "source": "Atlas — ImbewuField",
+      "key": "navAtlas",
+      "english": "Atlas",
+      "zu": "I-Atlas",
+      "st": null,
+      "ts": null,
+      "ve": null
+    },
+    {
+      "source": "Organisation — ImbewuField",
+      "key": "navSectionOrganisation",
+      "english": "Organisation",
+      "zu": "Inhlangano",
+      "st": "Mokgatlo",
+      "ts": "Nhlangano",
+      "ve": "Dzangano"
+    },
+    {
+      "source": "Account — ImbewuField",
+      "key": "tabAccount",
+      "english": "Account",
+      "zu": "I‑akhawunti",
+      "st": "Akhaonto",
+      "ts": "Akhawunti",
+      "ve": "Akhaunthu"
+    }
+  ],
+  "entries": [
+    {
+      "english": "Printable plan — ImbewuField",
+      "zu": "Uhlelo oluphrintekayo — ImbewuField",
+      "st": "Moralo o ka printwang — ImbewuField",
+      "ts": "Pulani leyi nga printiwaka — ImbewuField",
+      "ve": "Pulane ine ya nga gandiswa — ImbewuField"
+    },
+    {
+      "english": "Invoice — ImbewuField",
+      "zu": "I-invoyisi — ImbewuField",
+      "st": "Invoese — ImbewuField",
+      "ts": "Invhoyisi — ImbewuField",
+      "ve": "Invhoisi — ImbewuField"
+    },
+    {
+      "english": "Farm Finance — ImbewuField teaching preview",
+      "zu": "Izimali zepulazi — umbukiso wokufundisa we-ImbewuField",
+      "st": "Ditjhelete tsa polasi — ponelopele ya ho ruta ya ImbewuField",
+      "ts": "Timali ta purasi — nkombiso wo dyondzisa wa ImbewuField",
+      "ve": "Masheleni a bulasi — mbonelaphanḓa ya u funza ya ImbewuField"
+    },
+    {
+      "english": "Farmer exchange — ImbewuField",
+      "zu": "Ukuhwebelana kwabalimi — ImbewuField",
+      "st": "Phapanyetsano ya balemi — ImbewuField",
+      "ts": "Ku cincana ka varimi — ImbewuField",
+      "ve": "U tshintshana ha vhalimi — ImbewuField"
+    },
+    {
+      "english": "Farm Finance lesson — ImbewuField teaching preview",
+      "zu": "Isifundo sezimali zepulazi — umbukiso wokufundisa we-ImbewuField",
+      "st": "Thuto ya ditjhelete tsa polasi — ponelopele ya ho ruta ya ImbewuField",
+      "ts": "Dyondzo ya timali ta purasi — nkombiso wo dyondzisa wa ImbewuField",
+      "ve": "Ngudo ya masheleni a bulasi — mbonelaphanḓa ya u funza ya ImbewuField"
+    },
+    {
+      "english": "ACT Teach the Teachers | two-day facilitator refresher",
+      "zu": "ACT Teach the Teachers | ukubuyekeza kwabagqugquzeli kwezinsuku ezimbili",
+      "st": "ACT Teach the Teachers | kgopotso ya batsamaisi ba thuto ya matsatsi a mabedi",
+      "ts": "ACT Teach the Teachers | mpfuxeto wa vafambisi va tidyondzo wa masiku mambirhi",
+      "ve": "ACT Teach the Teachers | mvusuludzo ya vhatshimbidzi vha ngudo ya maḓuvha mavhili"
+    },
+    {
+      "english": "ImbewuField — permaculture planning for South African farmers",
+      "zu": "ImbewuField — ukuhlelwa kwe-permaculture kwabalimi baseNingizimu Afrika",
+      "st": "ImbewuField — moralo wa permaculture bakeng sa balemi ba Afrika Borwa",
+      "ts": "ImbewuField — ku pulana ka permaculture ka varimi va Afrika Dzonga",
+      "ve": "ImbewuField — u pulana ha permaculture ha vhalimi vha Afrika Tshipembe"
+    },
+    {
+      "english": "Farm Finance practical project — teaching preview",
+      "zu": "Iphrojekthi yokuzijwayeza izimali zepulazi — umbukiso wokufundisa",
+      "st": "Projeke ya tshebetso ya ditjhelete tsa polasi — ponelopele ya ho ruta",
+      "ts": "Phurojeke yo titoloveta ya timali ta purasi — nkombiso wo dyondzisa",
+      "ve": "Thandela ya nyito ya masheleni a bulasi — mbonelaphanḓa ya u funza"
+    },
+    {
+      "english": "ImbewuField for NGOs and funders",
+      "zu": "ImbewuField yama-NGO nabaxhasi",
+      "st": "ImbewuField bakeng sa di-NGO le batshehetsi",
+      "ts": "ImbewuField ya ti-NGO ni vaseketeri va mali",
+      "ve": "ImbewuField ya dzi-NGO na vhalambedzi"
+    },
+    {
+      "english": "Design a working homestead — teaching preview",
+      "zu": "Klama ikhaya elisebenzayo — umbukiso wokufundisa",
+      "st": "Rala lehae le sebetsang — ponelopele ya ho ruta",
+      "ts": "Dizayina muti lowu tirhaka — nkombiso wo dyondzisa",
+      "ve": "Pulanani muḓi une wa shuma — mbonelaphanḓa ya u funza"
+    },
+    {
+      "english": "The busy yard — design practice case",
+      "zu": "Igceke elimatasa — isibonelo sokuzijwayeza ukuklama",
+      "st": "Jarete e phetheselang — mohlala wa ho itlwaetsa ho rala",
+      "ts": "Rivala leri nga ni migingiriko — mhaka yo titoloveta ku dizayina",
+      "ve": "Luvhande lu re na mishumo minzhi — tsumbo ya u ḓiḓowedza u pulana"
+    },
+    {
+      "english": "Report a bug or suggest a feature — ImbewuField",
+      "zu": "Bika iphutha noma uphakamise isici — ImbewuField",
+      "st": "Tlaleha phoso kapa sisinya tshebetso — ImbewuField",
+      "ts": "Vika xihoxo kumbe ringanyeta xitirhisiwa — ImbewuField",
+      "ve": "Vhigani vhukhakhi kana ni dzinginye tshumelo — ImbewuField"
+    },
+    {
+      "english": "Permaculture design lesson — teaching preview",
+      "zu": "Isifundo sokuklama i-permaculture — umbukiso wokufundisa",
+      "st": "Thuto ya ho rala permaculture — ponelopele ya ho ruta",
+      "ts": "Dyondzo yo dizayina permaculture — nkombiso wo dyondzisa",
+      "ve": "Ngudo ya u pulana permaculture — mbonelaphanḓa ya u funza"
+    },
+    {
+      "english": "Choose a view — ImbewuField",
+      "zu": "Khetha ukubuka — ImbewuField",
+      "st": "Kgetha pono — ImbewuField",
+      "ts": "Hlawula mavonelo — ImbewuField",
+      "ve": "Nangani mbonalo — ImbewuField"
+    },
+    {
+      "english": "Example gardens — ImbewuField",
+      "zu": "Izingadi eziyisibonelo — ImbewuField",
+      "st": "Dirapa tsa mohlala — ImbewuField",
+      "ts": "Swirhapa swa swikombiso — ImbewuField",
+      "ve": "Ngade dza tsumbo — ImbewuField"
+    },
+    {
+      "english": "Your design learning folder — ImbewuField",
+      "zu": "Ifolda yakho yokufunda ukuklama — ImbewuField",
+      "st": "Foldara ya hao ya ho ithuta ho rala — ImbewuField",
+      "ts": "Foludara ya wena yo dyondza ku dizayina — ImbewuField",
+      "ve": "Foḽuda yaṋu ya u guda u pulana — ImbewuField"
+    },
+    {
+      "english": "Example production — ImbewuField",
+      "zu": "Ukukhiqiza okuyisibonelo — ImbewuField",
+      "st": "Tlhahiso ya mohlala — ImbewuField",
+      "ts": "Vuhumelerisi bya xikombiso — ImbewuField",
+      "ve": "Vhubveledzi ha tsumbo — ImbewuField"
+    },
+    {
+      "english": "Worked design demonstration — teaching preview",
+      "zu": "Umbukiso wesibonelo esenziwe sokuklama — umbukiso wokufundisa",
+      "st": "Pontsho ya mohlala o sebetsitsweng wa ho rala — ponelopele ya ho ruta",
+      "ts": "Nkombiso wa dizayini leyi tirhiweke — nkombiso wo dyondzisa",
+      "ve": "Tsumbedzo ya pulane yo shumwaho — mbonelaphanḓa ya u funza"
+    },
+    {
+      "english": "Read the scale, check the space — design practice",
+      "zu": "Funda isikali, hlola indawo — ukuzijwayeza ukuklama",
+      "st": "Bala sekala, hlahloba sebaka — boitlwaetso ba ho rala",
+      "ts": "Hlaya xikalo, kambela ndhawu — ku titoloveta ku dizayina",
+      "ve": "Vhalani tshikalo, ṱolani tshikhala — u ḓiḓowedza u pulana"
+    },
+    {
+      "english": "Example farm — ImbewuField",
+      "st": "Polasi ya mohlala — ImbewuField",
+      "ts": "Purasi ra xikombiso — ImbewuField",
+      "ve": "Bulasi ḽa tsumbo — ImbewuField"
+    },
+    {
+      "english": "Farm-gate prices — ImbewuField",
+      "st": "Ditheko hekeng ya polasi — ImbewuField",
+      "ts": "Minxavo ya le nyangweni wa purasi — ImbewuField",
+      "ve": "Mitengo ya khoroni ya bulasi — ImbewuField"
+    }
+  ],
+  "identityHolds": [
+    {
+      "source": "Lima Vision — ImbewuField",
+      "languages": [
+        "zu",
+        "st",
+        "ts",
+        "ve"
+      ],
+      "reason": "Lima Vision and ImbewuField are product names."
+    },
+    {
+      "source": "Atlas — ImbewuField",
+      "languages": [
+        "st",
+        "ts",
+        "ve"
+      ],
+      "reason": "Atlas is retained as the existing feature name; isiZulu follows existing navAtlas."
+    }
+  ],
+  "protectedNames": [
+    "ImbewuField",
+    "ACT Teach the Teachers",
+    "NGO"
+  ],
+  "scope": "Only exact known static metadata identities are localized after hydration. English server metadata stays exact. Manual subroutes keep URL-selected document language, Pitch retains its own title, unknown/private titles are never interpolated. Lesson bodies, recorded figures and saved content do not change.",
+  "releasePair": {
+    "english": "App page titles now have four draft translations.",
+    "zu": "Izihloko zamakhasi e-app manje zinokuhumusha okusaluhlaka ngezilimi ezine.",
+    "st": "Dihlooho tsa maqephe a app jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",
+    "ts": "Tinhlokomhaka ta matluka ya app sweswi ti ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",
+    "ve": "Ṱhoho dza masiaṱari a app zwino dzi na ṱhalutshedzelo dza mvetamveto nga nyambo nṋa."
+  }
+}

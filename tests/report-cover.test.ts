@@ -51,15 +51,15 @@ test('no survey means the word survey never appears in the provenance', () => {
   assert.ok(!/survey/i.test(line), `still claims a survey: ${line}`);
 });
 
-test('the provenance line cannot go back to being a literal', () => {
+test('the translated provenance row still derives its value from the supplied sources', () => {
   // A source test because the failure mode is someone re-hardcoding the friendly-sounding full
   // version. The cover must build this line from the sources it was handed.
   const src = readFileSync(new URL('../lib/report-cover.ts', import.meta.url), 'utf8');
-  const preparedByLine = src.split('\n').find((l) => l.includes('| Prepared by |')) ?? '';
-  assert.ok(
-    preparedByLine.includes('preparedFromLabel(input.sources)'),
-    'the Prepared by row is not derived from the supplied sources',
-  );
+  // The label is now translated; matching English table bytes would pin a language rather than
+  // the original rule. Keep guarding the producer and the exact supplied-source argument.
+  const preparedByLine = src.split('\n').find((l) => l.includes("t('Prepared by')") || l.includes('| Prepared by |')) ?? '';
+  assert.match(preparedByLine, /preparedFromLabel\(input\.sources(?:,\s*language)?\)/,
+    'the provenance row is not derived from the supplied sources');
 });
 
 test('the cover does not promise honesty it then breaks', () => {

@@ -1,0 +1,682 @@
+{
+  "zu": [
+    {
+      "size": "phone",
+      "state": "history-recent",
+      "lines": 492,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "guide-offer",
+      "lines": 18,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "guide-tour",
+      "lines": 30,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "banner-expanded-local-fallback",
+      "targets": [
+        {
+          "label": "Goqa isaziso sesibuyekezo",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Chitha kuze kube isakhiwo esilandelayo",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Vuselela ukuze uthole isibuyekezo",
+          "width": 249.359375,
+          "height": 44
+        },
+        {
+          "label": "bonisa okuncane",
+          "width": 326.796875,
+          "height": 44
+        }
+      ],
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "banner-compact",
+      "targets": [
+        {
+          "width": 153.6328125,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "lines": 2,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "discovery",
+      "lines": 23,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "history-recent",
+      "lines": 379,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "guide-offer",
+      "lines": 18,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "guide-tour",
+      "lines": 30,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "banner-expanded-local-fallback",
+      "targets": [
+        {
+          "label": "Goqa isaziso sesibuyekezo",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Chitha kuze kube isakhiwo esilandelayo",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Vuselela ukuze uthole isibuyekezo",
+          "width": 249.359375,
+          "height": 44
+        },
+        {
+          "label": "bonisa okuncane",
+          "width": 400,
+          "height": 44
+        }
+      ],
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "banner-compact",
+      "targets": [
+        {
+          "width": 153.6328125,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "lines": 2,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "discovery",
+      "lines": 18,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    }
+  ],
+  "st": [
+    {
+      "size": "phone",
+      "state": "history-recent",
+      "lines": 501,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "guide-offer",
+      "lines": 19,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "guide-tour",
+      "lines": 31,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "banner-expanded-local-fallback",
+      "targets": [
+        {
+          "label": "Mena tsebiso ya ntlafatso",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Pata ho fihlela ho fihla mofuta o latelang",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Ntjhafatsa app",
+          "width": 122.171875,
+          "height": 44
+        },
+        {
+          "label": "bontsha tse mmalwa",
+          "width": 326.796875,
+          "height": 44
+        }
+      ],
+      "lines": 42,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "banner-compact",
+      "targets": [
+        {
+          "width": 116.203125,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "lines": 2,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "discovery",
+      "lines": 24,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "history-recent",
+      "lines": 402,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "guide-offer",
+      "lines": 19,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "guide-tour",
+      "lines": 31,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "banner-expanded-local-fallback",
+      "targets": [
+        {
+          "label": "Mena tsebiso ya ntlafatso",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Pata ho fihlela ho fihla mofuta o latelang",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Ntjhafatsa app",
+          "width": 122.171875,
+          "height": 44
+        },
+        {
+          "label": "bontsha tse mmalwa",
+          "width": 400,
+          "height": 44
+        }
+      ],
+      "lines": 39,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "banner-compact",
+      "targets": [
+        {
+          "width": 116.203125,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "lines": 2,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "discovery",
+      "lines": 20,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    }
+  ],
+  "ts": [
+    {
+      "size": "phone",
+      "state": "history-recent",
+      "lines": 514,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "guide-offer",
+      "lines": 20,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "guide-tour",
+      "lines": 31,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "banner-expanded-local-fallback",
+      "targets": [
+        {
+          "label": "Pfala vuxokoxoko bya xitiviso xa mpfuxeto",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Fihla ku fikela eka mpfuxeto lowu landzelaka",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Pfuxeta app",
+          "width": 103.7734375,
+          "height": 44
+        },
+        {
+          "label": "komba switsongo",
+          "width": 326.796875,
+          "height": 44
+        }
+      ],
+      "lines": 45,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "banner-compact",
+      "targets": [
+        {
+          "width": 182.84375,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "lines": 2,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "discovery",
+      "lines": 24,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "history-recent",
+      "lines": 402,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "guide-offer",
+      "lines": 20,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "guide-tour",
+      "lines": 31,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "banner-expanded-local-fallback",
+      "targets": [
+        {
+          "label": "Pfala vuxokoxoko bya xitiviso xa mpfuxeto",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Fihla ku fikela eka mpfuxeto lowu landzelaka",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Pfuxeta app",
+          "width": 103.7734375,
+          "height": 44
+        },
+        {
+          "label": "komba switsongo",
+          "width": 400,
+          "height": 44
+        }
+      ],
+      "lines": 41,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "banner-compact",
+      "targets": [
+        {
+          "width": 182.84375,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "lines": 2,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "discovery",
+      "lines": 20,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    }
+  ],
+  "ve": [
+    {
+      "size": "phone",
+      "state": "history-recent",
+      "lines": 506,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "guide-offer",
+      "lines": 21,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "guide-tour",
+      "lines": 32,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "banner-expanded-local-fallback",
+      "targets": [
+        {
+          "label": "Valani zwidodombedzwa zwa n\u1e13ivhadzo ya khwiniso",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Dzumbani u swika kha khwiniso i tevhelaho",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Khwinisani app",
+          "width": 123.140625,
+          "height": 44
+        },
+        {
+          "label": "sumbedzani zwi\u1e71uku",
+          "width": 326.796875,
+          "height": 44
+        }
+      ],
+      "lines": 45,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "banner-compact",
+      "targets": [
+        {
+          "width": 172.5546875,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "lines": 2,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "phone",
+      "state": "discovery",
+      "lines": 25,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "history-recent",
+      "lines": 397,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "guide-offer",
+      "lines": 21,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "guide-tour",
+      "lines": 32,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "banner-expanded-local-fallback",
+      "targets": [
+        {
+          "label": "Valani zwidodombedzwa zwa n\u1e13ivhadzo ya khwiniso",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Dzumbani u swika kha khwiniso i tevhelaho",
+          "width": 44,
+          "height": 44
+        },
+        {
+          "label": "Khwinisani app",
+          "width": 123.140625,
+          "height": 44
+        },
+        {
+          "label": "sumbedzani zwi\u1e71uku",
+          "width": 400,
+          "height": 44
+        }
+      ],
+      "lines": 41,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "banner-compact",
+      "targets": [
+        {
+          "width": 172.5546875,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        },
+        {
+          "width": 44,
+          "height": 44
+        }
+      ],
+      "lines": 2,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    },
+    {
+      "size": "desktop",
+      "state": "discovery",
+      "lines": 20,
+      "failed": [],
+      "overflow": false,
+      "placeholders": false
+    }
+  ]
+}
