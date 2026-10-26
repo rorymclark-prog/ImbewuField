@@ -73,3 +73,6 @@
 
 /* Ground evidence is stored as thumbnails; keep it at a readable native scale. */
 .heroPhoto img { width: auto; max-width: 100%; max-height: 300px; margin: 0 auto; }
+/* w23-04: the isiZulu draft note is an inset note, not a bare line between the controls and the report. */
+.draftNote { margin: 0 0 16px; padding: 10px 14px; font-size: 13px; line-height: 1.5; color: var(--vr-muted); border-left: 3px solid var(--gold); border-radius: 8px; background: color-mix(in srgb, var(--gold) 8%, transparent); }
+@media print { .draftNote { display: none; } }

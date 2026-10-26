@@ -18,10 +18,10 @@ Every finding below came from reading the screenshots, which is where this wave'
 | ID | Where | What the render showed | Fix | Status |
 | --- | --- | --- | --- | --- |
 | w23-01 | /home in isiZulu, every role | The header date read "HOMEWEEKDAYWED · 28 HOMEMONTHOCT". A regression from `w22-01`: the date moved into an effect keyed on `[lang]`, which ran before the lazily loaded isiZulu dictionary landed, so `translate()` returned the keys and nothing re-ran. /community, which lands on Home after the dictionary has loaded, showed it correctly | Computed during render behind a mounted flag, so it is still never in the prerendered HTML and now follows the dictionary when it loads. Rendered: "uLwesithathu · 28 Okthoba" | Fixed |
-| w23-02 | /funder and /ngo, cohort view | The same figure twice on one page: "Farmer income R262 685" on the card and "R262 686" in "Harvest and income, month by month" | Open — one rounding for both | Open |
-| w23-03 | New report previews (farm finance on /records, phone) | Money figures break mid-number: "R9 / 358,00", "R8 / 758,00" (the thousands separator is a plain space in a 133px column). The figures are also in the body sans, where the design system puts numbers in Newsreader | `components/ProgrammeReport.module.css` `.metric strong` | Open |
-| w23-04 | New report workspaces in isiZulu | The isiZulu draft note between the report controls and the preview is a bare, unpadded line running edge to edge (`components/ReportComposer.tsx`) | Style it as the workspace's other notes | Open |
-| w23-05 | Facilitator delivery report, phone | The partner block wraps "Implemented / by" and "Imbewu / KZN" in narrow label columns | Open | Open |
+| w23-02 | /funder and /ngo, cohort view | The same figure twice on one page: "Farmer income R262 685" on the card and "R262 686" in "Harvest and income, month by month" | `lib/cohort-series.ts` rounds each month's income to whole rand, then the chart total sums the rounded months; the card rounds the exact sum once. That file is in Codex's open rorymclark-prog/imbewufield#1121, so: round the total from the unrounded months | Handed to Codex |
+| w23-03 | New report previews (farm finance on /records, phone) | Money figures break mid-number: "R9 / 358,00", "R8 / 758,00" (the thousands separator is a plain space in a 133px column). The figures are also in the body sans, where the design system puts numbers in Newsreader | `components/ProgrammeReport.module.css` `.metric strong`: Newsreader, `white-space: nowrap`, and `clamp(19px, 5.6vw, 25px)` on phones | Fixed |
+| w23-04 | New report workspaces in isiZulu | The isiZulu draft note between the report controls and the preview is a bare, unpadded line running edge to edge (`components/ReportComposer.tsx`) | `.draftNote` in `components/ProgrammeReport.module.css` (continues the controls band) and `components/report/VisualReport.module.css` (inset note) | Fixed |
+| w23-05 | Facilitator delivery report, phone | The partner block wraps "Implemented / by" and "Imbewu / KZN" in narrow label columns | Phone `.partner` minimum 140px → 200px, so each partner takes its own line | Fixed |
 | w23-06 | Farm finance report | "1 local invoices"; the sample farm name "Demonstration farm" stays English in isiZulu | `lib/farm-report.ts` and `components/FarmReports.tsx` are in Codex's open rorymclark-prog/imbewufield#1121 | Handed to Codex |
 | w23-07 | Every route | No page errors (clock two days on), no overflow at 390/768/1024/1280px, `lang` correct, nothing under the launcher at the end of any page | — | Checked |
 
@@ -40,8 +40,12 @@ Every finding below came from reading the screenshots, which is where this wave'
 
 `w23-01`: rebuilt and rendered with the clock on 28 October — isiZulu phone and desktop, farmer and
 mentor, show "uLwesithathu · 28 Okthoba"; English shows "Wednesday · 28 October"; no page errors.
-The rest is filled in when the open items land.
+`w23-03` to `w23-05`: rebuilt and re-measured. The farm report figures are Newsreader at 21.8px on a
+390px phone and sit on one line (26px tall; before: 60px, "R9 / 358,00"). Screenshots of the farm
+finance report (phone, dark, isiZulu), the MEL evidence report (desktop, isiZulu) and the facilitator
+report (phone) show the styled draft note and one partner per line ("Implemented by · Imbewu KZN").
+`tests/w23-reports.test.ts` pins all three.
 
 ## Next continuation
 
-Ship `w23-01` alone (it is live for isiZulu users), then `w23-02` to `w23-05` on the same branch.
+Ship `w23-01` alone (it is live for isiZulu users), then `w23-03` to `w23-05` on the same branch. Re-capture after both are live.
