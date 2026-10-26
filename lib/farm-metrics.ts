@@ -82,25 +82,19 @@ export interface FarmMetrics {
   hasUnattributedExpenses: boolean;
 }
 
-function seasonMonths(month0: number): number[] {
-  if (month0 >= 8 && month0 <= 10) return [8, 9, 10];
-  if (month0 === 11 || month0 <= 1) return [11, 0, 1];
-  if (month0 >= 2 && month0 <= 4) return [2, 3, 4];
-  return [5, 6, 7];
+export function financePeriodBounds(period: FinancePeriod, reference: Date) {
+  const year = reference.getFullYear(), month = reference.getMonth();
+  const startMonth = period === 'year' ? 0 : period === 'month' ? month : Math.floor((month + 1) / 3) * 3 - 1;
+  const months = period === 'year' ? 12 : period === 'season' ? 3 : 1;
+  return { start: new Date(year, startMonth, 1), end: new Date(year, startMonth + months, 1), months };
 }
 
 export function isInFinancePeriod(iso: string | null | undefined, period: FinancePeriod, now: Date): boolean {
   if (!iso || !Number.isFinite(now.getTime())) return false;
   const date = new Date(iso);
   if (!Number.isFinite(date.getTime())) return false;
-  if (period === 'year') return date.getFullYear() === now.getFullYear();
-  if (period === 'month') return date.getFullYear() === now.getFullYear() && date.getMonth() === now.getMonth();
-
-  const months = seasonMonths(now.getMonth());
-  if (!months.includes(date.getMonth())) return false;
-  if (!months.includes(11)) return date.getFullYear() === now.getFullYear();
-  const seasonStartYear = now.getMonth() <= 1 ? now.getFullYear() - 1 : now.getFullYear();
-  return date.getFullYear() === (date.getMonth() === 11 ? seasonStartYear : seasonStartYear + 1);
+  const { start, end } = financePeriodBounds(period, now);
+  return date >= start && date < end;
 }
 
 function finiteNonNegative(value: number | null | undefined): number {

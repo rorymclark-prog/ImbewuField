@@ -123,6 +123,8 @@ test('download names distinguish cohort scopes and do not carry path separators 
   const filename=programmeReportFilename(report,'2026-10-23');
   assert.match(filename,/2026-10-23$/);
   assert.notEqual(filename,programmeReportFilename({...report,scope:'A different cohort'},'2026-10-23'));
+  const longScope = 'An unusually long project and organisation name '.repeat(5);
+  assert.notEqual(programmeReportFilename({...report,scope:longScope+'A'},'2026-10-23'),programmeReportFilename({...report,scope:longScope+'B'},'2026-10-23'));
   assert.match(programmeReportFilename({...report,scope:'../=HYPERLINK("unsafe")'},'invalid'),/^ImbewuField-[a-z0-9-]+-undated$/);
 });
 

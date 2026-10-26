@@ -27,7 +27,7 @@ import { fieldApi } from '@/lib/field-api';
 import { useFieldSync } from './use-field-sync';
 import { isSampleMode } from '@/lib/sample-mode';
 import { isBackendConfigured } from '@/lib/firebase/init';
-import { DEMO_COHORT_MONTHLY, DEMO_NETWORK } from '@/lib/network-demo';
+import { DEMO_COHORT_MONTHLY, DEMO_COHORT_REPORT_MONTHLY, DEMO_NETWORK } from '@/lib/network-demo';
 import { emptyCohortSeries, type CohortSeries } from '@/lib/cohort-series';
 import type { NetworkFarmerSummary, NetworkOrgOption } from '@/lib/network';
 
@@ -63,7 +63,7 @@ export interface NetworkPortfolio {
   reload: () => void;
 }
 
-export function useNetworkPortfolio(signedIn: boolean): NetworkPortfolio {
+export function useNetworkPortfolio(signedIn: boolean, historyMonths: 12 | 24 = 12): NetworkPortfolio {
   const [sample, setSample] = useState<boolean | null>(null);
   useEffect(() => { setSample(isSampleMode()); }, [signedIn]);
   // A signed-in owner exploring sample roles must never read a live portfolio.
@@ -114,7 +114,7 @@ export function useNetworkPortfolio(signedIn: boolean): NetworkPortfolio {
     setError(null);
     (async () => {
       try {
-        const body = await fieldApi(`/api/network/farmers?org_id=${encodeURIComponent(orgId)}`);
+        const body = await fieldApi(`/api/network/farmers?org_id=${encodeURIComponent(orgId)}${historyMonths === 24 ? '&history_months=24' : ''}`);
         if(cancelled)return;
         setDeviceData(body);
         setRows(body.farmers ?? []);
@@ -129,11 +129,11 @@ export function useNetworkPortfolio(signedIn: boolean): NetworkPortfolio {
       }
     })();
     return () => { cancelled = true; };
-  }, [live, orgId, nonce]);
+  }, [live, orgId, nonce, historyMonths]);
 
   if (!live) {
     return {
-      rows: DEMO_NETWORK.farmers, monthly: DEMO_COHORT_MONTHLY, orgs: [], orgId: null, setOrgId: () => {},
+      rows: DEMO_NETWORK.farmers, monthly: historyMonths === 24 ? DEMO_COHORT_REPORT_MONTHLY : DEMO_COHORT_MONTHLY, orgs: [], orgId: null, setOrgId: () => {},
       isDemo: true, loading: false, error: null, withheldForConsent: 0, reload,
     };
   }

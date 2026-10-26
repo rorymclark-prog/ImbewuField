@@ -6,7 +6,9 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Site reports and mapping: start here
 
-Latest integration: [Report branch updated with current main — 25 October 2026](2026-10-25/site-report-main-integration-codex.md).
+Latest integration: [Site reports with the published role reports and wave 23 — 26 October 2026](2026-10-26/site-report-role-integration-codex.md).
+
+Previous integration: [Report branch updated with current main — 25 October 2026](2026-10-25/site-report-main-integration-codex.md).
 
 Previous verification: [CI readability-register follow-up — 24 October 2026](2026-10-24/site-report-ci-followup-codex.md).
 
@@ -77,6 +79,10 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [Site reports with the published role reports and wave 23 — 26 October 2026](2026-10-26/site-report-role-integration-codex.md).
+
+- [Wave 23 rendered re-capture of the live build 98c8a22 and the new report workspaces: w23-01 to w23-07, the isiZulu Home date regression fixed first — 26 October 2026](2026-10-26/wave-23-recapture-claude.md).
 
 - [Site-report main integration — 25 October 2026](2026-10-25/site-report-main-integration-codex.md).
 
