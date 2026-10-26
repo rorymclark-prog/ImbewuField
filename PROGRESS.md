@@ -52,6 +52,23 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 26 Oct 2026 — Wave 26: Codex hand-offs closed after #1121 merged, its report screens checked
+- **Hand-offs:** `w23-02` — cohort income and cost totals are summed from the unrounded months, so the card and the
+  month-by-month chart both read R262 685 (was R262 686 on the chart). `w23-06` — farm report counts agree ("1 local
+  invoice", "1 entry has a future date"); three `tests/farm-report.test.ts` pins re-pinned to the agreeing wording.
+- **w26-03:** programme reports use a decimal comma for kilograms and percentages, like the money beside them.
+- **#1121 screens:** 24 click-path loads of the new comparison and donor-reference controls — clean —
+  `docs/audits/2026-10-26/wave-26-handoffs-claude.md` (`w26-01`…`w26-04`).
+
+### 26 Oct 2026 — Wave 25: forms filled and submitted, keyboard focus, offline
+- **Capture:** 48 form fills at phone and desktop, light English and dark isiZulu; the first 30 Tab stops on ten pages;
+  offline navigation with and without the service worker —
+  `docs/audits/2026-10-26/wave-25-forms-offline-keyboard-claude.md` (`w25-01`…`w25-07`).
+- **Fixed:** a practice-mode Contact send no longer says "Message sent — delivered" (`w25-01`); a label drawn over a
+  hidden input (the produce photo chooser) shows the focus ring (`w25-02`).
+- **Open:** offline ChunkLoadError on precached routes never opened in the current build (`w25-03`) and an offline-aware
+  error screen (`w25-04`) — Sonnet track, follows separately.
+
 ### 26 Oct 2026 — Wave 24: the screens behind clicks, mostly dark mode (swarm #1126–#1128)
 - **Interaction capture:** 35 click paths (drawer, settings, Lima chat, forms, every staff tab, a lesson, a crop
   price, a manual chapter) at phone and desktop, light English and dark isiZulu —

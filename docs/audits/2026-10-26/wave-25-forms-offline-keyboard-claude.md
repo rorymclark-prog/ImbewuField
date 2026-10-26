@@ -29,7 +29,11 @@
 
 ## Verification
 
-Filled in when the offline track lands and the fixed build is re-measured.
+`w25-01` and `w25-02` were re-measured on the fixed build (phone light, desktop dark). After a practice
+Send, /contact reads "Practice message kept" and "…is not sent yet", and no longer says "has been delivered".
+Tabbing to the hidden produce-photo input on /records now draws a 2px solid ring on its "Choose photo…" label.
+`tests/w25-forms-focus.test.ts` pins both. `w25-03` and `w25-04` (offline) ship separately with the Sonnet
+track and are re-measured there.
 
 ## Next continuation
 

@@ -41,11 +41,6 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '26 October 2026', sha: '72434e1e', changes: [
-    'The menu, field-visit form and crop prices are easy to read in dark mode.',
-    'Messages, the exchange form and Records links are clearer, in light and dark.',
-    'Lima no longer covers Next at the end of a manual chapter.',
-  ] },
   { when: '26 October 2026', sha: '12aee61ba', changes: [
     'Farm reports compare past months, seasons and years using your recorded entries.',
     'Visit, training and programme reports compare recorded delivery across periods.',
@@ -58,6 +53,13 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     where: 'Organisation → Reports → MEL evidence', href: '/ngo',
     detail: 'Compare milestone dates and review linked donor definitions and evidence.',
   }] },
+  { when: '26 October 2026', sha: '72434e1e', changes: [
+    'The menu, field-visit form and crop prices are easy to read in dark mode.',
+    'Messages, the exchange form and Records links are clearer, in light and dark.',
+    'Lima no longer covers Next at the end of a manual chapter.',
+    'A practice message on Contact now says it was kept on this device, not sent.',
+    'Report totals match their charts, and counts read "1 entry", not "1 entries".',
+  ] },
   { when: '26 October 2026', sha: '98c8a22e', changes: [
     'Home shows today\'s date in isiZulu again instead of placeholder words.',
   ] },
