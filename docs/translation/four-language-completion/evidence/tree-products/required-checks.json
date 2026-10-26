@@ -1,0 +1,55 @@
+{
+  "fullRun": {
+    "startedAt": "2026-10-26T05:00:11.878416+00:00",
+    "pid": 74529,
+    "base": "64b39585de1a52139991cbbf4b198c21ace84add",
+    "branch": "codex/four-language-tree-products",
+    "tmpdir": "/private/tmp/imbewufield-tree-product-checks-20261026-jua1812f",
+    "frozenInputs": 1770,
+    "registeredTestFiles": 573,
+    "commands": [
+      {
+        "name": "typecheck",
+        "command": [
+          "npx",
+          "tsc",
+          "--noEmit"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "test",
+        "command": [
+          "npm",
+          "test"
+        ],
+        "exitCode": 0
+      },
+      {
+        "name": "diff",
+        "command": [
+          "git",
+          "diff",
+          "--check"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "status": "passed",
+    "current": "diff",
+    "endedAt": "2026-10-26T06:07:45.747956+00:00",
+    "changedFrozenInputs": []
+  },
+  "result": {
+    "tests": 5869,
+    "pass": 5868,
+    "fail": 0,
+    "existingTodo": 1,
+    "registeredTestFiles": 573
+  },
+  "sourceCheckpoint": "64b39585de1a52139991cbbf4b198c21ace84add",
+  "deliveryFrozenInputsChecked": 1770,
+  "changedFrozenInputsAtDelivery": [],
+  "parentAlignment": "Merged legal delivery958743275 with all1770tested inputs byte-exact; new delivery proof and Markdown only.",
+  "review": "Unreviewed drafts; no fluent/agricultural/current-main/full-account/production approval."
+}

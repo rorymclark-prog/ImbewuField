@@ -1,0 +1,11 @@
+# Tree-product description delivery
+
+The required ordered local Node 24 run at source checkpoint `64b39585de1a52139991cbbf4b198c21ace84add` passed: typecheck 0, **5,868 pass / 0 fail / 1 existing shape-sync TODO / 5,869 total**, 573 registered test files, then whitespace check 0. All 1,770 frozen inputs remained unchanged during the run and remain byte-exact at delivery, including after the merge of legal delivery `958743275`. That merge and this delivery add proof and Markdown pointers only. No code change or repeated full run. See [required checks](required-checks.json) and [frozen input hashes](full-run-frozen-inputs.json.gz).
+
+This supersedes full-suite-pending status in the historical packet and runtime README. All 21 complete product descriptions / 22 typed plant bindings have 84 unreviewed drafts. All 1,444 parent registry rows remain exact; 1,465 combined. Source wording, species, model, selector, renderer and component code, food-use holds, figures, geometry and citations remain unchanged. Original English and unsupported-language output stays exact.
+
+Actual browser verification covers 176 expanded phone states before/after, 16 desktop states, eight English/unsupported controls and six switches. Complete supplied contexts remain exact; whole markup differs only by the complete typed product sentence. Zero callbacks or measured horizontal overflows. Root-exclusion and fresh/dried ginger phone views in all four languages, plus specialist desktop views, were inspected.
+
+Twelve actual PDFs contain 88 pages, 36,221 checked word bounds, 976 complete native guide clauses and all 88 product binding occurrences whole on a page. Both English control sets have identical pixels/text. All eight native contacts and eight enlarged actual clause pages were inspected. No overlap or cut-off observed. This changes the picture; PLAN_VERSION unchanged.
+
+These are unreviewed drafts, not whole-app completion or fluent/agricultural approval. Surrounding care, purchasing and supplementary research are separately scoped continuations. Final-head CI, current-main/full-account integration and production visual verification remain pending. No merge, deployment, paid call or real farmer record use.

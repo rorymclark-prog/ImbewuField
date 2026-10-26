@@ -19,3 +19,7 @@ Twelve actual PDFs /88 pages /36,221 bounds /976 complete native clauses pass; a
 [Evidence and limits](../../translation/four-language-completion/evidence/tree-products/README.md). Source fixture is immutable; negative checks reject omitted/truncated/English-fallback product conditions. No source species, lesson body, geometry, farming number, source URL, paid call, merge or deployment changes. This changes the picture; PLAN_VERSION unchanged.
 
 Next: required ordered full Node24 typecheck/test/diff run against frozen inputs, then new delivery proof, one finished push and stacked draft PR/attachment/ledger. Read both exact-head CI jobs. Whole-app goal remains active for remaining UI, guides, feedback, lessons/media, accessibility/errors, exports, current-main integration and review.
+
+## Verified local delivery continuation
+
+The ordered full run at64b39585d completed with typecheck0,5,868pass0fail1existingTODO/5,869total573files,diff0. All1,770 frozen inputs remain exact after legal parent delivery alignment. [Delivery proof](../../translation/four-language-completion/evidence/tree-products/DELIVERY.md) supersedes full-suite-pending language above. Final-head CI, current-main integration and fluent/agricultural review remain pending.
