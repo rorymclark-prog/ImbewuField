@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Animal choices, source links and month controls have new translation drafts.": "Dikgetho tsa diphoofolo, dihokelo tsa mehlodi le ditaolo tsa dikgwedi di na le meralo e metjha ya diphetolelo.",
+  "Animal reference headings and conditions now have clearer draft labels.": "Dihlooho le maemo a ditshupiso tsa diphoofolo jwale di na le mabitso a meralo a hlakileng ho feta.",
+  "Review animal choices and months": "Hlahloba dikgetho tsa diphoofolo le dikgwedi",
+  "Choose an animal, check its reference units, then review your confirmed months.": "Kgetha phoofolo, hlahloba diyuniti tsa ditshupiso tsa yona, ebe o hlahloba dikgwedi tseo o di netefaditseng.",
   "Review animal care drafts": "Hlahloba meralo ya tlhokomelo ya diphoofolo",
   "Choose an animal enterprise. Review care notes and open the English source.": "Kgetha kgwebo ya diphoofolo. Hlahloba dinoto tsa tlhokomelo mme o bule mohlodi wa Senyesemane.",
   "Animal care notes now have unreviewed translations in four languages.": "Dinoto tsa tlhokomelo ya diphoofolo jwale di na le diphetolelo tse eso hlahlojwe ka dipuo tse nne.",

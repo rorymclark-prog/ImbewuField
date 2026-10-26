@@ -1,0 +1,1062 @@
+[
+  {
+    "language": "zu",
+    "scenario": "bees-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "bees-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "bees-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "cattle-beef-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "cattle-beef-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "cattle-beef-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "cattle-dairy-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "cattle-dairy-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "cattle-dairy-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "chicken-broiler-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "chicken-broiler-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "chicken-broiler-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "chicken-indigenous-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "chicken-indigenous-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "chicken-indigenous-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "chicken-layer-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "chicken-layer-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "chicken-layer-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "duck-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "duck-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "duck-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "fish-tilapia-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "fish-tilapia-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "fish-tilapia-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "goat-dairy-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "goat-dairy-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "goat-dairy-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "goat-indigenous-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "goat-indigenous-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "goat-indigenous-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "goat-meat-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "goat-meat-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "goat-meat-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "pig-pork-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "pig-pork-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "pig-pork-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "rabbit-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "rabbit-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "rabbit-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "sheep-mutton-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "sheep-mutton-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "sheep-mutton-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "sheep-wool-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "sheep-wool-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "sheep-wool-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "unselected-chicken",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "unselected-goat",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "unselected-bee",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "unselected-rabbit",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "unselected-duck",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "unselected-pig",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "unselected-kraal",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "zu",
+    "scenario": "unselected-pond",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "bees-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "bees-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "bees-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "cattle-beef-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "cattle-beef-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "cattle-beef-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "cattle-dairy-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "cattle-dairy-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "cattle-dairy-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "chicken-broiler-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "chicken-broiler-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "chicken-broiler-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "chicken-indigenous-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "chicken-indigenous-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "chicken-indigenous-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "chicken-layer-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "chicken-layer-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "chicken-layer-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "duck-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "duck-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "duck-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "fish-tilapia-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "fish-tilapia-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "fish-tilapia-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "goat-dairy-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "goat-dairy-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "goat-dairy-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "goat-indigenous-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "goat-indigenous-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "goat-indigenous-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "goat-meat-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "goat-meat-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "goat-meat-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "pig-pork-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "pig-pork-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "pig-pork-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "rabbit-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "rabbit-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "rabbit-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "sheep-mutton-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "sheep-mutton-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "sheep-mutton-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "sheep-wool-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "sheep-wool-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "sheep-wool-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "unselected-chicken",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "unselected-goat",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "unselected-bee",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "unselected-rabbit",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "unselected-duck",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "unselected-pig",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "unselected-kraal",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "st",
+    "scenario": "unselected-pond",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "bees-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "bees-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "bees-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "cattle-beef-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "cattle-beef-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "cattle-beef-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "cattle-dairy-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "cattle-dairy-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "cattle-dairy-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "chicken-broiler-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "chicken-broiler-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "chicken-broiler-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "chicken-indigenous-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "chicken-indigenous-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "chicken-indigenous-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "chicken-layer-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "chicken-layer-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "chicken-layer-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "duck-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "duck-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "duck-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "fish-tilapia-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "fish-tilapia-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "fish-tilapia-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "goat-dairy-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "goat-dairy-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "goat-dairy-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "goat-indigenous-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "goat-indigenous-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "goat-indigenous-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "goat-meat-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "goat-meat-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "goat-meat-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "pig-pork-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "pig-pork-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "pig-pork-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "rabbit-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "rabbit-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "rabbit-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "sheep-mutton-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "sheep-mutton-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "sheep-mutton-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "sheep-wool-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "sheep-wool-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "sheep-wool-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "unselected-chicken",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "unselected-goat",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "unselected-bee",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "unselected-rabbit",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "unselected-duck",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "unselected-pig",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "unselected-kraal",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ts",
+    "scenario": "unselected-pond",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "bees-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "bees-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "bees-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "cattle-beef-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "cattle-beef-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "cattle-beef-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "cattle-dairy-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "cattle-dairy-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "cattle-dairy-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "chicken-broiler-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "chicken-broiler-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "chicken-broiler-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "chicken-indigenous-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "chicken-indigenous-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "chicken-indigenous-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "chicken-layer-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "chicken-layer-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "chicken-layer-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "duck-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "duck-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "duck-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "fish-tilapia-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "fish-tilapia-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "fish-tilapia-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "goat-dairy-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "goat-dairy-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "goat-dairy-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "goat-indigenous-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "goat-indigenous-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "goat-indigenous-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "goat-meat-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "goat-meat-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "goat-meat-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "pig-pork-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "pig-pork-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "pig-pork-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "rabbit-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "rabbit-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "rabbit-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "sheep-mutton-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "sheep-mutton-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "sheep-mutton-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "sheep-wool-existing",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "sheep-wool-proposed",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "sheep-wool-compact",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "unselected-chicken",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "unselected-goat",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "unselected-bee",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "unselected-rabbit",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "unselected-duck",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "unselected-pig",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "unselected-kraal",
+    "onlyNativeValueWrapChanged": true
+  },
+  {
+    "language": "ve",
+    "scenario": "unselected-pond",
+    "onlyNativeValueWrapChanged": true
+  }
+]

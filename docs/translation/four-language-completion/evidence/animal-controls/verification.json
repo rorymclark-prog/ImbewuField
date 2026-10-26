@@ -1,0 +1,110 @@
+{
+  "savedAt": "2026-10-26T00:48:53.733770+00:00",
+  "status": "Unreviewed drafts. Actual isolated component and current guide PDFs checked. Full ordered branch suite, live production/account route, integration and fluent review remain required.",
+  "base": "70cb1d26d18fbe281818fa9efe5bc1c94817a444",
+  "newSourceRows": 137,
+  "combinedRegistryRows": 1343,
+  "unchangedParentRows": 1206,
+  "originalEnterprises": 15,
+  "immutableOriginalScenarios": 53,
+  "nativePhoneStates": 212,
+  "nativeDesktopStates": 212,
+  "interactiveStates": 24,
+  "languageSwitchStates": 6,
+  "imageRechecks": 2,
+  "correctedPhoneOverflowCases": 16,
+  "onlyNativeValueStyleChanged": 212,
+  "currentTextOverflowCases": 0,
+  "browserLimit": "Two initial desktop IMG scroll-width observations in loaded-layout transition were retained and rechecked with identical criteria at zero overflow; no exclusion rule was added. Full backend/account/persistence is not exercised. Harness initialization first omitted SITE_PDF_COPY; the actual canonical dependency was then included without changing app code.",
+  "nativePhoneContactsInspected": 2,
+  "representativeFullDesktopScreenshotsInspected": 4,
+  "beforeAndAfterGoatValueScreenshotsInspected": true,
+  "PDFs": 12,
+  "PDFPages": 174,
+  "PDFWordBounds": 79447,
+  "completeGuideClauses": 1176,
+  "completeCareFieldOccurrences": 176,
+  "completeCareFieldsOnSinglePages": 176,
+  "completeLayerManagementParagraphsOnSinglePages": 4,
+  "nativePDFContactSheetsInspected": 8,
+  "nativeLayerPagesInspected": 4,
+  "EnglishControls": "Both original default-English guide sets retain identical pixels and extracted text. No English-guide data change.",
+  "remainingAuthoredGuidanceProse": 338,
+  "remainingClassificationCandidates": 3,
+  "remainingScope": "The authored-field inventory covers its original 801 tree/animal source clauses and units, not the whole app or all feed/water/space notes. No percentage or whole-card completion claim.",
+  "sourceCaptionCorrection": {
+    "beforeExamples": [
+      {
+        "id": "cattle-beef",
+        "caption": "Meat per cow",
+        "sourceOutputUnit": "kg weaning weight/calf",
+        "sourceValue": [
+          114.51,
+          121.21
+        ],
+        "sourceQualifier": "Live calf weaning weight from communal Nguni herds in Limpopo; not meat weight.",
+        "sourceNote": "Table 5 gives weaning weight (WW) across four agro-ecological zones for the same nine Nguni communal herds: arid 114.51 kg (lowest), semi-arid 119.98 kg, dry sub-humid 117.91 kg, humid 121.21 kg (highest). The range recorded here spans this one study's own arid-to-humid zone means; it is not merged with any other paper's weaning-weight figures (other SA studies report different ranges for different systems - e.g. research-station or stud herds - and were deliberately excluded to avoid mixing systems). 826 Nguni calves from nine herds that the paper itself says were 'kept under extensive grazing system' in Limpopo Province - a genuine communal/extensive veld system matching this enterprise."
+      },
+      {
+        "id": "duck",
+        "caption": "Meat per bird",
+        "sourceOutputUnit": "kg live weight/bird at slaughter",
+        "sourceValue": [
+          2.29,
+          2.93
+        ],
+        "sourceQualifier": "Non-South African study reference; live weight, not meat weight.",
+        "sourceNote": "Non-SA (Guyana study reporting a citation to Steklenev 1990); no SA-specific absolute slaughter live-weight figure was found (see gaps). 2.93 kg = Pekin at 8-10 weeks, 2.29 kg = Muscovy at 8-10 weeks - matches this enterprise's two breeds. The same LRRD paper's own experiment (Table 2, intensive system, Guyana) measured live weight at slaughter (8 weeks) as: Pekin drakes 2.53 kg, Pekin hens 2.29 kg, Muscovy drakes 2.47 kg, Muscovy hens 1.51 kg - broadly consistent with, but not merged into, the cited range above since it is a separate dataset/table in the same source. No sourced eggs/duck/year figure was found for either breed (see gaps); the LRRD and SAJAS sources used here studied ducks reared only for meat."
+      },
+      {
+        "id": "goat-meat",
+        "caption": "Meat per doe",
+        "sourceOutputUnit": "kids weaned/doe mated",
+        "sourceValue": [
+          1.49,
+          1.49
+        ],
+        "sourceQualifier": "Extensive Boer-goat reference for kids weaned; not meat weight.",
+        "sourceNote": "The reported weaning rate is 149%, or 1.49 kids weaned per doe mated. The source describes observations over twenty years for extensive Boer does at 295 mm rainfall; it does not state kids weaned per doe per calendar year. This is a reproductive outcome, not kg of live animals or dressed meat. A separate mean litter size of 1.93 kids born per parturition has a different denominator and stage and is not merged into this figure."
+      },
+      {
+        "id": "rabbit",
+        "caption": "Meat per doe",
+        "sourceOutputUnit": "young reaching slaughter/reproduction age/doe/year",
+        "sourceValue": [
+          30,
+          35
+        ],
+        "sourceQualifier": "FAO backyard-system reference; not a South African farm forecast.",
+        "sourceNote": "FAO general backyard target, not a South African observed rate. The 30–35 young per doe annually have reached slaughter or reproduction age after allowance for post-weaning loss; they are not merely weaned and are not kg of meat. The source models six litters and 5.5 surviving young per litter, describing a 30-rabbit objective; an extra litter raises its stated objective to 35. Do not combine this backyard target with grower-house carcass weight from a different trial."
+      },
+      {
+        "id": "sheep-mutton",
+        "caption": "Meat per ewe",
+        "sourceOutputUnit": "lambs born per ewe",
+        "sourceValue": [
+          0.61,
+          1.39
+        ],
+        "sourceQualifier": "Farmer-reported lambs born; not lambs weaned or meat weight.",
+        "sourceNote": "outputUnit is 'lambs born/ewe/year' rather than the suggested 'kg live weight/lamb at weaning or slaughter' or 'lambs weaned/ewe/year': the source explains 'Measuring accurate lambing percentages for smallholder sheep farmers is challenging as these farmers mostly farm extensively and do not keep records', and instead calculates 'Lambs born per ewe (as recorded from the surveys based on interviews with individual respondents)' - a lambing (born), not weaning, figure, self-reported by smallholder farmers rather than measured/weighed. 139%=1.39, 83%=0.83, 61%=0.61 lambs born/ewe/year; the range [0.61, 1.39] spans the three Western Cape smallholder districts surveyed (Eden, Central Karoo, West Coast), all from this one study/quote - not merged with any other document. The same paper separately states a COMMERCIAL extensive benchmark of 110-156% lambing and 94-132% weaning (Snyman & Herselman, 2005), explicitly 'expressed over ewes joined' (a different denominator/system) - not merged into this smallholder range."
+      }
+    ],
+    "after": "Production reference",
+    "reason": "Existing meat-enterprise headings call live calf/bird weights and offspring counts meat quantities, and some use a different denominator from the value. The source output unit and qualifier already state the measured reference. A neutral reference heading preserves all actual values, dimensions and source limitations without implying edible meat or a new per-cow denominator. All15cards use the same reference heading; no source data or number changes."
+  },
+  "measuredValueWrapping": {
+    "reason": "All 53 actual browser scenarios per native language at 390px: 12 isiZulu, 2 Sesotho and 2 Tshivenda states overflowed their value columns; Xitsonga had none. Long native compound/slash units are preserved and may wrap at any character. Default English and unknown-language style is unchanged.",
+    "beforeExample": {
+      "language": "zu",
+      "scenario": "goat-dairy-existing",
+      "clientWidth": 155,
+      "scrollWidth": 211
+    },
+    "status": "Correction applied; repeat browser verification pending.",
+    "scope": "Paint-only native Fact value wrapping; values, numbers, data, callbacks and PLAN_VERSION unchanged."
+  },
+  "defaultPreservation": "All53 original English and unsupported card states remain exact except the deliberate neutral Production reference heading. Source equations, units, notes, callbacks and model data remain guarded.",
+  "draftStatus": "Every native entry remains unreviewed; no fluent speaker or agricultural approval claimed.",
+  "fullSuite": "PENDING; do not publish or claim the batch fully verified yet."
+}

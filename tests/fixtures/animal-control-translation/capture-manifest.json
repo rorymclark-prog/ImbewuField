@@ -1,0 +1,10 @@
+{
+  "base": "70cb1d26d18fbe281818fa9efe5bc1c94817a444",
+  "sourceCount": 8,
+  "originalEnterprises": 15,
+  "uiCases": 53,
+  "languageCases": 318,
+  "compressedSha256": "aeac0c3d7b522a3ac09b558e3ebf1a08dd32344687fac943a2af58eefada5df8",
+  "uncompressedSha256": "0f8221c096e4c514667e9f857807ead832a5e5c4df4f6ef70953869f487fe8d6",
+  "scope": "Whole original53component scenarios across6language states, all15enterprise data objects, original1206translation rows and source modules captured before new control/qualifier/season/name drafts or caption correction. Existing/proposed/compact/unselected states use synthetic mapped structure counts and month identities."
+}

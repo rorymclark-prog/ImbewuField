@@ -1,0 +1,51 @@
+{
+  "startedAt": "2026-10-26T00:41:44.010049+00:00",
+  "tmpdir": "/private/tmp/imbewufield-animal-controls-focused-2tmdh8kp",
+  "commands": [
+    {
+      "name": "typecheck",
+      "command": [
+        "npx",
+        "tsc",
+        "--noEmit"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "focused",
+      "command": [
+        "node",
+        "--import",
+        "./tests/register-alias.mjs",
+        "--test",
+        "tests/animal-control-localization.test.ts",
+        "tests/animal-welfare-localization.test.ts",
+        "tests/guidance-localization.test.ts",
+        "tests/plan-note-localization.test.ts",
+        "tests/crop-screen-localization.test.ts",
+        "tests/crop-export-instruction-localization.test.ts",
+        "tests/update-notices-localization.test.ts",
+        "tests/update-tour.test.ts",
+        "tests/animal-enterprises.test.ts",
+        "tests/product-profile-localization.test.ts",
+        "tests/first-crop-localization.test.ts",
+        "tests/product-yield-localization.test.ts"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "endedAt": "2026-10-26T00:42:26.066527+00:00",
+  "pass": 174,
+  "fail": 0,
+  "testFiles": 12,
+  "scope": "Focused checks, not the required full branch suite."
+}

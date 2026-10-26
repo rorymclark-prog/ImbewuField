@@ -259,14 +259,46 @@ test('processor supply guidance does not promise year-round milk from every cow 
   assert.doesNotMatch(dairy.seasonalPattern?.text ?? '', /seasonal.*not viable.*SA dairy farmers|milk is produced continuously all year/i);
 });
 
-test('every numeric animal card exposes its full source conditions as well as the concise qualifier', () => {
+test('every numeric animal card exposes its full source conditions as well as the concise qualifier', async () => {
   const component = readFileSync(new URL('../components/crops/AnimalEnterprisesCard.tsx', import.meta.url), 'utf8');
+  // Localization wraps these arguments. Restore only its exact declared edits for
+  // the original wiring check, then verify the actual current Fact props below.
+  const controls = JSON.parse(readFileSync(new URL('../docs/translation/four-language-completion/animal-control-drafts.json', import.meta.url), 'utf8')) as {sourceChanges:Array<{before:string;after:string}>};
+  let originalWiring = component;
+  for (const edit of [...controls.sourceChanges].reverse()) originalWiring = originalWiring.replace(edit.after, edit.before);
   for (const field of RANGES) {
-    assert.ok(component.includes(`qualifier={animalReferenceQualifier(e, '${field}')}`), `${field}: essential conditions disappeared from the fact`);
-    assert.ok(component.includes(`note={e.${field}?.note}`), `${field}: the source calculation and scope disappeared`);
+    assert.ok(originalWiring.includes(`qualifier={animalReferenceQualifier(e, '${field}')}`), `${field}: essential conditions disappeared from the fact`);
+    assert.ok(originalWiring.includes(`note={e.${field}?.note}`), `${field}: the source calculation and scope disappeared`);
   }
   assert.match(component, /Where this number comes from/);
   assert.match(component, /Check the age, system and units/);
+  const React = await import('react'), {default:TestRenderer,act} = await import('react-test-renderer');
+  const {renderToStaticMarkup} = await import('react-dom/server');
+  const {animalControlPresenters} = await import('./helpers/animal-control-presenter.ts');
+  const {productGuideText} = await import('../lib/production-product-guidance.ts');
+  const covered = new Set<string>();
+  for (const language of ['en','zu','st','ts','ve']) {
+    const {EnterpriseFacts,Fact} = animalControlPresenters(component,language);
+    for (const e of records) {
+      let renderer:import('react-test-renderer').ReactTestRenderer;
+      act(()=>{renderer=TestRenderer.create(React.createElement(EnterpriseFacts,{e}));});
+      const facts=renderer!.root.findAllByType(Fact);
+      const html=renderToStaticMarkup(React.createElement(EnterpriseFacts,{e}));
+      for (const field of RANGES) {
+        const range=e[field];if(!range)continue;covered.add(field);
+        const qualifier=animalReferenceQualifier(e,field),expectedQualifier=qualifier?productGuideText(qualifier,language):undefined;
+        const expectedNote=range.note===undefined?undefined:productGuideText(range.note,language);
+        const fact=facts.find(node=>node.props.source===range.source&&node.props.qualifier===expectedQualifier&&node.props.note===expectedNote);
+        assert.ok(fact,`${e.enterpriseId}/${field}/${language}: the actual numeric Fact lost its complete note or qualifier`);
+        const requireConditions=(props:Record<string,unknown>)=>{assert.equal(props.qualifier,expectedQualifier);assert.equal(props.note,expectedNote);assert.deepEqual(props.source,range.source);};
+        requireConditions(fact.props);
+        if(expectedNote){const escaped=renderToStaticMarkup(React.createElement('span',null,expectedNote)).slice(6,-7);assert.ok(html.includes(escaped),'full calculation and scope must actually render in the source disclosure');assert.throws(()=>requireConditions({...fact.props,note:undefined}),'a concise qualifier and citation cannot replace the full source note');}
+        if(expectedQualifier)assert.throws(()=>requireConditions({...fact.props,qualifier:undefined}),'a full note hidden below cannot replace the condition beside the number');
+      }
+      act(()=>renderer!.unmount());
+    }
+  }
+  assert.deepEqual([...covered].sort(),[...RANGES].sort(),'each numeric fact kind needs actual sourced runtime coverage');
 });
 
 function withAnimalStorage(store: object, run: () => void, sample = false): void {

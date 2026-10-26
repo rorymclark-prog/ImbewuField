@@ -70,7 +70,7 @@ test('every original English guide, purchasing document and season decision stay
   }
 });
 
-test('declared profile, age and yield wording preserves safety holds, item order, seasons, sources, numbers and inventory',()=>{
+test('declared profile, age, yield and bound animal-care wording preserve safety holds, item order, seasons, sources, numbers and inventory',()=>{
   for(const c of fx.cases)for(const lang of languages){
     const context=fx.contexts[c.context],before=JSON.stringify(context),guide=buildProductGuidance(context,c.zones,c.conditions,lang);
     const expected=structuredClone(c.guide);
@@ -189,5 +189,19 @@ test('translated guide seasons still reject changed months, citations, missing c
   const row=fx.cases.find((row:any)=>row.guide.foodForest.some((item:any)=>item.expectedSeason));assert.ok(row);const index=row.guide.foodForest.findIndex((item:any)=>item.expectedSeason),group=fx.contexts[row.context].trees[index],source=row.guide.foodForest[index].expectedSeason;
   for(const lang of languages){const actual=buildProductGuidance(fx.contexts[row.context],row.zones,row.conditions,lang).foodForest[index].expectedSeason!,expected=translatedSeasonExpectation(source,group,lang)!;assert.deepEqual(actual,expected);
     for(const broken of [{...actual,months:[...actual.months,0]},{...actual,source:{...actual.source!,url:'https://example.com/wrong-source'}},{...actual,basis:actual.basis.split('.')[0]},{...actual,label:source.label,calendarLabel:source.label}])assert.throws(()=>assert.deepEqual(broken,expected),/Expected values/,'the source-preservation rule must still fail when a reference decision or complete caution changes');
+  }
+});
+
+
+test('the whole-guide comparison rejects untranslated care, reordered limits, lost conditions and changed citations',()=>{
+  const care=JSON.parse(read('docs/translation/four-language-completion/animal-welfare-drafts.json')).rows as Array<Record<string,string>>;
+  for(const language of languages){
+    const c=fx.cases.find((c:any)=>c.guide.animalProducts.some((item:any)=>item.lines.some((line:string)=>line.startsWith('When pigs are trucked,'))));assert.ok(c,'the immutable profile scenarios must retain the pig transport recommendation');
+    const original=structuredClone(c.guide),expected=structuredClone(c.guide),context=fx.contexts[c.context];translateAdditionalProductPresentation(expected,original,context,language);
+    const row=care.find(row=>row.english.startsWith('When pigs are trucked,'))!;assert.ok(row);const itemIndex=expected.animalProducts.findIndex((item:any)=>item.lines.includes(row[language]));assert.ok(itemIndex>=0);const lineIndex=expected.animalProducts[itemIndex].lines.indexOf(row[language]);
+    const sameGuide=(candidate:typeof expected)=>assert.deepEqual(candidate,expected);
+    for(const damaged of [row.english,row[language].slice(0,-12),row[language].replace('0.3','__first__').replace('0.8','0.3').replace('__first__','0.8')]){const broken=structuredClone(expected);broken.animalProducts[itemIndex].lines[lineIndex]=damaged;assert.throws(()=>sameGuide(broken),'complete care text and ordered limits must survive beyond their headings');}
+    const source=structuredClone(expected);assert.ok(source.animalProducts[itemIndex].sources.length);source.animalProducts[itemIndex].sources[0].url='https://example.com/changed-care-source';assert.throws(()=>sameGuide(source),'all source objects remain in the whole-guide comparison');
+    const missing=structuredClone(expected);missing.animalProducts[itemIndex].lines.splice(lineIndex,1);assert.throws(()=>sameGuide(missing),'removing a whole condition must fail even when remaining values are unchanged');
   }
 });

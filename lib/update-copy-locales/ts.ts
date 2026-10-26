@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Animal choices, source links and month controls have new translation drafts.": "Swihlawuriwa swa swifuwo, swihlanganisi swa swihlovo ni swilawuri swa tin’hweti swi ni tindzimana tintshwa ta vuhundzuluxeri.",
+  "Animal reference headings and conditions now have clearer draft labels.": "Tinhlokomhaka ni swiyimo swa swikombo swa swifuwo sweswi swi ni malebulu ya tindzimana lama nga erivaleni ku tlurisa.",
+  "Review animal choices and months": "Kambela swihlawuriwa swa swifuwo ni tin’hweti",
+  "Choose an animal, check its reference units, then review your confirmed months.": "Hlawula xifuwo, kambela tiyuniti ta swikombo swa xona, kutani u kambela tin’hweti leti u ti tiyisiseke.",
   "Review animal care drafts": "Kambela tindzimana ta nhlayiseko wa swifuwo",
   "Choose an animal enterprise. Review care notes and open the English source.": "Hlawula bindzu ra swifuwo. Kambela tinotsi ta nhlayiseko kutani u pfula xihlovo xa Xinghezi.",
   "Animal care notes now have unreviewed translations in four languages.": "Tinotsi ta nhlayiseko wa swifuwo sweswi ti ni vuhundzuluxeri bya tindzimi ta mune leswi nga si kamberiwaka.",
