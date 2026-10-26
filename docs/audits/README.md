@@ -62,6 +62,7 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Wave 25 forms, offline and keyboard capture: w25-01 to w25-07, practice-mode contact copy, hidden-input focus, offline ChunkLoadError on unvisited routes — 26 October 2026](2026-10-26/wave-25-forms-offline-keyboard-claude.md).
 - [Wave 24 interaction capture behind clicks (drawer, forms, tabs, chat): w24-01 to w24-11, mostly dark-mode colours never seen on the dark page — 26 October 2026](2026-10-26/wave-24-interaction-claude.md).
 - [Wave 23 rendered re-capture of the live build 98c8a22 and the new report workspaces: w23-01 to w23-07, the isiZulu Home date regression fixed first — 26 October 2026](2026-10-26/wave-23-recapture-claude.md).
 - [Wave 22 rendered re-capture of the live build 8d2e1a9: w22-01 to w22-10, hydration errors on /home and /invoice, Lima clearance, weather card — 25 October 2026](2026-10-25/wave-22-recapture-claude.md).
