@@ -483,6 +483,9 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved
   const [challenges, setChallenges] = useState<string[]>(existing?.challenges ?? []);
   const [isCommercial, setIsCommercial] = useState(existing?.isCommercial ?? false);
   const [marketType, setMarketType] = useState(existing?.marketType ?? '');
+  const [marketNotes, setMarketNotes] = useState(existing?.marketEvidence?.notes ?? '');
+  const [marketSource, setMarketSource] = useState(existing?.marketEvidence?.source ?? '');
+  const [marketObservedOn, setMarketObservedOn] = useState(existing?.marketEvidence?.observedOn ?? '');
   const [notes, setNotes] = useState(existing?.notes ?? '');
 
   const totalRoof = (Number(roofMain) || 0) + (Number(roofSecondary) || 0);
@@ -521,6 +524,8 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved
       challenges,
       isCommercial,
       marketType: isCommercial ? marketType : undefined,
+      marketEvidence: marketNotes || marketSource || marketObservedOn
+        ? { notes: marketNotes, source: marketSource, observedOn: marketObservedOn } : undefined,
       reportedProduction: reportedProduction.filter((row) =>
         !!row.name || !!row.unit || row.quantityPerYear !== null || row.usedByHousehold !== null
         || row.sold !== null || row.incomeZar !== null || (row.harvestMonths?.length ?? 0) > 0
@@ -1161,6 +1166,23 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved
                 </div>
               </div>
             )}
+            <details className={styles.marketEvidence} lang="en">
+              <summary>Local market notes (optional){lang !== 'en' ? ' · English' : ''}</summary>
+              <p>Record what you found out about selling. Leave unknown details blank. These notes help the report show what still needs checking.</p>
+              <label>
+                What did you learn?
+                <textarea value={marketNotes} maxLength={2000} rows={4} onChange={event => setMarketNotes(event.target.value)} placeholder="Product, buyer or outlet, quantity and unit, price and date, transport or other conditions" />
+              </label>
+              <label>
+                Where did this information come from?
+                <input value={marketSource} maxLength={240} onChange={event => setMarketSource(event.target.value)} placeholder="For example: a buyer discussion, market visit or document reference" />
+              </label>
+              <label>
+                When did you observe or discuss it?
+                <input type="date" value={marketObservedOn} onChange={event => setMarketObservedOn(event.target.value)} />
+              </label>
+              <p>A note is not a confirmed sale. Check the details again before spending money to supply a buyer.</p>
+            </details>
             <div className="font-sans" style={{ padding: '12px 14px', borderRadius: 12, background: 'rgba(31,77,43,0.06)', color: 'var(--text-2)', fontSize: 12.5, lineHeight: 1.5 }}>
               {paired('surveyIncomeSalesNote', 'You can record what was sold and income earned against each item in the Current Production step.')}
             </div>

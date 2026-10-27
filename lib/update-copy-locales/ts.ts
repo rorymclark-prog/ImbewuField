@@ -149,5 +149,7 @@ const copy:UpdateCopy={
   "Open Design Studio": "Pfula Ndhawu ya ku dizayina",
   "Menu → Design Studio": "Menyu → Ndhawu ya ku dizayina",
   "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Pfula Xivoni xo sungula ni ku rhumela, kutani u hlawula Pulani ya rhekhodo ku kuma dayagiremu leyi pimiweke ni nhlamuselo ya yona.",
+  "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Tinotsi ta makete ti hlayisa xihlovo ni siku ra tona. Tipulani to xavisa ti tshama ti hambanile ni ku xavisa loku rhekhodiweke.",
+  "Full report headers keep unsourced soil values unknown.": "Tinhloko ta xiviko lexi heleleke ti hlayisa mimpimo ya misava leyi nga riki na xihlovo yi nga tiveki.",
 };
 export default copy;

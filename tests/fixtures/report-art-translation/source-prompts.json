@@ -2,75 +2,76 @@
   "sourceSha": "09b280efe5a7be82674af79dce70f238b7b07b1b",
   "prompts": [
     {
-      "sha256": "d44a77ce8df066e961f767864ce14e62eca37bc8149e37b3c310ca1818494b66",
+      "sha256": "4faa05c9f215e70be8c82e041088f8c767f7a355f0d4c73ba172d9996090ff79",
       "headings": [
         "Executive Summary",
         "Site Conditions"
       ]
     },
     {
-      "sha256": "58c6199c1baab03255be9c8d682c34b24e1e36226862611a5cd2322fd2e85c99",
+      "sha256": "cad4ca5d2dd059063df7b51941ce6fb426f108f7bb8dbd69beed60e727090014",
       "headings": [
         "Natural Vegetation & Biome",
         "Water Harvesting Design"
       ]
     },
     {
-      "sha256": "272c474a4f2ce311f91d989a6ad6b3dccf83aa747ba9fcee0d5ffe939b1d80c4",
+      "sha256": "f5f3c6927028785d0cd9def0fcac030db4bbe26cf0ddbeb7c5853f9249077ebe",
       "headings": [
         "Soil Building Plan",
         "Irrigation Plan — How Much Water You Need"
       ]
     },
     {
-      "sha256": "f14c35701c976f5965abc4d39ba35d23ae11c0cef26c2f8de86416837b5cdd4f",
+      "sha256": "bcc003c1550eee8ee35880c3a3771e3f6ba1ada4310b16842c3eb3a60d222f1f",
       "headings": [
         "Seasonal Planting Guidance",
         "All-Year-Round Food Production"
       ]
     },
     {
-      "sha256": "e20e424e166e7b24364e167a78d8672fecdb6f631240c2875795ef4c4147ea55",
+      "sha256": "6125c1c6e8b3e10089af2a50d1698211a32510bd3b2c80785a8b0c97af603849",
       "headings": [
         "Suitable Plants for This Site",
         "Crop Rotation Plan"
       ]
     },
     {
-      "sha256": "5a3b049da016cc17553d2c0868ed7e2aac0311c8caf32a1d5cdb86a5c51d9b36",
+      "sha256": "68462089dcf0c74b9af81160b6606406fa76a1a51e44ee1e558b3f2b7294bee4",
       "headings": [
         "Animals & Livestock",
         "Sun & Solar"
       ]
     },
     {
-      "sha256": "067177ad32763fbd3ebc38b2099d5659f3449050c3e15b19c8e2af7cd88cdd06",
+      "sha256": "9a3c729299b8841c572ce8aff4be55841a9352bf2adeb4b08157a0fa05bfb283",
       "headings": [
         "Wind & Windbreaks",
         "Fire Risk & Other Hazards"
       ]
     },
     {
-      "sha256": "049079b768f34c381c3ed20bd75b15970ee621599ae3eaab4368fe560a6f6861",
+      "sha256": "b4b291b9c3ab700dc7a268610dadb1b7d02a18310f491232c3e065e63a29d68c",
       "headings": [
         "Economic Opportunities",
         "Plant Guilds"
       ]
     },
     {
-      "sha256": "79203ab4c81f800c27c0945e763a8c3580c20871f915c884500dbb12be6290d9",
+      "sha256": "e9d9d997ca9de19e219ab2b2841ef9d3d15050dfbb79871a985032d21c9c9759",
       "headings": [
         "Zone Design",
         "Seasonal Action Calendar"
       ]
     },
     {
-      "sha256": "dd86400aa47b9acfd99f04bced5cca0cbb9ba074a4500d38c6a54780e71d9c17",
+      "sha256": "8908189c4856d49243e8a37169f897e8ba75238d260d3cee276a9301ac62fdb9",
       "headings": [
         "5-Year Vision",
         "Year 1 Priorities"
       ]
     }
   ],
-  "sitePurposeRepin": "#1099 adds the report-purpose instruction (default Complete site plan) to each English prompt. Diffed against main 55526909, whose dump reproduced every earlier pin: that instruction and a blank line are the only change in all ten prompts."
+  "sitePurposeRepin": "#1099 adds the report-purpose instruction (default Complete site plan) to each English prompt. Diffed against main 55526909, whose dump reproduced every earlier pin: that instruction and a blank line are the only change in all ten prompts.",
+  "marketEvidenceRepin": "#1101 adds the LOCAL MARKET EVIDENCE block to each English prompt and replaces the local-economy guidance so market gaps, prices and buyers are investigated, not asserted. Diffed against the integrated #1099 prompts, whose dump reproduced every earlier pin; those are the only changes."
 }

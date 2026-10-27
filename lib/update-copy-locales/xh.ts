@@ -150,5 +150,7 @@ const copy:UpdateCopy={
   "Open Design Studio": "Vula isitudiyo soyilo",
   "Menu → Design Studio": "Imenyu → Isitudiyo soyilo",
   "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Vula Jonga & thumela ngaphandle, emva koko Isicwangciso seerekhodi ukuze ufumane umzobo okalwe ngesikali nenkcazelo yeempawu zawo.",
+  "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Amanqaku emarike agcina umthombo nomhla wawo. Izicwangciso zokuthengisa zihlala zahlukile kwiintengiso ezirekhodiweyo.",
+  "Full report headers keep unsourced soil values unknown.": "Iintloko zengxelo epheleleyo zigcina amaxabiso omhlaba angenamthombo njengangaziwayo.",
 };
 export default copy;

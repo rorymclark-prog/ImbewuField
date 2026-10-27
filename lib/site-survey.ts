@@ -4,6 +4,7 @@ import { loadPlaces } from './saved-places';
 import { canonicalCoordinateSiteId, coordinateSiteIdParts } from './site-id';
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import { inlineText } from './xh-inline';
+import { normaliseMarketEvidence, marketEvidencePromptBlock, type MarketEvidence } from './report-site-facts';
 
 // The FAO Household Dietary Diversity Score uses these twelve food groups. This is a count of
 // reported groups, never a made-up nutrition score or an estimate of what a household eats.
@@ -151,6 +152,7 @@ export interface SiteSurvey {
   challenges: string[];
   isCommercial: boolean;
   marketType?: string;      // 'farm-stall' | 'local-market' | 'wholesale' | 'not-sure'
+  marketEvidence?: MarketEvidence;
 
   // Farmer-reported production, not a modelled yield. All row values are optional: a blank egg
   // count or income must remain blank rather than becoming a false zero in a funder report.
@@ -317,6 +319,7 @@ function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
     challenges: stringArray(row.challenges),
     isCommercial: row.isCommercial === true,
     marketType: stringValue(row.marketType) || undefined,
+    marketEvidence: normaliseMarketEvidence(row.marketEvidence),
     reportedProduction: normaliseReportedProduction(row.reportedProduction),
     productionYear: typeof row.productionYear === 'number'
       && Number.isInteger(row.productionYear)
@@ -330,7 +333,7 @@ function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
   };
 }
 
-export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string {
+export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number, includeMarketEvidence = true): string {
   // Reports are a public boundary for long-lived browser data. Normalise again
   // even though load/save do it, because API callers can pass decoded JSON directly.
   s = normaliseSurvey(s, stringValue(s?.siteId) || 'site:unknown')
@@ -466,10 +469,14 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string 
   lines.push(`Farming practice: ${s.farmingPractice || 'not specified'}`);
   lines.push(`Main challenges: ${s.challenges.length ? s.challenges.join(', ') : 'none highlighted'}`);
   if (s.isCommercial) {
-    lines.push(`Selling produce: Yes — ${s.marketType ?? 'market type not specified'}`);
+    lines.push(`Selling or planning to sell produce: Yes — ${s.marketType ?? 'market type not specified'}`);
   } else {
-    lines.push(`Selling produce: No (household / community use)`);
+    lines.push('Selling or planning to sell produce: Not selected in the saved survey.');
   }
+  // This toggle combines present activity with future intent; neither state proves a sale.
+  lines.push('This combined answer does not establish actual sales, buyer demand or income. Use separately supplied sales or production records, retaining their dates/year, source and uncertainty. If no such records were supplied, actual sales and income are not recorded.');
+
+  if (includeMarketEvidence) lines.push('', marketEvidencePromptBlock(s.marketEvidence));
 
   if (s.notes) {
     lines.push('');
@@ -587,6 +594,11 @@ export function readSurveyDraft(scope: string): { draft: SiteSurveyDraft | null;
       || !draft.inputs || !inputs.every(k => typeof draft.inputs[k] === 'string')
       || !['short', 'full'].includes(draft.mode) || !Number.isInteger(draft.step) || draft.step < 0 || draft.step > 7
       || typeof draft.started !== 'boolean' || typeof draft.baseRevision !== 'string'
+      || (a.marketEvidence !== undefined && (!a.marketEvidence || typeof a.marketEvidence !== 'object' || Array.isArray(a.marketEvidence)
+        || !['notes', 'source', 'observedOn'].every(k => {
+          const value = a.marketEvidence![k as keyof MarketEvidence];
+          return value === undefined || typeof value === 'string';
+        })))
       || (a.reportedProduction !== undefined && (!Array.isArray(a.reportedProduction) || !a.reportedProduction.every(row =>
         row && PRODUCTION_CATEGORIES.includes(row.category) && typeof row.unit === 'string'
         && (row.name === undefined || typeof row.name === 'string')

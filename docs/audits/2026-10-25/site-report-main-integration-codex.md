@@ -42,6 +42,51 @@ the latest PR/issue #35 status before merging. Fluent review, physical devices,
 current buyer/field evidence and generated narrative quality retain their recorded
 limits. Both PRs remain for review in the order #1099, then #1101.
 
+## Stacked #1101 integration checkpoint
+
+The market-evidence branch now carries prerequisite `0a08ccc57`, including main
+`8d2e1a9aa`. Its remaining conflicts were audit/progress ordering and the release
+entry: retain the current date/stamp and both market/soil messages. The latest
+audit index points to this integration while preserving the earlier verification
+record as a checkpoint of its own source revision.
+
+On the combined #1101 tree, `npx tsc --noEmit` is clean and **233 focused checks
+pass, zero fail**. The survey, report view, market/soil fact handling, report
+summary and calendar/PDF modules are byte-for-byte unchanged from `3d8183efc`;
+this integration carries newer main UI and the archive-heading reconciliation.
+No new farming interpretation or source numbers are introduced. The release
+stamp follows the same reachable-integration-commit rule before one branch push.
+
+Full CI is being run on both final integration heads. Read both test and rules
+jobs, the new preview and the final issue #35 handover before merge; the old-source
+5,489-pass run alone does not certify this new combined tree. Previous real-site,
+PDF and deployed-form evidence retains the exact scope and limits in its dated
+records. No production merge or fluent/field/device sign-off is implied.
+
+## SS-010 follow-up: selling intent is not a recorded sale
+
+The final source review found one remaining contradiction: the questionnaire's
+combined “sell or plan to sell” toggle still became “Selling produce: Yes” in
+`surveyToPrompt`. The original real Ubhejane assessment already explains why that
+combined flag cannot establish actual sales. The prompt now preserves the combined
+meaning, labels an unselected option as unselected rather than inferring household
+use, and requires separate sales/production records with their dates/year, source
+and uncertainty before describing achieved sales or income.
+
+A new regression check was run against the old implementation and failed on that
+exact unsupported claim. The correction applies to both report purposes and to
+the API's survey prompt even when the separate market-source block is suppressed.
+Existing saved report text and farmer records are retained. This later correction
+changes only the commercial-answer wording in the survey prompt; the earlier
+byte-identity statement describes the preceding integration checkpoint.
+
+The release note is stamped with reachable parent `094fa743e`; the existing
+one-commit drift rule remains intact. `npx tsc --noEmit` is clean and 234 focused checks pass, zero fail. Release
+drift and whitespace checks accompany this correction. #1099 is unchanged and
+its running CI remains applicable. #1101 receives fresh final CI after the single
+finished correction push. No new field evidence, actual sales, paid narrative,
+visual layout change, species, farming figures or geometry is claimed.
+
 ## Wave 22 integration after completed CI
 
 The four full CI runs on the preceding integrated sources completed successfully.
@@ -69,3 +114,18 @@ On the refreshed #1099 tree, typecheck is clean and **315 focused report,
 survey, production, readability, release and waves 19–22 checks pass, zero fail**.
 Whitespace is clean. Full CI and the combined preview are checked after the one
 finished push; previous rendered report/PDF evidence retains its scope.
+
+### Refreshed stacked branch
+
+#1101 now carries prerequisite `61b110d47` and main `cfb75437c`. Its manual
+conflicts are confined to this audit, the index, progress and release entries.
+Both market/soil notes and the wave-22 messages/tours are retained. The core
+survey/report modules remain byte-for-byte unchanged from `4b88d5559`; the
+commercial-intent correction and captured market/soil evidence remain intact.
+Typecheck is clean; **323 focused checks pass, zero fail**; whitespace is clean.
+The release stamp points to the reachable integration commit before the single
+finished branch push. Check the final CI and preview on these new heads. The
+older full runs above remain immutable checkpoints, not evidence of the new
+combined tree. Record the final results in the PR/issue handover without another
+repository documentation-only push. Existing field/language/device and newly
+generated narrative limits still apply.

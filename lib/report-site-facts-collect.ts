@@ -39,6 +39,7 @@ import { readLocalFarmShapes } from '@/lib/map-sync';
 import { loadWaterPoints, type WaterPoint } from '@/lib/water-points';
 import { loadCropPlan, type CropPlanState } from '@/lib/crop-plan';
 import { cropByKey, MONTHS_SHORT } from '@/lib/crop-catalog';
+import { normaliseMarketEvidence } from './report-site-facts';
 import type {
   FactElementGroup,
   FactTank,
@@ -177,6 +178,10 @@ export interface CollectFactsInput {
  */
 export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFacts {
   const facts: ReportSiteFacts = {};
+  try {
+    const evidence = normaliseMarketEvidence(loadSurvey(input.siteId)?.marketEvidence);
+    if (evidence) facts.marketEvidence = evidence;
+  } catch { /* Missing saved answers must not become inferred market evidence. */ }
   if (input.farmName?.trim()) facts.farmName = input.farmName.trim();
 
   const canvas = input.canvas;

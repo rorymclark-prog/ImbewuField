@@ -65,3 +65,15 @@ test('short reports acknowledge orchard and animal products without claiming har
   assert.match(page, /Honeybee/); assert.match(page, /Dec 2026 to Nov 2027/);
   assert.match(page, /not recorded harvests or animal counts/); assert.equal(JSON.stringify(facts),before);
 });
+
+test('the field guide carries reported market notes and source dates without making them verified demand', async () => {
+  const { reportSummaryPages } = await import('../lib/report-summary.ts');
+  const facts = { marketEvidence: { notes: 'Possible outlet; terms unknown', source: 'Farmer discussion', observedOn: '2026-09-14' } };
+  const page = reportSummaryPages(facts, DEMO_LOCATION, 5)[4].lines.join('\n');
+  assert.match(page, /Possible outlet; terms unknown/);
+  assert.match(page, /Farmer discussion/);
+  assert.match(page, /2026-09-14/);
+  assert.match(page, /not independently verified demand/);
+  assert.match(reportSummaryPages(null, DEMO_LOCATION, 5)[4].lines.join('\n'), /buyer demand and prices are not recorded/);
+  assert.match(reportSummaryPages(facts, DEMO_LOCATION, 5, 'zu')[4].lines.join('\n'), /English notes/);
+});

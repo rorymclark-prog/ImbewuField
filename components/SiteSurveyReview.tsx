@@ -64,7 +64,13 @@ export default function SiteSurveyReview({ survey:s, onEdit, onEditProduction, p
       [t('surveyExistingGrowingAreaLabel'),area(s.existingGrowingAreaM2),s.existingGrowingAreaM2===null?'':t(s.existingGrowingAreaSource==='auto'?'surveySourceMap':'surveySourceFarmer')],
     ]},
     {step:3,Icon:Sprout,title:t('surveyStepLivestockPoultry'),rows:[[t('sectionLivestock'),list(s.livestock)],[t('sectionOtherInfrastructure'),list(s.otherInfra)]]},
-    {step:4,Icon:Users,title:t('surveyStepIncomeSales'),rows:[[t('toggleSellProduceLabel'),t(s.isCommercial?'surveyAnswerYes':'surveyAnswerNo')],[t('sectionCurrentOrTargetMarket'),s.isCommercial?list(s.marketType?[s.marketType]:[]):t('surveyNotApplicable')]]},
+    {step:4,Icon:Users,title:t('surveyStepIncomeSales'),rows:[
+      [t('toggleSellProduceLabel'),t(s.isCommercial?'surveyAnswerYes':'surveyAnswerNo')],
+      [t('sectionCurrentOrTargetMarket'),s.isCommercial?list(s.marketType?[s.marketType]:[]):t('surveyNotApplicable')],
+      [`Local market notes${lang !== 'en' ? ' (English)' : ''}`,s.marketEvidence?.notes||unknown,'Farmer-reported; confirm before planning sales'],
+      [`Market source${lang !== 'en' ? ' (English)' : ''}`,s.marketEvidence?.source||unknown],
+      [`Market observation date${lang !== 'en' ? ' (English)' : ''}`,s.marketEvidence?.observedOn||unknown],
+    ]},
     {step:5,Icon:Droplets,title:t('surveyStepResourcesInputs'),rows:[
       [t('sectionWaterSources'),list(s.waterSource)],
       [t('sectionHowDoesWaterReachPlants'),list(s.waterDelivery)],
