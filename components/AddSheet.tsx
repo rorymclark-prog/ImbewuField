@@ -16,6 +16,7 @@ import {
   ADD_ACTIONS, ADD_GROUP_ORDER, ADD_GROUP_LABEL_KEYS, SIMPLE_ADD_ACTION_IDS, runsOnSurface,
   type AddAction,
 } from '@/lib/add-actions';
+import { useEscapeClose } from '@/lib/use-escape-close';
 
 export interface AddSheetProps {
   open: boolean;
@@ -38,12 +39,7 @@ export default function AddSheet({ open, surface, onClose, onPick, simple }: Add
   useEffect(() => { setMounted(true); }, []);
 
   // Close on Escape while open.
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [open, onClose]);
+  useEscapeClose(open, onClose);
 
   // Hydration-safe: paint nothing new on the server / before mount.
   // ABOVE THE EARLY RETURN. Hooks cannot be called conditionally — placing this after the

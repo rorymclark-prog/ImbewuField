@@ -8,6 +8,7 @@ import { getGroupCount, type EvidenceItem } from '@/lib/site-evidence';
 import EvidenceSheet from './EvidenceSheet';
 import type { EvidenceCatalogueGroup, EvidenceCatalogueItem } from '@/lib/evidence-catalogue';
 import { useLanguage } from '@/lib/i18n';
+import { useEscapeClose } from '@/lib/use-escape-close';
 
 interface Props {
   siteId: string;
@@ -28,11 +29,7 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
   }
 
   // Close on Escape — matches every other bottom sheet in the app (AddSheet, ThemePanel, etc).
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [onClose]);
+  useEscapeClose(true, onClose);
 
   return (
     <>

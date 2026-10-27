@@ -120,3 +120,19 @@ test('the Lima launcher opens from the keyboard and gets focus back on close (w2
   assert.match(src, /ref=\{fabRef\}/);
   assert.match(src, /if \(!opener\?\.isConnected \|\| opener === document\.body\) openerRef\.current = fabRef\.current;/);
 });
+
+test('Escape closes overlays through one stable listener (w28-06)', () => {
+  const hook = readFileSync(new URL('../lib/use-escape-close.ts', import.meta.url), 'utf8');
+  // Keyed on open only: a listener re-created mid-keydown (onClose in the deps) is skipped by the browser.
+  assert.match(hook, /\}, \[open\]\);/);
+  assert.match(hook, /onCloseRef\.current\(\)/);
+  for (const f of [
+    'components/AddSheet.tsx', 'components/EvidenceCatalogue.tsx', 'components/EvidenceSheet.tsx',
+    'components/ProfileSheet.tsx', 'components/design/BasePhotoImport.tsx', 'components/journal/JournalEntrySheet.tsx',
+    'components/ThemePanel.tsx', 'components/NavDrawer.tsx',
+  ]) {
+    const src = readFileSync(new URL(`../${f}`, import.meta.url), 'utf8');
+    assert.match(src, /useEscapeClose\((open|true), onClose\)/, f);
+    assert.doesNotMatch(src, /e\.key === 'Escape'\) onClose\(\)/, `${f} still has its own Escape listener keyed on onClose`);
+  }
+});

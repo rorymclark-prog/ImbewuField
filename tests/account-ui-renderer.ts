@@ -48,6 +48,7 @@ export async function actualAccountUi(initial:ControlLanguage,options:AccountUiO
  };
  scope.LanguageDraftNote=compile('components/LanguageDraftNote.tsx','LanguageDraftNote',scope);
   scope.useDialogFocus=(open:boolean)=>{if(open)calls.focus++;};
+  scope.useEscapeClose=()=>{};
  scope.AccountErrorText=compile('components/AccountErrorText.tsx','AccountErrorText',scope);
  scope.ConsentPanel=compile('components/ConsentPanel.tsx','ConsentPanel',scope);
  scope.AccountAccess=compile('components/AccountAccess.tsx','AccountAccess',scope);

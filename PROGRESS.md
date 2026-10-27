@@ -60,6 +60,9 @@ must provision — not buildable from code alone).
 - **Lima launcher (`w28-05`):** Enter and Space now open Lima (the draggable button only listened to pointer events), and
   closing returns focus to the launcher — checked at 390 light English and 1280 dark isiZulu —
   `docs/audits/2026-10-27/wave-28-dialog-focus-claude.md`. DesignGlossy and crop screens stay with Codex.
+- **Escape on the Add sheet (`w28-06`, also live):** it did nothing — /farmer's own Escape listener re-rendered the page
+  mid-keydown and the sheet's listener was swapped out before it ran. `lib/use-escape-close.ts` keeps one listener per
+  open; eight overlays use it.
 
 - **2026-10-26 — Stacked site-report compatibility (Codex).** #1101 carries prerequisite `6bf5396b4` and current main `201d57f5f`; market/date/soil and selling-intent code is unchanged from `9ddf7d399`. Typecheck clean, 439 focused checks pass, whitespace clean. [Current audit and verification scope](docs/audits/2026-10-26/site-report-role-integration-codex.md). Fresh full CI/preview is required; older green runs remain source-specific checkpoints.
 

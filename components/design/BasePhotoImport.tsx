@@ -26,6 +26,7 @@ import { uploadPhoto } from '@/lib/db/queries';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
 import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
+import { useEscapeClose } from '@/lib/use-escape-close';
 
 const PAPER = '#FFFEFA';
 const GOLD = '#F7C97E';
@@ -102,11 +103,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   useDialogFocus(true, dialogRef);
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [onClose]);
+  useEscapeClose(true, onClose);
 
   // Adjusting starts from the CURRENT bake, not from a file picker. Guarded so a file the
   // farmer has already picked is never clobbered by a slow-arriving prop.
