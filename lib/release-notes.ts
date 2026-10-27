@@ -51,6 +51,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   }, { title: 'Check the maps in your site report', where: 'Menu → Site reports', href: '/reports',
     detail: 'Review each included map before exporting. Saved older drawings stay available.',
   }] },
+  { when: '27 October 2026', sha: '31d0ba80', changes: [
+    'Menus, pop-ups and Lima now work fully from a keyboard and keep your place.',
+  ] },
   { when: '26 October 2026', sha: 'd38b5ea4b', changes: [
     'All nine map sheets use the same legend box, fonts and spacing.',
     'New drawings keep the legend on the right; your saved maps stay available.',

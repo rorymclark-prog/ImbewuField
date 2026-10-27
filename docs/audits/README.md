@@ -96,6 +96,9 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 - [Phasing public-sample fit and retained final rule — 27 October 2026](2026-10-27/phasing-public-sample-fit-codex.md).
 
+- [Site reports #1099 and #1101 merged and verified on production (Codex handoff results) — 27 October 2026](2026-10-27/site-report-handoff-results-claude.md).
+- [Wave 28 keyboard focus in overlays: w28-01 to w28-06, focus moves in, Tab stays inside, Escape closes and returns focus; Lima opens from the keyboard — 27 October 2026](2026-10-27/wave-28-dialog-focus-claude.md).
+
 - [Wider readable legends and plain-paper buildings — 26 October 2026](2026-10-26/map-readable-legend-buildings-codex.md).
 
 - [Consistent legend panels across all nine sheets — 26 October 2026](2026-10-26/map-legend-consistency-codex.md).

@@ -65,6 +65,18 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 27 Oct 2026 — Wave 28: overlays keep keyboard focus; Lima opens from the keyboard
+- **Overlays (Sonnet #1134, reviewed):** `lib/use-dialog-focus.ts` moves focus into Settings, the drawer, the Add sheet,
+  evidence sheets, profile, POPIA consent, base-photo import, lesson link, the confirm dialog and the records entry
+  dialog; Tab stays inside (was: 20 of 20 Tabs left Settings); Escape returns focus to the opener. The drawer is a named
+  `aria-modal` dialog while open (`w28-01`…`w28-04`).
+- **Lima launcher (`w28-05`):** Enter and Space now open Lima (the draggable button only listened to pointer events), and
+  closing returns focus to the launcher — checked at 390 light English and 1280 dark isiZulu —
+  `docs/audits/2026-10-27/wave-28-dialog-focus-claude.md`. DesignGlossy and crop screens stay with Codex.
+- **Escape on the Add sheet (`w28-06`, also live):** it did nothing — /farmer's own Escape listener re-rendered the page
+  mid-keydown and the sheet's listener was swapped out before it ran. `lib/use-escape-close.ts` keeps one listener per
+  open; eight overlays use it.
+
 - **2026-10-26 — Stacked site-report compatibility (Codex).** #1101 carries prerequisite `6bf5396b4` and current main `201d57f5f`; market/date/soil and selling-intent code is unchanged from `9ddf7d399`. Typecheck clean, 439 focused checks pass, whitespace clean. [Current audit and verification scope](docs/audits/2026-10-26/site-report-role-integration-codex.md). Fresh full CI/preview is required; older green runs remain source-specific checkpoints.
 
 - **2026-10-26 — Site reports with published role reports (Codex).** Continued from the verified #1099/#1101 heads. Main now includes #1100, #1121 and wave 23; retain their record-based period comparisons, donor metadata and report typography alongside site potential, complete site plans, annual products and Record plan. Conflicts are audit/progress/release history only. [Dated integration audit](docs/audits/2026-10-26/site-report-role-integration-codex.md); fresh combined checks/preview required. Existing field/language/device limits remain.

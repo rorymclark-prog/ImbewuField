@@ -172,5 +172,6 @@ const copy:UpdateCopy={
   "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Vula Ukubuka kuqala nokuthumela, bese ukhetha Uhlelo lwerekhodi ukuze uthole umdwebo olinganisiwe nencazelo yawo.",
   "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Amanothi emakethe agcina umthombo wawo nosuku. Izinhlelo zokuthengisa zihlala zihlukile ekuthengiseni okurekhodiwe.",
   "Full report headers keep unsourced soil values unknown.": "Izihloko zombiko ophelele zigcina amanani omhlabathi angenamthombo engaziwa.",
+  "Menus, pop-ups and Lima now work fully from a keyboard and keep your place.": "Amamenyu, amaphaneli avelayo noLima manje asebenza ngokugcwele ngekhibhodi futhi agcina lapho ubukhona.",
 };
 export default copy;

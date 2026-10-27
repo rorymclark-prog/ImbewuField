@@ -1,5 +1,6 @@
 'use client';
 
+import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { useEffect, useRef, useState } from 'react';
 import AiFeatureSettings from './AiFeatureSettings';
 import LanguageDraftNote from './LanguageDraftNote';
@@ -11,6 +12,7 @@ import { APP_LANGS, useLanguage, translate, loadLocale, T_en, getLoadedDict } fr
 import { setAppLevel, useAppLevel, type AppLevel } from '@/lib/app-level';
 import { coverageOf, type LangCoverage } from '@/lib/lang-coverage';
 import Link from 'next/link';
+import { useEscapeClose } from '@/lib/use-escape-close';
 
 // Small pill switch, matching the app's toggle style (used for the Guidance rows).
 function PillToggle({ on, onClick, label }: { on: boolean; onClick: () => void; label: string }) {
@@ -67,6 +69,7 @@ export default function ThemePanel({ open, onClose }: Props) {
   const { theme, mode, textScale, setTheme, setMode, setTextScale } = useTheme();
   const { lang, setLang, t } = useLanguage();
   const panelRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(open, panelRef);
   const level = useAppLevel();
 
   // How much of each language is actually translated, so a language that is still mostly
@@ -123,12 +126,7 @@ export default function ThemePanel({ open, onClose }: Props) {
   ];
 
   // Close on Escape
-  useEffect(() => {
-    if (!open) return;
-    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [open, onClose]);
+  useEscapeClose(open, onClose);
 
   // Close on outside click
   useEffect(() => {

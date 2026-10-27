@@ -172,5 +172,6 @@ const copy:UpdateCopy={
   "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Bula Ponelopele le ho romela, ebe o kgetha Moralo wa rekoto bakeng sa setshwantsho se lekantsweng le tlhaloso ya sona.",
   "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Dintlha tsa mmaraka di boloka mohlodi le letsatsi la tsona. Merero ya ho rekisa e sala e arohane le thekiso e ngodisitsweng.",
   "Full report headers keep unsourced soil values unknown.": "Dihlooho tsa tlaleho e feletseng di boloka dipalo tsa mobu tse se nang mohlodi di sa tsejwe.",
+  "Menus, pop-ups and Lima now work fully from a keyboard and keep your place.": "Dimenyu, diphanele tse hlahang le Lima jwale di sebetsa ka botlalo ka khiboto mme di boloka moo o neng o le teng.",
 };
 export default copy;
