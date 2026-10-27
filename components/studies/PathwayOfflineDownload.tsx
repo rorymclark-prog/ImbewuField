@@ -8,6 +8,7 @@ import { CACHE_CHANGED_EVENT, downloadPack, offlineSupported, packStatus, reques
 import { fieldPageDownloads } from '@/lib/field-page-downloads';
 import { studiesPathwayPack, type StudiesPathwayId } from '@/lib/studies-pathway-pack';
 import styles from './FinanceCourse.module.css';
+import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 
 export default function PathwayOfflineDownload({ pathwayId }: { pathwayId: StudiesPathwayId }) {
   const { lang } = useLanguage();
@@ -78,20 +79,20 @@ export default function PathwayOfflineDownload({ pathwayId }: { pathwayId: Studi
     ++sequence.current;
     setError(''); setStage('media'); setMessage('Saving pictures and practice materials…');
     try {
-      if (pathway.pack.missing.length) throw Error('This pathway is missing a file. Keep using the written pages while it is corrected.');
+      if (pathway.pack.missing.length) throw new UserFacingError('This pathway is missing a file. Keep using the written pages while it is corrected.');
       const persisted = await requestPersistence();
       if (!alive.current || controller.signal.aborted) return;
       setMayClear(!persisted);
       const result = await downloadPack(pathway.pack, undefined, controller.signal);
       if (!alive.current || controller.signal.aborted) return;
-      if (result.failed.length) throw Error(`${result.failed.length} files could not be saved. Reconnect and choose Finish download; saved files will be reused.`);
+      if (result.failed.length) throw new UserFacingError(`${result.failed.length} files could not be saved. Reconnect and choose Finish download; saved files will be reused.`);
       setStage('pages'); setMessage('Preparing every reading page and its startup files…');
       const pages = new Map<string, boolean>();
       await fieldPageDownloads(true, [...pathway.pages], page => pages.set(page.path, page.ready && !page.error));
       if (!alive.current || controller.signal.aborted) return;
-      if (!pathway.pages.every(path => pages.get(path) === true)) throw Error('Some reading pages are not ready to reopen offline. Keep your connection and choose Finish download.');
+      if (!pathway.pages.every(path => pages.get(path) === true)) throw new UserFacingError('Some reading pages are not ready to reopen offline. Keep your connection and choose Finish download.');
     } catch (cause) {
-      if (alive.current) setError(cause instanceof Error ? cause.message : 'This pathway could not finish downloading. Reconnect and try again.');
+      if (alive.current) setError(userFacingMessage(cause, 'This pathway could not finish downloading. Reconnect and try again.'));
     } finally {
       if (alive.current) { setStage('idle'); await refresh(); }
       operation.current = null;

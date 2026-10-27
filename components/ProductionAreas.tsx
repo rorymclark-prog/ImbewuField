@@ -2,8 +2,9 @@
 import { numberLabel } from '@/lib/format-figures';
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/lib/auth';
-import { useLanguage } from '@/lib/i18n';
+import { translate, useLanguage } from '@/lib/i18n';
 import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 import { fieldApi } from '@/lib/field-api';
 import { DEVICE_SAVE_NOTICE } from '@/lib/field-request-model';
 import { useFieldSync } from '@/lib/use-field-sync';
@@ -29,6 +30,7 @@ export default function ProductionAreas({ publishedOnly = false }: { publishedOn
 function ProductionAreaContent({ publishedOnly }: { publishedOnly: boolean }) {
   const { user } = useAuth();
   const { lang } = useLanguage();
+  const failure = (e: unknown) => userFacingMessage(e, translate(lang, 'networkFailed'), k => translate(lang, k));
   const [source,setSource]=useState<unknown>(null);
   const [orgs, setOrgs] = useState<{ id: string; name: string }[]>([]), [org, setOrg] = useState('');
   const [summary, setSummary] = useState<Summary | null>(null), [sites, setSites] = useState<ProductionSite[]>([]);
@@ -40,13 +42,13 @@ function ProductionAreaContent({ publishedOnly }: { publishedOnly: boolean }) {
     let cancelled = false; setSample(isSampleMode());
     if (isSampleMode()) { setOrgs([{ id: 'sample-ngo', name: "Imbewu KZN" }]); setOrg('sample-ngo'); return; }
     if (!user) return;
-    void request('/api/network/orgs').then(d => { if (!cancelled) { setOrgs(d.orgs); setOrg(d.orgs[0]?.id ?? ''); } }).catch(e => { if (!cancelled) setError(e.message); });
+    void request('/api/network/orgs').then(d => { if (!cancelled) { setOrgs(d.orgs); setOrg(d.orgs[0]?.id ?? ''); } }).catch(e => { if (!cancelled) setError(failure(e)); });
     return () => { cancelled = true; };
   }, [user]);
   async function reload() {
     const current = ++version.current; setLoading(true); setError('');
     try { if (isSampleMode()) { const rows = completeSampleAreas(sampleRead('areas', freshSampleAreas)); const visible = publishedOnly ? (readSampleProgramme().funderAccess ? rows.filter(s => s.published) : []) : rows; setSummary(productionAreaSummary(visible)); setSites(visible); setManage(!publishedOnly); return; } const d = await request(`/api/production-sites?org=${encodeURIComponent(org)}${publishedOnly ? '&published=true' : ''}`); if (current === version.current) { setSource(d);setSummary(d.summary); setSites(d.sites ?? []); setManage(d.canManage ?? false); } }
-    catch (e) { if (current === version.current) setError((e as Error).message); }
+    catch (e) { if (current === version.current) setError(failure(e)); }
     finally { if (current === version.current) setLoading(false); }
   }
   useEffect(() => {
@@ -64,11 +66,11 @@ function ProductionAreaContent({ publishedOnly }: { publishedOnly: boolean }) {
       const numeric = (v: string) => v.trim() ? Number(v) : null;
       const site = { ...form, vegetableM2: numeric(form.vegetableM2), stapleM2: numeric(form.stapleM2), boundaryM2: numeric(form.boundaryM2) };
       if (isSampleMode()) { sampleWrite('areas', upsertSampleArea(completeSampleAreas(sampleRead('areas', freshSampleAreas)), { ...site, updatedAt: new Date().toISOString(), updatedBy: 'sample-organisation' } as ProductionSite, localTodayISODate())); }
-      else { if (sample) throw Error('This practice workspace has ended. Reopen production areas.'); const result=await request(`/api/production-sites?org=${encodeURIComponent(org)}`, { confirmed, site, expectedUpdatedAt:form.updatedAt });queued=result.queued===true; }
+      else { if (sample) throw new UserFacingError('This practice workspace has ended. Reopen production areas.'); const result=await request(`/api/production-sites?org=${encodeURIComponent(org)}`, { confirmed, site, expectedUpdatedAt:form.updatedAt });queued=result.queued===true; }
       if (current !== version.current) return;
       void clearFieldDraft(`areas:${org}`).catch(()=>{});
       setNotice(queued?DEVICE_SAVE_NOTICE:form.published ? 'Saved and included in the funder total.' : 'Saved privately for the organisation.'); setForm(blank()); setConfirmed(false); setEditing(false); await reload();
-    } catch (e) { if (current === version.current) setError((e as Error).message); }
+    } catch (e) { if (current === version.current) setError(failure(e)); }
     finally { setSaving(false); }
   }
   useFieldSync(()=>void reload(),!saving&&!form.code);

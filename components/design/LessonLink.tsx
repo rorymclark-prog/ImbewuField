@@ -6,11 +6,12 @@
 // is total, so the link is never dead even before real copy is written. This is the wiring Rory
 // asked for: "anything we do on the app must connect to a lesson."
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { BookOpen, X } from 'lucide-react';
 import { getLesson } from '@/lib/lesson-registry';
 import { useLanguage } from '@/lib/i18n';
+import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { LessonPanel } from './LessonPanel';
 
 const GREEN = 'var(--color-forest-800)'; // text, icon and border on the page ground: follows the theme (leaf in dark)
@@ -28,6 +29,15 @@ export default function LessonLink({
   const { t } = useLanguage();
   const resolvedLabel = label ?? t('designLearn');
   const [open, setOpen] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(open, dialogRef);
+  // Captured and stopped here so Escape closes only the lesson, not the drawer it was opened from.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') { e.stopPropagation(); setOpen(false); } };
+    document.addEventListener('keydown', onKey, true);
+    return () => document.removeEventListener('keydown', onKey, true);
+  }, [open]);
 
   const trigger =
     tone === 'chip' || tone === 'menu'
@@ -77,6 +87,7 @@ export default function LessonLink({
 
       {open && createPortal(
         <div
+          ref={dialogRef}
           role="dialog"
           aria-modal="true"
           onClick={() => setOpen(false)}

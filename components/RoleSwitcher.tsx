@@ -38,7 +38,7 @@ export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { 
         // Nav items: Public Sans 16/600 on desktop (handoff §0 type scale).
         const base = `flex items-center gap-1.5 px-2.5 py-1.5 rounded-full font-sans font-semibold text-[15px] lg:text-base transition-all whitespace-nowrap${inMenu ? ' min-h-[44px]' : ''}`;
         const style = active
-          ? { background: 'var(--badge-bg)', border: '1px solid #1F4D2B', color: 'var(--color-forest-700)' }
+          ? { background: inMenu ? 'var(--role-chip-bg)' : 'var(--badge-bg)', border: '1px solid var(--cat-foundation-text)', color: 'var(--color-forest-700)' }
           : r.ready
           ? { background: 'transparent', border: '1px solid transparent', color: 'var(--text-primary)' }
           : { background: 'transparent', border: '1px solid transparent', color: 'var(--text-secondary)', opacity: 0.5, cursor: 'not-allowed' };

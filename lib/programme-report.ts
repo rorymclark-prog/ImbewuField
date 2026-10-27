@@ -54,7 +54,10 @@ export function programmeReportCohortChoices(rows: NetworkFarmerSummary[], selec
   return [...choices.values()];
 }
 
-const format = (n: number | null, unit = '', unavailable = 'Not available') => n === null || !Number.isFinite(n) ? unavailable : `${numberLabel(n,2)}${unit}`;
+// w26-03: a decimal comma, like the money beside it (randCentsLabel) and Records' kilograms (kgLabel) —
+// "32 707.1 kg" sat next to "R262 684,93". numberLabel's grouping is spaces, so its only '.' is the decimal.
+const format = (n: number | null, unit = '', unavailable = 'Not available') => n === null || !Number.isFinite(n) ? unavailable : `${numberLabel(n,2).replace('.', ',')}${unit}`;
+const countedNoun = (n: number, noun: string) => n === 1 ? noun : `${noun}s`;
 const money = (n: number | null, unavailable = 'Not available') => n === null || !Number.isFinite(n) ? unavailable : randCentsLabel(n);
 const sum = (values: (number | null)[]) => {
   const known = values.filter((v): v is number => v !== null && Number.isFinite(v));

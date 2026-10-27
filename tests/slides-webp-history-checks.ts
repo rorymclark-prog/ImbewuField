@@ -5,6 +5,7 @@ import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ensureWave13ThemeCurrent, wave13ThemeSourceBefore } from './wave-13-theme-history-checks.ts';
+import { wave25SourceBefore } from './wave-25-offline-history-checks.ts';
 
 // perf-03/perf-05 (14 Oct 2026): English and isiZulu lesson slides moved from JPEG
 // to WebP and two Studies thumbnails were added. This is a media-format layer only:
@@ -120,6 +121,8 @@ export function slidesWebpOwnsSource(file: string): boolean {
 
 /** Exact live successor source → its exact predecessor; any other bytes pass through for the caller's own check. */
 export function slidesWebpSourceBefore<T extends string | Uint8Array>(file: string, supplied: T): T {
+  // w25-03 re-pin: the newest layer (lazy-chunk precache in app/sw.js/route.ts) projects first, for every owner.
+  supplied = wave25SourceBefore(file, supplied);
   const row = proof.files[file];
   if (!row) return supplied;
   ensureOutsideScope();

@@ -19,10 +19,12 @@ import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { canSeeWorkspaceLink } from '@/lib/role-navigation';
 import { communityEnabled } from '@/lib/community/flag';
 import { useAppLevel } from '@/lib/app-level';
+import { useDialogFocus } from '@/lib/use-dialog-focus';
 import SettingsButton from './SettingsButton';
 import LessonLink from './design/LessonLink';
 import RoleSwitcher from './RoleSwitcher';
 import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { useEscapeClose } from '@/lib/use-escape-close';
 
 interface NavDrawerProps {
   open: boolean;
@@ -141,11 +143,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
     },
   ];
 
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    if (open) window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [open, onClose]);
+  useEscapeClose(open, onClose);
 
   // Prevent body scroll when open
   useEffect(() => {
@@ -158,6 +156,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   // prop (native inert support is React 19). The property works today in all evergreen browsers.
   const panelRef = useRef<HTMLDivElement>(null);
   useEffect(() => { if (panelRef.current) panelRef.current.inert = !open; }, [open]);
+  useDialogFocus(open, panelRef);
 
   return (
     <>
@@ -179,6 +178,9 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
       <div
         ref={panelRef}
         lang={lang}
+        role="dialog"
+        aria-modal={open}
+        aria-label={open ? ui('Main navigation', 'Ukuzulazula okuyinhloko') : undefined}
         aria-hidden={!open}
         style={{
           position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 61,
@@ -280,26 +282,24 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
                       display: 'flex', alignItems: 'center', gap: 12,
                       padding: '10px 20px', minHeight: 44,
                       textDecoration: 'none',
-                      // '#1F4D2B'-derived hardcodes, not var(--badge-bg)/var(--emerald): the earth
-                      // theme's --emerald (#3A7518, an "ok"-status olive-green, see globals.css)
-                      // is a different hue from the brand forest green every other screen still
-                      // hardcodes — swapping just this one would put two visibly different
-                      // "brand greens" in the app at once. Stays literal until that migrates.
-                      background: exactActive ? 'rgba(31,77,43,0.09)' : 'transparent',
-                      borderRight: exactActive ? '3px solid #1F4D2B' : '3px solid transparent',
+                      // --cat-foundation-text, not var(--emerald): it is #1F4D2B (brand forest)
+                      // in earth light, so the light look is unchanged, and the leaf #9CD672 in
+                      // dark, where the literal forest was 1.84:1 on the drawer (w24-01).
+                      background: exactActive ? 'color-mix(in srgb, var(--cat-foundation-text) 9%, transparent)' : 'transparent',
+                      borderRight: exactActive ? '3px solid var(--cat-foundation-text)' : '3px solid transparent',
                       transition: 'background 0.12s',
                     }}
                   >
                     <Icon
                       size={16}
                       strokeWidth={exactActive ? 2 : 1.6}
-                      style={{ color: exactActive ? '#1F4D2B' : 'var(--text-secondary)', flexShrink: 0 }}
+                      style={{ color: exactActive ? 'var(--cat-foundation-text)' : 'var(--text-secondary)', flexShrink: 0 }}
                     />
                     <span
                       className="font-sans"
                       style={{
                         fontSize: 14,
-                        color: exactActive ? '#1F4D2B' : 'var(--text-primary)',
+                        color: exactActive ? 'var(--cat-foundation-text)' : 'var(--text-primary)',
                         fontWeight: exactActive ? 600 : 400,
                       }}
                     >

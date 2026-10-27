@@ -9,6 +9,7 @@ import { CACHE_CHANGED_EVENT, downloadPack, offlineSupported, packStatus, remove
 import { fieldPageDownloads } from '@/lib/field-page-downloads';
 import styles from './AppGuide.module.css';
 import { guidePackWithScreens } from './guide-screens';
+import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 
 export default function GuideOfflineDownload({ guide }: { guide: AppGuide }) {
   const { lang } = useLanguage();
@@ -70,17 +71,17 @@ export default function GuideOfflineDownload({ guide }: { guide: AppGuide }) {
     ++sequence.current;
     setError(''); setStage('media'); setMessage('Saving recordings and pictures…');
     try {
-      if (pack.missing.length) throw Error('This guide is missing a file. Please keep using the written steps while it is corrected.');
+      if (pack.missing.length) throw new UserFacingError('This guide is missing a file. Please keep using the written steps while it is corrected.');
       setMayClear(!(await requestPersistence()));
       const result = await downloadPack(pack, p => { if (alive.current) setSavedBytes(p.bytes); }, controller.signal);
       if (controller.signal.aborted) return;
-      if (result.failed.length) throw Error(`${result.failed.length} files could not be saved. Reconnect and choose Finish download; saved files will be reused.`);
+      if (result.failed.length) throw new UserFacingError(`${result.failed.length} files could not be saved. Reconnect and choose Finish download; saved files will be reused.`);
       setStage('page'); setMessage('Preparing the written guide and My Studies…');
       const pages = new Map<string, boolean>();
       await fieldPageDownloads(true, [guide.href, '/student'], p => pages.set(p.path, p.ready && !p.error));
-      if (!pages.get(guide.href) || !pages.get('/student')) throw Error('The written guide is not ready to reopen offline. Keep your connection and choose Finish download.');
+      if (!pages.get(guide.href) || !pages.get('/student')) throw new UserFacingError('The written guide is not ready to reopen offline. Keep your connection and choose Finish download.');
     } catch (e) {
-      if (alive.current) setError(e instanceof Error ? e.message : 'The guide could not finish downloading. Reconnect and try again.');
+      if (alive.current) setError(userFacingMessage(e, 'The guide could not finish downloading. Reconnect and try again.'));
     } finally {
       if (alive.current) { setStage('idle'); await refresh(); }
       operation.current = null;

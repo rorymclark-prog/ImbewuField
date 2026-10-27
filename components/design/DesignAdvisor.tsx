@@ -15,6 +15,7 @@ import { evaluateDesign, type Advice, type AdviceLayer } from '@/lib/design-rule
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 
 const GOLD = '#F7C97E';
 const DARK = '#0B120B';
@@ -233,7 +234,8 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, simp
       });
       if (!res.ok) {
         const errBody = await res.json().catch(() => ({}));
-        throw new Error(errBody?.error || formatDesignTranslation(t('designAdvisorRequestFailed'), {
+        // Only the 429 body (lib/api-rate-limit.ts) is farmer copy; other error bodies are developer text.
+        throw new UserFacingError(res.status === 429 && errBody?.error || formatDesignTranslation(t('designAdvisorRequestFailed'), {
           status: res.status,
         }));
       }
@@ -247,7 +249,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId, simp
       if (clean.length === 0) setAiError(t('designAdvisorNothingToAdd'));
       else setExpanded(true);
     } catch (err) {
-      setAiError(err instanceof Error ? err.message : t('designAdvisorUnavailable'));
+      setAiError(userFacingMessage(err, t('designAdvisorUnavailable'), t));
     } finally {
       setAiLoading(false);
     }

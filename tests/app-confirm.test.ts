@@ -159,7 +159,8 @@ test('the dialog keeps the semantics the conversions rely on', () => {
   // Escape and the backdrop both decline; focus starts on the decline button so a stray Enter
   // on a destructive question cannot destroy anything.
   assert.match(dialog, /e\.key === 'Escape'/);
-  assert.match(dialog, /cancelRef\.current\?\.focus\(\)/);
+  assert.match(dialog, /data-autofocus=""/);
+  assert.match(dialog, /useDialogFocus\(!!pending/);
   // No baked-in strings beyond the Cancel default: labels come from call sites (t() where the
   // surface is translated), so the provider itself needs no i18n keys.
   assert.match(dialog, /confirmLabel: string/);

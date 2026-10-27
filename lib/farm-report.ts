@@ -12,6 +12,7 @@ import { buildFinanceSeries } from './finance-series';
 import { localTodayISODate } from './field-teams';
 import type { ReportChart, ReportMetric, ReportSection, ReportTable } from './programme-report-pdf';
 
+
 export type FarmReportKind = 'production' | 'finance';
 /** The language of the report's fixed wording. English (the default) and isiZulu build the English
  * report byte-for-byte; 'xh' reads the isiXhosa drafts in lib/locales/xh-inline/g34-farm-report-body.ts,
@@ -19,6 +20,11 @@ export type FarmReportKind = 'production' | 'finance';
 export type FarmReportLanguage = 'en' | 'zu' | 'xh';
 type Say = (english: string, vars?: Record<string, string | number>) => string;
 const sayIn = (language: string | undefined): Say => (english, vars = {}) => inlineTemplate(language ?? 'en', english, null, vars);
+// w23-06: "1 local invoices" read as a slip in a document a farmer shares; counts agree with their noun.
+const countOf = (n: number, one: string, many: string): string => `${n} ${n === 1 ? one : many}`;
+// The translated report body keeps singular and plural as two whole English templates instead, so each
+// has its own isiXhosa draft (an isiXhosa noun class changes more than the noun).
+const plural = (t: Say) => (n: number, one: string, many: string, vars: Record<string, string | number>) => t(n === 1 ? one : many, vars);
 export type FarmReportComparison = 'none' | 'previous' | 'year';
 export type FarmReportOptions = {
   kind: FarmReportKind; period: FinancePeriod; now: Date; farm: string; sample: boolean;
@@ -107,6 +113,7 @@ export function buildFarmReport(options: FarmReportOptions): FarmReport {
   const lang = options.language ?? 'en';
   /** A fixed sentence or label; `{name}` placeholders take the recorded values. */
   const t = sayIn(lang);
+  const tn = plural(t);
   const money = (value: unknown) => moneyKnown(value) ? randCentsLabel(value) : t('Not recorded');
   const dateLabel = (value: string | undefined) => validDate(value) ? value!.slice(0, 10) : t('Date unavailable');
   // isiXhosa wording is in play only once the isiXhosa drafts are loaded (before that, e.g. on the server, the report is English throughout).
@@ -144,7 +151,7 @@ export function buildFarmReport(options: FarmReportOptions): FarmReport {
   const cropNames = [...new Set([...production, ...soldQuantities].map(row => row.crop.trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'en'));
   const cropRows = cropNames.map(crop => {
     const picked = production.filter(row => row.crop.trim() === crop), sold = soldQuantities.filter(row => row.crop.trim() === crop);
-    return [crop, picked.length ? quantityText(t, picked) : t('No harvest entries'), sold.length ? quantityText(t, sold) : t('No sale quantities'), t('{harvests} harvest / {sales} sale entries', { harvests: picked.length, sales: sold.length })];
+    return [crop, picked.length ? quantityText(t, picked) : t('No harvest entries'), sold.length ? quantityText(t, sold) : t('No sale quantities'), tn(sold.length, '{harvests} harvest / {sales} sale entry', '{harvests} harvest / {sales} sale entries', { harvests: picked.length, sales: sold.length })];
   });
   const checkDuplicates = suspectedDuplicateIncomeIds([
     ...sales.filter(row => moneyKnown(row.amount)).map(row => ({ id: `sale-${row.id}`, kind: 'sale' as const, amount: row.amount, iso: row.sold_at })),
@@ -181,14 +188,14 @@ export function buildFarmReport(options: FarmReportOptions): FarmReport {
     ] : [
       t('Money received: {received}. Costs recorded: {costs}.', { received: receiptsKnown ? randCentsLabel(receipts) : t('unavailable amount in the selected receipts'), costs: expensesKnown && costs !== null ? randCentsLabel(costs) : t('unavailable amount in the selected costs') }),
       t('Recorded cash margin: {margin}. This is receipts minus logged expenses, not full accounting profit or a bank balance.', { margin: margin === null ? t('not available') : randCentsLabel(margin) }),
-      t('{n} local invoices are currently marked unpaid. They do not enter money received.', { n: unpaid.length }),
+      tn(unpaid.length, '{n} local invoice is currently marked unpaid. It does not enter money received.', '{n} local invoices are currently marked unpaid. They do not enter money received.', { n: unpaid.length }),
     ] }, scope,
     { title: t('What needs a closer look'), lines: [
       ...(!production.length && !sales.length && !invoices.length && !expenses.length ? [t('No dated entries are available for this period. Choose another period or record the activity; no result is inferred.')] : []),
-      ...(missingDates ? [t('{n} available records have no usable event date and cannot enter period totals. Review the source records.', { n: missingDates })] : []),
-      ...(missingQuantities ? [t('{n} harvest or sale entries have no usable quantity. Their weights and counts remain unavailable.', { n: missingQuantities })] : []),
+      ...(missingDates ? [tn(missingDates, '{n} available record has no usable event date and cannot enter period totals. Review the source record.', '{n} available records have no usable event date and cannot enter period totals. Review the source records.', { n: missingDates })] : []),
+      ...(missingQuantities ? [tn(missingQuantities, '{n} harvest or sale entry has no usable quantity. Their weights and counts remain unavailable.', '{n} harvest or sale entries have no usable quantity. Their weights and counts remain unavailable.', { n: missingQuantities })] : []),
       ...(checkDuplicates.size ? [t('{n} income entries need a possible-duplicate check. {note}', { n: checkDuplicates.size, note: t(DUPLICATE_ROW_NOTE) })] : []),
-      ...(futureDates.length ? [t('{n} entries have future dates within this calendar selection. They remain included, as in Records; review their dates before sharing.', { n: futureDates.length })] : []),
+      ...(futureDates.length ? [tn(futureDates.length, '{n} entry has a future date within this calendar selection. It remains included, as in Records; review its date before sharing.', '{n} entries have future dates within this calendar selection. They remain included, as in Records; review their dates before sharing.', { n: futureDates.length })] : []),
       t('Record household use, donations, losses and stock movements separately before making a food-use balance. Those observations are not supplied by these books.'),
       t('Achieved yield per area needs a matching crop, measured growing area and crop-cycle dates. The current map or plan alone does not provide that comparison.'),
       ...(kind === 'finance' ? [t('Check missing costs, unpaid invoices and supporting slips before sharing the report. Untagged costs are never allocated to crop profit.')] : []),
@@ -200,10 +207,10 @@ export function buildFarmReport(options: FarmReportOptions): FarmReport {
     { label: t('Harvest entries'), value: String(production.length), detail: t('Dated records in this period') },
     { label: t('Produce names'), value: String(cropNames.length), detail: t('As recorded; not a biodiversity score') },
   ] : [
-    { label: t('Money received'), value: receiptsKnown ? randCentsLabel(receipts) : notAvailable, detail: t('{sales} sale entries + {invoices} paid invoices', { sales: sales.length, invoices: invoices.length }) },
-    { label: t('Costs recorded'), value: expensesKnown && costs !== null ? randCentsLabel(costs) : notAvailable, detail: t('{n} expense entries; completeness unknown', { n: expenses.length }) },
+    { label: t('Money received'), value: receiptsKnown ? randCentsLabel(receipts) : notAvailable, detail: `${tn(sales.length, '{n} sale entry', '{n} sale entries', { n: sales.length })} + ${tn(invoices.length, '{n} paid invoice', '{n} paid invoices', { n: invoices.length })}` },
+    { label: t('Costs recorded'), value: expensesKnown && costs !== null ? randCentsLabel(costs) : notAvailable, detail: tn(expenses.length, '{n} expense entry; completeness unknown', '{n} expense entries; completeness unknown', { n: expenses.length }) },
     { label: t('Recorded cash margin'), value: margin === null ? notAvailable : randCentsLabel(margin), detail: t('Recorded receipts minus costs; not accounting profit') },
-    { label: t('Unpaid invoices now'), value: unpaidTotal === null ? notAvailable : randCentsLabel(unpaidTotal), detail: t('{n} local invoices; current snapshot', { n: unpaid.length }) },
+    { label: t('Unpaid invoices now'), value: unpaidTotal === null ? notAvailable : randCentsLabel(unpaidTotal), detail: tn(unpaid.length, '{n} local invoice; current snapshot', '{n} local invoices; current snapshot', { n: unpaid.length }) },
   ];
   const table: ReportTable = { title: t('Production by recorded name'), note: t('Units stay separate. A sale quantity follows its cash/payment date and may come from an earlier harvest. No food-use residual is calculated.'), columns: [t('Produce'), t('Harvest recorded'), t('Sold quantities'), t('Entries')], rows: cropRows };
   const harvestLog: ReportTable = { title: t('Harvest entries'), note: t('Only dated entries in the selected period. The report keeps recorded names and units.'), columns: [t('Date'), t('Produce'), t('Quantity')], rows: [...production].sort((a, b) => a.logged_at.localeCompare(b.logged_at)).map(row => [dateLabel(row.logged_at), row.crop, quantityLabel(t, row)]), includeInSummary: false };

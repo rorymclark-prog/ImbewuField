@@ -312,6 +312,7 @@ html[data-theme="earth"] {
   --glass-shadow: 0 2px 16px rgba(0,0,0,0.08);
   --glass-border: rgba(236,227,201,0.55);
   --badge-bg: rgba(58,117,24,0.1);
+  --role-chip-bg: #e9f1e9;   /* w24-01: current-role chip fill in the nav menu; was a literal pale #e9f1e9 under leaf text in dark */
 
   --gradient-from: #3A7518;
   --gradient-mid: #5CA030;
@@ -402,6 +403,7 @@ html[data-theme="earth"].dark {
   --glass-shadow: 0 4px 24px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.04);
   --glass-border: rgba(80,60,30,0.5);
   --badge-bg: rgba(130,200,68,0.1);
+  --role-chip-bg: rgba(130,200,68,0.16);   /* w24-01: current-role chip fill in the nav menu; was a literal pale #e9f1e9 under leaf text in dark */
 
   --gradient-from: #A8E860;
   --gradient-mid: #82C844;
@@ -481,6 +483,7 @@ html[data-theme="slate"] {
   --glass-shadow: 0 2px 16px rgba(0,0,0,0.07);
   --glass-border: rgba(160,180,205,0.5);
   --badge-bg: rgba(13,107,82,0.08);
+  --role-chip-bg: #e9f1e9;   /* w24-01: current-role chip fill in the nav menu; was a literal pale #e9f1e9 under leaf text in dark */
 
   --gradient-from: #0D6B52;
   --gradient-mid: #199870;
@@ -561,6 +564,7 @@ html[data-theme="slate"].dark {
   --glass-shadow: 0 4px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
   --glass-border: rgba(30,50,80,0.6);
   --badge-bg: rgba(24,168,120,0.1);
+  --role-chip-bg: rgba(24,168,120,0.16);   /* w24-01: current-role chip fill in the nav menu; was a literal pale #e9f1e9 under leaf text in dark */
 
   --gradient-from: #50CCA0;
   --gradient-mid: #18A878;
@@ -955,6 +959,13 @@ body.is-sample-mode .pwa-update-notifier {
 /* Inputs sit inside their own border, so an offset ring reads as a double border. Tuck it in. */
 :where(input, select, textarea):focus-visible {
   outline-offset: 1px !important;
+}
+
+/* w25-02: a control drawn as its <label> with the real input visually hidden (the produce photo picker,
+   custom file and choice tiles) put the ring on a 1px input nobody can see. Ring the label instead. */
+label:has(> input.sr-only:focus-visible) {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 
 /* Photo previews are keyboard controls as well as tap targets. */

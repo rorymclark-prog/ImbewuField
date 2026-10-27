@@ -95,7 +95,6 @@ const drafts: Record<string, string> = {
   "Produce names": "Amagama emveliso",
   "As recorded; not a biodiversity score": "Njengoko kurekhodiwe; asisosikori sohlukeno lwezinto eziphilayo",
   "Money received": "Imali efunyenweyo",
-  "{sales} sale entries + {invoices} paid invoices": "Imibhalo yentengiso: {sales} + ii-invoyisi ezihlawulweyo: {invoices}",
   "{n} expense entries; completeness unknown": "Imibhalo yeendleko: {n}; ukupheleliswa akwaziwa",
   "Recorded cash margin": "Imali eseleyo ebhaliweyo",
   "Recorded receipts minus costs; not accounting profit": "Imali efunyenweyo erekhodiweyo ukususa iindleko; asiyonzuzo yeeakhawunti",

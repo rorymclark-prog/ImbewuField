@@ -19,6 +19,7 @@ import { getElementArt2 } from '@/lib/element-art-2';
 import motion from './JournalMotion.module.css';
 import { inlineText } from '@/lib/xh-inline';
 import { journalCategoryLabel } from './journal-labels';
+import { useEscapeClose } from '@/lib/use-escape-close';
 
 export interface BedOption {
   id: string;
@@ -61,11 +62,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
   const [confirmDelete, setConfirmDelete] = useState(false);
   const confirmTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [onClose]);
+  useEscapeClose(true, onClose);
 
   useEffect(() => () => { if (confirmTimer.current) clearTimeout(confirmTimer.current); }, []);
 

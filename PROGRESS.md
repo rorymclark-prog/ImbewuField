@@ -139,9 +139,57 @@ and isiZulu output are unchanged.
 - **Marked as draft everywhere:** `LanguageDraftNote`, Settings, survey, Studies and per-screen notices name isiXhosa.
 - **Not translated:** slides with burned-in text and narration audio (no xh media), the printed invoice (English by
   design), staff training-feedback form (answer language stored as en/zu). Record: `docs/translation-reviews/xhosa-ui-2026-10-23/`.
+### 27 Oct 2026 — Wave 28: overlays keep keyboard focus; Lima opens from the keyboard
+- **Overlays (Sonnet #1134, reviewed):** `lib/use-dialog-focus.ts` moves focus into Settings, the drawer, the Add sheet,
+  evidence sheets, profile, POPIA consent, base-photo import, lesson link, the confirm dialog and the records entry
+  dialog; Tab stays inside (was: 20 of 20 Tabs left Settings); Escape returns focus to the opener. The drawer is a named
+  `aria-modal` dialog while open (`w28-01`…`w28-04`).
+- **Lima launcher (`w28-05`):** Enter and Space now open Lima (the draggable button only listened to pointer events), and
+  closing returns focus to the launcher — checked at 390 light English and 1280 dark isiZulu —
+  `docs/audits/2026-10-27/wave-28-dialog-focus-claude.md`. DesignGlossy and crop screens stay with Codex.
+- **Escape on the Add sheet (`w28-06`, also live):** it did nothing — /farmer's own Escape listener re-rendered the page
+  mid-keydown and the sheet's listener was swapped out before it ran. `lib/use-escape-close.ts` keeps one listener per
+  open; eight overlays use it.
+
 - **2026-10-26 — Stacked site-report compatibility (Codex).** #1101 carries prerequisite `6bf5396b4` and current main `201d57f5f`; market/date/soil and selling-intent code is unchanged from `9ddf7d399`. Typecheck clean, 439 focused checks pass, whitespace clean. [Current audit and verification scope](docs/audits/2026-10-26/site-report-role-integration-codex.md). Fresh full CI/preview is required; older green runs remain source-specific checkpoints.
 
 - **2026-10-26 — Site reports with published role reports (Codex).** Continued from the verified #1099/#1101 heads. Main now includes #1100, #1121 and wave 23; retain their record-based period comparisons, donor metadata and report typography alongside site potential, complete site plans, annual products and Record plan. Conflicts are audit/progress/release history only. [Dated integration audit](docs/audits/2026-10-26/site-report-role-integration-codex.md); fresh combined checks/preview required. Existing field/language/device limits remain.
+### 26 Oct 2026 — Wave 27: farmer-facing errors never show raw messages; offline track (w25-03/04/08) lands
+- **Offline (wave 25 track, Sonnet #1132):** the service worker's install also precaches each precached page's lazily
+  loaded chunks, so Home, Map, Studies, Prices and Saved open offline from a page that never loaded them (was:
+  ChunkLoadError). The error screen says "You're offline" with a link to saved screens. /farmer offline shows the
+  app's offline line, not "Failed to fetch" (`w25-08`). About 1.6 MB more on a first install (gzip).
+- **Wave 27 (Sonnet #1133, reviewed):** `lib/user-facing-error.ts`. 14 screens show only copy the app wrote. Network
+  failures use the translated network message; Firebase, storage and server internals fall back. Review kept the
+  fieldwork API's staff copy visible (`w27-03`) and /offline and Account as Codex pinned them (`w27-04`, `w27-05`) —
+  `docs/audits/2026-10-26/wave-27-raw-errors-claude.md`. DesignGlossy's 13 sites stay with Codex.
+
+### 26 Oct 2026 — Wave 26: Codex hand-offs closed after #1121 merged, its report screens checked
+- **Hand-offs:** `w23-02` — cohort income and cost totals are summed from the unrounded months, so the card and the
+  month-by-month chart both read R262 685 (was R262 686 on the chart). `w23-06` — farm report counts agree ("1 local
+  invoice", "1 entry has a future date"); three `tests/farm-report.test.ts` pins re-pinned to the agreeing wording.
+- **w26-03:** programme reports use a decimal comma for kilograms and percentages, like the money beside them.
+- **#1121 screens:** 24 click-path loads of the new comparison and donor-reference controls — clean —
+  `docs/audits/2026-10-26/wave-26-handoffs-claude.md` (`w26-01`…`w26-04`).
+
+### 26 Oct 2026 — Wave 25: forms filled and submitted, keyboard focus, offline
+- **Capture:** 48 form fills at phone and desktop, light English and dark isiZulu; the first 30 Tab stops on ten pages;
+  offline navigation with and without the service worker —
+  `docs/audits/2026-10-26/wave-25-forms-offline-keyboard-claude.md` (`w25-01`…`w25-07`).
+- **Fixed:** a practice-mode Contact send no longer says "Message sent — delivered" (`w25-01`); a label drawn over a
+  hidden input (the produce photo chooser) shows the focus ring (`w25-02`).
+- **Open:** offline ChunkLoadError on precached routes never opened in the current build (`w25-03`) and an offline-aware
+  error screen (`w25-04`) — Sonnet track, follows separately.
+
+### 26 Oct 2026 — Wave 24: the screens behind clicks, mostly dark mode (swarm #1126–#1128)
+- **Interaction capture:** 35 click paths (drawer, settings, Lima chat, forms, every staff tab, a lesson, a crop
+  price, a manual chapter) at phone and desktop, light English and dark isiZulu —
+  `docs/audits/2026-10-26/wave-24-interaction-claude.md` (`w24-01`…`w24-12`).
+- **Fixed:** the drawer's active item and role chip in dark (1.84 and 1.27:1), the field-visit location panel
+  (1.16:1), the exchange form's error text, Records' Log harvest and invoice links, the crop price card in dark
+  (1.8:1), the Messages practice note, the Lima chat tag, the "demo sample" chip, Lima over "Next" in manual chapters,
+  and the offline-map note in dark (1.36:1).
+- **Map error after in-app navigation:** sandbox-only (no Mapbox token); token-less builds now use the offline canvas.
 
 ### 26 Oct 2026 — Wave 23: re-capture of 98c8a22, isiZulu Home date regression fixed first
 - **Re-capture:** the wave 22 script on the live build (Codex's #1100 reports on top of wave 22), clock two days on,

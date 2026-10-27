@@ -1,5 +1,6 @@
 'use client';
 
+import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { suspectedDuplicateIncomeIds, DUPLICATE_ROW_NOTE, DUPLICATE_LEDGER_FOOTER } from '@/lib/duplicate-income';
 import Link from 'next/link';
@@ -56,6 +57,7 @@ import { produceDisplayName } from '@/lib/perennial-produce';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useLanguage, translate } from '@/lib/i18n';
 import { inlineText } from '@/lib/xh-inline';
+import { userFacingMessage } from '@/lib/user-facing-error';
 import { activeAccountUid } from '@/lib/account-local-storage';
 import {
   EXPENSE_RECEIPT_ACCEPT, expenseReceiptScope, receiptScopeIsCurrent,
@@ -637,7 +639,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
       setReceiptPhoto(file); setShownSlip(null);
       setForm(f => ({ ...f, error: '' }));
     } catch (error) {
-      if (receiptWorkIsCurrent(request)) setForm(f => ({ ...f, error: recordsMessage(lang, error instanceof Error ? error.message : 'Could not read that photo.') }));
+      if (receiptWorkIsCurrent(request)) setForm(f => ({ ...f, error: recordsMessage(lang, userFacingMessage(error, 'Could not read that photo.', k => translate(lang, k))) }));
     } finally { if (receiptWorkIsCurrent(request)) setReadingPhoto(false); }
   }
 
@@ -760,7 +762,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         onSaved();
         return;
       }
-      setForm((f) => ({ ...f, loading: false, error: recordsMessage(lang, err instanceof Error ? err.message : 'Failed to save. Try again.') }));
+      setForm((f) => ({ ...f, loading: false, error: recordsMessage(lang, userFacingMessage(err, 'Failed to save. Try again.', k => translate(lang, k))) }));
     }
   }
 
@@ -1171,7 +1173,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
               Same one tap, no page load: Picked is a tab in this book now. */}
           <button type="button" onClick={onLogHarvest}
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold"
-            style={{ background: 'rgba(35,94,134,0.10)', border: '1px solid rgba(35,94,134,0.25)', color: 'var(--color-water)', fontSize: 14, cursor: 'pointer' }}>
+            style={{ background: 'rgba(35,94,134,0.05)', border: '1px solid rgba(35,94,134,0.25)', color: 'var(--blue)', fontSize: 14, cursor: 'pointer' }}>
             <Sprout size={15} />{recordsText(lang, 'Log harvest', 'Rekhoda isivuno')}
           </button>
           <button onClick={onAddEntry}
@@ -1437,6 +1439,8 @@ export default function RecordsPage() {
   const [actionError, setActionError] = useState('');
   const [editing, setEditing] = useState<EditTarget>(null);
   const [desktopEntryOpen, setDesktopEntryOpen] = useState(false);
+  const desktopEntryRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(desktopEntryOpen, desktopEntryRef);
   const [desktopEntrySaving, setDesktopEntrySaving] = useState(false);
   /**
    * WHETHER THE DEVICE IS ONLINE. An empty ledger and an unreachable one rendered identically —
@@ -1562,7 +1566,7 @@ export default function RecordsPage() {
     } catch (err) {
       // bug-01: this used to be swallowed — the row reappeared once loadData() re-read the
       // (undeleted) server copy below, with no sign of why the delete itself had failed.
-      setActionError(err instanceof Error ? err.message : t('myRecordsDeleteError'));
+      setActionError(userFacingMessage(err, t('myRecordsDeleteError'), t));
     } finally {
       void loadData();
     }
@@ -1573,7 +1577,7 @@ export default function RecordsPage() {
     try {
       if (isSampleMode()) deleteSandboxExpense(id); else await deleteExpense(id);
     } catch (err) {
-      setActionError(err instanceof Error ? err.message : t('myRecordsDeleteError'));
+      setActionError(userFacingMessage(err, t('myRecordsDeleteError'), t));
     } finally {
       void loadData();
     }
@@ -1882,6 +1886,7 @@ export default function RecordsPage() {
                     only while open so every dismissal starts the next entry fresh. */}
                 {desktopEntryOpen && (
                   <div
+                    ref={desktopEntryRef}
                     className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto px-4 py-10"
                     style={{ background: 'rgba(32,25,15,0.45)' }}
                     role="dialog" aria-modal="true" aria-label={recordsText(lang, 'Record an entry', 'Rekhoda okufakiwe')}

@@ -111,7 +111,9 @@ async function isolatedGuard() {
     // The isiXhosa slide-card layer accounts for its new media in the listing, so the fixture carries it,
     // its release declarations and every declared card.
     'tests/xh-deck-history-checks.ts','lib/course-deck-release-bindings-xh-data.ts',
-    ...XH_DECK_RELEASE_ROWS.flatMap(row => row.slides.map(slide => 'public' + slide.imageUrl))]);
+    ...XH_DECK_RELEASE_ROWS.flatMap(row => row.slides.map(slide => 'public' + slide.imageUrl)),
+    // w25-03: the service-worker layer is projected first by slides-webp-history-checks.ts.
+    'tests/wave-25-offline-history-checks.ts','tests/fixtures/sw-route-before-w25-offline.ts.txt']);
   for (const file of files) { if (retiredJpegs.has(file)) continue;const destination=join(fixture,file);mkdirSync(dirname(destination),{recursive:true});copyFileSync(file,destination,constants.COPYFILE_FICLONE); }
   cpSync(folder,join(fixture,folder),{recursive:true});
   cpSync(webpFolder,join(fixture,webpFolder),{recursive:true});

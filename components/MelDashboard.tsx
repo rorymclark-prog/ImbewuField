@@ -15,8 +15,9 @@ import type { UserRole } from '@/lib/db/types';
 import styles from './MelDashboard.module.css';
 import FieldDataStatus from './FieldDataStatus';
 import SampleProgramme from './SampleProgramme';
-import { useLanguage } from '@/lib/i18n';
+import { translate, useLanguage } from '@/lib/i18n';
 import { inlineText, inlineTemplate, xhInlineDraft } from '@/lib/xh-inline';
+import { userFacingMessage } from '@/lib/user-facing-error';
 import SurveyZuluDraftPair from './SurveyZuluDraftPair';
 
 export async function melRequest(query = '', body?: unknown) {
@@ -63,7 +64,7 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
     if (role !== 'admin' || !user || isSampleMode()) return;
     void (async () => {
       try { const d = await fieldApi('/api/network/orgs'); if (!cancelled) { setOrgs(d.orgs); const linkedOrg=new URLSearchParams(window.location.search).get('org'); setOrg(d.orgs.find((o:{id:string})=>o.id===linkedOrg)?.id??d.orgs[0]?.id??''); } }
-      catch (e) { if (!cancelled) setError((e as Error).message); }
+      catch (e) { if (!cancelled) setError(failure(e)); }
     })();
     return () => { cancelled = true; };
   }, [role, user]);
@@ -91,6 +92,8 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
   const t = (en: string, zulu: string) => inlineText(dl, en, zulu);
   // A consent / answering line: isiZulu or isiXhosa draft, each beside its exact English source.
   const pair = (english: string, zuluText: string) => zu ? <SurveyZuluDraftPair english={english}>{zuluText}</SurveyZuluDraftPair> : isXhosa ? <SurveyXhosaDraftPair english={english}>{inlineText(dl, english)}</SurveyXhosaDraftPair> : english;
+  // The server's own error body is developer English; show the app's translated line instead.
+  const failure = (e: unknown) => userFacingMessage(e, translate(appLang, 'networkFailed'), k => translate(appLang, k));
   const requestVersion = useRef(0);
   const linkedOpened=useRef('');
   const detailRef = useRef<HTMLDivElement>(null);
@@ -112,13 +115,13 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
     if (!user || isSampleMode() || (role === 'admin' && !org)) { setReady(true); return; }
     const version = ++requestVersion.current;
     try { const data = await request(); if (version !== requestVersion.current) return; setSource(data);setList(data.assessments); setPermissions(data.permissions); setReady(true); }
-    catch (e) { if (version === requestVersion.current) { setError((e as Error).message); setReady(true); } }
+    catch (e) { if (version === requestVersion.current) { setError(failure(e)); setReady(true); } }
   }, [user, role, org, request]);
   useEffect(() => { setList([]); setSelected(null); setAnalysis(null); setPermissions({}); setError(''); setPeople([]); setAccessView(false); setReady(false); void reload(); return () => { requestVersion.current++; }; }, [reload]);
   async function perform(body: unknown, message: string) {
     setBusy(true); setError(''); setNotice('');
     try { const result=await request('', body); await reload(); if (accessOnly) { const d = await request('?mode=people'); setPeople(d.people); setFunderAccess(d.funderAccess); } setNotice(result.queued?DEVICE_SAVE_NOTICE:message); setSelected(null); setAnalysis(null); }
-    catch (e) { setError((e as Error).message); }
+    catch (e) { setError(failure(e)); }
     finally { setBusy(false); }
   }
   useFieldSync(()=>void reload(),!busy&&!selected);
@@ -129,7 +132,7 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
     try {
       if (permissions.analyse) setAnalysis(await request(`?mode=analysis&id=${a.id}`));
       if (permissions.manage && a.state === 'draft') setParticipants((await request('?mode=participants')).people);
-    } catch (e) { setError((e as Error).message); }
+    } catch (e) { setError(failure(e)); }
     finally { setBusy(false); }
   }
   useEffect(() => {
@@ -145,7 +148,7 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
   useEffect(() => {
     if (!accessOnly || sample || !permissions.people) return;
     let cancelled = false;
-    void request('?mode=people').then(d => { if (!cancelled) { setPeople(d.people); setFunderAccess(d.funderAccess); setAccessView(true); } }).catch(e => { if (!cancelled) setError(e.message); });
+    void request('?mode=people').then(d => { if (!cancelled) { setPeople(d.people); setFunderAccess(d.funderAccess); setAccessView(true); } }).catch(e => { if (!cancelled) setError(failure(e)); });
     return () => { cancelled = true; };
   }, [accessOnly, sample, permissions.people, request]);
   const staff = permissions.manage || permissions.analyse;
@@ -176,7 +179,7 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
             with a chevron, same disclosure affordance as every other <details> on this page. */}
         <details className={styles.about}><summary>{inlineTemplate(dl, 'About these counts · {n} overdue responses', 'Mayelana nalezi zibalo · izimpendulo ezingu-{n} ezidlulelwe isikhathi', { n: overdue })}</summary><p>{t('Counts are assessment assignments, not unique people. Assigned means available in the app; it does not mean a WhatsApp, email or SMS was sent. Awaiting review means closed but not shared; it is not a separate recorded approval status.','Lezi zibalo zibalela izabelo zokuhlola, hhayi abantu abahlukene. Okunikiwe kusho ukuthi ukuhlola kuyatholakala ohlelweni; akusho ukuthi kuthunyelwe umyalezo we-WhatsApp, i-imeyili noma i-SMS. Okulindele ukubuyekezwa kusho ukuthi kuvaliwe kodwa akukabiwa; akusona isimo esihlukile sokugunyazwa esirekhodiwe.')}</p></details>
       </>}
-      {permissions.people && !accessOnly && <button onClick={async () => { try { const d = await request('?mode=people'); setPeople(d.people); setFunderAccess(d.funderAccess); setAccessView(!accessView); } catch (e) { setError((e as Error).message); } }}>{t('People & funder access','Abantu nokufinyelela kwabaxhasi')}</button>}
+      {permissions.people && !accessOnly && <button onClick={async () => { try { const d = await request('?mode=people'); setPeople(d.people); setFunderAccess(d.funderAccess); setAccessView(!accessView); } catch (e) { setError(failure(e)); } }}>{t('People & funder access','Abantu nokufinyelela kwabaxhasi')}</button>}
       {accessView && <div className={styles.card} style={{ marginTop: 16 }}><h2>{t('Organisation access','Ukufinyelela kwenhlangano')}</h2><p>{t('Assign app roles within your organisation. Platform administrators, funder identities and organisation transfers are managed by the platform administrator. Role changes apply to the next server request; the member may need to refresh their screen.','Yabela amalungu izindima zohlelo ngaphakathi kwenhlangano yakho. Umphathi wohlelo ulawula abaphathi bohlelo, ama-akhawunti abaxhasi nokudluliselwa kwezinhlangano. Izinguquko zezindima zisebenza esicelweni esilandelayo kuseva; ilungu lingase lidinge ukuvuselela isikrini.')}</p>
         <label className={styles.option}><input type="checkbox" checked={funderAccess} onChange={e => setFunderAccess(e.target.checked)} />{t('Allow linked funders to view our dashboards','Vumela abaxhasi abaxhunyiwe babuke amadeshibhodi ethu')}</label><button disabled={busy} onClick={() => void perform({ action: 'sharing', funderAccess }, t('Funder access updated.','Ukufinyelela kwabaxhasi kubuyekeziwe.'))}>{t('Save funder access','Londoloza ukufinyelela kwabaxhasi')}</button>
         <p className={styles.muted}>{t('Farmer consent still applies. Assessment summaries remain private until published individually. Previously exported files cannot be recalled.','Imvume yomlimi isasebenza. Izifinyezo zokuhlola zihlala ziyimfihlo kuze kushicilelwe ngasinye. Amafayela asevele ekhishiwe awakwazi ukubuyiswa.')}</p>
@@ -205,7 +208,7 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
             <MelMetrics metrics={(publishedPreview ? analysis.funderPreview : analysis).metrics} zu={zu} lang={zu ? 'zu' : dl} />
             {isZulu && !publishedPreview && <p className={styles.notice}>Imibuzo yokuqhathanisa nezincazelo zokuhlaziywa ezingezansi zisaboniswa ngesiNgisi. Izimpendulo ezibhaliwe ziboniswa njengoba abahlanganyeli bezifakile.</p>}
             {isXhosa && !publishedPreview && <p className={styles.notice}>{inlineText(dl, 'The comparison questions and analysis notes below are still shown in English. Written answers are shown as the participants entered them.')}</p>}
-            {!publishedPreview && <><h3 style={{ marginTop: 22 }}>{t('Compare with an earlier assessment','Qhathanisa nokuhlola kwangaphambilini')}</h3><select aria-label={t('Earlier assessment','Ukuhlola kwangaphambilini')} defaultValue="" onChange={async e => { if (e.target.value) try { setAnalysis(await request(`?mode=analysis&id=${selected.id}&compare=${e.target.value}`)); } catch (err) { setError((err as Error).message); } }}><option value="">{t('Choose a matching baseline','Khetha isilinganiso sokuqala esihambisanayo')}</option>{list.filter(a => a.id !== selected.id && a.project === selected.project && ((a.stage === 'baseline' && ['midpoint', 'closeout'].includes(selected.stage)) || (a.stage === 'course_before' && selected.stage === 'course_after') || (a.stage === 'app_midpoint' && selected.stage === 'app_closeout'))).map(a => <option key={a.id} value={a.id}>{a.title}</option>)}</select>{analysis.comparison?.map(q => { const sourceQuestion = MEL_TEMPLATES[selected.stage].questions.find(item => item.id === q.id); return <p key={q.id}>{zu && sourceQuestion ? <SurveyZuluDraftPair english={q.en}>{sourceQuestion.zu}</SurveyZuluDraftPair> : q.en}<br /><strong>{q.change === null ? t('No matched answers','Azikho izimpendulo ezihambisanayo') : `${q.change > 0 ? '+' : ''}${q.change.toFixed(2)} ${t('average change','ushintsho olumaphakathi')}`}</strong> · {q.n} {t('matched participants','abahlanganyeli abahambisanayo')}</p>; })}<p className={styles.muted}>{t('Changes describe respondents with both measurements. They do not prove that the project caused the change. Self-reported garden area is not verified production hectares.','Izinguquko zichaza abaphendulile abanezilinganiso zombili. Azifakazeli ukuthi iphrojekthi iyona ebangele ushintsho. Indawo yengadi ebikwe ngumhlanganyeli ayiqinisekisiwe njengendawo ekhiqizayo ngamahektha.')}</p><h3>{t('Private written feedback','Impendulo ebhaliwe eyimfihlo')}</h3>{analysis.comments.length ? analysis.comments.map((x, i) => <blockquote key={i}><strong>{x.question}</strong><p>{x.text}</p></blockquote>) : <p>{t('No written feedback yet.','Akukabi khona impendulo ebhaliwe.')}</p>}</>}
+            {!publishedPreview && <><h3 style={{ marginTop: 22 }}>{t('Compare with an earlier assessment','Qhathanisa nokuhlola kwangaphambilini')}</h3><select aria-label={t('Earlier assessment','Ukuhlola kwangaphambilini')} defaultValue="" onChange={async e => { if (e.target.value) try { setAnalysis(await request(`?mode=analysis&id=${selected.id}&compare=${e.target.value}`)); } catch (err) { setError(failure(err)); } }}><option value="">{t('Choose a matching baseline','Khetha isilinganiso sokuqala esihambisanayo')}</option>{list.filter(a => a.id !== selected.id && a.project === selected.project && ((a.stage === 'baseline' && ['midpoint', 'closeout'].includes(selected.stage)) || (a.stage === 'course_before' && selected.stage === 'course_after') || (a.stage === 'app_midpoint' && selected.stage === 'app_closeout'))).map(a => <option key={a.id} value={a.id}>{a.title}</option>)}</select>{analysis.comparison?.map(q => { const sourceQuestion = MEL_TEMPLATES[selected.stage].questions.find(item => item.id === q.id); return <p key={q.id}>{zu && sourceQuestion ? <SurveyZuluDraftPair english={q.en}>{sourceQuestion.zu}</SurveyZuluDraftPair> : q.en}<br /><strong>{q.change === null ? t('No matched answers','Azikho izimpendulo ezihambisanayo') : `${q.change > 0 ? '+' : ''}${q.change.toFixed(2)} ${t('average change','ushintsho olumaphakathi')}`}</strong> · {q.n} {t('matched participants','abahlanganyeli abahambisanayo')}</p>; })}<p className={styles.muted}>{t('Changes describe respondents with both measurements. They do not prove that the project caused the change. Self-reported garden area is not verified production hectares.','Izinguquko zichaza abaphendulile abanezilinganiso zombili. Azifakazeli ukuthi iphrojekthi iyona ebangele ushintsho. Indawo yengadi ebikwe ngumhlanganyeli ayiqinisekisiwe njengendawo ekhiqizayo ngamahektha.')}</p><h3>{t('Private written feedback','Impendulo ebhaliwe eyimfihlo')}</h3>{analysis.comments.length ? analysis.comments.map((x, i) => <blockquote key={i}><strong>{x.question}</strong><p>{x.text}</p></blockquote>) : <p>{t('No written feedback yet.','Akukabi khona impendulo ebhaliwe.')}</p>}</>}
             {publishedPreview && <p className={styles.notice}>{t('Funders see these aggregate figures only after publication. Written feedback and staff ratings are excluded. Small groups and small response categories are withheld.','Abaxhasi babona lezi zibalo ezihlanganisiwe kuphela ngemva kokushicilelwa. Impendulo ebhaliwe nezilinganiso zabasebenzi akufakwa. Amaqembu amancane nezimpendulo zezigaba ezinenani elincane kuyafihlwa.')}</p>}
           </>}
           {permissions.manage && selected.state === 'closed' && <button disabled={busy || (!selected.published && !publishedPreview)} className={styles.primary} onClick={() => void perform({ action: 'publish', id: selected.id, published: !selected.published }, selected.published ? t('Summary withdrawn from funder view.','Isifinyezo sisusiwe ekubukweni kwabaxhasi.') : t('Summary published for linked funders.','Isifinyezo sishicilelwe ukuze sibonwe abaxhasi abaxhunyiwe.'))}>{selected.published ? t('Withdraw funder summary','Susa isifinyezo sabaxhasi') : t('Publish reviewed summary','Shicilela isifinyezo esibuyekeziwe')}</button>}

@@ -37,7 +37,8 @@ test('a future-dated entry counted by the calendar selection remains visible in 
   const report = buildFarmReport(options({ period: 'year', sales: [sale('future', 40, { sold_at: '2026-12-10T12:00:00' })] }));
   assert.equal(metric(report, 'Money received'), 'R40,00');
   assert.equal(report.tables.find(table => table.title === 'Month by month')!.rows.find(row => row[0] === 'Dec 2026')![1], 'R40,00');
-  assert.match(JSON.stringify(report.sections), /1 entries have future dates/);
+  // w23-06 re-pin: the count still discloses the entry; the noun now agrees with it (was "1 entries have").
+  assert.match(JSON.stringify(report.sections), /1 entry has a future date/);
 });
 
 test('egg counts and packaged sales remain their actual units and never inflate harvest weight', () => {
@@ -67,8 +68,10 @@ test('missing dates and quantities are disclosed rather than converted into curr
   assert.equal(metric(report, 'Harvest logged'), 'Not recorded');
   assert.equal(report.chart, undefined);
   const text = JSON.stringify(report);
-  assert.match(text, /1 available records have no usable event date/);
-  assert.match(text, /1 harvest or sale entries have no usable quantity/);
+  // w23-06 re-pin: singular agreement (was "1 available records have").
+  assert.match(text, /1 available record has no usable event date/);
+  // w23-06 re-pin: singular agreement (was "1 harvest or sale entries have").
+  assert.match(text, /1 harvest or sale entry has no usable quantity/);
   assert.ok(!text.includes('999'));
 });
 

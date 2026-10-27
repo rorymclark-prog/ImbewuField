@@ -18,6 +18,7 @@ import { readSampleProgramme } from './SampleProgramme';
 import ReportComposer from './ReportComposer';
 import styles from './MelDashboard.module.css';
 import reports from './ProgrammeReports.module.css';
+import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 
 type EvidenceSources = { assessments: MelReportAssessment[]; milestones: ProgrammeMilestone[]; assessmentSource: boolean; milestoneSource: boolean; branding?: ProgrammeBranding; notes: string[]; errors: string[] };
 export default function MelEvidenceReport({ orgId, organisation, funder, sample }: { orgId: string; organisation: string; funder: boolean; sample: boolean }) {
@@ -68,11 +69,11 @@ export default function MelEvidenceReport({ orgId, organisation, funder, sample 
     }
     void (async () => {
       try {
-        if (funder && !beforeId) { if (!selected.metrics) throw Error('Published assessment findings are unavailable.'); setAnalysis({ assessmentId: selected.id, beforeId, metrics: selected.metrics, assigned: selected.assigned, completed: selected.completed, comparison: null }); return; }
+        if (funder && !beforeId) { if (!selected.metrics) throw new UserFacingError('Published assessment findings are unavailable.'); setAnalysis({ assessmentId: selected.id, beforeId, metrics: selected.metrics, assigned: selected.assigned, completed: selected.completed, comparison: null }); return; }
         const result = await fieldApi(`/api/assessments?org=${encodeURIComponent(orgId)}&mode=${funder ? 'published' : 'analysis'}&id=${encodeURIComponent(selected.id)}${beforeId ? `&compare=${encodeURIComponent(beforeId)}` : ''}`);
         if (cancelled) return;
         setAnalysis({ assessmentId: selected.id, beforeId, metrics: funder ? selected.metrics || [] : result.metrics, assigned: funder ? selected.assigned : result.assigned, completed: funder ? selected.completed : result.completed, comparison: result.comparison, notes: fieldDataReportNote(result) ? [`Assessment findings: ${fieldDataReportNote(result)}`] : [] });
-      } catch (error) { if (!cancelled) setAnalysisError(error instanceof Error ? error.message : 'Selected assessment findings are unavailable.'); }
+      } catch (error) { if (!cancelled) setAnalysisError(userFacingMessage(error, 'Selected assessment findings are unavailable.')); }
     })();
     return () => { cancelled = true; };
     // Source refreshes and the explicit IDs own this request. Project changes clear

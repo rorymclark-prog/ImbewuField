@@ -10,7 +10,7 @@ export default function SampleLimaConversation({role}:{role:string}) {
   const example=sampleLimaFor(role);
   const [followed,setFollowed]=useState(false);
   return <section className={styles.root} style={{padding:16,borderRadius:16}} aria-label={inlineText(lang,'Lima example conversation')}>
-    <span className={styles.tag}>{inlineText(lang,'Lima · guided conversation')}</span><h2 style={{marginTop:12}}>{example.title}</h2>
+    <span className={styles.tag} style={{color:'var(--text-primary)'}}>{inlineText(lang,'Lima · guided conversation')}</span><h2 style={{marginTop:12}}>{example.title}</h2>
     <p>{inlineText(lang,'Explore this prepared conversation. Live questions are available from your own workspace.')}</p>
     {lang==='xh'&&<p role="note">{inlineText(lang,'The example questions and answers below stay in English so the advice is not changed in translation.')}</p>}
     <article className={styles.card}><strong>{inlineText(lang,'You')}</strong><p>{example.question}</p>{'image' in example && <img data-photo-preview src={example.image} alt={inlineText(lang,'AI-generated example of aphids on a leaf')} style={{width:'100%',maxWidth:300,borderRadius:12}}/>}</article>

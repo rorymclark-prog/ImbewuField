@@ -1734,6 +1734,62 @@
       "st": "Dihlooho tsa tlaleho e feletseng di boloka dipalo tsa mobu tse se nang mohlodi di sa tsejwe.",
       "ts": "Tinhloko ta xiviko lexi heleleke ti hlayisa mimpimo ya misava leyi nga riki na xihlovo yi nga tiveki.",
       "ve": "Ṱhoho dza muvhigo wo fhelelaho dzi vhulunga zwiṱhanganyelo zwa mavu zwi si na tshisima zwi sa ḓivhei."
+    },
+    {
+      "english": "The menu, field-visit form and crop prices are easy to read in dark mode.",
+      "zu": "Imenyu, ifomu lokuvakashela insimu namanani ezitshalo kulula ukukufunda kumodi emnyama.",
+      "st": "Menyu, foromo ya ketelo ya tshimo le ditheko tsa dijalo di bonolo ho bala ka mokgwa o lefifi.",
+      "ts": "Menyu, fomo yo endzela nsimu ni minxavo ya swirimiwa swi olova ku hlayiwa eka modi ya munyama.",
+      "ve": "Menyu, fomo ya u dalela tsimu na mitengo ya zwiliwa zwi leluwa u vhala kha modu ya swiswi."
+    },
+    {
+      "english": "Messages, the exchange form and Records links are clearer, in light and dark.",
+      "zu": "Imilayezo, ifomu lokushintshana nezixhumanisi zamaRekhodi kucace kakhulu, ekukhanyeni nasebumnyameni.",
+      "st": "Melaetsa, foromo ya phapanyetsano le dihokelo tsa Direkoto di hlakile haholwanyane, leseding le lefifing.",
+      "ts": "Marungula, fomo ya ku cincana ni swihlanganisi swa Tirhekhodo swi le rivaleni ku tlula, eku vonakaleni ni le munyameni.",
+      "ve": "Milaedza, fomo ya u tshintshana na vhukwamanyi ha Rekhodo zwo kona u vhonala, kha tshedza na swiswi."
+    },
+    {
+      "english": "Lima no longer covers the last buttons of a manual chapter.",
+      "zu": "ULima akasamboze izinkinobho zokugcina zesahluko sencwadi yeziqondiso.",
+      "st": "Lima ha a sa kwahela dikonopo tsa ho qetela tsa kgaolo ya bukana.",
+      "ts": "Lima a nga ha funengeti tikonopo to hetelela ta ndzima ya buku ya swiletelo.",
+      "ve": "Lima a tsha khou fukedza dzibathoni dza u fhedza dza ndima ya bugu ya ndaela."
+    },
+    {
+      "english": "A practice message on Contact now says it was kept on this device, not sent.",
+      "zu": "Umlayezo wokuzilolonga kuThintana manje uthi ugcinwe kule divayisi, awuthunyelwanga.",
+      "st": "Molaetsa wa boikwetliso ho Ikopanye le rona jwale o re o bolokilwe sesebedisweng sena, ha o a romellwa.",
+      "ts": "Rungula ro titoloveta eka Vulavurisana sweswi ri vula leswaku ri hlayisiwile eka xitirhisiwa lexi, a ri rhumeriwanga.",
+      "ve": "Mulaedza wa u ḓigudisa kha Kwamani zwino u ri wo vhulungwa kha tshishumiswa itshi, a wo ngo rumelwa."
+    },
+    {
+      "english": "Report totals now match their charts, and report counts read correctly.",
+      "zu": "Izingqikithi zemibiko manje ziyafana namashadi azo, futhi izibalo zemibiko zibhalwe kahle.",
+      "st": "Dikakaretso tsa ditlaleho jwale di dumellana le dichate tsa tsona, mme dipalo tsa ditlaleho di ngotswe hantle.",
+      "ts": "Mihlanganiso ya swiviko sweswi yi fambelana ni tichati ta yona, naswona tinhlayo ta swiviko ti tsariwe kahle.",
+      "ve": "Tshoṱhe tsha mivhigo zwino tshi tendelana na tshati dzayo, nahone mbalo dza mivhigo dzo ṅwalwa zwavhuḓi."
+    },
+    {
+      "english": "Home, Map, Studies and Prices now open offline, even before you have visited them.",
+      "zu": "Ikhaya, iMephu, Izifundo naManani manje kuyavuleka ungaxhunyiwe, ngisho ungakakuvakasheli.",
+      "st": "Lehae, Mmapa, Dithuto le Ditheko jwale di a buleha ntle le marang-rang, leha o eso di etele.",
+      "ts": "Kaya, Mepe, Tidyondzo ni Minxavo sweswi swa pfuleka handle ka inthanete, hambi u nga si swi endzela.",
+      "ve": "Hayani, Mepe, Ngudo na Mitengo zwino zwi a vulea hu si na inthanete, naho ni sa athu u zwi dalela."
+    },
+    {
+      "english": "Error messages now explain the problem in plain words, not technical text.",
+      "zu": "Imilayezo yamaphutha manje ichaza inkinga ngamagama alula, hhayi ngombhalo wobuchwepheshe.",
+      "st": "Melaetsa ya diphoso jwale e hlalosa bothata ka mantswe a bonolo, eseng ka mongolo wa setheknoloji.",
+      "ts": "Marungula ya swihoxo sweswi ma hlamusela xiphiqo hi marito yo olova, ku nga ri hi matsalwa ya xithekiniki.",
+      "ve": "Milaedza ya vhukhakhi zwino i ṱalutshedza thaidzo nga maipfi a leluwaho, hu si nga maṅwalwa a thekhinikhaḽa."
+    },
+    {
+      "english": "Menus, pop-ups and Lima now work fully from a keyboard and keep your place.",
+      "zu": "Amamenyu, amaphaneli avelayo noLima manje asebenza ngokugcwele ngekhibhodi futhi agcina lapho ubukhona.",
+      "st": "Dimenyu, diphanele tse hlahang le Lima jwale di sebetsa ka botlalo ka khiboto mme di boloka moo o neng o le teng.",
+      "ts": "Timenyu, tiphanele leti humelelaka na Lima sweswi swi tirha hi ku helela hi khiboto naswona swi hlayisa laha a wu ri kona.",
+      "ve": "Dzimenyu, dziphanele dzine dza bvelela na Lima zwino zwi shuma nga vhuḓalo nga khibodo nahone zwi vhulunga he na vha ni hone."
     }
   ],
   "historyBefore": [

@@ -1,5 +1,6 @@
 'use client';
 
+import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { useEffect, useRef, useState } from 'react';
 import AiFeatureSettings from './AiFeatureSettings';
 import LanguageDraftNote from './LanguageDraftNote';
@@ -12,6 +13,7 @@ import { setAppLevel, useAppLevel, type AppLevel } from '@/lib/app-level';
 import { inlineText } from '@/lib/xh-inline';
 import { coverageOf, type LangCoverage } from '@/lib/lang-coverage';
 import Link from 'next/link';
+import { useEscapeClose } from '@/lib/use-escape-close';
 
 // Small pill switch, matching the app's toggle style (used for the Guidance rows).
 function PillToggle({ on, onClick, label }: { on: boolean; onClick: () => void; label: string }) {
@@ -72,6 +74,7 @@ export default function ThemePanel({ open, onClose }: Props) {
   // language (and every key isiXhosa has) reads the dictionary exactly as before.
   const t = (key: string) => lang === 'xh' && getLoadedDict('xh')[key] === undefined ? inlineText(lang, translate('en', key)) : dictionaryT(key);
   const panelRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(open, panelRef);
   const level = useAppLevel();
 
   // How much of each language is actually translated, so a language that is still mostly
@@ -128,12 +131,7 @@ export default function ThemePanel({ open, onClose }: Props) {
   ];
 
   // Close on Escape
-  useEffect(() => {
-    if (!open) return;
-    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [open, onClose]);
+  useEscapeClose(open, onClose);
 
   // Close on outside click
   useEffect(() => {

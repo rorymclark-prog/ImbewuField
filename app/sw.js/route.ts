@@ -84,7 +84,9 @@ function cacheAsset(cache, url) {
     let response = await cache.match(url);
     if (!response) {
       response = await fetch(url);
-      if (!response.ok) throw new Error('Startup asset unavailable: ' + url);
+      // Release the connection: an unread error body holds one of the browser's six sockets to
+      // this host, and a handful of unresolvable lazy chunks was enough to stall every fetch behind.
+      if (!response.ok) { if (response.body) response.body.cancel().catch(function () {}); throw new Error('Startup asset unavailable: ' + url); }
       await cache.put(url, response.clone());
     }
     if (new URL(url).pathname.endsWith('.css')) {
@@ -96,7 +98,61 @@ function cacheAsset(cache, url) {
   pendingAssets.set(url, work);
   return work.finally(function () { pendingAssets.delete(url); });
 }
-async function cachePage(cache, url, suppliedResponse) {
+// A page's HTML only names the chunks it loads up front. Anything behind next/dynamic or a lazy
+// import (a Rive sprout on Home, per-tab CSS on /farmer) is requested by number from the webpack
+// runtime AFTER hydration, so it is in no HTML and used to reach the cache only if the farmer had
+// already opened that page online. Offline, tapping Home from a page that never loaded it then died
+// with ChunkLoadError. These helpers read the runtime's id -> filename tables and the .e(id) calls in
+// the page's scripts to find those chunks. Best effort throughout: a build that minifies the runtime
+// differently just matches nothing and we are back to the old behaviour, never a failed install.
+const scannedScripts = new Set();
+function readRuntime(text) {
+  const table = function (body) {
+    const out = {};
+    for (const m of (body || '').matchAll(/"?([\\w-]+)"?:"([^"]*)"/g)) out[m[1]] = m[2];
+    return out;
+  };
+  const maps = { explicit: {}, names: {}, hashes: {}, css: {} };
+  for (const m of text.matchAll(/"?([\\w-]+)"?===e\\?"(static\\/chunks\\/[^"]+)"/g)) maps.explicit[m[1]] = m[2];
+  const js = text.match(/"static\\/chunks\\/"\\+(?:\\(\\(\\{([^}]*)\\}\\)\\[e\\]\\|\\|e\\)|e)\\+"\\."\\+\\(\\{([^}]*)\\}\\)\\[e\\]\\+"\\.js"/);
+  if (js) { maps.names = table(js[1]); maps.hashes = table(js[2]); }
+  const css = text.match(/"static\\/css\\/"\\+\\(\\{([^}]*)\\}\\)\\[e\\]\\+"\\.css"/);
+  if (css) maps.css = table(css[1]);
+  return maps;
+}
+function lazyChunkUrls(text, maps) {
+  const urls = [];
+  for (const m of text.matchAll(/\\.e\\(("?)([\\w-]+)\\1\\)/g)) {
+    const id = m[2];
+    const script = maps.explicit[id] || (maps.hashes[id] ? 'static/chunks/' + (maps.names[id] || id) + '.' + maps.hashes[id] + '.js' : null);
+    if (script) urls.push(script);
+    if (maps.css[id]) urls.push('static/css/' + maps.css[id] + '.css');
+  }
+  return urls.map(function (path) { return new URL('/_next/' + path, self.location.origin).href; });
+}
+async function cacheLazyChunks(cache, assets) {
+  const runtimeUrl = assets.find(function (asset) { return /\\/webpack-[^/]*\\.js$/.test(new URL(asset).pathname); });
+  const runtime = runtimeUrl && await cache.match(runtimeUrl);
+  if (!runtime) return;
+  const maps = readRuntime(await runtime.text());
+  const queue = assets.filter(function (asset) { return new URL(asset).pathname.endsWith('.js'); });
+  while (queue.length) {
+    const batch = queue.splice(0).filter(function (asset) { return !scannedScripts.has(asset); });
+    await Promise.all(batch.map(async function (asset) {
+      scannedScripts.add(asset);
+      const hit = await cache.match(asset);
+      if (!hit) return;
+      await Promise.all(lazyChunkUrls(await hit.text(), maps).map(function (url) {
+        return cacheAsset(cache, url).then(function () {
+          if (new URL(url).pathname.endsWith('.js')) queue.push(url);
+        }, function () {});
+      }));
+    }));
+  }
+}
+// withLazy: also store the lazy chunks. Only for the install precache and the explicit "save for
+// offline" download; ordinary navigations would otherwise pull every lazy chunk on a farmer's airtime.
+async function cachePage(cache, url, suppliedResponse, withLazy) {
   const response = suppliedResponse || await fetch(url, { cache: 'reload' });
   if (!response.ok || !response.headers.get('content-type')?.includes('text/html')) {
     throw new Error('Startup page unavailable: ' + url);
@@ -106,6 +162,7 @@ async function cachePage(cache, url, suppliedResponse) {
     throw new Error('Startup page has no application scripts');
   }
   await Promise.all(assets.map(function (asset) { return cacheAsset(cache, asset); }));
+  if (withLazy) await cacheLazyChunks(cache, assets).catch(function () {});
   await cache.put(url, response);
 }
 self.addEventListener('install', function (event) {
@@ -113,11 +170,11 @@ self.addEventListener('install', function (event) {
     const cache = await caches.open(SHELL_CACHE);
     // The installed app launches /home. If preparing it fails, reject this update and
     // leave the previous working worker and its caches in control.
-    await cachePage(cache, '/home');
+    await cachePage(cache, '/home', null, true);
     await Promise.all(PRECACHE_URLS.map(function (url) {
       if (url === '/home') return;
       return (url.endsWith('.json') || url.endsWith('.png')
-        ? cache.add(url) : cachePage(cache, url)).catch(function () {});
+        ? cache.add(url) : cachePage(cache, url, null, true)).catch(function () {});
     }));
     await self.skipWaiting();
   })());
@@ -145,7 +202,7 @@ self.addEventListener('message', function (event) {
     for (const path of requested) {
       let error = '';
       if (event.data.type === 'PREPARE_FIELD_PAGES') {
-        try { await cachePage(cache, path); } catch (_) { error = 'Could not finish downloading this page.'; }
+        try { await cachePage(cache, path, null, true); } catch (_) { error = 'Could not finish downloading this page.'; }
       }
       const response = await cache.match(path);
       let ready = false;

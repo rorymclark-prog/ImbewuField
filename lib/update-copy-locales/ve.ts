@@ -139,6 +139,13 @@ const copy:UpdateCopy={
   "Visit, training and programme reports compare recorded delivery across periods.": "Mivhigo ya u dalela, vhugudisi na mbekanyamushumo i vhambedza zwo itwaho zwo rekhodiwaho vhukati ha tshifhinga.",
   "MEL reports compare dated readings and include agreed donor indicator details.": "Mivhigo ya MEL i vhambedza zwo vhalwaho zwi na maḓuvha, nahone i katela mafhungo a zwiga zwa vhalambedzi zwo tendelwaho.",
   "Donor evidence, missing records and current snapshots stay clear in every PDF.": "Vhuṱanzi ha vhalambedzi, rekhodo dzo shayaho na zwifanyiso zwa zwino zwi dzula zwi tshi pfesesea kha PDF iṅwe na iṅwe.",
+  "The menu, field-visit form and crop prices are easy to read in dark mode.": "Menyu, fomo ya u dalela tsimu na mitengo ya zwiliwa zwi leluwa u vhala kha modu ya swiswi.",
+  "Messages, the exchange form and Records links are clearer, in light and dark.": "Milaedza, fomo ya u tshintshana na vhukwamanyi ha Rekhodo zwo kona u vhonala, kha tshedza na swiswi.",
+  "Lima no longer covers the last buttons of a manual chapter.": "Lima a tsha khou fukedza dzibathoni dza u fhedza dza ndima ya bugu ya ndaela.",
+  "A practice message on Contact now says it was kept on this device, not sent.": "Mulaedza wa u ḓigudisa kha Kwamani zwino u ri wo vhulungwa kha tshishumiswa itshi, a wo ngo rumelwa.",
+  "Report totals now match their charts, and report counts read correctly.": "Tshoṱhe tsha mivhigo zwino tshi tendelana na tshati dzayo, nahone mbalo dza mivhigo dzo ṅwalwa zwavhuḓi.",
+  "Home, Map, Studies and Prices now open offline, even before you have visited them.": "Hayani, Mepe, Ngudo na Mitengo zwino zwi a vulea hu si na inthanete, naho ni sa athu u zwi dalela.",
+  "Error messages now explain the problem in plain words, not technical text.": "Milaedza ya vhukhakhi zwino i ṱalutshedza thaidzo nga maipfi a leluwaho, hu si nga maṅwalwa a thekhinikhaḽa.",
   "Survey and reports now show crops, food-forest and animal products through the year.": "Ṱhoḓisiso na mivhigo zwino zwi sumbedza zwiliwa, zwibveledzwa zwa ḓaka ḽa zwiḽiwa na zwa zwifuwo ṅwaha woṱhe.",
   "Choose Site potential or Complete site plan, then the detail you need.": "Nangani Ndeme ya fhethu kana Pulane yo fhelelaho ya fhethu, nahone ni nange zwidodombedzwa zwine na zwi ṱoḓa.",
   "Record plan adds a scaled map with symbols and a legend. Download or save it without AI.": "Pulane ya rekhodo i engedza mepe yo eletshedzwaho ine ya vha na zwiga na ṱhaluso yazwo. I dzhiseni kana ni i vhulunge hu si na AI.",
@@ -151,5 +158,6 @@ const copy:UpdateCopy={
   "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Vulani U sedza phanḓa na u rumela, nga murahu ni nange Pulane ya rekhodo u wana tshifanyiso tsho eletshedzwaho na ṱhaluso yatsho.",
   "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Notsi dza makete dzi vhulunga tshisima na ḓuvha zwadzo. Pulane dza u rengisa dzi dzula dzo khethekana na thengiso yo rekhodiwaho.",
   "Full report headers keep unsourced soil values unknown.": "Ṱhoho dza muvhigo wo fhelelaho dzi vhulunga zwiṱhanganyelo zwa mavu zwi si na tshisima zwi sa ḓivhei.",
+  "Menus, pop-ups and Lima now work fully from a keyboard and keep your place.": "Dzimenyu, dziphanele dzine dza bvelela na Lima zwino zwi shuma nga vhuḓalo nga khibodo nahone zwi vhulunga he na vha ni hone.",
 };
 export default copy;

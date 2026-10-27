@@ -30,6 +30,8 @@ test('every evidence/profile/survey sheet announces itself as a modal dialog', (
 test('every evidence/profile/survey sheet closes on Escape', () => {
   for (const rel of SHEETS) {
     const s = source(rel);
+    // The shared hook (lib/use-escape-close.ts, w28-06) or a sheet's own keydown listener.
+    if (/useEscapeClose\((open|true), onClose\)/.test(s)) continue;
     assert.match(s, /e\.key === 'Escape'/, `${rel} does not listen for Escape`);
     assert.match(s, /addEventListener\('keydown', onKey\)/, `${rel} wires no keydown listener`);
   }

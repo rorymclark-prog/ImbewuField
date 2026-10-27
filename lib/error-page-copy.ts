@@ -21,6 +21,11 @@ export interface ErrorPageCopy {
   errorTitle: string;
   errorBody: string;
   tryAgain: string;
+  /** Shown instead of errorTitle/errorBody when the failure is a missing chunk or the phone is offline. */
+  offlineTitle: string;
+  offlineBody: string;
+  /** Link to /offline ("Saved on this device"). */
+  offlineSaved: string;
   notFoundTitle: string;
   notFoundBody: string;
   goHome: string;
@@ -32,6 +37,9 @@ const EN: ErrorPageCopy = {
   errorTitle: 'Something went wrong',
   errorBody: 'This page ran into a problem. Your other reports, photos and places are safe.',
   tryAgain: 'Try again',
+  offlineTitle: "You're offline",
+  offlineBody: "This screen isn't saved on your phone yet. Screens you opened before still work. Open one of those, or try again when you have signal.",
+  offlineSaved: 'Saved on this device',
   notFoundTitle: 'Page not found',
   notFoundBody: "That page doesn't exist.",
   goHome: 'Go home',
@@ -45,6 +53,9 @@ const ZU: ErrorPageCopy = {
   errorTitle: 'Kukhona okungahambi kahle',
   errorBody: 'Leli khasi lihlangabezane nenkinga. Imibiko yakho, izithombe nezindawo zakho zilondolozekile.',
   tryAgain: 'Zama futhi',
+  offlineTitle: 'Awuxhumekile ku-inthanethi',
+  offlineBody: 'Leli khasi alikalondolozwa efonini yakho. Amakhasi owavule ngaphambilini asasebenza. Vula elinye lawo, noma uzame futhi uma unesignali.',
+  offlineSaved: 'Okulondoloziwe kule foni',
   notFoundTitle: 'Ikhasi alitholakali',
   notFoundBody: 'Leli khasi alikho.',
   goHome: 'Goduka',
@@ -61,8 +72,22 @@ const XH: ErrorPageCopy = {
   notFoundTitle: 'Iphepha alifumanekanga',
   notFoundBody: 'Elo phepha alikho.',
   goHome: 'Buyela ekhaya',
+  offlineTitle: 'Awukho kwi-intanethi',
+  offlineBody: 'Esi sikrini asikagcinwa kwifowuni yakho. Izikrini owazivula ngaphambili zisasebenza. Vula esinye sazo, okanye uzame kwakhona xa unesiginali.',
+  offlineSaved: 'Kugcinwe kwesi sixhobo',
   zuluDraftNotice: 'Unreviewed isiXhosa draft.',
 };
+
+// A chunk that will not load is the app saying "this screen's code was never saved on this phone",
+// not a bug in the screen — and on a farm with no signal the generic "Try again" just fails again.
+// Matches webpack's ChunkLoadError / "Loading chunk N failed" / "Loading CSS chunk N failed" and the
+// browser's dynamic-import failure text (Chrome, Firefox, Safari wordings).
+const CHUNK_FAILURE = /Loading (?:CSS )?chunk [\w-]+ failed|Failed to fetch dynamically imported module|error loading dynamically imported module|Importing a module script failed/i;
+
+export function isOfflineError(error: { name?: string; message?: string } | null | undefined): boolean {
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) return true;
+  return error?.name === 'ChunkLoadError' || CHUNK_FAILURE.test(error?.message ?? '');
+}
 
 export function errorPageCopy(lang: ErrorPageLang): ErrorPageCopy {
   return lang === 'zu' ? ZU : lang === 'xh' ? XH : EN;
