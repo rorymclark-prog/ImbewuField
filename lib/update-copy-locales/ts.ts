@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Visual audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Map legends have thinner borders and clearer scale marks.": "Mabokisi ya swikombiso swa mimepe ya ni mindzilakano yo vevuka ni swikombiso swa mpimo leswi nga erivaleni.",
   "Menu → Site design": "Menyu → Pulani ya ndhawu",
   "Check the new map lettering": "Kamba matsalelo lamantshwa ya mepe",
   "Create a free exact map. Check the larger key and the buildings you traced.": "Endla mepe lowu kongomeke wa mahala. Kamba nhlamuselo leyikulu ya swikombiso ni miako leyi u nga yi dirowa.",

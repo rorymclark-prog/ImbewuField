@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Visual audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Map legends have thinner borders and clearer scale marks.": "Mabokose a matshwao a dimmapa a na le meedi e mesesane le matshwao a sekala a hlakileng.",
   "Menu → Site design": "Lenane → Moralo wa sebaka",
   "Check the new map lettering": "Hlahloba mongolo o motjha wa mmapa",
   "Create a free exact map. Check the larger key and the buildings you traced.": "Etsa mmapa o nepahetseng wa mahala. Hlahloba tlhaloso e kgolo ya matshwao le meaho eo o e thaletseng.",

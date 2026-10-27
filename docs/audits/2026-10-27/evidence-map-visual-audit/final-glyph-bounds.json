@@ -1,0 +1,4028 @@
+[
+  {
+    "sheet": "01",
+    "width": 3783,
+    "height": 2202,
+    "frame": {
+      "ink": "#58705c",
+      "lineWidth": 2.8380000591278076
+    },
+    "calls": [
+      {
+        "text": "01 — SITE BASE MAP &",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2943.546562433243,
+          "top": 127.42799758911133,
+          "right": 3599.1476440429688,
+          "bottom": 170.63800430297852
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "TERRACE LEVELS",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2942.0965625047684,
+          "top": 190.48600006103516,
+          "right": 3447.4088134765625,
+          "bottom": 233.58000564575195
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Reference Blueprint",
+        "font": "600 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6b6355",
+        "bounds": {
+          "left": 2944.2346093654633,
+          "top": 274.50900077819824,
+          "right": 3289.883270263672,
+          "bottom": 307.9570026397705
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Ubhejane Crèche",
+        "font": "600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.8849217891693,
+          "top": 324.48100090026855,
+          "right": 3205.8816528320312,
+          "bottom": 354.47800064086914
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "House / building",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3061.2453122138977,
+          "top": 476.9356269836426,
+          "right": 3514.113983154297,
+          "bottom": 531.7756309509277
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Existing tarred",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3061.2453122138977,
+          "top": 653.8856269836426,
+          "right": 3472.8367919921875,
+          "bottom": 708.7256309509278
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "driveway",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3058.503125190735,
+          "top": 726.8856269836426,
+          "right": 3306.422149658203,
+          "bottom": 781.3656303405762
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Property boundary",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3061.2453122138977,
+          "top": 903.8356269836426,
+          "right": 3585.78955078125,
+          "bottom": 958.3156303405761
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Exact plan — geometry and counts",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.3603904247284,
+          "top": 1999.939001083374,
+          "right": 3388.824981689453,
+          "bottom": 2024.617000579834
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "come from your saved design.",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.286351442337,
+          "top": 2034.939001083374,
+          "right": 3318.144012451172,
+          "bottom": 2059.6170024871826
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "No unsaved features added.",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.3603904247284,
+          "top": 2069.939001083374,
+          "right": 3294.264678955078,
+          "bottom": 2090.2763290405273
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "5 m",
+        "font": "bold 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20382b",
+        "bounds": {
+          "left": 402.75624990463257,
+          "top": 2052.4237518310547,
+          "right": 470.59873962402344,
+          "bottom": 2081.7837524414062
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "N",
+        "font": "800 26px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20382b",
+        "bounds": {
+          "left": 2728.93390750885,
+          "top": 131.93762466430664,
+          "right": 2745.066095352173,
+          "bottom": 150.735625
+        },
+        "clip": null,
+        "clipped": false
+      }
+    ]
+  },
+  {
+    "sheet": "02",
+    "width": 3783,
+    "height": 2202,
+    "frame": {
+      "ink": "#58705c",
+      "lineWidth": 2.8380000591278076
+    },
+    "calls": [
+      {
+        "text": "02 — SECTOR ANALYSIS",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2943.546562433243,
+          "top": 127.48600006103516,
+          "right": 3647.0755615234375,
+          "bottom": 170.63800430297852
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Property evidence: latitude sun path,",
+        "font": "600 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6b6355",
+        "bounds": {
+          "left": 2944.2346093654633,
+          "top": 211.50900077819824,
+          "right": 3577.8628540039062,
+          "bottom": 245.10500526428223
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "terrain fall, traced driveway access,",
+        "font": "600 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6b6355",
+        "bounds": {
+          "left": 2942.3788281679153,
+          "top": 258.50900077819824,
+          "right": 3556.8087158203125,
+          "bottom": 292.10500144958496
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "coordinate climate grid",
+        "font": "600 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6b6355",
+        "bounds": {
+          "left": 2942.543593764305,
+          "top": 305.50900077819824,
+          "right": 3341.3566284179688,
+          "bottom": 339.3270015716553
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Ubhejane Crèche",
+        "font": "600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.8849217891693,
+          "top": 355.48100090026855,
+          "right": 3205.8816528320312,
+          "bottom": 385.47800064086914
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "1. Summer sun",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3017.7874999046326,
+          "top": 496.0637512207031,
+          "right": 3287.2899169921875,
+          "bottom": 525.7531261444092
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "— ESE → N →",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3023.3012499809265,
+          "top": 545.0637512207031,
+          "right": 3290.0457153320312,
+          "bottom": 574.7437515258789
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "WSW",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3016.834375023842,
+          "top": 594.0637512207031,
+          "right": 3117.8431243896484,
+          "bottom": 623.7437515258789
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "2. Winter sun",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3017.7874999046326,
+          "top": 662.0237503051758,
+          "right": 3260.8692932128906,
+          "bottom": 691.7531261444092
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "— ENE → N →",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3023.3012499809265,
+          "top": 711.423749923706,
+          "right": 3293.6063232421875,
+          "bottom": 740.34375
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "WNW",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3016.834375023842,
+          "top": 760.423749923706,
+          "right": 3122.866241455078,
+          "bottom": 789.34375
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "3. Regional",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3017.8343749046326,
+          "top": 827.6237506866455,
+          "right": 3225.531204223633,
+          "bottom": 864.1837482452393
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "summer",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3017.696874976158,
+          "top": 885.263750076294,
+          "right": 3168.813735961914,
+          "bottom": 906.7531261444092
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "cooling wind",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3017.6687500476837,
+          "top": 925.6237506866455,
+          "right": 3250.8780517578125,
+          "bottom": 962.1837482452393
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "— NE ᴬ",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3023.3012499809265,
+          "top": 973.666934967041,
+          "right": 3155.924041748047,
+          "bottom": 1004.34375
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "4. Regional",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3017.7874999046326,
+          "top": 1042.6237506866455,
+          "right": 3225.306198120117,
+          "bottom": 1079.1837482452393
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "cold front —",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3017.6687500476837,
+          "top": 1091.6237506866455,
+          "right": 3246.3961486816406,
+          "bottom": 1121.743751525879
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "driving rain —",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3017.6687500476837,
+          "top": 1140.6237506866455,
+          "right": 3274.834930419922,
+          "bottom": 1177.1837482452393
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "SW ᴬ",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3018.140625,
+          "top": 1188.666934967041,
+          "right": 3110.262191772461,
+          "bottom": 1219.743751525879
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "5. Regional",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3017.8343749046326,
+          "top": 1257.6237506866455,
+          "right": 3225.929946899414,
+          "bottom": 1294.1837482452393
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "berg wind —",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3018.75,
+          "top": 1306.6237506866455,
+          "right": 3249.839324951172,
+          "bottom": 1343.1837482452393
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "NW ᴬ",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3019.496874809265,
+          "top": 1354.666934967041,
+          "right": 3114.5540618896484,
+          "bottom": 1385.34375
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "6. Regional",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3398.8343749046326,
+          "top": 495.6237506866455,
+          "right": 3606.2918243408203,
+          "bottom": 532.1837482452393
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "fire approach",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3398.1999999284744,
+          "top": 544.6237506866455,
+          "right": 3645.6067504882812,
+          "bottom": 580.7837543487549
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "(NW) ᴬ",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3399.5625,
+          "top": 592.666934967041,
+          "right": 3522.415298461914,
+          "bottom": 628.7150077819824
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "7. Driveway",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3398.7874999046326,
+          "top": 662.4225006103516,
+          "right": 3607.1717834472656,
+          "bottom": 697.9437484741211
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "access — dust",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3398.835625052452,
+          "top": 710.6237506866455,
+          "right": 3673.4805297851562,
+          "bottom": 740.7531261444092
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "& noise — NE",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3398.8125,
+          "top": 759.9837493896484,
+          "right": 3654.1918029785156,
+          "bottom": 789.7437515258789
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "8. Site slope",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3398.8343749046326,
+          "top": 827.6237506866455,
+          "right": 3628.252410888672,
+          "bottom": 863.7837543487549
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "estimate falls",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3398.835625052452,
+          "top": 876.6237506866455,
+          "right": 3653.3399047851562,
+          "bottom": 906.7437515258789
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "SSW · ~10%",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3399.140625,
+          "top": 925.9837493896484,
+          "right": 3618.3799438476562,
+          "bottom": 955.7837524414062
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "(five-point",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3399.5625,
+          "top": 974.355001449585,
+          "right": 3589.155563354492,
+          "bottom": 1010.7837505340576
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "SRTM ·",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3399.140625,
+          "top": 1024.0637512207031,
+          "right": 3528.3824920654297,
+          "bottom": 1053.743751525879
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "indicative)",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3399.75,
+          "top": 1072.355001449585,
+          "right": 3587.496795654297,
+          "bottom": 1107.7150058746338
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "9. Terrain-RGB",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3398.919375061989,
+          "top": 1141.0237503051758,
+          "right": 3671.57177734375,
+          "bottom": 1170.7837524414062
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "contour — 0.5",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3398.6687500476837,
+          "top": 1190.0237503051758,
+          "right": 3666.036163330078,
+          "bottom": 1219.7837524414062
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "m interval",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3399.75,
+          "top": 1238.6237506866455,
+          "right": 3582.9705810546875,
+          "bottom": 1268.743751525879
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "10. Site",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3398.7874999046326,
+          "top": 1307.0237503051758,
+          "right": 3532.3811950683594,
+          "bottom": 1336.7837524414062
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "boundary",
+        "font": "600 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3399.75,
+          "top": 1355.6237506866455,
+          "right": 3575.4349670410156,
+          "bottom": 1391.9437503814697
+        },
+        "clip": {
+          "left": 2941,
+          "top": 484,
+          "right": 3679,
+          "bottom": 1402
+        },
+        "clipped": false
+      },
+      {
+        "text": "NOTES & PROVENANCE",
+        "font": "800 38px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2967.069687604904,
+          "top": 1430.1079998016357,
+          "right": 3409.6318359375,
+          "bottom": 1458.3800010681152
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "PROPERTY-SPECIFIC EVIDENCE — latitude sun path,",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2966.3603904247284,
+          "top": 1494.939001083374,
+          "right": 3644.6258544921875,
+          "bottom": 1519.3470001220703
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "terrain fall, traced driveway access, coordinate",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2965.006171822548,
+          "top": 1529.939001083374,
+          "right": 3556.392333984375,
+          "bottom": 1554.4550037384033
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "climate grid. ᴬ REGIONAL SECTOR ASSUMPTIONS —",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2965.126406311989,
+          "top": 1564.2927837371826,
+          "right": 3641.7870483398438,
+          "bottom": 1589.6170024871826
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "wind, berg and fire directions are the documented",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2964.5391562581062,
+          "top": 1599.939001083374,
+          "right": 3593.4532470703125,
+          "bottom": 1624.6170024871826
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "regional pattern for coastal KwaZulu-Natal, not",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2965.8562500476837,
+          "top": 1634.939001083374,
+          "right": 3562.6976318359375,
+          "bottom": 1659.6170024871826
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "measurements at this site. Confirm local wind, fire and",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2965.8562500476837,
+          "top": 1669.939001083374,
+          "right": 3651.2466430664062,
+          "bottom": 1693.599437713623
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "runoff directions by on-site observation before siting",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2965.8562500476837,
+          "top": 1704.939001083374,
+          "right": 3630.4384155273438,
+          "bottom": 1729.6170024871826
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "windbreaks or firebreaks. Sun path is computed from",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2964.5391562581062,
+          "top": 1739.939001083374,
+          "right": 3634.2821044921875,
+          "bottom": 1764.3470001220703
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "latitude. Bearings are TRUE north. COORDINATE",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2965.8562500476837,
+          "top": 1774.939001083374,
+          "right": 3576.4681396484375,
+          "bottom": 1799.617000579834
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "CLIMATE GRID — summer mean FROM ESE; winter",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2965.3689843416214,
+          "top": 1810.208999633789,
+          "right": 3614.099365234375,
+          "bottom": 1834.0246887207031
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "mean FROM SW; annual mean 2.8 m/s. This is coarse",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2965.8562500476837,
+          "top": 1844.939001083374,
+          "right": 3630.8611450195312,
+          "bottom": 1869.0246887207031
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "climatology for these coordinates, not an on-site wind",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2965.126406311989,
+          "top": 1879.939001083374,
+          "right": 3642.5075073242188,
+          "bottom": 1904.6170024871826
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "observation. CONTOURS — Mapbox Terrain-RGB",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2965.126406311989,
+          "top": 1914.939001083374,
+          "right": 3584.7085571289062,
+          "bottom": 1939.3470001220703
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "marching-squares geometry. The slope arrow and",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2965.8562500476837,
+          "top": 1949.939001083374,
+          "right": 3589.5292358398438,
+          "bottom": 1974.6170024871826
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "percentage remain a separate five-point SRTM plane",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2965.8562500476837,
+          "top": 1984.939001083374,
+          "right": 3631.6965942382812,
+          "bottom": 2009.617000579834
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "estimate and are indicative.",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2965.239046931267,
+          "top": 2019.939001083374,
+          "right": 3310.2794799804688,
+          "bottom": 2040.2700023651123
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "5 m",
+        "font": "bold 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20382b",
+        "bounds": {
+          "left": 402.75624990463257,
+          "top": 2052.4237518310547,
+          "right": 470.59873962402344,
+          "bottom": 2081.7837524414062
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "N",
+        "font": "800 26px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20382b",
+        "bounds": {
+          "left": 2728.93390750885,
+          "top": 131.93762466430664,
+          "right": 2745.066095352173,
+          "bottom": 150.735625
+        },
+        "clip": null,
+        "clipped": false
+      }
+    ]
+  },
+  {
+    "sheet": "03",
+    "width": 3783,
+    "height": 2202,
+    "frame": {
+      "ink": "#58705c",
+      "lineWidth": 2.8380000591278076
+    },
+    "calls": [
+      {
+        "text": "03 — PERMACULTURE",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2943.546562433243,
+          "top": 127.48600006103516,
+          "right": 3581.869140625,
+          "bottom": 170.64706802368164
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "ZONE MAP",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2944.1265625953674,
+          "top": 190.48600006103516,
+          "right": 3250.7090759277344,
+          "bottom": 233.58000564575195
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Reference Blueprint",
+        "font": "600 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6b6355",
+        "bounds": {
+          "left": 2944.2346093654633,
+          "top": 274.50900077819824,
+          "right": 3289.883270263672,
+          "bottom": 307.9570026397705
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Ubhejane Crèche",
+        "font": "600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.8849217891693,
+          "top": 324.48100090026855,
+          "right": 3205.8816528320312,
+          "bottom": 354.47800064086914
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Zone 1 — Daily",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3059.501562356949,
+          "top": 469.9356269836426,
+          "right": 3474.8964233398438,
+          "bottom": 524.4156303405762
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "garden",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3057.710000038147,
+          "top": 542.9356269836426,
+          "right": 3252.0987243652344,
+          "bottom": 597.7756309509277
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Zone 2 — Garden &",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3059.501562356949,
+          "top": 712.8856269836426,
+          "right": 3609.7642211914062,
+          "bottom": 758.0656272888184
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "orchard",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3058.503125190735,
+          "top": 785.8856269836426,
+          "right": 3271.085906982422,
+          "bottom": 831.0656272888184
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Zone 3 — Field crops",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3059.501562356949,
+          "top": 962.8356269836426,
+          "right": 3656.0148315429688,
+          "bottom": 1017.0756286621094
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Zone 5 — Natural",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3059.501562356949,
+          "top": 1139.7856269836425,
+          "right": 3559.1129760742188,
+          "bottom": 1185.0256286621093
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "habitat",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3060.125,
+          "top": 1212.7856269836425,
+          "right": 3254.4058837890625,
+          "bottom": 1257.9656272888183
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Property boundary",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3061.2453122138977,
+          "top": 1389.7356269836425,
+          "right": 3585.78955078125,
+          "bottom": 1444.2156303405761
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Tarred driveway",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3057.2515625953674,
+          "top": 1573.6856269836426,
+          "right": 3505.3080444335938,
+          "bottom": 1628.1656303405762
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Exact plan — geometry and counts",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.3603904247284,
+          "top": 1999.939001083374,
+          "right": 3388.824981689453,
+          "bottom": 2024.617000579834
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "come from your saved design.",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.286351442337,
+          "top": 2034.939001083374,
+          "right": 3318.144012451172,
+          "bottom": 2059.6170024871826
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "No unsaved features added.",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.3603904247284,
+          "top": 2069.939001083374,
+          "right": 3294.264678955078,
+          "bottom": 2090.2763290405273
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "5 m",
+        "font": "bold 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20382b",
+        "bounds": {
+          "left": 402.75624990463257,
+          "top": 2052.4237518310547,
+          "right": 470.59873962402344,
+          "bottom": 2081.7837524414062
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "N",
+        "font": "800 26px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20382b",
+        "bounds": {
+          "left": 2728.93390750885,
+          "top": 131.93762466430664,
+          "right": 2745.066095352173,
+          "bottom": 150.735625
+        },
+        "clip": null,
+        "clipped": false
+      }
+    ]
+  },
+  {
+    "sheet": "04",
+    "width": 3783,
+    "height": 2202,
+    "frame": {
+      "ink": "#58705c",
+      "lineWidth": 2.8380000591278076
+    },
+    "calls": [
+      {
+        "text": "04 — WATER,",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2943.546562433243,
+          "top": 127.48600006103516,
+          "right": 3320.5863647460938,
+          "bottom": 178.11275100708008
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "GREYWATER &",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2943.782187461853,
+          "top": 190.42799758911133,
+          "right": 3360.2620239257812,
+          "bottom": 233.58000564575195
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "IRRIGATION",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2945.6853127479553,
+          "top": 253.48600006103516,
+          "right": 3277.267578125,
+          "bottom": 296.58000564575195
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Reference Blueprint",
+        "font": "600 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6b6355",
+        "bounds": {
+          "left": 2944.2346093654633,
+          "top": 337.50900077819824,
+          "right": 3289.883270263672,
+          "bottom": 370.9570026397705
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Ubhejane Crèche",
+        "font": "600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.8849217891693,
+          "top": 387.48100090026855,
+          "right": 3205.8816528320312,
+          "bottom": 417.47800064086914
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "RAINWATER",
+        "font": "800 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2945.281406402588,
+          "top": 530.6809997558594,
+          "right": 3254.329345703125,
+          "bottom": 569
+        },
+        "clip": {
+          "left": 2941,
+          "top": 516,
+          "right": 3679,
+          "bottom": 1752
+        },
+        "clipped": false
+      },
+      {
+        "text": "JoJo Tank 2500L ×1",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3058.0250000953674,
+          "top": 629.9356269836426,
+          "right": 3587.693603515625,
+          "bottom": 675.1756286621094
+        },
+        "clip": {
+          "left": 2941,
+          "top": 516,
+          "right": 3679,
+          "bottom": 1752
+        },
+        "clipped": false
+      },
+      {
+        "text": "FILTERED GREYWATER",
+        "font": "800 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2945.281406402588,
+          "top": 743.3510009765625,
+          "right": 3531.8587646484375,
+          "bottom": 782.7300025939942
+        },
+        "clip": {
+          "left": 2941,
+          "top": 516,
+          "right": 3679,
+          "bottom": 1752
+        },
+        "clipped": false
+      },
+      {
+        "text": "Filtered greywater",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3061.2453122138977,
+          "top": 836.1356269836426,
+          "right": 3578.6027221679688,
+          "bottom": 890.9756309509278
+        },
+        "clip": {
+          "left": 2941,
+          "top": 516,
+          "right": 3679,
+          "bottom": 1752
+        },
+        "clipped": false
+      },
+      {
+        "text": "line ×1",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3060.125,
+          "top": 909.1356269836426,
+          "right": 3225.692153930664,
+          "bottom": 954.3156272888184
+        },
+        "clip": {
+          "left": 2941,
+          "top": 516,
+          "right": 3679,
+          "bottom": 1752
+        },
+        "clipped": false
+      },
+      {
+        "text": "WATER EARTHWORKS",
+        "font": "800 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2942.002031326294,
+          "top": 1015.5510009765625,
+          "right": 3514.8193359375,
+          "bottom": 1054.9300025939942
+        },
+        "clip": {
+          "left": 2941,
+          "top": 516,
+          "right": 3679,
+          "bottom": 1752
+        },
+        "clipped": false
+      },
+      {
+        "text": "Swale — earthwork",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3059.2109375,
+          "top": 1108.3356269836427,
+          "right": 3611.7630004882812,
+          "bottom": 1153.5156272888185
+        },
+        "clip": {
+          "left": 2941,
+          "top": 516,
+          "right": 3679,
+          "bottom": 1752
+        },
+        "clipped": false
+      },
+      {
+        "text": "(see sheet 05) ×1",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3059.84375,
+          "top": 1180.9325012207032,
+          "right": 3523.2105712890625,
+          "bottom": 1233.9725059509278
+        },
+        "clip": {
+          "left": 2941,
+          "top": 516,
+          "right": 3679,
+          "bottom": 1752
+        },
+        "clipped": false
+      },
+      {
+        "text": "Property boundary",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3061.2453122138977,
+          "top": 1297.5356269836425,
+          "right": 3585.78955078125,
+          "bottom": 1352.015630340576
+        },
+        "clip": {
+          "left": 2941,
+          "top": 516,
+          "right": 3679,
+          "bottom": 1752
+        },
+        "clipped": false
+      },
+      {
+        "text": "Tarred driveway",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3057.2515625953674,
+          "top": 1420.7356269836428,
+          "right": 3505.3080444335938,
+          "bottom": 1475.2156303405764
+        },
+        "clip": {
+          "left": 2941,
+          "top": 516,
+          "right": 3679,
+          "bottom": 1752
+        },
+        "clipped": false
+      },
+      {
+        "text": "Overland flow —",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3059.0421874523163,
+          "top": 1536.9356269836426,
+          "right": 3519.971435546875,
+          "bottom": 1582.1156272888184
+        },
+        "clip": {
+          "left": 2941,
+          "top": 516,
+          "right": 3679,
+          "bottom": 1752
+        },
+        "clipped": false
+      },
+      {
+        "text": "downhill to the SSW",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3058.503125190735,
+          "top": 1609.9356269836426,
+          "right": 3626.8445434570312,
+          "bottom": 1655.1156272888184
+        },
+        "clip": {
+          "left": 2941,
+          "top": 516,
+          "right": 3679,
+          "bottom": 1752
+        },
+        "clipped": false
+      },
+      {
+        "text": "(5.9° site slope)",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3059.84375,
+          "top": 1677.3274993896484,
+          "right": 3495.602996826172,
+          "bottom": 1737.1756286621094
+        },
+        "clip": {
+          "left": 2941,
+          "top": 516,
+          "right": 3679,
+          "bottom": 1752
+        },
+        "clipped": false
+      },
+      {
+        "text": "WATER BUDGET",
+        "font": "800 38px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2964.718437552452,
+          "top": 1780.1459999084473,
+          "right": 3261.0174560546875,
+          "bottom": 1808.3800010681152
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Roof catchment traced: 144 m²",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2966.3603904247284,
+          "top": 1842.468500137329,
+          "right": 3352.8697509765625,
+          "bottom": 1865.2700023651123
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Annual rainfall: 768 mm",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2964.9112500548363,
+          "top": 1879.939001083374,
+          "right": 3268.4569702148438,
+          "bottom": 1900.2970027923584
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Runoff coefficient: 0.8 (generic roof)",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2966.3603904247284,
+          "top": 1914.7575950622559,
+          "right": 3422.9301147460938,
+          "bottom": 1939.617000579834
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Harvestable: ~88 474 L a year",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2966.3603904247284,
+          "top": 1949.939001083374,
+          "right": 3345.562957763672,
+          "bottom": 1974.4550018310547
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Storage placed: 2 500 L",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2965.444921851158,
+          "top": 1984.939001083374,
+          "right": 3266.39306640625,
+          "bottom": 2009.617000579834
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "That is 3% of one year's harvest.",
+        "font": "600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6c6457",
+        "bounds": {
+          "left": 2964.5632031559944,
+          "top": 2019.939001083374,
+          "right": 3370.855194091797,
+          "bottom": 2044.4550018310547
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "5 m",
+        "font": "bold 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20382b",
+        "bounds": {
+          "left": 402.75624990463257,
+          "top": 2052.4237518310547,
+          "right": 470.59873962402344,
+          "bottom": 2081.7837524414062
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "N",
+        "font": "800 26px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20382b",
+        "bounds": {
+          "left": 2728.93390750885,
+          "top": 131.93762466430664,
+          "right": 2745.066095352173,
+          "bottom": 150.735625
+        },
+        "clip": null,
+        "clipped": false
+      }
+    ]
+  },
+  {
+    "sheet": "05",
+    "width": 3783,
+    "height": 2202,
+    "frame": {
+      "ink": "#58705c",
+      "lineWidth": 2.8380000591278076
+    },
+    "calls": [
+      {
+        "text": "05 — EARTHWORKS &",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2943.546562433243,
+          "top": 127.42799758911133,
+          "right": 3584.1963500976562,
+          "bottom": 170.63800430297852
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "CONTOUR SETTING-OUT",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2943.782187461853,
+          "top": 190.48600006103516,
+          "right": 3648.5491943359375,
+          "bottom": 233.58000564575195
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Reference Blueprint",
+        "font": "600 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6b6355",
+        "bounds": {
+          "left": 2944.2346093654633,
+          "top": 274.50900077819824,
+          "right": 3289.883270263672,
+          "bottom": 307.9570026397705
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Ubhejane Crèche",
+        "font": "600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.8849217891693,
+          "top": 324.48100090026855,
+          "right": 3205.8816528320312,
+          "bottom": 354.47800064086914
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Tree pit to dig (one",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3057.2515625953674,
+          "top": 469.5325012207031,
+          "right": 3582.2682495117188,
+          "bottom": 524.7756309509277
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "per tree) ×5",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3060.125,
+          "top": 542.5325012207031,
+          "right": 3384.550537109375,
+          "bottom": 597.1756286621094
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "VB · Vegetable Bed ×7",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3057.2515625953674,
+          "top": 719.8856269836426,
+          "right": 3675.7614135742188,
+          "bottom": 774.7256309509278
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "WATER EARTHWORKS",
+        "font": "800 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2942.002031326294,
+          "top": 894.0510009765625,
+          "right": 3514.8193359375,
+          "bottom": 933.4300025939941
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Swale / cut-and-fill",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3059.2109375,
+          "top": 986.8356269836426,
+          "right": 3593.9542846679688,
+          "bottom": 1033.075003051758
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "earthwork ×1",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3058.7534375190735,
+          "top": 1059.8356269836427,
+          "right": 3410.2633056640625,
+          "bottom": 1105.0156272888185
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Property boundary",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3061.2453122138977,
+          "top": 1236.7856269836425,
+          "right": 3585.78955078125,
+          "bottom": 1291.265630340576
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Tarred driveway",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3057.2515625953674,
+          "top": 1420.7356269836425,
+          "right": 3505.3080444335938,
+          "bottom": 1475.2156303405761
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Exact plan — geometry and counts",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.3603904247284,
+          "top": 1999.939001083374,
+          "right": 3388.824981689453,
+          "bottom": 2024.617000579834
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "come from your saved design.",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.286351442337,
+          "top": 2034.939001083374,
+          "right": 3318.144012451172,
+          "bottom": 2059.6170024871826
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "No unsaved features added.",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.3603904247284,
+          "top": 2069.939001083374,
+          "right": 3294.264678955078,
+          "bottom": 2090.2763290405273
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "5 m",
+        "font": "bold 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20382b",
+        "bounds": {
+          "left": 402.75624990463257,
+          "top": 2052.4237518310547,
+          "right": 470.59873962402344,
+          "bottom": 2081.7837524414062
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "N",
+        "font": "800 26px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20382b",
+        "bounds": {
+          "left": 2728.93390750885,
+          "top": 131.93762466430664,
+          "right": 2745.066095352173,
+          "bottom": 150.735625
+        },
+        "clip": null,
+        "clipped": false
+      }
+    ]
+  },
+  {
+    "sheet": "06",
+    "width": 3783,
+    "height": 2202,
+    "frame": {
+      "ink": "#58705c",
+      "lineWidth": 2.8380000591278076
+    },
+    "calls": [
+      {
+        "text": "06 — PLANTING &",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2943.546562433243,
+          "top": 127.42799758911133,
+          "right": 3468.0694580078125,
+          "bottom": 170.63800430297852
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "AGROFORESTRY",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2942.5950000286102,
+          "top": 190.48600006103516,
+          "right": 3418.3997497558594,
+          "bottom": 233.58000564575195
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Reference Blueprint",
+        "font": "600 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6b6355",
+        "bounds": {
+          "left": 2944.2346093654633,
+          "top": 274.50900077819824,
+          "right": 3289.883270263672,
+          "bottom": 307.9570026397705
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Ubhejane Crèche",
+        "font": "600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.8849217891693,
+          "top": 324.48100090026855,
+          "right": 3205.8816528320312,
+          "bottom": 354.47800064086914
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Staple garden",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3059.2109375,
+          "top": 476.9356269836426,
+          "right": 3451.482421875,
+          "bottom": 531.7756309509277
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "PRODUCTION PLANTING",
+        "font": "800 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2945.281406402588,
+          "top": 647.1510009765625,
+          "right": 3581.2896118164062,
+          "bottom": 686.5300025939941
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "VB · Vegetable Bed ×7",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3057.2515625953674,
+          "top": 746.9356269836426,
+          "right": 3675.7614135742188,
+          "bottom": 801.7756309509277
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "PERENNIAL GUILDS",
+        "font": "800 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2945.281406402588,
+          "top": 917.1510009765625,
+          "right": 3457.63232421875,
+          "bottom": 956.5300025939941
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "AV · Avocado Tree ×1",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3058.0250000953674,
+          "top": 1016.9356269836426,
+          "right": 3623.671142578125,
+          "bottom": 1062.1156272888184
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "MG · Mango Tree ×1",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3061.2453122138977,
+          "top": 1197.5356254577637,
+          "right": 3598.6754760742188,
+          "bottom": 1251.7756309509277
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "MO · Moringa Tree ×2",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3061.2453122138977,
+          "top": 1377.5356254577637,
+          "right": 3654.124755859375,
+          "bottom": 1431.7756309509277
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "NP · Natal Plum ×1",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3061.2453122138977,
+          "top": 1556.9356269836426,
+          "right": 3564.0873413085938,
+          "bottom": 1602.1296882629395
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Property boundary",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3061.2453122138977,
+          "top": 1736.9356269836426,
+          "right": 3585.78955078125,
+          "bottom": 1791.4156303405762
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Tarred driveway",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3057.2515625953674,
+          "top": 1916.9356269836426,
+          "right": 3505.3080444335938,
+          "bottom": 1971.4156303405762
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Exact plan — geometry and counts",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.3603904247284,
+          "top": 1999.939001083374,
+          "right": 3388.824981689453,
+          "bottom": 2024.617000579834
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "come from your saved design.",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.286351442337,
+          "top": 2034.939001083374,
+          "right": 3318.144012451172,
+          "bottom": 2059.6170024871826
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "No unsaved features added.",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.3603904247284,
+          "top": 2069.939001083374,
+          "right": 3294.264678955078,
+          "bottom": 2090.2763290405273
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "5 m",
+        "font": "bold 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20382b",
+        "bounds": {
+          "left": 402.75624990463257,
+          "top": 2052.4237518310547,
+          "right": 470.59873962402344,
+          "bottom": 2081.7837524414062
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "N",
+        "font": "800 26px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20382b",
+        "bounds": {
+          "left": 2728.93390750885,
+          "top": 131.93762466430664,
+          "right": 2745.066095352173,
+          "bottom": 150.735625
+        },
+        "clip": null,
+        "clipped": false
+      }
+    ]
+  },
+  {
+    "sheet": "07",
+    "width": 3783,
+    "height": 2202,
+    "frame": {
+      "ink": "#58705c",
+      "lineWidth": 2.8380000591278076
+    },
+    "calls": [
+      {
+        "text": "07 — SMALL LIVESTOCK",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2943.546562433243,
+          "top": 127.48600006103516,
+          "right": 3652.33544921875,
+          "bottom": 170.63800430297852
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "& INFRASTRUCTURE",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2943.71875,
+          "top": 190.42799758911133,
+          "right": 3530.0316162109375,
+          "bottom": 233.58000564575195
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Reference Blueprint",
+        "font": "600 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6b6355",
+        "bounds": {
+          "left": 2944.2346093654633,
+          "top": 274.50900077819824,
+          "right": 3289.883270263672,
+          "bottom": 307.9570026397705
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Ubhejane Crèche",
+        "font": "600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.8849217891693,
+          "top": 324.48100090026855,
+          "right": 3205.8816528320312,
+          "bottom": 354.47800064086914
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Path ×1",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3061.2453122138977,
+          "top": 476.9356269836426,
+          "right": 3251.5249786376953,
+          "bottom": 522.1156272888184
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "COMPOST & NURSERY",
+        "font": "800 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2943.5423436164856,
+          "top": 651.047999572754,
+          "right": 3533.6939697265625,
+          "bottom": 690.4800025939942
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Compost Bay (3-bin)",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3059.0421874523163,
+          "top": 743.4825012207032,
+          "right": 3627.7417602539062,
+          "bottom": 798.3656303405762
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "×1",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3059.5812499523163,
+          "top": 818.0856239318848,
+          "right": 3107.740623474121,
+          "bottom": 861.465625
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Property boundary",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3061.2453122138977,
+          "top": 993.8356269836426,
+          "right": 3585.78955078125,
+          "bottom": 1048.3156303405763
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Tarred driveway",
+        "font": "600 60px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3057.2515625953674,
+          "top": 1177.7856269836425,
+          "right": 3505.3080444335938,
+          "bottom": 1232.265630340576
+        },
+        "clip": {
+          "left": 2941,
+          "top": 453,
+          "right": 3679,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Exact plan — geometry and counts",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.3603904247284,
+          "top": 1999.939001083374,
+          "right": 3388.824981689453,
+          "bottom": 2024.617000579834
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "come from your saved design.",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.286351442337,
+          "top": 2034.939001083374,
+          "right": 3318.144012451172,
+          "bottom": 2059.6170024871826
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "No unsaved features added.",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.3603904247284,
+          "top": 2069.939001083374,
+          "right": 3294.264678955078,
+          "bottom": 2090.2763290405273
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "5 m",
+        "font": "bold 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20382b",
+        "bounds": {
+          "left": 402.75624990463257,
+          "top": 2052.4237518310547,
+          "right": 470.59873962402344,
+          "bottom": 2081.7837524414062
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "N",
+        "font": "800 26px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20382b",
+        "bounds": {
+          "left": 2728.93390750885,
+          "top": 131.93762466430664,
+          "right": 2745.066095352173,
+          "bottom": 150.735625
+        },
+        "clip": null,
+        "clipped": false
+      }
+    ]
+  },
+  {
+    "sheet": "08",
+    "width": 3457,
+    "height": 2202,
+    "frame": {
+      "ink": "#58705c",
+      "lineWidth": 2.8380000591278076
+    },
+    "calls": [
+      {
+        "text": "08 — FINAL INTEGRATED",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2617.546562433243,
+          "top": 127.48600006103516,
+          "right": 3340.5382080078125,
+          "bottom": 170.63800430297852
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "MASTERPLAN",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2619.6853127479553,
+          "top": 190.54399871826172,
+          "right": 3017.5797729492188,
+          "bottom": 233.58000564575195
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Reference Blueprint",
+        "font": "600 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6b6355",
+        "bounds": {
+          "left": 2618.2346093654633,
+          "top": 274.50900077819824,
+          "right": 2963.883270263672,
+          "bottom": 307.9570026397705
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "Ubhejane Crèche",
+        "font": "600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2617.8849217891693,
+          "top": 324.48100090026855,
+          "right": 2879.8816528320312,
+          "bottom": 354.47800064086914
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "SITE EDGE",
+        "font": "800 47px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2617.3426563739777,
+          "top": 465.54899978637695,
+          "right": 2858.1661987304688,
+          "bottom": 500.4700050354004
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Property boundary",
+        "font": "600 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 2724.6333594322205,
+          "top": 554.4647521972656,
+          "right": 3187.9807739257812,
+          "bottom": 602.588752746582
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Tarred driveway",
+        "font": "600 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 2721.105546951294,
+          "top": 644.798085530599,
+          "right": 3116.8887939453125,
+          "bottom": 692.9220860799154
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Paths, fences &",
+        "font": "600 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 2724.6333594322205,
+          "top": 729.1314188639324,
+          "right": 3106.3218688964844,
+          "bottom": 775.575979868571
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "windbreaks ×1",
+        "font": "600 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 2721.05834376812,
+          "top": 794.1314188639324,
+          "right": 3066.5255737304688,
+          "bottom": 834.0404192606609
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "WATER",
+        "font": "800 47px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2615.8885937929153,
+          "top": 870.0190010070801,
+          "right": 2774.4871520996094,
+          "bottom": 904
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Water storage & fittings",
+        "font": "600 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 2721.105546951294,
+          "top": 952.9417495727539,
+          "right": 3314.9397583007812,
+          "bottom": 1000.9067497253418
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "×1",
+        "font": "600 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 2723.1634373664856,
+          "top": 1018.5247497558594,
+          "right": 2765.7042083740234,
+          "bottom": 1056.84375
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Swale — earthwork (see",
+        "font": "600 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 2722.8363280296326,
+          "top": 1095.4419911702475,
+          "right": 3327.0296020507812,
+          "bottom": 1142.293992360433
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "sheet 05) ×1",
+        "font": "600 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 2722.2483592033386,
+          "top": 1160.4419911702475,
+          "right": 3015.3672790527344,
+          "bottom": 1207.293992360433
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Filtered greywater line ×1",
+        "font": "600 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 2724.6333594322205,
+          "top": 1245.1314188639324,
+          "right": 3345.3692626953125,
+          "bottom": 1293.5734163920085
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "PLANTING",
+        "font": "800 47px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2618.7967188358307,
+          "top": 1326.548999786377,
+          "right": 2856.788528442383,
+          "bottom": 1361.4700050354004
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Staple garden",
+        "font": "600 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 2722.8363280296326,
+          "top": 1415.4647521972656,
+          "right": 3069.3428344726562,
+          "bottom": 1463.9067497253418
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Production beds & crops",
+        "font": "600 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 2724.6333594322205,
+          "top": 1499.7980855305989,
+          "right": 3328.484619140625,
+          "bottom": 1547.7100880940754
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "×7",
+        "font": "600 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 2723.1634373664856,
+          "top": 1565.8580830891926,
+          "right": 2779.8759117126465,
+          "bottom": 1604.1770833333333
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Orchard & support trees",
+        "font": "600 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 2722.6872656345367,
+          "top": 1643.1314188639321,
+          "right": 3322.728271484375,
+          "bottom": 1691.0434214274087
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "×5",
+        "font": "600 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 2723.1634373664856,
+          "top": 1709.191416422526,
+          "right": 2782.1747856140137,
+          "bottom": 1748.0934206644692
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "INFRASTRUCTURE",
+        "font": "800 47px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2618.7967188358307,
+          "top": 1783.5489997863767,
+          "right": 3044.8869018554688,
+          "bottom": 1818.4700050354002
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Structures & work areas",
+        "font": "600 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 2722.8363280296326,
+          "top": 1866.4647521972654,
+          "right": 3323.4603271484375,
+          "bottom": 1906.3861732482908
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "×1",
+        "font": "600 53px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 2723.1634373664856,
+          "top": 1932.5247497558591,
+          "right": 2765.7042083740234,
+          "bottom": 1970.8437499999998
+        },
+        "clip": {
+          "left": 2615,
+          "top": 453,
+          "right": 3353,
+          "bottom": 1993
+        },
+        "clipped": false
+      },
+      {
+        "text": "Exact plan — geometry and counts",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2617.3603904247284,
+          "top": 1999.939001083374,
+          "right": 3062.824981689453,
+          "bottom": 2024.617000579834
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "come from your saved design.",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2617.286351442337,
+          "top": 2034.939001083374,
+          "right": 2992.144012451172,
+          "bottom": 2059.6170024871826
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "No unsaved features added.",
+        "font": "italic 600 27px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2617.3603904247284,
+          "top": 2069.939001083374,
+          "right": 2968.264678955078,
+          "bottom": 2090.2763290405273
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "5 m",
+        "font": "bold 40px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20382b",
+        "bounds": {
+          "left": 76.75624990463257,
+          "top": 2052.4237518310547,
+          "right": 144.59873962402344,
+          "bottom": 2081.7837524414062
+        },
+        "clip": null,
+        "clipped": false
+      },
+      {
+        "text": "N",
+        "font": "800 26px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20382b",
+        "bounds": {
+          "left": 2402.93390750885,
+          "top": 131.93762466430664,
+          "right": 2419.066095352173,
+          "bottom": 150.735625
+        },
+        "clip": null,
+        "clipped": false
+      }
+    ]
+  },
+  {
+    "sheet": "09",
+    "width": 3783,
+    "height": 2202,
+    "frame": {
+      "ink": "#58705c",
+      "lineWidth": 2.8380000591278076
+    },
+    "calls": [
+      {
+        "text": "09 — IMPLEMENTATION",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2943.546562433243,
+          "top": 127.48600006103516,
+          "right": 3630.3661499023438,
+          "bottom": 170.63800430297852
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "MAP & PHASING",
+        "font": "800 58px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20190f",
+        "bounds": {
+          "left": 2945.6853127479553,
+          "top": 190.42799758911133,
+          "right": 3412.5435791015625,
+          "bottom": 233.58000564575195
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Reference Blueprint",
+        "font": "600 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6b6355",
+        "bounds": {
+          "left": 2944.2346093654633,
+          "top": 274.50900077819824,
+          "right": 3289.883270263672,
+          "bottom": 307.9570026397705
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Ubhejane Crèche",
+        "font": "600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a8172",
+        "bounds": {
+          "left": 2943.8849217891693,
+          "top": 324.48100090026855,
+          "right": 3205.8816528320312,
+          "bottom": 354.47800064086914
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "1",
+        "font": "bold 35px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#0b120b",
+        "bounds": {
+          "left": 2963.0171875953674,
+          "top": 435.4918746948242,
+          "right": 2972.707812309265,
+          "bottom": 460.796875
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Verify, Set Out & Make Safe",
+        "font": "800 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3020.6995312571526,
+          "top": 425.50900077819824,
+          "right": 3509.58251953125,
+          "bottom": 459.1050052642822
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Week 0–1",
+        "font": "600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6b6355",
+        "bounds": {
+          "left": 2941.6883593797684,
+          "top": 483.48100090026855,
+          "right": 3082.7344512939453,
+          "bottom": 508.3630027770996
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Hold Point A: Boundary pegs, marked",
+        "font": "italic 600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#a56818",
+        "bounds": {
+          "left": 2976.8849217891693,
+          "top": 523.4810009002686,
+          "right": 3554.41455078125,
+          "bottom": 553.6430015563965
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "services and the set-out agreed with the",
+        "font": "italic 600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#a56818",
+        "bounds": {
+          "left": 2976.4992344379425,
+          "top": 563.4810009002686,
+          "right": 3600.607177734375,
+          "bottom": 593.6430015563965
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "owner on site before any ground is broken.",
+        "font": "italic 600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#a56818",
+        "bounds": {
+          "left": 2976.7985546588898,
+          "top": 603.4810009002686,
+          "right": 3629.056640625,
+          "bottom": 633.6430015563965
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "2",
+        "font": "bold 35px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#ffffff",
+        "bounds": {
+          "left": 2959.399610519409,
+          "top": 662.1418762207031,
+          "right": 2978.480079650879,
+          "bottom": 687.796875
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Safe Access & Water Spine",
+        "font": "800 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3021.8442187309265,
+          "top": 652.8419990539551,
+          "right": 3496.2845458984375,
+          "bottom": 685.9570007324219
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Weeks 1–4",
+        "font": "600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6b6355",
+        "bounds": {
+          "left": 2941.6883593797684,
+          "top": 710.4810009002686,
+          "right": 3104.9635314941406,
+          "bottom": 735.3300018310547
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Hold Point B: Pressure and leak test the main",
+        "font": "italic 600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#a56818",
+        "bounds": {
+          "left": 2976.8849217891693,
+          "top": 750.4810009002686,
+          "right": 3672.1941528320312,
+          "bottom": 775.3377361297607
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "line before backfilling any trench.",
+        "font": "italic 600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#a56818",
+        "bounds": {
+          "left": 2977.069902420044,
+          "top": 790.4810009002686,
+          "right": 3493.97900390625,
+          "bottom": 820.6430015563965
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "3",
+        "font": "bold 35px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#ffffff",
+        "bounds": {
+          "left": 2958.900312423706,
+          "top": 849.1418762207031,
+          "right": 2979.099687576294,
+          "bottom": 875.1873455047607
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Earthworks & Soil Building",
+        "font": "800 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3022.9889063835144,
+          "top": 839.5090007781982,
+          "right": 3489.877716064453,
+          "bottom": 873.3270015716553
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Weeks 3–6",
+        "font": "600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6b6355",
+        "bounds": {
+          "left": 2941.6883593797684,
+          "top": 897.4810009002686,
+          "right": 3112.0348205566406,
+          "bottom": 922.3707370758057
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Hold Point C: Levels re-checked along every",
+        "font": "italic 600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#a56818",
+        "bounds": {
+          "left": 2976.8849217891693,
+          "top": 937.4810009002686,
+          "right": 3657.2054443359375,
+          "bottom": 967.6430015563965
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "swale and bank, and the bank planted, before",
+        "font": "italic 600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#a56818",
+        "bounds": {
+          "left": 2976.4992344379425,
+          "top": 977.4810009002686,
+          "right": 3676.3807373046875,
+          "bottom": 1007.3129997253418
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "the first big rain.",
+        "font": "italic 600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#a56818",
+        "bounds": {
+          "left": 2978.7303438186646,
+          "top": 1017.4810009002686,
+          "right": 3229.43408203125,
+          "bottom": 1047.6430015563965
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "4",
+        "font": "bold 35px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#0b120b",
+        "bounds": {
+          "left": 2959.026098251343,
+          "top": 1076.4918746948242,
+          "right": 2979.479223251343,
+          "bottom": 1101.796875
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Beds, Drip & Working Infrastructure",
+        "font": "800 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3022.9889063835144,
+          "top": 1066.5090007781982,
+          "right": 3650.1326904296875,
+          "bottom": 1100.3270015716553
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Weeks 5–9",
+        "font": "600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6b6355",
+        "bounds": {
+          "left": 2941.6883593797684,
+          "top": 1124.4810009002686,
+          "right": 3112.3622436523438,
+          "bottom": 1149.3630027770996
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Hold Point D: Run the drip at working",
+        "font": "italic 600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#a56818",
+        "bounds": {
+          "left": 2976.8849217891693,
+          "top": 1164.4810009002686,
+          "right": 3547.6122436523438,
+          "bottom": 1194.6430015563965
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "pressure and check every emitter before",
+        "font": "italic 600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#a56818",
+        "bounds": {
+          "left": 2974.940500020981,
+          "top": 1204.4810009002686,
+          "right": 3602.77685546875,
+          "bottom": 1234.4450016021729
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "mulching over the lines.",
+        "font": "italic 600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#a56818",
+        "bounds": {
+          "left": 2976.2687499523163,
+          "top": 1244.4810009002686,
+          "right": 3341.279815673828,
+          "bottom": 1274.6430015563965
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "5",
+        "font": "bold 35px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#ffffff",
+        "bounds": {
+          "left": 2958.728597640991,
+          "top": 1303.4918746948242,
+          "right": 2979.2714099884033,
+          "bottom": 1329.1818771362305
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Perennials & Guilds",
+        "font": "800 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3022.9889063835144,
+          "top": 1293.5090007781982,
+          "right": 3364.904571533203,
+          "bottom": 1321.375783920288
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Weeks 8–12",
+        "font": "600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6b6355",
+        "bounds": {
+          "left": 2941.6883593797684,
+          "top": 1351.4810009002686,
+          "right": 3122.8985290527344,
+          "bottom": 1376.3542366027832
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Hold Point E: Water tested and reaching",
+        "font": "italic 600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#a56818",
+        "bounds": {
+          "left": 2976.8849217891693,
+          "top": 1391.4810009002686,
+          "right": 3593.195068359375,
+          "bottom": 1421.6430015563965
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "every planting pit before the first tree goes in",
+        "font": "italic 600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#a56818",
+        "bounds": {
+          "left": 2976.930296897888,
+          "top": 1431.4810009002686,
+          "right": 3679.33447265625,
+          "bottom": 1461.6430015563965
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "the ground.",
+        "font": "italic 600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#a56818",
+        "bounds": {
+          "left": 2978.7303438186646,
+          "top": 1471.4810009002686,
+          "right": 3151.9681701660156,
+          "bottom": 1501.6430015563965
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "6",
+        "font": "bold 35px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#ffffff",
+        "bounds": {
+          "left": 2958.9818019866943,
+          "top": 1530.1418762207031,
+          "right": 2979.0182094573975,
+          "bottom": 1556.1818771362305
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Commissioning & Handover",
+        "font": "800 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#241e12",
+        "bounds": {
+          "left": 3021.7748436927795,
+          "top": 1520.5090007781982,
+          "right": 3505.9369506835938,
+          "bottom": 1554.3270015716553
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Month 3+",
+        "font": "600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#6b6355",
+        "bounds": {
+          "left": 2943.8849217891693,
+          "top": 1578.4810009002686,
+          "right": 3086.674331665039,
+          "bottom": 1603.3707370758057
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Hold Point F: Every earlier hold point signed",
+        "font": "italic 600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#a56818",
+        "bounds": {
+          "left": 2976.8849217891693,
+          "top": 1618.4810009002686,
+          "right": 3653.770751953125,
+          "bottom": 1648.6430015563965
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "off and the as-built record handed over",
+        "font": "italic 600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#a56818",
+        "bounds": {
+          "left": 2976.7985546588898,
+          "top": 1658.4810009002686,
+          "right": 3581.5328979492188,
+          "bottom": 1683.3377361297607
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "before the job is closed.",
+        "font": "italic 600 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#a56818",
+        "bounds": {
+          "left": 2976.2687499523163,
+          "top": 1698.4810009002686,
+          "right": 3341.1679077148438,
+          "bottom": 1728.4780006408691
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "CRITICAL ORDER",
+        "font": "800 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#7a4a12",
+        "bounds": {
+          "left": 2942.7748436927795,
+          "top": 1747.8790016174316,
+          "right": 3249.0873413085938,
+          "bottom": 1775.370002746582
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Survey & set out → Safe access → Main water",
+        "font": "500 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#3e3a31",
+        "bounds": {
+          "left": 2942.8387187719345,
+          "top": 1798.7779998779297,
+          "right": 3652.432373046875,
+          "bottom": 1828.4450016021729
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "line → Swales on contour → Beds & structures",
+        "font": "500 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#3e3a31",
+        "bounds": {
+          "left": 2943.392499923706,
+          "top": 1838.4810009002686,
+          "right": 3658.3507080078125,
+          "bottom": 1863.339282989502
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "→ Trees & guilds → Commissioning & handover",
+        "font": "500 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#3e3a31",
+        "bounds": {
+          "left": 2942.3346679210663,
+          "top": 1878.4810009002686,
+          "right": 3671.6385498046875,
+          "bottom": 1908.6430015563965
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "SITE RULES",
+        "font": "800 37px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a3434",
+        "bounds": {
+          "left": 2942.8442187309265,
+          "top": 1927.916000366211,
+          "right": 3153.1868591308594,
+          "bottom": 1955.370002746582
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "!",
+        "font": "500 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#8a3434",
+        "bounds": {
+          "left": 2950.0831248760223,
+          "top": 1979.1410007476807,
+          "right": 2954.2782497406006,
+          "bottom": 2003
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "Keep the driveway open at all times — no",
+        "font": "500 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#3e3a31",
+        "bounds": {
+          "left": 2977.0164062976837,
+          "top": 1978.4810009002686,
+          "right": 3609.66845703125,
+          "bottom": 2008.4450016021729
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "spoil, pipe or materials stored on it.",
+        "font": "500 33px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#3e3a31",
+        "bounds": {
+          "left": 2975.4819062948227,
+          "top": 2018.4810009002686,
+          "right": 3511.3552856445312,
+          "bottom": 2048.312999725342
+        },
+        "clip": {
+          "left": 2941,
+          "top": 33,
+          "right": 3679,
+          "bottom": 2098
+        },
+        "clipped": false
+      },
+      {
+        "text": "N",
+        "font": "800 26px __Public_Sans_9a9580, __Public_Sans_Fallback_9a9580, \"Public Sans\", \"Helvetica Neue\", Helvetica, Arial, \"Segoe UI\", Roboto, system-ui, sans-serif",
+        "ink": "#20382b",
+        "bounds": {
+          "left": 2728.93390750885,
+          "top": 131.93762466430664,
+          "right": 2745.066095352173,
+          "bottom": 150.735625
+        },
+        "clip": null,
+        "clipped": false
+      }
+    ]
+  }
+]

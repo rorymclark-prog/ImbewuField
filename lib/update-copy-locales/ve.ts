@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Visual audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Map legends have thinner borders and clearer scale marks.": "Mabogisi a zwiga zwa mimepe a na mikano miṱuku na zwiga zwa tshikalo zwi re khagala.",
   "Menu → Site design": "Menyu → Puḽane ya fhethu",
   "Check the new map lettering": "Ṱolani maṅwalwa maswa a mepe",
   "Create a free exact map. Check the larger key and the buildings you traced.": "Itani mepe wo teaho wa mahala. Ṱolani ṱhalutshedzo khulwane ya zwiga na zwifhaṱo zwe na zwi ola.",

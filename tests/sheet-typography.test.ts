@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import ts from 'typescript';
+import { calculateSheetLegendPlacement, calculateStyleSheetSize, paperSheetCanvas } from '../lib/reference-presentation.ts';
 
 // Rory kept saying the typography looked wrong and could not say why. The answer was that a single
 // sheet was set in several families at once — the title in Georgia, the legend in a condensed
@@ -156,7 +158,7 @@ test('sector labels sit directly on the photograph with a dark halo, never an op
   assert.match(composedPainter, /lineJoin = 'round'/, 'wide composed-label halos keep soft corners');
 });
 
-test('sector provenance keeps its wording in a padded hairline box at the existing type floor', () => {
+test('sector provenance keeps its complete wording in a padded hairline box at the shared reading size', () => {
   const sectorStart = SOURCE.indexOf('async function composeSectorSheet(');
   const sectorEnd = SOURCE.indexOf('// The exact sheet is composeSectorSheet', sectorStart);
   assert.ok(sectorStart >= 0 && sectorEnd > sectorStart, 'sector sheet composer exists');
@@ -171,9 +173,136 @@ test('sector provenance keeps its wording in a padded hairline box at the existi
   assert.ok(footerStart >= 0 && footerEnd > footerStart, 'style-sheet footer painter exists');
   const footerPainter = SOURCE.slice(footerStart, footerEnd);
 
-  assert.match(footerPainter, /footerFs = options\.footerText \? Math\.max\(9,/);
+  // The earlier assertion pinned the smaller private floor. The public Sector export made its
+  // required evidence note too small to read; it now shares the other sheets' footer scale.
+  assert.match(footerPainter, /footerFs = legendFooterFontSize\(typeW\)/);
   assert.match(footerPainter, /footerBoxPad = options\.footerBox \? Math\.max\(6,/);
   assert.match(footerPainter, /footerTextX = lx \+ footerBoxPad/);
   assert.match(footerPainter, /ctx\.lineWidth = 1;\s+roundRectPath\(/);
   assert.doesNotMatch(sectorComposer, /analysis\.noteText\.(?:slice|replace|split|substring)/);
+});
+
+// A paint refactor must preserve the physical distance even when the sheet has side gutters.
+// Execute the real painter without importing the browser-only component.
+const painterTree = ts.createSourceFile('DesignGlossy.tsx', SOURCE, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+function actualPainter(name: string, dependencies: Record<string, unknown> = {}): (...args: unknown[]) => unknown {
+  let declaration: ts.FunctionDeclaration | undefined;
+  function visit(node: ts.Node) {
+    if (ts.isFunctionDeclaration(node) && node.name?.text === name) declaration = node;
+    ts.forEachChild(node, visit);
+  }
+  visit(painterTree);
+  assert.ok(declaration, `${name} is the shared paint authority`);
+  const javascript = ts.transpileModule(declaration.getText(painterTree), {
+    compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.None },
+  }).outputText;
+  return new Function('SHEET_BODY_FONT', ...Object.keys(dependencies), `${javascript}; return ${name};`)(
+    'Public Sans', ...Object.values(dependencies),
+  );
+}
+
+type PaintEvent = { kind: string; x?: number; y?: number; text?: string; ink?: string; alpha?: number };
+function recordingContext() {
+  const events: PaintEvent[] = [];
+  const saved: Array<{ globalAlpha: number }> = [];
+  const context = {
+    globalAlpha: 0.2, lineWidth: 1, lineCap: 'butt', lineJoin: 'miter',
+    strokeStyle: '#000000', fillStyle: '#000000', font: '', textBaseline: '', textAlign: '',
+    save() { saved.push({ globalAlpha: this.globalAlpha }); },
+    restore() { Object.assign(this, saved.pop()); },
+    beginPath() {}, closePath() {}, arc() {},
+    moveTo(x: number, y: number) { events.push({ kind: 'move', x, y }); },
+    lineTo(x: number, y: number) { events.push({ kind: 'line', x, y }); },
+    stroke() { events.push({ kind: 'stroke', ink: this.strokeStyle, alpha: this.globalAlpha }); },
+    fill() { events.push({ kind: 'fill', ink: this.fillStyle, alpha: this.globalAlpha }); },
+    strokeText(text: string, x: number, y: number) { events.push({ kind: 'text-outline', text, x, y, ink: this.strokeStyle, alpha: this.globalAlpha }); },
+    fillText(text: string, x: number, y: number) { events.push({ kind: 'text', text, x, y, ink: this.fillStyle, alpha: this.globalAlpha }); },
+  };
+  return { context, events };
+}
+
+function contrastOnPaper(ink: string): number {
+  assert.match(ink, /^#[\da-f]{6}$/i, 'measurement marks use opaque print ink');
+  const luminance = (hex: string) => {
+    const channels = [1, 3, 5].map(start => parseInt(hex.slice(start, start + 2), 16) / 255)
+      .map(value => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4);
+    return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+  };
+  const a = luminance(ink), b = luminance('#FBF6EC');
+  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+}
+
+test('a readable scale bar still measures the stated metres when a sheet adds side gutters', () => {
+  const paint = actualPainter('drawBlueprintScaleBar');
+  for (const pixelsPerMetre of [0.5, 1, 5, 11, 32]) {
+    const widths: number[] = [];
+    for (const gutter of [0, 160, 320]) {
+      const { context, events } = recordingContext();
+      paint(context, 1200, 900, 30, 25, pixelsPerMetre, { x: gutter + 30, y: 850 });
+      const start = events.find(event => event.kind === 'move')!;
+      const end = events.find(event => event.kind === 'line')!;
+      const label = events.find(event => event.kind === 'text')!;
+      assert.match(label.text!, /^\d+ m$/);
+      assert.equal(start.x, gutter + 30);
+      assert.equal(end.y, start.y);
+      const width = end.x! - start.x!;
+      widths.push(width);
+      assert.equal(width, Number(label.text!.split(' ')[0]) * pixelsPerMetre);
+      assert.ok(width <= 1200 * 0.18, 'sheet furniture must not inflate the map scale');
+      assert.ok(contrastOnPaper(label.ink!) >= 7, 'the metre label must remain readable on cream paper');
+      assert.equal(label.alpha, 1, 'an earlier translucent map layer must not fade the ruler');
+      assert.equal(context.globalAlpha, 0.2, 'the painter restores the surrounding drawing state');
+    }
+    assert.equal(new Set(widths).size, 1, 'gutters change the ruler position, never its metre width');
+  }
+});
+
+test('the shared north marker stays inside the map and uses legible ink on paper', () => {
+  const needle = actualPainter('drawImplNorthArrow');
+  const paint = actualPainter('drawSheetNorthArrow', { drawImplNorthArrow: needle });
+  for (const [width, height] of [[1200, 900], [2400, 1800], [1800, 2400]]) {
+    for (const gutter of [0, 320]) {
+      const { context, events } = recordingContext();
+      paint(context, gutter, width, height);
+      const label = events.find(event => event.kind === 'text')!;
+      const tip = events.find(event => event.kind === 'move')!;
+      const ends = events.filter(event => event.kind === 'line');
+      assert.equal(label.text, 'N');
+      assert.ok(label.x! > gutter && label.x! < gutter + width);
+      assert.ok(label.y! > 0 && label.y! < height);
+      assert.ok(ends.every(end => end.y! > tip.y!), 'the needle points up in the north-up frame');
+      assert.ok(contrastOnPaper(label.ink!) >= 7);
+      assert.equal(label.alpha, 1);
+    }
+  }
+});
+
+
+test('the compact masterplan prints its key at the same physical size without rescaling measured ground', () => {
+  for (const [mapWidth, mapHeight] of [[2200, 2400], [2600, 1900], [1500, 2200]]) {
+    const full = calculateStyleSheetSize(mapWidth, mapHeight);
+    const compact = calculateSheetLegendPlacement(full, { includeLabelGutters: false });
+    const outputs: string[] = [];
+    for (const width of [full.W, compact.W]) {
+      const placements: unknown[][] = [];
+      const canvas = { width: 0, height: 0, getContext: () => ({
+        fillStyle: '', fillRect() {}, drawImage(...args: unknown[]) { placements.push(args); },
+      }) };
+      const pad = actualPainter('padToPaperSheet', {
+        paperSheetCanvas, document: { createElement: () => canvas }, releaseCanvas: () => {},
+        drainCanvasToDataUrl: (result: { width: number; height: number }) => JSON.stringify({ width: result.width, height: result.height }),
+      });
+      const original = { width, height: mapHeight };
+      const output = pad(original, full.W);
+      assert.equal(typeof output, 'string');
+      outputs.push(output as string);
+      if (placements.length) {
+        assert.equal(placements[0][0], original, 'the finished map is copied directly');
+        assert.equal(placements[0].length, 3, 'paper padding must never scale or crop the map');
+      }
+    }
+    assert.equal(outputs[0], outputs[1], 'same paper envelope prevents PDF enlargement of only sheet 08');
+  }
+  const composer = SOURCE.slice(SOURCE.indexOf('async function composeStyleSheet('), SOURCE.indexOf('// extendProtectMaskToStyleSheet lived here.'));
+  assert.match(composer, /padToPaperSheet\(canvas, sheetSize\.W\)/, 'the composer supplies the common full-set envelope');
 });

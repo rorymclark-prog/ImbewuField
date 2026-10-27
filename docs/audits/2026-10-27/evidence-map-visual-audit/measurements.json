@@ -1,0 +1,73 @@
+{
+  "scope": "Public Ubhejane sample; no real farmer Save or paid render",
+  "reviewed_base": "6031467cd0174f0e77bdb67e40df336de18f594a",
+  "integrated_main": "16bca4669",
+  "pages": 9,
+  "exported_image_dimensions": [
+    [
+      3783,
+      2675
+    ],
+    [
+      3783,
+      2675
+    ],
+    [
+      3783,
+      2675
+    ],
+    [
+      3783,
+      2675
+    ],
+    [
+      3783,
+      2675
+    ],
+    [
+      3783,
+      2675
+    ],
+    [
+      3783,
+      2675
+    ],
+    [
+      3783,
+      2675
+    ],
+    [
+      3783,
+      2675
+    ]
+  ],
+  "frame_width_px": 946,
+  "frame_stroke_px": 2.838,
+  "prior_green_band_px": 33,
+  "measured_text_calls": 244,
+  "clipped_calls": 0,
+  "historical_preview_before": [
+    {
+      "alt": "08 · Whole design map · Design Map",
+      "width": 3457,
+      "height": 2444
+    }
+  ],
+  "preview_after_normal_redraw": [
+    {
+      "alt": "Exact plan sheet of the design",
+      "width": 3783,
+      "height": 2675
+    }
+  ],
+  "sample_gallery_rows_after_final_generation": 20,
+  "phone_viewport": {
+    "width": 390,
+    "height": 844,
+    "document_width": 390,
+    "map_display_width": 343
+  },
+  "pdf_sha256": "8ed53efa52489878b1c31288395b496e5f4075cbacf1453d8a00d1670e458444",
+  "physical_device_review": false,
+  "paid_artwork_review": false
+}

@@ -117,6 +117,8 @@ import {
   fitLegendFontSize,
   layoutLegendColumn,
   legendHeightFillRatio,
+  legendFooterFontSize,
+  legendWrapWords,
   legendMaxFontSize,
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
@@ -4893,7 +4895,7 @@ function referenceBlueprintLabels(
   return rebalance(curated, 9);
 }
 
-/** Scale bar, bottom-left — the largest "nice" round metre count fitting ~18% of the sheet. */
+/** The map owns the metre width; a paper halo keeps that same measured bar legible on any base. */
 function drawBlueprintScaleBar(
   ctx: CanvasRenderingContext2D,
   W: number,
@@ -4901,27 +4903,40 @@ function drawBlueprintScaleBar(
   pad: number,
   rowH: number,
   pxPerM: number,
+  position: { x?: number; y?: number } = {},
 ): void {
   const niceM = [5, 10, 20, 25, 50, 100, 200];
   let m = niceM[0];
   for (const nm of niceM) if (nm * pxPerM <= W * 0.18) m = nm;
   const barW = m * pxPerM;
-  const bx = pad, by = H - pad - rowH * 0.3;
-  ctx.strokeStyle = '#F3EEE2';
-  ctx.fillStyle = '#F3EEE2';
-  ctx.lineWidth = 3;
+  const bx = position.x ?? pad;
+  const by = position.y ?? H - pad - rowH * 0.3;
+  ctx.save();
+  ctx.globalAlpha = 1;
+  ctx.lineCap = 'butt';
+  ctx.lineJoin = 'round';
   ctx.beginPath();
   ctx.moveTo(bx, by);
   ctx.lineTo(bx + barW, by);
-  ctx.moveTo(bx, by - 8);
-  ctx.lineTo(bx, by + 8);
-  ctx.moveTo(bx + barW, by - 8);
-  ctx.lineTo(bx + barW, by + 8);
+  ctx.moveTo(bx, by - 9);
+  ctx.lineTo(bx, by + 9);
+  ctx.moveTo(bx + barW, by - 9);
+  ctx.lineTo(bx + barW, by + 9);
+  ctx.strokeStyle = '#FBF6EC';
+  ctx.lineWidth = 7;
   ctx.stroke();
-  ctx.font = `700 ${Math.round(W * 0.014)}px ${SHEET_BODY_FONT}`;
+  ctx.strokeStyle = '#20382B';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+  ctx.font = `700 ${Math.max(16, Math.round(W * 0.016))}px ${SHEET_BODY_FONT}`;
   ctx.textBaseline = 'bottom';
   ctx.textAlign = 'left';
-  ctx.fillText(`${m} m`, bx, by - 12);
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = '#FBF6EC';
+  ctx.strokeText(`${m} m`, bx, by - 14);
+  ctx.fillStyle = '#20382B';
+  ctx.fillText(`${m} m`, bx, by - 14);
+  ctx.restore();
 }
 
 /** How many legend rows fit the sheet at this size (the panel must not run off the bottom).
@@ -7687,33 +7702,33 @@ function readableTextOn(hex: string): string {
   return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? '#0B120B' : '#FFFFFF';
 }
 
-/** North arrow on a translucent disc so it reads over any satellite. Frames are north-up with no
- *  rotation (CanvasFrame, lib/design-canvas.ts), so "up" is always true north — no bearing to apply. */
+/** Frames are north-up. One ink-and-paper compass reads on plain and photographic maps alike. */
 function drawImplNorthArrow(ctx: CanvasRenderingContext2D, cx: number, cy: number, size: number): void {
   const R = size * 0.6;
   ctx.save();
-  ctx.beginPath();
-  ctx.arc(cx, cy, R, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(10,16,22,0.72)';
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(255,255,255,0.35)';
-  ctx.lineWidth = 1.5;
-  ctx.stroke();
-  // Arrow: filled triangle pointing up, tail notched so it reads as a compass needle, not a play icon.
+  ctx.globalAlpha = 1;
+  ctx.lineJoin = 'round';
   ctx.beginPath();
   ctx.moveTo(cx, cy - R * 0.5);
   ctx.lineTo(cx - R * 0.32, cy + R * 0.34);
   ctx.lineTo(cx, cy + R * 0.16);
   ctx.lineTo(cx + R * 0.32, cy + R * 0.34);
   ctx.closePath();
-  ctx.fillStyle = '#F3EEE2';
+  ctx.strokeStyle = '#FBF6EC';
+  ctx.lineWidth = Math.max(3, size * 0.08);
+  ctx.stroke();
+  ctx.fillStyle = '#20382B';
   ctx.fill();
-  ctx.fillStyle = '#F3EEE2';
-  ctx.font = `800 ${Math.round(size * 0.34)}px ${SHEET_BODY_FONT}`;
+  ctx.font = `800 ${Math.round(size * 0.4)}px ${SHEET_BODY_FONT}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'bottom';
+  ctx.strokeText('N', cx, cy - R * 0.52);
   ctx.fillText('N', cx, cy - R * 0.52);
   ctx.restore();
+}
+
+function drawSheetNorthArrow(ctx: CanvasRenderingContext2D, mapX: number, mapW: number, mapH: number): void {
+  drawImplNorthArrow(ctx, mapX + mapW - Math.round(mapW * 0.04), Math.round(mapH * 0.08), Math.max(30, Math.round(mapW * 0.026)));
 }
 
 interface SectorAnalysisComposition {
@@ -9424,8 +9439,7 @@ async function composePhasingSheet(
   const scaleRowH = Math.round(mapW * 0.026);
   drawBlueprintScaleBar(ctx, mapW, mapH, pad, scaleRowH, pxPerM);
   ctx.restore();
-  const naSize = Math.max(30, Math.round(mapW * 0.026));
-  drawImplNorthArrow(ctx, lgX - pad - naSize * 0.6, H - pad - naSize * 0.6, naSize);
+  drawSheetNorthArrow(ctx, mapX, mapW, mapH);
 
   // 4. The schedule panel itself — copied pixel-for-pixel from a freshly built exact sheet, so the
   //    text is guaranteed byte-identical to buildImplementationMap's own render rather than a second,
@@ -9774,9 +9788,8 @@ export async function buildImplementationMap(
   }
   ctx.restore();
 
-  // North arrow, on its disc just left of the panel foot.
-  const naSize = Math.max(30, Math.round(mapW * 0.026));
-  drawImplNorthArrow(ctx, lgX - pad - naSize * 0.6, H - pad - naSize * 0.6, naSize);
+  // The compass occupies the same map corner as the other eight sheets.
+  drawSheetNorthArrow(ctx, mapX, mapW, mapH);
 
   // ONE PAPER SIZE FOR THE WHOLE SET. Sheet 09 builds its own canvas and returns it directly rather
   // than going through composeStyleSheet, so it was the only sheet that never reached the paper
@@ -10329,8 +10342,8 @@ function drawStyleLegendSymbol(
  * including the paid ones, where the model has already rendered and this only adds chrome. No AI
  * input is ever a padded sheet.
  */
-function padToPaperSheet(sheet: HTMLCanvasElement): string {
-  const paper = paperSheetCanvas(sheet.width, sheet.height);
+function padToPaperSheet(sheet: HTMLCanvasElement, minimumWidth = sheet.width): string {
+  const paper = paperSheetCanvas(Math.max(sheet.width, minimumWidth), sheet.height);
   if (paper.width === sheet.width && paper.height === sheet.height) {
     return drainCanvasToDataUrl(sheet, 'image/png');
   }
@@ -10364,14 +10377,16 @@ function padToPaperSheet(sheet: HTMLCanvasElement): string {
 function drawSheetLegendPanel(ctx: CanvasRenderingContext2D, x: number, width: number, height: number) {
   const panel = sheetLegendPanelMetrics(width, height);
   ctx.save();
-  ctx.fillStyle = '#0B2116';
+  // A heavy green slab overwhelmed the drawings. Keep the same cream card and text bounds,
+  // with a fine outline that still defines the key when the plan is printed.
+  ctx.fillStyle = '#FBF6EC';
   ctx.fillRect(x, 0, width, height);
   roundRectPath(ctx, x + panel.inset, panel.inset,
     width - panel.inset * 2, height - panel.inset * 2, Math.round(width * 0.055));
   ctx.fillStyle = '#F7F2E7';
   ctx.fill();
-  ctx.strokeStyle = 'rgba(67,61,48,0.36)';
-  ctx.lineWidth = 1.5;
+  ctx.strokeStyle = '#58705C';
+  ctx.lineWidth = Math.max(1.5, width * 0.003);
   ctx.stroke();
   ctx.restore();
   return panel;
@@ -10414,7 +10429,8 @@ async function composeStyleSheet(
   // The compact masterplan shares that wider key without adding duplicate leader gutters.
   const mapW = map.width;
   const H = map.height;
-  const placement = calculateSheetLegendPlacement(calculateStyleSheetSize(mapW, H), {
+  const sheetSize = calculateStyleSheetSize(mapW, H);
+  const placement = calculateSheetLegendPlacement(sheetSize, {
     includeLabelGutters: options.includeLabelGutters,
     hasRightGutterLabels: Boolean(options.gutterLayout?.rows.some((row) => row.side === 'right')),
   });
@@ -10514,7 +10530,7 @@ async function composeStyleSheet(
     ...(options.extraLegendRows ?? []),
   ];
   const legendTop = y + Math.round(legendW * 0.03);
-  const footerFs = options.footerText ? Math.max(9, Math.round(typeW * 0.025)) : Math.round(typeW * 0.036);
+  const footerFs = legendFooterFontSize(typeW);
   const footerLineH = Math.max(11, Math.round(footerFs * 1.28));
   const footerBoxPad = options.footerBox ? Math.max(6, Math.round(legendW * 0.024)) : 0;
   const footerTextX = lx + footerBoxPad;
@@ -10589,7 +10605,7 @@ async function composeStyleSheet(
     ctx.font = `600 ${fontSize}px ${SHEET_BODY_FONT}`;
     const lines: string[] = [];
     let current = '';
-    for (const word of value.split(/\s+/)) {
+    for (const word of legendWrapWords(value)) {
       const next = current ? `${current} ${word}` : word;
       if (current && ctx.measureText(next).width > textWidth) {
         lines.push(current);
@@ -10960,61 +10976,16 @@ async function composeStyleSheet(
   // the distance it claims. A scale bar is the one mark on a plan a farmer is entitled to hold a
   // ruler against, so this must key off the map's own width and sit inside the map's own column.
   const pxPerM = mapW / (frame.imgW * frame.mPerPx);
-  const niceM = [5, 10, 20, 25, 50, 100, 200];
-  let m = niceM[0];
-  for (const nm of niceM) if (nm * pxPerM <= mapW * 0.18) m = nm;
-  const barW = m * pxPerM;
-  const bx = gutter + Math.round(mapW * 0.03);
-  const by = H - Math.round(H * 0.045);
-  ctx.lineCap = 'butt';
-  ctx.strokeStyle = 'rgba(11,14,10,0.55)';
-  ctx.lineWidth = 7;
-  ctx.beginPath();
-  ctx.moveTo(bx, by); ctx.lineTo(bx + barW, by);
-  ctx.moveTo(bx, by - 9); ctx.lineTo(bx, by + 9);
-  ctx.moveTo(bx + barW, by - 9); ctx.lineTo(bx + barW, by + 9);
-  ctx.stroke();
-  ctx.strokeStyle = '#FBF6EC';
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.moveTo(bx, by); ctx.lineTo(bx + barW, by);
-  ctx.moveTo(bx, by - 9); ctx.lineTo(bx, by + 9);
-  ctx.moveTo(bx + barW, by - 9); ctx.lineTo(bx + barW, by + 9);
-  ctx.stroke();
-  ctx.font = `700 ${Math.round(mapW * 0.016)}px ${REFERENCE_LABEL_FONT}`;
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'bottom';
-  ctx.lineWidth = 4;
-  ctx.strokeStyle = 'rgba(11,14,10,0.6)';
-  ctx.strokeText(`${m} m`, bx, by - 14);
-  ctx.fillStyle = '#FBF6EC';
-  ctx.fillText(`${m} m`, bx, by - 14);
-
-  // ── North arrow (over the map, top-right) ──
-  const nx = gutter + mapW - Math.round(mapW * 0.04);
-  const ny = Math.round(H * 0.08);
-  ctx.beginPath();
-  ctx.moveTo(nx, ny - 30);
-  ctx.lineTo(nx - 11, ny);
-  ctx.lineTo(nx, ny - 9);
-  ctx.lineTo(nx + 11, ny);
-  ctx.closePath();
-  ctx.fillStyle = '#FBF6EC';
-  ctx.strokeStyle = 'rgba(11,14,10,0.65)';
-  ctx.lineWidth = 3;
-  ctx.stroke();
-  ctx.fill();
-  ctx.font = `700 ${Math.round(mapW * 0.017)}px ${REFERENCE_LABEL_FONT}`;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'bottom';
-  ctx.lineWidth = 4;
-  ctx.strokeStyle = 'rgba(11,14,10,0.65)';
-  ctx.strokeText('N', nx, ny - 34);
-  ctx.fillStyle = '#FBF6EC';
-  ctx.fillText('N', nx, ny - 34);
+  drawBlueprintScaleBar(ctx, mapW, H, 0, 0, pxPerM, {
+    x: gutter + Math.round(mapW * 0.03),
+    y: H - Math.round(H * 0.045),
+  });
+  drawSheetNorthArrow(ctx, gutter, mapW, H);
 
   // A2 LANDSCAPE, added as PAPER rather than taken out of the map. See PAPER_SHEET_RATIO.
-  return padToPaperSheet(canvas);
+  // The compact masterplan omits leaders, not paper size. A smaller exported bitmap was being
+  // enlarged in the PDF, making its supposedly shared legend and lettering visibly bigger.
+  return padToPaperSheet(canvas, sheetSize.W);
 }
 
 // extendProtectMaskToStyleSheet lived here. It widened a map-space protect mask onto a composed

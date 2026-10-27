@@ -11,6 +11,8 @@ import {
   fitLegendFontSize,
   FULL_HEIGHT_LEGEND_MIN_ROWS,
   legendHeightFillRatio,
+  legendFooterFontSize,
+  legendWrapWords,
   layoutLegendColumn,
   legendMaxFontSize,
   legendRowFontSize,
@@ -381,4 +383,22 @@ test('a compact masterplan keeps its legend on the same paper edge and long titl
   const composer = source.slice(source.indexOf('async function composeStyleSheet('), source.indexOf('// ── Persistence', source.indexOf('async function composeStyleSheet(')));
   assert.doesNotMatch(composer, /titleLines\.slice|titleLines\.length <|styleLines\.slice|styleLines\.length </,
     'Earthworks and longer style names must wrap rather than clipping their third line');
+});
+
+
+test('provenance notes keep a readable share of the shared legend lettering', () => {
+  for (const width of [360, 620, 744, 960]) {
+    const detail = Math.round(width * SHEET_LEGEND_TYPE.detail);
+    assert.ok(legendFooterFontSize(width) >= Math.round(detail * 0.75));
+    assert.ok(legendFooterFontSize(width) <= detail);
+  }
+});
+
+test('a regional-evidence marker stays with its direction instead of becoming an orphan line', () => {
+  const value = 'Regional cold front — driving rain — SW ᴬ';
+  const words = legendWrapWords(value);
+  assert.equal(words.join(' '), value, 'all wording and the evidence marker remain');
+  assert.ok(words.some(word => word.includes('SW') && word.includes('ᴬ')));
+  assert.ok(!words.includes('ᴬ'), 'wrapping must not put the evidence marker on its own');
+  assert.deepEqual(legendWrapWords('Site boundary'), ['Site', 'boundary']);
 });

@@ -320,6 +320,16 @@ export function countedLegendText(label: string, count: number, status?: 'existi
   return `${qualified} ×${count}`;
 }
 
+/** A provenance note is still reading text; custom notes must not get a smaller private scale. */
+export function legendFooterFontSize(typeWidth: number): number {
+  return Math.max(12, Math.round(typeWidth * 0.036));
+}
+
+/** The regional-evidence marker belongs to its bearing, not on a line by itself. */
+export function legendWrapWords(value: string): string[] {
+  return value.match(/\S+(?:\s+ᴬ)?/g) ?? [];
+}
+
 /** One panel for the whole printed set. Sheet-specific content must not select its own box. */
 export function sheetLegendPanelMetrics(width: number, height: number) {
   const inset = Math.max(12, Math.round(width * 0.035));

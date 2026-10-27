@@ -1,0 +1,15 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "scope": "One map visual-update notice only. Existing native wording and farming content are preserved; no fluent review claimed.",
+  "entries": [
+    {
+      "source": "Map legends have thinner borders and clearer scale marks.",
+      "drafts": {
+        "zu": "Izincazelo zezimpawu zemephu sezinemingcele emincane nezimpawu zesilinganiso ezicacile.",
+        "st": "Mabokose a matshwao a dimmapa a na le meedi e mesesane le matshwao a sekala a hlakileng.",
+        "ts": "Mabokisi ya swikombiso swa mimepe ya ni mindzilakano yo vevuka ni swikombiso swa mpimo leswi nga erivaleni.",
+        "ve": "Mabogisi a zwiga zwa mimepe a na mikano miṱuku na zwiga zwa tshikalo zwi re khagala."
+      }
+    }
+  ]
+}

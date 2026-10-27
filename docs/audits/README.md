@@ -28,6 +28,8 @@ in the catalogue; personal site records are not copied into this archive.
 
 ## Site survey: start here
 
+Latest visual audit: [Fine map frames, legible chrome and consistent print size — 27 October 2026](2026-10-27/map-visual-audit-codex.md).
+
 Latest readability follow-up: [Wider readable legends and plain-paper buildings — 26 October 2026](2026-10-26/map-readable-legend-buildings-codex.md).
 
 Latest legend follow-up: [Consistent legend panels across all nine sheets — 26 October 2026](2026-10-26/map-legend-consistency-codex.md).
@@ -89,6 +91,8 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [Nine-map visual audit and lighter shared frames — 27 October 2026](2026-10-27/map-visual-audit-codex.md).
 
 - [Phasing public-sample fit and retained final rule — 27 October 2026](2026-10-27/phasing-public-sample-fit-codex.md).
 
