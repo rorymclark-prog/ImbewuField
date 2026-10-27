@@ -14,7 +14,6 @@ import { accountText, accountRoleName, type AccountCopy } from '@/lib/account-co
 import AccountErrorText from '@/components/AccountErrorText';
 import LanguageDraftNote from '@/components/LanguageDraftNote';
 import { APP_LANGS, useLanguage } from '@/lib/i18n';
-import { userFacingMessage } from '@/lib/user-facing-error';
 import TabBar from '@/components/TabBar';
 import AppHeader from '@/components/layout/AppHeader';
 import ThemePanel from '@/components/ThemePanel';
@@ -144,7 +143,7 @@ export default function AccountPage() {
     } catch (err) {
       // Stay in the edit form (not setEditing(false)) so nothing typed here is lost, and the
       // farmer sees why the save didn't happen instead of a save that just silently hung.
-      setProfileError(userFacingMessage(err, 'Could not save. Try again.'));
+      setProfileError(err instanceof Error ? err.message : 'Could not save. Try again.');
     } finally {
       setSaving(false);
     }
@@ -159,7 +158,7 @@ export default function AccountPage() {
       const url = await uploadPhoto(await resizeFileForUpload(file), 'avatars');
       if (url) { await updateMyProfile({ photo_url: url }); await refreshProfile(); }
     } catch (err) {
-      setPhotoError(userFacingMessage(err, 'Could not update your photo.'));
+      setPhotoError(err instanceof Error ? err.message : 'Could not update your photo.');
     } finally {
       setPhotoUploading(false);
       if (photoInputRef.current) photoInputRef.current.value = '';
@@ -177,7 +176,7 @@ export default function AccountPage() {
       await refreshProfile();
     } catch (err) {
       // The farmer chose a file and watched nothing happen otherwise. Say which part failed.
-      setLogoError(userFacingMessage(err, 'Could not add that logo.'));
+      setLogoError(err instanceof Error ? err.message : 'Could not add that logo.');
     } finally {
       setLogoUploading(false);
       if (logoInputRef.current) logoInputRef.current.value = '';

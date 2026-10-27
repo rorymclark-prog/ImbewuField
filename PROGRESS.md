@@ -57,9 +57,9 @@ must provision — not buildable from code alone).
   loaded chunks, so Home, Map, Studies, Prices and Saved open offline from a page that never loaded them (was:
   ChunkLoadError). The error screen says "You're offline" with a link to saved screens. /farmer offline shows the
   app's offline line, not "Failed to fetch" (`w25-08`). About 1.6 MB more on a first install (gzip).
-- **Wave 27 (Sonnet #1133, reviewed):** `lib/user-facing-error.ts`. 15 screens show only copy the app wrote. Network
+- **Wave 27 (Sonnet #1133, reviewed):** `lib/user-facing-error.ts`. 14 screens show only copy the app wrote. Network
   failures use the translated network message; Firebase, storage and server internals fall back. Review kept the
-  fieldwork API's staff copy visible (`w27-03`) and /offline as Codex pinned it (`w27-04`) —
+  fieldwork API's staff copy visible (`w27-03`) and /offline and Account as Codex pinned them (`w27-04`, `w27-05`) —
   `docs/audits/2026-10-26/wave-27-raw-errors-claude.md`. DesignGlossy's 13 sites stay with Codex.
 
 ### 26 Oct 2026 — Wave 26: Codex hand-offs closed after #1121 merged, its report screens checked

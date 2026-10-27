@@ -37,10 +37,11 @@ test('a message the app threw on purpose is shown as written', () => {
   assert.equal(userFacingMessage(own, 'fallback'), 'That image is too big to store.');
 });
 
-// app/offline/page.tsx is left out on purpose: tests/offline-ui-localization.test.ts pins that an
-// unmapped server line there is shown exactly (the four-language offline work, #1122).
+// app/offline/page.tsx and app/account/page.tsx are left out on purpose: the four-language work (#1122)
+// pins that an unmapped server line there is shown exactly (tests/offline-ui-localization.test.ts), and
+// on Account marked as of unknown language (tests/account-localization.test.ts).
 const FILES = [
-  'app/account/page.tsx', 'components/EvidenceSheet.tsx', 'app/records/page.tsx',
+  'components/EvidenceSheet.tsx', 'app/records/page.tsx',
   'components/studies/PathwayOfflineDownload.tsx', 'components/studies/GuideOfflineDownload.tsx',
   'components/records/ReceiptPreview.tsx', 'components/funder/FunderAssessments.tsx',
   'components/design/DesignAdvisor.tsx', 'components/design/BasePhotoImport.tsx', 'components/SiteDesign.tsx',
