@@ -16,6 +16,7 @@ The shared cream frame, wider margin placement, larger typography, paper-buildin
 | ID | User-visible problem or coverage gap | Status | Evidence and next action |
 | --- | --- | --- | --- |
 | MAP-L02 | Public Ubhejane Phasing loses the site-rules section after the wider typography | Corrected and locally rendered; final CI/publication pending | The deployed `264342bed` nine-page PDF ends the schedule at critical order. The revised reading rhythm retains 33px detail text and makes the complete first site rule visible. All six hold points and critical order remain. |
+| MAP-U01 | Creating a new map while a historical row is selected leaves the old map on screen | Reproduced in deployed `8a59db5`; shared rerun corrected, deployed recheck pending | The gallery grew from 3 to 4, but the older Phasing row stayed selected and hid the fresh image. Selecting the new row exposed the corrected rule. See the continuation below. |
 | MAP-L01/B01/K01/F01 | Earlier width, paper building, duplicate key and footer findings | Retained | This follow-up changes only Phasing paragraph spacing. The nine-page preview PDF was visually inspected; the corrected Phasing sheet was downloaded at full size. |
 | SS-001–008 | Earlier survey/map findings and review limits | Retained | Previous records remain authoritative; no physical phone/Safari or fluent-language review was added. |
 
@@ -35,6 +36,32 @@ The existing fit policy omits optional task bullets and surplus site rules. This
 ![Actual public sample: prior widened schedule and corrected complete rule](evidence-phasing-sample-fit/phasing-before-after.jpg)
 
 [Full corrected composition](evidence-phasing-sample-fit/phasing-final-review.jpg) · [Recorded glyph bounds](evidence-phasing-sample-fit/phasing-final-text-bounds.json).
+
+## New-render preview continuation
+
+The subsequent normal workflow check applied the deployed `8a59db5` update,
+selected its older saved Phasing row, then chose Design map. The new drawing was
+created and retained, but `railPreviewImage` still took precedence over the fresh
+result. The older selected row remained on screen without SITE RULES. Selecting
+the newly created row showed the complete corrected rule. This was reproduced
+again with the saved-map count increasing from four to five; it is a selection
+defect, not a claim that generation failed or a paid request occurred.
+
+The single shared `runCurrentSheet` entry now clears that historical preview
+before dispatch. It also marks this site/sheet's auto-preview intent, so late
+gallery metadata cannot reopen the old row. All eight exact/queued/analysis
+dispatch paths keep their existing routing and return values. No saved row is
+removed and no renderer, schedule content, pixel recipe or geometry is changed.
+
+Eight runtime regression cases extract and execute the actual rerun callback
+from the component. All eight failed before correction because the selected
+historical preview was never cleared. They now check clearing and the late-load
+guard before each renderer is invoked. Node 24 typecheck and all 578 focused
+gallery, map, Phasing, geometry, routing, paid-render gate, release and practice
+checks pass, zero failures/TODOs. No existing assertion was changed for this fix.
+Final full-suite CI and the deployed before/after selection check remain gates;
+the PR/issue handover records their terminal outcomes rather than calling an
+incomplete run a pass.
 
 ## Next continuation
 

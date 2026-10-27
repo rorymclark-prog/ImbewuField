@@ -1,11 +1,66 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import ts from 'typescript';
 import { newestSavedMapForSheet, savedMapSheetNo } from '../lib/saved-map-preview.ts';
 
 const glossy = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
 const css = readFileSync(new URL('../components/design/DesignGlossy.module.css', import.meta.url), 'utf8');
 const page = readFileSync(new URL('../app/design/page.tsx', import.meta.url), 'utf8');
+
+// Execute the actual rerun callback: checking only the fresh image's creation misses a saved
+// gallery selection which still wins the centre preview (reproduced in the deployed sample).
+const glossyTree = ts.createSourceFile('DesignGlossy.tsx', glossy, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+let rerunCallback: ts.ArrowFunction | undefined;
+function findRerun(node: ts.Node) {
+  if (ts.isVariableDeclaration(node) && node.name.getText(glossyTree) === 'runCurrentSheet'
+    && node.initializer && ts.isCallExpression(node.initializer)) {
+    const callback = node.initializer.arguments[0];
+    if (callback && ts.isArrowFunction(callback)) rerunCallback = callback;
+  }
+  ts.forEachChild(node, findRerun);
+}
+findRerun(glossyTree);
+assert.ok(rerunCallback, 'the visible render actions need a shared rerun entry point');
+const rerunJs = ts.transpileModule(`const rerun = ${rerunCallback.getText(glossyTree)}; return rerun;`, {
+  compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.None },
+}).outputText;
+
+for (const [label, flags, renderer] of [
+  ['base', { exactSheet: 'base' }, 'renderBaseMap'],
+  ['sector', { exactSheet: 'sector' }, 'renderSectorMap'],
+  ['Phasing', { exactSheet: 'implementation' }, 'renderImplementationMap'],
+  ['Phasing AI', { phasingAiMode: true }, 'generatePhasingViaQueue'],
+  ['sector AI', { restyleAiKind: 'sector' }, 'generateSectorViaQueue'],
+  ['styled', { producerStyle: 'reference' }, 'generateOneViaQueue'],
+  ['analysis', { analysisStyle: 'implementation' }, 'generate'],
+  ['design', {}, 'renderDesignMap'],
+] as const) {
+  test(`a new ${label} render leaves the older saved preview before dispatch`, () => {
+    const events: unknown[][] = [];
+    const autoPreviewHandledKeyRef = { current: null as string | null };
+    const scope: Record<string, unknown> = Object.assign({
+      selectedSheet: null, exactSheet: null, phasingAiMode: false,
+      restyleAiKind: null, producerStyle: null, analysisStyle: null,
+      gallerySiteId: 'qa-site', selectedNo: '09', autoPreviewHandledKeyRef,
+      setGalleryViewId: (id: string | null) => events.push(['preview', id]),
+    }, flags);
+    for (const name of ['renderBaseMap', 'renderSectorMap', 'renderImplementationMap',
+      'generatePhasingViaQueue', 'generateSectorViaQueue', 'generateOneViaQueue', 'generate', 'renderDesignMap']) {
+      scope[name] = () => {
+        assert.deepEqual(events, [['preview', null]],
+          'a selected historical map otherwise masks the newly produced image');
+        assert.equal(autoPreviewHandledKeyRef.current, 'qa-site:09',
+          'late metadata must not reopen an old map after the deliberate rerun');
+        events.push(['render', name]);
+        return name;
+      };
+    }
+    const run = new Function(...Object.keys(scope), rerunJs)(...Object.values(scope));
+    assert.equal(run(), renderer);
+    assert.deepEqual(events, [['preview', null], ['render', renderer]]);
+  });
+}
 
 test('Glossy owns the whole studio width instead of inheriting the drawing rails', () => {
   assert.match(page, /canvasState && canvasState\.step !== 'glossy'/,

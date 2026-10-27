@@ -14314,6 +14314,10 @@ export default function DesignGlossy({
 
   // One explicit rerun path for the visible refresh button and the main CTA.
   const runCurrentSheet = useCallback(() => {
+    // A selected saved row otherwise keeps winning the preview after a new image is made.
+    // Mark the intent too, so late gallery metadata cannot reopen that historical row.
+    autoPreviewHandledKeyRef.current = `${gallerySiteId}:${selectedNo}`;
+    setGalleryViewId(null);
     // Cross-check against the single routing authority (lib/sheet-render-route.ts): the dispatch
     // below must never independently drift from what sheetRenderRoute computes for the SAME
     // sheet+style — the exact drift pattern that has bitten repeatedly (see that file's header,
@@ -14381,7 +14385,7 @@ export default function DesignGlossy({
     }
     if (analysisStyle) return generate('gemini');
     return renderDesignMap();
-  }, [exactSheet, restyleAiKind, phasingAiMode, producerStyle, engine, geometryLock, analysisStyle, selectedSheet, isExactRender, renderBaseMap, renderSectorMap, renderImplementationMap, generatePhasingViaQueue, generateSectorViaQueue, generateOneViaQueue, generateProducer, generate, renderDesignMap]);
+  }, [gallerySiteId, selectedNo, exactSheet, restyleAiKind, phasingAiMode, producerStyle, engine, geometryLock, analysisStyle, selectedSheet, isExactRender, renderBaseMap, renderSectorMap, renderImplementationMap, generatePhasingViaQueue, generateSectorViaQueue, generateOneViaQueue, generateProducer, generate, renderDesignMap]);
 
   // Direct Step 1 button. If this sheet is already in exact mode, redraw immediately. Otherwise,
   // wait for React to switch the generator selection and then run the deterministic renderer.
