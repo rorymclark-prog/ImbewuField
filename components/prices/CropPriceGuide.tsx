@@ -90,17 +90,17 @@ export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: 
         <div style={{ background: 'var(--color-forest-800)', borderRadius: 24, padding: '22px 18px' }}>
           <div
             className="font-sans font-bold uppercase tracking-widest"
-            style={{ fontSize: 12, color: 'rgba(247,242,233,0.78)', letterSpacing: '0.1em' }}
+            style={{ fontSize: 12, color: 'color-mix(in srgb, var(--on-forest-800) 88%, transparent)', letterSpacing: '0.1em' }}
           >
             {lang === 'zu' ? <>{t('priceWholesale')}<span className="block mt-1" style={{ fontSize: 12, fontWeight: 500, letterSpacing: 0 }}>{translate('en', 'priceWholesale')}</span></> : t('priceWholesale')}
           </div>
           <div
             className="font-display font-bold"
-            style={{ fontSize: 54, color: 'var(--on-forest)', lineHeight: 1.05, marginTop: 4 }}
+            style={{ fontSize: 54, color: 'var(--on-forest-800)', lineHeight: 1.05, marginTop: 4 }}
           >
             R{formatPrice(price.wholesalePerKg)}
           </div>
-          <div className="font-sans" style={{ fontSize: 13, color: 'rgba(247,242,233,0.78)' }}>
+          <div className="font-sans" style={{ fontSize: 13, color: 'color-mix(in srgb, var(--on-forest-800) 88%, transparent)' }}>
             {lang === 'zu' ? <>{t('pricePerKgTrader')}<span className="block mt-1">{translate('en', 'pricePerKgTrader')}</span></> : t('pricePerKgTrader')}
           </div>
         </div>

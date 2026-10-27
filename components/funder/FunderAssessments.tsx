@@ -1,6 +1,8 @@
 'use client';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/lib/auth';
+import { translate, useLanguage } from '@/lib/i18n';
+import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 import { isSampleMode } from '@/lib/sample-mode';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { MelMetrics, melRequest } from '@/components/MelDashboard';
@@ -13,6 +15,8 @@ import SampleProgramme from '@/components/SampleProgramme';
 type Summary = { id: string; title: string; project: string; due: string; completed: number; assigned: number; metrics: MelMetric[] };
 export default function FunderAssessments() {
   const { user } = useAuth();
+  const { lang } = useLanguage();
+  const failure = (e: unknown) => userFacingMessage(e, translate(lang, 'networkFailed'), k => translate(lang, k));
   const [orgs, setOrgs] = useState<{ id: string; name: string }[]>([]);
   const [org, setOrg] = useState('');
   const [summaries, setSummaries] = useState<Summary[]>([]);
@@ -26,9 +30,9 @@ export default function FunderAssessments() {
     void (async () => {
       try {
         const res = await fetch('/api/network/orgs', { headers: await paidApiHeaders() });
-        const body = await res.json(); if (!res.ok) throw new Error(body.error);
+        const body = await res.json(); if (!res.ok) throw new UserFacingError(typeof body.error === 'string' ? body.error : translate(lang, 'networkFailed'));
         if (!cancelled) { setOrgs(body.orgs); setOrg(body.orgs[0]?.id ?? ''); }
-      } catch (e) { if (!cancelled) setError((e as Error).message); }
+      } catch (e) { if (!cancelled) setError(failure(e)); }
     })();
     return () => { cancelled = true; };
   }, [user]);
@@ -36,7 +40,7 @@ export default function FunderAssessments() {
     let cancelled = false; setSummaries([]); setError('');
     if (!org) return;
     setLoading(true);
-    void melRequest(`?mode=published&org=${encodeURIComponent(org)}`).then(d => { if (!cancelled) setSummaries(d.assessments); }).catch(e => { if (!cancelled) setError(e.message); }).finally(() => { if (!cancelled) setLoading(false); });
+    void melRequest(`?mode=published&org=${encodeURIComponent(org)}`).then(d => { if (!cancelled) setSummaries(d.assessments); }).catch(e => { if (!cancelled) setError(failure(e)); }).finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [org]);
   return <section className={styles.root}><div className={styles.wrap}><div className={styles.hero}><h1>Assessments & learning</h1><p>Assessment summaries reviewed and shared by the organisation.</p></div>

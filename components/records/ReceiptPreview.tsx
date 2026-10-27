@@ -7,6 +7,7 @@ import { announceOverlay } from '@/lib/overlay-signal';
 import { expenseReceiptScope, loadExpenseReceipt, receiptScopeIsCurrent, type ExpenseReceipt } from '@/lib/expense-receipts';
 import { getSandboxExpenses, isSampleMode } from '@/lib/sample-mode';
 import { useLanguage } from '@/lib/i18n';
+import { userFacingMessage } from '@/lib/user-facing-error';
 import { recordsFill } from '@/lib/records-regional-drafts';
 
 /** The tour's receipt is drawn from its own expense, so the slip and ledger always agree. */
@@ -75,7 +76,7 @@ export default function ReceiptPreview({ expense }: { expense: ExpenseLog }) {
         setPrepared(isSampleMode() && getSandboxExpenses().some(row => row.id === expense.id));
       }
     } catch (cause) {
-      if (version === request.current && receiptScopeIsCurrent(scope)) setError(cause instanceof Error ? cause.message : text('Could not open this receipt. Try again.', 'Asikwazanga ukuvula le risidi. Zama futhi.'));
+      if (version === request.current && receiptScopeIsCurrent(scope)) setError(userFacingMessage(cause, text('Could not open this receipt. Try again.', 'Asikwazanga ukuvula le risidi. Zama futhi.')));
     } finally {
       if (version === request.current && receiptScopeIsCurrent(scope)) setLoading(false);
     }
