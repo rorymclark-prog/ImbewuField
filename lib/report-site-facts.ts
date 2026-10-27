@@ -730,6 +730,12 @@ export function cropPlanPromptBlock(facts: ReportSiteFacts | null | undefined): 
       : '';
     lines.push(`· ${row.name} — sown ${row.sowMonths.join(', ')}${row.bedLabels.length ? ` in ${row.bedLabels.join(', ')}` : ''}${row.alreadyGrowing ? ' (already in the ground)' : ''}${onceNote}`);
   }
+  const production = crop.snapshot?.annualProduction;
+  if (production) {
+    lines.push('WHOLE-YEAR FOOD AND PRODUCT PLAN (dated snapshot; not recorded harvests)', `Period: ${production.months.join(', ')}`);
+    for (const row of production.rows) lines.push(`· ${row.name} / ${row.product} (${row.kind}): ${row.months.length ? row.months.map(i => production.months[i]).join(', ') : 'timing not established'}${row.reference ? ' — sourced reference window' : ''}. ${row.note}`);
+    lines.push('Keep reference windows, proposed systems and local observations qualified as above. Housing units are not animal counts. Missing timing is not evidence of a food gap; no food-adequacy, yield or income claim follows from this calendar.');
+  }
   lines.push(
     'Build the Planting Calendar, Crop Rotation and Year-Round Food Production sections AROUND this existing plan: '
     + 'name these crops and these beds, say what the plan already covers, and only then name the gaps it does not. '

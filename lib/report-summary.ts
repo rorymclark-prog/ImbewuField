@@ -6,8 +6,21 @@ import { buildBillOfQuantities } from './report-boq';
 import { registerReportPdfFont, reportPdfText } from './report-pdf-font.ts';
 import { recordsMonthShort } from './records-months.ts';
 import type { BoqLine } from './report-boq';
+import type { SavedReport } from './saved-reports';
 
 export type ReportSummaryPage = { title: string; lines: string[] };
+
+/** A prepared example has no AI settings: those choices never produced its text. */
+export function preparedSampleReport(input: Omit<SavedReport, 'report' | 'origin' | 'settings' | 'analysedMapIds'>): SavedReport {
+  const lang = input.lang === 'zu' ? 'zu' : 'en';
+  return { ...input, lang, origin: 'prepared-example', report: sampleFullSiteReport(input.facts ?? null, input.location, lang), analysedMapIds: [] };
+}
+
+export function preparedExampleNote(language = 'en'): string {
+  return language === 'zu'
+    ? 'Isibonelo esilungiselelwe samarekhodi agciniwe. Akusikho ukuhlolwa okuphelele kwendawo, umbiko womklamo noma ubufakazi benqubekela-phambili. Akukho ukuhlaziywa okusha kwe-AI.'
+    : 'Prepared example of saved records. It is not a comprehensive site assessment, design report or evidence of progress. No new AI analysis.';
+}
 export function reportSummaryPages(facts: ReportSiteFacts | null, location: LocationData, pageCount: 1 | 5, language = 'en'): ReportSummaryPage[] {
   const t = (en: string, zulu: string) => reportSummaryText(en, language, {}, zulu);
   const unknown = t('Not recorded', 'Akubhaliwe');
@@ -29,6 +42,17 @@ export function reportSummaryPages(facts: ReportSiteFacts | null, location: Loca
     t('Capacity is not water currently available; check which tanks are already installed.', 'Umthamo awusho amanzi akhona manje; hlola ukuthi yimaphi amathangi asefakiwe.'),
   ];
   const cropLines = facts?.crop?.crops.length ? facts.crop.crops.map(c => `${c.name} · ${c.bedLabels.join(', ')} · ${t('sow', 'hlwanyela')}: ${c.sowMonths.map(month => summaryMonth(month, language)).join(', ')}${c.firstSeasonOnlyMonths.length ? ` · ${t('once only', 'kanye kuphela')}: ${c.firstSeasonOnlyMonths.map(month => summaryMonth(month, language)).join(', ')}` : ''}${c.alreadyGrowing ? ` · ${t('includes an existing crop', 'kufaka isitshalo esesikhona')}` : ''}`) : [t('No crop rows linked to this site were saved with this report.', 'Ayikho imigqa yezitshalo exhunywe kule ndawo egcinwe nalo mbiko.')];
+  const production = facts?.crop?.snapshot?.annualProduction;
+  const productNames = (kind: 'food-forest' | 'animal') => {
+    const names = production?.rows.filter(row => row.kind === kind).map(row => `${row.name} (${row.product})`) ?? [];
+    return names.length ? `${names.slice(0, 5).join(', ')}${names.length > 5 ? '; more in the full calendar' : ''}` : 'No mapped product rows recorded';
+  };
+  const productionNotes = production ? [
+    `Annual food and product plan${language !== 'en' ? ' (English overview)' : ''}: ${production.months[0]} to ${production.months[11]}.`,
+    `Food forest: ${productNames('food-forest')}.`,
+    `Animal products: ${productNames('animal')}.`,
+    'See the full report for dated picking and storage windows, proposed systems and source notes. These are plans, not recorded harvests or animal counts.',
+  ] : [];
   const cropNotes = [t('This is the saved planting plan, not a harvest or sales record. Check actual bed clearance before each next planting.', 'Lolu uhlelo lokutshala olugciniwe, alulona irekhodi lesivuno noma ukuthengisa. Hlola ukuthi umbhede usukhululekile ngaphambi kokutshala okulandelayo.'), t('For seed quantities, use the crop planner’s seed list. Do not buy seed from an inferred yield or monthly availability chart.', 'Ngobuningi bembewu, sebenzisa uhlu lwembewu kuhlelo lwezitshalo. Ungathengi imbewu ngokwesivuno esiqageliwe noma ishadi lokutholakala kwenyanga.')];
   const costLines = [
     `${t('Priced infrastructure subtotal', 'Isamba sezindleko zengqalasizinda ezinentengo')}: ${boq.lines.length ? amount(boq.subtotalZar) : unknown}`,
@@ -38,7 +62,7 @@ export function reportSummaryPages(facts: ReportSiteFacts | null, location: Loca
   if (pageCount === 1) return [{ title, lines: [...factsLines, `${t('Crop rows', 'Imigqa yezitshalo')}: ${facts?.crop?.plantingCount ?? unknown}`, ...cropLines.slice(0, 4), ...(cropLines.length > 4 ? [t('More crop rows are listed in the five-page or full report.', 'Eminye imigqa yezitshalo isembikweni wamakhasi amahlanu noma ogcwele.')] : []), ...costLines, t('Next: verify the land measurements, soil and water supply; confirm the crop plan and obtain missing quotes.', 'Okulandelayo: qinisekisa izilinganiso zomhlaba, umhlabathi namanzi; qinisekisa uhlelo lwezitshalo uthole namanani angekho.')] }];
   return [
     { title, lines: factsLines },
-    { title: t('Crop plan', 'Uhlelo lwezitshalo'), lines: [...cropNotes, ...cropLines] },
+    { title: t('Crop plan', 'Uhlelo lwezitshalo'), lines: [...productionNotes, ...cropNotes, ...cropLines] },
     { title: t('Water, soil and the mapped site', 'Amanzi, umhlabathi nendawo ebalazwe'), lines: [factsLines[7], ...factsLines.slice(8), `${t('Traced roof', 'Uphahla olulinganisiwe')}: ${area(facts?.roof?.areaM2)}`, ...(facts?.water?.tanks.map(tank => `${reportElementDisplayName(tank.name,tank.defId,language)} ×${tank.count} · ${tank.status === 'existing' ? t('existing', 'ikhona') : tank.status === 'proposed' ? t('planned', 'ihleliwe') : t('mixed status', 'isimo esixubile')}`) ?? []), ...(facts?.design?.routes.map(r => `${reportRouteDisplayName(r.label,r.kind,language)}: ${numberLabel(r.totalLengthM)} m`) ?? []), t('Confirm water reliability, drainage and soil condition on the ground before construction or amendment purchases.', 'Qinisekisa ukutholakala kwamanzi, ukuphuma kwamanzi nesimo somhlabathi ngaphambi kokwakha noma ukuthenga izinto zokulungisa umhlabathi.')] },
     { title: t('Bill of quantities', 'Uhlu lobuningi nezindleko'), lines: [...costLines, ...boq.lines.map(l => `${summaryBoqDescription(l, language)} · ${l.quantity} · ${l.zar === null ? l.unpriced === 'existing' ? t('existing; excluded from new spend', 'ikhona; ayifakiwe ezindlekweni ezintsha') : t('quote / measurement needed', 'kudingeka intengo / isilinganiso') : amount(l.zar)}`)] },
     { title: t('Next actions and checks', 'Izinyathelo ezilandelayo nokuhlola'), lines: [
@@ -54,7 +78,7 @@ export function reportSummaryPages(facts: ReportSiteFacts | null, location: Loca
 
 /** Fixed page count, white paper, no photograph plates. Readable type has priority
  * over squeezing unlimited crop/BOQ rows onto a page; omissions are stated. */
-export async function buildInkSummaryPdf(pages: ReportSummaryPage[], stamp: string, language = 'en'): Promise<Blob> {
+export async function buildInkSummaryPdf(pages: ReportSummaryPage[], stamp: string, language = 'en', scopeNote?: string): Promise<Blob> {
   const { jsPDF } = await import('jspdf');
   const doc = new jsPDF({ unit: 'pt', format: 'a4', compress: true, putOnlyUsedFonts: true });
   const font = await registerReportPdfFont(doc);
@@ -66,6 +90,10 @@ export async function buildInkSummaryPdf(pages: ReportSummaryPage[], stamp: stri
     doc.text(titleLines.slice(0, 2), 46, 56);
     doc.setFont(font, 'normal'); doc.setFontSize(10);
     let y = 70 + Math.min(titleLines.length, 2) * 20;
+    if (scopeNote) {
+      const scopeLines = doc.splitTextToSize(reportPdfText(scopeNote), 503) as string[];
+      doc.text(scopeLines, 46, y); y += scopeLines.length * 13 + 12;
+    }
     let omitted = false;
     for (const line of pages[i].lines) {
       const wrapped = doc.splitTextToSize(reportPdfText(line), 503) as string[];

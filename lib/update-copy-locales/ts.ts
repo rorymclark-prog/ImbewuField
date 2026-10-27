@@ -139,5 +139,15 @@ const copy:UpdateCopy={
   "Visit, training and programme reports compare recorded delivery across periods.": "Swiviko swa ku endzela, vuleteri ni pulogirama swi pimanisa leswi endliweke leswi rhekhodiweke hi minkarhi.",
   "MEL reports compare dated readings and include agreed donor indicator details.": "Swiviko swa MEL swi pimanisa leswi hlayiweke leswi ni masiku, naswona swi katsa vuxokoxoko bya swikombiso swa vafani leswi pfumeleriweke.",
   "Donor evidence, missing records and current snapshots stay clear in every PDF.": "Vumbhoni bya vafani, tirhekhodo leti kayivelaka ni swifaniso swa sweswi swi sala swi twisiseka eka PDF yin'wana ni yin'wana.",
+  "Survey and reports now show crops, food-forest and animal products through the year.": "Ndzavisiso ni swiviko sweswi swi kombisa swirimiwa, swikumiwa swa khwati ra swakudya ni swa swifuwo lembe hinkwaro.",
+  "Choose Site potential or Complete site plan, then the detail you need.": "Hlawula Vuswikoti bya ndhawu kumbe Pulani leyi heleleke ya ndhawu, kutani u hlawula vuxokoxoko lebyi u byi lavaka.",
+  "Record plan adds a scaled map with symbols and a legend. Download or save it without AI.": "Pulani ya rhekhodo yi engetela mepe leyi pimiweke leyi nga ni swikombiso ni nhlamuselo ya swona. Yi kopi kumbe u yi hlayisa handle ka AI.",
+  "Prepared examples are labelled clearly; unused report settings are hidden.": "Swikombiso leswi lunghiselelweke swi tsariwe kahle; swiyimiso swa xiviko leswi nga tirhisiwiki swi fihliwile.",
+  "Open site reports": "Pfula swiviko swa ndhawu",
+  "Menu → Reports": "Menyu → Swiviko",
+  "Review the report purpose, annual production plan and saved maps for your site.": "Kambela xikongomelo xa xiviko, pulani ya vuhumelerisi ya lembe ni timepe leti hlayisiweke ta ndhawu ya wena.",
+  "Open Design Studio": "Pfula Ndhawu ya ku dizayina",
+  "Menu → Design Studio": "Menyu → Ndhawu ya ku dizayina",
+  "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Pfula Xivoni xo sungula ni ku rhumela, kutani u hlawula Pulani ya rhekhodo ku kuma dayagiremu leyi pimiweke ni nhlamuselo ya yona.",
 };
 export default copy;

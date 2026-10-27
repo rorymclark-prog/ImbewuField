@@ -417,3 +417,18 @@ test('chart artwork escapes saved labels before SVG rendering', () => {
   assert.ok(!svg.includes('<script>'));
   assert.match(svg, /&lt;script&gt; &amp; &quot;A&quot;/);
 });
+
+test('printed annual product pages keep dated windows, source qualifiers and undated products through pagination', async () => {
+  const { jsPDF } = await import('jspdf');
+  const { drawReportProductionYear } = await import('../lib/report-crop-pdf.ts');
+  const months = Array.from({length:12}, (_, i) => new Date(2026, 11+i, 1).toLocaleDateString('en-ZA', {month:'short',year:'numeric'}));
+  const rows = Array.from({length:16}, (_, i) => ({ id:`fixture-${i}`, kind:'animal' as const, name:`Product ${i}`, product:'Honey', months:i===15?[]:[0,1], note:`Source qualifier ${i}. Housing is not an animal count. ` + 'Keep the recorded observation separate from the plan. '.repeat(4), reference:i%2===0 }));
+  const doc = new jsPDF({unit:'pt',format:'a4',compress:false});
+  drawReportProductionYear(doc, {months,rows}, '2026-12-07T10:00:00Z');
+  const streams = pdfContentStreams(doc.output('arraybuffer'));
+  assert.ok(doc.getNumberOfPages()>2, 'this fixture must exercise continuation pages');
+  for (const row of rows) assert.ok(streams.includes(row.name), row.id);
+  assert.match(streams, /Dec/); assert.match(streams, /2027/);
+  assert.match(streams, /not harvest records/); assert.match(streams, /timing not established/);
+  assert.match(streams, /Source qualifier 15/);
+});

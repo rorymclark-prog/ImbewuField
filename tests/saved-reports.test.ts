@@ -356,7 +356,7 @@ test('editing the next report settings cannot relabel the saved report; regenera
   Object.assign(browser, { matchMedia: () => ({ matches: true, addEventListener() {}, removeEventListener() {} }) });
   const ReportView = (await import('../components/ReportView.tsx')).default;
   const initial = report('original', { facts: { farmName: 'Ubhejane Creche' }, settings: {
-    tone: 'professional', length: 'comprehensive', language: 'en', bilingual: false,
+    purpose: 'complete', tone: 'professional', length: 'comprehensive', language: 'en', bilingual: false,
     sections: ['Executive Summary'], generatedAt: '2026-09-07T08:00:00Z', provider: 'Anthropic', model: 'claude-sonnet-4-6',
   } });
   saveReport(initial);
@@ -376,12 +376,15 @@ test('editing the next report settings cannot relabel the saved report; regenera
     assert.equal(new Set(rows.map(textOf)).size, 2, 'versions saved at exactly the same time need distinct visible references');
     await act(async () => { deleteReport('another-version'); });
     await act(async () => button('Simple').props.onClick());
+    await act(async () => view!.root.findAllByType('select').find(n => n.props['aria-label'] === 'Report purpose')!.props.onChange({ target: { value: 'potential' } }));
     await act(async () => button('Save').props.onClick());
+    assert.equal(loadReports()[0].settings?.purpose, 'complete', 'next-purpose controls cannot relabel a saved plan');
     assert.equal(loadReports()[0].settings?.tone, 'professional', 'Save must capture generated wording, not next-report controls');
     assert.equal(loadReports()[0].savedAt, initial.savedAt, 're-saving does not rewrite the original date');
     assert.match(textOf(view!.toJSON()), /Wording: Detailed/);
     await act(async () => button('Generate new report').props.onClick());
     assert.equal(requestBody?.tone, 'simple');
+    assert.equal(requestBody?.purpose, 'potential');
     assert.equal(loadReports().length, 1, 'generation leaves the original saved version alone');
     assert.match(textOf(view!.toJSON()), /New report · not saved yet/);
     await act(async () => {
@@ -391,6 +394,7 @@ test('editing the next report settings cannot relabel the saved report; regenera
     assert.equal(loadReports().length, 2, 'saving regenerated text must create a separate report');
     assert.equal(loadReports().find(r => r.id === 'original')?.report, initial.report);
     assert.equal(loadReports()[0].settings?.tone, 'simple');
+    assert.equal(loadReports()[0].settings?.purpose, 'potential');
     assert.equal(loadReports()[0].settings?.model, 'claude-sonnet-4-6');
     await act(async () => button('Saved').props.onClick());
     assert.equal(loadReports().length, 2, 'repeated Save must not duplicate the new version');
@@ -452,4 +456,74 @@ test('map review records are separate by site, account and sample mode and repor
   local.throwOnWrite = true;
   assert.equal(saveSiteMapReview('ubhejane', emptyMapReview()), false);
   local.throwOnWrite = false; reset();
+});
+
+test('prepared examples keep their origin and cannot acquire requested AI settings on save', async () => {
+  reset();
+  const { preparedSampleReport } = await import('../lib/report-summary.ts');
+  const original = preparedSampleReport({ ...report('prepared'), lang: 'zu', facts: { farmName: 'Example garden' } });
+  const settings = { tone: 'professional' as const, length: 'comprehensive' as const, language: 'zu', bilingual: true, sections: ['Executive Summary'], generatedAt: original.savedAt };
+  assert.equal(saveReport({ ...original, settings }).saved, true);
+  const reopened = loadReports()[0];
+  assert.equal(reopened.origin, 'prepared-example');
+  assert.equal(reopened.settings, undefined, 'unused controls must not claim the example was generated comprehensively');
+  assert.equal(reopened.report, original.report);
+  assert.equal(reopened.lang, 'zu');
+  assert.deepEqual(reopened.analysedMapIds, [], 'no image model analysed the prepared example');
+  assert.match(reopened.report, /Asikona ukuhlaziywa okusha kwe-AI/);
+  const unsupported = preparedSampleReport({ ...report('fallback'), lang: 'fr' });
+  assert.equal(unsupported.lang, 'en', 'English fixed text cannot be labelled as translated advice');
+  saveReport(report('older'));
+  saveReport({ ...report('future'), origin: 'unknown-kind' } as unknown as SavedReport);
+  assert.equal(loadReports().find(r => r.id === 'older')?.origin, undefined);
+  assert.equal(loadReports().find(r => r.id === 'future')?.origin, undefined, 'unknown metadata must not discard readable historical text');
+});
+
+test('sample refresh has honest controls, makes a distinct version and never calls a paid generator', async () => {
+  reset(); enterSampleMode();
+  const { createElement } = await import('react');
+  const { act, create } = await import('react-test-renderer');
+  const { readFileSync } = await import('node:fs');
+  const ts = (await import('typescript')).default;
+  const css = `data:text/javascript,${encodeURIComponent('export default new Proxy({}, { get: (_, key) => key });')}`;
+  const empty = `data:text/javascript,${encodeURIComponent('export default function Component(){ return null; }')}`;
+  const componentHooks = registerHooks({
+    resolve(specifier, context, nextResolve) {
+      if (specifier.endsWith('.css')) return { url: css, shortCircuit: true };
+      if (specifier.endsWith('/ReportPreparation')) return { url: empty, shortCircuit: true };
+      return nextResolve(specifier, context);
+    },
+    load(url, context, nextLoad) {
+      if (url.endsWith('.tsx')) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
+        compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 }, fileName: url,
+      }).outputText };
+      return nextLoad(url, context);
+    },
+  });
+  Object.assign(browser, { matchMedia: () => ({ matches: true, addEventListener() {}, removeEventListener() {} }) });
+  const ReportView = (await import('../components/ReportView.tsx')).default;
+  const textOf = (node: any): string => typeof node === 'string' ? node : node?.children?.map(textOf).join('') ?? '';
+  let view: ReturnType<typeof create> | undefined;
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = async () => { throw Error('Prepared examples must not need an API call'); };
+  try {
+    await act(async () => { view = create(createElement(ReportView, { locationData: DEMO_LOCATION, onClose() {} })); });
+    const button = (label: string) => view!.root.findAllByType('button').find(n => textOf(n) === label)!;
+    assert.ok(button('Refresh prepared example'));
+    assert.equal(button('Comprehensive'), undefined, 'a control that cannot affect prepared text must not be offered');
+    assert.equal(button('Detailed'), undefined);
+    assert.match(textOf(view!.toJSON()), /not a comprehensive site assessment/);
+    await act(async () => button('Save').props.onClick());
+    const first = structuredClone(loadReports()[0]);
+    assert.equal(first.origin, 'prepared-example');
+    await act(async () => button('Refresh prepared example').props.onClick());
+    assert.equal(loadReports().length, 1, 'refresh does not overwrite saved history');
+    await act(async () => button('Save').props.onClick());
+    assert.equal(loadReports().length, 2);
+    assert.deepEqual(loadReports().find(r => r.id === first.id), first);
+    assert.ok(loadReports().every(r => r.origin === 'prepared-example' && !r.settings));
+  } finally {
+    if (view) await act(async () => view!.unmount());
+    globalThis.fetch = realFetch; componentHooks.deregister(); exitSampleMode();
+  }
 });

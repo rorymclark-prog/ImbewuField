@@ -1,14 +1,16 @@
 'use client';
-import type { ReportGenerationSettings } from '@/lib/saved-reports';
+import { reportOriginLabel, type ReportGenerationSettings, type ReportOrigin } from '@/lib/saved-reports';
+import { siteReportPurposeLabel } from '@/lib/site-survey';
 import { useLanguage } from '@/lib/i18n';
 import { reportUiText, reportUiDate } from '@/lib/report-localisation';
 import styles from '../ReportView.module.css';
 
-export default function ReportVersionDetails({ settings, language, savedAt, reference, sample = false }: {
-  settings?: ReportGenerationSettings; language: string; savedAt?: string; reference?: string; sample?: boolean;
+export default function ReportVersionDetails({ settings, language, savedAt, reference, origin }: {
+  settings?: ReportGenerationSettings; language: string; savedAt?: string; reference?: string; sample?: boolean; origin?: ReportOrigin;
 }) {
   const { lang, t: appT } = useLanguage();
   const t = (english: string) => reportUiText(english, lang, appT);
+  const sample = origin === 'prepared-example';
   const wording = settings?.tone === 'simple' ? t('Simple') : settings?.tone === 'professional' ? t('Detailed') : t('Not recorded');
   const depth = settings ? t({ 'one-pager': 'Brief advice', standard: 'Standard', comprehensive: 'Comprehensive' }[settings.length]) : t('Not recorded');
   const date = (iso: string) => reportUiDate(lang, iso);
@@ -18,6 +20,8 @@ export default function ReportVersionDetails({ settings, language, savedAt, refe
       <span>{t('Wording: {wording} · Depth: {depth} · Language: {language}').replace('{wording}', wording).replace('{depth}', depth).replace('{language}', language)}</span>
     </summary>
     <dl>
+      <div><dt>{t('Purpose')}</dt><dd>{settings?.purpose ? siteReportPurposeLabel(settings.purpose, lang) : sample ? t('Prepared example') : t('Not recorded')}</dd></div>
+      <div><dt>{t('Report origin')}</dt><dd>{reportOriginLabel(origin, lang)}</dd></div>
       {reference && <div><dt>{t('Report reference')}</dt><dd>{reference}</dd></div>}
       <div><dt>{t('Generated')}</dt><dd>{settings ? date(settings.generatedAt) : t('Not recorded')}</dd></div>
       <div><dt>{t('English alongside')}</dt><dd>{settings ? settings.bilingual ? t('Yes') : t('No') : t('Not recorded')}</dd></div>
