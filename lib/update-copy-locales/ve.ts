@@ -149,5 +149,7 @@ const copy:UpdateCopy={
   "Open Design Studio": "Vulani Fhethu ha u pulana",
   "Menu → Design Studio": "Menyu → Fhethu ha u pulana",
   "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Vulani U sedza phanḓa na u rumela, nga murahu ni nange Pulane ya rekhodo u wana tshifanyiso tsho eletshedzwaho na ṱhaluso yatsho.",
+  "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Notsi dza makete dzi vhulunga tshisima na ḓuvha zwadzo. Pulane dza u rengisa dzi dzula dzo khethekana na thengiso yo rekhodiwaho.",
+  "Full report headers keep unsourced soil values unknown.": "Ṱhoho dza muvhigo wo fhelelaho dzi vhulunga zwiṱhanganyelo zwa mavu zwi si na tshisima zwi sa ḓivhei.",
 };
 export default copy;

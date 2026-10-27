@@ -59,7 +59,10 @@ test('native header labels and provenance translate without changing any measure
   for(let i=1;i<englishRows.length;i++){if(rawSources.has(englishRows[i][2]))assert.equal(nativeRows[i][2],reportRecordedSourceLabel(englishRows[i][2],lang));else assert.notEqual(nativeRows[i][2],englishRows[i][2],`${lang}: English provenance ${englishRows[i][2]}`);}
   for(const value of [row.input.facts?.farmName,row.input.vegUnit,row.input.bruLabel,...(row.input.facts?.design?.elements.map(e=>e.name)??[]),...(row.input.facts?.water?.tanks.map(t=>t.name)??[]),...(row.input.facts?.water?.mapPoints.map(p=>p.name)??[])])if(value&&row.expected.includes(value))assert.ok(native.includes(value),`${lang}: changed saved name/source ${value}`);
   for(const source of ['Not traced','Not traced or measured','capacity not stated'])if(englishRows.some(r=>r[1]===source))assert.ok(nativeRows.some(r=>r[1]===reportDocumentText(source,lang)));
-  assert.ok(cell(native,'Soil (0-30 cm)',lang)[1].includes(row.input.soilSource==='lab'?row.input.soilTexture:reportVisualText(row.input.soilTexture,lang)));
+  // Soil figures print only from an uploaded laboratory test or SoilGrids; generic defaults say "Not measured" (SS-014).
+  const measured=row.input.soilSource==='lab'||row.input.soilSource==='soilgrids';
+  if(measured)assert.ok(cell(native,'Soil (0-30 cm)',lang)[1].includes(row.input.soilSource==='lab'?row.input.soilTexture:reportVisualText(row.input.soilTexture,lang)));
+  else assert.equal(cell(native,'Soil (0-30 cm)',lang)[1],reportDocumentText('Not measured; arrange a soil test',lang));
   assert.equal(JSON.stringify(row.input),before);
  }
 });
@@ -116,7 +119,7 @@ test('the real API emits the translated measurement table with the same supplied
  const hooks=registerHooks({resolve(s,c,next){if(s==='@anthropic-ai/sdk')return{url:module('export default class Anthropic{}'),shortCircuit:true};if(s==='next/server')return{url:module('export class NextRequest{}'),shortCircuit:true};if(s==='@/lib/api-auth')return{url:module('export async function guardPaidApiRequest(){return {uid:"header-test"};}'),shortCircuit:true};if(s==='@/lib/metered-ai')return{url:module(`export const AI_MODELS={main:'claude-sonnet-4-6'};export async function meteredAi(){return {ai:{model:m=>m,messages:{create:async request=>{globalThis[Symbol.for('imbewu-header-provider-stub')].push(request);return {usage:{},stop_reason:'end_turn',content:[{type:'text',text:'## Mocked body\\nOriginal mocked response.'}]};}}}};}`),shortCircuit:true};return next(s,c);}});
  const original=globalThis.fetch;globalThis.fetch=async()=>new Response('{}');
  try{const {POST}=await import('../app/api/generate-report/route.ts');for(const language of ['en',...languages]){calls.length=0;const response=await POST(new Request('http://localhost/api/generate-report',{method:'POST',body:JSON.stringify({language,locationData:DEMO_LOCATION,sections:['Executive Summary']})})as any);assert.equal(response.status,200);const text=await response.text();assert.equal(calls.length,1);
-  const start=text.indexOf('## '+reportDocumentText('Site at a Glance',language));assert.ok(start>=0);const table=text.slice(start,text.indexOf('## 1. Mocked body'));assert.ok(table.includes(`| ${reportDocumentText('Measure',language)} | ${reportDocumentText('Value',language)} | ${reportDocumentText('Where it comes from',language)} |`));assert.ok(cell(table,'Annual rainfall',language)[1].includes(String(DEMO_LOCATION.rainfall.annual)+' mm'));assert.ok(cell(table,'Soil (0-30 cm)',language)[1].includes('pH '+DEMO_LOCATION.soil.ph));if(language!=='en')assert.ok(!table.includes('| Property boundary |'));
+  const start=text.indexOf('## '+reportDocumentText('Site at a Glance',language));assert.ok(start>=0);const table=text.slice(start,text.indexOf('## 1. Mocked body'));assert.ok(table.includes(`| ${reportDocumentText('Measure',language)} | ${reportDocumentText('Value',language)} | ${reportDocumentText('Where it comes from',language)} |`));assert.ok(cell(table,'Annual rainfall',language)[1].includes(String(DEMO_LOCATION.rainfall.annual)+' mm'));assert.ok(['lab','soilgrids'].includes(String((DEMO_LOCATION.soil as {soilSource?:string}).soilSource))?cell(table,'Soil (0-30 cm)',language)[1].includes('pH '+DEMO_LOCATION.soil.ph):cell(table,'Soil (0-30 cm)',language)[1]===reportDocumentText('Not measured; arrange a soil test',language));if(language!=='en')assert.ok(!table.includes('| Property boundary |'));
  }}finally{globalThis.fetch=original;hooks.deregister();delete(globalThis as any)[key];}
 });
 
@@ -148,7 +151,7 @@ test('only recognized collector provenance translates, with original vertex digi
 
 test('model soil classes reuse existing native diagram wording while laboratory and unknown classes stay as recorded',()=>{
  const base=fixture.cases[0].input;
- for(const lang of languages){for(const soilSource of ['soilgrids','estimate','lab']as const){const input={...base,soilSource,soilTexture:'Loam'};const before=JSON.stringify(input);const soil=cell(buildReportHeaderMarkdown(input,lang),'Soil (0-30 cm)',lang)[1];assert.ok(soil.includes(soilSource==='lab'?'Loam':reportVisualText('Loam',lang)));assert.equal(JSON.stringify(input),before);}
+ for(const lang of languages){for(const soilSource of ['soilgrids','estimate','lab']as const){const input={...base,soilSource,soilTexture:'Loam'};const before=JSON.stringify(input);const soil=cell(buildReportHeaderMarkdown(input,lang),'Soil (0-30 cm)',lang)[1];assert.ok(soilSource==='estimate'?soil===reportDocumentText('Not measured; arrange a soil test',lang):soil.includes(soilSource==='lab'?'Loam':reportVisualText('Loam',lang)));assert.equal(JSON.stringify(input),before);}
   const recorded='Recorded custom texture';assert.ok(cell(buildReportHeaderMarkdown({...base,soilTexture:recorded},lang),'Soil (0-30 cm)',lang)[1].includes(recorded));
  }
 });

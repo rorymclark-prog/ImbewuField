@@ -70,3 +70,15 @@ checks pass, zero fail**. Whitespace is clean. The original site-survey, report
 view, crop-plan and Record plan modules have no diff from `61b110d47`;
 `lib/design-studio.ts` and its version remain unchanged. This is source and local
 regression evidence; final combined CI/preview remains required.
+
+### Stacked market-evidence checkpoint
+
+#1101 now carries prerequisite `6bf5396b4` and main `201d57f5f`. Its manual
+conflicts are progress ordering and the release stamp; market/soil messages,
+all historical records and the new role-report entries/tours are retained.
+The original survey/report source has no diff from `9ddf7d399`, including the
+source/date and selling-intent safeguards. `npx tsc --noEmit` is clean; **439
+focused checks pass, zero fail**; whitespace is clean. Both branches need fresh
+full current-head CI and a combined preview check before this integration is
+called verified. Record final results in the PR/issue handover without another
+repository documentation-only push.

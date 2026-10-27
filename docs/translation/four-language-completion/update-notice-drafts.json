@@ -1720,6 +1720,20 @@
       "st": "Bula Ponelopele le ho romela, ebe o kgetha Moralo wa rekoto bakeng sa setshwantsho se lekantsweng le tlhaloso ya sona.",
       "ts": "Pfula Xivoni xo sungula ni ku rhumela, kutani u hlawula Pulani ya rhekhodo ku kuma dayagiremu leyi pimiweke ni nhlamuselo ya yona.",
       "ve": "Vulani U sedza phanḓa na u rumela, nga murahu ni nange Pulane ya rekhodo u wana tshifanyiso tsho eletshedzwaho na ṱhaluso yatsho."
+    },
+    {
+      "english": "Market notes keep their source and date. Selling plans stay separate from recorded sales.",
+      "zu": "Amanothi emakethe agcina umthombo wawo nosuku. Izinhlelo zokuthengisa zihlala zihlukile ekuthengiseni okurekhodiwe.",
+      "st": "Dintlha tsa mmaraka di boloka mohlodi le letsatsi la tsona. Merero ya ho rekisa e sala e arohane le thekiso e ngodisitsweng.",
+      "ts": "Tinotsi ta makete ti hlayisa xihlovo ni siku ra tona. Tipulani to xavisa ti tshama ti hambanile ni ku xavisa loku rhekhodiweke.",
+      "ve": "Notsi dza makete dzi vhulunga tshisima na ḓuvha zwadzo. Pulane dza u rengisa dzi dzula dzo khethekana na thengiso yo rekhodiwaho."
+    },
+    {
+      "english": "Full report headers keep unsourced soil values unknown.",
+      "zu": "Izihloko zombiko ophelele zigcina amanani omhlabathi angenamthombo engaziwa.",
+      "st": "Dihlooho tsa tlaleho e feletseng di boloka dipalo tsa mobu tse se nang mohlodi di sa tsejwe.",
+      "ts": "Tinhloko ta xiviko lexi heleleke ti hlayisa mimpimo ya misava leyi nga riki na xihlovo yi nga tiveki.",
+      "ve": "Ṱhoho dza muvhigo wo fhelelaho dzi vhulunga zwiṱhanganyelo zwa mavu zwi si na tshisima zwi sa ḓivhei."
     }
   ],
   "historyBefore": [

@@ -1,6 +1,6 @@
 // Scale-of-permanence evidence catalogue for ImbewuField site assessments
 
-import { Droplets, Home, Sprout, TreeDeciduous, PawPrint, Zap, Camera, type LucideIcon } from 'lucide-react';
+import { Droplets, Home, Sprout, TreeDeciduous, PawPrint, Zap, Camera, Landmark, type LucideIcon } from 'lucide-react';
 
 export interface EvidenceCatalogueItem {
   key: string;
@@ -168,6 +168,7 @@ export const EVIDENCE_GROUP_ICON: Record<string, LucideIcon> = {
   trees: TreeDeciduous,
   animals: PawPrint,
   energy: Zap,
+  land_legal: Landmark,
   site_photos: Camera,
 };
 

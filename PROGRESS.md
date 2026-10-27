@@ -52,6 +52,8 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+- **2026-10-26 — Stacked site-report compatibility (Codex).** #1101 carries prerequisite `6bf5396b4` and current main `201d57f5f`; market/date/soil and selling-intent code is unchanged from `9ddf7d399`. Typecheck clean, 439 focused checks pass, whitespace clean. [Current audit and verification scope](docs/audits/2026-10-26/site-report-role-integration-codex.md). Fresh full CI/preview is required; older green runs remain source-specific checkpoints.
+
 - **2026-10-26 — Site reports with published role reports (Codex).** Continued from the verified #1099/#1101 heads. Main now includes #1100, #1121 and wave 23; retain their record-based period comparisons, donor metadata and report typography alongside site potential, complete site plans, annual products and Record plan. Conflicts are audit/progress/release history only. [Dated integration audit](docs/audits/2026-10-26/site-report-role-integration-codex.md); fresh combined checks/preview required. Existing field/language/device limits remain.
 
 ### 26 Oct 2026 — Wave 23: re-capture of 98c8a22, isiZulu Home date regression fixed first
@@ -64,9 +66,19 @@ must provision — not buildable from code alone).
   note styled in both report layouts, one partner per line on phones. `w23-02` (R1 income rounding) and `w23-06` handed to
   Codex — both sit in files its open #1121 is changing.
 
+- **2026-10-25 — Stacked wave 22 report verification (Codex).** #1101 carries prerequisite `61b110d47` and main `cfb75437c`; its survey/report source is unchanged from the fully tested `4b88d5559`. Typecheck clean, 323 focused checks pass, whitespace clean. Final combined CI/preview results belong in the [integration handover](docs/audits/2026-10-25/site-report-main-integration-codex.md) and PR/issue #35, preserving all earlier evidence and limits.
+
 - **2026-10-25 — Wave 22 report integration (Codex).** All four preceding report test/rules CI runs passed (5,562 / 5,572 passing tests plus the existing TODO). Main then advanced to `cfb75437c`; reconciled audit/progress/release histories without changing report logic. [Current integration record](docs/audits/2026-10-25/site-report-main-integration-codex.md). Read final PR/issue #35 results for the refreshed heads.
 
+- **2026-10-25 — Keep selling intent separate from results (Codex, SS-010).** The combined “sell or plan to sell” survey answer was still labelled “Selling produce: Yes” in report input. The prompt now preserves intent, keeps an unselected option unselected, and requires separate recorded figures/dates/source for achieved sales or income. A regression check first failed on the old wording. Existing farmer records and saved report text are retained. [Source correction and verification scope](docs/audits/2026-10-25/site-report-main-integration-codex.md). #1099 remains unchanged; #1101 gets fresh final CI.
+
+- **2026-10-25 — Stacked report continuation integrated (Codex).** #1101 now carries prerequisite `0a08ccc57` and main `8d2e1a9aa`, retaining market notes/source/date, soil-source safeguards and all earlier audit records. Typecheck clean; 233 focused checks pass. Core survey/report/calendar/PDF modules retain their prior source; fresh full CI and preview are pending for the combined tree. [Integration and handover scope](docs/audits/2026-10-25/site-report-main-integration-codex.md).
+
 - **2026-10-25 — Report branch integration (Codex).** #1099 became conflicting after waves 19–21 landed. Integrated main `8d2e1a9aa`, preserving both histories/release entries and combining the report-archive heading cleanup with saved purpose/origin labels. [Integration record](docs/audits/2026-10-25/site-report-main-integration-codex.md). Fresh integrated CI/preview supersedes old-source green checks; #1101 follows this prerequisite. No saved data, species, farming figures or PLAN_VERSION edits.
+
+- **2026-10-25 — Site-report verification complete (Codex).** Read final push/PR CI for #1099 (`45d3dabe`: 5,480 pass, zero fail, one existing TODO) and #1101 (`23922e558`: 5,489 pass, zero fail, one existing TODO); both test and rules jobs pass. Rechecked deployed short/complete and comprehensive/potential survey routes, retained synthetic notes, absent date, Public Sans 16px fields and 390px phone width. Earlier real Ubhejane PDFs/source files remain intact. This follow-up changes only documentation/evidence. [Completion audit, exact CI and screenshots](docs/audits/2026-10-25/site-report-verification-codex.md). Merge #1099 before #1101; fluent, physical-device, current field/buyer and generated-narrative checks retain their recorded limits.
+
+- **2026-10-24 — Site-report continuation: market evidence and soil source (Codex).** Built on unmerged #1099 at `45d3dabe`; merge it first. Re-read the original six private Ubhejane reports and exported/inspected the current real five-page handout. Added optional market notes/source/observation date to the existing survey, recovery, capture, prompt and exports; unverified opportunities remain unverified. Full headers now reject unsourced soil placeholders. Desktop/phone and actual PDFs inspected; 211 focused tests pass, final typecheck/whitespace clean. Full suite and prerequisite CI are pending. [Shared audit and private-folder pointers](docs/audits/2026-10-24/site-report-market-evidence-codex.md). This changes the picture; `PLAN_VERSION` retained.
 
 ### 25 Oct 2026 — Wave 22: re-capture of the live build, hydration errors, Lima clearance, weather card
 - **Re-capture:** 41 routes × phone/desktop × light/dark × English/isiZulu, plus 768/1024px, with a checker that now

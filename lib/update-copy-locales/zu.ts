@@ -149,5 +149,7 @@ const copy:UpdateCopy={
   "Open Design Studio": "Vula Isitudiyo Sokuklama",
   "Menu → Design Studio": "Imenyu → Isitudiyo Sokuklama",
   "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Vula Ukubuka kuqala nokuthumela, bese ukhetha Uhlelo lwerekhodi ukuze uthole umdwebo olinganisiwe nencazelo yawo.",
+  "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Amanothi emakethe agcina umthombo wawo nosuku. Izinhlelo zokuthengisa zihlala zihlukile ekuthengiseni okurekhodiwe.",
+  "Full report headers keep unsourced soil values unknown.": "Izihloko zombiko ophelele zigcina amanani omhlabathi angenamthombo engaziwa.",
 };
 export default copy;
