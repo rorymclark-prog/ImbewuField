@@ -3,6 +3,7 @@
 import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { useEffect, useRef, useState } from 'react';
 import AiFeatureSettings from './AiFeatureSettings';
+import dynamic from 'next/dynamic';
 import LanguageDraftNote from './LanguageDraftNote';
 import { Sun, Moon, Monitor, Check, X, Footprints, Volume2, type LucideIcon } from 'lucide-react';
 import { useTheme, type ThemeName, type ThemeMode } from '@/lib/theme';
@@ -14,6 +15,8 @@ import { inlineText } from '@/lib/xh-inline';
 import { coverageOf, type LangCoverage } from '@/lib/lang-coverage';
 import Link from 'next/link';
 import { useEscapeClose } from '@/lib/use-escape-close';
+
+const AiMapSettings = dynamic(() => import('./AiMapSettings'), { ssr: false });
 
 // Small pill switch, matching the app's toggle style (used for the Guidance rows).
 function PillToggle({ on, onClick, label }: { on: boolean; onClick: () => void; label: string }) {
@@ -355,6 +358,7 @@ export default function ThemePanel({ open, onClose }: Props) {
           </div>
 
           <AiFeatureSettings />
+          <AiMapSettings />
           {/* Guidance (Lima) section */}
           <div style={{ marginBottom: 28 }}>
             <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>

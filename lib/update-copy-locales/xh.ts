@@ -160,5 +160,14 @@ const copy:UpdateCopy={
   "Home, Map, Studies and Prices now open offline, even before you have visited them.": "Ikhaya, Imephu, Izifundo namaXabiso ngoku avuleka ngaphandle kwe-intanethi, nangaphambi kokuba uwatyelele.",
   "Error messages now explain the problem in plain words, not technical text.": "Imiyalezo yeempazamo ngoku ichaza ingxaki ngamazwi alula, hayi ngombhalo wobuchwepheshe.",
   "Menus, pop-ups and Lima now work fully from a keyboard and keep your place.": "Iimenyu, iifestile ezivelayo no-Lima ngoku zisebenza ngokupheleleyo ngebhodi yezitshixo kwaye zigcina apho ubukhona.",
+  "AI glossy map settings": "Iisetingi zeemephu ezikhazimlayo ze-AI",
+  "Settings → AI glossy maps": "Iisetingi → Iimephu ezikhazimlayo ze-AI",
+  "Open Settings to control your own AI maps. Platform master accounts can also manage each organisation.": "Vula Iisetingi ukuze ulawule iimephu zakho ze-AI. Ii-akhawunti eziphambili zeqonga nazo zinokulawula umbutho ngamnye.",
+  "Turn AI glossy maps on or off in Settings. Saved maps stay available.": "Vula okanye uvale iimephu ezikhazimlayo ze-AI kwiisetingi. Iimephu ezigciniweyo zihlala zifumaneka.",
+  "The platform owner can enable or suspend AI maps for each organisation.": "Umnini weqonga unokuvula okanye anqumamise iimephu ze-AI kumbutho ngamnye.",
+  "Approved organisations can give AI map access by role or person.": "Imibutho evunyiweyo inokunika ukufikelela kwiimephu ze-AI ngokwendima okanye ngomntu.",
+  "Try an AI glossy map": "Zama imephu ekhazimlayo ye-AI",
+  "Design Studio → Glossy": "Isitudiyo soyilo → Glossy",
+  "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Vula ifama egciniweyo, khetha iphepha uze ukhethe i-AI Polished. Umzobo ngamnye uyahlawulelwa.",
 };
 export default copy;

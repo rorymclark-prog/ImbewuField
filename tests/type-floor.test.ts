@@ -94,6 +94,7 @@ const STAFF_ROUTES = [
 const FARMER_SURFACES: Record<string, string> = {
   // Fixed English on server-rendered pages (teach-the-teachers, /partners) that follows the language; renders text only.
   'components/InlineText.tsx': 'isiXhosa inline text wrapper; renders only the text it is given, no type of its own',
+  'components/AiMapSettings.tsx': 'farmers must read their own paid-map switch and service-access status in Settings; enforce the zero-debt 12px floor',
   // Added with wave 15 (code-10): the exchange, community, contact and prices captions.
   'app/community/messages/[threadId]/page.tsx': 'wave 15 code-10: the community message thread; no sub-12px type',
   'app/community/page.tsx': 'wave 15 code-10: the community board; no sub-12px type',
