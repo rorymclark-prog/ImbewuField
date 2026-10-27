@@ -112,3 +112,11 @@ test('every overlay calls useDialogFocus', () => {
   const popia = readFileSync(new URL('../components/PopiaConsent.tsx', import.meta.url), 'utf8');
   assert.doesNotMatch(popia, /key === 'Escape'/);
 });
+
+test('the Lima launcher opens from the keyboard and gets focus back on close (w28-05)', () => {
+  const src = readFileSync(new URL('../components/ChatWidget.tsx', import.meta.url), 'utf8');
+  // Enter/Space produce a click with detail 0 and no pointer events; pointer taps still open via onPointerUp.
+  assert.match(src, /onClick=\{e => \{ if \(e\.detail === 0\) setOpen\(true\); \}\}/);
+  assert.match(src, /ref=\{fabRef\}/);
+  assert.match(src, /opener !== document\.body \? opener : fabRef\.current/);
+});
