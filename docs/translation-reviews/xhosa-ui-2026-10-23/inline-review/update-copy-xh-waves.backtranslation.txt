@@ -1,0 +1,9 @@
+# update-copy-xh-waves — Phase A blind back-translation (isiXhosa values only, lib/update-copy-locales/xh.ts, insertion-order indices 150..157 = last 8)
+150. The menu, the field-visit form and crop prices are easy to read in dark mode.
+151. Messages, the exchange form and Records links are clearer, in light and dark mode.
+152. Lima no longer covers the last buttons of a guide-book chapter.
+153. The practice message in Contact now says it is saved on this device, not sent.
+154. Report totals now agree with their charts, and report numbers read correctly.
+155. Home, Map, Studies and Prices now open offline, even before you have visited them.
+156. Error messages now explain the problem in simple words, not in technical text.
+157. Menus, pop-up windows and Lima now work fully with the keyboard and keep where you were.

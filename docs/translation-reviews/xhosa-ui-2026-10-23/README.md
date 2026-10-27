@@ -287,6 +287,20 @@ reviewed blind (Phase A from the isiXhosa only, then Phase B against the English
   `scripts/xh-review-handoff.mjs` now passes every `...NAME` spread of `T_en`, since main adds
   pending tables over time.
 
+## 27 Oct 2026 (afternoon): main's waves 24–28
+
+Drafts for main #1125/#1136 (farm-report singular templates, the 42 farmer-facing `UserFacingError`
+messages, two screen strings in g41; 8 release notes), reviewed blind the same way.
+
+| Unit | File | Reviewed | OK | Repair | Hold |
+|---|---|---:|---:|---:|---:|
+| `g41-merge-waves` | `lib/locales/xh-inline/g41-merge-waves.ts` | 55 | 53 | 2 | 0 |
+| `update-copy-xh-waves` | `lib/update-copy-locales/xh.ts` (150–157) | 8 | 8 | 0 | 0 |
+
+- **"Your field records can still be saved on this device"** used `-senoku-`, which reads as "may
+  possibly be saved": the reassurance became doubt. Now `zisenakho ukugcinwa`.
+- **"Keep the original readable"** had lost its noun ("keep the first one"); now `ifoto yoqobo`.
+
 ## Still English for isiXhosa readers
 - Lesson narration audio. No isiXhosa recording or TTS voice exists; the decks are silent or use the
   optional English source voice.
