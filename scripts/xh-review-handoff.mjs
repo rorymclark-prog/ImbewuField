@@ -7,7 +7,8 @@
 //
 // Sources: the interface dictionary (lib/locales/xh.ts against T_en in lib/i18n.tsx), the
 // English-keyed inline drafts (lib/locales/xh-inline/*), and the money-book drafts
-// (lib/records-regional-drafts-data.ts, xh column). Lessons, slides and the Manual have their own
+// (lib/records-regional-drafts-data.ts, xh column), and the release-note/tour drafts
+// (lib/update-copy-locales/xh.ts). Lessons, slides and the Manual have their own
 // source-paired review packets under docs/study-translation-reviews/ and research/manual/.
 
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
@@ -25,8 +26,12 @@ const i18nSource = readFileSync(join(ROOT, 'lib/i18n.tsx'), 'utf8');
 const start = i18nSource.indexOf('export const T_en: Dict = {');
 if (start < 0) throw new Error('lib/i18n.tsx no longer exports T_en as a literal');
 const literal = i18nSource.slice(start, i18nSource.indexOf('\n};', start) + 3).replace('export const T_en: Dict = ', 'return ');
-const T_en = new Function('DESIGN_STUDIO_ENGLISH_PENDING', 'JOURNAL_ENGLISH_PENDING', 'LIMA_ENGLISH_PENDING', 'MENTOR_ENGLISH_PENDING', 'REPORT_FOOTNOTE_ENGLISH_PENDING', 'LEARNER_UI_ENGLISH', literal)(
-  pending.DESIGN_STUDIO_ENGLISH_PENDING, pending.JOURNAL_ENGLISH_PENDING, pending.LIMA_ENGLISH_PENDING, pending.MENTOR_ENGLISH_PENDING, pending.REPORT_FOOTNOTE_ENGLISH_PENDING, LEARNER_UI_ENGLISH);
+// Pass every `...NAME` spread the literal uses (main adds new pending tables over time).
+const spreads = [...new Set([...literal.matchAll(/\.\.\.([A-Z][A-Z0-9_]*)/g)].map((m) => m[1]))];
+const scope = { ...pending, LEARNER_UI_ENGLISH };
+const missing = spreads.filter((name) => !(name in scope));
+if (missing.length) throw new Error(`T_en spreads not found in i18n-pending: ${missing.join(', ')}`);
+const T_en = new Function(...spreads, literal)(...spreads.map((name) => scope[name]));
 const xh = (await import('../lib/locales/xh.ts')).default;
 const { RECORDS_DRAFTS } = await import('../lib/records-regional-drafts-data.ts');
 
@@ -50,6 +55,8 @@ for (const file of readdirSync(dir).filter((f) => f.endsWith('.ts') && f !== 'in
   for (const [english, draft] of Object.entries(shard)) rows.push([file.replace(/\.ts$/, ''), '', english, draft]);
 }
 for (const [english, row] of Object.entries(RECORDS_DRAFTS)) if (row.xh) rows.push(['money-book', '', english, row.xh]);
+const updateCopy = (await import('../lib/update-copy-locales/xh.ts')).default;
+for (const [english, draft] of Object.entries(updateCopy)) rows.push(['update-copy', '', english, draft]);
 
 // The same English and draft in several places is reviewed once; the row names every source.
 const merged = new Map();

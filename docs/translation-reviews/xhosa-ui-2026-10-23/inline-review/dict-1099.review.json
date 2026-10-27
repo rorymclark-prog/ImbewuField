@@ -1,0 +1,62 @@
+{
+  "unit": "dict-1099",
+  "shard": "../../../../lib/locales/xh.ts",
+  "range": "11 reportUi* keys (#1099)",
+  "okCount": 5,
+  "items": [
+    {
+      "key": "reportUiRefreshPreparedExample",
+      "english": "Refresh prepared example",
+      "verdict": "repair",
+      "draft": "Hlaziya umzekelo olungisiweyo",
+      "backtranslation": "Refresh the corrected (fixed-up) example",
+      "problem": "'prepared' rendered with -lungisiwe, which reads as 'corrected/fixed' (the blind read gave 'corrected example'; the release notes use the same form for 'corrected'). Use -lungiselelwe (prepared), consistent with g40 'Prepared example'.",
+      "corrected": "Hlaziya umzekelo olungiselelweyo"
+    },
+    {
+      "key": "reportUiRefreshUpdatesThisPreparedExample",
+      "english": "Refresh updates this prepared example from saved records. It does not write new advice. Sample history clears when you restart the workspace.",
+      "verdict": "repair",
+      "draft": "Ukuhlaziya kuhlaziya lo mzekelo ulungisiweyo ngeerekhodi ezigciniweyo. Akubhali ngcebiso intsha. Imbali yomzekelo iyacinywa xa uqalisa kwakhona indawo yokusebenza.",
+      "backtranslation": "Refreshing refreshes this corrected example with the saved records. It does not write new advice. The example history is deleted when you start the workplace again.",
+      "problem": "'prepared' rendered with -lungisiwe, which reads as 'corrected/fixed' (the blind read gave 'corrected example'; the release notes use the same form for 'corrected'). Use -lungiselelwe (prepared), consistent with g40 'Prepared example'.",
+      "corrected": "Ukuhlaziya kuhlaziya lo mzekelo ulungiselelweyo ngeerekhodi ezigciniweyo. Akubhali ngcebiso intsha. Imbali yomzekelo iyacinywa xa uqalisa kwakhona indawo yokusebenza."
+    },
+    {
+      "key": "reportUiRefreshPreparedExampleToApplyLanguage",
+      "english": "Refresh prepared example to apply this language.",
+      "verdict": "repair",
+      "draft": "Hlaziya umzekelo olungisiweyo ukuze usebenzise olu lwimi.",
+      "backtranslation": "Refresh the corrected example so that you use this language.",
+      "problem": "'prepared' rendered with -lungisiwe, which reads as 'corrected/fixed' (the blind read gave 'corrected example'; the release notes use the same form for 'corrected'). Use -lungiselelwe (prepared), consistent with g40 'Prepared example'.",
+      "corrected": "Hlaziya umzekelo olungiselelweyo ukuze usebenzise olu lwimi."
+    },
+    {
+      "key": "reportUiPreparedExample",
+      "english": "Prepared example",
+      "verdict": "repair",
+      "draft": "Umzekelo olungisiweyo",
+      "backtranslation": "Corrected example",
+      "problem": "'prepared' rendered with -lungisiwe, which reads as 'corrected/fixed' (the blind read gave 'corrected example'; the release notes use the same form for 'corrected'). Use -lungiselelwe (prepared), consistent with g40 'Prepared example'.",
+      "corrected": "Umzekelo olungiselelweyo"
+    },
+    {
+      "key": "reportUiPreparedExamplePdf",
+      "english": "Prepared example PDF",
+      "verdict": "repair",
+      "draft": "I-PDF yomzekelo olungisiweyo",
+      "backtranslation": "PDF of the corrected example",
+      "problem": "'prepared' rendered with -lungisiwe, which reads as 'corrected/fixed' (the blind read gave 'corrected example'; the release notes use the same form for 'corrected'). Use -lungiselelwe (prepared), consistent with g40 'Prepared example'.",
+      "corrected": "I-PDF yomzekelo olungiselelweyo"
+    },
+    {
+      "key": "reportUiTheseSummariesUseTheSamePreparedRecords",
+      "english": "These summaries use the same prepared records. Full example includes all available maps and visuals.",
+      "verdict": "repair",
+      "draft": "Ezi zishwankathelo zisebenzisa iirekhodi ezilungisiweyo ezifanayo. Umzekelo opheleleyo uquka zonke iimephu nemifanekiso ekhoyo.",
+      "backtranslation": "These summaries use the same corrected records. The full example includes all the maps and pictures that exist.",
+      "problem": "'the same prepared records' became 'iirekhodi ezilungisiweyo' = 'corrected records', implying the records were edited. Use 'ezilungiselelweyo'.",
+      "corrected": "Ezi zishwankathelo zisebenzisa iirekhodi ezilungiselelweyo ezifanayo. Umzekelo opheleleyo uquka zonke iimephu nemifanekiso ekhoyo."
+    }
+  ]
+}

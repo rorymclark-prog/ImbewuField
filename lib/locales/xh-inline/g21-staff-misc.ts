@@ -41,7 +41,7 @@ const drafts: Record<string, string> = {
   "A group agreement and a list of questions to revisit.": "Isivumelwano seqela nohlu lwemibuzo eza kubuyelwa kuyo.",
   "Model a lesson: look, try, talk, take home": "Bonisa isifundo: jonga, zama, thetha, thatha uye nayo ekhaya",
   "Identify what the learner does at each part of a practical lesson.": "Chonga oko umfundi akwenzayo kwinxalenye nganye yesifundo esisebenzayo.",
-  "Use two prepared photos or soil samples from a permitted practice site. Ask what is visible before offering an explanation.": "Sebenzisa iifoto ezimbini ezilungisiweyo okanye imizekelo emibini yomhlaba esuka kwindawo evumelekileyo yokuziqhelisa. Buza ukuba kubonakala ntoni phambi kokunika inkcazelo.",
+  "Use two prepared photos or soil samples from a permitted practice site. Ask what is visible before offering an explanation.": "Sebenzisa iifoto ezimbini ezilungiselelweyo okanye imizekelo emibini yomhlaba esuka kwindawo evumelekileyo yokuziqhelisa. Buza ukuba kubonakala ntoni phambi kokunika inkcazelo.",
   "Let pairs describe one observation and one uncertainty; then model a safe action whose exact core-lesson source and local limits you have checked.": "Vumela izibini zichaze into enye ezijonge yona nento enye ezingaqinisekanga ngayo; emva koko bonisa isenzo esikhuselekileyo osele ukhangele umthombo waso ngqo wesifundo esisisiseko nemida yasekuhlaleni.",
   "Unpack the teaching method: What did learners see, try, discuss and plan to check later?": "Hlalutya indlela yokufundisa: Abafundi babone ntoni, bazame ntoni, baxoxe ngantoni baze bacwangcisele ukukhangela ntoni kamva?",
   "Open the core Study course": "Vula ikhosi yoMfundo esisiseko",
@@ -140,7 +140,7 @@ const drafts: Record<string, string> = {
   "Small Livestock Integration": "Ukudibanisa Imfuyo Encinci",
   // components/report/ReportVersionDetails.tsx
   "Saved report · {date}": "Ingxelo egciniweyo · {date}",
-  "Prepared report": "Ingxelo elungisiweyo",
+  "Prepared report": "Ingxelo elungiselelweyo",
   "New report · not saved yet": "Ingxelo entsha · ayikagcinwa",
   "Wording: {wording} · Depth: {depth} · Language: {language}": "Amagama: {wording} · Ubunzulu: {depth} · Ulwimi: {language}",
   "Report reference": "Inkomba yengxelo",
@@ -148,7 +148,7 @@ const drafts: Record<string, string> = {
   "English alongside": "isiNgesi ecaleni",
   "Sections requested": "Amacandelo acelwe",
   "AI provider / model": "Umboneleli we-AI / imodeli",
-  "Prepared report; no AI charge": "Ingxelo elungisiweyo; akukho ndleko ye-AI",
+  "Prepared report; no AI charge": "Ingxelo elungiselelweyo; akukho ndleko ye-AI",
   "This older report did not record its original settings. The controls are for your next report.": "Le ngxelo indala ayirekhodanga iisetingi zayo zokuqala. Izilawuli zeyengxelo yakho elandelayo.",
   // components/funder/FunderAssessments.tsx
   "Assessments & learning": "Uvavanyo nokufunda",

@@ -90,7 +90,7 @@ const drafts: Record<string, string> = {
   "Explore at your own pace. No sign-in needed.": "Hlola ngesantya sakho. Akukho sidingo sokungena.",
   "Illustrated example of a garden harvest": "Umzekelo ochazwe ngomzobo wesivuno segadi",
   "Garden harvest · AI-generated illustration": "Isivuno segadi · umzobo owenziwe yi-AI",
-  "Try the app with prepared records. Your own project stays unchanged.": "Zama i-app ngeerekhodi ezilungisiweyo. Iprojekthi yakho ihlala injalo.",
+  "Try the app with prepared records. Your own project stays unchanged.": "Zama i-app ngeerekhodi ezilungiselelweyo. Iprojekthi yakho ihlala injalo.",
   "You’ve explored the whole tour.": "Uhlolile lonke ukhenketho.",
   "Keep exploring at your own pace.": "Qhubeka uhlola ngesantya sakho.",
   "{tried} of {total} stops marked as explored. These are your checklist choices, not a training certificate.": "Izitishi ezi-{tried} kwezi-{total} zimakwe njengezihloliweyo. Ezi zizikhethelo zakho zoluhlu lokuhlola, asisosatifikethi soqeqesho.",

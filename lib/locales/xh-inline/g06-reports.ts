@@ -37,7 +37,7 @@ const drafts: Record<string, string> = {
   "No picture": "Akukho mfanekiso",
   "Include photos and maps in PDF": "Quka iifoto neemephu kwi-PDF",
   "Screen, print and summary controls change the view or export without a new AI call.": "Izilawuli zesikrini, zokushicilela nezesishwankathelo zitshintsha indlela yokubuka okanye yokukhupha ngaphandle kokubiza i-AI kwakhona.",
-  "Generate new report refreshes the advice from this design. Saved reports stay available while you explore; restarting the workspace clears them. Prepared full advice is in English; translated summaries are available.": "Ukwenza ingxelo entsha kuhlaziya iingcebiso ezivela kolu yilo. Iingxelo ezigciniweyo ziyaqhubeka zifumaneka ngelixa uhlola; ukuqalisa kwakhona indawo yokusebenzela kuzicima. Iingcebiso ezipheleleyo ezilungisiweyo zisesiNgesi; izishwankathelo ezitoliweyo ziyafumaneka.",
+  "Generate new report refreshes the advice from this design. Saved reports stay available while you explore; restarting the workspace clears them. Prepared full advice is in English; translated summaries are available.": "Ukwenza ingxelo entsha kuhlaziya iingcebiso ezivela kolu yilo. Iingxelo ezigciniweyo ziyaqhubeka zifumaneka ngelixa uhlola; ukuqalisa kwakhona indawo yokusebenzela kuzicima. Iingcebiso ezipheleleyo ezilungiselelweyo zisesiNgesi; izishwankathelo ezitoliweyo ziyafumaneka.",
   "Language changes apply to new reports and summaries. Regenerate to translate the full advice.": "Utshintsho lolwimi lusebenza kwiingxelo ezintsha nakwizishwankathelo. Yenza kwakhona ukuze iingcebiso ezipheleleyo zitolikwe.",
   "Read the report": "Funda ingxelo",
   "Saved reports": "Iingxelo ezigciniweyo",

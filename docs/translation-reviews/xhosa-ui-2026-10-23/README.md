@@ -260,6 +260,33 @@ de-duplication, ordered for review:
 - the SARS word for a tax "return"
 - the many "ingeniso" uses that mean entry or input rather than income
 
+## 27 Oct 2026 review: release notes, Record plan and main #1099 keys
+
+New drafts from merging main's #1099 and adding isiXhosa as a fifth `lib/update-copy` language,
+reviewed blind (Phase A from the isiXhosa only, then Phase B against the English). Records are in
+`inline-review/`.
+
+| Unit | File | Reviewed | OK | Repair | Hold |
+|---|---|---:|---:|---:|---:|
+| `update-copy-xh` | `lib/update-copy-locales/xh.ts` | 148 | 142 | 6 | 0 |
+| `g40-record-plan` | `lib/locales/xh-inline/g40-record-plan.ts` | 19 | 16 | 3 | 0 |
+| `dict-1099` | 11 `reportUi*` keys in `lib/locales/xh.ts` | 11 | 5 | 6 | 0 |
+
+- **"Prepared" read as "corrected" (9 of the 15 repairs).** `-lungisiwe` back-translates as
+  fixed or corrected, and the release notes use that same form for "five corrected cards". The
+  drafts now use `-lungiselelwe` ("prepared"), which the dictionary already used for "Preparing".
+- **The same fix in 22 older drafts.** Every draft whose English says "prepare" and which used
+  `-lungisiw…` now uses `-lungiselelw…`: prepared reports, examples, records, receipts and invoices
+  (g06, g10, g21, g31, three dictionary keys), and "packs prepared and sold" in the Study money
+  exercises (g26). Drafts whose English does not say "prepare" are unchanged.
+- **Other repairs:** "more controls" had become "many controls"; "report version details" read as
+  "translation details"; "one set of links at the top" read as "some links".
+- **Kept:** release notes that name isiZulu as a fact keep isiZulu; "isitshixo" (legend) and
+  "Jonga & thumela ngaphandle" (Preview & export) match the existing app terms.
+- **Hand-off list regenerated** with the release-note drafts included (source `update-copy`).
+  `scripts/xh-review-handoff.mjs` now passes every `...NAME` spread of `T_en`, since main adds
+  pending tables over time.
+
 ## Still English for isiXhosa readers
 - Lesson narration audio. No isiXhosa recording or TTS voice exists; the decks are silent or use the
   optional English source voice.

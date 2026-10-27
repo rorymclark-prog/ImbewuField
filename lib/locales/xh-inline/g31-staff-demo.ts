@@ -114,7 +114,7 @@ const drafts: Record<string, string> = {
   "Counts show assessment assignments and responses. A participant may appear in several assessments. Missing numerical answers remain unknown. Awaiting review means closed but not shared; it is not a separate recorded approval status.": "Amanani abonisa ukwabelwa kovavanyo neempendulo. Umthathi-nxaxheba usenokubonakala kuvavanyo oluliqela. Iimpendulo zamanani ezingekhoyo zihlala zingaziwa. Ilindele uphononongo ithetha ivaliwe kodwa ayabelwananga; asiso simo sohlukileyo sokuvunywa esirekhodiweyo.",
   "Lima example conversation": "Ingxoxo yomzekelo ne-Lima",
   "Lima · guided conversation": "I-Lima · ingxoxo ekhokelwayo",
-  "Explore this prepared conversation. Live questions are available from your own workspace.": "Hlola le ngxoxo ilungisiweyo. Imibuzo ephilayo ifumaneka kwindawo yakho yokusebenza.",
+  "Explore this prepared conversation. Live questions are available from your own workspace.": "Hlola le ngxoxo ilungiselelweyo. Imibuzo ephilayo ifumaneka kwindawo yakho yokusebenza.",
   "The example questions and answers below stay in English so the advice is not changed in translation.": "Imibuzo neempendulo zomzekelo ngezantsi zihlala zisesiNgesi ukuze ingcebiso ingatshintshwa ekuguqulweni.",
   "You": "Wena",
   "AI-generated example of aphids on a leaf": "Umzekelo owenziwe yi-AI wee-aphids kwigqabi",

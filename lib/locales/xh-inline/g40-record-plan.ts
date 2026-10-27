@@ -3,7 +3,7 @@ const drafts: Record<string, string> = {
   // Main #1099: the Record plan map option and the "still in English" notices beside it.
   "Your account changed. Reopen this map before saving.": "I-akhawunti yakho itshintshile. Vula le mephu kwakhona phambi kokuyigcina.",
   "Map added. Open Saved maps to export it or include it in a report.": "Imephu yongeziwe. Vula Iimephu ezigciniweyo ukuze uyithumele ngaphandle okanye uyifake kwingxelo.",
-  "Could not prepare the map. Please try again.": "Imephu ayikwazanga ukulungiswa. Nceda uzame kwakhona.",
+  "Could not prepare the map. Please try again.": "Imephu ayikwazanga ukulungiselelwa. Nceda uzame kwakhona.",
   "Record plan": "Isicwangciso seerekhodi",
   "To scale · symbols and legend · no AI charge": "Ngokwesikali · iimpawu nesitshixo · akukho ndleko ye-AI",
   "Close record plan": "Vala isicwangciso seerekhodi",
@@ -11,14 +11,14 @@ const drafts: Record<string, string> = {
   "Add to maps": "Yongeza kwiimephu",
   "Download PNG": "Khuphela i-PNG",
   "Download SVG": "Khuphela i-SVG",
-  "Preparing map…": "Kulungiswa imephu…",
+  "Preparing map…": "Kulungiselelwa imephu…",
   "Save a site boundary or add design features to draw this plan.": "Gcina umda wendawo okanye wongeze izinto zoyilo ukuze uzobe esi sicwangciso.",
   "This production overview is currently in English.": "Esi sishwankathelo semveliso okwangoku sisesiNgesini.",
   "This guide is currently in English.": "Esi sikhokelo okwangoku sisesiNgesini.",
   // Report purpose and origin labels (lib/site-survey.ts, lib/saved-reports.ts).
   "Site potential": "Amathuba endawo",
   "Complete site plan": "Isicwangciso sendawo esipheleleyo",
-  "Prepared example": "Umzekelo olungisiweyo",
+  "Prepared example": "Umzekelo olungiselelweyo",
   "Generated report": "Ingxelo eyenziweyo",
   "Origin not recorded": "Imvelaphi ayibhalwanga",
 };
