@@ -29,6 +29,7 @@ import type { HarvestCitation, HarvestWindow, SourcedRange } from './perennial-h
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import { isSampleMode } from './sample-mode';
 import type { PoultryManagement, SiteProductionConditions } from './site-survey';
+import { statusOf } from './design-canvas';
 
 export type AnimalKind = 'chicken' | 'goat' | 'bee' | 'rabbit' | 'duck' | 'cattle' | 'sheep' | 'pig' | 'fish';
 export type AnimalProduct = 'eggs' | 'meat' | 'milk' | 'honey' | 'fish' | 'wool';
@@ -326,7 +327,8 @@ export interface PlacedAnimalGroup {
  * The design's animal structures, grouped by what they house.
  *
  * Kinds with no enterprise in the table are dropped: a hutch with nothing to say about rabbits
- * would be a row of blanks. Legacy items with no status count as existing, as they do for trees.
+ * would be a row of blanks. Legacy placed housing follows the same design status as plants;
+ * missing status must not turn a proposal into a standing source of food.
  */
 export function placedAnimalGroups(items: readonly PlacedAnimalItem[]): PlacedAnimalGroup[] {
   const byKind = new Map<HousingKind, PlacedAnimalGroup>();
@@ -334,7 +336,7 @@ export function placedAnimalGroups(items: readonly PlacedAnimalItem[]): PlacedAn
     const housing = ELEMENT_HOUSING[item.defId];
     if (!housing || enterprisesForHousing(housing).length === 0) continue;
     const group = byKind.get(housing) ?? { housing, existing: 0, proposed: 0 };
-    if (item.status === 'proposed') group.proposed++; else group.existing++;
+    if (statusOf(item) === 'proposed') group.proposed++; else group.existing++;
     byKind.set(housing, group);
   }
   const order = Object.keys(HOUSING_LABEL) as HousingKind[];
