@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 October 2026', sha: '31d0ba80', changes: [
+    'Menus, pop-ups and Lima now work fully from a keyboard and keep your place.',
+  ] },
   { when: '26 October 2026', sha: '16bca466', changes: [
     'Home, Map, Studies and Prices now open offline, even before you have visited them.',
     'Error messages now explain the problem in plain words, not technical text.',

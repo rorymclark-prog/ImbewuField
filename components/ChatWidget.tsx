@@ -49,6 +49,7 @@ export default function ChatWidget() {
   const panelRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
+  const fabRef = useRef<HTMLButtonElement>(null);
 
   // Real dialog semantics (a11y-03): move focus in when the sheet opens, trap Tab inside it,
   // close on Escape, and return focus to whatever opened it — the FAB, or a LimaBar deep link.
@@ -80,6 +81,10 @@ export default function ChatWidget() {
     document.addEventListener('keydown', onKeyDown);
     return () => {
       document.removeEventListener('keydown', onKeyDown);
+      // The FAB unmounts while the sheet is open, so focus had already fallen to <body> (or a
+      // detached node) when it opened Lima: return to its re-mounted copy instead (w28-05).
+      const opener = openerRef.current;
+      if (!opener?.isConnected || opener === document.body) openerRef.current = fabRef.current;
       openerRef.current?.focus?.();
     };
   }, [open]);
@@ -253,6 +258,9 @@ export default function ChatWidget() {
       {/* Launcher FAB — draggable; defaults bottom-left (bottom-right on desktop, w22-08), remembers where you park it */}
       {!open && !drawing && !overlay && (
         <button
+          ref={fabRef}
+          // Enter/Space fire a click with no pointer events (detail 0); pointer taps open via onPointerUp.
+          onClick={e => { if (e.detail === 0) setOpen(true); }}
           onPointerDown={onFabPointerDown}
           onPointerMove={onFabPointerMove}
           onPointerUp={onFabPointerUp}
