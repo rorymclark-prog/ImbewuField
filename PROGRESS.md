@@ -91,6 +91,8 @@ and isiZulu output are unchanged.
   - **Main's four-language stack (#1122), report history (#1121) and production year (#1099) merged:** main's isiZulu, Sesotho, Xitsonga and Tshivenda output kept exactly; 340 + 11 new dictionary keys and the Record plan dialog get isiXhosa (g37–g40).
   - **Release notes and the update tour:** isiXhosa is a fifth `lib/update-copy` language (148 drafts, English source shown beside each).
   - **Report purpose and origin labels** (`siteReportPurposeLabel`, `reportOriginLabel`) give isiXhosa its draft; isiZulu and English unchanged.
+  - **Main's waves 24–28 (#1125, #1136) merged:** farm-report counts keep main's singular/plural agreement as whole templates (English identical to main across 216 report cases); the 42 farmer-facing error messages (`UserFacingError`), 8 release notes and the offline error page have isiXhosa (g41).
+  - **Browser sweep:** all 52 static routes loaded in isiXhosa; the remaining visible English is source lines, farmer-written sample content, citations, the partner pitch deck and the crash-recovery page.
 - **Still English:**
   - Crop and species names, catalogue notes and custom bed labels.
   - The site-survey chicken block and the calendar advice holds, both deliberately held until review.
