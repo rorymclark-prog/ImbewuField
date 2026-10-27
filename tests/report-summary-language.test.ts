@@ -56,3 +56,24 @@ test('the English sample keeps its established safeguards and empty-data wording
   assert.match(report, /No placed elements recorded/);
   assert.match(report, /No production spaces recorded/);
 });
+
+test('short reports acknowledge orchard and animal products without claiming harvests or retiming old snapshots', async () => {
+  const { reportSummaryPages } = await import('../lib/report-summary.ts');
+  const months = Array.from({length:12}, (_, i) => new Date(2026, 11+i, 1).toLocaleDateString('en-ZA', {month:'short',year:'numeric'}));
+  const facts: ReportSiteFacts = { crop: { plantingCount:0,bedsPlanted:0,crops:[],snapshot:{siteId:'fixture',capturedAt:'2026-12-07T10:00:00Z',planUpdatedAt:0,beds:[],plantings:[],outlines:[],annualProduction:{months,rows:[{id:'animal:bees',kind:'animal',name:'Honeybee (managed hives)',product:'Honey',note:'No confirmed timing',months:[],reference:false}]}} } };
+  const before = JSON.stringify(facts), page = reportSummaryPages(facts, DEMO_LOCATION, 5)[1].lines.join('\n');
+  assert.match(page, /Honeybee/); assert.match(page, /Dec 2026 to Nov 2027/);
+  assert.match(page, /not recorded harvests or animal counts/); assert.equal(JSON.stringify(facts),before);
+});
+
+test('the field guide carries reported market notes and source dates without making them verified demand', async () => {
+  const { reportSummaryPages } = await import('../lib/report-summary.ts');
+  const facts = { marketEvidence: { notes: 'Possible outlet; terms unknown', source: 'Farmer discussion', observedOn: '2026-09-14' } };
+  const page = reportSummaryPages(facts, DEMO_LOCATION, 5)[4].lines.join('\n');
+  assert.match(page, /Possible outlet; terms unknown/);
+  assert.match(page, /Farmer discussion/);
+  assert.match(page, /2026-09-14/);
+  assert.match(page, /not independently verified demand/);
+  assert.match(reportSummaryPages(null, DEMO_LOCATION, 5)[4].lines.join('\n'), /buyer demand and prices are not recorded/);
+  assert.match(reportSummaryPages(facts, DEMO_LOCATION, 5, 'zu')[4].lines.join('\n'), /English notes/);
+});

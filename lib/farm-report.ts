@@ -9,6 +9,9 @@ import { buildFinanceSeries } from './finance-series';
 import { localTodayISODate } from './field-teams';
 import type { ReportChart, ReportMetric, ReportSection, ReportTable } from './programme-report-pdf';
 
+// w23-06: "1 local invoices" read as a slip in a document a farmer shares; counts agree with their noun.
+const countOf = (n: number, one: string, many: string): string => `${n} ${n === 1 ? one : many}`;
+
 export type FarmReportKind = 'production' | 'finance';
 export type FarmReportComparison = 'none' | 'previous' | 'year';
 export type FarmReportOptions = {
@@ -114,7 +117,7 @@ export function buildFarmReport(options: FarmReportOptions): FarmReport {
   const cropNames = [...new Set([...production, ...soldQuantities].map(row => row.crop.trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'en'));
   const cropRows = cropNames.map(crop => {
     const picked = production.filter(row => row.crop.trim() === crop), sold = soldQuantities.filter(row => row.crop.trim() === crop);
-    return [crop, picked.length ? quantityText(picked) : 'No harvest entries', sold.length ? quantityText(sold) : 'No sale quantities', `${picked.length} harvest / ${sold.length} sale entries`];
+    return [crop, picked.length ? quantityText(picked) : 'No harvest entries', sold.length ? quantityText(sold) : 'No sale quantities', `${picked.length} harvest / ${countOf(sold.length, 'sale entry', 'sale entries')}`];
   });
   const checkDuplicates = suspectedDuplicateIncomeIds([
     ...sales.filter(row => moneyKnown(row.amount)).map(row => ({ id: `sale-${row.id}`, kind: 'sale' as const, amount: row.amount, iso: row.sold_at })),
@@ -151,14 +154,14 @@ export function buildFarmReport(options: FarmReportOptions): FarmReport {
     ] : [
       `Money received: ${receiptsKnown ? randCentsLabel(receipts) : 'unavailable amount in the selected receipts'}. Costs recorded: ${expensesKnown && costs !== null ? randCentsLabel(costs) : 'unavailable amount in the selected costs'}.`,
       `Recorded cash margin: ${margin === null ? 'not available' : randCentsLabel(margin)}. This is receipts minus logged expenses, not full accounting profit or a bank balance.`,
-      `${unpaid.length} local invoices are currently marked unpaid. They do not enter money received.`,
+      `${countOf(unpaid.length, 'local invoice is', 'local invoices are')} currently marked unpaid. ${unpaid.length === 1 ? 'It does' : 'They do'} not enter money received.`,
     ] }, scope,
     { title: 'What needs a closer look', lines: [
       ...(!production.length && !sales.length && !invoices.length && !expenses.length ? ['No dated entries are available for this period. Choose another period or record the activity; no result is inferred.'] : []),
-      ...(missingDates ? [`${missingDates} available records have no usable event date and cannot enter period totals. Review the source records.`] : []),
-      ...(missingQuantities ? [`${missingQuantities} harvest or sale entries have no usable quantity. Their weights and counts remain unavailable.`] : []),
+      ...(missingDates ? [`${countOf(missingDates, 'available record has', 'available records have')} no usable event date and cannot enter period totals. Review the source ${missingDates === 1 ? 'record' : 'records'}.`] : []),
+      ...(missingQuantities ? [`${countOf(missingQuantities, 'harvest or sale entry has', 'harvest or sale entries have')} no usable quantity. Their weights and counts remain unavailable.`] : []),
       ...(checkDuplicates.size ? [`${checkDuplicates.size} income entries need a possible-duplicate check. ${DUPLICATE_ROW_NOTE}`] : []),
-      ...(futureDates.length ? [`${futureDates.length} entries have future dates within this calendar selection. They remain included, as in Records; review their dates before sharing.`] : []),
+      ...(futureDates.length ? [`${countOf(futureDates.length, 'entry has a future date', 'entries have future dates')} within this calendar selection. ${futureDates.length === 1 ? 'It remains' : 'They remain'} included, as in Records; review ${futureDates.length === 1 ? 'its date' : 'their dates'} before sharing.`] : []),
       'Record household use, donations, losses and stock movements separately before making a food-use balance. Those observations are not supplied by these books.',
       'Achieved yield per area needs a matching crop, measured growing area and crop-cycle dates. The current map or plan alone does not provide that comparison.',
       ...(kind === 'finance' ? ['Check missing costs, unpaid invoices and supporting slips before sharing the report. Untagged costs are never allocated to crop profit.'] : []),
@@ -170,10 +173,10 @@ export function buildFarmReport(options: FarmReportOptions): FarmReport {
     { label: 'Harvest entries', value: String(production.length), detail: 'Dated records in this period' },
     { label: 'Produce names', value: String(cropNames.length), detail: 'As recorded; not a biodiversity score' },
   ] : [
-    { label: 'Money received', value: receiptsKnown ? randCentsLabel(receipts) : 'Not available', detail: `${sales.length} sale entries + ${invoices.length} paid invoices` },
-    { label: 'Costs recorded', value: expensesKnown && costs !== null ? randCentsLabel(costs) : 'Not available', detail: `${expenses.length} expense entries; completeness unknown` },
+    { label: 'Money received', value: receiptsKnown ? randCentsLabel(receipts) : 'Not available', detail: `${countOf(sales.length, 'sale entry', 'sale entries')} + ${countOf(invoices.length, 'paid invoice', 'paid invoices')}` },
+    { label: 'Costs recorded', value: expensesKnown && costs !== null ? randCentsLabel(costs) : 'Not available', detail: `${countOf(expenses.length, 'expense entry', 'expense entries')}; completeness unknown` },
     { label: 'Recorded cash margin', value: margin === null ? 'Not available' : randCentsLabel(margin), detail: 'Recorded receipts minus costs; not accounting profit' },
-    { label: 'Unpaid invoices now', value: unpaidTotal === null ? 'Not available' : randCentsLabel(unpaidTotal), detail: `${unpaid.length} local invoices; current snapshot` },
+    { label: 'Unpaid invoices now', value: unpaidTotal === null ? 'Not available' : randCentsLabel(unpaidTotal), detail: `${countOf(unpaid.length, 'local invoice', 'local invoices')}; current snapshot` },
   ];
   const table: ReportTable = { title: 'Production by recorded name', note: 'Units stay separate. A sale quantity follows its cash/payment date and may come from an earlier harvest. No food-use residual is calculated.', columns: ['Produce', 'Harvest recorded', 'Sold quantities', 'Entries'], rows: cropRows };
   const harvestLog: ReportTable = { title: 'Harvest entries', note: 'Only dated entries in the selected period. The report keeps recorded names and units.', columns: ['Date', 'Produce', 'Quantity'], rows: [...production].sort((a, b) => a.logged_at.localeCompare(b.logged_at)).map(row => [dateLabel(row.logged_at), row.crop, recordQuantityLabel(row)]), includeInSummary: false };

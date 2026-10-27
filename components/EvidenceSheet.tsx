@@ -6,6 +6,7 @@ import { useDialogFocus } from '@/lib/use-dialog-focus';
 import type { EvidenceCatalogueGroup, EvidenceCatalogueItem } from '@/lib/evidence-catalogue';
 import { EVIDENCE_GROUP_ICON, QUICK_NUMBERS, LIMA_TIPS } from '@/lib/evidence-catalogue';
 import { useLanguage } from '@/lib/i18n';
+import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 import { evidenceDocumentScope, saveEvidenceDocument, loadEvidenceDocument, removeEvidenceDocument } from '@/lib/evidence-documents';
 import {
   getEvidenceItems,
@@ -67,15 +68,15 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
     const scope = evidenceDocumentScope(siteId);
     for (const file of Array.from(files)) {
       try {
-        if (isLab && getEvidenceItems(siteId,itemKey).length >= 4) throw Error(t('evidenceSheetLabMaxEntries'));
+        if (isLab && getEvidenceItems(siteId,itemKey).length >= 4) throw new UserFacingError(t('evidenceSheetLabMaxEntries'));
         let saved: boolean;
         if (file.type.startsWith('image/')) {
           const dataUrl = await resizeForStorage(file);
-          if (scope !== evidenceDocumentScope(siteId)) throw Error(t('evidenceSheetAccountChanged'));
+          if (scope !== evidenceDocumentScope(siteId)) throw new UserFacingError(t('evidenceSheetAccountChanged'));
           saved = addEvidenceItem(siteId, itemKey, { type: 'photo', dataUrl, name: file.name, sizeBytes: file.size });
         } else if (isLab) {
           const documentId = await saveEvidenceDocument(scope, file);
-          if (scope !== evidenceDocumentScope(siteId)) { await removeEvidenceDocument(scope, documentId); throw Error(t('evidenceSheetAccountChanged')); }
+          if (scope !== evidenceDocumentScope(siteId)) { await removeEvidenceDocument(scope, documentId); throw new UserFacingError(t('evidenceSheetAccountChanged')); }
           saved = addEvidenceItem(siteId, itemKey, { type:'pdf', name:file.name, sizeBytes:file.size, documentId });
           if (!saved) await removeEvidenceDocument(scope, documentId);
         } else {
@@ -87,7 +88,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
           break;
         }
       } catch (err) {
-        setFileError(err instanceof Error ? err.message : t('evidenceSheetFileSaveFailed'));
+        setFileError(userFacingMessage(err, t('evidenceSheetFileSaveFailed'), t));
         break;
       }
     }
@@ -107,11 +108,11 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
     setFileError('');
     try {
       const blob = await loadEvidenceDocument(siteId, id);
-      if (!blob) throw Error(t('evidenceSheetPdfUnavailable'));
+      if (!blob) throw new UserFacingError(t('evidenceSheetPdfUnavailable'));
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');link.href=url;link.download=evidenceItems.find(row=>row.documentId===id)?.name??'lab-result.pdf';link.click();
       setTimeout(()=>URL.revokeObjectURL(url),60000);
-    } catch (e) { setFileError(e instanceof Error ? e.message : t('evidenceSheetPdfOpenFailed')); }
+    } catch (e) { setFileError(userFacingMessage(e, t('evidenceSheetPdfOpenFailed'), t)); }
   }
 
   function startEditField(fieldKey: string) {

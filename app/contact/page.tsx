@@ -57,6 +57,8 @@ export default function ContactPage() {
   const [body, setBody] = useState('');
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  // w25-01: true when the last send wrote nothing (practice/sample mode), so the success card can say so.
+  const [practiceSend, setPracticeSend] = useState(false);
   const [error, setError] = useState('');
   const [replies, setReplies] = useState<ContactReply[]>([]);
   const [repliesError, setRepliesError] = useState(false);
@@ -122,7 +124,8 @@ export default function ContactPage() {
 
     try {
       // Sample farm: "send" is a fake success — never write a real message as the signed-in user.
-      if (isLive && user && !isSampleMode()) {
+      const realSend = Boolean(isLive && user && !isSampleMode());
+      if (realSend && user) {
         const fb = getFirebase();
         if (!fb) throw new Error('Firebase not initialised');
         // The profile may still be loading on a fast send — resolve it now rather than stamping
@@ -151,6 +154,7 @@ export default function ContactPage() {
           created_at: serverTimestamp(),
         }));
       }
+      setPracticeSend(!realSend);
       setSent(true);
     } catch {
       setError(ui('Could not send message. Please try again.', 'Umlayezo awukwazanga ukuthunyelwa. Sicela uzame futhi.'));
@@ -189,10 +193,14 @@ export default function ContactPage() {
           >
             <CheckCircle className={motion.sentIcon} size={40} style={{ color: 'var(--color-forest-800)', margin: '0 auto 16px' }} strokeWidth={1.5} />
             <div className="font-display font-bold" style={{ fontSize: 20, color: 'var(--color-forest-800)', marginBottom: 8 }}>
-              {ui('Message sent', 'Umlayezo uthunyelwe')}
+              {practiceSend ? ui('Practice message kept', 'Inguqulo yokuzilolonga') : ui('Message sent', 'Umlayezo uthunyelwe')}
             </div>
             <p className="font-sans" style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: 24 }}>
-              {ui("Your message has been delivered. You'll hear back within 1–2 working days.", 'Umlayezo wakho uthunyelwe. Uzoxhumana nawe phakathi kwezinsuku eziyi-1–2 zokusebenza.')}
+              {/* w25-01: the practice send is a deliberate fake success (handleSend writes nothing), so it
+                  must not claim delivery and a reply; it repeats the form's own practice note instead. */}
+              {practiceSend
+                ? ui('Practice version: your message is kept on this device and is not sent yet.', 'Inguqulo yokuzilolonga: umlayezo wakho ugcinwa kule foni futhi awukathunyelwa.')
+                : ui("Your message has been delivered. You'll hear back within 1–2 working days.", 'Umlayezo wakho uthunyelwe. Uzoxhumana nawe phakathi kwezinsuku eziyi-1–2 zokusebenza.')}
             </p>
             <button
               onClick={() => { setSent(false); setBody(''); setSubject(''); setShowSubject(false); }}

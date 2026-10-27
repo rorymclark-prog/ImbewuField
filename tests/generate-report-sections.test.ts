@@ -45,3 +45,23 @@ test('site report candidates cannot put listed invasive plants back into the pla
   assert.deepEqual(listedPlantMentions('Black mulberry and Cape silver willow are choices'), []);
   assert.match(reportRoute, /if \(listedPlantMentions\(text\)\.length > 0\) continue/);
 });
+
+import { siteReportPurposeInstruction, normaliseSiteReportPurpose } from '../lib/site-survey.ts';
+test('the two report purposes guide every generated batch without certifying proposed work or inventing missing evidence', () => {
+  assert.equal(normaliseSiteReportPurpose('potential'), 'potential');
+  assert.equal(normaliseSiteReportPurpose('complete'), 'complete');
+  assert.equal(normaliseSiteReportPurpose('progress'), undefined);
+  assert.match(siteReportPurposeInstruction('potential'), /before detailed design/);
+  assert.match(siteReportPurposeInstruction('potential'), /Do not invent/);
+  assert.match(siteReportPurposeInstruction('complete'), /twelve-month crop\/food-forest\/animal-product/);
+  assert.match(siteReportPurposeInstruction('complete'), /does not certify completion on the ground/);
+  assert.match(reportRoute, /siteReportPurposeInstruction\(reportPurpose\)/);
+});
+
+test('every report batch receives market evidence and cannot demand invented local buyers or undersupply', () => {
+  assert.match(reportRoute, /marketEvidencePromptBlock\(facts\?\.marketEvidence \?\? surveyData\?\.marketEvidence\)/);
+  assert.match(reportRoute, /surveyToPrompt\(surveyData, d\.rainfall\.annual, false\)/);
+  assert.match(reportRoute, /label each as an untested opportunity/);
+  assert.match(reportRoute, /Regional context alone is not buyer evidence/);
+  assert.doesNotMatch(reportRoute, /Name 2–4 specific crops\/products this farmer could grow to fill a genuine gap/);
+});

@@ -4522,6 +4522,50 @@
       "locations": [
         "components/ReportView.tsx:generate fallback error"
       ]
+    },
+    {
+      "english": "Refresh prepared example",
+      "key": "reportUiRefreshPreparedExample"
+    },
+    {
+      "english": "Refresh updates this prepared example from saved records. It does not write new advice. Sample history clears when you restart the workspace.",
+      "key": "reportUiRefreshUpdatesThisPreparedExample"
+    },
+    {
+      "english": "Refresh prepared example to apply this language.",
+      "key": "reportUiRefreshPreparedExampleToApplyLanguage"
+    },
+    {
+      "english": "Prepared example",
+      "key": "reportUiPreparedExample"
+    },
+    {
+      "english": "Report purpose",
+      "key": "reportUiReportPurpose"
+    },
+    {
+      "english": "Full example",
+      "key": "reportUiFullExample"
+    },
+    {
+      "english": "All saved chapters, maps and visuals.",
+      "key": "reportUiAllSavedChaptersMapsAndVisuals"
+    },
+    {
+      "english": "Prepared example PDF",
+      "key": "reportUiPreparedExamplePdf"
+    },
+    {
+      "english": "These summaries use the same prepared records. Full example includes all available maps and visuals.",
+      "key": "reportUiTheseSummariesUseTheSamePreparedRecords"
+    },
+    {
+      "english": "Purpose",
+      "key": "reportUiPurpose"
+    },
+    {
+      "english": "Report origin",
+      "key": "reportUiReportOrigin"
     }
   ],
   "baseSourceSha256": {

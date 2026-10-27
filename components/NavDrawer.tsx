@@ -277,26 +277,24 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
                       display: 'flex', alignItems: 'center', gap: 12,
                       padding: '10px 20px', minHeight: 44,
                       textDecoration: 'none',
-                      // '#1F4D2B'-derived hardcodes, not var(--badge-bg)/var(--emerald): the earth
-                      // theme's --emerald (#3A7518, an "ok"-status olive-green, see globals.css)
-                      // is a different hue from the brand forest green every other screen still
-                      // hardcodes — swapping just this one would put two visibly different
-                      // "brand greens" in the app at once. Stays literal until that migrates.
-                      background: exactActive ? 'rgba(31,77,43,0.09)' : 'transparent',
-                      borderRight: exactActive ? '3px solid #1F4D2B' : '3px solid transparent',
+                      // --cat-foundation-text, not var(--emerald): it is #1F4D2B (brand forest)
+                      // in earth light, so the light look is unchanged, and the leaf #9CD672 in
+                      // dark, where the literal forest was 1.84:1 on the drawer (w24-01).
+                      background: exactActive ? 'color-mix(in srgb, var(--cat-foundation-text) 9%, transparent)' : 'transparent',
+                      borderRight: exactActive ? '3px solid var(--cat-foundation-text)' : '3px solid transparent',
                       transition: 'background 0.12s',
                     }}
                   >
                     <Icon
                       size={16}
                       strokeWidth={exactActive ? 2 : 1.6}
-                      style={{ color: exactActive ? '#1F4D2B' : 'var(--text-secondary)', flexShrink: 0 }}
+                      style={{ color: exactActive ? 'var(--cat-foundation-text)' : 'var(--text-secondary)', flexShrink: 0 }}
                     />
                     <span
                       className="font-sans"
                       style={{
                         fontSize: 14,
-                        color: exactActive ? '#1F4D2B' : 'var(--text-primary)',
+                        color: exactActive ? 'var(--cat-foundation-text)' : 'var(--text-primary)',
                         fontWeight: exactActive ? 600 : 400,
                       }}
                     >
