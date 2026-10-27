@@ -7,6 +7,7 @@ import type { SavedPlace } from './saved-places';
 import { designSiteIdFromLocation } from './design-studio';
 import { normaliseReportSiteFacts, type ReportSiteFacts } from './report-site-facts';
 import { normaliseSiteReportPurpose, type SiteReportPurpose } from './site-survey';
+import { inlineText } from './xh-inline';
 
 // A permaculture report saved locally so the farmer can re-read it without
 // regenerating (each generation is an AI call). We store the markdown plus a
@@ -27,9 +28,9 @@ export type ReportCoverChoice = 'auto' | 'map' | 'photo' | 'none';
 export type ReportOrigin = 'prepared-example' | 'generated';
 
 export function reportOriginLabel(origin: ReportOrigin | undefined, language = 'en'): string {
-  if (origin === 'prepared-example') return language === 'zu' ? 'Isibonelo esilungiselelwe' : 'Prepared example';
-  if (origin === 'generated') return language === 'zu' ? 'Umbiko okhiqiziwe' : 'Generated report';
-  return language === 'zu' ? 'Indlela yokukhiqiza ayibhalwanga' : 'Origin not recorded';
+  if (origin === 'prepared-example') return inlineText(language, 'Prepared example', 'Isibonelo esilungiselelwe');
+  if (origin === 'generated') return inlineText(language, 'Generated report', 'Umbiko okhiqiziwe');
+  return inlineText(language, 'Origin not recorded', 'Indlela yokukhiqiza ayibhalwanga');
 }
 
 export interface SavedReport {

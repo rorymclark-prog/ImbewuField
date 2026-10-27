@@ -3,6 +3,7 @@ import { upsertSurvey } from './user-sync';
 import { loadPlaces } from './saved-places';
 import { canonicalCoordinateSiteId, coordinateSiteIdParts } from './site-id';
 import { activeAccountLocalStorageKey } from './account-local-storage';
+import { inlineText } from './xh-inline';
 
 // The FAO Household Dietary Diversity Score uses these twelve food groups. This is a count of
 // reported groups, never a made-up nutrition score or an estimate of what a household eats.
@@ -21,7 +22,7 @@ export type ProductionCategory = typeof PRODUCTION_CATEGORIES[number];
 export type SiteReportPurpose = 'potential' | 'complete';
 export const normaliseSiteReportPurpose = (value: unknown): SiteReportPurpose | undefined => value === 'potential' || value === 'complete' ? value : undefined;
 export function siteReportPurposeLabel(purpose: SiteReportPurpose, language = 'en'): string {
-  return purpose === 'potential' ? (language === 'zu' ? 'Amathuba endawo' : 'Site potential') : (language === 'zu' ? 'Uhlelo oluphelele lwendawo' : 'Complete site plan');
+  return purpose === 'potential' ? inlineText(language, 'Site potential', 'Amathuba endawo') : inlineText(language, 'Complete site plan', 'Uhlelo oluphelele lwendawo');
 }
 export function siteReportPurposeInstruction(purpose: SiteReportPurpose): string {
   return purpose === 'potential'

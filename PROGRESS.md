@@ -87,12 +87,16 @@ and isiZulu output are unchanged.
   - **Farmer's farm report (g34):** builds in isiXhosa through `buildFarmReport({ language: 'xh' })`, on screen and in the PDF. It uses the money book's wording, keeps every amount and date the same as the English, and keeps the file name in English.
   - **Crop catalogue advice (g33):** 63 notes, shown at render. `lib/crop-catalog.ts` is unchanged.
   - **Gaps (g35):** the 8 strings that were wired for isiXhosa but had no draft.
+- **27 Oct:**
+  - **Main's four-language stack (#1122), report history (#1121) and production year (#1099) merged:** main's isiZulu, Sesotho, Xitsonga and Tshivenda output kept exactly; 340 + 11 new dictionary keys and the Record plan dialog get isiXhosa (g37–g40).
+  - **Release notes and the update tour:** isiXhosa is a fifth `lib/update-copy` language (148 drafts, English source shown beside each).
+  - **Report purpose and origin labels** (`siteReportPurposeLabel`, `reportOriginLabel`) give isiXhosa its draft; isiZulu and English unchanged.
 - **Still English:**
   - Crop and species names, catalogue notes and custom bed labels.
   - The site-survey chicken block and the calendar advice holds, both deliberately held until review.
   - PDFs and download texts.
   - Narration audio.
-  - Guide card titles on `/student`, which is byte-pinned.
+  - The readiness checklist's record statuses and evidence details (a note says so).
 
 ### 24 Oct 2026 — isiXhosa phase 3: Studies slide cards and the last English corners (PR #1090)
 - **Studies slide cards:** all 10 modules (240 slides) as isiXhosa silent cards, with the draft above

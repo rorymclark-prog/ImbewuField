@@ -15,6 +15,12 @@ const drafts: Record<string, string> = {
   "Save a site boundary or add design features to draw this plan.": "Gcina umda wendawo okanye wongeze izinto zoyilo ukuze uzobe esi sicwangciso.",
   "This production overview is currently in English.": "Esi sishwankathelo semveliso okwangoku sisesiNgesini.",
   "This guide is currently in English.": "Esi sikhokelo okwangoku sisesiNgesini.",
+  // Report purpose and origin labels (lib/site-survey.ts, lib/saved-reports.ts).
+  "Site potential": "Amathuba endawo",
+  "Complete site plan": "Isicwangciso sendawo esipheleleyo",
+  "Prepared example": "Umzekelo olungisiweyo",
+  "Generated report": "Ingxelo eyenziweyo",
+  "Origin not recorded": "Imvelaphi ayibhalwanga",
 };
 
 export default drafts;
