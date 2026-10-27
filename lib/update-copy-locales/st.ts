@@ -158,6 +158,15 @@ const copy:UpdateCopy={
   "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Bula Ponelopele le ho romela, ebe o kgetha Moralo wa rekoto bakeng sa setshwantsho se lekantsweng le tlhaloso ya sona.",
   "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Dintlha tsa mmaraka di boloka mohlodi le letsatsi la tsona. Merero ya ho rekisa e sala e arohane le thekiso e ngodisitsweng.",
   "Full report headers keep unsourced soil values unknown.": "Dihlooho tsa tlaleho e feletseng di boloka dipalo tsa mobu tse se nang mohlodi di sa tsejwe.",
+  "AI glossy map settings": "Ditlhophiso tsa dimmapa tsa AI tse kgabisitsweng",
+  "Settings → AI glossy maps": "Ditlhophiso → Dimmapa tsa AI tse kgabisitsweng",
+  "Open Settings to control your own AI maps. Platform master accounts can also manage each organisation.": "Bula Ditlhophiso ho laola dimmapa tsa hao tsa AI. Diakhaonto tse ka sehloohong tsa sethala di ka boela tsa laola mokgatlo ka mong.",
   "Menus, pop-ups and Lima now work fully from a keyboard and keep your place.": "Dimenyu, diphanele tse hlahang le Lima jwale di sebetsa ka botlalo ka khiboto mme di boloka moo o neng o le teng.",
+  "Turn AI glossy maps on or off in Settings. Saved maps stay available.": "Bulela kapa o kwale dimmapa tsa AI tse kgabisitsweng ho Ditlhophiso. Dimmapa tse bolokilweng di dula di fumaneha.",
+  "The platform owner can enable or suspend AI maps for each organisation.": "Monga sethala a ka dumella kapa a emisa dimmapa tsa AI bakeng sa mokgatlo ka mong.",
+  "Approved organisations can give AI map access by role or person.": "Mekgatlo e dumelletsweng e ka fana ka phihlello ya dimmapa tsa AI ho ya ka karolo kapa motho.",
+  "Try an AI glossy map": "Leka mmapa wa AI o kgabisitsweng",
+  "Design Studio → Glossy": "Studio sa moralo → Mmapa o kgabisitsweng",
+  "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Bula polasi e bolokilweng, kgetha leqephe ebe o kgetha AI Polished. Ho hlahisa mmapa ka mong ho a lefellwa.",
 };
 export default copy;

@@ -31,7 +31,9 @@ import { getFirestore, FieldValue, Timestamp, type DocumentReference } from 'fir
 import { getStorage } from 'firebase-admin/storage';
 import { PNG } from 'pngjs';
 import { compareRenders } from '../../lib/render-difference';
-import { readAiRenderTesterAccess } from '../../lib/ai-render/access';
+import { decideManagedAiRenderAccess } from '../../lib/ai-render/access';
+import { loadAiMapContext } from './ai-map-access';
+export { aiMapAccess } from './ai-map-access';
 import { geminiEdit, geminiAspectRatio, geminiImageSize, geminiModelForQuality } from './gemini';
 import { friendlyProviderError } from './provider-errors';
 import {
@@ -342,12 +344,10 @@ async function claimJob(ref: DocumentReference, jobId: string): Promise<ClaimRes
       return { proceed: false, reason: `invalid: ${contractError}` };
     }
 
-    // The job is client-written, so no approval field in it is trusted. Read the current Auth
-    // grant, including for owner/admin accounts, before either usage counter or any provider call.
-    const access = await readAiRenderTesterAccess(job.uid, async (uid) => {
-      const account = await getAuth().getUser(uid);
-      return account.disabled ? null : account.customClaims;
-    });
+    // Re-read the account, tenant suspension and personal switch in this transaction.
+    // Old tokens and previously queued jobs cannot retain a permission the owner revoked.
+    const account = await getAuth().getUser(job.uid);
+    const access = decideManagedAiRenderAccess((await loadAiMapContext(db, account, tx)).policy);
     if (!access.allowed) {
       tx.update(ref, { status: 'error', error: access.message, updatedAt: FieldValue.serverTimestamp() });
       return { proceed: false, reason: `tester-access: ${access.reason}` };
@@ -470,6 +470,10 @@ export const runRenderJob = onDocumentCreated(
             // Absent on job docs written before the quality dial existed — read as 'high', the
             // setting every render used until then, so old and in-flight jobs are unchanged.
             const quality = job.quality === 'medium' || job.quality === 'low' ? job.quality : 'high';
+
+            const currentAccount = await getAuth().getUser(job.uid);
+            const currentAccess = decideManagedAiRenderAccess((await loadAiMapContext(db, currentAccount)).policy);
+            if (!currentAccess.allowed) throw new Error(currentAccess.message);
 
             if (job.engine === 'gemini') {
               // PARITY WITH THE OPENAI BRANCH. This used to hand Gemini a prompt and an image and

@@ -169,6 +169,7 @@ import type { LocationData } from '@/lib/types';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
 import styles from './DesignGlossy.module.css';
+import SettingsButton from '@/components/SettingsButton';
 export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
 export type { GlossyLayerFilter } from '@/lib/glossy-filters';
 
@@ -11661,7 +11662,8 @@ export default function DesignGlossy({
     const onFocus = () => { void checkAccess(); };
     void checkAccess();
     window.addEventListener('focus', onFocus);
-    return () => { active = false; window.removeEventListener('focus', onFocus); };
+    window.addEventListener('imbewu-ai-map-access-changed', onFocus);
+    return () => { active = false; window.removeEventListener('focus', onFocus); window.removeEventListener('imbewu-ai-map-access-changed', onFocus); };
   }, [renderUser]);
   /**
    * WHICH PICTURE THE SHEETS ARE DRAWN ON. Rory: "I want the option when rendering the map to have
@@ -16024,6 +16026,12 @@ export default function DesignGlossy({
         )}
 
         <div style={{ order: 1, display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
+          {!aiRenderOn && renderUser && !isSampleMode() && (
+            <div lang="en" style={{ padding: 12, border: '1px solid #D8CEBC', borderRadius: 12 }}>
+              <p style={{ fontSize: 12, lineHeight: 1.5, margin: '0 0 8px' }}>AI glossy maps are off or access has not been granted. Open Settings → AI glossy maps to check your account and organisation access.</p>
+              <SettingsButton showLabel />
+            </div>
+          )}
           {/* The engine determines which account is charged, so it sits beside the finish that
               spends money. Quality belongs here too: it changes that same paid render. */}
           {!simple && (

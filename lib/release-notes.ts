@@ -41,6 +41,14 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '27 October 2026', sha: '9d42fedbe', changes: [
+    'Turn AI glossy maps on or off in Settings. Saved maps stay available.',
+    'The platform owner can enable or suspend AI maps for each organisation.',
+    'Approved organisations can give AI map access by role or person.',
+  ], tour: [{ title: 'AI glossy map settings', where: 'Settings → AI glossy maps', href: '/account',
+    detail: 'Open Settings to control your own AI maps. Platform master accounts can also manage each organisation.' },
+    { title: 'Try an AI glossy map', where: 'Design Studio → Glossy', href: '/design',
+      detail: 'Open a saved farm, choose a sheet and select AI Polished. Each render is paid.' }] },
   { when: '27 October 2026', sha: '31d0ba80', changes: [
     'Menus, pop-ups and Lima now work fully from a keyboard and keep your place.',
   ] },
