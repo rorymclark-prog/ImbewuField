@@ -2933,6 +2933,18 @@ const dict: Dict = {
   reportsEnglishSavedNote: "Ezinye iingxelo ezigciniweyo zinombhalo wazo opheleleyo ngesiNgesi. Ezi zilawuli zisebenzisa {language}.",
   reportUiReportLanguage: "Ulwimi lwengxelo",
   reportUiGenerationFailed: "Ingxelo ayikwazanga ukwenziwa. Nceda uzame kwakhona.",
+  // main #1099 prepared-example and report-purpose controls (unreviewed drafts).
+  reportUiRefreshPreparedExample: "Hlaziya umzekelo olungisiweyo",
+  reportUiRefreshUpdatesThisPreparedExample: "Ukuhlaziya kuhlaziya lo mzekelo ulungisiweyo ngeerekhodi ezigciniweyo. Akubhali ngcebiso intsha. Imbali yomzekelo iyacinywa xa uqalisa kwakhona indawo yokusebenza.",
+  reportUiRefreshPreparedExampleToApplyLanguage: "Hlaziya umzekelo olungisiweyo ukuze usebenzise olu lwimi.",
+  reportUiPreparedExample: "Umzekelo olungisiweyo",
+  reportUiReportPurpose: "Injongo yengxelo",
+  reportUiFullExample: "Umzekelo opheleleyo",
+  reportUiAllSavedChaptersMapsAndVisuals: "Zonke izahluko ezigciniweyo, iimephu nemifanekiso.",
+  reportUiPreparedExamplePdf: "I-PDF yomzekelo olungisiweyo",
+  reportUiTheseSummariesUseTheSamePreparedRecords: "Ezi zishwankathelo zisebenzisa iirekhodi ezilungisiweyo ezifanayo. Umzekelo opheleleyo uquka zonke iimephu nemifanekiso ekhoyo.",
+  reportUiPurpose: "Injongo",
+  reportUiReportOrigin: "Imvelaphi yengxelo",
 };
 
 export default dict;
