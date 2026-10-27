@@ -68,6 +68,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Phasing public-sample fit and retained final rule — 27 October 2026](2026-10-27/phasing-public-sample-fit-codex.md).
+
 - [Wider readable legends and plain-paper buildings — 26 October 2026](2026-10-26/map-readable-legend-buildings-codex.md).
 
 - [Consistent legend panels across all nine sheets — 26 October 2026](2026-10-26/map-legend-consistency-codex.md).

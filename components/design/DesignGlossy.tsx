@@ -9574,8 +9574,11 @@ export async function buildImplementationMap(
   const fsHeader = Math.round(typeW * SHEET_LEGEND_TYPE.title);
   const fsSection = Math.round(typeW * SHEET_LEGEND_TYPE.section);
   const fsBody = Math.round(typeW * SHEET_LEGEND_TYPE.detail);
-  const lineH = Math.round(fsBody * 1.34);
-  const blockGap = Math.round(lineH * 0.55);
+  // The Ubhejane sample schedule is longer than the synthetic example: loose paragraph spacing
+  // hid its site rules even after optional bullets were removed. Keep the larger shared type,
+  // but use a compact reading rhythm so the final instructions still fit the widened cream box.
+  const lineH = Math.round(fsBody * 1.2);
+  const blockGap = Math.round(lineH * 0.3);
   const headerFont = `800 ${fsHeader}px ${REFERENCE_LABEL_FONT}`;
   const sectionFont = `800 ${fsSection}px ${SHEET_BODY_FONT}`;
   const titleFont = `800 ${Math.round(typeW * SHEET_LEGEND_TYPE.section)}px ${SHEET_BODY_FONT}`;
