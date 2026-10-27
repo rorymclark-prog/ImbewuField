@@ -373,7 +373,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   }, []);
   const [style, setStyle] = useState<'satellite-streets-v12' | 'outdoors-v12'>('satellite-streets-v12');
   const [connected,setConnected]=useState(true),[canvasOnly,setCanvasOnly]=useState(false);
-  const offlineCanvas=!connected||canvasOnly;
+  // w24-10: with no Mapbox token the `mapbox://` style URL makes the Map constructor throw after
+  // the canvas and its mouse handlers are attached but before the transform is sized, so a
+  // pointer already resting over the mount point (in-app navigation) hit a 0x0 transform and
+  // threw `Invalid LngLat object: (NaN, NaN)` from unproject. No token means no mapbox:// style
+  // can load anyway, so use the token-free canvas style and never build the half-made map.
+  const offlineCanvas=!connected||canvasOnly||!TOKEN;
   useEffect(()=>{const update=()=>setConnected(navigator.onLine);update();window.addEventListener('online',update);window.addEventListener('offline',update);return()=>{window.removeEventListener('online',update);window.removeEventListener('offline',update);};},[]);
   // Default to Esri ("HD") wherever a licensed key is configured, and to Mapbox otherwise.
   //
@@ -2164,7 +2169,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
   return (
     <div className="relative w-full h-full">
-      {offlineCanvas&&<div role="status" style={{position:'absolute',bottom:80,left:12,maxWidth:'calc(100% - 24px)',zIndex:10,padding:'8px 12px',borderRadius:10,background:'var(--bg-1)',color:'#203127',fontSize:14,pointerEvents:'none'}}>{t('mapOfflineCanvasStatus')}</div>}
+      {offlineCanvas&&<div role="status" style={{position:'absolute',bottom:80,left:12,maxWidth:'calc(100% - 24px)',zIndex:10,padding:'8px 12px',borderRadius:10,background:'var(--bg-1)',color:'var(--text-primary)',fontSize:14,pointerEvents:'none'}}>{t('mapOfflineCanvasStatus')}</div>}
       <ReactMapGL
         ref={mapRef}
         mapboxAccessToken={TOKEN}

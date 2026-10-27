@@ -209,7 +209,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
 
   return (
     <div className="space-y-2">
-      {sample && <p className="rounded-xl p-3 text-sm" style={{ background: 'var(--info-soft)', color: 'var(--info)' }}>{lang === 'zu' ? 'Izimpendulo zigcinwa kulesi sivivinyo kuphela. Akukho okuthunyelwayo.' : 'Replies stay in this tour session. Nothing is sent.'}</p>}
+      {sample && <p className="rounded-xl p-3 text-sm" style={{ background: 'color-mix(in srgb, var(--blue) 12%, var(--bg-1))', color: 'var(--text-primary)' }}>{lang === 'zu' ? 'Izimpendulo zigcinwa kulesi sivivinyo kuphela. Akukho okuthunyelwayo.' : 'Replies stay in this tour session. Nothing is sent.'}</p>}
       {actionError && (
         <div className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--bg-1)', border: "1px solid color-mix(in srgb, var(--danger) 35%, transparent)", color: 'var(--danger)' }}>
           {lang === 'zu' ? 'Leso senzo asikwazanga ukugcinwa. Hlola imvume ye-akhawunti noma uxhumano, bese uzama futhi.' : 'That action could not be saved. Check your account access or connection and try again.'}
@@ -262,15 +262,15 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                   >
                     {msg.from_name ?? (lang === 'zu' ? 'Umthumeli ongaziwa' : 'Unknown sender')}
                   </span>
-                  <span className="font-sans flex-shrink-0" style={{ fontSize: 12, color: 'var(--text-muted)' }}>
+                  <span className="font-sans flex-shrink-0" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
                     {formatDate(msg.created_at, lang)}
                   </span>
                 </div>
-                <div className="font-sans text-xs mt-0.5 truncate" style={{ color: 'var(--text-muted)' }}>
+                <div className="font-sans text-xs mt-0.5 truncate" style={{ color: 'var(--text-secondary)' }}>
                   {msg.subject || (lang === 'zu' ? '(Akunasihloko)' : '(no subject)')}
                 </div>
                 {!isOpen && (
-                  <div className="font-sans text-xs mt-0.5 truncate" style={{ color: 'var(--text-muted)' }}>
+                  <div className="font-sans text-xs mt-0.5 truncate" style={{ color: 'var(--text-secondary)' }}>
                     {msg.body}
                   </div>
                 )}

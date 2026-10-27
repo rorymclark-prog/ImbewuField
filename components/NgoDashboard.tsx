@@ -499,7 +499,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                 {ui(mode === 'funder' ? 'Funded gardens' : 'Gardens', mode === 'funder' ? 'Izingadi ezixhaswayo' : 'Izingadi')}
               </div>
               {isDemo && (
-                <span className="text-xs font-sans px-1.5 py-0.5 rounded" style={{ background: 'rgba(158,92,8,0.12)', color: 'var(--gold)', border: '1px solid rgba(158,92,8,0.3)' }}>{ui('demo sample','isibonelo sedemo')}</span>
+                <span className="text-xs font-sans px-1.5 py-0.5 rounded" style={{ background: 'rgba(158,92,8,0.12)', color: 'var(--gold-dim)', border: '1px solid rgba(158,92,8,0.3)' }}>{ui('demo sample','isibonelo sedemo')}</span>
               )}
             </div>
             {lang === 'zu' && <p className="text-xs leading-relaxed mb-3" style={{color:'var(--text-muted)'}}>{ui('', 'Izilawuli nezaziso zaleli khasi zisesiZulu. Amagama abalimi, izindawo, izitshalo nezifundo, kanye nemininingwane egcinwe nemibiko noma izithombe zesibonelo, kuboniswa njengoba ifakiwe futhi kungase kube ngesiNgisi.')}</p>}
