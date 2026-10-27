@@ -103,7 +103,8 @@ test('every image-generation endpoint enforces the verified grant before body or
     const src = read(route);
     const post = src.indexOf('export async function POST(');
     const handler = src.slice(post);
-    const gate = handler.indexOf('decideAiRenderAccess(auth.uid, auth)');
+    // Eligibility now includes the current tenant suspension and personal switch, not only a token claim.
+    const gate = handler.indexOf('resolveAiRenderAccess(req, auth.uid)');
     assert.ok(gate >= 0, `${route} must use verified auth, not request data or a role`);
     assert.match(handler, /if \(!access\.allowed\)/);
     for (const needle of ['await req.json()', 'process.env.FAL_KEY', 'process.env.OPENAI_API_KEY', 'process.env.GEMINI_API_KEY']) {
@@ -116,11 +117,12 @@ test('every image-generation endpoint enforces the verified grant before body or
 test('the worker rejects unapproved jobs before reserving quota, including owner jobs', () => {
   const src = read('functions/src/index.ts');
   const claim = src.slice(src.indexOf('async function claimJob('), src.indexOf('export const runRenderJob'));
-  const gate = claim.indexOf('readAiRenderTesterAccess(job.uid');
+  const gate = claim.indexOf('decideManagedAiRenderAccess(');
   assert.ok(gate >= 0);
-  assert.match(claim, /getAuth\(\)\.getUser\(uid\)/);
-  assert.match(claim, /account\.disabled \? null : account\.customClaims/,
-    'a disabled Auth account must lose rendering even if its old claim remains true');
+  assert.match(claim, /getAuth\(\)\.getUser\(job\.uid\)/);
+  assert.match(claim, /loadAiMapContext\(db, account, tx\)/,
+    'the worker must check current account and tenant policy within the quota transaction');
+  assert.match(read('functions/src/ai-map-access.ts'), /uid: user\.disabled \? null : user\.uid/);
   assert.match(claim, /if \(!access\.allowed\)/);
   assert.ok(gate < claim.indexOf('const usageRef'), 'unapproved users must not consume usage counters');
   assert.ok(gate < claim.indexOf('const isOwner'), 'the old owner budget exemption must not grant access');
@@ -129,7 +131,7 @@ test('the worker rejects unapproved jobs before reserving quota, including owner
 test('the access endpoint returns only a noncached decision for the verified caller', () => {
   const src = read('app/api/ai-render/access/route.ts');
   assert.match(src, /authenticateApiRequest/);
-  assert.match(src, /decideAiRenderAccess\(auth\.uid, auth\)/);
+  assert.match(src, /resolveAiRenderAccess\(req, auth\.uid\)/);
   assert.match(src, /private, no-store/);
   assert.doesNotMatch(src, /getFirestore|profiles|Math\.random|localStorage/);
 });

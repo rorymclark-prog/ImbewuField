@@ -151,5 +151,10 @@ const copy:UpdateCopy={
   "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Bula Ponelopele le ho romela, ebe o kgetha Moralo wa rekoto bakeng sa setshwantsho se lekantsweng le tlhaloso ya sona.",
   "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Dintlha tsa mmaraka di boloka mohlodi le letsatsi la tsona. Merero ya ho rekisa e sala e arohane le thekiso e ngodisitsweng.",
   "Full report headers keep unsourced soil values unknown.": "Dihlooho tsa tlaleho e feletseng di boloka dipalo tsa mobu tse se nang mohlodi di sa tsejwe.",
+  "AI glossy maps have a personal Settings switch. Exact maps and saved sheets remain available when AI is off.": "Dimmapa tsa AI tse kgabisitsweng di na le switjhi ya hao ho Ditlhophiso. Dimmapa tse nepahetseng le maqephe a bolokilweng di dula di fumaneha ha AI e kwetswe.",
+  "The platform owner controls AI access for each organisation. Approved organisations can delegate access by role or person.": "Monga sethala o laola phihlello ya AI bakeng sa mokgatlo ka mong. Mekgatlo e dumelletsweng e ka fana ka phihlello ho ya ka karolo kapa motho.",
+  "AI glossy map settings": "Ditlhophiso tsa dimmapa tsa AI tse kgabisitsweng",
+  "Settings → AI glossy maps": "Ditlhophiso → Dimmapa tsa AI tse kgabisitsweng",
+  "Open Settings to control your own AI maps. Platform master accounts can also manage each organisation.": "Bula Ditlhophiso ho laola dimmapa tsa hao tsa AI. Diakhaonto tse ka sehloohong tsa sethala di ka boela tsa laola mokgatlo ka mong.",
 };
 export default copy;

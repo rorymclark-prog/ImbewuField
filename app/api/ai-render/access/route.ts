@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { authenticateApiRequest } from '@/lib/api-auth';
 import { aiRenderEnabled } from '@/lib/ai-render/flag';
-import { aiRenderAccessState, decideAiRenderAccess } from '@/lib/ai-render/access';
+import { aiRenderAccessState } from '@/lib/ai-render/access';
+import { resolveAiRenderAccess } from '@/lib/ai-render/server-access';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,6 +15,6 @@ export async function GET(req: NextRequest) {
   }
   const auth = await authenticateApiRequest(req, '/api/ai-render/access');
   // Signed-out is a normal locked UI state even when other APIs enforce strict authentication.
-  const access = decideAiRenderAccess(auth.uid, auth);
+  const access = await resolveAiRenderAccess(req, auth.uid);
   return NextResponse.json(access, { headers });
 }

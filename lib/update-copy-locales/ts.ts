@@ -151,5 +151,10 @@ const copy:UpdateCopy={
   "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Pfula Xivoni xo sungula ni ku rhumela, kutani u hlawula Pulani ya rhekhodo ku kuma dayagiremu leyi pimiweke ni nhlamuselo ya yona.",
   "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Tinotsi ta makete ti hlayisa xihlovo ni siku ra tona. Tipulani to xavisa ti tshama ti hambanile ni ku xavisa loku rhekhodiweke.",
   "Full report headers keep unsourced soil values unknown.": "Tinhloko ta xiviko lexi heleleke ti hlayisa mimpimo ya misava leyi nga riki na xihlovo yi nga tiveki.",
+  "AI glossy maps have a personal Settings switch. Exact maps and saved sheets remain available when AI is off.": "Mimepe ya AI leyi sasekisiweke yi na swichi ya wena eka Swiyimiso. Mimepe leyi kongomeke ni maphepha lama hlayisiweke swi ya mahlweni swi kumeka loko AI yi timiwile.",
+  "The platform owner controls AI access for each organisation. Approved organisations can delegate access by role or person.": "N’winyi wa pulatifomo u lawula mfikelelo wa AI eka nhlangano wun’wana ni wun’wana. Minhlangano leyi pfumeleriweke yi nga nyika mfikelelo hi ku ya hi xiavelo kumbe munhu.",
+  "AI glossy map settings": "Swiyimiso swa mimepe ya AI leyi sasekisiweke",
+  "Settings → AI glossy maps": "Swiyimiso → Mimepe ya AI leyi sasekisiweke",
+  "Open Settings to control your own AI maps. Platform master accounts can also manage each organisation.": "Pfula Swiyimiso ku lawula mimepe ya wena ya AI. Tiakhawunti ta vulawuri bya pulatifomo ti nga tlhela ti lawula nhlangano wun’wana ni wun’wana.",
 };
 export default copy;
