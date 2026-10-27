@@ -47,6 +47,7 @@ export async function actualAccountUi(initial:ControlLanguage,options:AccountUiO
   AppHeader:({title}:any)=>React.createElement('header',null,title),TabBar:()=>React.createElement('nav',null,'QA navigation'),LessonLink:({label}:any)=>React.createElement('span',null,label),ThemePanel:()=>null,
  };
  scope.LanguageDraftNote=compile('components/LanguageDraftNote.tsx','LanguageDraftNote',scope);
+  scope.useDialogFocus=(open:boolean)=>{if(open)calls.focus++;};
  scope.AccountErrorText=compile('components/AccountErrorText.tsx','AccountErrorText',scope);
  scope.ConsentPanel=compile('components/ConsentPanel.tsx','ConsentPanel',scope);
  scope.AccountAccess=compile('components/AccountAccess.tsx','AccountAccess',scope);

@@ -19,7 +19,7 @@ export function actualConsent(initialLanguage: ControlLanguage, initialStorage: 
     setItem: (key:string,value:string) => { writes.push({key,value}); values.set(key,value); },
   }, activeAccountLocalStorageKey: (key:string) => 'qa::' + key,
   removeSignedInLegacyLocalStorageKey: (key:string) => removed.push(key),
-  useLanguage: () => ({ lang, t:controlT(lang) }),
+  useLanguage: () => ({ lang, t:controlT(lang) }), useDialogFocus: () => {},
   translate: (language:ControlLanguage,key:string) => controlT(language)(key),
   };
   const Component = new Function('scope', `with(scope){${code};return PopiaConsent;}`)(scope);
