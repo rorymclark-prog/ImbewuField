@@ -84,7 +84,8 @@ export default function ChatWidget() {
       // The FAB unmounts while the sheet is open, so focus had already fallen to <body> (or a
       // detached node) when it opened Lima: return to its re-mounted copy instead (w28-05).
       const opener = openerRef.current;
-      (opener?.isConnected && opener !== document.body ? opener : fabRef.current)?.focus?.();
+      if (!opener?.isConnected || opener === document.body) openerRef.current = fabRef.current;
+      openerRef.current?.focus?.();
     };
   }, [open]);
   // Hide the FAB while the map is in boundary-draw mode (the draw bar owns the
