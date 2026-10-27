@@ -92,7 +92,7 @@ export default function PathwayOfflineDownload({ pathwayId }: { pathwayId: Studi
       if (!alive.current || controller.signal.aborted) return;
       if (!pathway.pages.every(path => pages.get(path) === true)) throw new UserFacingError('Some reading pages are not ready to reopen offline. Keep your connection and choose Finish download.');
     } catch (cause) {
-      if (alive.current) setError(userFacingMessage(cause, 'This pathway could not finish downloading. Reconnect and try again.'));
+      if (alive.current) setError(inlineText(lang, userFacingMessage(cause, 'This pathway could not finish downloading. Reconnect and try again.')));
     } finally {
       if (alive.current) { setStage('idle'); await refresh(); }
       operation.current = null;

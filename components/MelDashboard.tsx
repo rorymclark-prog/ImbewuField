@@ -93,7 +93,7 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
   // A consent / answering line: isiZulu or isiXhosa draft, each beside its exact English source.
   const pair = (english: string, zuluText: string) => zu ? <SurveyZuluDraftPair english={english}>{zuluText}</SurveyZuluDraftPair> : isXhosa ? <SurveyXhosaDraftPair english={english}>{inlineText(dl, english)}</SurveyXhosaDraftPair> : english;
   // The server's own error body is developer English; show the app's translated line instead.
-  const failure = (e: unknown) => userFacingMessage(e, translate(appLang, 'networkFailed'), k => translate(appLang, k));
+  const failure = (e: unknown) => inlineText(appLang, userFacingMessage(e, translate(appLang, 'networkFailed'), k => translate(appLang, k)));
   const requestVersion = useRef(0);
   const linkedOpened=useRef('');
   const detailRef = useRef<HTMLDivElement>(null);

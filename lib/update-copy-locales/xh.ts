@@ -152,5 +152,13 @@ const copy:UpdateCopy={
   "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Vula Jonga & thumela ngaphandle, emva koko Isicwangciso seerekhodi ukuze ufumane umzobo okalwe ngesikali nenkcazelo yeempawu zawo.",
   "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Amanqaku emarike agcina umthombo nomhla wawo. Izicwangciso zokuthengisa zihlala zahlukile kwiintengiso ezirekhodiweyo.",
   "Full report headers keep unsourced soil values unknown.": "Iintloko zengxelo epheleleyo zigcina amaxabiso omhlaba angenamthombo njengangaziwayo.",
+  "The menu, field-visit form and crop prices are easy to read in dark mode.": "Imenyu, ifomu yotyelelo lwasentsimini namaxabiso ezityalo kulula ukuwafunda kwimo emnyama.",
+  "Messages, the exchange form and Records links are clearer, in light and dark.": "Imiyalezo, ifomu yotshintshiselwano namakhonkco eeRekhodi acace ngakumbi, kwimo ekhanyayo nemnyama.",
+  "Lima no longer covers the last buttons of a manual chapter.": "U-Lima akasagqumi amaqhosha okugqibela esahluko sencwadi yesikhokelo.",
+  "A practice message on Contact now says it was kept on this device, not sent.": "Umyalezo wokuziqhelisa kwi-Qhagamshelana ngoku uthi ugcinwe kwesi sixhobo, awuthunyelwanga.",
+  "Report totals now match their charts, and report counts read correctly.": "Iitotali zeengxelo ngoku ziyahambelana neetshathi zazo, kwaye amanani eengxelo afundeka ngokuchanekileyo.",
+  "Home, Map, Studies and Prices now open offline, even before you have visited them.": "Ikhaya, Imephu, Izifundo namaXabiso ngoku avuleka ngaphandle kwe-intanethi, nangaphambi kokuba uwatyelele.",
+  "Error messages now explain the problem in plain words, not technical text.": "Imiyalezo yeempazamo ngoku ichaza ingxaki ngamazwi alula, hayi ngombhalo wobuchwepheshe.",
+  "Menus, pop-ups and Lima now work fully from a keyboard and keep your place.": "Iimenyu, iifestile ezivelayo no-Lima ngoku zisebenza ngokupheleleyo ngebhodi yezitshixo kwaye zigcina apho ubukhona.",
 };
 export default copy;

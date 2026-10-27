@@ -81,7 +81,7 @@ export default function GuideOfflineDownload({ guide }: { guide: AppGuide }) {
       await fieldPageDownloads(true, [guide.href, '/student'], p => pages.set(p.path, p.ready && !p.error));
       if (!pages.get(guide.href) || !pages.get('/student')) throw new UserFacingError('The written guide is not ready to reopen offline. Keep your connection and choose Finish download.');
     } catch (e) {
-      if (alive.current) setError(userFacingMessage(e, 'The guide could not finish downloading. Reconnect and try again.'));
+      if (alive.current) setError(inlineText(lang, userFacingMessage(e, 'The guide could not finish downloading. Reconnect and try again.')));
     } finally {
       if (alive.current) { setStage('idle'); await refresh(); }
       operation.current = null;

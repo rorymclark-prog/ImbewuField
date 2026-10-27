@@ -73,7 +73,7 @@ export default function MelEvidenceReport({ orgId, organisation, funder, sample 
         const result = await fieldApi(`/api/assessments?org=${encodeURIComponent(orgId)}&mode=${funder ? 'published' : 'analysis'}&id=${encodeURIComponent(selected.id)}${beforeId ? `&compare=${encodeURIComponent(beforeId)}` : ''}`);
         if (cancelled) return;
         setAnalysis({ assessmentId: selected.id, beforeId, metrics: funder ? selected.metrics || [] : result.metrics, assigned: funder ? selected.assigned : result.assigned, completed: funder ? selected.completed : result.completed, comparison: result.comparison, notes: fieldDataReportNote(result) ? [`Assessment findings: ${fieldDataReportNote(result)}`] : [] });
-      } catch (error) { if (!cancelled) setAnalysisError(userFacingMessage(error, 'Selected assessment findings are unavailable.')); }
+      } catch (error) { if (!cancelled) setAnalysisError(inlineText(lang, userFacingMessage(error, 'Selected assessment findings are unavailable.'))); }
     })();
     return () => { cancelled = true; };
     // Source refreshes and the explicit IDs own this request. Project changes clear

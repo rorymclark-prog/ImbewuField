@@ -30,7 +30,7 @@ export default function ProductionAreas({ publishedOnly = false }: { publishedOn
 function ProductionAreaContent({ publishedOnly }: { publishedOnly: boolean }) {
   const { user } = useAuth();
   const { lang } = useLanguage();
-  const failure = (e: unknown) => userFacingMessage(e, translate(lang, 'networkFailed'), k => translate(lang, k));
+  const failure = (e: unknown) => inlineText(lang, userFacingMessage(e, translate(lang, 'networkFailed'), k => translate(lang, k)));
   const [source,setSource]=useState<unknown>(null);
   const [orgs, setOrgs] = useState<{ id: string; name: string }[]>([]), [org, setOrg] = useState('');
   const [summary, setSummary] = useState<Summary | null>(null), [sites, setSites] = useState<ProductionSite[]>([]);

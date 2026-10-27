@@ -18,7 +18,7 @@ export default function FunderAssessments() {
   const { user } = useAuth();
   const { lang } = useLanguage();
   const tx = (en: string) => inlineText(lang, en);
-  const failure = (e: unknown) => userFacingMessage(e, translate(lang, 'networkFailed'), k => translate(lang, k));
+  const failure = (e: unknown) => inlineText(lang, userFacingMessage(e, translate(lang, 'networkFailed'), k => translate(lang, k)));
   const [orgs, setOrgs] = useState<{ id: string; name: string }[]>([]);
   const [org, setOrg] = useState('');
   const [summaries, setSummaries] = useState<Summary[]>([]);
