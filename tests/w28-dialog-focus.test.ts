@@ -118,5 +118,5 @@ test('the Lima launcher opens from the keyboard and gets focus back on close (w2
   // Enter/Space produce a click with detail 0 and no pointer events; pointer taps still open via onPointerUp.
   assert.match(src, /onClick=\{e => \{ if \(e\.detail === 0\) setOpen\(true\); \}\}/);
   assert.match(src, /ref=\{fabRef\}/);
-  assert.match(src, /opener !== document\.body \? opener : fabRef\.current/);
+  assert.match(src, /if \(!opener\?\.isConnected \|\| opener === document\.body\) openerRef\.current = fabRef\.current;/);
 });

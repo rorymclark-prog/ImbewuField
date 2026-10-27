@@ -158,5 +158,6 @@ const copy:UpdateCopy={
   "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Pfula Xivoni xo sungula ni ku rhumela, kutani u hlawula Pulani ya rhekhodo ku kuma dayagiremu leyi pimiweke ni nhlamuselo ya yona.",
   "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Tinotsi ta makete ti hlayisa xihlovo ni siku ra tona. Tipulani to xavisa ti tshama ti hambanile ni ku xavisa loku rhekhodiweke.",
   "Full report headers keep unsourced soil values unknown.": "Tinhloko ta xiviko lexi heleleke ti hlayisa mimpimo ya misava leyi nga riki na xihlovo yi nga tiveki.",
+  "Menus, pop-ups and Lima now work fully from a keyboard and keep your place.": "Timenyu, tiphanele leti humelelaka na Lima sweswi swi tirha hi ku helela hi khiboto naswona swi hlayisa laha a wu ri kona.",
 };
 export default copy;
