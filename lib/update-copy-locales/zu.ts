@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // PDF sample audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Report headings stay with their opening text when you export a PDF.": "Izihloko zombiko zihlala nombhalo wazo wokuqala lapho uthekelisa i-PDF.",
   // Visual audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
   "Map legends have thinner borders and clearer scale marks.": "Izincazelo zezimpawu zemephu sezinemingcele emincane nezimpawu zesilinganiso ezicacile.",
   "Menu → Site design": "Imenyu → Ukuklama indawo",

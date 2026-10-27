@@ -3,7 +3,7 @@ import { inflateSync } from 'node:zlib';
 /** jsPDF now compresses image-rich reports for phones. Assertions must inspect
  * the content streams, not mistake compressed bytes for missing visible text.
  * This helper is for the direct-length streams emitted by our own PDF builder. */
-export function pdfContentStreams(input: ArrayBuffer): string {
+export function pdfTextStreams(input: ArrayBuffer): string[] {
   const source = Buffer.from(input).toString('latin1');
   const streams: string[] = [];
   const headers = /<<([\s\S]*?)>>\s*stream\r?\n/g;
@@ -17,5 +17,9 @@ export function pdfContentStreams(input: ArrayBuffer): string {
     if (dictionary.includes('/Subtype /Image')) continue;
     streams.push((dictionary.includes('/FlateDecode') ? inflateSync(bytes) : bytes).toString('latin1'));
   }
-  return streams.join('\n');
+  return streams;
+}
+
+export function pdfContentStreams(input: ArrayBuffer): string {
+  return pdfTextStreams(input).join('\n');
 }

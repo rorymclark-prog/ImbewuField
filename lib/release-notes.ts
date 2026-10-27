@@ -42,6 +42,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '27 October 2026', sha: 'eb7a69bb6', changes: [
+    'Report headings stay with their opening text when you export a PDF.',
     'Map legends have thinner borders and clearer scale marks.',
     'New map legends use spare margin space for larger, clearer lettering.',
     'Paper base maps show each building you traced, with separate building names.',

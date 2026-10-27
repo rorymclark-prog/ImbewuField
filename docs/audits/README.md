@@ -6,6 +6,8 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Site reports and mapping: start here
 
+Latest PDF sample follow-up: [Keep chapter headings with their opening text — 27 October 2026](2026-10-27/report-pdf-pagination-codex.md). Read its release status on #1131 and issue #35.
+
 Latest published report handoff: [Claude reviewed, merged and checked the two report PRs — 27 October 2026](2026-10-27/site-report-handoff-results-claude.md).
 
 Map release continuation: [Nine-sheet visual audit and current-main integration — 27 October 2026](2026-10-27/map-visual-audit-codex.md). Check its PR/ledger terminal status before treating it as published.
