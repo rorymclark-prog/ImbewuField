@@ -135,6 +135,8 @@ and isiZulu output are unchanged.
 - **Marked as draft everywhere:** `LanguageDraftNote`, Settings, survey, Studies and per-screen notices name isiXhosa.
 - **Not translated:** slides with burned-in text and narration audio (no xh media), the printed invoice (English by
   design), staff training-feedback form (answer language stored as en/zu). Record: `docs/translation-reviews/xhosa-ui-2026-10-23/`.
+- **2026-10-26 — Site reports with published role reports (Codex).** Continued from the verified #1099/#1101 heads. Main now includes #1100, #1121 and wave 23; retain their record-based period comparisons, donor metadata and report typography alongside site potential, complete site plans, annual products and Record plan. Conflicts are audit/progress/release history only. [Dated integration audit](docs/audits/2026-10-26/site-report-role-integration-codex.md); fresh combined checks/preview required. Existing field/language/device limits remain.
+
 ### 26 Oct 2026 — Wave 23: re-capture of 98c8a22, isiZulu Home date regression fixed first
 - **Re-capture:** the wave 22 script on the live build (Codex's #1100 reports on top of wave 22), clock two days on,
   plus click-through captures of the new report workspaces and hand-read contact sheets —
@@ -144,6 +146,10 @@ and isiZulu output are unchanged.
 - **Report previews (follow-up PR):** figures in Newsreader that no longer break mid-number on phones, the isiZulu draft
   note styled in both report layouts, one partner per line on phones. `w23-02` (R1 income rounding) and `w23-06` handed to
   Codex — both sit in files its open #1121 is changing.
+
+- **2026-10-25 — Wave 22 report integration (Codex).** All four preceding report test/rules CI runs passed (5,562 / 5,572 passing tests plus the existing TODO). Main then advanced to `cfb75437c`; reconciled audit/progress/release histories without changing report logic. [Current integration record](docs/audits/2026-10-25/site-report-main-integration-codex.md). Read final PR/issue #35 results for the refreshed heads.
+
+- **2026-10-25 — Report branch integration (Codex).** #1099 became conflicting after waves 19–21 landed. Integrated main `8d2e1a9aa`, preserving both histories/release entries and combining the report-archive heading cleanup with saved purpose/origin labels. [Integration record](docs/audits/2026-10-25/site-report-main-integration-codex.md). Fresh integrated CI/preview supersedes old-source green checks; #1101 follows this prerequisite. No saved data, species, farming figures or PLAN_VERSION edits.
 
 ### 25 Oct 2026 — Wave 22: re-capture of the live build, hydration errors, Lima clearance, weather card
 - **Re-capture:** 41 routes × phone/desktop × light/dark × English/isiZulu, plus 768/1024px, with a checker that now
@@ -158,6 +164,13 @@ and isiZulu output are unchanged.
 - **Lima on desktop (`w22-08`, Rory's call):** the launcher and its panel park bottom-right from `lg` (phones and
   the /farmer map keep bottom-left); the /network legend stops above it. First-view overlap at 1280px: 7 → 3 routes.
 - **Open:** `w22-09` chart labels in `components/crops/*` for Codex.
+
+### 2026-10-24 — Site reports continue the existing production work
+- [CI follow-up](docs/audits/2026-10-24/site-report-ci-followup-codex.md): the full run found one omission in the readability register. The three new farmer-facing components now inherit its strict floor; 174 focused checks pass. Read the fresh full CI result before merging PR #1099.
+- The site survey and report now reuse the crop planner's dated crop, food-forest and animal-product windows, preserving unknown timing and proposed status. Saved reports freeze this evidence; legacy reports stay unchanged.
+- Two primary purposes: **Site potential** and **Complete site plan**, independent of questionnaire length and reading edition. The earlier six Ubhejane PDFs remain dated historical outputs; progress reviews are later follow-ups.
+- **Record plan** reuses the existing scaled report diagram in Preview & export, with PNG/SVG downloads and the existing Saved maps gallery. Prepared examples now state their origin and hide unused generation controls.
+- Start with the [dated audit](docs/audits/2026-10-24/site-report-production-mapping-codex.md), which links prior findings, the six-report catalogue and visual evidence. This changes the picture; `PLAN_VERSION` is unchanged.
 
 ### 24 Oct 2026 — Wave 21: isiZulu re-capture of the wave 20 build, eleven findings fixed directly
 - **Re-capture:** every sample route at 390/1280px, light and dark, in isiZulu with the sample-language key set,

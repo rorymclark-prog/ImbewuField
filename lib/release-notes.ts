@@ -41,6 +41,15 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '26 October 2026', sha: '6069e0207', changes: [
+    'Survey and reports now show crops, food-forest and animal products through the year.',
+    'Choose Site potential or Complete site plan, then the detail you need.',
+    'Record plan adds a scaled map with symbols and a legend. Download or save it without AI.',
+    'Prepared examples are labelled clearly; unused report settings are hidden.',
+  ], tour: [{ title: 'Open site reports', where: 'Menu → Reports', href: '/reports',
+    detail: 'Review the report purpose, annual production plan and saved maps for your site.' },
+    { title: 'Open Design Studio', where: 'Menu → Design Studio', href: '/design',
+      detail: 'Open Preview & export, then Record plan for the scaled diagram and its legend.' }] },
   // The four-language stack reaches main here, so this entry announces it with lines that already
   // carry native drafts in every language (tests/update-notices-localization.test.ts).
   { when: '26 October 2026', sha: '8d84a518', changes: [

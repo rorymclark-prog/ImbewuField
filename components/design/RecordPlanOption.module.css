@@ -1,0 +1,17 @@
+.option { display:flex; align-items:center; gap:10px; width:100%; min-height:64px; text-align:left; padding:12px; border:1px solid var(--border); border-radius:12px; background:var(--bg-1); color:var(--text-primary); font-family:var(--font-sans),sans-serif; }
+.option span { display:grid; gap:4px; }
+.option strong { font-size:15px; }
+.option small { font-size:12px; color:var(--text-secondary); }
+.option svg { flex-shrink:0; color:var(--emerald); }
+.dialog { width:min(850px,calc(100vw - 24px)); max-height:calc(100dvh - 24px); overflow:auto; box-sizing:border-box; padding:20px; border:1px solid var(--border); border-radius:16px; background:var(--bg-1); color:var(--text-primary); font:15px/1.6 var(--font-sans),sans-serif; }
+.dialog::backdrop { background:rgb(0 0 0 / .5); }
+.dialog header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.dialog h2 { margin:0; font:600 clamp(24px,2vw,30px)/1.2 var(--font-display),serif; }
+.dialog button { min-height:44px; min-width:44px; padding:8px 12px; border:1px solid var(--border); border-radius:8px; background:var(--bg-2); color:var(--text-primary); }
+.dialog button:disabled { opacity:.6; }
+.dialog button:focus-visible,.option:focus-visible { outline:2px solid var(--emerald); outline-offset:3px; }
+.actions { display:flex; flex-wrap:wrap; gap:8px; }
+.actions button:first-child { background:var(--color-forest-800); color:var(--on-forest-800); }
+.plan { display:block; width:100%; height:auto; background:white; border:1px solid var(--border); }
+.dialog small { color:var(--text-secondary); }
+@media(max-width:600px) { .dialog { padding:14px; } .actions button { flex:1; } }

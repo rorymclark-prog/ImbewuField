@@ -3,12 +3,16 @@ import { bedsFromDesignCanvas, canvasMetreExtent } from './design-beds-bridge';
 import { ELEMENTS_BY_ID } from './design-elements';
 import { cropByKey, MONTHS_SHORT } from './crop-catalog';
 import { buildOccupancyCalendar } from './crop-export-benchmark';
-import { tasksForPlan, taskMonthsFromNow, type Planting, type PlanBed, type CropPlanState } from './crop-plan';
+import { buildFoodAvailability, tasksForPlan, taskMonthsFromNow, type Planting, type PlanBed, type CropPlanState } from './crop-plan';
 import type { PlanNote } from './crop-autosuggest';
 import type { CropPlanPdfInput } from './crop-export-pdf';
+import { placedTreeGroups } from './perennial-harvest';
+import { placedAnimalGroups, ANIMAL_ENTERPRISES, PRODUCT_LABEL, HOUSING_LABEL, enterprisesForHousing, isFoodProduct } from './animal-enterprises';
+import { calendarProduceByMonth, treeLineText, animalLineText } from './calendar-produce';
 import type { FactCropPlan } from './report-site-facts';
 
 export interface ReportCropSnapshot {
+  annualProduction?: ReportProductionYear;
   siteId: string;
   capturedAt: string;
   planUpdatedAt: number;
@@ -20,7 +24,7 @@ export interface ReportCropSnapshot {
   outlines: Array<{ bedId: string; points: [number, number][] }>;
 }
 
-export function captureReportCropPlan(canvas: DesignCanvasState, plan: CropPlanState, siteId: string, now = new Date()): ReportCropSnapshot {
+export function captureReportCropPlan(canvas: DesignCanvasState, plan: CropPlanState, siteId: string, now = new Date(), production: ReportProductionContext = {}): ReportCropSnapshot {
   const beds = bedsFromDesignCanvas(canvas).map(b => ({ ...b, kind: b.kind ?? 'bed' as const }));
   const ids = new Set(beds.map(b => b.id));
   const { wMetres, hMetres } = canvasMetreExtent(canvas);
@@ -34,7 +38,8 @@ export function captureReportCropPlan(canvas: DesignCanvasState, plan: CropPlanS
     outlines.push({ bedId: item.id, points: local.map(([x, y]) => [item.x * wMetres + x * Math.cos(a) - y * Math.sin(a), item.y * hMetres + x * Math.sin(a) + y * Math.cos(a)]) });
   }
   for (const zone of canvas.zones.filter(z => ids.has(z.id))) outlines.push({ bedId: zone.id, points: zone.points.map(([x, y]) => [x * wMetres, y * hMetres]) });
-  return { siteId, capturedAt: now.toISOString(), planUpdatedAt: plan.updatedAt, planNotes: plan.planNotes?.filter(n => n.bedIds?.length ? n.bedIds.every(id => ids.has(id)) : plan.plantings.every(p => ids.has(p.bedId))).map(n => ({ ...n, bedIds: n.bedIds ? [...n.bedIds] : undefined })), planNotesAt: plan.planNotesAt, beds, plantings: plan.plantings.filter(p => ids.has(p.bedId)).map(p => ({ ...p })), outlines };
+  const plantings = plan.plantings.filter(p => ids.has(p.bedId)).map(p => ({ ...p }));
+  return { annualProduction: reportProductionYear({ capturedAt: now.toISOString(), beds, plantings }, canvas.items, production), siteId, capturedAt: now.toISOString(), planUpdatedAt: plan.updatedAt, planNotes: plan.planNotes?.filter(n => n.bedIds?.length ? n.bedIds.every(id => ids.has(id)) : plan.plantings.every(p => ids.has(p.bedId))).map(n => ({ ...n, bedIds: n.bedIds ? [...n.bedIds] : undefined })), planNotesAt: plan.planNotesAt, beds, plantings, outlines };
 }
 
 /** A malformed new attachment must not discard a readable legacy report. */
@@ -49,7 +54,7 @@ export function normaliseReportCropSnapshot(value: unknown): ReportCropSnapshot 
   if (ids.size !== v.beds.length) return;
   if (!v.plantings.every(p => p && str(p.id) && ids.has(p.bedId) && str(p.cropKey) && Number.isInteger(p.sowMonth) && p.sowMonth >= 1 && p.sowMonth <= 12 && (p.areaFraction === undefined || Number.isFinite(p.areaFraction) && p.areaFraction > 0 && p.areaFraction <= 1) && (p.variety === undefined || typeof p.variety === 'string') && [p.once, p.inNursery].every(d => d === undefined || typeof d === 'string' && /^\d{4}-(0[1-9]|1[0-2])$/.test(d)))) return;
   if (!v.outlines.every(o => o && ids.has(o.bedId) && Array.isArray(o.points) && o.points.length >= 3 && o.points.length <= 10000 && o.points.every(p => Array.isArray(p) && p.length === 2 && p.every(n => Number.isFinite(n) && Math.abs(n) < 1e8)))) return;
-  return { siteId: v.siteId, capturedAt: v.capturedAt, planUpdatedAt: v.planUpdatedAt, planNotes: Array.isArray(v.planNotes) ? v.planNotes.filter(n => n && ['warning', 'choice', 'gap', 'basis'].includes(n.kind) && typeof n.text === 'string').slice(0, 100).map(n => ({ kind: n.kind, text: n.text.slice(0, 4000), bedIds: Array.isArray(n.bedIds) ? n.bedIds.filter(id => ids.has(id)) : undefined })) : undefined, planNotesAt: Number.isFinite(v.planNotesAt) ? v.planNotesAt : undefined, beds: v.beds.map(b => ({ id: b.id, label: b.label, areaM2: b.areaM2, kind: b.kind === 'plot' ? 'plot' : 'bed', ...(Number.isFinite(b.minDimM) ? { minDimM: b.minDimM } : {}) })), plantings: v.plantings.map(p => ({ id: p.id, bedId: p.bedId, cropKey: p.cropKey, sowMonth: p.sowMonth, areaFraction: p.areaFraction, existing: p.existing === true, once: p.once, inNursery: p.inNursery, variety: p.variety?.trim().slice(0, 120) || undefined })), outlines: v.outlines.map(o => ({ bedId: o.bedId, points: o.points.map(p => [...p] as [number, number]) })) };
+  return { annualProduction: normaliseReportProductionYear(v.annualProduction), siteId: v.siteId, capturedAt: v.capturedAt, planUpdatedAt: v.planUpdatedAt, planNotes: Array.isArray(v.planNotes) ? v.planNotes.filter(n => n && ['warning', 'choice', 'gap', 'basis'].includes(n.kind) && typeof n.text === 'string').slice(0, 100).map(n => ({ kind: n.kind, text: n.text.slice(0, 4000), bedIds: Array.isArray(n.bedIds) ? n.bedIds.filter(id => ids.has(id)) : undefined })) : undefined, planNotesAt: Number.isFinite(v.planNotesAt) ? v.planNotesAt : undefined, beds: v.beds.map(b => ({ id: b.id, label: b.label, areaM2: b.areaM2, kind: b.kind === 'plot' ? 'plot' : 'bed', ...(Number.isFinite(b.minDimM) ? { minDimM: b.minDimM } : {}) })), plantings: v.plantings.map(p => ({ id: p.id, bedId: p.bedId, cropKey: p.cropKey, sowMonth: p.sowMonth, areaFraction: p.areaFraction, existing: p.existing === true, once: p.once, inNursery: p.inNursery, variety: p.variety?.trim().slice(0, 120) || undefined })), outlines: v.outlines.map(o => ({ bedId: o.bedId, points: o.points.map(p => [...p] as [number, number]) })) };
 }
 
 export function reportCropMonths(s: ReportCropSnapshot) {
@@ -136,4 +141,72 @@ export function reportSowingCalendar(s: ReportCropSnapshot): { months: string[];
   }
   const unscheduled = [...new Set(s.plantings.filter(p => !grouped.has(p.cropKey)).map(p => cropByKey(p.cropKey)?.name ?? p.cropKey))];
   return { months: reportCropMonths(s), rows: [...grouped.values()], unscheduled };
+}
+
+export interface ReportProductionRow {
+  id: string;
+  kind: 'crop' | 'food-forest' | 'animal';
+  name: string;
+  product: string;
+  note: string;
+  /** Offsets in this snapshot's dated year. These are planning windows, never recorded harvests. */
+  months: number[];
+  reference: boolean;
+}
+export interface ReportProductionYear { months: string[]; rows: ReportProductionRow[] }
+export interface ReportProductionContext {
+  treeSeasons?: import('./perennial-harvest').TreeSeasonChoices;
+  animalSeasons?: import('./animal-enterprises').AnimalSeasonChoices;
+  animalChoices?: Partial<Record<import('./animal-enterprises').HousingKind, string>>;
+  planning?: readonly import('./production-product-guidance').PlanningTreeSeason[];
+}
+
+/** Read the crop calendar's own food/product builders; no second harvest calendar or yield formula. */
+export function reportProductionYear(s: Pick<ReportCropSnapshot, 'capturedAt' | 'beds' | 'plantings'>, items: readonly import('./perennial-harvest').PlacedPlant[], context: ReportProductionContext = {}): ReportProductionYear {
+  const now = new Date(s.capturedAt);
+  const dates = Array.from({ length: 12 }, (_, i) => new Date(now.getFullYear(), now.getMonth() + i, 1));
+  const months = dates.map(d => d.getMonth() + 1);
+  const trees = placedTreeGroups(items), animals = placedAnimalGroups(items);
+  const produce = calendarProduceByMonth(trees, animals, context.animalChoices ?? {}, months, context.treeSeasons, context.animalSeasons, context.planning, dates.map(d => ({ year: d.getFullYear(), month: d.getMonth() + 1 })));
+  const rows = new Map<string, ReportProductionRow>();
+  const add = (row: Omit<ReportProductionRow, 'months'>, offset?: number) => {
+    const existing = rows.get(row.id) ?? { ...row, months: [] };
+    if (offset !== undefined && !existing.months.includes(offset)) existing.months.push(offset);
+    rows.set(row.id, existing);
+  };
+  buildFoodAvailability(s.plantings, s.beds, now.getMonth() + 1, 12).forEach((slot, i) => slot.forEach(food => add({ id: `crop:${food.cropKey}:${food.status}`, kind: 'crop', name: food.name, product: food.status === 'stored' ? 'Stored crop' : 'Fresh crop', note: food.status === 'stored' ? 'Storage reference under the crop planner’s stated conditions; stock has not been measured.' : 'Expected picking from the saved sowing plan; not a harvest record.', reference: false }, i)));
+  produce.forEach((month, i) => {
+    month.trees.forEach(tree => add({ id: `tree:${tree.speciesId}`, kind: 'food-forest', name: tree.name, product: tree.product, note: treeLineText(tree), reference: !!tree.planning }, i));
+    month.animals.forEach(animal => add({ id: `animal:${animal.enterpriseId}`, kind: 'animal', name: animal.name, product: PRODUCT_LABEL[animal.product], note: animalLineText(animal) + '. Housing is not an animal count or evidence of output.', reference: false }, i));
+  });
+  for (const tree of trees) {
+    const id = `tree:${tree.harvest.speciesId}`;
+    if (!rows.has(id)) add({ id, kind: 'food-forest', name: tree.harvest.name, product: tree.harvest.product, note: `${tree.existing} existing and ${tree.proposed} proposed plants on the map. No dated picking window is established for this year; check planting age, local season and suitability.`, reference: false });
+  }
+  for (const animal of animals) {
+    const choice = context.animalChoices?.[animal.housing];
+    const enterprise = choice && enterprisesForHousing(animal.housing).some(e => e.enterpriseId === choice) ? ANIMAL_ENTERPRISES[choice] : undefined;
+    if (!enterprise) {
+      add({ id: `housing:${animal.housing}`, kind: 'animal', name: HOUSING_LABEL[animal.housing], product: 'Product not selected', note: `${animal.existing} existing and ${animal.proposed} proposed housing units. Select an enterprise and record animal numbers and local product months in the crop plan.`, reference: false });
+      continue;
+    }
+    const id = `animal:${enterprise.enterpriseId}`;
+    if (!rows.has(id)) add({ id, kind: 'animal', name: enterprise.name, product: PRODUCT_LABEL[enterprise.product], note: `${animal.existing} existing and ${animal.proposed} proposed housing units. Product timing is not established. ${isFoodProduct(enterprise.product) ? '' : 'This is a non-food product. '}Housing does not establish animal numbers or output.`, reference: false });
+  }
+  return { months: dates.map(d => d.toLocaleDateString('en-ZA', { month: 'short', year: 'numeric' })), rows: [...rows.values()] };
+}
+
+export function normaliseReportProductionYear(value: unknown): ReportProductionYear | undefined {
+  if (!value || typeof value !== 'object') return;
+  const v = value as ReportProductionYear;
+  if (!Array.isArray(v.months) || v.months.length !== 12 || !v.months.every(m => typeof m === 'string' && m.length <= 40)
+    || !Array.isArray(v.rows) || v.rows.length > 1000) return;
+  const rows: ReportProductionRow[] = [];
+  for (const r of v.rows) {
+    if (!r || !['crop', 'food-forest', 'animal'].includes(r.kind) || ![r.id, r.name, r.product, r.note].every(t => typeof t === 'string' && t.length <= 3000)
+      || typeof r.reference !== 'boolean' || !Array.isArray(r.months) || r.months.length > 12 || !r.months.every(m => Number.isInteger(m) && m >= 0 && m < 12)) return;
+    rows.push({ id: r.id, kind: r.kind, name: r.name, product: r.product, note: r.note, reference: r.reference, months: [...new Set(r.months)] });
+  }
+  if (new Set(rows.map(r => r.id)).size !== rows.length) return;
+  return { months: [...v.months], rows };
 }

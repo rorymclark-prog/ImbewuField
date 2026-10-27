@@ -722,6 +722,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       placeId={activePlaceId}
       coords={coords}
       annualRainfallMm={data?.rainfall.annual}
+      locationData={data ?? undefined}
       onSaved={() => { setSurveySheetOpen(false); if (data) openPhotoOrReport(); }}
       onClose={() => setSurveySheetOpen(false)}
     />

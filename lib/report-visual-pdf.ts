@@ -9,7 +9,7 @@ export type VisualImage = { image: string; caption: string };
 export type ChapterImage = { image:string; title:string; caption:string; maxHeight?:number };
 export type VisualPdfAssets = { charts: Record<string, string>; photos: VisualImage[]; plants?: VisualImage[]; chapters?:Record<string,ChapterImage[]> };
 
-async function svgImage(svg: string): Promise<string> {
+export async function svgImage(svg: string): Promise<string> {
   const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
   try {
     const img = new Image();

@@ -6,11 +6,13 @@ import { normaliseReportMapSelection, type ReportMapSelection } from './report-m
 import type { SavedPlace } from './saved-places';
 import { designSiteIdFromLocation } from './design-studio';
 import { normaliseReportSiteFacts, type ReportSiteFacts } from './report-site-facts';
+import { normaliseSiteReportPurpose, type SiteReportPurpose } from './site-survey';
 
 // A permaculture report saved locally so the farmer can re-read it without
 // regenerating (each generation is an AI call). We store the markdown plus a
 // snapshot of the location data so the charts/header re-render exactly.
 export interface ReportGenerationSettings {
+  purpose?: SiteReportPurpose;
   tone: 'simple' | 'professional';
   length: 'one-pager' | 'standard' | 'comprehensive';
   language: string;
@@ -22,6 +24,13 @@ export interface ReportGenerationSettings {
 }
 
 export type ReportCoverChoice = 'auto' | 'map' | 'photo' | 'none';
+export type ReportOrigin = 'prepared-example' | 'generated';
+
+export function reportOriginLabel(origin: ReportOrigin | undefined, language = 'en'): string {
+  if (origin === 'prepared-example') return language === 'zu' ? 'Isibonelo esilungiselelwe' : 'Prepared example';
+  if (origin === 'generated') return language === 'zu' ? 'Umbiko okhiqiziwe' : 'Generated report';
+  return language === 'zu' ? 'Indlela yokukhiqiza ayibhalwanga' : 'Origin not recorded';
+}
 
 export interface SavedReport {
   id: string;
@@ -29,6 +38,8 @@ export interface SavedReport {
   savedAt: string;       // ISO date
   lang: string;
   report: string;        // the generated markdown
+  /** Current sample mode cannot establish how a historical report was made. */
+  origin?: ReportOrigin;
   location: LocationData;
   siteData?: SiteData;
   waterData?: WaterData;
@@ -59,6 +70,7 @@ export function normaliseReportSettings(value: unknown): ReportGenerationSetting
     || !s.sections.every(v => typeof v === 'string' && v.trim())
     || typeof s.generatedAt !== 'string' || !Number.isFinite(Date.parse(s.generatedAt))) return undefined;
   return {
+    purpose: normaliseSiteReportPurpose(s.purpose),
     tone: s.tone as ReportGenerationSettings['tone'], length: s.length as ReportGenerationSettings['length'],
     language: s.language, bilingual: s.bilingual, sections: [...new Set(s.sections as string[])], generatedAt: s.generatedAt,
     ...(typeof s.provider === 'string' && s.provider.trim() ? { provider: s.provider } : {}),
@@ -96,10 +108,11 @@ function normaliseReport(value: unknown): SavedReport | null {
   };
   if (isValidSiteData(row.siteData)) report.siteData = row.siteData;
   if (isValidWaterData(row.waterData)) report.waterData = row.waterData;
+  if (row.origin === 'prepared-example' || row.origin === 'generated') report.origin = row.origin;
   const facts = normaliseReportSiteFacts(row.facts);
   if (facts) report.facts = facts;
   const settings = normaliseReportSettings(row.settings);
-  if (settings) report.settings = settings;
+  if (settings && report.origin !== 'prepared-example') report.settings = settings;
   if (['auto', 'map', 'photo', 'none'].includes(row.coverChoice as string)) report.coverChoice = row.coverChoice as ReportCoverChoice;
   const maps = normaliseReportMapSelection(row.mapSelection, designSiteIdFromLocation(report.location));
   if (maps) report.mapSelection = maps;

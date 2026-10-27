@@ -139,5 +139,15 @@ const copy:UpdateCopy={
   "Visit, training and programme reports compare recorded delivery across periods.": "Ditlaleho tsa ketelo, thupelo le lenaneo di bapisa tse entsweng tse rekotilweng mahareng a dinako.",
   "MEL reports compare dated readings and include agreed donor indicator details.": "Ditlaleho tsa MEL di bapisa dipalo tse nang le matsatsi, mme di kenyelletsa dintlha tsa matshwao a bafani tse dumellanweng.",
   "Donor evidence, missing records and current snapshots stay clear in every PDF.": "Bopaki ba bafani, direkoto tse sieo le dinepe tsa jwale di sala di hlakile ho PDF e nngwe le e nngwe.",
+  "Survey and reports now show crops, food-forest and animal products through the year.": "Phuputso le ditlaleho jwale di bontsha dijalo, dihlahiswa tsa moru wa dijo le tsa diphoofolo selemo kaofela.",
+  "Choose Site potential or Complete site plan, then the detail you need.": "Kgetha Bokgoni ba sebaka kapa Moralo o feletseng wa sebaka, ebe o kgetha dintlha tseo o di hlokang.",
+  "Record plan adds a scaled map with symbols and a legend. Download or save it without AI.": "Moralo wa rekoto o eketsa mmapa o lekantsweng o nang le matshwao le tlhaloso ya ona. O jarolle kapa o o boloke ntle le AI.",
+  "Prepared examples are labelled clearly; unused report settings are hidden.": "Mehlala e lokisitsweng e tshwailwe ka ho hlaka; ditlhophiso tsa tlaleho tse sa sebediswang di patilwe.",
+  "Open site reports": "Bula ditlaleho tsa sebaka",
+  "Menu → Reports": "Menyu → Ditlaleho",
+  "Review the report purpose, annual production plan and saved maps for your site.": "Hlahloba sepheo sa tlaleho, moralo wa tlhahiso wa selemo le dimmapa tse bolokilweng tsa sebaka sa hao.",
+  "Open Design Studio": "Bula Sebaka sa ho rala",
+  "Menu → Design Studio": "Menyu → Sebaka sa ho rala",
+  "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Bula Ponelopele le ho romela, ebe o kgetha Moralo wa rekoto bakeng sa setshwantsho se lekantsweng le tlhaloso ya sona.",
 };
 export default copy;

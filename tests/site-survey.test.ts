@@ -539,3 +539,21 @@ test('a damaged draft cannot crash recovery and stays available for deliberate d
     assert.equal(clearSurveyDraft(scope, survey().siteId, result.token), true);
   }
 });
+
+test('the two site-report purposes persist in saved answers and recovery without turning a plan into observations', () => {
+  installBrowser();
+  for (const reportPurpose of ['potential', 'complete'] as const) {
+    const answers = survey({ reportPurpose, reportedProduction: [] });
+    const saved = saveSurvey(answers)!;
+    assert.equal(loadSurvey(saved.siteId)?.reportPurpose, reportPurpose);
+    assert.match(surveyToPrompt(saved, 800), /Questionnaire length is independent/);
+    const draft = draftFor(answers), scope = surveyDraftScope(answers.siteId);
+    assert.ok(writeSurveyDraft(scope, draft, readSurveyDraft(scope).token));
+    assert.equal(readSurveyDraft(scope).draft?.answers.reportPurpose, reportPurpose);
+    assert.deepEqual(saved.reportedProduction, answers.reportedProduction);
+  }
+  const legacy = saveSurvey(survey())!;
+  assert.equal(legacy.reportPurpose, undefined);
+  const corrupt = saveSurvey(survey({ reportPurpose: 'progress' as SiteSurvey['reportPurpose'] }))!;
+  assert.equal(corrupt.reportPurpose, undefined, 'legacy stage labels must not be guessed into one of the two new purposes');
+});

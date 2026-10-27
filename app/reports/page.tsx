@@ -14,7 +14,8 @@ import { isSampleMode } from '@/lib/sample-mode';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { canSeeWorkspaceLink } from '@/lib/role-navigation';
 import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
-import { loadReports, reportSiteChoices, type SavedReport } from '@/lib/saved-reports';
+import { loadReports, reportSiteChoices, reportOriginLabel, type SavedReport } from '@/lib/saved-reports';
+import { siteReportPurposeLabel } from '@/lib/site-survey';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import styles from '@/components/MelDashboard.module.css';
 import { APP_LANGS, useLanguage } from '@/lib/i18n';
@@ -105,7 +106,7 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
         <Link href={href} aria-label={t('reportsOpenWorkspaceForSite').replace('{site}', place.name || t('reportsSavedSiteFallback'))} style={{display:'inline-flex',minHeight:44,alignItems:'center',gap:8,fontWeight:600}}><FileText size={18}/>{t('reportsOpenGenerateReport')}<ArrowRight size={16}/></Link>
         {latest&&<p><button disabled={opening} onClick={()=>void openSaved(latest)}>{opening ? t('reportsOpening') : t('reportsReadLatest')}</button></p>}
       </article>; })}</div></>}
-      {view==='reports'&&<><p>{t('reportsEarlierReportsDescription')}</p>{!reports.length&&<p>{t('reportsNoSavedReports')}</p>}{choices.filter(c=>c.reports.length).map(choice=><section className={styles.card} style={{marginBottom:16}} key={choice.siteId}><h3>{choice.place?.name??t('reportsUnlinkedSiteHeading')}</h3>{!choice.place&&<p>{t('reportsRemovedPinNote')}</p>}{choice.reports.map(report=><p key={report.id}><button disabled={opening} onClick={()=>void openSaved(report)}>{report.name} · {stampLabel(report.savedAt)}</button></p>)}</section>)}</>}
+      {view==='reports'&&<><p>{t('reportsEarlierReportsDescription')}</p>{!reports.length&&<p>{t('reportsNoSavedReports')}</p>}{choices.filter(c=>c.reports.length).map(choice=><section className={styles.card} style={{marginBottom:16}} key={choice.siteId}><h3>{choice.place?.name??t('reportsUnlinkedSiteHeading')}</h3>{!choice.place&&<p>{t('reportsRemovedPinNote')}</p>}{choice.reports.map(report=><p key={report.id}><button disabled={opening} onClick={()=>void openSaved(report)}>{report.name} · {report.settings?.purpose ? `${siteReportPurposeLabel(report.settings.purpose, lang)} · ` : ''}{reportOriginLabel(report.origin, lang)} · {stampLabel(report.savedAt)}</button></p>)}</section>)}</>}
     </>}
   </div></main>
     <TabBar hideAtDesktop />

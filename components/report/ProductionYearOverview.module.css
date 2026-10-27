@@ -1,0 +1,19 @@
+.section { margin:24px 0; color:var(--text-primary); font:14px/1.55 var(--font-sans),sans-serif; }
+.section h3 { font:600 clamp(21px,2vw,25px)/1.25 var(--font-display),serif; margin:0 0 12px; }
+.section p { margin:10px 0; }
+.key { padding:12px; border:1px solid var(--border); border-radius:10px; background:var(--bg-2); }
+.table { overflow:auto; border:1px solid var(--border); border-radius:10px; max-height:650px; }
+.table:focus-visible { outline:2px solid var(--emerald); outline-offset:3px; }
+.table table { width:100%; min-width:1000px; border-collapse:collapse; font-size:12px; }
+.table th,.table td { padding:9px 6px; border:1px solid var(--border); vertical-align:middle; text-align:center; }
+.table thead th { position:sticky; top:0; background:var(--bg-2); z-index:1; }
+.table thead th:first-child { left:0; z-index:3; }
+.table tbody th { position:sticky; left:0; z-index:2; text-align:left; width:230px; min-width:210px; background:var(--bg-1); }
+.table small { display:block; font-size:12px; font-weight:400; color:var(--text-secondary); }
+.product { display:flex; gap:8px; align-items:center; margin-bottom:5px; }
+.product img { flex-shrink:0; object-fit:contain; }
+.planned,.reference { display:inline-block; min-width:22px; border-radius:4px; padding:5px 2px; color:var(--text-primary); background:color-mix(in srgb,var(--emerald) 20%,var(--bg-1)); }
+.reference { background:var(--bg-1); border:1px dashed var(--text-secondary); }
+@media print { .table { overflow:visible; max-height:none; } .table table { min-width:0; font-size:9px; } .table tbody th { min-width:0; width:25%; } .table tr { break-inside:avoid; } }
+
+@media (max-width:600px) { .table tbody th { min-width:150px; width:150px; } .table table { min-width:920px; } }

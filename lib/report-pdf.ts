@@ -181,6 +181,7 @@ export interface ReportPdfSheet {
 }
 
 export interface ReportPdfMeta {
+  reportLabel?: string;
   cropPlan?: import('./report-site-facts').FactCropPlan;
   cropMapMonth?: number;
   includeCropWorkingPlan?: boolean;
@@ -459,7 +460,7 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
     doc.text('ImbewuField', M, y);
     y += 20;
     doc.setFont('helvetica', 'normal'); doc.setFontSize(12); setInk(INK.green);
-    doc.text('Permaculture Site Analysis Report', M, y);
+    doc.text(pdfSafe(meta.reportLabel ?? 'Permaculture Site Analysis Report'), M, y);
     y += 18;
     doc.setFontSize(9); setInk(INK.muted);
     doc.text(
