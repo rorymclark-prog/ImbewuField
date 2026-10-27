@@ -70,3 +70,33 @@ and plain-error changes are retained. The map painters and the recorded nine-map
 PDF are unchanged by the integration. The combined revision has its own ordered
 checks and exact-head CI gate; the earlier passing result is historical evidence,
 not a substitute. Final results are recorded on #1131 and issue #35.
+
+
+## Current-main release continuation — 27 October
+
+The combined head `b0ef2ea72` completed both test/rules runs successfully. Before
+release, main advanced again to `9d42fedbe` (#1136, keyboard focus in overlays),
+so the open PR became conflicting. The recovery checkout integrates that main
+at `eb7a69bb6`. The two manual conflicts are the audit index and release history;
+both sides are retained. Four native update dictionaries merge additively, and
+the canonical test command retains every argument from both prior heads.
+
+The six checked drawing modules (`DesignGlossy`, reference presentation, shared
+legend layout, render recipe, cartographic symbols and glossy filters) are
+byte-identical to `b0ef2ea72`. The recorded nine-sheet rendering is still the
+rendering source under review; keyboard behaviour has its own current-main tests.
+No new map painter or geometry change was made for this integration.
+
+Rory's downloaded `codex-handoff-results-2026-10-27.md` was read and compared with
+the shared handoff record. Report PRs #1099 and #1101 are merged. Record plan is
+already present in Design Studio's Preview & export, with PNG/SVG download and
+Add to maps; rebuilding that option would repeat completed work. The updated
+Ubhejane sample is being prepared using the existing public demonstration mode,
+separate from real field evidence and the preserved original six reports.
+
+The first release-note drift check identified the integration and new keyboard
+commit after the earlier stamp. The map entry now covers `eb7a69bb6`, retaining
+all existing farmer-facing descriptions and four-language draft strings. Ordered
+checks and fresh exact-head CI certify this combined source; older green heads
+are historical evidence only. Final totals and production verification belong in
+the PR/issue handover. PLAN_VERSION and recipe r8 are unchanged.

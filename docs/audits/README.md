@@ -6,6 +6,10 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Site reports and mapping: start here
 
+Latest published report handoff: [Claude reviewed, merged and checked the two report PRs — 27 October 2026](2026-10-27/site-report-handoff-results-claude.md).
+
+Map release continuation: [Nine-sheet visual audit and current-main integration — 27 October 2026](2026-10-27/map-visual-audit-codex.md). Check its PR/ledger terminal status before treating it as published.
+
 Latest integration: [Site reports with the published role reports and wave 23 — 26 October 2026](2026-10-26/site-report-role-integration-codex.md).
 
 Previous integration: [Report branch updated with current main — 25 October 2026](2026-10-25/site-report-main-integration-codex.md).
