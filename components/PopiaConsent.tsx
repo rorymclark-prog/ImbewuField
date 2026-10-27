@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ShieldCheck, Check, Utensils, TrendingUp, Recycle, ArrowRight } from 'lucide-react';
+import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { translate, useLanguage } from '@/lib/i18n';
 import {
   activeAccountLocalStorageKey,
@@ -79,6 +80,9 @@ export default function PopiaConsent() {
   const [storeData, setStoreData] = useState(true);    // required — cannot proceed without
   const [shareNgo, setShareNgo] = useState(false);     // optional — privacy-preserving default: off until the farmer opts in
   const [goal, setGoal] = useState<Goal | null>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  // A consent gate: focus goes in and stays in; there is deliberately no Escape-to-dismiss.
+  useDialogFocus(ready && !done, dialogRef);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -128,6 +132,7 @@ export default function PopiaConsent() {
       style={{ background: 'rgba(32,25,15,0.40)', backdropFilter: 'blur(6px)' }}
     >
       <div
+        ref={dialogRef}
         role="dialog"
         aria-modal="true"
         aria-label={t(step === 1 ? 'popiaTitle' : 'popiaGoalTitle')}

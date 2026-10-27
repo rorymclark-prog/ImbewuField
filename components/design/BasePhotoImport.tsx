@@ -17,6 +17,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Camera, Check, GripVertical, Loader2, MapPin, RotateCcw, RotateCw, Undo2, X } from 'lucide-react';
+import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { DEFAULT_IMG_W, DEFAULT_IMG_H, BASE_PHOTO_EXPORT_SCALE } from '@/lib/design-canvas';
 import { deviceBakeScale, phoneGradeDevice } from '@/lib/device-grade';
 import { drainCanvasToDataUrl } from '@/lib/release-canvas';
@@ -25,6 +26,7 @@ import { uploadPhoto } from '@/lib/db/queries';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
 import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
+import { useEscapeClose } from '@/lib/use-escape-close';
 
 const PAPER = '#FFFEFA';
 const GOLD = '#F7C97E';
@@ -99,6 +101,9 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
   const [busy, setBusy] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  useDialogFocus(true, dialogRef);
+  useEscapeClose(true, onClose);
 
   // Adjusting starts from the CURRENT bake, not from a file picker. Guarded so a file the
   // farmer has already picked is never clobbered by a slow-arriving prop.
@@ -384,6 +389,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
 
   return (
     <div
+      ref={dialogRef}
       role="dialog"
       aria-modal="true"
       style={{

@@ -158,10 +158,15 @@ const copy:UpdateCopy={
   "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Vulani U sedza phanḓa na u rumela, nga murahu ni nange Pulane ya rekhodo u wana tshifanyiso tsho eletshedzwaho na ṱhaluso yatsho.",
   "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Notsi dza makete dzi vhulunga tshisima na ḓuvha zwadzo. Pulane dza u rengisa dzi dzula dzo khethekana na thengiso yo rekhodiwaho.",
   "Full report headers keep unsourced soil values unknown.": "Ṱhoho dza muvhigo wo fhelelaho dzi vhulunga zwiṱhanganyelo zwa mavu zwi si na tshisima zwi sa ḓivhei.",
-  "AI glossy maps have a personal Settings switch. Exact maps and saved sheets remain available when AI is off.": "Mepe yo nakiswaho nga AI i na switshi yaṋu kha Nzudzanyo. Mepe yo teaho na masiaṱari o vhulungwaho zwi dzula zwi hone musi AI yo dzimwa.",
-  "The platform owner controls AI access for each organisation. Approved organisations can delegate access by role or person.": "Muṋe wa pulatifomo u langa u swikelela AI ha dzangano ḽiṅwe na ḽiṅwe. Madzangano o tendelwaho a nga ṋea pfanelo ya u swikelela u ya nga mushumo kana muthu.",
   "AI glossy map settings": "Nzudzanyo dza mepe yo nakiswaho nga AI",
   "Settings → AI glossy maps": "Nzudzanyo → Mepe yo nakiswaho nga AI",
   "Open Settings to control your own AI maps. Platform master accounts can also manage each organisation.": "Vhulani Nzudzanyo uri ni lange mepe yaṋu ya AI. Akhaunthu khulwane dza pulatifomo dzi nga dovha dza langa dzangano ḽiṅwe na ḽiṅwe.",
+  "Menus, pop-ups and Lima now work fully from a keyboard and keep your place.": "Dzimenyu, dziphanele dzine dza bvelela na Lima zwino zwi shuma nga vhuḓalo nga khibodo nahone zwi vhulunga he na vha ni hone.",
+  "Turn AI glossy maps on or off in Settings. Saved maps stay available.": "Vhulani kana ni dzime mepe yo nakiswaho nga AI kha Nzudzanyo. Mepe yo vhulungwaho i dzula i hone.",
+  "The platform owner can enable or suspend AI maps for each organisation.": "Muṋe wa pulatifomo a nga tendela kana a imisa mepe ya AI ya dzangano ḽiṅwe na ḽiṅwe.",
+  "Approved organisations can give AI map access by role or person.": "Madzangano o tendelwaho a nga ṋea pfanelo ya u swikelela mepe ya AI u ya nga mushumo kana muthu.",
+  "Try an AI glossy map": "Lingani mepe yo nakiswaho nga AI",
+  "Design Studio → Glossy": "Studio tsha u pulana → Mepe yo nakiswaho",
+  "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Vhulani bulasi yo vhulungwaho, khethani siaṱari ni kone u khetha AI Polished. U bveledza mepe iṅwe na iṅwe zwi a badelwa.",
 };
 export default copy;

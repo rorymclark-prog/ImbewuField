@@ -158,10 +158,15 @@ const copy:UpdateCopy={
   "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Pfula Xivoni xo sungula ni ku rhumela, kutani u hlawula Pulani ya rhekhodo ku kuma dayagiremu leyi pimiweke ni nhlamuselo ya yona.",
   "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Tinotsi ta makete ti hlayisa xihlovo ni siku ra tona. Tipulani to xavisa ti tshama ti hambanile ni ku xavisa loku rhekhodiweke.",
   "Full report headers keep unsourced soil values unknown.": "Tinhloko ta xiviko lexi heleleke ti hlayisa mimpimo ya misava leyi nga riki na xihlovo yi nga tiveki.",
-  "AI glossy maps have a personal Settings switch. Exact maps and saved sheets remain available when AI is off.": "Mimepe ya AI leyi sasekisiweke yi na swichi ya wena eka Swiyimiso. Mimepe leyi kongomeke ni maphepha lama hlayisiweke swi ya mahlweni swi kumeka loko AI yi timiwile.",
-  "The platform owner controls AI access for each organisation. Approved organisations can delegate access by role or person.": "N’winyi wa pulatifomo u lawula mfikelelo wa AI eka nhlangano wun’wana ni wun’wana. Minhlangano leyi pfumeleriweke yi nga nyika mfikelelo hi ku ya hi xiavelo kumbe munhu.",
   "AI glossy map settings": "Swiyimiso swa mimepe ya AI leyi sasekisiweke",
   "Settings → AI glossy maps": "Swiyimiso → Mimepe ya AI leyi sasekisiweke",
   "Open Settings to control your own AI maps. Platform master accounts can also manage each organisation.": "Pfula Swiyimiso ku lawula mimepe ya wena ya AI. Tiakhawunti ta vulawuri bya pulatifomo ti nga tlhela ti lawula nhlangano wun’wana ni wun’wana.",
+  "Menus, pop-ups and Lima now work fully from a keyboard and keep your place.": "Timenyu, tiphanele leti humelelaka na Lima sweswi swi tirha hi ku helela hi khiboto naswona swi hlayisa laha a wu ri kona.",
+  "Turn AI glossy maps on or off in Settings. Saved maps stay available.": "Pfula kumbe u tima mimepe ya AI leyi sasekisiweke eka Swiyimiso. Mimepe leyi hlayisiweke ya ha kumeka.",
+  "The platform owner can enable or suspend AI maps for each organisation.": "N’winyi wa pulatifomo a nga pfumelela kumbe ku yimisa mimepe ya AI eka nhlangano wun’wana ni wun’wana.",
+  "Approved organisations can give AI map access by role or person.": "Minhlangano leyi pfumeleriweke yi nga nyika mfikelelo wa mimepe ya AI hi ku ya hi xiavelo kumbe munhu.",
+  "Try an AI glossy map": "Ringeta mepe wa AI lowu sasekisiweke",
+  "Design Studio → Glossy": "Xitudiyo xo pulana → Mepe lowu sasekisiweke",
+  "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Pfula purasi leri hlayisiweke, hlawula phepha kutani u hlawula AI Polished. Mepe wun’wana ni wun’wana lowu endliwaka wa hakeriwa.",
 };
 export default copy;

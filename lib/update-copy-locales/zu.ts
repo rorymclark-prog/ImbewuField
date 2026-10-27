@@ -158,10 +158,15 @@ const copy:UpdateCopy={
   "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Vula Ukubuka kuqala nokuthumela, bese ukhetha Uhlelo lwerekhodi ukuze uthole umdwebo olinganisiwe nencazelo yawo.",
   "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Amanothi emakethe agcina umthombo wawo nosuku. Izinhlelo zokuthengisa zihlala zihlukile ekuthengiseni okurekhodiwe.",
   "Full report headers keep unsourced soil values unknown.": "Izihloko zombiko ophelele zigcina amanani omhlabathi angenamthombo engaziwa.",
-  "AI glossy maps have a personal Settings switch. Exact maps and saved sheets remain available when AI is off.": "Amamephu acwebezelayo e-AI aneswishi yomuntu siqu kokuthi Izilungiselelo. Amamephu anembile namakhasi alondoloziwe ahlala etholakala uma i-AI ivaliwe.",
-  "The platform owner controls AI access for each organisation. Approved organisations can delegate access by role or person.": "Umnikazi wenkundla ulawula ukufinyelela kwe-AI kwenhlangano ngayinye. Izinhlangano ezivunyelwe zinganikeza ukufinyelela ngokwendima noma ngomuntu.",
   "AI glossy map settings": "Izilungiselelo zamamephu acwebezelayo e-AI",
   "Settings → AI glossy maps": "Izilungiselelo → Amamephu acwebezelayo e-AI",
   "Open Settings to control your own AI maps. Platform master accounts can also manage each organisation.": "Vula Izilungiselelo ukuze ulawule amamephu akho e-AI. Ama-akhawunti ayinhloko enkundla angaphatha nenhlangano ngayinye.",
+  "Menus, pop-ups and Lima now work fully from a keyboard and keep your place.": "Amamenyu, amaphaneli avelayo noLima manje asebenza ngokugcwele ngekhibhodi futhi agcina lapho ubukhona.",
+  "Turn AI glossy maps on or off in Settings. Saved maps stay available.": "Vula noma uvale amamephu acwebezelayo e-AI kokuthi Izilungiselelo. Amamephu alondoloziwe ahlala etholakala.",
+  "The platform owner can enable or suspend AI maps for each organisation.": "Umnikazi wenkundla angavula noma amise amamephu e-AI enhlanganweni ngayinye.",
+  "Approved organisations can give AI map access by role or person.": "Izinhlangano ezivunyelwe zinganikeza ukufinyelela kwamamephu e-AI ngokwendima noma ngomuntu.",
+  "Try an AI glossy map": "Zama imephu ecwebezelayo ye-AI",
+  "Design Studio → Glossy": "Isitudiyo sokuklama → Imephu ecwebezelayo",
+  "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Vula ipulazi elilondoloziwe, khetha ikhasi bese ukhetha i-AI Polished. Ukukhiqiza ngakunye kuyakhokhelwa.",
 };
 export default copy;

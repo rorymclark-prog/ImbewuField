@@ -19,9 +19,11 @@ import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { canSeeWorkspaceLink } from '@/lib/role-navigation';
 import { communityEnabled } from '@/lib/community/flag';
 import { useAppLevel } from '@/lib/app-level';
+import { useDialogFocus } from '@/lib/use-dialog-focus';
 import SettingsButton from './SettingsButton';
 import LessonLink from './design/LessonLink';
 import RoleSwitcher from './RoleSwitcher';
+import { useEscapeClose } from '@/lib/use-escape-close';
 
 interface NavDrawerProps {
   open: boolean;
@@ -139,11 +141,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
     },
   ];
 
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    if (open) window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [open, onClose]);
+  useEscapeClose(open, onClose);
 
   // Prevent body scroll when open
   useEffect(() => {
@@ -156,6 +154,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   // prop (native inert support is React 19). The property works today in all evergreen browsers.
   const panelRef = useRef<HTMLDivElement>(null);
   useEffect(() => { if (panelRef.current) panelRef.current.inert = !open; }, [open]);
+  useDialogFocus(open, panelRef);
 
   return (
     <>
@@ -177,6 +176,9 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
       <div
         ref={panelRef}
         lang={lang}
+        role="dialog"
+        aria-modal={open}
+        aria-label={open ? ui('Main navigation', 'Ukuzulazula okuyinhloko') : undefined}
         aria-hidden={!open}
         style={{
           position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 61,

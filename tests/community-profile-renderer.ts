@@ -29,7 +29,7 @@ export async function actualCommunityProfile(initial:ControlLanguage,options:Com
  const navigator={geolocation:options.unsupportedLocation?undefined:{getCurrentPosition:(success:any,failure:any,settings:any)=>{geolocationSuccess=success;geolocationFailure=failure;calls.geo.push(settings);}}};
  let renderer!:ReactTestRenderer;
  const scope:Record<string,unknown>={APP_LANGS:actualAppLanguages,React,...React,...Icons,window,sessionStorage,navigator,setTimeout:window.setTimeout,clearTimeout:window.clearTimeout,
-  translate:(language:ControlLanguage,key:string)=>controlT(language)(key),useLanguage:()=>({lang,t:controlT(lang),setLang:()=>{}}),
+  translate:(language:ControlLanguage,key:string)=>controlT(language)(key),useLanguage:()=>({lang,t:controlT(lang),setLang:()=>{}}),useDialogFocus:(open:boolean)=>{if(open)calls.focus++;},useEscapeClose:()=>{},
   useAuth:()=>({user,loading:options.authLoading??false}),useRouter:()=>router,useAppLevel:()=>simple?'simple':'full',communityEnabled:()=>options.enabled??true,
   getMyCommunityProfile:async()=>{calls.reads.push(user.uid);if(options.deferLoad)return new Promise(resolve=>pendingLoads.push(resolve));if(failures-->0)throw Error('isolated read failure');return structuredClone(profile);},
   upsertCommunityProfile:async(value:any)=>{calls.saves.push(value);if(options.saveFails)throw Error('isolated save failure');},
