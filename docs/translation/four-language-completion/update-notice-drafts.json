@@ -1652,6 +1652,90 @@
       "ve": "Vhuṱanzi ha vhalambedzi, rekhodo dzo shayaho na zwifanyiso zwa zwino zwi dzula zwi tshi pfesesea kha PDF iṅwe na iṅwe."
     },
     {
+      "english": "Survey and reports now show crops, food-forest and animal products through the year.",
+      "zu": "Uhlolo nemibiko manje kubonisa izitshalo, imikhiqizo yehlathi lokudla neyezilwane unyaka wonke.",
+      "st": "Phuputso le ditlaleho jwale di bontsha dijalo, dihlahiswa tsa moru wa dijo le tsa diphoofolo selemo kaofela.",
+      "ts": "Ndzavisiso ni swiviko sweswi swi kombisa swirimiwa, swikumiwa swa khwati ra swakudya ni swa swifuwo lembe hinkwaro.",
+      "ve": "Ṱhoḓisiso na mivhigo zwino zwi sumbedza zwiliwa, zwibveledzwa zwa ḓaka ḽa zwiḽiwa na zwa zwifuwo ṅwaha woṱhe."
+    },
+    {
+      "english": "Choose Site potential or Complete site plan, then the detail you need.",
+      "zu": "Khetha Amathuba endawo noma Uhlelo oluphelele lwendawo, bese ukhetha imininingwane oyidingayo.",
+      "st": "Kgetha Bokgoni ba sebaka kapa Moralo o feletseng wa sebaka, ebe o kgetha dintlha tseo o di hlokang.",
+      "ts": "Hlawula Vuswikoti bya ndhawu kumbe Pulani leyi heleleke ya ndhawu, kutani u hlawula vuxokoxoko lebyi u byi lavaka.",
+      "ve": "Nangani Ndeme ya fhethu kana Pulane yo fhelelaho ya fhethu, nahone ni nange zwidodombedzwa zwine na zwi ṱoḓa."
+    },
+    {
+      "english": "Record plan adds a scaled map with symbols and a legend. Download or save it without AI.",
+      "zu": "Uhlelo lwerekhodi lwengeza imephu elinganisiwe enezimpawu nencazelo yazo. Yilande noma uyigcine ngaphandle kwe-AI.",
+      "st": "Moralo wa rekoto o eketsa mmapa o lekantsweng o nang le matshwao le tlhaloso ya ona. O jarolle kapa o o boloke ntle le AI.",
+      "ts": "Pulani ya rhekhodo yi engetela mepe leyi pimiweke leyi nga ni swikombiso ni nhlamuselo ya swona. Yi kopi kumbe u yi hlayisa handle ka AI.",
+      "ve": "Pulane ya rekhodo i engedza mepe yo eletshedzwaho ine ya vha na zwiga na ṱhaluso yazwo. I dzhiseni kana ni i vhulunge hu si na AI."
+    },
+    {
+      "english": "Prepared examples are labelled clearly; unused report settings are hidden.",
+      "zu": "Izibonelo ezilungiselelwe zibhalwe ngokucacile; izilungiselelo zombiko ezingasetshenziswa ziyafihlwa.",
+      "st": "Mehlala e lokisitsweng e tshwailwe ka ho hlaka; ditlhophiso tsa tlaleho tse sa sebediswang di patilwe.",
+      "ts": "Swikombiso leswi lunghiselelweke swi tsariwe kahle; swiyimiso swa xiviko leswi nga tirhisiwiki swi fihliwile.",
+      "ve": "Tsumbo dzo lugiselelwaho dzo ṅwalwa nga u kona; nzudzanyo dza muvhigo dzi sa shumiswi dzo dzumbiwa."
+    },
+    {
+      "english": "Open site reports",
+      "zu": "Vula imibiko yendawo",
+      "st": "Bula ditlaleho tsa sebaka",
+      "ts": "Pfula swiviko swa ndhawu",
+      "ve": "Vulani mivhigo ya fhethu"
+    },
+    {
+      "english": "Menu → Reports",
+      "zu": "Imenyu → Imibiko",
+      "st": "Menyu → Ditlaleho",
+      "ts": "Menyu → Swiviko",
+      "ve": "Menyu → Mivhigo"
+    },
+    {
+      "english": "Review the report purpose, annual production plan and saved maps for your site.",
+      "zu": "Buyekeza inhloso yombiko, uhlelo lokukhiqiza lonyaka namamephu agciniwe endawo yakho.",
+      "st": "Hlahloba sepheo sa tlaleho, moralo wa tlhahiso wa selemo le dimmapa tse bolokilweng tsa sebaka sa hao.",
+      "ts": "Kambela xikongomelo xa xiviko, pulani ya vuhumelerisi ya lembe ni timepe leti hlayisiweke ta ndhawu ya wena.",
+      "ve": "Sedzulusani ndivho ya muvhigo, pulane ya u bveledza ya ṅwaha na mepe yo vhulungwaho ya fhethu haṋu."
+    },
+    {
+      "english": "Open Design Studio",
+      "zu": "Vula Isitudiyo Sokuklama",
+      "st": "Bula Sebaka sa ho rala",
+      "ts": "Pfula Ndhawu ya ku dizayina",
+      "ve": "Vulani Fhethu ha u pulana"
+    },
+    {
+      "english": "Menu → Design Studio",
+      "zu": "Imenyu → Isitudiyo Sokuklama",
+      "st": "Menyu → Sebaka sa ho rala",
+      "ts": "Menyu → Ndhawu ya ku dizayina",
+      "ve": "Menyu → Fhethu ha u pulana"
+    },
+    {
+      "english": "Open Preview & export, then Record plan for the scaled diagram and its legend.",
+      "zu": "Vula Ukubuka kuqala nokuthumela, bese ukhetha Uhlelo lwerekhodi ukuze uthole umdwebo olinganisiwe nencazelo yawo.",
+      "st": "Bula Ponelopele le ho romela, ebe o kgetha Moralo wa rekoto bakeng sa setshwantsho se lekantsweng le tlhaloso ya sona.",
+      "ts": "Pfula Xivoni xo sungula ni ku rhumela, kutani u hlawula Pulani ya rhekhodo ku kuma dayagiremu leyi pimiweke ni nhlamuselo ya yona.",
+      "ve": "Vulani U sedza phanḓa na u rumela, nga murahu ni nange Pulane ya rekhodo u wana tshifanyiso tsho eletshedzwaho na ṱhaluso yatsho."
+    },
+    {
+      "english": "Market notes keep their source and date. Selling plans stay separate from recorded sales.",
+      "zu": "Amanothi emakethe agcina umthombo wawo nosuku. Izinhlelo zokuthengisa zihlala zihlukile ekuthengiseni okurekhodiwe.",
+      "st": "Dintlha tsa mmaraka di boloka mohlodi le letsatsi la tsona. Merero ya ho rekisa e sala e arohane le thekiso e ngodisitsweng.",
+      "ts": "Tinotsi ta makete ti hlayisa xihlovo ni siku ra tona. Tipulani to xavisa ti tshama ti hambanile ni ku xavisa loku rhekhodiweke.",
+      "ve": "Notsi dza makete dzi vhulunga tshisima na ḓuvha zwadzo. Pulane dza u rengisa dzi dzula dzo khethekana na thengiso yo rekhodiwaho."
+    },
+    {
+      "english": "Full report headers keep unsourced soil values unknown.",
+      "zu": "Izihloko zombiko ophelele zigcina amanani omhlabathi angenamthombo engaziwa.",
+      "st": "Dihlooho tsa tlaleho e feletseng di boloka dipalo tsa mobu tse se nang mohlodi di sa tsejwe.",
+      "ts": "Tinhloko ta xiviko lexi heleleke ti hlayisa mimpimo ya misava leyi nga riki na xihlovo yi nga tiveki.",
+      "ve": "Ṱhoho dza muvhigo wo fhelelaho dzi vhulunga zwiṱhanganyelo zwa mavu zwi si na tshisima zwi sa ḓivhei."
+    },
+    {
       "english": "The menu, field-visit form and crop prices are easy to read in dark mode.",
       "zu": "Imenyu, ifomu lokuvakashela insimu namanani ezitshalo kulula ukukufunda kumodi emnyama.",
       "st": "Menyu, foromo ya ketelo ya tshimo le ditheko tsa dijalo di bonolo ho bala ka mokgwa o lefifi.",

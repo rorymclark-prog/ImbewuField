@@ -146,5 +146,17 @@ const copy:UpdateCopy={
   "Report totals now match their charts, and report counts read correctly.": "Dikakaretso tsa ditlaleho jwale di dumellana le dichate tsa tsona, mme dipalo tsa ditlaleho di ngotswe hantle.",
   "Home, Map, Studies and Prices now open offline, even before you have visited them.": "Lehae, Mmapa, Dithuto le Ditheko jwale di a buleha ntle le marang-rang, leha o eso di etele.",
   "Error messages now explain the problem in plain words, not technical text.": "Melaetsa ya diphoso jwale e hlalosa bothata ka mantswe a bonolo, eseng ka mongolo wa setheknoloji.",
+  "Survey and reports now show crops, food-forest and animal products through the year.": "Phuputso le ditlaleho jwale di bontsha dijalo, dihlahiswa tsa moru wa dijo le tsa diphoofolo selemo kaofela.",
+  "Choose Site potential or Complete site plan, then the detail you need.": "Kgetha Bokgoni ba sebaka kapa Moralo o feletseng wa sebaka, ebe o kgetha dintlha tseo o di hlokang.",
+  "Record plan adds a scaled map with symbols and a legend. Download or save it without AI.": "Moralo wa rekoto o eketsa mmapa o lekantsweng o nang le matshwao le tlhaloso ya ona. O jarolle kapa o o boloke ntle le AI.",
+  "Prepared examples are labelled clearly; unused report settings are hidden.": "Mehlala e lokisitsweng e tshwailwe ka ho hlaka; ditlhophiso tsa tlaleho tse sa sebediswang di patilwe.",
+  "Open site reports": "Bula ditlaleho tsa sebaka",
+  "Menu → Reports": "Menyu → Ditlaleho",
+  "Review the report purpose, annual production plan and saved maps for your site.": "Hlahloba sepheo sa tlaleho, moralo wa tlhahiso wa selemo le dimmapa tse bolokilweng tsa sebaka sa hao.",
+  "Open Design Studio": "Bula Sebaka sa ho rala",
+  "Menu → Design Studio": "Menyu → Sebaka sa ho rala",
+  "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Bula Ponelopele le ho romela, ebe o kgetha Moralo wa rekoto bakeng sa setshwantsho se lekantsweng le tlhaloso ya sona.",
+  "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Dintlha tsa mmaraka di boloka mohlodi le letsatsi la tsona. Merero ya ho rekisa e sala e arohane le thekiso e ngodisitsweng.",
+  "Full report headers keep unsourced soil values unknown.": "Dihlooho tsa tlaleho e feletseng di boloka dipalo tsa mobu tse se nang mohlodi di sa tsejwe.",
 };
 export default copy;

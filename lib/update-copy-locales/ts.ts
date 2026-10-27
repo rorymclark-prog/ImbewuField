@@ -146,5 +146,17 @@ const copy:UpdateCopy={
   "Report totals now match their charts, and report counts read correctly.": "Mihlanganiso ya swiviko sweswi yi fambelana ni tichati ta yona, naswona tinhlayo ta swiviko ti tsariwe kahle.",
   "Home, Map, Studies and Prices now open offline, even before you have visited them.": "Kaya, Mepe, Tidyondzo ni Minxavo sweswi swa pfuleka handle ka inthanete, hambi u nga si swi endzela.",
   "Error messages now explain the problem in plain words, not technical text.": "Marungula ya swihoxo sweswi ma hlamusela xiphiqo hi marito yo olova, ku nga ri hi matsalwa ya xithekiniki.",
+  "Survey and reports now show crops, food-forest and animal products through the year.": "Ndzavisiso ni swiviko sweswi swi kombisa swirimiwa, swikumiwa swa khwati ra swakudya ni swa swifuwo lembe hinkwaro.",
+  "Choose Site potential or Complete site plan, then the detail you need.": "Hlawula Vuswikoti bya ndhawu kumbe Pulani leyi heleleke ya ndhawu, kutani u hlawula vuxokoxoko lebyi u byi lavaka.",
+  "Record plan adds a scaled map with symbols and a legend. Download or save it without AI.": "Pulani ya rhekhodo yi engetela mepe leyi pimiweke leyi nga ni swikombiso ni nhlamuselo ya swona. Yi kopi kumbe u yi hlayisa handle ka AI.",
+  "Prepared examples are labelled clearly; unused report settings are hidden.": "Swikombiso leswi lunghiselelweke swi tsariwe kahle; swiyimiso swa xiviko leswi nga tirhisiwiki swi fihliwile.",
+  "Open site reports": "Pfula swiviko swa ndhawu",
+  "Menu → Reports": "Menyu → Swiviko",
+  "Review the report purpose, annual production plan and saved maps for your site.": "Kambela xikongomelo xa xiviko, pulani ya vuhumelerisi ya lembe ni timepe leti hlayisiweke ta ndhawu ya wena.",
+  "Open Design Studio": "Pfula Ndhawu ya ku dizayina",
+  "Menu → Design Studio": "Menyu → Ndhawu ya ku dizayina",
+  "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Pfula Xivoni xo sungula ni ku rhumela, kutani u hlawula Pulani ya rhekhodo ku kuma dayagiremu leyi pimiweke ni nhlamuselo ya yona.",
+  "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Tinotsi ta makete ti hlayisa xihlovo ni siku ra tona. Tipulani to xavisa ti tshama ti hambanile ni ku xavisa loku rhekhodiweke.",
+  "Full report headers keep unsourced soil values unknown.": "Tinhloko ta xiviko lexi heleleke ti hlayisa mimpimo ya misava leyi nga riki na xihlovo yi nga tiveki.",
 };
 export default copy;

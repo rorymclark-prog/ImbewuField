@@ -4,6 +4,28 @@ This is the shared starting point for Rory, Claude and Codex. Read the latest
 record for the area being worked on before opening another audit. Build on its
 findings and subsequent changes; do not restart from an older snapshot.
 
+## Site reports and mapping: start here
+
+Latest integration: [Site reports with the published role reports and wave 23 — 26 October 2026](2026-10-26/site-report-role-integration-codex.md).
+
+Previous integration: [Report branch updated with current main — 25 October 2026](2026-10-25/site-report-main-integration-codex.md).
+
+Previous verification: [Completed CI and deployed questionnaire checks — 25 October 2026](2026-10-25/site-report-verification-codex.md).
+
+Previous continuation: [Market evidence, real Ubhejane comparison and soil source — 24 October 2026](2026-10-24/site-report-market-evidence-codex.md).
+
+Previous verification: [CI readability-register follow-up — 24 October 2026](2026-10-24/site-report-ci-followup-codex.md).
+
+Implementation: [Two report purposes, annual production handoff and Record plan — 24 October 2026](2026-10-24/site-report-production-mapping-codex.md).
+
+Read this together with the latest survey and crop records below. It reuses the
+existing production calendars and preserves the earlier six Ubhejane reports.
+The [3 October six-report catalogue](https://github.com/rorymclark-prog/ImbewuField/blob/716fb585fa43b54fbfbb8d8777a6b8ba75ba4342/docs/audits/2026-10-03/ubhejane-six-report-continuation-codex.md)
+and [2 October coverage and stages audit](https://github.com/rorymclark-prog/ImbewuField/blob/716fb585fa43b54fbfbb8d8777a6b8ba75ba4342/docs/audits/2026-10-02/site-report-coverage-and-stages-codex.md)
+are retained on their original branch. These immutable links recover that work
+without pretending it was merged into main. The private report folder is listed
+in the catalogue; personal site records are not copied into this archive.
+
 ## Site survey: start here
 
 Latest implementation: [Survey draft recovery and signed-in Ubhejane check — 22 October 2026](2026-10-22/survey-draft-recovery-codex.md).
@@ -66,8 +88,22 @@ or main. Local Downloads packs remain dated reading snapshots.
 - [Wave 26 Codex hand-offs closed after #1121 merged, and #1121's report screens checked: w26-01 to w26-04 — 26 October 2026](2026-10-26/wave-26-handoffs-claude.md).
 - [Wave 25 forms, offline and keyboard capture: w25-01 to w25-07, practice-mode contact copy, hidden-input focus, offline ChunkLoadError on unvisited routes — 26 October 2026](2026-10-26/wave-25-forms-offline-keyboard-claude.md).
 - [Wave 24 interaction capture behind clicks (drawer, forms, tabs, chat): w24-01 to w24-11, mostly dark-mode colours never seen on the dark page — 26 October 2026](2026-10-26/wave-24-interaction-claude.md).
+- [Site reports with the published role reports and wave 23 — 26 October 2026](2026-10-26/site-report-role-integration-codex.md).
+
 - [Wave 23 rendered re-capture of the live build 98c8a22 and the new report workspaces: w23-01 to w23-07, the isiZulu Home date regression fixed first — 26 October 2026](2026-10-26/wave-23-recapture-claude.md).
+
+- [Site-report main integration — 25 October 2026](2026-10-25/site-report-main-integration-codex.md).
+
+- [Site report completed CI and deployed verification — 25 October 2026](2026-10-25/site-report-verification-codex.md).
+
 - [Wave 22 rendered re-capture of the live build 8d2e1a9: w22-01 to w22-10, hydration errors on /home and /invoice, Lima clearance, weather card — 25 October 2026](2026-10-25/wave-22-recapture-claude.md).
+
+- [Site report market evidence and soil-source continuation — 24 October 2026](2026-10-24/site-report-market-evidence-codex.md).
+
+- [Site report CI readability-register follow-up — 24 October 2026](2026-10-24/site-report-ci-followup-codex.md).
+
+- [Two report purposes, annual production handoff and Record plan — 24 October 2026](2026-10-24/site-report-production-mapping-codex.md).
+
 - [Wave 21 rendered re-capture of the wave 20 build in isiZulu: w21-01 to w21-11, ten fixed, one handed to Codex — 24 October 2026](2026-10-24/wave-21-recapture-claude.md).
 - [Wave 20 integration close-out: five tracks folded onto the wave 19 branch with main, w20-01 to w20-46 implemented, w19 partials closed with them — 24 October 2026](2026-10-24/wave-20-integration-claude.md).
 
