@@ -5,6 +5,7 @@ import { join } from 'node:path';
 
 import {
   EVIDENCE_CATALOGUE,
+  EVIDENCE_GROUP_ICON,
   INDIGENOUS_EDIBLES,
   LIMA_TIPS,
   QUICK_NUMBERS,
@@ -289,4 +290,13 @@ test('the Land & legal sheet warns the farmer this app is not a backup of their 
   const warnIdx = src.indexOf("evidenceSheetLandLegalWarningTitle");
   const buttonsIdx = src.indexOf("evidenceSheetTakePhoto");
   assert.ok(warnIdx > 0 && buttonsIdx > 0 && warnIdx < buttonsIdx, 'warning must precede capture buttons');
+});
+
+// The Reports tab (components/DataPanel.tsx) and the evidence library draw each group with
+// EVIDENCE_GROUP_ICON[group.key]. land_legal shipped without one, so the site Reports tab rendered
+// an undefined component and crashed to "Something went wrong" on production.
+test('every evidence group has an icon for the Reports tab and the evidence library', () => {
+  for (const group of EVIDENCE_CATALOGUE) {
+    assert.equal(typeof EVIDENCE_GROUP_ICON[group.key], 'object', `${group.key} has no icon`);
+  }
 });
