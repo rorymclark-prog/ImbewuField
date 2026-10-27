@@ -18,7 +18,7 @@ export function ExchangeSourceCopy({ en, zu, tpl, vars }: { en: string; zu: stri
     return (
       <>
         <span lang="xh">{draft}</span>
-        <small style={{ display: 'block', marginTop: 4, fontSize: 12, lineHeight: 1.45 }}>
+        <small lang="en" style={{ display: 'block', marginTop: 4, fontSize: 12, lineHeight: 1.45 }}>
           English source: {en}
         </small>
       </>
