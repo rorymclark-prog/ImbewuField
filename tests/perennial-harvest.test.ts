@@ -19,6 +19,8 @@ import {
   unidentifiedPlantGroups,
 } from '@/lib/perennial-harvest';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
+import { statusOf } from '@/lib/design-canvas';
+import { reportProductionYear } from '@/lib/report-crop-plan';
 import { ageReadyForSeason, buildProductionProjection, plantingMonthIndex, projectedKgLabel, treeAgeCalendarNote, treeAgeProjection } from '@/lib/production-projection';
 import { estimatedYieldKgAdjusted, type PlanBed, type Planting } from '@/lib/crop-plan';
 import { calendarProduceByMonth } from '@/lib/calendar-produce';
@@ -362,18 +364,20 @@ test('month spans read the way a farmer says them', () => {
   assert.equal(formatRange([100, 112.5]), '100–112.5');
 });
 
-test('locally confirmed seasons count standing trees from today and preserve proposed plants in the repeated design', () => {
+test('locally confirmed seasons count only trees the design marks existing and retain planned plants', () => {
   const avocado = PERENNIAL_HARVEST['persea-americana'];
   assert.ok(avocado, 'avocado dossier missing');
   const groups = placedTreeGroups([
     { defId: 'tree_avocado', status: 'existing' },
     { defId: 'tree_other', speciesId: 'persea-americana', status: 'proposed' },
-    { defId: 'tree_other', speciesId: 'persea-americana' }, // legacy: no status = existing
+    // The real Ubhejane review found these were called standing even though the design
+    // treats an unmarked placed item as proposed. Local picking months cannot change that.
+    { defId: 'tree_other', speciesId: 'persea-americana' }, // legacy: statusOf resolves proposed
     { defId: 'veg_bed' },
     { defId: 'tree_citrus' },
   ]);
   assert.equal(groups.length, 1);
-  assert.deepEqual([groups[0].existing, groups[0].proposed], [2, 1]);
+  assert.deepEqual([groups[0].existing, groups[0].proposed], [1, 2]);
 
   // The audit found an eleven-month avocado season made by unioning different regions. This
   // fixture represents one farmer-confirmed window; the national union must never choose it.
@@ -386,7 +390,7 @@ test('locally confirmed seasons count standing trees from today and preserve pro
   const established = buildTreeAvailability(groups, months, false, choices);
   const fromToday = buildTreeAvailability(groups, months, true, choices);
   assert.equal(established[0][0].trees, 3);
-  assert.equal(fromToday[0][0].trees, 2);
+  assert.equal(fromToday[0][0].trees, 1, 'a local season does not establish that an unmarked proposal is standing');
   if (off !== undefined) assert.deepEqual(established[1], []);
 
   // Only proposed trees: nothing from today.
@@ -419,7 +423,7 @@ test('each banana circle contributes three planted bananas without changing the 
   assert.equal(unidentifiedPlantGroups([{ defId: 'banana_circle', speciesId: 'unsupported-id' }]).length, 1, 'an unavailable harvest record must not erase the design layout');
 });
 
-test('mapped food species without a harvest dossier remain counted and permit only confirmed local dates without invented yields', () => {
+test('mapped food species retain design status and permit confirmed dates without invented yields when research is missing', () => {
   // Research coverage grows. Exercise an actual permitted catalogue identity without a
   // perennial dossier rather than requiring any named food to stay unresearched forever.
   const food = SPECIES.find(species => species.uses.includes('food') && species.nemba === 'none' && !perennialHarvestFor(species.id));
@@ -427,6 +431,7 @@ test('mapped food species without a harvest dossier remain counted and permit on
   assert.equal(perennialHarvestFor(food.id), null, 'the fixture must exercise a genuinely missing harvest dossier');
   const items = [
     { defId: 'tree_other', speciesId: food.id, status: 'existing' as const },
+    // Missing research does not change the canvas rule: an unmarked placed plant is proposed.
     { defId: 'tree_apple', speciesId: food.id },
     { defId: 'tree_other', speciesId: food.id, status: 'proposed' as const },
     { defId: 'tree_other', speciesId: 'morus-nigra', status: 'proposed' as const },
@@ -438,14 +443,14 @@ test('mapped food species without a harvest dossier remain counted and permit on
   assert.deepEqual(unidentifiedPlantGroups(items), [], 'an identified permitted food plant uses the same month-confirmation authority');
   const group = groups.find(entry => entry.harvest.speciesId === food.id);
   assert.ok(group?.referenceMissing);
-  assert.deepEqual([group.existing, group.proposed, group.harvest.name], [2, 1, food.commonName]);
+  assert.deepEqual([group.existing, group.proposed, group.harvest.name], [1, 2, food.commonName]);
   assert.deepEqual(group.harvest.windows, []);
   for (const key of ['yearsToFirstCrop', 'yearsToFullBearing', 'yieldKgPerTree', 'chillUnits', 'pollination'] as const) assert.equal(group.harvest[key], null);
   assert.deepEqual(buildTreeAvailability(groups, [1, 6, 12], true), [[], [], []]);
   const choices = cleanTreeSeasonChoices({ [food.id]: { bearing: true, months: [6, 6, 13, 0] }, 'morus-nigra': { bearing: true, months: [6] } });
   assert.deepEqual(choices[food.id], { bearing: true, months: [6] });
   const locallyConfirmed = buildTreeAvailability(groups, [1, 6, 12], true, choices);
-  assert.deepEqual(locallyConfirmed[1], [{ speciesId: food.id, name: food.commonName, trees: 2 }]);
+  assert.deepEqual(locallyConfirmed[1], [{ speciesId: food.id, name: food.commonName, trees: 1 }], 'a local date cannot turn the unmarked proposal into a standing plant');
   assert.deepEqual(locallyConfirmed[0], []);
   assert.deepEqual(locallyConfirmed[2], []);
   assert.equal(treePickingByMonth(groups, [6], choices)[0][0].name, food.commonName);
@@ -672,4 +677,46 @@ test('spiny monkey orange review values retain their geography and period withou
   const projection = treeAgeProjection(groups[0], { months: [], bearing: false, production: [{ status: 'existing', plants: 1, planted: '2010-01', yields: [] }] }, projectionStart, projectionStart + 11);
   assert.equal(projection.kg, null, 'even an established plant needs an entered annual yield schedule; source kg/plant is not kg/year');
   assert.deepEqual(projection.knownKg, [0, 0], 'no source weight can silently fill the known annual subtotal');
+});
+
+test('legacy food plants use the design status without changing the saved map', () => {
+  const items = [
+    { defId: 'tree_avocado', x: 0.2, y: 0.3 },
+    { defId: 'tree_avocado', status: 'existing' as const, x: 0.4, y: 0.5 },
+    { defId: 'tree_avocado', status: 'proposed' as const, x: 0.6, y: 0.7 },
+  ];
+  const before = structuredClone(items);
+  assert.equal(statusOf(items[0]), 'proposed', 'the canvas legacy contract already treats placed items as proposals');
+  const expected = { existing: 0, proposed: 0 };
+  for (const item of items) expected[statusOf(item)]++;
+  const [group] = placedTreeGroups(items);
+  assert.deepEqual({ existing: group.existing, proposed: group.proposed }, expected);
+  assert.deepEqual(items, before, 'reading production status cannot rewrite geometry or saved fields');
+});
+
+test('unidentified legacy plants retain inventory with the same proposed status as the design', () => {
+  const items = [{ defId: 'tree_citrus' }, { defId: 'tree_citrus', status: 'existing' as const }];
+  const before = structuredClone(items);
+  const [group] = unidentifiedPlantGroups(items);
+  assert.deepEqual({ existing: group.existing, proposed: group.proposed }, { existing: 1, proposed: 1 });
+  assert.deepEqual(items, before);
+});
+
+test('annual site reports do not call an unmarked legacy proposal an existing food plant', () => {
+  const items = [{ defId: 'tree_avocado', x: 0.2, y: 0.3 }];
+  const before = structuredClone(items);
+  const year = reportProductionYear({ capturedAt: '2026-10-01T12:00:00Z', beds: [], plantings: [] }, items);
+  const row = year.rows.find(row => row.kind === 'food-forest');
+  assert.ok(row, 'the planned plant must remain visible when timing is missing');
+  assert.match(row.note, /0 existing and 1 proposed plants on the map/);
+  assert.deepEqual(row.months, [], 'an unmarked legacy proposal cannot invent a picking window');
+  assert.deepEqual(items, before);
+});
+
+test('legacy banana circles and clumps stay proposed while retaining the established circle count', () => {
+  const items = [{ defId: 'banana_circle' }, { defId: 'banana_clump' }];
+  const before = structuredClone(items);
+  const [group] = placedTreeGroups(items);
+  assert.deepEqual([group.existing, group.proposed], [0, 4], 'the established three-plant circle assumption and one clump remain proposed inventory');
+  assert.deepEqual(items, before);
 });

@@ -6,6 +6,8 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Site reports and mapping: start here
 
+Latest production truth follow-up: [Use the design status for legacy plants — 27 October 2026](2026-10-27/report-production-status-codex.md). This follows #1131; check its own release gates on issue #35.
+
 Latest PDF sample follow-up: [Keep chapter headings with their opening text — 27 October 2026](2026-10-27/report-pdf-pagination-codex.md). Read its release status on #1131 and issue #35.
 
 Latest published report handoff: [Claude reviewed, merged and checked the two report PRs — 27 October 2026](2026-10-27/site-report-handoff-results-claude.md).
@@ -97,6 +99,10 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [Real-site production status and legacy plants — 27 October 2026](2026-10-27/report-production-status-codex.md).
+
+- [PDF headings kept with their opening evidence — 27 October 2026](2026-10-27/report-pdf-pagination-codex.md).
 
 - [Nine-map visual audit and lighter shared frames — 27 October 2026](2026-10-27/map-visual-audit-codex.md).
 
