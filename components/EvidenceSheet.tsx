@@ -17,6 +17,7 @@ import {
   resizeForStorage,
   type EvidenceItem,
 } from '@/lib/site-evidence';
+import { useEscapeClose } from '@/lib/use-escape-close';
 
 interface Props {
   siteId: string;
@@ -134,11 +135,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
   const docItems = evidenceItems.filter((e) => e.type !== 'photo');
 
   // Close on Escape — matches every other bottom sheet in the app (AddSheet, ThemePanel, etc).
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [onClose]);
+  useEscapeClose(true, onClose);
 
   return (
     <div

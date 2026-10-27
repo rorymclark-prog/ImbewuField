@@ -6,6 +6,7 @@ import { uploadProfilePhoto, updateMyProfile } from '@/lib/db/queries';
 import { resizeFileForUpload } from '@/lib/site-evidence';
 import type { Profile } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n';
+import { useEscapeClose } from '@/lib/use-escape-close';
 
 const ROLE_LABEL_KEY: Record<string, string> = {
   farmer: 'profileRoleFarmer',
@@ -265,12 +266,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
   }, [profile, fullName, bio, skills, showOnMap, photoUrl, mapCenter, onSaved, onClose]);
 
   // Close on Escape — matches every other full-screen sheet in the app (AddSheet, ThemePanel, etc).
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [open, onClose]);
+  useEscapeClose(open, onClose);
 
   if (!open) return null;
 

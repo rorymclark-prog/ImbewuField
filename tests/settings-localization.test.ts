@@ -37,6 +37,7 @@ function settingsHtml(lang: keyof typeof locales, replacement?: string): string 
     '@/lib/site-progress': {}, '@/lib/tts': {},
     '@/lib/app-level': { useAppLevel: () => 'simple', setAppLevel: noOp },
     '@/lib/use-dialog-focus': { useDialogFocus: noOp },
+    '@/lib/use-escape-close': { useEscapeClose: noOp },
     '@/lib/lang-coverage': { coverageOf }, '@/lib/ai-features': { AI_FEATURES },
     '@/lib/ai-preferences': { disabledAiFeatures: () => [], saveDisabledAiFeatures: () => true },
     'next/link': { default: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => React.createElement('a', props) },

@@ -23,6 +23,7 @@ import { useDialogFocus } from '@/lib/use-dialog-focus';
 import SettingsButton from './SettingsButton';
 import LessonLink from './design/LessonLink';
 import RoleSwitcher from './RoleSwitcher';
+import { useEscapeClose } from '@/lib/use-escape-close';
 
 interface NavDrawerProps {
   open: boolean;
@@ -140,11 +141,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
     },
   ];
 
-  useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
-    if (open) window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [open, onClose]);
+  useEscapeClose(open, onClose);
 
   // Prevent body scroll when open
   useEffect(() => {
