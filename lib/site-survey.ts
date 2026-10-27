@@ -3,6 +3,7 @@ import { upsertSurvey } from './user-sync';
 import { loadPlaces } from './saved-places';
 import { canonicalCoordinateSiteId, coordinateSiteIdParts } from './site-id';
 import { activeAccountLocalStorageKey } from './account-local-storage';
+import { normaliseMarketEvidence, marketEvidencePromptBlock, type MarketEvidence } from './report-site-facts';
 
 // The FAO Household Dietary Diversity Score uses these twelve food groups. This is a count of
 // reported groups, never a made-up nutrition score or an estimate of what a household eats.
@@ -17,6 +18,17 @@ export const PRODUCTION_CATEGORIES = [
   'eggs', 'poultry', 'rabbits', 'honey', 'other',
 ] as const;
 export type ProductionCategory = typeof PRODUCTION_CATEGORIES[number];
+
+export type SiteReportPurpose = 'potential' | 'complete';
+export const normaliseSiteReportPurpose = (value: unknown): SiteReportPurpose | undefined => value === 'potential' || value === 'complete' ? value : undefined;
+export function siteReportPurposeLabel(purpose: SiteReportPurpose, language = 'en'): string {
+  return purpose === 'potential' ? (language === 'zu' ? 'Amathuba endawo' : 'Site potential') : (language === 'zu' ? 'Uhlelo oluphelele lwendawo' : 'Complete site plan');
+}
+export function siteReportPurposeInstruction(purpose: SiteReportPurpose): string {
+  return purpose === 'potential'
+    ? 'SITE POTENTIAL REPORT: assess what could work before detailed design. Cover people and goals, local economy, climate, terrain, soil, water, biome, vegetation, approximate bioresource information, crop/food-forest/animal options and constraints. Identify evidence gaps and next field checks. A mapped proposal is an option, not installed infrastructure or a completed design. Do not invent a layout, implementation budget, local buyer demand, output or completion. Explain missing design sections as work still to do.'
+    : 'COMPLETE SITE PLAN REPORT: integrate the saved assessment, survey, maps and production plan into one evidence-based design and implementation report. Explain existing and proposed systems, the twelve-month crop/food-forest/animal-product picture, dependencies, responsibilities, sourced costs and checks. Preserve missing evidence visibly; the word complete does not certify completion on the ground. Keep reported harvests and actual spending separate from plan windows, assumptions and budgets.';
+}
 
 /** “None” must not travel into a report alongside the resource it denies. */
 export function toggleSurveyChoice(values: string[], value: string, none = 'none'): string[] {
@@ -98,6 +110,7 @@ export interface SiteSurvey {
   siteId: string;   // canonical key: designSiteIdFromLocation()'s `site:${lat.toFixed(5)},${lon.toFixed(5)}`
   placeId: string;  // legacy key (SavedPlace id) — kept for provenance/migration, no longer used to store
   savedAt: string;
+  reportPurpose?: SiteReportPurpose;
   updatedAt?: number; // ms — drives cross-device newest-wins merge
 
   // Branching
@@ -138,6 +151,7 @@ export interface SiteSurvey {
   challenges: string[];
   isCommercial: boolean;
   marketType?: string;      // 'farm-stall' | 'local-market' | 'wholesale' | 'not-sure'
+  marketEvidence?: MarketEvidence;
 
   // Farmer-reported production, not a modelled yield. All row values are optional: a blank egg
   // count or income must remain blank rather than becoming a false zero in a funder report.
@@ -272,6 +286,7 @@ function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
     siteId,
     placeId: stringValue(row.placeId),
     savedAt: stringValue(row.savedAt),
+    reportPurpose: normaliseSiteReportPurpose(row.reportPurpose),
     updatedAt: typeof row.updatedAt === 'number'
       && Number.isFinite(row.updatedAt)
       && row.updatedAt >= 0
@@ -303,6 +318,7 @@ function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
     challenges: stringArray(row.challenges),
     isCommercial: row.isCommercial === true,
     marketType: stringValue(row.marketType) || undefined,
+    marketEvidence: normaliseMarketEvidence(row.marketEvidence),
     reportedProduction: normaliseReportedProduction(row.reportedProduction),
     productionYear: typeof row.productionYear === 'number'
       && Number.isInteger(row.productionYear)
@@ -316,7 +332,7 @@ function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
   };
 }
 
-export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string {
+export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number, includeMarketEvidence = true): string {
   // Reports are a public boundary for long-lived browser data. Normalise again
   // even though load/save do it, because API callers can pass decoded JSON directly.
   s = normaliseSurvey(s, stringValue(s?.siteId) || 'site:unknown')
@@ -434,6 +450,7 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string 
   lines.push('A housing structure does not establish the number of birds. Recorded hens and management are not a promised egg yield; reported annual eggs remain separate from plan forecasts.');
 
   lines.push('');
+  if (s.reportPurpose) lines.push(`Requested site report: ${siteReportPurposeLabel(s.reportPurpose)}. Questionnaire length is independent of report purpose.`);
   lines.push('--- FARMER-REPORTED ANNUAL PRODUCTION ---');
   lines.push(`Reporting year for these annual production figures: ${s.productionYear ?? 'not recorded'}. The survey save date is not the reporting year.`);
   const rows = s.reportedProduction ?? [];
@@ -451,10 +468,14 @@ export function surveyToPrompt(s: SiteSurvey, annualRainfallMm: number): string 
   lines.push(`Farming practice: ${s.farmingPractice || 'not specified'}`);
   lines.push(`Main challenges: ${s.challenges.length ? s.challenges.join(', ') : 'none highlighted'}`);
   if (s.isCommercial) {
-    lines.push(`Selling produce: Yes — ${s.marketType ?? 'market type not specified'}`);
+    lines.push(`Selling or planning to sell produce: Yes — ${s.marketType ?? 'market type not specified'}`);
   } else {
-    lines.push(`Selling produce: No (household / community use)`);
+    lines.push('Selling or planning to sell produce: Not selected in the saved survey.');
   }
+  // This toggle combines present activity with future intent; neither state proves a sale.
+  lines.push('This combined answer does not establish actual sales, buyer demand or income. Use separately supplied sales or production records, retaining their dates/year, source and uncertainty. If no such records were supplied, actual sales and income are not recorded.');
+
+  if (includeMarketEvidence) lines.push('', marketEvidencePromptBlock(s.marketEvidence));
 
   if (s.notes) {
     lines.push('');
@@ -572,6 +593,11 @@ export function readSurveyDraft(scope: string): { draft: SiteSurveyDraft | null;
       || !draft.inputs || !inputs.every(k => typeof draft.inputs[k] === 'string')
       || !['short', 'full'].includes(draft.mode) || !Number.isInteger(draft.step) || draft.step < 0 || draft.step > 7
       || typeof draft.started !== 'boolean' || typeof draft.baseRevision !== 'string'
+      || (a.marketEvidence !== undefined && (!a.marketEvidence || typeof a.marketEvidence !== 'object' || Array.isArray(a.marketEvidence)
+        || !['notes', 'source', 'observedOn'].every(k => {
+          const value = a.marketEvidence![k as keyof MarketEvidence];
+          return value === undefined || typeof value === 'string';
+        })))
       || (a.reportedProduction !== undefined && (!Array.isArray(a.reportedProduction) || !a.reportedProduction.every(row =>
         row && PRODUCTION_CATEGORIES.includes(row.category) && typeof row.unit === 'string'
         && (row.name === undefined || typeof row.name === 'string')

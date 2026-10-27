@@ -151,5 +151,17 @@ const copy:UpdateCopy={
   "Visit, training and programme reports compare recorded delivery across periods.": "Mivhigo ya u dalela, vhugudisi na mbekanyamushumo i vhambedza zwo itwaho zwo rekhodiwaho vhukati ha tshifhinga.",
   "MEL reports compare dated readings and include agreed donor indicator details.": "Mivhigo ya MEL i vhambedza zwo vhalwaho zwi na maḓuvha, nahone i katela mafhungo a zwiga zwa vhalambedzi zwo tendelwaho.",
   "Donor evidence, missing records and current snapshots stay clear in every PDF.": "Vhuṱanzi ha vhalambedzi, rekhodo dzo shayaho na zwifanyiso zwa zwino zwi dzula zwi tshi pfesesea kha PDF iṅwe na iṅwe.",
+  "Survey and reports now show crops, food-forest and animal products through the year.": "Ṱhoḓisiso na mivhigo zwino zwi sumbedza zwiliwa, zwibveledzwa zwa ḓaka ḽa zwiḽiwa na zwa zwifuwo ṅwaha woṱhe.",
+  "Choose Site potential or Complete site plan, then the detail you need.": "Nangani Ndeme ya fhethu kana Pulane yo fhelelaho ya fhethu, nahone ni nange zwidodombedzwa zwine na zwi ṱoḓa.",
+  "Record plan adds a scaled map with symbols and a legend. Download or save it without AI.": "Pulane ya rekhodo i engedza mepe yo eletshedzwaho ine ya vha na zwiga na ṱhaluso yazwo. I dzhiseni kana ni i vhulunge hu si na AI.",
+  "Prepared examples are labelled clearly; unused report settings are hidden.": "Tsumbo dzo lugiselelwaho dzo ṅwalwa nga u kona; nzudzanyo dza muvhigo dzi sa shumiswi dzo dzumbiwa.",
+  "Open site reports": "Vulani mivhigo ya fhethu",
+  "Menu → Reports": "Menyu → Mivhigo",
+  "Review the report purpose, annual production plan and saved maps for your site.": "Sedzulusani ndivho ya muvhigo, pulane ya u bveledza ya ṅwaha na mepe yo vhulungwaho ya fhethu haṋu.",
+  "Open Design Studio": "Vulani Fhethu ha u pulana",
+  "Menu → Design Studio": "Menyu → Fhethu ha u pulana",
+  "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Vulani U sedza phanḓa na u rumela, nga murahu ni nange Pulane ya rekhodo u wana tshifanyiso tsho eletshedzwaho na ṱhaluso yatsho.",
+  "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Notsi dza makete dzi vhulunga tshisima na ḓuvha zwadzo. Pulane dza u rengisa dzi dzula dzo khethekana na thengiso yo rekhodiwaho.",
+  "Full report headers keep unsourced soil values unknown.": "Ṱhoho dza muvhigo wo fhelelaho dzi vhulunga zwiṱhanganyelo zwa mavu zwi si na tshisima zwi sa ḓivhei.",
 };
 export default copy;

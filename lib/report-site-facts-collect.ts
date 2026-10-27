@@ -17,8 +17,13 @@
 // exported ringAreaOf + pointInRing at the same ground scale the sheets use, so it is the same
 // maths, not a second opinion.
 
-import { loadEnterpriseChoices } from './animal-enterprises';
+import { loadAnimalSeasonChoices, loadEnterpriseChoices } from './animal-enterprises';
 import { captureReportCropPlan } from './report-crop-plan';
+import { loadTreeSeasonChoices, placedTreeGroups } from './perennial-harvest';
+import { planningTreeSeasons } from './production-product-guidance';
+import { growingZonesForClimate } from './growing-zones';
+import { loadSurvey, type SiteSurvey } from './site-survey';
+import type { LocationData } from './types';
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
 import type { Feature } from 'geojson';
@@ -29,11 +34,12 @@ import { summariseDesignStudio } from '@/lib/design-studio-report';
 import { bedsFromDesignCanvas, BED_DEF_IDS } from '@/lib/design-beds-bridge';
 import { studioBoundaryMetrics, surveyRoofAreaM2, studioRoofAreaM2 } from '@/lib/studio-traced-areas';
 import { statedTankCapacityLitres, TANK_IDS } from '@/lib/water-system';
-import { computeTracedAreaTotals, loadDesignStudioState, mergeFarmShapesIntoDesignState } from '@/lib/design-studio';
+import { computeTracedAreaTotals, loadDesignStudioState, mergeFarmShapesIntoDesignState, designSiteIdFromLocation } from '@/lib/design-studio';
 import { readLocalFarmShapes } from '@/lib/map-sync';
 import { loadWaterPoints, type WaterPoint } from '@/lib/water-points';
 import { loadCropPlan, type CropPlanState } from '@/lib/crop-plan';
 import { cropByKey, MONTHS_SHORT } from '@/lib/crop-catalog';
+import { normaliseMarketEvidence } from './report-site-facts';
 import type {
   FactElementGroup,
   FactTank,
@@ -157,6 +163,7 @@ export interface CollectFactsInput {
   /** The farm's own name, from the saved place. Injected rather than read so the caller keeps
    *  control of WHICH pin the report is about. */
   farmName?: string;
+  location?: LocationData;
   /** Overridable for tests; defaults to the app's own loaders. */
   waterPoints?: WaterPoint[];
   cropPlan?: CropPlanState | null;
@@ -171,6 +178,10 @@ export interface CollectFactsInput {
  */
 export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFacts {
   const facts: ReportSiteFacts = {};
+  try {
+    const evidence = normaliseMarketEvidence(loadSurvey(input.siteId)?.marketEvidence);
+    if (evidence) facts.marketEvidence = evidence;
+  } catch { /* Missing saved answers must not become inferred market evidence. */ }
   if (input.farmName?.trim()) facts.farmName = input.farmName.trim();
 
   const canvas = input.canvas;
@@ -330,7 +341,8 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
     // The account stores plans for several gardens together. Only rows whose
     // physical bed belongs to this report's canvas describe this site.
     const plantings = (plan?.plantings ?? []).filter(p => bedLabelById.has(p.bedId));
-    if (plantings.length) {
+    const cropSnapshot = canvas && plan ? collectReportCropSnapshot(canvas, plan, input.siteId, new Date(), input.location) : undefined;
+    if (plantings.length || cropSnapshot?.annualProduction?.rows.length) {
       const byCrop = new Map<string, { name: string; sowMonths: Set<number>; bedLabels: Set<string>; alreadyGrowing: boolean; recurringMonths: Set<number>; onceMonths: Set<number> }>();
       const bedsUsed = new Set<string>();
       for (const planting of plantings) {
@@ -358,7 +370,7 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
         bedsUsed.add(planting.bedId);
       }
       facts.crop = {
-        snapshot: canvas ? captureReportCropPlan(canvas, plan, input.siteId) : undefined,
+        snapshot: cropSnapshot,
         plantingCount: plantings.length,
         bedsPlanted: bedsUsed.size,
         crops: [...byCrop.values()].map((entry) => ({
@@ -379,4 +391,15 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
   } catch { /* no crop plan is a fact, not an error */ }
 
   return facts;
+}
+
+/** Capture the same site-specific choices the crop planner reads, without publishing draft survey answers. */
+export function collectReportCropSnapshot(canvas: DesignCanvasState, plan: CropPlanState, siteId: string, now = new Date(), location?: LocationData, survey?: SiteSurvey) {
+  const treeSeasons = loadTreeSeasonChoices(siteId);
+  const matchingLocation = location && designSiteIdFromLocation(location) === siteId ? location : undefined;
+  const zones = matchingLocation ? growingZonesForClimate(matchingLocation.climate.monthlyTemp, matchingLocation.rainfall.monthly, matchingLocation.lat) : [];
+  return captureReportCropPlan(canvas, plan, siteId, now, {
+    treeSeasons, animalSeasons: loadAnimalSeasonChoices(siteId), animalChoices: loadEnterpriseChoices(siteId),
+    planning: planningTreeSeasons(placedTreeGroups(canvas.items), zones, (survey?.siteId === siteId ? survey : loadSurvey(siteId))?.productionConditions, treeSeasons),
+  });
 }

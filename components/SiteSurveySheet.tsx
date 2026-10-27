@@ -6,7 +6,7 @@ import { X, ChevronRight, ChevronLeft, Check, Users, Droplets, Home, Leaf, Alert
 import { useLanguage } from '@/lib/i18n';
 import { useAppConfirm } from '@/components/AppConfirm';
 import {
-  saveSurvey,
+  saveSurvey, siteReportPurposeLabel,
   readSurveyDraft, writeSurveyDraft, clearSurveyDraft, surveyDraftScope, surveyDraftScopeIsActive, surveyRevision,
   type SiteSurveyDraft,
   loadSurvey,
@@ -17,6 +17,7 @@ import {
   type ProductionCategory,
   type ReportedProduction,
   type SiteSurvey,
+  type SiteReportPurpose,
   type SiteProductionConditions,
   type PoultryManagement,
 } from '@/lib/site-survey';
@@ -38,6 +39,7 @@ interface Props {
    *  filled on a freshly-saved pin lands under the same key it's read back from. */
   coords?: { lat: number; lon: number } | null;
   annualRainfallMm?: number;
+  locationData?: LocationData;
   onSaved: (survey: SiteSurvey) => void;
   onClose: () => void;
 }
@@ -326,7 +328,7 @@ function SurveyRecoverySession(props: Props & { siteId: string; scope: string })
     initialDraftToken={choice === 'resume' ? stored.token : null}/>;
 }
 
-function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, scope, initialDraft, initialDraftToken }: Props & {
+function SurveyEditor({ placeId, coords, annualRainfallMm, locationData, onSaved, onClose, scope, initialDraft, initialDraftToken }: Props & {
   scope: string; initialDraft: SiteSurveyDraft | null; initialDraftToken: string | null;
 }) {
   const { lang, t } = useLanguage();
@@ -376,6 +378,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, sco
 
 
   // Step 0 — Site & Goals
+  const [reportPurpose, setReportPurpose] = useState<SiteReportPurpose | undefined>(existing?.reportPurpose);
   const [siteType, setSiteType] = useState<'homestead' | 'community'>(existing?.siteType ?? 'homestead');
   const [adults, setAdults] = useState(existing?.adults ?? '');
   const [memberCount, setMemberCount] = useState(existing?.memberCount ?? '');
@@ -475,6 +478,9 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, sco
   const [challenges, setChallenges] = useState<string[]>(existing?.challenges ?? []);
   const [isCommercial, setIsCommercial] = useState(existing?.isCommercial ?? false);
   const [marketType, setMarketType] = useState(existing?.marketType ?? '');
+  const [marketNotes, setMarketNotes] = useState(existing?.marketEvidence?.notes ?? '');
+  const [marketSource, setMarketSource] = useState(existing?.marketEvidence?.source ?? '');
+  const [marketObservedOn, setMarketObservedOn] = useState(existing?.marketEvidence?.observedOn ?? '');
   const [notes, setNotes] = useState(existing?.notes ?? '');
 
   const totalRoof = (Number(roofMain) || 0) + (Number(roofSecondary) || 0);
@@ -485,6 +491,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, sco
 
   const survey: SiteSurvey = {
       siteId,
+      reportPurpose,
       placeId,
       savedAt: existing?.savedAt ?? '',
       siteType,
@@ -512,6 +519,8 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, sco
       challenges,
       isCommercial,
       marketType: isCommercial ? marketType : undefined,
+      marketEvidence: marketNotes || marketSource || marketObservedOn
+        ? { notes: marketNotes, source: marketSource, observedOn: marketObservedOn } : undefined,
       reportedProduction: reportedProduction.filter((row) =>
         !!row.name || !!row.unit || row.quantityPerYear !== null || row.usedByHousehold !== null
         || row.sold !== null || row.incomeZar !== null || (row.harvestMonths?.length ?? 0) > 0
@@ -657,6 +666,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, sco
             <p>{t('surveyWelcomeIntro')}</p>
             <div className={styles.illustration}><Illustration name="example-hero"/><span>{t('surveyIllustrationCaption')}</span></div>
           </div>
+          <fieldset className={styles.reviewCard}><legend>What are you preparing?</legend><p>Choose the purpose, then the questionnaire length. Your maps and production plan remain linked to this site.</p><div className={styles.modeCards}>{(['potential','complete'] as const).map(purpose => <button type="button" key={purpose} className={styles.modeCard} aria-pressed={survey.reportPurpose === purpose} onClick={() => setReportPurpose(purpose)}><h2>{siteReportPurposeLabel(purpose, lang)}</h2><p>{purpose === 'potential' ? 'Understand the site, constraints and possibilities before detailed design.' : 'Bring the site survey, saved maps and whole-year production plan together. Missing evidence stays visible.'}</p></button>)}</div></fieldset>
           <div className={styles.modeCards}>
             {(['short','full'] as const).map(value => <button key={value} className={styles.modeCard} aria-pressed={mode === value} onClick={() => setMode(value)}>
               <div className={styles.modeCardTop}>{value === 'short' ? <Sprout size={26}/> : <NotebookPen size={26}/>}<span><RegionalWelcomeCopy language={lang} field={value === 'short' ? 'fiveSections' : 'sevenSections'}>{value === 'short' ? t('surveyFiveSections') : t('surveySevenSections')}</RegionalWelcomeCopy></span>{mode === value ? <CircleCheck size={23}/> : <Circle size={23}/>}</div>
@@ -676,7 +686,7 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, sco
             <p className={styles.intro}>{step === 2 && lang === 'zu' ? <SurveyZuluDraftPair english="Record what you already grow. In the comprehensive survey, open only the production categories you want to record.">{tips[step]}</SurveyZuluDraftPair> : tips[step]}</p>
             {step < 7 && <details className={styles.mobileGuide}><summary><Info size={16}/>{step === 5 ? paired('surveyFieldGuide', 'Along the way') : step === 6 ? paired('surveyFieldGuide', 'Field guide') : t('surveyFieldGuide')}</summary><p>{step === 2 && lang === 'zu' ? <SurveyZuluDraftPair english="A notebook, harvest record or sales record can help. Do not add kilograms to bunches. Leave figures blank when your records do not cover a full year.">{fieldGuides[step]}</SurveyZuluDraftPair> : fieldGuides[step]}</p></details>}
             {step === 7 && missingSections.length > 0 && <div className={styles.missing}><strong>{t('surveyMissingEssentials')}</strong><p>{lang === 'zu' ? SURVEY_MISSING_HINT_ENGLISH : t('surveyMissingHint')}</p>{missingSections.map(item => <button key={item.step} onClick={() => goTo(item.step)}>{STEPS[item.step]}<ArrowRight size={16}/></button>)}</div>}
-            {step === 7 && <SiteSurveyReview survey={survey} onEdit={id => goTo(mode === 'short' && (id === 3 || id === 4) ? 2 : id)} onEditProduction={() => { setMode('full'); goTo(2); }} productionLabels={PRODUCTION_ROWS} months={MONTH_LABELS}/>}
+            {step === 7 && <SiteSurveyReview survey={survey} onEdit={id => goTo(mode === 'short' && (id === 3 || id === 4) ? 2 : id)} onEditProduction={() => { setMode('full'); goTo(2); }} location={locationData} productionLabels={PRODUCTION_ROWS} months={MONTH_LABELS}/>}
             {step === 7 && ((survey.reportedProduction?.length ?? 0) > 0 || productionYear !== '') && <div lang="en" className="text-sm mb-5" style={{ padding: '14px 16px', borderRadius: 14, border: '1px solid var(--border)', background: 'var(--surface-2)' }}>
               <strong>Year for reported production: {productionYear || 'Not recorded'}</strong>
               <p style={{ color: 'var(--text-2)' }}>These are past or recorded results, separate from future production forecasts.</p>
@@ -1151,6 +1161,23 @@ function SurveyEditor({ placeId, coords, annualRainfallMm, onSaved, onClose, sco
                 </div>
               </div>
             )}
+            <details className={styles.marketEvidence} lang="en">
+              <summary>Local market notes (optional){lang !== 'en' ? ' · English' : ''}</summary>
+              <p>Record what you found out about selling. Leave unknown details blank. These notes help the report show what still needs checking.</p>
+              <label>
+                What did you learn?
+                <textarea value={marketNotes} maxLength={2000} rows={4} onChange={event => setMarketNotes(event.target.value)} placeholder="Product, buyer or outlet, quantity and unit, price and date, transport or other conditions" />
+              </label>
+              <label>
+                Where did this information come from?
+                <input value={marketSource} maxLength={240} onChange={event => setMarketSource(event.target.value)} placeholder="For example: a buyer discussion, market visit or document reference" />
+              </label>
+              <label>
+                When did you observe or discuss it?
+                <input type="date" value={marketObservedOn} onChange={event => setMarketObservedOn(event.target.value)} />
+              </label>
+              <p>A note is not a confirmed sale. Check the details again before spending money to supply a buyer.</p>
+            </details>
             <div className="font-sans" style={{ padding: '12px 14px', borderRadius: 12, background: 'rgba(31,77,43,0.06)', color: 'var(--text-2)', fontSize: 12.5, lineHeight: 1.5 }}>
               {paired('surveyIncomeSalesNote', 'You can record what was sold and income earned against each item in the Current Production step.')}
             </div>

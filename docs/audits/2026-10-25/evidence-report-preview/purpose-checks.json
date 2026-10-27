@@ -1,0 +1,21 @@
+{
+  "environment": "Deployed public demonstration workspace; synthetic unsaved notes only",
+  "complete": {
+    "purpose": "Report purpose: Complete site plan. Questionnaire length is a separate choice.",
+    "notesRetained": true,
+    "observationDate": "Not recorded"
+  },
+  "potential": {
+    "purpose": "Report purpose: Site potential. Questionnaire length is a separate choice.",
+    "notesRetained": true,
+    "sourceRetained": true
+  },
+  "phone": {
+    "viewportWidth": 390,
+    "documentWidth": 390,
+    "fieldTextPx": 16,
+    "nativeViewportScreenshot": "market-short-phone.png"
+  },
+  "savedToSite": false,
+  "paidGeneration": false
+}

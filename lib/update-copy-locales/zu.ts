@@ -151,5 +151,17 @@ const copy:UpdateCopy={
   "Visit, training and programme reports compare recorded delivery across periods.": "Imibiko yokuvakasha, yokuqeqeshwa neyohlelo iqhathanisa okwenziwe okuqoshiwe ezikhathini ezehlukene.",
   "MEL reports compare dated readings and include agreed donor indicator details.": "Imibiko ye-MEL iqhathanisa ukufundwa okunezinsuku futhi ifaka imininingwane yezinkomba zabaxhasi esivunyelwene ngayo.",
   "Donor evidence, missing records and current snapshots stay clear in every PDF.": "Ubufakazi babaxhasi, amarekhodi angekho nezithombe zamanje kuhlala kucacile kuyo yonke i-PDF.",
+  "Survey and reports now show crops, food-forest and animal products through the year.": "Uhlolo nemibiko manje kubonisa izitshalo, imikhiqizo yehlathi lokudla neyezilwane unyaka wonke.",
+  "Choose Site potential or Complete site plan, then the detail you need.": "Khetha Amathuba endawo noma Uhlelo oluphelele lwendawo, bese ukhetha imininingwane oyidingayo.",
+  "Record plan adds a scaled map with symbols and a legend. Download or save it without AI.": "Uhlelo lwerekhodi lwengeza imephu elinganisiwe enezimpawu nencazelo yazo. Yilande noma uyigcine ngaphandle kwe-AI.",
+  "Prepared examples are labelled clearly; unused report settings are hidden.": "Izibonelo ezilungiselelwe zibhalwe ngokucacile; izilungiselelo zombiko ezingasetshenziswa ziyafihlwa.",
+  "Open site reports": "Vula imibiko yendawo",
+  "Menu → Reports": "Imenyu → Imibiko",
+  "Review the report purpose, annual production plan and saved maps for your site.": "Buyekeza inhloso yombiko, uhlelo lokukhiqiza lonyaka namamephu agciniwe endawo yakho.",
+  "Open Design Studio": "Vula Isitudiyo Sokuklama",
+  "Menu → Design Studio": "Imenyu → Isitudiyo Sokuklama",
+  "Open Preview & export, then Record plan for the scaled diagram and its legend.": "Vula Ukubuka kuqala nokuthumela, bese ukhetha Uhlelo lwerekhodi ukuze uthole umdwebo olinganisiwe nencazelo yawo.",
+  "Market notes keep their source and date. Selling plans stay separate from recorded sales.": "Amanothi emakethe agcina umthombo wawo nosuku. Izinhlelo zokuthengisa zihlala zihlukile ekuthengiseni okurekhodiwe.",
+  "Full report headers keep unsourced soil values unknown.": "Izihloko zombiko ophelele zigcina amanani omhlabathi angenamthombo engaziwa.",
 };
 export default copy;

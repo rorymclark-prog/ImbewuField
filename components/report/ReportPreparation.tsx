@@ -11,6 +11,7 @@ import { collectReportSiteFacts } from '@/lib/report-site-facts-collect';
 import { loadCanvasState } from '@/lib/design-canvas';
 import { savePlace, type SavedPlace } from '@/lib/saved-places';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
+import type { SiteSurvey } from '@/lib/site-survey';
 import type { LocationData } from '@/lib/types';
 import { useLanguage } from '@/lib/i18n';
 import styles from './ReportPreparation.module.css';
@@ -18,7 +19,7 @@ import styles from './ReportPreparation.module.css';
 const EvidenceSheet=dynamic(()=>import('../EvidenceSheet'),{ssr:false});
 const SiteSurveySheet=dynamic(()=>import('../SiteSurveySheet'),{ssr:false});
 const icons={photos:Camera,soil:FlaskConical,water:Droplets,survey:ClipboardList,boundary:Map,design:PenTool,crops:Sprout};
-export default function ReportPreparation({location,place,onSavedPlace,onChanged,snapshot,maps,onViewMaps}:{location:LocationData;place?:SavedPlace;onSavedPlace:(place:SavedPlace)=>void;onChanged:()=>void;snapshot:boolean;maps:ReportDesignRecords['maps'];onViewMaps:()=>void}) {
+export default function ReportPreparation({location,place,onSavedPlace,onChanged,snapshot,maps,onViewMaps,onSurveySaved}:{location:LocationData;place?:SavedPlace;onSavedPlace:(place:SavedPlace)=>void;onChanged:()=>void;snapshot:boolean;maps:ReportDesignRecords['maps'];onViewMaps:()=>void;onSurveySaved?:(survey:SiteSurvey)=>void}) {
   const { lang: language } = useLanguage();
   const copy = (source: string, values?: Record<string, string | number>) => reportPreparationText(source, language, values);
   const progress=useSiteProgress(location);
@@ -33,7 +34,7 @@ export default function ReportPreparation({location,place,onSavedPlace,onChanged
   const currentFacts=designRecords?.siteId===siteId?designRecords.facts:null;
   useEffect(()=>{
     const read=()=>{
-      setDesignRecords({siteId,facts:collectReportSiteFacts({siteId,lat:location.lat,lon:location.lon,canvas:loadCanvasState(siteId)})});
+      setDesignRecords({siteId,facts:collectReportSiteFacts({location,siteId,lat:location.lat,lon:location.lon,canvas:loadCanvasState(siteId)})});
     };
     read();
     window.addEventListener('focus',read);
@@ -63,6 +64,6 @@ export default function ReportPreparation({location,place,onSavedPlace,onChanged
     </details>
     {changed&&<p role="status">{copy('Site evidence updated. Choose Generate new report to include it in the advice.')}</p>}
     {sheet&&place&&<EvidenceSheet key={`${place.id}:${sheet.group.key}`} siteId={evidenceSiteId(place.id)} group={sheet.group} item={sheet.item} onClose={()=>setSheet(null)} onChanged={refresh}/>}
-    {survey&&place&&<SiteSurveySheet placeId={place.id} coords={location} annualRainfallMm={location.rainfall.annual} onClose={()=>setSurvey(false)} onSaved={()=>{setSurvey(false);refresh();}}/>}
+    {survey&&place&&<SiteSurveySheet placeId={place.id} coords={location} annualRainfallMm={location.rainfall.annual} locationData={location} onClose={()=>setSurvey(false)} onSaved={saved=>{setSurvey(false);onSurveySaved?.(saved);refresh();}}/>}
   </section>;
 }

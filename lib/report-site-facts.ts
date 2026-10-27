@@ -177,7 +177,44 @@ export interface FactCropPlan {
   crops: Array<{ name: string; sowMonths: string[]; bedLabels: string[]; alreadyGrowing: boolean; firstSeasonOnlyMonths: string[] }>;
 }
 
+/** Notes remain reported claims. A save date or a municipality name cannot verify a buyer. */
+export interface MarketEvidence {
+  notes?: string;
+  source?: string;
+  observedOn?: string;
+}
+
+export function normaliseMarketEvidence(value: unknown): MarketEvidence | undefined {
+  if (!isRec(value)) return undefined;
+  const notes = text(value.notes, 2000) ?? undefined;
+  const source = text(value.source, 240) ?? undefined;
+  const date = typeof value.observedOn === 'string' ? value.observedOn.trim() : '';
+  const observedOn = date && /^\d{4}-\d{2}-\d{2}$/.test(date)
+    && !Number.isNaN(Date.parse(`${date}T00:00:00Z`))
+    && new Date(`${date}T00:00:00Z`).toISOString().slice(0, 10) === date
+    ? date : undefined;
+  return notes || source || observedOn ? { notes, source, observedOn } : undefined;
+}
+
+/** The same source labels travel into the prompt, saved report and short handout. */
+export function marketEvidenceLines(value: unknown): string[] {
+  const evidence = normaliseMarketEvidence(value);
+  return [
+    `Local market notes (farmer-reported): ${evidence?.notes ?? 'Not recorded'}`,
+    `Market source as reported: ${evidence?.source ?? 'Not recorded'}`,
+    `Market observation / discussion date: ${evidence?.observedOn ?? 'Not recorded; the survey save date is not an observation date'}`,
+    'These notes are not independently verified demand, a current price or a purchase commitment. Confirm buyer, product, quantity, unit, price, transport and date before planning sales.',
+  ];
+}
+
+export function marketEvidencePromptBlock(value: unknown): string {
+  return ['LOCAL MARKET EVIDENCE', ...marketEvidenceLines(value),
+    'Treat missing or undated market evidence as a gap. Administrative names and regional farming context do not establish local demand, undersupply, distance, an active buyer or available funding. Present unverified opportunities as questions to investigate; never invent market gaps, prices, contacts, contracts or programme availability.',
+  ].join('\n');
+}
+
 export interface ReportSiteFacts {
+  marketEvidence?: MarketEvidence;
   /** Canonical item identities for purchasing guidance, never geometry or guessed labels. */
   productionItems?: PlacedPlant[];
   productionEnterpriseChoices?: Partial<Record<HousingKind, string>>;
@@ -289,6 +326,9 @@ function status(value: unknown): FactStatus {
 export function normaliseReportSiteFacts(value: unknown): ReportSiteFacts | null {
   if (!isRec(value)) return null;
   const facts: ReportSiteFacts = {};
+
+  const marketEvidence = normaliseMarketEvidence(value.marketEvidence);
+  if (marketEvidence) facts.marketEvidence = marketEvidence;
 
   const farmName = text(value.farmName, 60);
   if (farmName) facts.farmName = farmName;
@@ -730,6 +770,12 @@ export function cropPlanPromptBlock(facts: ReportSiteFacts | null | undefined): 
       : '';
     lines.push(`· ${row.name} — sown ${row.sowMonths.join(', ')}${row.bedLabels.length ? ` in ${row.bedLabels.join(', ')}` : ''}${row.alreadyGrowing ? ' (already in the ground)' : ''}${onceNote}`);
   }
+  const production = crop.snapshot?.annualProduction;
+  if (production) {
+    lines.push('WHOLE-YEAR FOOD AND PRODUCT PLAN (dated snapshot; not recorded harvests)', `Period: ${production.months.join(', ')}`);
+    for (const row of production.rows) lines.push(`· ${row.name} / ${row.product} (${row.kind}): ${row.months.length ? row.months.map(i => production.months[i]).join(', ') : 'timing not established'}${row.reference ? ' — sourced reference window' : ''}. ${row.note}`);
+    lines.push('Keep reference windows, proposed systems and local observations qualified as above. Housing units are not animal counts. Missing timing is not evidence of a food gap; no food-adequacy, yield or income claim follows from this calendar.');
+  }
   lines.push(
     'Build the Planting Calendar, Crop Rotation and Year-Round Food Production sections AROUND this existing plan: '
     + 'name these crops and these beds, say what the plan already covers, and only then name the gaps it does not. '
@@ -895,9 +941,15 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
   row('Annual rainfall', t('{rainfall} mm — wet {wet}, dry {dry}',{rainfall:input.rainfallMm,wet:recordsSeasonLabel(language,input.wetSeason),dry:recordsSeasonLabel(language,input.drySeason)}), input.rainfallSource === 'nasa-power' ? 'NASA POWER' : input.rainfallSource === 'open-meteo' ? 'Open-Meteo' : t('Climate data service'));
   if (input.vegUnit) row('Natural vegetation', input.vegUnit, 'SANBI 2018 National Vegetation Map');
   if (input.bruLabel) row('Agro-ecological zone', t('Closest to {label}',{label:input.bruLabel}), t('KZN DARD bioresource units — a best-effort climate match, not a verified classification'));
-  // A known model class can use the diagram's existing draft; uploaded laboratory wording stays raw.
-  const soilTexture=input.soilSource==='lab'||typeof input.soilTexture!=='string'?String(input.soilTexture):reportVisualText(input.soilTexture,language);
-  row('Soil (0-30 cm)', t('pH {ph} · {carbon}% organic carbon · {texture}',{ph:input.soilPh,carbon:input.soilOrganicCarbon,texture:soilTexture}), t(SOIL_SOURCE_LABEL[input.soilSource ?? ''] ?? 'Soil data source not recorded'));
+  // Location responses also carry generic placeholders. The narrative and short guide already
+  // reject them; printing them in this deterministic header would undo that safeguard.
+  if (input.soilSource === 'lab' || input.soilSource === 'soilgrids') {
+    // A known model class can use the diagram's existing draft; uploaded laboratory wording stays raw.
+    const soilTexture=input.soilSource==='lab'||typeof input.soilTexture!=='string'?String(input.soilTexture):reportVisualText(input.soilTexture,language);
+    row('Soil (0-30 cm)', t('pH {ph} · {carbon}% organic carbon · {texture}',{ph:input.soilPh,carbon:input.soilOrganicCarbon,texture:soilTexture}), t(SOIL_SOURCE_LABEL[input.soilSource]));
+  } else {
+    row('Soil (0-30 cm)', t('Not measured; arrange a soil test'), t('No laboratory result or SoilGrids source recorded'));
+  }
   row('Elevation, slope, aspect', t('{elevation} m · {slope}° · faces {aspect}',{elevation:input.elevationM,slope:input.slopeDeg,aspect:input.aspectLabel}), t('SRTM elevation model'));
 
   const absent = absentWaterBodies(facts, input.hasMapWaterPolygons);
@@ -906,6 +958,16 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
   }
 
   out.push('');
+  // A farmer's line breaks or Markdown cannot create extra report headings or table rows. The fixed
+  // labels follow the report language like the rest of this header; the farmer's notes, source and
+  // date stay exactly as recorded, and the prompt keeps marketEvidenceLines' English.
+  const market = normaliseMarketEvidence(facts?.marketEvidence);
+  out.push('## ' + t('Local market evidence'), '', ...[
+    t('Local market notes (farmer-reported): {notes}', { notes: market?.notes ?? t('Not recorded') }),
+    t('Market source as reported: {source}', { source: market?.source ?? t('Not recorded') }),
+    t('Market observation / discussion date: {date}', { date: market?.observedOn ?? t('Not recorded; the survey save date is not an observation date') }),
+    t('These notes are not independently verified demand, a current price or a purchase commitment. Confirm buyer, product, quantity, unit, price, transport and date before planning sales.'),
+  ].flatMap(line => [line.replace(/[\\`*_{}\[\]<>#|]/g, '\\$&').replace(/[\r\n]+/g, ' '), '']));
   return out.join('\n');
 }
 
