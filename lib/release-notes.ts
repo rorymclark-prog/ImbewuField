@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '27 October 2026', sha: 'c1252591c', changes: [
+  { when: '27 October 2026', sha: 'f87f10f4', changes: [
     'Map legends have thinner borders and clearer scale marks.',
     'New map legends use spare margin space for larger, clearer lettering.',
     'Paper base maps show each building you traced, with separate building names.',
@@ -55,6 +55,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'All nine map sheets use the same legend box, fonts and spacing.',
     'New drawings keep the legend on the right; your saved maps stay available.',
     'Long map headings wrap inside their legend box.',
+  ] },
+  { when: '26 October 2026', sha: '16bca466', changes: [
+    'Home, Map, Studies and Prices now open offline, even before you have visited them.',
+    'Error messages now explain the problem in plain words, not technical text.',
   ] },
   { when: '26 October 2026', sha: 'eab699fb', changes: [
     'Market notes keep their source and date. Selling plans stay separate from recorded sales.',
@@ -92,6 +96,13 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     where: 'Organisation → Reports → MEL evidence', href: '/ngo',
     detail: 'Compare milestone dates and review linked donor definitions and evidence.',
   }] },
+  { when: '26 October 2026', sha: '72434e1e', changes: [
+    'The menu, field-visit form and crop prices are easy to read in dark mode.',
+    'Messages, the exchange form and Records links are clearer, in light and dark.',
+    'Lima no longer covers the last buttons of a manual chapter.',
+    'A practice message on Contact now says it was kept on this device, not sent.',
+    'Report totals now match their charts, and report counts read correctly.',
+  ] },
   { when: '26 October 2026', sha: '98c8a22e', changes: [
     'Home shows today\'s date in isiZulu again instead of placeholder words.',
   ] },

@@ -56,3 +56,17 @@ Finish the final ordered checks and exact-head CI, merge the user-authorized
 #1131 release, and verify the production SHA. The normal saved-map redraw flow
 must show the new key while retaining old drawings. Existing bitmaps require a
 deliberate free redraw after refresh to acquire this template.
+
+## Release integration after the visual audit
+
+The final rendered revision `f87f10f4` completed the local ordered checks:
+6,041 tests, 6,040 pass, zero failures, one existing shape-sync TODO. The
+branch CI run [40472525968](https://github.com/rorymclark-prog/ImbewuField/actions/runs/40472525968)
+also passed with those totals. While the PR job was finishing, production
+advanced to `31d0ba801` through #1125 (waves 24–27), creating conflicts in the
+audit index and release notes. Both entries are retained in this integration;
+all four locale dictionaries merge additively. Main’s offline, theme, keyboard
+and plain-error changes are retained. The map painters and the recorded nine-map
+PDF are unchanged by the integration. The combined revision has its own ordered
+checks and exact-head CI gate; the earlier passing result is historical evidence,
+not a substitute. Final results are recorded on #1131 and issue #35.

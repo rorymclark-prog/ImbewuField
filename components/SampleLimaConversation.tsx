@@ -7,7 +7,7 @@ export default function SampleLimaConversation({role}:{role:string}) {
   const example=sampleLimaFor(role);
   const [followed,setFollowed]=useState(false);
   return <section className={styles.root} style={{padding:16,borderRadius:16}} aria-label="Lima example conversation">
-    <span className={styles.tag}>Lima · guided conversation</span><h2 style={{marginTop:12}}>{example.title}</h2>
+    <span className={styles.tag} style={{color:'var(--text-primary)'}}>Lima · guided conversation</span><h2 style={{marginTop:12}}>{example.title}</h2>
     <p>Explore this prepared conversation. Live questions are available from your own workspace.</p>
     <article className={styles.card}><strong>You</strong><p>{example.question}</p>{'image' in example && <img data-photo-preview src={example.image} alt="AI-generated example of aphids on a leaf" style={{width:'100%',maxWidth:300,borderRadius:12}}/>}</article>
     <article className={styles.card} style={{marginTop:12}}><strong>Lima</strong><p>{example.answer}</p>{'source' in example && <a href={example.source} target="_blank" rel="noreferrer">Read the aphid management reference</a>}</article>

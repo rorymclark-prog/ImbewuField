@@ -6,6 +6,7 @@ import { useState, useEffect, useMemo, useRef } from 'react';
 import { Plus, Trash2, Printer, Share2, FilePlus2, Clock, X, ChevronDown, Building2, Landmark, Save, Sprout } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 import { recordsDate } from '@/lib/records-months';
 import {
   isRecordsRegionalLang, recordsDraftNotice, recordsFill, recordsPaired, recordsQuantityLabel, recordsTemplate,
@@ -545,14 +546,14 @@ export default function InvoicePage() {
     };
     try {
       const invalid = invoiceEntryError(candidate);
-      if (invalid) throw new Error(invalid);
-      if (candidate.items.some(item => normaliseRecordUnit(item.unit) !== null && !validRecordQuantity(item.qty, item.unit))) throw new Error(ui('Enter a positive quantity. Eggs and items need whole numbers.'));
+      if (invalid) throw new UserFacingError(invalid);
+      if (candidate.items.some(item => normaliseRecordUnit(item.unit) !== null && !validRecordQuantity(item.qty, item.unit))) throw new UserFacingError(ui('Enter a positive quantity. Eggs and items need whole numbers.'));
       if (sourceSaleId) {
-        if (!linkedSale) throw new Error(ui('Load the recorded sale before saving this invoice.'));
+        if (!linkedSale) throw new UserFacingError(ui('Load the recorded sale before saving this invoice.'));
         const mismatch = recordedSaleInvoiceError(candidate, linkedSale, sample ? 'demo' : user?.uid ?? '');
-        if (mismatch) throw new Error(mismatch);
-        if (!sample && !navigator.onLine) throw new Error(ui('Connect to the internet to link this existing sale safely.'));
-        if (!stageInvoiceSaleLink(candidate)) throw new Error(ui('Free some device storage before linking this sale. Its existing record has not been changed.'));
+        if (mismatch) throw new UserFacingError(mismatch);
+        if (!sample && !navigator.onLine) throw new UserFacingError(ui('Connect to the internet to link this existing sale safely.'));
+        if (!stageInvoiceSaleLink(candidate)) throw new UserFacingError(ui('Free some device storage before linking this sale. Its existing record has not been changed.'));
         // Link first. Until this device has the invoice, cashLedgerSales retains the tagged
         // original sale. A failed device write therefore cannot double or erase its cash.
         try { await syncInvoiceSales(candidate); }
@@ -561,17 +562,17 @@ export default function InvoicePage() {
           // "NetworkError when attempting to fetch resource"…) straight into what the farmer
           // sees. Log it for debugging; show only the translated sentence.
           console.error(error);
-          throw new Error(ui('Connect to the internet to link this existing sale safely.'));
+          throw new UserFacingError(ui('Connect to the internet to link this existing sale safely.'));
         }
       }
-      if (!sameAccount()) throw new Error(ui('Your account changed. Open the invoice again in the correct workspace.'));
+      if (!sameAccount()) throw new UserFacingError(ui('Your account changed. Open the invoice again in the correct workspace.'));
       const list = saveInvoice(candidate);
       const stored = list.find((x) => x.id === id);
       if (!stored || stored.status !== candidate.status || stored.paidAt !== candidate.paidAt
         || stored.sourceSaleId !== candidate.sourceSaleId || stored.total !== candidate.total
         || stored.paperReference !== candidate.paperReference
         || JSON.stringify(stored.items) !== JSON.stringify(candidate.items)) {
-        throw new Error(ui('This invoice could not be saved. Check your device storage and keep the original details of any linked sale, then try again.'));
+        throw new UserFacingError(ui('This invoice could not be saved. Check your device storage and keep the original details of any linked sale, then try again.'));
       }
       addCustomer(billTo, buyerDetails);
       items.forEach((it) => { if (it.desc.trim()) addProduct({ desc: it.desc.trim(), unit: it.unit, price: it.price }); });
@@ -595,7 +596,7 @@ export default function InvoicePage() {
       if (sameAccount()) setSaveMessage(sourceSaleId ? ui('Invoice saved and linked to the existing sale. Its quantity and income are counted once.') : ui('Invoice saved.'));
       return sameAccount() ? id : null;
     } catch (error) {
-      if (sameAccount()) setSaveError(error instanceof Error ? ui(error.message) : ui('The invoice could not be saved. Please try again.'));
+      if (sameAccount()) setSaveError(ui(userFacingMessage(error, 'The invoice could not be saved. Please try again.')));
       return null;
     } finally {
       persistBusy.current = false;

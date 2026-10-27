@@ -6,6 +6,7 @@ import { PenLine, Sprout, GraduationCap, Loader2, Check, PencilRuler } from 'luc
 import type { LocationData } from '@/lib/types';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { networkFailureMessage } from '@/lib/network-failure';
+import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 import { useLanguage } from '@/lib/i18n';
 
 interface Props {
@@ -26,9 +27,9 @@ async function resizeImage(file: File, maxPx = 1400): Promise<{ data: string; me
   return new Promise((resolve, reject) => {
     const img = new Image();
     const reader = new FileReader();
-    reader.onerror = () => reject(new Error('Could not read file'));
+    reader.onerror = () => reject(new UserFacingError('Could not read file'));
     reader.onload = (e) => {
-      img.onerror = () => reject(new Error('Could not decode image'));
+      img.onerror = () => reject(new UserFacingError('Could not decode image'));
       img.onload = () => {
         const ratio = Math.min(maxPx / img.width, maxPx / img.height, 1);
         const canvas = document.createElement('canvas');
@@ -83,7 +84,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
       const resized = await resizeImage(file);
       setImageData(resized);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Could not process image');
+      setError(userFacingMessage(err, 'Could not process image', t));
       return;
     }
     if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);

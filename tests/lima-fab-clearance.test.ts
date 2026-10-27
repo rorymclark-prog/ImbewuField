@@ -91,3 +91,10 @@ for (const [label, rel, pattern] of [
 test('/reports no longer overrides the MelDashboard padding with a fixed 32px', () => {
   assert.doesNotMatch(source('../app/reports/page.tsx'), /paddingBottom:\s*32\b/);
 });
+
+// w24-09: the manual chapter page ends in Previous/Contents/Next and the "Compiled by" credit; on
+// a phone the launcher covered both. The document scrolls, so <main> carries the padding.
+test('manual chapter page reads --lima-fab-clearance for its bottom padding', () => {
+  const page = source('../app/manual/[lang]/[slug]/page.tsx');
+  assert.match(page, /paddingBottom: 'max\(64px, var\(--lima-fab-clearance, 0px\)\)'/);
+});
