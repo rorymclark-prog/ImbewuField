@@ -482,9 +482,10 @@ const ENGINES: Array<{ key: 'falgpt' | 'gemini'; label: string; sub: string }> =
  * geometry, every label and the whole legend are composited back on top afterwards, so much of the
  * fine detail 'high' pays for is covered up again before the farmer ever sees the sheet.
  */
-const RENDER_QUALITY_CHOICES: ReadonlyArray<{ key: RenderQuality; labelKey: string; subKey: string }> = [
+const RENDER_QUALITY_CHOICES: ReadonlyArray<{ key: RenderQuality; labelKey: string; subKey?: string }> = [
   { key: 'high', labelKey: 'designGlossyQualityHigh', subKey: 'designGlossyQualityHighSub' },
-  { key: 'medium', labelKey: 'designGlossyQualityMedium', subKey: 'designGlossyQualityMediumSub' },
+  // The old medium subtitle promises a GPT Image 2 cost ratio that does not apply to 2.5.
+  { key: 'medium', labelKey: 'designGlossyQualityMedium' },
   { key: 'low', labelKey: 'designGlossyQualityLow', subKey: 'designGlossyQualityLowSub' },
 ];
 
@@ -12021,7 +12022,7 @@ export default function DesignGlossy({
                       }}
                     >
                       <span style={{ fontWeight: 800, fontSize: 13 }}>{t(q.labelKey)}</span>
-                      <span style={{ fontSize: 10.5, opacity: active ? 0.85 : 0.6 }}>{t(q.subKey)}</span>
+                      {q.subKey && <span style={{ fontSize: 10.5, opacity: active ? 0.85 : 0.6 }}>{t(q.subKey)}</span>}
                     </button>
                   );
                 })}
