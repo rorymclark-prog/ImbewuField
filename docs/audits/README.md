@@ -4,6 +4,10 @@ This is the shared starting point for Rory, Claude and Codex. Read the latest
 record for the area being worked on before opening another audit. Build on its
 findings and subsequent changes; do not restart from an older snapshot.
 
+## Paid AI maps: start here
+
+Latest: [Paid AI composition audit — ghost strips, canopy clipping, roof overlays and export claims — 28 October 2026](2026-10-28/ai-map-composition-codex.md). Eight findings remain open; no rendering correction is claimed by this audit.
+
 ## Site reports and mapping: start here
 
 Latest integration: [Site reports with the published role reports and wave 23 — 26 October 2026](2026-10-26/site-report-role-integration-codex.md).
@@ -83,6 +87,8 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [Paid AI composition audit: eight open findings, with actual paid-output and synthetic mask evidence — 28 October 2026](2026-10-28/ai-map-composition-codex.md).
 
 - [Site reports #1099 and #1101 merged and verified on production (Codex handoff results) — 27 October 2026](2026-10-27/site-report-handoff-results-claude.md).
 - [Wave 28 keyboard focus in overlays: w28-01 to w28-06, focus moves in, Tab stays inside, Escape closes and returns focus; Lima opens from the keyboard — 27 October 2026](2026-10-27/wave-28-dialog-focus-claude.md).
