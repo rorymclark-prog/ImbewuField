@@ -1,6 +1,7 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "New AI glossy maps use GPT Image 2.5 Sunburst.": "Mimepe leyintshwa ya AI yo vangama yi tirhisa GPT Image 2.5 Sunburst.",
   "Offline saving and sending messages now have drafts in all four languages.": "Swiviko swa ku hlayisa handle ka vuhlanganisi ni ku rhumela sweswi swi ni mipfapfarhuto hi tindzimi hinkwato ta mune.",
   "Consent choices now show draft translations and the English source in all four languages.": "Swihlawuriwa swa mpfumelelo sweswi swi komba vuhundzuluxi bya mpfapfarhuto ni tsalwa ro sungula ra Xinghezi hi tindzimi hinkwato ta mune.",
   "Full production and yield notes now have four draft translations.": "Tinotsi leti heleleke ta vuhumelerisi ni ntshovelo sweswi ti ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",

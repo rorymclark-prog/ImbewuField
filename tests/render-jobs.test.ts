@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { OPENAI_MAP_MODEL, OPENAI_MAP_MODEL_LABEL } from '../lib/ai-render/model.ts';
 import {
   createRenderSceneSnapshot,
   decodeRenderSceneSnapshot,
@@ -174,10 +175,15 @@ test('completed queue results keep the durable job vendor in every user-visible 
     label: 'gpt-image-2',
   });
 
+  // New model selection must not retroactively relabel old paid maps.
+  assert.equal(renderJobAttribution('openai', OPENAI_MAP_MODEL).label, OPENAI_MAP_MODEL_LABEL);
+  assert.equal(renderJobAttribution('openai', 'gpt-image-2').label, 'gpt-image-2');
+  assert.equal(renderJobAttribution('gemini', OPENAI_MAP_MODEL).label, 'Gemini');
+
   const glossy = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
   const finish = glossy.slice(glossy.indexOf('async function handleSnapshot('));
-  assert.match(finish, /const attribution = renderJobAttribution\(job\.engine\)/,
-    'the queue finisher no longer reads the vendor from the durable job');
+  assert.match(finish, /const attribution = renderJobAttribution\(job\.engine, job\.model\)/,
+    'the queue finisher must read both the vendor and actual model from the durable job');
   assert.match(finish, /provider: attribution\.saved/);
   assert.match(finish, /provider: attribution\.gallery/);
   assert.match(finish, /paid \$\{attribution\.label\} result/);
@@ -354,6 +360,12 @@ test('subscription snapshots are accepted only when every storage path belongs t
   };
 
   assert.deepEqual(normaliseRenderJobDoc(jobId, valid), valid);
+  const current = { ...valid, model: OPENAI_MAP_MODEL };
+  assert.deepEqual(normaliseRenderJobDoc(jobId, current), current,
+    'a reload must retain the worker model rather than guessing from the current picker');
+  for (const model of ['', 7, 'x'.repeat(129), 'gpt-image-2\n']) {
+    assert.equal(normaliseRenderJobDoc(jobId, { ...valid, model }), null);
+  }
   assert.equal(normaliseRenderJobDoc(jobId, {
     ...valid,
     sheets: [{ ...valid.sheets[0], outputPath: 'renders/another-user/private.png' }],

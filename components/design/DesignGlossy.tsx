@@ -48,6 +48,7 @@ import {
 import { structureRegisterText } from '@/lib/structure-register';
 import { buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { zoneBadgePositions } from '@/lib/canvas-labels';
+import { OPENAI_MAP_MODEL_LABEL, openAiMapModelLabel } from '@/lib/ai-render/model';
 import { enqueueRenderJob, mapSerially, subscribeRenderJob, fetchRenderOutput, fetchRenderJobScene, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, renderJobAttribution, type RenderQuality } from '@/lib/render-jobs';
 import { createRenderSceneSnapshot, type RenderSceneSnapshot } from '@/lib/render-scene';
 import type { RenderEngine } from '@/lib/render-job-contract';
@@ -463,10 +464,10 @@ const LINE_COLORS: Record<string, string> = {
 // because the worker branched on a `provider` field nothing ever wrote. Both are fixed; see
 // RENDER_ENGINES in lib/render-job-contract.ts.
 //
-// gpt-image-2 stays the DEFAULT. Changing which vendor a render bills to is Rory's call, not a
+// OpenAI stays the DEFAULT. Changing which vendor a render bills to is Rory's call, not a
 // side effect of making the other one selectable.
 const ENGINES: Array<{ key: 'falgpt' | 'gemini'; label: string; sub: string }> = [
-  { key: 'falgpt', label: 'gpt-image-2', sub: 'sharpest · background (~mins)' },
+  { key: 'falgpt', label: OPENAI_MAP_MODEL_LABEL, sub: 'sharpest · background (~mins)' },
   { key: 'gemini', label: 'Gemini', sub: 'cheaper · background (~mins)' },
 ];
 
@@ -474,19 +475,17 @@ const ENGINES: Array<{ key: 'falgpt' | 'gemini'; label: string; sub: string }> =
  * The three paid-render quality settings, offered so the SAME sheet can be rendered all three ways
  * and compared before anyone commits to one.
  *
- * The costs in the sub-labels are the reason this exists. At the ~3.3 megapixels these sheets are
- * rendered, 'high' is roughly 4x 'medium' and roughly 35x 'low'. Those are computed from OpenAI's
- * own published rates and are estimates, not invoices — which is exactly why the worker now logs
- * the API's real usage block (functions/src/index.ts) instead of discarding it. Treat these as
- * "order of magnitude" until a real bill confirms them.
+ * Model upgrades can change token consumption at the same tier. Keep the existing quality
+ * choices and use the worker's real usage logs rather than promising an old model's cost ratio.
  *
  * Why 'high' may be waste here specifically: the model paints an UNDERLAYER. Every piece of exact
  * geometry, every label and the whole legend are composited back on top afterwards, so much of the
  * fine detail 'high' pays for is covered up again before the farmer ever sees the sheet.
  */
-const RENDER_QUALITY_CHOICES: ReadonlyArray<{ key: RenderQuality; labelKey: string; subKey: string }> = [
+const RENDER_QUALITY_CHOICES: ReadonlyArray<{ key: RenderQuality; labelKey: string; subKey?: string }> = [
   { key: 'high', labelKey: 'designGlossyQualityHigh', subKey: 'designGlossyQualityHighSub' },
-  { key: 'medium', labelKey: 'designGlossyQualityMedium', subKey: 'designGlossyQualityMediumSub' },
+  // The old medium subtitle promises a GPT Image 2 cost ratio that does not apply to 2.5.
+  { key: 'medium', labelKey: 'designGlossyQualityMedium' },
   { key: 'low', labelKey: 'designGlossyQualityLow', subKey: 'designGlossyQualityLowSub' },
 ];
 
@@ -11177,6 +11176,7 @@ async function composeSheetChromeOverMapArt(opts: {
 interface SavedGlossy {
   image: string;
   provider: 'gemini' | 'falgpt' | 'exact';
+  model?: string;
   at: string;
   /**
    * Which treatment produced this picture — 'exact', 'hybrid' or 'full'.
@@ -11546,6 +11546,7 @@ interface GalleryItem {
   thumb?: string;
   resultKind: SheetResultKind;
   provider: SheetProvider;
+  model?: string;
   geometryLock: boolean;
   showcase: boolean;
   freshness: SavedSheetFreshness;
@@ -11567,15 +11568,15 @@ function galleryResultBadge(item: GalleryItem): string {
   if (item.freshness !== 'current') return 'Older render · generate again for the current layout';
   if (item.resultKind === 'exact') return 'Design Map';
   if (item.resultKind === 'hybrid') {
-    return `AI Polished · ${item.validationStatus === 'unscored' ? 'comparison unavailable' : 'check against exact map'} · ${item.provider === 'gemini' ? 'Gemini' : 'gpt-image-2'}`;
+    return `AI Polished · ${item.validationStatus === 'unscored' ? 'comparison unavailable' : 'check against exact map'} · ${item.provider === 'gemini' ? 'Gemini' : openAiMapModelLabel(item.model)}`;
   }
   if (item.resultKind === 'ai-polished') {
     // The SHELVED second pass. Named for what it is so a sheet already in a gallery still says
     // honestly which of the two it came from.
-    return `AI Polished + 2nd pass · check against exact map · ${item.provider === 'gemini' ? 'Gemini' : 'gpt-image-2'}`;
+    return `AI Polished + 2nd pass · check against exact map · ${item.provider === 'gemini' ? 'Gemini' : openAiMapModelLabel(item.model)}`;
   }
   if (item.resultKind === 'ai-illustrated') {
-    return `AI illustrated · ${item.provider === 'gemini' ? 'Gemini' : item.provider === 'openai' ? 'gpt-image-2' : 'provider unknown'}`;
+    return `AI illustrated · ${item.provider === 'gemini' ? 'Gemini' : item.provider === 'openai' ? openAiMapModelLabel(item.model) : 'provider unknown'}`;
   }
   return 'Older saved map · provenance unavailable';
 }
@@ -11931,7 +11932,7 @@ export default function DesignGlossy({
   const [exactSheet, setExactSheet] = useState<null | 'base' | 'sector' | 'implementation'>(null);
   // Whether the CURRENT selection renders without any model — drives the honest caption/pill.
   const isExactRender = exactSheet !== null || (!producerStyle && !analysisStyle);
-  // Render engine. gpt-image-2 is the default; Gemini is selectable again (see ENGINES).
+  // Render engine. OpenAI is the default; Gemini is selectable again (see ENGINES).
   const [engine, setEngine] = useState<'falgpt' | 'gemini'>('falgpt');
   // The picker's key is a UI label ('falgpt'); the job doc's is a VENDOR ('openai'). Every queue
   // enqueue below must use this rather than a literal — four of them hardcoded 'openai', which is
@@ -12021,7 +12022,7 @@ export default function DesignGlossy({
                       }}
                     >
                       <span style={{ fontWeight: 800, fontSize: 13 }}>{t(q.labelKey)}</span>
-                      <span style={{ fontSize: 10.5, opacity: active ? 0.85 : 0.6 }}>{t(q.subKey)}</span>
+                      {q.subKey && <span style={{ fontSize: 10.5, opacity: active ? 0.85 : 0.6 }}>{t(q.subKey)}</span>}
                     </button>
                   );
                 })}
@@ -12262,6 +12263,7 @@ export default function DesignGlossy({
           thumb: r.thumb,
           resultKind: r.resultKind ?? 'legacy',
           provider: r.provider ?? 'unknown',
+          model: r.model,
           geometryLock: r.geometryLock ?? false,
           showcase: r.showcase ?? false,
           underlay: r.underlay,
@@ -12324,7 +12326,7 @@ export default function DesignGlossy({
     (
       label: string,
       image: string,
-      provenance: Partial<Pick<GalleryItem, 'resultKind' | 'provider' | 'geometryLock' | 'showcase' | 'underlay' | 'jobId' | 'attemptId' | 'designRevision' | 'validationStatus' | 'rawOutputPath'>> & { siteId?: string } = {},
+      provenance: Partial<Pick<GalleryItem, 'resultKind' | 'provider' | 'model' | 'geometryLock' | 'showcase' | 'underlay' | 'jobId' | 'attemptId' | 'designRevision' | 'validationStatus' | 'rawOutputPath'>> & { siteId?: string } = {},
     ) => {
       const targetSiteId = provenance.siteId ?? state.siteId;
       // GalleryItem & {image: string}: fresh renders are the one case that always carries the
@@ -14504,7 +14506,7 @@ export default function DesignGlossy({
       setError,
       missingHybridMessage: t('designGlossyMissingHybrid'),
       setNotice,
-      startingPolishMessage: t('designGlossyStartingPolish'),
+      startingPolishMessage: t('designGlossyStartingPolish').replace('gpt-image-2', OPENAI_MAP_MODEL_LABEL),
       polishingMessage: t('designGlossyPolishing'),
       clearResult: clearLockedPolishResult,
       renderCurrentSheet: runCurrentSheet,
@@ -14682,7 +14684,7 @@ export default function DesignGlossy({
         // showcaseKeysRef stays as fallback for jobs enqueued before the field existed.
         const styleKey = ((job.style || styleRef.current) ?? 'extension_blueprint') as StylePreset;
         const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
-        const attribution = renderJobAttribution(job.engine);
+        const attribution = renderJobAttribution(job.engine, job.model);
         const outputMode = job.outputMode ?? (job.sheets.some((entry) => entry.resultKind === 'ai-polished') ? 'full' : 'hybrid');
         setLoading(attribution.saved);
         for (const sheet of job.sheets) {
@@ -15042,7 +15044,7 @@ export default function DesignGlossy({
                   stage: isPolishedResult ? 'polish' : 'hybrid', outputMode, style: styleKey,
                   outcome: 'unscored', note: 'one or more comparisons were unavailable; final artwork needs review' });
               }
-              const record: SavedGlossy = { image: finalSheet, provider: attribution.saved, at: new Date().toISOString() };
+              const record: SavedGlossy = { image: finalSheet, model: job.model, provider: attribution.saved, at: new Date().toISOString() };
               // The display effect reads `producer:<style>:<filter>:<mode>` plus the underlay/
               // label-mode suffixes; this save used a three-segment key, so every queue-rendered
               // Hybrid and Full Treatment was written to a slot NOTHING reads — the farmer came
@@ -15090,6 +15092,7 @@ export default function DesignGlossy({
                   // combination is never a genuine paid polish, so it must not claim to be one.
                   resultKind: isPolishedResult ? 'ai-polished' : isHybridResult ? 'hybrid' : 'legacy',
                   provider: attribution.gallery,
+                  model: job.model,
                   geometryLock: finalGeometryLocked,
                   showcase,
                   underlay: frozenScene.underlay,
@@ -15748,7 +15751,7 @@ export default function DesignGlossy({
             : exactSheet === 'implementation'
             ? 'Draw your Implementation & Phasing sheet (plan-set 08) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Review the schedule against your site survey and available resources.'
             : producerStyle
-            ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. ${engine === 'falgpt' ? (effectiveModelChrome ? 'gpt-image-2 paints the whole sheet with its own legend & labels. Renders in the background (~mins); it lands in your gallery.' : 'gpt-image-2 paints the map artwork in the background (~mins); source protections, labels, legend, north arrow and scale are applied afterwards. Compare AI-drawn features with your exact map before using the illustration.') : 'Gemini paints the map artwork in the background (~mins); source protections, labels, legend, north arrow and scale are applied afterwards. Compare AI-drawn features with your exact map before using the illustration. It lands in your gallery.'}`
+            ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. ${engine === 'falgpt' ? (effectiveModelChrome ? `${OPENAI_MAP_MODEL_LABEL} paints the whole sheet with its own legend & labels. Renders in the background (~mins); it lands in your gallery.` : `${OPENAI_MAP_MODEL_LABEL} paints the map artwork in the background (~mins); source protections, labels, legend, north arrow and scale are applied afterwards. Compare AI-drawn features with your exact map before using the illustration.`) : 'Gemini paints the map artwork in the background (~mins); source protections, labels, legend, north arrow and scale are applied afterwards. Compare AI-drawn features with your exact map before using the illustration. It lands in your gallery.'}`
             : analysisStyle
               ? `Generate the ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} analysis map — an illustrated Gemini render (sun/wind, opportunities, phasing) over your real site. These are freer than the design maps: great to look at, less exact on geometry. Takes about a minute.`
               : filter === 'all'
@@ -15852,7 +15855,7 @@ export default function DesignGlossy({
             <div style={{ fontSize: 12, opacity: 0.65 }}>
               {formatDesignTranslation(t('designGlossySavedRender'), {
                 date: relativeDate(saved.at),
-                provider: PROVIDER_LABEL[saved.provider],
+                provider: saved.provider === 'falgpt' ? openAiMapModelLabel(saved.model) : PROVIDER_LABEL[saved.provider],
               })}
             </div>
           )}

@@ -33,6 +33,7 @@ import { PNG } from 'pngjs';
 import { compareRenders } from '../../lib/render-difference';
 import { decideManagedAiRenderAccess } from '../../lib/ai-render/access';
 import { loadAiMapContext } from './ai-map-access';
+import { OPENAI_MAP_MODEL } from '../../lib/ai-render/model';
 export { aiMapAccess } from './ai-map-access';
 import { geminiEdit, geminiAspectRatio, geminiImageSize, geminiModelForQuality } from './gemini';
 import { friendlyProviderError } from './provider-errors';
@@ -49,7 +50,6 @@ const GEMINI_API_KEY = defineSecret('GEMINI_API_KEY');
 // Firestore-trigger region MUST equal the database region, or deploy is rejected.
 // fieldproof-sa's Firestore database is in europe-west1 (confirmed via firebase CLI 2026-07-18).
 const REGION = 'europe-west1';
-const MODEL = 'gpt-image-2';
 const CONCURRENCY = 3; // parallel sheets within ONE job (instance concurrency is pinned to 1 below)
 const MAX_RETRIES = 2; // network / 5xx
 const MAX_429_RETRIES = 5; // rate-limit gets more patience — the budget has room once sheets ≤ 5
@@ -197,7 +197,7 @@ async function openaiEdit(
   maskB64?: string,
   styleReference?: Buffer | null,
   attempt = 0,
-  // A MONEY DIAL. At the size these sheets render, 'high' costs roughly 4x 'medium' and 35x 'low'.
+  // Keep the requested money dial across retries; model upgrades do not raise the quality tier.
   // Defaulted here as well as at the call site so an old job doc written before the field existed
   // still renders exactly as it always did.
   quality: 'high' | 'medium' | 'low' = 'high',
@@ -208,7 +208,7 @@ async function openaiEdit(
   try {
     const buf = Buffer.from(imageB64, 'base64');
     const form = new FormData();
-    form.append('model', MODEL);
+    form.append('model', OPENAI_MAP_MODEL);
     form.append('prompt', styleReference
       ? [
           'IMAGE ROLES:',
@@ -220,7 +220,7 @@ async function openaiEdit(
       : prompt);
     form.append('n', '1');
     form.append('size', pickSize(pngDims(buf) ?? jpegDims(buf))); // PNG first — composites are always PNG; 'auto' guarantees no detail
-    form.append('quality', quality); // low/medium/high/auto; 'high' is the documented maximum
+    form.append('quality', quality); // Keep the existing tiers; do not opt into 2.5's xhigh/max spend.
     form.append('output_format', 'png'); // lossless — no JPEG ringing around fine legend lettering
     form.append('moderation', 'low'); // less-restrictive filter — fewer spurious refusals on aerial land photos
     // Storage path is historically named "composite.jpg"/input-*.jpg (harmless — GCS doesn't care about
@@ -286,7 +286,7 @@ async function openaiEdit(
   // arithmetic on invoices instead of a guess.
   const b64 = data?.data?.[0]?.b64_json;
   if (data?.usage) {
-    console.log('openai_image_usage', JSON.stringify({ quality, ...data.usage }));
+    console.log('openai_image_usage', JSON.stringify({ model: OPENAI_MAP_MODEL, quality, ...data.usage }));
   }
   if (!b64) throw new Error('OpenAI returned no image');
   return b64;
@@ -413,6 +413,9 @@ export const runRenderJob = onDocumentCreated(
         return;
       }
 
+      // Stamp the server-selected model, never a model id supplied by the client. A finished job
+      // can be reopened after the next model upgrade and must still name its original generator.
+      if (job.engine === 'openai') await ref.update({ model: OPENAI_MAP_MODEL });
       const key = OPENAI_API_KEY.value();
       // A Gemini job with no Gemini secret must die HERE, named, before any sheet is attempted.
       // The branch below has never run in production, and its last bug (asking a text model for an

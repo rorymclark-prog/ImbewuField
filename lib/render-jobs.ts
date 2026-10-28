@@ -11,6 +11,7 @@
 // SAME numbers the security rules enforce (keep them in sync). See functions/README.md.
 
 import { getFirebase } from '@/lib/firebase/init';
+import { isMapModelId, openAiMapModelLabel } from './ai-render/model';
 import { isSampleMode, SAMPLE_MODE_RENDER_REFUSAL } from '@/lib/sample-mode';
 import { doc, onSnapshot, serverTimestamp, setDoc, Timestamp, type FirestoreError } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, ref, uploadString } from 'firebase/storage';
@@ -96,7 +97,7 @@ export interface RenderSheetState {
 
 /**
  * How hard the paid model is asked to work. This is a MONEY dial, not a taste dial: at the size
- * these sheets are rendered, 'high' costs roughly 4x 'medium' and roughly 35x 'low'.
+ * these sheets are rendered, higher tiers consume more; exact ratios depend on the model.
  *
  * It is worth testing rather than assuming, because of what the AI is actually for here — it
  * paints an underlayer, and every piece of exact geometry, every label and the whole legend are
@@ -137,6 +138,8 @@ export interface RenderJobDoc {
   siteId: string;
   style: string;
   engine: string;
+  /** Set by the worker, so a later model upgrade cannot relabel this result. */
+  model?: string;
   quality?: RenderQuality;
   /** Old jobs have no scene; new jobs carry the design and image that were actually submitted. */
   sceneJson?: string;
@@ -157,14 +160,14 @@ export interface RenderJobDoc {
  * finish after the farmer changes the engine picker or reloads the page, so attribution must never
  * come from live React state (and must never be hard-coded to OpenAI in the queue finisher).
  */
-export function renderJobAttribution(engine: string): {
+export function renderJobAttribution(engine: string, model?: string): {
   saved: 'gemini' | 'falgpt';
   gallery: 'gemini' | 'openai';
-  label: 'Gemini' | 'gpt-image-2';
+  label: string;
 } {
   return engine === 'gemini'
     ? { saved: 'gemini', gallery: 'gemini', label: 'Gemini' }
-    : { saved: 'falgpt', gallery: 'openai', label: 'gpt-image-2' };
+    : { saved: 'falgpt', gallery: 'openai', label: openAiMapModelLabel(model) };
 }
 
 export class RenderJobError extends Error {}
@@ -485,6 +488,7 @@ export function normaliseRenderJobDoc(jobId: string, value: unknown): RenderJobD
     || job.sheets.length > MAX_SHEETS_PER_JOB
   ) return null;
   if (job.error !== undefined && typeof job.error !== 'string') return null;
+  if (job.model !== undefined && !isMapModelId(job.model)) return null;
   if (job.quality !== undefined && !RENDER_QUALITIES.includes(job.quality as RenderQuality)) return null;
   if (job.attemptId !== undefined && !validAttemptId(job.attemptId)) return null;
   if (job.outputMode !== undefined && job.outputMode !== 'hybrid' && job.outputMode !== 'full') return null;
@@ -567,6 +571,7 @@ export function normaliseRenderJobDoc(jobId: string, value: unknown): RenderJobD
     siteId: job.siteId,
     style: job.style,
     engine: job.engine,
+    ...(job.model === undefined ? {} : { model: job.model as string }),
     ...(job.quality === undefined ? {} : { quality: job.quality as RenderQuality }),
     ...(job.sceneJson === undefined ? {} : { sceneJson: job.sceneJson as string }),
     ...(job.designRevision === undefined ? {} : { designRevision: job.designRevision as string }),
