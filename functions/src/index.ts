@@ -33,7 +33,7 @@ import { PNG } from 'pngjs';
 import { compareRenders } from '../../lib/render-difference';
 import { decideManagedAiRenderAccess } from '../../lib/ai-render/access';
 import { loadAiMapContext } from './ai-map-access';
-import { OPENAI_MAP_MODEL } from '../../lib/ai-render/model';
+import { OPENAI_MAP_MODEL, openAiMapRequestedSize } from '../../lib/ai-render/model';
 export { aiMapAccess } from './ai-map-access';
 import { geminiEdit, geminiAspectRatio, geminiImageSize, geminiModelForQuality } from './gemini';
 import { friendlyProviderError } from './provider-errors';
@@ -179,13 +179,7 @@ function pngDims(buf: Buffer): { w: number; h: number } | null {
 // 2560×1440 are documented "experimental"). Both edges must be multiples of 16, aspect ≤ 3:1,
 // 0.66–8.3 MP. Falls back to 'auto' if the input is unreadable or the target is out of range.
 function pickSize(dims: { w: number; h: number } | null): string {
-  if (!dims || !dims.w || !dims.h) return 'auto';
-  const s = Math.sqrt(3_300_000 / (dims.w * dims.h));
-  const W = Math.round((dims.w * s) / 16) * 16;
-  const H = Math.round((dims.h * s) / 16) * 16;
-  const px = W * H;
-  const ar = Math.max(W, H) / Math.min(W, H);
-  return px < 655_360 || px > 8_294_400 || ar > 3 || Math.max(W, H) > 3840 ? 'auto' : `${W}x${H}`;
+  return dims ? openAiMapRequestedSize(dims.w, dims.h) : 'auto';
 }
 
 // One OpenAI image edit — the only slow, network-bound step. AbortController caps a hung socket;
