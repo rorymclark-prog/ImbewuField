@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 October 2026', sha: 'a5972fc7d', changes: [
+    'Paid AI maps now finish when the image service rounds their size.',
+  ] },
   { when: '28 October 2026', sha: 'e7812ef7a', changes: [
     'New AI glossy maps use GPT Image 2.5 Sunburst.',
   ] },

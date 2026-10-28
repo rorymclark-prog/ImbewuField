@@ -18,7 +18,8 @@
 // does not establish that every tree, bed or route inside it is correct.
 
 import { compareRenders, type DifferenceReport } from '@/lib/render-difference';
-import { drainCanvasToDataUrl, releaseCanvas } from '@/lib/release-canvas';
+import { openAiMapRequestedSize } from '@/lib/ai-render/model';
+import { drainCanvasToDataUrl, releaseCanvas, releaseImageSource } from '@/lib/release-canvas';
 
 /** Either an image source (data URL / base64) or an already-decoded element. */
 export type ImageInput = string | HTMLImageElement;
@@ -415,6 +416,48 @@ export function assertMatchingImageAspects(
     if (relativeDrift > roundingTolerance) {
       throw new Error(`image registration: ${name} aspect does not match source (${size.width}x${size.height} vs ${source.width}x${source.height})`);
     }
+  }
+}
+
+/** Only the exact size requested by our OpenAI worker earns a grid-rounding repair. Keep the
+ * strict guard intact: a square/crop, a wrong-size return or an unrelated mask still fails. */
+export function registeredOpenAiMapSize(source: ImageDimensions, model: ImageDimensions): ImageDimensions {
+  try {
+    assertMatchingImageAspects(source, model);
+    return { ...model };
+  } catch (error) {
+    if (openAiMapRequestedSize(source.width, source.height) !== `${model.width}x${model.height}`) throw error;
+    const registered = { width: model.width, height: Math.round(model.width * source.height / source.width) };
+    assertMatchingImageAspects(source, registered);
+    return registered;
+  }
+}
+
+/** Undo only the provider's known output-grid rounding, before restoring any source pixels.
+ * The original source/mask and all saved geometry remain untouched; only AI artwork is sampled
+ * into a canvas with the source aspect. The original paid output remains in Storage. */
+export async function registerOpenAiMapOutput(sourceImage: string, modelImage: string): Promise<string> {
+  const [source, model] = await Promise.all([loadImage(sourceImage), loadImage(modelImage)]);
+  try {
+    const size = registeredOpenAiMapSize(
+      { width: source.naturalWidth || source.width, height: source.naturalHeight || source.height },
+      { width: model.naturalWidth || model.width, height: model.naturalHeight || model.height },
+    );
+    if (size.width === (model.naturalWidth || model.width) && size.height === (model.naturalHeight || model.height)) return modelImage;
+    const canvas = document.createElement('canvas');
+    canvas.width = size.width;
+    canvas.height = size.height;
+    const context = canvas.getContext('2d');
+    if (!context) { releaseCanvas(canvas); throw new Error('image registration: 2D context unavailable'); }
+    try {
+      context.drawImage(model, 0, 0, size.width, size.height);
+      return drainCanvasToDataUrl(canvas, 'image/png');
+    } finally {
+      releaseCanvas(canvas);
+    }
+  } finally {
+    releaseImageSource(source);
+    releaseImageSource(model);
   }
 }
 

@@ -29,7 +29,7 @@ import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
 import { aiRenderEnabled } from '@/lib/ai-render/flag';
 import { useAuth } from '@/lib/auth';
-import { compositeAccurateMap, measureRenderDifference, restoreProtectedPixels, assertMatchingImageAspects, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
+import { compositeAccurateMap, measureRenderDifference, restoreProtectedPixels, assertMatchingImageAspects, registerOpenAiMapOutput, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
 import { paidRenderDecision, retainedRenderHasVisibleChange } from '@/lib/render-difference';
 import { auditFromReport, recordRenderAudit } from '@/lib/render-audit';
 import { polishedRenderPoints, type RenderPoint } from '@/lib/render-geometry';
@@ -14705,7 +14705,7 @@ export default function DesignGlossy({
                 designRevision: job.designRevision,
               };
               let validationStatus: 'needs-review' | 'unscored' = 'needs-review';
-              const raw = await fetchRenderOutput(sheet.outputPath);
+              let raw = await fetchRenderOutput(sheet.outputPath);
               const showcase = sheet.showcase ?? showcaseKeysRef.current.has(sheet.key);
               // Jobs can finish after a navigation or reload. Use the flag persisted with the
               // sheet, never the current toggle value. Existing in-flight jobs created before the
@@ -14723,6 +14723,7 @@ export default function DesignGlossy({
               // there is no mask; after a reload this Storage object is the only durable baseline.
               // Both paid stages use the durable input, including after a page reload.
               const sourceImage = await fetchRenderOutput(sheet.inputPath);
+              if (job.engine === 'openai') raw = await registerOpenAiMapOutput(sourceImage, raw);
               const protectMask = sheet.protectMaskPath ? await fetchRenderOutput(sheet.protectMaskPath) : undefined;
               const inputDimensions = await loadImage(sourceImage);
               const outputDimensions = await loadImage(raw);

@@ -22,7 +22,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
-import { OPENAI_MAP_MODEL } from '../lib/ai-render/model.ts';
+import { OPENAI_MAP_MODEL, openAiMapRequestedSize } from '../lib/ai-render/model.ts';
 
 const source = readFileSync(new URL('../functions/src/index.ts', import.meta.url), 'utf8');
 
@@ -67,9 +67,9 @@ test('paid map edits use GPT Image 2.5 while preserving the chosen quality and p
     compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS },
   }).outputText;
   const calls: Array<{ url: string; body: FormData }> = [];
-  const edit = new Function('OPENAI_MAP_MODEL', 'ATTEMPT_TIMEOUT_MS', 'MAX_RETRIES', 'MAX_429_RETRIES',
+  const edit = new Function('OPENAI_MAP_MODEL', 'openAiMapRequestedSize', 'ATTEMPT_TIMEOUT_MS', 'MAX_RETRIES', 'MAX_429_RETRIES',
     'friendlyProviderError', 'sleep', 'fetch', `${compiled}; return openaiEdit;`)(
-      OPENAI_MAP_MODEL, 1000, 0, 0, () => 'provider failure', async () => {},
+      OPENAI_MAP_MODEL, openAiMapRequestedSize, 1000, 0, 0, () => 'provider failure', async () => {},
       async (url: string, init: RequestInit) => {
         calls.push({ url, body: init.body as FormData });
         return { ok: true, status: 200, json: async () => ({ data: [{ b64_json: 'painted-image' }] }) };
