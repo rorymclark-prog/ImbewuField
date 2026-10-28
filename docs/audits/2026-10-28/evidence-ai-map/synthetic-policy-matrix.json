@@ -1,0 +1,32 @@
+[
+  {
+    "filter": "all",
+    "zoneEdgeAlpha": 255,
+    "outsideCrownAlpha": 255
+  },
+  {
+    "filter": "zones",
+    "zoneEdgeAlpha": 255,
+    "outsideCrownAlpha": 255
+  },
+  {
+    "filter": "water",
+    "zoneEdgeAlpha": 0,
+    "outsideCrownAlpha": 255
+  },
+  {
+    "filter": "earthworks",
+    "zoneEdgeAlpha": 0,
+    "outsideCrownAlpha": 255
+  },
+  {
+    "filter": "planting",
+    "zoneEdgeAlpha": 0,
+    "outsideCrownAlpha": 255
+  },
+  {
+    "filter": "structures",
+    "zoneEdgeAlpha": 0,
+    "outsideCrownAlpha": 255
+  }
+]
