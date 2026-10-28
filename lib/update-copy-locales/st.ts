@@ -1,6 +1,7 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Map sheets now use white paper, thin legend borders and clearer plant pictures.": "Maqephe a limmapa joale a sebelisa pampiri e tšoeu, meeli e mesesane ea senotlolo le litšoantšo tse hlakileng tsa limela.",
   "Paid AI maps now finish when the image service rounds their size.": "Limmapa tsa AI tse lefelloang joale lia phethoa ha tšebeletso ea litšoantšo e potoloha boholo ba tsona.",
   "New AI glossy maps use GPT Image 2.5 Sunburst.": "Limmapa tse ncha tse benyang tsa AI li sebelisa GPT Image 2.5 Sunburst.",
   "Offline saving and sending messages now have drafts in all four languages.": "Melaetsa ya ho boloka ntle le kgokahano le ho romela jwale e na le meralo ka dipuo tsohle tse nne.",

@@ -120,7 +120,7 @@ import {
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
 import { PLAIN_HARD_SURFACE_PAINT, SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
-import { frameForUnderlay, hasFarmerPhoto, paintPlainPaperGround, savedSheetUnderlayNote, SHEET_UNDERLAY_LABEL, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
+import { frameForUnderlay, hasFarmerPhoto, paintPlainPaperGround, PLAIN_PAPER_GROUND, savedSheetUnderlayNote, SHEET_UNDERLAY_LABEL, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
 import { drainCanvasToDataUrl, releaseCanvas, releaseImageSource } from '@/lib/release-canvas';
 import { overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
 import { ridgeAngleOf, roofRunoffArrows, gutterToTankArrows, tankOverflowArrows, type StoryArrow } from '@/lib/water-story';
@@ -174,7 +174,8 @@ import SettingsButton from '@/components/SettingsButton';
 export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
 export type { GlossyLayerFilter } from '@/lib/glossy-filters';
 
-const PAPER = '#FFFEFA';
+// Rory wants white paper throughout the plan set, including its legends and label margins.
+const PAPER = PLAIN_PAPER_GROUND;
 
 // Persist the active background render job per site, so closing/reopening the Studio re-attaches to
 // an in-flight render (they take minutes) and still collects the finished sheets instead of wasting
@@ -1613,7 +1614,11 @@ async function preloadReferenceFeatureArtwork(
     }
   }
   void filter;
-  await Promise.all([...urls].map(async (url) => {
+  await preloadReferenceArtworkUrls(urls);
+}
+
+async function preloadReferenceArtworkUrls(urls: Iterable<string>): Promise<void> {
+  await Promise.all([...new Set(urls)].filter((url) => !referenceFeatureArtworkCache.has(url)).map(async (url) => {
     try {
       const artwork = await settleOptionalReferenceArtLoad(loadImage(url));
       if (artwork) referenceFeatureArtworkCache.set(url, artwork);
@@ -4578,7 +4583,7 @@ function drawLabelGutter(
 
   for (const side of ['left', 'right'] as const) {
     ctx.save();
-    ctx.fillStyle = '#FBF6EC';
+    ctx.fillStyle = PAPER;
     ctx.fillRect(bandX[side], 0, gutter, H);
     ctx.strokeStyle = 'rgba(32,25,15,0.34)';
     ctx.lineWidth = Math.max(1, Math.round(mapW * 0.0009));
@@ -9395,7 +9400,7 @@ async function composePhasingSheet(
   // 1. The model's decorative illustrated background, normalised to the MAP column — not the whole
   //    sheet. The gutters are drawing furniture and must stay paper; letting the model's art run
   //    into them is how a "margin" turns back into more picture.
-  ctx.fillStyle = '#FBF6EC';
+  ctx.fillStyle = PAPER;
   ctx.fillRect(0, 0, W, H);
   const modelImg = await loadImage(baseImage);
   ctx.drawImage(modelImg, mapX, 0, mapW, H);
@@ -9462,7 +9467,7 @@ async function blankPhasingPanel(
   ctx.drawImage(await loadImage(imageDataUrl), 0, 0, W, H);
 
   const { lgW, lgX, lgY, lgBottom } = phasingPanelRect(size);
-  ctx.fillStyle = '#FBF6EC'; // fully opaque — same cream as buildImplementationMap's panel fill
+  ctx.fillStyle = PAPER; // fully opaque — same paper as buildImplementationMap's panel fill
   ctx.fillRect(lgX, lgY, lgW, lgBottom - lgY);
   ctx.strokeStyle = 'rgba(32,25,15,0.34)';
   ctx.lineWidth = 1.5;
@@ -9524,7 +9529,7 @@ export async function buildImplementationMap(
   const { pad, lgW, lgX, lgY, lgBottom, mapX } = phasingPanelRect(size);
 
   // 1. Satellite + scrim, inset into the map column so the label gutters stay paper.
-  ctx.fillStyle = '#FBF6EC';
+  ctx.fillStyle = PAPER;
   ctx.fillRect(0, 0, W, H);
   ctx.save();
   ctx.translate(mapX, 0);
@@ -9554,7 +9559,7 @@ export async function buildImplementationMap(
   const innerW = lgW - ip * 2;
   const panelBottom = lgBottom - ip;
 
-  ctx.fillStyle = '#FBF6EC';
+  ctx.fillStyle = PAPER;
   ctx.fillRect(lgX, lgY, lgW, lgBottom - lgY);
   ctx.strokeStyle = 'rgba(32,25,15,0.34)';
   ctx.lineWidth = 1.5;
@@ -10336,9 +10341,9 @@ function padToPaperSheet(sheet: HTMLCanvasElement): string {
     releaseCanvas(canvas);
     return drainCanvasToDataUrl(sheet, 'image/png');
   }
-  // The legend panel's own cream, so the margin reads as the sheet's paper rather than as a border
+  // The legend panel's own paper, so the margin reads as the sheet rather than as a border
   // someone forgot to fill.
-  ctx.fillStyle = '#FBF6EC';
+  ctx.fillStyle = PAPER;
   ctx.fillRect(0, 0, paper.width, paper.height);
   ctx.drawImage(
     sheet,
@@ -10403,7 +10408,7 @@ async function composeStyleSheet(
     return mapDataUrl;
   }
   // Paper under the bands first: the map is inset, and whatever is not map must read as sheet.
-  ctx.fillStyle = '#FBF6EC';
+  ctx.fillStyle = PAPER;
   ctx.fillRect(0, 0, W, H);
   try {
     ctx.drawImage(map, gutter, 0);
@@ -10414,23 +10419,23 @@ async function composeStyleSheet(
 
   // ── Legend panel ──
   const benchmarkPanel = styleLabel === 'Reference Blueprint' && (filter === 'water' || filter === 'planting' || filter === 'structures');
-  const panelInset = benchmarkPanel ? Math.max(12, Math.round(legendW * 0.035)) : 0;
-  ctx.fillStyle = benchmarkPanel ? '#0B2116' : '#FBF6EC';
+  const panelInset = benchmarkPanel ? Math.max(2, Math.round(legendW * 0.004)) : 0;
+  ctx.fillStyle = benchmarkPanel ? '#0B2116' : PAPER;
   ctx.fillRect(W, 0, legendW, H);
   if (benchmarkPanel) {
     ctx.save();
-    ctx.shadowColor = 'rgba(0,0,0,0.3)';
-    ctx.shadowBlur = Math.round(legendW * 0.035);
-    ctx.shadowOffsetY = Math.round(legendW * 0.012);
+    ctx.shadowColor = 'rgba(0,0,0,0.12)';
+    ctx.shadowBlur = Math.round(legendW * 0.008);
+    ctx.shadowOffsetY = Math.round(legendW * 0.003);
     roundRectPath(
       ctx,
       W + panelInset,
       panelInset,
       legendW - panelInset * 2,
       H - panelInset * 2,
-      Math.round(legendW * 0.055),
+      Math.round(legendW * 0.012),
     );
-    ctx.fillStyle = '#F7F2E7';
+    ctx.fillStyle = PAPER;
     ctx.fill();
     ctx.shadowColor = 'transparent';
     ctx.strokeStyle = 'rgba(67,61,48,0.36)';
@@ -10506,6 +10511,13 @@ async function composeStyleSheet(
     ...(options.legendRows ?? sheetLegendRows(state, refLayers, filter, includeToolGlyphs, frame, options.labelMode ?? DEFAULT_SHEET_LABEL_MODE)),
     ...(options.extraLegendRows ?? []),
   ];
+  // A resumed paid sheet may never have drawn the exact feature layer in this tab. Load the
+  // legend's own catalogue artwork before drawing its symbols, or every species becomes the
+  // same fallback disc even though the app already ships distinct fruit and foliage artwork.
+  await preloadReferenceArtworkUrls(rows.flatMap((row) => {
+    const url = row.defId ? referenceFeatureArtworkUrl(row.defId) : null;
+    return url ? [url] : [];
+  }));
   const legendTop = y + Math.round(legendW * 0.03);
   const footerFs = options.footerText ? Math.max(9, Math.round(legendW * 0.025)) : Math.round(legendW * 0.036);
   const footerLineH = Math.max(11, Math.round(footerFs * 1.28));
@@ -10995,7 +11007,7 @@ async function composeStyleSheet(
   ctx.lineWidth = 4;
   ctx.strokeStyle = 'rgba(11,14,10,0.6)';
   ctx.strokeText(`${m} m`, bx, by - 14);
-  ctx.fillStyle = '#FBF6EC';
+  ctx.fillStyle = PAPER;
   ctx.fillText(`${m} m`, bx, by - 14);
 
   // ── North arrow (over the map, top-right) ──
@@ -11007,7 +11019,7 @@ async function composeStyleSheet(
   ctx.lineTo(nx, ny - 9);
   ctx.lineTo(nx + 11, ny);
   ctx.closePath();
-  ctx.fillStyle = '#FBF6EC';
+  ctx.fillStyle = PAPER;
   ctx.strokeStyle = 'rgba(11,14,10,0.65)';
   ctx.lineWidth = 3;
   ctx.stroke();
@@ -11018,7 +11030,7 @@ async function composeStyleSheet(
   ctx.lineWidth = 4;
   ctx.strokeStyle = 'rgba(11,14,10,0.65)';
   ctx.strokeText('N', nx, ny - 34);
-  ctx.fillStyle = '#FBF6EC';
+  ctx.fillStyle = PAPER;
   ctx.fillText('N', nx, ny - 34);
 
   // A2 LANDSCAPE, added as PAPER rather than taken out of the map. See PAPER_SHEET_RATIO.
@@ -12399,7 +12411,7 @@ export default function DesignGlossy({
         throw new Error('Canvas unavailable');
       }
       if (format === 'jpeg') {
-        ctx.fillStyle = '#FBF6EC';
+        ctx.fillStyle = PAPER;
         ctx.fillRect(0, 0, w, h);
       }
       ctx.imageSmoothingQuality = 'high';

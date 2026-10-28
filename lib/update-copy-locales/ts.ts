@@ -1,6 +1,7 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Map sheets now use white paper, thin legend borders and clearer plant pictures.": "Maphepha ya mimepe sweswi ma tirhisa phepha ro basa, mindzilakano yo lala ya xilotlelo ni swifaniso swa swimilana leswi vonakaka kahle.",
   "Paid AI maps now finish when the image service rounds their size.": "Mimepe ya AI leyi hakeriwaka sweswi ya hela loko vukorhokeri bya swifaniso byi rhendzeleka mpimo wa yona.",
   "New AI glossy maps use GPT Image 2.5 Sunburst.": "Mimepe leyintshwa ya AI yo vangama yi tirhisa GPT Image 2.5 Sunburst.",
   "Offline saving and sending messages now have drafts in all four languages.": "Swiviko swa ku hlayisa handle ka vuhlanganisi ni ku rhumela sweswi swi ni mipfapfarhuto hi tindzimi hinkwato ta mune.",
