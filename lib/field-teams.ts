@@ -15,6 +15,17 @@ export function localTodayISODate(d: Date = new Date()): string {
   return `${y}-${m}-${day}`;
 }
 
+const SOUTH_AFRICAN_DATE = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'Africa/Johannesburg', year: 'numeric', month: '2-digit', day: '2-digit',
+});
+
+/** Fieldwork is dated in South Africa even when its API runs on a UTC host.
+ * Otherwise a date the phone allows after midnight is rejected until 02:00 SAST. */
+export function southAfricanTodayISODate(d: Date = new Date()): string {
+  const parts = SOUTH_AFRICAN_DATE.formatToParts(d);
+  return ['year', 'month', 'day'].map(type => parts.find(part => part.type === type)!.value).join('-');
+}
+
 export type FieldMember = { id: string; name: string; role: UserRole; photoUrl?: string | null; gardenName?: string; gardenType?: string; gardenAreaM2?: number };
 export const FIELD_PROGRAMMES = { general: 'General garden support', 'act-sef-food-security': 'ACT · SEF food security' } as const;
 export type FieldProgramme = keyof typeof FIELD_PROGRAMMES;

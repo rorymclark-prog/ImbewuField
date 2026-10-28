@@ -7,7 +7,7 @@ import ReportVersionDetails from './report/ReportVersionDetails';
 import ReportCropPlan from './report/ReportCropPlan';
 import { reportSectionsForGeneration } from '@/lib/report-planting-guide';
 import ReportMapStocktake, { ReportMapPreview } from './report/ReportMapStocktake';
-import { defaultReportMapIds, emptyMapReview, loadSiteMapReview, selectedReportMaps, type ReportMapSelection } from '@/lib/report-map-selection';
+import { defaultReportMapIds, emptyMapReview, loadSiteMapReview, savedReportMapSelection, selectedReportMaps, type ReportMapSelection } from '@/lib/report-map-selection';
 import ReportVisualOverview, { type OpenReportImage } from './report/ReportVisualOverview';
 import ReportPreparation from './report/ReportPreparation';
 import ReportReadingGuide from './report/ReportReadingGuide';
@@ -31,7 +31,7 @@ import { reportCoverPlate, type ReportPlate } from '@/lib/report-plates';
 import { prepareSiteAnalysisImages } from '@/lib/report-site-images';
 import { loadSurvey, siteReportPurposeLabel, type SiteReportPurpose } from '@/lib/site-survey';
 import { evidenceSiteId, getSiteEvidence } from '@/lib/site-evidence';
-import { groundPhotoGallery, prepareGroundPhotos, type GroundPhotoView } from '@/lib/report-ground-photos';
+import { groundPhotoGallery, groundPhotoSnapshotGallery, prepareGroundPhotos, type GroundPhotoView } from '@/lib/report-ground-photos';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { loadCanvasState } from '@/lib/design-canvas';
 import { resolveBaseLayers } from '@/lib/base-layers';
@@ -464,7 +464,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const reportMapScope = `${sheetScope}:${activeSaved?.id ?? 'draft'}`;
   const [mapChoice, setMapChoice] = useState<{ scope: string; selection: ReportMapSelection }>({ scope: '', selection: { siteId: siteKey, ids: [] } });
   const allMaps = plateSet.scope === sheetScope ? plateSet.items : [];
-  const mapSelection = mapChoice.scope === reportMapScope ? mapChoice.selection : activeSaved?.mapSelection;
+  const historicalMapSelection = useMemo(() => activeSaved ? savedReportMapSelection(activeSaved.mapSelection, siteKey) : undefined, [activeSaved, siteKey]);
+  const mapSelection = mapChoice.scope === reportMapScope ? mapChoice.selection : historicalMapSelection;
   const plates = selectedReportMaps(allMaps, mapSelection, siteKey, emptyMapReview());
   const selectedMapIds = mapSelection?.ids ?? plates.map(p => p.id);
   const savedMapRecords = plateSet.scope === sheetScope ? { count: allMaps.length, latestAt: plateSet.latestAt } : null;
@@ -503,14 +504,16 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   useEffect(() => { setPlateZoom(false); }, [openPlate]);
   const [coverPlate, setCoverPlate] = useState<{ scope: string; id: string; image: string } | null>(null);
 
+  // Drafts show current ground photos; a generated/saved version reads only its frozen attachment.
   // The farmer's own photographs of the ground, and how many they have in total. Read on mount
   // rather than memoised on a value, because localStorage is where they live and nothing in this
   // component's props changes when one is added. No memory contract to observe: these are the
   // ≤400px thumbnails site-evidence stores, so the whole strip is a few hundred KB, unlike a
   // print-resolution plan sheet.
-  const [photoGallery, setPhotoGallery] = useState<{ shown: GroundPhotoView[]; total: number }>({ shown: [], total: 0 });
+  const [currentPhotoGallery, setCurrentPhotoGallery] = useState<{ shown: GroundPhotoView[]; total: number }>({ shown: [], total: 0 });
+  const photoGallery = activeSaved ? groundPhotoSnapshotGallery(activeSaved.groundPhotos) : currentPhotoGallery;
   useEffect(() => {
-    setPhotoGallery(groundPhotoGallery(activePlaceId?getSiteEvidence(evidenceSiteId(activePlaceId)):{}));
+    setCurrentPhotoGallery(groundPhotoGallery(activePlaceId?getSiteEvidence(evidenceSiteId(activePlaceId)):{}));
   }, [activePlaceId, evidenceRevision]);
 
   useEffect(() => {
@@ -525,7 +528,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         setPlateSet({ scope: sheetScope, latestAt, items: metas });
         setMapChoice(previous => previous.scope === reportMapScope ? previous : {
           scope: reportMapScope,
-          selection: activeSaved?.mapSelection ?? { siteId: siteKey, ids: defaultReportMapIds(metas, loadSiteMapReview(siteKey)) },
+          selection: historicalMapSelection ?? { siteId: siteKey, ids: defaultReportMapIds(metas, loadSiteMapReview(siteKey)) },
         });
       });
     };
@@ -534,7 +537,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     refresh();
     window.addEventListener('focus', refresh);
     return () => { cancelled = true; window.removeEventListener('focus', refresh); };
-  }, [siteKey, sheetScope, evidenceRevision, reportMapScope, activeSaved?.mapSelection]);
+  }, [siteKey, sheetScope, evidenceRevision, reportMapScope, historicalMapSelection]);
 
   const coverPhoto = coverChoice === 'auto' || coverChoice === 'photo' ? photoGallery.shown[0] : undefined;
   const captureCover = (coverChoice === 'auto' || coverChoice === 'map') && !activeSaved && !mapSelection && mapCapture;
@@ -589,16 +592,16 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [panelOpen, setPanelOpen] = useState(!savedReport);
   const sampleReportSeeded = useRef(false);
   useEffect(() => {
-    if (!isSampleMode() || savedReport || !facts || sampleReportSeeded.current) return;
+    if (!isSampleMode() || savedReport || !facts || sampleReportSeeded.current || plateSet.scope !== sheetScope) return;
     sampleReportSeeded.current = true;
-    const example = preparedSampleReport({ id: reportId(), name: siteName, savedAt: new Date().toISOString(), lang: language, location: d, siteData, waterData, facts });
+    const example = preparedSampleReport({ id: reportId(), name: siteName, savedAt: new Date().toISOString(), lang: language, location: d, siteData, waterData, facts, groundPhotos: prepareGroundPhotos(activePlaceId ? getSiteEvidence(evidenceSiteId(activePlaceId)) : {}), mapSelection: { siteId: siteKey, ids: selectedMapIds } });
     setReport(example.report);
     setActiveSaved(example);
     setLanguage(example.lang);
     setGenerated(true);
     setIncludeImages(true);
     setPanelOpen(false);
-  }, [facts, d, language, savedReport]);
+  }, [facts, d, language, savedReport, plateSet.scope, sheetScope]);
 
   const [viewOptionsOpen, setViewOptionsOpen] = useState(false);
   const showPanel = isWide || panelOpen;
@@ -617,7 +620,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       siteData: siteData ?? undefined,
       waterData: waterData ?? undefined,
       facts: facts ?? undefined,
-      settings, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds }, analysedMapIds: activeSaved?.analysedMapIds,
+      settings, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds }, analysedMapIds: activeSaved?.analysedMapIds, groundPhotos: activeSaved?.groundPhotos,
     };
     const { saved, reason } = saveReport(version);
     // Keep storage failures visible so the farmer can retry without losing this version.
@@ -687,7 +690,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       const siteId = designSiteIdFromLocation(d);
       const currentFacts = collectReportSiteFacts({ location: d, siteId, lat: d.lat, lon: d.lon, canvas: loadCanvasState(siteId), farmName: savedPlaces?.find(place => place.id === activePlaceId)?.name });
       setFacts(currentFacts);
-      const example = preparedSampleReport({ id: reportId(), name: currentFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: language, location: d, siteData, waterData, facts: currentFacts, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds } });
+      const example = preparedSampleReport({ id: reportId(), name: currentFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: language, location: d, siteData, waterData, facts: currentFacts, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds }, groundPhotos: prepareGroundPhotos(activePlaceId ? getSiteEvidence(evidenceSiteId(activePlaceId)) : {}) });
       setReport(example.report);
       setActiveSaved(example);
       setSavedVersion(false);
@@ -809,7 +812,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       }
       const provider = res.headers.get('X-Report-Provider') || undefined;
       const model = res.headers.get('X-Report-Model') || undefined;
-      setActiveSaved({ id: reportId(), name: siteFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: requested.language, report: text, origin: 'generated', location: d, siteData, waterData, facts: siteFacts, settings: { ...requested, provider, model }, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds }, analysedMapIds: siteImages.length ? plates.filter(p => siteImages.some(image => image.label === p.label)).map(p => p.id) : [] });
+      setActiveSaved({ id: reportId(), name: siteFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: requested.language, report: text, origin: 'generated', location: d, siteData, waterData, facts: siteFacts, settings: { ...requested, provider, model }, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds }, analysedMapIds: siteImages.length ? plates.filter(p => siteImages.some(image => image.label === p.label)).map(p => p.id) : [], groundPhotos });
       setSavedVersion(false);
       setReading('full');
       setGenerated(true);
@@ -866,7 +869,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       const coverImages: Array<{ image: string; caption: string }> = [];
       if (presentation !== 'print' && includeImages) {
         if (coverPhoto) {
-          coverImages.push({ image: coverPhoto.dataUrl, caption: `${coverPhoto.label} · Current site evidence; it may postdate saved report text.` });
+          coverImages.push({ image: coverPhoto.dataUrl, caption: activeSaved ? coverPhoto.label : `${coverPhoto.label} · Current site evidence; it may postdate saved report text.` });
         } else if (captureCover) {
           coverImages.push({ image: `data:image/jpeg;base64,${mapCapture}`, caption: 'Captured site satellite view' });
         } else if (useCoverMap && coverMap) {
@@ -1401,6 +1404,11 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               </div>
             )}
 
+            {reading === 'full' && activeSaved && !activeSaved.mapSelection && (
+              <p className="mb-4 text-sm" style={{ color: 'var(--report-muted)' }}>
+                {tr('Maps selected for this report', 'Amamephu akhethelwe lo mbiko')} · {label('Not recorded')}
+              </p>
+            )}
             {reading === 'full' && savedMapRecords !== null && <div ref={mapsRef} tabIndex={-1} aria-label={tr('Your saved design maps', 'Amamephu akho omklamo agciniwe')}>
               <ReportMapStocktake maps={allMaps} selectedIds={selectedMapIds} siteId={siteKey} scope={reportMapScope}
                 designUrl={`/design?lat=${d.lat}&lon=${d.lon}`} onSelect={chooseMaps} onOpen={map => { void openSheet(map); }} language={language} busy={loading || pdfState === 'working'} />
@@ -1420,6 +1428,11 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 more exist. A strip of everything on file would look more generous and be less true
                 — advice about the soil beside twelve pictures, four of which informed it, with
                 nothing marking which four. */}
+            {showVisuals && activeSaved && !activeSaved.groundPhotos && (
+              <p className="mb-4 text-sm" style={{ color: 'var(--report-muted)' }}>
+                {tr('Your saved site photos', 'Izithombe zakho zendawo ezigciniwe')} · {label('Not recorded')}
+              </p>
+            )}
             {showVisuals && photoGallery.shown.length > 0 && (
               <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
                 <div className="text-xs font-sans uppercase tracking-wider mb-3" style={{ color: 'var(--report-muted)' }}>
@@ -1458,7 +1471,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                   ))}
                 </div>
                 <div className="font-sans mt-3" style={{ fontSize: 12, color: 'var(--report-muted)', opacity: 0.8 }}>
-                  {tr('Photos from your current site evidence. Saved report text may refer to an earlier selection. Photos can be included in the full PDF.', 'Izithombe ezisebufakazini bakho bendawo njengamanje. Umbiko ogciniwe ungase ubhekisele ezithombeni zangaphambili. Ungafaka izithombe ku-PDF egcwele.')}
+                  {activeSaved ? tr('Photos included', 'Izithombe ezifakiwe') : tr('Photos from your current site evidence. Saved report text may refer to an earlier selection. Photos can be included in the full PDF.', 'Izithombe ezisebufakazini bakho bendawo njengamanje. Umbiko ogciniwe ungase ubhekisele ezithombeni zangaphambili. Ungafaka izithombe ku-PDF egcwele.')}
                 </div>
               </div>
             )}

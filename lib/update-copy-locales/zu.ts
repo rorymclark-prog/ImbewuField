@@ -1,6 +1,9 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Saved reports keep their original photos and site water evidence.": "Imibiko egciniwe igcina izithombe zayo zangempela nobufakazi bamanzi bendawo.",
+  "Field records now accept today’s date after midnight in South Africa.": "Amarekhodi asensimini manje amukela usuku lwanamuhla ngemva kwamabili eNingizimu Afrika.",
+  "Map and crop exports give clearer errors and keyboard controls.": "Ukukhipha amamephu nezinhlelo zezitshalo kunemilayezo yamaphutha nezilawuli zekhibhodi ezicacile.",
   "Map sheets now use white paper, thin legend borders and clearer plant pictures.": "Amashidi amamephu manje asebenzisa iphepha elimhlophe, imingcele emincane yokhiye nezithombe zezitshalo ezicacile.",
   "Paid AI maps now finish when the image service rounds their size.": "Amamephu e-AI akhokhelwayo manje ayaqedwa lapho isevisi yezithombe isondeza ubukhulu bawo.",
   "New AI glossy maps use GPT Image 2.5 Sunburst.": "Amamephu amasha e-AI acwebezelayo asebenzisa i-GPT Image 2.5 Sunburst.",

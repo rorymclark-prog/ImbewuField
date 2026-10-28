@@ -215,6 +215,20 @@ export function groundPhotoGallery(
   return { shown, total };
 }
 
+/** Reopening a report must never replace its photographs with newer site evidence. */
+export function groundPhotoSnapshotGallery(value: unknown): { shown: GroundPhotoView[]; total: number } {
+  const photos = normaliseGroundPhotos(value);
+  return {
+    shown: photos.map((photo, index) => ({
+      key: `report-photo-${index}`,
+      label: photo.label,
+      note: photo.note,
+      dataUrl: `data:${photo.mediaType};base64,${photo.data}`,
+    })),
+    total: photos.length,
+  };
+}
+
 // ── The server side ───────────────────────────────────────────────────────────────────────────
 
 /**
