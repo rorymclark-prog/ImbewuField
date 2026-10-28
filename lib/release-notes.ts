@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '28 October 2026', sha: '9e11f2396', changes: [
+  { when: '28 October 2026', sha: '8d7bfd18d', changes: [
     'Saved reports keep their original photos and site water evidence.',
     'Field records now accept today’s date after midnight in South Africa.',
     'Map and crop exports give clearer errors and keyboard controls.',

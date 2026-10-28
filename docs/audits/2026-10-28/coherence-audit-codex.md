@@ -32,6 +32,8 @@ On the live app, inspected the desktop home, tour entry, narrow mentor fieldwork
 
 Visually reproduced the dark production chart defect and measured its computed heading/surface colours. This is direct output evidence, not a source-only inference.
 
+On preview commit `8d7bfd1`, the corrected dark charts were inspected on desktop and at 390px phone width. The four headings now pair RGB(238,228,208) with RGB(24,18,8), and the phone document width remains 390px. A deterministic Record plan was created and saved in the isolated Tour; no paid render was used. Keyboard opening moved into the gallery and all 20 Tab presses remained inside it. That walkthrough caught an additional focus-return defect when opening a map replaced the original gallery tile; the follow-up adds a connected gallery fallback when the old opener has unmounted.
+
 The training PDF download observation timed out, so no claim is made that its print pagination was visually verified in this pass. Starting a local development server was blocked by the sandbox's listen permission. Branch preview/CI verification is recorded on the PR and issue #35.
 
 ## Remaining limits

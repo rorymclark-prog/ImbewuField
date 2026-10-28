@@ -12141,7 +12141,7 @@ export default function DesignGlossy({
     setExportSel(new Set());
   }, []);
   useDialogFocus(galleryOpen, galleryDialogRef);
-  useDialogFocus(galleryZoomOpen, galleryZoomRef);
+  useDialogFocus(galleryZoomOpen, galleryZoomRef, { returnFocusFallbackRef: galleryDialogRef });
   // A zoom opened from the gallery closes first; Escape must not also dismiss its parent.
   useEscapeClose(galleryOpen || galleryZoomOpen, () => {
     if (galleryZoomOpen) setGalleryZoomOpen(false);
@@ -16437,6 +16437,7 @@ export default function DesignGlossy({
             role="dialog"
             aria-modal="true"
             aria-label={`${formatDesignTranslation(t('designGlossySavedMaps'), { count: gallery.length })} · ${gallerySiteName}`}
+            tabIndex={-1}
             style={{
               width: '100%',
               maxWidth: 520,

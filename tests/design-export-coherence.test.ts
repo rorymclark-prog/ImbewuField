@@ -2,6 +2,9 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import ts from 'typescript';
+import * as React from 'react';
+import { act, create } from 'react-test-renderer';
+import { useDialogFocus } from '../lib/use-dialog-focus.ts';
 import { UserFacingError, userFacingMessage } from '../lib/user-facing-error.ts';
 import { RenderJobError, mapSerially } from '../lib/render-jobs.ts';
 
@@ -127,4 +130,53 @@ test('Escape closes a zoom before its saved-map gallery and the next Escape clea
   assert.match(glossy, /ref=\{galleryZoomRef\}\s+role="dialog"\s+aria-modal="true"/);
   assert.doesNotMatch(glossy.slice(glossy.indexOf('{galleryZoomOpen && stageResultImage')), /autoFocus/,
     'React autoFocus runs before the focus hook captures the opener and would break focus return');
+});
+
+test('closing a zoom whose grid trigger was replaced returns focus to the surviving gallery', () => {
+  const originalDocument = Object.getOwnPropertyDescriptor(globalThis, 'document');
+  try {
+    for (const state of ['replaced-trigger', 'live-trigger', 'closed-parent', 'inert-parent'] as const) {
+      const doc: any = { activeElement: null, body: {}, addEventListener() {}, removeEventListener() {} };
+      const element = (name: string): any => ({
+        name, isConnected: true, hidden: false, focusCount: 0,
+        hasAttribute: () => false, getClientRects: () => [{}], closest: () => null,
+        focus() { this.focusCount++; doc.activeElement = this; },
+      });
+      const opener = element('grid trigger');
+      const gallery = element('gallery');
+      const close = element('zoom close');
+      const zoom = { ...element('zoom'), querySelector: () => null, querySelectorAll: () => [close] };
+      const fallback = { current: gallery };
+      doc.activeElement = opener;
+      Object.defineProperty(globalThis, 'document', { configurable: true, value: doc });
+      const Probe = ({ open }: { open: boolean }) => {
+        const ref = React.useRef<any>(zoom);
+        useDialogFocus(open, ref, { returnFocusFallbackRef: fallback });
+        return null;
+      };
+      let view!: ReturnType<typeof create>;
+      act(() => { view = create(React.createElement(Probe, { open: true })); });
+      try {
+        assert.equal(doc.activeElement, close);
+        if (state !== 'live-trigger') opener.isConnected = false;
+        if (state === 'closed-parent') fallback.current = null;
+        if (state === 'inert-parent') gallery.closest = () => ({});
+        act(() => { view.update(React.createElement(Probe, { open: false })); });
+        if (state === 'replaced-trigger') {
+          assert.equal(doc.activeElement, gallery, 'the page behind the gallery must not receive focus');
+          assert.equal(gallery.tabIndex, -1);
+        } else if (state === 'live-trigger') {
+          assert.equal(doc.activeElement, opener, 'a surviving trigger remains the preferred return target');
+          assert.equal(gallery.focusCount, 0);
+        } else {
+          assert.equal(gallery.focusCount, 0, 'a closed or inert parent cannot steal focus');
+        }
+      } finally { act(() => { view.unmount(); }); }
+    }
+    assert.match(glossy, /useDialogFocus\(galleryZoomOpen, galleryZoomRef, \{ returnFocusFallbackRef: galleryDialogRef \}\)/,
+      'the real map zoom must supply its surviving gallery as the fallback');
+  } finally {
+    if (originalDocument) Object.defineProperty(globalThis, 'document', originalDocument);
+    else delete (globalThis as any).document;
+  }
 });
