@@ -590,7 +590,7 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designGlossyQualityHigh: 'High',
   designGlossyQualityHighSub: 'sharpest · most expensive',
   designGlossyQualityMedium: 'Medium',
-  designGlossyQualityMediumSub: 'about a quarter of the cost',
+  designGlossyQualityMediumSub: 'balanced detail · lower cost',
   designGlossyQualityLow: 'Low',
   designGlossyQualityLowSub: 'cheapest · for testing',
   designGlossyQualityNote: 'AI artwork can change or invent features. Source protections, labels and legend are applied afterwards, but compare positions and counts with your Exact Canvas map before using the illustration. Higher AI quality does not verify accuracy.',

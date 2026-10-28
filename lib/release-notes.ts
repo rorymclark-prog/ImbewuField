@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '28 October 2026', sha: 'e7812ef7a', changes: [
+    'New AI glossy maps use GPT Image 2.5 Sunburst.',
+  ] },
   { when: '27 October 2026', sha: '9d42fedbe', changes: [
     'Turn AI glossy maps on or off in Settings. Saved maps stay available.',
     'The platform owner can enable or suspend AI maps for each organisation.',

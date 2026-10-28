@@ -62,3 +62,9 @@ firebase deploy --only functions:aiMapAccess,functions:runRenderJob
 ## Notes
 - Logs: `npm run logs` or Firebase console → Functions. Each job logs a structured JSON line.
 - The `render_usage/{uid}_{yyyymmdd}` docs hold the daily counters (worker-written, owner-readable).
+
+The OpenAI glossy-map worker uses `gpt-image-2.5-sunburst` (the shared model in
+`lib/ai-render/model.ts`). The worker records the actual model on each job so saved
+maps keep their original attribution after upgrades. The existing low/medium/high
+quality choices and spend caps remain in force; xhigh/max are not enabled.
+Model reference: https://developers.openai.com/api/docs/models/gpt-image-2.5-sunburst
