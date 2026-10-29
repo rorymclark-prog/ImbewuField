@@ -155,7 +155,11 @@ test('the chrome pass draws every app-owned element over the model art', () => {
 
   // Boundary stroke — drawn here, in the same pass as everything else, rather than byte-restored
   // alone onto repainted ground.
-  assert.match(pass, /drawBlueprintBoundary\(ctx, refLayers\.boundary/);
+  assert.match(pass, /await burnPaintedBoundary\(unboundedArt, state, frame, refLayers, filter, W, H\)/);
+  const boundaryPass = functionBody('async function burnPaintedBoundary(', '\nasync function buildProtectMask(');
+  assert.match(boundaryPass, /drawBlueprintBoundary\(ctx, refLayers\.boundary/);
+  assert.match(boundaryPass, /buildCanopyForeground\(map, state, frame, filter, W, H\)/,
+    'the shared boundary pass must run behind foreground foliage on both paid stages');
   // Plant labels, leaders and the gutter layout: burnExactLabelLayer is the exact sheet's own
   // label block (drawGroundAreaNames + drawPlantMarks + sheetGutterLayout), so a paid sheet's
   // names are the exact sheet's names.

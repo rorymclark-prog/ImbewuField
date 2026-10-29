@@ -19,6 +19,10 @@ const copy:UpdateCopy={
   "All nine map sheets use the same legend box, fonts and spacing.": "Wonke amakhasi ayisishiyagalolunye amamephu asebenzisa ibhokisi elifanayo lezimpawu, amafonti nezikhala.",
   "New drawings keep the legend on the right; your saved maps stay available.": "Imidwebo emisha igcina incazelo yezimpawu ngakwesokudla; amamephu akho agciniwe ayatholakala.",
   "Long map headings wrap inside their legend box.": "Izihloko ezinde zemephu zihlukaniswa ngemigqa ngaphakathi kwebhokisi lezimpawu.",
+  "Saved AI maps can be reassembled without buying another render.": "Amamephu e-AI agciniwe angahlanganiswa futhi ngaphandle kokuthenga omunye umdwebo.",
+  "AI maps keep continuous artwork, with tree crowns allowed over the boundary.": "Amamephu e-AI agcina umdwebo oqhubekayo, imiqhele yezihlahla ingadlula umngcele.",
+  "AI map downloads now remind you to check positions and counts.": "Amamephu e-AI alandiwe manje akukhumbuza ukuhlola izindawo nezibalo.",
+
   "Saved reports keep their original photos and site water evidence.": "Imibiko egciniwe igcina izithombe zayo zangempela nobufakazi bamanzi bendawo.",
   "Field records now accept today’s date after midnight in South Africa.": "Amarekhodi asensimini manje amukela usuku lwanamuhla ngemva kwamabili eNingizimu Afrika.",
   "Map and crop exports give clearer errors and keyboard controls.": "Ukukhipha amamephu nezinhlelo zezitshalo kunemilayezo yamaphutha nezilawuli zekhibhodi ezicacile.",

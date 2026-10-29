@@ -44,7 +44,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '29 October 2026', sha: '95a91dab9', changes: [
     'Production plans keep unmarked plants and housing as proposed, matching your design.',
   ] },
-  { when: '29 October 2026', sha: 'd785a0950', changes: [
+  { when: '29 October 2026', sha: '50e82eca3', changes: [
     'Report headings stay with their opening text when you export a PDF.',
     'Map legends have thinner borders and clearer scale marks.',
     'New map legends use spare margin space for larger, clearer lettering.',
@@ -55,6 +55,11 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   }, { title: 'Check the maps in your site report', where: 'Menu → Site reports', href: '/reports',
     detail: 'Review each included map before exporting. Saved older drawings stay available.',
   }] },
+  { when: '29 October 2026', sha: 'a484688bd', changes: [
+    'AI maps keep continuous artwork, with tree crowns allowed over the boundary.',
+    'AI map downloads now remind you to check positions and counts.',
+    'Saved AI maps can be reassembled without buying another render.',
+  ] },
   { when: '28 October 2026', sha: '9e11f2396', changes: [
     'Saved reports keep their original photos and site water evidence.',
     'Field records now accept today’s date after midnight in South Africa.',
