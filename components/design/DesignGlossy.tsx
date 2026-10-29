@@ -5,6 +5,9 @@
 // Overlay remains the explicit model-authored comparison/rollback style.
 
 import { numberLabel } from '@/lib/format-figures';
+import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
+import { useDialogFocus } from '@/lib/use-dialog-focus';
+import { useEscapeClose } from '@/lib/use-escape-close';
 import { useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { createPortal } from 'react-dom';
 import { Download, RefreshCw, Gem, FlaskConical, Images, MapPin, Maximize2, X, Trash2, Share2, Check, Upload, AlertTriangle, Sparkles, Image as ImageIcon } from 'lucide-react';
@@ -1502,7 +1505,7 @@ async function shareSheetFiles(files: File[], labels: string[]): Promise<void> {
     ? `${labels[0]} — my farm plan, made with ImbewuField`
     : `${labels.length} sheets from my farm plan, made with ImbewuField`;
   if (typeof navigator === 'undefined' || !navigator.canShare?.({ files })) {
-    throw new Error('This phone cannot share files directly — use Download instead.');
+    throw new UserFacingError('This phone cannot share files directly — use Download instead.');
   }
   await navigator.share({ files, title, text });
 }
@@ -1960,7 +1963,7 @@ async function requestProducer(
   // /api/image-producer, so it must refuse here, at the boundary, where no future call site —
   // generateProducer, generateAllStyledSheets, or one not yet written — can forget it.
   if (isSampleMode()) {
-    throw new Error(SAMPLE_MODE_RENDER_REFUSAL);
+    throw new UserFacingError(SAMPLE_MODE_RENDER_REFUSAL);
   }
   // The cap applies at the boundary itself so no future call site can forget it.
   const capped = stripDataUrl(await capForAiInput(`data:image/png;base64,${imageBase64}`));
@@ -10843,7 +10846,7 @@ async function composeStyleSheet(
     columnPlans = findPlan(true);
     if (!columnPlans.length) columnPlans = findPlan(false);
     if (!columnPlans.length) {
-      throw new Error('Legend facts cannot fit the finished sheet at the 9px readability floor.');
+      throw new UserFacingError('Legend facts cannot fit the finished sheet at the 9px readability floor.');
     }
   }
 
@@ -12128,6 +12131,22 @@ export default function DesignGlossy({
   const [exportQuality, setExportQuality] = useState<SheetExportQuality>('high');
   const [exportBusy, setExportBusy] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const galleryDialogRef = useRef<HTMLDivElement>(null);
+  const galleryZoomRef = useRef<HTMLDivElement>(null);
+  const closeGallery = useCallback(() => {
+    setGalleryOpen(false);
+    setGalleryViewId(null);
+    setGalleryZoomOpen(false);
+    setExportMode(false);
+    setExportSel(new Set());
+  }, []);
+  useDialogFocus(galleryOpen, galleryDialogRef);
+  useDialogFocus(galleryZoomOpen, galleryZoomRef, { returnFocusFallbackRef: galleryDialogRef });
+  // A zoom opened from the gallery closes first; Escape must not also dismiss its parent.
+  useEscapeClose(galleryOpen || galleryZoomOpen, () => {
+    if (galleryZoomOpen) setGalleryZoomOpen(false);
+    else closeGallery();
+  });
 
   // A stable cache key per chosen map (producer style OR design filter OR analysis style).
   // Each map+style combination caches its own render (e.g. producer:storybook:zones).
@@ -12230,15 +12249,10 @@ export default function DesignGlossy({
 
   useEffect(() => {
     if (!galleryZoomOpen) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setGalleryZoomOpen(false);
-    };
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', closeOnEscape);
     return () => {
       document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', closeOnEscape);
     };
   }, [galleryZoomOpen]);
 
@@ -12509,14 +12523,14 @@ export default function DesignGlossy({
         if (mode === 'share' && files.length) await shareSheetFiles(files, picked.map((g) => g.label));
       } catch (err) {
         if (!(err instanceof DOMException && err.name === 'AbortError')) {
-          setError(err instanceof Error ? err.message : String(err));
+          setError(userFacingMessage(err, t('designGlossyShareError'), t));
         }
       } finally {
         setExportBusy(false);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [gallery, exportSel, exportFormat, exportQuality, exportBusy, gallerySiteName, encodeSheet, buildGalleryPdf, resolveGalleryImage],
+    [gallery, exportSel, exportFormat, exportQuality, exportBusy, gallerySiteName, encodeSheet, buildGalleryPdf, resolveGalleryImage, t],
   );
 
   const removeGallery = useCallback((id: string) => {
@@ -12662,7 +12676,7 @@ export default function DesignGlossy({
           showcase: true,
         });
       } catch (err) {
-        setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+        setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
       } finally {
         setLoading(null);
       }
@@ -12850,7 +12864,7 @@ export default function DesignGlossy({
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -12907,7 +12921,7 @@ export default function DesignGlossy({
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -12946,7 +12960,7 @@ export default function DesignGlossy({
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -12976,7 +12990,7 @@ export default function DesignGlossy({
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -13005,7 +13019,7 @@ export default function DesignGlossy({
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -13069,7 +13083,7 @@ export default function DesignGlossy({
       setGalleryViewId(null);
       setGalleryOpen(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -13234,7 +13248,7 @@ export default function DesignGlossy({
         setGalleryOpen(true);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -13305,7 +13319,7 @@ export default function DesignGlossy({
           try {
             sheetImage = await restoreProtectedPixels(sourceImage, modelImage, protectMask);
           } catch (err) {
-            throw new Error('Could not restore the source roof. The AI candidate is retained for retry.', { cause: err });
+            throw Object.assign(new UserFacingError('Could not restore the source roof. The AI candidate is retained for retry.'), { cause: err });
           }
         }
         // ZONE GEOMETRY IS NOT THE MODEL'S TO DRAW. Every other style burns buildZoneOverlay — the
@@ -13323,7 +13337,7 @@ export default function DesignGlossy({
             sheetImage = await burnOverlayOnSheetMap(sheetImage, exactZones);
           } catch (err) {
             // A failed burn must never lose a paid render — ship the model's sheet rather than nothing.
-            throw new Error('Could not draw the saved zones. The AI candidate is retained for retry.', { cause: err });
+            throw Object.assign(new UserFacingError('Could not draw the saved zones. The AI candidate is retained for retry.'), { cause: err });
           }
         }
         return sheetImage;
@@ -13579,7 +13593,7 @@ export default function DesignGlossy({
         outputScale: SCALE, renderRecipe: SHEET_RENDER_RECIPE, planVersion: PLAN_VERSION, cacheSuffix: underlaySuffix,
       });
       if (lockedPolishStage === 'polish' && hybridReadyRevisionRef.current !== sceneSnapshot.designRevision) {
-        throw new Error('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
+        throw new UserFacingError('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
       }
       if (lockedPolishStage !== 'polish' || !renderAttemptRef.current) {
         renderAttemptRef.current = crypto.randomUUID();
@@ -13724,7 +13738,7 @@ export default function DesignGlossy({
       }));
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
+      setError(userFacingMessage(err, t('designGlossyCouldNotStart'), t));
       setLoading(null);
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, finishStyledSheet, pushGallery, effectiveModelChrome, lockActive, promptRewrite, queueEngine, quality, labelMode, underlay, lockedPolishStage, underlaySuffix, aiRenderOn]);
@@ -13759,7 +13773,7 @@ export default function DesignGlossy({
         outputScale: SCALE, renderRecipe: SHEET_RENDER_RECIPE, planVersion: PLAN_VERSION, cacheSuffix: underlaySuffix,
       });
       if (lockedPolishStage === 'polish' && hybridReadyRevisionRef.current !== sceneSnapshot.designRevision) {
-        throw new Error('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
+        throw new UserFacingError('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
       }
       if (lockedPolishStage !== 'polish' || !renderAttemptRef.current) {
         renderAttemptRef.current = crypto.randomUUID();
@@ -13779,7 +13793,7 @@ export default function DesignGlossy({
       // and the flagship render obeyed both by erasing the labels and repainting the legend.
       const polishSource = fullSheetPolish ? hybridMapForPolishRef.current : null;
       if (fullSheetPolish && (!polishSource || polishSource.key !== filter)) {
-        throw new Error('The AI hybrid sheet was not available to polish — please try again.');
+        throw new UserFacingError('The AI hybrid sheet was not available to polish — please try again.');
       }
       const exactSheetInput = fullSheetPolish && polishSource ? polishSource.map : null;
       // Keep a SECOND reference to the same image, deliberately not consumed. The paid pass has to
@@ -13903,7 +13917,7 @@ export default function DesignGlossy({
         : formatDesignTranslation(t('designGlossyBackgroundSheet'), { layer: layerLabel }));
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
+      setError(userFacingMessage(err, t('designGlossyCouldNotStart'), t));
       setLoading(null);
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, filter, effectiveModelChrome, lockActive, promptRewrite, lockedPolishStage, queueEngine, quality, labelMode, underlay, underlaySuffix, aiRenderOn]);
@@ -13950,7 +13964,7 @@ export default function DesignGlossy({
       canvas.width = W;
       canvas.height = H;
       const ctx = canvas.getContext('2d');
-      if (!ctx) throw new Error('Could not prepare the exact map overlay. The AI candidate is retained for retry.');
+      if (!ctx) throw new UserFacingError('Could not prepare the exact map overlay. The AI candidate is retained for retry.');
       const px = (n: number) => n * W;
       const py = (n: number) => n * H;
       const pxPerM = W / (renderFrame.imgW * renderFrame.mPerPx);
@@ -14078,7 +14092,7 @@ export default function DesignGlossy({
         outputScale: SCALE, renderRecipe: SHEET_RENDER_RECIPE, planVersion: PLAN_VERSION, cacheSuffix: underlaySuffix,
       });
       if (lockedPolishStage === 'polish' && hybridReadyRevisionRef.current !== sceneSnapshot.designRevision) {
-        throw new Error('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
+        throw new UserFacingError('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
       }
       if (lockedPolishStage !== 'polish' || !renderAttemptRef.current) {
         renderAttemptRef.current = crypto.randomUUID();
@@ -14090,7 +14104,7 @@ export default function DesignGlossy({
       // prompt, the same "polish an empty page" bug the 5-sheet path had.
       const polishStage = lockedPolishStage === 'polish';
       if (polishStage && !hybridResultRef.current) {
-        throw new Error('The AI hybrid sheet was not available to polish — please try again.');
+        throw new UserFacingError('The AI hybrid sheet was not available to polish — please try again.');
       }
       const hybridInput = polishStage ? hybridResultRef.current : null;
       if (polishStage) hybridResultRef.current = null; // consume-once
@@ -14178,7 +14192,7 @@ export default function DesignGlossy({
           : t('designGlossyBaseHybrid'));
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
+      setError(userFacingMessage(err, t('designGlossyCouldNotStart'), t));
       setLoading(null);
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, lockedPolishStage, queueEngine, quality, labelMode, underlay, underlaySuffix, aiRenderOn]);
@@ -14231,7 +14245,7 @@ export default function DesignGlossy({
         outputScale: SCALE, renderRecipe: SHEET_RENDER_RECIPE, planVersion: PLAN_VERSION, cacheSuffix: underlaySuffix,
       });
       if (lockedPolishStage === 'polish' && hybridReadyRevisionRef.current !== sceneSnapshot.designRevision) {
-        throw new Error('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
+        throw new UserFacingError('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
       }
       if (lockedPolishStage !== 'polish' || !renderAttemptRef.current) {
         renderAttemptRef.current = crypto.randomUUID();
@@ -14240,7 +14254,7 @@ export default function DesignGlossy({
       // Same consume-once stash contract as generateOneViaQueue / generateSectorViaQueue.
       const polishStage = lockedPolishStage === 'polish';
       if (polishStage && !hybridResultRef.current) {
-        throw new Error('The AI hybrid sheet was not available to polish — please try again.');
+        throw new UserFacingError('The AI hybrid sheet was not available to polish — please try again.');
       }
       let hybridInput = polishStage ? hybridResultRef.current : null;
       if (polishStage) hybridResultRef.current = null; // consume-once
@@ -14332,7 +14346,7 @@ export default function DesignGlossy({
         : t('designGlossyPhasingHybrid'));
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
+      setError(userFacingMessage(err, t('designGlossyCouldNotStart'), t));
       setLoading(null);
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, lockedPolishStage, queueEngine, quality, labelMode, underlay, underlaySuffix, aiRenderOn]);
@@ -14707,10 +14721,10 @@ export default function DesignGlossy({
               const frozenScene = await scenePromise;
               if (!active) return;
               if (!frozenScene) {
-                throw new Error('This older AI job has no saved design snapshot. Its original output is retained; it cannot be combined safely with the current design.');
+                throw new UserFacingError('This older AI job has no saved design snapshot. Its original output is retained; it cannot be combined safely with the current design.');
               }
               if (frozenScene.outputScale !== SCALE || frozenScene.renderRecipe !== SHEET_RENDER_RECIPE || frozenScene.planVersion !== PLAN_VERSION) {
-                throw new Error('This AI job belongs to a different export setting or renderer version. Its original output is retained; finish it with the original settings.');
+                throw new UserFacingError('This AI job belongs to a different export setting or renderer version. Its original output is retained; finish it with the original settings.');
               }
               const auditContext = {
                 siteId: job.siteId, jobId: queueJobId!, attemptId: job.attemptId ?? queueJobId!,
@@ -15123,7 +15137,7 @@ export default function DesignGlossy({
               console.error('[glossy] finishing a queued sheet failed', sheet.key, e);
               // Let a later snapshot retry this sheet — the worker's output is still in Storage.
               finished.delete(sheet.key);
-              lastAssembleError = e instanceof Error ? e.message : String(e);
+              lastAssembleError = userFacingMessage(e, '', t);
             }
           }
         }
@@ -15136,13 +15150,13 @@ export default function DesignGlossy({
           const rejectedDone = rejected.size;
           const serverDone = job.sheets.filter((s) => s.status === 'done').length;
           const failedSheets = job.sheets.filter((s) => s.status === 'error');
-          // Surface the worker's actual reason (quota, moderation, …) — it was captured
-          // server-side but never shown, leaving farmers guessing (audit find).
-          const firstErr = failedSheets[0]?.error;
+          // Worker diagnostics can contain provider or infrastructure wording. Keep them in
+          // diagnostics; the farmer sees the failed count and the app's own retry guidance.
+          if (job.error || failedSheets.length) console.error('[glossy] queued render failed', job.error, failedSheets);
           if (done > 0) {
             setNotice(refreshPendingRef.current
               ? `AI POLISH COMPLETE — the new ${attribution.label} result is open now — review it against the exact map. The exact no-AI master remains separately saved.`
-              : `AI POLISH COMPLETE — ${done} paid ${attribution.label} result${done === 1 ? '' : 's'} finished for review against the exact map${failedSheets.length ? ` · ${failedSheets.length} failed${firstErr ? ` (${firstErr})` : ''} — try again` : ''}. Results are saved in the gallery; the exact no-AI master remains the reference for positions and counts.`);
+              : `AI POLISH COMPLETE — ${done} paid ${attribution.label} result${done === 1 ? '' : 's'} finished for review against the exact map${failedSheets.length ? ` · ${failedSheets.length} failed — try again` : ''}. Results are saved in the gallery; the exact no-AI master remains the reference for positions and counts.`);
             refreshPendingRef.current = false;
             setGalleryViewId(lastAssembledGalleryId);
             setGalleryOpen(true);
@@ -15162,7 +15176,7 @@ export default function DesignGlossy({
             setLockedPolishStage(null);
             refreshPendingRef.current = false;
           } else {
-            setError(job.error || firstErr || t('designGlossyRenderIncomplete'));
+            setError(t('designGlossyRenderIncomplete'));
             setHybridHandoffReady(false);
             setLockedPolishStage(null);
             refreshPendingRef.current = false;
@@ -16419,6 +16433,11 @@ export default function DesignGlossy({
           }}
         >
           <div
+            ref={galleryDialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${formatDesignTranslation(t('designGlossySavedMaps'), { count: gallery.length })} · ${gallerySiteName}`}
+            tabIndex={-1}
             style={{
               width: '100%',
               maxWidth: 520,
@@ -16451,9 +16470,9 @@ export default function DesignGlossy({
                 </button>
               )}
               <button
-                onClick={() => { setGalleryOpen(false); setGalleryViewId(null); setGalleryZoomOpen(false); setExportMode(false); setExportSel(new Set()); }}
+                onClick={closeGallery}
                 aria-label={t('designGlossyCloseSaved')}
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 8, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#755942', cursor: 'pointer' }}
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 44, height: 44, flexShrink: 0, borderRadius: 8, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#755942', cursor: 'pointer' }}
               >
                 <X size={14} />
               </button>
@@ -16741,6 +16760,7 @@ export default function DesignGlossy({
       )}
       {galleryZoomOpen && stageResultImage && typeof document !== 'undefined' && createPortal((
         <div
+          ref={galleryZoomRef}
           role="dialog"
           aria-modal="true"
           aria-label={formatDesignTranslation(t('designGlossyFullScreenNamed'), {
@@ -16763,7 +16783,6 @@ export default function DesignGlossy({
         >
           <button
             type="button"
-            autoFocus
             onClick={() => setGalleryZoomOpen(false)}
             aria-label={t('designGlossyCloseFullScreen')}
             style={{
@@ -16771,8 +16790,8 @@ export default function DesignGlossy({
               top: 14,
               right: 14,
               zIndex: 81,
-              width: 42,
-              height: 42,
+              width: 44,
+              height: 44,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

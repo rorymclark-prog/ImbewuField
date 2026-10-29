@@ -1,6 +1,9 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Saved reports keep their original photos and site water evidence.": "Litlaleho tse bolokiloeng li boloka linepe tsa tsona tsa pele le bopaki ba metsi a sebaka.",
+  "Field records now accept today’s date after midnight in South Africa.": "Lirekoto tsa tšimo joale li amohela letsatsi la kajeno kamora khitla Afrika Boroa.",
+  "Map and crop exports give clearer errors and keyboard controls.": "Ho romela limmapa le meralo ea lijalo ho fana ka liphoso le taolo ea keyboard tse hlakileng.",
   "Map sheets now use white paper, thin legend borders and clearer plant pictures.": "Maqephe a limmapa joale a sebelisa pampiri e tšoeu, meeli e mesesane ea senotlolo le litšoantšo tse hlakileng tsa limela.",
   "Paid AI maps now finish when the image service rounds their size.": "Limmapa tsa AI tse lefelloang joale lia phethoa ha tšebeletso ea litšoantšo e potoloha boholo ba tsona.",
   "New AI glossy maps use GPT Image 2.5 Sunburst.": "Limmapa tse ncha tse benyang tsa AI li sebelisa GPT Image 2.5 Sunburst.",
