@@ -18,3 +18,7 @@ The prior integrated source `2d14bdaff` completed the full local suite:6122pass,
 ## Verification and next continuation
 
 Run the ordered typecheck/full suite/whitespace and wait for the full exact-head `test`, focused-render and rules jobs plus successful preview. No known failure is ignored and no test is weakened. Record terminal results on #1137 and issue35. Merge the map parent before this correction; the separate report chooser may publish in between. Actual maps and the annual-production sample remain private; verify production source and all corrected row notes before calling the new sample final. PLAN_VERSION and saved geometry are unchanged; this changes report eligibility, not the stored drawing.
+
+## Final branch topology
+
+The independent chooser source is included in this correction before its full run so that publishing the UI first cannot create a metadata-only merge conflict afterwards. The plant/housing reader bytes remain unchanged. The short-lived78b6 local full run was stopped and preserved as superseded; it is not passed. The final combined source gets a fresh full local/CI run, with no further optional changes during that gate.

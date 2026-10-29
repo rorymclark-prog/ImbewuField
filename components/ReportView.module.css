@@ -161,6 +161,16 @@
 .versionDetails dl > div { display:grid; grid-template-columns:150px minmax(0,1fr); gap:12px; padding:5px 0; }
 .versionDetails dt { color:var(--report-muted); }
 .versionDetails dd { margin:0; overflow-wrap:anywhere; }
+/* Two columns keep the comparison readable on a phone without hiding a choice off-screen. */
+.purposeGuide { color:var(--report-ink); font-size:14px; }
+.purposeTable { width:100%; table-layout:fixed; border-collapse:collapse; margin:16px 0; }
+.purposeTable caption { text-align:left; font-weight:700; padding-bottom:8px; }
+.purposeTable th, .purposeTable td { text-align:left; vertical-align:top; padding:12px; border:1px solid var(--report-border); overflow-wrap:anywhere; }
+.purposeTable thead { background:var(--report-panel); }
+.purposeTable th:first-child { width:27%; }
+.purposeTable td p { margin:0 0 10px; }
+.purposeTable td p:last-child { margin-bottom:0; }
+@media (max-width:640px) { .purposeTable th:first-child { width:35%; } }
 .settingsNote { font-size:13px; line-height:1.5; margin:12px 0; }
 .settingsNote p { margin:6px 0; color:var(--report-muted); }
 .readingControls select { min-height:44px; max-width:150px; background:var(--report-paper); color:var(--report-ink); border:1px solid var(--report-border); border-radius:8px; padding:6px; }
