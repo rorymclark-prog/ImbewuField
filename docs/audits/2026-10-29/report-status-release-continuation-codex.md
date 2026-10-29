@@ -22,3 +22,7 @@ Run the ordered typecheck/full suite/whitespace and wait for the full exact-head
 ## Final branch topology
 
 The independent chooser source is included in this correction before its full run so that publishing the UI first cannot create a metadata-only merge conflict afterwards. The plant/housing reader bytes remain unchanged. The short-lived78b6 local full run was stopped and preserved as superseded; it is not passed. The final combined source gets a fresh full local/CI run, with no further optional changes during that gate.
+
+## Full-run failure and coverage correction
+
+The `a91f8c313` local run finished with 6,128 passes, one failure and one longstanding TODO (exit 1). [REP-V01](simple-plant-label-coverage-codex.md) records the sole failure: a Simple-mode regex pinned the old plant-label condition and rejected the additional Whole/individual naming guard. Both the old test and component are identical to main `b8a4d11`; no runtime change is needed. The assertion is rewritten upward into the actual visibility obligations, with mutation checks proving that lost guards fail. This necessary correction ends the failed-source freeze and requires a fresh full run on the amended source. REP-S01 remains unpublished until that gate passes.
