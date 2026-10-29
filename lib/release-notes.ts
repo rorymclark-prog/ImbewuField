@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '29 October 2026', sha: 'fdfb6b698', changes: [
+  { when: '29 October 2026', sha: '007bf4f6d', changes: [
     'Open a field note from a task, with its crop and bed ready to check.',
     'Find journal notes by crop, bed, date or words you remember.',
     'Compare dated photos and download selected notes for an adviser.',
