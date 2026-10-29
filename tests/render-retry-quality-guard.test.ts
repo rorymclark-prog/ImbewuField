@@ -21,6 +21,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import ts from 'typescript';
+import { OPENAI_MAP_MODEL, openAiMapRequestedSize } from '../lib/ai-render/model.ts';
 
 const source = readFileSync(new URL('../functions/src/index.ts', import.meta.url), 'utf8');
 
@@ -54,4 +56,47 @@ test('the quality parameter still defaults to high for pre-field job docs', () =
     /quality:\s*'high'\s*\|\s*'medium'\s*\|\s*'low'\s*=\s*'high'/,
     'openaiEdit no longer defaults quality to high; update this guard and its rationale.',
   );
+});
+
+
+test('paid map edits use GPT Image 2.5 while preserving the chosen quality and protect mask', async () => {
+  // Run the actual worker request builder with a fake transport. A picker-label-only upgrade,
+  // an old model on the wire, or a lost quality/mask must all fail without buying an image.
+  const requestSource = source.slice(source.indexOf('function jpegDims('), source.indexOf('// Patch one sheet'));
+  const compiled = ts.transpileModule(requestSource, {
+    compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS },
+  }).outputText;
+  const calls: Array<{ url: string; body: FormData }> = [];
+  const edit = new Function('OPENAI_MAP_MODEL', 'openAiMapRequestedSize', 'ATTEMPT_TIMEOUT_MS', 'MAX_RETRIES', 'MAX_429_RETRIES',
+    'friendlyProviderError', 'sleep', 'fetch', `${compiled}; return openaiEdit;`)(
+      OPENAI_MAP_MODEL, openAiMapRequestedSize, 1000, 0, 0, () => 'provider failure', async () => {},
+      async (url: string, init: RequestInit) => {
+        calls.push({ url, body: init.body as FormData });
+        return { ok: true, status: 200, json: async () => ({ data: [{ b64_json: 'painted-image' }] }) };
+      },
+    );
+  const png = Buffer.alloc(24);
+  png.writeUInt32BE(0x89504e47, 0);
+  png.writeUInt32BE(0x0d0a1a0a, 4);
+  png.writeUInt32BE(1600, 16);
+  png.writeUInt32BE(1000, 20);
+  for (const quality of ['low', 'medium', 'high']) {
+    assert.equal(await edit('fake-key', png.toString('base64'), 'Saved geometry only', png.toString('base64'), null, 0, quality), 'painted-image');
+    const call = calls.at(-1)!;
+    assert.equal(call.url, 'https://api.openai.com/v1/images/edits');
+    assert.equal(call.body.get('model'), 'gpt-image-2.5-sunburst');
+    assert.equal(call.body.get('quality'), quality);
+    assert.equal(call.body.get('n'), '1');
+    assert.equal(call.body.get('output_format'), 'png');
+    assert.equal(call.body.get('prompt'), 'Saved geometry only');
+    assert.ok(call.body.get('image[]') instanceof Blob);
+    assert.ok(call.body.get('mask') instanceof Blob);
+    const [w, h] = String(call.body.get('size')).split('x').map(Number);
+    assert.equal(w % 16, 0);
+    assert.equal(h % 16, 0);
+    assert.ok(Math.abs(w / h - 1.6) < 0.02);
+  }
+  assert.equal(calls.length, 3);
+  assert.match(source, /if \(job\.engine === 'openai'\) await ref\.update\(\{ model: OPENAI_MAP_MODEL \}\)/,
+    'the worker must stamp the same actual model it sends to OpenAI');
 });

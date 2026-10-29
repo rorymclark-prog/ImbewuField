@@ -17,7 +17,7 @@ import { projectorForFrame, type DesignCanvasState } from './design-canvas';
 import type { MapRefLayers } from './base-layers';
 
 /** ~2 km. The main map stores every site's shapes in one pool — see app/design/page.tsx. */
-const NEAR_DEG = 0.02;
+export const REPORT_SITE_PROXIMITY_DEGREES = 0.02;
 
 function ringOf(geometry: DesignLayer['geometry'] | undefined): Position[] {
   if (!geometry) return [];
@@ -42,7 +42,7 @@ export function mapRefLayersForCanvas(layers: DesignLayer[] | null | undefined, 
   if (![frame.centerLng, frame.centerLat, frame.zoom, frame.imgW, frame.imgH].every(Number.isFinite) || !(frame.imgW > 0) || !(frame.imgH > 0)) return EMPTY_MAP_REF_LAYERS;
   const near = layers.filter((layer) => {
     const first = ringOf(layer.geometry)[0] ?? lineOf(layer.geometry)[0];
-    return !!first && Math.abs(first[1] - lat) < NEAR_DEG && Math.abs(first[0] - lon) < NEAR_DEG;
+    return !!first && Math.abs(first[1] - lat) < REPORT_SITE_PROXIMITY_DEGREES && Math.abs(first[0] - lon) < REPORT_SITE_PROXIMITY_DEGREES;
   });
   const pick = (test: (layer: DesignLayer) => boolean) => near.find(layer => test(layer) && layer.approved) ?? near.find(test);
   const boundary = pick(layer => layer.layerType === 'property_boundary')

@@ -11,9 +11,10 @@
 //           then redeploy that environment.
 // Turn OFF: remove the variable (or set it to anything else), redeploy.
 //
-// This switch enables the environment, not every account. A verified aiRenderTester custom
-// claim additionally grants each tester access; the routes and worker enforce it independently
-// of the interface. Keep this switch off until both sides of that gate have been deployed.
+// This switch enables the environment, not every account. The shared managed access policy
+// additionally checks the live platform switch, tenant grant and personal opt-in. Only a verified
+// aiMapMaster Auth grant controls the platform and tenants. Routes and worker enforce the policy
+// independently of the interface. Deploy both sides before enabling this environment.
 // There is deliberately no localStorage or query-string override for paid rendering.
 
 export const AI_RENDER_FLAG = 'NEXT_PUBLIC_AI_RENDER_ENABLED';

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import ts from 'typescript';
+import { PLAIN_PAPER_GROUND } from '../lib/sheet-underlay.ts';
 import { calculateSheetLegendPlacement, calculateStyleSheetSize, paperSheetCanvas } from '../lib/reference-presentation.ts';
 
 // Rory kept saying the typography looked wrong and could not say why. The answer was that a single
@@ -289,7 +290,8 @@ test('the compact masterplan prints its key at the same physical size without re
         fillStyle: '', fillRect() {}, drawImage(...args: unknown[]) { placements.push(args); },
       }) };
       const pad = actualPainter('padToPaperSheet', {
-        paperSheetCanvas, document: { createElement: () => canvas }, releaseCanvas: () => {},
+        // The current painter shares main's white-paper authority rather than a private cream literal.
+        PAPER: PLAIN_PAPER_GROUND, paperSheetCanvas, document: { createElement: () => canvas }, releaseCanvas: () => {},
         drainCanvasToDataUrl: (result: { width: number; height: number }) => JSON.stringify({ width: result.width, height: result.height }),
       });
       const original = { width, height: mapHeight };

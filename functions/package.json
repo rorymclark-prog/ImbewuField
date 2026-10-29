@@ -3,7 +3,7 @@
   "description": "ImbewuField Cloud Functions — background AI render worker (direct OpenAI gpt-image, escapes Vercel's 60s limit).",
   "private": true,
   "engines": {
-    "node": "20"
+    "node": "22"
   },
   "main": "lib/functions/src/index.js",
   "scripts": {

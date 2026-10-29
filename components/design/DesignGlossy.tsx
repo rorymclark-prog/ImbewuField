@@ -5,6 +5,9 @@
 // Overlay remains the explicit model-authored comparison/rollback style.
 
 import { numberLabel } from '@/lib/format-figures';
+import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
+import { useDialogFocus } from '@/lib/use-dialog-focus';
+import { useEscapeClose } from '@/lib/use-escape-close';
 import { useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { createPortal } from 'react-dom';
 import { Download, RefreshCw, Gem, FlaskConical, Images, MapPin, Maximize2, X, Trash2, Share2, Check, Upload, AlertTriangle, Sparkles, Image as ImageIcon } from 'lucide-react';
@@ -29,7 +32,7 @@ import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
 import { aiRenderEnabled } from '@/lib/ai-render/flag';
 import { useAuth } from '@/lib/auth';
-import { compositeAccurateMap, measureRenderDifference, restoreProtectedPixels, assertMatchingImageAspects, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
+import { compositeAccurateMap, measureRenderDifference, restoreProtectedPixels, assertMatchingImageAspects, registerOpenAiMapOutput, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
 import { paidRenderDecision, retainedRenderHasVisibleChange } from '@/lib/render-difference';
 import { auditFromReport, recordRenderAudit } from '@/lib/render-audit';
 import { polishedRenderPoints, type RenderPoint } from '@/lib/render-geometry';
@@ -48,6 +51,7 @@ import {
 import { structureRegisterText } from '@/lib/structure-register';
 import { buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { zoneBadgePositions } from '@/lib/canvas-labels';
+import { OPENAI_MAP_MODEL_LABEL, openAiMapModelLabel } from '@/lib/ai-render/model';
 import { enqueueRenderJob, mapSerially, subscribeRenderJob, fetchRenderOutput, fetchRenderJobScene, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, renderJobAttribution, type RenderQuality } from '@/lib/render-jobs';
 import { createRenderSceneSnapshot, type RenderSceneSnapshot } from '@/lib/render-scene';
 import type { RenderEngine } from '@/lib/render-job-contract';
@@ -123,7 +127,7 @@ import {
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
 import { PLAIN_HARD_SURFACE_PAINT, SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
-import { frameForUnderlay, hasFarmerPhoto, paintPlainPaperGround, savedSheetUnderlayNote, SHEET_UNDERLAY_LABEL, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
+import { frameForUnderlay, hasFarmerPhoto, paintPlainPaperGround, PLAIN_PAPER_GROUND, savedSheetUnderlayNote, SHEET_UNDERLAY_LABEL, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
 import { drainCanvasToDataUrl, releaseCanvas, releaseImageSource } from '@/lib/release-canvas';
 import { overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
 import { ridgeAngleOf, roofRunoffArrows, gutterToTankArrows, tankOverflowArrows, type StoryArrow } from '@/lib/water-story';
@@ -175,10 +179,12 @@ import type { LocationData } from '@/lib/types';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
 import styles from './DesignGlossy.module.css';
+import SettingsButton from '@/components/SettingsButton';
 export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
 export type { GlossyLayerFilter } from '@/lib/glossy-filters';
 
-const PAPER = '#FFFEFA';
+// Rory wants white paper throughout the plan set, including its legends and label margins.
+const PAPER = PLAIN_PAPER_GROUND;
 
 // Persist the active background render job per site, so closing/reopening the Studio re-attaches to
 // an in-flight render (they take minutes) and still collects the finished sheets instead of wasting
@@ -468,10 +474,10 @@ const LINE_COLORS: Record<string, string> = {
 // because the worker branched on a `provider` field nothing ever wrote. Both are fixed; see
 // RENDER_ENGINES in lib/render-job-contract.ts.
 //
-// gpt-image-2 stays the DEFAULT. Changing which vendor a render bills to is Rory's call, not a
+// OpenAI stays the DEFAULT. Changing which vendor a render bills to is Rory's call, not a
 // side effect of making the other one selectable.
 const ENGINES: Array<{ key: 'falgpt' | 'gemini'; label: string; sub: string }> = [
-  { key: 'falgpt', label: 'gpt-image-2', sub: 'sharpest · background (~mins)' },
+  { key: 'falgpt', label: OPENAI_MAP_MODEL_LABEL, sub: 'sharpest · background (~mins)' },
   { key: 'gemini', label: 'Gemini', sub: 'cheaper · background (~mins)' },
 ];
 
@@ -479,19 +485,17 @@ const ENGINES: Array<{ key: 'falgpt' | 'gemini'; label: string; sub: string }> =
  * The three paid-render quality settings, offered so the SAME sheet can be rendered all three ways
  * and compared before anyone commits to one.
  *
- * The costs in the sub-labels are the reason this exists. At the ~3.3 megapixels these sheets are
- * rendered, 'high' is roughly 4x 'medium' and roughly 35x 'low'. Those are computed from OpenAI's
- * own published rates and are estimates, not invoices — which is exactly why the worker now logs
- * the API's real usage block (functions/src/index.ts) instead of discarding it. Treat these as
- * "order of magnitude" until a real bill confirms them.
+ * Model upgrades can change token consumption at the same tier. Keep the existing quality
+ * choices and use the worker's real usage logs rather than promising an old model's cost ratio.
  *
  * Why 'high' may be waste here specifically: the model paints an UNDERLAYER. Every piece of exact
  * geometry, every label and the whole legend are composited back on top afterwards, so much of the
  * fine detail 'high' pays for is covered up again before the farmer ever sees the sheet.
  */
-const RENDER_QUALITY_CHOICES: ReadonlyArray<{ key: RenderQuality; labelKey: string; subKey: string }> = [
+const RENDER_QUALITY_CHOICES: ReadonlyArray<{ key: RenderQuality; labelKey: string; subKey?: string }> = [
   { key: 'high', labelKey: 'designGlossyQualityHigh', subKey: 'designGlossyQualityHighSub' },
-  { key: 'medium', labelKey: 'designGlossyQualityMedium', subKey: 'designGlossyQualityMediumSub' },
+  // The old medium subtitle promises a GPT Image 2 cost ratio that does not apply to 2.5.
+  { key: 'medium', labelKey: 'designGlossyQualityMedium' },
   { key: 'low', labelKey: 'designGlossyQualityLow', subKey: 'designGlossyQualityLowSub' },
 ];
 
@@ -1507,7 +1511,7 @@ async function shareSheetFiles(files: File[], labels: string[]): Promise<void> {
     ? `${labels[0]} — my farm plan, made with ImbewuField`
     : `${labels.length} sheets from my farm plan, made with ImbewuField`;
   if (typeof navigator === 'undefined' || !navigator.canShare?.({ files })) {
-    throw new Error('This phone cannot share files directly — use Download instead.');
+    throw new UserFacingError('This phone cannot share files directly — use Download instead.');
   }
   await navigator.share({ files, title, text });
 }
@@ -1619,7 +1623,11 @@ async function preloadReferenceFeatureArtwork(
     }
   }
   void filter;
-  await Promise.all([...urls].map(async (url) => {
+  await preloadReferenceArtworkUrls(urls);
+}
+
+async function preloadReferenceArtworkUrls(urls: Iterable<string>): Promise<void> {
+  await Promise.all([...new Set(urls)].filter((url) => !referenceFeatureArtworkCache.has(url)).map(async (url) => {
     try {
       const artwork = await settleOptionalReferenceArtLoad(loadImage(url));
       if (artwork) referenceFeatureArtworkCache.set(url, artwork);
@@ -1961,7 +1969,7 @@ async function requestProducer(
   // /api/image-producer, so it must refuse here, at the boundary, where no future call site —
   // generateProducer, generateAllStyledSheets, or one not yet written — can forget it.
   if (isSampleMode()) {
-    throw new Error(SAMPLE_MODE_RENDER_REFUSAL);
+    throw new UserFacingError(SAMPLE_MODE_RENDER_REFUSAL);
   }
   // The cap applies at the boundary itself so no future call site can forget it.
   const capped = stripDataUrl(await capForAiInput(`data:image/png;base64,${imageBase64}`));
@@ -4584,7 +4592,7 @@ function drawLabelGutter(
 
   for (const side of ['left', 'right'] as const) {
     ctx.save();
-    ctx.fillStyle = '#FBF6EC';
+    ctx.fillStyle = PAPER;
     ctx.fillRect(bandX[side], 0, gutter, H);
     ctx.strokeStyle = 'rgba(32,25,15,0.34)';
     ctx.lineWidth = Math.max(1, Math.round(mapW * 0.0009));
@@ -9423,7 +9431,7 @@ async function composePhasingSheet(
   // 1. The model's decorative illustrated background, normalised to the MAP column — not the whole
   //    sheet. The gutters are drawing furniture and must stay paper; letting the model's art run
   //    into them is how a "margin" turns back into more picture.
-  ctx.fillStyle = '#FBF6EC';
+  ctx.fillStyle = PAPER;
   ctx.fillRect(0, 0, W, H);
   const modelImg = await loadImage(baseImage);
   ctx.drawImage(modelImg, mapX, 0, mapW, H);
@@ -9489,7 +9497,7 @@ async function blankPhasingPanel(
   ctx.drawImage(await loadImage(imageDataUrl), 0, 0, W, H);
 
   const { lgW, lgX, lgY, lgBottom } = phasingPanelRect(size);
-  ctx.fillStyle = '#FBF6EC'; // fully opaque — same cream as buildImplementationMap's panel fill
+  ctx.fillStyle = PAPER; // fully opaque — same paper as buildImplementationMap's panel fill
   ctx.fillRect(lgX, lgY, lgW, lgBottom - lgY);
   ctx.strokeStyle = 'rgba(32,25,15,0.34)';
   ctx.lineWidth = 1.5;
@@ -9551,7 +9559,7 @@ export async function buildImplementationMap(
   const { pad, lgW, lgX, lgY, lgBottom, mapX, typeW } = phasingPanelRect(size);
 
   // 1. Satellite + scrim, inset into the map column so the label gutters stay paper.
-  ctx.fillStyle = '#FBF6EC';
+  ctx.fillStyle = PAPER;
   ctx.fillRect(0, 0, W, H);
   ctx.save();
   ctx.translate(mapX, 0);
@@ -9591,7 +9599,7 @@ export async function buildImplementationMap(
   const fsBody = Math.round(typeW * SHEET_LEGEND_TYPE.detail);
   // The Ubhejane sample schedule is longer than the synthetic example: loose paragraph spacing
   // hid its site rules even after optional bullets were removed. Keep the larger shared type,
-  // but use a compact reading rhythm so the final instructions still fit the widened cream box.
+  // but use a compact reading rhythm so the final instructions still fit the widened legend box.
   const lineH = Math.round(fsBody * 1.2);
   const blockGap = Math.round(lineH * 0.3);
   const headerFont = `800 ${fsHeader}px ${REFERENCE_LABEL_FONT}`;
@@ -10355,9 +10363,9 @@ function padToPaperSheet(sheet: HTMLCanvasElement, minimumWidth = sheet.width): 
     releaseCanvas(canvas);
     return drainCanvasToDataUrl(sheet, 'image/png');
   }
-  // The legend panel's own cream, so the margin reads as the sheet's paper rather than as a border
+  // The legend panel's own paper, so the margin reads as the sheet rather than as a border
   // someone forgot to fill.
-  ctx.fillStyle = '#FBF6EC';
+  ctx.fillStyle = PAPER;
   ctx.fillRect(0, 0, paper.width, paper.height);
   // The compact masterplan omits leader gutters. Put its spare paper on the left so its
   // legend still sits on the same right-hand trim as the other eight sheets.
@@ -10377,13 +10385,13 @@ function padToPaperSheet(sheet: HTMLCanvasElement, minimumWidth = sheet.width): 
 function drawSheetLegendPanel(ctx: CanvasRenderingContext2D, x: number, width: number, height: number) {
   const panel = sheetLegendPanelMetrics(width, height);
   ctx.save();
-  // A heavy green slab overwhelmed the drawings. Keep the same cream card and text bounds,
+  // A heavy green slab overwhelmed the drawings. Keep the shared white paper and text bounds,
   // with a fine outline that still defines the key when the plan is printed.
-  ctx.fillStyle = '#FBF6EC';
+  ctx.fillStyle = PAPER;
   ctx.fillRect(x, 0, width, height);
   roundRectPath(ctx, x + panel.inset, panel.inset,
     width - panel.inset * 2, height - panel.inset * 2, Math.round(width * 0.055));
-  ctx.fillStyle = '#F7F2E7';
+  ctx.fillStyle = PAPER;
   ctx.fill();
   ctx.strokeStyle = '#58705C';
   ctx.lineWidth = Math.max(1.5, width * 0.003);
@@ -10449,7 +10457,7 @@ async function composeStyleSheet(
     return mapDataUrl;
   }
   // Paper under the bands first: the map is inset, and whatever is not map must read as sheet.
-  ctx.fillStyle = '#FBF6EC';
+  ctx.fillStyle = PAPER;
   ctx.fillRect(0, 0, W, H);
   try {
     ctx.drawImage(map, gutter, 0);
@@ -10529,6 +10537,13 @@ async function composeStyleSheet(
     ...(options.legendRows ?? sheetLegendRows(state, refLayers, filter, includeToolGlyphs, frame, options.labelMode ?? DEFAULT_SHEET_LABEL_MODE)),
     ...(options.extraLegendRows ?? []),
   ];
+  // A resumed paid sheet may never have drawn the exact feature layer in this tab. Load the
+  // legend's own catalogue artwork before drawing its symbols, or every species becomes the
+  // same fallback disc even though the app already ships distinct fruit and foliage artwork.
+  await preloadReferenceArtworkUrls(rows.flatMap((row) => {
+    const url = row.defId ? referenceFeatureArtworkUrl(row.defId) : null;
+    return url ? [url] : [];
+  }));
   const legendTop = y + Math.round(legendW * 0.03);
   const footerFs = legendFooterFontSize(typeW);
   const footerLineH = Math.max(11, Math.round(footerFs * 1.28));
@@ -10860,7 +10875,7 @@ async function composeStyleSheet(
     columnPlans = findPlan(true);
     if (!columnPlans.length) columnPlans = findPlan(false);
     if (!columnPlans.length) {
-      throw new Error('Legend facts cannot fit the finished sheet at the 9px readability floor.');
+      throw new UserFacingError('Legend facts cannot fit the finished sheet at the 9px readability floor.');
     }
   }
 
@@ -11139,6 +11154,7 @@ async function composeSheetChromeOverMapArt(opts: {
 interface SavedGlossy {
   image: string;
   provider: 'gemini' | 'falgpt' | 'exact';
+  model?: string;
   at: string;
   /**
    * Which treatment produced this picture — 'exact', 'hybrid' or 'full'.
@@ -11508,6 +11524,7 @@ interface GalleryItem {
   thumb?: string;
   resultKind: SheetResultKind;
   provider: SheetProvider;
+  model?: string;
   geometryLock: boolean;
   showcase: boolean;
   freshness: SavedSheetFreshness;
@@ -11529,15 +11546,15 @@ function galleryResultBadge(item: GalleryItem): string {
   if (item.freshness !== 'current') return 'Older render · generate again for the current layout';
   if (item.resultKind === 'exact') return 'Design Map';
   if (item.resultKind === 'hybrid') {
-    return `AI Polished · ${item.validationStatus === 'unscored' ? 'comparison unavailable' : 'check against exact map'} · ${item.provider === 'gemini' ? 'Gemini' : 'gpt-image-2'}`;
+    return `AI Polished · ${item.validationStatus === 'unscored' ? 'comparison unavailable' : 'check against exact map'} · ${item.provider === 'gemini' ? 'Gemini' : openAiMapModelLabel(item.model)}`;
   }
   if (item.resultKind === 'ai-polished') {
     // The SHELVED second pass. Named for what it is so a sheet already in a gallery still says
     // honestly which of the two it came from.
-    return `AI Polished + 2nd pass · check against exact map · ${item.provider === 'gemini' ? 'Gemini' : 'gpt-image-2'}`;
+    return `AI Polished + 2nd pass · check against exact map · ${item.provider === 'gemini' ? 'Gemini' : openAiMapModelLabel(item.model)}`;
   }
   if (item.resultKind === 'ai-illustrated') {
-    return `AI illustrated · ${item.provider === 'gemini' ? 'Gemini' : item.provider === 'openai' ? 'gpt-image-2' : 'provider unknown'}`;
+    return `AI illustrated · ${item.provider === 'gemini' ? 'Gemini' : item.provider === 'openai' ? openAiMapModelLabel(item.model) : 'provider unknown'}`;
   }
   return 'Older saved map · provenance unavailable';
 }
@@ -11624,7 +11641,8 @@ export default function DesignGlossy({
     const onFocus = () => { void checkAccess(); };
     void checkAccess();
     window.addEventListener('focus', onFocus);
-    return () => { active = false; window.removeEventListener('focus', onFocus); };
+    window.addEventListener('imbewu-ai-map-access-changed', onFocus);
+    return () => { active = false; window.removeEventListener('focus', onFocus); window.removeEventListener('imbewu-ai-map-access-changed', onFocus); };
   }, [renderUser]);
   /**
    * WHICH PICTURE THE SHEETS ARE DRAWN ON. Rory: "I want the option when rendering the map to have
@@ -11892,7 +11910,7 @@ export default function DesignGlossy({
   const [exactSheet, setExactSheet] = useState<null | 'base' | 'sector' | 'implementation'>(null);
   // Whether the CURRENT selection renders without any model — drives the honest caption/pill.
   const isExactRender = exactSheet !== null || (!producerStyle && !analysisStyle);
-  // Render engine. gpt-image-2 is the default; Gemini is selectable again (see ENGINES).
+  // Render engine. OpenAI is the default; Gemini is selectable again (see ENGINES).
   const [engine, setEngine] = useState<'falgpt' | 'gemini'>('falgpt');
   // The picker's key is a UI label ('falgpt'); the job doc's is a VENDOR ('openai'). Every queue
   // enqueue below must use this rather than a literal — four of them hardcoded 'openai', which is
@@ -11982,7 +12000,7 @@ export default function DesignGlossy({
                       }}
                     >
                       <span style={{ fontWeight: 800, fontSize: 13 }}>{t(q.labelKey)}</span>
-                      <span style={{ fontSize: 10.5, opacity: active ? 0.85 : 0.6 }}>{t(q.subKey)}</span>
+                      {q.subKey && <span style={{ fontSize: 10.5, opacity: active ? 0.85 : 0.6 }}>{t(q.subKey)}</span>}
                     </button>
                   );
                 })}
@@ -12076,6 +12094,22 @@ export default function DesignGlossy({
   const [exportQuality, setExportQuality] = useState<SheetExportQuality>('high');
   const [exportBusy, setExportBusy] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const galleryDialogRef = useRef<HTMLDivElement>(null);
+  const galleryZoomRef = useRef<HTMLDivElement>(null);
+  const closeGallery = useCallback(() => {
+    setGalleryOpen(false);
+    setGalleryViewId(null);
+    setGalleryZoomOpen(false);
+    setExportMode(false);
+    setExportSel(new Set());
+  }, []);
+  useDialogFocus(galleryOpen, galleryDialogRef);
+  useDialogFocus(galleryZoomOpen, galleryZoomRef, { returnFocusFallbackRef: galleryDialogRef });
+  // A zoom opened from the gallery closes first; Escape must not also dismiss its parent.
+  useEscapeClose(galleryOpen || galleryZoomOpen, () => {
+    if (galleryZoomOpen) setGalleryZoomOpen(false);
+    else closeGallery();
+  });
 
   // A stable cache key per chosen map (producer style OR design filter OR analysis style).
   // Each map+style combination caches its own render (e.g. producer:storybook:zones).
@@ -12178,15 +12212,10 @@ export default function DesignGlossy({
 
   useEffect(() => {
     if (!galleryZoomOpen) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setGalleryZoomOpen(false);
-    };
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', closeOnEscape);
     return () => {
       document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', closeOnEscape);
     };
   }, [galleryZoomOpen]);
 
@@ -12223,6 +12252,7 @@ export default function DesignGlossy({
           thumb: r.thumb,
           resultKind: r.resultKind ?? 'legacy',
           provider: r.provider ?? 'unknown',
+          model: r.model,
           geometryLock: r.geometryLock ?? false,
           showcase: r.showcase ?? false,
           underlay: r.underlay,
@@ -12285,7 +12315,7 @@ export default function DesignGlossy({
     (
       label: string,
       image: string,
-      provenance: Partial<Pick<GalleryItem, 'resultKind' | 'provider' | 'geometryLock' | 'showcase' | 'underlay' | 'jobId' | 'attemptId' | 'designRevision' | 'validationStatus' | 'rawOutputPath'>> & { siteId?: string } = {},
+      provenance: Partial<Pick<GalleryItem, 'resultKind' | 'provider' | 'model' | 'geometryLock' | 'showcase' | 'underlay' | 'jobId' | 'attemptId' | 'designRevision' | 'validationStatus' | 'rawOutputPath'>> & { siteId?: string } = {},
     ) => {
       const targetSiteId = provenance.siteId ?? state.siteId;
       // GalleryItem & {image: string}: fresh renders are the one case that always carries the
@@ -12358,7 +12388,7 @@ export default function DesignGlossy({
         throw new Error('Canvas unavailable');
       }
       if (format === 'jpeg') {
-        ctx.fillStyle = '#FBF6EC';
+        ctx.fillStyle = PAPER;
         ctx.fillRect(0, 0, w, h);
       }
       ctx.imageSmoothingQuality = 'high';
@@ -12456,14 +12486,14 @@ export default function DesignGlossy({
         if (mode === 'share' && files.length) await shareSheetFiles(files, picked.map((g) => g.label));
       } catch (err) {
         if (!(err instanceof DOMException && err.name === 'AbortError')) {
-          setError(err instanceof Error ? err.message : String(err));
+          setError(userFacingMessage(err, t('designGlossyShareError'), t));
         }
       } finally {
         setExportBusy(false);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [gallery, exportSel, exportFormat, exportQuality, exportBusy, gallerySiteName, encodeSheet, buildGalleryPdf, resolveGalleryImage],
+    [gallery, exportSel, exportFormat, exportQuality, exportBusy, gallerySiteName, encodeSheet, buildGalleryPdf, resolveGalleryImage, t],
   );
 
   const removeGallery = useCallback((id: string) => {
@@ -12609,7 +12639,7 @@ export default function DesignGlossy({
           showcase: true,
         });
       } catch (err) {
-        setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+        setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
       } finally {
         setLoading(null);
       }
@@ -12797,7 +12827,7 @@ export default function DesignGlossy({
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -12854,7 +12884,7 @@ export default function DesignGlossy({
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -12893,7 +12923,7 @@ export default function DesignGlossy({
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -12923,7 +12953,7 @@ export default function DesignGlossy({
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -12952,7 +12982,7 @@ export default function DesignGlossy({
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -13016,7 +13046,7 @@ export default function DesignGlossy({
       setGalleryViewId(null);
       setGalleryOpen(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -13181,7 +13211,7 @@ export default function DesignGlossy({
         setGalleryOpen(true);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -13252,7 +13282,7 @@ export default function DesignGlossy({
           try {
             sheetImage = await restoreProtectedPixels(sourceImage, modelImage, protectMask);
           } catch (err) {
-            throw new Error('Could not restore the source roof. The AI candidate is retained for retry.', { cause: err });
+            throw Object.assign(new UserFacingError('Could not restore the source roof. The AI candidate is retained for retry.'), { cause: err });
           }
         }
         // ZONE GEOMETRY IS NOT THE MODEL'S TO DRAW. Every other style burns buildZoneOverlay — the
@@ -13270,7 +13300,7 @@ export default function DesignGlossy({
             sheetImage = await burnOverlayOnSheetMap(sheetImage, exactZones);
           } catch (err) {
             // A failed burn must never lose a paid render — ship the model's sheet rather than nothing.
-            throw new Error('Could not draw the saved zones. The AI candidate is retained for retry.', { cause: err });
+            throw Object.assign(new UserFacingError('Could not draw the saved zones. The AI candidate is retained for retry.'), { cause: err });
           }
         }
         return sheetImage;
@@ -13526,7 +13556,7 @@ export default function DesignGlossy({
         outputScale: SCALE, renderRecipe: SHEET_RENDER_RECIPE, planVersion: PLAN_VERSION, cacheSuffix: underlaySuffix,
       });
       if (lockedPolishStage === 'polish' && hybridReadyRevisionRef.current !== sceneSnapshot.designRevision) {
-        throw new Error('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
+        throw new UserFacingError('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
       }
       if (lockedPolishStage !== 'polish' || !renderAttemptRef.current) {
         renderAttemptRef.current = crypto.randomUUID();
@@ -13671,7 +13701,7 @@ export default function DesignGlossy({
       }));
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
+      setError(userFacingMessage(err, t('designGlossyCouldNotStart'), t));
       setLoading(null);
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, finishStyledSheet, pushGallery, effectiveModelChrome, lockActive, promptRewrite, queueEngine, quality, labelMode, underlay, lockedPolishStage, underlaySuffix, aiRenderOn]);
@@ -13706,7 +13736,7 @@ export default function DesignGlossy({
         outputScale: SCALE, renderRecipe: SHEET_RENDER_RECIPE, planVersion: PLAN_VERSION, cacheSuffix: underlaySuffix,
       });
       if (lockedPolishStage === 'polish' && hybridReadyRevisionRef.current !== sceneSnapshot.designRevision) {
-        throw new Error('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
+        throw new UserFacingError('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
       }
       if (lockedPolishStage !== 'polish' || !renderAttemptRef.current) {
         renderAttemptRef.current = crypto.randomUUID();
@@ -13726,7 +13756,7 @@ export default function DesignGlossy({
       // and the flagship render obeyed both by erasing the labels and repainting the legend.
       const polishSource = fullSheetPolish ? hybridMapForPolishRef.current : null;
       if (fullSheetPolish && (!polishSource || polishSource.key !== filter)) {
-        throw new Error('The AI hybrid sheet was not available to polish — please try again.');
+        throw new UserFacingError('The AI hybrid sheet was not available to polish — please try again.');
       }
       const exactSheetInput = fullSheetPolish && polishSource ? polishSource.map : null;
       // Keep a SECOND reference to the same image, deliberately not consumed. The paid pass has to
@@ -13850,7 +13880,7 @@ export default function DesignGlossy({
         : formatDesignTranslation(t('designGlossyBackgroundSheet'), { layer: layerLabel }));
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
+      setError(userFacingMessage(err, t('designGlossyCouldNotStart'), t));
       setLoading(null);
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, filter, effectiveModelChrome, lockActive, promptRewrite, lockedPolishStage, queueEngine, quality, labelMode, underlay, underlaySuffix, aiRenderOn]);
@@ -13897,7 +13927,7 @@ export default function DesignGlossy({
       canvas.width = W;
       canvas.height = H;
       const ctx = canvas.getContext('2d');
-      if (!ctx) throw new Error('Could not prepare the exact map overlay. The AI candidate is retained for retry.');
+      if (!ctx) throw new UserFacingError('Could not prepare the exact map overlay. The AI candidate is retained for retry.');
       const px = (n: number) => n * W;
       const py = (n: number) => n * H;
       const pxPerM = W / (renderFrame.imgW * renderFrame.mPerPx);
@@ -14025,7 +14055,7 @@ export default function DesignGlossy({
         outputScale: SCALE, renderRecipe: SHEET_RENDER_RECIPE, planVersion: PLAN_VERSION, cacheSuffix: underlaySuffix,
       });
       if (lockedPolishStage === 'polish' && hybridReadyRevisionRef.current !== sceneSnapshot.designRevision) {
-        throw new Error('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
+        throw new UserFacingError('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
       }
       if (lockedPolishStage !== 'polish' || !renderAttemptRef.current) {
         renderAttemptRef.current = crypto.randomUUID();
@@ -14037,7 +14067,7 @@ export default function DesignGlossy({
       // prompt, the same "polish an empty page" bug the 5-sheet path had.
       const polishStage = lockedPolishStage === 'polish';
       if (polishStage && !hybridResultRef.current) {
-        throw new Error('The AI hybrid sheet was not available to polish — please try again.');
+        throw new UserFacingError('The AI hybrid sheet was not available to polish — please try again.');
       }
       const hybridInput = polishStage ? hybridResultRef.current : null;
       if (polishStage) hybridResultRef.current = null; // consume-once
@@ -14125,7 +14155,7 @@ export default function DesignGlossy({
           : t('designGlossyBaseHybrid'));
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
+      setError(userFacingMessage(err, t('designGlossyCouldNotStart'), t));
       setLoading(null);
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, lockedPolishStage, queueEngine, quality, labelMode, underlay, underlaySuffix, aiRenderOn]);
@@ -14178,7 +14208,7 @@ export default function DesignGlossy({
         outputScale: SCALE, renderRecipe: SHEET_RENDER_RECIPE, planVersion: PLAN_VERSION, cacheSuffix: underlaySuffix,
       });
       if (lockedPolishStage === 'polish' && hybridReadyRevisionRef.current !== sceneSnapshot.designRevision) {
-        throw new Error('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
+        throw new UserFacingError('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
       }
       if (lockedPolishStage !== 'polish' || !renderAttemptRef.current) {
         renderAttemptRef.current = crypto.randomUUID();
@@ -14187,7 +14217,7 @@ export default function DesignGlossy({
       // Same consume-once stash contract as generateOneViaQueue / generateSectorViaQueue.
       const polishStage = lockedPolishStage === 'polish';
       if (polishStage && !hybridResultRef.current) {
-        throw new Error('The AI hybrid sheet was not available to polish — please try again.');
+        throw new UserFacingError('The AI hybrid sheet was not available to polish — please try again.');
       }
       let hybridInput = polishStage ? hybridResultRef.current : null;
       if (polishStage) hybridResultRef.current = null; // consume-once
@@ -14279,7 +14309,7 @@ export default function DesignGlossy({
         : t('designGlossyPhasingHybrid'));
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
+      setError(userFacingMessage(err, t('designGlossyCouldNotStart'), t));
       setLoading(null);
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, lockedPolishStage, queueEngine, quality, labelMode, underlay, underlaySuffix, aiRenderOn]);
@@ -14469,7 +14499,7 @@ export default function DesignGlossy({
       setError,
       missingHybridMessage: t('designGlossyMissingHybrid'),
       setNotice,
-      startingPolishMessage: t('designGlossyStartingPolish'),
+      startingPolishMessage: t('designGlossyStartingPolish').replace('gpt-image-2', OPENAI_MAP_MODEL_LABEL),
       polishingMessage: t('designGlossyPolishing'),
       clearResult: clearLockedPolishResult,
       renderCurrentSheet: runCurrentSheet,
@@ -14647,7 +14677,7 @@ export default function DesignGlossy({
         // showcaseKeysRef stays as fallback for jobs enqueued before the field existed.
         const styleKey = ((job.style || styleRef.current) ?? 'extension_blueprint') as StylePreset;
         const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
-        const attribution = renderJobAttribution(job.engine);
+        const attribution = renderJobAttribution(job.engine, job.model);
         const outputMode = job.outputMode ?? (job.sheets.some((entry) => entry.resultKind === 'ai-polished') ? 'full' : 'hybrid');
         setLoading(attribution.saved);
         for (const sheet of job.sheets) {
@@ -14658,17 +14688,17 @@ export default function DesignGlossy({
               const frozenScene = await scenePromise;
               if (!active) return;
               if (!frozenScene) {
-                throw new Error('This older AI job has no saved design snapshot. Its original output is retained; it cannot be combined safely with the current design.');
+                throw new UserFacingError('This older AI job has no saved design snapshot. Its original output is retained; it cannot be combined safely with the current design.');
               }
               if (frozenScene.outputScale !== SCALE || frozenScene.renderRecipe !== SHEET_RENDER_RECIPE || frozenScene.planVersion !== PLAN_VERSION) {
-                throw new Error('This AI job belongs to a different export setting or renderer version. Its original output is retained; finish it with the original settings.');
+                throw new UserFacingError('This AI job belongs to a different export setting or renderer version. Its original output is retained; finish it with the original settings.');
               }
               const auditContext = {
                 siteId: job.siteId, jobId: queueJobId!, attemptId: job.attemptId ?? queueJobId!,
                 designRevision: job.designRevision,
               };
               let validationStatus: 'needs-review' | 'unscored' = 'needs-review';
-              const raw = await fetchRenderOutput(sheet.outputPath);
+              let raw = await fetchRenderOutput(sheet.outputPath);
               const showcase = sheet.showcase ?? showcaseKeysRef.current.has(sheet.key);
               // Jobs can finish after a navigation or reload. Use the flag persisted with the
               // sheet, never the current toggle value. Existing in-flight jobs created before the
@@ -14686,6 +14716,7 @@ export default function DesignGlossy({
               // there is no mask; after a reload this Storage object is the only durable baseline.
               // Both paid stages use the durable input, including after a page reload.
               const sourceImage = await fetchRenderOutput(sheet.inputPath);
+              if (job.engine === 'openai') raw = await registerOpenAiMapOutput(sourceImage, raw);
               const protectMask = sheet.protectMaskPath ? await fetchRenderOutput(sheet.protectMaskPath) : undefined;
               const inputDimensions = await loadImage(sourceImage);
               const outputDimensions = await loadImage(raw);
@@ -15007,7 +15038,7 @@ export default function DesignGlossy({
                   stage: isPolishedResult ? 'polish' : 'hybrid', outputMode, style: styleKey,
                   outcome: 'unscored', note: 'one or more comparisons were unavailable; final artwork needs review' });
               }
-              const record: SavedGlossy = { image: finalSheet, provider: attribution.saved, at: new Date().toISOString() };
+              const record: SavedGlossy = { image: finalSheet, model: job.model, provider: attribution.saved, at: new Date().toISOString() };
               // The display effect reads `producer:<style>:<filter>:<mode>` plus the underlay/
               // label-mode suffixes; this save used a three-segment key, so every queue-rendered
               // Hybrid and Full Treatment was written to a slot NOTHING reads — the farmer came
@@ -15055,6 +15086,7 @@ export default function DesignGlossy({
                   // combination is never a genuine paid polish, so it must not claim to be one.
                   resultKind: isPolishedResult ? 'ai-polished' : isHybridResult ? 'hybrid' : 'legacy',
                   provider: attribution.gallery,
+                  model: job.model,
                   geometryLock: finalGeometryLocked,
                   showcase,
                   underlay: frozenScene.underlay,
@@ -15072,7 +15104,7 @@ export default function DesignGlossy({
               console.error('[glossy] finishing a queued sheet failed', sheet.key, e);
               // Let a later snapshot retry this sheet — the worker's output is still in Storage.
               finished.delete(sheet.key);
-              lastAssembleError = e instanceof Error ? e.message : String(e);
+              lastAssembleError = userFacingMessage(e, '', t);
             }
           }
         }
@@ -15085,13 +15117,13 @@ export default function DesignGlossy({
           const rejectedDone = rejected.size;
           const serverDone = job.sheets.filter((s) => s.status === 'done').length;
           const failedSheets = job.sheets.filter((s) => s.status === 'error');
-          // Surface the worker's actual reason (quota, moderation, …) — it was captured
-          // server-side but never shown, leaving farmers guessing (audit find).
-          const firstErr = failedSheets[0]?.error;
+          // Worker diagnostics can contain provider or infrastructure wording. Keep them in
+          // diagnostics; the farmer sees the failed count and the app's own retry guidance.
+          if (job.error || failedSheets.length) console.error('[glossy] queued render failed', job.error, failedSheets);
           if (done > 0) {
             setNotice(refreshPendingRef.current
               ? `AI POLISH COMPLETE — the new ${attribution.label} result is open now — review it against the exact map. The exact no-AI master remains separately saved.`
-              : `AI POLISH COMPLETE — ${done} paid ${attribution.label} result${done === 1 ? '' : 's'} finished for review against the exact map${failedSheets.length ? ` · ${failedSheets.length} failed${firstErr ? ` (${firstErr})` : ''} — try again` : ''}. Results are saved in the gallery; the exact no-AI master remains the reference for positions and counts.`);
+              : `AI POLISH COMPLETE — ${done} paid ${attribution.label} result${done === 1 ? '' : 's'} finished for review against the exact map${failedSheets.length ? ` · ${failedSheets.length} failed — try again` : ''}. Results are saved in the gallery; the exact no-AI master remains the reference for positions and counts.`);
             refreshPendingRef.current = false;
             setGalleryViewId(lastAssembledGalleryId);
             setGalleryOpen(true);
@@ -15111,7 +15143,7 @@ export default function DesignGlossy({
             setLockedPolishStage(null);
             refreshPendingRef.current = false;
           } else {
-            setError(job.error || firstErr || t('designGlossyRenderIncomplete'));
+            setError(t('designGlossyRenderIncomplete'));
             setHybridHandoffReady(false);
             setLockedPolishStage(null);
             refreshPendingRef.current = false;
@@ -15713,7 +15745,7 @@ export default function DesignGlossy({
             : exactSheet === 'implementation'
             ? 'Draw your Implementation & Phasing sheet (plan-set 08) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Review the schedule against your site survey and available resources.'
             : producerStyle
-            ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. ${engine === 'falgpt' ? (effectiveModelChrome ? 'gpt-image-2 paints the whole sheet with its own legend & labels. Renders in the background (~mins); it lands in your gallery.' : 'gpt-image-2 paints the map artwork in the background (~mins); source protections, labels, legend, north arrow and scale are applied afterwards. Compare AI-drawn features with your exact map before using the illustration.') : 'Gemini paints the map artwork in the background (~mins); source protections, labels, legend, north arrow and scale are applied afterwards. Compare AI-drawn features with your exact map before using the illustration. It lands in your gallery.'}`
+            ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. ${engine === 'falgpt' ? (effectiveModelChrome ? `${OPENAI_MAP_MODEL_LABEL} paints the whole sheet with its own legend & labels. Renders in the background (~mins); it lands in your gallery.` : `${OPENAI_MAP_MODEL_LABEL} paints the map artwork in the background (~mins); source protections, labels, legend, north arrow and scale are applied afterwards. Compare AI-drawn features with your exact map before using the illustration.`) : 'Gemini paints the map artwork in the background (~mins); source protections, labels, legend, north arrow and scale are applied afterwards. Compare AI-drawn features with your exact map before using the illustration. It lands in your gallery.'}`
             : analysisStyle
               ? `Generate the ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} analysis map — an illustrated Gemini render (sun/wind, opportunities, phasing) over your real site. These are freer than the design maps: great to look at, less exact on geometry. Takes about a minute.`
               : filter === 'all'
@@ -15817,7 +15849,7 @@ export default function DesignGlossy({
             <div style={{ fontSize: 12, opacity: 0.65 }}>
               {formatDesignTranslation(t('designGlossySavedRender'), {
                 date: relativeDate(saved.at),
-                provider: PROVIDER_LABEL[saved.provider],
+                provider: saved.provider === 'falgpt' ? openAiMapModelLabel(saved.model) : PROVIDER_LABEL[saved.provider],
               })}
             </div>
           )}
@@ -15991,6 +16023,12 @@ export default function DesignGlossy({
         )}
 
         <div style={{ order: 1, display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
+          {!aiRenderOn && renderUser && !isSampleMode() && (
+            <div lang="en" style={{ padding: 12, border: '1px solid #D8CEBC', borderRadius: 12 }}>
+              <p style={{ fontSize: 12, lineHeight: 1.5, margin: '0 0 8px' }}>AI glossy maps are off or access has not been granted. Open Settings → AI glossy maps to check your account and organisation access.</p>
+              <SettingsButton showLabel />
+            </div>
+          )}
           {/* The engine determines which account is charged, so it sits beside the finish that
               spends money. Quality belongs here too: it changes that same paid render. */}
           {!simple && (
@@ -16362,6 +16400,11 @@ export default function DesignGlossy({
           }}
         >
           <div
+            ref={galleryDialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${formatDesignTranslation(t('designGlossySavedMaps'), { count: gallery.length })} · ${gallerySiteName}`}
+            tabIndex={-1}
             style={{
               width: '100%',
               maxWidth: 520,
@@ -16394,9 +16437,9 @@ export default function DesignGlossy({
                 </button>
               )}
               <button
-                onClick={() => { setGalleryOpen(false); setGalleryViewId(null); setGalleryZoomOpen(false); setExportMode(false); setExportSel(new Set()); }}
+                onClick={closeGallery}
                 aria-label={t('designGlossyCloseSaved')}
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 8, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#755942', cursor: 'pointer' }}
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 44, height: 44, flexShrink: 0, borderRadius: 8, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#755942', cursor: 'pointer' }}
               >
                 <X size={14} />
               </button>
@@ -16684,6 +16727,7 @@ export default function DesignGlossy({
       )}
       {galleryZoomOpen && stageResultImage && typeof document !== 'undefined' && createPortal((
         <div
+          ref={galleryZoomRef}
           role="dialog"
           aria-modal="true"
           aria-label={formatDesignTranslation(t('designGlossyFullScreenNamed'), {
@@ -16706,7 +16750,6 @@ export default function DesignGlossy({
         >
           <button
             type="button"
-            autoFocus
             onClick={() => setGalleryZoomOpen(false)}
             aria-label={t('designGlossyCloseFullScreen')}
             style={{
@@ -16714,8 +16757,8 @@ export default function DesignGlossy({
               top: 14,
               right: 14,
               zIndex: 81,
-              width: 42,
-              height: 42,
+              width: 44,
+              height: 44,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

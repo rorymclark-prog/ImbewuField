@@ -3,7 +3,8 @@ import { middayFromLat } from '@/lib/sector';
 import { isValidEarthLatitude } from '@/lib/solar';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { aiRenderEnabled, AI_RENDER_DISABLED_MESSAGE, AI_RENDER_DISABLED_STATUS } from '@/lib/ai-render/flag';
-import { decideAiRenderAccess, aiRenderAccessHttpStatus } from '@/lib/ai-render/access';
+import { aiRenderAccessHttpStatus } from '@/lib/ai-render/access';
+import { resolveAiRenderAccess } from '@/lib/ai-render/server-access';
 
 // Gemini image generation can take 10-60s — Vercel max.
 export const maxDuration = 60;
@@ -807,7 +808,7 @@ export async function POST(req: NextRequest) {
   }
   const auth = await guardPaidApiRequest(req, '/api/ai-render');
   if (auth.response) return auth.response;
-  const access = decideAiRenderAccess(auth.uid, auth);
+  const access = await resolveAiRenderAccess(req, auth.uid);
   if (!access.allowed) {
     return NextResponse.json({ error: access.message, ...access }, { status: aiRenderAccessHttpStatus(access) });
   }

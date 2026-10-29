@@ -7,6 +7,7 @@ import type { SavedPlace } from './saved-places';
 import { designSiteIdFromLocation } from './design-studio';
 import { normaliseReportSiteFacts, type ReportSiteFacts } from './report-site-facts';
 import { normaliseSiteReportPurpose, type SiteReportPurpose } from './site-survey';
+import { normaliseGroundPhotos, type GroundPhoto } from './report-ground-photos';
 
 // A permaculture report saved locally so the farmer can re-read it without
 // regenerating (each generation is an AI call). We store the markdown plus a
@@ -51,6 +52,8 @@ export interface SavedReport {
   mapSelection?: ReportMapSelection;
   /** Maps actually offered to the model; changing attachments cannot rewrite this history. */
   analysedMapIds?: string[];
+  /** The bounded photographs attached when this version was prepared, independent of live evidence. */
+  groundPhotos?: GroundPhoto[];
 }
 
 export function reportSiteName(report: Pick<SavedReport, 'name' | 'facts' | 'location'>, places: SavedPlace[] = []): string {
@@ -117,6 +120,8 @@ function normaliseReport(value: unknown): SavedReport | null {
   const maps = normaliseReportMapSelection(row.mapSelection, designSiteIdFromLocation(report.location));
   if (maps) report.mapSelection = maps;
   if (Array.isArray(row.analysedMapIds) && row.analysedMapIds.length <= 12 && row.analysedMapIds.every(id => typeof id === 'string' && id.length <= 256)) report.analysedMapIds = [...row.analysedMapIds];
+  // Missing is historical uncertainty; an explicit empty array records that no photos were sent.
+  if (Array.isArray(row.groundPhotos)) report.groundPhotos = normaliseGroundPhotos(row.groundPhotos);
   return report;
 }
 
