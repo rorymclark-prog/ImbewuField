@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '29 October 2026', sha: '977ea31b4', changes: [
+  { when: '29 October 2026', sha: '3b74a1890', changes: [
     'PDF exports keep each product and its notes together.',
   ] },
   { when: '29 October 2026', sha: '47bdffe30', changes: [
