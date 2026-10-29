@@ -15378,6 +15378,28 @@ export default function DesignGlossy({
       : PRODUCER_STYLES.find((style) => galleryViewItem.label.includes(style.label))?.label
         ?? t('designGlossyAiHybrid'))
     : selectedStyleLabel;
+  // Reuse the paid job's own snapshot/output. This action never enters a generation flow;
+  // clear every staged handoff so a recovered Hybrid cannot accidentally buy a polish pass.
+  const reassembleSavedArtwork = useCallback((item: GalleryItem) => {
+    if (!item.jobId || !item.rawOutputPath || item.resultKind === 'exact'
+      || loading !== null || queueJobId || gallerySiteId !== state.siteId || isSampleMode()) return;
+    exactAfterFlipRef.current = false;
+    hybridAfterExactRef.current = false;
+    hybridAfterFlipRef.current = false;
+    polishAfterHybridRef.current = false;
+    polishAfterFlipRef.current = false;
+    hybridResultRef.current = null;
+    setHybridHandoffReady(false);
+    setLockedPolishStage(null);
+    setError(null);
+    setResumeGaveUp(null);
+    clearResumeGaveUp(state.siteId);
+    persistJobId(state.siteId, item.jobId);
+    closeGallery();
+    setNotice('Reassembling your saved artwork. No new AI render will be charged.');
+    setLoading(item.provider === 'openai' ? 'falgpt' : 'gemini');
+    setQueueJobId(item.jobId);
+  }, [loading, queueJobId, gallerySiteId, state.siteId, closeGallery]);
   const handleStageDownload = useCallback(() => {
     if (!stageResultImage) return;
     if (!galleryViewItem) {
@@ -16636,6 +16658,20 @@ export default function DesignGlossy({
                   >
                     {galleryResultBadge(galleryViewItem)}
                   </div>
+                  {galleryViewItem.jobId && galleryViewItem.rawOutputPath && galleryViewItem.resultKind !== 'exact' && (
+                    <div lang="en" style={{ display: 'grid', gap: 6 }}>
+                      <button type="button"
+                        onClick={() => reassembleSavedArtwork(galleryViewItem)}
+                        disabled={loading !== null || Boolean(queueJobId) || gallerySiteId !== state.siteId || isSampleMode()}
+                        style={{ minHeight: 44, padding: '10px 14px', borderRadius: 12, border: `1px solid ${GREEN}`, background: PAPER, color: GREEN, fontWeight: 700, cursor: 'pointer' }}>
+                        Reassemble artwork · no AI charge
+                      </button>
+                      <span style={{ fontSize: 11, color: '#5C5040' }}>
+                        Uses the original artwork and design; keeps this saved copy. Use the original print quality.
+                        {gallerySiteId !== state.siteId && ' Open this farm in Design Studio first.'}
+                      </span>
+                    </div>
+                  )}
                   <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                     <a
                       href={galleryViewImage ?? galleryViewItem.image ?? galleryViewItem.thumb ?? '#'}

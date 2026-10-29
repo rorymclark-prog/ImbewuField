@@ -1,6 +1,7 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Saved AI maps can be reassembled without buying another render.": "Mapa wa AI wo vhulungwaho u nga kuvhanganywa hafhu hu si na u renga tshiṅwe tshifanyiso.",
   "AI maps keep continuous artwork, with tree crowns allowed over the boundary.": "Mapa wa AI u vhulunga tshifanyiso tshi bvelaho phanḓa, ṱhoho dza miri dzi nga fhira mukano.",
   "AI map downloads now remind you to check positions and counts.": "Mapa wa AI wo dzheniswaho zwino u ni humbudza u ṱola fhethu na mbalo.",
 

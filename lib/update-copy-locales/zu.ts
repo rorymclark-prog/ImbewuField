@@ -1,6 +1,7 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Saved AI maps can be reassembled without buying another render.": "Amamephu e-AI agciniwe angahlanganiswa futhi ngaphandle kokuthenga omunye umdwebo.",
   "AI maps keep continuous artwork, with tree crowns allowed over the boundary.": "Amamephu e-AI agcina umdwebo oqhubekayo, imiqhele yezihlahla ingadlula umngcele.",
   "AI map downloads now remind you to check positions and counts.": "Amamephu e-AI alandiwe manje akukhumbuza ukuhlola izindawo nezibalo.",
 

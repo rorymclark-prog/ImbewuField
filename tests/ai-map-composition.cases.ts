@@ -168,3 +168,34 @@ test('standalone paid exports cannot silently claim exact model-drawn counts', (
   assert.match(source,/sheetHasPlantCodes && sheetElementNaming\(filter\) === 'individual'/,
     'Whole must not promise individual labels its grouped renderer omits');
 });
+
+test('reassembling a saved paid map reconnects only its existing job and clears every paid handoff', () => {
+  const item={jobId:'existing-paid-job',rawOutputPath:'existing-output',resultKind:'hybrid',provider:'openai'};
+  function run(overrides: Record<string,unknown>={}) {
+    const calls:unknown[][]=[];
+    const refs=Object.fromEntries(['exactAfterFlipRef','hybridAfterExactRef','hybridAfterFlipRef','polishAfterHybridRef','polishAfterFlipRef','hybridResultRef'].map(k=>[k,{current:true}]));
+    const scope:Record<string,unknown>={...refs,loading:null,queueJobId:null,gallerySiteId:'farm',state:{siteId:'farm'},isSampleMode:()=>false};
+    for(const name of ['setHybridHandoffReady','setLockedPolishStage','setError','setResumeGaveUp','clearResumeAttempts','clearResumeGaveUp','persistJobId','closeGallery','setNotice','setLoading','setQueueJobId']) {
+      scope[name]=(...args:unknown[])=>calls.push([name,...args]);
+    }
+    const store={setItem:(...args:unknown[])=>calls.push(['pointer',...args])};
+    const persist=helper('persistJobId',{...scope,localStorage:store,queueJobKey:(site:string)=>'job:'+site});
+    scope.persistJobId=(...args:unknown[])=>{calls.push(['persistJobId',...args]);persist(...args);};
+    const callback=helper('reassembleSavedArtwork',{...scope,...overrides});
+    callback(item);
+    return {calls,refs};
+  }
+  const {calls,refs}=run();
+  assert.deepEqual(calls.find(c=>c[0]==='persistJobId'),['persistJobId','farm','existing-paid-job']);
+  assert.deepEqual(calls.find(c=>c[0]==='setQueueJobId'),['setQueueJobId','existing-paid-job']);
+  for(const [key,value] of Object.entries(refs)) assert.equal(value.current,key==='hybridResultRef'?null:false,key);
+  assert.ok(calls.some(c=>c[0]==='setLockedPolishStage' && c[1]===null));
+  assert.ok(calls.some(c=>c[0]==='clearResumeAttempts' && c[2]==='farm'));
+  for(const blocked of [{loading:'gemini'},{queueJobId:'running-job'},{gallerySiteId:'other-farm'},{isSampleMode:()=>true}]) {
+    assert.deepEqual(run(blocked).calls,[],'must not replace an active job or cross site/sample boundaries');
+  }
+  const start=source.indexOf('  const reassembleSavedArtwork = useCallback(');
+  const callback=source.slice(start,source.indexOf('  const handleStageDownload',start));
+  assert.doesNotMatch(callback,/enqueueRenderJob|runCurrentSheet|runLockedPolishFlow|requestProducer|requestRender/,
+    'a free reassembly can subscribe to the old job but must never buy another generation');
+});
