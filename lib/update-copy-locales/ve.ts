@@ -1,6 +1,7 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Photo dates are easier to read; scroll through older notes on desktop.": "Maḓuvha a zwifanyiso zwino a a vhalea nga hu leluwaho; skrolani kha notsi dza kale kha khomphyutha.",
   "Photo dates and journal headings are easier to read.": "Maḓuvha a zwifanyiso na ṱhoho dza dzhenala zwino zwi a vhalea nga hu leluwaho.",
   // Farm memory release: docs/audits/2026-10-29/farm-memory-release-drafts.json; unreviewed.
   "Farm memory search, photos and saved copies now support isiZulu.": "U ṱoḓa, zwifanyiso na khophi dzo vhulungwaho dza khumbudzo dza bulasi zwino zwi tikedza isiZulu.",

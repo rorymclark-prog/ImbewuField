@@ -21,18 +21,51 @@ new Function('require', 'module', 'exports', javascript)((name: string) => name 
   : require(name), componentModule, componentModule.exports);
 const JournalPhotoReview = componentModule.exports.default as React.ComponentType<{ entries: readonly JournalEntry[]; lang?: string }>;
 
+function assertJournalCssReadingFloor(css: string, name: string): void {
+  const declarations = [...css.replace(/\/\*[\s\S]*?\*\//g, '').matchAll(/(?<![-\w])(font(?:-size)?)\s*:\s*([^;{}]+)/gi)];
+  assert.ok(declarations.length > 0, `${name} must exercise the actual text styles`);
+  let explicitSizes = 0;
+  for (const [declaration, property, rawValue] of declarations) {
+    const value = rawValue.trim().replace(/\s*!\s*important\s*$/i, '');
+    // This reset introduces no local size. The search input inherits the tools' 13px font.
+    if (property.toLowerCase() === 'font' && value.toLowerCase() === 'inherit') continue;
+    const isShorthand = property.toLowerCase() === 'font';
+    const sizeValue = isShorthand
+      ? value.replace(/^(?:(?:normal|italic|oblique|small-caps|bold|bolder|lighter|(?:ultra-|extra-|semi-)?(?:condensed|expanded)|[1-9]\d{0,2}|1000)\s+)*/i, '')
+      : value;
+    // A relative or dynamic size needs a computed-style check; em is not always 16px.
+    // Read only the shorthand's size, before its optional line height and font family.
+    const size = sizeValue.match(isShorthand
+      ? /^([+]?(?:\d+(?:\.\d+)?|\.\d+))px(?=\s|\/)/i
+      : /^([+]?(?:\d+(?:\.\d+)?|\.\d+))px$/i);
+    assert.ok(size, `${name} needs a literal px font size: ${declaration}`);
+    assert.ok(Number(size[1]) >= 12, `${name} sets text below the farmer reading floor: ${declaration}`);
+    explicitSizes++;
+  }
+  assert.ok(explicitSizes > 0, `${name} must check an explicit size rather than only inheritance resets`);
+}
+
 test('journal photo dates and memory controls keep the farmer’s 12px reading floor in their CSS modules', () => {
   // The shared TSX register cannot see sizes supplied by CSS modules. A 10px photo date
   // otherwise passes it even though that date is how a farmer identifies an observation.
   for (const name of ['JournalPhotoReview', 'JournalExplore']) {
     const css = readFileSync(new URL(`../components/journal/${name}.module.css`, import.meta.url), 'utf8');
-    const declarations = [...css.matchAll(/\bfont(?:-size)?\s*:[^;{}]+/g)];
-    assert.ok(declarations.length > 0, `${name} must exercise the actual text styles`);
-    for (const [declaration] of declarations) {
-      for (const size of declaration.matchAll(/(\d+(?:\.\d+)?)(px|rem|em)\b/g)) {
-        const pixels = Number(size[1]) * (size[2] === 'px' ? 1 : 16);
-        assert.ok(pixels >= 12, `${name} sets text below the farmer reading floor: ${declaration}`);
-      }
+    assertJournalCssReadingFloor(css, name);
+  }
+});
+
+test('the journal reading-floor guard catches small or unresolved sizes in the actual date and heading declarations', () => {
+  const targets = [
+    { name: 'JournalPhotoReview', declaration: /(\.strip span\s*\{[^}]*\bfont-size\s*:)\s*[^;]+/ },
+    { name: 'JournalExplore', declaration: /(\.eyebrow\s*\{[^}]*\bfont\s*:\s*\d+\s+)[^/\s;]+/ },
+  ];
+  for (const { name, declaration } of targets) {
+    const css = readFileSync(new URL(`../components/journal/${name}.module.css`, import.meta.url), 'utf8');
+    for (const value of ['10px', '.5px', '.625rem', '62.5%', '.8em', 'calc(8px + 2px)', 'var(--tiny-text)']) {
+      const mutated = css.replace(declaration, `$1 ${value}`);
+      assert.notEqual(mutated, css, 'the mutation must alter the actual date or heading size');
+      assert.throws(() => assertJournalCssReadingFloor(mutated, name),
+        /literal px font size|below the farmer reading floor/, `${name} ${value} must not silently pass the reading-floor guard`);
     }
   }
 });

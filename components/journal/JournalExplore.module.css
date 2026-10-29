@@ -49,7 +49,7 @@
 .tools button:focus-visible, .tools select:focus-visible, .tools input[type='date']:focus-visible, .resultBar button:focus-visible, .noMatches button:focus-visible { outline: 2px solid var(--color-forest-800); outline-offset: 3px; }
 /* Expanded filters and photo history must remain reachable beside a long timeline. */
 @media (min-width: 1024px) {
-  .sidebar { max-height: calc(100dvh - 28px); overflow-y: auto; padding-right: 4px; scrollbar-gutter: stable; }
+  .sidebar { max-height: calc(var(--journal-scroll-height, 100dvh) - 28px); overflow-y: auto; padding-right: 4px; scrollbar-gutter: stable; }
   .tools { padding: 16px; }
   .dateFields { grid-template-columns: 1fr; }
 }

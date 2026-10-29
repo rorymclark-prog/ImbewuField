@@ -1,6 +1,7 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Photo dates are easier to read; scroll through older notes on desktop.": "Izinsuku zezithombe sezifundeka kalula; skrola kumanothi amadala kukhompyutha.",
   "Photo dates and journal headings are easier to read.": "Izinsuku zezithombe nezihloko zejenali sezifundeka kalula.",
   // Farm memory release: docs/audits/2026-10-29/farm-memory-release-drafts.json; unreviewed.
   "Farm memory search, photos and saved copies now support isiZulu.": "Ukusesha, izithombe namakhophi agciniwe Ezinkumbulo zepulazi manje kusekela isiZulu.",
