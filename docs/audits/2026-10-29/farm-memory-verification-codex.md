@@ -27,7 +27,7 @@ The previous REP-V01 failure is already corrected in the inherited source. At `a
 
 ## Verification
 
-- Snapshot: **29 October 2026, 20:42 Europe/Vienna**.
+- Initial CI snapshot: **29 October 2026, 20:42 Europe/Vienna**; later baseline and integration evidence is recorded below.
 - Main run [40924622651](https://github.com/rorymclark-prog/ImbewuField/actions/runs/40924622651), head `cc2809c55`: typecheck passed; full `test` still running; `rules` and `focused-render` passed.
 - Earlier feature runs [40923696459](https://github.com/rorymclark-prog/ImbewuField/actions/runs/40923696459) and [40923687230](https://github.com/rorymclark-prog/ImbewuField/actions/runs/40923687230): full `test` still running; their rules/focused checks passed. Pending is not passed.
 - Current follow-up branch: the completed legacy-contract/readability correction passed Node 24 typecheck and **250 affected checks / 250 pass / zero failures**. The further scroll/guard correction has **262 affected checks / 262 pass / zero failures**, with final ordered verification recorded in the PR/ledger before its push. The checks cover journal filtering/identity, task drafts/harvest destinations, photo comparison, CSV/HTML safety, isiZulu labels, optional export photos, translated notices, original workflow assertions, Simple/All tools modes, farmer readability, scroll containment and complete test registration. Exact-head full CI remains pending. No test is deleted or weakened; obsolete source-shape claims are replaced by stronger rendered contracts with their reasons above. Separate in-memory mutations withdrawing task-draft dates or exposing Simple category filters each trigger their specific rendered test, without changing app files on disk.
