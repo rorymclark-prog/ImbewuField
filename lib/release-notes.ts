@@ -41,6 +41,15 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 October 2026', sha: 'f05da57a9', changes: [
+    'Farm memory search, photos and saved copies now support isiZulu.',
+    'Tap a crop or bed on a note to see its journal history.',
+    'Choose a smaller printable copy with notes only.',
+    'Photo dates are easier to read; scroll through older notes on desktop.',
+  ], tour: [{ title: 'Explore your farm memory', where: 'Menu → Field journal', href: '/journal',
+    detail: 'Search your notes, compare saved photos and keep a printable copy.' },
+  { title: 'Record work from a task', where: 'Menu → Task planner', href: '/cropplan',
+    detail: 'Open a draft field note or record an actual harvest from a crop task.' }] },
   { when: '29 October 2026', sha: 'df2bd1a17', changes: [
     'AI maps keep tank tops and more foliage visible across the property line.',
   ] },

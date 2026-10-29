@@ -120,6 +120,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Farm memory full-suite verification and language continuation — 29 October 2026](2026-10-29/farm-memory-verification-codex.md).
+
 - [Live annual production and complete product PDF rows — 29 October 2026](2026-10-29/annual-product-pdf-pagination-codex.md).
 
 - [Simple plant-label coverage and failed full-run continuation — 29 October 2026](2026-10-29/simple-plant-label-coverage-codex.md).

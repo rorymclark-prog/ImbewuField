@@ -2,8 +2,37 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import ts from 'typescript';
 
 const read = (p: string) => readFileSync(join(process.cwd(), p), 'utf8');
+
+test('the journal keeps older notes and photos reachable in a bounded scroll area at every screen width', () => {
+  // The app body is viewport-sized and clips overflow. Letting this page grow at lg
+  // left later notes below the screen with no scrolling ancestor, despite green UI tests.
+  const page = ts.createSourceFile('journal.tsx', read('app/journal/page.tsx'), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const classes: Record<string, string[]> = {};
+  function visit(node: ts.Node) {
+    if (ts.isJsxOpeningElement(node)) {
+      const tag = node.tagName.getText(page);
+      if ((tag === 'div' || tag === 'main') && !classes[tag]) {
+        const attribute = node.attributes.properties.find(property => ts.isJsxAttribute(property) && property.name.getText(page) === 'className');
+        assert.ok(attribute && ts.isJsxAttribute(attribute) && attribute.initializer && ts.isStringLiteral(attribute.initializer), `${tag} needs an explicit, inspectable scroll layout`);
+        classes[tag] = attribute.initializer.text.split(/\s+/);
+      }
+    }
+    ts.forEachChild(node, visit);
+  }
+  visit(page);
+  assert.ok(classes.div?.some(value => ['h-[100dvh]', 'h-dvh', 'h-screen'].includes(value)), 'the journal must fit the viewport that its app body clips');
+  for (const value of ['flex', 'flex-col', 'overflow-hidden']) assert.ok(classes.div.includes(value), `the bounded journal page needs ${value}`);
+  for (const value of [...classes.div, ...classes.main]) {
+    assert.ok(!['h-auto', 'overflow-visible', 'overflow-y-visible', 'flex-none'].includes(value.split(':').at(-1)!), `${value} must not remove the journal's bounded scrolling at a breakpoint`);
+  }
+  for (const value of ['flex-1', 'min-h-0', 'overflow-y-auto']) assert.ok(classes.main?.includes(value), `the journal body needs ${value} to scroll inside the page`);
+  for (const value of classes.main) {
+    assert.ok(!['overflow-hidden', 'overflow-y-hidden', 'overflow-clip', 'overflow-y-clip'].includes(value.split(':').at(-1)!), `${value} must not disable scrolling inside the journal body`);
+  }
+});
 
 test('w19-01: farmer pages hide the phone TabBar at desktop', () => {
   for (const p of ['app/journal/page.tsx', 'app/home/page.tsx', 'app/farmer/page.tsx']) {

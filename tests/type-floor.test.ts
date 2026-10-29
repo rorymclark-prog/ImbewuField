@@ -172,6 +172,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'app/journal/page.tsx': 'the journal she writes her own season into',
   'components/journal/FieldJournal.tsx': 'every entry, its date, its kind and its bed — 46 sub-12px nodes before 24 September',
   'components/journal/JournalEntrySheet.tsx': 'the sheet she writes an entry in',
+  'components/journal/JournalPhotoReview.tsx': 'her own dated observations and comparison controls; the same zero-debt farmer type floor',
   'app/calendar/page.tsx': 'when to sow and when to pick — every month chip was 10px',
   'app/cropplan/page.tsx': 'the month grid and the job list the home card links into',
   'app/home/page.tsx': 'the first screen, and the tile subtitles the audit was about',

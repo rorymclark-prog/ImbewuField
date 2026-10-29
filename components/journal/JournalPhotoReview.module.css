@@ -5,7 +5,7 @@
 .strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
 .strip button { min-height: 44px; min-width: 0; padding: 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); background: var(--bg-1); color: var(--text-secondary); cursor: zoom-in; }
 .strip img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
-.strip span { display: block; font-size: 10px; padding: 5px 1px; }
+.strip span { display: block; font-size: 12px; padding: 5px 1px; }
 .compare { min-height: 44px; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--border); background: var(--bg-1); color: var(--text-primary); border-radius: 10px; padding: 9px 12px; margin-top: 12px; font-size: 14px; cursor: pointer; }
 .dialog { padding: 0; width: min(1000px, calc(100vw - 24px)); max-width: none; max-height: 92dvh; border: 1px solid var(--border); border-radius: 18px; background: var(--bg-1); color: var(--text-primary); }
 .dialog::backdrop { background: rgba(0, 0, 0, 0.65); }

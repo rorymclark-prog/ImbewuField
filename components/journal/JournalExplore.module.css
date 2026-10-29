@@ -39,7 +39,7 @@
 .exportNotice { margin: 12px 0 0; padding: 10px; border-radius: 10px; background: var(--bg-2); color: var(--text-primary); }
 .error { margin: 12px 0 0; color: var(--danger); font-weight: 600; }
 .resultBar { margin: 0 0 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 4px 2px 14px; border-bottom: 1px solid var(--border); }
-.eyebrow { margin: 0 0 5px; font: 700 11px/1.3 var(--font-sans), sans-serif; letter-spacing: 0.12em; color: var(--text-secondary); }
+.eyebrow { margin: 0 0 5px; font: 700 12px/1.3 var(--font-sans), sans-serif; letter-spacing: 0.12em; color: var(--text-secondary); }
 .resultBar h2 { margin: 0; font: 600 26px/1.2 var(--font-display), Georgia, serif; color: var(--text-primary); }
 .resultBar .clearButton { flex-shrink: 0; margin: 0; }
 .noMatches { padding: 34px 20px; text-align: center; border: 1px dashed var(--border); border-radius: 18px; background: var(--bg-1); color: var(--text-secondary); }
@@ -49,7 +49,7 @@
 .tools button:focus-visible, .tools select:focus-visible, .tools input[type='date']:focus-visible, .resultBar button:focus-visible, .noMatches button:focus-visible { outline: 2px solid var(--color-forest-800); outline-offset: 3px; }
 /* Expanded filters and photo history must remain reachable beside a long timeline. */
 @media (min-width: 1024px) {
-  .sidebar { max-height: calc(100dvh - 28px); overflow-y: auto; padding-right: 4px; scrollbar-gutter: stable; }
+  .sidebar { max-height: calc(var(--journal-scroll-height, 100dvh) - 28px); overflow-y: auto; padding-right: 4px; scrollbar-gutter: stable; }
   .tools { padding: 16px; }
   .dateFields { grid-template-columns: 1fr; }
 }
@@ -59,3 +59,29 @@
   .memoryLayout { display: flex; flex-direction: column; }
   .timeline { order: 1; }
 }
+.draftNotice { max-width: 1040px; margin: 0 auto; padding: 8px 14px 0; }
+.draftNotice:empty { display: none; }
+.historyTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  max-width: 100%;
+  padding: 8px 11px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-2);
+  color: var(--text-primary);
+  cursor: pointer;
+  font: 600 12px/1.4 var(--font-sans), sans-serif;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+.historyTag > svg { flex-shrink: 0; }
+.historyTag:hover { border-color: var(--color-forest-800); }
+.historyTag:focus-visible { outline: 2px solid var(--color-forest-800); outline-offset: 3px; }
+
+.photoChoice { display: flex; align-items: center; gap: 9px; min-height: 44px; font-weight: 600; cursor: pointer; }
+.photoChoice input { width: 20px; height: 20px; flex-shrink: 0; accent-color: var(--color-forest-800); }
+.photoChoice + .help { margin: 0 0 10px; }
+.photoChoice input:focus-visible { outline: 2px solid var(--color-forest-800); outline-offset: 3px; }

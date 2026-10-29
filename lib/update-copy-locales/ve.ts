@@ -1,6 +1,22 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Photo dates are easier to read; scroll through older notes on desktop.": "Maḓuvha a zwifanyiso zwino a a vhalea nga hu leluwaho; skrolani kha notsi dza kale kha khomphyutha.",
+  "Photo dates and journal headings are easier to read.": "Maḓuvha a zwifanyiso na ṱhoho dza dzhenala zwino zwi a vhalea nga hu leluwaho.",
+  // Farm memory release: docs/audits/2026-10-29/farm-memory-release-drafts.json; unreviewed.
+  "Farm memory search, photos and saved copies now support isiZulu.": "U ṱoḓa, zwifanyiso na khophi dzo vhulungwaho dza khumbudzo dza bulasi zwino zwi tikedza isiZulu.",
+  "Tap a crop or bed on a note to see its journal history.": "Kwatamani tshimela kana mubethe kha notsi uri ni vhone ḓivhazwakale yatsho kha dzhenala.",
+  "Choose a smaller printable copy with notes only.": "Khethani khophi ṱhukhu ine ya nga gandiswa i re na notsi fhedzi.",
+  "Open a field note from a task, with its crop and bed ready to check.": "Vulani notsi ya tsimuni kha mushumo, tshimela na mubethe zwo lugela u sedzuluswa.",
+  "Find journal notes by crop, bed, date or words you remember.": "Wanani notsi dza dzhenala nga tshimela, mubethe, ḓuvha kana maipfi ane na a humbula.",
+  "Compare dated photos and download selected notes for an adviser.": "Vhambedzani zwifanyiso zwi re na maḓuvha ni kone u dzhenisa notsi dzo khethiwaho dza mueletshedzi.",
+  "Harvest tasks open the crop and blank quantity field, ready to fill in.": "Mishumo ya khaṋo i vula tshimela na fhethu ha tshivhalo hu si na tshithu, ho lugela u ḓadzwa.",
+  "Explore your farm memory": "Sedzulusani khumbudzo dza bulasi yaṋu",
+  "Menu → Field journal": "Menyu → Dzhenala ya tsimuni",
+  "Search your notes, compare saved photos and keep a printable copy.": "Ṱoḓani notsi dzaṋu, vhambedzani zwifanyiso zwo vhulungwaho ni kone u vhulunga khophi ine ya nga gandiswa.",
+  "Record work from a task": "Rekhodani zwo itwaho kha mushumo",
+  "Menu → Task planner": "Menyu → Mudzudzanyi wa mishumo",
+  "Open a draft field note or record an actual harvest from a crop task.": "Vulani mvetamveto ya notsi ya tsimuni kana ni rekhode khaṋo ya vhukuma kha mushumo wa tshimela.",
   // Boundary artwork audit: docs/audits/2026-10-29/ai-map-boundary-release-drafts.json; unreviewed.
   "AI maps keep tank tops and more foliage visible across the property line.": "Mapa dza AI dzi ita uri zwipiḓa zwa nṱha zwa mathangi na maṱari manzhi zwi vhonale zwi tshi pfuka mukano wa fhethu.",
   // Annual PDF row audit: docs/audits/2026-10-29/annual-product-pdf-release-drafts.json; unreviewed.

@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import FieldJournal from '@/components/journal/FieldJournal';
 import TabBar from '@/components/TabBar';
 import LimaBar from '@/components/LimaBar';
@@ -10,8 +11,21 @@ import { useLanguage } from '@/lib/i18n';
 export default function JournalPage() {
   const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
+  const scrollRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    const main = scrollRef.current;
+    if (!main) return;
+    // The sticky rail must fit the space left by the header and help bar, including
+    // their translated or enlarged text. The full viewport is taller than that space.
+    const measure = () => main.style.setProperty('--journal-scroll-height', `${main.clientHeight}px`);
+    measure();
+    const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(measure) : null;
+    observer?.observe(main);
+    window.addEventListener('resize', measure);
+    return () => { observer?.disconnect(); window.removeEventListener('resize', measure); };
+  }, []);
   return (
-    <div className="flex flex-col overflow-hidden h-[100dvh] lg:h-auto lg:min-h-0 lg:overflow-visible" style={{ background: 'var(--bg-0)' }}>
+    <div className="flex flex-col overflow-hidden h-[100dvh]" style={{ background: 'var(--bg-0)' }}>
       {/* Header */}
       <AppHeader
         title=""
@@ -27,7 +41,9 @@ export default function JournalPage() {
       {/* Body — the dated record of what actually happened on the land. Harvest
           weights and sales stay in /records and /finances, where the ledger, the
           harvest reconciliation and the CSV export already live. */}
-      <main className="journal-narrow-sidebar flex-1 overflow-y-auto lg:flex-none lg:overflow-visible" style={{ background: 'var(--bg-0)' }}>
+      {/* The app body clips to the viewport. Keep one scrolling region at desktop too,
+          or later notes and the saved-photo dates become unreachable below the screen. */}
+      <main ref={scrollRef} className="journal-narrow-sidebar flex-1 min-h-0 overflow-y-auto" style={{ background: 'var(--bg-0)' }}>
         <FieldJournal />
       </main>
 

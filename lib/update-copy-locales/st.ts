@@ -1,6 +1,22 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Photo dates are easier to read; scroll through older notes on desktop.": "Matsatsi a dinepe a se a baleha habonolo; tsamaisetsa dintlheng tsa kgale khomphutheng.",
+  "Photo dates and journal headings are easier to read.": "Matsatsi a dinepe le dihlooho tsa jenale di se di baleha habonolo.",
+  // Farm memory release: docs/audits/2026-10-29/farm-memory-release-drafts.json; unreviewed.
+  "Farm memory search, photos and saved copies now support isiZulu.": "Patlo, dinepe le dikopi tse bolokilweng tsa dikgopotso tsa polasi jwale di tshehetsa isiZulu.",
+  "Tap a crop or bed on a note to see its journal history.": "Tobetsa sejalo kapa bethe ya temo ntlheng e ngotsweng ho bona nalane ya yona jenaleng.",
+  "Choose a smaller printable copy with notes only.": "Kgetha kopi e nyane e ka hatiswang e nang le dintlha tse ngotsweng feela.",
+  "Open a field note from a task, with its crop and bed ready to check.": "Bula ntlha e ngotsweng ya tshimo ho tswa mosebetsing, sejalo le bethe ya temo di loketse ho hlahlojwa.",
+  "Find journal notes by crop, bed, date or words you remember.": "Fumana dintlha tsa jenale ka sejalo, bethe ya temo, letsatsi kapa mantswe ao o a hopolang.",
+  "Compare dated photos and download selected notes for an adviser.": "Bapisa dinepe tse nang le matsatsi mme o jarolle dintlha tse kgethilweng bakeng sa moeletsi.",
+  "Harvest tasks open the crop and blank quantity field, ready to fill in.": "Mesebetsi ya kotulo e bula sejalo le sebaka se se nang letho sa bongata, se loketse ho tlatswa.",
+  "Explore your farm memory": "Hlahloba dikgopotso tsa polasi ya hao",
+  "Menu → Field journal": "Lenane → Jenale ya tshimo",
+  "Search your notes, compare saved photos and keep a printable copy.": "Batla dintlha tsa hao, bapisa dinepe tse bolokilweng mme o boloke kopi e ka hatiswang.",
+  "Record work from a task": "Rekota se entsweng ho tswa mosebetsing",
+  "Menu → Task planner": "Lenane → Moralo wa mesebetsi",
+  "Open a draft field note or record an actual harvest from a crop task.": "Bula moralo wa ntlha ya tshimo kapa o rekote kotulo ya nnete ho tswa mosebetsing wa sejalo.",
   // Boundary artwork audit: docs/audits/2026-10-29/ai-map-boundary-release-drafts.json; unreviewed.
   "AI maps keep tank tops and more foliage visible across the property line.": "Dimmapa tsa AI di boloka dihlooho tsa ditanka le mahlaku a mangata di bonahala ka nqane ho moedi wa sebaka.",
   // Annual PDF row audit: docs/audits/2026-10-29/annual-product-pdf-release-drafts.json; unreviewed.
