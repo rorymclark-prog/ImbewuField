@@ -1,0 +1,26 @@
+.review { margin: 16px 0; color: var(--text-primary); }
+.heading { display: flex; align-items: center; gap: 8px; }
+.heading h2 { font: 600 16px var(--font-display), Georgia, serif; margin: 0; }
+.review p { color: var(--text-secondary); font-size: 13px; line-height: 1.5; margin: 8px 0 12px; }
+.strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.strip button { min-height: 44px; min-width: 0; padding: 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--border); background: var(--bg-1); color: var(--text-secondary); cursor: zoom-in; }
+.strip img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+.strip span { display: block; font-size: 10px; padding: 5px 1px; }
+.compare { min-height: 44px; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid var(--border); background: var(--bg-1); color: var(--text-primary); border-radius: 10px; padding: 9px 12px; margin-top: 12px; font-size: 14px; cursor: pointer; }
+.dialog { padding: 0; width: min(1000px, calc(100vw - 24px)); max-width: none; max-height: 92dvh; border: 1px solid var(--border); border-radius: 18px; background: var(--bg-1); color: var(--text-primary); }
+.dialog::backdrop { background: rgba(0, 0, 0, 0.65); }
+.panel { padding: 16px; }
+.panel header { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.panel h2 { font: 600 22px var(--font-display), Georgia, serif; margin: 0; }
+.panel header button { display: grid; place-items: center; flex-shrink: 0; width: 44px; height: 44px; border: 1px solid var(--border); border-radius: 50%; background: var(--bg-1); color: var(--text-primary); cursor: pointer; }
+.explanation { color: var(--text-secondary); font-size: 13px; line-height: 1.5; margin: 8px 0 16px; }
+.frames { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.frames figure { margin: 0; min-width: 0; }
+.frames label { display: block; color: var(--text-secondary); font-size: 13px; }
+.frames select { display: block; width: 100%; min-height: 44px; margin: 6px 0 10px; padding: 8px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-1); color: var(--text-primary); font-size: 14px; }
+.frames img { display: block; width: 100%; height: min(44dvh, 420px); object-fit: contain; background: var(--bg-2); border-radius: 10px; }
+.frames figcaption { display: flex; flex-direction: column; gap: 4px; padding: 10px 0; font-size: 14px; line-height: 1.4; overflow-wrap: anywhere; }
+.frames time, .frames figcaption span { color: var(--text-secondary); font-size: 13px; }
+.review button:focus-visible, .dialog button:focus-visible, .dialog select:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+@media (min-width: 640px) { .pair { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 1023px) { .review { order: 2; } }

@@ -169,6 +169,9 @@ export interface BoardTask {
    *  ItemEditSheet use — instead of rendering `icon` as raw emoji text.
    *  Undefined for non-crop kinds (survey/lesson), which have no art system. */
   cropKey?: string;
+  /** Keep the actual bed reference for a draft journal handoff; subtitles are translated text. */
+  bedId?: string;
+  bedLabel?: string;
   /** CropTask['action'] (lib/crop-plan.ts), set only for kind 'crop' tasks. Lets a renderer
    *  pick an icon/category per task without re-parsing the title string — added for the
    *  Task Planner screen (app/cropplan), which used to invent its own day-of-week rota
@@ -245,6 +248,7 @@ export function buildCropBoardTasks(
     seenPlantingIds.add(planting.id);
     return true;
   });
+  const plantingBeds = new Map(validPlantings.map((planting) => [planting.id, planting.bedId]));
   const out: BoardTask[] = [];
   for (const t of tasksForPlan(validPlantings, beds, currentMonth)) {
     // Crop-plan owns cohort chronology. Re-deriving it here from the action
@@ -259,6 +263,8 @@ export function buildCropBoardTasks(
       subtitle: `${boardBedLabel(t.bedLabel, translateFn)} · ${dueLabel(monthsAway, translateFn)}`,
       icon: t.icon,
       cropKey: t.cropKey,
+      bedId: plantingBeds.get(t.plantingId),
+      bedLabel: t.bedLabel,
       action: t.action,
       // Derived from the resolved offset (not t.month) so a clamped-to-now
       // prep task carries the month it's actually due.

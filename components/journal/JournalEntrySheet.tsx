@@ -19,6 +19,7 @@ import { getElementArt2 } from '@/lib/element-art-2';
 import motion from './JournalMotion.module.css';
 import { journalCategoryLabel } from './journal-labels';
 import { useEscapeClose } from '@/lib/use-escape-close';
+import { useDialogFocus } from '@/lib/use-dialog-focus';
 
 export interface BedOption {
   id: string;
@@ -28,6 +29,8 @@ export interface BedOption {
 interface Props {
   /** null = creating a new entry. */
   entry: JournalEntry | null;
+  /** A plan is a prompt to write, never proof that the work happened. */
+  initialDraft?: Partial<JournalEntryInput>;
   beds: BedOption[];
   crops: string[];
   onSave: (input: JournalEntryInput) => void;
@@ -40,22 +43,24 @@ interface Props {
 /* Bottom sheet, phone-first: 92dvh cap, 22px top radius, safe-area padding —
    the same chrome components/EvidenceSheet.tsx uses, so the journal does not
    introduce a second modal idiom. */
-export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete, onClose, error }: Props) {
+export default function JournalEntrySheet({ entry, initialDraft, beds, crops, onSave, onDelete, onClose, error }: Props) {
   const { lang } = useLanguage();
   const isZulu = lang === 'zu';
   const ui = (english: string, zulu: string) => isZulu ? zulu : english;
   const simple = useAppLevel() === 'simple';
-  const [date, setDate] = useState(entry?.date ?? todayISODate());
-  const [title, setTitle] = useState(entry?.title ?? '');
-  const [notes, setNotes] = useState(entry?.notes ?? '');
-  const [category, setCategory] = useState<JournalCategory>(entry?.category ?? 'planting');
-  const [bedId, setBedId] = useState<string>(entry?.bedId ?? '');
-  const [bedLabel, setBedLabel] = useState<string>(entry?.bedLabel ?? '');
-  const [cropName, setCropName] = useState<string>(entry?.cropName ?? '');
+  const [date, setDate] = useState(entry?.date ?? initialDraft?.date ?? todayISODate());
+  const [title, setTitle] = useState(entry?.title ?? initialDraft?.title ?? '');
+  const [notes, setNotes] = useState(entry?.notes ?? initialDraft?.notes ?? '');
+  const [category, setCategory] = useState<JournalCategory>(entry?.category ?? initialDraft?.category ?? 'planting');
+  const [bedId, setBedId] = useState<string>(entry?.bedId ?? initialDraft?.bedId ?? '');
+  const [bedLabel, setBedLabel] = useState<string>(entry?.bedLabel ?? initialDraft?.bedLabel ?? '');
+  const [cropName, setCropName] = useState<string>(entry?.cropName ?? initialDraft?.cropName ?? '');
   const [photos, setPhotos] = useState<string[]>(entry?.photos ?? []);
   const [busy, setBusy] = useState(false);
   const [photoError, setPhotoError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const dialogRef = useRef<HTMLFormElement>(null);
+  useDialogFocus(true, dialogRef);
   // bug-12: two-tap delete, same pattern as app/records/page.tsx's SalesLedger — first tap
   // arms a confirm (reverting on its own after 3.5s), second tap within that window deletes.
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -107,8 +112,10 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
       title: title.trim(),
       notes: notes.trim(),
       category,
-      bedId: bed ? bed.id : null,
-      bedLabel: bed ? bed.label : (bedLabel.trim() || null),
+      bedId: bedId || null,
+      // An old observation keeps the name it had then; the picker changes both
+      // fields explicitly when the farmer chooses a different bed.
+      bedLabel: bedLabel.trim() || bed?.label || null,
       cropName: cropName.trim() || null,
       photos,
     });
@@ -123,6 +130,10 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <form
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label={entry ? ui('Edit journal entry', 'Hlela okubhaliwe kwejenali') : ui('New journal entry', 'Okusha kwejenali')}
         onSubmit={submit}
         className={`w-full max-w-md font-sans overflow-y-auto ${motion.sheet}`}
         style={{
@@ -154,7 +165,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
               type="button"
               onClick={onClose}
               aria-label={ui('Close', 'Vala')}
-              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, color: 'var(--text-muted)' }}
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 8, minWidth: 44, minHeight: 44, color: 'var(--text-muted)' }}
             >
               <X size={20} />
             </button>
@@ -162,6 +173,12 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
         </div>
 
         <div style={{ padding: '16px 20px 0', display: 'flex', flexDirection: 'column', gap: 16 }}>
+          {initialDraft && !entry && (
+            <p role="note" lang="en" style={{ margin: 0, padding: 12, borderRadius: 12, background: 'var(--bg-2)', color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.5 }}>
+              Draft from your crop plan. Check what happened before saving. Today is selected;
+              change the date if the work happened earlier. Nothing is recorded until you save.
+            </p>
+          )}
           {/* Category — big tap targets, wraps on a phone. Collapsed in Simple: the note still
               saves with its default category ('planting', or the entry's own on edit) — hiding
               the picker never changes what gets stored. */}
@@ -201,11 +218,12 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
 
           {/* Date defaults to today (or the entry's own date on edit) whether or not this
               field is shown — Simple keeps that default instead of asking for it. */}
-          {!simple && (
+          {(!simple || initialDraft) && (
             <div>
               <Label>{ui('Date', 'Usuku')}</Label>
               <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                 type="date"
+                aria-label={ui('Date', 'Usuku')}
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
                 style={inputStyle}
@@ -217,6 +235,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
             <Label>{ui('Title', 'Isihloko')}</Label>
             <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
               type="text"
+              aria-label={ui('Title', 'Isihloko')}
               value={title}
               maxLength={MAX_TITLE_LEN}
               placeholder={ui('e.g. First chard cut from Bed 1', 'isib. Ukuvunwa kokuqala kwe-chard embhedeni 1')}
@@ -228,6 +247,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
           <div>
             <Label>{ui('Notes', 'Amanothi')}</Label>
             <textarea className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
+              aria-label={ui('Notes', 'Amanothi')}
               value={notes}
               rows={5}
               maxLength={MAX_NOTES_LEN}
@@ -239,21 +259,26 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
 
           {/* Bed/plot and crop — extra fields, left unlinked/blank by default in both modes,
               so collapsing them in Simple never changes what gets saved. */}
-          {!simple && (
+          {(!simple || initialDraft) && (
             <div style={{ display: 'flex', gap: 10 }}>
               <div style={{ flex: 1 }}>
                 <Label>{ui('Bed / plot', 'Umbhede / isiqephu')}</Label>
                 {beds.length > 0 ? (
-                  <select className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1" value={bedId} onChange={(e) => setBedId(e.target.value)} style={inputStyle}>
+                  <select className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1" aria-label={ui('Bed / plot', 'Umbhede / isiqephu')} value={bedId} onChange={(e) => {
+                    setBedId(e.target.value);
+                    setBedLabel(beds.find((bed) => bed.id === e.target.value)?.label ?? '');
+                  }} style={inputStyle}>
                     <option value="">{ui('Not linked', 'Akuxhunyiwe')}</option>
-                    {beds.map((b) => <option key={b.id} value={b.id}>{b.label}</option>)}
+                    {bedId && !beds.some((bed) => bed.id === bedId) && <option value={bedId}>{bedLabel || bedId}</option>}
+                    {beds.map((b) => <option key={b.id} value={b.id}>{b.id === bedId && bedLabel && bedLabel !== b.label ? `${bedLabel} (${b.label} now)` : b.label}</option>)}
                   </select>
                 ) : (
                   <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                     type="text"
+                    aria-label={ui('Bed / plot', 'Umbhede / isiqephu')}
                     value={bedLabel}
                     placeholder={ui('e.g. Bed 4', 'isib. Umbhede 4')}
-                    onChange={(e) => setBedLabel(e.target.value)}
+                    onChange={(e) => { setBedLabel(e.target.value); setBedId(''); }}
                     style={inputStyle}
                   />
                 )}
@@ -262,6 +287,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
                 <Label>{ui('Crop', 'Isitshalo')}</Label>
                 <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"
                   type="text"
+                  aria-label={ui('Crop', 'Isitshalo')}
                   list="journal-crop-options"
                   value={cropName}
                   placeholder={ui('Optional', 'Akudingeki')}
