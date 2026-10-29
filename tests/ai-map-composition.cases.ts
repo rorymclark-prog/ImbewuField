@@ -104,7 +104,9 @@ test('boundary foreground includes tank tops and rectangular planting but respec
   paint(ctx,tanks,frame,'water',300,300,'tanks');
   assert.deepEqual(canvas.snapshot(),[255,255,0,0,0],'tank tops project above their ground position');
   ctx.clearRect();paint(ctx,tanks,frame,'planting',300,300,'tanks');
-  assert.deepEqual(canvas.snapshot(),[0,0,0,0,0],'Planting must not reveal absent water-layer objects');
+  assert.deepEqual(canvas.snapshot(),[255,255,0,0,0],'existing tank artwork is physical context on Planting too');
+  ctx.clearRect();paint(ctx,tanks,frame,'zones',300,300,'tanks');
+  assert.deepEqual(canvas.snapshot(),[0,0,0,0,0],'Zones retains its outline-only contract');
   assert.equal(JSON.stringify({plants,tanks}),before,'presentation must not move or resize the saved objects');
 });
 

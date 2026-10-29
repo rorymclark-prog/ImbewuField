@@ -1252,8 +1252,12 @@ function paintPlannedCanopyFootprints(
   ctx.fillStyle = '#FFFFFF';
   for (const item of state.items) {
     const def = ELEMENTS_BY_ID[item.defId];
-    if (!def || (kind === 'plants' ? def.category !== 'growing' : !def.id.startsWith('jojo_') && def.id !== 'rain_barrel')
-      || (!itemInFilter(def.category, filter, def.id) && !isContextElement(def, filter))) continue;
+    if (!def || (kind === 'plants' ? def.category !== 'growing' : !def.id.startsWith('jojo_') && def.id !== 'rain_barrel')) continue;
+    // Rory's Planting artwork already shows the tanks as physical context. Foreground recovery
+    // may keep their existing silhouette without adding them to that sheet's labels or inventory.
+    // Zones keeps its separate outline-only contract. Missing tank-coloured art retains no pixels.
+    if (kind === 'tanks' ? filter === 'zones'
+      : !itemInFilter(def.category, filter, def.id) && !isContextElement(def, filter)) continue;
     // A small leaf halo and an upright tank envelope are presentation allowances. Colour
     // selection still rejects soil; neither allowance changes the saved ground footprint.
     const rx = (item.wM ?? def.wM) * pxPerM * halo / 2;
