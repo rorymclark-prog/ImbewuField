@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 October 2026', sha: '47bdffe30', changes: [
+    'Production plans keep unmarked plants and housing as proposed, matching your design.',
+  ] },
   { when: '29 October 2026', sha: '1f54713e8', changes: [
     'Choose Site potential or Complete site plan, then the detail you need.',
   ], tour: [{ title: 'Open site reports', where: 'Menu → Reports', href: '/reports',

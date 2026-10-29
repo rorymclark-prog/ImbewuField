@@ -1,12 +1,61 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import ts from 'typescript';
+import { sheetElementNaming, type ExactPlanSheetKey } from '../lib/glossy-filters.ts';
 
 // swarm/w4-glossy-simple: Design Studio step 09 "Glossy" (Preview & Export) in Simple. Source-text
 // guard style, same as tests/design-simple-mode.test.ts: DesignGlossy is not a pure function of
 // exported data, so this reads the real shipped file and asserts the wiring a farmer would hit.
 
 const GLOSSY = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+
+// Whole now has a grouped legend, so an extra sheet-naming guard is legitimate. Execute the
+// real heading's enclosing condition instead of pinning the old two-clause source spelling.
+function plantLabelCondition(source: string): string {
+  const tree = ts.createSourceFile('DesignGlossy.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  let heading: ts.JsxSelfClosingElement | undefined;
+  function visit(node: ts.Node) {
+    if (ts.isJsxSelfClosingElement(node) && node.tagName.getText(tree) === 'WorkflowHeading'
+      && node.attributes.properties.some(attribute => ts.isJsxAttribute(attribute)
+        && attribute.name.getText(tree) === 'title'
+        && attribute.initializer && ts.isStringLiteral(attribute.initializer)
+        && attribute.initializer.text === 'Plant labels')) {
+      assert.equal(heading, undefined, 'the plant-label chooser has one heading');
+      heading = node;
+    }
+    ts.forEachChild(node, visit);
+  }
+  visit(tree);
+  assert.ok(heading, 'keep the individual plant-label chooser available');
+  let parent: ts.Node | undefined = heading.parent;
+  while (parent && !ts.isJsxExpression(parent)) parent = parent.parent;
+  assert.ok(parent && ts.isJsxExpression(parent) && parent.expression
+    && ts.isBinaryExpression(parent.expression)
+    && parent.expression.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken,
+  'the chooser must have an enclosing visibility condition');
+  return parent.expression.left.getText(tree);
+}
+
+function assertPlantLabelVisibility(condition: string) {
+  const visible = new Function('sheetHasPlantCodes', 'filter', 'simple', 'sheetElementNaming',
+    `return Boolean(${condition});`) as (
+      hasPlants: boolean, sheet: ExactPlanSheetKey, simple: boolean,
+      naming: typeof sheetElementNaming,
+    ) => boolean;
+  for (const filter of ['planting', 'all'] as const) {
+    for (const hasPlants of [true, false]) {
+      assert.equal(visible(hasPlants, filter, true, sheetElementNaming), false,
+        'Simple must hide plant-label controls on both Planting and Whole');
+    }
+  }
+  assert.equal(visible(true, 'planting', false, sheetElementNaming), true,
+    'All tools must retain the individual Planting label chooser');
+  assert.equal(visible(false, 'planting', false, sheetElementNaming), false,
+    'an empty sheet must not offer plant-label controls');
+  assert.equal(visible(true, 'all', false, sheetElementNaming), false,
+    'Whole uses its grouped legend rather than individual label controls');
+}
 
 test('DesignGlossy computes simple from useAppLevel(), called unconditionally', () => {
   assert.match(GLOSSY, /from '@\/lib\/app-level'/, 'DesignGlossy must import useAppLevel');
@@ -35,18 +84,29 @@ test('Simple hides the header context strip and the saved-maps icon button, keep
   );
 });
 
-test('Simple hides Underlay, the Quality chooser and Plant labels', () => {
+test('Simple hides Underlay and the Quality chooser', () => {
   assert.match(
     GLOSSY,
     /\{!simple && \(\s*\n\s*<>\s*\n\s*<WorkflowHeading number=\{2\} title="Underlay" \/>/,
     'the Underlay heading + pills must not render in Simple',
   );
   assert.match(GLOSSY, /Quality\s*\n\s*<\/span>/, 'the Quality chooser label must still exist for All tools');
-  assert.match(
-    GLOSSY,
-    /\{sheetHasPlantCodes && !simple && \(\s*\n\s*<>\s*\n\s*<WorkflowHeading number=\{3\} title="Plant labels" \/>/,
-    'the Plant labels heading + pills must not render in Simple',
-  );
+});
+
+test('Simple hides plant labels while All tools keeps the Planting chooser and Whole grouping', () => {
+  assertPlantLabelVisibility(plantLabelCondition(GLOSSY));
+});
+
+test('plant-label coverage rejects exposed Simple controls, hidden Planting controls and missing sheet guards', () => {
+  const condition = plantLabelCondition(GLOSSY);
+  assert.throws(() => assertPlantLabelVisibility(condition.replace('!simple', 'true')),
+    /Simple must hide/);
+  assert.throws(() => assertPlantLabelVisibility(`(${condition}) && false`),
+    /All tools must retain/);
+  assert.throws(() => assertPlantLabelVisibility(condition.replace('sheetHasPlantCodes', 'true')),
+    /empty sheet must not offer/);
+  assert.throws(() => assertPlantLabelVisibility(condition.replace("sheetElementNaming(filter) === 'individual'", 'true')),
+    /Whole uses its grouped legend/);
 });
 
 test('Simple hides the style-pack picker and "More style packs"', () => {
