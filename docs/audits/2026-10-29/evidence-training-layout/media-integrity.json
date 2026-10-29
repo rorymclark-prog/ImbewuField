@@ -1,0 +1,5860 @@
+{
+  "scope": "All repository public MP3, M4A, MP4 and WebM files; full FFmpeg decode. Not a linguistic review, player/browser test or offline-device check.",
+  "files": 731,
+  "extensions": {
+    ".mp3": 690,
+    ".mp4": 41
+  },
+  "failures": [],
+  "records": [
+    {
+      "path": "public/app-guide-audio/charts/area-meaning.mp3",
+      "durationSeconds": 52.896,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 317376
+    },
+    {
+      "path": "public/app-guide-audio/charts/cash-meaning.mp3",
+      "durationSeconds": 62.856,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 377136
+    },
+    {
+      "path": "public/app-guide-audio/charts/chart-window.mp3",
+      "durationSeconds": 53.664,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 321984
+    },
+    {
+      "path": "public/app-guide-audio/charts/feedback-1.mp3",
+      "durationSeconds": 9.72,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 58320
+    },
+    {
+      "path": "public/app-guide-audio/charts/feedback-2.mp3",
+      "durationSeconds": 10.152,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 60912
+    },
+    {
+      "path": "public/app-guide-audio/charts/feedback-3.mp3",
+      "durationSeconds": 8.016,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 48096
+    },
+    {
+      "path": "public/app-guide-audio/charts/harvest-meaning.mp3",
+      "durationSeconds": 55.248,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 331488
+    },
+    {
+      "path": "public/app-guide-audio/charts/next.mp3",
+      "durationSeconds": 41.952,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 251712
+    },
+    {
+      "path": "public/app-guide-audio/charts/plan-meaning.mp3",
+      "durationSeconds": 55.44,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 332640
+    },
+    {
+      "path": "public/app-guide-audio/charts/practice.mp3",
+      "durationSeconds": 33.192,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 199152
+    },
+    {
+      "path": "public/app-guide-audio/charts/prepare.mp3",
+      "durationSeconds": 42.696,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 256176
+    },
+    {
+      "path": "public/app-guide-audio/charts/trace-figure.mp3",
+      "durationSeconds": 70.776,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 424656
+    },
+    {
+      "path": "public/app-guide-audio/crop-planning/check-areas.mp3",
+      "durationSeconds": 56.16,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 336960
+    },
+    {
+      "path": "public/app-guide-audio/crop-planning/choose-planting.mp3",
+      "durationSeconds": 53.616,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 321696
+    },
+    {
+      "path": "public/app-guide-audio/crop-planning/feedback-1.mp3",
+      "durationSeconds": 6.072,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 36432
+    },
+    {
+      "path": "public/app-guide-audio/crop-planning/feedback-2.mp3",
+      "durationSeconds": 9.528,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 57168
+    },
+    {
+      "path": "public/app-guide-audio/crop-planning/feedback-3.mp3",
+      "durationSeconds": 7.176,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 43056
+    },
+    {
+      "path": "public/app-guide-audio/crop-planning/next.mp3",
+      "durationSeconds": 48.768,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 292608
+    },
+    {
+      "path": "public/app-guide-audio/crop-planning/practice.mp3",
+      "durationSeconds": 28.296,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 169776
+    },
+    {
+      "path": "public/app-guide-audio/crop-planning/prepare.mp3",
+      "durationSeconds": 36.168,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 217008
+    },
+    {
+      "path": "public/app-guide-audio/crop-planning/read-calendar.mp3",
+      "durationSeconds": 63.624,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 381744
+    },
+    {
+      "path": "public/app-guide-audio/crop-planning/save-check.mp3",
+      "durationSeconds": 57.768,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 346608
+    },
+    {
+      "path": "public/app-guide-audio/crop-planning/suggest-review.mp3",
+      "durationSeconds": 68.4,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 410400
+    },
+    {
+      "path": "public/app-guide-audio/crop-planning/take-plan.mp3",
+      "durationSeconds": 63.24,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 379440
+    },
+    {
+      "path": "public/app-guide-audio/crop-planning/timing-space.mp3",
+      "durationSeconds": 56.496,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 338976
+    },
+    {
+      "path": "public/app-guide-audio/design/edit-undo.mp3",
+      "durationSeconds": 56.88,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 341280
+    },
+    {
+      "path": "public/app-guide-audio/design/export-plan.mp3",
+      "durationSeconds": 56.352,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 338112
+    },
+    {
+      "path": "public/app-guide-audio/design/feedback-1.mp3",
+      "durationSeconds": 7.056,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 42336
+    },
+    {
+      "path": "public/app-guide-audio/design/feedback-2.mp3",
+      "durationSeconds": 9.504,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 57024
+    },
+    {
+      "path": "public/app-guide-audio/design/feedback-3.mp3",
+      "durationSeconds": 9.624,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 57744
+    },
+    {
+      "path": "public/app-guide-audio/design/next.mp3",
+      "durationSeconds": 55.056,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 330336
+    },
+    {
+      "path": "public/app-guide-audio/design/place-systems.mp3",
+      "durationSeconds": 54.888,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 329328
+    },
+    {
+      "path": "public/app-guide-audio/design/practice.mp3",
+      "durationSeconds": 28.872,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 173232
+    },
+    {
+      "path": "public/app-guide-audio/design/prepare.mp3",
+      "durationSeconds": 33.024,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 198144
+    },
+    {
+      "path": "public/app-guide-audio/design/preview-sheet.mp3",
+      "durationSeconds": 60.264,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 361584
+    },
+    {
+      "path": "public/app-guide-audio/design/read-sectors.mp3",
+      "durationSeconds": 49.848,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 299088
+    },
+    {
+      "path": "public/app-guide-audio/design/review-save.mp3",
+      "durationSeconds": 60.12,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 360720
+    },
+    {
+      "path": "public/app-guide-audio/design/site-base.mp3",
+      "durationSeconds": 50.112,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 300672
+    },
+    {
+      "path": "public/app-guide-audio/evidence/feedback-1.mp3",
+      "durationSeconds": 9.024,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 54144
+    },
+    {
+      "path": "public/app-guide-audio/evidence/feedback-2.mp3",
+      "durationSeconds": 7.848,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 47088
+    },
+    {
+      "path": "public/app-guide-audio/evidence/feedback-3.mp3",
+      "durationSeconds": 9.768,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 58608
+    },
+    {
+      "path": "public/app-guide-audio/evidence/inspect-report.mp3",
+      "durationSeconds": 60.432,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 362592
+    },
+    {
+      "path": "public/app-guide-audio/evidence/next.mp3",
+      "durationSeconds": 63.192,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 379152
+    },
+    {
+      "path": "public/app-guide-audio/evidence/observations.mp3",
+      "durationSeconds": 55.992,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 335952
+    },
+    {
+      "path": "public/app-guide-audio/evidence/practice.mp3",
+      "durationSeconds": 29.64,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 177840
+    },
+    {
+      "path": "public/app-guide-audio/evidence/prepare.mp3",
+      "durationSeconds": 40.056,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 240336
+    },
+    {
+      "path": "public/app-guide-audio/evidence/review-advice.mp3",
+      "durationSeconds": 58.512,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 351072
+    },
+    {
+      "path": "public/app-guide-audio/evidence/right-site.mp3",
+      "durationSeconds": 45.24,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 271440
+    },
+    {
+      "path": "public/app-guide-audio/evidence/save-version.mp3",
+      "durationSeconds": 55.176,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 331056
+    },
+    {
+      "path": "public/app-guide-audio/evidence/test-sources.mp3",
+      "durationSeconds": 61.632,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 369792
+    },
+    {
+      "path": "public/app-guide-audio/expenses/amount.mp3",
+      "durationSeconds": 44.448,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 266688
+    },
+    {
+      "path": "public/app-guide-audio/expenses/assign.mp3",
+      "durationSeconds": 38.592,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 231552
+    },
+    {
+      "path": "public/app-guide-audio/expenses/feedback-1.mp3",
+      "durationSeconds": 6.36,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 38160
+    },
+    {
+      "path": "public/app-guide-audio/expenses/feedback-2.mp3",
+      "durationSeconds": 9.048,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 54288
+    },
+    {
+      "path": "public/app-guide-audio/expenses/feedback-3.mp3",
+      "durationSeconds": 6.456,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 38736
+    },
+    {
+      "path": "public/app-guide-audio/expenses/find.mp3",
+      "durationSeconds": 31.464,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 188784
+    },
+    {
+      "path": "public/app-guide-audio/expenses/next.mp3",
+      "durationSeconds": 39.12,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 234720
+    },
+    {
+      "path": "public/app-guide-audio/expenses/practice.mp3",
+      "durationSeconds": 29.784,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 178704
+    },
+    {
+      "path": "public/app-guide-audio/expenses/prepare.mp3",
+      "durationSeconds": 33.48,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 200880
+    },
+    {
+      "path": "public/app-guide-audio/expenses/receipt.mp3",
+      "durationSeconds": 48.048,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 288288
+    },
+    {
+      "path": "public/app-guide-audio/expenses/save.mp3",
+      "durationSeconds": 47.808,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 286848
+    },
+    {
+      "path": "public/app-guide-audio/exports/check-period.mp3",
+      "durationSeconds": 55.248,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 331488
+    },
+    {
+      "path": "public/app-guide-audio/exports/choose-copy.mp3",
+      "durationSeconds": 45.048,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 270288
+    },
+    {
+      "path": "public/app-guide-audio/exports/collect-evidence.mp3",
+      "durationSeconds": 51.72,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 310320
+    },
+    {
+      "path": "public/app-guide-audio/exports/feedback-1.mp3",
+      "durationSeconds": 7.344,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 44064
+    },
+    {
+      "path": "public/app-guide-audio/exports/feedback-2.mp3",
+      "durationSeconds": 9.72,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 58320
+    },
+    {
+      "path": "public/app-guide-audio/exports/feedback-3.mp3",
+      "durationSeconds": 7.92,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 47520
+    },
+    {
+      "path": "public/app-guide-audio/exports/inspect-csv.mp3",
+      "durationSeconds": 67.416,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 404496
+    },
+    {
+      "path": "public/app-guide-audio/exports/inspect-summary.mp3",
+      "durationSeconds": 59.616,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 357696
+    },
+    {
+      "path": "public/app-guide-audio/exports/keep-share.mp3",
+      "durationSeconds": 57.408,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 344448
+    },
+    {
+      "path": "public/app-guide-audio/exports/next.mp3",
+      "durationSeconds": 44.376,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 266256
+    },
+    {
+      "path": "public/app-guide-audio/exports/practice.mp3",
+      "durationSeconds": 29.04,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 174240
+    },
+    {
+      "path": "public/app-guide-audio/exports/prepare.mp3",
+      "durationSeconds": 31.128,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 186768
+    },
+    {
+      "path": "public/app-guide-audio/getting-started/feedback-1.mp3",
+      "durationSeconds": 6.456,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 38736
+    },
+    {
+      "path": "public/app-guide-audio/getting-started/feedback-2.mp3",
+      "durationSeconds": 9.912,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 59472
+    },
+    {
+      "path": "public/app-guide-audio/getting-started/feedback-3.mp3",
+      "durationSeconds": 8.28,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 49680
+    },
+    {
+      "path": "public/app-guide-audio/getting-started/keep-copy.mp3",
+      "durationSeconds": 61.368,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 368208
+    },
+    {
+      "path": "public/app-guide-audio/getting-started/navigate.mp3",
+      "durationSeconds": 43.248,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 259488
+    },
+    {
+      "path": "public/app-guide-audio/getting-started/next.mp3",
+      "durationSeconds": 40.44,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 242640
+    },
+    {
+      "path": "public/app-guide-audio/getting-started/own-work.mp3",
+      "durationSeconds": 50.568,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 303408
+    },
+    {
+      "path": "public/app-guide-audio/getting-started/practice.mp3",
+      "durationSeconds": 29.136,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 174816
+    },
+    {
+      "path": "public/app-guide-audio/getting-started/prepare.mp3",
+      "durationSeconds": 28.368,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 170208
+    },
+    {
+      "path": "public/app-guide-audio/getting-started/reopen.mp3",
+      "durationSeconds": 48.336,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 290016
+    },
+    {
+      "path": "public/app-guide-audio/getting-started/sample.mp3",
+      "durationSeconds": 47.016,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 282096
+    },
+    {
+      "path": "public/app-guide-audio/getting-started/save-check.mp3",
+      "durationSeconds": 55.392,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 332352
+    },
+    {
+      "path": "public/app-guide-audio/harvest/compare.mp3",
+      "durationSeconds": 48.288,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 289728
+    },
+    {
+      "path": "public/app-guide-audio/harvest/feedback-1.mp3",
+      "durationSeconds": 7.608,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 45648
+    },
+    {
+      "path": "public/app-guide-audio/harvest/feedback-2.mp3",
+      "durationSeconds": 6.864,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 41184
+    },
+    {
+      "path": "public/app-guide-audio/harvest/feedback-3.mp3",
+      "durationSeconds": 6.6,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 39600
+    },
+    {
+      "path": "public/app-guide-audio/harvest/find.mp3",
+      "durationSeconds": 31.848,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 191088
+    },
+    {
+      "path": "public/app-guide-audio/harvest/measure.mp3",
+      "durationSeconds": 45.048,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 270288
+    },
+    {
+      "path": "public/app-guide-audio/harvest/next.mp3",
+      "durationSeconds": 33.168,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 199008
+    },
+    {
+      "path": "public/app-guide-audio/harvest/photo.mp3",
+      "durationSeconds": 34.248,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 205488
+    },
+    {
+      "path": "public/app-guide-audio/harvest/practice.mp3",
+      "durationSeconds": 28.608,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 171648
+    },
+    {
+      "path": "public/app-guide-audio/harvest/prepare.mp3",
+      "durationSeconds": 34.32,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 205920
+    },
+    {
+      "path": "public/app-guide-audio/harvest/save.mp3",
+      "durationSeconds": 50.208,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 301248
+    },
+    {
+      "path": "public/app-guide-audio/invoices/details.mp3",
+      "durationSeconds": 51.168,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 307008
+    },
+    {
+      "path": "public/app-guide-audio/invoices/feedback-1.mp3",
+      "durationSeconds": 6.648,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 39888
+    },
+    {
+      "path": "public/app-guide-audio/invoices/feedback-2.mp3",
+      "durationSeconds": 9.072,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 54432
+    },
+    {
+      "path": "public/app-guide-audio/invoices/feedback-3.mp3",
+      "durationSeconds": 7.512,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 45072
+    },
+    {
+      "path": "public/app-guide-audio/invoices/find.mp3",
+      "durationSeconds": 48.264,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 289584
+    },
+    {
+      "path": "public/app-guide-audio/invoices/next.mp3",
+      "durationSeconds": 38.712,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 232272
+    },
+    {
+      "path": "public/app-guide-audio/invoices/payment.mp3",
+      "durationSeconds": 47.76,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 286560
+    },
+    {
+      "path": "public/app-guide-audio/invoices/practice.mp3",
+      "durationSeconds": 26.904,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 161424
+    },
+    {
+      "path": "public/app-guide-audio/invoices/prepare.mp3",
+      "durationSeconds": 32.424,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 194544
+    },
+    {
+      "path": "public/app-guide-audio/invoices/save.mp3",
+      "durationSeconds": 49.488,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 296928
+    },
+    {
+      "path": "public/app-guide-audio/invoices/share.mp3",
+      "durationSeconds": 46.272,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 277632
+    },
+    {
+      "path": "public/app-guide-audio/mapping/feedback-1.mp3",
+      "durationSeconds": 8.424,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 50544
+    },
+    {
+      "path": "public/app-guide-audio/mapping/feedback-2.mp3",
+      "durationSeconds": 11.592,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 69552
+    },
+    {
+      "path": "public/app-guide-audio/mapping/feedback-3.mp3",
+      "durationSeconds": 7.224,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 43344
+    },
+    {
+      "path": "public/app-guide-audio/mapping/find.mp3",
+      "durationSeconds": 50.448,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 302688
+    },
+    {
+      "path": "public/app-guide-audio/mapping/growing-area.mp3",
+      "durationSeconds": 53.424,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 320544
+    },
+    {
+      "path": "public/app-guide-audio/mapping/name-boundary.mp3",
+      "durationSeconds": 58.704,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 352224
+    },
+    {
+      "path": "public/app-guide-audio/mapping/next.mp3",
+      "durationSeconds": 38.88,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 233280
+    },
+    {
+      "path": "public/app-guide-audio/mapping/practice.mp3",
+      "durationSeconds": 29.808,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 178848
+    },
+    {
+      "path": "public/app-guide-audio/mapping/prepare.mp3",
+      "durationSeconds": 40.224,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 241344
+    },
+    {
+      "path": "public/app-guide-audio/mapping/reopen.mp3",
+      "durationSeconds": 51.336,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 308016
+    },
+    {
+      "path": "public/app-guide-audio/mapping/save-place.mp3",
+      "durationSeconds": 49.752,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 298512
+    },
+    {
+      "path": "public/app-guide-audio/mapping/trace.mp3",
+      "durationSeconds": 50.808,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 304848
+    },
+    {
+      "path": "public/app-guide-audio/offline-learning/choose-pack.mp3",
+      "durationSeconds": 49.992,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 299952
+    },
+    {
+      "path": "public/app-guide-audio/offline-learning/feedback-1.mp3",
+      "durationSeconds": 7.056,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 42336
+    },
+    {
+      "path": "public/app-guide-audio/offline-learning/feedback-2.mp3",
+      "durationSeconds": 9.072,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 54432
+    },
+    {
+      "path": "public/app-guide-audio/offline-learning/feedback-3.mp3",
+      "durationSeconds": 7.632,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 45792
+    },
+    {
+      "path": "public/app-guide-audio/offline-learning/finish-download.mp3",
+      "durationSeconds": 50.4,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 302400
+    },
+    {
+      "path": "public/app-guide-audio/offline-learning/keep-evidence.mp3",
+      "durationSeconds": 59.328,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 355968
+    },
+    {
+      "path": "public/app-guide-audio/offline-learning/learn-practise.mp3",
+      "durationSeconds": 50.472,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 302832
+    },
+    {
+      "path": "public/app-guide-audio/offline-learning/next.mp3",
+      "durationSeconds": 57.048,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 342288
+    },
+    {
+      "path": "public/app-guide-audio/offline-learning/practice.mp3",
+      "durationSeconds": 31.344,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 188064
+    },
+    {
+      "path": "public/app-guide-audio/offline-learning/prepare.mp3",
+      "durationSeconds": 37.008,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 222048
+    },
+    {
+      "path": "public/app-guide-audio/offline-learning/reconnect.mp3",
+      "durationSeconds": 64.464,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 386784
+    },
+    {
+      "path": "public/app-guide-audio/offline-learning/test-offline.mp3",
+      "durationSeconds": 55.464,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 332784
+    },
+    {
+      "path": "public/app-guide-audio/past-sales/check-existing.mp3",
+      "durationSeconds": 35.304,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 211824
+    },
+    {
+      "path": "public/app-guide-audio/past-sales/choose-entry.mp3",
+      "durationSeconds": 49.272,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 295632
+    },
+    {
+      "path": "public/app-guide-audio/past-sales/feedback-1.mp3",
+      "durationSeconds": 7.248,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 43488
+    },
+    {
+      "path": "public/app-guide-audio/past-sales/feedback-2.mp3",
+      "durationSeconds": 9.816,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 58896
+    },
+    {
+      "path": "public/app-guide-audio/past-sales/feedback-3.mp3",
+      "durationSeconds": 7.2,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 43200
+    },
+    {
+      "path": "public/app-guide-audio/past-sales/link-sale.mp3",
+      "durationSeconds": 57.672,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 346032
+    },
+    {
+      "path": "public/app-guide-audio/past-sales/next.mp3",
+      "durationSeconds": 37.128,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 222768
+    },
+    {
+      "path": "public/app-guide-audio/past-sales/old-payment.mp3",
+      "durationSeconds": 53.064,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 318384
+    },
+    {
+      "path": "public/app-guide-audio/past-sales/practice.mp3",
+      "durationSeconds": 30.624,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 183744
+    },
+    {
+      "path": "public/app-guide-audio/past-sales/prepare.mp3",
+      "durationSeconds": 39.336,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 236016
+    },
+    {
+      "path": "public/app-guide-audio/past-sales/source-details.mp3",
+      "durationSeconds": 52.776,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 316656
+    },
+    {
+      "path": "public/app-guide-audio/past-sales/verify-copy.mp3",
+      "durationSeconds": 49.68,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 298080
+    },
+    {
+      "path": "public/app-guide-audio/payments/check-book.mp3",
+      "durationSeconds": 49.056,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 294336
+    },
+    {
+      "path": "public/app-guide-audio/payments/feedback-1.mp3",
+      "durationSeconds": 5.64,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 33840
+    },
+    {
+      "path": "public/app-guide-audio/payments/feedback-2.mp3",
+      "durationSeconds": 9.456,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 56736
+    },
+    {
+      "path": "public/app-guide-audio/payments/feedback-3.mp3",
+      "durationSeconds": 7.776,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 46656
+    },
+    {
+      "path": "public/app-guide-audio/payments/inspect-copy.mp3",
+      "durationSeconds": 56.592,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 339552
+    },
+    {
+      "path": "public/app-guide-audio/payments/next.mp3",
+      "durationSeconds": 40.56,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 243360
+    },
+    {
+      "path": "public/app-guide-audio/payments/payment-evidence.mp3",
+      "durationSeconds": 45.6,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 273600
+    },
+    {
+      "path": "public/app-guide-audio/payments/practice.mp3",
+      "durationSeconds": 29.064,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 174384
+    },
+    {
+      "path": "public/app-guide-audio/payments/prepare.mp3",
+      "durationSeconds": 32.76,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 196560
+    },
+    {
+      "path": "public/app-guide-audio/payments/right-invoice.mp3",
+      "durationSeconds": 31.56,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 189360
+    },
+    {
+      "path": "public/app-guide-audio/payments/share-copy.mp3",
+      "durationSeconds": 42.24,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 253440
+    },
+    {
+      "path": "public/app-guide-audio/payments/update-payment.mp3",
+      "durationSeconds": 53.304,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 319824
+    },
+    {
+      "path": "public/app-guide-audio/sales/check-payment.mp3",
+      "durationSeconds": 64.032,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 384192
+    },
+    {
+      "path": "public/app-guide-audio/sales/check-sale.mp3",
+      "durationSeconds": 51.048,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 306288
+    },
+    {
+      "path": "public/app-guide-audio/sales/choose-source.mp3",
+      "durationSeconds": 46.752,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 280512
+    },
+    {
+      "path": "public/app-guide-audio/sales/feedback-1.mp3",
+      "durationSeconds": 8.712,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 52272
+    },
+    {
+      "path": "public/app-guide-audio/sales/feedback-2.mp3",
+      "durationSeconds": 12.576,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 75456
+    },
+    {
+      "path": "public/app-guide-audio/sales/feedback-3.mp3",
+      "durationSeconds": 7.176,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 43056
+    },
+    {
+      "path": "public/app-guide-audio/sales/find-sale.mp3",
+      "durationSeconds": 51.84,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 311040
+    },
+    {
+      "path": "public/app-guide-audio/sales/follow-sale.mp3",
+      "durationSeconds": 49.944,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 299664
+    },
+    {
+      "path": "public/app-guide-audio/sales/next.mp3",
+      "durationSeconds": 37.104,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 222624
+    },
+    {
+      "path": "public/app-guide-audio/sales/practice.mp3",
+      "durationSeconds": 34.104,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 204624
+    },
+    {
+      "path": "public/app-guide-audio/sales/prepare.mp3",
+      "durationSeconds": 34.752,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 208512
+    },
+    {
+      "path": "public/app-guide-audio/sales/save-sale.mp3",
+      "durationSeconds": 50.52,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 303120
+    },
+    {
+      "path": "public/course-animations/food-forest/flow-sheet-mulching-closeup.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video",
+        "audio"
+      ],
+      "bytes": 6248424
+    },
+    {
+      "path": "public/course-animations/food-forest/flow-sheet-mulching.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 7483690
+    },
+    {
+      "path": "public/course-animations/intro-permaculture/flow-earth-care.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 5177501
+    },
+    {
+      "path": "public/course-animations/market-community/flow-seed-sharing.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 3024675
+    },
+    {
+      "path": "public/course-animations/plant-guilds/Imbewu-Guilds-01-Mulch-ring.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 3173759
+    },
+    {
+      "path": "public/course-animations/plant-guilds/Imbewu-Guilds-02-Pruning-trimmed.mp4",
+      "durationSeconds": 5.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 3373640
+    },
+    {
+      "path": "public/course-animations/plant-guilds/Imbewu-Guilds-03-Pigeon-pea-food.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 7277042
+    },
+    {
+      "path": "public/course-animations/plant-guilds/Imbewu-Guilds-04-Helpful-insects.mp4",
+      "durationSeconds": 5.5,
+      "streams": [
+        "video"
+      ],
+      "bytes": 3933234
+    },
+    {
+      "path": "public/course-animations/plant-guilds/Imbewu-Guilds-05-Guild-overview.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 9200096
+    },
+    {
+      "path": "public/course-animations/plant-guilds/Imbewu-Guilds-06-Succession-establish.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 3900208
+    },
+    {
+      "path": "public/course-animations/plant-guilds/Imbewu-Guilds-08-Succession-carry-mulch.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 8354154
+    },
+    {
+      "path": "public/course-animations/plant-guilds/Imbewu-Guilds-09-Labelled-zu.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 3639293
+    },
+    {
+      "path": "public/course-animations/plant-guilds/Imbewu-Guilds-09-Labelled.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 4174276
+    },
+    {
+      "path": "public/course-animations/reading-landscape/flow-a-frame.mp4",
+      "durationSeconds": 6.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 1808880
+    },
+    {
+      "path": "public/course-animations/seeds-sovereignty/hi/imbewu_isiZulu_video_01.mp4",
+      "durationSeconds": 10.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 640574
+    },
+    {
+      "path": "public/course-animations/seeds-sovereignty/hi/imbewu_isiZulu_video_02.mp4",
+      "durationSeconds": 10.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 1145431
+    },
+    {
+      "path": "public/course-animations/seeds-sovereignty/hi/imbewu_isiZulu_video_03.mp4",
+      "durationSeconds": 10.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 634341
+    },
+    {
+      "path": "public/course-animations/seeds-sovereignty/hi/imbewu_isiZulu_video_05.mp4",
+      "durationSeconds": 20.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 2245228
+    },
+    {
+      "path": "public/course-animations/seeds-sovereignty/hi/imbewu_isiZulu_video_06.mp4",
+      "durationSeconds": 10.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 659072
+    },
+    {
+      "path": "public/course-animations/seeds-sovereignty/hi/new_seed-storage-jar-vs-bag.mp4",
+      "durationSeconds": 10.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 2694411
+    },
+    {
+      "path": "public/course-animations/seeds-sovereignty/hi/seed-dry-processing.mp4",
+      "durationSeconds": 4.792,
+      "streams": [
+        "video"
+      ],
+      "bytes": 1226704
+    },
+    {
+      "path": "public/course-animations/seeds-sovereignty/hi/seed-selecting-parents.mp4",
+      "durationSeconds": 5.208,
+      "streams": [
+        "video"
+      ],
+      "bytes": 1122111
+    },
+    {
+      "path": "public/course-animations/seeds-sovereignty/imbewu_isiZulu_video_01.mp4",
+      "durationSeconds": 10.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 420204
+    },
+    {
+      "path": "public/course-animations/seeds-sovereignty/imbewu_isiZulu_video_02.mp4",
+      "durationSeconds": 10.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 738328
+    },
+    {
+      "path": "public/course-animations/seeds-sovereignty/imbewu_isiZulu_video_03.mp4",
+      "durationSeconds": 10.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 399404
+    },
+    {
+      "path": "public/course-animations/seeds-sovereignty/imbewu_isiZulu_video_05.mp4",
+      "durationSeconds": 20.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 1377407
+    },
+    {
+      "path": "public/course-animations/seeds-sovereignty/imbewu_isiZulu_video_06.mp4",
+      "durationSeconds": 10.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 439958
+    },
+    {
+      "path": "public/course-animations/seeds-sovereignty/new_seed-storage-jar-vs-bag.mp4",
+      "durationSeconds": 10.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 474949
+    },
+    {
+      "path": "public/course-animations/seeds-sovereignty/seed-dry-processing.mp4",
+      "durationSeconds": 4.792,
+      "streams": [
+        "video"
+      ],
+      "bytes": 311237
+    },
+    {
+      "path": "public/course-animations/seeds-sovereignty/seed-selecting-parents.mp4",
+      "durationSeconds": 5.208,
+      "streams": [
+        "video"
+      ],
+      "bytes": 248394
+    },
+    {
+      "path": "public/course-animations/small-livestock/flow-bee-between-blossoms.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 2126645
+    },
+    {
+      "path": "public/course-animations/small-livestock/flow-ducks-understorey.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 7613902
+    },
+    {
+      "path": "public/course-animations/small-livestock/flow-hens-foraging.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 5064928
+    },
+    {
+      "path": "public/course-animations/small-livestock/hens-pecking-pexels-5563939.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 5058477
+    },
+    {
+      "path": "public/course-animations/soil-health/flow-build-compost-heap.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 7619537
+    },
+    {
+      "path": "public/course-animations/soil-health/flow-compost-materials.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 4290981
+    },
+    {
+      "path": "public/course-animations/vegetables-staples/flow-seed-or-seedling.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 5423616
+    },
+    {
+      "path": "public/course-animations/vegetables-staples/flow-transplant-root-plug.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 6707780
+    },
+    {
+      "path": "public/course-animations/water-harvesting/flow-roof-rain.mp4",
+      "durationSeconds": 8.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 3828056
+    },
+    {
+      "path": "public/course-animations/water-harvesting/watch-04-swale-infiltration.mp4",
+      "durationSeconds": 16.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 881320
+    },
+    {
+      "path": "public/course-animations/water-harvesting/watch-07-swale-overflow-pond.mp4",
+      "durationSeconds": 13.0,
+      "streams": [
+        "video"
+      ],
+      "bytes": 2712641
+    },
+    {
+      "path": "public/course-audio/food-forest/en/full.mp3",
+      "durationSeconds": 439.296,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 2636012
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-01.mp3",
+      "durationSeconds": 15.864,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 95184
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-02.mp3",
+      "durationSeconds": 16.56,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 99360
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-03.mp3",
+      "durationSeconds": 15.384,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 92304
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-04.mp3",
+      "durationSeconds": 18.432,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 110592
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-05.mp3",
+      "durationSeconds": 29.088,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 174528
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-06.mp3",
+      "durationSeconds": 19.056,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 114336
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-07.mp3",
+      "durationSeconds": 24.6,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 147600
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-08.mp3",
+      "durationSeconds": 21.504,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 129024
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-09.mp3",
+      "durationSeconds": 21.552,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 129312
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-10.mp3",
+      "durationSeconds": 13.608,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 81648
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-11.mp3",
+      "durationSeconds": 28.536,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 171216
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-12.mp3",
+      "durationSeconds": 28.392,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 170352
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-13.mp3",
+      "durationSeconds": 21.624,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 129744
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-14.mp3",
+      "durationSeconds": 22.872,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 137232
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-15.mp3",
+      "durationSeconds": 32.04,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 192240
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-16.mp3",
+      "durationSeconds": 23.568,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 141408
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-17.mp3",
+      "durationSeconds": 25.128,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 150768
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-18.mp3",
+      "durationSeconds": 23.688,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 142128
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-19.mp3",
+      "durationSeconds": 19.032,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 114192
+    },
+    {
+      "path": "public/course-audio/food-forest/en/slide-20.mp3",
+      "durationSeconds": 18.768,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 112608
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/full.mp3",
+      "durationSeconds": 665.208,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 3991484
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-01.mp3",
+      "durationSeconds": 22.752,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 136512
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-02.mp3",
+      "durationSeconds": 26.52,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 159120
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-03.mp3",
+      "durationSeconds": 28.632,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 171792
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-04.mp3",
+      "durationSeconds": 29.928,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 179568
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-05.mp3",
+      "durationSeconds": 31.608,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 189648
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-06.mp3",
+      "durationSeconds": 33.792,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 202752
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-07.mp3",
+      "durationSeconds": 39.48,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 236880
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-08.mp3",
+      "durationSeconds": 32.952,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 197712
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-09.mp3",
+      "durationSeconds": 31.92,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 191520
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-10.mp3",
+      "durationSeconds": 24.048,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 144288
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-11.mp3",
+      "durationSeconds": 40.608,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 243648
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-12.mp3",
+      "durationSeconds": 41.064,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 246384
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-13.mp3",
+      "durationSeconds": 33.48,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 200880
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-14.mp3",
+      "durationSeconds": 35.256,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 211536
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-15.mp3",
+      "durationSeconds": 38.712,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 232272
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-16.mp3",
+      "durationSeconds": 38.592,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 231552
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-17.mp3",
+      "durationSeconds": 37.128,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 222768
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-18.mp3",
+      "durationSeconds": 39.384,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 236304
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-19.mp3",
+      "durationSeconds": 28.368,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 170208
+    },
+    {
+      "path": "public/course-audio/food-forest/zu/slide-20.mp3",
+      "durationSeconds": 30.984,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 185904
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/full.mp3",
+      "durationSeconds": 535.656,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 3214172
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-01.mp3",
+      "durationSeconds": 23.808,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 142848
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-02.mp3",
+      "durationSeconds": 22.296,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 133776
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-03.mp3",
+      "durationSeconds": 19.632,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 117792
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-04.mp3",
+      "durationSeconds": 19.632,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 117792
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-05.mp3",
+      "durationSeconds": 18.768,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 112608
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-06.mp3",
+      "durationSeconds": 22.44,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 134640
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-07.mp3",
+      "durationSeconds": 33.264,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 199584
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-08.mp3",
+      "durationSeconds": 23.496,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 140976
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-09.mp3",
+      "durationSeconds": 24.192,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 145152
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-10.mp3",
+      "durationSeconds": 38.736,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 232416
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-11.mp3",
+      "durationSeconds": 21.576,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 129456
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-12.mp3",
+      "durationSeconds": 17.4,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 104400
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-13.mp3",
+      "durationSeconds": 27.24,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 163440
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-14.mp3",
+      "durationSeconds": 40.344,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 242064
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-15.mp3",
+      "durationSeconds": 31.32,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 187920
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-16.mp3",
+      "durationSeconds": 17.088,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 102528
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-17.mp3",
+      "durationSeconds": 22.728,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 136368
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-18.mp3",
+      "durationSeconds": 27.792,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 166752
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-19.mp3",
+      "durationSeconds": 29.376,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 176256
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-20.mp3",
+      "durationSeconds": 21.12,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 126720
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-21.mp3",
+      "durationSeconds": 15.624,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 93744
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/en/slide-22.mp3",
+      "durationSeconds": 17.784,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 106704
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/full.mp3",
+      "durationSeconds": 645.92,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 5168108
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-01.mp3",
+      "durationSeconds": 35.36,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 283628
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-02.mp3",
+      "durationSeconds": 31.92,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 255980
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-03.mp3",
+      "durationSeconds": 30.64,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 245804
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-04.mp3",
+      "durationSeconds": 29.88,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 239660
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-05.mp3",
+      "durationSeconds": 28.16,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 226028
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-06.mp3",
+      "durationSeconds": 28.88,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 231788
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-07.mp3",
+      "durationSeconds": 32.12,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 257708
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-08.mp3",
+      "durationSeconds": 24.8,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 199148
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-09.mp3",
+      "durationSeconds": 31.8,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 255020
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-10.mp3",
+      "durationSeconds": 43.16,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 346028
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-11.mp3",
+      "durationSeconds": 30.44,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 244268
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-12.mp3",
+      "durationSeconds": 21.52,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 172844
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-13.mp3",
+      "durationSeconds": 28.32,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 227180
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-14.mp3",
+      "durationSeconds": 41.4,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 331820
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-15.mp3",
+      "durationSeconds": 31.88,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 255788
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-16.mp3",
+      "durationSeconds": 20.12,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 161708
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-17.mp3",
+      "durationSeconds": 26.84,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 215468
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-18.mp3",
+      "durationSeconds": 29.28,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 234860
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-19.mp3",
+      "durationSeconds": 28.24,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 226604
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-20.mp3",
+      "durationSeconds": 30.24,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 242540
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-21.mp3",
+      "durationSeconds": 18.16,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 145964
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/st/slide-22.mp3",
+      "durationSeconds": 22.76,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 182828
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/full.mp3",
+      "durationSeconds": 877.728,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 5266604
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-01.mp3",
+      "durationSeconds": 36.096,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 216576
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-02.mp3",
+      "durationSeconds": 38.736,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 232416
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-03.mp3",
+      "durationSeconds": 31.2,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 187200
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-04.mp3",
+      "durationSeconds": 35.544,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 213264
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-05.mp3",
+      "durationSeconds": 28.872,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 173232
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-06.mp3",
+      "durationSeconds": 38.808,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 232848
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-07.mp3",
+      "durationSeconds": 58.056,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 348336
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-08.mp3",
+      "durationSeconds": 35.184,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 211104
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-09.mp3",
+      "durationSeconds": 40.44,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 242640
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-10.mp3",
+      "durationSeconds": 64.104,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 384624
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-11.mp3",
+      "durationSeconds": 38.856,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 233136
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-12.mp3",
+      "durationSeconds": 28.464,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 170784
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-13.mp3",
+      "durationSeconds": 44.904,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 269424
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-14.mp3",
+      "durationSeconds": 64.704,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 388224
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-15.mp3",
+      "durationSeconds": 48.84,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 293040
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-16.mp3",
+      "durationSeconds": 24.192,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 145152
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-17.mp3",
+      "durationSeconds": 29.856,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 179136
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-18.mp3",
+      "durationSeconds": 45.84,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 275040
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-19.mp3",
+      "durationSeconds": 46.656,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 279936
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-20.mp3",
+      "durationSeconds": 37.92,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 227520
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-21.mp3",
+      "durationSeconds": 25.488,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 152928
+    },
+    {
+      "path": "public/course-audio/intro-permaculture/zu/slide-22.mp3",
+      "durationSeconds": 34.968,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 209808
+    },
+    {
+      "path": "public/course-audio/market-community/en/full.mp3",
+      "durationSeconds": 387.12,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 2322956
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-01.mp3",
+      "durationSeconds": 15.696,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 94176
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-02.mp3",
+      "durationSeconds": 16.344,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 98064
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-03.mp3",
+      "durationSeconds": 17.928,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 107568
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-04.mp3",
+      "durationSeconds": 11.04,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 66240
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-05.mp3",
+      "durationSeconds": 21.36,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 128160
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-06.mp3",
+      "durationSeconds": 19.464,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 116784
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-07.mp3",
+      "durationSeconds": 27.6,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 165600
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-08.mp3",
+      "durationSeconds": 20.04,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 120240
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-09.mp3",
+      "durationSeconds": 9.816,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 58896
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-10.mp3",
+      "durationSeconds": 21.96,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 131760
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-11.mp3",
+      "durationSeconds": 22.608,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 135648
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-12.mp3",
+      "durationSeconds": 17.16,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 102960
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-13.mp3",
+      "durationSeconds": 17.856,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 107136
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-14.mp3",
+      "durationSeconds": 13.608,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 81648
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-15.mp3",
+      "durationSeconds": 29.4,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 176400
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-16.mp3",
+      "durationSeconds": 14.4,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 86400
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-17.mp3",
+      "durationSeconds": 21.264,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 127584
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-18.mp3",
+      "durationSeconds": 19.872,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 119232
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-19.mp3",
+      "durationSeconds": 22.944,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 137664
+    },
+    {
+      "path": "public/course-audio/market-community/en/slide-20.mp3",
+      "durationSeconds": 26.76,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 160560
+    },
+    {
+      "path": "public/course-audio/market-community/zu/full.mp3",
+      "durationSeconds": 607.152,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 3643148
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-01.mp3",
+      "durationSeconds": 22.752,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 136512
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-02.mp3",
+      "durationSeconds": 25.272,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 151632
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-03.mp3",
+      "durationSeconds": 27.96,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 167760
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-04.mp3",
+      "durationSeconds": 16.536,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 99216
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-05.mp3",
+      "durationSeconds": 29.16,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 174960
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-06.mp3",
+      "durationSeconds": 30.528,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 183168
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-07.mp3",
+      "durationSeconds": 47.16,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 282960
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-08.mp3",
+      "durationSeconds": 32.688,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 196128
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-09.mp3",
+      "durationSeconds": 13.92,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 83520
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-10.mp3",
+      "durationSeconds": 33.048,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 198288
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-11.mp3",
+      "durationSeconds": 37.608,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 225648
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-12.mp3",
+      "durationSeconds": 26.328,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 157968
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-13.mp3",
+      "durationSeconds": 29.208,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 175248
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-14.mp3",
+      "durationSeconds": 15.936,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 95616
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-15.mp3",
+      "durationSeconds": 48.624,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 291744
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-16.mp3",
+      "durationSeconds": 23.736,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 142416
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-17.mp3",
+      "durationSeconds": 34.8,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 208800
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-18.mp3",
+      "durationSeconds": 32.088,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 192528
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-19.mp3",
+      "durationSeconds": 32.4,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 194400
+    },
+    {
+      "path": "public/course-audio/market-community/zu/slide-20.mp3",
+      "durationSeconds": 47.4,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 284400
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/full.mp3",
+      "durationSeconds": 816.667,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 6533997
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-01.mp3",
+      "durationSeconds": 7.333,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 59373
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-02.mp3",
+      "durationSeconds": 24.417,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 196077
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-03.mp3",
+      "durationSeconds": 6.458,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 52461
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-04.mp3",
+      "durationSeconds": 23.333,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 187437
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-05.mp3",
+      "durationSeconds": 5.875,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 47661
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-06.mp3",
+      "durationSeconds": 24.958,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 200301
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-07.mp3",
+      "durationSeconds": 6.042,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 49005
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-08.mp3",
+      "durationSeconds": 21.25,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 170733
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-09.mp3",
+      "durationSeconds": 7.458,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 60333
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-10.mp3",
+      "durationSeconds": 23.583,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 189357
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-11.mp3",
+      "durationSeconds": 6.667,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 53997
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-12.mp3",
+      "durationSeconds": 24.0,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 192621
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-13.mp3",
+      "durationSeconds": 6.958,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 56301
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-14.mp3",
+      "durationSeconds": 28.333,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 227373
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-15.mp3",
+      "durationSeconds": 9.667,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 77997
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-16.mp3",
+      "durationSeconds": 26.083,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 209325
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-17.mp3",
+      "durationSeconds": 7.5,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 60717
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-18.mp3",
+      "durationSeconds": 24.667,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 197997
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-19.mp3",
+      "durationSeconds": 6.875,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 55725
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-20.mp3",
+      "durationSeconds": 24.333,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 195309
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-21.mp3",
+      "durationSeconds": 6.417,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 52077
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-22.mp3",
+      "durationSeconds": 24.167,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 193965
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-23.mp3",
+      "durationSeconds": 8.417,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 68013
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-24.mp3",
+      "durationSeconds": 25.833,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 207405
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-25.mp3",
+      "durationSeconds": 6.5,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 52653
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-26.mp3",
+      "durationSeconds": 23.625,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 189741
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-27.mp3",
+      "durationSeconds": 5.417,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 44013
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-28.mp3",
+      "durationSeconds": 29.417,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 236013
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-29.mp3",
+      "durationSeconds": 8.417,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 68013
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-30.mp3",
+      "durationSeconds": 21.375,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 171693
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-31.mp3",
+      "durationSeconds": 6.292,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 51117
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-32.mp3",
+      "durationSeconds": 23.5,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 188781
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-33.mp3",
+      "durationSeconds": 6.083,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 49389
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-34.mp3",
+      "durationSeconds": 24.542,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 197037
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-35.mp3",
+      "durationSeconds": 6.292,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 51117
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-36.mp3",
+      "durationSeconds": 23.042,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 185133
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-37.mp3",
+      "durationSeconds": 8.417,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 68013
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-38.mp3",
+      "durationSeconds": 25.5,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 204717
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-39.mp3",
+      "durationSeconds": 7.625,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 61677
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-40.mp3",
+      "durationSeconds": 20.375,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 163629
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-41.mp3",
+      "durationSeconds": 8.417,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 68013
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-42.mp3",
+      "durationSeconds": 22.792,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 183021
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-43.mp3",
+      "durationSeconds": 32.125,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 257709
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-44.mp3",
+      "durationSeconds": 8.708,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 70317
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-45.mp3",
+      "durationSeconds": 24.375,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 195693
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-46.mp3",
+      "durationSeconds": 5.583,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 45357
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-47.mp3",
+      "durationSeconds": 24.875,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 199725
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-48.mp3",
+      "durationSeconds": 6.125,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 49773
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-49.mp3",
+      "durationSeconds": 24.375,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 195693
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-50.mp3",
+      "durationSeconds": 6.833,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 55341
+    },
+    {
+      "path": "public/course-audio/plant-guilds/en/slide-51.mp3",
+      "durationSeconds": 25.418,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 204141
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/full.mp3",
+      "durationSeconds": 1040.458,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 8324397
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-01.mp3",
+      "durationSeconds": 8.125,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 65709
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-02.mp3",
+      "durationSeconds": 33.667,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 269997
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-03.mp3",
+      "durationSeconds": 6.958,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 56301
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-04.mp3",
+      "durationSeconds": 29.25,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 234669
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-05.mp3",
+      "durationSeconds": 6.167,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 49965
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-06.mp3",
+      "durationSeconds": 33.5,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 268653
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-07.mp3",
+      "durationSeconds": 7.875,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 63789
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-08.mp3",
+      "durationSeconds": 26.458,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 212397
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-09.mp3",
+      "durationSeconds": 8.458,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 68397
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-10.mp3",
+      "durationSeconds": 31.75,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 254637
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-11.mp3",
+      "durationSeconds": 7.542,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 61101
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-12.mp3",
+      "durationSeconds": 30.708,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 246381
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-13.mp3",
+      "durationSeconds": 7.083,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 57453
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-14.mp3",
+      "durationSeconds": 32.958,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 264429
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-15.mp3",
+      "durationSeconds": 9.167,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 73965
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-16.mp3",
+      "durationSeconds": 34.5,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 276717
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-17.mp3",
+      "durationSeconds": 8.708,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 70317
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-18.mp3",
+      "durationSeconds": 33.042,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 265005
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-19.mp3",
+      "durationSeconds": 10.458,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 84333
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-20.mp3",
+      "durationSeconds": 33.958,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 272301
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-21.mp3",
+      "durationSeconds": 8.583,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 69357
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-22.mp3",
+      "durationSeconds": 33.792,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 270957
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-23.mp3",
+      "durationSeconds": 8.417,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 68013
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-24.mp3",
+      "durationSeconds": 30.667,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 245997
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-25.mp3",
+      "durationSeconds": 7.458,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 60333
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-26.mp3",
+      "durationSeconds": 27.125,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 217773
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-27.mp3",
+      "durationSeconds": 6.083,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 49389
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-28.mp3",
+      "durationSeconds": 32.21,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 258477
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-29.mp3",
+      "durationSeconds": 12.542,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 101037
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-30.mp3",
+      "durationSeconds": 27.958,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 224301
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-31.mp3",
+      "durationSeconds": 8.583,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 69357
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-32.mp3",
+      "durationSeconds": 31.958,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 256365
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-33.mp3",
+      "durationSeconds": 7.458,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 60333
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-34.mp3",
+      "durationSeconds": 36.083,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 289389
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-35.mp3",
+      "durationSeconds": 8.21,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 66477
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-36.mp3",
+      "durationSeconds": 32.75,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 262701
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-37.mp3",
+      "durationSeconds": 8.417,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 68013
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-38.mp3",
+      "durationSeconds": 29.167,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 234093
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-39.mp3",
+      "durationSeconds": 8.125,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 65709
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-40.mp3",
+      "durationSeconds": 31.333,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 251373
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-41.mp3",
+      "durationSeconds": 10.167,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 82029
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-42.mp3",
+      "durationSeconds": 31.042,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 249069
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-43.mp3",
+      "durationSeconds": 33.917,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 272109
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-44.mp3",
+      "durationSeconds": 13.042,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 105069
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-45.mp3",
+      "durationSeconds": 30.833,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 247341
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-46.mp3",
+      "durationSeconds": 6.667,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 53997
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-47.mp3",
+      "durationSeconds": 33.667,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 269997
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-48.mp3",
+      "durationSeconds": 8.542,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 68973
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-49.mp3",
+      "durationSeconds": 34.583,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 277293
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-50.mp3",
+      "durationSeconds": 7.917,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 63981
+    },
+    {
+      "path": "public/course-audio/plant-guilds/zu/slide-51.mp3",
+      "durationSeconds": 32.834,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 263469
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/full.mp3",
+      "durationSeconds": 464.688,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 2788364
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-01.mp3",
+      "durationSeconds": 19.752,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 118512
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-02.mp3",
+      "durationSeconds": 21.024,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 126144
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-03.mp3",
+      "durationSeconds": 20.808,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 124848
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-04.mp3",
+      "durationSeconds": 21.288,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 127728
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-05.mp3",
+      "durationSeconds": 7.896,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 47376
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-06.mp3",
+      "durationSeconds": 32.712,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 196272
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-07.mp3",
+      "durationSeconds": 22.008,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 132048
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-08.mp3",
+      "durationSeconds": 26.376,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 158256
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-09.mp3",
+      "durationSeconds": 7.584,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 45504
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-10.mp3",
+      "durationSeconds": 21.336,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 128016
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-11.mp3",
+      "durationSeconds": 10.272,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 61632
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-12.mp3",
+      "durationSeconds": 25.272,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 151632
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-13.mp3",
+      "durationSeconds": 7.272,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 43632
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-14.mp3",
+      "durationSeconds": 44.376,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 266256
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-15.mp3",
+      "durationSeconds": 39.096,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 234576
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-16.mp3",
+      "durationSeconds": 26.52,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 159120
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-17.mp3",
+      "durationSeconds": 9.672,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 58032
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-18.mp3",
+      "durationSeconds": 22.608,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 135648
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-19.mp3",
+      "durationSeconds": 18.864,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 113184
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-20.mp3",
+      "durationSeconds": 30.408,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 182448
+    },
+    {
+      "path": "public/course-audio/reading-landscape/en/slide-21.mp3",
+      "durationSeconds": 29.544,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 177264
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/full.mp3",
+      "durationSeconds": 782.616,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 4695932
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-01.mp3",
+      "durationSeconds": 33.312,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 199872
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-02.mp3",
+      "durationSeconds": 34.656,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 207936
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-03.mp3",
+      "durationSeconds": 37.152,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 222912
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-04.mp3",
+      "durationSeconds": 34.104,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 204624
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-05.mp3",
+      "durationSeconds": 16.56,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 99360
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-06.mp3",
+      "durationSeconds": 57.576,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 345456
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-07.mp3",
+      "durationSeconds": 40.344,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 242064
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-08.mp3",
+      "durationSeconds": 47.184,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 283104
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-09.mp3",
+      "durationSeconds": 13.632,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 81792
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-10.mp3",
+      "durationSeconds": 34.8,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 208800
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-11.mp3",
+      "durationSeconds": 20.016,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 120096
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-12.mp3",
+      "durationSeconds": 41.544,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 249264
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-13.mp3",
+      "durationSeconds": 12.936,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 77616
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-14.mp3",
+      "durationSeconds": 73.896,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 443376
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-15.mp3",
+      "durationSeconds": 62.544,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 375264
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-16.mp3",
+      "durationSeconds": 36.0,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 216000
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-17.mp3",
+      "durationSeconds": 16.08,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 96480
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-18.mp3",
+      "durationSeconds": 37.152,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 222912
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-19.mp3",
+      "durationSeconds": 33.648,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 201888
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-20.mp3",
+      "durationSeconds": 50.52,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 303120
+    },
+    {
+      "path": "public/course-audio/reading-landscape/zu/slide-21.mp3",
+      "durationSeconds": 48.96,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 293760
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/full.mp3",
+      "durationSeconds": 1050.744,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 6304844
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-01.mp3",
+      "durationSeconds": 41.568,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 249788
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-02.mp3",
+      "durationSeconds": 40.272,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 242012
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-03.mp3",
+      "durationSeconds": 32.664,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 196364
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-04.mp3",
+      "durationSeconds": 52.92,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 317900
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-05.mp3",
+      "durationSeconds": 45.168,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 271388
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-06.mp3",
+      "durationSeconds": 42.144,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 253244
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-07.mp3",
+      "durationSeconds": 38.472,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 231212
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-08.mp3",
+      "durationSeconds": 47.808,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 287228
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-09.mp3",
+      "durationSeconds": 46.128,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 277148
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-10.mp3",
+      "durationSeconds": 34.08,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 204860
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-11.mp3",
+      "durationSeconds": 45.912,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 275852
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-12.mp3",
+      "durationSeconds": 44.784,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 269084
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-13.mp3",
+      "durationSeconds": 31.608,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 190028
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-14.mp3",
+      "durationSeconds": 52.776,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 317036
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-15.mp3",
+      "durationSeconds": 42.528,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 255548
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-16.mp3",
+      "durationSeconds": 44.28,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 266060
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-17.mp3",
+      "durationSeconds": 38.544,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 231644
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-18.mp3",
+      "durationSeconds": 42.984,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 258284
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-19.mp3",
+      "durationSeconds": 39.36,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 236540
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-20.mp3",
+      "durationSeconds": 46.176,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 277436
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-21.mp3",
+      "durationSeconds": 39.048,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 234668
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-22.mp3",
+      "durationSeconds": 38.64,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 232220
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-23.mp3",
+      "durationSeconds": 55.416,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 332876
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/en/slide-24.mp3",
+      "durationSeconds": 31.032,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 186572
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/full.mp3",
+      "durationSeconds": 1238.832,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 7433372
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-01.mp3",
+      "durationSeconds": 51.744,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 310844
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-02.mp3",
+      "durationSeconds": 48.984,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 294284
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-03.mp3",
+      "durationSeconds": 37.104,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 223004
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-04.mp3",
+      "durationSeconds": 61.992,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 372332
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-05.mp3",
+      "durationSeconds": 53.448,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 321068
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-06.mp3",
+      "durationSeconds": 49.656,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 298316
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-07.mp3",
+      "durationSeconds": 46.56,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 279740
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-08.mp3",
+      "durationSeconds": 57.336,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 344396
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-09.mp3",
+      "durationSeconds": 52.392,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 314732
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-10.mp3",
+      "durationSeconds": 41.352,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 248492
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-11.mp3",
+      "durationSeconds": 56.472,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 339212
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-12.mp3",
+      "durationSeconds": 53.376,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 320636
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-13.mp3",
+      "durationSeconds": 37.104,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 223004
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-14.mp3",
+      "durationSeconds": 61.176,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 367436
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-15.mp3",
+      "durationSeconds": 49.44,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 297020
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-16.mp3",
+      "durationSeconds": 51.408,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 308828
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-17.mp3",
+      "durationSeconds": 46.344,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 278444
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-18.mp3",
+      "durationSeconds": 53.328,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 320348
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-19.mp3",
+      "durationSeconds": 48.096,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 288956
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-20.mp3",
+      "durationSeconds": 57.696,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 346556
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-21.mp3",
+      "durationSeconds": 42.864,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 257564
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-22.mp3",
+      "durationSeconds": 43.512,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 261452
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-23.mp3",
+      "durationSeconds": 63.672,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 382412
+    },
+    {
+      "path": "public/course-audio/seeds-sovereignty/zu/slide-24.mp3",
+      "durationSeconds": 37.344,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 224444
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/full.mp3",
+      "durationSeconds": 418.032,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 2508428
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-01.mp3",
+      "durationSeconds": 21.024,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 126144
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-02.mp3",
+      "durationSeconds": 24.144,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 144864
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-03.mp3",
+      "durationSeconds": 19.104,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 114624
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-04.mp3",
+      "durationSeconds": 15.96,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 95760
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-05.mp3",
+      "durationSeconds": 18.336,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 110016
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-06.mp3",
+      "durationSeconds": 18.72,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 112320
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-07.mp3",
+      "durationSeconds": 20.184,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 121104
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-08.mp3",
+      "durationSeconds": 20.976,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 125856
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-09.mp3",
+      "durationSeconds": 6.84,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 41040
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-10.mp3",
+      "durationSeconds": 21.36,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 128160
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-11.mp3",
+      "durationSeconds": 25.224,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 151344
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-12.mp3",
+      "durationSeconds": 17.448,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 104688
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-13.mp3",
+      "durationSeconds": 38.208,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 229248
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-14.mp3",
+      "durationSeconds": 15.408,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 92448
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-15.mp3",
+      "durationSeconds": 30.744,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 184464
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-16.mp3",
+      "durationSeconds": 17.808,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 106848
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-17.mp3",
+      "durationSeconds": 21.744,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 130464
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-18.mp3",
+      "durationSeconds": 18.864,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 113184
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-19.mp3",
+      "durationSeconds": 25.152,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 150912
+    },
+    {
+      "path": "public/course-audio/small-livestock/en/slide-20.mp3",
+      "durationSeconds": 20.784,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 124704
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/full.mp3",
+      "durationSeconds": 660.744,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 3964700
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-01.mp3",
+      "durationSeconds": 30.864,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 185184
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-02.mp3",
+      "durationSeconds": 36.456,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 218736
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-03.mp3",
+      "durationSeconds": 28.92,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 173520
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-04.mp3",
+      "durationSeconds": 23.664,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 141984
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-05.mp3",
+      "durationSeconds": 31.968,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 191808
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-06.mp3",
+      "durationSeconds": 28.08,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 168480
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-07.mp3",
+      "durationSeconds": 32.616,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 195696
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-08.mp3",
+      "durationSeconds": 31.944,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 191664
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-09.mp3",
+      "durationSeconds": 10.08,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 60480
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-10.mp3",
+      "durationSeconds": 34.248,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 205488
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-11.mp3",
+      "durationSeconds": 47.208,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 283248
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-12.mp3",
+      "durationSeconds": 26.184,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 157104
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-13.mp3",
+      "durationSeconds": 65.256,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 391536
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-14.mp3",
+      "durationSeconds": 23.496,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 140976
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-15.mp3",
+      "durationSeconds": 51.24,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 307440
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-16.mp3",
+      "durationSeconds": 29.544,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 177264
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-17.mp3",
+      "durationSeconds": 29.616,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 177696
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-18.mp3",
+      "durationSeconds": 32.016,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 192096
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-19.mp3",
+      "durationSeconds": 36.0,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 216000
+    },
+    {
+      "path": "public/course-audio/small-livestock/zu/slide-20.mp3",
+      "durationSeconds": 31.344,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 188064
+    },
+    {
+      "path": "public/course-audio/soil-health/en/full.mp3",
+      "durationSeconds": 413.808,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 2483084
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-01.mp3",
+      "durationSeconds": 16.896,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 101376
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-02.mp3",
+      "durationSeconds": 17.304,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 103824
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-03.mp3",
+      "durationSeconds": 14.52,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 87120
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-04.mp3",
+      "durationSeconds": 21.24,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 127440
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-05.mp3",
+      "durationSeconds": 28.56,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 171360
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-06.mp3",
+      "durationSeconds": 25.32,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 151920
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-07.mp3",
+      "durationSeconds": 20.568,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 123408
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-08.mp3",
+      "durationSeconds": 22.032,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 132192
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-09.mp3",
+      "durationSeconds": 18.936,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 113616
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-10.mp3",
+      "durationSeconds": 8.568,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 51408
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-11.mp3",
+      "durationSeconds": 18.552,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 111312
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-12.mp3",
+      "durationSeconds": 25.32,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 151920
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-13.mp3",
+      "durationSeconds": 23.64,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 141840
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-14.mp3",
+      "durationSeconds": 15.888,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 95328
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-15.mp3",
+      "durationSeconds": 19.344,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 116064
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-16.mp3",
+      "durationSeconds": 26.328,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 157968
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-17.mp3",
+      "durationSeconds": 25.344,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 152064
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-18.mp3",
+      "durationSeconds": 24.0,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 144000
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-19.mp3",
+      "durationSeconds": 21.648,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 129888
+    },
+    {
+      "path": "public/course-audio/soil-health/en/slide-20.mp3",
+      "durationSeconds": 19.8,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 118800
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/full.mp3",
+      "durationSeconds": 669.288,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 4015964
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-01.mp3",
+      "durationSeconds": 27.84,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 167040
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-02.mp3",
+      "durationSeconds": 24.576,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 147456
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-03.mp3",
+      "durationSeconds": 24.576,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 147456
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-04.mp3",
+      "durationSeconds": 33.648,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 201888
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-05.mp3",
+      "durationSeconds": 40.752,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 244512
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-06.mp3",
+      "durationSeconds": 42.288,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 253728
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-07.mp3",
+      "durationSeconds": 32.136,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 192816
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-08.mp3",
+      "durationSeconds": 38.784,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 232704
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-09.mp3",
+      "durationSeconds": 30.336,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 182016
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-10.mp3",
+      "durationSeconds": 13.872,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 83232
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-11.mp3",
+      "durationSeconds": 27.744,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 166464
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-12.mp3",
+      "durationSeconds": 43.728,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 262368
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-13.mp3",
+      "durationSeconds": 35.112,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 210672
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-14.mp3",
+      "durationSeconds": 28.392,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 170352
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-15.mp3",
+      "durationSeconds": 30.216,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 181296
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-16.mp3",
+      "durationSeconds": 42.312,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 253872
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-17.mp3",
+      "durationSeconds": 40.44,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 242640
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-18.mp3",
+      "durationSeconds": 43.656,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 261936
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-19.mp3",
+      "durationSeconds": 36.552,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 219312
+    },
+    {
+      "path": "public/course-audio/soil-health/zu/slide-20.mp3",
+      "durationSeconds": 32.328,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 193968
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/full.mp3",
+      "durationSeconds": 693.672,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 4162268
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-01.mp3",
+      "durationSeconds": 30.696,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 184176
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-02.mp3",
+      "durationSeconds": 34.68,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 208080
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-03.mp3",
+      "durationSeconds": 39.216,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 235296
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-04.mp3",
+      "durationSeconds": 39.336,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 236016
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-05.mp3",
+      "durationSeconds": 43.488,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 260928
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-06.mp3",
+      "durationSeconds": 29.592,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 177552
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-07.mp3",
+      "durationSeconds": 37.872,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 227232
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-08.mp3",
+      "durationSeconds": 40.392,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 242352
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-09.mp3",
+      "durationSeconds": 37.008,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 222048
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-10.mp3",
+      "durationSeconds": 46.848,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 281088
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-11.mp3",
+      "durationSeconds": 35.016,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 210096
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-12.mp3",
+      "durationSeconds": 34.656,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 207936
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-13.mp3",
+      "durationSeconds": 40.08,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 240480
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-14.mp3",
+      "durationSeconds": 20.76,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 124560
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-15.mp3",
+      "durationSeconds": 36.12,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 216720
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-16.mp3",
+      "durationSeconds": 62.352,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 374112
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-17.mp3",
+      "durationSeconds": 41.688,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 250128
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/en/slide-18.mp3",
+      "durationSeconds": 43.872,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 263232
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/full.mp3",
+      "durationSeconds": 1095.216,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 6571532
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-01.mp3",
+      "durationSeconds": 41.664,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 249984
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-02.mp3",
+      "durationSeconds": 47.952,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 287712
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-03.mp3",
+      "durationSeconds": 63.264,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 379584
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-04.mp3",
+      "durationSeconds": 56.64,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 339840
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-05.mp3",
+      "durationSeconds": 70.584,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 423504
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-06.mp3",
+      "durationSeconds": 49.632,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 297792
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-07.mp3",
+      "durationSeconds": 53.088,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 318528
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-08.mp3",
+      "durationSeconds": 67.896,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 407376
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-09.mp3",
+      "durationSeconds": 60.6,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 363600
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-10.mp3",
+      "durationSeconds": 71.928,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 431568
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-11.mp3",
+      "durationSeconds": 59.16,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 354960
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-12.mp3",
+      "durationSeconds": 58.368,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 350208
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-13.mp3",
+      "durationSeconds": 71.928,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 431568
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-14.mp3",
+      "durationSeconds": 39.888,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 239328
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-15.mp3",
+      "durationSeconds": 58.416,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 350496
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-16.mp3",
+      "durationSeconds": 102.384,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 614304
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-17.mp3",
+      "durationSeconds": 68.52,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 411120
+    },
+    {
+      "path": "public/course-audio/vegetables-staples/zu/slide-18.mp3",
+      "durationSeconds": 53.304,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 319824
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/full.mp3",
+      "durationSeconds": 465.12,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 2790956
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-01.mp3",
+      "durationSeconds": 7.224,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 43344
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-02.mp3",
+      "durationSeconds": 21.192,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 127152
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-03.mp3",
+      "durationSeconds": 24.48,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 146880
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-04.mp3",
+      "durationSeconds": 16.248,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 97488
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-05.mp3",
+      "durationSeconds": 14.064,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 84384
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-06.mp3",
+      "durationSeconds": 24.312,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 145872
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-07.mp3",
+      "durationSeconds": 14.472,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 86832
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-08.mp3",
+      "durationSeconds": 21.576,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 129456
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-09.mp3",
+      "durationSeconds": 9.24,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 55440
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-10.mp3",
+      "durationSeconds": 24.12,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 144720
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-11.mp3",
+      "durationSeconds": 25.416,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 152496
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-12.mp3",
+      "durationSeconds": 14.448,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 86688
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-13.mp3",
+      "durationSeconds": 22.2,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 133200
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-14.mp3",
+      "durationSeconds": 30.84,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 185040
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-15.mp3",
+      "durationSeconds": 23.064,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 138384
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-16.mp3",
+      "durationSeconds": 9.432,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 56592
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-17.mp3",
+      "durationSeconds": 21.72,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 130320
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-18.mp3",
+      "durationSeconds": 28.152,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 168912
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-19.mp3",
+      "durationSeconds": 24.816,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 148896
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-20.mp3",
+      "durationSeconds": 20.352,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 122112
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-21.mp3",
+      "durationSeconds": 16.416,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 98496
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-22.mp3",
+      "durationSeconds": 21.48,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 128880
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-23.mp3",
+      "durationSeconds": 10.992,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 65952
+    },
+    {
+      "path": "public/course-audio/water-harvesting/en/slide-24.mp3",
+      "durationSeconds": 18.864,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 113184
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/full.mp3",
+      "durationSeconds": 751.488,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 4509164
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-01.mp3",
+      "durationSeconds": 16.92,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 101520
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-02.mp3",
+      "durationSeconds": 35.112,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 210672
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-03.mp3",
+      "durationSeconds": 41.232,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 247392
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-04.mp3",
+      "durationSeconds": 26.4,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 158400
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-05.mp3",
+      "durationSeconds": 21.432,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 128592
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-06.mp3",
+      "durationSeconds": 38.328,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 229968
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-07.mp3",
+      "durationSeconds": 23.664,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 141984
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-08.mp3",
+      "durationSeconds": 32.232,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 193392
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-09.mp3",
+      "durationSeconds": 15.552,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 93312
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-10.mp3",
+      "durationSeconds": 42.192,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 253152
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-11.mp3",
+      "durationSeconds": 40.536,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 243216
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-12.mp3",
+      "durationSeconds": 23.616,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 141696
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-13.mp3",
+      "durationSeconds": 35.04,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 210240
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-14.mp3",
+      "durationSeconds": 46.584,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 279504
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-15.mp3",
+      "durationSeconds": 36.384,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 218304
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-16.mp3",
+      "durationSeconds": 17.928,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 107568
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-17.mp3",
+      "durationSeconds": 34.08,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 204480
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-18.mp3",
+      "durationSeconds": 43.32,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 259920
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-19.mp3",
+      "durationSeconds": 38.52,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 231120
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-20.mp3",
+      "durationSeconds": 32.064,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 192384
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-21.mp3",
+      "durationSeconds": 27.528,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 165168
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-22.mp3",
+      "durationSeconds": 36.48,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 218880
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-23.mp3",
+      "durationSeconds": 17.232,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 103392
+    },
+    {
+      "path": "public/course-audio/water-harvesting/zu/slide-24.mp3",
+      "durationSeconds": 29.112,
+      "streams": [
+        "audio"
+      ],
+      "bytes": 174672
+    }
+  ]
+}

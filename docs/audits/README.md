@@ -14,6 +14,8 @@ The prior audit is preserved unchanged. Source-photo seams remain open; deployme
 
 ## Site reports and mapping: start here
 
+Latest training PDF continuation: [Complete session titles and 32-page layout check — 29 October 2026](2026-10-29/training-pdf-layout-codex.md). Keeps #1145's evidence/water follow-up separate; see its PR for full-suite status.
+
 Latest choice-guide follow-up: [Report-purpose comparison and separate wording/depth choices - 29 October 2026](2026-10-29/report-choice-guide-codex.md). Follows #1131 independently of #1137’s production-status gate; release status is recorded on its PR and issue #35.
 
 Latest release continuation: [Current-main reconciliation and remaining release gates - 29 October 2026](2026-10-29/map-report-release-continuation-codex.md). The two earlier PR heads passed CI but remain unpublished; check their new integrated heads before merging.
@@ -109,6 +111,8 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [Training PDF covers and audio/offline contract checks — 29 October 2026](2026-10-29/training-pdf-layout-codex.md).
 
 - [Report choice tables and wording/depth guidance - 29 October 2026](2026-10-29/report-choice-guide-codex.md).
 - [Map/report current-main release continuation - 29 October 2026](2026-10-29/map-report-release-continuation-codex.md).
@@ -274,3 +278,4 @@ with screenshots. That pack was exported at `a9b3f5a`; it does not include the
 The browser audit could not exercise the signed-in roles. Its coverage limit is
 not evidence that the current signed-in survey works or fails.
 - [Vegetables L2 fuller regional drafts — 2026-10-05](2026-10-05/study-vegetables-l2-fuller-codex.md)
+

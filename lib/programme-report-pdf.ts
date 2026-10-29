@@ -64,18 +64,23 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     const { drawVisualReportFront } = await import('./report-visual-pdf');
     drawVisualReportFront(doc, visual.visuals, visual.assets, visual.date, presentation.language);page();
   }
-  if(!ink){doc.setFillColor(23,62,44);doc.rect(0,0,210,presentation.language==='zu'?58:49,'F');doc.setTextColor(255);}
-  else {doc.setDrawColor(35,75,49);doc.setLineWidth(.6);doc.line(18,46,192,46);doc.setTextColor(23,62,44);}
   doc.setFont('times','normal');doc.setFontSize(24);
-  const titleRows=doc.splitTextToSize(pdfSafe(presentation.session?.title??title),174) as string[];
-  doc.text(titleRows.slice(0,2),18,22);
+  const titleRows=doc.splitTextToSize(pdfSafe(presentation.session?.title??title).replace(/\s+/g,' ').trim(),174) as string[];
+  // Session titles can legitimately fill all 160 saved characters. Cutting at two
+  // lines loses the record's identity; the cover must grow before placing its date.
+  const dateY=Math.max(38,22+(titleRows.length-1)*doc.getLineHeight()/doc.internal.scaleFactor+9);
+  const noticeY=dateY+13;
+  const coverHeight=presentation.language==='zu'?noticeY+7:dateY+11;
+  if(!ink){doc.setFillColor(23,62,44);doc.rect(0,0,210,coverHeight,'F');doc.setTextColor(255);}
+  else {doc.setDrawColor(35,75,49);doc.setLineWidth(.6);doc.line(18,coverHeight-3,192,coverHeight-3);doc.setTextColor(23,62,44);}
+  doc.text(titleRows,18,22);
   doc.setFont('helvetica','normal');doc.setFontSize(9);
-  doc.text(pdfSafe(`${sample?`${pdfLabel('Tour workspace',presentation.language)} · `:''}${pdfLabel(format==='full'?'Full report':'Brief summary',presentation.language)} · ${presentation.date ?? new Date().toISOString().slice(0,10)}`),18,38);
+  doc.text(pdfSafe(`${sample?`${pdfLabel('Tour workspace',presentation.language)} · `:''}${pdfLabel(format==='full'?'Full report':'Brief summary',presentation.language)} · ${presentation.date ?? new Date().toISOString().slice(0,10)}`),18,dateY);
   if(presentation.language==='zu'){
     doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(ink?75:245,ink?95:245,ink?80:245);
-    doc.text(pdfSafe('Izihloko zesiZulu azikabuyekezwa; umbhalo wobufakazi ugcinwa ngolimi oqoshwe ngalo.'),18,51);
+    doc.text(pdfSafe('Izihloko zesiZulu azikabuyekezwa; umbhalo wobufakazi ugcinwa ngolimi oqoshwe ngalo.'),18,noticeY);
   }
-  y=presentation.language==='zu'?67:59;
+  y=coverHeight+(presentation.language==='zu'?9:10);
   if(sample) write('DEMONSTRATION RECORDS - illustrative figures, not real programme results.',9,true);
   if(presentation.subtitle) write(presentation.subtitle,10);
   const partners=branding?(['organisation','garden','funder'] as const).filter(k=>branding[k].label||branding[k].image):[];

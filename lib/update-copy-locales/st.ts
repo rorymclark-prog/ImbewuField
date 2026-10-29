@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Unreviewed draft: docs/audits/2026-10-29/training-pdf-notice-drafts.json.
+  "Training report PDFs keep the full session title.": "Li-PDF tsa litlaleho tsa koetliso li boloka sehlooho sohle sa thupelo.",
   // PDF sample audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
   "Report headings stay with their opening text when you export a PDF.": "Dihlooho tsa tlaleho di dula le mongolo wa tsona wa pele ha o romela PDF.",
   // Visual audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
@@ -196,3 +198,4 @@ const copy:UpdateCopy={
   "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Bula polasi e bolokilweng, kgetha leqephe ebe o kgetha AI Polished. Ho hlahisa mmapa ka mong ho a lefellwa.",
 };
 export default copy;
+

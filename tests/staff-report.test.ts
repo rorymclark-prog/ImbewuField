@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { buildFieldReport } from '../lib/field-report';
 import { buildTrainingReport } from '../lib/training-report';
-import { aggregateProgrammeBranding, freshEvidenceData } from '../lib/programme-evidence';
+import { aggregateProgrammeBranding, freshEvidenceData, validTrainingRecord } from '../lib/programme-evidence';
 import type { FieldWorkspace } from '../lib/field-teams';
 import { buildProgrammePdf } from '../lib/programme-report-pdf';
 import { pdfContentStreams } from './pdf-content-streams';
@@ -119,4 +119,37 @@ test('a chart that fits one fresh page keeps its last observation with its headi
   const pages = (pdf.internal as unknown as { pages: string[][] }).pages;
   const chartPage = pages.find(page => page?.join('\n').includes(chart.title));
   assert.ok(chartPage?.join('\n').includes('Final observed group'), 'the final observation must stay with the heading when the whole chart fits one page');
+});
+
+test('a valid long training title stays complete above the date on colour and ink covers', async () => {
+  const session = structuredClone(freshEvidenceData().sessions[0]);
+  session.title = 'Community learning and practical observation workshop with participants and facilitators from neighbouring gardens, including a review of records and next steps';
+  assert.equal(validTrainingRecord(session, '2026-10-29'), true);
+  for (const language of ['en', 'zu'] as const) for (const ink of [false, true]) for (const format of ['summary', 'full'] as const) {
+    const pdf = await buildProgrammePdf('Session report', false, [], format, undefined, [], 'Evidence', undefined, { session, language, ink, date: '2026-10-29' });
+    pdf.setFont('times', 'normal'); pdf.setFontSize(24);
+    const titleRows = pdf.splitTextToSize(session.title, 174) as string[];
+    assert.ok(titleRows.length > 2, 'exercise the cover that previously discarded remaining title rows');
+    const page = (pdf.internal as unknown as { pages: string[][] }).pages[1].join('\n');
+    for (const row of titleRows) assert.ok(page.includes(row), `${language}/${ink}: missing title row ${row}`);
+    const blocks = [...page.matchAll(/BT\n([\s\S]*?)\nET/g)].map(match => match[1]);
+    const title = blocks.find(block => titleRows.every(row => block.includes(row)))!;
+    const date = blocks.find(block => block.includes('2026-10-29'))!;
+    const baseline = (block: string) => Number(/[-\d.]+ ([-\d.]+) Td/.exec(block)![1]);
+    const leading = Number(/([-\d.]+) TL/.exec(title)![1]);
+    assert.ok(baseline(date) < baseline(title) - (titleRows.length - 1) * leading - 9,
+      'the date must sit below the complete title with readable separation');
+  }
+});
+
+test('pasted line breaks in a saved title cannot push its PDF cover off the paper', async () => {
+  const session = structuredClone(freshEvidenceData().sessions[0]);
+  session.title = Array.from({ length: 25 }, () => 'Visit').join('\n');
+  assert.equal(validTrainingRecord(session, '2026-10-29'), true);
+  const pdf = await buildProgrammePdf('Session report', false, [], 'full', undefined, [], 'Evidence', undefined, { session, date: '2026-10-29' });
+  const page = (pdf.internal as unknown as { pages: string[][] }).pages[1].join('\n');
+  const titleBlock = [...page.matchAll(/BT\n([\s\S]*?)\nET/g)].map(match => match[1]).find(block => block.includes('Visit'))!;
+  assert.equal((titleBlock.match(/Visit/g) ?? []).length, 25);
+  assert.ok(titleBlock.split('T*').length < 10, 'render title whitespace as spaces rather than twenty-five empty cover lines');
+  assert.equal(session.title.split('\n').length, 25, 'the saved record remains unchanged');
 });
