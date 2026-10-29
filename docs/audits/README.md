@@ -6,6 +6,8 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Site reports and mapping: start here
 
+Latest choice-guide follow-up: [Report-purpose comparison and separate wording/depth choices - 29 October 2026](2026-10-29/report-choice-guide-codex.md). Stacked after #1137; release status is recorded on its PR and issue #35.
+
 Latest release continuation: [Current-main reconciliation and remaining release gates - 29 October 2026](2026-10-29/map-report-release-continuation-codex.md). The two earlier PR heads passed CI but remain unpublished; check their new integrated heads before merging.
 
 Latest production truth follow-up: [Use the design status for legacy plants and housing — 27 October 2026](2026-10-27/report-production-status-codex.md). This follows #1131; check its own release gates on issue #35.
