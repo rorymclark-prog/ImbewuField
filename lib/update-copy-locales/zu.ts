@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Production status audit: docs/audits/2026-10-27/report-production-status-release-drafts.json; unreviewed.
+  "Production plans keep unmarked plants and housing as proposed, matching your design.": "Izinhlelo zokukhiqiza zigcina izitshalo nezindlu zezilwane ezingaphawuliwe njengezihleliwe, ngokuhambisana nomklamo wakho.",
   // PDF sample audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
   "Report headings stay with their opening text when you export a PDF.": "Izihloko zombiko zihlala nombhalo wazo wokuqala lapho uthekelisa i-PDF.",
   // Visual audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.

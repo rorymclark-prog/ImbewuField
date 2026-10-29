@@ -29,6 +29,7 @@ import { activeAccountLocalStorageKey } from './account-local-storage';
 import { isSampleMode } from './sample-mode';
 import { SPECIES } from './species-catalog';
 import { ELEMENTS_BY_ID, plantingGroupFor } from './design-elements';
+import { statusOf } from './design-canvas';
 
 export interface HarvestCitation {
   /** Verbatim from the source. Fragments joined with "..." are separate passages of one source. */
@@ -272,7 +273,7 @@ export function unidentifiedPlantGroups(items: readonly PlacedPlant[]): Unidenti
     if (!label) continue;
     const key = species ? `species:${species.id}` : `element:${item.defId}`;
     const entry = groups.get(key) ?? { defId: item.defId, label, ...(species ? { speciesId: species.id } : {}), ...(legalCheck ? { legalCheck } : {}), existing: 0, proposed: 0 };
-    if (item.status === 'proposed') entry.proposed++; else entry.existing++;
+    if (statusOf(item) === 'proposed') entry.proposed++; else entry.existing++;
     groups.set(key, entry);
   }
   return [...groups.values()].sort((a, b) => a.label.localeCompare(b.label));
@@ -294,8 +295,9 @@ function harvestForMappedFoodSpecies(id: string | null): PerennialHarvest | null
  * The design's known, permitted catalogue food plants, grouped by species.
  *
  * Status matters to the chart. A tree drawn as proposed is a plan: it will not crop for the years
- * its yearsToFirstCrop says, so a "from today" calendar must not show its fruit. Legacy items with
- * no status count as existing, which is what lib/design-canvas.ts's statusOf does for them too.
+ * its yearsToFirstCrop says, so a "from today" calendar must not show its fruit. The real Ubhejane
+ * report exposed a second legacy default here: unmarked placed items were called existing while
+ * the design treated them as proposed. Read the design's status authority without editing storage.
  */
 export function placedTreeGroups(items: readonly PlacedPlant[]): PlacedTreeGroup[] {
   const bySpecies = new Map<string, PlacedTreeGroup>();
@@ -306,7 +308,7 @@ export function placedTreeGroups(items: readonly PlacedPlant[]): PlacedTreeGroup
     // Rory defines each circle as three planted bananas. This is an inventory assumption,
     // not a geometry edit or a count of the mat's later replacement followers.
     const plants = item.defId === 'banana_circle' && harvest.speciesId === 'musa-acuminata-aaa-group' ? 3 : 1;
-    if (item.status === 'proposed') group.proposed += plants; else group.existing += plants;
+    if (statusOf(item) === 'proposed') group.proposed += plants; else group.existing += plants;
     bySpecies.set(harvest.speciesId, group);
   }
   return [...bySpecies.values()].sort((a, b) => a.harvest.name.localeCompare(b.harvest.name, 'en-ZA'));

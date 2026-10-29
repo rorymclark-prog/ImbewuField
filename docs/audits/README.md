@@ -14,9 +14,15 @@ The prior audit is preserved unchanged. Source-photo seams remain open; deployme
 
 ## Site reports and mapping: start here
 
+Latest production-status release: [Current-main eligibility correction and full-suite gate - 29 October 2026](2026-10-29/report-status-release-continuation-codex.md). REP-S01 remains subject to its own current-head full tests.
+
+Latest verification follow-up: [Simple plant-label coverage after Whole grouping — 29 October 2026](2026-10-29/simple-plant-label-coverage-codex.md). REP-V01 replaces an obsolete condition-spelling assertion with actual visibility checks; the failed full run remains recorded and the amended status branch needs fresh full results.
+
 Latest choice-guide follow-up: [Report-purpose comparison and separate wording/depth choices - 29 October 2026](2026-10-29/report-choice-guide-codex.md). Follows #1131 independently of #1137’s production-status gate; release status is recorded on its PR and issue #35.
 
 Latest release continuation: [Current-main reconciliation and remaining release gates - 29 October 2026](2026-10-29/map-report-release-continuation-codex.md). The two earlier PR heads passed CI but remain unpublished; check their new integrated heads before merging.
+
+Latest production truth follow-up: [Use the design status for legacy plants and housing — 27 October 2026](2026-10-27/report-production-status-codex.md). This follows #1131; check its own release gates on issue #35.
 
 Latest PDF sample follow-up: [Keep chapter headings with their opening text — 27 October 2026](2026-10-27/report-pdf-pagination-codex.md). Read its release status on #1131 and issue #35.
 
@@ -110,10 +116,18 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Simple plant-label coverage and failed full-run continuation — 29 October 2026](2026-10-29/simple-plant-label-coverage-codex.md).
+
+- [Production-status current-main release continuation - 29 October 2026](2026-10-29/report-status-release-continuation-codex.md).
+
 - [Report choice tables and wording/depth guidance - 29 October 2026](2026-10-29/report-choice-guide-codex.md).
 - [Map/report current-main release continuation - 29 October 2026](2026-10-29/map-report-release-continuation-codex.md).
 
 - [Paid AI map composition corrections — 29 October 2026](2026-10-29/ai-map-composition-fixes-codex.md).
+
+- [Real-site production status and legacy plants — 27 October 2026](2026-10-27/report-production-status-codex.md).
+
+- [PDF headings kept with their opening evidence — 27 October 2026](2026-10-27/report-pdf-pagination-codex.md).
 
 - [Nine-map visual audit and lighter shared frames — 27 October 2026](2026-10-27/map-visual-audit-codex.md).
 

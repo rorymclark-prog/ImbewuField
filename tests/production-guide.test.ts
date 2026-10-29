@@ -253,7 +253,9 @@ test('purchase advice stages fruit cultivars but requires flowering compatibilit
 });
 
 test('circle counts, tropical variety assumptions and missing dates survive in the shared product guide', () => {
-  const items = [{ defId: 'banana_circle', status: 'proposed' as const }, { defId: 'banana_clump' }, { defId: 'tree_pawpaw', status: 'proposed' as const }];
+  // This guide deliberately mixes a standing clump with a planned circle. Record that
+  // standing status explicitly; unmarked items follow the design's proposal contract.
+  const items = [{ defId: 'banana_circle', status: 'proposed' as const }, { defId: 'banana_clump', status: 'existing' as const }, { defId: 'tree_pawpaw', status: 'proposed' as const }];
   const before = structuredClone(items);
   const context = productContextFromItems(items);
   const guide = buildProductGuidance(context, ['subtropical-coast']);

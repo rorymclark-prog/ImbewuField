@@ -84,7 +84,9 @@ function productionScope(yearMode: 'fromToday' | 'established', includeTrees: bo
     const lead = planningMaturityMonths(crop.daysToHarvest) + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0);
     return { id: `existing-${cropKey}`, bedId, cropKey, sowMonth: wrapMonth(pickMonth - lead), existing: true };
   };
-  const canvasTrees = placedTreeGroups([{ defId: 'tree_avocado' }, { defId: 'tree_avocado', status: 'proposed' }]);
+  // This toggle scenario includes a standing tree and standing housing with observed months.
+  // Declare that status: the design's unmarked placed items remain proposals.
+  const canvasTrees = placedTreeGroups([{ defId: 'tree_avocado', status: 'existing' }, { defId: 'tree_avocado', status: 'proposed' }]);
   const layer = ANIMAL_ENTERPRISES['chicken-layer'];
   const honey = Object.values(ANIMAL_ENTERPRISES).find(enterprise => enterprise.animal === 'bee' && enterprise.product === 'honey');
   assert.ok(layer && honey, 'the real enterprise records must supply these fixture products');
@@ -95,7 +97,7 @@ function productionScope(yearMode: 'fromToday' | 'established', includeTrees: bo
       { id: 'new-cycle', bedId: 'planned-bed', cropKey: 'butternut', sowMonth: 12 }],
     beds: ['oct-bed', 'nov-bed', 'planned-bed'].map(id => ({ id, label: id, areaM2: 10 })),
     canvasTrees, treeSeasons: { [canvasTrees[0].harvest.speciesId]: { bearing: true, months: [1] } },
-    canvasAnimals: placedAnimalGroups([{ defId: 'chicken_coop' }, { defId: 'beehive' }]),
+    canvasAnimals: placedAnimalGroups([{ defId: 'chicken_coop', status: 'existing' }, { defId: 'beehive', status: 'existing' }]),
     animalChoices: { chicken: layer.enterpriseId, bee: honey.enterpriseId },
     animalSeasons: { chicken: { enterpriseId: layer.enterpriseId, months: [2] }, bee: { enterpriseId: honey.enterpriseId, months: [2] } },
     wrapMonth, buildFoodAvailability, buildYearReport, recurringPlanPlantings, buildTreeAvailability, buildAnimalAvailability, buildYearOfFood,

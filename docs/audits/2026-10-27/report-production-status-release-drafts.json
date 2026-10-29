@@ -1,0 +1,15 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "scope": "One production-status update notice only; existing native wording and all farming source values are preserved. No fluent review claimed.",
+  "entries": [
+    {
+      "source": "Production plans keep unmarked plants and housing as proposed, matching your design.",
+      "drafts": {
+        "zu": "Izinhlelo zokukhiqiza zigcina izitshalo nezindlu zezilwane ezingaphawuliwe njengezihleliwe, ngokuhambisana nomklamo wakho.",
+        "st": "Meralo ya tlhahiso e boloka dimela le meaho ya diphoofolo e sa tshwauwang e le tse rerilweng, ho latela moralo wa hao.",
+        "ts": "Mapulani ya vuhumelerisi ya hlayisa swimilana ni tindlu ta swifuwo leswi nga funghiwang swi ri leswi kunguhatiweke, ku landzela pulani ya wena.",
+        "ve": "Pulane dza mveledziso dzi vhea zwimela na zwifhaṱo zwa zwifuwo zwi sa athu u swaiwa sa zwo dzudzanywaho, u tevhedza pulane yaṋu."
+      }
+    }
+  ]
+}
