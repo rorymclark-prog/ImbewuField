@@ -1,0 +1,15 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "scope": "Update notice only; training content and recorded evidence remain unchanged.",
+  "entries": [
+    {
+      "source": "Training report PDFs keep the full session title.",
+      "drafts": {
+        "zu": "Ama-PDF emibiko yokuqeqesha agcina isihloko esigcwele seseshini.",
+        "st": "Li-PDF tsa litlaleho tsa koetliso li boloka sehlooho sohle sa thupelo.",
+        "ts": "Ti-PDF ta swiviko swa ndzetelo ti hlayisa nhlokomhaka leyi heleleke ya xiyenge.",
+        "ve": "PDF dza mivhigo ya vhugudisi dzi vhulunga thoho yo fhelelaho ya sesheni."
+      }
+    }
+  ]
+}
