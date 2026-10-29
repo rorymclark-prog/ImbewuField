@@ -11,6 +11,15 @@
   "tourDecision": "The new entry uses the existing Farm memory tour; the visible five-note window includes the prior entry and therefore its two stops.",
   "entries": [
     {
+      "source": "Photo dates and journal headings are easier to read.",
+      "drafts": {
+        "zu": "Izinsuku zezithombe nezihloko zejenali sezifundeka kalula.",
+        "st": "Matsatsi a dinepe le dihlooho tsa jenale di se di baleha habonolo.",
+        "ts": "Masiku ya swifaniso ni tinhlokomhaka ta jenali sweswi swa olova ku swi hlaya.",
+        "ve": "Maḓuvha a zwifanyiso na ṱhoho dza dzhenala zwino zwi a vhalea nga hu leluwaho."
+      }
+    },
+    {
       "source": "Farm memory search, photos and saved copies now support isiZulu.",
       "drafts": {
         "zu": "Ukusesha, izithombe namakhophi agciniwe Ezinkumbulo zepulazi manje kusekela isiZulu.",

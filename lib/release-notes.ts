@@ -45,6 +45,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Farm memory search, photos and saved copies now support isiZulu.',
     'Tap a crop or bed on a note to see its journal history.',
     'Choose a smaller printable copy with notes only.',
+    'Photo dates and journal headings are easier to read.',
   ] },
   { when: '29 October 2026', sha: '53ed7ab73', changes: [
     'Open a field note from a task, with its crop and bed ready to check.',

@@ -39,7 +39,7 @@
 .exportNotice { margin: 12px 0 0; padding: 10px; border-radius: 10px; background: var(--bg-2); color: var(--text-primary); }
 .error { margin: 12px 0 0; color: var(--danger); font-weight: 600; }
 .resultBar { margin: 0 0 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 4px 2px 14px; border-bottom: 1px solid var(--border); }
-.eyebrow { margin: 0 0 5px; font: 700 11px/1.3 var(--font-sans), sans-serif; letter-spacing: 0.12em; color: var(--text-secondary); }
+.eyebrow { margin: 0 0 5px; font: 700 12px/1.3 var(--font-sans), sans-serif; letter-spacing: 0.12em; color: var(--text-secondary); }
 .resultBar h2 { margin: 0; font: 600 26px/1.2 var(--font-display), Georgia, serif; color: var(--text-primary); }
 .resultBar .clearButton { flex-shrink: 0; margin: 0; }
 .noMatches { padding: 34px 20px; text-align: center; border: 1px dashed var(--border); border-radius: 18px; background: var(--bg-1); color: var(--text-secondary); }

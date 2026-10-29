@@ -1,6 +1,7 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Photo dates and journal headings are easier to read.": "Matsatsi a dinepe le dihlooho tsa jenale di se di baleha habonolo.",
   // Farm memory release: docs/audits/2026-10-29/farm-memory-release-drafts.json; unreviewed.
   "Farm memory search, photos and saved copies now support isiZulu.": "Patlo, dinepe le dikopi tse bolokilweng tsa dikgopotso tsa polasi jwale di tshehetsa isiZulu.",
   "Tap a crop or bed on a note to see its journal history.": "Tobetsa sejalo kapa bethe ya temo ntlheng e ngotsweng ho bona nalane ya yona jenaleng.",

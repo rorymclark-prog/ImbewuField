@@ -21,6 +21,22 @@ new Function('require', 'module', 'exports', javascript)((name: string) => name 
   : require(name), componentModule, componentModule.exports);
 const JournalPhotoReview = componentModule.exports.default as React.ComponentType<{ entries: readonly JournalEntry[]; lang?: string }>;
 
+test('journal photo dates and memory controls keep the farmer’s 12px reading floor in their CSS modules', () => {
+  // The shared TSX register cannot see sizes supplied by CSS modules. A 10px photo date
+  // otherwise passes it even though that date is how a farmer identifies an observation.
+  for (const name of ['JournalPhotoReview', 'JournalExplore']) {
+    const css = readFileSync(new URL(`../components/journal/${name}.module.css`, import.meta.url), 'utf8');
+    const declarations = [...css.matchAll(/\bfont(?:-size)?\s*:[^;{}]+/g)];
+    assert.ok(declarations.length > 0, `${name} must exercise the actual text styles`);
+    for (const [declaration] of declarations) {
+      for (const size of declaration.matchAll(/(\d+(?:\.\d+)?)(px|rem|em)\b/g)) {
+        const pixels = Number(size[1]) * (size[2] === 'px' ? 1 : 16);
+        assert.ok(pixels >= 12, `${name} sets text below the farmer reading floor: ${declaration}`);
+      }
+    }
+  }
+});
+
 function photoEntry(id: string, date: string, title: string, bedLabel: string, cropName: string): JournalEntry {
   return { id, date, title, bedLabel, cropName, category: 'planting', notes: '',
     photos: [`data:image/png;base64,${Buffer.from(id).toString('base64')}`], createdAt: 1, updatedAt: 1 };
