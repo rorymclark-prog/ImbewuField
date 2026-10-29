@@ -14,7 +14,9 @@ The prior audit is preserved unchanged. Source-photo seams remain open; deployme
 
 ## Site reports and mapping: start here
 
-Latest production-status release: [Current-main eligibility correction and full-suite gate - 29 October 2026](2026-10-29/report-status-release-continuation-codex.md). REP-S01 remains subject to its own current-head full tests.
+Latest production-status verification and PDF follow-up: [Live annual rows and complete product qualifications — 29 October 2026](2026-10-29/annual-product-pdf-pagination-codex.md). REP-S01 and REP-V01 are verified in production `977ea31`; REP-L02's narrow PDF pagination follow-up has its own release gates.
+
+Previous production-status release: [Current-main eligibility correction and full-suite gate - 29 October 2026](2026-10-29/report-status-release-continuation-codex.md). The pending gate described there is superseded by the terminal results above and on #1137.
 
 Latest verification follow-up: [Simple plant-label coverage after Whole grouping — 29 October 2026](2026-10-29/simple-plant-label-coverage-codex.md). REP-V01 replaces an obsolete condition-spelling assertion with actual visibility checks; the failed full run remains recorded and the amended status branch needs fresh full results.
 
@@ -115,6 +117,8 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [Live annual production and complete product PDF rows — 29 October 2026](2026-10-29/annual-product-pdf-pagination-codex.md).
 
 - [Simple plant-label coverage and failed full-run continuation — 29 October 2026](2026-10-29/simple-plant-label-coverage-codex.md).
 

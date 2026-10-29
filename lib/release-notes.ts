@@ -50,6 +50,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     detail: 'Search your notes, compare saved photos and keep a printable copy.' },
   { title: 'Record work from a task', where: 'Menu → Task planner', href: '/cropplan',
     detail: 'Open a draft field note or record an actual harvest from a crop task.' }] },
+  { when: '29 October 2026', sha: '3b74a1890', changes: [
+    'PDF exports keep each product and its notes together.',
+  ] },
   { when: '29 October 2026', sha: '47bdffe30', changes: [
     'Production plans keep unmarked plants and housing as proposed, matching your design.',
   ] },

@@ -433,6 +433,47 @@ test('printed annual product pages keep dated windows, source qualifiers and und
   assert.match(streams, /Source qualifier 15/);
 });
 
+test('an annual product row keeps its complete qualification on one page when the row fits a fresh page', async () => {
+  const { jsPDF } = await import('jspdf');
+  const { drawReportProductionYear } = await import('../lib/report-crop-pdf.ts');
+  const months = Array.from({length:12}, (_, i) => new Date(2026, i, 1).toLocaleDateString('en-ZA', {month:'short',year:'numeric'}));
+  // The actual export split "No food quantity or" from "first-year crop promised". Vary the
+  // preceding rows so this guards the page boundary rather than a particular farm's row count.
+  for (let count = 1; count <= 18; count++) {
+    const rows = Array.from({length:count}, (_, i) => ({
+      id:`context-${i}`, kind:'crop' as const, name:`Recorded context ${i}`, product:'Saved product',
+      months:[], note:'Keep the supplied context for review. '.repeat(3), reference:false,
+    }));
+    rows.push({id:'qualified',kind:'crop',name:'REVIEWPRODUCT',product:'Saved product',months:[],
+      note:'Saved context supplied for review. '.repeat(40)
+        + 'QUALIFICATIONSTART No food quantity or first-year crop promised. QUALIFICATIONEND',reference:false});
+    const doc = new jsPDF({unit:'pt',format:'a4',compress:false});
+    drawReportProductionYear(doc,{months,rows},'2026-10-29T10:00:00Z');
+    const pages = pdfTextStreams(doc.output('arraybuffer'));
+    const rowPage = pages.findIndex(page => page.includes('REVIEWPRODUCT'));
+    const qualificationPage = pages.findIndex(page => page.includes('QUALIFICATIONEND'));
+    assert.ok(rowPage>=0 && qualificationPage>=0,'the product and complete supplied qualification survive');
+    assert.equal(rowPage,qualificationPage,`product qualification split after ${count} preceding rows`);
+    assert.match(pages[rowPage],/QUALIFICATIONSTART/);
+  }
+});
+
+test('an annual product note longer than a page continues with its final supplied text intact', async () => {
+  const { jsPDF } = await import('jspdf');
+  const { drawReportProductionYear } = await import('../lib/report-crop-pdf.ts');
+  const months = Array.from({length:12}, (_, i) => `Month ${i}`);
+  const doc = new jsPDF({unit:'pt',format:'a4',compress:false});
+  drawReportProductionYear(doc,{months,rows:[{id:'long-note',kind:'crop',name:'LONGPRODUCT',
+    product:'Saved product',months:[],reference:false,
+    note:'LONGNOTESTART '+ 'Retain this supplied context through the page transition. '.repeat(180)+' LONGNOTEEND',
+  }]},'2026-10-29T10:00:00Z');
+  const pages=pdfTextStreams(doc.output('arraybuffer'));
+  assert.ok(pages.filter(page=>page.includes('SITE REPORT')).length>1,'the note must exercise real page continuation');
+  assert.match(pages.join('\n'),/LONGNOTESTART/);
+  assert.match(pages.join('\n'),/LONGNOTEEND/);
+  assert.ok(pages.some(page=>page.includes('LONGPRODUCT / continued')),'continued notes retain their product identity');
+});
+
 // The real comprehensive Ubhejane export left a subheading at the bottom of one page
 // and its opening paragraph on the next. Inspect emitted page streams across boundaries;
 // a test of the heading's presence alone cannot notice this reading break.

@@ -1,0 +1,15 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "scope": "One PDF-layout release notice; no fluent review claimed. Existing native wording and all farming facts are preserved.",
+  "entries": [
+    {
+      "source": "PDF exports keep each product and its notes together.",
+      "drafts": {
+        "zu": "Ama-PDF athunyelwe agcina umkhiqizo ngamunye namanothi awo ndawonye.",
+        "st": "Di-PDF tse romelwang di boloka sehlahiswa ka seng le dintlha tsa sona mmoho.",
+        "ts": "Ti-PDF leti humesiwaka ti hlayisa xikumiwa xin’wana ni xin’wana ni tinotsi ta xona swin’we.",
+        "ve": "PDF dzi bviswaho dzi vhea tshibveledzwa tshiṅwe na tshiṅwe na notsi dzatsho fhethu huthihi."
+      }
+    }
+  ]
+}

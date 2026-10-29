@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Annual PDF row audit: docs/audits/2026-10-29/annual-product-pdf-release-drafts.json; unreviewed.
+  "PDF exports keep each product and its notes together.": "Ama-PDF athunyelwe agcina umkhiqizo ngamunye namanothi awo ndawonye.",
   // Production status audit: docs/audits/2026-10-27/report-production-status-release-drafts.json; unreviewed.
   "Production plans keep unmarked plants and housing as proposed, matching your design.": "Izinhlelo zokukhiqiza zigcina izitshalo nezindlu zezilwane ezingaphawuliwe njengezihleliwe, ngokuhambisana nomklamo wakho.",
   // PDF sample audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
