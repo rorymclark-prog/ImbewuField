@@ -4,6 +4,14 @@ This is the shared starting point for Rory, Claude and Codex. Read the latest
 record for the area being worked on before opening another audit. Build on its
 findings and subsequent changes; do not restart from an older snapshot.
 
+## Paid AI map composition: start here
+
+Latest implementation: [Paid map composition corrections — 29 October 2026](2026-10-29/ai-map-composition-fixes-codex.md).
+
+Previous audit: [Paid Whole ghost strips, crowns and export provenance — 28 October 2026](https://github.com/rorymclark-prog/ImbewuField/blob/88adb66a7199040ba527c94cfee9df3f69aaf5ac/docs/audits/2026-10-28/ai-map-composition-codex.md).
+
+The prior audit is preserved unchanged. Source-photo seams remain open; deployment and final CI evidence belong to the implementation’s issue #35 completion ledger.
+
 ## Site reports and mapping: start here
 
 Latest release continuation: [Current-main reconciliation and remaining release gates - 29 October 2026](2026-10-29/map-report-release-continuation-codex.md). The two earlier PR heads passed CI but remain unpublished; check their new integrated heads before merging.
@@ -100,6 +108,8 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Paid AI map composition corrections — 29 October 2026](2026-10-29/ai-map-composition-fixes-codex.md).
+
 - [Nine-map visual audit and lighter shared frames — 27 October 2026](2026-10-27/map-visual-audit-codex.md).
 
 - [Phasing public-sample fit and retained final rule — 27 October 2026](2026-10-27/phasing-public-sample-fit-codex.md).
@@ -188,6 +198,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-29 | [Paid AI map composition corrections — Codex](2026-10-29/ai-map-composition-fixes-codex.md) |
 | 2026-10-10 | [Production plan re-audit — Codex](2026-10-10/production-reaudit-codex.md) |
 | 2026-10-07 | [Reading and Vegetables ordinary-clause follow-up — Codex](2026-10-07/study-core-followup-codex.md) |
 | 2026-10-07 | [Tshivenda Reading frost placement — Codex](2026-10-07/study-reading-frost-placement-codex.md) |

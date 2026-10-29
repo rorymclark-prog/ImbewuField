@@ -17,6 +17,10 @@ const copy:UpdateCopy={
   "All nine map sheets use the same legend box, fonts and spacing.": "Masiaṱari oṱhe a ṱahe a mimepe a shumisa bogisi ḽithihi ḽa zwiga, fonto na zwikhala zwi fanaho.",
   "New drawings keep the legend on the right; your saved maps stay available.": "Zwifanyiso zwiswa zwi vhea ṱhalutshedzo ya zwiga kha tsha u ḽa; mimepe yaṋu yo vhulungwaho i kha ḓi wanala.",
   "Long map headings wrap inside their legend box.": "Ṱhoho ndapfu dza mepe dzi khethekanywa nga mitaladzi ngomu ha bogisi ḽa zwiga.",
+  "Saved AI maps can be reassembled without buying another render.": "Mapa wa AI wo vhulungwaho u nga kuvhanganywa hafhu hu si na u renga tshiṅwe tshifanyiso.",
+  "AI maps keep continuous artwork, with tree crowns allowed over the boundary.": "Mapa wa AI u vhulunga tshifanyiso tshi bvelaho phanḓa, ṱhoho dza miri dzi nga fhira mukano.",
+  "AI map downloads now remind you to check positions and counts.": "Mapa wa AI wo dzheniswaho zwino u ni humbudza u ṱola fhethu na mbalo.",
+
   "Saved reports keep their original photos and site water evidence.": "Mivhigo yo vhulungwaho i vhulunga zwifanyiso zwayo zwa u thoma na vhuṱanzi ha maḓi a fhethu.",
   "Field records now accept today’s date after midnight in South Africa.": "Rekhodo dza tsimuni zwino dzi ṱanganedza datumu ya ṋamusi nga murahu ha vhusiku Afurika Tshipembe.",
   "Map and crop exports give clearer errors and keyboard controls.": "U bvisa mapa na pulane dza zwiliṅwa zwi ṋea milaedza ya vhukhakhi na ndango dza khibodo dzi pfalaho.",

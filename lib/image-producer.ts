@@ -24,6 +24,35 @@ import { drainCanvasToDataUrl, releaseCanvas, releaseImageSource } from '@/lib/r
 /** Either an image source (data URL / base64) or an already-decoded element. */
 export type ImageInput = string | HTMLImageElement;
 
+/** An exterior canopy window must not also retain a round tile of model-painted soil. Select
+ * foliage inside the saved footprint, including nearby flowers/branches, with a soft raster edge.
+ * This is presentation selection, not species recognition or a test of agricultural accuracy. */
+export function canopyForegroundAlpha(
+  artwork: Uint8ClampedArray, footprint: Uint8ClampedArray, width: number, height: number,
+): Uint8ClampedArray {
+  if (artwork.length !== width * height * 4 || footprint.length !== artwork.length) throw new Error('canopy raster size mismatch');
+  const selected = new Uint8ClampedArray(width * height);
+  for (let i = 0; i < selected.length; i++) {
+    const p = i * 4;
+    const r = artwork[p], g = artwork[p + 1], b = artwork[p + 2];
+    if (footprint[p + 3] && g >= r * 0.98 && g > b * 1.15 && g - b > 8) selected[i] = 255;
+  }
+  // One-pixel neighbours keep flower and branch detail without admitting a whole ground tile.
+  const alpha = new Uint8ClampedArray(selected.length);
+  for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+    const i = y * width + x;
+    if (!footprint[i * 4 + 3]) continue;
+    let strongest = selected[i];
+    for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+      if (x + dx >= 0 && x + dx < width && y + dy >= 0 && y + dy < height) {
+        strongest = Math.max(strongest, selected[(y + dy) * width + x + dx] * 0.65);
+      }
+    }
+    alpha[i] = Math.round(strongest * footprint[i * 4 + 3] / 255);
+  }
+  return alpha;
+}
+
 /** A true, in-frame label to burn onto the produced map. All coords are OUTPUT px. */
 export interface ProducerLabel {
   /** Stable source identity used only as the final layout-order tie-break. */

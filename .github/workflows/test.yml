@@ -84,6 +84,33 @@ jobs:
       # chasing that failure has already cost real time. Build coverage comes from
       # deploy-preview.yml, which runs on the same push.
 
+  # Rory approved matched verification on 29 October 2026 (AGENTS.md §1). A map fix
+  # must not wait for unrelated course-history fixtures, but its own regression suite
+  # must still fail CI. The full `test` and independent `rules` jobs remain unchanged.
+  focused-render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Map and export regressions
+        run: npm run test:render
+
+      - name: Whitespace
+        run: git diff --check HEAD^ HEAD
+
   # ITS OWN JOB, AND THAT IS THE WHOLE POINT.
   #
   # THE RULES TESTS HAVE NEVER RUN IN CI. tests/firestore-rules.test.ts is deliberately outside
