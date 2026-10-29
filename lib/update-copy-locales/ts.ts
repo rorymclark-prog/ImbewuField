@@ -1,6 +1,10 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Saved AI maps can be reassembled without buying another render.": "Mimepe ya AI leyi hlayisiweke yi nga hlanganisiwa nakambe handle ko xava xifaniso xin’wana.",
+  "AI maps keep continuous artwork, with tree crowns allowed over the boundary.": "Mimepe ya AI yi hlayisa xifaniso lexi yaka mahlweni, marhavi ya mirhi ma nga hundza ndzilakano.",
+  "AI map downloads now remind you to check positions and counts.": "Mimepe ya AI leyi dawunilodiweke sweswi yi ku tsundzuxa ku kambela tindhawu ni tinhlayo.",
+
   "Saved reports keep their original photos and site water evidence.": "Swiviko leswi hlayisiweke swi hlayisa swifaniso swa swona swo sungula ni vumbhoni bya mati ya ndhawu.",
   "Field records now accept today’s date after midnight in South Africa.": "Tirhekhodo ta nsimu sweswi ti amukela siku ra namuntlha endzhaku ka vusiku eAfrika Dzonga.",
   "Map and crop exports give clearer errors and keyboard controls.": "Ku humesa mimepe ni mapulani ya swibyariwa swi nyika swihoxo ni vulawuri bya khibodo leswi twisisekaka.",
