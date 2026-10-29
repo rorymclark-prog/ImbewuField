@@ -11,6 +11,7 @@
 // and reality.) A deadline says what we mean far better than a magic iteration count.
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { isSampleMode, SAMPLE_MODE_RENDER_REFUSAL } from '@/lib/sample-mode';
+import { UserFacingError } from '@/lib/user-facing-error';
 
 const RENDER_DEADLINE_MS = 8 * 60 * 1000;
 
@@ -58,7 +59,7 @@ export async function requestRender(body: Record<string, unknown>): Promise<stri
   // path): this call bills a real vendor account directly, so it must refuse before any network
   // work — not just inside enqueueRenderJob, which this call never goes through.
   if (isSampleMode()) {
-    throw new Error(SAMPLE_MODE_RENDER_REFUSAL);
+    throw new UserFacingError(SAMPLE_MODE_RENDER_REFUSAL);
   }
   const authHeaders = await paidApiHeaders();
   const res = await fetch('/api/ai-render', {
