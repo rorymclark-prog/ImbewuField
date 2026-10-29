@@ -11,6 +11,7 @@
 // SAME numbers the security rules enforce (keep them in sync). See functions/README.md.
 
 import { getFirebase } from '@/lib/firebase/init';
+import { UserFacingError } from '@/lib/user-facing-error';
 import { isMapModelId, openAiMapModelLabel } from './ai-render/model';
 import { isSampleMode, SAMPLE_MODE_RENDER_REFUSAL } from '@/lib/sample-mode';
 import { doc, onSnapshot, serverTimestamp, setDoc, Timestamp, type FirestoreError } from 'firebase/firestore';
@@ -170,7 +171,7 @@ export function renderJobAttribution(engine: string, model?: string): {
     : { saved: 'falgpt', gallery: 'openai', label: openAiMapModelLabel(model) };
 }
 
-export class RenderJobError extends Error {}
+export class RenderJobError extends UserFacingError {}
 
 // ── Resume-attempt budget ─────────────────────────────────────────────────────
 //
@@ -432,7 +433,7 @@ export async function enqueueRenderJob(opts: {
     });
   } catch (err) {
     await Promise.allSettled(uploaded.map((p) => deleteObject(ref(fb.storage, p))));
-    throw new RenderJobError(`Could not upload your maps for rendering: ${String(err instanceof Error ? err.message : err)}`);
+    throw Object.assign(new RenderJobError('Could not upload your maps for rendering. Check your connection and try again.'), { cause: err });
   }
 
   try {
@@ -456,7 +457,7 @@ export async function enqueueRenderJob(opts: {
     });
   } catch (err) {
     await Promise.allSettled(uploaded.map((p) => deleteObject(ref(fb.storage, p))));
-    throw new RenderJobError(`Could not start the render job: ${String(err instanceof Error ? err.message : err)}`);
+    throw Object.assign(new RenderJobError('Could not start the render job. Check your connection and try again.'), { cause: err });
   }
   return jobId;
 }
@@ -624,15 +625,15 @@ export function subscribeRenderJob(
 /** Downloads a finished sheet's raw styled image as a data URL, ready for the client composite-back. */
 export async function fetchRenderOutput(outputPath: string): Promise<string> {
   const fb = getFirebase();
-  if (!fb) throw new RenderJobError('Firebase unavailable.');
+  if (!fb) throw new RenderJobError('The render service is unavailable. Reconnect and try again.');
   const url = await getDownloadURL(ref(fb.storage, outputPath));
   const res = await fetch(url);
-  if (!res.ok) throw new RenderJobError(`Could not fetch render (${res.status}).`);
+  if (!res.ok) throw new RenderJobError('Could not load the rendered image. Reconnect and try again.');
   const blob = await res.blob();
   return await new Promise<string>((resolve, reject) => {
     const r = new FileReader();
     r.onload = () => resolve(r.result as string);
-    r.onerror = () => reject(new RenderJobError(`Could not read render image: ${r.error?.message ?? 'unknown error'}`));
+    r.onerror = () => reject(new RenderJobError('Could not open the rendered image on this device. Please try again.'));
     r.readAsDataURL(blob);
   });
 }

@@ -4,6 +4,9 @@ const copy:UpdateCopy={
   "AI maps keep continuous artwork, with tree crowns allowed over the boundary.": "Mapa wa AI u vhulunga tshifanyiso tshi bvelaho phanḓa, ṱhoho dza miri dzi nga fhira mukano.",
   "AI map downloads now remind you to check positions and counts.": "Mapa wa AI wo dzheniswaho zwino u ni humbudza u ṱola fhethu na mbalo.",
 
+  "Saved reports keep their original photos and site water evidence.": "Mivhigo yo vhulungwaho i vhulunga zwifanyiso zwayo zwa u thoma na vhuṱanzi ha maḓi a fhethu.",
+  "Field records now accept today’s date after midnight in South Africa.": "Rekhodo dza tsimuni zwino dzi ṱanganedza datumu ya ṋamusi nga murahu ha vhusiku Afurika Tshipembe.",
+  "Map and crop exports give clearer errors and keyboard controls.": "U bvisa mapa na pulane dza zwiliṅwa zwi ṋea milaedza ya vhukhakhi na ndango dza khibodo dzi pfalaho.",
   "Map sheets now use white paper, thin legend borders and clearer plant pictures.": "Mashithi a mapa zwino a shumisa bammbiri ḽitshena, mikano misekene ya khii na zwifanyiso zwa zwimela zwi vhonalaho zwavhuḓi.",
   "Paid AI maps now finish when the image service rounds their size.": "Mapa a AI ane a badelwa zwino a a fhela musi tshumelo ya zwifanyiso i tshi ita uri saizi i vhe nomboro yo tandaho.",
   "New AI glossy maps use GPT Image 2.5 Sunburst.": "Mapa miswa ya AI i shumisa GPT Image 2.5 Sunburst.",

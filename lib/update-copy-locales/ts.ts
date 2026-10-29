@@ -4,6 +4,9 @@ const copy:UpdateCopy={
   "AI maps keep continuous artwork, with tree crowns allowed over the boundary.": "Mimepe ya AI yi hlayisa xifaniso lexi yaka mahlweni, marhavi ya mirhi ma nga hundza ndzilakano.",
   "AI map downloads now remind you to check positions and counts.": "Mimepe ya AI leyi dawunilodiweke sweswi yi ku tsundzuxa ku kambela tindhawu ni tinhlayo.",
 
+  "Saved reports keep their original photos and site water evidence.": "Swiviko leswi hlayisiweke swi hlayisa swifaniso swa swona swo sungula ni vumbhoni bya mati ya ndhawu.",
+  "Field records now accept today’s date after midnight in South Africa.": "Tirhekhodo ta nsimu sweswi ti amukela siku ra namuntlha endzhaku ka vusiku eAfrika Dzonga.",
+  "Map and crop exports give clearer errors and keyboard controls.": "Ku humesa mimepe ni mapulani ya swibyariwa swi nyika swihoxo ni vulawuri bya khibodo leswi twisisekaka.",
   "Map sheets now use white paper, thin legend borders and clearer plant pictures.": "Maphepha ya mimepe sweswi ma tirhisa phepha ro basa, mindzilakano yo lala ya xilotlelo ni swifaniso swa swimilana leswi vonakaka kahle.",
   "Paid AI maps now finish when the image service rounds their size.": "Mimepe ya AI leyi hakeriwaka sweswi ya hela loko vukorhokeri bya swifaniso byi rhendzeleka mpimo wa yona.",
   "New AI glossy maps use GPT Image 2.5 Sunburst.": "Mimepe leyintshwa ya AI yo vangama yi tirhisa GPT Image 2.5 Sunburst.",

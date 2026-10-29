@@ -61,6 +61,10 @@ export function normaliseReportMapSelection(value: unknown, siteId: string): Rep
   if (v.siteId !== siteId || !Array.isArray(v.ids) || v.ids.length > 12 || !v.ids.every(id => typeof id === 'string' && !!id.trim() && id.length <= 256)) return;
   return { siteId, ids: [...new Set(v.ids)] };
 }
+/** Older reports without an attachment record cannot establish which of today's maps they used. */
+export function savedReportMapSelection(value: unknown, siteId: string): ReportMapSelection {
+  return normaliseReportMapSelection(value, siteId) ?? { siteId, ids: [] };
+}
 /** Explicit empty selection means no maps; missing selected originals are never replaced. */
 export function selectedReportMaps<T extends ReportPlateCandidate>(maps: readonly T[], selection: ReportMapSelection | undefined, siteId: string, review: SiteMapReview): T[] {
   const ids = selection?.siteId === siteId ? selection.ids : defaultReportMapIds(maps, review);

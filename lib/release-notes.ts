@@ -45,6 +45,14 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'AI maps keep continuous artwork, with tree crowns allowed over the boundary.',
     'AI map downloads now remind you to check positions and counts.',
   ] },
+  { when: '28 October 2026', sha: '9e11f2396', changes: [
+    'Saved reports keep their original photos and site water evidence.',
+    'Field records now accept today’s date after midnight in South Africa.',
+    'Map and crop exports give clearer errors and keyboard controls.',
+  ], tour: [{ title: 'Open site reports', where: 'Menu → Reports', href: '/reports',
+    detail: 'Review the report purpose, annual production plan and saved maps for your site.' },
+    { title: 'Open Design Studio', where: 'Menu → Design Studio', href: '/design',
+      detail: 'Open Preview & export, then Record plan for the scaled diagram and its legend.' }] },
   { when: '28 October 2026', sha: '70dfef97f', changes: [
     'Map sheets now use white paper, thin legend borders and clearer plant pictures.',
   ] },

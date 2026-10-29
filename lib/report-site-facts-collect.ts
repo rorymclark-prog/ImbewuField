@@ -26,9 +26,12 @@ import { loadSurvey, type SiteSurvey } from './site-survey';
 import type { LocationData } from './types';
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
-import type { Feature } from 'geojson';
+import booleanPointInPolygon from '@turf/boolean-point-in-polygon';
+import type { Feature, Polygon, MultiPolygon } from 'geojson';
 
-import { pointInRing, ringAreaOf, type DesignCanvasState } from '@/lib/design-canvas';
+import { pointInRing, projectorForFrame, ringAreaOf, type DesignCanvasState } from '@/lib/design-canvas';
+import { largestStudioRing } from '@/lib/base-layers';
+import { REPORT_SITE_PROXIMITY_DEGREES } from '@/lib/report-map-layers';
 import { ELEMENTS_BY_ID, ZONE_DEFS } from '@/lib/design-elements';
 import { summariseDesignStudio } from '@/lib/design-studio-report';
 import { bedsFromDesignCanvas, BED_DEF_IDS } from '@/lib/design-beds-bridge';
@@ -114,11 +117,10 @@ function collectZones(state: DesignCanvasState): FactZone[] {
  *  Mirrors computeTracedAreaTotals' own ~2 km proximity guard so a farmer's other site's shapes
  *  can never be summed into this one. */
 function mapTracedAreas(siteId: string, lat: number, lon: number): {
-  boundary: { areaM2: number; perimeterM: number; name?: string } | null;
+  boundary: { areaM2: number; perimeterM: number; name?: string; geometry: Polygon | MultiPolygon } | null;
 } {
   try {
     const merged = mergeFarmShapesIntoDesignState(readLocalFarmShapes(), loadDesignStudioState(siteId), siteId);
-    const NEAR_DEG = 0.02;
     const near = merged.layers.filter((layer) => {
       const geom = layer.geometry;
       const first = geom && geom.type === 'Polygon'
@@ -127,12 +129,12 @@ function mapTracedAreas(siteId: string, lat: number, lon: number): {
           ? geom.coordinates?.[0]?.[0]?.[0]
           : null;
       if (!first) return false;
-      return Math.abs(first[1] - lat) < NEAR_DEG && Math.abs(first[0] - lon) < NEAR_DEG;
+      return Math.abs(first[1] - lat) < REPORT_SITE_PROXIMITY_DEGREES && Math.abs(first[0] - lon) < REPORT_SITE_PROXIMITY_DEGREES;
     });
     const boundaryLayer = near
       .filter((layer) => layer.layerType === 'property_boundary')
       .sort((a, b) => b.areaM2 - a.areaM2)[0];
-    if (!boundaryLayer) return { boundary: null };
+    if (!boundaryLayer || !['Polygon', 'MultiPolygon'].includes(boundaryLayer.geometry.type)) return { boundary: null };
     const feature = { type: 'Feature', properties: {}, geometry: boundaryLayer.geometry } as Feature;
     let perimeterM = 0;
     try {
@@ -148,6 +150,7 @@ function mapTracedAreas(siteId: string, lat: number, lon: number): {
         areaM2: Math.round(areaM2),
         perimeterM: Math.round(perimeterM * 10) / 10,
         name: boundaryLayer.name,
+        geometry: boundaryLayer.geometry as Polygon | MultiPolygon,
       },
     };
   } catch {
@@ -185,6 +188,8 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
   if (input.farmName?.trim()) facts.farmName = input.farmName.trim();
 
   const canvas = input.canvas;
+  const studioBoundary = canvas ? studioBoundaryMetrics(canvas) : null;
+  const mappedBoundary = studioBoundary ? null : mapTracedAreas(input.siteId, input.lat, input.lon).boundary;
 
   // ── The drawn design ──
   if (canvas) {
@@ -266,6 +271,21 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
   try {
     waterPoints = input.waterPoints ?? loadWaterPoints();
   } catch { waterPoints = []; }
+  // Pins are account-wide. A point on another farm must not become this report's dam or borehole.
+  // Use the same boundary as the reported area; without one, retain only nearby pins using the
+  // existing map-layer proximity rule. Proximity alone cannot establish ownership or water access.
+  const validLocation = (lat: number, lon: number) => Number.isFinite(lat) && lat >= -90 && lat <= 90
+    && Number.isFinite(lon) && lon >= -180 && lon <= 180;
+  const studioRing = canvas && studioBoundary ? largestStudioRing(canvas, 'boundary') : null;
+  const project = canvas && studioRing ? projectorForFrame(canvas.frame) : null;
+  const studioPolygon: Polygon | null = studioRing ? { type: 'Polygon', coordinates: [[...studioRing, studioRing[0]]] } : null;
+  waterPoints = !input.siteId.trim() || !validLocation(input.lat, input.lon) ? [] : waterPoints.filter(point => {
+    if (!validLocation(point.lat, point.lon)) return false;
+    if (project && studioPolygon) return booleanPointInPolygon(project([point.lon, point.lat]), studioPolygon);
+    if (mappedBoundary) return booleanPointInPolygon([point.lon, point.lat], mappedBoundary.geometry);
+    return Math.abs(point.lat - input.lat) < REPORT_SITE_PROXIMITY_DEGREES
+      && Math.abs(point.lon - input.lon) < REPORT_SITE_PROXIMITY_DEGREES;
+  });
   const mapPoints: FactWaterPoint[] = waterPoints.map((point) => ({
     name: point.name,
     category: point.category || 'Other',
@@ -299,7 +319,6 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
   }
 
   // ── Boundary: the traced ring, never the sum of every shape on the map ──
-  const studioBoundary = canvas ? studioBoundaryMetrics(canvas) : null;
   if (studioBoundary) {
     facts.boundary = {
       areaM2: Math.round(studioBoundary.areaM2),
@@ -307,7 +326,7 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
       source: `Traced by the farmer in the Design Studio (${studioBoundary.vertexCount} points)`,
     };
   } else {
-    const mapped = mapTracedAreas(input.siteId, input.lat, input.lon).boundary;
+    const mapped = mappedBoundary;
     if (mapped) {
       facts.boundary = {
         areaM2: mapped.areaM2,
