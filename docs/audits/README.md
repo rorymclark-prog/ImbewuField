@@ -14,6 +14,10 @@ The prior audit is preserved unchanged. Source-photo seams remain open; deployme
 
 ## Site reports and mapping: start here
 
+Latest continuation: [Report evidence identity, water access and PDF checks — 29 October 2026](2026-10-29/report-evidence-followup-codex.md).
+
+Previous focused audit: [28 October coherence audit](2026-10-28/coherence-audit-codex.md) and [29 October coverage record](2026-10-29/coverage-and-release-codex.md).
+
 Latest integration: [Site reports with the published role reports and wave 23 — 26 October 2026](2026-10-26/site-report-role-integration-codex.md).
 
 Previous integration: [Report branch updated with current main — 25 October 2026](2026-10-25/site-report-main-integration-codex.md).
@@ -92,6 +96,9 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Report evidence identity, water access and PDF continuation — 29 October 2026](2026-10-29/report-evidence-followup-codex.md).
+- [Focused audit coverage and release record — 29 October 2026](2026-10-29/coverage-and-release-codex.md).
+- [Cross-workflow coherence audit — 28 October 2026](2026-10-28/coherence-audit-codex.md).
 - [Paid AI map composition corrections — 29 October 2026](2026-10-29/ai-map-composition-fixes-codex.md).
 
 - [Site reports #1099 and #1101 merged and verified on production (Codex handoff results) — 27 October 2026](2026-10-27/site-report-handoff-results-claude.md).

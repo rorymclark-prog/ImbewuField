@@ -1,0 +1,46 @@
+{
+  "documents": [
+    {
+      "pdf": "session-en-full.pdf",
+      "pages": 3
+    },
+    {
+      "pdf": "session-en-summary.pdf",
+      "pages": 3
+    },
+    {
+      "pdf": "session-zu-full.pdf",
+      "pages": 3
+    },
+    {
+      "pdf": "session-zu-summary.pdf",
+      "pages": 3
+    },
+    {
+      "pdf": "site-en.pdf",
+      "pages": 3
+    },
+    {
+      "pdf": "site-zu.pdf",
+      "pages": 3
+    },
+    {
+      "pdf": "training-en-full.pdf",
+      "pages": 3
+    },
+    {
+      "pdf": "training-en-summary.pdf",
+      "pages": 3
+    },
+    {
+      "pdf": "training-zu-full.pdf",
+      "pages": 3
+    },
+    {
+      "pdf": "training-zu-summary.pdf",
+      "pages": 3
+    }
+  ],
+  "pageCount": 30,
+  "offPageText": []
+}

@@ -26,6 +26,7 @@ import {
   normaliseReportSiteFacts,
   roofCalcLine,
   waterPromptBlock,
+  WATER_ACCESS_PROMPT_RULE,
   zonePromptBlock,
   type ReportSiteFacts,
 } from '@/lib/report-site-facts';
@@ -464,7 +465,7 @@ ${siteAreaForCalcM2 ? `- **Rain falling on the boundary area:** ${Math.round(sit
 - **Earthwork spacing:** no generic slope-to-spacing formula is supported. Require a contour survey, soil/infiltration checks, safe overflow and local design review before giving dimensions.
 - **Dry season storage gap:** ${d.rainfall.drySeason} = ~${Math.round(drySeasonRainMm)}mm total — minimum tank size for food garden: **[X,XXX L]**
 - **ETo vs rainfall:** solar radiation alone is not evapotranspiration. If no validated ETo series is supplied, state that the irrigation deficit has not been calculated; list the observations needed.
-${waterData ? `- **Drawn water storage:** ${waterData.count} store(s), ~**${waterData.estVolumeKL.toLocaleString()} kL** capacity (est. ${waterData.avgDepthM}m avg depth over ${waterData.areaM2.toLocaleString()} m²). State clearly whether this covers the dry-season deficit above, and if not, how much more storage is needed.` : ''}
+${waterData ? `- **Drawn water storage:** ${waterData.count} store(s), ~**${waterData.estVolumeKL.toLocaleString()} kL** capacity (est. ${waterData.avgDepthM}m avg depth over ${waterData.areaM2.toLocaleString()} m²). This is a geometrical capacity estimate, not a measurement of usable water. Do not subtract it from the dry-season deficit or claim it covers the need without confirmed access, reliability, water quality and available volume.` : ''}
 ${facts?.water && facts.water.statedStorageLitres > 0 ? `- **Tank storage on the plan:** **${facts.water.statedStorageLitres.toLocaleString()} L** stated capacity (${facts.water.tanks.map((tank) => `${tank.name} x${tank.count}`).join(', ')}). Compare THIS number to the dry-season need you calculate above and say plainly whether it is enough, and if not by how much.` : ''}
 
 ### Implementation Timeline
@@ -517,7 +518,7 @@ Work out the water needed to irrigate the growing areas through the dry season (
 
 ${irrigationRowsBlock(facts)}
 
-Recommend the cheapest effective method for this ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.textureClass : 'not measured'} soil and how to cut water use (mulch, shade, swales).${siteAreaForCalcM2 ? ` Scale to the ${(siteAreaForCalcM2 / 10000).toFixed(siteAreaForCalcM2 < 10000 ? 3 : 2)} ha site.` : ''}${waterData ? ` Compare the total need to the ~${waterData.estVolumeKL.toLocaleString()} kL of drawn storage and say if it is enough.` : ''}${facts?.water && facts.water.statedStorageLitres > 0 ? ` Compare the total daily need to the **${facts.water.statedStorageLitres.toLocaleString()} L** of tank storage on the plan and say how many days it covers.` : ''}
+Recommend the cheapest effective method for this ${d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.textureClass : 'not measured'} soil and how to cut water use (mulch, shade, swales).${siteAreaForCalcM2 ? ` Scale to the ${(siteAreaForCalcM2 / 10000).toFixed(siteAreaForCalcM2 < 10000 ? 3 : 2)} ha site.` : ''}${waterData ? ` Show the ~${waterData.estVolumeKL.toLocaleString()} kL as drawn storage capacity only. Access, reliability, water quality and available volume must be confirmed before treating it as irrigation supply.` : ''}${facts?.water && facts.water.statedStorageLitres > 0 ? ` Compare the total daily need to the **${facts.water.statedStorageLitres.toLocaleString()} L** of tank storage on the plan and say how many days it covers.` : ''}
 
 ` : ''}${sections.includes('Year-Round Food Production') ? `## All-Year-Round Food Production
 
@@ -722,6 +723,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
             'NEVER attach a capacity, depth, water level, percentage or age to a structure that is not in those facts.',
             'Where the facts are silent, the honest reading is that the thing is absent. Write recommendations as something to BUILD or BUY, not as something to monitor or draw down.',
             'Prefer saying a figure is unknown over supplying a plausible one. An invented number in this report is worse than a missing one, because the farmer cannot tell them apart.',
+            WATER_ACCESS_PROMPT_RULE,
             REPORT_PLANTING_SAFETY_RULE,
           ].join(' '),
           messages: [{ role: 'user', content: messageContent(buildPrompt(batchSections, idx === 0) + (attempt ? '\n\nYour previous draft named a listed invasive plant. Rewrite without naming or recommending any listed invasive plant.' : '')) }],

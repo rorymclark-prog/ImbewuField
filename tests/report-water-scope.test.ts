@@ -4,7 +4,9 @@ import { activeAccountLocalStorageKey } from '../lib/account-local-storage.ts';
 import { buildDemoDesignCanvasState, DEMO_SITE } from '../lib/demo-farm.ts';
 import { makeMercatorUnprojector, type DesignCanvasState } from '../lib/design-canvas.ts';
 import { collectReportSiteFacts } from '../lib/report-site-facts-collect.ts';
-import { waterPromptBlock } from '../lib/report-site-facts.ts';
+import { buildReportHeaderMarkdown, normaliseReportSiteFacts, waterPromptBlock } from '../lib/report-site-facts.ts';
+import { readFileSync } from 'node:fs';
+import { reportDocumentText } from '../lib/report-localisation.ts';
 import type { WaterPoint } from '../lib/water-points.ts';
 
 const values = new Map<string, string>();
@@ -68,4 +70,35 @@ test('missing site identity or invalid site coordinates cannot fall back to ever
     const facts = collectReportSiteFacts({ ...input, ...site, waterPoints });
     assert.equal(facts.water, undefined);
   }
+});
+
+
+test('even a boundary-contained pin records a location, not permission or reliable irrigation supply', () => {
+  values.clear();
+  const facts = collectReportSiteFacts({ ...input, waterPoints: [point('Neighbour dam')] });
+  const restored = normaliseReportSiteFacts(JSON.parse(JSON.stringify(facts)))!;
+  const prompt = waterPromptBlock(restored, false);
+  assert.match(prompt, /ownership.*permission.*reliability/i);
+  assert.match(prompt, /not.*available.*supply/i);
+  assert.match(prompt, /Neighbour dam/);
+  assert.doesNotMatch(prompt, /no dam/);
+  assert.equal(restored.water?.statedStorageLitres, 0, 'a pin carries no measured capacity');
+  const fixture = JSON.parse(readFileSync(new URL('./fixtures/report-header-translation/source-cases.json', import.meta.url), 'utf8'));
+  const note = 'Pinned on the map; water access and reliability not confirmed';
+  for (const language of ['en', 'zu', 'st', 'ts', 've']) {
+    const expected = reportDocumentText(note, language);
+    if (language !== 'en') assert.notEqual(expected, note, 'the qualification must accompany every supported report language');
+    const document = buildReportHeaderMarkdown({ ...fixture.cases[0].input, facts: restored }, language);
+    assert.ok(document.includes(expected), `${language}: the screen and PDF header must qualify the recorded pin`);
+  }
+});
+
+
+test('every independent report batch qualifies mapped capacity before it can be called irrigation supply', () => {
+  const source = readFileSync(new URL('../app/api/generate-report/route.ts', import.meta.url), 'utf8');
+  const system = source.slice(source.indexOf('          system: ['), source.indexOf("          messages: [{ role: 'user'"));
+  assert.match(system, /WATER_ACCESS_PROMPT_RULE/);
+  assert.match(source, /Do not subtract it from the dry-season deficit/);
+  assert.match(source, /available volume must be confirmed before treating it as irrigation supply/);
+  assert.doesNotMatch(source, /drawn storage and say if it is enough|State clearly whether this covers the dry-season deficit/);
 });

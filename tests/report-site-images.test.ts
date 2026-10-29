@@ -202,3 +202,26 @@ test('the report screen shows the maps and sends them to be read', () => {
   // Sheets live in this browser's store. Absence here cannot erase maps saved on another device.
   assert.match(view, /No saved design maps were found in this browser for this site/);
 });
+
+
+test('analysis history follows the loaded sheet ID when two versions share a label', async () => {
+  const plates = [
+    { id: 'missing-version', label: '08 — Whole design', at: '2026-10-20T12:00:00Z' },
+    { id: 'read-version', label: '08 — Whole design', at: '2026-10-21T12:00:00Z' },
+  ];
+  const before = JSON.stringify(plates);
+  const images = await prepareSiteAnalysisImages(plates,
+    async id => id === 'missing-version' ? null : jpeg('AAAA'),
+    async dataUrl => ({ dataUrl }));
+  assert.deepEqual(images.map(image => image.sheetId), ['read-version']);
+  assert.equal(JSON.stringify(plates), before);
+  assert.deepEqual(normaliseSiteAnalysisImages(images), [
+    { label: '08 — Whole design', mediaType: 'image/jpeg', data: 'AAAA' },
+  ], 'upstream image validation still checks the payload independently of client history');
+});
+
+test('analysis history omits a same-named version that could not fit the upload budget', async () => {
+  const plates = ['first', 'over-budget'].map(id => ({ id, label: '08 — Whole design', at: '2026-10-20T12:00:00Z' }));
+  const images = await prepareSiteAnalysisImages(plates, async () => jpeg('AAAA'), async dataUrl => ({ dataUrl }), 3);
+  assert.deepEqual(images.map(image => image.sheetId), ['first']);
+});

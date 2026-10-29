@@ -29,6 +29,11 @@ export interface SiteAnalysisImage {
   data: string;
 }
 
+/** The source identity stays with the successful payload; gallery labels are not unique. */
+export interface PreparedSiteAnalysisImage extends SiteAnalysisImage {
+  sheetId: string;
+}
+
 /**
  * How many sheets go to the model.
  *
@@ -113,8 +118,8 @@ export async function prepareSiteAnalysisImages(
   loadImage: (id: string) => Promise<string | null>,
   downscale: SheetDownscaler,
   budgetBytes: number = ANALYSIS_IMAGE_BUDGET_BYTES,
-): Promise<SiteAnalysisImage[]> {
-  const out: SiteAnalysisImage[] = [];
+): Promise<PreparedSiteAnalysisImage[]> {
+  const out: PreparedSiteAnalysisImage[] = [];
   let spent = 0;
   for (const plate of selectAnalysisPlates(plates)) {
     let source: string | null = null;
@@ -137,7 +142,7 @@ export async function prepareSiteAnalysisImages(
     const bytes = base64Bytes(data);
     if (spent + bytes > budgetBytes) continue;
     spent += bytes;
-    out.push({ label: plate.label, mediaType: 'image/jpeg', data });
+    out.push({ sheetId: plate.id, label: plate.label, mediaType: 'image/jpeg', data });
   }
   return out;
 }

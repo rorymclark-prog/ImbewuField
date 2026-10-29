@@ -791,6 +791,20 @@
   },
   "bodyEntries": [
     {
+      "english": "Reports record only the map images actually sent for analysis.",
+      "zu": "Imibiko irekhoda kuphela izithombe zamamephu ezithunyelwe ngempela ukuze zihlaziywe.",
+      "st": "Litlaleho li rekota feela litšoantšo tsa limmapa tse rometsoeng ho hlahlojoa.",
+      "ts": "Swiviko swi rhekhoda ntsena swifaniso swa mimepe leswi rhumeriweke ku ya hlahluviwa.",
+      "ve": "Mivhigo i rekhoda fhedzi zwifanyiso zwa mimapa zwo rumelwaho uri zwi sedzuluswe."
+    },
+    {
+      "english": "Mapped water points show that access and reliability need checking.",
+      "zu": "Izindawo zamanzi ezimakwe ebalazweni zibonisa ukuthi imvume yokuwasebenzisa nokutholakala kwawo njalo kudinga ukuhlolwa.",
+      "st": "Dibaka tsa metsi tse tshwailweng mmapeng di bontsha hore tumello ya tshebediso le ho fumaneha kamehla di hloka ho hlahlojwa.",
+      "ts": "Tindhawu ta mati leti funghiweke emepeni ti komba leswaku mpfumelelo wo tirhisa mati ni ku kumeka ka wona nkarhi na nkarhi swi fanele ku kamberiwa.",
+      "ve": "Fhethu ha maḓi ho swaiwaho kha mapa hu sumbedza uri thendelo ya u shumisa maḓi na u dzula a tshi wanala zwi tea u ṱoliwa."
+    },
+    {
       "english": "Offline saving and sending messages now have drafts in all four languages.",
       "zu": "Imilayezo yokugcina nokuthumela ungaxhunyiwe manje inohlaka kuzo zonke izilimi ezine.",
       "st": "Melaetsa ya ho boloka ntle le kgokahano le ho romela jwale e na le meralo ka dipuo tsohle tse nne.",

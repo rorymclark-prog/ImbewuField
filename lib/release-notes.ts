@@ -41,6 +41,13 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 October 2026', sha: '2d2ce46da', changes: [
+    'Reports record only the map images actually sent for analysis.',
+    'Mapped water points show that access and reliability need checking.',
+  ], tour: [{ title: 'Open site reports', where: 'Menu → Reports', href: '/reports',
+    detail: 'Review the report purpose, annual production plan and saved maps for your site.' },
+    { title: 'Open Design Studio', where: 'Menu → Design Studio', href: '/design',
+      detail: 'Open Preview & export, then Record plan for the scaled diagram and its legend.' }] },
   { when: '29 October 2026', sha: 'a484688bd', changes: [
     'AI maps keep continuous artwork, with tree crowns allowed over the boundary.',
     'AI map downloads now remind you to check positions and counts.',

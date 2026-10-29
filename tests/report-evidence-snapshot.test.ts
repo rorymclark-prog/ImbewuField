@@ -38,9 +38,11 @@ const sourceModule = (code: string) => `data:text/javascript,${encodeURIComponen
 const firebase = sourceModule('export const getFirebase=()=>({auth:{currentUser:null}}); export const isBackendConfigured=()=>false;');
 const css = sourceModule('export default new Proxy({}, {get:(_,key)=>key});');
 const emptyPreparation = sourceModule('export default function Preparation(){return null;}');
+const mapImageHarness = { metas: [{ id: 'today-map', label: '08 — Whole design', at: '2026-10-28T10:00:00Z', thumb: jpeg('CCCC') }], images: {} as Record<string, string> };
+Object.assign(globalThis, { __reportMapImageHarness: mapImageHarness });
 const sheets = sourceModule(`
-  export const loadSheetMetas=async()=>[{id:'today-map',label:'08 — Whole design',at:'2026-10-28T10:00:00Z',thumb:'${jpeg('CCCC')}'}];
-  export const loadSheetImage=async()=>null;
+  export const loadSheetMetas=async()=>globalThis.__reportMapImageHarness.metas;
+  export const loadSheetImage=async id=>globalThis.__reportMapImageHarness.images[id] ?? null;
 `);
 const pdfHarness: { options?: Record<string, unknown>; covers?: Array<{ image: string; caption: string }> } = {};
 Object.assign(globalThis, { __reportSnapshotPdfHarness: pdfHarness });
@@ -48,7 +50,7 @@ const pdf = sourceModule(`
   export const buildReportPdf=async(_body,options)=>{globalThis.__reportSnapshotPdfHarness.options=options; return new Blob(['test']);};
   export const deliverPdf=async()=>{};
   export const reportPdfFilename=()=> 'report.pdf';
-  export const sheetPlate=async()=>null;
+  export const sheetPlate=async dataUrl=>({dataUrl});
   export const stripInlineMarkdown=value=>value;
 `);
 const pdfAssets = sourceModule('export const prepareVisualPdfAssets=async(_visuals,covers)=>{globalThis.__reportSnapshotPdfHarness.covers=covers;return undefined;};');
@@ -76,7 +78,7 @@ const { designSiteIdFromLocation } = await import('../lib/design-studio.ts');
 const { act, create } = await import('react-test-renderer');
 const ReportView = (await import('../components/ReportView.tsx')).default;
 
-function reset() { local.clear(); session.clear(); pdfHarness.options = undefined; pdfHarness.covers = undefined; }
+function reset() { mapImageHarness.metas = [{ id: 'today-map', label: '08 — Whole design', at: '2026-10-28T10:00:00Z', thumb: jpeg('CCCC') }]; mapImageHarness.images = {}; local.clear(); session.clear(); pdfHarness.options = undefined; pdfHarness.covers = undefined; }
 const textOf = (node: any): string => typeof node === 'string' ? node : node?.children?.map(textOf).join('') ?? '';
 
 test('saved photograph bytes, captions and advice survive replacement of the live site evidence', () => {
@@ -198,6 +200,36 @@ test('generation freezes the submitted photographs even if another tab changes e
     assert.deepEqual(loadReports()[0].groundPhotos?.map(photo => photo.data), ['AAAA']);
     assert.ok(view!.root.findAllByType('img').some(node => node.props.src === jpeg('AAAA')));
     assert.ok(!view!.root.findAllByType('img').some(node => node.props.src === jpeg('BBBB')));
+  } finally {
+    globalThis.fetch = originalFetch;
+    await act(async () => { view?.unmount(); });
+  }
+});
+
+test('generating and saving advice records only the same-named map version whose image was submitted', async () => {
+  reset();
+  mapImageHarness.metas = ['unreadable-version', 'submitted-version'].map(id => ({ id, label: '08 — Whole design', at: '2026-10-28T10:00:00Z', thumb: jpeg('CCCC') }));
+  mapImageHarness.images = { 'submitted-version': jpeg('AAAA') };
+  const originalFetch = globalThis.fetch;
+  let submitted: { siteImages?: Array<{ sheetId: string; data: string }> } | undefined;
+  globalThis.fetch = async (_url, options) => {
+    submitted = JSON.parse(String(options?.body));
+    return new Response('# Generated report\n\nAdvice about the submitted map.');
+  };
+  const siteId = designSiteIdFromLocation(DEMO_LOCATION);
+  const saved = report('original-with-two-versions', { mapSelection: { siteId, ids: mapImageHarness.metas.map(map => map.id) } });
+  let view: ReturnType<typeof create>;
+  try {
+    await act(async () => { view = create(React.createElement(Ctx.Provider, { value: { lang: 'en', t: key => key, setLang() {}, onboarded: true, completeOnboarding() {} } },
+      React.createElement(ReportView, { locationData: DEMO_LOCATION, savedReport: saved, appLang: 'en', onClose() {} }))); });
+    const generate = view!.root.findAllByType('button').find(node => textOf(node) === 'Generate new report')!;
+    assert.ok(generate && !generate.props.disabled);
+    await act(async () => { await generate.props.onClick(); });
+    assert.deepEqual(submitted?.siteImages?.map(image => image.sheetId), ['submitted-version']);
+    const save = view!.root.findAllByType('button').find(node => textOf(node) === 'Save')!;
+    await act(async () => { save.props.onClick(); });
+    assert.deepEqual(loadReports()[0].analysedMapIds, ['submitted-version']);
+    assert.deepEqual(loadReports()[0].mapSelection?.ids, ['unreadable-version', 'submitted-version'], 'selection and actual analysis are different records');
   } finally {
     globalThis.fetch = originalFetch;
     await act(async () => { view?.unmount(); });
