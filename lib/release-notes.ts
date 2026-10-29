@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '29 October 2026', sha: '966aff785', changes: [
+  { when: '29 October 2026', sha: 'eea51e3d0', changes: [
     'Choose Site potential or Complete site plan, then the detail you need.',
   ], tour: [{ title: 'Open site reports', where: 'Menu → Reports', href: '/reports',
     detail: 'Review the report purpose, annual production plan and saved maps for your site.' }] },
