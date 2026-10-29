@@ -3,12 +3,13 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 import './hybrid-composite-registration.cases.ts';
+import './ai-map-composition.cases.ts';
 import { registerOpenAiMapOutput, registeredOpenAiMapSize, assertMatchingImageAspects, blendProtectedPixels, countProtectedPixelMismatches, maskEditableFraction, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
 import { buildFinishedSheetPolishPrompt, buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES, SHEET_NO } from '../lib/producer-prompt.ts';
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
-import { exactModelInputMarks, geometryLockCompositionPolicy, hasConflictingRenderAuthority, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
+import { exactModelInputMarks, hybridProtectionPolicy, geometryLockCompositionPolicy, hasConflictingRenderAuthority, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
 import { lineInFilter, REFERENCE_SHEET_LABEL } from '../lib/glossy-filters.ts';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, pairedWaterDestinationCanopyIds, waterFeaturePresentationDimensions, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, earthworksRouteStyleFor } from '../lib/water-cartography.ts';
 import { authenticateApiRequest, MAX_API_BODY_BYTES, oversizedApiBodyResponse } from '../lib/api-auth.ts';
@@ -266,8 +267,13 @@ test('photo and paper Geometry Lock retain their factual background contracts', 
 
 test('the Geometry-Lock finisher obeys the shared composition policy', () => {
   const src = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
-  assert.match(src, /protectUnmarkedGround: composition\.protectUnmarkedGround/,
-    'the protect mask must take its background contract from the shared style policy');
+  assert.match(src, /return hybridProtectionPolicy\(filter, style, hasPhoto\)/,
+    'the mask delegates to the same policy for new jobs and recovered paid jobs');
+  for (const style of ['photo_plan', 'precision_atlas'] as const) for (const hasPhoto of [true, false]) {
+    assert.equal(hybridProtectionPolicy('all', style, hasPhoto).protectUnmarkedGround,
+      geometryLockCompositionPolicy(style, hasPhoto ? 'photo' : 'paper').protectUnmarkedGround,
+      'consolidating the policy must retain the factual background contract');
+  }
   assert.match(src, /locked && compositionPolicy\.useExactGroundOverlay/,
     'painted styles must be able to suppress the exact ground tiles that caused the collage');
   assert.match(src, /compositionPolicy\.useSourceStructurePixels/,

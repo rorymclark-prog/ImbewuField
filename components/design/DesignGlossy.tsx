@@ -29,7 +29,7 @@ import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
 import { aiRenderEnabled } from '@/lib/ai-render/flag';
 import { useAuth } from '@/lib/auth';
-import { compositeAccurateMap, measureRenderDifference, restoreProtectedPixels, assertMatchingImageAspects, registerOpenAiMapOutput, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
+import { canopyForegroundAlpha, compositeAccurateMap, measureRenderDifference, restoreProtectedPixels, assertMatchingImageAspects, registerOpenAiMapOutput, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
 import { paidRenderDecision, retainedRenderHasVisibleChange } from '@/lib/render-difference';
 import { auditFromReport, recordRenderAudit } from '@/lib/render-audit';
 import { polishedRenderPoints, type RenderPoint } from '@/lib/render-geometry';
@@ -91,7 +91,7 @@ import {
   type GutterRow,
 } from '@/lib/plan-label-gutter';
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
-import { geometryLockCompositionPolicy, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
+import { AI_MAP_REVIEW_NOTICE, hybridProtectionPolicy, geometryLockCompositionPolicy, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { PLAN_VERSION } from '@/lib/plan-version';
@@ -726,6 +726,8 @@ function lockedCompositeMarks(filter: GlossyLayerFilter): CompositeMarkOptions {
 
 interface ProtectMaskOptions {
   protectOutside?: boolean;
+  protectZones?: boolean;
+  allowCanopyOverhang?: boolean;
   protectLines?: boolean;
   protectItems?: boolean;
   protectBoundary?: boolean;
@@ -742,20 +744,7 @@ function lockedProtectMaskOptions(
   style: StylePreset,
   hasPhoto: boolean,
 ): ProtectMaskOptions {
-  const composition = geometryLockCompositionPolicy(style, hasPhoto ? 'photo' : 'paper');
-  const structural = {
-    protectOutside: true,
-    protectLines: false,
-    protectItems: false,
-    protectHouse: composition.protectHousePixels,
-    protectDriveway: composition.protectDrivewayPixels,
-    protectUnmarkedGround: composition.protectUnmarkedGround,
-    houseHaloRatio: 0.003,
-    houseFeatherRatio: 0.0012,
-  };
-  return filter === 'water'
-    ? { ...structural, protectBoundary: true }
-    : structural;
+  return hybridProtectionPolicy(filter, style, hasPhoto);
 }
 
 /**
@@ -1237,12 +1226,89 @@ export async function buildComposite(
   return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
+/** Use saved dimensions, never inferred model foliage, to bound permitted overhang. */
+function paintPlannedCanopyFootprints(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  filter: GlossyLayerFilter,
+  W: number,
+  H: number,
+): void {
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  if (!(pxPerM > 0) || !Number.isFinite(pxPerM)) return;
+  ctx.fillStyle = '#FFFFFF';
+  for (const item of state.items) {
+    const def = ELEMENTS_BY_ID[item.defId];
+    if (!def || def.category !== 'growing' || def.shape !== 'circle'
+      || (!itemInFilter(def.category, filter, def.id) && !isContextElement(def, filter))) continue;
+    const rx = (item.wM ?? def.wM) * pxPerM / 2;
+    const ry = (item.hM ?? def.hM) * pxPerM / 2;
+    if (!(rx > 0 && ry > 0) || !Number.isFinite(rx + ry)) continue;
+    ctx.save();
+    ctx.translate(item.x * W, item.y * H);
+    ctx.rotate((item.rot ?? 0) * Math.PI / 180);
+    // A soft paint edge avoids a hard circular cut where model leaves meet the saved extent.
+    ctx.filter = `blur(${Math.max(1, W * 0.0015)}px)`;
+    ctx.beginPath();
+    ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+/** Keep foliage, not the circular ground tile around it, when joining art to factual context. */
+async function buildCanopyForeground(
+  art: string, state: DesignCanvasState, frame: CanvasFrame,
+  filter: GlossyLayerFilter, W: number, H: number,
+): Promise<HTMLCanvasElement> {
+  const canvas = document.createElement('canvas');
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) { releaseCanvas(canvas); throw new Error('Canopy canvas unavailable'); }
+  paintPlannedCanopyFootprints(ctx, state, frame, filter, W, H);
+  const footprint = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  const image = await loadImage(art);
+  ctx.clearRect(0, 0, W, H);
+  try { ctx.drawImage(image, 0, 0, W, H); } finally { releaseImageSource(image); }
+  const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const alpha = canopyForegroundAlpha(pixels.data, footprint, canvas.width, canvas.height);
+  for (let i = 0; i < alpha.length; i++) {
+    pixels.data[i * 4] = 255; pixels.data[i * 4 + 1] = 255; pixels.data[i * 4 + 2] = 255;
+    pixels.data[i * 4 + 3] = alpha[i];
+  }
+  ctx.putImageData(pixels, 0, 0);
+  return canvas;
+}
+
+/** Survey line and image clipping have separate jobs. The line goes behind planned crowns;
+ * suppressing its foreground segment does not move the boundary or enlarge the property. */
+async function burnPaintedBoundary(
+  map: string, state: DesignCanvasState, frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'], filter: GlossyLayerFilter, W: number, H: number,
+): Promise<string> {
+  const line = document.createElement('canvas');
+  line.width = W; line.height = H;
+  const ctx = line.getContext('2d');
+  if (!ctx) { releaseCanvas(line); throw new Error('Boundary canvas unavailable'); }
+  drawBlueprintBoundary(ctx, refLayers.boundary, n => n * W, n => n * H, W, state, frame);
+  ctx.save();
+  ctx.globalCompositeOperation = 'destination-out';
+  const foreground = await buildCanopyForeground(map, state, frame, filter, W, H);
+  ctx.drawImage(foreground, 0, 0);
+  releaseCanvas(foreground);
+  ctx.restore();
+  const overlay = drainCanvasToDataUrl(line, 'image/png');
+  return (await stackOverlayImages(map, overlay, W, H))!;
+}
+
 async function buildProtectMask(
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
   filter: GlossyLayerFilter = 'all',
   options: ProtectMaskOptions = {},
+  canopyArtwork?: string,
 ): Promise<string> {
   const imgW = frame.imgW * SCALE;
   const imgH = frame.imgH * SCALE;
@@ -1418,7 +1484,7 @@ async function buildProtectMask(
   // model unable to illustrate inside a zone → flat, plain outline maps. The edge band + the
   // outside-boundary protection + "stay inside the outline" prompt hold the shape while the
   // interior stays free for rich illustration. (Reverted the interior fill-lock, 1871db9→.)
-  for (const zone of zonesInFilter(filter) ? state.zones : []) {
+  for (const zone of options.protectZones !== false && zonesInFilter(filter) ? state.zones : []) {
     if (zone.points.length < 3 || zone.feature) continue; // ground-feature areas aren't effort-zones
     ctx.beginPath();
     zone.points.forEach(([x, y], i) => {
@@ -1469,6 +1535,21 @@ async function buildProtectMask(
       ctx.fill();
       ctx.restore();
     }
+  }
+
+  // A crown is foreground, not a transfer of neighbouring land into the design. Only its
+  // saved footprint may cross the survey line; all other exterior pixels remain protected.
+  if (options.allowCanopyOverhang) {
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-out';
+    if (canopyArtwork) {
+      const foreground = await buildCanopyForeground(canopyArtwork, state, frame, filter, imgW, imgH);
+      ctx.drawImage(foreground, 0, 0);
+      releaseCanvas(foreground);
+    } else {
+      paintPlannedCanopyFootprints(ctx, state, frame, filter, imgW, imgH);
+    }
+    ctx.restore();
   }
 
   return drainCanvasToDataUrl(canvas, 'image/png');
@@ -3082,6 +3163,9 @@ async function buildGeometryLockStructureOverlay(
   styleKey: StylePreset,
   useSourcePixels: boolean,
 ): Promise<string | undefined> {
+  // The model already paints these roofs. A second corrugated slab creates two silhouettes.
+  // Paper has no model-painted ground and still needs the deterministic structure drawing.
+  if (geometryLockCompositionPolicy(styleKey, frame.satDataUrl ? 'photo' : 'paper').ground === 'paint') return undefined;
   return useSourcePixels
     ? buildLockedStructureOverlay(sourceImage, state, frame, refLayers, W, H, styleKey)
     : buildPaintedStructureOverlay(state, frame, refLayers, W, H, styleKey);
@@ -10368,6 +10452,7 @@ async function composeStyleSheet(
   includeToolGlyphs = true,
   exactGeometry = false,
   options: {
+    aiArtwork?: boolean;
     sheetNumber?: string;
     legendRows?: StyleLegendRow[];
     /** Rows a SHEET adds that sheetLegendRows cannot derive from the design alone — sheet 04's
@@ -10556,7 +10641,10 @@ async function composeStyleSheet(
     }
     return lines;
   };
-  const customFooterLines = options.footerText ? wrapFooterText(options.footerText) : [];
+  const footerText = options.aiArtwork
+    ? [AI_MAP_REVIEW_NOTICE, options.footerText, frame.satDataUrl ? basemapAttribution() : ''].filter(Boolean).join('\n')
+    : options.footerText;
+  const customFooterLines = footerText ? wrapFooterText(footerText) : [];
   const footerHeadingH = options.footerHeading ? Math.round(legendW * 0.06) : 0;
   // Esri's imagery must be credited wherever it is shown — a licence term, not a courtesy — so the
   // exact-plan footer grows a fourth line for it. basemapAttribution() is '' on Mapbox, so this
@@ -10960,9 +11048,9 @@ async function composeStyleSheet(
     }
   } else {
     ctx.font = `italic 600 ${Math.round(legendW * 0.036)}px ${SHEET_BODY_FONT}`;
-    ctx.fillText('Illustrated render — boundary, labels', lx, H - pad - Math.round(legendW * 0.05));
-    ctx.fillText('and elements are exact; artwork is', lx, H - pad - Math.round(legendW * 0.005));
-    ctx.fillText('indicative. Confirm on site.', lx, H - pad + Math.round(legendW * 0.04));
+    ctx.fillText('AI illustration — check positions', lx, H - pad - Math.round(legendW * 0.05));
+    ctx.fillText('and counts against your saved', lx, H - pad - Math.round(legendW * 0.005));
+    ctx.fillText('Design Map before use.', lx, H - pad + Math.round(legendW * 0.04));
     // AN ILLUSTRATED SHEET IS BUILT ON THE SAME PHOTOGRAPH. The credit was first added only to the
     // exact branch, which reads as reasonable until you follow where the imagery goes: satDataUrl
     // is the underlay handed to the AI hybrid and full-treatment passes, so the illustrated sheets
@@ -11154,8 +11242,9 @@ async function composeSheetChromeOverMapArt(opts: {
     : false;
   const srcW = legacyPageInput ? Math.min(art.width, art.height * (W / H)) : art.width;
   ctx.drawImage(art, 0, 0, srcW, art.height, 0, 0, W, H);
-  drawBlueprintBoundary(ctx, refLayers.boundary, (n) => n * W, (n) => n * H, W, state, frame);
-  const mapArt = drainCanvasToDataUrl(canvas, 'image/png');
+  // Both paid stages share the same saved boundary pass and canopy occlusion policy.
+  const unboundedArt = drainCanvasToDataUrl(canvas, 'image/png');
+  const mapArt = await burnPaintedBoundary(unboundedArt, state, frame, refLayers, filter, W, H);
   const labelled = await burnExactLabelLayer(mapArt, state, frame, refLayers, filter, W, H, labelMode);
   const sheet = await composeStyleSheet(
     labelled.map,
@@ -11169,6 +11258,7 @@ async function composeSheetChromeOverMapArt(opts: {
     false,
     true,
     {
+      aiArtwork: true,
       labelMode,
       gutterLayout: labelled.gutterLayout,
       includeLabelGutters: filter !== 'all',
@@ -12823,6 +12913,7 @@ export default function DesignGlossy({
         geometryLock,
         geometryLock
           ? {
+              aiArtwork: true,
               includeLabelGutters: filter !== 'all',
               ...(filter === 'water'
                 ? {
@@ -13191,6 +13282,7 @@ export default function DesignGlossy({
           geometryLock,
           geometryLock
             ? {
+                aiArtwork: true,
                 includeLabelGutters: f !== 'all',
                 ...(f === 'water'
                   ? {
@@ -13417,8 +13509,23 @@ export default function DesignGlossy({
         styleDef.key,
         renderFrame.satDataUrl ? 'photo' : 'paper',
       );
-      const restoredImage = locked && protectMask && cleanSource
-        ? await restoreProtectedPixels(cleanSource, modelImage, protectMask)
+      // Completed paid jobs retain their original masks. Rebuild only the presentation mask
+      // from that job's frozen scene so recovery receives the same correction as a new job.
+      // Validate the stored mask first: a real crop mismatch must still fail, not be hidden.
+      let effectiveMask = protectMask;
+      if (locked && compositionPolicy.ground === 'paint' && cleanSource) {
+        if (protectMask) {
+          const [sourceSize, modelSize, maskSize] = await Promise.all([
+            loadImage(cleanSource), loadImage(modelImage), loadImage(protectMask),
+          ]);
+          try { assertMatchingImageAspects(sourceSize, modelSize, maskSize); }
+          finally { [sourceSize, modelSize, maskSize].forEach(releaseImageSource); }
+        }
+        effectiveMask = await buildProtectMask(renderState, renderFrame, renderRefLayers, f,
+          lockedProtectMaskOptions(f, styleDef.key, Boolean(renderFrame.satDataUrl)), modelImage);
+      }
+      const restoredImage = locked && effectiveMask && cleanSource
+        ? await restoreProtectedPixels(cleanSource, modelImage, effectiveMask)
         : modelImage;
       const structureOverlay = locked
         ? await buildGeometryLockStructureOverlay(
@@ -13488,7 +13595,7 @@ export default function DesignGlossy({
       //
       // Locked now means what the farmer was promised it means: saved geometry, labels and legend
       // stay exact. Photo Plan keeps the factual photo; painted styles keep Gemini's continuous
-      // property artwork and receive exact illustrated roofs/driveway instead of satellite holes.
+      // property artwork, including its roofs, without a second material stamped over it.
       const overlayImage = f === 'zones'
         // Zones are saved polygons, not model artwork. The general locked-sheet rule below must
         // not suppress them: that shipped a paid Zones sheet with only Gemini's faint impression
@@ -13504,7 +13611,7 @@ export default function DesignGlossy({
         ? await stackOverlayImages(exactGroundOverlay, structureOverlay, W, H)
         : structureOverlay;
       const mergedOverlay = await stackOverlayImages(groundedStructures, overlayImage, W, H);
-      const final = await compositeAccurateMap({
+      let final = await compositeAccurateMap({
         modelImage: restoredImage,
         satelliteImage: renderFrame.satDataUrl ?? sourceImage ?? modelImage,
         boundaryPx,
@@ -13518,6 +13625,9 @@ export default function DesignGlossy({
         width: W,
         height: H,
       });
+      final = locked && compositionPolicy.ground === 'paint'
+        ? await burnPaintedBoundary(final, renderState, renderFrame, renderRefLayers, f, W, H)
+        : final;
       // Full Treatment polishes THIS image — the finished map with exact content burned back and
       // not one glyph of text on it. Stashed pre-labels, so what the model receives has nothing
       // writable to mangle; the label layer is re-drawn from the design over its output.
@@ -13540,6 +13650,7 @@ export default function DesignGlossy({
           ? {
               // The legend prints code prefixes only in the mode that draws them, and the gutter
               // rows must honour the farmer's label-mode choice — same contract as the exact sheet.
+              aiArtwork: true,
               labelMode,
               gutterLayout: labelled.gutterLayout,
               includeLabelGutters: f !== 'all',
@@ -15517,7 +15628,7 @@ export default function DesignGlossy({
         {/* HOW THIS SHEET NAMES ITS PLANTS — one or the other, never both. Shown only where the
             selected sheet actually has coded plants, so it appears on Planting and disappears on
             Site or Sector rather than sitting there doing nothing. See lib/plant-codes.ts. */}
-        {sheetHasPlantCodes && !simple && (
+        {sheetHasPlantCodes && sheetElementNaming(filter) === 'individual' && !simple && (
           <>
           <WorkflowHeading number={3} title="Plant labels" />
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
@@ -15539,6 +15650,12 @@ export default function DesignGlossy({
             <span style={{ fontSize: 10.5, opacity: 0.6 }}>{LABEL_MODE_HINT[labelMode]}</span>
           </div>
           </>
+        )}
+
+        {sheetHasPlantCodes && sheetElementNaming(filter) === 'grouped' && !simple && (
+          <p style={{ fontSize: 11, opacity: 0.75 }}>
+            Whole design groups plants in the legend. Open the Planting sheet for individual names or codes.
+          </p>
         )}
 
         {/* Illustrated styles — the boundary-locked image-producer pipeline (beautiful AND

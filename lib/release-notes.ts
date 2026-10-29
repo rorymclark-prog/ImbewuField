@@ -41,6 +41,10 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 October 2026', sha: '9e11f2396', changes: [
+    'AI maps keep continuous artwork, with tree crowns allowed over the boundary.',
+    'AI map downloads now remind you to check positions and counts.',
+  ] },
   { when: '28 October 2026', sha: '70dfef97f', changes: [
     'Map sheets now use white paper, thin legend borders and clearer plant pictures.',
   ] },

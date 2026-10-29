@@ -56,6 +56,31 @@ export function geometryLockCompositionPolicy(
   };
 }
 
+/** Photo outline bands were being restored through the paid Whole artwork. Analysis zones
+ * still own their outlines; a painted property uses a separately drawn survey line instead. */
+export function hybridProtectionPolicy(filter: GlossyLayerFilter, style: StylePreset, hasPhoto: boolean) {
+  const composition = geometryLockCompositionPolicy(style, hasPhoto ? 'photo' : 'paper');
+  const painted = composition.ground === 'paint';
+  return {
+    protectOutside: true,
+    protectBoundary: !painted,
+    protectZones: filter === 'zones',
+    allowCanopyOverhang: painted,
+    protectLines: false,
+    protectItems: false,
+    protectHouse: composition.protectHousePixels,
+    protectDriveway: composition.protectDrivewayPixels,
+    protectUnmarkedGround: composition.protectUnmarkedGround,
+    houseHaloRatio: 0.003,
+    houseFeatherRatio: 0.0012,
+  };
+}
+
+/** Standalone downloads must carry the same review status as the gallery. A saved inventory
+ * does not establish which features an image model actually drew. */
+export const AI_MAP_REVIEW_NOTICE =
+  'AI illustration — check positions and counts against your saved Design Map before use.';
+
 /**
  * One authority decision for every illustrated style.
  *

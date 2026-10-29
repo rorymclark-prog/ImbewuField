@@ -1,6 +1,9 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "AI maps keep continuous artwork, with tree crowns allowed over the boundary.": "Limmapa tsa AI li boloka setšoantšo se tsoelang pele, meqhaka ea lifate e ka feta moeli.",
+  "AI map downloads now remind you to check positions and counts.": "Limmapa tsa AI tse jarollotsoeng joale li u hopotsa ho hlahloba libaka le lipalo.",
+
   "Map sheets now use white paper, thin legend borders and clearer plant pictures.": "Maqephe a limmapa joale a sebelisa pampiri e tšoeu, meeli e mesesane ea senotlolo le litšoantšo tse hlakileng tsa limela.",
   "Paid AI maps now finish when the image service rounds their size.": "Limmapa tsa AI tse lefelloang joale lia phethoa ha tšebeletso ea litšoantšo e potoloha boholo ba tsona.",
   "New AI glossy maps use GPT Image 2.5 Sunburst.": "Limmapa tse ncha tse benyang tsa AI li sebelisa GPT Image 2.5 Sunburst.",
