@@ -71,7 +71,3 @@ is claimed. The one update notice has explicitly unreviewed zu/st/ts/ve drafts i
 After release, reopen the real Ubhejane report/crop plan and confirm its unmarked
 plants and housing are proposed, with absent dates/amounts still unknown. Inspect the actual
 building/Record plan and free exact-map samples without changing the design.
-
-## Current-main integration - 29 October
-
-The prior integrated source `2d14bdaff` completed the full local suite:6122pass,0fail,1existingTODO, exit0. Main then advanced to paid-composition release `2d2ce46da`. This follow-up integrates the finished map parent `966aff785`, retaining every paid-render change and the new verification policy. The plant/housing correction is unchanged. Because it changes derived existing/proposed production eligibility, this follow-up conservatively retains the full current-head test gate; the focused map/UI exception is not used for it. The explanatory report table is released separately so its static guidance need not wait for this stock correction. New combined full results belong on #1137 and issue#35; prior green results remain historical evidence only.

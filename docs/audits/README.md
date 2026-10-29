@@ -14,6 +14,8 @@ The prior audit is preserved unchanged. Source-photo seams remain open; deployme
 
 ## Site reports and mapping: start here
 
+Latest production-status release: [Current-main eligibility correction and full-suite gate - 29 October 2026](2026-10-29/report-status-release-continuation-codex.md). REP-S01 remains subject to its own current-head full tests.
+
 Latest release continuation: [Current-main reconciliation and remaining release gates - 29 October 2026](2026-10-29/map-report-release-continuation-codex.md). The two earlier PR heads passed CI but remain unpublished; check their new integrated heads before merging.
 
 Latest production truth follow-up: [Use the design status for legacy plants and housing — 27 October 2026](2026-10-27/report-production-status-codex.md). This follows #1131; check its own release gates on issue #35.
