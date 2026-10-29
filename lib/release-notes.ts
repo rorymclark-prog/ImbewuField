@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 October 2026', sha: 'cc2809c55', changes: [
+    'AI maps keep tank tops and more foliage visible across the property line.',
+  ] },
   { when: '29 October 2026', sha: '53ed7ab73', changes: [
     'Open a field note from a task, with its crop and bed ready to check.',
     'Find journal notes by crop, bed, date or words you remember.',

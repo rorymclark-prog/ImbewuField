@@ -6,7 +6,9 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Paid AI map composition: start here
 
-Latest implementation: [Paid map composition corrections — 29 October 2026](2026-10-29/ai-map-composition-fixes-codex.md).
+Latest boundary follow-up: [Tanks and foliage at the property line — 29 October 2026](2026-10-29/ai-map-boundary-features-codex.md).
+
+Previous implementation: [Paid map composition corrections — 29 October 2026](2026-10-29/ai-map-composition-fixes-codex.md).
 
 Previous audit: [Paid Whole ghost strips, crowns and export provenance — 28 October 2026](https://github.com/rorymclark-prog/ImbewuField/blob/88adb66a7199040ba527c94cfee9df3f69aaf5ac/docs/audits/2026-10-28/ai-map-composition-codex.md).
 
@@ -221,6 +223,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-29 | [Paid AI map boundary foreground — Codex](2026-10-29/ai-map-boundary-features-codex.md) |
 | 2026-10-29 | [Paid AI map composition corrections — Codex](2026-10-29/ai-map-composition-fixes-codex.md) |
 | 2026-10-10 | [Production plan re-audit — Codex](2026-10-10/production-reaudit-codex.md) |
 | 2026-10-07 | [Reading and Vegetables ordinary-clause follow-up — Codex](2026-10-07/study-core-followup-codex.md) |

@@ -1235,7 +1235,8 @@ export async function buildComposite(
   return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
-/** Use saved dimensions, never inferred model foliage, to bound permitted overhang. */
+/** Saved centres and dimensions bound a presentation halo, not an enlarged property. The
+ * illustration's leaves and cylindrical tank tops can extend past their ground footprints. */
 function paintPlannedCanopyFootprints(
   ctx: CanvasRenderingContext2D,
   state: DesignCanvasState,
@@ -1243,30 +1244,36 @@ function paintPlannedCanopyFootprints(
   filter: GlossyLayerFilter,
   W: number,
   H: number,
+  kind: 'plants' | 'tanks' = 'plants',
+  halo = kind === 'plants' ? 1.15 : 2,
 ): void {
   const pxPerM = W / (frame.imgW * frame.mPerPx);
   if (!(pxPerM > 0) || !Number.isFinite(pxPerM)) return;
   ctx.fillStyle = '#FFFFFF';
   for (const item of state.items) {
     const def = ELEMENTS_BY_ID[item.defId];
-    if (!def || def.category !== 'growing' || def.shape !== 'circle'
+    if (!def || (kind === 'plants' ? def.category !== 'growing' : !def.id.startsWith('jojo_') && def.id !== 'rain_barrel')
       || (!itemInFilter(def.category, filter, def.id) && !isContextElement(def, filter))) continue;
-    const rx = (item.wM ?? def.wM) * pxPerM / 2;
-    const ry = (item.hM ?? def.hM) * pxPerM / 2;
+    // A small leaf halo and an upright tank envelope are presentation allowances. Colour
+    // selection still rejects soil; neither allowance changes the saved ground footprint.
+    const rx = (item.wM ?? def.wM) * pxPerM * halo / 2;
+    const ry = (item.hM ?? def.hM) * pxPerM * halo / 2;
     if (!(rx > 0 && ry > 0) || !Number.isFinite(rx + ry)) continue;
     ctx.save();
-    ctx.translate(item.x * W, item.y * H);
+    // Tank tops project upwards from the saved ground position in the angled illustration.
+    ctx.translate(item.x * W, item.y * H - (kind === 'tanks' ? ry : 0));
     ctx.rotate((item.rot ?? 0) * Math.PI / 180);
     // A soft paint edge avoids a hard circular cut where model leaves meet the saved extent.
     ctx.filter = `blur(${Math.max(1, W * 0.0015)}px)`;
     ctx.beginPath();
-    ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2);
+    if (def.shape === 'circle') ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2);
+    else ctx.rect(-rx, -ry, rx * 2, ry * 2);
     ctx.fill();
     ctx.restore();
   }
 }
 
-/** Keep foliage, not the circular ground tile around it, when joining art to factual context. */
+/** Keep planned foliage and tank bodies, not their surrounding ground tiles. */
 async function buildCanopyForeground(
   art: string, state: DesignCanvasState, frame: CanvasFrame,
   filter: GlossyLayerFilter, W: number, H: number,
@@ -1277,11 +1284,17 @@ async function buildCanopyForeground(
   if (!ctx) { releaseCanvas(canvas); throw new Error('Canopy canvas unavailable'); }
   paintPlannedCanopyFootprints(ctx, state, frame, filter, W, H);
   const footprint = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  ctx.clearRect(0, 0, W, H);
+  paintPlannedCanopyFootprints(ctx, state, frame, filter, W, H, 'tanks');
+  const tanks = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  ctx.clearRect(0, 0, W, H);
+  paintPlannedCanopyFootprints(ctx, state, frame, filter, W, H, 'plants', 1);
+  const seeds = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
   const image = await loadImage(art);
   ctx.clearRect(0, 0, W, H);
   try { ctx.drawImage(image, 0, 0, W, H); } finally { releaseImageSource(image); }
   const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  const alpha = canopyForegroundAlpha(pixels.data, footprint, canvas.width, canvas.height);
+  const alpha = canopyForegroundAlpha(pixels.data, footprint, canvas.width, canvas.height, tanks, seeds);
   for (let i = 0; i < alpha.length; i++) {
     pixels.data[i * 4] = 255; pixels.data[i * 4 + 1] = 255; pixels.data[i * 4 + 2] = 255;
     pixels.data[i * 4 + 3] = alpha[i];
@@ -1557,6 +1570,7 @@ async function buildProtectMask(
       releaseCanvas(foreground);
     } else {
       paintPlannedCanopyFootprints(ctx, state, frame, filter, imgW, imgH);
+      paintPlannedCanopyFootprints(ctx, state, frame, filter, imgW, imgH, 'tanks');
     }
     ctx.restore();
   }

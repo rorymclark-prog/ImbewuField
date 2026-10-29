@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Boundary artwork audit: docs/audits/2026-10-29/ai-map-boundary-release-drafts.json; unreviewed.
+  "AI maps keep tank tops and more foliage visible across the property line.": "Mimepe ya AI yi hlayisa tinhlohla ta mathangi ni matluka yo tala swi vonaka ku tsemakanya ndzilakano wa ndhawu.",
   // Annual PDF row audit: docs/audits/2026-10-29/annual-product-pdf-release-drafts.json; unreviewed.
   "PDF exports keep each product and its notes together.": "Ti-PDF leti humesiwaka ti hlayisa xikumiwa xin’wana ni xin’wana ni tinotsi ta xona swin’we.",
   // Production status audit: docs/audits/2026-10-27/report-production-status-release-drafts.json; unreviewed.
