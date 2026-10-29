@@ -17,6 +17,8 @@ const copy:UpdateCopy={
   "Record work from a task": "Rekota se entsweng ho tswa mosebetsing",
   "Menu → Task planner": "Lenane → Moralo wa mesebetsi",
   "Open a draft field note or record an actual harvest from a crop task.": "Bula moralo wa ntlha ya tshimo kapa o rekote kotulo ya nnete ho tswa mosebetsing wa sejalo.",
+  // Boundary artwork audit: docs/audits/2026-10-29/ai-map-boundary-release-drafts.json; unreviewed.
+  "AI maps keep tank tops and more foliage visible across the property line.": "Dimmapa tsa AI di boloka dihlooho tsa ditanka le mahlaku a mangata di bonahala ka nqane ho moedi wa sebaka.",
   // Annual PDF row audit: docs/audits/2026-10-29/annual-product-pdf-release-drafts.json; unreviewed.
   "PDF exports keep each product and its notes together.": "Di-PDF tse romelwang di boloka sehlahiswa ka seng le dintlha tsa sona mmoho.",
   // Production status audit: docs/audits/2026-10-27/report-production-status-release-drafts.json; unreviewed.

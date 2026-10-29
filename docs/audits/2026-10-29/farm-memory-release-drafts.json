@@ -8,7 +8,7 @@
     "lib/update-copy-locales/ve.ts": "4b918eeaa4970690d94b24f8fe5e38bec71fc410fcfd99afbd31f3bc0c478479"
   },
   "releaseShaPlaceholder": "cc2809c55",
-  "tourDecision": "The new entry uses the existing Farm memory tour; the visible five-note window includes the prior entry and therefore its two stops.",
+  "tourDecision": "The new entry retains the existing Farm memory tour destinations and descriptions explicitly, so an intervening map release cannot push its guide outside the visible five-note window.",
   "entries": [
     {
       "source": "Photo dates are easier to read; scroll through older notes on desktop.",

@@ -56,7 +56,7 @@ function probeCanvas(points: Point[]) {
     beginPath() { paths=[]; current=[]; ellipse=null; },
     moveTo(x: number,y: number) { current=[[x+transform[0],y+transform[1]]]; paths.push(current); },
     lineTo(x: number,y: number) { current.push([x+transform[0],y+transform[1]]); },
-    rect(x: number,y: number,w: number,h: number) { paths.push([[x,y],[x+w,y],[x+w,y+h],[x,y+h]]); },
+    rect(x: number,y: number,w: number,h: number) { x+=transform[0]; y+=transform[1]; paths.push([[x,y],[x+w,y],[x+w,y+h],[x,y+h]]); },
     ellipse(x: number,y: number,rx: number,ry: number) { ellipse=[x+transform[0],y+transform[1],rx,ry]; },
     closePath() { if(current.length) current.push(current[0]); },
     fill(rule?: string) { paint(points.map(p=>ellipse ? ((p[0]-ellipse[0])/ellipse[2])**2+((p[1]-ellipse[1])/ellipse[3])**2<1
@@ -89,6 +89,49 @@ test('painted Whole removes zone photo strips and allows only saved canopy windo
     assert.equal(result[2],255,filter+' must retain distant exterior');
   }
   assert.equal(JSON.stringify(state),original,'mask generation must not move trees or saved zones');
+});
+
+test('boundary foreground includes tank tops and rectangular planting but respects each sheet', () => {
+  const points:Point[]=[[100,70],[100,50],[190,100],[216,100],[20,20]];
+  const canvas=probeCanvas(points);
+  const paint=helper('paintPlannedCanopyFootprints',{ELEMENTS_BY_ID,itemInFilter,isContextElement});
+  const plants={items:[{defId:'veg_bed',x:2/3,y:1/3,wM:10,hM:10}]};
+  const tanks={items:[{defId:'jojo_5000',x:1/3,y:1/3,wM:10,hM:10}]};
+  const before=JSON.stringify({plants,tanks});
+  paint(canvas.getContext(),plants,frame,'planting',300,300);
+  assert.deepEqual(canvas.snapshot(),[0,0,255,255,0],'rectangular plant leaves get a bounded halo');
+  const ctx=canvas.getContext();ctx.clearRect();
+  paint(ctx,tanks,frame,'water',300,300,'tanks');
+  assert.deepEqual(canvas.snapshot(),[255,255,0,0,0],'tank tops project above their ground position');
+  ctx.clearRect();paint(ctx,tanks,frame,'planting',300,300,'tanks');
+  assert.deepEqual(canvas.snapshot(),[255,255,0,0,0],'existing tank artwork is physical context on Planting too');
+  ctx.clearRect();paint(ctx,tanks,frame,'zones',300,300,'tanks');
+  assert.deepEqual(canvas.snapshot(),[0,0,0,0,0],'Zones retains its outline-only contract');
+  assert.equal(JSON.stringify({plants,tanks}),before,'presentation must not move or resize the saved objects');
+});
+
+test('tank colour selection is local and foliage expansion rejects disconnected neighbouring trees', () => {
+  const w=15,h=7,art=new Uint8ClampedArray(w*h*4),plants=new Uint8ClampedArray(art.length);
+  const tanks=new Uint8ClampedArray(art.length),seeds=new Uint8ClampedArray(art.length);
+  const at=(x:number,y:number)=>(y*w+x)*4;
+  for(let i=0;i<w*h;i++) art.set([160,100,45,255],i*4);
+  for(let y=0;y<h;y++) for(let x=0;x<7;x++)plants[at(x,y)+3]=255;
+  for(let x=1;x<=3;x++)art.set([70,130,50,255],at(x,3));
+  seeds[at(1,3)+3]=255;
+  art.set([55,130,50,255],at(6,0));
+  art.set([40,105,115,255],at(11,3));tanks[at(11,3)+3]=255;
+  art.set([140,170,150,255],at(11,4));tanks[at(11,4)+3]=255;
+  for(let x=1;x<=3;x++) art.set([220,225,225,255],at(x,0));
+  art.set([40,105,115,255],at(14,3));
+  const alpha=canopyForegroundAlpha(art,plants,w,h,tanks,seeds);
+  assert.equal(alpha[3*w+3],255,'connected crown can grow beyond its saved ground footprint');
+  assert.equal(alpha[6],0,'a disconnected green neighbour must remain factual context');
+  assert.equal(alpha[3*w+11],255,'teal plastic within a saved tank window survives');
+  assert.equal(alpha[4*w+11],255,'sunlit tank lids must not acquire missing wedges');
+  assert.equal(alpha[2],0,'pale model fence strokes must not return as ghost lines');
+  assert.equal(alpha[3*w+14],0,'same colour away from a saved object stays protected');
+  assert.equal(alpha[6*w+11],0,'brown ground never becomes a tank window');
+  assert.throws(()=>canopyForegroundAlpha(art,plants,w,h,new Uint8ClampedArray(4)),/size mismatch/);
 });
 
 test('canopy foreground keeps leaves but rejects soil and never escapes the saved envelope', () => {

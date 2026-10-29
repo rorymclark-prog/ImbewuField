@@ -17,6 +17,8 @@ const copy:UpdateCopy={
   "Record work from a task": "Rekhodani zwo itwaho kha mushumo",
   "Menu → Task planner": "Menyu → Mudzudzanyi wa mishumo",
   "Open a draft field note or record an actual harvest from a crop task.": "Vulani mvetamveto ya notsi ya tsimuni kana ni rekhode khaṋo ya vhukuma kha mushumo wa tshimela.",
+  // Boundary artwork audit: docs/audits/2026-10-29/ai-map-boundary-release-drafts.json; unreviewed.
+  "AI maps keep tank tops and more foliage visible across the property line.": "Mapa dza AI dzi ita uri zwipiḓa zwa nṱha zwa mathangi na maṱari manzhi zwi vhonale zwi tshi pfuka mukano wa fhethu.",
   // Annual PDF row audit: docs/audits/2026-10-29/annual-product-pdf-release-drafts.json; unreviewed.
   "PDF exports keep each product and its notes together.": "PDF dzi bviswaho dzi vhea tshibveledzwa tshiṅwe na tshiṅwe na notsi dzatsho fhethu huthihi.",
   // Production status audit: docs/audits/2026-10-27/report-production-status-release-drafts.json; unreviewed.

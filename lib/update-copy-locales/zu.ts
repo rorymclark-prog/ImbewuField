@@ -17,6 +17,8 @@ const copy:UpdateCopy={
   "Record work from a task": "Rekhoda okwenziwe emsebenzini",
   "Menu → Task planner": "Imenyu → Ukuhlela imisebenzi",
   "Open a draft field note or record an actual harvest from a crop task.": "Vula uhlaka lwenothi lasensimini noma urekhode isivuno sangempela emsebenzini wesitshalo.",
+  // Boundary artwork audit: docs/audits/2026-10-29/ai-map-boundary-release-drafts.json; unreviewed.
+  "AI maps keep tank tops and more foliage visible across the property line.": "Amamephu e-AI agcina iziqongo zamathangi namahlamvu engeziwe zibonakala ngale komngcele wendawo.",
   // Annual PDF row audit: docs/audits/2026-10-29/annual-product-pdf-release-drafts.json; unreviewed.
   "PDF exports keep each product and its notes together.": "Ama-PDF athunyelwe agcina umkhiqizo ngamunye namanothi awo ndawonye.",
   // Production status audit: docs/audits/2026-10-27/report-production-status-release-drafts.json; unreviewed.
