@@ -16,7 +16,7 @@ The prior audit is preserved unchanged. Source-photo seams remain open; deployme
 
 Latest production-status release: [Current-main eligibility correction and full-suite gate - 29 October 2026](2026-10-29/report-status-release-continuation-codex.md). REP-S01 remains subject to its own current-head full tests.
 
-Latest choice-guide follow-up: [Report-purpose comparison and separate wording/depth choices - 29 October 2026](2026-10-29/report-choice-guide-codex.md). Stacked after #1137; release status is recorded on its PR and issue #35.
+Latest choice-guide follow-up: [Report-purpose comparison and separate wording/depth choices - 29 October 2026](2026-10-29/report-choice-guide-codex.md). Follows #1131 independently of #1137’s production-status gate; release status is recorded on its PR and issue #35.
 
 Latest release continuation: [Current-main reconciliation and remaining release gates - 29 October 2026](2026-10-29/map-report-release-continuation-codex.md). The two earlier PR heads passed CI but remain unpublished; check their new integrated heads before merging.
 
@@ -113,6 +113,11 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [Production-status current-main release continuation - 29 October 2026](2026-10-29/report-status-release-continuation-codex.md).
+
+- [Report choice tables and wording/depth guidance - 29 October 2026](2026-10-29/report-choice-guide-codex.md).
+- [Map/report current-main release continuation - 29 October 2026](2026-10-29/map-report-release-continuation-codex.md).
 
 - [Paid AI map composition corrections — 29 October 2026](2026-10-29/ai-map-composition-fixes-codex.md).
 

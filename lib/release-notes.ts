@@ -44,7 +44,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '29 October 2026', sha: '041d69c9d', changes: [
     'Production plans keep unmarked plants and housing as proposed, matching your design.',
   ] },
-  { when: '29 October 2026', sha: 'eea51e3d0', changes: [
+  { when: '29 October 2026', sha: '1f54713e8', changes: [
     'Choose Site potential or Complete site plan, then the detail you need.',
   ], tour: [{ title: 'Open site reports', where: 'Menu → Reports', href: '/reports',
     detail: 'Review the report purpose, annual production plan and saved maps for your site.' }] },
