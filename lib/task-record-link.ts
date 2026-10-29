@@ -83,5 +83,5 @@ export function parseTaskHarvestQuery(params: URLSearchParams): { cropKey: strin
 export function taskHarvestHref(task: BoardTask): string | null {
   if (task.kind !== 'crop' || task.action !== 'harvest' || !task.cropKey) return null;
   const params = new URLSearchParams({ tab: 'picked', crop: task.cropKey });
-  return parseTaskHarvestQuery(params) ? `/records?${params.toString()}` : null;
+  return parseTaskHarvestQuery(params) ? `/records?${params.toString()}#log-harvest` : null;
 }

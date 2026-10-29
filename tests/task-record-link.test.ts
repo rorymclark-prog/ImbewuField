@@ -141,10 +141,23 @@ test('the harvest form consumes a task once, preserving other query state and le
   run(browser, update, parseTaskHarvestQuery, router);
   assert.deepEqual(state, { crop: 'Lettuce', cropKey: 'lettuce', quantity: '' });
   assert.equal(href, 'https://example.test/records?tab=picked&keep=value#picked');
-  assert.deepEqual(navigations, [{ url: '/records?tab=picked&keep=value#picked', options: { scroll: false } }],
+  assert.deepEqual(navigations.map(navigation => navigation.url), ['/records?tab=picked&keep=value#picked'],
     'Next must consume the canonical navigation URL too, so HMR and remounts cannot restore the crop');
   state = { crop: 'Tomatoes', cropKey: 'tomatoes', quantity: '4' };
   run(browser, update, parseTaskHarvestQuery, router);
   assert.deepEqual(state, { crop: 'Tomatoes', cropKey: 'tomatoes', quantity: '4' }, 'effect replay cannot replace the next crop or its entered quantity');
   assert.equal(navigations.length, 1);
+  // The destination must name an element the shipped form actually renders.
+  // A link that merely selects Picked leaves the quantity below the summary cards.
+  const shortcut = taskHarvestHref({ ...task, action: 'harvest' });
+  assert.ok(shortcut);
+  const target = new URL(shortcut, 'https://example.test');
+  assert.ok(target.hash);
+  assert.ok(source.includes(`id="${target.hash.slice(1)}"`), 'the harvest link must resolve to a real form anchor');
+  href = target.href;
+  state = { crop: '', cropKey: null, quantity: '' };
+  run(browser, update, parseTaskHarvestQuery, router);
+  assert.equal(new URL(href).hash, target.hash, 'consuming a task must retain its form destination');
+  assert.equal(navigations.at(-1)?.options.scroll, true, 'resolve the form anchor after it mounts so the phone exposes the empty quantity');
+  assert.equal(state.quantity, '');
 });

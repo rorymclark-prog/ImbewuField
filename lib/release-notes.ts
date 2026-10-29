@@ -41,11 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '29 October 2026', sha: 'c6941cc98', changes: [
+  { when: '29 October 2026', sha: 'fdfb6b698', changes: [
     'Open a field note from a task, with its crop and bed ready to check.',
     'Find journal notes by crop, bed, date or words you remember.',
     'Compare dated photos and download selected notes for an adviser.',
-    'Harvest tasks open the harvest book with the crop selected and amount blank.',
+    'Harvest tasks open the crop and blank quantity field, ready to fill in.',
   ], tour: [{ title: 'Explore your farm memory', where: 'Menu → Field journal', href: '/journal',
     detail: 'Search your notes, compare saved photos and keep a printable copy.' },
   { title: 'Record work from a task', where: 'Menu → Task planner', href: '/cropplan',

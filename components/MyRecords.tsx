@@ -320,7 +320,10 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
     // Switching tabs remounts this form. The original task must not keep replacing
     // the farmer's next crop, or replay after changing accounts on a shared phone.
     url.searchParams.delete('crop');
-    router.replace(`${url.pathname}${url.search}${url.hash}`, { scroll: false });
+    // Resolve the anchor after this form has mounted: the book's summary cards
+    // otherwise fill the phone screen before the farmer reaches the empty amount.
+    if (!url.hash) url.hash = 'log-harvest';
+    router.replace(`${url.pathname}${url.search}${url.hash}`, { scroll: true });
   }, [router]);
 
   const handleFile = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -403,7 +406,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
   return (
     <Card accent="#1F4D2B" className="md:max-w-xl">
       <SectionLabel>{t('myRecordsLogProductionHeader')}</SectionLabel>
-      <form onSubmit={handleSubmit} className="space-y-3 u-form-column">
+      <form id="log-harvest" onSubmit={handleSubmit} className="space-y-3 u-form-column" style={{ scrollMarginTop: 16 }}>
         {sampleProducePhoto(form.crop) && <figure className="flex items-center gap-3"><img src={sampleProducePhoto(form.crop)!} alt={form.crop} width={56} height={56} style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover' }} /><figcaption className="text-xs">{recordsUi(lang, 'AI-generated crop reference · add your own harvest photo below.', 'Isithombe sesitshalo esenziwe nge-AI · faka esakho isithombe sesivuno ngezansi.')}</figcaption></figure>}
         <div>
           <FieldLabel>{recordsFill(lang, 'Produce / product')}</FieldLabel>
