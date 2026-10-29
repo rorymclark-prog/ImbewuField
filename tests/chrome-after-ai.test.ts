@@ -9,9 +9,9 @@ import {
   paidPolishNeedsChromePass,
 } from '@/lib/sheet-chrome-pass';
 import { AI_INPUT_WIDTH } from '@/lib/sheet-scale';
-import { calculateStyleSheetSize } from '@/lib/reference-presentation';
+import { calculateSheetLegendPlacement, calculateStyleSheetSize } from '@/lib/reference-presentation';
 import { fullTreatmentProtectPolicy } from '@/lib/locked-polish-flow';
-import { SHEET_RENDER_RECIPE } from '@/lib/sheet-render-recipe';
+import { SHEET_RENDER_RECIPE, savedSheetFreshness } from '@/lib/sheet-render-recipe';
 
 // CHROME IS DRAWN AFTER THE AI PASS, ALWAYS.
 //
@@ -210,8 +210,21 @@ test('a full masterplan has one grouped inventory, not leader labels repeated in
     '\n// ── Persistence',
   );
   assert.match(composer, /includeLabelGutters\?: boolean/);
-  assert.match(composer, /options\.includeLabelGutters === false \? 0 : sheetGutterWidth\(mapW\)/,
-    'the masterplan must reclaim the physical margin width, not merely leave it blank');
+  // The margin decision now lives with the shared placement arithmetic. Check both the wiring
+  // and its actual result; pinning the old inline ternary would reject that one-authority move
+  // while still being unable to notice a helper that left the unwanted margins in place.
+  // The old inline-call assertion could not guard the exported page envelope. The compact
+  // masterplan was enlarged by the PDF, so the same size must now own placement AND paper.
+  assert.match(composer, /const sheetSize = calculateStyleSheetSize\(mapW, H\)/);
+  assert.match(composer, /calculateSheetLegendPlacement\(sheetSize,/);
+  assert.match(composer, /padToPaperSheet\(canvas, sheetSize\.W\)/);
+  assert.match(composer, /includeLabelGutters: options\.includeLabelGutters/);
+  assert.match(composer, /const gutter = placement\.mapX/);
+  const size = calculateStyleSheetSize(2200, 2400);
+  const compact = calculateSheetLegendPlacement(size, { includeLabelGutters: false });
+  assert.equal(compact.mapX, 0, 'the unpadded masterplan must not reserve duplicate callout bands');
+  assert.equal(compact.legendX, size.mapW, 'the unpadded key follows the actual map');
+  assert.ok(compact.W < size.W, 'the compositor omits leader bands; common paper is added afterwards without scaling');
 
   const pass = functionBody(
     'async function composeSheetChromeOverMapArt(',
@@ -341,7 +354,12 @@ test('a change to what a paid sheet looks like bumps the recipe token', () => {
     DESIGN_GLOSSY_SOURCE.includes('+ `:${SHEET_RENDER_RECIPE}`'),
     'the last-render cache must use the same recipe authority as durable saved sheets',
   );
-  assert.equal(SHEET_RENDER_RECIPE, 'r5', 'the r-token must move when the sheet changes');
+  // The former equality pinned r5 rather than the cache rule and rejected this legitimate
+  // legend-shell repair. Pre-shared-panel bitmaps must remain available but read as older.
+  assert.match(SHEET_RENDER_RECIPE, /^r[1-9]\d*$/);
+  assert.ok(Number(SHEET_RENDER_RECIPE.slice(1)) > 5, 'the shared-panel recipe must differ from pre-repair r5');
+  assert.equal(savedSheetFreshness({ planVersion: 'same', renderRecipe: 'r5' }, 'same'), 'older-render');
+  assert.equal(savedSheetFreshness({ planVersion: 'same', renderRecipe: SHEET_RENDER_RECIPE }, 'same'), 'current');
   // PLAN_VERSION must NOT move with it: bumping that re-keys the gallery and takes paid renders
   // away from farmers who already have them.
   assert.match(

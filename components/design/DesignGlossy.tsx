@@ -114,11 +114,15 @@ import {
 } from '@/lib/plant-codes';
 import { paintTopDownVetiverHedge, VETIVER_HEDGE_IDS } from '@/lib/vetiver-hedge';
 import {
+  SHEET_LEGEND_TYPE,
+  sheetLegendPanelMetrics,
   balancedLegendColumnRanges,
   countedLegendText,
   fitLegendFontSize,
   layoutLegendColumn,
   legendHeightFillRatio,
+  legendFooterFontSize,
+  legendWrapWords,
   legendMaxFontSize,
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
@@ -160,6 +164,8 @@ import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE, type SheetSpec, type SheetRou
 import {
   calculateBoundaryPresentationLayout,
   calculatePhasingSheetSize,
+  calculateSheetLegendPlacement,
+  calculateStyleSheetSize,
   paperSheetCanvas,
   styleSheetLegendWidth,
 } from '@/lib/reference-presentation';
@@ -4981,7 +4987,7 @@ function referenceBlueprintLabels(
   return rebalance(curated, 9);
 }
 
-/** Scale bar, bottom-left — the largest "nice" round metre count fitting ~18% of the sheet. */
+/** The map owns the metre width; a paper halo keeps that same measured bar legible on any base. */
 function drawBlueprintScaleBar(
   ctx: CanvasRenderingContext2D,
   W: number,
@@ -4989,27 +4995,40 @@ function drawBlueprintScaleBar(
   pad: number,
   rowH: number,
   pxPerM: number,
+  position: { x?: number; y?: number } = {},
 ): void {
   const niceM = [5, 10, 20, 25, 50, 100, 200];
   let m = niceM[0];
   for (const nm of niceM) if (nm * pxPerM <= W * 0.18) m = nm;
   const barW = m * pxPerM;
-  const bx = pad, by = H - pad - rowH * 0.3;
-  ctx.strokeStyle = '#F3EEE2';
-  ctx.fillStyle = '#F3EEE2';
-  ctx.lineWidth = 3;
+  const bx = position.x ?? pad;
+  const by = position.y ?? H - pad - rowH * 0.3;
+  ctx.save();
+  ctx.globalAlpha = 1;
+  ctx.lineCap = 'butt';
+  ctx.lineJoin = 'round';
   ctx.beginPath();
   ctx.moveTo(bx, by);
   ctx.lineTo(bx + barW, by);
-  ctx.moveTo(bx, by - 8);
-  ctx.lineTo(bx, by + 8);
-  ctx.moveTo(bx + barW, by - 8);
-  ctx.lineTo(bx + barW, by + 8);
+  ctx.moveTo(bx, by - 9);
+  ctx.lineTo(bx, by + 9);
+  ctx.moveTo(bx + barW, by - 9);
+  ctx.lineTo(bx + barW, by + 9);
+  ctx.strokeStyle = '#FBF6EC';
+  ctx.lineWidth = 7;
   ctx.stroke();
-  ctx.font = `700 ${Math.round(W * 0.014)}px ${SHEET_BODY_FONT}`;
+  ctx.strokeStyle = '#20382B';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+  ctx.font = `700 ${Math.max(16, Math.round(W * 0.016))}px ${SHEET_BODY_FONT}`;
   ctx.textBaseline = 'bottom';
   ctx.textAlign = 'left';
-  ctx.fillText(`${m} m`, bx, by - 12);
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = '#FBF6EC';
+  ctx.strokeText(`${m} m`, bx, by - 14);
+  ctx.fillStyle = '#20382B';
+  ctx.fillText(`${m} m`, bx, by - 14);
+  ctx.restore();
 }
 
 /** How many legend rows fit the sheet at this size (the panel must not run off the bottom).
@@ -7084,6 +7103,14 @@ export async function buildBlueprintBaseMap(
       )
     : undefined;
   if (sourceStructures) ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
+  else {
+    // The ground pass omits buildings/access that the source-cutout pass promises to draw. On
+    // plain paper there is no source cutout: without this fallback the classroom had a label
+    // and a legend row pointing to empty paper. Reuse the same footprints and roof symbols as
+    // the design sheets, including buildings beyond the promoted main-map house.
+    drawBlueprintDriveway(ctx, renderRefLayers, px, py, pxPerM, false, !renderFrame.satDataUrl);
+    drawPaperRoofs(ctx, renderState, renderRefLayers, px, py, pxPerM);
+  }
   drawBlueprintBoundary(ctx, renderRefLayers.boundary, px, py, W, renderState, renderFrame);
   // Existing placed items are discrete site facts, so they sit above the traced ground and locked
   // source structures as symbols/footprints rather than becoming another zone wash.
@@ -7767,33 +7794,33 @@ function readableTextOn(hex: string): string {
   return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? '#0B120B' : '#FFFFFF';
 }
 
-/** North arrow on a translucent disc so it reads over any satellite. Frames are north-up with no
- *  rotation (CanvasFrame, lib/design-canvas.ts), so "up" is always true north — no bearing to apply. */
+/** Frames are north-up. One ink-and-paper compass reads on plain and photographic maps alike. */
 function drawImplNorthArrow(ctx: CanvasRenderingContext2D, cx: number, cy: number, size: number): void {
   const R = size * 0.6;
   ctx.save();
-  ctx.beginPath();
-  ctx.arc(cx, cy, R, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(10,16,22,0.72)';
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(255,255,255,0.35)';
-  ctx.lineWidth = 1.5;
-  ctx.stroke();
-  // Arrow: filled triangle pointing up, tail notched so it reads as a compass needle, not a play icon.
+  ctx.globalAlpha = 1;
+  ctx.lineJoin = 'round';
   ctx.beginPath();
   ctx.moveTo(cx, cy - R * 0.5);
   ctx.lineTo(cx - R * 0.32, cy + R * 0.34);
   ctx.lineTo(cx, cy + R * 0.16);
   ctx.lineTo(cx + R * 0.32, cy + R * 0.34);
   ctx.closePath();
-  ctx.fillStyle = '#F3EEE2';
+  ctx.strokeStyle = '#FBF6EC';
+  ctx.lineWidth = Math.max(3, size * 0.08);
+  ctx.stroke();
+  ctx.fillStyle = '#20382B';
   ctx.fill();
-  ctx.fillStyle = '#F3EEE2';
-  ctx.font = `800 ${Math.round(size * 0.34)}px ${SHEET_BODY_FONT}`;
+  ctx.font = `800 ${Math.round(size * 0.4)}px ${SHEET_BODY_FONT}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'bottom';
+  ctx.strokeText('N', cx, cy - R * 0.52);
   ctx.fillText('N', cx, cy - R * 0.52);
   ctx.restore();
+}
+
+function drawSheetNorthArrow(ctx: CanvasRenderingContext2D, mapX: number, mapW: number, mapH: number): void {
+  drawImplNorthArrow(ctx, mapX + mapW - Math.round(mapW * 0.04), Math.round(mapH * 0.08), Math.max(30, Math.round(mapW * 0.026)));
 }
 
 interface SectorAnalysisComposition {
@@ -9328,12 +9355,13 @@ function phasingSheetSize(
  * calculation says it is prints with the schedule half over the map. */
 function phasingPanelRect(size: ReturnType<typeof calculatePhasingSheetSize>) {
   const pad = Math.round(size.mapW * 0.02);
-  const lgW = size.legendWidth;
-  const mapX = size.gutter;
-  const lgX = mapX + size.mapW + size.gutter;
+  const placement = calculateSheetLegendPlacement(size);
+  const lgW = placement.legendWidth;
+  const mapX = placement.mapX;
+  const lgX = placement.legendX;
   const lgY = 0;
   const lgBottom = size.H;
-  return { pad, lgW, lgX, lgY, lgBottom, mapX };
+  return { pad, lgW, lgX, lgY, lgBottom, mapX, typeW: placement.typeWidth };
 }
 
 // Draws every EXACT-content layer of the Phasing sheet that is not the schedule panel itself:
@@ -9503,8 +9531,7 @@ async function composePhasingSheet(
   const scaleRowH = Math.round(mapW * 0.026);
   drawBlueprintScaleBar(ctx, mapW, mapH, pad, scaleRowH, pxPerM);
   ctx.restore();
-  const naSize = Math.max(30, Math.round(mapW * 0.026));
-  drawImplNorthArrow(ctx, lgX - pad - naSize * 0.6, H - pad - naSize * 0.6, naSize);
+  drawSheetNorthArrow(ctx, mapX, mapW, mapH);
 
   // 4. The schedule panel itself — copied pixel-for-pixel from a freshly built exact sheet, so the
   //    text is guaranteed byte-identical to buildImplementationMap's own render rather than a second,
@@ -9613,7 +9640,7 @@ export async function buildImplementationMap(
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
   const pxPerM = mapW / (renderFrame.imgW * renderFrame.mPerPx);
-  const { pad, lgW, lgX, lgY, lgBottom, mapX } = phasingPanelRect(size);
+  const { pad, lgW, lgX, lgY, lgBottom, mapX, typeW } = phasingPanelRect(size);
 
   // 1. Satellite + scrim, inset into the map column so the label gutters stay paper.
   ctx.fillStyle = PAPER;
@@ -9641,37 +9668,27 @@ export async function buildImplementationMap(
   //    or widened sheet width. When content would overflow we shed task bullets and surplus site
   //    rules — never shrink the type — exactly as the spec requires ("fewer task bullets over
   //    unreadable text"). A hard clip at the panel foot guarantees nothing ever spills.
-  const ip = Math.round(lgW * 0.055);
-  const innerX = lgX + ip;
-  const innerW = lgW - ip * 2;
-  const panelBottom = lgBottom - ip;
-
-  ctx.fillStyle = PAPER;
-  ctx.fillRect(lgX, lgY, lgW, lgBottom - lgY);
-  ctx.strokeStyle = 'rgba(32,25,15,0.34)';
-  ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.moveTo(lgX, lgY);
-  ctx.lineTo(lgX, lgBottom);
-  ctx.stroke();
+  const panel = drawSheetLegendPanel(ctx, lgX, lgW, lgBottom - lgY);
+  const ip = panel.contentLeft;
+  const innerX = lgX + panel.contentLeft;
+  const innerW = panel.contentRight - panel.contentLeft;
+  const panelBottom = panel.contentBottom;
   ctx.save();
   ctx.beginPath();
-  ctx.rect(lgX, lgY, lgW, lgBottom - lgY);
+  ctx.rect(innerX, panel.inset, innerW, panelBottom - panel.inset);
   ctx.clip();
 
-  const fsHeader = Math.round(lgW * 0.051);
-  const fsSection = Math.round(lgW * 0.035);
-  const fsBody = Math.round(lgW * 0.029);
-  const lineH = Math.round(fsBody * 1.34);
-  const blockGap = Math.round(lineH * 0.55);
-  // Sheet 08's header used SHEET_TITLE_FONT (Georgia) while 01–07 set theirs in
-  // REFERENCE_LABEL_FONT, so one sheet of a printed plan set arrived in a different typeface. It
-  // also made the sheet number read as "o8": Georgia has oldstyle figures, so its zero sits at
-  // x-height next to a full-height 8. Nobody chose that — the phasing panel was written separately
-  // and reached for the nearest title constant.
+  const fsHeader = Math.round(typeW * SHEET_LEGEND_TYPE.title);
+  const fsSection = Math.round(typeW * SHEET_LEGEND_TYPE.section);
+  const fsBody = Math.round(typeW * SHEET_LEGEND_TYPE.detail);
+  // The Ubhejane sample schedule is longer than the synthetic example: loose paragraph spacing
+  // hid its site rules even after optional bullets were removed. Keep the larger shared type,
+  // but use a compact reading rhythm so the final instructions still fit the widened legend box.
+  const lineH = Math.round(fsBody * 1.2);
+  const blockGap = Math.round(lineH * 0.3);
   const headerFont = `800 ${fsHeader}px ${REFERENCE_LABEL_FONT}`;
   const sectionFont = `800 ${fsSection}px ${SHEET_BODY_FONT}`;
-  const titleFont = `800 ${Math.round(lgW * 0.034)}px ${SHEET_BODY_FONT}`;
+  const titleFont = `800 ${Math.round(typeW * SHEET_LEGEND_TYPE.section)}px ${SHEET_BODY_FONT}`;
   const bodyFont = `500 ${fsBody}px ${SHEET_BODY_FONT}`;
   const weekFont = `600 ${fsBody}px ${SHEET_BODY_FONT}`;
   const holdFont = `italic 600 ${fsBody}px ${SHEET_BODY_FONT}`;
@@ -9715,7 +9732,9 @@ export async function buildImplementationMap(
     h += wrap(phase.holdPoint, bulletTextW, holdFont).length * lineH; // hold point
     return h + blockGap;
   };
-  const headerH = panelTitleLines.length * Math.round(fsHeader * 1.08) + lineH * 2 + Math.round(lineH * 0.8);
+  const headerH = panel.titleBaseline - ip
+    + panelTitleLines.length * Math.round(fsHeader * 1.08)
+    + Math.round(lgW * (0.006 + SHEET_LEGEND_TYPE.style + 0.035 + 0.045 + 0.03));
   const coLines = wrap(plan.criticalOrder.join('  →  '), innerW, bodyFont);
   const criticalH = plan.criticalOrder.length
     ? Math.round(fsSection * 1.3) + coLines.length * lineH + blockGap
@@ -9746,7 +9765,7 @@ export async function buildImplementationMap(
   while (!fits() && maxRules > 1) maxRules--;
 
   // ── Render top-down (with a hard clip at the panel foot as a belt-and-braces guard) ──────────
-  let y = lgY + ip + fsHeader;
+  let y = panel.titleBaseline;
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#20190F';
@@ -9755,21 +9774,22 @@ export async function buildImplementationMap(
     ctx.fillText(line, innerX, y);
     y += Math.round(fsHeader * 1.08);
   }
+  y += Math.round(lgW * 0.006);
   ctx.fillStyle = '#6B6355';
-  ctx.font = `italic 500 ${fsBody}px ${SHEET_BODY_FONT}`;
+  ctx.font = `600 ${Math.round(typeW * SHEET_LEGEND_TYPE.style)}px ${SHEET_BODY_FONT}`;
   ctx.fillText('Reference Blueprint', innerX, y);
-  y += lineH;
+  y += Math.round(lgW * SHEET_LEGEND_TYPE.style);
   ctx.fillStyle = '#8A8172';
-  ctx.font = `500 ${fsBody}px ${SHEET_BODY_FONT}`;
+  ctx.font = `600 ${fsBody}px ${SHEET_BODY_FONT}`;
   ctx.fillText(placeName ?? 'Your design', innerX, y);
-  y += Math.round(lineH * 0.45);
-  ctx.strokeStyle = 'rgba(32,25,15,0.24)';
-  ctx.lineWidth = 1;
+  y += Math.round(lgW * 0.035);
+  ctx.strokeStyle = 'rgba(11,18,11,0.25)';
+  ctx.lineWidth = 1.5;
   ctx.beginPath();
   ctx.moveTo(innerX, y);
-  ctx.lineTo(lgX + lgW - ip, y);
+  ctx.lineTo(lgX + panel.contentRight, y);
   ctx.stroke();
-  y += Math.round(lineH * 0.75);
+  y += Math.round(lgW * 0.045) + Math.round(lgW * 0.03);
 
   const drawLines = (lines: string[], x: number, font: string, color: string): void => {
     ctx.font = font;
@@ -9860,9 +9880,8 @@ export async function buildImplementationMap(
   }
   ctx.restore();
 
-  // North arrow, on its disc just left of the panel foot.
-  const naSize = Math.max(30, Math.round(mapW * 0.026));
-  drawImplNorthArrow(ctx, lgX - pad - naSize * 0.6, H - pad - naSize * 0.6, naSize);
+  // The compass occupies the same map corner as the other eight sheets.
+  drawSheetNorthArrow(ctx, mapX, mapW, mapH);
 
   // ONE PAPER SIZE FOR THE WHOLE SET. Sheet 09 builds its own canvas and returns it directly rather
   // than going through composeStyleSheet, so it was the only sheet that never reached the paper
@@ -10403,7 +10422,7 @@ function drawStyleLegendSymbol(
 // docs/PLAN-SET-SPEC.md). The Blueprint maps bake this in; the Style output never had it, which is
 // most of the visible gap vs ChatGPT's sheets. All drawn deterministically from the real design.
 /**
- * Centre a finished sheet on A-series landscape paper.
+ * Place a finished sheet on A-series landscape paper with its legend anchored at the right.
  *
  * Pure addition: the composed sheet is drawn unchanged into a larger paper-coloured canvas, so no
  * mark moves relative to any other mark and nothing can be clipped. Where the plot's shape does not
@@ -10415,8 +10434,8 @@ function drawStyleLegendSymbol(
  * including the paid ones, where the model has already rendered and this only adds chrome. No AI
  * input is ever a padded sheet.
  */
-function padToPaperSheet(sheet: HTMLCanvasElement): string {
-  const paper = paperSheetCanvas(sheet.width, sheet.height);
+function padToPaperSheet(sheet: HTMLCanvasElement, minimumWidth = sheet.width): string {
+  const paper = paperSheetCanvas(Math.max(sheet.width, minimumWidth), sheet.height);
   if (paper.width === sheet.width && paper.height === sheet.height) {
     return drainCanvasToDataUrl(sheet, 'image/png');
   }
@@ -10432,15 +10451,37 @@ function padToPaperSheet(sheet: HTMLCanvasElement): string {
   // someone forgot to fill.
   ctx.fillStyle = PAPER;
   ctx.fillRect(0, 0, paper.width, paper.height);
+  // The compact masterplan omits leader gutters. Put its spare paper on the left so its
+  // legend still sits on the same right-hand trim as the other eight sheets.
   ctx.drawImage(
     sheet,
-    Math.round((paper.width - sheet.width) / 2),
+    paper.width - sheet.width,
     Math.round((paper.height - sheet.height) / 2),
   );
   // drawImage is synchronous: the unpadded sheet is finished once copied. Keeping both backing
   // stores until Safari's next GC doubled the largest exact-sheet allocation on every render.
   releaseCanvas(sheet);
   return drainCanvasToDataUrl(canvas, 'image/png');
+}
+
+// Rory asked for the same box, in the same place, with the same fonts on every map.
+// Previously only Water/Planting/Structures had this frame, and Phasing drew a separate shell.
+function drawSheetLegendPanel(ctx: CanvasRenderingContext2D, x: number, width: number, height: number) {
+  const panel = sheetLegendPanelMetrics(width, height);
+  ctx.save();
+  // A heavy green slab overwhelmed the drawings. Keep the shared white paper and text bounds,
+  // with a fine outline that still defines the key when the plan is printed.
+  ctx.fillStyle = PAPER;
+  ctx.fillRect(x, 0, width, height);
+  roundRectPath(ctx, x + panel.inset, panel.inset,
+    width - panel.inset * 2, height - panel.inset * 2, Math.round(width * 0.055));
+  ctx.fillStyle = PAPER;
+  ctx.fill();
+  ctx.strokeStyle = '#58705C';
+  ctx.lineWidth = Math.max(1.5, width * 0.003);
+  ctx.stroke();
+  ctx.restore();
+  return panel;
 }
 
 async function composeStyleSheet(
@@ -10477,15 +10518,20 @@ async function composeStyleSheet(
   } = {},
 ): Promise<string> {
   const map = await loadImage(mapDataUrl);
-  // Most sheets are [gutter][map][gutter][legend]. A full masterplan is [map][legend]: its grouped
-  // legend plus compact map codes are the complete inventory, so side leaders only waste map area.
-  // `W` remains "everything left of the legend panel", keeping the panel geometry unchanged.
+  // Empty leader bands become readable legend space; a genuine margin-label layout retains them.
+  // The compact masterplan shares that wider key without adding duplicate leader gutters.
   const mapW = map.width;
   const H = map.height;
-  const gutter = options.includeLabelGutters === false ? 0 : sheetGutterWidth(mapW);
-  const W = mapW + gutter * 2;
-  const legendW = styleSheetLegendWidth(W);
-  const outW = W + legendW;
+  const sheetSize = calculateStyleSheetSize(mapW, H);
+  const placement = calculateSheetLegendPlacement(sheetSize, {
+    includeLabelGutters: options.includeLabelGutters,
+    hasRightGutterLabels: Boolean(options.gutterLayout?.rows.some((row) => row.side === 'right')),
+  });
+  const gutter = placement.mapX;
+  const W = placement.legendX;
+  const legendW = placement.legendWidth;
+  const typeW = placement.typeWidth;
+  const outW = placement.W;
   const canvas = document.createElement('canvas');
   canvas.width = outW;
   canvas.height = H;
@@ -10506,46 +10552,23 @@ async function composeStyleSheet(
   if (gutter > 0 && options.gutterLayout) drawLabelGutter(ctx, options.gutterLayout, gutter, mapW, H);
 
   // ── Legend panel ──
-  const benchmarkPanel = styleLabel === 'Reference Blueprint' && (filter === 'water' || filter === 'planting' || filter === 'structures');
-  const panelInset = benchmarkPanel ? Math.max(2, Math.round(legendW * 0.004)) : 0;
-  ctx.fillStyle = benchmarkPanel ? '#0B2116' : PAPER;
-  ctx.fillRect(W, 0, legendW, H);
-  if (benchmarkPanel) {
-    ctx.save();
-    ctx.shadowColor = 'rgba(0,0,0,0.12)';
-    ctx.shadowBlur = Math.round(legendW * 0.008);
-    ctx.shadowOffsetY = Math.round(legendW * 0.003);
-    roundRectPath(
-      ctx,
-      W + panelInset,
-      panelInset,
-      legendW - panelInset * 2,
-      H - panelInset * 2,
-      Math.round(legendW * 0.012),
-    );
-    ctx.fillStyle = PAPER;
-    ctx.fill();
-    ctx.shadowColor = 'transparent';
-    ctx.strokeStyle = 'rgba(67,61,48,0.36)';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-    ctx.restore();
-  }
-  const pad = Math.round(legendW * 0.075);
-  const lx = W + panelInset + pad;
-  const maxX = outW - panelInset - pad;
+  const panel = drawSheetLegendPanel(ctx, W, legendW, H);
+  const panelInset = panel.inset;
+  const pad = panel.padding;
+  const lx = W + panel.contentLeft;
+  const maxX = W + panel.contentRight;
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
-  let y = panelInset + pad + Math.round(legendW * 0.07);
+  let y = panel.titleBaseline;
   ctx.fillStyle = '#20190F';
-  const titleSize = Math.round(legendW * 0.078);
+  const titleSize = Math.round(typeW * SHEET_LEGEND_TYPE.title);
   ctx.font = `800 ${titleSize}px ${REFERENCE_LABEL_FONT}`;
   const titleWords = `${options.sheetNumber ?? SHEET_NO[filter]} — ${layerLabel.toUpperCase()}`.split(/\s+/);
   const titleLines: string[] = [];
   let titleLine = '';
   for (const word of titleWords) {
     const next = titleLine ? `${titleLine} ${word}` : word;
-    if (titleLine && ctx.measureText(next).width > maxX - lx && titleLines.length < 2) {
+    if (titleLine && ctx.measureText(next).width > maxX - lx) {
       titleLines.push(titleLine);
       titleLine = word;
     } else {
@@ -10553,19 +10576,19 @@ async function composeStyleSheet(
     }
   }
   if (titleLine) titleLines.push(titleLine);
-  for (const line of titleLines.slice(0, 3)) {
+  for (const line of titleLines) {
     ctx.fillText(line, lx, y);
     y += Math.round(titleSize * 1.08);
   }
   y += Math.round(legendW * 0.006);
   ctx.fillStyle = '#6B6355';
-  ctx.font = `600 ${Math.round(legendW * 0.05)}px ${SHEET_BODY_FONT}`;
+  ctx.font = `600 ${Math.round(typeW * SHEET_LEGEND_TYPE.style)}px ${SHEET_BODY_FONT}`;
   const styleWords = styleLabel.split(/\s+/);
   const styleLines: string[] = [];
   let styleLine = '';
   for (const word of styleWords) {
     const next = styleLine ? `${styleLine} ${word}` : word;
-    if (styleLine && ctx.measureText(next).width > maxX - lx && styleLines.length < 2) {
+    if (styleLine && ctx.measureText(next).width > maxX - lx) {
       styleLines.push(styleLine);
       styleLine = word;
     } else {
@@ -10573,13 +10596,13 @@ async function composeStyleSheet(
     }
   }
   if (styleLine) styleLines.push(styleLine);
-  const styleLineH = Math.round(legendW * 0.05);
-  for (const line of styleLines.slice(0, 3)) {
+  const styleLineH = Math.round(legendW * SHEET_LEGEND_TYPE.style);
+  for (const line of styleLines) {
     ctx.fillText(line, lx, y);
     y += styleLineH;
   }
   ctx.fillStyle = '#8A8172';
-  ctx.font = `600 ${Math.round(legendW * 0.045)}px ${SHEET_BODY_FONT}`;
+  ctx.font = `600 ${Math.round(typeW * SHEET_LEGEND_TYPE.detail)}px ${SHEET_BODY_FONT}`;
   ctx.fillText(placeName ?? 'Your design', lx, y);
   y += Math.round(legendW * 0.035);
   ctx.strokeStyle = 'rgba(11,18,11,0.25)';
@@ -10607,7 +10630,7 @@ async function composeStyleSheet(
     return url ? [url] : [];
   }));
   const legendTop = y + Math.round(legendW * 0.03);
-  const footerFs = options.footerText ? Math.max(9, Math.round(legendW * 0.025)) : Math.round(legendW * 0.036);
+  const footerFs = legendFooterFontSize(typeW);
   const footerLineH = Math.max(11, Math.round(footerFs * 1.28));
   const footerBoxPad = options.footerBox ? Math.max(6, Math.round(legendW * 0.024)) : 0;
   const footerTextX = lx + footerBoxPad;
@@ -10615,7 +10638,7 @@ async function composeStyleSheet(
   const wrapFooterText = (value: string): string[] => {
     ctx.font = options.footerHeading
       ? `600 ${footerFs}px ${SHEET_BODY_FONT}`
-      : `italic 500 ${footerFs}px ${SHEET_BODY_FONT}`;
+      : `italic 600 ${footerFs}px ${SHEET_BODY_FONT}`;
     // A NEWLINE IS A HARD BREAK, NOT A SPACE.
     //
     // This wrapped on /\s+/, which treats "\n" as whitespace like any other. The Water sheet's
@@ -10660,17 +10683,23 @@ async function composeStyleSheet(
   // satDataUrl is the same condition drawBlueprintBase uses to lay paper instead of a photo, so the
   // credit and the picture can never disagree.
   const attributionLine = frame.satDataUrl ? basemapAttribution() : '';
+  const defaultFooterLines = wrapFooterText([
+    exactGeometry
+      ? 'Exact plan — geometry and counts\ncome from your saved design.\nNo unsaved features added.'
+      : AI_MAP_REVIEW_NOTICE,
+    attributionLine,
+  ].filter(Boolean).join('\n'));
   const footerBlockH = customFooterLines.length
     ? customFooterLines.length * footerLineH
       + footerHeadingH
       + Math.round(legendW * 0.035)
       + footerBoxPad * 2
-    : Math.round(legendW * (attributionLine ? 0.2 : 0.16));
+    : defaultFooterLines.length * footerLineH;
   const panelBottom = H - panelInset;
   const footerTop = panelBottom - pad - footerBlockH;
   const availableRowsH = Math.max(1, footerTop - legendTop);
   const contentW = maxX - lx;
-  const normalFs = legendRowFontSize(legendW, availableRowsH, rows.length);
+  const normalFs = legendRowFontSize(typeW, availableRowsH, rows.length);
   const baseSw = Math.round(legendW * 0.064);
   const columnGap = Math.max(10, Math.round(legendW * 0.025));
   const singleColumnTextGap = Math.round(legendW * 0.03);
@@ -10679,7 +10708,7 @@ async function composeStyleSheet(
     ctx.font = `600 ${fontSize}px ${SHEET_BODY_FONT}`;
     const lines: string[] = [];
     let current = '';
-    for (const word of value.split(/\s+/)) {
+    for (const word of legendWrapWords(value)) {
       const next = current ? `${current} ${word}` : word;
       if (current && ctx.measureText(next).width > textWidth) {
         lines.push(current);
@@ -10871,7 +10900,7 @@ async function composeStyleSheet(
   // Searching per column count fixes both symptoms at once, and they were always one bug: the
   // space that became gaps is the space the type should have grown into. Fewest columns wins on a
   // tie, so a sparse legend still stays a single readable list.
-  const growthCeiling = legendMaxFontSize(legendW);
+  const growthCeiling = legendMaxFontSize(typeW);
   const fitForColumns = (columnCount: number): number => fitLegendFontSize(
     (fontSize) => {
       const candidate = planColumns(columnCount, fontSize);
@@ -11032,35 +11061,14 @@ async function composeStyleSheet(
       ctx.fillText(line, footerTextX, footerY);
       footerY += footerLineH;
     }
-  } else if (exactGeometry) {
-    ctx.font = `italic 600 ${Math.round(legendW * 0.036)}px ${SHEET_BODY_FONT}`;
-    // A fourth line does not fit BELOW the third — appending one put the Esri credit through the
-    // bottom of the panel, half-clipped, on the first render that used it. The block is LIFTED
-    // instead, so whatever its line count, it still ends on the baseline the three-line version
-    // ended on. footerBlockH already reserved the extra height above (0.16 -> 0.2 of legendW), so
-    // the legend rows above have the clearance for it.
-    const lift = attributionLine ? Math.round(legendW * 0.045) : 0;
-    ctx.fillText('Exact plan — geometry and counts', lx, H - pad - Math.round(legendW * 0.05) - lift);
-    ctx.fillText('come from your saved design.', lx, H - pad - Math.round(legendW * 0.005) - lift);
-    ctx.fillText('No unsaved features added.', lx, H - pad + Math.round(legendW * 0.04) - lift);
-    // Esri's imagery must be credited wherever it is shown — a licence term, not a courtesy. Only
-    // drawn when the live provider is actually Esri; on Mapbox attributionLine is '' and lift is 0,
-    // so nothing on the sheet moves at all.
-    if (attributionLine) {
-      ctx.fillText(attributionLine, lx, H - pad + Math.round(legendW * 0.04));
-    }
   } else {
-    ctx.font = `italic 600 ${Math.round(legendW * 0.036)}px ${SHEET_BODY_FONT}`;
-    ctx.fillText('AI illustration — check positions', lx, H - pad - Math.round(legendW * 0.05));
-    ctx.fillText('and counts against your saved', lx, H - pad - Math.round(legendW * 0.005));
-    ctx.fillText('Design Map before use.', lx, H - pad + Math.round(legendW * 0.04));
-    // AN ILLUSTRATED SHEET IS BUILT ON THE SAME PHOTOGRAPH. The credit was first added only to the
-    // exact branch, which reads as reasonable until you follow where the imagery goes: satDataUrl
-    // is the underlay handed to the AI hybrid and full-treatment passes, so the illustrated sheets
-    // are DERIVED from Esri's imagery too — and those are the ones a farmer pays for. Crediting the
-    // free sheet and not the paid one would leave the obligation unmet exactly where it matters.
-    if (attributionLine) {
-      ctx.fillText(attributionLine, lx, H - pad + Math.round(legendW * 0.085));
+    // Measure the complete footer, including imagery credit, inside the shared content box.
+    // The old third baseline was below the panel inset once the legend became wider.
+    ctx.font = `italic 600 ${footerFs}px ${SHEET_BODY_FONT}`;
+    let footerY = footerTop + footerFs;
+    for (const line of defaultFooterLines) {
+      ctx.fillText(line, lx, footerY);
+      footerY += footerLineH;
     }
   }
 
@@ -11071,61 +11079,16 @@ async function composeStyleSheet(
   // the distance it claims. A scale bar is the one mark on a plan a farmer is entitled to hold a
   // ruler against, so this must key off the map's own width and sit inside the map's own column.
   const pxPerM = mapW / (frame.imgW * frame.mPerPx);
-  const niceM = [5, 10, 20, 25, 50, 100, 200];
-  let m = niceM[0];
-  for (const nm of niceM) if (nm * pxPerM <= mapW * 0.18) m = nm;
-  const barW = m * pxPerM;
-  const bx = gutter + Math.round(mapW * 0.03);
-  const by = H - Math.round(H * 0.045);
-  ctx.lineCap = 'butt';
-  ctx.strokeStyle = 'rgba(11,14,10,0.55)';
-  ctx.lineWidth = 7;
-  ctx.beginPath();
-  ctx.moveTo(bx, by); ctx.lineTo(bx + barW, by);
-  ctx.moveTo(bx, by - 9); ctx.lineTo(bx, by + 9);
-  ctx.moveTo(bx + barW, by - 9); ctx.lineTo(bx + barW, by + 9);
-  ctx.stroke();
-  ctx.strokeStyle = '#FBF6EC';
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.moveTo(bx, by); ctx.lineTo(bx + barW, by);
-  ctx.moveTo(bx, by - 9); ctx.lineTo(bx, by + 9);
-  ctx.moveTo(bx + barW, by - 9); ctx.lineTo(bx + barW, by + 9);
-  ctx.stroke();
-  ctx.font = `700 ${Math.round(mapW * 0.016)}px ${REFERENCE_LABEL_FONT}`;
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'bottom';
-  ctx.lineWidth = 4;
-  ctx.strokeStyle = 'rgba(11,14,10,0.6)';
-  ctx.strokeText(`${m} m`, bx, by - 14);
-  ctx.fillStyle = PAPER;
-  ctx.fillText(`${m} m`, bx, by - 14);
-
-  // ── North arrow (over the map, top-right) ──
-  const nx = gutter + mapW - Math.round(mapW * 0.04);
-  const ny = Math.round(H * 0.08);
-  ctx.beginPath();
-  ctx.moveTo(nx, ny - 30);
-  ctx.lineTo(nx - 11, ny);
-  ctx.lineTo(nx, ny - 9);
-  ctx.lineTo(nx + 11, ny);
-  ctx.closePath();
-  ctx.fillStyle = PAPER;
-  ctx.strokeStyle = 'rgba(11,14,10,0.65)';
-  ctx.lineWidth = 3;
-  ctx.stroke();
-  ctx.fill();
-  ctx.font = `700 ${Math.round(mapW * 0.017)}px ${REFERENCE_LABEL_FONT}`;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'bottom';
-  ctx.lineWidth = 4;
-  ctx.strokeStyle = 'rgba(11,14,10,0.65)';
-  ctx.strokeText('N', nx, ny - 34);
-  ctx.fillStyle = PAPER;
-  ctx.fillText('N', nx, ny - 34);
+  drawBlueprintScaleBar(ctx, mapW, H, 0, 0, pxPerM, {
+    x: gutter + Math.round(mapW * 0.03),
+    y: H - Math.round(H * 0.045),
+  });
+  drawSheetNorthArrow(ctx, gutter, mapW, H);
 
   // A2 LANDSCAPE, added as PAPER rather than taken out of the map. See PAPER_SHEET_RATIO.
-  return padToPaperSheet(canvas);
+  // The compact masterplan omits leaders, not paper size. A smaller exported bitmap was being
+  // enlarged in the PDF, making its supposedly shared legend and lettering visibly bigger.
+  return padToPaperSheet(canvas, sheetSize.W);
 }
 
 // extendProtectMaskToStyleSheet lived here. It widened a map-space protect mask onto a composed
@@ -14464,6 +14427,10 @@ export default function DesignGlossy({
 
   // One explicit rerun path for the visible refresh button and the main CTA.
   const runCurrentSheet = useCallback(() => {
+    // A selected saved row otherwise keeps winning the preview after a new image is made.
+    // Mark the intent too, so late gallery metadata cannot reopen that historical row.
+    autoPreviewHandledKeyRef.current = `${gallerySiteId}:${selectedNo}`;
+    setGalleryViewId(null);
     // Cross-check against the single routing authority (lib/sheet-render-route.ts): the dispatch
     // below must never independently drift from what sheetRenderRoute computes for the SAME
     // sheet+style — the exact drift pattern that has bitten repeatedly (see that file's header,
@@ -14531,7 +14498,7 @@ export default function DesignGlossy({
     }
     if (analysisStyle) return generate('gemini');
     return renderDesignMap();
-  }, [exactSheet, restyleAiKind, phasingAiMode, producerStyle, engine, geometryLock, analysisStyle, selectedSheet, isExactRender, renderBaseMap, renderSectorMap, renderImplementationMap, generatePhasingViaQueue, generateSectorViaQueue, generateOneViaQueue, generateProducer, generate, renderDesignMap]);
+  }, [gallerySiteId, selectedNo, exactSheet, restyleAiKind, phasingAiMode, producerStyle, engine, geometryLock, analysisStyle, selectedSheet, isExactRender, renderBaseMap, renderSectorMap, renderImplementationMap, generatePhasingViaQueue, generateSectorViaQueue, generateOneViaQueue, generateProducer, generate, renderDesignMap]);
 
   // Direct Step 1 button. If this sheet is already in exact mode, redraw immediately. Otherwise,
   // wait for React to switch the generator selection and then run the deterministic renderer.

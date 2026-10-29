@@ -761,11 +761,16 @@ export function existingSiteGroundRings(
   state: Pick<DesignCanvasState, 'zones'>,
   refLayers: Pick<MapRefLayers, 'house' | 'driveway'> | undefined,
 ): DesignCanvasState['zones'] {
-  const houseCovered = (refLayers?.house.length ?? 0) >= 3;
+  const mapHouse = refLayers?.house ?? [];
+  const houseCovered = mapHouse.length >= 3;
   const drivewayCovered = (refLayers?.driveway.length ?? 0) >= 2;
   return state.zones.filter((zone) => {
     if (!zone.feature || zone.points.length < 3) return false;
-    if (zone.feature === 'house' && houseCovered) return false;
+    // The map promotes one building. Suppressing every house ring also erased the classroom's
+    // name/key; only that identical promoted footprint is already covered. The boundary is a
+    // dedicated line, never a ground fill or a second ground-surface legend entry.
+    if (zone.feature === 'boundary') return false;
+    if (zone.feature === 'house' && houseCovered && sameFootprint(mapHouse, zone.points)) return false;
     if (zone.feature === 'driveway' && drivewayCovered) return false;
     return ownedByCurrentStep('base', { kind: 'zone', feature: zone.feature });
   });

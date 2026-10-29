@@ -14,6 +14,14 @@ The prior audit is preserved unchanged. Source-photo seams remain open; deployme
 
 ## Site reports and mapping: start here
 
+Latest release continuation: [Current-main reconciliation and remaining release gates - 29 October 2026](2026-10-29/map-report-release-continuation-codex.md). The two earlier PR heads passed CI but remain unpublished; check their new integrated heads before merging.
+
+Latest PDF sample follow-up: [Keep chapter headings with their opening text — 27 October 2026](2026-10-27/report-pdf-pagination-codex.md). Read its release status on #1131 and issue #35.
+
+Latest published report handoff: [Claude reviewed, merged and checked the two report PRs — 27 October 2026](2026-10-27/site-report-handoff-results-claude.md).
+
+Map release continuation: [Nine-sheet visual audit and current-main integration — 27 October 2026](2026-10-27/map-visual-audit-codex.md). Check its PR/ledger terminal status before treating it as published.
+
 Latest integration: [Site reports with the published role reports and wave 23 — 26 October 2026](2026-10-26/site-report-role-integration-codex.md).
 
 Previous integration: [Report branch updated with current main — 25 October 2026](2026-10-25/site-report-main-integration-codex.md).
@@ -35,6 +43,14 @@ without pretending it was merged into main. The private report folder is listed
 in the catalogue; personal site records are not copied into this archive.
 
 ## Site survey: start here
+
+Latest visual audit: [Fine map frames, legible chrome and consistent print size — 27 October 2026](2026-10-27/map-visual-audit-codex.md).
+
+Latest readability follow-up: [Wider readable legends and plain-paper buildings — 26 October 2026](2026-10-26/map-readable-legend-buildings-codex.md).
+
+Latest legend follow-up: [Consistent legend panels across all nine sheets — 26 October 2026](2026-10-26/map-legend-consistency-codex.md).
+
+Latest map follow-up: [Ubhejane map recovery and current exact-sheet delivery — 26 October 2026](2026-10-26/ubhejane-map-recovery-codex.md).
 
 Latest implementation: [Survey draft recovery and signed-in Ubhejane check — 22 October 2026](2026-10-22/survey-draft-recovery-codex.md).
 
@@ -94,8 +110,18 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 - [Paid AI map composition corrections — 29 October 2026](2026-10-29/ai-map-composition-fixes-codex.md).
 
+- [Nine-map visual audit and lighter shared frames — 27 October 2026](2026-10-27/map-visual-audit-codex.md).
+
+- [Phasing public-sample fit and retained final rule — 27 October 2026](2026-10-27/phasing-public-sample-fit-codex.md).
+
 - [Site reports #1099 and #1101 merged and verified on production (Codex handoff results) — 27 October 2026](2026-10-27/site-report-handoff-results-claude.md).
 - [Wave 28 keyboard focus in overlays: w28-01 to w28-06, focus moves in, Tab stays inside, Escape closes and returns focus; Lima opens from the keyboard — 27 October 2026](2026-10-27/wave-28-dialog-focus-claude.md).
+
+- [Wider readable legends and plain-paper buildings — 26 October 2026](2026-10-26/map-readable-legend-buildings-codex.md).
+
+- [Consistent legend panels across all nine sheets — 26 October 2026](2026-10-26/map-legend-consistency-codex.md).
+
+- [Ubhejane map recovery and current exact-sheet delivery — 26 October 2026](2026-10-26/ubhejane-map-recovery-codex.md).
 - [Wave 27 farmer-facing error messages: w27-01 to w27-05, no raw browser, Firebase or storage wording on 14 screens; fieldwork API copy kept — 26 October 2026](2026-10-26/wave-27-raw-errors-claude.md).
 - [Wave 26 Codex hand-offs closed after #1121 merged, and #1121's report screens checked: w26-01 to w26-04 — 26 October 2026](2026-10-26/wave-26-handoffs-claude.md).
 - [Wave 25 forms, offline and keyboard capture: w25-01 to w25-07, practice-mode contact copy, hidden-input focus, offline ChunkLoadError on unvisited routes — 26 October 2026](2026-10-26/wave-25-forms-offline-keyboard-claude.md).

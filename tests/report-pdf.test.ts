@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { pdfContentStreams } from './pdf-content-streams.ts';
+import { pdfContentStreams, pdfTextStreams } from './pdf-content-streams.ts';
 
 import {
   layoutTableColumns,
@@ -431,4 +431,50 @@ test('printed annual product pages keep dated windows, source qualifiers and und
   assert.match(streams, /Dec/); assert.match(streams, /2027/);
   assert.match(streams, /not harvest records/); assert.match(streams, /timing not established/);
   assert.match(streams, /Source qualifier 15/);
+});
+
+// The real comprehensive Ubhejane export left a subheading at the bottom of one page
+// and its opening paragraph on the next. Inspect emitted page streams across boundaries;
+// a test of the heading's presence alone cannot notice this reading break.
+for (const level of [2, 3] as const) {
+  test(`report level-${level} headings keep their opening paragraph and emphasis across page boundaries`, async () => {
+    const { buildReportPdf } = await import('../lib/report-pdf.ts');
+    for (let count = 25; count <= 39; count += 1) {
+      const filler = Array.from({ length: count }, (_, index) => `Filler record ${index}. This paragraph keeps its supplied wording.`).join('\n\n');
+      const heading = `HEADINGKEEP${level}`;
+      const body = 'OPENINGBODY Keep the recorded source, unresolved checks and next action together for review. ' + 'The supplied evidence remains unchanged while the layout is reviewed. '.repeat(4);
+      const markdown = `# Pagination fixture\n\n## Contents\nControlled fixture, not farm guidance.\n\n${filler}\n\n${'#'.repeat(level)} ${heading}\n${body}`;
+      const blob = await buildReportPdf(markdown, { biome: 'Fixture', lat: 0, lon: 0, rainfallMm: 0, meanTempC: 0, dateLabel: 'Fixture' });
+      const pages = pdfTextStreams(await blob.arrayBuffer());
+      const headingPage = pages.findIndex(page => page.includes(heading));
+      const bodyPage = pages.findIndex(page => page.includes('OPENINGBODY'));
+      assert.ok(headingPage >= 0 && bodyPage >= 0, 'both supplied text blocks must survive');
+      assert.equal(headingPage, bodyPage, `heading was stranded after ${count} filler paragraphs`);
+      const page = pages[headingPage];
+      const fontAt = (marker: string) => {
+        const offset = page.indexOf(marker);
+        const block = page.slice(page.lastIndexOf('BT', offset), offset);
+        const font = /\/(F\d+)\s+(\d+(?:\.\d+)?)\s+Tf/.exec(block);
+        assert.ok(font, 'the emitted heading/body text must have an explicit font');
+        return { name: font[1], size: Number(font[2]) };
+      };
+      const headingFont = fontAt(heading), bodyFont = fontAt('OPENINGBODY');
+      assert.notEqual(headingFont.name, bodyFont.name, 'measuring the opening paragraph must not turn the heading into body text');
+      assert.ok(headingFont.size >= bodyFont.size, 'a heading must not shrink below its opening text');
+    }
+  });
+}
+
+test('report headings keep the first table row even when its cells wrap', async () => {
+  const { buildReportPdf } = await import('../lib/report-pdf.ts');
+  for (let count = 23; count <= 39; count += 1) {
+    const filler = Array.from({ length: count }, (_, index) => `Filler record ${index}. This paragraph keeps its supplied wording.`).join('\n\n');
+    const markdown = `# Table fixture\n\n## Contents\nControlled fixture, not farm guidance.\n\n${filler}\n\n## TABLEHEADINGKEEP\n| Source | Note |\n| --- | --- |\n| FIRSTROWKEEP | ${'Preserve this supplied observation and its status. '.repeat(12)} |`;
+    const blob = await buildReportPdf(markdown, { biome: 'Fixture', lat: 0, lon: 0, rainfallMm: 0, meanTempC: 0, dateLabel: 'Fixture' });
+    const pages = pdfTextStreams(await blob.arrayBuffer());
+    const headingPage = pages.findIndex(page => page.includes('TABLEHEADINGKEEP'));
+    const rowPage = pages.findIndex(page => page.includes('FIRSTROWKEEP'));
+    assert.ok(headingPage >= 0 && rowPage >= 0, 'the heading and supplied first row must survive');
+    assert.equal(headingPage, rowPage, `first wrapped row separated from its section after ${count} filler paragraphs`);
+  }
 });

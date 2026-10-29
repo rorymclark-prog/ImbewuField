@@ -1,6 +1,22 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // PDF sample audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Report headings stay with their opening text when you export a PDF.": "Tinhlokomhaka ta xiviko ti sala ni tsalwa ra tona ro sungula loko u humesa PDF.",
+  // Visual audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Map legends have thinner borders and clearer scale marks.": "Mabokisi ya swikombiso swa mimepe ya ni mindzilakano yo vevuka ni swikombiso swa mpimo leswi nga erivaleni.",
+  "Menu → Site design": "Menyu → Pulani ya ndhawu",
+  "Check the new map lettering": "Kamba matsalelo lamantshwa ya mepe",
+  "Create a free exact map. Check the larger key and the buildings you traced.": "Endla mepe lowu kongomeke wa mahala. Kamba nhlamuselo leyikulu ya swikombiso ni miako leyi u nga yi dirowa.",
+  "Check the maps in your site report": "Kamba mimepe eka xiviko xa ndhawu ya wena",
+  "Review each included map before exporting. Saved older drawings stay available.": "Kamba mepe wun’wana ni wun’wana lowu katsiweke u nga si wu humesa. Swidirowiwa swa khale leswi hlayisiweke swa ha kumeka.",
+  // Map follow-up: docs/audits/2026-10-26/map-release-note-drafts.json; unreviewed.
+  "New map legends use spare margin space for larger, clearer lettering.": "Tinhlamuselo letintshwa ta swikombiso swa mepe ti tirhisa ndhawu leyi nga tirhisiwiki etlhelo leswaku marito ma va makulu ni ku hlayeka kahle.",
+  "Paper base maps show each building you traced, with separate building names.": "Mimepe ya masungulo ya le papileni yi komba muako wun’wana ni wun’wana lowu u nga wu dirowa, ni mavito ya miako lama hambaneke.",
+  "Saved maps stay available; create new drawings to see these improvements.": "Mimepe leyi hlayisiweke ya ha kumeka; endla swidirowiwa leswintshwa ku vona ku antswisiwa loku.",
+  "All nine map sheets use the same legend box, fonts and spacing.": "Mapheji hinkwawo ya nkaye ya mimepe ma tirhisa bokisi rin’we ra swikombiso, tifonto ni swivandla leswi fanaka.",
+  "New drawings keep the legend on the right; your saved maps stay available.": "Swidirowiwa leswintshwa swi veka nhlamuselo ya swikombiso exineneni; mimepe ya wena leyi hlayisiweke ya ha kumeka.",
+  "Long map headings wrap inside their legend box.": "Tinhlokomhaka to leha ta mepe ti aviwa hi tilayini endzeni ka bokisi ra swikombiso.",
   "Saved AI maps can be reassembled without buying another render.": "Mimepe ya AI leyi hlayisiweke yi nga hlanganisiwa nakambe handle ko xava xifaniso xin’wana.",
   "AI maps keep continuous artwork, with tree crowns allowed over the boundary.": "Mimepe ya AI yi hlayisa xifaniso lexi yaka mahlweni, marhavi ya mirhi ma nga hundza ndzilakano.",
   "AI map downloads now remind you to check positions and counts.": "Mimepe ya AI leyi dawunilodiweke sweswi yi ku tsundzuxa ku kambela tindhawu ni tinhlayo.",

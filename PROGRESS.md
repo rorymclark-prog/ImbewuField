@@ -1,5 +1,18 @@
 # ImbewuField — Build Progress
 
+## 26 October 2026 — readable legend space and base-map buildings
+
+Continues #1131's shared panel. Empty right leader paper becomes legend space;
+actual right-side labels keep their band. The nine-sheet public fixture has one
+913px panel at the same right edge, with larger shared type. The paper base map
+now paints every traced building and retains a separate classroom's name; the
+boundary is keyed once. Default footers are measured inside the panel. Saved
+geometry and PLAN_VERSION are unchanged; r7 preserves earlier saved images.
+Source, failed-before regressions and rendered evidence are in
+`docs/audits/2026-10-26/map-readable-legend-buildings-codex.md`. Final checks and
+publication status are tracked in the PR/issue handover. This changes the picture.
+
+
 > **Current map-render goal and ongoing task list:** see
 > **`docs/ACTIVE-MAP-QUALITY-TASKS.md`**. The older "What's left" section below describes the
 > original 33-frame product handoff only; it is not the completion list for the current

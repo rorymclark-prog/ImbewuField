@@ -1,6 +1,22 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // PDF sample audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Report headings stay with their opening text when you export a PDF.": "Thoho dza muvhigo dzi dzula na maipfi adzo a u thoma musi ni tshi bvisa PDF.",
+  // Visual audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Map legends have thinner borders and clearer scale marks.": "Mabogisi a zwiga zwa mimepe a na mikano miṱuku na zwiga zwa tshikalo zwi re khagala.",
+  "Menu → Site design": "Menyu → Puḽane ya fhethu",
+  "Check the new map lettering": "Ṱolani maṅwalwa maswa a mepe",
+  "Create a free exact map. Check the larger key and the buildings you traced.": "Itani mepe wo teaho wa mahala. Ṱolani ṱhalutshedzo khulwane ya zwiga na zwifhaṱo zwe na zwi ola.",
+  "Check the maps in your site report": "Ṱolani mimepe kha muvhigo wa fhethu haṋu",
+  "Review each included map before exporting. Saved older drawings stay available.": "Sedzulusani mepe muṅwe na muṅwe wo katelwaho musi ni sa athu u bvisa faela. Zwifanyiso zwa kale zwo vhulungwaho zwi kha ḓi wanala.",
+  // Map follow-up: docs/audits/2026-10-26/map-release-note-drafts.json; unreviewed.
+  "New map legends use spare margin space for larger, clearer lettering.": "Ṱhalutshedzo ntswa dza zwiga zwa mepe dzi shumisa tshikhala tshi sa shumiswiho thungo uri maṅwalwa a vhe mahulwane nahone a vhalege zwavhuḓi.",
+  "Paper base maps show each building you traced, with separate building names.": "Mimepe ya mutheo ya kha bammbiri i sumbedza tshifhaṱo tshiṅwe na tshiṅwe tshe na tshi ola, na madzina o fhambanaho a zwifhaṱo.",
+  "Saved maps stay available; create new drawings to see these improvements.": "Mimepe yo vhulungwaho i kha ḓi wanala; olani mimepe miswa uri ni vhone khwiniso idzi.",
+  "All nine map sheets use the same legend box, fonts and spacing.": "Masiaṱari oṱhe a ṱahe a mimepe a shumisa bogisi ḽithihi ḽa zwiga, fonto na zwikhala zwi fanaho.",
+  "New drawings keep the legend on the right; your saved maps stay available.": "Zwifanyiso zwiswa zwi vhea ṱhalutshedzo ya zwiga kha tsha u ḽa; mimepe yaṋu yo vhulungwaho i kha ḓi wanala.",
+  "Long map headings wrap inside their legend box.": "Ṱhoho ndapfu dza mepe dzi khethekanywa nga mitaladzi ngomu ha bogisi ḽa zwiga.",
   "Saved AI maps can be reassembled without buying another render.": "Mapa wa AI wo vhulungwaho u nga kuvhanganywa hafhu hu si na u renga tshiṅwe tshifanyiso.",
   "AI maps keep continuous artwork, with tree crowns allowed over the boundary.": "Mapa wa AI u vhulunga tshifanyiso tshi bvelaho phanḓa, ṱhoho dza miri dzi nga fhira mukano.",
   "AI map downloads now remind you to check positions and counts.": "Mapa wa AI wo dzheniswaho zwino u ni humbudza u ṱola fhethu na mbalo.",

@@ -1,6 +1,22 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // PDF sample audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Report headings stay with their opening text when you export a PDF.": "Dihlooho tsa tlaleho di dula le mongolo wa tsona wa pele ha o romela PDF.",
+  // Visual audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Map legends have thinner borders and clearer scale marks.": "Mabokose a matshwao a dimmapa a na le meedi e mesesane le matshwao a sekala a hlakileng.",
+  "Menu → Site design": "Lenane → Moralo wa sebaka",
+  "Check the new map lettering": "Hlahloba mongolo o motjha wa mmapa",
+  "Create a free exact map. Check the larger key and the buildings you traced.": "Etsa mmapa o nepahetseng wa mahala. Hlahloba tlhaloso e kgolo ya matshwao le meaho eo o e thaletseng.",
+  "Check the maps in your site report": "Hlahloba dimmapa tlalehong ya sebaka sa hao",
+  "Review each included map before exporting. Saved older drawings stay available.": "Hlahloba mmapa o mong le o mong o kenyelleditsweng pele o o romela kantle. Metako ya kgale e bolokilweng e ntse e fumaneha.",
+  // Map follow-up: docs/audits/2026-10-26/map-release-note-drafts.json; unreviewed.
+  "New map legends use spare margin space for larger, clearer lettering.": "Ditlhaloso tse ntjha tsa matshwao a dimmapa di sebedisa sebaka se se nang letho mahlakoreng hore mongolo o be moholo le ho hlaka.",
+  "Paper base maps show each building you traced, with separate building names.": "Dimmapa tsa motheo tsa pampiri di bontsha moaho o mong le o mong oo o o thaletseng, ka mabitso a arohaneng a meaho.",
+  "Saved maps stay available; create new drawings to see these improvements.": "Dimmapa tse bolokilweng di ntse di fumaneha; etsa metako e metjha ho bona dintlafatso tsena.",
+  "All nine map sheets use the same legend box, fonts and spacing.": "Maqephe ohle a robong a dimmapa a sebedisa lebokose le tshwanang la matshwao, mekgwa ya mongolo le dikgeo.",
+  "New drawings keep the legend on the right; your saved maps stay available.": "Metako e metjha e boloka tlhaloso ya matshwao ka ho le letona; dimmapa tse bolokilweng di ntse di fumaneha.",
+  "Long map headings wrap inside their legend box.": "Dihlooho tse telele tsa dimmapa di arolwa ka mela ka hara lebokose la tlhaloso ya matshwao.",
   "Saved AI maps can be reassembled without buying another render.": "Limmapa tsa AI tse bolokiloeng li ka kopanngoa hape ntle le ho reka setšoantšo se seng.",
   "AI maps keep continuous artwork, with tree crowns allowed over the boundary.": "Limmapa tsa AI li boloka setšoantšo se tsoelang pele, meqhaka ea lifate e ka feta moeli.",
   "AI map downloads now remind you to check positions and counts.": "Limmapa tsa AI tse jarollotsoeng joale li u hopotsa ho hlahloba libaka le lipalo.",

@@ -1,13 +1,18 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 import {
+  SHEET_LEGEND_TYPE,
+  sheetLegendPanelMetrics,
   balancedLegendColumnRanges,
   COMPACT_LEGEND_MAX_ROWS,
   countedLegendText,
   fitLegendFontSize,
   FULL_HEIGHT_LEGEND_MIN_ROWS,
   legendHeightFillRatio,
+  legendFooterFontSize,
+  legendWrapWords,
   layoutLegendColumn,
   legendMaxFontSize,
   legendRowFontSize,
@@ -334,4 +339,66 @@ test('invalid counts can never print as plausible legend facts', () => {
       /non-negative safe integer/i,
     );
   }
+});
+
+
+test('every sheet keeps the legend text inside the same framed panel at screen and print scales', () => {
+  for (const width of [360, 445, 620]) {
+    for (const height of [640, 1289, 2448]) {
+      const panel = sheetLegendPanelMetrics(width, height);
+      assert.equal(panel.contentLeft, width - panel.contentRight, 'left and right text insets match');
+      assert.ok(panel.contentLeft > panel.inset, 'text clears the frame');
+      assert.ok(panel.titleBaseline > panel.contentLeft, 'the title clears the top padding');
+      assert.ok(panel.titleBaseline < panel.contentBottom, 'the header stays in the content box');
+      assert.equal(height - panel.contentBottom, panel.contentLeft, 'the bottom repeats the same inset');
+    }
+  }
+});
+
+test('Phasing keeps the shared title and detail type roles instead of its tiny private font scale', () => {
+  assert.ok(SHEET_LEGEND_TYPE.title > SHEET_LEGEND_TYPE.style);
+  assert.ok(SHEET_LEGEND_TYPE.style >= SHEET_LEGEND_TYPE.detail);
+  const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  const phasing = source.slice(source.indexOf('export async function buildImplementationMap('), source.indexOf('// Legend rows for a Style sheet'));
+  const shared = source.slice(source.indexOf('async function composeStyleSheet('), source.indexOf('// ── Persistence', source.indexOf('async function composeStyleSheet(')));
+  assert.match(phasing, /drawSheetLegendPanel\(ctx, lgX, lgW, lgBottom - lgY\)/);
+  assert.match(shared, /drawSheetLegendPanel\(ctx, W, legendW, H\)/);
+  assert.doesNotMatch(shared, /benchmarkPanel/, 'a map category must not opt out of the shared frame');
+  // Type uses the shared placement's restrained scale: some reclaimed width belongs to fewer
+  // wrapped lines, rather than making the schedule so large that its final hold point vanishes.
+  assert.match(phasing, /typeW.*= phasingPanelRect\(size\)/);
+  assert.match(phasing, /fsHeader = Math\.round\(typeW \* SHEET_LEGEND_TYPE\.title\)/);
+  assert.match(phasing, /fsBody = Math\.round\(typeW \* SHEET_LEGEND_TYPE\.detail\)/);
+  assert.match(shared, /const typeW = placement\.typeWidth/);
+  assert.match(shared, /titleSize = Math\.round\(typeW \* SHEET_LEGEND_TYPE\.title\)/);
+  assert.match(shared, /typeW \* SHEET_LEGEND_TYPE\.detail/);
+});
+
+
+test('a compact masterplan keeps its legend on the same paper edge and long titles wrap in full', () => {
+  const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  const paper = source.slice(source.indexOf('function padToPaperSheet('), source.indexOf('function drawSheetLegendPanel('));
+  assert.match(paper, /paper\.width - sheet\.width,/);
+  assert.doesNotMatch(paper, /\(paper\.width - sheet\.width\) \/ 2/);
+  const composer = source.slice(source.indexOf('async function composeStyleSheet('), source.indexOf('// ── Persistence', source.indexOf('async function composeStyleSheet(')));
+  assert.doesNotMatch(composer, /titleLines\.slice|titleLines\.length <|styleLines\.slice|styleLines\.length </,
+    'Earthworks and longer style names must wrap rather than clipping their third line');
+});
+
+
+test('provenance notes keep a readable share of the shared legend lettering', () => {
+  for (const width of [360, 620, 744, 960]) {
+    const detail = Math.round(width * SHEET_LEGEND_TYPE.detail);
+    assert.ok(legendFooterFontSize(width) >= Math.round(detail * 0.75));
+    assert.ok(legendFooterFontSize(width) <= detail);
+  }
+});
+
+test('a regional-evidence marker stays with its direction instead of becoming an orphan line', () => {
+  const value = 'Regional cold front — driving rain — SW ᴬ';
+  const words = legendWrapWords(value);
+  assert.equal(words.join(' '), value, 'all wording and the evidence marker remain');
+  assert.ok(words.some(word => word.includes('SW') && word.includes('ᴬ')));
+  assert.ok(!words.includes('ᴬ'), 'wrapping must not put the evidence marker on its own');
+  assert.deepEqual(legendWrapWords('Site boundary'), ['Site', 'boundary']);
 });

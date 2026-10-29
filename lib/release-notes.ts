@@ -41,6 +41,17 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '29 October 2026', sha: '50e82eca3', changes: [
+    'Report headings stay with their opening text when you export a PDF.',
+    'Map legends have thinner borders and clearer scale marks.',
+    'New map legends use spare margin space for larger, clearer lettering.',
+    'Paper base maps show each building you traced, with separate building names.',
+    'Saved maps stay available; create new drawings to see these improvements.',
+  ], tour: [{ title: 'Check the new map lettering', where: 'Menu → Site design', href: '/design',
+    detail: 'Create a free exact map. Check the larger key and the buildings you traced.',
+  }, { title: 'Check the maps in your site report', where: 'Menu → Site reports', href: '/reports',
+    detail: 'Review each included map before exporting. Saved older drawings stay available.',
+  }] },
   { when: '29 October 2026', sha: 'a484688bd', changes: [
     'AI maps keep continuous artwork, with tree crowns allowed over the boundary.',
     'AI map downloads now remind you to check positions and counts.',
@@ -73,6 +84,11 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       detail: 'Open a saved farm, choose a sheet and select AI Polished. Each render is paid.' }] },
   { when: '27 October 2026', sha: '31d0ba80', changes: [
     'Menus, pop-ups and Lima now work fully from a keyboard and keep your place.',
+  ] },
+  { when: '26 October 2026', sha: 'd38b5ea4b', changes: [
+    'All nine map sheets use the same legend box, fonts and spacing.',
+    'New drawings keep the legend on the right; your saved maps stay available.',
+    'Long map headings wrap inside their legend box.',
   ] },
   { when: '26 October 2026', sha: '16bca466', changes: [
     'Home, Map, Studies and Prices now open offline, even before you have visited them.',
