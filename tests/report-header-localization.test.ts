@@ -26,8 +26,11 @@ const numbers=(s:string)=>(s.match(/(?<![\p{L}\p{N}])-?\d+(?:[.,]\d+)?/gu)??[]).
 const rows=(s:string)=>s.split('\n').filter(l=>l.startsWith('| ')&&!l.includes('|---')).map(line=>line.slice(1,-1).split('|').map(c=>c.trim()));
 function cell(markdown:string,source:string,language:string){return rows(markdown).find(r=>r[0]===reportDocumentText(source,language))!;}
 
-test('all original English header variants and diagram bytes survive the shared month-parser change',()=>{
- const before=JSON.stringify(fixture);for(const row of fixture.cases){assert.equal(buildReportHeaderMarkdown(row.input),row.expected,row.name);assert.equal(buildReportHeaderMarkdown(row.input,'af'),row.expected);}
+test('header variants retain every recorded figure and diagram while pins explicitly leave water access unconfirmed',()=>{
+ // The historical fixture predates the access qualification. Permit only that authored-source
+ // correction; all measured values, recorded names, other prose and diagram bytes remain exact.
+ const qualify=(value:string)=>value.replaceAll('Pinned on the map by the farmer','Pinned on the map; water access and reliability not confirmed');
+ const before=JSON.stringify(fixture);for(const row of fixture.cases){assert.equal(buildReportHeaderMarkdown(row.input),qualify(row.expected),row.name);assert.equal(buildReportHeaderMarkdown(row.input,'af'),qualify(row.expected));}
  assert.deepEqual(siteReportFigures(visual.facts,visual.location,'en',{canvas:visual.canvas,mapLayers:visual.refs,phasePlan:visual.phasePlan}),visual.figures.en);
  assert.equal(JSON.stringify(fixture),before);
 });

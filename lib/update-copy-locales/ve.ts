@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Reports record only the map images actually sent for analysis.": "Mivhigo i rekhoda fhedzi zwifanyiso zwa mimapa zwo rumelwaho uri zwi sedzuluswe.",
+  "Mapped water points show that access and reliability need checking.": "Fhethu ha maḓi ho swaiwaho kha mapa hu sumbedza uri thendelo ya u shumisa maḓi na u dzula a tshi wanala zwi tea u ṱoliwa.",
   "Saved AI maps can be reassembled without buying another render.": "Mapa wa AI wo vhulungwaho u nga kuvhanganywa hafhu hu si na u renga tshiṅwe tshifanyiso.",
   "AI maps keep continuous artwork, with tree crowns allowed over the boundary.": "Mapa wa AI u vhulunga tshifanyiso tshi bvelaho phanḓa, ṱhoho dza miri dzi nga fhira mukano.",
   "AI map downloads now remind you to check positions and counts.": "Mapa wa AI wo dzheniswaho zwino u ni humbudza u ṱola fhethu na mbalo.",

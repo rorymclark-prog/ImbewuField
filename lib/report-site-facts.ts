@@ -608,6 +608,11 @@ export function designPromptBlock(facts: ReportSiteFacts): string {
   return lines.join('\n');
 }
 
+// A boundary or nearby pin establishes a recorded location, never the right or ability to use it.
+// This also binds each independent generation batch through the route's system instructions.
+export const WATER_ACCESS_PROMPT_RULE = 'A water pin or mapped water polygon is a recorded location, not proof of ownership, permission to use water, reliability, water quality or available water supply. '
+  + 'Keep those facts unconfirmed unless explicit site evidence establishes them. Never count a pin or polygon as available irrigation supply or infer its capacity from its category or proximity.';
+
 /**
  * WATER ON SITE. Replaces the blanket denial that used to fire on any farm without a water-typed
  * MAP POLYGON — which is most farms, including one with a 2 500 L tank on its own plan.
@@ -616,7 +621,7 @@ export function waterPromptBlock(
   facts: ReportSiteFacts | null | undefined,
   hasMapWaterPolygons: boolean,
 ): string {
-  const lines: string[] = ['WATER ON SITE (drawn or recorded by the farmer — real)'];
+  const lines: string[] = ['WATER ON SITE (drawn or recorded; availability must be confirmed)', WATER_ACCESS_PROMPT_RULE];
   const water = facts?.water;
   let any = false;
 
@@ -920,7 +925,7 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput,language='en'
     row('Water storage on the plan', proposedOnly?t('{value} (drawn as proposed)',{value}):value, t('Design Studio'));
   }
   if (water?.mapPoints.length) {
-    row('Water points recorded', water.mapPoints.map((p) => `${p.name}${p.category && p.category !== 'Other' ? ` [${pointCategory(p.category)}]` : ''}`).join(' · '), t('Pinned on the map by the farmer'));
+    row('Water points recorded', water.mapPoints.map((p) => `${p.name}${p.category && p.category !== 'Other' ? ` [${pointCategory(p.category)}]` : ''}`).join(' · '), t('Pinned on the map; water access and reliability not confirmed'));
   }
   if (facts?.roof && facts.roof.areaM2 > 0) {
     const harvest = Math.round(roofHarvestLitres(facts.roof.areaM2, input.rainfallMm, WATER_SHEET_ROOF_RUNOFF_COEFFICIENT));

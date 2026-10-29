@@ -812,7 +812,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       }
       const provider = res.headers.get('X-Report-Provider') || undefined;
       const model = res.headers.get('X-Report-Model') || undefined;
-      setActiveSaved({ id: reportId(), name: siteFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: requested.language, report: text, origin: 'generated', location: d, siteData, waterData, facts: siteFacts, settings: { ...requested, provider, model }, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds }, analysedMapIds: siteImages.length ? plates.filter(p => siteImages.some(image => image.label === p.label)).map(p => p.id) : [], groundPhotos });
+      setActiveSaved({ id: reportId(), name: siteFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: requested.language, report: text, origin: 'generated', location: d, siteData, waterData, facts: siteFacts, settings: { ...requested, provider, model }, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds }, analysedMapIds: siteImages.map(image => image.sheetId), groundPhotos });
       setSavedVersion(false);
       setReading('full');
       setGenerated(true);

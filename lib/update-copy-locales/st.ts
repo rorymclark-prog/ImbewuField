@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  "Reports record only the map images actually sent for analysis.": "Litlaleho li rekota feela litšoantšo tsa limmapa tse rometsoeng ho hlahlojoa.",
+  "Mapped water points show that access and reliability need checking.": "Dibaka tsa metsi tse tshwailweng mmapeng di bontsha hore tumello ya tshebediso le ho fumaneha kamehla di hloka ho hlahlojwa.",
   "Saved AI maps can be reassembled without buying another render.": "Limmapa tsa AI tse bolokiloeng li ka kopanngoa hape ntle le ho reka setšoantšo se seng.",
   "AI maps keep continuous artwork, with tree crowns allowed over the boundary.": "Limmapa tsa AI li boloka setšoantšo se tsoelang pele, meqhaka ea lifate e ka feta moeli.",
   "AI map downloads now remind you to check positions and counts.": "Limmapa tsa AI tse jarollotsoeng joale li u hopotsa ho hlahloba libaka le lipalo.",

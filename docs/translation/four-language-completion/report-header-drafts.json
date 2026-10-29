@@ -3,6 +3,13 @@
   "sourceSha": "af151ab440b84a9ff1d2c7aa930ed1493b4acd90",
   "entries": [
     {
+      "english": "Pinned on the map; water access and reliability not confirmed",
+      "zu": "Kumakwe ebalazweni; imvume yokusebenzisa amanzi nokutholakala kwawo njalo akuqinisekisiwe",
+      "st": "Ho tshwailwe mmapeng; tumello ya ho sebedisa metsi le ho fumaneha ha ona kamehla ha di eso netefatswe",
+      "ts": "Swi funghiwe emepeni; mpfumelelo wo tirhisa mati ni ku kumeka ka wona nkarhi na nkarhi a swi si tiyisisiwa",
+      "ve": "Ho swaiwa kha mapa; thendelo ya u shumisa maḓi na u dzula a tshi wanala a zwi athu u khwaṱhisedzwa"
+    },
+    {
       "english": "Site Report — {name}",
       "zu": "Umbiko wendawo — {name}",
       "st": "Tlaleho ya sebaka — {name}",

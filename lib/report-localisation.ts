@@ -8,6 +8,13 @@ import { reportSummaryPages } from './report-summary';
 /** Unreviewed AI drafts for code-authored document furniture; saved values are only interpolated. */
 export const REPORT_DOCUMENT_COPY:readonly {english:string;zu:string;st:string;ts:string;ve:string}[] = [
   {
+      "english": "Pinned on the map; water access and reliability not confirmed",
+      "zu": "Kumakwe ebalazweni; imvume yokusebenzisa amanzi nokutholakala kwawo njalo akuqinisekisiwe",
+      "st": "Ho tshwailwe mmapeng; tumello ya ho sebedisa metsi le ho fumaneha ha ona kamehla ha di eso netefatswe",
+      "ts": "Swi funghiwe emepeni; mpfumelelo wo tirhisa mati ni ku kumeka ka wona nkarhi na nkarhi a swi si tiyisisiwa",
+      "ve": "Ho swaiwa kha mapa; thendelo ya u shumisa maḓi na u dzula a tshi wanala a zwi athu u khwaṱhisedzwa"
+  },
+  {
     "english": "Permaculture Site Report",
     "zu": "Umbiko wendawo ye-permaculture",
     "st": "Tlaleho ya sebaka sa permaculture",
