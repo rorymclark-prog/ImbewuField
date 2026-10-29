@@ -3,7 +3,7 @@
 - Auditor: Codex, implementing Rory’s request to correct, merge and deploy the audited map.
 - Concurrent integration: report/export release #1141 (`55b03506e21d9e180ce11677a236bffe9c39dadd`) landed during verification and was merged with both sets of notes/translations retained. The full local suite was restarted on the combined source.
 - Reviewed base: production `9e11f2396dadc84c2a8fb07bb89162007ba9e245`; implementation branch `codex/ai-map-composition-fixes`.
-- Deployment: pending both required CI jobs, merge and the production deployment; this record does not claim release completion. The completion ledger on issue #35 records the eventual release revision and verification.
+- Deployment: pending the current-head focused-render/security checks, preview, merge and production verification under Rory’s approved matched-check policy; this record does not claim release completion. The completion ledger on issue #35 records the eventual release revision and verification.
 - Previous audit: [28 October paid composition audit, unchanged historical record](https://github.com/rorymclark-prog/ImbewuField/blob/88adb66a7199040ba527c94cfee9df3f69aaf5ac/docs/audits/2026-10-28/ai-map-composition-codex.md), PR #1142. Finding IDs are carried forward below.
 - Scope: active paid design-layer queue finishers, both engines; effective recovery masks, roof appearance ownership, independent boundary drawing, export provenance and Whole label controls. Existing Site, Sector, Phasing and model-authored Satellite Overlay have separate composition contracts and are not newly certified here.
 - Evidence: actual original paid Whole artwork reassembled locally with the production finisher and detached frozen scene; regional synthetic probes executed against extracted production helpers; source review and focused checks. No new provider generation.
@@ -11,6 +11,23 @@
 ## What was already done
 
 The registration correction, white paper, fine legend frame, catalogue artwork loading and original saved paid maps from PRs #1139/#1140 are retained. This work changes presentation assembly, not the source image, the stored model output or the farmer’s saved geometry. The original paid-job mask remains stored unchanged. Saved maps offers **Reassemble artwork · no AI charge** for paid entries with original-job provenance. This clears staged paid handoffs, reconnects only the existing job and keeps the earlier bitmap; it refuses active jobs, other farms and sample mode. Use the original print quality. Its effective restoration mask is rebuilt locally from that job’s frozen scene; a stored mask with a genuinely incompatible aspect still fails validation.
+
+## Verification policy approved during this continuation
+
+On 29 October Rory explicitly approved replacing the blanket full-suite wait with
+checks matched to a change. `AGENTS.md` §1 now owns that rule; `CLAUDE.md` and the
+queue point to it. `npm run test:render` is the shared map-check command and CI adds
+an independent `focused-render` job. The full `test` and `rules` jobs remain intact:
+no full-suite result is hidden or relabelled as passed. Higher-risk or unclear work
+still requires the full suite before merge. This explicit approval covers this
+additive verification-workflow transition, not general workflow-editing ownership.
+
+This map release changes presentation/restoration and reconnects an already-paid
+job; it changes no provider dispatch, spend authorisation, worker execution, access
+policy, saved-data schema or measured saved geometry. Its required merge evidence
+is current-head `focused-render` + `rules` green, successful preview build, local
+release-note/whitespace checks and the actual image/UI inspection recorded here.
+The full suite continues separately. Any known new related failure still blocks.
 
 ## Findings and disposition
 
@@ -28,11 +45,12 @@ The registration correction, white paper, fine legend frame, catalogue artwork l
 ## Verification
 
 - Typecheck: `npx tsc --noEmit` passed before the full suite.
-- Focused suite: **177 pass / 0 fail** across image producer, chrome after AI, locked flow, paid-render gate, legend agreement and integrated export coherence. Includes seven new composition/reassembly regressions.
-- Full suite: running at branch preparation. The required `test` and `rules` CI jobs must both pass on the finished head before merge; final results are recorded on issue #35.
+- Focused suite: **561 pass / 0 fail** with the shared `npm run test:render` command, covering the paid pipeline, geometry/registration, labels/legends, stored maps, exports and access controls. Includes seven new composition/reassembly regressions. The initial narrower selection also passed (177 checks).
+- Full suite: the duplicate local run was stopped, not reported as passed. The CI full suite continues separately under the explicitly approved policy above. Current-head focused-render and rules results, preview and deployment evidence are recorded on issue #35.
 - Whitespace: `git diff --check` clean at branch preparation.
 - Output inspected: original paid raw Whole art, original photo and prior restoration evidence; complete rebuilt Whole sheet with continuous interior, no second grey roof, boundary line, canopy foreground, white paper, catalogue legend and AI review footer. Frozen scene remained byte-identical before/after actual composition.
 - Exact/different contracts: synthetic probes check Photo Plan and paper protection remains enabled and their structure passes remain used. These are not fresh provider-generated visual verifications for those styles. The six design-layer mask checks are not six independently generated AI sheets.
+- Additional layout inspection: all six design-layer composers completed with the existing Whole artwork as a layout fixture, Water review notes fit, and the scene stayed byte-identical. This is not six provider generations or evidence that Whole artwork represents a dedicated Water/Structures layer.
 - Local render limits: native canvas uses Arial and rounds unsupported intermediate font weights; preview/live browser inspection is still required for the actual web fonts and UI. No physical-phone test or new paid call.
 - **This changes the picture.** `PLAN_VERSION` and the paid recipe token remain unchanged so existing paid output can be recovered. No saved geometry, catalogue species, source registration, worker credentials or security rules changed.
 
@@ -40,6 +58,6 @@ Two existing source-location assertions were updated because policy authority mo
 
 ## Next continuation
 
-1. Read the current-head CI results, merge only after both required jobs pass, then verify the production build identifier.
+1. Read the current-head focused-render and rules results, confirm the successful preview and recorded notes/visual checks, then merge and verify the production build identifier. The full suite continues separately under the approved policy.
 2. Reconnect the existing completed job without a provider request; inspect the actual saved result after a page reload and leave the corrected map available to Rory. Keep earlier gallery entries and raw outputs.
 3. Resolve AI-MAP-007 separately. Retain honest review status for model-drawn feature counts, positions and roof silhouettes; these have not been independently verified merely by assembling the sheet.

@@ -8,10 +8,19 @@ it: it carries a retired `PLAN_VERSION` instruction that now causes harm. See th
 
 ---
 
+## Verification policy update — 29 October 2026
+
+Rory approved checks matched to the change. **AGENTS.md §1 is authoritative** over
+older blanket full-suite merge wording in this queue. Focused map/UI work may merge
+after its relevant checks, current-head security checks and successful preview;
+map work also needs the current-head `focused-render` job. The full suite continues
+separately. Higher-risk or unclear work still needs the full `test` job green.
+Do not skip visual verification, hide failures or change any other guardrail.
+
 ## ⚠ OPERATING MODE — UPDATED 2026-08-06 17:00. START AT QD1.
 
 **Rory is away from the computer and Claude is not watching your run.** You own the whole loop:
-build it, push it, read BOTH CI jobs, merge it yourself, log it on issue #35, take the next item.
+build it, push it, read the CI results required by AGENTS.md §1, merge it yourself, log it on issue #35, take the next item.
 
 **Start with QD1, then QD2, then QD3** (Priority 1c, below the Priority 2 block). Those three are
 the Vision 2 design work Rory asked for today and they are written against code that was verified
@@ -35,10 +44,10 @@ Also true as of today, and worth knowing before you touch anything:
 
 **You own the whole loop until Saturday.** For each item:
 
-1. Branch, build it, verify it — `npx tsc --noEmit`, then `npm test`, then **look at the output**.
+1. Branch, build it, verify it — typecheck, the affected tests required by AGENTS.md §1, then **look at the output**.
 2. Push the branch.
-3. Read the CI result on that push. **`test.yml` now has TWO jobs — `test` and `rules` — and both
-   must be green before you merge.** Check the jobs, not the run summary:
+3. Read the CI results on that push. **Apply AGENTS.md §1: `rules` and the applicable focused
+   checks must pass; higher-risk work also requires the full `test` job.** Check the jobs, not the run summary:
    `gh run view <id> --json jobs --jq '.jobs[] | "\(.name): \(.conclusion)"'`
 4. Append one line to the ledger, issue #35: what merged, and what Rory should look at.
 5. Take the next item immediately.

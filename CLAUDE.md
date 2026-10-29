@@ -36,6 +36,8 @@ historical evidence rather than restarting from them.
 - **Home is task-first**, not role-first. No data-vendor badges in the UI.
 
 ## Working here
-- Verify changes with `npx tsc --noEmit` before committing. Run the dev server to check UI.
+- Follow **AGENTS.md §1** for verification and merge gates (Rory’s 29 October 2026
+  policy). Focused map/UI work uses affected tests; higher-risk changes require the
+  full suite. Do not reinterpret pending full-suite results as passed. Inspect UI.
 - Deploy = push to `main` → GitHub Actions → Vercel (~2 min). Don't commit `.env*` or secrets.
 - Env vars live in the Vercel project (mirrored from GitHub secrets via `.github/workflows/set-vercel-env.yml`).
