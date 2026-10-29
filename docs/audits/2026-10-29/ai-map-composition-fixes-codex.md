@@ -1,6 +1,7 @@
 # Paid AI map composition corrections — 29 October 2026
 
 - Auditor: Codex, implementing Rory’s request to correct, merge and deploy the audited map.
+- Concurrent integration: report/export release #1141 (`55b03506e21d9e180ce11677a236bffe9c39dadd`) landed during verification and was merged with both sets of notes/translations retained. The full local suite was restarted on the combined source.
 - Reviewed base: production `9e11f2396dadc84c2a8fb07bb89162007ba9e245`; implementation branch `codex/ai-map-composition-fixes`.
 - Deployment: pending both required CI jobs, merge and the production deployment; this record does not claim release completion. The completion ledger on issue #35 records the eventual release revision and verification.
 - Previous audit: [28 October paid composition audit, unchanged historical record](https://github.com/rorymclark-prog/ImbewuField/blob/88adb66a7199040ba527c94cfee9df3f69aaf5ac/docs/audits/2026-10-28/ai-map-composition-codex.md), PR #1142. Finding IDs are carried forward below.
