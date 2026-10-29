@@ -1,4 +1,5 @@
 import { isJournalDate, sortJournal, type JournalCategory, type JournalEntry } from './field-journal';
+import { farmMemoryText } from './farm-memory-copy';
 
 export interface JournalViewFilters {
   query?: string;
@@ -16,7 +17,7 @@ function searchText(value: string): string {
   return value.normalize('NFKC').toLocaleLowerCase().replace(/\s+/gu, ' ').trim();
 }
 
-function bedValue(entry: JournalEntry): string | null {
+export function journalBedFilterValue(entry: Pick<JournalEntry, 'bedId' | 'bedLabel'>): string | null {
   if (entry.bedId) return `id:${entry.bedId}`;
   if (entry.bedLabel) return `label:${entry.bedLabel}`;
   return null;
@@ -24,11 +25,11 @@ function bedValue(entry: JournalEntry): string | null {
 
 /** Options come from the notes themselves, including beds since removed from the design.
  * Two different beds called "Bed 1" must never be silently combined into one history. */
-export function journalFilterOptions(entries: JournalEntry[]): { beds: JournalFilterOption[]; crops: string[] } {
+export function journalFilterOptions(entries: JournalEntry[], lang = 'en'): { beds: JournalFilterOption[]; crops: string[] } {
   const beds = new Map<string, string[]>();
   const crops = new Set<string>();
   for (const entry of sortJournal(entries)) {
-    const value = bedValue(entry);
+    const value = journalBedFilterValue(entry);
     if (value) {
       const labels = beds.get(value) ?? [];
       if (entry.bedLabel && !labels.includes(entry.bedLabel)) labels.push(entry.bedLabel);
@@ -38,7 +39,7 @@ export function journalFilterOptions(entries: JournalEntry[]): { beds: JournalFi
   }
   const options = [...beds].map(([value, labels]) => ({
     value,
-    label: labels.length ? labels.join(' / ') : 'Unnamed bed',
+    label: labels.length ? labels.join(' / ') : farmMemoryText(lang, 'unnamedBed'),
   }));
   // Keep identical display names distinguishable without presenting a saved label as a new name.
   const counts = new Map<string, number>();
@@ -49,7 +50,7 @@ export function journalFilterOptions(entries: JournalEntry[]): { beds: JournalFi
     const label = option.label;
     const index = (seen.get(label) ?? 0) + 1;
     seen.set(label, index);
-    option.label = `${label} (recorded group ${index})`;
+    option.label = farmMemoryText(lang, 'recordedGroup', { label, n: index });
   }
   return {
     beds: options.sort((a, b) => a.label.localeCompare(b.label)),
@@ -57,10 +58,10 @@ export function journalFilterOptions(entries: JournalEntry[]): { beds: JournalFi
   };
 }
 
-export function journalDateRangeError(filters: JournalViewFilters): string | null {
-  if (filters.from && !isJournalDate(filters.from)) return 'Choose a valid start date.';
-  if (filters.to && !isJournalDate(filters.to)) return 'Choose a valid end date.';
-  if (filters.from && filters.to && filters.from > filters.to) return 'The start date must be on or before the end date.';
+export function journalDateRangeError(filters: JournalViewFilters, lang = 'en'): string | null {
+  if (filters.from && !isJournalDate(filters.from)) return farmMemoryText(lang, 'invalidStart');
+  if (filters.to && !isJournalDate(filters.to)) return farmMemoryText(lang, 'invalidEnd');
+  if (filters.from && filters.to && filters.from > filters.to) return farmMemoryText(lang, 'invalidRange');
   return null;
 }
 
@@ -73,7 +74,7 @@ export function filterJournalEntries(entries: JournalEntry[], filters: JournalVi
     if (!isJournalDate(entry.date)) return false;
     if (filters.category && filters.category !== 'all' && entry.category !== filters.category) return false;
     if (filters.from && entry.date < filters.from || filters.to && entry.date > filters.to) return false;
-    if (filters.bed && bedValue(entry) !== filters.bed) return false;
+    if (filters.bed && journalBedFilterValue(entry) !== filters.bed) return false;
     if (filters.crop && entry.cropName !== filters.crop) return false;
     if (!words.length) return true;
     const text = searchText([entry.title, entry.notes, entry.bedLabel, entry.cropName].filter(Boolean).join(' '));

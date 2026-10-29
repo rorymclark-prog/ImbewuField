@@ -20,6 +20,7 @@ import motion from './JournalMotion.module.css';
 import { journalCategoryLabel } from './journal-labels';
 import { useEscapeClose } from '@/lib/use-escape-close';
 import { useDialogFocus } from '@/lib/use-dialog-focus';
+import { farmMemoryText } from '@/lib/farm-memory-copy';
 
 export interface BedOption {
   id: string;
@@ -174,9 +175,8 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
 
         <div style={{ padding: '16px 20px 0', display: 'flex', flexDirection: 'column', gap: 16 }}>
           {initialDraft && !entry && (
-            <p role="note" lang="en" style={{ margin: 0, padding: 12, borderRadius: 12, background: 'var(--bg-2)', color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.5 }}>
-              Draft from your crop plan. Check what happened before saving. Today is selected;
-              change the date if the work happened earlier. Nothing is recorded until you save.
+            <p role="note" lang={isZulu ? 'zu' : 'en'} style={{ margin: 0, padding: 12, borderRadius: 12, background: 'var(--bg-2)', color: 'var(--text-secondary)', fontSize: 14, lineHeight: 1.5 }}>
+              {farmMemoryText(lang, 'taskDraftNotice')}
             </p>
           )}
           {/* Category — big tap targets, wraps on a phone. Collapsed in Simple: the note still
@@ -270,7 +270,7 @@ export default function JournalEntrySheet({ entry, initialDraft, beds, crops, on
                   }} style={inputStyle}>
                     <option value="">{ui('Not linked', 'Akuxhunyiwe')}</option>
                     {bedId && !beds.some((bed) => bed.id === bedId) && <option value={bedId}>{bedLabel || bedId}</option>}
-                    {beds.map((b) => <option key={b.id} value={b.id}>{b.id === bedId && bedLabel && bedLabel !== b.label ? `${bedLabel} (${b.label} now)` : b.label}</option>)}
+                    {beds.map((b) => <option key={b.id} value={b.id}>{b.id === bedId && bedLabel && bedLabel !== b.label ? farmMemoryText(lang, 'renamedBed', { recorded: bedLabel, current: b.label }) : b.label}</option>)}
                   </select>
                 ) : (
                   <input className="focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-1"

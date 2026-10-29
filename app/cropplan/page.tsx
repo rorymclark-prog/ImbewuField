@@ -26,6 +26,7 @@ import {
   type BoardTask, type CropBoardYear,
 } from '@/lib/task-board';
 import { taskJournalHref, taskHarvestHref } from '@/lib/task-record-link';
+import { farmMemoryText } from '@/lib/farm-memory-copy';
 
 // ─── Types & data ────────────────────────────────────────────────────────────
 //
@@ -218,12 +219,12 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel, lang
                 />
               </div>
               {(journalHref || harvestHref) && (
-                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1" lang="en">
-                  {journalHref && <Link href={journalHref} className="inline-flex items-center gap-1 min-h-11 font-sans text-sm underline underline-offset-4" style={{ color: 'var(--color-forest-800)' }} aria-label={`Write a field note: ${task.title}`}>
-                    <ClipboardList size={15} aria-hidden /> Write a field note
+                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1" lang={lang === 'zu' ? 'zu' : 'en'}>
+                  {journalHref && <Link href={journalHref} className="inline-flex items-center gap-1 min-h-11 font-sans text-sm underline underline-offset-4" style={{ color: 'var(--color-forest-800)' }} aria-label={farmMemoryText(lang, 'writeFieldNoteAria', { title: task.title })}>
+                    <ClipboardList size={15} aria-hidden /> {farmMemoryText(lang, 'writeFieldNote')}
                   </Link>}
-                  {harvestHref && <Link href={harvestHref} className="inline-flex items-center gap-1 min-h-11 font-sans text-sm underline underline-offset-4" style={{ color: 'var(--color-forest-800)' }} aria-label={`Log what you picked: ${task.title}`}>
-                    <Scissors size={15} aria-hidden /> Log what you picked
+                  {harvestHref && <Link href={harvestHref} className="inline-flex items-center gap-1 min-h-11 font-sans text-sm underline underline-offset-4" style={{ color: 'var(--color-forest-800)' }} aria-label={farmMemoryText(lang, 'logPickedAria', { title: task.title })}>
+                    <Scissors size={15} aria-hidden /> {farmMemoryText(lang, 'logPicked')}
                   </Link>}
                 </div>
               )}

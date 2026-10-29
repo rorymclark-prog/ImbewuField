@@ -1,6 +1,20 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Farm memory release: docs/audits/2026-10-29/farm-memory-release-drafts.json; unreviewed.
+  "Farm memory search, photos and saved copies now support isiZulu.": "Ukusesha, izithombe namakhophi agciniwe Ezinkumbulo zepulazi manje kusekela isiZulu.",
+  "Tap a crop or bed on a note to see its journal history.": "Thepha isitshalo noma umbhede kunothi ukuze ubone umlando wako kujenali.",
+  "Choose a smaller printable copy with notes only.": "Khetha ikhophi encane ongayiphrinta enamanothi kuphela.",
+  "Open a field note from a task, with its crop and bed ready to check.": "Vula inothi lasensimini emsebenzini, nesitshalo nombhede walo kulungele ukuhlolwa.",
+  "Find journal notes by crop, bed, date or words you remember.": "Thola amanothi ejenali ngesitshalo, ngombhede, ngosuku noma ngamagama owakhumbulayo.",
+  "Compare dated photos and download selected notes for an adviser.": "Qhathanisa izithombe ezinezinsuku bese ulanda amanothi akhethiwe omeluleki.",
+  "Harvest tasks open the crop and blank quantity field, ready to fill in.": "Imisebenzi yokuvuna ivula isitshalo nendawo yenani engenalutho, elungele ukugcwaliswa.",
+  "Explore your farm memory": "Hlola Izinkumbulo zepulazi lakho",
+  "Menu → Field journal": "Imenyu → Ijenali yasensimini",
+  "Search your notes, compare saved photos and keep a printable copy.": "Sesha amanothi akho, qhathanisa izithombe ezigciniwe bese ugcina ikhophi ongayiphrinta.",
+  "Record work from a task": "Rekhoda okwenziwe emsebenzini",
+  "Menu → Task planner": "Imenyu → Ukuhlela imisebenzi",
+  "Open a draft field note or record an actual harvest from a crop task.": "Vula uhlaka lwenothi lasensimini noma urekhode isivuno sangempela emsebenzini wesitshalo.",
   // Annual PDF row audit: docs/audits/2026-10-29/annual-product-pdf-release-drafts.json; unreviewed.
   "PDF exports keep each product and its notes together.": "Ama-PDF athunyelwe agcina umkhiqizo ngamunye namanothi awo ndawonye.",
   // Production status audit: docs/audits/2026-10-27/report-production-status-release-drafts.json; unreviewed.

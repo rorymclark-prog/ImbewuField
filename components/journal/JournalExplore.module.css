@@ -59,3 +59,29 @@
   .memoryLayout { display: flex; flex-direction: column; }
   .timeline { order: 1; }
 }
+.draftNotice { max-width: 1040px; margin: 0 auto; padding: 8px 14px 0; }
+.draftNotice:empty { display: none; }
+.historyTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  max-width: 100%;
+  padding: 8px 11px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-2);
+  color: var(--text-primary);
+  cursor: pointer;
+  font: 600 12px/1.4 var(--font-sans), sans-serif;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+.historyTag > svg { flex-shrink: 0; }
+.historyTag:hover { border-color: var(--color-forest-800); }
+.historyTag:focus-visible { outline: 2px solid var(--color-forest-800); outline-offset: 3px; }
+
+.photoChoice { display: flex; align-items: center; gap: 9px; min-height: 44px; font-weight: 600; cursor: pointer; }
+.photoChoice input { width: 20px; height: 20px; flex-shrink: 0; accent-color: var(--color-forest-800); }
+.photoChoice + .help { margin: 0 0 10px; }
+.photoChoice input:focus-visible { outline: 2px solid var(--color-forest-800); outline-offset: 3px; }

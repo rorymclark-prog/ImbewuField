@@ -1,0 +1,131 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "scope": "Farm memory release notice, previous Farm memory descriptions and current guide stops in four languages. No fluent review claimed. Original farmer observations, crop/bed names and archived release sources remain unchanged.",
+  "sourceSha256Before": {
+    "lib/update-copy-locales/zu.ts": "4b31584b2f0b1e74e1e085e401cfcdbd06c936a43b3c2c0ace4b555524b00dbd",
+    "lib/update-copy-locales/st.ts": "d80687221b7d1ff28443407cad476241e0c725d481d5673748d4de162b35ea38",
+    "lib/update-copy-locales/ts.ts": "7d8b6db37d9cffe6ccf28bdb2f6ecede08c10b8bed4a40a0fae143fae19f48ff",
+    "lib/update-copy-locales/ve.ts": "4b918eeaa4970690d94b24f8fe5e38bec71fc410fcfd99afbd31f3bc0c478479"
+  },
+  "releaseShaPlaceholder": "cc2809c55",
+  "tourDecision": "The new entry uses the existing Farm memory tour; the visible five-note window includes the prior entry and therefore its two stops.",
+  "entries": [
+    {
+      "source": "Farm memory search, photos and saved copies now support isiZulu.",
+      "drafts": {
+        "zu": "Ukusesha, izithombe namakhophi agciniwe Ezinkumbulo zepulazi manje kusekela isiZulu.",
+        "st": "Patlo, dinepe le dikopi tse bolokilweng tsa dikgopotso tsa polasi jwale di tshehetsa isiZulu.",
+        "ts": "Ku lavisisa, swifaniso ni tikopi leti hlayisiweke ta switsundzuxo swa purasi sweswi swi seketela isiZulu.",
+        "ve": "U ṱoḓa, zwifanyiso na khophi dzo vhulungwaho dza khumbudzo dza bulasi zwino zwi tikedza isiZulu."
+      }
+    },
+    {
+      "source": "Tap a crop or bed on a note to see its journal history.",
+      "drafts": {
+        "zu": "Thepha isitshalo noma umbhede kunothi ukuze ubone umlando wako kujenali.",
+        "st": "Tobetsa sejalo kapa bethe ya temo ntlheng e ngotsweng ho bona nalane ya yona jenaleng.",
+        "ts": "Khoma ximilana kumbe mubedo eka notsi ku vona matimu ya xona eka jenali.",
+        "ve": "Kwatamani tshimela kana mubethe kha notsi uri ni vhone ḓivhazwakale yatsho kha dzhenala."
+      }
+    },
+    {
+      "source": "Choose a smaller printable copy with notes only.",
+      "drafts": {
+        "zu": "Khetha ikhophi encane ongayiphrinta enamanothi kuphela.",
+        "st": "Kgetha kopi e nyane e ka hatiswang e nang le dintlha tse ngotsweng feela.",
+        "ts": "Hlawula kopi leyitsongo leyi nga kandziyisiwaka leyi nga ni tinotsi ntsena.",
+        "ve": "Khethani khophi ṱhukhu ine ya nga gandiswa i re na notsi fhedzi."
+      }
+    },
+    {
+      "source": "Open a field note from a task, with its crop and bed ready to check.",
+      "drafts": {
+        "zu": "Vula inothi lasensimini emsebenzini, nesitshalo nombhede walo kulungele ukuhlolwa.",
+        "st": "Bula ntlha e ngotsweng ya tshimo ho tswa mosebetsing, sejalo le bethe ya temo di loketse ho hlahlojwa.",
+        "ts": "Pfula notsi ya nsimu eka ntiro, ximilana ni mubedo wa kona swi lunghekele ku kamberiwa.",
+        "ve": "Vulani notsi ya tsimuni kha mushumo, tshimela na mubethe zwo lugela u sedzuluswa."
+      }
+    },
+    {
+      "source": "Find journal notes by crop, bed, date or words you remember.",
+      "drafts": {
+        "zu": "Thola amanothi ejenali ngesitshalo, ngombhede, ngosuku noma ngamagama owakhumbulayo.",
+        "st": "Fumana dintlha tsa jenale ka sejalo, bethe ya temo, letsatsi kapa mantswe ao o a hopolang.",
+        "ts": "Kuma tinotsi ta jenali hi ximilana, mubedo, siku kumbe marito lawa u ma tsundzukaka.",
+        "ve": "Wanani notsi dza dzhenala nga tshimela, mubethe, ḓuvha kana maipfi ane na a humbula."
+      }
+    },
+    {
+      "source": "Compare dated photos and download selected notes for an adviser.",
+      "drafts": {
+        "zu": "Qhathanisa izithombe ezinezinsuku bese ulanda amanothi akhethiwe omeluleki.",
+        "st": "Bapisa dinepe tse nang le matsatsi mme o jarolle dintlha tse kgethilweng bakeng sa moeletsi.",
+        "ts": "Pimanisa swifaniso leswi nga ni masiku kutani u kopa tinotsi leti hlawuriweke ta mutsundzuxi.",
+        "ve": "Vhambedzani zwifanyiso zwi re na maḓuvha ni kone u dzhenisa notsi dzo khethiwaho dza mueletshedzi."
+      }
+    },
+    {
+      "source": "Harvest tasks open the crop and blank quantity field, ready to fill in.",
+      "drafts": {
+        "zu": "Imisebenzi yokuvuna ivula isitshalo nendawo yenani engenalutho, elungele ukugcwaliswa.",
+        "st": "Mesebetsi ya kotulo e bula sejalo le sebaka se se nang letho sa bongata, se loketse ho tlatswa.",
+        "ts": "Mintirho ya ntshovelo yi pfula ximilana ni ndhawu leyi nga riki na nhlayo, yi lunghekele ku tatiwa.",
+        "ve": "Mishumo ya khaṋo i vula tshimela na fhethu ha tshivhalo hu si na tshithu, ho lugela u ḓadzwa."
+      }
+    },
+    {
+      "source": "Explore your farm memory",
+      "drafts": {
+        "zu": "Hlola Izinkumbulo zepulazi lakho",
+        "st": "Hlahloba dikgopotso tsa polasi ya hao",
+        "ts": "Kambela switsundzuxo swa purasi ra wena",
+        "ve": "Sedzulusani khumbudzo dza bulasi yaṋu"
+      }
+    },
+    {
+      "source": "Menu → Field journal",
+      "drafts": {
+        "zu": "Imenyu → Ijenali yasensimini",
+        "st": "Lenane → Jenale ya tshimo",
+        "ts": "Menyu → Jenali ya nsimu",
+        "ve": "Menyu → Dzhenala ya tsimuni"
+      }
+    },
+    {
+      "source": "Search your notes, compare saved photos and keep a printable copy.",
+      "drafts": {
+        "zu": "Sesha amanothi akho, qhathanisa izithombe ezigciniwe bese ugcina ikhophi ongayiphrinta.",
+        "st": "Batla dintlha tsa hao, bapisa dinepe tse bolokilweng mme o boloke kopi e ka hatiswang.",
+        "ts": "Lavisisa tinotsi ta wena, pimanisa swifaniso leswi hlayisiweke kutani u hlayisa kopi leyi nga kandziyisiwaka.",
+        "ve": "Ṱoḓani notsi dzaṋu, vhambedzani zwifanyiso zwo vhulungwaho ni kone u vhulunga khophi ine ya nga gandiswa."
+      }
+    },
+    {
+      "source": "Record work from a task",
+      "drafts": {
+        "zu": "Rekhoda okwenziwe emsebenzini",
+        "st": "Rekota se entsweng ho tswa mosebetsing",
+        "ts": "Rhekhoda leswi endliweke eka ntiro",
+        "ve": "Rekhodani zwo itwaho kha mushumo"
+      }
+    },
+    {
+      "source": "Menu → Task planner",
+      "drafts": {
+        "zu": "Imenyu → Ukuhlela imisebenzi",
+        "st": "Lenane → Moralo wa mesebetsi",
+        "ts": "Menyu → Mupulani wa mintirho",
+        "ve": "Menyu → Mudzudzanyi wa mishumo"
+      }
+    },
+    {
+      "source": "Open a draft field note or record an actual harvest from a crop task.",
+      "drafts": {
+        "zu": "Vula uhlaka lwenothi lasensimini noma urekhode isivuno sangempela emsebenzini wesitshalo.",
+        "st": "Bula moralo wa ntlha ya tshimo kapa o rekote kotulo ya nnete ho tswa mosebetsing wa sejalo.",
+        "ts": "Pfula mpfapfarhuto wa notsi ya nsimu kumbe u rhekhoda ntshovelo wa xiviri eka ntiro wa ximilana.",
+        "ve": "Vulani mvetamveto ya notsi ya tsimuni kana ni rekhode khaṋo ya vhukuma kha mushumo wa tshimela."
+      }
+    }
+  ]
+}

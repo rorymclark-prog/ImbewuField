@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import type { JournalEntry } from '@/lib/field-journal';
 import { buildJournalCsv, buildJournalHtml } from '@/lib/journal-export';
 import { filterJournalEntries } from '@/lib/journal-view';
+import { FARM_MEMORY_ZU, farmMemoryCategoryLabel } from '@/lib/farm-memory-copy';
 
 function entry(id: string, overrides: Partial<JournalEntry> = {}): JournalEntry {
   return { id, date: '2026-10-12', title: 'Checked the bed', notes: 'Leaves recovered.\nChecked again after rain.', category: 'maintenance', bedId: 'bed-1', bedLabel: 'Old bed name', cropName: 'Recorded crop', createdAt: 1, updatedAt: 1, ...overrides };
@@ -101,4 +102,58 @@ test('creating copies does not rewrite stored observations or add generated data
   buildJournalCsv(rows, { sample: true, selection: 'Some selection' });
   buildJournalHtml(rows, { sample: true, generatedAt: '2026-10-29' });
   assert.deepEqual(rows, before);
+});
+
+test('isiZulu copies translate their controls and reporting basis while keeping original farmer evidence exact', () => {
+  const rows = [entry('a', { title: 'My original title', notes: 'Lokhu engikubonile.\nOriginal words, "quoted".', bedLabel: 'My own bed', cropName: 'My original crop' })];
+  const before = structuredClone(rows);
+  const csv = buildJournalCsv(rows, { lang: 'zu', sample: true });
+  const output = buildJournalHtml(rows, { lang: 'zu', sample: true, generatedAt: '2026-10-29' });
+  assert.ok(csv.startsWith('\uFEFF"Usuku","Isigaba","Isihloko","Amanothi"'));
+  const csvHeader = csv.split('\r\n')[0];
+  for (const label of ['Umbhede oqoshiwe', 'I-ID yombhede oqoshiwe', 'Isitshalo esiqoshiwe', 'Izithombe ezifakiwe', 'Umthombo werekhodi', 'Okukhethiwe']) assert.ok(csvHeader.includes(`"${label}"`));
+  assert.ok(csv.includes('"Lokhu engikubonile.\nOriginal words, ""quoted""."'));
+  assert.match(output, /<html lang="zu">/);
+  for (const copy of [csv, output]) {
+    assert.ok(copy.includes('My original title'));
+    assert.ok(copy.includes('My own bed'));
+    assert.ok(copy.includes('My original crop'));
+    assert.ok(copy.includes('2026-10-12'));
+    assert.ok(copy.includes(FARM_MEMORY_ZU.exportBasis));
+    assert.ok(copy.includes(FARM_MEMORY_ZU.exportDemo));
+    assert.ok(copy.includes(FARM_MEMORY_ZU.draftNotice));
+    assert.ok(copy.includes(farmMemoryCategoryLabel('zu', 'maintenance')));
+    assert.ok(!copy.includes('Farmer observations from the journal'));
+  }
+  assert.ok(csv.includes('"bed-1"'), 'the stored reference is not translated');
+  assert.ok(output.includes(FARM_MEMORY_ZU.exportPrintHelp));
+  assert.ok(output.includes(FARM_MEMORY_ZU.exportFooter));
+  for (const englishControl of ['Journal copy', 'Field journal — selected entries', 'Recorded bed:', 'Recorded crop:', 'Copy prepared', 'This copy works offline.', 'Original wording retained', 'Selected journal entries', 'DEMONSTRATION JOURNAL']) {
+    assert.ok(!output.includes(englishControl), `${englishControl}: exported controls must follow isiZulu`);
+  }
+  assert.deepEqual(rows, before);
+});
+
+test('isiZulu exports keep formula and HTML protections, sample markers and original photo numbering', () => {
+  const payload = '=HYPERLINK("https://bad")';
+  const attack = '<script>alert(1)</script>';
+  const row = entry('a', { title: attack, notes: payload, photos: ['https://example.com/unavailable.jpg', 'data:image/png;base64,iVBORw0KGgo='] });
+  const csv = buildJournalCsv([row], { lang: 'zu', selection: payload });
+  const output = buildJournalHtml([row], { lang: 'zu', title: attack, selection: attack });
+  assert.ok(csv.includes('"\'=HYPERLINK(""https://bad"")"'));
+  assert.ok(output.includes('&lt;script&gt;alert(1)&lt;/script&gt;'));
+  assert.ok(!output.includes('<script>'));
+  assert.ok(output.includes('default-src \'none\''));
+  assert.ok(!output.includes('src="https://'));
+  assert.ok(output.includes('Isithombe sejenali esifakiwe 2'));
+  assert.ok(output.includes('Isithombe 2'));
+  assert.ok(!output.includes('Isithombe sejenali esifakiwe 1'));
+  assert.ok(output.includes('Isithombe esingu-1 asifakiwe'));
+  const withoutPhotos = buildJournalHtml([row], { lang: 'zu', includePhotos: false });
+  assert.ok(!withoutPhotos.includes('<img src='));
+  assert.ok(withoutPhotos.includes('Izithombe ezingu-2 azifakiwe kule khophi ngokukhetha kwakho.'));
+  const empty = buildJournalHtml([], { lang: 'zu' });
+  assert.ok(empty.includes(FARM_MEMORY_ZU.exportEmpty));
+  assert.ok(empty.includes('okungu-0'));
+  assert.match(buildJournalHtml([], { lang: 'xh' }), /<html lang="en">/);
 });

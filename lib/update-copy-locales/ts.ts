@@ -1,6 +1,20 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Farm memory release: docs/audits/2026-10-29/farm-memory-release-drafts.json; unreviewed.
+  "Farm memory search, photos and saved copies now support isiZulu.": "Ku lavisisa, swifaniso ni tikopi leti hlayisiweke ta switsundzuxo swa purasi sweswi swi seketela isiZulu.",
+  "Tap a crop or bed on a note to see its journal history.": "Khoma ximilana kumbe mubedo eka notsi ku vona matimu ya xona eka jenali.",
+  "Choose a smaller printable copy with notes only.": "Hlawula kopi leyitsongo leyi nga kandziyisiwaka leyi nga ni tinotsi ntsena.",
+  "Open a field note from a task, with its crop and bed ready to check.": "Pfula notsi ya nsimu eka ntiro, ximilana ni mubedo wa kona swi lunghekele ku kamberiwa.",
+  "Find journal notes by crop, bed, date or words you remember.": "Kuma tinotsi ta jenali hi ximilana, mubedo, siku kumbe marito lawa u ma tsundzukaka.",
+  "Compare dated photos and download selected notes for an adviser.": "Pimanisa swifaniso leswi nga ni masiku kutani u kopa tinotsi leti hlawuriweke ta mutsundzuxi.",
+  "Harvest tasks open the crop and blank quantity field, ready to fill in.": "Mintirho ya ntshovelo yi pfula ximilana ni ndhawu leyi nga riki na nhlayo, yi lunghekele ku tatiwa.",
+  "Explore your farm memory": "Kambela switsundzuxo swa purasi ra wena",
+  "Menu → Field journal": "Menyu → Jenali ya nsimu",
+  "Search your notes, compare saved photos and keep a printable copy.": "Lavisisa tinotsi ta wena, pimanisa swifaniso leswi hlayisiweke kutani u hlayisa kopi leyi nga kandziyisiwaka.",
+  "Record work from a task": "Rhekhoda leswi endliweke eka ntiro",
+  "Menu → Task planner": "Menyu → Mupulani wa mintirho",
+  "Open a draft field note or record an actual harvest from a crop task.": "Pfula mpfapfarhuto wa notsi ya nsimu kumbe u rhekhoda ntshovelo wa xiviri eka ntiro wa ximilana.",
   // Annual PDF row audit: docs/audits/2026-10-29/annual-product-pdf-release-drafts.json; unreviewed.
   "PDF exports keep each product and its notes together.": "Ti-PDF leti humesiwaka ti hlayisa xikumiwa xin’wana ni xin’wana ni tinotsi ta xona swin’we.",
   // Production status audit: docs/audits/2026-10-27/report-production-status-release-drafts.json; unreviewed.

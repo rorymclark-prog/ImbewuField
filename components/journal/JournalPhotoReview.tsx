@@ -3,10 +3,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Camera, Columns2, X } from 'lucide-react';
 import type { JournalEntry } from '@/lib/field-journal';
+import { farmMemoryText, type FarmMemoryKey } from '@/lib/farm-memory-copy';
 import styles from './JournalPhotoReview.module.css';
 
 /** Compare the farmer's own dated observations, without inferring crop health or yields. */
-export default function JournalPhotoReview({ entries }: { entries: readonly JournalEntry[] }) {
+export default function JournalPhotoReview({ entries, lang = 'en' }: { entries: readonly JournalEntry[]; lang?: string }) {
+  const fm = (key: FarmMemoryKey, vars?: Record<string, string | number>) => farmMemoryText(lang, key, vars);
   const photos = useMemo(() => [...entries]
     .sort((a, b) => b.date.localeCompare(a.date) || a.id.localeCompare(b.id))
     .flatMap((entry) => (entry.photos ?? []).map((src, index) => ({
@@ -33,36 +35,36 @@ export default function JournalPhotoReview({ entries }: { entries: readonly Jour
 
   if (photos.length === 0) return null;
 
-  const optionLabel = (photo: typeof photos[number]) => `${photo.date} · ${photo.title || 'Untitled note'}${photo.context ? ` · ${photo.context}` : ''} · Photo ${photo.number}`;
+  const optionLabel = (photo: typeof photos[number]) => `${photo.date} · ${photo.title || fm('untitledNote')}${photo.context ? ` · ${photo.context}` : ''} · ${fm('photoNumber', { n: photo.number })}`;
   return (
-    <section className={styles.review} lang="en" aria-label="Journal photos">
-      <div className={styles.heading}><Camera size={16} aria-hidden /><h2>Photos in these notes</h2></div>
-      <p>Open a photo or compare two dates. These are the pictures saved with your notes.</p>
+    <section className={styles.review} lang={lang === 'zu' ? 'zu' : 'en'} aria-label={fm('photos')}>
+      <div className={styles.heading}><Camera size={16} aria-hidden /><h2>{fm('photosHeading')}</h2></div>
+      <p>{fm('photosHelp')}</p>
       <div className={styles.strip}>
-        {photos.slice(0, 8).map((photo) => <button key={photo.id} type="button" onClick={() => open(photo.id, false)} aria-label={`Open photo: ${optionLabel(photo)}`}>
+        {photos.slice(0, 8).map((photo) => <button key={photo.id} type="button" onClick={() => open(photo.id, false)} aria-label={fm('openPhoto', { label: optionLabel(photo) })}>
           <img src={photo.src} alt="" loading="lazy" />
           <span>{photo.date}</span>
         </button>)}
       </div>
-      {photos.length > 1 && <button className={styles.compare} type="button" onClick={() => open(photos[0].id, true)}><Columns2 size={17} aria-hidden />Compare two photos</button>}
+      {photos.length > 1 && <button className={styles.compare} type="button" onClick={() => open(photos[0].id, true)}><Columns2 size={17} aria-hidden />{fm('comparePhotos')}</button>}
       <dialog ref={dialogRef} className={styles.dialog} aria-labelledby="journal-photo-heading"
         onClick={(event) => { if (event.target === event.currentTarget) dialogRef.current?.close(); }}
         onClose={() => { setSelection(null); if (opener.current?.isConnected) opener.current.focus(); }}>
         {first && selection && <div className={styles.panel}>
-          <header><h2 id="journal-photo-heading">{second ? 'Compare your observations' : 'Journal photo'}</h2><button type="button" autoFocus onClick={() => dialogRef.current?.close()} aria-label="Close journal photos"><X size={22} aria-hidden /></button></header>
-          <p className={styles.explanation}>Dates and captions come from your notes. Photos alone do not measure growth or prove a yield.</p>
+          <header><h2 id="journal-photo-heading">{fm(second ? 'compareObservations' : 'photo')}</h2><button type="button" autoFocus onClick={() => dialogRef.current?.close()} aria-label={fm('closePhotos')}><X size={22} aria-hidden /></button></header>
+          <p className={styles.explanation}>{fm('photoExplanation')}</p>
           <div className={`${styles.frames} ${second ? styles.pair : ''}`}>
             {[first, ...(second ? [second] : [])].map((photo, index) => <figure key={`${index}-${photo.id}`}>
-              <label>{second ? (index === 0 ? 'First photo' : 'Second photo') : 'Choose a photo'}
+              <label>{fm(second ? (index === 0 ? 'firstPhoto' : 'secondPhoto') : 'choosePhoto')}
                 <select value={photo.id} onChange={(event) => setSelection((current) => current ? { ...current, [index === 0 ? 'first' : 'second']: event.target.value } : null)}>
                   {photos.map((choice) => <option key={choice.id} value={choice.id} disabled={second ? choice.id === (index === 0 ? second.id : first.id) : false}>{optionLabel(choice)}</option>)}
                 </select>
               </label>
-              <img src={photo.src} alt={`${photo.title || 'Journal observation'} · ${photo.date}${photo.context ? ` · ${photo.context}` : ''}`} />
-              <figcaption><time dateTime={photo.date}>{photo.date}</time><strong>{photo.title || 'Untitled note'}</strong>{photo.context && <span>{photo.context}</span>}</figcaption>
+              <img src={photo.src} alt={`${photo.title || fm('observation')} · ${photo.date}${photo.context ? ` · ${photo.context}` : ''}`} />
+              <figcaption><time dateTime={photo.date}>{photo.date}</time><strong lang={photo.title ? '' : undefined}>{photo.title || fm('untitledNote')}</strong>{photo.context && <span lang="">{photo.context}</span>}</figcaption>
             </figure>)}
           </div>
-          {photos.length > 1 && <button className={styles.compare} type="button" onClick={() => setSelection({ first: first.id, second: second ? null : photos.find((photo) => photo.id !== first.id)!.id })}><Columns2 size={17} aria-hidden />{second ? 'View one photo' : 'Compare with another photo'}</button>}
+          {photos.length > 1 && <button className={styles.compare} type="button" onClick={() => setSelection({ first: first.id, second: second ? null : photos.find((photo) => photo.id !== first.id)!.id })}><Columns2 size={17} aria-hidden />{fm(second ? 'viewOne' : 'compareAnother')}</button>}
         </div>}
       </dialog>
     </section>
