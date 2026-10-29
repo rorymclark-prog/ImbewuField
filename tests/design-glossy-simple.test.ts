@@ -1,12 +1,53 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import ts from 'typescript';
+import { sheetElementNaming } from '@/lib/glossy-filters';
 
 // swarm/w4-glossy-simple: Design Studio step 09 "Glossy" (Preview & Export) in Simple. Source-text
 // guard style, same as tests/design-simple-mode.test.ts: DesignGlossy is not a pure function of
 // exported data, so this reads the real shipped file and asserts the wiring a farmer would hit.
 
 const GLOSSY = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+
+function plantLabelGuard(source: string): string {
+  const file = ts.createSourceFile('DesignGlossy.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const headings: ts.JsxSelfClosingElement[] = [];
+  function visit(node: ts.Node): void {
+    if (ts.isJsxSelfClosingElement(node) && node.tagName.getText(file) === 'WorkflowHeading'
+      && node.attributes.properties.some(attribute => ts.isJsxAttribute(attribute)
+        && attribute.name.getText(file) === 'title' && attribute.initializer
+        && ts.isStringLiteral(attribute.initializer) && attribute.initializer.text === 'Plant labels')) {
+      headings.push(node);
+    }
+    ts.forEachChild(node, visit);
+  }
+  visit(file);
+  assert.equal(headings.length, 1, 'there must be one real Plant labels chooser heading, not an unguarded duplicate');
+  let parent: ts.Node | undefined = headings[0].parent;
+  while (parent && !ts.isJsxExpression(parent)) parent = parent.parent;
+  assert.ok(parent && ts.isJsxExpression(parent) && parent.expression, 'the chooser must have a JSX condition');
+  const expression = parent.expression;
+  assert.ok(ts.isBinaryExpression(expression) && expression.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken,
+    'the chooser must render only after its condition passes');
+  assert.ok(ts.isParenthesizedExpression(expression.right) && ts.isJsxFragment(expression.right.expression),
+    'the condition must control the real chooser fragment');
+  return expression.left.getText(file);
+}
+
+function assertPlantLabelGate(guard: string): void {
+  const evaluate = new Function('sheetHasPlantCodes', 'simple', 'filter', 'sheetElementNaming', `return Boolean(${guard});`) as (
+    hasPlants: boolean, simple: boolean, filter: string, naming: (filter: string) => string,
+  ) => boolean;
+  for (const hasPlants of [false, true]) for (const simple of [false, true]) for (const naming of ['individual', 'grouped']) {
+    const actual = evaluate(hasPlants, simple, 'selected-sheet', filter => {
+      assert.equal(filter, 'selected-sheet', 'the chooser must ask the shared authority about the selected sheet');
+      return naming;
+    });
+    assert.equal(actual, hasPlants && !simple && naming === 'individual',
+      `Plant labels: plants=${hasPlants}, Simple=${simple}, naming=${naming}`);
+  }
+}
 
 test('DesignGlossy computes simple from useAppLevel(), called unconditionally', () => {
   assert.match(GLOSSY, /from '@\/lib\/app-level'/, 'DesignGlossy must import useAppLevel');
@@ -42,11 +83,32 @@ test('Simple hides Underlay, the Quality chooser and Plant labels', () => {
     'the Underlay heading + pills must not render in Simple',
   );
   assert.match(GLOSSY, /Quality\s*\n\s*<\/span>/, 'the Quality chooser label must still exist for All tools');
+  // The old two-condition literal rejected the legitimate shared naming-policy gate.
+  // Whole design now groups its plants; test the real JSX predicate across modes instead
+  // of demanding that every sheet offer individual label controls it cannot apply.
+  assertPlantLabelGate(plantLabelGuard(GLOSSY));
   assert.match(
     GLOSSY,
-    /\{sheetHasPlantCodes && !simple && \(\s*\n\s*<>\s*\n\s*<WorkflowHeading number=\{3\} title="Plant labels" \/>/,
-    'the Plant labels heading + pills must not render in Simple',
+    /\{sheetHasPlantCodes && sheetElementNaming\(filter\) === 'grouped' && !simple && \(\s*<p[^>]*>\s*Whole design groups plants in the legend\./,
+    'the grouped-sheet explanation must also stay out of Simple',
   );
+  assert.match(GLOSSY, /sheetElementNaming,[\s\S]*?from '@\/lib\/glossy-filters'/,
+    'the chooser must use the same naming authority as the map and legend');
+  assert.equal(sheetElementNaming('all'), 'grouped', 'whole design uses grouped inventory');
+  assert.equal(sheetElementNaming('planting'), 'individual', 'the Planting sheet offers individual names and codes');
+});
+
+test('the Plant labels guard check detects losing any of its three farmer-facing conditions', () => {
+  const guard = plantLabelGuard(GLOSSY);
+  for (const [reason, mutation] of [
+    ['Simple visibility', guard.replace(/\s*&&\s*!simple\b/, '')],
+    ['sheet naming policy', guard.replace(/\s*&&\s*sheetElementNaming\(filter\)\s*===\s*'individual'/, '')],
+    ['plant presence', guard.replace(/\bsheetHasPlantCodes\s*&&\s*/, '')],
+  ]) {
+    assert.notEqual(mutation, guard, `the ${reason} mutation must actually remove its condition`);
+    assert.throws(() => assertPlantLabelGate(mutation), assert.AssertionError,
+      `the check must fail when ${reason} is removed`);
+  }
 });
 
 test('Simple hides the style-pack picker and "More style packs"', () => {
