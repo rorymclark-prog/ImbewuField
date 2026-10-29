@@ -31,11 +31,16 @@ interface Options {
   // 'first' (default) focuses the first control — or an element marked data-autofocus. 'container'
   // focuses the container itself, for when the first control would be a destructive action.
   initialFocus?: 'first' | 'container';
+  // Opening a child may replace its trigger (the map grid becomes a detail view).
+  // Keep focus in the surviving parent instead of dropping onto the page behind it.
+  returnFocusFallbackRef?: RefObject<HTMLElement>;
 }
 
 export function useDialogFocus(open: boolean, ref: RefObject<HTMLElement>, options: Options = {}) {
   const initial = useRef(options.initialFocus);
   initial.current = options.initialFocus;
+  const returnFocusFallback = useRef(options.returnFocusFallbackRef);
+  returnFocusFallback.current = options.returnFocusFallbackRef;
 
   useEffect(() => {
     const container = ref.current;
@@ -64,6 +69,14 @@ export function useDialogFocus(open: boolean, ref: RefObject<HTMLElement>, optio
     return () => {
       document.removeEventListener('keydown', onKeyDown);
       if (opener && opener.isConnected && opener !== document.body) opener.focus({ preventScroll: true });
+      else {
+        const fallback = returnFocusFallback.current?.current;
+        if (fallback?.isConnected && fallback !== document.body
+          && fallback.getClientRects().length > 0 && !fallback.closest('[inert]')) {
+          if (!fallback.hasAttribute('tabindex')) fallback.tabIndex = -1;
+          fallback.focus({ preventScroll: true });
+        }
+      }
     };
   }, [open, ref]);
 }

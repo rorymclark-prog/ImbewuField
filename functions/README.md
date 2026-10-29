@@ -11,6 +11,22 @@ the input composite from a **server-derived** Storage path, calls OpenAI's image
 updates that sheet's status. Every job reaches a terminal status; `sweepStaleRenderJobs` (every
 10 min) fails anything stuck.
 
+`aiMapAccess` verifies the caller's Firebase token and current Auth record. Settings uses this
+service for the personal switch, platform master controls and organisation delegation. Its
+decision is shared with the worker: personal opt-in, the platform switch and the tenant grant
+must all permit a new render. Existing saved images remain retrievable after access is revoked.
+
+The `aiMapMaster: true` custom Auth claim is a platform-owner grant issued with the Admin SDK;
+an ordinary admin role, a role preview or a writable profile cannot issue it. The owner's
+Settings can suspend any organisation. Approved organisation people managers may assign role
+or individual access within their own organisation, but cannot override that suspension.
+The organisation switch is a manual service entitlement; it does not claim to verify invoices.
+
+The `ai_map_accounts`, `ai_map_organizations`, `ai_map_members` and `ai_map_audit` collections
+have no client write rule. Only the authenticated service writes them. A person starts with AI
+off and must opt in after access is granted. Revocation is checked again before each sheet;
+requests already sent to a provider may finish.
+
 ## One-time setup (Rory)
 1. **OpenAI org verification** — platform.openai.com → Settings → Organization → Verify. gpt-image
    models require it.
@@ -18,15 +34,16 @@ updates that sheet's status. Every job reaches a terminal status; `sweepStaleRen
    `fieldproof-sa` project to Blaze.
 3. **Region** — already set: `REGION` in `src/index.ts` is `europe-west1`, matching this project's
    Firestore database (confirmed via CLI). No action needed unless the DB is ever moved.
-4. **Turn the pipeline ON** (the kill switch, default OFF): in Firestore, create
-   `app_config/renders` = `{ enabled: true }`. Set `enabled: false` any time to instantly stop all
-   render spend.
+4. **Turn the pipeline ON** only after deploying the access service and worker: the Vercel
+   environment needs `NEXT_PUBLIC_AI_RENDER_ENABLED=true`, then a web redeploy. The master
+   Settings switch controls `app_config/renders.enabled` live, without another redeploy.
+   Organisation access and personal switches remain independent and default off.
 
 ## Deploy
 ```bash
 cd functions && npm install                      # first time only
 firebase functions:secrets:set OPENAI_API_KEY    # paste the key
-firebase deploy --only functions,firestore:rules,firestore:indexes,storage
+firebase deploy --only functions:aiMapAccess,functions:runRenderJob
 ```
 
 ## Tunables (`src/index.ts`)
@@ -45,3 +62,9 @@ firebase deploy --only functions,firestore:rules,firestore:indexes,storage
 ## Notes
 - Logs: `npm run logs` or Firebase console → Functions. Each job logs a structured JSON line.
 - The `render_usage/{uid}_{yyyymmdd}` docs hold the daily counters (worker-written, owner-readable).
+
+The OpenAI glossy-map worker uses `gpt-image-2.5-sunburst` (the shared model in
+`lib/ai-render/model.ts`). The worker records the actual model on each job so saved
+maps keep their original attribution after upgrades. The existing low/medium/high
+quality choices and spend caps remain in force; xhigh/max are not enabled.
+Model reference: https://developers.openai.com/api/docs/models/gpt-image-2.5-sunburst

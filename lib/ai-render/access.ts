@@ -3,7 +3,7 @@
 // Both Next routes (verified ID token) and the worker (current Auth record) use this decision.
 export const AI_RENDER_TESTER_CLAIM = 'aiRenderTester';
 
-export type AiRenderAccessReason = 'approved' | 'disabled' | 'not-approved' | 'sign-in-required' | 'unavailable';
+export type AiRenderAccessReason = 'approved' | 'disabled' | 'not-approved' | 'sign-in-required' | 'unavailable' | 'personal-off' | 'organization-disabled';
 export interface AiRenderAccess {
   allowed: boolean;
   reason: AiRenderAccessReason;
@@ -11,15 +11,54 @@ export interface AiRenderAccess {
 }
 
 const MESSAGES: Record<AiRenderAccessReason, string> = {
+  'personal-off': 'AI glossy maps are off in your Settings. Turn them on when you want to generate a paid map.',
+  'organization-disabled': 'AI glossy maps are not enabled for your organisation. Your organisation cannot override the platform switch. Exact maps remain available.',
   approved: 'Experimental AI map rendering is available for your account.',
   disabled: 'AI map rendering is currently turned off. Exact maps are still available.',
-  'not-approved': 'AI map rendering is experimental and available only to approved testers. Exact maps are still available.',
+  'not-approved': 'AI glossy maps are not enabled for your account. Ask your organisation or the platform owner for access. Exact maps remain available.',
   'sign-in-required': 'Sign in with an approved tester account to use experimental AI map rendering. Exact maps are still available.',
   unavailable: 'AI map access could not be checked. Try again later; exact maps are still available.',
 };
 
 export function aiRenderAccessState(reason: AiRenderAccessReason): AiRenderAccess {
   return { allowed: reason === 'approved', reason, message: MESSAGES[reason] };
+}
+
+export const AI_MAP_ROLES = ['farmer', 'mentor', 'student', 'ngo', 'funder'] as const;
+export type AiMapRole = typeof AI_MAP_ROLES[number];
+export interface AiMapPolicyContext {
+  uid: string | null;
+  master: boolean;
+  tester: boolean;
+  enabled: boolean;
+  personalEnabled: boolean;
+  personalGranted: boolean;
+  role: string | null;
+  orgId: string | null;
+  orgEnabled: boolean;
+  orgRoles: readonly string[];
+  memberGrant: boolean | null;
+}
+
+// A tenant suspension beats both role and individual grants. Personal consent is independent:
+// neither an organisation nor an old tester claim may silently turn a person's spending on.
+export function decideManagedAiRenderAccess(c: AiMapPolicyContext): AiRenderAccess {
+  if (!c.uid) return aiRenderAccessState('sign-in-required');
+  if (!c.enabled) return aiRenderAccessState('disabled');
+  if (!c.master) {
+    if (c.orgId) {
+      if (!c.orgEnabled) return aiRenderAccessState('organization-disabled');
+      if (c.memberGrant === false || !(c.memberGrant === true || (c.role && c.orgRoles.includes(c.role)))) {
+        return aiRenderAccessState('not-approved');
+      }
+    } else if (!c.personalGranted && !c.tester) return aiRenderAccessState('not-approved');
+  }
+  if (!c.personalEnabled) return aiRenderAccessState('personal-off');
+  return aiRenderAccessState('approved');
+}
+
+export function canManageAiMapOrganization(master: boolean, actor: { role: string | null; orgId: string | null; people: boolean }, orgId: string): boolean {
+  return master || (actor.role === 'ngo' && actor.orgId === orgId && actor.people);
 }
 
 export function decideAiRenderAccess(uid: unknown, verifiedClaims: unknown): AiRenderAccess {

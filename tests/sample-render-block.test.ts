@@ -2,6 +2,9 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import ts from 'typescript';
+import { UserFacingError, userFacingMessage } from '../lib/user-facing-error.ts';
+import { SAMPLE_MODE_RENDER_REFUSAL } from '../lib/sample-mode.ts';
 
 // SAMPLE MODE MUST REFUSE EVERY ROUTE TO A BILLED RENDER, NOT JUST THE QUEUE.
 //
@@ -14,26 +17,83 @@ import { join } from 'node:path';
 // does, so an anonymous sample-mode visitor could reach billed image generation through either
 // path — softened only by the 8/hour/IP rate limit added in PR #374, not actually closed.
 //
-// Source-shape checks, in the same style as tests/paid-render-gate.test.ts and
-// tests/sheet-scale.test.ts: requestProducer lives inside a ~16k-line React component with no DOM
-// or Firebase queue in this suite, and "does the network call fire" is exactly the kind of
-// property worth pinning at the text level so a reordered statement or a copy-pasted new call site
-// cannot quietly drop the gate.
+// Keep source ordering checks at the billed boundary, then execute the real boundary functions
+// and their caller catches without mounting the full sheet renderer. A network attempt is a
+// failing spy; intentional refusal text must survive while unrelated provider text stays hidden.
 
 const CLIENT = readFileSync(join(process.cwd(), 'lib', 'ai-render-client.ts'), 'utf8');
 const GLOSSY = readFileSync(join(process.cwd(), 'components', 'design', 'DesignGlossy.tsx'), 'utf8');
 const SAMPLE_MODE = readFileSync(join(process.cwd(), 'lib', 'sample-mode.ts'), 'utf8');
 const RENDER_JOBS = readFileSync(join(process.cwd(), 'lib', 'render-jobs.ts'), 'utf8');
 
-/** Body of a `const <name> = useCallback(...)` up to the closing `}, [deps]);` at that indent —
- *  same helper as tests/paid-render-gate.test.ts, kept local so this file has no cross-file
- *  runtime dependency on another test. */
-function callbackBody(name: string): string {
-  const start = GLOSSY.indexOf(`const ${name} = useCallback(`);
-  assert.notEqual(start, -1, `${name} not found — this test needs updating, not deleting`);
-  const end = GLOSSY.indexOf('\n  }, [', start);
-  assert.notEqual(end, -1, `could not find the end of ${name}`);
-  return GLOSSY.slice(start, end);
+function sourceTree(text: string) {
+  return ts.createSourceFile('render-boundary.tsx', text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+}
+
+function declaration(text: string, name: string): ts.FunctionDeclaration {
+  const tree = sourceTree(text);
+  let found: ts.FunctionDeclaration | undefined;
+  const visit = (node: ts.Node) => {
+    if (ts.isFunctionDeclaration(node) && node.name?.text === name) found = node;
+    ts.forEachChild(node, visit);
+  };
+  visit(tree);
+  assert.ok(found, `The real ${name} boundary must remain covered`);
+  return found;
+}
+
+function compile<T>(text: string, result: string, scope: Record<string, unknown>): T {
+  const js = ts.transpileModule(text, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText;
+  return new Function('scope', `with(scope) { ${js}; return ${result}; }`)(scope) as T;
+}
+
+async function sampleRefusal(label: 'requestRender' | 'requestProducer'): Promise<Error> {
+  const text = label === 'requestRender' ? CLIENT : GLOSSY;
+  let paidWork = 0;
+  const forbidden = () => { paidWork++; throw Error('A billed render boundary was reached'); };
+  const scope = {
+    isSampleMode: () => true, SAMPLE_MODE_RENDER_REFUSAL, UserFacingError,
+    paidApiHeaders: forbidden, capForAiInput: forbidden, stripDataUrl: forbidden, fetch: forbidden,
+  };
+  const run = compile<(...args: unknown[]) => Promise<unknown>>(
+    declaration(text, label).getText().replace(/^export\s+/, ''), label, scope,
+  );
+  let refusal: unknown;
+  try { await run(...(label === 'requestRender' ? [{}] : ['', '', '', ''])); }
+  catch (error) { refusal = error; }
+  assert.equal(paidWork, 0, `${label} must refuse before auth, image preparation or network work`);
+  assert.ok(refusal instanceof Error, `${label} must reject rather than silently return`);
+  assert.equal(refusal.message, SAMPLE_MODE_RENDER_REFUSAL);
+  return refusal;
+}
+
+function callerCatch(flow: string, setError: (value: string) => void) {
+  const tree = sourceTree(GLOSSY);
+  let callback: ts.ArrowFunction | undefined;
+  const findCallback = (node: ts.Node) => {
+    if (ts.isVariableDeclaration(node) && node.name.getText(tree) === flow
+      && node.initializer && ts.isCallExpression(node.initializer)
+      && node.initializer.arguments[0] && ts.isArrowFunction(node.initializer.arguments[0])) {
+      callback = node.initializer.arguments[0];
+    }
+    ts.forEachChild(node, findCallback);
+  };
+  findCallback(tree);
+  assert.ok(callback, `The real ${flow} flow must remain covered`);
+  let catcher: ts.CatchClause | undefined;
+  const findCatch = (node: ts.Node) => {
+    if (ts.isCatchClause(node) && /\bsetError\(/.test(node.block.getText(tree))) catcher = node;
+    ts.forEachChild(node, findCatch);
+  };
+  findCatch(callback.body);
+  assert.ok(catcher?.variableDeclaration, `${flow} must handle its rejected render visibly`);
+  return compile<(error: Error) => void>(
+    `function show(${catcher.variableDeclaration.name.getText(tree)}) ${catcher.block.getText(tree)}`,
+    'show', {
+      setError, userFacingMessage, t: () => 'Render unavailable. Try again.',
+      refreshPendingRef: { current: true },
+    },
+  );
 }
 
 test('requestRender (lib/ai-render-client.ts) checks isSampleMode before it ever calls fetch', () => {
@@ -64,17 +124,11 @@ test('requestProducer (DesignGlossy.tsx) checks isSampleMode before it ever call
   );
 });
 
-test('both direct-call gates throw — never a silent no-op or a swallowed rejection', () => {
-  for (const [label, src, marker] of [
-    ['requestRender', CLIENT, 'export async function requestRender('],
-    ['requestProducer', GLOSSY, 'async function requestProducer('],
-  ] as const) {
-    const start = src.indexOf(marker);
-    const gateAt = src.indexOf('isSampleMode()', start);
-    const window = src.slice(gateAt, gateAt + 200);
-    assert.match(window, /throw new Error\(/, `${label}'s sample-mode gate must throw, not return/resolve quietly`);
-    assert.doesNotMatch(window, /return\s*(null|undefined|;)/, `${label}'s gate must not resolve as if nothing happened`);
-  }
+test('both direct-call gates reject with the shared refusal before any paid work', async () => {
+  // A typed, intentional Error is still a refusal. Pinning `new Error` missed that contract
+  // and prevented the friendly-error boundary from distinguishing it from provider diagnostics.
+  await sampleRefusal('requestRender');
+  await sampleRefusal('requestProducer');
 });
 
 test('the direct-call gates reuse the exact refusal wording the queue already uses', () => {
@@ -86,19 +140,19 @@ test('the direct-call gates reuse the exact refusal wording the queue already us
   assert.match(GLOSSY, /SAMPLE_MODE_RENDER_REFUSAL/, 'requestProducer should reuse the shared refusal message, not invent its own');
 });
 
-test('the refusal actually reaches the farmer: every caller of the two gated functions surfaces err.message as visible text', () => {
-  // This is the mechanism: requestRender/requestProducer throw a plain Error, and each of the three
-  // callers below already wraps its call in `catch (err) { setError(err instanceof Error ?
-  // err.message : ...) }` — pre-existing code, unrelated to this fix, that this test pins so a
-  // future refactor cannot quietly move the call outside that catch and turn the throw back into
-  // an unhandled rejection. setError's own render (checked below) is what makes it visible.
-  const SET_ERROR_MARKER = "setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));";
+test('every render caller shows the deliberate tour refusal while hiding unrelated provider diagnostics', async () => {
+  // The farmer must still read the refusal, but trusting every raw err.message also exposed
+  // Firebase/vendor failures. Execute each actual catch with both kinds of rejection.
+  const refusals = await Promise.all([sampleRefusal('requestRender'), sampleRefusal('requestProducer')]);
   for (const flow of ['generate', 'generateProducer', 'generateAllStyledSheets']) {
-    const body = callbackBody(flow);
-    assert.ok(
-      body.includes(SET_ERROR_MARKER),
-      `${flow} must catch a thrown sample-mode refusal and hand it to setError — otherwise it becomes a swallowed promise, worse than the leak it fixes`,
-    );
+    let message = '';
+    const show = callerCatch(flow, value => { message = value; });
+    for (const refusal of refusals) {
+      show(refusal);
+      assert.equal(message, SAMPLE_MODE_RENDER_REFUSAL, `${flow} must keep the real tour instruction visible`);
+    }
+    show(new Error('Firebase: Missing or insufficient permissions.'));
+    assert.equal(message, 'Render unavailable. Try again.');
   }
   // And setError must actually paint something a farmer can see — not a console.log, not a toast
   // that already rendered and vanished, but a persistent line in the panel these flows are called

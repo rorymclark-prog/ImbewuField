@@ -3,6 +3,7 @@ import { NextRequest } from 'next/server';
 import { resolveNetworkCaller } from '@/lib/network-caller';
 import { canSeeOrg } from '@/lib/network-access';
 import { type MelPermission } from '@/lib/mel';
+import { southAfricanTodayISODate } from '@/lib/field-teams';
 import { productionAreaAccess, productionAreaSummary, validProductionSite, type ProductionSite } from '@/lib/production-sites';
 export const runtime = 'nodejs';
 const json = (body: unknown, status = 200) => Response.json(body, { status, headers: { 'Cache-Control': 'no-store' } });
@@ -30,9 +31,10 @@ export async function POST(req: NextRequest) {
   if (!c.manage || c.publishedOnly || !['ngo', 'admin'].includes(c.access.role)) return json({ error: 'NGO management access is required.' }, 403);
   const raw = await req.text(); if (raw.length > 8000) return json({ error: 'Entry is too large.' }, 413);
   let body: Record<string, unknown>; try { body = JSON.parse(raw); } catch { return json({ error: 'Invalid entry.' }, 400); }
-  if (!body || typeof body !== 'object' || body.confirmed !== true || !validProductionSite(body.site, new Date().toISOString().slice(0, 10))) return json({ error: 'Check the site code, date, areas and measurement note. Confirm that the areas do not overlap.' }, 400);
+  const instant = new Date();
+  if (!body || typeof body !== 'object' || body.confirmed !== true || !validProductionSite(body.site, southAfricanTodayISODate(instant))) return json({ error: 'Check the site code, date, areas and measurement note. Confirm that the areas do not overlap.' }, 400);
   const s = body.site;
-  const site: ProductionSite = { code: s.code, name: s.name.trim(), observedOn: s.observedOn, vegetableM2: s.vegetableM2, stapleM2: s.stapleM2, boundaryM2: s.boundaryM2, evidence: s.evidence.trim(), published: s.published, updatedAt: new Date().toISOString(), updatedBy: c.uid };
+  const site: ProductionSite = { code: s.code, name: s.name.trim(), observedOn: s.observedOn, vegetableM2: s.vegetableM2, stapleM2: s.stapleM2, boundaryM2: s.boundaryM2, evidence: s.evidence.trim(), published: s.published, updatedAt: instant.toISOString(), updatedBy: c.uid };
   const ref = c.db.collection('production_sites').doc(c.org).collection('sites').doc(site.code);
   // Append a history entry and replace this site's current observation atomically.
   // Repeated seasons update the same physical site instead of accumulating hectares.

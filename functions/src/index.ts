@@ -31,7 +31,10 @@ import { getFirestore, FieldValue, Timestamp, type DocumentReference } from 'fir
 import { getStorage } from 'firebase-admin/storage';
 import { PNG } from 'pngjs';
 import { compareRenders } from '../../lib/render-difference';
-import { readAiRenderTesterAccess } from '../../lib/ai-render/access';
+import { decideManagedAiRenderAccess } from '../../lib/ai-render/access';
+import { loadAiMapContext } from './ai-map-access';
+import { OPENAI_MAP_MODEL, openAiMapRequestedSize } from '../../lib/ai-render/model';
+export { aiMapAccess } from './ai-map-access';
 import { geminiEdit, geminiAspectRatio, geminiImageSize, geminiModelForQuality } from './gemini';
 import { friendlyProviderError } from './provider-errors';
 import {
@@ -47,7 +50,6 @@ const GEMINI_API_KEY = defineSecret('GEMINI_API_KEY');
 // Firestore-trigger region MUST equal the database region, or deploy is rejected.
 // fieldproof-sa's Firestore database is in europe-west1 (confirmed via firebase CLI 2026-07-18).
 const REGION = 'europe-west1';
-const MODEL = 'gpt-image-2';
 const CONCURRENCY = 3; // parallel sheets within ONE job (instance concurrency is pinned to 1 below)
 const MAX_RETRIES = 2; // network / 5xx
 const MAX_429_RETRIES = 5; // rate-limit gets more patience — the budget has room once sheets ≤ 5
@@ -177,13 +179,7 @@ function pngDims(buf: Buffer): { w: number; h: number } | null {
 // 2560×1440 are documented "experimental"). Both edges must be multiples of 16, aspect ≤ 3:1,
 // 0.66–8.3 MP. Falls back to 'auto' if the input is unreadable or the target is out of range.
 function pickSize(dims: { w: number; h: number } | null): string {
-  if (!dims || !dims.w || !dims.h) return 'auto';
-  const s = Math.sqrt(3_300_000 / (dims.w * dims.h));
-  const W = Math.round((dims.w * s) / 16) * 16;
-  const H = Math.round((dims.h * s) / 16) * 16;
-  const px = W * H;
-  const ar = Math.max(W, H) / Math.min(W, H);
-  return px < 655_360 || px > 8_294_400 || ar > 3 || Math.max(W, H) > 3840 ? 'auto' : `${W}x${H}`;
+  return dims ? openAiMapRequestedSize(dims.w, dims.h) : 'auto';
 }
 
 // One OpenAI image edit — the only slow, network-bound step. AbortController caps a hung socket;
@@ -195,7 +191,7 @@ async function openaiEdit(
   maskB64?: string,
   styleReference?: Buffer | null,
   attempt = 0,
-  // A MONEY DIAL. At the size these sheets render, 'high' costs roughly 4x 'medium' and 35x 'low'.
+  // Keep the requested money dial across retries; model upgrades do not raise the quality tier.
   // Defaulted here as well as at the call site so an old job doc written before the field existed
   // still renders exactly as it always did.
   quality: 'high' | 'medium' | 'low' = 'high',
@@ -206,7 +202,7 @@ async function openaiEdit(
   try {
     const buf = Buffer.from(imageB64, 'base64');
     const form = new FormData();
-    form.append('model', MODEL);
+    form.append('model', OPENAI_MAP_MODEL);
     form.append('prompt', styleReference
       ? [
           'IMAGE ROLES:',
@@ -218,7 +214,7 @@ async function openaiEdit(
       : prompt);
     form.append('n', '1');
     form.append('size', pickSize(pngDims(buf) ?? jpegDims(buf))); // PNG first — composites are always PNG; 'auto' guarantees no detail
-    form.append('quality', quality); // low/medium/high/auto; 'high' is the documented maximum
+    form.append('quality', quality); // Keep the existing tiers; do not opt into 2.5's xhigh/max spend.
     form.append('output_format', 'png'); // lossless — no JPEG ringing around fine legend lettering
     form.append('moderation', 'low'); // less-restrictive filter — fewer spurious refusals on aerial land photos
     // Storage path is historically named "composite.jpg"/input-*.jpg (harmless — GCS doesn't care about
@@ -284,7 +280,7 @@ async function openaiEdit(
   // arithmetic on invoices instead of a guess.
   const b64 = data?.data?.[0]?.b64_json;
   if (data?.usage) {
-    console.log('openai_image_usage', JSON.stringify({ quality, ...data.usage }));
+    console.log('openai_image_usage', JSON.stringify({ model: OPENAI_MAP_MODEL, quality, ...data.usage }));
   }
   if (!b64) throw new Error('OpenAI returned no image');
   return b64;
@@ -342,12 +338,10 @@ async function claimJob(ref: DocumentReference, jobId: string): Promise<ClaimRes
       return { proceed: false, reason: `invalid: ${contractError}` };
     }
 
-    // The job is client-written, so no approval field in it is trusted. Read the current Auth
-    // grant, including for owner/admin accounts, before either usage counter or any provider call.
-    const access = await readAiRenderTesterAccess(job.uid, async (uid) => {
-      const account = await getAuth().getUser(uid);
-      return account.disabled ? null : account.customClaims;
-    });
+    // Re-read the account, tenant suspension and personal switch in this transaction.
+    // Old tokens and previously queued jobs cannot retain a permission the owner revoked.
+    const account = await getAuth().getUser(job.uid);
+    const access = decideManagedAiRenderAccess((await loadAiMapContext(db, account, tx)).policy);
     if (!access.allowed) {
       tx.update(ref, { status: 'error', error: access.message, updatedAt: FieldValue.serverTimestamp() });
       return { proceed: false, reason: `tester-access: ${access.reason}` };
@@ -413,6 +407,9 @@ export const runRenderJob = onDocumentCreated(
         return;
       }
 
+      // Stamp the server-selected model, never a model id supplied by the client. A finished job
+      // can be reopened after the next model upgrade and must still name its original generator.
+      if (job.engine === 'openai') await ref.update({ model: OPENAI_MAP_MODEL });
       const key = OPENAI_API_KEY.value();
       // A Gemini job with no Gemini secret must die HERE, named, before any sheet is attempted.
       // The branch below has never run in production, and its last bug (asking a text model for an
@@ -470,6 +467,10 @@ export const runRenderJob = onDocumentCreated(
             // Absent on job docs written before the quality dial existed — read as 'high', the
             // setting every render used until then, so old and in-flight jobs are unchanged.
             const quality = job.quality === 'medium' || job.quality === 'low' ? job.quality : 'high';
+
+            const currentAccount = await getAuth().getUser(job.uid);
+            const currentAccess = decideManagedAiRenderAccess((await loadAiMapContext(db, currentAccount)).policy);
+            if (!currentAccess.allowed) throw new Error(currentAccess.message);
 
             if (job.engine === 'gemini') {
               // PARITY WITH THE OPENAI BRANCH. This used to hand Gemini a prompt and an image and

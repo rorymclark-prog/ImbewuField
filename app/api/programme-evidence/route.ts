@@ -4,7 +4,7 @@ import { getApps, getApp, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { melCan, programmeCapabilities, type MelPermission } from '@/lib/mel';
-import { validFieldId } from '@/lib/field-teams';
+import { southAfricanTodayISODate, validFieldId } from '@/lib/field-teams';
 import { blankBranding, cleanDonorIndicator, trainingForStorage, trainingFromStorage, publishedTraining, sharedTrainingPhotos, validProgrammeBranding, validProgrammeMilestone, validTrainingRecord, type TrainingRecord, type ProgrammeMilestone, type ProgrammeBranding } from '@/lib/programme-evidence';
 import type { UserRole } from '@/lib/db/types';
 
@@ -63,7 +63,7 @@ async function handle(req: NextRequest, write: boolean) {
     }
     if (role==='funder') fail('Funders can read published reports.',403);
     const raw=await req.text(); if (new TextEncoder().encode(raw).length>1500000) fail('This record is too large. Use smaller photos or split a large register into sessions.',413);
-    const b=JSON.parse(raw), now=new Date().toISOString(), today=now.slice(0,10);
+    const b=JSON.parse(raw), instant=new Date(), now=instant.toISOString(), today=southAfricanTodayISODate(instant);
     let acknowledgedAt=now;
     const receipt=fieldOperationReceipt(db,auth.uid!,org,'programme',b);
     if (b.action==='branding') {

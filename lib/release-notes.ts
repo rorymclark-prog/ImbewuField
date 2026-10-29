@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '27 October 2026', sha: 'b559d69cb', changes: [
+  { when: '29 October 2026', sha: '55b03506e', changes: [
     'Report headings stay with their opening text when you export a PDF.',
     'Map legends have thinner borders and clearer scale marks.',
     'New map legends use spare margin space for larger, clearer lettering.',
@@ -52,6 +52,31 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   }, { title: 'Check the maps in your site report', where: 'Menu → Site reports', href: '/reports',
     detail: 'Review each included map before exporting. Saved older drawings stay available.',
   }] },
+  { when: '28 October 2026', sha: '9e11f2396', changes: [
+    'Saved reports keep their original photos and site water evidence.',
+    'Field records now accept today’s date after midnight in South Africa.',
+    'Map and crop exports give clearer errors and keyboard controls.',
+  ], tour: [{ title: 'Open site reports', where: 'Menu → Reports', href: '/reports',
+    detail: 'Review the report purpose, annual production plan and saved maps for your site.' },
+    { title: 'Open Design Studio', where: 'Menu → Design Studio', href: '/design',
+      detail: 'Open Preview & export, then Record plan for the scaled diagram and its legend.' }] },
+  { when: '28 October 2026', sha: '70dfef97f', changes: [
+    'Map sheets now use white paper, thin legend borders and clearer plant pictures.',
+  ] },
+  { when: '28 October 2026', sha: 'a5972fc7d', changes: [
+    'Paid AI maps now finish when the image service rounds their size.',
+  ] },
+  { when: '28 October 2026', sha: 'e7812ef7a', changes: [
+    'New AI glossy maps use GPT Image 2.5 Sunburst.',
+  ] },
+  { when: '27 October 2026', sha: '9d42fedbe', changes: [
+    'Turn AI glossy maps on or off in Settings. Saved maps stay available.',
+    'The platform owner can enable or suspend AI maps for each organisation.',
+    'Approved organisations can give AI map access by role or person.',
+  ], tour: [{ title: 'AI glossy map settings', where: 'Settings → AI glossy maps', href: '/account',
+    detail: 'Open Settings to control your own AI maps. Platform master accounts can also manage each organisation.' },
+    { title: 'Try an AI glossy map', where: 'Design Studio → Glossy', href: '/design',
+      detail: 'Open a saved farm, choose a sheet and select AI Polished. Each render is paid.' }] },
   { when: '27 October 2026', sha: '31d0ba80', changes: [
     'Menus, pop-ups and Lima now work fully from a keyboard and keep your place.',
   ] },
