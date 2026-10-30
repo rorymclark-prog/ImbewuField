@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Roof reference: docs/audits/2026-10-30/aerial-roof-release-drafts.json; unreviewed.
+  "AI maps on plain paper keep real roof detail from satellite imagery.": "Dimmapa tsa AI tse pampiring e tshweu di boloka dintlha tsa nnete tsa marulelo ho tswa ditshwantshong tsa sathelaete.",
   // Phone map artwork: docs/audits/2026-10-30/phone-ai-paper-release-drafts.json; unreviewed.
   "AI maps on plain paper keep illustrated ground instead of flat overlays.": "Dimmapa tsa AI tse pampiring e tshweu di boloka mobu o takilweng ho e-na le dikarolo tse bataletseng.",
   "Full-screen maps fit your phone, including with larger text.": "Dimmapa tsa skrine se felletseng di lekana fonong ya hao, le ha mongolo o le moholo.",
