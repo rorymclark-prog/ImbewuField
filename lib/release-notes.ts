@@ -46,6 +46,19 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     'Keep a field open without beds and use both layouts in automatic crop planning.',
   ], tour: [{ title: 'Lay out your fields', where: 'Site design → Planting → Field blocks', href: '/design',
     detail: 'Draw a polygon, choose beds or open field, save the layout and open the automatic crop planner.' }] },
+  { when: '30 October 2026', sha: 'ef82c465b', changes: [
+    'Oblique styles stay visible when you switch from an exact map.',
+  ] },
+  { when: '30 October 2026', sha: 'f03409726', changes: [
+    'Choose Oblique in AI viewpoint for an angled illustration of your whole design.',
+    'The app gathers your layout, photo and terrain; use the top-down plan for measurements.',
+  ], tour: [{ title: 'Try an angled view', where: 'Menu → Site design', href: '/design',
+    detail: 'With AI access, open Glossy and choose Oblique under AI viewpoint to generate your design.' },
+  { title: 'Keep the measured plan', where: 'Menu → Site design', href: '/design',
+    detail: 'Use the top-down Design Map for measurements; compare the angled view with it.' }] },
+  { when: '30 October 2026', sha: '51d5c5208', changes: [
+    'Glossy AI maps omit duplicate driveway guides; your editable paths stay saved.',
+  ] },
   { when: '30 October 2026', sha: 'de4a3636f', changes: [
     'AI maps on plain paper keep real roof detail from satellite imagery.',
   ] },

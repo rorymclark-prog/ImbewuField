@@ -1,0 +1,24 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "scope": "Oblique beta release notices only; no fluent review claimed.",
+  "entries": [
+    {
+      "source": "Choose Oblique in AI viewpoint for an angled illustration of your whole design.",
+      "drafts": {
+        "zu": "Khetha i-Oblique ku-AI viewpoint ukuze ubone umdwebo wawo wonke umklamo wakho ubukwa nge-engeli.",
+        "st": "Kgetha Oblique ho AI viewpoint bakeng sa setshwantsho sa moralo wa hao kaofela se shebilweng ka lehlakore.",
+        "ts": "Hlawula Oblique eka AI viewpoint ku vona xifaniso xa pulani ya wena hinkwato xi langutiwe hi le tlhelo.",
+        "ve": "Khethani Oblique kha AI viewpoint uri ni vhone tshifanyiso tsha pulane yaṋu yoṱhe tsho sedzwa nga thungo."
+      }
+    },
+    {
+      "source": "The app gathers your layout, photo and terrain; use the top-down plan for measurements.",
+      "drafts": {
+        "zu": "Uhlelo lulungisa umklamo owugcinile, isithombe sendawo nolwazi lomhlaba olutholakalayo; sebenzisa ipulani ebukwa phezulu ukuze ulinganise.",
+        "st": "App e lokisa moralo o bolokilweng, foto ya sebaka le tlhahisoleseding ya mobu e fumanehang; sebedisa moralo o shebilweng hodimo bakeng sa ditekanyo.",
+        "ts": "App yi lulamisa pulani leyi hlayisiweke, xifaniso xa ndhawu ni vuxokoxoko bya misava leyi kumekaka; tirhisa pulani leyi langutiweke ehenhla ku pima.",
+        "ve": "App i lugisa pulane yo vhulungwaho, tshifanyiso tsha fhethu na zwidodombedzwa zwa mavu zwi re hone; shumisani pulane yo sedzwaho nṱha u kala."
+      }
+    }
+  ]
+}

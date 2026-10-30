@@ -7,6 +7,18 @@ const copy:UpdateCopy={
   "Lay out your fields": "Hlela izinsimu zakho",
   "Site design → Planting → Field blocks": "Ukuhlelwa kwesiza → Ukutshala → Izingxenye zensimu",
   "Draw a polygon, choose beds or open field, save the layout and open the automatic crop planner.": "Dweba umumo onamakhona, khetha imibhede noma insimu evulekile, gcina uhlelo bese uvula umhleli wezitshalo ozenzakalelayo.",
+  // Oblique picker: docs/audits/2026-10-30/oblique-style-picker-release-drafts.json; unreviewed.
+  "Oblique styles stay visible when you switch from an exact map.": "Izitayela ze-Oblique zihlala zibonakala uma usuka ebalazweni elinezilinganiso eziqondile.",
+  // Oblique experiment guide: docs/audits/2026-10-30/oblique-experiment-guide-drafts.json; unreviewed.
+  "Try an angled view": "Zama ukubuka nge-engeli",
+  "With AI access, open Glossy and choose Oblique under AI viewpoint to generate your design.": "Uma ukwazi ukusebenzisa i-AI, vula i-Glossy ukhethe i-Oblique ngaphansi kwe-AI viewpoint ukuze wakhe umdwebo womklamo wakho.",
+  "Keep the measured plan": "Gcina ipulani elinezilinganiso",
+  "Use the top-down Design Map for measurements; compare the angled view with it.": "Sebenzisa i-Design Map ebukwa phezulu ukuze ulinganise; qhathanisa umdwebo obukwa nge-engeli nayo.",
+  // Oblique beta: docs/audits/2026-10-30/oblique-ai-view-release-drafts.json; unreviewed.
+  "Choose Oblique in AI viewpoint for an angled illustration of your whole design.": "Khetha i-Oblique ku-AI viewpoint ukuze ubone umdwebo wawo wonke umklamo wakho ubukwa nge-engeli.",
+  "The app gathers your layout, photo and terrain; use the top-down plan for measurements.": "Uhlelo lulungisa umklamo owugcinile, isithombe sendawo nolwazi lomhlaba olutholakalayo; sebenzisa ipulani ebukwa phezulu ukuze ulinganise.",
+  // Driveway guide: docs/audits/2026-10-30/glossy-driveway-guide-release-drafts.json; unreviewed.
+  "Glossy AI maps omit duplicate driveway guides; your editable paths stay saved.": "Amamephu e-AI acwebezelayo awabonisi imigqa eyengeziwe yendlela yezimoto; izindlela zakho ezihlelwayo zihlala zigciniwe.",
   // Roof reference: docs/audits/2026-10-30/aerial-roof-release-drafts.json; unreviewed.
   "AI maps on plain paper keep real roof detail from satellite imagery.": "Amamephu e-AI ephepheni elimhlophe agcina imininingwane yangempela yophahla ezithombeni zesathelayithi.",
   // Phone map artwork: docs/audits/2026-10-30/phone-ai-paper-release-drafts.json; unreviewed.

@@ -7,6 +7,18 @@ const copy:UpdateCopy={
   "Lay out your fields": "Hlela masimu ya wena",
   "Site design → Planting → Field blocks": "Dizayini ya ndhawu → Ku byala → Swiphemu swa nsimu",
   "Draw a polygon, choose beds or open field, save the layout and open the automatic crop planner.": "Dirowa xivumbeko lexi nga ni tikhona, hlawula mibedo kumbe nsimu leyi pfulekeke, hlayisa malulamiselo kutani u pfula xipulani xa swibyariwa lexi tiendlekelaka.",
+  // Oblique picker: docs/audits/2026-10-30/oblique-style-picker-release-drafts.json; unreviewed.
+  "Oblique styles stay visible when you switch from an exact map.": "Switayele swa Oblique swi sala swi vonaka loko u suka eka mepe lowu pimiweke hi ku kongoma.",
+  // Oblique experiment guide: docs/audits/2026-10-30/oblique-experiment-guide-drafts.json; unreviewed.
+  "Try an angled view": "Ringeta ku languta hi engele",
+  "With AI access, open Glossy and choose Oblique under AI viewpoint to generate your design.": "Loko u ri ni mfikelelo wa AI, pfula Glossy kutani u hlawula Oblique ehansi ka AI viewpoint leswaku u humesa dizayini ya wena.",
+  "Keep the measured plan": "Hlayisa pulani leyi pimiweke",
+  "Use the top-down Design Map for measurements; compare the angled view with it.": "Tirhisa Design Map leyi langutiwaka ehenhla eka mimpimo; pimanisa xifaniso xa engele na yona.",
+  // Oblique beta: docs/audits/2026-10-30/oblique-ai-view-release-drafts.json; unreviewed.
+  "Choose Oblique in AI viewpoint for an angled illustration of your whole design.": "Hlawula Oblique eka AI viewpoint ku vona xifaniso xa pulani ya wena hinkwato xi langutiwe hi le tlhelo.",
+  "The app gathers your layout, photo and terrain; use the top-down plan for measurements.": "App yi lulamisa pulani leyi hlayisiweke, xifaniso xa ndhawu ni vuxokoxoko bya misava leyi kumekaka; tirhisa pulani leyi langutiweke ehenhla ku pima.",
+  // Driveway guide: docs/audits/2026-10-30/glossy-driveway-guide-release-drafts.json; unreviewed.
+  "Glossy AI maps omit duplicate driveway guides; your editable paths stay saved.": "Mimepe yo saseka ya AI a yi kombisi swiletelo leswi phindhiweke swa ndlela ya timovha; tindlela ta wena leti hlelekaka ti sala ti hlayisiwile.",
   // Roof reference: docs/audits/2026-10-30/aerial-roof-release-drafts.json; unreviewed.
   "AI maps on plain paper keep real roof detail from satellite imagery.": "Mimepe ya AI eka phepha ro basa yi hlayisa vuxokoxoko bya xiviri bya lwangu ku suka eka swifaniso swa sathelayiti.",
   // Phone map artwork: docs/audits/2026-10-30/phone-ai-paper-release-drafts.json; unreviewed.

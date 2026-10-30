@@ -6,6 +6,13 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Paid AI map composition: start here
 
+Latest style follow-up: [Complete Oblique style picker across sheets — 30 October 2026](2026-10-30/oblique-style-picker-codex.md).
+
+Latest experimental release: [Oblique current-main integration and explicit wait exception — 30 October 2026](2026-10-30/oblique-experiment-release-codex.md).
+
+Latest implementation: [Oblique AI illustration — 30 October 2026](2026-10-30/oblique-ai-view-codex.md). Release status and actual paid-pipeline evidence belong to its PR/issue #35 ledger.
+Latest guide follow-up: [Duplicate driveway guide and remaining canopy clipping — 30 October 2026](2026-10-30/glossy-driveway-guide-codex.md).
+
 Latest roof follow-up: [Existing roof detail on plain-input AI maps — 30 October 2026](2026-10-30/aerial-roof-detail-codex.md).
 
 Latest phone follow-up: [Plain-input artwork and full-screen fit — 30 October 2026](2026-10-30/phone-ai-paper-quality-codex.md).
@@ -126,6 +133,12 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [Complete Oblique style picker across sheets — 30 October 2026](2026-10-30/oblique-style-picker-codex.md).
+
+- [Oblique current-main integration and explicit wait exception — 30 October 2026](2026-10-30/oblique-experiment-release-codex.md).
+
+- [Duplicate driveway guide and remaining canopy clipping — 30 October 2026](2026-10-30/glossy-driveway-guide-codex.md).
+
 - [Existing roof detail on plain-input AI maps — 30 October 2026](2026-10-30/aerial-roof-detail-codex.md).
 
 - [Farm memory full-suite verification and language continuation — 29 October 2026](2026-10-29/farm-memory-verification-codex.md).
@@ -233,6 +246,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-30 | [Oblique AI illustration — Codex](2026-10-30/oblique-ai-view-codex.md) |
 | 2026-10-30 | [Phone AI artwork and full-screen fit — Codex](2026-10-30/phone-ai-paper-quality-codex.md) |
 | 2026-10-30 | [Map style footer and oblique feasibility — Codex](2026-10-30/map-style-footer-and-oblique-feasibility-codex.md) |
 | 2026-10-29 | [Paid AI map boundary foreground — Codex](2026-10-29/ai-map-boundary-features-codex.md) |
