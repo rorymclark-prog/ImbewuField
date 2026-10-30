@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '30 October 2026', sha: '21c177d30', changes: [
+  { when: '30 October 2026', sha: '51d5c5208', changes: [
     'Glossy AI maps omit duplicate driveway guides; your editable paths stay saved.',
   ] },
   { when: '30 October 2026', sha: 'de4a3636f', changes: [
