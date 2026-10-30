@@ -9690,7 +9690,9 @@ export async function buildImplementationMap(
   const ip = panel.contentLeft;
   const innerX = lgX + panel.contentLeft;
   const innerW = panel.contentRight - panel.contentLeft;
-  const panelBottom = panel.contentBottom;
+  // The drawing style is a small colophon, leaving the heading for the farm and sheet.
+  const styleFooterFs = legendFooterFontSize(typeW);
+  const panelBottom = panel.contentBottom - Math.ceil(styleFooterFs * 1.6);
   ctx.save();
   ctx.beginPath();
   ctx.rect(innerX, panel.inset, innerW, panelBottom - panel.inset);
@@ -9752,7 +9754,7 @@ export async function buildImplementationMap(
   };
   const headerH = panel.titleBaseline - ip
     + panelTitleLines.length * Math.round(fsHeader * 1.08)
-    + Math.round(lgW * (0.006 + SHEET_LEGEND_TYPE.style + 0.035 + 0.045 + 0.03));
+    + Math.round(lgW * (0.006 + 0.035 + 0.045 + 0.03));
   const coLines = wrap(plan.criticalOrder.join('  →  '), innerW, bodyFont);
   const criticalH = plan.criticalOrder.length
     ? Math.round(fsSection * 1.3) + coLines.length * lineH + blockGap
@@ -9793,10 +9795,6 @@ export async function buildImplementationMap(
     y += Math.round(fsHeader * 1.08);
   }
   y += Math.round(lgW * 0.006);
-  ctx.fillStyle = '#6B6355';
-  ctx.font = `600 ${Math.round(typeW * SHEET_LEGEND_TYPE.style)}px ${SHEET_BODY_FONT}`;
-  ctx.fillText('Reference Blueprint', innerX, y);
-  y += Math.round(lgW * SHEET_LEGEND_TYPE.style);
   ctx.fillStyle = '#8A8172';
   ctx.font = `600 ${fsBody}px ${SHEET_BODY_FONT}`;
   ctx.fillText(placeName ?? 'Your design', innerX, y);
@@ -9897,6 +9895,10 @@ export async function buildImplementationMap(
     }
   }
   ctx.restore();
+
+  ctx.fillStyle = '#8A8172';
+  ctx.font = `500 ${styleFooterFs}px ${SHEET_BODY_FONT}`;
+  ctx.fillText('Reference Blueprint', innerX, panel.contentBottom - Math.ceil(styleFooterFs * 0.25));
 
   // The compass occupies the same map corner as the other eight sheets.
   drawSheetNorthArrow(ctx, mapX, mapW, mapH);
@@ -10601,7 +10603,10 @@ async function composeStyleSheet(
   y += Math.round(legendW * 0.006);
   ctx.fillStyle = '#6B6355';
   ctx.font = `600 ${Math.round(typeW * SHEET_LEGEND_TYPE.style)}px ${SHEET_BODY_FONT}`;
-  const styleWords = styleLabel.split(/\s+/);
+  // Rory wants the Reference Blueprint credit at the foot, below the useful map information.
+  // Other selected styles keep their existing heading; this does not change the artwork preset.
+  const footerStyleLabel = styleLabel === 'Reference Blueprint' ? styleLabel : '';
+  const styleWords = (footerStyleLabel ? '' : styleLabel).split(/\s+/).filter(Boolean);
   const styleLines: string[] = [];
   let styleLine = '';
   for (const word of styleWords) {
@@ -10686,8 +10691,8 @@ async function composeStyleSheet(
     return lines;
   };
   const footerText = options.aiArtwork
-    ? [AI_MAP_REVIEW_NOTICE, options.footerText, frame.satDataUrl ? basemapAttribution() : ''].filter(Boolean).join('\n')
-    : options.footerText;
+    ? [AI_MAP_REVIEW_NOTICE, options.footerText, frame.satDataUrl ? basemapAttribution() : '', footerStyleLabel].filter(Boolean).join('\n')
+    : options.footerText ? [options.footerText, footerStyleLabel].filter(Boolean).join('\n') : undefined;
   const customFooterLines = footerText ? wrapFooterText(footerText) : [];
   const footerHeadingH = options.footerHeading ? Math.round(legendW * 0.06) : 0;
   // Esri's imagery must be credited wherever it is shown — a licence term, not a courtesy — so the
@@ -10706,6 +10711,7 @@ async function composeStyleSheet(
       ? 'Exact plan — geometry and counts\ncome from your saved design.\nNo unsaved features added.'
       : AI_MAP_REVIEW_NOTICE,
     attributionLine,
+    footerStyleLabel,
   ].filter(Boolean).join('\n'));
   const footerBlockH = customFooterLines.length
     ? customFooterLines.length * footerLineH

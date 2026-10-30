@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 October 2026', sha: 'efdd0cd85', changes: [
+    'Reference Blueprint now appears in small print at the bottom of your maps.',
+  ] },
   { when: '29 October 2026', sha: 'f05da57a9', changes: [
     'Farm memory search, photos and saved copies now support isiZulu.',
     'Tap a crop or bed on a note to see its journal history.',
