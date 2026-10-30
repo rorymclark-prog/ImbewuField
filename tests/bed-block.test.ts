@@ -255,6 +255,14 @@ test('a saved crop allocation prevents rebuilding or deleting its measured field
   const deleted = reconcileFieldBlockEdit(filled, { ...filled, zones: [] }, new Set());
   assert.equal(deleted.items.length, 0);
   assert.equal(deleted.lines.length, 0);
+  assert.throws(() => reconcileFieldBlockEdit(filled, fieldState(), allocated), /crop allocations/, 'history restoration cannot remove allocated generated beds');
+});
+
+test('an allocated open field keeps its measured outline through ordinary edits', () => {
+  const open = configureFieldBlock(fieldState(), 'field-a', 'West', { ...fieldConfig, mode: 'open' }, fieldFrame);
+  const changed = { ...open, zones: open.zones.map(z => ({ ...z, points: z.points.map(([x,y]): [number,number] => [x/2,y]) })) };
+  assert.throws(() => reconcileFieldBlockEdit(open, changed, new Set(['field-a'])), /crop allocations/);
+  assert.deepEqual(reconcileFieldBlockEdit(open, changed, new Set()), changed);
 });
 
 test('separate bed and open-field blocks both reach the existing automatic crop planner', () => {

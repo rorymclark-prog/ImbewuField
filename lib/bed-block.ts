@@ -48,6 +48,8 @@ export function reconcileFieldBlockEdit(prev: DesignCanvasState, next: DesignCan
     const after = next.zones.find(z => z.id === zone.id);
     if (deleted.has(zone.id) && (allocated.has(zone.id) || children.some(i => allocated.has(i.id))))
       throw new Error('Remove this field’s crop allocations before deleting it.');
+    if (after && allocated.has(zone.id) && (after.feature !== zone.feature || JSON.stringify(after.points) !== JSON.stringify(zone.points)))
+      throw new Error('Remove this field’s crop allocations before changing its outline.');
     if (after?.fieldBlock?.mode === 'beds' && children.length && JSON.stringify(after.points) !== JSON.stringify(zone.points))
       throw new Error('Switch this block to an open field before editing its outline, then fill it again.');
   }

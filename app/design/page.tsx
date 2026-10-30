@@ -1733,14 +1733,11 @@ function DesignStudioInner() {
   // Persist canvas state on change (with undo history), and re-run the advisor.
   const handleChange = useCallback(
     (updater: (prev: DesignCanvasState) => DesignCanvasState) => {
-      setSaved(false);
       setCanvasState((prev) => {
         if (!prev) return prev;
-        undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
         // A genuinely new edit invalidates whatever future we might have redone back to —
         // standard undo/redo semantics. Without this, undo → edit → redo would silently
         // resurrect a stale future state the farmer never asked for.
-        redoStack.current = [];
         let next: DesignCanvasState;
         try {
           next = reconcileFieldBlockEdit(prev, updater(prev), new Set(loadCropPlan().plantings.map(p => p.bedId)));
@@ -1748,6 +1745,9 @@ function DesignStudioInner() {
           setSaveError((e as Error).message);
           return prev;
         }
+        setSaved(false);
+        undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
+        redoStack.current = [];
         const stamped = persistCanvasState(next);
         setSaved(!!stamped);
         setSaveError(stamped ? null : t('designStorageFull'));
@@ -2156,13 +2156,18 @@ function DesignStudioInner() {
   }, [handleChange, revertToSatellite, appConfirm, t]);
 
   const handleUndo = useCallback(() => {
-    setSaved(false);
     setCanvasState((prev) => {
-      const popped = undoStack.current.pop();
+      let popped = undoStack.current[undoStack.current.length - 1];
       if (!popped || !prev) {
         setSaved(true);
         return prev;
       }
+      // Crop allocations can arrive after this history snapshot was recorded.
+      // Restoring history must protect the same measured ground as a fresh edit.
+      try { popped = reconcileFieldBlockEdit(prev, popped, new Set(loadCropPlan().plantings.map(p => p.bedId))); }
+      catch (e) { setSaveError((e as Error).message); return prev; }
+      setSaved(false);
+      undoStack.current.pop();
       // Stash what we're undoing FROM so redo can bring it back — this is the only place
       // the pre-undo state is available; once we restore `popped` below it's gone otherwise.
       redoStack.current = [...redoStack.current, prev].slice(-MAX_UNDO);
@@ -2185,13 +2190,16 @@ function DesignStudioInner() {
   }, [t]);
 
   const handleRedo = useCallback(() => {
-    setSaved(false);
     setCanvasState((prev) => {
-      const popped = redoStack.current.pop();
+      let popped = redoStack.current[redoStack.current.length - 1];
       if (!popped || !prev) {
         setSaved(true);
         return prev;
       }
+      try { popped = reconcileFieldBlockEdit(prev, popped, new Set(loadCropPlan().plantings.map(p => p.bedId))); }
+      catch (e) { setSaveError((e as Error).message); return prev; }
+      setSaved(false);
+      redoStack.current.pop();
       // Mirror of handleUndo: put the pre-redo state back on the undo stack so undo can
       // reverse this redo, same as any other edit.
       undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
