@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Oblique picker: docs/audits/2026-10-30/oblique-style-picker-release-drafts.json; unreviewed.
+  "Oblique styles stay visible when you switch from an exact map.": "Switayele swa Oblique swi sala swi vonaka loko u suka eka mepe lowu pimiweke hi ku kongoma.",
   // Oblique experiment guide: docs/audits/2026-10-30/oblique-experiment-guide-drafts.json; unreviewed.
   "Try an angled view": "Ringeta ku languta hi engele",
   "With AI access, open Glossy and choose Oblique under AI viewpoint to generate your design.": "Loko u ri ni mfikelelo wa AI, pfula Glossy kutani u hlawula Oblique ehansi ka AI viewpoint leswaku u humesa dizayini ya wena.",

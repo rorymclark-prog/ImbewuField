@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 October 2026', sha: '9df3ff3af', changes: [
+    'Oblique styles stay visible when you switch from an exact map.',
+  ] },
   { when: '30 October 2026', sha: 'f03409726', changes: [
     'Choose Oblique in AI viewpoint for an angled illustration of your whole design.',
     'The app gathers your layout, photo and terrain; use the top-down plan for measurements.',

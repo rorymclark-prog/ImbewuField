@@ -54,7 +54,7 @@ import { zoneBadgePositions } from '@/lib/canvas-labels';
 import { OPENAI_MAP_MODEL_LABEL, openAiMapModelLabel } from '@/lib/ai-render/model';
 import { enqueueRenderJob, mapSerially, subscribeRenderJob, fetchRenderOutput, fetchRenderJobScene, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, renderJobAttribution, type RenderQuality } from '@/lib/render-jobs';
 import { createRenderSceneSnapshot, decodeRenderSceneSnapshot, type RenderSceneSnapshot } from '@/lib/render-scene';
-import { buildObliquePrompt, isObliqueJobStyle, obliqueJobStyle, obliqueStyleFromJob, obliqueTerrainEvidence, paintObliqueReferenceBoard, OBLIQUE_BOARD, OBLIQUE_REVIEW_NOTICE, type AiMapView } from '@/lib/oblique-render';
+import { buildObliquePrompt, isObliqueJobStyle, obliqueJobStyle, obliqueStyleFromJob, obliqueStyleDescription, obliqueTerrainEvidence, paintObliqueReferenceBoard, OBLIQUE_BOARD, OBLIQUE_REVIEW_NOTICE, type AiMapView } from '@/lib/oblique-render';
 import type { RenderEngine } from '@/lib/render-job-contract';
 import { authoritativeHouseFootprints, sameFootprint } from '@/lib/house-footprints';
 import { isSampleMode, SAMPLE_MODE_RENDER_REFUSAL } from '@/lib/sample-mode';
@@ -12089,7 +12089,10 @@ export default function DesignGlossy({
   // null (AI mode cleared it) and producerStyle is set, so runCurrentSheet must check this BEFORE
   // falling through to generateOneViaQueue's GlossyLayerFilter path. See generatePhasingViaQueue.
   const phasingAiMode = aiRenderOn && mode === 'ai' && !!selectedSheet && 'exact' in selectedSheet && selectedSheet.exact === 'implementation';
-  const aiLayerMode = aiRenderOn && mode === 'ai' && !!selectedSheet && (!('exact' in selectedSheet) || sectorAiMode || phasingAiMode);
+  // Oblique is a whole-design illustration even when opened from an exact/analysis sheet.
+  const aiLayerMode = aiRenderOn && !!selectedSheet && (aiView === 'oblique'
+    || (mode === 'ai' && (!('exact' in selectedSheet) || sectorAiMode || phasingAiMode)));
+  const availableStyleChoices = aiView === 'oblique' || !sectorAiMode ? PRODUCER_STYLES : SECTOR_STYLE_CHOICES;
   // `initialFilter` chooses which sheet Preview map opens on; it must not choose a second, retired
   // layout. That coupling is what made the modal fall back to the old full-width control dump while
   // the Glossy step showed the current three-column Preview & Export workspace.
@@ -15888,19 +15891,17 @@ export default function DesignGlossy({
           </p>
         )}
 
-        {/* Illustrated styles — the boundary-locked image-producer pipeline (beautiful AND
-            accurate). Shown in AI mode on a design LAYER (03–07) and now also on Sector (02),
-            whose AI render is a restyle with the measured bearings composited on top; Site (01) and
-            Phasing (08) render exact-only, so neither needs a Style. */}
+        {/* Oblique needs an appearance choice even when entered from an exact sheet. The
+            top-down analysis routes retain their own style restrictions. */}
         {aiLayerMode && !simple && (
         <>
         <WorkflowHeading number={4} title={t('designGlossyStyle')} />
-        <div style={{ fontSize: 10.5, opacity: 0.6, margin: '-5px 0 7px 34px' }}>
-          {t('designGlossyStyle')} {`(on your ${restyleAiKind === 'base' ? 'Existing Site' : restyleAiKind === 'sector' ? 'Sector' : filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)`}
+        <div lang={aiView === 'oblique' ? 'en' : undefined} style={{ fontSize: 10.5, opacity: 0.6, margin: '-5px 0 7px 34px' }}>
+          {aiView === 'oblique' ? 'For the whole oblique view' : `${t('designGlossyStyle')} (on your ${restyleAiKind === 'base' ? 'Existing Site' : restyleAiKind === 'sector' ? 'Sector' : filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)`}
         </div>
         <div style={{ display: 'grid', gridAutoFlow: 'column', gridAutoColumns: 'calc((100% - 16px) / 3)', gap: 8, overflowX: 'auto', padding: '2px 1px 7px', scrollSnapType: 'x proximity', scrollbarWidth: 'thin' }}>
-          {(sectorAiMode ? SECTOR_STYLE_CHOICES : PRODUCER_STYLES).map((s) => {
-            const active = producerStyle === s.key;
+          {availableStyleChoices.map((s) => {
+            const active = (producerStyle ?? (aiView === 'oblique' ? DEFAULT_PRODUCER_STYLE : null)) === s.key;
             return (
               <button
                 key={s.key}
@@ -15927,7 +15928,7 @@ export default function DesignGlossy({
                 }}
                 disabled={loading !== null}
                 aria-pressed={active}
-                title={aiView === 'oblique' ? 'Illustrative appearance · review against the measured top-down plan' : `${s.blurb}${s.recommended ? t('designGlossyRecommendedSuffix') : ''}`}
+                title={aiView === 'oblique' ? obliqueStyleDescription(s.key) : `${s.blurb}${s.recommended ? t('designGlossyRecommendedSuffix') : ''}`}
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -15968,7 +15969,7 @@ export default function DesignGlossy({
                 )}
                 <span aria-hidden style={{ display: 'block', height: 34, borderRadius: 8, background: s.swatch, border: '1px solid rgba(20,16,10,0.12)' }} />
                 <span style={{ textAlign: 'center', lineHeight: 1.15 }}>{s.label}</span>
-                <span style={{ fontSize: 9.5, fontWeight: 600, textAlign: 'center', opacity: 0.6, lineHeight: 1.2 }}>{aiView === 'oblique' ? 'Illustrative appearance · review heights & shapes' : s.blurb}</span>
+                <span style={{ fontSize: 9.5, fontWeight: 600, textAlign: 'center', opacity: 0.6, lineHeight: 1.2 }}>{aiView === 'oblique' ? obliqueStyleDescription(s.key).split(',')[0] : s.blurb}</span>
               </button>
             );
           })}
@@ -16408,7 +16409,13 @@ export default function DesignGlossy({
               <div role="group" aria-label="AI viewpoint" style={{ display: 'flex', gap: 6 }}>
                 {(['top-down', 'oblique'] as const).map((view) => (
                   <button key={view} type="button" aria-pressed={aiView === view} disabled={loading !== null}
-                    onClick={() => setAiView(view)}
+                    onClick={() => {
+                      setAiView(view);
+                      if (view === 'top-down' && sectorAiMode && producerStyle
+                        && !SECTOR_STYLE_CHOICES.some((style) => style.key === producerStyle)) {
+                        setProducerStyle(DEFAULT_PRODUCER_STYLE);
+                      }
+                    }}
                     style={{ padding: '9px 12px', minHeight: 44, borderRadius: 10, border: `1px solid ${GREEN}`,
                       background: aiView === view ? GREEN : '#FFFFFF', color: aiView === view ? '#FFFFFF' : GREEN, fontWeight: 700 }}>
                     {view === 'top-down' ? 'Top-down' : 'Oblique · beta'}

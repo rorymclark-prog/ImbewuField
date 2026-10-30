@@ -1,12 +1,14 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
-import { buildObliquePrompt, fitObliqueReference, isObliqueJobStyle, obliqueJobStyle, obliqueStyleFromJob,
+import ts from 'typescript';
+import { buildObliquePrompt, fitObliqueReference, isObliqueJobStyle, obliqueJobStyle, obliqueStyleFromJob, obliqueStyleDescription,
   obliqueTerrainEvidence, paintObliqueReferenceBoard, OBLIQUE_BOARD, OBLIQUE_REVIEW_NOTICE } from '@/lib/oblique-render';
 import { STYLE_LINES, type StylePreset } from '@/lib/producer-prompt';
 import type { SheetContourResult } from '@/lib/sheet-contours';
 import { normaliseRenderJobDoc, renderJobRequestError } from '@/lib/render-jobs';
 import { createRenderSceneSnapshot, decodeRenderSceneSnapshot, type RenderSceneInput } from '@/lib/render-scene';
+import { DEFAULT_PRODUCER_STYLE } from '@/lib/sheet-render-route';
 
 const unavailable: SheetContourResult = { lines: [], intervalM: 1, tooFlat: false, status: 'unavailable', source: null };
 const site = { elevation: { slopeDeg: 6.7, slopePct: 11.8, aspectDeg: 188, aspectLabel: 'S', directionConfidence: 'site-local-indicative' as const } };
@@ -15,6 +17,79 @@ const contourLines: SheetContourResult = { ...unavailable, status: 'ok', source:
   { points: [[0.2, 0.3], [0.8, 0.4]], elevM: 100, major: true },
   { points: [[0.2, 0.4], [0.8, 0.5]], elevM: 101, major: false },
 ] };
+
+test('Oblique exposes every style even when entered from an exact or Sector sheet', () => {
+  const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  const tree = ts.createSourceFile('DesignGlossy.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const initializers = new Map<string, string>();
+  let selectStyle: string | undefined;
+  let selectView: string | undefined;
+  function walk(node: ts.Node) {
+    if (ts.isVariableDeclaration(node) && node.initializer)
+      initializers.set(node.name.getText(tree), node.initializer.getText(tree));
+    if (ts.isJsxElement(node) && node.openingElement.tagName.getText(tree) === 'button') {
+      const attribute = node.openingElement.attributes.properties.find((attribute) => ts.isJsxAttribute(attribute)
+        && attribute.name.getText(tree) === 'onClick' && attribute.initializer
+        && attribute.initializer.getText(tree).includes('setProducerStyle(s.key)')) as ts.JsxAttribute | undefined;
+      if (attribute && attribute.initializer && ts.isJsxExpression(attribute.initializer))
+        selectStyle = attribute.initializer.expression!.getText(tree);
+      const viewAttribute = node.openingElement.attributes.properties.find((attribute) => ts.isJsxAttribute(attribute)
+        && attribute.name.getText(tree) === 'onClick' && attribute.initializer
+        && attribute.initializer.getText(tree).includes('setAiView(view)')) as ts.JsxAttribute | undefined;
+      if (viewAttribute && viewAttribute.initializer && ts.isJsxExpression(viewAttribute.initializer))
+        selectView = viewAttribute.initializer.expression!.getText(tree);
+    }
+    ts.forEachChild(node, walk);
+  }
+  walk(tree);
+  function execute(expression: string, scope: Record<string, unknown>) {
+    const js = ts.transpileModule(`const result = (${expression}); return result;`,
+      { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText;
+    return new Function(...Object.keys(scope), js)(...Object.values(scope));
+  }
+  const styles = execute(initializers.get('PRODUCER_STYLES')!, {});
+  const sectorStyles = execute(initializers.get('SECTOR_STYLE_CHOICES')!, { PRODUCER_STYLES: styles });
+  for (const selectedSheet of [{ exact: 'base' }, { exact: 'sector' }, { exact: 'implementation' }, { filter: 'all' }]) {
+    for (const mode of ['exact', 'ai']) {
+      const scope = { aiRenderOn: true, aiView: 'oblique', selectedSheet, mode, sectorAiMode: 'exact' in selectedSheet,
+        phasingAiMode: false, PRODUCER_STYLES: styles, SECTOR_STYLE_CHOICES: sectorStyles };
+      assert.equal(execute(initializers.get('aiLayerMode')!, scope), true,
+        'choosing an angled view must expose its styles regardless of the previous finish');
+      assert.deepEqual(new Set(execute(initializers.get('availableStyleChoices')!, scope).map((style:any) => style.key)),
+        new Set(Object.keys(STYLE_LINES)), 'Sector restrictions belong only to top-down restyling');
+      assert.equal(execute(initializers.get('aiLayerMode')!, { ...scope, aiRenderOn: false }), false);
+      assert.equal(execute(initializers.get('aiLayerMode')!, { ...scope, selectedSheet: null }), false);
+    }
+  }
+  assert.equal(execute(initializers.get('aiLayerMode')!, { aiRenderOn: true, aiView: 'top-down',
+    selectedSheet: { exact: 'base' }, mode: 'exact', sectorAiMode: false, phasingAiMode: false }), false,
+  'the existing exact top-down screen does not acquire paid style controls');
+  assert.ok(selectStyle);
+  for (const style of styles) {
+    let selected = 'initial', queued = 0;
+    execute(selectStyle!, { s: style, selectedSheet: { exact: 'sector' },
+      setProducerStyle: (key:string) => { selected=key; }, setAnalysisStyle:()=>{},setExactSheet:()=>{},setMode:()=>{},
+      applySheet:()=>{selected='seeded-default';},setResultImage:()=>{},enqueueRenderJobCapped:()=>{queued++;} })();
+    assert.equal(selected, style.key, 'the selected card must win over applySheet seeding a default');
+    assert.equal(queued, 0, 'changing appearance must not purchase an image');
+    const description = obliqueStyleDescription(style.key);
+    const prompt = buildObliquePrompt({ style: style.key, hasPhoto: true, terrain: obliqueTerrainEvidence(unavailable, null),
+      designBrief: 'Saved design', elements: 'Saved inventory' });
+    assert.equal(prompt.split('\n')[0], description, 'the visible style description must match the requested appearance');
+    assert.ok(description.length > 0);
+  }
+  assert.equal(new Set(styles.map((style:any)=>obliqueStyleDescription(style.key))).size, styles.length,
+    'different style choices must not all request the same appearance');
+  assert.ok(selectView);
+  for (const view of ['oblique','top-down']) for (const sectorAiMode of [true,false]) for (const style of styles) {
+    let selected=style.key;
+    execute(selectView!,{view,sectorAiMode,producerStyle:style.key,SECTOR_STYLE_CHOICES:sectorStyles,
+      DEFAULT_PRODUCER_STYLE,setAiView:()=>{},setProducerStyle:(key:string)=>{selected=key;}})();
+    assert.equal(selected,view==='top-down'&&sectorAiMode&&!sectorStyles.some((s:any)=>s.key===style.key)
+      ? DEFAULT_PRODUCER_STYLE:style.key,
+    'returning to top-down Sector replaces only an incompatible style; other choices stay selected');
+  }
+});
 
 test('a reloaded oblique job keeps its viewpoint and style without changing legacy top-down jobs', () => {
   for (const preset of Object.keys(STYLE_LINES) as StylePreset[]) {

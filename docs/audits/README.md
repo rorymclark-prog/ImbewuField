@@ -6,6 +6,8 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Paid AI map composition: start here
 
+Latest style follow-up: [Complete Oblique style picker across sheets — 30 October 2026](2026-10-30/oblique-style-picker-codex.md).
+
 Latest experimental release: [Oblique current-main integration and explicit wait exception — 30 October 2026](2026-10-30/oblique-experiment-release-codex.md).
 
 Latest implementation: [Oblique AI illustration — 30 October 2026](2026-10-30/oblique-ai-view-codex.md). Release status and actual paid-pipeline evidence belong to its PR/issue #35 ledger.
@@ -130,6 +132,8 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [Complete Oblique style picker across sheets — 30 October 2026](2026-10-30/oblique-style-picker-codex.md).
 
 - [Oblique current-main integration and explicit wait exception — 30 October 2026](2026-10-30/oblique-experiment-release-codex.md).
 
