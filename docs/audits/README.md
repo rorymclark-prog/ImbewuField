@@ -6,6 +6,8 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Paid AI map composition: start here
 
+Latest roof follow-up: [Existing roof detail on plain-input AI maps — 30 October 2026](2026-10-30/aerial-roof-detail-codex.md).
+
 Latest phone follow-up: [Plain-input artwork and full-screen fit — 30 October 2026](2026-10-30/phone-ai-paper-quality-codex.md).
 
 Latest footer and feasibility record: [Small style credit and oblique view proposal — 30 October 2026](2026-10-30/map-style-footer-and-oblique-feasibility-codex.md).
@@ -123,6 +125,8 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [Existing roof detail on plain-input AI maps — 30 October 2026](2026-10-30/aerial-roof-detail-codex.md).
 
 - [Farm memory full-suite verification and language continuation — 29 October 2026](2026-10-29/farm-memory-verification-codex.md).
 

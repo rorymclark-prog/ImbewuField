@@ -6,6 +6,8 @@ import { hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtwo
 import { canopyForegroundAlpha, assertMatchingImageAspects } from '../lib/image-producer.ts';
 import { ELEMENTS_BY_ID } from '../lib/design-elements.ts';
 import { itemInFilter, isContextElement, zonesInFilter } from '../lib/glossy-filters.ts';
+import { statusOf } from '../lib/design-canvas.ts';
+import { authoritativeHouseFootprints, sameFootprint } from '../lib/house-footprints.ts';
 
 // Execute the actual production helpers. A source-pattern test cannot see a photo strip or
 // prove that a completed job's old mask is replaced. No private farm records or native dependency.
@@ -225,9 +227,55 @@ test('completed jobs recover painted photo and paper interiors from the frozen s
       assert.equal(roof.at(-1),false,'old paper recovery restores only the missing exact roof, not a driveway/ground stamp');
     }
     assert.equal(JSON.stringify(scene),frozen,'free reassembly cannot change the saved design');
+    calls.length=0;
+    const reference={overlay:'factual-seven-section-roof',credit:'Roof reference: test imagery'};
+    await finish('model','all',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,scene,()=>false,'KEEP THE PAPER WHITE: original paid contract',reference);
+    assert.equal(calls.filter(c=>c[0]==='legacy-roof').length,0,
+      'an available factual roof must replace the generic two-pitch fallback');
+    const roofChrome=calls.find(c=>c[0]==='chrome')!;
+    assert.equal((roofChrome.at(-1) as {footerText:string}).footerText,hasPhoto?'':reference.credit,
+      'only a roof actually used in the composition may claim the extra imagery credit');
     badStoredMask=true;
     await assert.rejects(()=>finish('model','all',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,scene,()=>false),/mask aspect/);
   }
+});
+
+test('plain-paper recovery uses the frozen aerial roof and excludes proposed houses without changing the crop', async () => {
+  const primary:Point[]=[[.2,.2],[.5,.2],[.5,.5],[.2,.5]];
+  const proposed:Point[]=[[.6,.6],[.8,.6],[.8,.8],[.6,.8]];
+  const saved={...state,zones:[{id:'new',feature:'house',status:'proposed',points:proposed}]};
+  const snapshot={state:saved,frame:{...frame,satDataUrl:null},refLayers:{...refs,house:primary}};
+  const frozen=JSON.stringify(snapshot),calls:unknown[][]=[];
+  let unavailable=false;
+  const build=helper('buildPaperRoofReference',{
+    SCALE:3,statusOf,authoritativeHouseFootprints,sameFootprint,process:{env:{}},
+    loadImage:async()=>({width:frame.imgW,height:frame.imgH}),releaseImageSource:()=>{},assertMatchingImageAspects,
+    buildSatelliteUrl:(...args:unknown[])=>{calls.push(['url',...args]);return 'licensed-url';},
+    fetchImageAsDataUrl:()=>{},fetchBasemapForFrame:async(...args:unknown[])=>{
+      calls.push(['fetch',...args]);if(unavailable)throw Error('imagery unavailable');return 'frozen-frame-photo';},
+    boundaryPresentationContext:async(s:any,f:any,r:any)=>{
+      calls.push(['presentation',s,f,r]);return {state:s,frame:{...f,imgW:400,imgH:200},refLayers:r};},
+    buildHouseOverlay:async(...args:unknown[])=>{calls.push(['roof',...args]);return 'roof-pixels';},
+    basemapAttribution:()=> 'Imagery: licensed provider',
+  });
+  assert.deepEqual(await build(snapshot),{overlay:'roof-pixels',credit:'Roof reference from satellite imagery. Imagery: licensed provider'});
+  assert.equal(calls.find(c=>c[0]==='fetch')![1],snapshot.frame,'use the immutable job frame, never the open design');
+  assert.equal(calls.find(c=>c[0]==='presentation')![1],saved,'all saved features still determine the identical crop');
+  const roof=calls.find(c=>c[0]==='roof')!;
+  assert.equal(roof[1],'frozen-frame-photo');
+  assert.deepEqual((roof[2] as any).zones,[],'proposed roofs cannot be replaced by old ground in satellite imagery');
+  assert.deepEqual(roof.slice(4),[1200,600,'source'],'preserve real roof detail, without the charcoal veil');
+  assert.equal(JSON.stringify(snapshot),frozen);
+  calls.length=0;
+  assert.equal(await build({...snapshot,frame:{...snapshot.frame,satDataUrl:'original-photo'}}),undefined);
+  assert.deepEqual(calls,[],'an existing photo path keeps its original source contract');
+  assert.equal(await build({...snapshot,refLayers:{...snapshot.refLayers,house:[]}}),undefined);
+  assert.deepEqual(calls,[],'a proposed house alone is never a reason to fetch satellite roof pixels');
+  const promoted={...snapshot,state:{...saved,zones:[{...saved.zones[0],points:primary}]}};
+  assert.equal(await build(promoted),undefined,'a proposed polygon promoted into the primary trace stays proposed');
+  unavailable=true;
+  await assert.rejects(()=>build(snapshot),/imagery unavailable/,
+    'failed imagery cannot be credited as an available factual roof; the caller retains the old fallback');
 });
 
 test('standalone paid exports cannot silently claim exact model-drawn counts', () => {

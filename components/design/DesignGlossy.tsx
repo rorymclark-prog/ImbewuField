@@ -25,7 +25,7 @@ import {
 import polygonClipping from 'polygon-clipping';
 
 import type { CanvasFrame, DesignCanvasState, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
-import { groundFeatureLayer } from '@/lib/design-canvas';
+import { groundFeatureLayer, statusOf, buildSatelliteUrl, fetchImageAsDataUrl } from '@/lib/design-canvas';
 import type { DesignElementDef } from '@/lib/design-elements';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
@@ -55,7 +55,7 @@ import { OPENAI_MAP_MODEL_LABEL, openAiMapModelLabel } from '@/lib/ai-render/mod
 import { enqueueRenderJob, mapSerially, subscribeRenderJob, fetchRenderOutput, fetchRenderJobScene, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, renderJobAttribution, type RenderQuality } from '@/lib/render-jobs';
 import { createRenderSceneSnapshot, type RenderSceneSnapshot } from '@/lib/render-scene';
 import type { RenderEngine } from '@/lib/render-job-contract';
-import { authoritativeHouseFootprints } from '@/lib/house-footprints';
+import { authoritativeHouseFootprints, sameFootprint } from '@/lib/house-footprints';
 import { isSampleMode, SAMPLE_MODE_RENDER_REFUSAL } from '@/lib/sample-mode';
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
 // Re-exported below so existing consumers (lib/producer-prompt.ts comments, app/design/page.tsx,
@@ -171,7 +171,7 @@ import {
 } from '@/lib/reference-presentation';
 import { loadSheetMetas, loadSheetImage, patchSheetThumb, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
 import { backfillThumbnails } from '@/lib/gallery-thumbnails';
-import { basemapAttribution } from '@/lib/basemap-imagery';
+import { basemapAttribution, fetchBasemapForFrame } from '@/lib/basemap-imagery';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
@@ -3039,6 +3039,38 @@ async function buildHouseOverlay(
     ctx.stroke();
   }
   return drainCanvasToDataUrl(canvas, 'image/png');
+}
+
+type PaperRoofReference = { overlay: string; credit: string };
+
+// A traced footprint records the eaves, not the ridges. Rory's seven-section roof became a
+// two-pitch corrugated template on plain paper. Recover the existing roof from licensed imagery
+// in the JOB'S frame; never borrow today's edited design or put a photograph over a proposed house.
+async function buildPaperRoofReference(
+  snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers'>,
+): Promise<PaperRoofReference | undefined> {
+  const { state, frame, refLayers } = snapshot;
+  if (frame.satDataUrl) return undefined;
+  const proposedPrimary = state.zones.some((zone) => zone.feature === 'house'
+    && statusOf(zone) === 'proposed' && sameFootprint(zone.points, refLayers.house));
+  const existingRefs = proposedPrimary ? { ...refLayers, house: [] } : refLayers;
+  const existingState = { ...state, zones: state.zones.filter((zone) => statusOf(zone) === 'existing') };
+  if (!authoritativeHouseFootprints(existingState, existingRefs).length) return undefined;
+  const url = buildSatelliteUrl(frame.centerLng, frame.centerLat, frame.zoom, frame.imgW, frame.imgH,
+    process.env.NEXT_PUBLIC_MAPBOX_TOKEN ?? '');
+  const photo = await fetchBasemapForFrame(frame, url, fetchImageAsDataUrl);
+  const size = await loadImage(photo);
+  try { assertMatchingImageAspects({ width: frame.imgW, height: frame.imgH }, size); }
+  finally { releaseImageSource(size); }
+  // Keep the full original scene for the presentation crop, then filter buildings. Otherwise a
+  // proposed zone could change the crop and displace the real roof against the paid artwork.
+  const presentation = await boundaryPresentationContext(state, { ...frame, satDataUrl: photo }, refLayers);
+  const roofState = { ...presentation.state,
+    zones: presentation.state.zones.filter((zone) => statusOf(zone) === 'existing') };
+  const overlay = await buildHouseOverlay(presentation.frame.satDataUrl!, roofState,
+    proposedPrimary ? { ...presentation.refLayers, house: [] } : presentation.refLayers,
+    presentation.frame.imgW * SCALE, presentation.frame.imgH * SCALE, 'source');
+  return overlay ? { overlay, credit: `Roof reference from satellite imagery. ${basemapAttribution()}` } : undefined;
 }
 
 // Draw the traced driveway after generation. This preserves the exact path/area while avoiding
@@ -13373,6 +13405,7 @@ export default function DesignGlossy({
       snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName' | 'labelMode'> = { state, frame, refLayers, site, placeName, labelMode },
       canPublish: () => boolean = () => true,
       sourcePrompt?: string,
+      roofReference?: PaperRoofReference,
     ): Promise<string> => {
       const { state, frame, refLayers, site, placeName, labelMode } = snapshot;
       // Model-authored pages and geometry-locked pages must use the same boundary-focused frame
@@ -13535,7 +13568,9 @@ export default function DesignGlossy({
         : modelImage;
       const legacyPaperRoof = locked && !renderFrame.satDataUrl
         && compositionPolicy.ground === 'paint' && legacyPaperArtworkNeedsRoof(sourcePrompt);
-      const structureOverlay = legacyPaperRoof
+      const sourceRoof = locked && !renderFrame.satDataUrl && compositionPolicy.ground === 'paint'
+        ? roofReference : undefined;
+      const structureOverlay = sourceRoof?.overlay ?? (legacyPaperRoof
         ? await buildPaintedStructureOverlay(renderState, renderFrame, renderRefLayers, W, H, styleDef.key, false)
         : locked ? await buildGeometryLockStructureOverlay(
             cleanSource,
@@ -13547,7 +13582,7 @@ export default function DesignGlossy({
             styleDef.key,
             compositionPolicy.useSourceStructurePixels,
           )
-        : undefined;
+        : undefined);
       const exactGroundOverlay = locked && compositionPolicy.useExactGroundOverlay
         ? await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, f, W, H, 'ground', f === 'water' ? 'illustrated' : 'standard')
         : undefined;
@@ -13603,8 +13638,9 @@ export default function DesignGlossy({
       // badge.
       //
       // Locked now means what the farmer was promised it means: saved geometry, labels and legend
-      // stay exact. Photo Plan keeps the factual photo; painted styles keep Gemini's continuous
-      // property artwork, including its roofs, without a second material stamped over it.
+      // stay exact. Photo Plan keeps the factual photo; painted styles keep continuous property
+      // artwork. A plain-input existing roof can use its factual aerial reference instead of a
+      // guessed ridge layout; no garden ground or driveway is restored with that roof.
       const overlayImage = f === 'zones'
         // Zones are saved polygons, not model artwork. The general locked-sheet rule below must
         // not suppress them: that shipped a paid Zones sheet with only Gemini's faint impression
@@ -13663,10 +13699,12 @@ export default function DesignGlossy({
               labelMode,
               gutterLayout: labelled.gutterLayout,
               includeLabelGutters: f !== 'all',
+              footerText: [f === 'water' ? waterReferenceFooterText(renderState, renderFrame, renderRefLayers, site) : '',
+                sourceRoof?.credit ?? (legacyPaperRoof ? 'Approximate roof symbol; roof sections are not recorded.' : '')]
+                .filter(Boolean).join(' '),
               ...(f === 'water'
                 ? {
                     footerHeading: 'NOTES',
-                    footerText: waterReferenceFooterText(renderState, renderFrame, renderRefLayers, site),
                   }
                 : {}),
             }
@@ -14768,6 +14806,7 @@ export default function DesignGlossy({
     let lastAssembledGalleryId: string | null = null;
     let lastAssembleError = '';
     let scenePromise: Promise<RenderSceneSnapshot | null> | null = null;
+    let roofReferencePromise: Promise<PaperRoofReference | undefined> | null = null;
     // Snapshots must be handled ONE AT A TIME. Assembling a sheet takes seconds (two downloads plus
     // canvas work) while `finished` is marked synchronously, so an unserialised handler lets the
     // terminal "complete" snapshot overtake an in-flight assembly: it skips the sheet as already
@@ -14979,6 +15018,16 @@ export default function DesignGlossy({
               // the same frozen composition from the input first; legends and labels then cancel
               // out, so only a visible retained change can earn another gallery entry.
               let baselineSheet: string | undefined;
+              // One factual reference per job, shared by the baseline and result. Its pixels
+              // must cancel in the retained-change check; they are never counted as paid AI work.
+              let roofReference: PaperRoofReference | undefined;
+              if (locked && styleDef && !frozenScene.frame.satDataUrl
+                && !['base', 'sector', 'implementation'].includes(sheet.key)
+                && geometryLockCompositionPolicy(styleDef.key, 'paper').ground === 'paint') {
+                roofReferencePromise ??= buildPaperRoofReference(frozenScene).catch(() => undefined);
+                roofReference = await roofReferencePromise;
+                if (!active) return;
+              }
               try {
                 baselineSheet = sheet.key === 'implementation'
                   ? await finishPhasingRef.current(sourceImage, frozenScene)
@@ -14987,7 +15036,7 @@ export default function DesignGlossy({
                   : sheet.key === 'base'
                   ? await finishSiteRef.current(sourceImage, styleKey, frozenScene)
                   : styleDef
-                    ? await finishRef.current(sourceImage, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked, isPolishedResult, frozenScene, () => active, sheet.prompt)
+                    ? await finishRef.current(sourceImage, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked, isPolishedResult, frozenScene, () => active, sheet.prompt, roofReference)
                     : undefined;
               } catch (comparisonError) {
                 validationStatus = 'unscored';
@@ -15000,7 +15049,7 @@ export default function DesignGlossy({
                 : sheet.key === 'base'
                 ? await finishSiteRef.current(factualModelImage, styleKey, frozenScene)
                 : styleDef
-                  ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked, isPolishedResult, frozenScene, () => active, sheet.prompt)
+                  ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked, isPolishedResult, frozenScene, () => active, sheet.prompt, roofReference)
                   : raw;
               if (!active) return;
               if (baselineSheet) {

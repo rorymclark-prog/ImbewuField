@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Roof reference: docs/audits/2026-10-30/aerial-roof-release-drafts.json; unreviewed.
+  "AI maps on plain paper keep real roof detail from satellite imagery.": "Amamephu e-AI ephepheni elimhlophe agcina imininingwane yangempela yophahla ezithombeni zesathelayithi.",
   // Phone map artwork: docs/audits/2026-10-30/phone-ai-paper-release-drafts.json; unreviewed.
   "AI maps on plain paper keep illustrated ground instead of flat overlays.": "Amamephu e-AI ephepheni elimhlophe agcina umhlaba odwetshiwe esikhundleni sezendlalelo eziyisicaba.",
   "Full-screen maps fit your phone, including with larger text.": "Amamephu esikrini esigcwele angena kahle ocingweni lwakho, ngisho nombhalo omkhulu.",

@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 October 2026', sha: '673ca6d8b', changes: [
+    'AI maps on plain paper keep real roof detail from satellite imagery.',
+  ] },
   { when: '30 October 2026', sha: 'c406ecd66', changes: [
     'AI maps on plain paper keep illustrated ground instead of flat overlays.',
     'Full-screen maps fit your phone, including with larger text.',
