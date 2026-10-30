@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 October 2026', sha: 'e7927e639', changes: [
+    'Draw named field blocks and fill them with beds using your own dimensions and path widths.',
+    'Keep a field open without beds and use both layouts in automatic crop planning.',
+  ], tour: [{ title: 'Lay out your fields', where: 'Site design → Planting → Field blocks', href: '/design',
+    detail: 'Draw a polygon, choose beds or open field, save the layout and open the automatic crop planner.' }] },
   { when: '30 October 2026', sha: 'de4a3636f', changes: [
     'AI maps on plain paper keep real roof detail from satellite imagery.',
   ] },
