@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Map footer: docs/audits/2026-10-30/map-style-footer-release-drafts.json; unreviewed.
+  "Reference Blueprint now appears in small print at the bottom of your maps.": "Reference Blueprint zwino i vhonala nga maḽeḓere maṱuku fhasi ha mapa dzavho.",
   "Photo dates are easier to read; scroll through older notes on desktop.": "Maḓuvha a zwifanyiso zwino a a vhalea nga hu leluwaho; skrolani kha notsi dza kale kha khomphyutha.",
   "Photo dates and journal headings are easier to read.": "Maḓuvha a zwifanyiso na ṱhoho dza dzhenala zwino zwi a vhalea nga hu leluwaho.",
   // Farm memory release: docs/audits/2026-10-29/farm-memory-release-drafts.json; unreviewed.

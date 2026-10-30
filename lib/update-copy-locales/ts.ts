@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Map footer: docs/audits/2026-10-30/map-style-footer-release-drafts.json; unreviewed.
+  "Reference Blueprint now appears in small print at the bottom of your maps.": "Reference Blueprint sweswi yi humelela hi matsalelo lamatsongo ehansi ka mimepe ya wena.",
   "Photo dates are easier to read; scroll through older notes on desktop.": "Masiku ya swifaniso sweswi swa olova ku ma hlaya; skrola eka tinotsi ta khale eka khompyuta.",
   "Photo dates and journal headings are easier to read.": "Masiku ya swifaniso ni tinhlokomhaka ta jenali sweswi swa olova ku swi hlaya.",
   // Farm memory release: docs/audits/2026-10-29/farm-memory-release-drafts.json; unreviewed.
