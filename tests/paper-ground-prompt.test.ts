@@ -70,10 +70,11 @@ test('a painted paper property is illustrated inside its boundary without claimi
     assert.match(prompt, /fully illustrated top-down/);
     assert.match(prompt, /There is no photograph/);
     assert.match(prompt, /page beyond the property pure white/);
+    assert.match(prompt, /FINAL CHECK: the entire saved property is illustrated and the surrounding page is pure white/);
     assert.match(prompt, /each traced building into a complete detailed roof/);
     assert.match(prompt, /Unknown surfaces.*neutral texture/);
     assert.match(prompt, /do not infer crops, structures, terrain, contours or neighbouring land/);
-    assert.doesNotMatch(prompt, /KEEP THE PAPER WHITE:|EVERY OTHER PIXEL IS STILL WHITE PAPER|the source contains a real aerial photograph/);
+    assert.doesNotMatch(prompt, /KEEP THE PAPER WHITE:|EVERY OTHER PIXEL IS STILL WHITE PAPER|the source contains a real aerial photograph|the entire frame is illustrated|the photo shows/);
     if (layer === 'Water') assert.match(prompt, /WATER FEATURE ROLE/);
   }
 });

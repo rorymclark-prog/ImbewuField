@@ -236,13 +236,15 @@ export function buildLockedIllustrationPrompt(
     groundClause,
     paintedPhotoCompleteness,
     `INVENT NOTHING: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible or marked in the source. Where the ground is open it stays open — ${onPaper ? 'blank white paper, with nothing painted on it at all' : photoPreserving ? 'the real photographed ground' : 'fully painted as the same open lawn, veld, soil, track or paving already visible in the source, with no new object added'}. Do not decorate, fill space or redesign the site.`,
-    `KEEP THE GEOMETRY: every roof outline, driveway edge, boundary and treeline keeps exactly the shape, size and position the photo shows. Never crop, shrink, rotate, straighten, cover or plant over any part of a roof.`,
+    `KEEP THE GEOMETRY: every roof outline, driveway edge, boundary and treeline keeps exactly the shape, size and position the ${groundSource === 'paper' ? 'saved design' : 'photo'} shows. Never crop, shrink, rotate, straighten, cover or plant over any part of a roof.`,
     `VIEW AND FRAMING: flat orthographic top-down, north-up plan only. Keep exactly the source crop, scale, aspect ratio and camera position. No oblique view, perspective tilt, 3D camera, horizon, isometric view, rotation, zoom, recentering or reframing.`,
     `NO SHEET FURNITURE: no writing, numbers, title, legend, key, panel, border, compass, north arrow, scale bar, pin, icon or emoji anywhere in the image. The app draws all of those afterwards.`,
     onPaper
       ? `FINAL CHECK: every marked design element is a finished illustration at the right place, count and footprint; EVERY OTHER PIXEL IS STILL WHITE PAPER, with no ground, terrain, wash or tint invented anywhere; every roof and boundary stays where the source put it; there is no text anywhere.`
       : photoPreserving
       ? `FINAL CHECK: the photograph itself is pixel-for-pixel the same land the source shows, unrepainted; every marked design element is added on top of it at the right place; every roof and boundary stays where the source put it; there is no text anywhere.`
+      : paintedPaper
+      ? `FINAL CHECK: the entire saved property is illustrated and the surrounding page is pure white; every saved feature keeps its count and position; each roof fills its saved silhouette; no new objects or terrain are inferred; there is no text anywhere.`
       : `FINAL CHECK: the entire frame is illustrated; every saved feature has the exact same count and position; every roof and boundary stays where the source put it; nothing is added; there is no text anywhere.`,
   ].filter(Boolean).join('\n\n');
 }
