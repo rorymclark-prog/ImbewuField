@@ -5,9 +5,10 @@ import ts from 'typescript';
 import { hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, AI_MAP_REVIEW_NOTICE } from '../lib/render-policy.ts';
 import { canopyForegroundAlpha, assertMatchingImageAspects } from '../lib/image-producer.ts';
 import { ELEMENTS_BY_ID } from '../lib/design-elements.ts';
-import { itemInFilter, isContextElement, zonesInFilter } from '../lib/glossy-filters.ts';
+import { itemInFilter, isContextElement, zonesInFilter, lineInFilter } from '../lib/glossy-filters.ts';
 import { statusOf } from '../lib/design-canvas.ts';
 import { authoritativeHouseFootprints, sameFootprint } from '../lib/house-footprints.ts';
+import polygonClipping from 'polygon-clipping';
 
 // Execute the actual production helpers. A source-pattern test cannot see a photo strip or
 // prove that a completed job's old mask is replaced. No private farm records or native dependency.
@@ -30,6 +31,40 @@ function helper(name: string, scope: Record<string, unknown>): any {
 }
 
 type Point = [number, number];
+const drivewayGuideLines = helper('drivewayGuideLines', { polygonClipping, ringArea: helper('ringArea', {}) });
+const glossyArtworkState = helper('glossyArtworkState', { drivewayGuideLines });
+
+test('a duplicate closed driveway guide stays editable while genuine paths remain in glossy inputs and briefs', () => {
+  const area:Point[]=[[.2,.2],[.5,.2],[.5,.5],[.2,.5],[.2,.2]];
+  const walking:Point[]=[[.7,.7],[.9,.7],[.9,.9],[.7,.9],[.7,.7]];
+  const circuit:Point[]=[[0,0],[1,0],[1,1],[0,1],[0,0]];
+  const lines=[{id:'guide',kind:'path',points:area},{id:'open',kind:'path',points:area.slice(0,-1)},
+    {id:'walking',kind:'path',points:walking},{id:'circuit',kind:'path',points:circuit}];
+  const saved={items:[],zones:[],lines};
+  const refs={boundary:[],house:[],driveway:area,drivewayClosed:true};
+  const frozen=JSON.stringify({saved,refs});
+  assert.deepEqual(drivewayGuideLines(saved,refs).map((line:any)=>line.id),['guide']);
+  assert.deepEqual(glossyArtworkState(saved,refs).lines.map((line:any)=>line.id),['open','walking','circuit']);
+  assert.equal(glossyArtworkState(saved,{...refs,driveway:[]}),saved,'without a recorded driveway no path is silently hidden');
+  assert.deepEqual(drivewayGuideLines({...saved,zones:[{feature:'driveway',points:area}]},{...refs,driveway:[]})
+    .map((line:any)=>line.id),['guide'],'Studio-traced driveways use the same guide rule');
+  const brief=helper('buildDesignBrief',{drivewayGuideLines,glossyArtworkState,
+    compass8:helper('compass8',{}),COMPASS_ORDER:[],LINE_BRIEF_LABELS:{path:'walking path'},BRIEF_MAX:10000});
+  const text=brief(saved,refs,'Fictional',null);
+  assert.match(text,/DRIVEWAY GUIDE OMITTED:/);
+  assert.match(text,/3× walking path/,'the real open path and separate walking loops stay in the register');
+  assert.doesNotMatch(brief(saved,{...refs,driveway:[]},'Fictional',null),/DRIVEWAY GUIDE OMITTED:/);
+  const draw=helper('drawMarks',{glossyArtworkState,RENDERED_DRIVEWAY_EDGE:false,TAR:'#12140F',SCALE:3,
+    authoritativeHouseFootprints,zoneBadgePositions:()=>new Map(),lineInFilter,LINE_COLORS:{path:'#C4A74E'}});
+  for(const line of [lines[0],lines[1]]) {
+    const canvas=probeCanvas([[100,100]]),ctx:any=canvas.getContext(),dashes:unknown[]=[];
+    ctx.setLineDash=(value:unknown)=>dashes.push(value);
+    draw(ctx,{...saved,lines:[line]},{imgW:300,imgH:300,mPerPx:1,satDataUrl:'photo'},refs,300,300);
+    assert.equal(dashes.length,line.id==='guide'?0:2,
+      'the actual model-input painter omits the duplicate dash loop, while open paths remain visible');
+  }
+  assert.equal(JSON.stringify({saved,refs}),frozen,'presentation must not delete or move the editable source guide');
+});
 const frame = { imgW: 100, imgH: 100, mPerPx: 1, satDataUrl: 'photo' };
 const refs = { boundary: [[.1,.1],[.85,.1],[.85,.9],[.1,.9]], house: [], driveway: [] };
 const state = { items: [{ id: 'crown', defId: 'tree_other', x: .84, y: .7, wM: 70/3, hM: 70/3 }],
@@ -98,6 +133,7 @@ test('a plain-input building is visible to the model without painting over a pho
   const rings={boundary:[],house:[[.2,.2],[.8,.2],[.8,.8],[.2,.8]],driveway:[]};
   const before=JSON.stringify({saved,rings});
   const draw=helper('drawMarks',{RENDERED_DRIVEWAY_EDGE:false,
+    glossyArtworkState,
     authoritativeHouseFootprints:()=>[rings.house],zoneBadgePositions:()=>new Map(),SCALE:3});
   for(const hasPhoto of [false,true]){
     const canvas=probeCanvas([[150,150]]);
@@ -196,6 +232,7 @@ test('completed jobs recover painted photo and paper interiors from the frozen s
     const scene={state,frame:renderFrame,refLayers:refs,site:null,placeName:'Fictional test',labelMode:'onplant'};
     const frozen=JSON.stringify(scene);
     const finish=helper('finishStyledSheet',{
+      glossyArtworkState,
       state,frame:renderFrame,refLayers:refs,site:null,placeName:scene.placeName,labelMode:'codes',SCALE:3,
       boundaryPresentationContext:async(...args:unknown[])=>{calls.push(['scene',...args]);return {state,frame:renderFrame,refLayers:refs};},
       isModelChromeStyle:()=>false,paidPolishNeedsChromePass:()=>false,
@@ -220,6 +257,8 @@ test('completed jobs recover painted photo and paper interiors from the frozen s
     assert.equal(mask[1],state); assert.equal(mask[4],'all'); assert.equal(mask[6],'model');
     const chrome=calls.find(c=>c[0]==='chrome')!;
     assert.equal((chrome.at(-1) as {aiArtwork:boolean}).aiArtwork,true);
+    assert.equal((chrome.at(-1) as {preserveLegacyPathGuides:boolean}).preserveLegacyPathGuides,true,
+      'reassembly cannot claim to erase a guide already baked into old paid pixels');
     assert.equal(calls.filter(c=>c[0]==='legacy-roof').length,0,'new painted jobs keep the model roof');
     if(!hasPhoto){
       assert.equal(await finish('model','all',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,scene,()=>false,'KEEP THE PAPER WHITE: original paid contract'),'sheet');
@@ -235,6 +274,11 @@ test('completed jobs recover painted photo and paper interiors from the frozen s
     const roofChrome=calls.find(c=>c[0]==='chrome')!;
     assert.equal((roofChrome.at(-1) as {footerText:string}).footerText,hasPhoto?'':reference.credit,
       'only a roof actually used in the composition may claim the extra imagery credit');
+    calls.length=0;
+    await finish('model','all',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,
+      scene,()=>false,'DRIVEWAY GUIDE OMITTED: duplicate editor trace');
+    assert.equal((calls.find(c=>c[0]==='chrome')!.at(-1) as {preserveLegacyPathGuides:boolean}).preserveLegacyPathGuides,false,
+      'only the durable new prompt tells recovery that the model input omitted the guide');
     badStoredMask=true;
     await assert.rejects(()=>finish('model','all',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,scene,()=>false),/mask aspect/);
   }

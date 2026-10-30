@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Driveway guide: docs/audits/2026-10-30/glossy-driveway-guide-release-drafts.json; unreviewed.
+  "Glossy AI maps omit duplicate driveway guides; your editable paths stay saved.": "Dimmapa tse ntle tsa AI ha di bontshe mela e phetilweng ya tsela ya koloi; ditsela tseo o ka di fetolang di dula di bolokilwe.",
   // Roof reference: docs/audits/2026-10-30/aerial-roof-release-drafts.json; unreviewed.
   "AI maps on plain paper keep real roof detail from satellite imagery.": "Dimmapa tsa AI tse pampiring e tshweu di boloka dintlha tsa nnete tsa marulelo ho tswa ditshwantshong tsa sathelaete.",
   // Phone map artwork: docs/audits/2026-10-30/phone-ai-paper-release-drafts.json; unreviewed.
