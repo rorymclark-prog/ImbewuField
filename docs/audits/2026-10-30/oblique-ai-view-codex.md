@@ -44,4 +44,6 @@ The app's automatic board supplies a fresh text-free saved-layout reference, pho
 
 ## Next continuation
 
+Phone correction #1154 was isolated and merged into production at `673ca6d8b6e5008633cdc550b5f90392eea2d148`. This branch integrates it before its final Oblique checks. Phone and Oblique release notes, native draft copies, guide stops and test coverage are all retained; no permission, worker, paid-gate, geometry or version rule is relaxed. The phone code is an independently verified focused release, not evidence that the Oblique workflow has passed its required full suite.
+
 Finish the full suite, focused-render, rules and preview gates. Inspect the real preview UI and one authorised oblique worker output, including saved-map reload/reassembly. Record exact evidence before merge, then verify the production build and option. A calibrated terrain mesh, multiple unregistered drone photos, surveyed object heights and projected/occlusion-aware labels remain separate work; none is claimed complete here.

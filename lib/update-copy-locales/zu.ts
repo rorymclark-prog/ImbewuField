@@ -4,6 +4,14 @@ const copy:UpdateCopy={
   // Oblique beta: docs/audits/2026-10-30/oblique-ai-view-release-drafts.json; unreviewed.
   "Choose Oblique in AI viewpoint for an angled illustration of your whole design.": "Khetha i-Oblique ku-AI viewpoint ukuze ubone umdwebo wawo wonke umklamo wakho ubukwa nge-engeli.",
   "The app gathers your layout, photo and terrain; use the top-down plan for measurements.": "Uhlelo lulungisa umklamo owugcinile, isithombe sendawo nolwazi lomhlaba olutholakalayo; sebenzisa ipulani ebukwa phezulu ukuze ulinganise.",
+  // Phone map artwork: docs/audits/2026-10-30/phone-ai-paper-release-drafts.json; unreviewed.
+  "AI maps on plain paper keep illustrated ground instead of flat overlays.": "Amamephu e-AI ephepheni elimhlophe agcina umhlaba odwetshiwe esikhundleni sezendlalelo eziyisicaba.",
+  "Full-screen maps fit your phone, including with larger text.": "Amamephu esikrini esigcwele angena kahle ocingweni lwakho, ngisho nombhalo omkhulu.",
+  "Check the complete map": "Hlola imephu ephelele",
+  "Open a saved map full-screen. The whole sheet and legend should fit.": "Vula imephu egciniwe esikrinini esigcwele. Lonke ishidi nezincazelo zezimpawu kufanele kungene.",
+  "Recover your paid artwork": "Buyisa umdwebo owawukhokhele",
+  "Saved maps → Open map": "Amamephu agciniwe → Vula imephu",
+  "Choose Reassemble artwork at the original print quality. No new AI render is bought.": "Khetha ukuhlanganisa umdwebo kabusha ngekhwalithi yokuphrinta yasekuqaleni. Awuthengi umdwebo omusha we-AI.",
   // Map footer: docs/audits/2026-10-30/map-style-footer-release-drafts.json; unreviewed.
   "Reference Blueprint now appears in small print at the bottom of your maps.": "I-Reference Blueprint manje ibhalwe ngombhalo omncane ezansi kwamamephu akho.",
   "Photo dates are easier to read; scroll through older notes on desktop.": "Izinsuku zezithombe sezifundeka kalula; skrola kumanothi amadala kukhompyutha.",

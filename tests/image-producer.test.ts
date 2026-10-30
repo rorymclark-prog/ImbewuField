@@ -233,9 +233,11 @@ test('Satellite Overlay remains the explicit reversible model-authored style', (
   });
 });
 
-test('painted Geometry Lock keeps one editable property interior instead of satellite islands', () => {
-  for (const style of ['precision_atlas', 'extension_blueprint', 'field_ledger', 'homestead_storybook', 'karoo_folk', 'chatgpt_atlas', 'master_atlas'] as const) {
-    assert.deepEqual(geometryLockCompositionPolicy(style, 'photo'), {
+test('painted styles retain a continuous illustrated property with either a photo or paper input', () => {
+  // Rory chose the richer illustrated interior after the phone's plain-input result was flattened.
+  // The white surrounding sheet is still protected; plain input must not mean exact green tiles.
+  for (const style of ['precision_atlas', 'extension_blueprint', 'field_ledger', 'homestead_storybook', 'karoo_folk', 'chatgpt_atlas', 'master_atlas'] as const) for (const source of ['photo', 'paper'] as const) {
+    assert.deepEqual(geometryLockCompositionPolicy(style, source), {
       ground: 'paint',
       protectUnmarkedGround: false,
       protectHousePixels: false,
@@ -255,7 +257,7 @@ test('photo and paper Geometry Lock retain their factual background contracts', 
     useSourceStructurePixels: true,
     useExactGroundOverlay: true,
   });
-  assert.deepEqual(geometryLockCompositionPolicy('precision_atlas', 'paper'), {
+  assert.deepEqual(geometryLockCompositionPolicy('photo_plan', 'paper'), {
     ground: 'paper',
     protectUnmarkedGround: true,
     protectHousePixels: true,

@@ -4,6 +4,14 @@ const copy:UpdateCopy={
   // Oblique beta: docs/audits/2026-10-30/oblique-ai-view-release-drafts.json; unreviewed.
   "Choose Oblique in AI viewpoint for an angled illustration of your whole design.": "Kgetha Oblique ho AI viewpoint bakeng sa setshwantsho sa moralo wa hao kaofela se shebilweng ka lehlakore.",
   "The app gathers your layout, photo and terrain; use the top-down plan for measurements.": "App e lokisa moralo o bolokilweng, foto ya sebaka le tlhahisoleseding ya mobu e fumanehang; sebedisa moralo o shebilweng hodimo bakeng sa ditekanyo.",
+  // Phone map artwork: docs/audits/2026-10-30/phone-ai-paper-release-drafts.json; unreviewed.
+  "AI maps on plain paper keep illustrated ground instead of flat overlays.": "Dimmapa tsa AI tse pampiring e tshweu di boloka mobu o takilweng ho e-na le dikarolo tse bataletseng.",
+  "Full-screen maps fit your phone, including with larger text.": "Dimmapa tsa skrine se felletseng di lekana fonong ya hao, le ha mongolo o le moholo.",
+  "Check the complete map": "Hlahloba mmapa o felletseng",
+  "Open a saved map full-screen. The whole sheet and legend should fit.": "Bula mmapa o bolokilweng skrineng se felletseng. Leqephe lohle le tlhaloso ya matshwao di lokela ho lekana.",
+  "Recover your paid artwork": "Fumana hape setshwantsho seo o se lefileng",
+  "Saved maps → Open map": "Dimmapa tse bolokilweng → Bula mmapa",
+  "Choose Reassemble artwork at the original print quality. No new AI render is bought.": "Kgetha ho kopanya setshwantsho hape ka boleng ba pele ba kgatiso. Ha o reke setshwantsho se setjha sa AI.",
   // Map footer: docs/audits/2026-10-30/map-style-footer-release-drafts.json; unreviewed.
   "Reference Blueprint now appears in small print at the bottom of your maps.": "Reference Blueprint jwale e hlaha ka mongolo o monyane tlase ho dimmapa tsa hao.",
   "Photo dates are easier to read; scroll through older notes on desktop.": "Matsatsi a dinepe a se a baleha habonolo; tsamaisetsa dintlheng tsa kgale khomphutheng.",
