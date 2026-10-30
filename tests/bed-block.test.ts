@@ -188,6 +188,7 @@ import { bedsInsideField, configureFieldBlock, reconcileFieldBlockEdit, type Fie
 import { normaliseCanvasState, type DesignCanvasState } from '../lib/design-canvas.ts';
 import { bedsFromDesignCanvas } from '../lib/design-beds-bridge.ts';
 import { autoSuggestPlan } from '../lib/crop-autosuggest.ts';
+import { collectReportSiteFacts } from '../lib/report-site-facts-collect.ts';
 
 const fieldFrame = { centerLng: 31, centerLat: -29, zoom: 18, imgW: 100, imgH: 50, mPerPx: 0.2, satDataUrl: null };
 const fieldConfig: FieldBlockConfig = { mode: 'beds', bedLengthM: 4, bedWidthM: 2, pathWidthM: 1, angleDeg: 0 };
@@ -291,4 +292,22 @@ test('allocated generated beds cannot be deleted or resized through ordinary map
   const allocated = new Set([bed.id]);
   assert.throws(() => reconcileFieldBlockEdit(filled, { ...filled, items: filled.items.slice(1) }, allocated), /crop allocations/);
   assert.throws(() => reconcileFieldBlockEdit(filled, { ...filled, items: filled.items.map(i => i.id === bed.id ? { ...i, wM: 1 } : i) }, allocated), /crop allocations/);
+});
+
+test('a traced patio is excluded from a generated field layout', () => {
+  const state = fieldState();
+  state.zones.push({ id: 'patio', feature: 'patio', zone: 0, points: [[0,0],[0.2,0],[0.2,0.2],[0,0.2]] });
+  const filled = configureFieldBlock(state, 'field-a', 'West', fieldConfig, fieldFrame);
+  assert.equal(filled.items.length, 11, 'the first bed would occupy the patio');
+});
+
+test('reports count the generated beds without also describing their parent as an open crop plot', () => {
+  const filled = configureFieldBlock(fieldState(), 'field-a', 'West', fieldConfig, fieldFrame);
+  filled.zones.push({ id: 'effort', zone: 3, points: [[0,0],[1,0],[1,1],[0,1]] });
+  const collect = (canvas: DesignCanvasState) => collectReportSiteFacts({ siteId: canvas.siteId, lat: -29, lon: 31, canvas, waterPoints: [], cropPlan: null });
+  const facts = collect(filled);
+  assert.equal(facts.design?.zones[0].staplePlots, 0);
+  assert.equal(facts.design?.beds.length, 12);
+  const open = configureFieldBlock(filled, 'field-a', 'West', { ...fieldConfig, mode: 'open' }, fieldFrame);
+  assert.equal(collect(open).design?.zones[0].staplePlots, 1);
 });

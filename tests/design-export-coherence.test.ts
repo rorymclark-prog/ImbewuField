@@ -180,3 +180,23 @@ test('closing a zoom whose grid trigger was replaced returns focus to the surviv
     else delete (globalThis as any).document;
   }
 });
+
+test('printed bed-field outlines leave paths and unused ground free of whole-field crop artwork', () => {
+  let fills = 0, cropLayouts = 0, strokes = 0;
+  const ctx = { save() {}, restore() {}, fill() { fills++; }, stroke() { strokes++; } };
+  const draw = handler('drawBlueprintGround', {
+    groundRegister: () => 'content', ringArea: () => 1,
+    staplePlotOrdinalById: () => new Map([['field', 0]]),
+    GROUND_FEATURES: { staple_garden: { color: '#557733' } },
+    blueprintRing: () => {}, referenceFeatureArtworkCache: new Map(), stapleTileUrl: () => 'tile',
+    staplePlotGlyphs: () => [], polygonCropRows: () => { cropLayouts++; return { plants: [] }; },
+  }, glossy);
+  const zone = { id: 'field', feature: 'staple_garden', points: [[0,0],[1,0],[1,1],[0,1]], fieldBlock: { mode: 'beds' } };
+  draw(ctx, { zones: [zone] }, (n: number) => n*100, (n: number) => n*100, 100);
+  assert.equal(fills, 0, 'a grouping outline cannot fill paths or unused edges');
+  assert.equal(cropLayouts, 0, 'the individual beds carry the plants');
+  assert.equal(strokes, 1, 'the field boundary remains visible');
+  draw(ctx, { zones: [{ ...zone, fieldBlock: { mode: 'open' } }] }, (n: number) => n*100, (n: number) => n*100, 100);
+  assert.equal(fills, 1, 'an open crop field retains its existing surface depiction');
+  assert.equal(cropLayouts, 1, 'the check must detect the whole-field drawing path');
+});

@@ -1719,7 +1719,7 @@ async function preloadReferenceFeatureArtwork(
   {
     const ordinals = staplePlotOrdinalById(state.zones);
     for (const z of state.zones) {
-      if (z.feature !== 'staple_garden') continue;
+      if (z.feature !== 'staple_garden' || z.fieldBlock?.mode === 'beds') continue;
       const url = stapleTileUrl(ordinals.get(z.id) ?? 0);
       if (!referenceFeatureArtworkCache.has(url)) urls.add(url);
     }
@@ -3708,7 +3708,11 @@ function drawBlueprintGround(
     const isRoof = z.feature === 'house';
     ctx.save();
     blueprintRing(ctx, z.points, px, py);
-    if (!isRoof) {
+    // A bed field's outline groups its measured children. Filling that whole
+    // polygon with crop artwork would also paint plants over paths and unused
+    // edges, contradicting the capacity sent to the crop planner.
+    const isBedField = z.fieldBlock?.mode === 'beds';
+    if (!isRoof && !isBedField) {
       ctx.fillStyle = `${meta.color}${fillAlpha}`;
       ctx.fill();
     }
@@ -3755,7 +3759,7 @@ function drawBlueprintGround(
     // the plain wash above is left alone, because a field of illegible dots is worse than an
     // honest polygon. Nothing here is agronomic: the rhythm is a drawing rhythm, and no spacing,
     // yield or variety is implied. See lib/crop-row-cartography.ts.
-    if (z.feature === 'staple_garden' && isContent) {
+    if (z.feature === 'staple_garden' && isContent && !isBedField) {
       // THE ILLUSTRATED FIELD, when its tile has loaded. Rory: "the staple plots now to be
       // rendered like the trees" — the same painterly standard as the canopies, as a seamless
       // repeating tile clipped to the traced plot. One tile per plot in the SAME rotation the

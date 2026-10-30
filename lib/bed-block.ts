@@ -130,7 +130,7 @@ export function fieldBlockExclusions(state: DesignCanvasState, zoneId: string, f
     const dx = (item.wM ?? def.wM)/2, dy = (item.hM ?? def.hM)/2;
     return [[[-dx,-dy],[dx,-dy],[dx,dy],[-dx,dy]].map(([x,y]): Point => [item.x+(x*c-y*s)/w,item.y+(x*s+y*c)/h])];
   });
-  for (const zone of state.zones) if (zone.id !== zoneId && zone.feature && ['house','paving','driveway'].includes(zone.feature)) rings.push(zone.points);
+  for (const zone of state.zones) if (zone.id !== zoneId && zone.feature && ['house','patio','driveway'].includes(zone.feature)) rings.push(zone.points);
   return rings;
 }
 
