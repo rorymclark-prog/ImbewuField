@@ -1,9 +1,18 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Oblique experiment guide: docs/audits/2026-10-30/oblique-experiment-guide-drafts.json; unreviewed.
+  "Try an angled view": "Leka pono ya ka lehlakoreng",
+  "With AI access, open Glossy and choose Oblique under AI viewpoint to generate your design.": "Ha o na le phihlello ya AI, bula Glossy ebe o kgetha Oblique tlasa AI viewpoint ho hlahisa moralo wa hao.",
+  "Keep the measured plan": "Boloka moralo o lekantsweng",
+  "Use the top-down Design Map for measurements; compare the angled view with it.": "Sebedisa Design Map e shebilweng hodimo bakeng sa ditekanyo; bapisa pono ya lehlakoreng le yona.",
   // Oblique beta: docs/audits/2026-10-30/oblique-ai-view-release-drafts.json; unreviewed.
   "Choose Oblique in AI viewpoint for an angled illustration of your whole design.": "Kgetha Oblique ho AI viewpoint bakeng sa setshwantsho sa moralo wa hao kaofela se shebilweng ka lehlakore.",
   "The app gathers your layout, photo and terrain; use the top-down plan for measurements.": "App e lokisa moralo o bolokilweng, foto ya sebaka le tlhahisoleseding ya mobu e fumanehang; sebedisa moralo o shebilweng hodimo bakeng sa ditekanyo.",
+  // Driveway guide: docs/audits/2026-10-30/glossy-driveway-guide-release-drafts.json; unreviewed.
+  "Glossy AI maps omit duplicate driveway guides; your editable paths stay saved.": "Dimmapa tse ntle tsa AI ha di bontshe mela e phetilweng ya tsela ya koloi; ditsela tseo o ka di fetolang di dula di bolokilwe.",
+  // Roof reference: docs/audits/2026-10-30/aerial-roof-release-drafts.json; unreviewed.
+  "AI maps on plain paper keep real roof detail from satellite imagery.": "Dimmapa tsa AI tse pampiring e tshweu di boloka dintlha tsa nnete tsa marulelo ho tswa ditshwantshong tsa sathelaete.",
   // Phone map artwork: docs/audits/2026-10-30/phone-ai-paper-release-drafts.json; unreviewed.
   "AI maps on plain paper keep illustrated ground instead of flat overlays.": "Dimmapa tsa AI tse pampiring e tshweu di boloka mobu o takilweng ho e-na le dikarolo tse bataletseng.",
   "Full-screen maps fit your phone, including with larger text.": "Dimmapa tsa skrine se felletseng di lekana fonong ya hao, le ha mongolo o le moholo.",

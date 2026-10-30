@@ -1,0 +1,42 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "scope": "Two Oblique discovery/review guide stops; no fluent review claimed.",
+  "entries": [
+    {
+      "source": "Try an angled view",
+      "drafts": {
+        "zu": "Zama ukubuka nge-engeli",
+        "st": "Leka pono ya ka lehlakoreng",
+        "ts": "Ringeta ku languta hi engele",
+        "ve": "Lingedzani u lavhelesa nga engele"
+      }
+    },
+    {
+      "source": "With AI access, open Glossy and choose Oblique under AI viewpoint to generate your design.",
+      "drafts": {
+        "zu": "Uma ukwazi ukusebenzisa i-AI, vula i-Glossy ukhethe i-Oblique ngaphansi kwe-AI viewpoint ukuze wakhe umdwebo womklamo wakho.",
+        "st": "Ha o na le phihlello ya AI, bula Glossy ebe o kgetha Oblique tlasa AI viewpoint ho hlahisa moralo wa hao.",
+        "ts": "Loko u ri ni mfikelelo wa AI, pfula Glossy kutani u hlawula Oblique ehansi ka AI viewpoint leswaku u humesa dizayini ya wena.",
+        "ve": "Arali ni na tswikelelo ya AI, vulani Glossy ni kone u nanga Oblique fhasi ha AI viewpoint u bveledza pulane yaṋu."
+      }
+    },
+    {
+      "source": "Keep the measured plan",
+      "drafts": {
+        "zu": "Gcina ipulani elinezilinganiso",
+        "st": "Boloka moralo o lekantsweng",
+        "ts": "Hlayisa pulani leyi pimiweke",
+        "ve": "Vhulungani pulane yo elwaho"
+      }
+    },
+    {
+      "source": "Use the top-down Design Map for measurements; compare the angled view with it.",
+      "drafts": {
+        "zu": "Sebenzisa i-Design Map ebukwa phezulu ukuze ulinganise; qhathanisa umdwebo obukwa nge-engeli nayo.",
+        "st": "Sebedisa Design Map e shebilweng hodimo bakeng sa ditekanyo; bapisa pono ya lehlakoreng le yona.",
+        "ts": "Tirhisa Design Map leyi langutiwaka ehenhla eka mimpimo; pimanisa xifaniso xa engele na yona.",
+        "ve": "Shumisani Design Map i lavheleswaho nṱha kha mielo; vhambedzani tshifanyiso tsha engele nayo."
+      }
+    }
+  ]
+}

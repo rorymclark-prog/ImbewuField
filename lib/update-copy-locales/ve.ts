@@ -1,9 +1,18 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Oblique experiment guide: docs/audits/2026-10-30/oblique-experiment-guide-drafts.json; unreviewed.
+  "Try an angled view": "Lingedzani u lavhelesa nga engele",
+  "With AI access, open Glossy and choose Oblique under AI viewpoint to generate your design.": "Arali ni na tswikelelo ya AI, vulani Glossy ni kone u nanga Oblique fhasi ha AI viewpoint u bveledza pulane yaṋu.",
+  "Keep the measured plan": "Vhulungani pulane yo elwaho",
+  "Use the top-down Design Map for measurements; compare the angled view with it.": "Shumisani Design Map i lavheleswaho nṱha kha mielo; vhambedzani tshifanyiso tsha engele nayo.",
   // Oblique beta: docs/audits/2026-10-30/oblique-ai-view-release-drafts.json; unreviewed.
   "Choose Oblique in AI viewpoint for an angled illustration of your whole design.": "Khethani Oblique kha AI viewpoint uri ni vhone tshifanyiso tsha pulane yaṋu yoṱhe tsho sedzwa nga thungo.",
   "The app gathers your layout, photo and terrain; use the top-down plan for measurements.": "App i lugisa pulane yo vhulungwaho, tshifanyiso tsha fhethu na zwidodombedzwa zwa mavu zwi re hone; shumisani pulane yo sedzwaho nṱha u kala.",
+  // Driveway guide: docs/audits/2026-10-30/glossy-driveway-guide-release-drafts.json; unreviewed.
+  "Glossy AI maps omit duplicate driveway guides; your editable paths stay saved.": "Mapa dza AI dzo nakaho a dzi sumbedzi mitalo yo dovhololwaho ya nḓila ya zwiendedzi; nḓila dzaṋu dzine dza nga dzudzanywa dzi dzula dzo vhulungwa.",
+  // Roof reference: docs/audits/2026-10-30/aerial-roof-release-drafts.json; unreviewed.
+  "AI maps on plain paper keep real roof detail from satellite imagery.": "Mapa dza AI kha bammbiri ḽitshena dzi vhulunga zwidodombedzwa zwa vhukuma zwa ṱhanga zwi bvaho kha zwifanyiso zwa sathelaithi.",
   // Phone map artwork: docs/audits/2026-10-30/phone-ai-paper-release-drafts.json; unreviewed.
   "AI maps on plain paper keep illustrated ground instead of flat overlays.": "Mapa dza AI kha bammbiri ḽitshena dzi vhulunga mavu o oliwaho nṱhani ha zwipiḓa zwo ṱanḓavhuwaho.",
   "Full-screen maps fit your phone, including with larger text.": "Mapa a tshikirini tsho ḓalaho a lingana na luṱingo lwaṋu, na musi maḽeḓere e mahulwane.",
