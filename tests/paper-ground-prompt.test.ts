@@ -21,13 +21,15 @@ import {
 // Rory: "It's a mess tho it didn't look like ai polished anything", and on the next attempt:
 // "Even with ChatGPT, it's a hybrid mess."
 
-test('the ground contract is decided by the source, and paper outranks the style', () => {
+test('Photo Plan falls back to paper, while painted styles illustrate the saved property without a photo', () => {
   // Paper wins even for the two styles that would otherwise promise to keep a photograph — that
   // promise is unkeepable when there is no photograph, and an unkeepable absolute instruction is
   // exactly what this file already documents producing indistinguishable hybrids.
   assert.equal(groundContractFor('photo_plan', 'paper'), 'paper');
   assert.equal(groundContractFor('satellite_overlay', 'paper'), 'paper');
-  assert.equal(groundContractFor('homestead_storybook', 'paper'), 'paper');
+  // Rory's 30 October phone follow-up chooses a fully illustrated interior, with a white page.
+  assert.equal(groundContractFor('homestead_storybook', 'paper'), 'paint');
+  assert.equal(groundContractFor('precision_atlas', 'paper'), 'paint');
   // With a photograph present nothing changes: the style decides, exactly as before.
   assert.equal(groundContractFor('photo_plan', 'photo'), 'photo');
   assert.equal(groundContractFor('homestead_storybook', 'photo'), 'paint');
@@ -51,15 +53,29 @@ test('on paper the model is told to invent no ground at all', () => {
   assert.doesNotMatch(prompt, /real photographed pixels/);
 });
 
-test('a water sheet on paper also loses the ground-painting art direction', () => {
+test('Photo Plan water on paper retains the no-invented-ground contract', () => {
   // The water branch carries its OWN copies of TONAL HIERARCHY and MATERIAL SEPARATION. They were
   // skipped only for photo-preserving styles, so on paper they would have re-opened the exact
   // contradiction the sheet-level branch closes.
-  const prompt = buildLockedIllustrationPrompt('Water', 'homestead_storybook', 'JoJo Tank 2500L x1', '', 'paper');
+  const prompt = buildLockedIllustrationPrompt('Water', 'photo_plan', 'JoJo Tank 2500L x1', '', 'paper');
   assert.doesNotMatch(prompt, /TONAL HIERARCHY/);
   assert.doesNotMatch(prompt, /MATERIAL SEPARATION/);
   assert.match(prompt, /KEEP THE PAPER WHITE/);
   assert.match(prompt, /WATER FEATURE ROLE/, 'the water direction itself must survive');
+});
+
+test('a painted paper property is illustrated inside its boundary without claiming an absent photo', () => {
+  for (const layer of ['Water', 'Earthworks', 'Planting', 'Full design']) {
+    const prompt = buildLockedIllustrationPrompt(layer, 'precision_atlas', 'Saved features only', '', 'paper');
+    assert.match(prompt, /fully illustrated top-down/);
+    assert.match(prompt, /There is no photograph/);
+    assert.match(prompt, /page beyond the property pure white/);
+    assert.match(prompt, /each traced building into a complete detailed roof/);
+    assert.match(prompt, /Unknown surfaces.*neutral texture/);
+    assert.match(prompt, /do not infer crops, structures, terrain, contours or neighbouring land/);
+    assert.doesNotMatch(prompt, /KEEP THE PAPER WHITE:|EVERY OTHER PIXEL IS STILL WHITE PAPER|the source contains a real aerial photograph/);
+    if (layer === 'Water') assert.match(prompt, /WATER FEATURE ROLE/);
+  }
 });
 
 test('a painted water sheet derives its surroundings from the source instead of inventing a forest', () => {

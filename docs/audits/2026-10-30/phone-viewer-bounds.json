@@ -1,0 +1,84 @@
+{
+  "evidence": "Chrome, actual fullscreen portal fixture; CSS pixels; no phone Safari certification",
+  "baseline": {
+    "width": 393,
+    "height": 852,
+    "scale": 1.4,
+    "imageLeft": -70.3359375,
+    "imageRight": 463.3359375,
+    "fits": false
+  },
+  "corrected": [
+    {
+      "width": 393,
+      "height": 852,
+      "scale": 1.4,
+      "imageLeft": 16.796875,
+      "imageRight": 376.203125,
+      "fits": true
+    },
+    {
+      "width": 393,
+      "height": 852,
+      "scale": 1,
+      "rect": {
+        "bottom": 755,
+        "height": 691,
+        "left": 12,
+        "right": 381,
+        "top": 64,
+        "width": 369,
+        "x": 12,
+        "y": 64
+      },
+      "viewport": {
+        "height": 852,
+        "width": 393
+      },
+      "zoom": "1",
+      "fits": true
+    },
+    {
+      "width": 852,
+      "height": 393,
+      "scale": 1.4,
+      "rect": {
+        "bottom": 279.6015625,
+        "height": 190.0078125,
+        "left": 16.796875,
+        "right": 835.203125,
+        "top": 89.59375,
+        "width": 818.40625,
+        "x": 16.796875,
+        "y": 89.59375
+      },
+      "viewport": {
+        "height": 393,
+        "width": 852
+      },
+      "zoom": "1.4",
+      "fits": true
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "scale": 1.4,
+      "rect": {
+        "bottom": 786.6015625,
+        "height": 697.0078125,
+        "left": 16.796875,
+        "right": 1263.203125,
+        "top": 89.59375,
+        "width": 1246.40625,
+        "x": 16.796875,
+        "y": 89.59375
+      },
+      "viewport": {
+        "height": 900,
+        "width": 1280
+      },
+      "zoom": "1.4",
+      "fits": true
+    }
+  ]
+}
