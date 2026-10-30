@@ -15827,7 +15827,7 @@ export default function DesignGlossy({
                 }}
                 disabled={loading !== null}
                 aria-pressed={active}
-                title={`${s.blurb}${s.recommended ? t('designGlossyRecommendedSuffix') : ''}`}
+                title={aiView === 'oblique' ? 'Illustrative appearance · review against the measured top-down plan' : `${s.blurb}${s.recommended ? t('designGlossyRecommendedSuffix') : ''}`}
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -15868,7 +15868,7 @@ export default function DesignGlossy({
                 )}
                 <span aria-hidden style={{ display: 'block', height: 34, borderRadius: 8, background: s.swatch, border: '1px solid rgba(20,16,10,0.12)' }} />
                 <span style={{ textAlign: 'center', lineHeight: 1.15 }}>{s.label}</span>
-                <span style={{ fontSize: 9.5, fontWeight: 600, textAlign: 'center', opacity: 0.6, lineHeight: 1.2 }}>{s.blurb}</span>
+                <span style={{ fontSize: 9.5, fontWeight: 600, textAlign: 'center', opacity: 0.6, lineHeight: 1.2 }}>{aiView === 'oblique' ? 'Illustrative appearance · review heights & shapes' : s.blurb}</span>
               </button>
             );
           })}
@@ -16244,7 +16244,7 @@ export default function DesignGlossy({
 
               {/* Style ALL sheets — the AI batch (mockup naming). gpt-image-2 → background queue;
                   Gemini → synchronous. */}
-              {aiRenderOn && (<div>
+              {aiRenderOn && aiView === 'top-down' && (<div>
                 <button
                   onClick={generateAllViaQueue}
                   disabled={loading !== null}
@@ -16481,7 +16481,7 @@ export default function DesignGlossy({
               {t('designGlossyHowFinishesWork')}
             </summary>
             <p style={{ margin: '0 0 10px', fontSize: 12.5, lineHeight: 1.45 }}>
-              {aiRenderOn ? <><strong>{t('designGlossyChooseFinish')}</strong> {t('designGlossyFinishHelp')}
+              {aiRenderOn ? aiView === 'oblique' ? <span lang="en">{OBLIQUE_REVIEW_NOTICE} One paid render creates the whole view; Exact Canvas remains the measured top-down drawing.</span> : <><strong>{t('designGlossyChooseFinish')}</strong> {t('designGlossyFinishHelp')}
               {fullTreatmentVisible ? ` ${t('designGlossyFinishHelpFullTreatment')}` : ''}</> : t('designGlossyExactFootnote')}
             </p>
           </details>
