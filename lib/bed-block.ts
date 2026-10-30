@@ -31,6 +31,17 @@ export interface FieldBlockConfig {
 }
 
 export function reconcileFieldBlockEdit(prev: DesignCanvasState, next: DesignCanvasState, allocated: ReadonlySet<string>): DesignCanvasState {
+  // The ordinary map delete/resize tools must honour the same allocation
+  // protection as the field form; otherwise rebuilding can reuse a deleted
+  // bed's identity and attach its old crop to different measured ground.
+  for (const item of prev.items) {
+    if (!item.fieldBlockId || !allocated.has(item.id)) continue;
+    const after = next.items.find(i => i.id === item.id);
+    if (!after || after.x !== item.x || after.y !== item.y
+      || after.wM !== item.wM || after.hM !== item.hM || after.rot !== item.rot
+      || after.fieldBlockId !== item.fieldBlockId)
+      throw new Error('Remove this bed’s crop allocations before changing or deleting its layout.');
+  }
   const deleted = new Set(prev.zones.filter(z => z.fieldBlock && !next.zones.some(n => n.id === z.id)).map(z => z.id));
   for (const zone of prev.zones.filter(z => z.fieldBlock)) {
     const children = prev.items.filter(i => i.fieldBlockId === zone.id);
@@ -67,7 +78,10 @@ export function bedsInsideField(
   const snap = (v: number) => Math.abs(v) < 1e-12 ? 0 : v;
   const c = snap(Math.cos(rad)), s = snap(Math.sin(rad));
   const ring: Point[] = points.map(([x, y]) => [x * w * c + y * h * s, -x * w * s + y * h * c]);
-  const blockers = exclusions.map(r => r.map(([x,y]): Point => [x*w*c+y*h*s, -x*w*s+y*h*c]));
+  const blockers = exclusions.map(r => {
+    const ring = r.map(([x,y]): Point => [x*w*c+y*h*s, -x*w*s+y*h*c]);
+    return { ring, minX: Math.min(...ring.map(p => p[0])), maxX: Math.max(...ring.map(p => p[0])), minY: Math.min(...ring.map(p => p[1])), maxY: Math.max(...ring.map(p => p[1])) };
+  });
   const minX = Math.min(...ring.map(p => p[0])), maxX = Math.max(...ring.map(p => p[0]));
   const minY = Math.min(...ring.map(p => p[1])), maxY = Math.max(...ring.map(p => p[1]));
   const nx = Math.max(0, Math.floor((maxX - minX + path + 1e-8) / (length + path)));
@@ -78,7 +92,12 @@ export function bedsInsideField(
       const q = r[(i + 1) % r.length]; return a + p[0] * q[1] - q[0] * p[1];
     }, 0)) < 1e-7));
   const fits = (box: Point[]) => empty(polygonClipping.difference([box], [ring]))
-    && blockers.every(blocker => empty(polygonClipping.intersection([box], [blocker])));
+    // Most footprints belong to other fields. Reject their bounding boxes
+    // cheaply before clipping so typing a dimension does not clip every bed
+    // against hundreds of unrelated beds in neighbouring blocks.
+    && blockers.every(b => box[1][0] <= b.minX || box[0][0] >= b.maxX
+      || box[2][1] <= b.minY || box[0][1] >= b.maxY
+      || empty(polygonClipping.intersection([box], [b.ring])));
   const beds: BedBlockPlacement[] = [], paths: Point[][] = [];
   const cells = new Set<string>();
   for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) {

@@ -284,3 +284,11 @@ test('overlapping field polygons cannot double-book the same land', () => {
   state.zones.push({ ...state.zones[0], id: 'field-b' });
   assert.throws(() => configureFieldBlock(state, 'field-a', 'West', fieldConfig, fieldFrame), /blocks overlap/);
 });
+
+test('allocated generated beds cannot be deleted or resized through ordinary map editing', () => {
+  const filled = configureFieldBlock(fieldState(), 'field-a', 'West', fieldConfig, fieldFrame);
+  const bed = filled.items[0];
+  const allocated = new Set([bed.id]);
+  assert.throws(() => reconcileFieldBlockEdit(filled, { ...filled, items: filled.items.slice(1) }, allocated), /crop allocations/);
+  assert.throws(() => reconcileFieldBlockEdit(filled, { ...filled, items: filled.items.map(i => i.id === bed.id ? { ...i, wM: 1 } : i) }, allocated), /crop allocations/);
+});
