@@ -1209,6 +1209,7 @@ function DesignStudioInner() {
   // Set when a local save genuinely failed (device storage full). Must be shown — a silent
   // failure here is how a design's zones went missing while the header still said "Saved".
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [editError, setEditError] = useState<string | null>(null);
   // Per-layer glossy preview overlay: when non-null, show the strict glossy render scoped to
   // this layer over the studio, without leaving the current step. null = closed.
   const [previewFilter, setPreviewFilter] = useState<GlossyLayerFilter | null>(null);
@@ -1742,10 +1743,11 @@ function DesignStudioInner() {
         try {
           next = reconcileFieldBlockEdit(prev, updater(prev), new Set(loadCropPlan().plantings.map(p => p.bedId)));
         } catch (e) {
-          setSaveError((e as Error).message);
+          setEditError((e as Error).message);
           return prev;
         }
         setSaved(false);
+        setEditError(null);
         undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
         redoStack.current = [];
         const stamped = persistCanvasState(next);
@@ -2165,8 +2167,9 @@ function DesignStudioInner() {
       // Crop allocations can arrive after this history snapshot was recorded.
       // Restoring history must protect the same measured ground as a fresh edit.
       try { popped = reconcileFieldBlockEdit(prev, popped, new Set(loadCropPlan().plantings.map(p => p.bedId))); }
-      catch (e) { setSaveError((e as Error).message); return prev; }
+      catch (e) { setEditError((e as Error).message); return prev; }
       setSaved(false);
+      setEditError(null);
       undoStack.current.pop();
       // Stash what we're undoing FROM so redo can bring it back — this is the only place
       // the pre-undo state is available; once we restore `popped` below it's gone otherwise.
@@ -2197,8 +2200,9 @@ function DesignStudioInner() {
         return prev;
       }
       try { popped = reconcileFieldBlockEdit(prev, popped, new Set(loadCropPlan().plantings.map(p => p.bedId))); }
-      catch (e) { setSaveError((e as Error).message); return prev; }
+      catch (e) { setEditError((e as Error).message); return prev; }
       setSaved(false);
+      setEditError(null);
       redoStack.current.pop();
       // Mirror of handleUndo: put the pre-redo state back on the undo stack so undo can
       // reverse this redo, same as any other edit.
@@ -3288,6 +3292,13 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           >
             {tr('Try the photo again', 'Zama isithombe futhi')}
           </button>
+        </div>
+      )}
+
+      {editError && (
+        <div role="alert" style={{ padding: '8px 14px', background: '#FFF4D9', borderBottom: '1px solid #C79A3C', color: DARK, fontSize: 12.5 }}>
+          {editError}
+          <button type="button" onClick={() => setEditError(null)} style={{ marginLeft: 12, cursor: 'pointer' }}>Dismiss</button>
         </div>
       )}
 
