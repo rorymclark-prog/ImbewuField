@@ -1,6 +1,9 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Oblique beta: docs/audits/2026-10-30/oblique-ai-view-release-drafts.json; unreviewed.
+  "Choose Oblique in AI viewpoint for an angled illustration of your whole design.": "Kgetha Oblique ho AI viewpoint bakeng sa setshwantsho sa moralo wa hao kaofela se shebilweng ka lehlakore.",
+  "The app gathers your layout, photo and terrain; use the top-down plan for measurements.": "App e lokisa moralo o bolokilweng, foto ya sebaka le tlhahisoleseding ya mobu e fumanehang; sebedisa moralo o shebilweng hodimo bakeng sa ditekanyo.",
   // Map footer: docs/audits/2026-10-30/map-style-footer-release-drafts.json; unreviewed.
   "Reference Blueprint now appears in small print at the bottom of your maps.": "Reference Blueprint jwale e hlaha ka mongolo o monyane tlase ho dimmapa tsa hao.",
   "Photo dates are easier to read; scroll through older notes on desktop.": "Matsatsi a dinepe a se a baleha habonolo; tsamaisetsa dintlheng tsa kgale khomphutheng.",

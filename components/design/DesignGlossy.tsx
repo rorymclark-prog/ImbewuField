@@ -16391,7 +16391,8 @@ export default function DesignGlossy({
                 {aiView === 'oblique' ? 'Whole design · 1 paid AI render · saved illustration' : t('designGlossyAiHybridHint')}
               </span>
             </button>)}
-            {aiRenderOn && aiView === 'top-down' && fullTreatmentVisible && (
+            {aiView === 'top-down' && (<>
+            {aiRenderOn && fullTreatmentVisible && (
             <button
               type="button"
               onClick={() => runLockedPolishFlow('full')}
@@ -16422,6 +16423,7 @@ export default function DesignGlossy({
               </span>
             </button>
             )}
+            </>)}
             </>
             )}
           </div>
