@@ -6,6 +6,8 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Paid AI map composition: start here
 
+Latest guide follow-up: [Duplicate driveway guide and remaining canopy clipping — 30 October 2026](2026-10-30/glossy-driveway-guide-codex.md).
+
 Latest roof follow-up: [Existing roof detail on plain-input AI maps — 30 October 2026](2026-10-30/aerial-roof-detail-codex.md).
 
 Latest phone follow-up: [Plain-input artwork and full-screen fit — 30 October 2026](2026-10-30/phone-ai-paper-quality-codex.md).
@@ -125,6 +127,8 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [Duplicate driveway guide and remaining canopy clipping — 30 October 2026](2026-10-30/glossy-driveway-guide-codex.md).
 
 - [Existing roof detail on plain-input AI maps — 30 October 2026](2026-10-30/aerial-roof-detail-codex.md).
 

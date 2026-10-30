@@ -774,6 +774,36 @@ function sectorProtectMaskOptions(): ProtectMaskOptions {
   };
 }
 
+// Rory confirmed the closed duplicate driveway trace is an editable guide, not a walking path.
+function drivewayGuideLines(state: DesignCanvasState, refs: DesignGlossyProps['refLayers']): LineShape[] {
+  const areas = [
+    ...(refs.drivewayClosed && refs.driveway.length >= 3 ? [refs.driveway] : []),
+    ...state.zones.filter((zone) => zone.feature === 'driveway').map((zone) => zone.points),
+  ];
+  return state.lines.filter((line) => {
+    const ring = line.points;
+    if (line.kind !== 'path' || ring.length < 4
+      || Math.hypot(ring[0][0] - ring.at(-1)![0], ring[0][1] - ring.at(-1)![1]) > 1e-6) return false;
+    const area = ringArea(ring);
+    if (!(area > 0)) return false;
+    return areas.some((driveway) => {
+      try {
+        const overlap = polygonClipping.intersection([ring], [driveway])
+          .reduce((sum, polygon) => sum + ringArea(polygon[0])
+            - polygon.slice(1).reduce((holes, hole) => holes + ringArea(hole), 0), 0);
+        // A closed loop covering most of the same area is a duplicate tracing guide. Open
+        // paths, separate walking loops and a large circuit around the house remain real paths.
+        return overlap > area / 2 && overlap > ringArea(driveway) / 2;
+      } catch { return false; }
+    });
+  });
+}
+
+function glossyArtworkState(state: DesignCanvasState, refs: DesignGlossyProps['refLayers']): DesignCanvasState {
+  const guides = new Set(drivewayGuideLines(state, refs).map((line) => line.id));
+  return guides.size ? { ...state, lines: state.lines.filter((line) => !guides.has(line.id)) } : state;
+}
+
 /**
  * NO_OVERLAY_MASK — Satellite Overlay deliberately sends NO protect mask. Measured, not assumed.
  *
@@ -802,6 +832,7 @@ export function drawMarks(
   drawDesign = true,
   options: CompositeMarkOptions = {},
 ) {
+  state = glossyArtworkState(state, refLayers);
   const px = (n: number) => n * imgW;
   const py = (n: number) => n * imgH;
   const showToolGlyphs = options.showToolGlyphs !== false;
@@ -1882,11 +1913,14 @@ export function buildDesignBrief(
   placeName: string | undefined,
   site: DesignGlossyProps['site'],
 ): string {
+  const omittedGuides = drivewayGuideLines(state, refLayers).length;
+  state = glossyArtworkState(state, refLayers);
   // Split so ELEMENTS can be sized against whatever budget the other lines leave (see below).
   const before: string[] = [];
   const after: string[] = [];
 
   before.push(`PLACE: ${placeName ?? 'this smallholding'} — a real South African smallholding.`);
+  if (omittedGuides) before.push('DRIVEWAY GUIDE OMITTED: the duplicate closed tracing guide is not a physical path or kerb. Keep the tar surface unbordered; no yellow dashes, raised edging or invented walking loop.');
 
   // ── Traced base geometry (the references every sheet must agree on first) ──
   if (refLayers.boundary.length >= 3) {
@@ -2138,6 +2172,7 @@ function producerElementsText(
   filter: GlossyLayerFilter = 'all',
   includeToolGlyphs = true,
 ): string {
+  state = glossyArtworkState(state, refLayers);
   const counts = new Map<string, { icon: string; n: number }>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
@@ -10553,6 +10588,8 @@ async function composeStyleSheet(
   exactGeometry = false,
   options: {
     aiArtwork?: boolean;
+    /** Old paid artwork can contain a guide already painted by the model. Keep its old inventory. */
+    preserveLegacyPathGuides?: boolean;
     sheetNumber?: string;
     legendRows?: StyleLegendRow[];
     /** Rows a SHEET adds that sheetLegendRows cannot derive from the design alone — sheet 04's
@@ -10573,6 +10610,7 @@ async function composeStyleSheet(
     includeLabelGutters?: boolean;
   } = {},
 ): Promise<string> {
+  if (options.aiArtwork && !options.preserveLegacyPathGuides) state = glossyArtworkState(state, refLayers);
   const map = await loadImage(mapDataUrl);
   // Empty leader bands become readable legend space; a genuine margin-label layout retains them.
   // The compact masterplan shares that wider key without adding duplicate leader gutters.
@@ -13419,7 +13457,9 @@ export default function DesignGlossy({
       const presentation = useBoundaryPresentation
         ? await boundaryPresentationContext(state, frame, refLayers)
         : { state, frame, refLayers };
-      const renderState = presentation.state;
+      const hideDrivewayGuides = Boolean(sourcePrompt?.includes('DRIVEWAY GUIDE OMITTED:'));
+      const renderState = hideDrivewayGuides
+        ? glossyArtworkState(presentation.state, presentation.refLayers) : presentation.state;
       const renderFrame = presentation.frame;
       const renderRefLayers = presentation.refLayers;
       const W = renderFrame.imgW * SCALE;
@@ -13696,6 +13736,7 @@ export default function DesignGlossy({
               // The legend prints code prefixes only in the mode that draws them, and the gutter
               // rows must honour the farmer's label-mode choice — same contract as the exact sheet.
               aiArtwork: true,
+              preserveLegacyPathGuides: !hideDrivewayGuides,
               labelMode,
               gutterLayout: labelled.gutterLayout,
               includeLabelGutters: f !== 'all',
