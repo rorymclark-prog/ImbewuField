@@ -34,9 +34,11 @@ The app's automatic board supplies a fresh text-free saved-layout reference, pho
 - Typecheck: passed after correcting a new test fixture's missing nullable frame image field.
 - Focused render suite: 581 passed, zero failures/skips/TODO, including seven new oblique tests. Final release head must pass again in CI.
 - New tests cover durable viewpoint/style identity; unavailable/single-height/unconfirmed terrain; complete undistorted reference fitting; actual contour coordinates; unchanged geometry; owner-bound frozen-scene recovery; guarded single paid dispatch; durable raw baseline; and perspective-specific finishing. Existing protections remain intact.
+- The first full run exposed `design-glossy-simple` pinning the paid button's former `onClick` spelling. The visibility claim remains required. Its check now executes the real JSX ancestor gates for both viewpoints, approval states and the shelved full pass, and verifies that removing the Simple gate would expose the button. No visibility assertion or paid access guard was removed.
 - Full suite: required for this new paid workflow; local run and current-head CI must complete before merge. No pending run is called passed.
 - Whitespace/release notes: checked before push; four notice translations remain explicitly unreviewed drafts in `oblique-ai-view-release-drafts.json`. Experimental viewpoint controls are labelled English rather than pretending to be reviewed translations.
 - Actual app-generated oblique output, refresh recovery, account/org gates and production build: record terminal evidence on the PR and issue #35.
+- The preview's Google sign-in domain is not authorised. No domain/access policy was widened for QA. The production account session can verify the integrated paid output after the required merge gates; the real local compositor output remains the pre-merge visual evidence.
 - **This changes the picture.** `PLAN_VERSION` and render-recipe tokens remain unchanged. Existing saved images are retained. This adds an illustrative view; the working measured plan remains top-down.
 
 ## Next continuation
