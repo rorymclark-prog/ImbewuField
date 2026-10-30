@@ -6,6 +6,8 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Paid AI map composition: start here
 
+Latest implementation: [Oblique AI illustration — 30 October 2026](2026-10-30/oblique-ai-view-codex.md). Release status and actual paid-pipeline evidence belong to its PR/issue #35 ledger.
+
 Latest footer and feasibility record: [Small style credit and oblique view proposal — 30 October 2026](2026-10-30/map-style-footer-and-oblique-feasibility-codex.md).
 
 Previous boundary follow-up: [Tanks and foliage at the property line — 29 October 2026](2026-10-29/ai-map-boundary-features-codex.md).
@@ -227,6 +229,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-30 | [Oblique AI illustration — Codex](2026-10-30/oblique-ai-view-codex.md) |
 | 2026-10-30 | [Map style footer and oblique feasibility — Codex](2026-10-30/map-style-footer-and-oblique-feasibility-codex.md) |
 | 2026-10-29 | [Paid AI map boundary foreground — Codex](2026-10-29/ai-map-boundary-features-codex.md) |
 | 2026-10-29 | [Paid AI map composition corrections — Codex](2026-10-29/ai-map-composition-fixes-codex.md) |

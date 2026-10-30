@@ -53,7 +53,8 @@ import { buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPha
 import { zoneBadgePositions } from '@/lib/canvas-labels';
 import { OPENAI_MAP_MODEL_LABEL, openAiMapModelLabel } from '@/lib/ai-render/model';
 import { enqueueRenderJob, mapSerially, subscribeRenderJob, fetchRenderOutput, fetchRenderJobScene, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, renderJobAttribution, type RenderQuality } from '@/lib/render-jobs';
-import { createRenderSceneSnapshot, type RenderSceneSnapshot } from '@/lib/render-scene';
+import { createRenderSceneSnapshot, decodeRenderSceneSnapshot, type RenderSceneSnapshot } from '@/lib/render-scene';
+import { buildObliquePrompt, isObliqueJobStyle, obliqueJobStyle, obliqueStyleFromJob, obliqueTerrainEvidence, paintObliqueReferenceBoard, OBLIQUE_BOARD, OBLIQUE_REVIEW_NOTICE, type AiMapView } from '@/lib/oblique-render';
 import type { RenderEngine } from '@/lib/render-job-contract';
 import { authoritativeHouseFootprints } from '@/lib/house-footprints';
 import { isSampleMode, SAMPLE_MODE_RENDER_REFUSAL } from '@/lib/sample-mode';
@@ -10517,6 +10518,8 @@ async function composeStyleSheet(
   exactGeometry = false,
   options: {
     aiArtwork?: boolean;
+    /** Perspective art cannot carry a metric bar or the top-down north marker. */
+    obliqueArtwork?: boolean;
     sheetNumber?: string;
     legendRows?: StyleLegendRow[];
     /** Rows a SHEET adds that sheetLegendRows cannot derive from the design alone — sheet 04's
@@ -10691,7 +10694,7 @@ async function composeStyleSheet(
     return lines;
   };
   const footerText = options.aiArtwork
-    ? [AI_MAP_REVIEW_NOTICE, options.footerText, frame.satDataUrl ? basemapAttribution() : '', footerStyleLabel].filter(Boolean).join('\n')
+    ? [options.obliqueArtwork ? OBLIQUE_REVIEW_NOTICE : AI_MAP_REVIEW_NOTICE, options.footerText, frame.satDataUrl ? basemapAttribution() : '', footerStyleLabel].filter(Boolean).join('\n')
     : options.footerText ? [options.footerText, footerStyleLabel].filter(Boolean).join('\n') : undefined;
   const customFooterLines = footerText ? wrapFooterText(footerText) : [];
   const footerHeadingH = options.footerHeading ? Math.round(legendW * 0.06) : 0;
@@ -11102,12 +11105,14 @@ async function composeStyleSheet(
   // includes a label gutter on each side; deriving pxPerM from it would draw a bar 26% longer than
   // the distance it claims. A scale bar is the one mark on a plan a farmer is entitled to hold a
   // ruler against, so this must key off the map's own width and sit inside the map's own column.
-  const pxPerM = mapW / (frame.imgW * frame.mPerPx);
-  drawBlueprintScaleBar(ctx, mapW, H, 0, 0, pxPerM, {
-    x: gutter + Math.round(mapW * 0.03),
-    y: H - Math.round(H * 0.045),
-  });
-  drawSheetNorthArrow(ctx, gutter, mapW, H);
+  if (!options.obliqueArtwork) {
+    const pxPerM = mapW / (frame.imgW * frame.mPerPx);
+    drawBlueprintScaleBar(ctx, mapW, H, 0, 0, pxPerM, {
+      x: gutter + Math.round(mapW * 0.03),
+      y: H - Math.round(H * 0.045),
+    });
+    drawSheetNorthArrow(ctx, gutter, mapW, H);
+  }
 
   // A2 LANDSCAPE, added as PAPER rather than taken out of the map. See PAPER_SHEET_RATIO.
   // The compact masterplan omits leaders, not paper size. A smaller exported bitmap was being
@@ -11781,6 +11786,7 @@ export default function DesignGlossy({
   // Rory prefers clean printable sheets on first opening. Photo and satellite remain
   // explicit choices; losing an imported photo returns to the same plain default.
   const [underlay, setUnderlay] = useState<SheetUnderlay>('plain');
+  const [aiView, setAiView] = useState<AiMapView>('top-down');
   useEffect(() => {
     if (underlay === 'photo' && !hasFarmerPhoto(frameProp)) setUnderlay('plain');
   }, [underlay, frameProp]);
@@ -14020,6 +14026,78 @@ export default function DesignGlossy({
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, filter, effectiveModelChrome, lockActive, promptRewrite, lockedPolishStage, queueEngine, quality, labelMode, underlay, underlaySuffix, aiRenderOn]);
 
+  const generateObliqueViaQueue = useCallback(async () => {
+    if (!aiRenderOn || isSampleMode()) {
+      setError(isSampleMode() ? SAMPLE_MODE_RENDER_REFUSAL : 'AI rendering is available only to approved accounts.');
+      return;
+    }
+    if (loading !== null || queueJobId || gallerySiteId !== state.siteId) return;
+    if (layerContentCount(state, refLayers, 'all') === 0) {
+      setError(emptyLayerMessage('all', t));
+      return;
+    }
+    // An oblique view is one independent paid illustration. It must never consume a staged
+    // top-down Hybrid or arm the shelved second paid pass, including after free recovery.
+    exactAfterFlipRef.current = false;
+    hybridAfterExactRef.current = false;
+    hybridAfterFlipRef.current = false;
+    polishAfterHybridRef.current = false;
+    polishAfterFlipRef.current = false;
+    hybridResultRef.current = null;
+    hybridMapForPolishRef.current = null;
+    setHybridHandoffReady(false);
+    setLockedPolishStage(null);
+    setError(null); setNotice('Preparing the saved design, site photo and available terrain for an oblique view…');
+    setLoading('falgpt');
+    try {
+      const style = producerStyle ?? DEFAULT_PRODUCER_STYLE;
+      const sourceUnderlay: SheetUnderlay = hasFarmerPhoto(frameProp) ? 'photo' : frameProp.satDataUrl ? 'satellite' : 'plain';
+      const sourceFrame = frameForUnderlay(frameProp, sourceUnderlay);
+      const sceneSnapshot = await createRenderSceneSnapshot({
+        state, frame: sourceFrame, refLayers, site, placeName, labelMode, underlay: sourceUnderlay,
+        outputScale: SCALE, renderRecipe: SHEET_RENDER_RECIPE, planVersion: PLAN_VERSION,
+      });
+      // Use the detached scene for every reference: an edit while terrain is loading must not
+      // mix a new bed position with the older paid job's photo and inventory.
+      const frozen = await decodeRenderSceneSnapshot(sceneSnapshot.sceneJson, sceneSnapshot.designRevision, sceneSnapshot.sourceDataUrl);
+      const p = await boundaryPresentationContext(frozen.state, frozen.frame, frozen.refLayers);
+      const contours = await fetchSheetContours(p.frame, p.refLayers.boundary, frozen.site?.elevation?.slopeDeg ?? 0, frozen.site?.elevation?.aspectDeg ?? 0,
+        async (url) => fetch(url, { headers: await paidApiHeaders(), signal: AbortSignal.timeout(15_000) }));
+      const terrain = obliqueTerrainEvidence(contours, frozen.site);
+      const plan = await buildComposite(p.state, { ...p.frame, satDataUrl: null }, p.refLayers, 'all', true, polishModelInputMarks('all'));
+      const designImage = await loadImage(plan);
+      let photo: HTMLImageElement | undefined;
+      const board = document.createElement('canvas');
+      let compositeDataUrl: string;
+      try {
+        if (p.frame.satDataUrl) photo = await loadImage(p.frame.satDataUrl);
+        board.width = OBLIQUE_BOARD.width; board.height = OBLIQUE_BOARD.height;
+        const ctx = board.getContext('2d');
+        if (!ctx) throw new Error('Image preparation unavailable.');
+        paintObliqueReferenceBoard(ctx, { design: designImage, photo, frame: p.frame, boundary: p.refLayers.boundary, contours, terrain });
+        compositeDataUrl = board.toDataURL('image/png');
+      } finally {
+        releaseCanvas(board); releaseImageSource(designImage);
+        if (photo) releaseImageSource(photo);
+      }
+      const prompt = buildObliquePrompt({ style, terrain, hasPhoto: Boolean(p.frame.satDataUrl),
+        elements: producerElementsText(frozen.state, frozen.refLayers, 'all', false),
+        designBrief: buildDesignBrief(frozen.state, frozen.refLayers, frozen.placeName, frozen.site),
+      });
+      const jobId = await enqueueRenderJobCapped({
+        siteId: frozen.state.siteId, style: obliqueJobStyle(style), engine: queueEngine, quality,
+        sceneSnapshot, attemptId: crypto.randomUUID(), outputMode: 'hybrid',
+        sheets: [{ key: 'all', label: 'Oblique design view', prompt, compositeDataUrl,
+          geometryLock: false, showcase: false, resultKind: 'hybrid' }],
+      });
+      persistJobId(frozen.state.siteId, jobId);
+      setQueueJobId(jobId);
+      setNotice('Oblique illustration is rendering in the background. It will open in Saved maps when ready.');
+    } catch (err) {
+      setError(userFacingMessage(err, t('designGlossyCouldNotStart'), t)); setLoading(null);
+    }
+  }, [aiRenderOn, loading, queueJobId, gallerySiteId, state, frameProp, refLayers, site, placeName, labelMode, producerStyle, queueEngine, quality, t]);
+
   // Compatibility finisher for older queued Sector jobs, which contain a ground-only AI pass.
   // New paid Sector jobs persist showcase:true and return the model's complete polished sheet
   // directly; old in-flight jobs remain safe and still receive deterministic analysis geometry.
@@ -14828,6 +14906,12 @@ export default function DesignGlossy({
               if (frozenScene.outputScale !== SCALE || frozenScene.renderRecipe !== SHEET_RENDER_RECIPE || frozenScene.planVersion !== PLAN_VERSION) {
                 throw new UserFacingError('This AI job belongs to a different export setting or renderer version. Its original output is retained; finish it with the original settings.');
               }
+              const obliqueStyle = obliqueStyleFromJob(job.style);
+              if (isObliqueJobStyle(job.style) && (!obliqueStyle || sheet.key !== 'all'
+                || sheet.geometryLock !== false || sheet.showcase !== false || sheet.resultKind !== 'hybrid'
+                || sheet.protectMaskPath || outputMode !== 'hybrid')) {
+                throw new UserFacingError('This oblique job has incompatible view settings. Its original artwork is retained.');
+              }
               const auditContext = {
                 siteId: job.siteId, jobId: queueJobId!, attemptId: job.attemptId ?? queueJobId!,
                 designRevision: job.designRevision,
@@ -14918,6 +15002,23 @@ export default function DesignGlossy({
                     note: 'comparison unavailable; retained as an unverified review candidate',
                   });
                 }
+              }
+              if (obliqueStyle) {
+                // Perspective artwork has no top-down pixel correspondence. Restoring the
+                // overhead photograph, boundary or labels here would cut it into ghost strips.
+                // The durable raw-input comparison above still rejects a returned reference board.
+                const obliqueLabel = PRODUCER_STYLES.find((entry) => entry.key === obliqueStyle)?.label ?? obliqueStyle;
+                const finalSheet = await composeStyleSheet(raw, frozenScene.state, frozenScene.frame,
+                  frozenScene.refLayers, 'all', frozenScene.placeName, obliqueLabel, 'Oblique design view', true, false,
+                  { aiArtwork: true, obliqueArtwork: true, sheetNumber: 'VIEW', labelMode: 'names', includeLabelGutters: false });
+                if (!active) return;
+                lastAssembledGalleryId = pushGalleryRef.current(
+                  `Oblique design view · ${obliqueLabel} · ${validationStatus === 'unscored' ? 'comparison unavailable' : 'review against measured plan'}`,
+                  finalSheet, { resultKind: 'ai-illustrated', provider: attribution.gallery, model: job.model,
+                    geometryLock: false, showcase: false, underlay: frozenScene.underlay, ...auditContext,
+                    validationStatus, rawOutputPath: sheet.outputPath });
+                assembled.add(sheet.key);
+                continue;
               }
               // finishStyledSheet's zone/water-overlay branches and producerLabels() call are
               // meaningless for a sheet with no GlossyLayerFilter — `sheet.key as GlossyLayerFilter`
@@ -15256,7 +15357,9 @@ export default function DesignGlossy({
           // diagnostics; the farmer sees the failed count and the app's own retry guidance.
           if (job.error || failedSheets.length) console.error('[glossy] queued render failed', job.error, failedSheets);
           if (done > 0) {
-            setNotice(refreshPendingRef.current
+            setNotice(obliqueStyleFromJob(job.style)
+              ? 'Oblique illustration ready in Saved maps. Review positions, heights and terrain against your measured top-down plan.'
+              : refreshPendingRef.current
               ? `AI POLISH COMPLETE — the new ${attribution.label} result is open now — review it against the exact map. The exact no-AI master remains separately saved.`
               : `AI POLISH COMPLETE — ${done} paid ${attribution.label} result${done === 1 ? '' : 's'} finished for review against the exact map${failedSheets.length ? ` · ${failedSheets.length} failed — try again` : ''}. Results are saved in the gallery; the exact no-AI master remains the reference for positions and counts.`);
             refreshPendingRef.current = false;
@@ -16022,7 +16125,7 @@ export default function DesignGlossy({
               it used to start a Full Treatment while saying "1 AI render", which is two.
               Flipping BACK to exact from an older AI result spends nothing, and a farmer looking at
               a sheet they already paid for must always be able to leave it. */}
-          {aiRenderOn && selectedSheet && !galleryViewItem && (
+          {aiRenderOn && aiView === 'top-down' && selectedSheet && !galleryViewItem && (
             <button
               type="button"
               onClick={() => {
@@ -16199,6 +16302,24 @@ export default function DesignGlossy({
           {aiRenderOn && selectedSheet && <WorkflowHeading number={5} title={`${t('designGlossyEngine')} & ${t('designGlossyQuality')}`} />}
           {aiRenderOn && selectedSheet && enginePicker}
           {aiRenderOn && selectedSheet && qualityPicker}
+          {aiRenderOn && selectedSheet && (
+            <div lang="en" style={{ display: 'grid', gap: 7 }}>
+              <div style={{ fontSize: 12, fontWeight: 800 }}>AI viewpoint</div>
+              <div role="group" aria-label="AI viewpoint" style={{ display: 'flex', gap: 6 }}>
+                {(['top-down', 'oblique'] as const).map((view) => (
+                  <button key={view} type="button" aria-pressed={aiView === view} disabled={loading !== null}
+                    onClick={() => setAiView(view)}
+                    style={{ padding: '9px 12px', minHeight: 44, borderRadius: 10, border: `1px solid ${GREEN}`,
+                      background: aiView === view ? GREEN : '#FFFFFF', color: aiView === view ? '#FFFFFF' : GREEN, fontWeight: 700 }}>
+                    {view === 'top-down' ? 'Top-down' : 'Oblique · beta'}
+                  </button>
+                ))}
+              </div>
+              {aiView === 'oblique' && <p style={{ margin: 0, fontSize: 12, lineHeight: 1.5 }}>
+                An angled illustration of the whole design. The app prepares your saved layout, registered drone/aerial photo and available terrain automatically. Heights and landform need review; use your top-down plan for measurements.
+              </p>}
+            </div>
+          )}
           </>
           )}
           {selectedSheet && !simple && <WorkflowHeading number={aiRenderOn ? 6 : 4} title={t('designGlossyFinishHeading')} />}
@@ -16242,7 +16363,7 @@ export default function DesignGlossy({
             <>
             {aiRenderOn && (<button
               type="button"
-              onClick={() => runLockedPolishFlow('hybrid')}
+              onClick={() => aiView === 'oblique' ? generateObliqueViaQueue() : runLockedPolishFlow('hybrid')}
               disabled={loading !== null}
               style={{
                 display: 'flex',
@@ -16265,12 +16386,12 @@ export default function DesignGlossy({
                 opacity: loading !== null ? 0.7 : 1,
               }}
             >
-              <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{resultImage ? <RefreshCw size={16} /> : <Gem size={16} />} {t('designGlossyAiHybrid')}</span>
+              <span lang={aiView === 'oblique' ? 'en' : undefined} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{resultImage ? <RefreshCw size={16} /> : <Gem size={16} />} {aiView === 'oblique' ? 'Generate oblique view' : t('designGlossyAiHybrid')}</span>
               <span style={{ fontSize: 11, fontWeight: 700, opacity: 0.72, textAlign: 'center' }}>
-                {t('designGlossyAiHybridHint')}
+                {aiView === 'oblique' ? 'Whole design · 1 paid AI render · saved illustration' : t('designGlossyAiHybridHint')}
               </span>
             </button>)}
-            {aiRenderOn && fullTreatmentVisible && (
+            {aiRenderOn && aiView === 'top-down' && fullTreatmentVisible && (
             <button
               type="button"
               onClick={() => runLockedPolishFlow('full')}
