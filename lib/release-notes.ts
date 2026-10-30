@@ -41,7 +41,7 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '30 October 2026', sha: '784307cb2', changes: [
+  { when: '30 October 2026', sha: 'e2c2ff6a8', changes: [
     'Draw named field blocks and fill them with beds using your own dimensions and path widths.',
     'Keep a field open without beds and use both layouts in automatic crop planning.',
   ], tour: [{ title: 'Lay out your fields', where: 'Site design → Planting → Field blocks', href: '/design',
