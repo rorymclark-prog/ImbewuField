@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
-import { hybridProtectionPolicy, geometryLockCompositionPolicy, AI_MAP_REVIEW_NOTICE } from '../lib/render-policy.ts';
+import { hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, AI_MAP_REVIEW_NOTICE } from '../lib/render-policy.ts';
 import { canopyForegroundAlpha, assertMatchingImageAspects } from '../lib/image-producer.ts';
 import { ELEMENTS_BY_ID } from '../lib/design-elements.ts';
 import { itemInFilter, isContextElement, zonesInFilter } from '../lib/glossy-filters.ts';
@@ -14,7 +14,7 @@ const tree = ts.createSourceFile('DesignGlossy.tsx', source, ts.ScriptTarget.Lat
 function helper(name: string, scope: Record<string, unknown>): any {
   let code = '';
   function visit(n: ts.Node) {
-    if (ts.isFunctionDeclaration(n) && n.name?.text === name) code = n.getText(tree);
+    if (ts.isFunctionDeclaration(n) && n.name?.text === name) code = n.getText(tree).replace(/^export\s+/, '');
     if (ts.isVariableDeclaration(n) && n.name.getText(tree) === name) {
       const call = n.initializer as ts.CallExpression;
       code = `const ${name} = ${call.arguments[0].getText(tree)};`;
@@ -91,6 +91,21 @@ test('painted Whole removes zone photo strips and allows only saved canopy windo
   assert.equal(JSON.stringify(state),original,'mask generation must not move trees or saved zones');
 });
 
+test('a plain-input building is visible to the model without painting over a photographed roof', () => {
+  const saved={items:[],lines:[],zones:[]};
+  const rings={boundary:[],house:[[.2,.2],[.8,.2],[.8,.8],[.2,.8]],driveway:[]};
+  const before=JSON.stringify({saved,rings});
+  const draw=helper('drawMarks',{RENDERED_DRIVEWAY_EDGE:false,
+    authoritativeHouseFootprints:()=>[rings.house],zoneBadgePositions:()=>new Map(),SCALE:3});
+  for(const hasPhoto of [false,true]){
+    const canvas=probeCanvas([[150,150]]);
+    draw(canvas.getContext(),saved,{...frame,satDataUrl:hasPhoto?'photo':null},rings,300,300,'earthworks',false);
+    assert.deepEqual(canvas.snapshot(),[hasPhoto?0:255],
+      'white-on-white must not hide a paper roof, while an existing aerial keeps its own roof pixels');
+  }
+  assert.equal(JSON.stringify({saved,rings}),before);
+});
+
 test('boundary foreground includes tank tops and rectangular planting but respects each sheet', () => {
   const points:Point[]=[[100,70],[100,50],[190,100],[216,100],[20,20]];
   const canvas=probeCanvas(points);
@@ -147,8 +162,8 @@ test('canopy foreground keeps leaves but rejects soil and never escapes the save
   assert.throws(()=>canopyForegroundAlpha(art,footprint,2,2),/size mismatch/);
 });
 
-test('photo and plain-paper contracts never acquire painted exterior or lose source structures', () => {
-  for(const [style,photo] of [['photo_plan',true],['precision_atlas',false]] as const){
+test('Photo Plan retains its source photograph or paper fallback rather than painting the exterior', () => {
+  for(const [style,photo] of [['photo_plan',true],['photo_plan',false]] as const){
     const policy=hybridProtectionPolicy('all',style,photo);
     assert.equal(policy.allowCanopyOverhang,false); assert.equal(policy.protectOutside,true);
     assert.equal(policy.protectBoundary,true); assert.equal(policy.protectHouse,true); assert.equal(policy.protectUnmarkedGround,true);
@@ -165,24 +180,31 @@ test('painted roofs have one appearance owner while photo and paper keep their s
   assert.equal(await build('photo',state,frame,refs,300,300,'precision_atlas',false),undefined);
   assert.deepEqual(calls,[],'no extra grey roof over already painted AI material');
   assert.equal(await build('photo',state,frame,refs,300,300,'photo_plan',true),'photo-roof');
-  assert.equal(await build(undefined,state,{...frame,satDataUrl:null},refs,300,300,'precision_atlas',false),'paper-roof');
+  assert.equal(await build(undefined,state,{...frame,satDataUrl:null},refs,300,300,'precision_atlas',false),undefined,
+    'the new painted paper job owns its own roof, just like the photographic painted input');
+  assert.equal(await build(undefined,state,{...frame,satDataUrl:null},refs,300,300,'photo_plan',false),'paper-roof');
   assert.deepEqual(calls,['photo','paper']);
 });
 
-test('completed OpenAI and Gemini jobs rebuild the mask from their frozen scene before restoring', async () => {
-  for(const engine of ['openai','gemini']) {
+test('completed jobs recover painted photo and paper interiors from the frozen scene without flat ground stamps', async () => {
+  for(const engine of ['openai','gemini']) for(const hasPhoto of [true,false]) {
     const calls:unknown[][]=[];
     let badStoredMask=false;
-    const scene={state,frame,refLayers:refs,site:null,placeName:'Fictional test',labelMode:'onplant'};
+    const renderFrame={...frame,satDataUrl:hasPhoto?'photo':null};
+    const scene={state,frame:renderFrame,refLayers:refs,site:null,placeName:'Fictional test',labelMode:'onplant'};
+    const frozen=JSON.stringify(scene);
     const finish=helper('finishStyledSheet',{
-      state,frame,refLayers:refs,site:null,placeName:scene.placeName,labelMode:'codes',SCALE:3,
-      boundaryPresentationContext:async(...args:unknown[])=>{calls.push(['scene',...args]);return {state,frame,refLayers:refs};},
+      state,frame:renderFrame,refLayers:refs,site:null,placeName:scene.placeName,labelMode:'codes',SCALE:3,
+      boundaryPresentationContext:async(...args:unknown[])=>{calls.push(['scene',...args]);return {state,frame:renderFrame,refLayers:refs};},
       isModelChromeStyle:()=>false,paidPolishNeedsChromePass:()=>false,
       GLOSSY_FILTERS:[],geometryLockCompositionPolicy,lockedProtectMaskOptions:hybridProtectionPolicy,
       loadImage:async(value:string)=>({width:300,height:value==='stored-mask'&&badStoredMask?200:300}),
       releaseImageSource:()=>{},assertMatchingImageAspects,
       buildProtectMask:async(...args:unknown[])=>{calls.push(['mask',...args]);return 'rebuilt-mask';},
       restoreProtectedPixels:async(...args:unknown[])=>{calls.push(['restore',...args]);return 'restored';},
+      legacyPaperArtworkNeedsRoof,
+      buildPaintedStructureOverlay:async(...args:unknown[])=>{calls.push(['legacy-roof',...args]);return 'paper-roof';},
+      buildExactLayerOverlay:()=>{throw Error('flat ground must not cover paid painted artwork');},
       buildGeometryLockStructureOverlay:async()=>undefined,stackOverlayImages:async()=>undefined,
       compositeAccurateMap:async()=> 'composite',burnPaintedBoundary:async()=> 'bounded',
       burnExactLabelLayer:async(map:string)=>({map}),
@@ -191,11 +213,18 @@ test('completed OpenAI and Gemini jobs rebuild the mask from their frozen scene 
     });
     assert.equal(await finish('model','all',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,scene,()=>false),'sheet',engine);
     const restore=calls.find(c=>c[0]==='restore')!;
-    assert.deepEqual(restore,['restore','photo','model','rebuilt-mask']);
+    assert.deepEqual(restore,['restore',hasPhoto?'photo':'input','model','rebuilt-mask']);
     const mask=calls.find(c=>c[0]==='mask')!;
     assert.equal(mask[1],state); assert.equal(mask[4],'all'); assert.equal(mask[6],'model');
     const chrome=calls.find(c=>c[0]==='chrome')!;
     assert.equal((chrome.at(-1) as {aiArtwork:boolean}).aiArtwork,true);
+    assert.equal(calls.filter(c=>c[0]==='legacy-roof').length,0,'new painted jobs keep the model roof');
+    if(!hasPhoto){
+      assert.equal(await finish('model','all',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,scene,()=>false,'KEEP THE PAPER WHITE: original paid contract'),'sheet');
+      const roof=calls.find(c=>c[0]==='legacy-roof')!;
+      assert.equal(roof.at(-1),false,'old paper recovery restores only the missing exact roof, not a driveway/ground stamp');
+    }
+    assert.equal(JSON.stringify(scene),frozen,'free reassembly cannot change the saved design');
     badStoredMask=true;
     await assert.rejects(()=>finish('model','all',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,scene,()=>false),/mask aspect/);
   }

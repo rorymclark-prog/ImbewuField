@@ -1,6 +1,14 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Phone map artwork: docs/audits/2026-10-30/phone-ai-paper-release-drafts.json; unreviewed.
+  "AI maps on plain paper keep illustrated ground instead of flat overlays.": "Mimepe ya AI eka phepha ro basa yi hlayisa misava leyi dirowiweke ematshan'weni ya swiphemu swo andlaleka.",
+  "Full-screen maps fit your phone, including with larger text.": "Mimepe ya xikirini lexi heleleke yi nghena kahle eka riqingho ra wena, hambi ku ri ni matsalelo lamakulu.",
+  "Check the complete map": "Kambisisa mepe lowu heleleke",
+  "Open a saved map full-screen. The whole sheet and legend should fit.": "Pfula mepe lowu hlayisiweke eka xikirini hinkwaxo. Phepha hinkwaro ni tinhlamuselo ta swikombiso swi fanele ku nghena.",
+  "Recover your paid artwork": "Vuyisa xifaniso lexi u xi hakeleke",
+  "Saved maps → Open map": "Mimepe leyi hlayisiweke → Pfula mepe",
+  "Choose Reassemble artwork at the original print quality. No new AI render is bought.": "Hlawula ku hlanganisa xifaniso nakambe hi khwalithi yo sungula ya ku kandziyisa. A wu xavi xifaniso lexintshwa xa AI.",
   // Map footer: docs/audits/2026-10-30/map-style-footer-release-drafts.json; unreviewed.
   "Reference Blueprint now appears in small print at the bottom of your maps.": "Reference Blueprint sweswi yi humelela hi matsalelo lamatsongo ehansi ka mimepe ya wena.",
   "Photo dates are easier to read; scroll through older notes on desktop.": "Masiku ya swifaniso sweswi swa olova ku ma hlaya; skrola eka tinotsi ta khale eka khompyuta.",

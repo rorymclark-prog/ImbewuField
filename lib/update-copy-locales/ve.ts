@@ -1,6 +1,14 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Phone map artwork: docs/audits/2026-10-30/phone-ai-paper-release-drafts.json; unreviewed.
+  "AI maps on plain paper keep illustrated ground instead of flat overlays.": "Mapa dza AI kha bammbiri ḽitshena dzi vhulunga mavu o oliwaho nṱhani ha zwipiḓa zwo ṱanḓavhuwaho.",
+  "Full-screen maps fit your phone, including with larger text.": "Mapa a tshikirini tsho ḓalaho a lingana na luṱingo lwaṋu, na musi maḽeḓere e mahulwane.",
+  "Check the complete map": "Ṱolani mapa o fhelelaho",
+  "Open a saved map full-screen. The whole sheet and legend should fit.": "Vulani mapa o vhulungwaho kha tshikirini tsho ḓalaho. Siaṱari ḽoṱhe na ṱhalutshedzo ya zwiga zwi tea u lingana.",
+  "Recover your paid artwork": "Vhuisani tshifanyiso tshe na badela",
+  "Saved maps → Open map": "Mapa o vhulungwaho → Vulani mapa",
+  "Choose Reassemble artwork at the original print quality. No new AI render is bought.": "Khethani u kuvhanganya tshifanyiso hafhu nga vhuimo ha u gandisa ha u thoma. A hu rengwi tshifanyiso tshiswa tsha AI.",
   // Map footer: docs/audits/2026-10-30/map-style-footer-release-drafts.json; unreviewed.
   "Reference Blueprint now appears in small print at the bottom of your maps.": "Reference Blueprint zwino i vhonala nga maḽeḓere maṱuku fhasi ha mapa dzavho.",
   "Photo dates are easier to read; scroll through older notes on desktop.": "Maḓuvha a zwifanyiso zwino a a vhalea nga hu leluwaho; skrolani kha notsi dza kale kha khomphyutha.",

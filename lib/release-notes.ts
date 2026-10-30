@@ -41,6 +41,13 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 October 2026', sha: 'c406ecd66', changes: [
+    'AI maps on plain paper keep illustrated ground instead of flat overlays.',
+    'Full-screen maps fit your phone, including with larger text.',
+  ], tour: [{ title: 'Check the complete map', where: 'Menu → Site design', href: '/design',
+    detail: 'Open a saved map full-screen. The whole sheet and legend should fit.' },
+  { title: 'Recover your paid artwork', where: 'Saved maps → Open map', href: '/design',
+    detail: 'Choose Reassemble artwork at the original print quality. No new AI render is bought.' }] },
   { when: '30 October 2026', sha: 'efdd0cd85', changes: [
     'Reference Blueprint now appears in small print at the bottom of your maps.',
   ] },

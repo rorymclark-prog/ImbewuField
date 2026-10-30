@@ -1,0 +1,44 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "scope": "Two map presentation notices and discovery guide stops; no fluent review claimed.",
+  "entries": [
+    {
+      "source": "AI maps on plain paper keep illustrated ground instead of flat overlays.",
+      "drafts": {
+        "zu": "Amamephu e-AI ephepheni elimhlophe agcina umhlaba odwetshiwe esikhundleni sezendlalelo eziyisicaba.",
+        "st": "Dimmapa tsa AI tse pampiring e tshweu di boloka mobu o takilweng ho e-na le dikarolo tse bataletseng.",
+        "ts": "Mimepe ya AI eka phepha ro basa yi hlayisa misava leyi dirowiweke ematshan'weni ya swiphemu swo andlaleka.",
+        "ve": "Mapa dza AI kha bammbiri ḽitshena dzi vhulunga mavu o oliwaho nṱhani ha zwipiḓa zwo ṱanḓavhuwaho."
+      }
+    },
+    {
+      "source": "Full-screen maps fit your phone, including with larger text.",
+      "drafts": {
+        "zu": "Amamephu esikrini esigcwele angena kahle ocingweni lwakho, ngisho nombhalo omkhulu.",
+        "st": "Dimmapa tsa skrine se felletseng di lekana fonong ya hao, le ha mongolo o le moholo.",
+        "ts": "Mimepe ya xikirini lexi heleleke yi nghena kahle eka riqingho ra wena, hambi ku ri ni matsalelo lamakulu.",
+        "ve": "Mapa a tshikirini tsho ḓalaho a lingana na luṱingo lwaṋu, na musi maḽeḓere e mahulwane."
+      }
+    },
+    {
+      "source": "Check the complete map",
+      "drafts": { "zu": "Hlola imephu ephelele", "st": "Hlahloba mmapa o felletseng", "ts": "Kambisisa mepe lowu heleleke", "ve": "Ṱolani mapa o fhelelaho" }
+    },
+    {
+      "source": "Open a saved map full-screen. The whole sheet and legend should fit.",
+      "drafts": { "zu": "Vula imephu egciniwe esikrinini esigcwele. Lonke ishidi nezincazelo zezimpawu kufanele kungene.", "st": "Bula mmapa o bolokilweng skrineng se felletseng. Leqephe lohle le tlhaloso ya matshwao di lokela ho lekana.", "ts": "Pfula mepe lowu hlayisiweke eka xikirini hinkwaxo. Phepha hinkwaro ni tinhlamuselo ta swikombiso swi fanele ku nghena.", "ve": "Vulani mapa o vhulungwaho kha tshikirini tsho ḓalaho. Siaṱari ḽoṱhe na ṱhalutshedzo ya zwiga zwi tea u lingana." }
+    },
+    {
+      "source": "Recover your paid artwork",
+      "drafts": { "zu": "Buyisa umdwebo owawukhokhele", "st": "Fumana hape setshwantsho seo o se lefileng", "ts": "Vuyisa xifaniso lexi u xi hakeleke", "ve": "Vhuisani tshifanyiso tshe na badela" }
+    },
+    {
+      "source": "Saved maps → Open map",
+      "drafts": { "zu": "Amamephu agciniwe → Vula imephu", "st": "Dimmapa tse bolokilweng → Bula mmapa", "ts": "Mimepe leyi hlayisiweke → Pfula mepe", "ve": "Mapa o vhulungwaho → Vulani mapa" }
+    },
+    {
+      "source": "Choose Reassemble artwork at the original print quality. No new AI render is bought.",
+      "drafts": { "zu": "Khetha ukuhlanganisa umdwebo kabusha ngekhwalithi yokuphrinta yasekuqaleni. Awuthengi umdwebo omusha we-AI.", "st": "Kgetha ho kopanya setshwantsho hape ka boleng ba pele ba kgatiso. Ha o reke setshwantsho se setjha sa AI.", "ts": "Hlawula ku hlanganisa xifaniso nakambe hi khwalithi yo sungula ya ku kandziyisa. A wu xavi xifaniso lexintshwa xa AI.", "ve": "Khethani u kuvhanganya tshifanyiso hafhu nga vhuimo ha u gandisa ha u thoma. A hu rengwi tshifanyiso tshiswa tsha AI." }
+    }
+  ]
+}

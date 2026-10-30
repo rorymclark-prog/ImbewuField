@@ -94,7 +94,7 @@ import {
   type GutterRow,
 } from '@/lib/plan-label-gutter';
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
-import { AI_MAP_REVIEW_NOTICE, hybridProtectionPolicy, geometryLockCompositionPolicy, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
+import { AI_MAP_REVIEW_NOTICE, hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { PLAN_VERSION } from '@/lib/plan-version';
@@ -859,6 +859,9 @@ export function drawMarks(
       // model and the reader exactly where the building is — bright, and thicker than before so it
       // survives the crop — and the earlier "driveway bleeds into the house" failure stays fixed,
       // because a photographed roof was never the near-black the model mistook for tar.
+      // On paper an outline of white on white erased the house from the AI input. The saved
+      // footprint needs a visible guide there; a real photograph keeps its original roof pixels.
+      if (!frame.satDataUrl) { ctx.fillStyle = '#B7BCC0'; ctx.fill(); }
       ctx.strokeStyle = 'rgba(255,255,255,0.96)';
       ctx.lineWidth = 3.5;
       ctx.stroke();
@@ -3148,9 +3151,10 @@ async function buildPaintedStructureOverlay(
   W: number,
   H: number,
   styleKey: StylePreset,
+  includeDriveway = true,
 ): Promise<string | undefined> {
   const treatment: LockedStructureTreatment = styleKey === 'precision_atlas' ? 'precision_atlas' : 'source';
-  const driveway = await buildDrivewayOverlay(undefined, frame, refLayers, W, H, treatment);
+  const driveway = includeDriveway ? await buildDrivewayOverlay(undefined, frame, refLayers, W, H, treatment) : undefined;
   const hasHouse = authoritativeHouseFootprints(state, refLayers).length > 0;
   if (!driveway && !hasHouse) return undefined;
 
@@ -3191,7 +3195,7 @@ async function buildGeometryLockStructureOverlay(
   useSourcePixels: boolean,
 ): Promise<string | undefined> {
   // The model already paints these roofs. A second corrugated slab creates two silhouettes.
-  // Paper has no model-painted ground and still needs the deterministic structure drawing.
+  // Photo Plan's paper fallback still needs the deterministic structure drawing.
   if (geometryLockCompositionPolicy(styleKey, frame.satDataUrl ? 'photo' : 'paper').ground === 'paint') return undefined;
   return useSourcePixels
     ? buildLockedStructureOverlay(sourceImage, state, frame, refLayers, W, H, styleKey)
@@ -13368,6 +13372,7 @@ export default function DesignGlossy({
       polishStage = false,
       snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName' | 'labelMode'> = { state, frame, refLayers, site, placeName, labelMode },
       canPublish: () => boolean = () => true,
+      sourcePrompt?: string,
     ): Promise<string> => {
       const { state, frame, refLayers, site, placeName, labelMode } = snapshot;
       // Model-authored pages and geometry-locked pages must use the same boundary-focused frame
@@ -13528,8 +13533,11 @@ export default function DesignGlossy({
       const restoredImage = locked && effectiveMask && cleanSource
         ? await restoreProtectedPixels(cleanSource, modelImage, effectiveMask)
         : modelImage;
-      const structureOverlay = locked
-        ? await buildGeometryLockStructureOverlay(
+      const legacyPaperRoof = locked && !renderFrame.satDataUrl
+        && compositionPolicy.ground === 'paint' && legacyPaperArtworkNeedsRoof(sourcePrompt);
+      const structureOverlay = legacyPaperRoof
+        ? await buildPaintedStructureOverlay(renderState, renderFrame, renderRefLayers, W, H, styleDef.key, false)
+        : locked ? await buildGeometryLockStructureOverlay(
             cleanSource,
             renderState,
             renderFrame,
@@ -14979,7 +14987,7 @@ export default function DesignGlossy({
                   : sheet.key === 'base'
                   ? await finishSiteRef.current(sourceImage, styleKey, frozenScene)
                   : styleDef
-                    ? await finishRef.current(sourceImage, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked, isPolishedResult, frozenScene, () => active)
+                    ? await finishRef.current(sourceImage, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked, isPolishedResult, frozenScene, () => active, sheet.prompt)
                     : undefined;
               } catch (comparisonError) {
                 validationStatus = 'unscored';
@@ -14992,7 +15000,7 @@ export default function DesignGlossy({
                 : sheet.key === 'base'
                 ? await finishSiteRef.current(factualModelImage, styleKey, frozenScene)
                 : styleDef
-                  ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked, isPolishedResult, frozenScene, () => active)
+                  ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked, isPolishedResult, frozenScene, () => active, sheet.prompt)
                   : raw;
               if (!active) return;
               if (baselineSheet) {
@@ -15612,6 +15620,8 @@ export default function DesignGlossy({
           <span style={{ fontSize: 10.5, opacity: 0.6 }}>
             {underlay === 'photo' && !hasFarmerPhoto(frameProp)
               ? 'tap “+ Your photo” to import a drone or phone aerial'
+              : underlay === 'plain' && mode === 'ai' && producerStyle && geometryLockCompositionPolicy(producerStyle, 'paper').ground === 'paint'
+                ? 'no photo — AI illustrates the property; the page stays white'
               : UNDERLAY_HINT[underlay]}
           </span>
         </div>
@@ -16920,7 +16930,11 @@ export default function DesignGlossy({
             alignItems: 'center',
             justifyContent: 'center',
             gap: 10,
-            padding: 12,
+            padding: '64px 12px 56px',
+            boxSizing: 'border-box',
+            overflow: 'hidden',
+            minWidth: 0,
+            minHeight: 0,
             background: 'rgba(8,12,8,0.94)',
             cursor: 'zoom-out',
           }}
@@ -16930,7 +16944,7 @@ export default function DesignGlossy({
             onClick={() => setGalleryZoomOpen(false)}
             aria-label={t('designGlossyCloseFullScreen')}
             style={{
-              position: 'fixed',
+              position: 'absolute',
               top: 14,
               right: 14,
               zIndex: 81,
@@ -16954,10 +16968,14 @@ export default function DesignGlossy({
             alt={galleryViewItem?.label ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt')}
             onClick={() => setGalleryZoomOpen(false)}
             style={{
-              maxWidth: '97vw',
-              maxHeight: '88vh',
-              width: 'auto',
-              height: 'auto',
+              // Parent-relative dimensions respect the app's text-size zoom. Viewport units
+              // were enlarged again by that zoom, cutting the right legend off on phones.
+              display: 'block',
+              width: '100%',
+              height: '100%',
+              flex: '1 1 0',
+              minWidth: 0,
+              minHeight: 0,
               objectFit: 'contain',
               borderRadius: 10,
               boxShadow: '0 18px 70px rgba(0,0,0,0.55)',
@@ -16982,7 +17000,7 @@ export default function DesignGlossy({
           >
             {t('designGlossyClickMapToMinimise')}
           </span>
-          <span style={{ maxWidth: '90vw', color: '#FBF6EC', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>
+          <span style={{ maxWidth: '100%', flexShrink: 0, overflowWrap: 'anywhere', color: '#FBF6EC', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>
             {galleryViewItem?.label ?? placeName ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt')}
           </span>
         </div>
