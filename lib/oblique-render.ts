@@ -47,12 +47,16 @@ const OBLIQUE_LOOK: Record<StylePreset, string> = {
   master_atlas: 'Fine engraved landscape illustration with restrained natural colour.',
 };
 
+// The picker and generation request describe the same angled appearance. Top-down blurbs can
+// promise exact geometry or untouched satellite pixels, neither of which belongs to this view.
+export function obliqueStyleDescription(style: StylePreset): string { return OBLIQUE_LOOK[style]; }
+
 export const OBLIQUE_REVIEW_NOTICE = 'Oblique AI illustration — positions, heights and terrain need review against the measured top-down plan. Not to scale. Legend lists the saved design; hidden features may not be visible.';
 
 export function buildObliquePrompt(input: {
   style: StylePreset; elements: string; designBrief: string; terrain: ObliqueTerrainEvidence; hasPhoto: boolean;
 }): string {
-  return `${OBLIQUE_LOOK[input.style]}
+  return `${obliqueStyleDescription(input.style)}
 Create ONE finished oblique aerial illustration of this saved garden design. Camera south of the plot looking north, approximately 45 degrees above the ground: north at the back, east on the right. Show building sides and tree/tank volume. Keep the whole property and complete tree crowns/tanks in frame, with breathing room around every edge. This is an illustrative viewpoint, not a measured 3D reconstruction.
 The supplied reference board has three labelled panels. LEFT: saved top-down DESIGN, the authority for boundary shape, planted beds, feature counts, footprints and relative positions. TOP RIGHT: ${input.hasPhoto ? 'registered site aerial/drone PHOTO, appearance and surrounding context only; the planned design takes priority over old bare ground. Photographic inset seams and blurred repeated strips are not physical fences or paths; do not reproduce them.' : 'no photo is available; use restrained illustrative materials.'} BOTTOM RIGHT: TERRAIN reference, with real contour elevation labels only when available. Panel titles are reference instructions, not text to reproduce.
 Reconstruct the design in oblique perspective; do not return a tilted flat map or a copy of this board. Keep all placed tanks, buildings, beds, orchard rows, routes and plants, including features touching the boundary. Tree crowns may overlap the boundary naturally. Retain hidden features in their saved positions rather than moving them to face the camera. Building and vegetation heights are illustrative unless explicitly measured in the supplied facts. Do not turn footprint dimensions or catalogue species heights into surveyed object heights.
