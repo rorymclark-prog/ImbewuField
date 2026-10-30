@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Field blocks: docs/audits/2026-10-31/field-block-release-drafts.json; unreviewed.
+  "Draw named field blocks and fill them with beds using your own dimensions and path widths.": "Taka dikarolo tsa tshimo tse nang le mabitso mme o di tlatse ka dibethe tsa temo o sebedisa ditekanyo tsa hao le bophara ba ditselana.",
+  "Keep a field open without beds and use both layouts in automatic crop planning.": "Tlohela karolo ya tshimo e bulehile e se na dibethe tsa temo, mme o sebedise meralo ka bobedi moralong wa dijalo o iketsang.",
+  "Lay out your fields": "Rala ditshimo tsa hao",
+  "Site design → Planting → Field blocks": "Moralo wa sebaka → Ho lema → Dikarolo tsa tshimo",
+  "Draw a polygon, choose beds or open field, save the layout and open the automatic crop planner.": "Taka sebopeho se nang le dikgutlo, kgetha dibethe tsa temo kapa tshimo e bulehileng, boloka moralo mme o bule moralo wa dijalo o iketsang.",
   // Roof reference: docs/audits/2026-10-30/aerial-roof-release-drafts.json; unreviewed.
   "AI maps on plain paper keep real roof detail from satellite imagery.": "Dimmapa tsa AI tse pampiring e tshweu di boloka dintlha tsa nnete tsa marulelo ho tswa ditshwantshong tsa sathelaete.",
   // Phone map artwork: docs/audits/2026-10-30/phone-ai-paper-release-drafts.json; unreviewed.

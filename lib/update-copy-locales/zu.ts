@@ -1,6 +1,12 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Field blocks: docs/audits/2026-10-31/field-block-release-drafts.json; unreviewed.
+  "Draw named field blocks and fill them with beds using your own dimensions and path widths.": "Dweba izingxenye zensimu ezinamagama bese uzigcwalisa ngemibhede usebenzisa ubukhulu bakho nobubanzi bezindlela.",
+  "Keep a field open without beds and use both layouts in automatic crop planning.": "Shiya ingxenye yensimu ivulekile ingenamibhede, bese usebenzisa zombili izinhlelo ekuhleleni izitshalo okuzenzakalelayo.",
+  "Lay out your fields": "Hlela izinsimu zakho",
+  "Site design → Planting → Field blocks": "Ukuhlelwa kwesiza → Ukutshala → Izingxenye zensimu",
+  "Draw a polygon, choose beds or open field, save the layout and open the automatic crop planner.": "Dweba umumo onamakhona, khetha imibhede noma insimu evulekile, gcina uhlelo bese uvula umhleli wezitshalo ozenzakalelayo.",
   // Roof reference: docs/audits/2026-10-30/aerial-roof-release-drafts.json; unreviewed.
   "AI maps on plain paper keep real roof detail from satellite imagery.": "Amamephu e-AI ephepheni elimhlophe agcina imininingwane yangempela yophahla ezithombeni zesathelayithi.",
   // Phone map artwork: docs/audits/2026-10-30/phone-ai-paper-release-drafts.json; unreviewed.
