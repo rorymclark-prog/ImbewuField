@@ -41,6 +41,13 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '30 October 2026', sha: 'f03409726', changes: [
+    'Choose Oblique in AI viewpoint for an angled illustration of your whole design.',
+    'The app gathers your layout, photo and terrain; use the top-down plan for measurements.',
+  ], tour: [{ title: 'Try an angled view', where: 'Menu → Site design', href: '/design',
+    detail: 'With AI access, open Glossy and choose Oblique under AI viewpoint to generate your design.' },
+  { title: 'Keep the measured plan', where: 'Menu → Site design', href: '/design',
+    detail: 'Use the top-down Design Map for measurements; compare the angled view with it.' }] },
   { when: '30 October 2026', sha: '51d5c5208', changes: [
     'Glossy AI maps omit duplicate driveway guides; your editable paths stay saved.',
   ] },

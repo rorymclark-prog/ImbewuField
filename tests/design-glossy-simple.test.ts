@@ -10,6 +10,31 @@ import { sheetElementNaming, type ExactPlanSheetKey } from '../lib/glossy-filter
 
 const GLOSSY = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
 
+// Oblique adds another handler to the paid button. Its handler spelling does not decide whether
+// Simple can spend money: execute the actual enclosing render conditions, for both viewpoints.
+function paidButtonCondition(message: string): string {
+  const tree = ts.createSourceFile('DesignGlossy.tsx', GLOSSY, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+  const buttons: ts.JsxElement[] = [];
+  function visit(node: ts.Node) {
+    if (ts.isJsxElement(node) && node.openingElement.tagName.getText(tree) === 'button'
+      && node.getText(tree).includes(`t('${message}')`)) buttons.push(node);
+    ts.forEachChild(node, visit);
+  }
+  visit(tree);
+  assert.equal(buttons.length, 1, `one ${message} finish button`);
+  const conditions: string[] = [];
+  let parent: ts.Node | undefined = buttons[0].parent;
+  while (parent) {
+    if (ts.isJsxExpression(parent) && parent.expression && ts.isBinaryExpression(parent.expression)
+      && parent.expression.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken) {
+      conditions.push(`(${parent.expression.left.getText(tree)})`);
+    }
+    parent = parent.parent;
+  }
+  assert.ok(conditions.length, 'a paid finish must be gated');
+  return conditions.join(' && ');
+}
+
 // Whole now has a grouped legend, so an extra sheet-naming guard is legitimate. Execute the
 // real heading's enclosing condition instead of pinning the old two-clause source spelling.
 function plantLabelCondition(source: string): string {
@@ -129,16 +154,21 @@ test('Simple hides the paid AI finish buttons, the AI engine/quality controls an
     /\{aiRenderOn && selectedSheet && enginePicker\}\s*\n\s*\{aiRenderOn && selectedSheet && qualityPicker\}/,
     'the engine and quality pickers must both live inside the !simple wrapper',
   );
-  assert.match(
-    GLOSSY,
-    /\{!simple && \(\s*\n\s*<>\s*\n\s*\{aiRenderOn && \(<button\s*\n\s*type="button"\s*\n\s*onClick=\{\(\) => runLockedPolishFlow\('hybrid'\)\}/,
-    'the AI Polished button must not render in Simple',
-  );
-  assert.match(
-    GLOSSY,
-    /\{aiRenderOn && fullTreatmentVisible && \(\s*\n\s*<button\s*\n\s*type="button"\s*\n\s*onClick=\{\(\) => runLockedPolishFlow\('full'\)\}/,
-    'the Full Treatment button must live inside the same !simple wrapper as AI Polished',
-  );
+  for (const message of ['designGlossyAiHybrid', 'designGlossyFullTreatment']) {
+    const condition = paidButtonCondition(message);
+    const visible = new Function('simple', 'aiRenderOn', 'aiView', 'fullTreatmentVisible',
+      `return Boolean(${condition});`) as (simple: boolean, allowed: boolean, view: string, full: boolean) => boolean;
+    for (const view of ['top-down', 'oblique']) for (const full of [true, false]) {
+      assert.equal(visible(true, true, view, full), false, `${message}: Simple hides both paid viewpoints`);
+      assert.equal(visible(false, false, view, full), false, `${message}: no unapproved paid finish`);
+      assert.equal(visible(false, true, view, full), message === 'designGlossyAiHybrid' || (view === 'top-down' && full),
+        'approved full-mode users retain the offered single pass; the second pass stays top-down and shelved');
+    }
+    const withoutSimpleGate = new Function('simple', 'aiRenderOn', 'aiView', 'fullTreatmentVisible',
+      `return Boolean(${condition.replace(/!simple/g, 'true')});`);
+    assert.equal(withoutSimpleGate(true, true, 'top-down', true), true,
+      'removing the Simple gate must expose the button, so the check above would catch it');
+  }
   assert.match(
     GLOSSY,
     /\{!compact && !simple && \(\s*\n\s*<div style=\{\{ order: 3,/,
