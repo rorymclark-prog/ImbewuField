@@ -18,6 +18,139 @@
 //    The emitted `rot` is therefore angleDeg - 90, not angleDeg.
 
 import { normaliseRotation } from './design-canvas';
+import type { CanvasFrame, DesignCanvasState, ZoneShape } from './design-canvas';
+import polygonClipping from 'polygon-clipping';
+import { ELEMENTS_BY_ID } from './design-elements';
+
+export interface FieldBlockConfig {
+  mode: 'beds' | 'open';
+  bedLengthM: number;
+  bedWidthM: number;
+  pathWidthM: number;
+  angleDeg: number;
+}
+
+export function reconcileFieldBlockEdit(prev: DesignCanvasState, next: DesignCanvasState, allocated: ReadonlySet<string>): DesignCanvasState {
+  const deleted = new Set(prev.zones.filter(z => z.fieldBlock && !next.zones.some(n => n.id === z.id)).map(z => z.id));
+  for (const zone of prev.zones.filter(z => z.fieldBlock)) {
+    const children = prev.items.filter(i => i.fieldBlockId === zone.id);
+    const after = next.zones.find(z => z.id === zone.id);
+    if (deleted.has(zone.id) && (allocated.has(zone.id) || children.some(i => allocated.has(i.id))))
+      throw new Error('Remove this field’s crop allocations before deleting it.');
+    if (after?.fieldBlock?.mode === 'beds' && children.length && JSON.stringify(after.points) !== JSON.stringify(zone.points))
+      throw new Error('Switch this block to an open field before editing its outline, then fill it again.');
+  }
+  if (!deleted.size) return next;
+  return { ...next, items: next.items.filter(i => !i.fieldBlockId || !deleted.has(i.fieldBlockId)), lines: next.lines.filter(l => !l.fieldBlockId || !deleted.has(l.fieldBlockId)) };
+}
+
+type Point = [number, number];
+
+/** Only whole beds count as planted capacity. A corner-only containment check
+ * misses a concave field edge passing through the middle of a bed. */
+export function bedsInsideField(
+  points: Point[], config: FieldBlockConfig,
+  frame: Pick<CanvasFrame, 'mPerPx' | 'imgW' | 'imgH'>,
+  exclusions: Point[][] = [],
+): { beds: BedBlockPlacement[]; paths: Point[][] } {
+  const { bedLengthM: length, bedWidthM: width, pathWidthM: path, angleDeg } = config;
+  const w = frame.imgW * frame.mPerPx, h = frame.imgH * frame.mPerPx;
+  if (![w, h, length, width, path, angleDeg].every(Number.isFinite)
+    || w <= 0 || h <= 0 || length < MIN_BED_DIM_M || width < MIN_BED_DIM_M || path < 0
+    || length > MAX_BED_DIM_M || width > MAX_BED_DIM_M || path > MAX_PATH_M) {
+    throw new Error('Enter valid bed dimensions, path width and direction.');
+  }
+  if (points.length < 3 || points.some(p => !p.every(Number.isFinite))) throw new Error('Draw a field polygon first.');
+  const rad = angleDeg * Math.PI / 180;
+  // Cardinal directions must be exact: tiny trig residues at 90° can make
+  // coincident polygon edges disagree inside the clipping engine.
+  const snap = (v: number) => Math.abs(v) < 1e-12 ? 0 : v;
+  const c = snap(Math.cos(rad)), s = snap(Math.sin(rad));
+  const ring: Point[] = points.map(([x, y]) => [x * w * c + y * h * s, -x * w * s + y * h * c]);
+  const blockers = exclusions.map(r => r.map(([x,y]): Point => [x*w*c+y*h*s, -x*w*s+y*h*c]));
+  const minX = Math.min(...ring.map(p => p[0])), maxX = Math.max(...ring.map(p => p[0]));
+  const minY = Math.min(...ring.map(p => p[1])), maxY = Math.max(...ring.map(p => p[1]));
+  const nx = Math.max(0, Math.floor((maxX - minX + path + 1e-8) / (length + path)));
+  const ny = Math.max(0, Math.floor((maxY - minY + path + 1e-8) / (width + path)));
+  if (nx * ny > 20000) throw new Error('This layout is too dense. Increase the bed dimensions or divide the field.');
+  const norm = (x: number, y: number): Point => [(x * c - y * s) / w, (x * s + y * c) / h];
+  const empty = (polys: ReturnType<typeof polygonClipping.difference>) => polys.every(poly => poly.every(r => Math.abs(r.reduce((a, p, i) => {
+      const q = r[(i + 1) % r.length]; return a + p[0] * q[1] - q[0] * p[1];
+    }, 0)) < 1e-7));
+  const fits = (box: Point[]) => empty(polygonClipping.difference([box], [ring]))
+    && blockers.every(blocker => empty(polygonClipping.intersection([box], [blocker])));
+  const beds: BedBlockPlacement[] = [], paths: Point[][] = [];
+  const cells = new Set<string>();
+  for (let j = 0; j < ny; j++) for (let i = 0; i < nx; i++) {
+    const x = minX + i * (length + path), y = minY + j * (width + path);
+    if (!fits([[x,y], [x+length,y], [x+length,y+width], [x,y+width]])) continue;
+    if (beds.length >= 500) throw new Error('More than 500 beds fit. Divide this field into smaller blocks.');
+    cells.add(`${i}:${j}`);
+    const [cx, cy] = norm(x + length / 2, y + width / 2);
+    beds.push({ x: cx, y: cy, wM: width, hM: length, rot: normaliseRotation(angleDeg - 90) });
+  }
+  if (path > 0) for (const cell of cells) {
+    const [i,j] = cell.split(':').map(Number);
+    const x = minX + i * (length + path), y = minY + j * (width + path);
+    if (cells.has(`${i}:${j+1}`) && fits([[x,y+width],[x+length,y+width],[x+length,y+width+path],[x,y+width+path]]))
+      paths.push([norm(x,y+width+path/2), norm(x+length,y+width+path/2)]);
+    if (cells.has(`${i+1}:${j}`) && fits([[x+length,y],[x+length+path,y],[x+length+path,y+width],[x+length,y+width]]))
+      paths.push([norm(x+length+path/2,y), norm(x+length+path/2,y+width)]);
+  }
+  return { beds, paths };
+}
+
+/** Existing physical footprints stay in place; filling a field must not plant
+ * over a bed, building or tree already recorded by the farmer. */
+export function fieldBlockExclusions(state: DesignCanvasState, zoneId: string, frame: Pick<CanvasFrame, 'mPerPx' | 'imgW' | 'imgH'>): Point[][] {
+  const w = frame.imgW * frame.mPerPx, h = frame.imgH * frame.mPerPx;
+  const rings: Point[][] = state.items.filter(i => i.fieldBlockId !== zoneId).flatMap(item => {
+    const def = ELEMENTS_BY_ID[item.defId];
+    if (!def) return [];
+    const a = (item.rot ?? 0) * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
+    const dx = (item.wM ?? def.wM)/2, dy = (item.hM ?? def.hM)/2;
+    return [[[-dx,-dy],[dx,-dy],[dx,dy],[-dx,dy]].map(([x,y]): Point => [item.x+(x*c-y*s)/w,item.y+(x*s+y*c)/h])];
+  });
+  for (const zone of state.zones) if (zone.id !== zoneId && zone.feature && ['house','paving','driveway'].includes(zone.feature)) rings.push(zone.points);
+  return rings;
+}
+
+/** Materialise a farmer-approved layout as one edit, never during rendering.
+ * Existing crop allocations block rebuilding so their measured space cannot
+ * silently change underneath a saved crop plan. */
+export function configureFieldBlock(
+  state: DesignCanvasState, zoneId: string, name: string, config: FieldBlockConfig,
+  frame: Pick<CanvasFrame, 'mPerPx' | 'imgW' | 'imgH'>,
+  allocatedIds: ReadonlySet<string> = new Set(),
+): DesignCanvasState {
+  const zone = state.zones.find(z => z.id === zoneId && z.feature === 'staple_garden');
+  if (!zone) throw new Error('Select a field polygon first.');
+  const overlaps = (ring: Point[]) => polygonClipping.intersection([zone.points], [ring]).some(p => p.some(r => Math.abs(r.reduce((a,v,i) => {
+    const q = r[(i+1)%r.length]; return a+v[0]*q[1]-q[0]*v[1];
+  },0)) > 1e-12));
+  if (state.zones.some(z => z.id !== zoneId && z.feature === 'staple_garden' && overlaps(z.points)))
+    throw new Error('Field blocks overlap. Adjust their outlines so the same ground is not planned twice.');
+  if (allocatedIds.has(zoneId) || state.items.some(i => i.fieldBlockId === zoneId && allocatedIds.has(i.id)))
+    throw new Error('This field has crop allocations. Remove those allocations in the crop planner before changing its layout.');
+  const exclusions = fieldBlockExclusions(state, zoneId, frame);
+  if (config.mode === 'open' && exclusions.some(overlaps)) throw new Error('This open field overlaps placed elements. Adjust its outline.');
+  const result = config.mode === 'beds' ? bedsInsideField(zone.points, config, frame, exclusions) : { beds: [], paths: [] };
+  if (config.mode === 'beds' && !result.beds.length) throw new Error('No full-size beds fit. Try a shorter length, smaller width or another direction.');
+  const label = name.trim() || 'Field block';
+  const fieldZone: ZoneShape = { ...zone, name: label, fieldBlock: { ...config } };
+  return {
+    ...state,
+    zones: state.zones.map(z => z.id === zoneId ? fieldZone : z),
+    items: [...state.items.filter(i => i.fieldBlockId !== zoneId), ...result.beds.map((bed, n) => ({
+      ...bed, id: `${zoneId}:bed:${n+1}`, defId: 'veg_bed', fieldBlockId: zoneId,
+      label: `${label} / Bed ${n+1}`, status: 'proposed' as const,
+    }))],
+    lines: [...state.lines.filter(l => l.fieldBlockId !== zoneId), ...result.paths.map((points, n) => ({
+      id: `${zoneId}:path:${n+1}`, kind: 'bedpath' as const, fieldBlockId: zoneId,
+      points, widthM: config.pathWidthM,
+    }))],
+  };
+}
 
 export interface BedBlockSpec {
   /** The long side of each bed, in metres. */

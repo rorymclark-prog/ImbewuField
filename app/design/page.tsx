@@ -8,6 +8,9 @@
 import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type Dispatch, type SetStateAction } from 'react';
 import Link from 'next/link';
 import AppHeader from '@/components/layout/AppHeader';
+import FieldBlocksPanel from '@/components/design/FieldBlocksPanel';
+import { configureFieldBlock, reconcileFieldBlockEdit } from '@/lib/bed-block';
+import { loadCropPlan } from '@/lib/crop-plan';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
 import { ArrowLeft, ArrowRight, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock, AlertTriangle, Droplets } from 'lucide-react';
@@ -1738,7 +1741,13 @@ function DesignStudioInner() {
         // standard undo/redo semantics. Without this, undo → edit → redo would silently
         // resurrect a stale future state the farmer never asked for.
         redoStack.current = [];
-        const next = updater(prev);
+        let next: DesignCanvasState;
+        try {
+          next = reconcileFieldBlockEdit(prev, updater(prev), new Set(loadCropPlan().plantings.map(p => p.bedId)));
+        } catch (e) {
+          setSaveError((e as Error).message);
+          return prev;
+        }
         const stamped = persistCanvasState(next);
         setSaved(!!stamped);
         setSaveError(stamped ? null : t('designStorageFull'));
@@ -4181,6 +4190,27 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           selectedIdentity={selectedIdentity}
           areaFillControl={{ value: areaFill, onChange: changeAreaFill }}
           bedBlockControl={bedBlockControl}
+          fieldBlocksPanel={frame && <FieldBlocksPanel
+            state={canvasState}
+            frame={frame}
+            selectedId={selectedId}
+            onDraw={() => {
+              setAreaFeature('staple_garden');
+              setZoneDraw(3);
+              handleSetTool('zone');
+              setActiveLayers(a => ({ ...a, planting: true }));
+            }}
+            onSelect={id => { handleSetTool('select'); setSelectedIds([id]); }}
+            onApply={(id, name, config) => {
+              const allocations = new Set(loadCropPlan().plantings.map(p => p.bedId));
+              // Validate before the state updater: failures belong beside the form,
+              // not in React's render/update cycle.
+              configureFieldBlock(canvasState, id, name, config, frame, allocations);
+              handleChange(prev => configureFieldBlock(prev, id, name, config, frame, allocations));
+              handleSetTool('select');
+              setActiveLayers(a => ({ ...a, planting: true }));
+            }}
+          />}
           setActiveLayers={setActiveLayers}
           onUndo={handleUndo}
           canUndo={undoStack.current.length > 0}

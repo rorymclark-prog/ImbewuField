@@ -95,6 +95,7 @@ export function defaultStatusForStep(step: WizardStep): ElementStatus {
 
 export interface PlacedItem {
   id: string;
+  fieldBlockId?: string;
   defId: string; // references DesignElementDef.id
   x: number;
   y: number; // normalised [0..1] centre position in the frame
@@ -160,6 +161,7 @@ export function groundFeatureLayer(feature: GroundFeatureKind): 'ground' | 'plan
 
 export interface ZoneShape {
   id: string;
+  fieldBlock?: import('./bed-block').FieldBlockConfig;
   zone: 0 | 1 | 2 | 3 | 4 | 5;
   points: Array<[number, number]>; // normalised ring
   // When set, this ring is a real ground/built feature (filled, labelled) rather than a
@@ -192,6 +194,7 @@ export interface ZoneShape {
 
 export interface LineShape {
   id: string;
+  fieldBlockId?: string;
   // 'greywater' is the subsurface run from the house diverter to the basins it feeds. It was
   // missing for a long time while the water PROMPT described it in detail — so the sheet asked
   // for a violet greywater line that a farmer had no tool to draw, and the only way the model
@@ -1336,11 +1339,11 @@ export function normaliseCanvasState(value: unknown, siteId: string): DesignCanv
       && optionalFiniteCanvasNumber(candidate.labelDx)
       && optionalFiniteCanvasNumber(candidate.labelDy)
       && (candidate.widthM === undefined
-        || (candidate.kind === 'swale'
+        || ((candidate.kind === 'swale' || candidate.kind === 'bedpath')
           && typeof candidate.widthM === 'number'
           && Number.isFinite(candidate.widthM)
           && candidate.widthM > 0
-          && candidate.widthM <= MAX_SWALE_WIDTH_M));
+          && candidate.widthM <= (candidate.kind === 'bedpath' ? 50 : MAX_SWALE_WIDTH_M)));
   })) return null;
 
   if (value.useCustomBase !== undefined && typeof value.useCustomBase !== 'boolean') return null;
