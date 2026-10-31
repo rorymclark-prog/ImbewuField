@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Map defaults: docs/audits/2026-10-31/map-defaults-release-drafts.json; unreviewed.
+  "Each map opens with recommended settings and keeps your choices as you switch sheets.": "Mmapa ka mong o bula ka di-setting tse kgothaletswang mme o boloka dikgetho tsa hao ha o fetola maqephe.",
+  "Check each map’s settings": "Hlahloba di-setting tsa mmapa ka mong",
+  "Open Glossy and choose a sheet. Adjust its style, background or labels; your choices stay selected when you switch maps and return.": "Bula Glossy mme o kgethe leqephe. Fetola setaele, bokamorao kapa dileibole; dikgetho tsa hao di sala di kgethilwe ha o fetola dimmapa mme o kgutla.",
+
   // Sheet fidelity: docs/audits/2026-10-31/ai-sheet-fidelity-release-drafts.json; unreviewed.
   "AI map guidance separates earthworks from finished planting.": "Ditaelo tsa dimmapa tsa AI di arola mesebetsi ya mobu le temo e seng e jetswe.",
   // Field blocks: docs/audits/2026-10-31/field-block-release-drafts.json; unreviewed.

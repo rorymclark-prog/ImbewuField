@@ -2,7 +2,8 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
-import { hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, AI_MAP_REVIEW_NOTICE } from '../lib/render-policy.ts';
+import { hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, AI_MAP_REVIEW_NOTICE, recommendedSheetSettings } from '../lib/render-policy.ts';
+import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE } from '../lib/sheet-render-route.ts';
 import { canopyForegroundAlpha, assertMatchingImageAspects } from '../lib/image-producer.ts';
 import { ELEMENTS_BY_ID } from '../lib/design-elements.ts';
 import { itemInFilter, isContextElement, zonesInFilter, lineInFilter, exactSheetElementRegister, EXACT_CONTEXT_ALPHA } from '../lib/glossy-filters.ts';
@@ -34,6 +35,32 @@ function helper(name: string, scope: Record<string, unknown>): any {
 type Point = [number, number];
 const drivewayGuideLines = helper('drivewayGuideLines', { polygonClipping, ringArea: helper('ringArea', {}) });
 const glossyArtworkState = helper('glossyArtworkState', { drivewayGuideLines });
+
+test('switching maps applies recommendations once and remembers manual choices without queuing a render', () => {
+  const sheets=[{no:'08',filter:'all'},{no:'05',filter:'earthworks'},{no:'04',filter:'water'},{no:'02',exact:'sector'}];
+  const ui:any={selectedNo:'08',underlay:'photo',producerStyle:'master_atlas',labelMode:'onplant',aiView:'oblique'};
+  const remembered={current:new Map()},state={siteId:'test-site'},frameProp={satDataUrl:'drone',underlayDataUrl:'satellite'};
+  const setter=(key:string)=>(value:any)=>{ui[key]=typeof value==='function'?value(ui[key]):value;};
+  const scope=()=>({...ui,state,frameProp,loading:null,sheetSettingsRef:remembered,DESIGN_SHEETS:sheets,recommendedSheetSettings,DEFAULT_PRODUCER_STYLE,sheetRenderRoute,
+    setUnderlay:setter('underlay'),setLabelMode:setter('labelMode'),setAiView:setter('aiView'),setProducerStyle:setter('producerStyle'),
+    enqueueRenderJobCapped:()=>{throw Error('selection must never spend');}});
+  const apply=()=>helper('applySheet',{...scope(),setSelectedNo:setter('selectedNo'),setExactSheet:setter('exactSheet'),setAnalysisStyle:setter('analysisStyle'),setFilter:setter('filter')});
+  const choose=(sheet:any,mode='ai',loading:any=null)=>helper('chooseSheet',{...scope(),loading,applySheet:apply()})(sheet,mode);
+  choose(sheets[1]);
+  assert.deepEqual([ui.selectedNo,ui.underlay,ui.producerStyle,ui.labelMode,ui.aiView],['05','plain',DEFAULT_PRODUCER_STYLE,'codes','top-down']);
+  Object.assign(ui,{underlay:'satellite',producerStyle:'homestead_storybook',labelMode:'names',aiView:'oblique'});
+  choose(sheets[2]);
+  assert.deepEqual([ui.selectedNo,ui.underlay,ui.producerStyle,ui.labelMode,ui.aiView],['04','photo',DEFAULT_PRODUCER_STYLE,'names','top-down']);
+  choose(sheets[1]);
+  assert.deepEqual([ui.underlay,ui.producerStyle,ui.labelMode,ui.aiView],['satellite','homestead_storybook','names','oblique']);
+  ui.underlay='photo';choose(sheets[1]);
+  assert.equal(ui.underlay,'photo','the current sheet and its exact/AI transitions must not reset a manual background');
+  choose(sheets[3],'ai','busy');assert.equal(ui.selectedNo,'05','settings cannot change under an in-flight job');
+  choose(sheets[0]);
+  assert.deepEqual([ui.underlay,ui.producerStyle,ui.labelMode,ui.aiView],['photo','master_atlas','onplant','oblique']);
+  assert.match(source,/if \(next\) chooseSheet\(next, mode\)/,'desktop dropdown must use the remembered-settings navigation');
+  assert.match(source,/onClick=\{\(\) => chooseSheet\(sheet, mode\)\}/,'compact buttons must use the same navigation');
+});
 
 test('a duplicate closed driveway guide stays editable while genuine paths remain in glossy inputs and briefs', () => {
   const area:Point[]=[[.2,.2],[.5,.2],[.5,.5],[.2,.5],[.2,.2]];

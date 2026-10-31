@@ -54,6 +54,10 @@ test('Oblique exposes every style even when entered from an exact or Sector shee
       const scope: Record<string,any> = { aiRenderOn: true, aiView: 'oblique', selectedSheet, mode, sectorAiMode: 'exact' in selectedSheet,
         phasingAiMode: false, PRODUCER_STYLES: styles, SECTOR_STYLE_CHOICES: sectorStyles };
       scope.topDownStyleChoices = execute(initializers.get('topDownStyleChoices')!, scope);
+      const analytical = 'exact' in selectedSheet && ['base', 'sector', 'implementation'].includes(selectedSheet.exact!);
+      assert.deepEqual(scope.topDownStyleChoices.map((style:any) => style.key),
+        (analytical ? sectorStyles : styles).map((style:any) => style.key),
+        'Base, Sector and Phasing must not offer a top-down style that their renderer silently replaces');
       assert.equal(execute(initializers.get('aiLayerMode')!, scope), true,
         'choosing an angled view must expose its styles regardless of the previous finish');
       assert.deepEqual(new Set(execute(initializers.get('availableStyleChoices')!, scope).map((style:any) => style.key)),

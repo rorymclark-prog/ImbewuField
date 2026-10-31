@@ -96,7 +96,7 @@ import {
   type GutterRow,
 } from '@/lib/plan-label-gutter';
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
-import { AI_MAP_REVIEW_NOTICE, hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
+import { AI_MAP_REVIEW_NOTICE, hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, recommendedSheetSettings, renderAuthorityFlagsForStyle, renderPolicyForStyle, type SheetPresentationSettings } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { PLAN_VERSION } from '@/lib/plan-version';
@@ -11878,10 +11878,9 @@ export default function DesignGlossy({
    * the drawing on its own, at full sheet resolution with nothing soft behind it. None is correct
    * in general, which is why it is a control and not a constant.
    */
-  // Rory prefers clean printable sheets on first opening. Photo and satellite remain
-  // explicit choices; losing an imported photo returns to the same plain default.
-  const [underlay, setUnderlay] = useState<SheetUnderlay>('plain');
-  const [aiView, setAiView] = useState<AiMapView>('top-down');
+  const openingSettings = recommendedSheetSettings(initialFilter ?? 'all', frameProp, DEFAULT_PRODUCER_STYLE);
+  const [underlay, setUnderlay] = useState<SheetUnderlay>(() => openingSettings.underlay);
+  const [aiView, setAiView] = useState<AiMapView>(() => openingSettings.view);
   useEffect(() => {
     if (underlay === 'photo' && !hasFarmerPhoto(frameProp)) setUnderlay('plain');
   }, [underlay, frameProp]);
@@ -11996,7 +11995,7 @@ export default function DesignGlossy({
    * same input the renderer and the legend use, so the control cannot appear when the sheet would
    * draw no codes, or vanish when it would.
    */
-  const [labelMode, setLabelMode] = useState<SheetLabelMode>(DEFAULT_SHEET_LABEL_MODE);
+  const [labelMode, setLabelMode] = useState<SheetLabelMode>(() => openingSettings.labelMode);
   const sheetHasPlantCodes = useMemo(
     () => plantCodesForSheet(exactSheetElementLegendGroups(state, filter).map((group) => group.defId)).size > 0,
     [state, filter],
@@ -12075,6 +12074,27 @@ export default function DesignGlossy({
   // case that needs the Style/engine pickers. AI on 01/02/08 uses the Gemini analysis path (no
   // Style), and exact mode uses no AI at all.
   const selectedSheet = DESIGN_SHEETS.find((s) => s.no === selectedNo);
+  const sheetSettingsRef = useRef(new Map<string, SheetPresentationSettings>());
+  // Only explicit sheet navigation applies recommendations. applySheet also runs during the
+  // exact → AI handoff; resetting there would discard the farmer's chosen photo/style mid-job.
+  const chooseSheet = useCallback((sheet: DesignSheet, m: 'ai' | 'exact') => {
+    if (loading !== null || sheet.no === selectedNo) return;
+    const previous = DESIGN_SHEETS.find((entry) => entry.no === selectedNo);
+    const key = (no: string) => `${state.siteId}:${no}`;
+    if (previous) {
+      const retainedStyle = producerStyle ?? sheetSettingsRef.current.get(key(previous.no))?.style ?? DEFAULT_PRODUCER_STYLE;
+      sheetSettingsRef.current.set(key(previous.no), { underlay, style: retainedStyle, labelMode, view: aiView });
+    }
+    const next = sheetSettingsRef.current.get(key(sheet.no))
+      ?? recommendedSheetSettings('exact' in sheet ? sheet.exact : sheet.filter, frameProp, DEFAULT_PRODUCER_STYLE);
+    sheetSettingsRef.current.set(key(sheet.no), next);
+    setUnderlay(next.underlay);
+    setLabelMode(next.labelMode);
+    setAiView(next.view);
+    applySheet(sheet, m);
+    if (m === 'ai') setProducerStyle(next.view === 'oblique'
+      ? next.style : sheetRenderRoute(sheet, 'hybrid', next.style).styleUsed);
+  }, [loading, selectedNo, state.siteId, producerStyle, underlay, labelMode, aiView, frameProp, applySheet]);
   useEffect(() => {
     if (aiRenderOn || !selectedSheet) return;
     setMode('exact');
@@ -12114,7 +12134,7 @@ export default function DesignGlossy({
   // Water on steps 1, 2, 3, 5 with no way to choose step 4. Selection itself never renders.
   const aiLayerMode = aiRenderOn && !!selectedSheet;
   const topDownStyleChoices = selectedSheet && 'exact' in selectedSheet
-    && (selectedSheet.exact === 'base' || selectedSheet.exact === 'sector') ? SECTOR_STYLE_CHOICES : PRODUCER_STYLES;
+    && (selectedSheet.exact === 'base' || selectedSheet.exact === 'sector' || selectedSheet.exact === 'implementation') ? SECTOR_STYLE_CHOICES : PRODUCER_STYLES;
   const availableStyleChoices = aiView === 'oblique' ? PRODUCER_STYLES : topDownStyleChoices;
   // `initialFilter` chooses which sheet Preview map opens on; it must not choose a second, retired
   // layout. That coupling is what made the modal fall back to the old full-width control dump while
@@ -14847,6 +14867,8 @@ export default function DesignGlossy({
 
   const runExactStep = useCallback(() => {
     if (!selectedSheet || loading !== null) return;
+    if (producerStyle) sheetSettingsRef.current.set(`${state.siteId}:${selectedSheet.no}`,
+      { underlay, style: producerStyle, labelMode, view: aiView });
     setError(null);
     setNotice(null);
     requestedModeRef.current = 'exact';
@@ -14860,7 +14882,7 @@ export default function DesignGlossy({
     setMode('exact');
     applySheet(selectedSheet, 'exact');
     setResultImage(null);
-  }, [selectedSheet, loading, mode, isExactRender, runCurrentSheet, applySheet]);
+  }, [selectedSheet, loading, mode, isExactRender, runCurrentSheet, applySheet, producerStyle, state.siteId, underlay, labelMode, aiView]);
 
   // Drives both the Hybrid and Full Treatment guided flows — they share every stage up to and
   // including Hybrid; Full Treatment alone continues into the polish stage afterward.
@@ -14873,7 +14895,8 @@ export default function DesignGlossy({
     if (!selectedSheet || loading !== null) return;
     setError(null);
     const totalSteps = targetMode === 'full' ? 3 : 2;
-    polishStyleRef.current = lockedPolishStyle(producerStyle, DEFAULT_PRODUCER_STYLE);
+    polishStyleRef.current = lockedPolishStyle(producerStyle
+      ?? sheetSettingsRef.current.get(`${state.siteId}:${selectedSheet.no}`)?.style, DEFAULT_PRODUCER_STYLE);
     setNotice(formatDesignTranslation(t('designGlossySavingExact'), { total: totalSteps }));
     setLockedPolishStage('exact');
     hybridAfterExactRef.current = true;
@@ -14894,7 +14917,7 @@ export default function DesignGlossy({
     exactAfterFlipRef.current = true;
     setMode('exact');
     applySheet(selectedSheet, 'exact');
-  }, [selectedSheet, loading, mode, isExactRender, producerStyle, runCurrentSheet, applySheet]);
+  }, [selectedSheet, loading, mode, isExactRender, producerStyle, runCurrentSheet, applySheet, state.siteId]);
 
   // User-facing refresh action. Give immediate feedback, then kick the rerun off on the next
   // tick so the UI has a chance to paint the "refreshing" state before the work starts.
@@ -15759,7 +15782,7 @@ export default function DesignGlossy({
             disabled={loading !== null}
             onChange={(event) => {
               const next = DESIGN_SHEETS.find((sheet) => sheet.no === event.target.value);
-              if (next) applySheet(next, mode);
+              if (next) chooseSheet(next, mode);
             }}
           >
             {DESIGN_SHEETS.map((sheet) => (
@@ -15774,7 +15797,7 @@ export default function DesignGlossy({
               <button
                 key={sheet.no}
                 type="button"
-                onClick={() => applySheet(sheet, mode)}
+                onClick={() => chooseSheet(sheet, mode)}
                 disabled={loading !== null}
                 aria-pressed={active}
                 style={{

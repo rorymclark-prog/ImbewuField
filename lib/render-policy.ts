@@ -1,4 +1,7 @@
-import type { GlossyLayerFilter } from '@/lib/glossy-filters';
+import type { ExactPlanSheetKey, GlossyLayerFilter } from '@/lib/glossy-filters';
+import type { CanvasFrame } from '@/lib/design-canvas';
+import type { SheetLabelMode } from '@/lib/plant-codes';
+import { hasFarmerPhoto, type SheetUnderlay } from '@/lib/sheet-underlay';
 import {
   groundContractFor,
   isModelChromeStyle,
@@ -7,6 +10,32 @@ import {
 } from '@/lib/producer-prompt';
 
 export type RenderAuthority = 'app' | 'model';
+
+export interface SheetPresentationSettings {
+  underlay: SheetUnderlay;
+  style: StylePreset;
+  labelMode: SheetLabelMode;
+  view: 'top-down' | 'oblique';
+}
+
+/** Digging/zone diagrams need a clean page; physical-system sheets need the site's real context.
+ * These are starting choices, not a claim that a model's returned geometry has been verified.
+ * The caller supplies the routing authority's default style; selecting settings never spends. */
+export function recommendedSheetSettings(
+  sheet: ExactPlanSheetKey,
+  frame: Pick<CanvasFrame, 'satDataUrl' | 'underlayDataUrl'>,
+  defaultStyle: StylePreset,
+): SheetPresentationSettings {
+  const aerial: SheetUnderlay = frame.satDataUrl
+    ? hasFarmerPhoto(frame) ? 'photo' : 'satellite'
+    : frame.underlayDataUrl ? 'satellite' : 'plain';
+  return {
+    underlay: sheet === 'earthworks' || sheet === 'zones' ? 'plain' : aerial,
+    style: defaultStyle,
+    labelMode: sheet === 'earthworks' || sheet === 'planting' || sheet === 'all' ? 'codes' : 'names',
+    view: 'top-down',
+  };
+}
 
 export interface StyleRenderPolicy {
   authority: RenderAuthority;

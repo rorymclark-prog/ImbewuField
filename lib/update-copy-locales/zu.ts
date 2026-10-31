@@ -1,6 +1,11 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Map defaults: docs/audits/2026-10-31/map-defaults-release-drafts.json; unreviewed.
+  "Each map opens with recommended settings and keeps your choices as you switch sheets.": "Imephu ngayinye ivuleka ngezilungiselelo ezinconyiwe futhi igcina ukukhetha kwakho lapho ushintsha amashidi.",
+  "Check each map’s settings": "Hlola izilungiselelo zemephu ngayinye",
+  "Open Glossy and choose a sheet. Adjust its style, background or labels; your choices stay selected when you switch maps and return.": "Vula i-Glossy ukhethe ishidi. Lungisa isitayela, ingemuva noma amalebula; ukukhetha kwakho kuhlala kukhethiwe lapho ushintsha amamephu bese ubuya.",
+
   // Sheet fidelity: docs/audits/2026-10-31/ai-sheet-fidelity-release-drafts.json; unreviewed.
   "AI map guidance separates earthworks from finished planting.": "Imiyalelo yamamephu e-AI ihlukanisa umsebenzi womhlaba nokutshala okuqediwe.",
   // Field blocks: docs/audits/2026-10-31/field-block-release-drafts.json; unreviewed.
