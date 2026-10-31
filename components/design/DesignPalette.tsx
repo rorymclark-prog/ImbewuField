@@ -228,6 +228,7 @@ export interface DesignPaletteProps {
     onArm: () => void;
     onCancel: () => void;
   } | null;
+  fieldBlocksPanel?: React.ReactNode;
   onUndo: () => void;
   canUndo: boolean;
   onRedo: () => void;
@@ -550,6 +551,7 @@ export default function DesignPalette({
   textScaleControl,
   areaFillControl,
   bedBlockControl,
+  fieldBlocksPanel,
   onUndo,
   canUndo,
   onRedo,
@@ -3041,6 +3043,7 @@ export default function DesignPalette({
   function renderBodyRows() {
     return (
       <>
+        {step === 'planting' && fieldBlocksPanel}
         {renderElementCatalog()}
         {renderAreaChips()}
         {renderSectorWind()}

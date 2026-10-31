@@ -366,7 +366,7 @@ function lineStroke(
       // missing for a fourth time. A dashed hairline reads as an annotation; a solid band with a
       // dark casing reads as ground you can walk on, which is what it is. Wider and solid, and
       // the casing below carries it over pale soil as well as dark beds.
-      return { stroke: '#F2E3C0', width: 5 };
+      return { stroke: '#F2E3C0', width: swaleWidthM && pxPerM ? swaleWidthM * pxPerM : 5 };
     case 'windbreak':
       return { stroke: '#2F7A4A', width: 6, opacity: 0.5 };
     default:
@@ -3120,7 +3120,7 @@ export default function DesignCanvas({
                     the SAME pattern as the ground-feature label pill above, generalised to lines.
                     No LineShape kind had an on-canvas label before this: "there's no label for
                     swales" turned out to be true of every kind, not just swales. */}
-                {activeLayers.labels && mid && (() => {
+                {activeLayers.labels && mid && (!line.fieldBlockId || isSelected) && (() => {
                   const isDraggingThisLabel =
                     dragLabel.current?.id === line.id && dragLabel.current?.kind === 'line' && dragLabel.current?.moved && labelDragDelta;
                   const ldx = (line.labelDx ?? 0) + (isDraggingThisLabel ? labelDragDelta![0] : 0);
@@ -3841,6 +3841,9 @@ export default function DesignCanvas({
                 PILL_H = 16 * mapTextScale, PILL_MAX = 120 * mapTextScale;
           const shown = state.items
             .map((item) => {
+              // The named field is the readable overview. Hundreds of unique
+              // bed pills obscure its layout; selecting a bed reveals its name.
+              if (item.fieldBlockId && selectedId !== item.id) return null;
               const def = ELEMENTS_BY_ID[item.defId];
               if (!def) return null;
               const water = waterPresentation(waterInfrastructureForElement(item.defId));

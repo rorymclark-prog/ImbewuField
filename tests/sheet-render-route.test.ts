@@ -7,7 +7,7 @@ import {
   type SheetSpec,
   type SheetRoutePath,
 } from '@/lib/sheet-render-route';
-import { hasConflictingRenderAuthority, renderAuthorityFlagsForStyle, type RenderAuthorityFlags } from '@/lib/render-policy';
+import { hasConflictingRenderAuthority, recommendedSheetSettings, renderAuthorityFlagsForStyle, type RenderAuthorityFlags } from '@/lib/render-policy';
 import { isModelChromeStyle, STYLE_LINES } from '@/lib/producer-prompt';
 import type { SheetOutputMode } from '@/lib/locked-polish-flow';
 import type { StylePreset } from '@/lib/producer-prompt';
@@ -23,6 +23,24 @@ const SHEETS: Array<{ label: string; spec: SheetSpec }> = [
   ...LAYER_FILTERS.map((filter) => ({ label: `filter:${filter}`, spec: { filter } as SheetSpec })),
 ];
 assert.equal(SHEETS.length, 9, 'expected exactly the 9 plan-set sheets');
+
+test('each sheet starts with a readable purpose-specific background without claiming a photo exists', () => {
+  const frames=[{satDataUrl:'drone',underlayDataUrl:'satellite'}, {satDataUrl:'satellite'}, {satDataUrl:null,underlayDataUrl:'satellite'}, {satDataUrl:null}];
+  for(const frame of frames) for(const {spec} of SHEETS) {
+    const sheet='exact' in spec?spec.exact:spec.filter;
+    const before=JSON.stringify(frame),settings=recommendedSheetSettings(sheet,frame,DEFAULT_PRODUCER_STYLE);
+    const aerial=frame.underlayDataUrl&&frame.satDataUrl?'photo':frame.satDataUrl||frame.underlayDataUrl?'satellite':'plain';
+    assert.equal(settings.underlay,sheet==='zones'?'plain':aerial,
+      'Zones stays clean; Earthworks and other physical systems retain available roof/courtyard context');
+    assert.equal(settings.style,DEFAULT_PRODUCER_STYLE);
+    assert.equal(settings.view,'top-down','each measured sheet must start as a plan rather than inherit an angled camera');
+    assert.equal(settings.labelMode,['earthworks','planting','all'].includes(sheet)?'codes':'names');
+    assert.equal(JSON.stringify(frame),before);
+    const route=sheetRenderRoute(spec,'hybrid',settings.style);
+    assert.equal(route.hybridFlags?.geometryLock,true);
+    assert.equal(route.hybridFlags?.showcase,false,'recommendations must retain app-owned labels and key');
+  }
+});
 
 const MODES: SheetOutputMode[] = ['exact', 'hybrid', 'full'];
 // EVERY style, not a sample of two. The table used to cover satellite_overlay and precision_atlas

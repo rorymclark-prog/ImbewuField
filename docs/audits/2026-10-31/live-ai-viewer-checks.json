@@ -1,0 +1,71 @@
+{
+  "reviewedBuild": "9d6854e",
+  "freshPaidOutputs": 3,
+  "sameFrozenSavedGeometry": true,
+  "rows": [
+    {
+      "sheet": "earthworks",
+      "underlay": "plain",
+      "status": "complete",
+      "style": "precision_atlas",
+      "quality": "high",
+      "labelMode": "codes",
+      "outputScale": 3
+    },
+    {
+      "sheet": "water",
+      "underlay": "photo",
+      "status": "complete",
+      "style": "precision_atlas",
+      "quality": "high",
+      "labelMode": "names",
+      "outputScale": 3
+    },
+    {
+      "sheet": "planting",
+      "underlay": "photo",
+      "status": "complete",
+      "style": "precision_atlas",
+      "quality": "high",
+      "labelMode": "codes",
+      "outputScale": 3
+    }
+  ],
+  "viewer": {
+    "source": "actual fullscreen JSX fixture",
+    "images": "two actual native compositor reconstructions and one actual app-download Planting export",
+    "viewports": [
+      {
+        "width": 390,
+        "height": 844
+      },
+      {
+        "width": 820,
+        "height": 1180
+      },
+      {
+        "width": 1440,
+        "height": 900
+      }
+    ],
+    "rootZoom": [
+      1,
+      1.4
+    ],
+    "cases": 18,
+    "loaded": 18,
+    "contained": 18,
+    "overflow": 0,
+    "physicalDeviceCertification": false
+  },
+  "notCompleted": [
+    "fresh Base",
+    "fresh Sector",
+    "fresh Zones styled view",
+    "fresh Structures",
+    "fresh Whole",
+    "fresh Phasing",
+    "Earthworks aerial comparison",
+    "physical phone/iPad Safari"
+  ]
+}

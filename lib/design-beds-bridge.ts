@@ -124,6 +124,9 @@ export function bedsFromDesignCanvas(state: DesignCanvasState | null): PlanBed[]
     // staplePlotOrdinalById, which has no notion of "degenerate" either — so a plot
     // that IS plantable never shifts number just because an earlier one got skipped.
     plotN += 1;
+    // The parent outline includes paths and unused edges. Its children are the
+    // planted capacity; counting the parent too would allocate the land twice.
+    if (zone.fieldBlock?.mode === 'beds') continue;
     if (!(wMetres > 0) || !(hMetres > 0)) continue;
     const { areaM2, minDimM } = ringMetrics(zone.points, wMetres, hMetres);
     if (zone.points.length < 3 || !(areaM2 > 0)) continue; // degenerate ring — nothing to plant

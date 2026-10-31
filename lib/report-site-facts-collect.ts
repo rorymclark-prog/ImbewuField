@@ -96,7 +96,7 @@ function collectZones(state: DesignCanvasState): FactZone[] {
     const names = [...counts.entries()].map(([name, count]) => (count > 1 ? `${name} x${count}` : name));
     let staplePlots = 0;
     for (const other of state.zones) {
-      if (other.feature !== 'staple_garden' || other.points.length < 3) continue;
+      if (other.feature !== 'staple_garden' || other.fieldBlock?.mode === 'beds' || other.points.length < 3) continue;
       const cx = other.points.reduce((sum, p) => sum + p[0], 0) / other.points.length;
       const cy = other.points.reduce((sum, p) => sum + p[1], 0) / other.points.length;
       if (pointInRing([cx, cy], zone.points)) staplePlots += 1;

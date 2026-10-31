@@ -49,7 +49,7 @@ import {
   type FrameLike as BoundaryFrameGeom,
 } from '@/lib/boundary-geometry';
 import { structureRegisterText } from '@/lib/structure-register';
-import { buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
+import { bedFootprintRegister, buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { zoneBadgePositions } from '@/lib/canvas-labels';
 import { OPENAI_MAP_MODEL_LABEL, openAiMapModelLabel } from '@/lib/ai-render/model';
 import { enqueueRenderJob, mapSerially, subscribeRenderJob, fetchRenderOutput, fetchRenderJobScene, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, renderJobAttribution, type RenderQuality } from '@/lib/render-jobs';
@@ -76,6 +76,7 @@ import {
   EXACT_DRIVEWAY_LEGEND_TEXT,
   INTEGRATED_LEGEND_FAMILIES,
   exactSheetElementLegendGroups,
+  exactSheetElementRegister,
   exactSheetGroundLegendGroups,
   existingSiteGroundRings,
   existingSiteItems,
@@ -95,7 +96,7 @@ import {
   type GutterRow,
 } from '@/lib/plan-label-gutter';
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
-import { AI_MAP_REVIEW_NOTICE, hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
+import { AI_MAP_REVIEW_NOTICE, hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, recommendedSheetSettings, renderAuthorityFlagsForStyle, renderPolicyForStyle, type SheetPresentationSettings } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { PLAN_VERSION } from '@/lib/plan-version';
@@ -1071,6 +1072,15 @@ export function drawMarks(
     }
   }
 
+  // Earthworks is the digging stage. The generic green bed markers and blue dashed swales
+  // instructed the image model to grow vegetables and draw irrigation on the setting-out sheet.
+  // Share the exact sheet's soil footprints, derived pits and cut/berm route vocabulary instead.
+  if (drawDesign && filter === 'earthworks') {
+    if (showDesignLines) drawFilteredLines(ctx, state, filter, px, py, pxPerM);
+    if (showDesignItems) drawEarthworksFeatures(ctx, state, filter, px, py, pxPerM);
+    return;
+  }
+
   // Lines
   for (const line of drawDesign && showDesignLines ? state.lines : []) {
     if (line.points.length < 2 || !lineInFilter(line.kind, filter)) continue;
@@ -1109,11 +1119,12 @@ export function drawMarks(
   // FIRST and faintly, so this sheet's own water elements always sit on top of them.
   const contextItems = (drawDesign && showDesignItems ? state.items : []).filter((it) => {
     const def = ELEMENTS_BY_ID[it.defId];
-    return def && !itemInFilter(def.category, filter, def.id) && isContextElement(def, filter);
+    return def && exactSheetElementRegister(def, filter) === 'context';
   });
   if (contextItems.length) {
     ctx.save();
-    ctx.globalAlpha = 0.45;
+    ctx.globalAlpha = filter === 'structures' ? EXACT_CONTEXT_ALPHA.structures
+      : filter === 'zones' ? EXACT_CONTEXT_ALPHA.zones : EXACT_CONTEXT_ALPHA.water;
     for (const item of contextItems) {
       const def = ELEMENTS_BY_ID[item.defId]!;
       const wLogical = (item.wM ?? def.wM) * pxPerM;
@@ -1752,7 +1763,7 @@ async function preloadReferenceFeatureArtwork(
   {
     const ordinals = staplePlotOrdinalById(state.zones);
     for (const z of state.zones) {
-      if (z.feature !== 'staple_garden') continue;
+      if (z.feature !== 'staple_garden' || z.fieldBlock?.mode === 'beds') continue;
       const url = stapleTileUrl(ordinals.get(z.id) ?? 0);
       if (!referenceFeatureArtworkCache.has(url)) urls.add(url);
     }
@@ -2188,6 +2199,10 @@ function producerElementsText(
   const parts = [...counts.entries()].map(([name, g]) =>
     `${includeToolGlyphs ? `${g.icon} ` : ''}${name}${g.n > 1 ? ` ×${g.n}` : ''}`,
   );
+  if (filter === 'earthworks') {
+    const pits = derivedTreeBasinCount(state, state.frame);
+    if (pits > 0) parts.push(`Tree pit to dig (one per tree) ×${pits}`);
+  }
   // On the zones layer, describe the effort-zone areas instead of individual elements.
   if (zonesInFilter(filter)) {
     for (const z of state.zones.filter((z) => !z.feature)) parts.push(`Zone ${z.zone} — ${ZONE_DEFS[z.zone].label}`);
@@ -3746,7 +3761,11 @@ function drawBlueprintGround(
     const isRoof = z.feature === 'house';
     ctx.save();
     blueprintRing(ctx, z.points, px, py);
-    if (!isRoof) {
+    // A bed field's outline groups its measured children. Filling that whole
+    // polygon with crop artwork would also paint plants over paths and unused
+    // edges, contradicting the capacity sent to the crop planner.
+    const isBedField = z.fieldBlock?.mode === 'beds';
+    if (!isRoof && !isBedField) {
       ctx.fillStyle = `${meta.color}${fillAlpha}`;
       ctx.fill();
     }
@@ -3793,7 +3812,7 @@ function drawBlueprintGround(
     // the plain wash above is left alone, because a field of illegible dots is worse than an
     // honest polygon. Nothing here is agronomic: the rhythm is a drawing rhythm, and no spacing,
     // yield or variety is implied. See lib/crop-row-cartography.ts.
-    if (z.feature === 'staple_garden' && isContent) {
+    if (z.feature === 'staple_garden' && isContent && !isBedField) {
       // THE ILLUSTRATED FIELD, when its tile has loaded. Rory: "the staple plots now to be
       // rendered like the trees" — the same painterly standard as the canopies, as a seamless
       // repeating tile clipped to the traced plot. One tile per plot in the SAME rotation the
@@ -5798,7 +5817,7 @@ function drawEarthworksFeatures(
 /** How many tree pits sheet 05 will DERIVE — trees with no basin of their own already placed.
  *  Exported so the legend can name them: nothing is drawn on these sheets without a legend row,
  *  and a derived mark is no exception. */
-export function derivedTreeBasinCount(state: DesignCanvasState, frame: CanvasFrame): number {
+export function derivedTreeBasinCount(state: DesignCanvasState, frame: Pick<CanvasFrame, 'imgW' | 'imgH' | 'mPerPx'>): number {
   const basinDef = ELEMENTS_BY_ID.tree_basin;
   if (!basinDef) return 0;
   const pxPerM = 1 / frame.mPerPx;
@@ -11859,10 +11878,9 @@ export default function DesignGlossy({
    * the drawing on its own, at full sheet resolution with nothing soft behind it. None is correct
    * in general, which is why it is a control and not a constant.
    */
-  // Rory prefers clean printable sheets on first opening. Photo and satellite remain
-  // explicit choices; losing an imported photo returns to the same plain default.
-  const [underlay, setUnderlay] = useState<SheetUnderlay>('plain');
-  const [aiView, setAiView] = useState<AiMapView>('top-down');
+  const openingSettings = recommendedSheetSettings(initialFilter ?? 'all', frameProp, DEFAULT_PRODUCER_STYLE);
+  const [underlay, setUnderlay] = useState<SheetUnderlay>(() => openingSettings.underlay);
+  const [aiView, setAiView] = useState<AiMapView>(() => openingSettings.view);
   useEffect(() => {
     if (underlay === 'photo' && !hasFarmerPhoto(frameProp)) setUnderlay('plain');
   }, [underlay, frameProp]);
@@ -11977,7 +11995,7 @@ export default function DesignGlossy({
    * same input the renderer and the legend use, so the control cannot appear when the sheet would
    * draw no codes, or vanish when it would.
    */
-  const [labelMode, setLabelMode] = useState<SheetLabelMode>(DEFAULT_SHEET_LABEL_MODE);
+  const [labelMode, setLabelMode] = useState<SheetLabelMode>(() => openingSettings.labelMode);
   const sheetHasPlantCodes = useMemo(
     () => plantCodesForSheet(exactSheetElementLegendGroups(state, filter).map((group) => group.defId)).size > 0,
     [state, filter],
@@ -12056,6 +12074,27 @@ export default function DesignGlossy({
   // case that needs the Style/engine pickers. AI on 01/02/08 uses the Gemini analysis path (no
   // Style), and exact mode uses no AI at all.
   const selectedSheet = DESIGN_SHEETS.find((s) => s.no === selectedNo);
+  const sheetSettingsRef = useRef(new Map<string, SheetPresentationSettings>());
+  // Only explicit sheet navigation applies recommendations. applySheet also runs during the
+  // exact → AI handoff; resetting there would discard the farmer's chosen photo/style mid-job.
+  const chooseSheet = useCallback((sheet: DesignSheet, m: 'ai' | 'exact') => {
+    if (loading !== null || sheet.no === selectedNo) return;
+    const previous = DESIGN_SHEETS.find((entry) => entry.no === selectedNo);
+    const key = (no: string) => `${state.siteId}:${no}`;
+    if (previous) {
+      const retainedStyle = producerStyle ?? sheetSettingsRef.current.get(key(previous.no))?.style ?? DEFAULT_PRODUCER_STYLE;
+      sheetSettingsRef.current.set(key(previous.no), { underlay, style: retainedStyle, labelMode, view: aiView });
+    }
+    const next = sheetSettingsRef.current.get(key(sheet.no))
+      ?? recommendedSheetSettings('exact' in sheet ? sheet.exact : sheet.filter, frameProp, DEFAULT_PRODUCER_STYLE);
+    sheetSettingsRef.current.set(key(sheet.no), next);
+    setUnderlay(next.underlay);
+    setLabelMode(next.labelMode);
+    setAiView(next.view);
+    applySheet(sheet, m);
+    if (m === 'ai') setProducerStyle(next.view === 'oblique'
+      ? next.style : sheetRenderRoute(sheet, 'hybrid', next.style).styleUsed);
+  }, [loading, selectedNo, state.siteId, producerStyle, underlay, labelMode, aiView, frameProp, applySheet]);
   useEffect(() => {
     if (aiRenderOn || !selectedSheet) return;
     setMode('exact');
@@ -12095,7 +12134,7 @@ export default function DesignGlossy({
   // Water on steps 1, 2, 3, 5 with no way to choose step 4. Selection itself never renders.
   const aiLayerMode = aiRenderOn && !!selectedSheet;
   const topDownStyleChoices = selectedSheet && 'exact' in selectedSheet
-    && (selectedSheet.exact === 'base' || selectedSheet.exact === 'sector') ? SECTOR_STYLE_CHOICES : PRODUCER_STYLES;
+    && (selectedSheet.exact === 'base' || selectedSheet.exact === 'sector' || selectedSheet.exact === 'implementation') ? SECTOR_STYLE_CHOICES : PRODUCER_STYLES;
   const availableStyleChoices = aiView === 'oblique' ? PRODUCER_STYLES : topDownStyleChoices;
   // `initialFilter` chooses which sheet Preview map opens on; it must not choose a second, retired
   // layout. That coupling is what made the modal fall back to the old full-width control dump while
@@ -13896,7 +13935,7 @@ export default function DesignGlossy({
           // the plain underlay, and there the prompt must be told there is no photograph — see
           // groundContractFor. Sending 'photo' there asked the model to preserve pixels that do not
           // exist, and it filled the void with an invented khaki ground.
-          ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief, renderFrame.satDataUrl ? 'photo' : 'paper')
+          ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief, renderFrame.satDataUrl ? 'photo' : 'paper', bedFootprintRegister(renderState.items, renderFrame, f))
           : effectiveModelChrome
             ? (promptRewrite
               ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', f, renderState.items)
@@ -14073,7 +14112,7 @@ export default function DesignGlossy({
       }
       showcaseKeysRef.current = new Set(authorityFlags.showcase ? [filter] : []);
       const prompt = fullSheetPolish
-        ? buildFinishedSheetPolishPrompt(layerLabel, styleKey, placeName, structureRegisterText(renderState, renderRefLayers))
+        ? buildFinishedSheetPolishPrompt(layerLabel, styleKey, placeName, structureRegisterText(renderState, renderRefLayers), bedFootprintRegister(renderState.items, renderFrame, filter))
         : isModelChromeStyle(styleKey)
         ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(renderState), placeName, sheetKind: filter, hasDriveway: renderRefLayers.driveway.length >= 2, items: renderState.items })
         : lockActive
@@ -14081,7 +14120,7 @@ export default function DesignGlossy({
         // the plain underlay, and there the prompt must be told there is no photograph — see
         // groundContractFor. Sending 'photo' there asked the model to preserve pixels that do not
         // exist, and it filled the void with an invented khaki ground.
-        ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief, renderFrame.satDataUrl ? 'photo' : 'paper')
+        ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief, renderFrame.satDataUrl ? 'photo' : 'paper', bedFootprintRegister(renderState.items, renderFrame, filter))
         : useShowcase
           ? (promptRewrite
             ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', filter, renderState.items)
@@ -14828,6 +14867,8 @@ export default function DesignGlossy({
 
   const runExactStep = useCallback(() => {
     if (!selectedSheet || loading !== null) return;
+    if (producerStyle) sheetSettingsRef.current.set(`${state.siteId}:${selectedSheet.no}`,
+      { underlay, style: producerStyle, labelMode, view: aiView });
     setError(null);
     setNotice(null);
     requestedModeRef.current = 'exact';
@@ -14841,7 +14882,7 @@ export default function DesignGlossy({
     setMode('exact');
     applySheet(selectedSheet, 'exact');
     setResultImage(null);
-  }, [selectedSheet, loading, mode, isExactRender, runCurrentSheet, applySheet]);
+  }, [selectedSheet, loading, mode, isExactRender, runCurrentSheet, applySheet, producerStyle, state.siteId, underlay, labelMode, aiView]);
 
   // Drives both the Hybrid and Full Treatment guided flows — they share every stage up to and
   // including Hybrid; Full Treatment alone continues into the polish stage afterward.
@@ -14854,7 +14895,8 @@ export default function DesignGlossy({
     if (!selectedSheet || loading !== null) return;
     setError(null);
     const totalSteps = targetMode === 'full' ? 3 : 2;
-    polishStyleRef.current = lockedPolishStyle(producerStyle, DEFAULT_PRODUCER_STYLE);
+    polishStyleRef.current = lockedPolishStyle(producerStyle
+      ?? sheetSettingsRef.current.get(`${state.siteId}:${selectedSheet.no}`)?.style, DEFAULT_PRODUCER_STYLE);
     setNotice(formatDesignTranslation(t('designGlossySavingExact'), { total: totalSteps }));
     setLockedPolishStage('exact');
     hybridAfterExactRef.current = true;
@@ -14875,7 +14917,7 @@ export default function DesignGlossy({
     exactAfterFlipRef.current = true;
     setMode('exact');
     applySheet(selectedSheet, 'exact');
-  }, [selectedSheet, loading, mode, isExactRender, producerStyle, runCurrentSheet, applySheet]);
+  }, [selectedSheet, loading, mode, isExactRender, producerStyle, runCurrentSheet, applySheet, state.siteId]);
 
   // User-facing refresh action. Give immediate feedback, then kick the rerun off on the next
   // tick so the UI has a chance to paint the "refreshing" state before the work starts.
@@ -15740,7 +15782,7 @@ export default function DesignGlossy({
             disabled={loading !== null}
             onChange={(event) => {
               const next = DESIGN_SHEETS.find((sheet) => sheet.no === event.target.value);
-              if (next) applySheet(next, mode);
+              if (next) chooseSheet(next, mode);
             }}
           >
             {DESIGN_SHEETS.map((sheet) => (
@@ -15755,7 +15797,7 @@ export default function DesignGlossy({
               <button
                 key={sheet.no}
                 type="button"
-                onClick={() => applySheet(sheet, mode)}
+                onClick={() => chooseSheet(sheet, mode)}
                 disabled={loading !== null}
                 aria-pressed={active}
                 style={{
