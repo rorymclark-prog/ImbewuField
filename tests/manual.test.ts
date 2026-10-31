@@ -116,10 +116,10 @@ test('UI strings: English complete, translated languages complete, placeholders 
   }
 });
 
-test('all five home languages Rory asked for are public: isiZulu, Sesotho, Tshivenḓa, Xitsonga and isiXhosa', () => {
-  assert.deepEqual(MANUAL_LANGS, ['en', 'zu', 'st', 've', 'ts', 'xh']);
+test('every language Rory asked for is public: isiZulu, Sesotho, Tshivenḓa, Xitsonga, isiXhosa and Afrikaans', () => {
+  assert.deepEqual(MANUAL_LANGS, ['en', 'zu', 'st', 've', 'ts', 'xh', 'af']);
   assert.deepEqual(Object.keys(MANUAL_LANG_NAMES), MANUAL_LANGS);
-  for (const lang of ['zu', 'st', 've', 'ts', 'xh']) {
+  for (const lang of ['zu', 'st', 've', 'ts', 'xh', 'af']) {
     assert.equal(isManualLang(lang), true, `/manual/${lang} must be served`);
     for (const slug of MANUAL_CHAPTERS) assert.ok(existsSync(file(lang, slug)), `${lang}/${slug} is missing`);
   }

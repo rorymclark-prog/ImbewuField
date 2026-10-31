@@ -19,8 +19,9 @@ import uiSt from '../content/manual/st/ui.json' with { type: 'json' };
 import uiVe from '../content/manual/ve/ui.json' with { type: 'json' };
 import uiTs from '../content/manual/ts/ui.json' with { type: 'json' };
 import uiXh from '../content/manual/xh/ui.json' with { type: 'json' };
+import uiAf from '../content/manual/af/ui.json' with { type: 'json' };
 
-export const MANUAL_LANGS = ['en', 'zu', 'st', 've', 'ts', 'xh'] as const;
+export const MANUAL_LANGS = ['en', 'zu', 'st', 've', 'ts', 'xh', 'af'] as const;
 export type ManualLang = (typeof MANUAL_LANGS)[number];
 
 export const MANUAL_LANG_NAMES: Record<ManualLang, string> = {
@@ -30,6 +31,7 @@ export const MANUAL_LANG_NAMES: Record<ManualLang, string> = {
   ve: 'Tshivenḓa',
   ts: 'Xitsonga',
   xh: 'isiXhosa',
+  af: 'Afrikaans',
 };
 
 export function isManualLang(code: string): code is ManualLang {
@@ -77,7 +79,7 @@ export interface ManualUi {
   book: string;
 }
 
-const UI: Record<ManualLang, ManualUi> = { en: uiEn, zu: uiZu, st: uiSt, ve: uiVe, ts: uiTs, xh: uiXh };
+const UI: Record<ManualLang, ManualUi> = { en: uiEn, zu: uiZu, st: uiSt, ve: uiVe, ts: uiTs, xh: uiXh, af: uiAf };
 
 /** Per-key fallback to English, so a half-translated ui.json never shows a blank button. */
 export function manualUi(lang: ManualLang): ManualUi {
