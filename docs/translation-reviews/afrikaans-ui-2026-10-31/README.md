@@ -33,6 +33,13 @@ reviewers each read only the Afrikaans first and wrote a literal English back-tr
 The hold (p5 #319, `mentorZuluDraftNotice`) needs no change: like isiXhosa, the `*ZuluDraftNotice`
 keys name the locale's own language.
 
+## Fluent-review hand-off
+`fluent-review-handoff-2026-10-31.csv` lists every Afrikaans draft beside its English, ordered
+safety → money → consent → other. It covers 11,851 rows: dictionary, inline drafts, release notes and
+Studies lessons. The `model_review` column says whether the blind model review checked a row, and
+whether it repaired it. A fluent reviewer fills in `fluent_reviewer_verdict` (ok / fix / hold) and
+`fluent_reviewer_correction`.
+
 ## Honest limits
 - Drafters and reviewers are models. "Checked" means no meaning error was found, not that the wording
   is natural or in a South African farming register.
