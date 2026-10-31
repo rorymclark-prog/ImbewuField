@@ -60,7 +60,7 @@ the Manual has only the structure and number checks.
 - **Wild plants:** species kept in English by rule (Kei apple, sweet thorn, white stinkwood …).
   Where a well-known Afrikaans name exists it is given in brackets in some chapters, not all.
 - **Water and earthworks:** poel (pond), afloopkoëffisiënt, afleivoor / afleiwal,
-  eerstespoel-afleier, sypelput, vetvanger, flodder (slurry), doeke-water (nappy water). The Studies
+  eerstespoel-afleier, sypelput, vetvanger, flodder (slurry), luierwater (nappy water; chapters 01 and 07 and the Glossary). The Studies
   lessons use "luiers" for nappies.
 - **Energy:** sonkraggeiser, omsetter, kisstoof, hooikis. "sonkrag-energieverskaffer" (fence
   energiser) is awkward.
