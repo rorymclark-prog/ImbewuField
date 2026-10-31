@@ -245,10 +245,10 @@ test('completed jobs recover painted photo and paper interiors from the frozen s
       buildPaintedStructureOverlay:async(...args:unknown[])=>{calls.push(['legacy-roof',...args]);return 'paper-roof';},
       buildExactLayerOverlay:()=>{throw Error('flat ground must not cover paid painted artwork');},
       buildGeometryLockStructureOverlay:async()=>undefined,stackOverlayImages:async()=>undefined,
-      compositeAccurateMap:async()=> 'composite',burnPaintedBoundary:async()=> 'bounded',
+      compositeAccurateMap:async(options:any)=>{calls.push(['composite',options]);return 'composite';},burnPaintedBoundary:async()=> 'bounded',
       burnExactLabelLayer:async(map:string)=>({map}),
       composeStyleSheet:async(...args:unknown[])=>{calls.push(['chrome',...args]);return 'sheet';},
-      REFERENCE_SHEET_LABEL:{all:'Whole'},
+      REFERENCE_SHEET_LABEL:{all:'Whole',water:'Water'},waterReferenceFooterText:()=> 'Water notes',
     });
     assert.equal(await finish('model','all',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,scene,()=>false),'sheet',engine);
     const restore=calls.find(c=>c[0]==='restore')!;
@@ -279,6 +279,18 @@ test('completed jobs recover painted photo and paper interiors from the frozen s
       scene,()=>false,'DRIVEWAY GUIDE OMITTED: duplicate editor trace');
     assert.equal((calls.find(c=>c[0]==='chrome')!.at(-1) as {preserveLegacyPathGuides:boolean}).preserveLegacyPathGuides,false,
       'only the durable new prompt tells recovery that the model input omitted the guide');
+    calls.length=0;
+    await finish('model','water',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,
+      scene,()=>false,'new illustrated-property contract',reference);
+    const waterComposite=calls.find(c=>c[0]==='composite')![1] as any;
+    assert.equal(waterComposite.contextTreatment,hasPhoto?'precision_atlas':'original',
+      'plain paper must not receive the photographic palette treatment');
+    assert.equal(Boolean(waterComposite.focusBoundaryPx),hasPhoto,
+      'the Water focus wash must not darken white paper or the paid property artwork');
+    const waterChrome=calls.find(c=>c[0]==='chrome')!.at(-1) as any;
+    assert.equal(waterChrome.footerText,'Water notes',
+      'new completed roofs must not be replaced or credited as satellite patches');
+    assert.equal(calls.filter(c=>c[0]==='legacy-roof').length,0);
     badStoredMask=true;
     await assert.rejects(()=>finish('model','all',{key:'precision_atlas',label:'Reference Blueprint'},false,'input','stored-mask',true,false,scene,()=>false),/mask aspect/);
   }

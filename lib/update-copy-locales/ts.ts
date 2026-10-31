@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Paper recovery: docs/audits/2026-10-31/paper-map-release-drafts.json; unreviewed.
+  "Style choices stay visible; plain-paper Water maps keep white backgrounds.": "Swihlawuriwa swa xitayele swi sala swi vonaka; mimepe ya Mati eka phepha ro basa yi hlayisa le ndzhaku ku basile.",
   // Oblique picker: docs/audits/2026-10-30/oblique-style-picker-release-drafts.json; unreviewed.
   "Oblique styles stay visible when you switch from an exact map.": "Switayele swa Oblique swi sala swi vonaka loko u suka eka mepe lowu pimiweke hi ku kongoma.",
   // Oblique experiment guide: docs/audits/2026-10-30/oblique-experiment-guide-drafts.json; unreviewed.
