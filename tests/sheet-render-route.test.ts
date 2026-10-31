@@ -30,8 +30,8 @@ test('each sheet starts with a readable purpose-specific background without clai
     const sheet='exact' in spec?spec.exact:spec.filter;
     const before=JSON.stringify(frame),settings=recommendedSheetSettings(sheet,frame,DEFAULT_PRODUCER_STYLE);
     const aerial=frame.underlayDataUrl&&frame.satDataUrl?'photo':frame.satDataUrl||frame.underlayDataUrl?'satellite':'plain';
-    assert.equal(settings.underlay,sheet==='earthworks'||sheet==='zones'?'plain':aerial,
-      'digging and zone diagrams stay clean; physical-system sheets use available real context');
+    assert.equal(settings.underlay,sheet==='zones'?'plain':aerial,
+      'Zones stays clean; Earthworks and other physical systems retain available roof/courtyard context');
     assert.equal(settings.style,DEFAULT_PRODUCER_STYLE);
     assert.equal(settings.view,'top-down','each measured sheet must start as a plan rather than inherit an angled camera');
     assert.equal(settings.labelMode,['earthworks','planting','all'].includes(sheet)?'codes':'names');
