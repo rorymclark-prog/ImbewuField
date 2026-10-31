@@ -26,6 +26,7 @@ Oblique and its nine styles are live. The previous fix exposed styles on Oblique
 - Actual saved Water raw art inspected: white exterior, detailed roofs and brighter garden. Actual deployed finisher reproduced grey/muted output with satellite roof patches. Corrected finisher inspected at scale 3: white exterior, intact AI roofs, original labels/legend and scene unchanged. Private originals and recovered PNG remain outside Git.
 - Tests execute the real finisher and assert photographic treatment/focus only for photo frames, no source-roof credit for new painted jobs, retained old-paper recovery, reachable exact Water styles, denied AI-off/no-sheet controls and no paid request on selection.
 - Local `npx tsc --noEmit`, `npm run test:render` (595 passed), affected notice/UI/access/kill-switch tests (50 passed) and `git diff --check` pass. Current-head release checks recorded in PR / issue #35 before merge. No full-suite pass claimed.
+- Repainted and inspected the actual frozen scene input locally: courtyard is visibly tan, the two separate grey building footprints remain distinct; scene unchanged. Photo paving keeps its translucent wash. No provider claim follows from that input inspection.
 - No new provider image, geometry mutation or physical-device certification. Native compositor uses fallback fonts. Four notice translations are unreviewed drafts.
 - **This changes the picture.** PLAN_VERSION v93 and recipe r8 are unchanged, preserving free recovery of this existing paid job.
 
