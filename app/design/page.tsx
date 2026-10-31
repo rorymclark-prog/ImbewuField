@@ -8,6 +8,9 @@
 import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type Dispatch, type SetStateAction } from 'react';
 import Link from 'next/link';
 import AppHeader from '@/components/layout/AppHeader';
+import FieldBlocksPanel from '@/components/design/FieldBlocksPanel';
+import { configureFieldBlock, reconcileFieldBlockEdit } from '@/lib/bed-block';
+import { loadCropPlan } from '@/lib/crop-plan';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
 import { ArrowLeft, ArrowRight, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock, AlertTriangle, Droplets } from 'lucide-react';
@@ -1207,6 +1210,7 @@ function DesignStudioInner() {
   // Set when a local save genuinely failed (device storage full). Must be shown — a silent
   // failure here is how a design's zones went missing while the header still said "Saved".
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [editError, setEditError] = useState<string | null>(null);
   // Per-layer glossy preview overlay: when non-null, show the strict glossy render scoped to
   // this layer over the studio, without leaving the current step. null = closed.
   const [previewFilter, setPreviewFilter] = useState<GlossyLayerFilter | null>(null);
@@ -1731,15 +1735,22 @@ function DesignStudioInner() {
   // Persist canvas state on change (with undo history), and re-run the advisor.
   const handleChange = useCallback(
     (updater: (prev: DesignCanvasState) => DesignCanvasState) => {
-      setSaved(false);
       setCanvasState((prev) => {
         if (!prev) return prev;
-        undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
         // A genuinely new edit invalidates whatever future we might have redone back to —
         // standard undo/redo semantics. Without this, undo → edit → redo would silently
         // resurrect a stale future state the farmer never asked for.
+        let next: DesignCanvasState;
+        try {
+          next = reconcileFieldBlockEdit(prev, updater(prev), new Set(loadCropPlan().plantings.map(p => p.bedId)));
+        } catch (e) {
+          setEditError((e as Error).message);
+          return prev;
+        }
+        setSaved(false);
+        setEditError(null);
+        undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
         redoStack.current = [];
-        const next = updater(prev);
         const stamped = persistCanvasState(next);
         setSaved(!!stamped);
         setSaveError(stamped ? null : t('designStorageFull'));
@@ -2148,13 +2159,19 @@ function DesignStudioInner() {
   }, [handleChange, revertToSatellite, appConfirm, t]);
 
   const handleUndo = useCallback(() => {
-    setSaved(false);
     setCanvasState((prev) => {
-      const popped = undoStack.current.pop();
+      let popped = undoStack.current[undoStack.current.length - 1];
       if (!popped || !prev) {
         setSaved(true);
         return prev;
       }
+      // Crop allocations can arrive after this history snapshot was recorded.
+      // Restoring history must protect the same measured ground as a fresh edit.
+      try { popped = reconcileFieldBlockEdit(prev, popped, new Set(loadCropPlan().plantings.map(p => p.bedId))); }
+      catch (e) { setEditError((e as Error).message); return prev; }
+      setSaved(false);
+      setEditError(null);
+      undoStack.current.pop();
       // Stash what we're undoing FROM so redo can bring it back — this is the only place
       // the pre-undo state is available; once we restore `popped` below it's gone otherwise.
       redoStack.current = [...redoStack.current, prev].slice(-MAX_UNDO);
@@ -2177,13 +2194,17 @@ function DesignStudioInner() {
   }, [t]);
 
   const handleRedo = useCallback(() => {
-    setSaved(false);
     setCanvasState((prev) => {
-      const popped = redoStack.current.pop();
+      let popped = redoStack.current[redoStack.current.length - 1];
       if (!popped || !prev) {
         setSaved(true);
         return prev;
       }
+      try { popped = reconcileFieldBlockEdit(prev, popped, new Set(loadCropPlan().plantings.map(p => p.bedId))); }
+      catch (e) { setEditError((e as Error).message); return prev; }
+      setSaved(false);
+      setEditError(null);
+      redoStack.current.pop();
       // Mirror of handleUndo: put the pre-redo state back on the undo stack so undo can
       // reverse this redo, same as any other edit.
       undoStack.current = [...undoStack.current, prev].slice(-MAX_UNDO);
@@ -3275,6 +3296,13 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         </div>
       )}
 
+      {editError && (
+        <div role="alert" style={{ padding: '8px 14px', background: '#FFF4D9', borderBottom: '1px solid #C79A3C', color: DARK, fontSize: 12.5 }}>
+          {editError}
+          <button type="button" onClick={() => setEditError(null)} style={{ marginLeft: 12, cursor: 'pointer' }}>Dismiss</button>
+        </div>
+      )}
+
       {saveError && (
         <div
           role="alert"
@@ -4181,6 +4209,27 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           selectedIdentity={selectedIdentity}
           areaFillControl={{ value: areaFill, onChange: changeAreaFill }}
           bedBlockControl={bedBlockControl}
+          fieldBlocksPanel={frame && <FieldBlocksPanel
+            state={canvasState}
+            frame={frame}
+            selectedId={selectedId}
+            onDraw={() => {
+              setAreaFeature('staple_garden');
+              setZoneDraw(3);
+              handleSetTool('zone');
+              setActiveLayers(a => ({ ...a, planting: true }));
+            }}
+            onSelect={id => { handleSetTool('select'); setSelectedIds([id]); }}
+            onApply={(id, name, config) => {
+              const allocations = new Set(loadCropPlan().plantings.map(p => p.bedId));
+              // Validate before the state updater: failures belong beside the form,
+              // not in React's render/update cycle.
+              configureFieldBlock(canvasState, id, name, config, frame, allocations);
+              handleChange(prev => configureFieldBlock(prev, id, name, config, frame, allocations));
+              handleSetTool('select');
+              setActiveLayers(a => ({ ...a, planting: true }));
+            }}
+          />}
           setActiveLayers={setActiveLayers}
           onUndo={handleUndo}
           canUndo={undoStack.current.length > 0}

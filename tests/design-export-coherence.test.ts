@@ -12,6 +12,40 @@ const source = (path: string) => readFileSync(new URL(`../${path}`, import.meta.
 const glossy = source('components/design/DesignGlossy.tsx');
 const crop = source('components/crops/CropPlanExportCard.tsx');
 
+for (const action of ['handleChange', 'handleUndo', 'handleRedo']) {
+  test(`${action} reports an allocated-field refusal without claiming storage failed or changing history`, () => {
+    const text = source('app/design/page.tsx');
+    const file = ts.createSourceFile('page.tsx', text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+    let declaration: ts.VariableDeclaration | undefined;
+    function visit(node: ts.Node) {
+      if (ts.isVariableDeclaration(node) && node.name.getText(file) === action) declaration = node;
+      ts.forEachChild(node, visit);
+    }
+    visit(file);
+    assert.ok(declaration);
+    const js = ts.transpileModule(`const ${declaration.getText(file)};`, { compilerOptions: { target: ts.ScriptTarget.ES2022 } }).outputText;
+    const snapshot = { zones: [], items: [], lines: [] };
+    const undoStack = { current: [snapshot] }, redoStack = { current: [snapshot] };
+    const writes: string[] = [];
+    let message: string | null = null;
+    const scope = {
+      useCallback: (fn: unknown) => fn, t: (key: string) => key,
+      setCanvasState: (update: (prev: unknown) => unknown) => assert.equal(update(snapshot), snapshot),
+      reconcileFieldBlockEdit: () => { throw new Error('Remove this field’s crop allocations before changing its outline.'); },
+      loadCropPlan: () => ({ plantings: [{ bedId: 'field' }] }),
+      setEditError: (value: string | null) => { message = value; },
+      setSaveError: () => { writes.push('storage error'); }, setSaved: () => { writes.push('save status'); },
+      persistCanvasState: () => { writes.push('persist'); }, undoStack, redoStack, MAX_UNDO: 40,
+    };
+    const callback = new Function('scope', `with(scope) { ${js}; return ${action}; }`)(scope);
+    callback((prev: unknown) => prev);
+    assert.match(message!, /crop allocations/);
+    assert.deepEqual(writes, []);
+    assert.deepEqual(undoStack.current, [snapshot]);
+    assert.deepEqual(redoStack.current, [snapshot]);
+  });
+}
+
 function handler(name: string, scope: Record<string, unknown>, text = crop) {
   const tree = ts.createSourceFile('exports.tsx', text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
   let declaration: ts.FunctionDeclaration | undefined;
@@ -179,4 +213,24 @@ test('closing a zoom whose grid trigger was replaced returns focus to the surviv
     if (originalDocument) Object.defineProperty(globalThis, 'document', originalDocument);
     else delete (globalThis as any).document;
   }
+});
+
+test('printed bed-field outlines leave paths and unused ground free of whole-field crop artwork', () => {
+  let fills = 0, cropLayouts = 0, strokes = 0;
+  const ctx = { save() {}, restore() {}, fill() { fills++; }, stroke() { strokes++; } };
+  const draw = handler('drawBlueprintGround', {
+    groundRegister: () => 'content', ringArea: () => 1,
+    staplePlotOrdinalById: () => new Map([['field', 0]]),
+    GROUND_FEATURES: { staple_garden: { color: '#557733' } },
+    blueprintRing: () => {}, referenceFeatureArtworkCache: new Map(), stapleTileUrl: () => 'tile',
+    staplePlotGlyphs: () => [], polygonCropRows: () => { cropLayouts++; return { plants: [] }; },
+  }, glossy);
+  const zone = { id: 'field', feature: 'staple_garden', points: [[0,0],[1,0],[1,1],[0,1]], fieldBlock: { mode: 'beds' } };
+  draw(ctx, { zones: [zone] }, (n: number) => n*100, (n: number) => n*100, 100);
+  assert.equal(fills, 0, 'a grouping outline cannot fill paths or unused edges');
+  assert.equal(cropLayouts, 0, 'the individual beds carry the plants');
+  assert.equal(strokes, 1, 'the field boundary remains visible');
+  draw(ctx, { zones: [{ ...zone, fieldBlock: { mode: 'open' } }] }, (n: number) => n*100, (n: number) => n*100, 100);
+  assert.equal(fills, 1, 'an open crop field retains its existing surface depiction');
+  assert.equal(cropLayouts, 1, 'the check must detect the whole-field drawing path');
 });

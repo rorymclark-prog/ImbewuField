@@ -1,0 +1,51 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "scope": "Field-block release notice and its guide only; no fluent review claimed. No lesson or quiz changes.",
+  "entries": [
+    {
+      "source": "Draw named field blocks and fill them with beds using your own dimensions and path widths.",
+      "drafts": {
+        "zu": "Dweba izingxenye zensimu ezinamagama bese uzigcwalisa ngemibhede usebenzisa ubukhulu bakho nobubanzi bezindlela.",
+        "st": "Taka dikarolo tsa tshimo tse nang le mabitso mme o di tlatse ka dibethe tsa temo o sebedisa ditekanyo tsa hao le bophara ba ditselana.",
+        "ts": "Dirowa swiphemu swa nsimu leswi nga ni mavito kutani u swi tata hi mibedo u tirhisa mipimo ya wena ni ku anama ka tindlela.",
+        "ve": "Olani zwipiḓa zwa tsimu zwi re na madzina ni zwi ḓadze nga mibethe ni tshi shumisa mielo yaṋu na vhuphara ha nḓila."
+      }
+    },
+    {
+      "source": "Keep a field open without beds and use both layouts in automatic crop planning.",
+      "drafts": {
+        "zu": "Shiya ingxenye yensimu ivulekile ingenamibhede, bese usebenzisa zombili izinhlelo ekuhleleni izitshalo okuzenzakalelayo.",
+        "st": "Tlohela karolo ya tshimo e bulehile e se na dibethe tsa temo, mme o sebedise meralo ka bobedi moralong wa dijalo o iketsang.",
+        "ts": "Siya xiphemu xa nsimu xi pfulekile xi nga ri na mibedo, kutani u tirhisa malulamiselo hamambirhi eka ku kunguhata swibyariwa loku tiendlekelaka.",
+        "ve": "Litshani tshipiḓa tsha tsimu tsho vulea tshi si na mibethe, ni shumise nzudzanyo dzoṱhe mbili kha u pulana zwiliṅwa hu ḓiendelaho."
+      }
+    },
+    {
+      "source": "Lay out your fields",
+      "drafts": {
+        "zu": "Hlela izinsimu zakho",
+        "st": "Rala ditshimo tsa hao",
+        "ts": "Hlela masimu ya wena",
+        "ve": "Dzudzanyani tsimu dzaṋu"
+      }
+    },
+    {
+      "source": "Site design → Planting → Field blocks",
+      "drafts": {
+        "zu": "Ukuhlelwa kwesiza → Ukutshala → Izingxenye zensimu",
+        "st": "Moralo wa sebaka → Ho lema → Dikarolo tsa tshimo",
+        "ts": "Dizayini ya ndhawu → Ku byala → Swiphemu swa nsimu",
+        "ve": "Dizaini ya fhethu → U ṱavha → Zwipiḓa zwa tsimu"
+      }
+    },
+    {
+      "source": "Draw a polygon, choose beds or open field, save the layout and open the automatic crop planner.",
+      "drafts": {
+        "zu": "Dweba umumo onamakhona, khetha imibhede noma insimu evulekile, gcina uhlelo bese uvula umhleli wezitshalo ozenzakalelayo.",
+        "st": "Taka sebopeho se nang le dikgutlo, kgetha dibethe tsa temo kapa tshimo e bulehileng, boloka moralo mme o bule moralo wa dijalo o iketsang.",
+        "ts": "Dirowa xivumbeko lexi nga ni tikhona, hlawula mibedo kumbe nsimu leyi pfulekeke, hlayisa malulamiselo kutani u pfula xipulani xa swibyariwa lexi tiendlekelaka.",
+        "ve": "Olani tshivhumbeo tshi re na khuḓa, khethani mibethe kana tsimu yo vuleaho, vhulungani nzudzanyo ni vule mupulani wa zwiliṅwa ane a ḓiendela."
+      }
+    }
+  ]
+}
