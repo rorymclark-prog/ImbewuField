@@ -1,0 +1,33 @@
+// Unreviewed Afrikaans machine drafts keyed by the exact English (see index.ts).
+const drafts: Record<string, string> = {
+  "IMBEWUFIELD FARM FINANCE PRACTICE": "IMBEWUFIELD PLAASFINANSIES-OEFENING",
+  "Synthetic classroom case. This is not a farm record, financial advice or a submitted assessment.": "Sintetiese klaskamergeval. Dit is nie 'n plaasrekord, finansiële advies of 'n ingediende assessering nie.",
+  "Case: {title} ({id})": "Geval: {title} ({id})",
+  "Practice period: {start} to {end}": "Oefentydperk: {start} tot {end}",
+  "[Not yet entered]": "[Nog nie ingevul nie]",
+  "metres": "meter",
+  "Units: {unit}. {axis}.": "Eenhede: {unit}. {axis}.",
+  "Teaching frame: {width} × {height} m. Not a land-rights record or fixed physical print scale.": "Onderrigraam: {width} × {height} m. Nie 'n grondregterekord of vaste fisiese drukskaal nie.",
+  "Keep the downloaded diagrams alongside this record. This is the guided example, not your personal learning folder.": "Hou die afgelaaide diagramme saam met hierdie rekord. Dit is die begeleide voorbeeld, nie jou persoonlike leerlêer nie.",
+  "SOURCE CARDS": "BRONKAARTE",
+  "MODEL GEOMETRY — all coordinates supplied fictional inputs": "MODELGEOMETRIE — alle koördinate is verskafte fiktiewe insette",
+  "{id} — {label}: x={x}, y={y}, width={width}, height={height} m.": "{id} — {label}: x={x}, y={y}, breedte={width}, hoogte={height} m.",
+  "{id} — {label}: x={x}, y={y} m (reference point).": "{id} — {label}: x={x}, y={y} m (verwysingspunt).",
+  "FAIR COMPARISON": "REGVERDIGE VERGELYKING",
+  "Unknown:": "Onbekend:",
+  "PROVISIONAL CHOICE": "VOORLOPIGE KEUSE",
+  "CONNECTED WORK, COST AND CARE": "VERBONDE WERK, KOSTE EN SORG",
+  "Before work:": "Voor die werk:",
+  "{revision}: {phase}; {quantity}; cost {cost}; {care}.": "{revision}: {phase}; {quantity}; koste {cost}; {care}.",
+  "Cost detail:": "Kostebesonderhede:",
+  "Next discussion:": "Volgende bespreking:",
+  "REVISION": "HERSIENING",
+  "OBSERVATION PLAN — no outcomes supplied": "WAARNEMINGSPLAN — geen uitkomste verskaf nie",
+  "Facilitator, practitioner, learner and language review are still required. This preview awards no assessed progress.": "Fasiliteerder-, praktisyn-, leerder- en taalhersiening word steeds vereis. Hierdie voorskou ken geen geassesseerde vordering toe nie.",
+  "Paper or drawing references below are not attachments. Keep a separate copy of those sources.": "Papier- of tekeningverwysings hieronder is nie aanhegsels nie. Hou 'n aparte kopie van daardie bronne.",
+  "For discussion with a reviewer:": "Vir bespreking met 'n beoordelaar:",
+  "Illustrative homestead planning scene; this image is not a measured picture of the practice case": "Geïllustreerde opstalbeplanningstoneel; hierdie beeld is nie 'n gemete prent van die oefengeval nie",
+  "Illustrated growers discussing a paper plan; it is contextual only and not the fictional classroom site": "Geïllustreerde kwekers wat 'n papierplan bespreek; dit is slegs vir konteks en nie die fiktiewe klaskamerterrein nie",
+};
+
+export default drafts;
