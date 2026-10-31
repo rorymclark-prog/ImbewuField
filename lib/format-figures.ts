@@ -127,12 +127,13 @@ export function numberLabel(n: number, maximumFractionDigits = 3): string {
  * and invoice-document.ts formats dates the same way for the exact same locale pair. Day/month
  * order (not en-ZA's month/day) is what a South African reader expects. isiXhosa has no browser
  * locale pack ('xh-ZA' falls back to English), so lang 'xh' uses lib/xh-dates.ts month names.
+ * Afrikaans has one ('af-ZA'), so it gets the browser's own Afrikaans month names.
  */
 export function formatStaffDate(iso: string | null | undefined, lang: string): string {
   if (!iso) return '';
   const date = new Date(`${iso}T00:00:00`);
   if (Number.isNaN(date.getTime())) return iso;
-  return localeDate(lang, date, { day: 'numeric', month: 'short', year: 'numeric' }, lang === 'zu' ? 'zu-ZA' : 'en-GB');
+  return localeDate(lang, date, { day: 'numeric', month: 'short', year: 'numeric' }, lang === 'zu' ? 'zu-ZA' : lang === 'af' ? 'af-ZA' : 'en-GB');
 }
 
 /** '15 Aug – 5 Sep 2026' — a staff date range, dropping the year from the first date when both
@@ -143,7 +144,7 @@ export function formatStaffDateRange(fromIso: string | null | undefined, toIso: 
   const fromDate = new Date(`${fromIso}T00:00:00`);
   const toDate = new Date(`${toIso}T00:00:00`);
   if (Number.isNaN(fromDate.getTime()) || Number.isNaN(toDate.getTime())) return `${fromIso} – ${toIso}`;
-  const locale = lang === 'zu' ? 'zu-ZA' : 'en-GB';
+  const locale = lang === 'zu' ? 'zu-ZA' : lang === 'af' ? 'af-ZA' : 'en-GB';
   const sameYear = fromDate.getFullYear() === toDate.getFullYear();
   const fromLabel = localeDate(lang, fromDate, sameYear ? { day: 'numeric', month: 'short' } : { day: 'numeric', month: 'short', year: 'numeric' }, locale);
   const toLabel = localeDate(lang, toDate, { day: 'numeric', month: 'short', year: 'numeric' }, locale);

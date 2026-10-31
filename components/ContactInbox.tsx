@@ -39,7 +39,7 @@ function formatDate(ts: ContactMessage['created_at'], lang: string): string {
     if (diff < 60_000) return lang === 'zu' ? 'Manje' : inlineText(lang, 'Just now');
     if (diff < 3_600_000) return lang === 'zu' ? `emiz ${Math.floor(diff / 60_000)} edlule` : inlineTemplate(lang, '{n}m ago', null, { n: Math.floor(diff / 60_000) });
     if (diff < 86_400_000) return lang === 'zu' ? `amahora ${Math.floor(diff / 3_600_000)} edlule` : inlineTemplate(lang, '{n}h ago', null, { n: Math.floor(diff / 3_600_000) });
-    return localeDate(lang, d, { day: 'numeric', month: 'short' }, lang === 'zu' ? 'zu-ZA' : 'en-ZA');
+    return localeDate(lang, d, { day: 'numeric', month: 'short' }, lang === 'zu' ? 'zu-ZA' : lang === 'af' ? 'af-ZA' : 'en-ZA');
   } catch {
     return '';
   }

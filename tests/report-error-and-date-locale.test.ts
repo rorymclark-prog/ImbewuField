@@ -22,12 +22,12 @@ test('the PDF export error no longer appends the raw JS error message to the far
   assert.match(src, /'Could not build the PDF\. Check your connection and try again\.': '/, 'the isiZulu translation for the new sentence is missing from the known-strings map');
 });
 
-test('SavedReportsList dates follow en-ZA/zu-ZA, not the browser default locale', () => {
+test('SavedReportsList dates follow en-ZA/zu-ZA/af-ZA, not the browser default locale', () => {
   const src = savedReportsList();
   assert.doesNotMatch(src, /toLocaleDateString\(\)/, 'a bare toLocaleDateString() call remains');
   assert.doesNotMatch(src, /toLocaleDateString\(undefined/, 'a toLocaleDateString(undefined, …) call remains');
   assert.doesNotMatch(src, /toLocaleTimeString\(\[\]/, 'a toLocaleTimeString([], …) call (browser-default locale) remains');
-  assert.match(src, /const dateLocale = lang === 'zu' \? 'zu-ZA' : 'en-ZA'/, 'the shared dateLocale constant is gone');
+  assert.match(src, /const dateLocale = lang === 'zu' \? 'zu-ZA' : lang === 'af' \? 'af-ZA' : 'en-ZA'/, 'the shared dateLocale constant is gone');
 });
 
 test("mentor's enrolled-date line follows en-ZA/zu-ZA consistently", () => {

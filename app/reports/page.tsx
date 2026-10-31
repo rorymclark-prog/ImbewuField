@@ -59,7 +59,7 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
     finally { setOpening(false); }
   }
   const choices = reportSiteChoices(reports, places);
-  const dateLocale = lang === 'zu' ? 'zu-ZA' : 'en-ZA';
+  const dateLocale = lang === 'zu' ? 'zu-ZA' : lang === 'af' ? 'af-ZA' : 'en-ZA';
   // 'xh-ZA' falls back to English in browsers, so isiXhosa writes its own month names (xh-dates).
   const dayLabel = (value: string | number) => lang === 'xh' ? formatXhosaDate(new Date(value), { day: true, month: 'short', year: true }) : new Date(value).toLocaleDateString(dateLocale);
   const stampLabel = (value: string | number) => lang === 'xh' ? formatXhosaDate(new Date(value), { day: true, month: 'short', year: true, time: true }) : new Date(value).toLocaleString(dateLocale);

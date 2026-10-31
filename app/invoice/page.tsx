@@ -958,7 +958,7 @@ export default function InvoicePage() {
                                 ? formatXhosaDate(new Date(inv.dateISO), { day: true, month: 'short', year: true })
                                 : isRecordsRegionalLang(lang)
                                 ? recordsDate(lang, new Date(inv.dateISO), true)
-                                : new Date(inv.dateISO).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                : new Date(inv.dateISO).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : lang === 'af' ? 'af-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                             </div>
                           </button>
                           <span className="hidden md:inline-block text-sm font-display tabular-nums" style={{ color: 'var(--text-primary)', minWidth: '7rem' }}>
