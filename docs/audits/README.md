@@ -6,6 +6,8 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Paid AI map composition: start here
 
+Latest paper recovery: [White Water sheets, retained AI roofs and reachable styling — 31 October 2026](2026-10-31/paper-map-finish-codex.md).
+
 Latest style follow-up: [Complete Oblique style picker across sheets — 30 October 2026](2026-10-30/oblique-style-picker-codex.md).
 
 Latest experimental release: [Oblique current-main integration and explicit wait exception — 30 October 2026](2026-10-30/oblique-experiment-release-codex.md).
@@ -132,6 +134,8 @@ is available across their separate worktrees and chats after fetching the branch
 or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
+
+- [White Water sheets, retained AI roofs and reachable styling — 31 October 2026](2026-10-31/paper-map-finish-codex.md).
 
 - [Complete Oblique style picker across sheets — 30 October 2026](2026-10-30/oblique-style-picker-codex.md).
 
