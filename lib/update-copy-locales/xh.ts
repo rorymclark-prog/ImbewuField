@@ -227,5 +227,15 @@ const copy:UpdateCopy={
   "Map sheets now use white paper, thin legend borders and clearer plant pictures.": "Amaphepha eemephu ngoku asebenzisa iphepha elimhlophe, imiphetho ebhityileyo yenkcazelo yeempawu nemifanekiso yezityalo ecace ngakumbi.",
   "Paid AI maps now finish when the image service rounds their size.": "Iimephu ze-AI ezihlawulelweyo ngoku ziyagqitywa xa inkonzo yemifanekiso ijikelezisa ubungakanani bazo.",
   "New AI glossy maps use GPT Image 2.5 Sunburst.": "Iimephu ezintsha ezikhazimlayo ze-AI zisebenzisa i-GPT Image 2.5 Sunburst.",
+  "Earthworks starts with your available aerial photo; plain paper remains a choice.": "Imisebenzi yomhlaba iqala ngefoto yakho yasemoyeni ekhoyo; iphepha elingenanto lisenokukhethwa.",
+  "Each map opens with recommended settings and keeps your choices as you switch sheets.": "Imephu nganye ivuleka nezicwangciso ezicetyiswayo kwaye igcina ukhetho lwakho xa utshintsha amaphepha.",
+  "Check each map’s settings": "Khangela izicwangciso zemephu nganye",
+  "Open Glossy and choose a sheet. Adjust its style, background or labels; your choices stay selected when you switch maps and return.": "Vula i-Glossy uze ukhethe iphepha. Lungelelanisa isitayile salo, imvelaphi okanye iilebhile; ukhetho lwakho luhlala lukhethiwe xa utshintsha iimephu uze ubuye.",
+  "AI map guidance separates earthworks from finished planting.": "Isikhokelo semephu ye-AI sahlula imisebenzi yomhlaba kukutyala okugqityiweyo.",
+  "Draw named field blocks and fill them with beds using your own dimensions and path widths.": "Zoba iibhloko zamasimi ezinamagama uze uzizalise ngemibhede usebenzisa eyakho imilinganiselo nobubanzi beendlela.",
+  "Keep a field open without beds and use both layouts in automatic crop planning.": "Gcina intsimi ivulekile ngaphandle kwemibhede uze usebenzise zombini iindlela zokubeka ekucwangciseni izityalo ngokuzenzekelayo.",
+  "Lay out your fields": "Cwangcisa ubeko lwamasimi akho",
+  "Site design → Planting → Field blocks": "Uyilo lwendawo → Ukutyala → Field blocks",
+  "Draw a polygon, choose beds or open field, save the layout and open the automatic crop planner.": "Zoba i-polygon, khetha imibhede okanye intsimi evulekileyo, gcina ubeko uze uvule umcwangcisi wezityalo ozenzekelayo.",
 };
 export default copy;
