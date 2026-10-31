@@ -443,9 +443,9 @@
 442 | [g27-crop-plan-built] | Check a protected growing place or local timing by asking an extension officer before you add frost-affected crops by hand.
 443 | [g27-crop-plan-built] | the field time passes through the frost months you observed
 444 | [g27-crop-plan-built] | the field time passes through the frost months you observed, or another site heat or rain check excludes it
-445 | [g30-farmer-gaps] | Well-spread rain helps production all year — 
-446 | [g30-farmer-gaps] | . A moderate dry winter suits cool-season crops; warm frost-free conditions can also carry 
-447 | [g30-farmer-gaps] | . Warm frost-free conditions can also carry 
+445 | [g30-farmer-gaps] | Well-spread rain helps production all year —
+446 | [g30-farmer-gaps] | . A moderate dry winter suits cool-season crops; warm frost-free conditions can also carry
+447 | [g30-farmer-gaps] | . Warm frost-free conditions can also carry
 448 | [g30-farmer-gaps] |  grow well. The moderate winter keeps frost-weak plants still able to grow in protected places.
 449 | [g30-farmer-gaps] | . High humidity — choose varieties [garbled: "that cannot be cured by diseases"] and open the airflow widely.
 450 | [g30-farmer-gaps] |  in warm north-facing places. Protect all plants from frost and strong wind.

@@ -57,7 +57,7 @@ Phase A blind back-translation (values only, numbered by order in shard). Writte
 128 These assessment tools are available. Results appear below when the organisation has reviewed and shared them; a tool listed here does not mean the assessment is complete.
 129 App experience | 130 Turn feedback into the next improvement
 131 Record what needs to change, who will do it and when to review it. Organisations can link a learning action to an assessment. App requests go to the developer through the feedback form.
-132 Report a fault or request a feature → 
+132 Report a fault or request a feature →
 133 Feature requests are tracked separately from assessment results. It is planned to link a request to a new version together with a later assessment.
 134 The isiXhosa text here is an unchecked draft.
 135 Gardens | 136 in this tour register | 137 in your organisation | 138 Farmers | 139 supported farmers | 140 Food planted | 141 this season | 142 Active gardens | 143 registered in this cycle

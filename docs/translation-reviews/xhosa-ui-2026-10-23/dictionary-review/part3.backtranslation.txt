@@ -265,7 +265,7 @@
 264 | navPageHelp | Page help
 265 | tourMenuTipOpenMenuAria | Open the menu to find Start tour
 266 | tourMenuTipTitle | Your tour stays here
-267 | tourMenuTipBodyBefore | The garden photo stays on Home. You can open again 
+267 | tourMenuTipBodyBefore | The garden photo stays on Home. You can open again
 268 | tourMenuTipBodyAfter |  in this menu any time you need it.
 269 | tourMenuTipShowMenu | Show me the menu
 270 | updateBannerRefreshing | Refreshing…

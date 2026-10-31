@@ -19,24 +19,24 @@
 18 Light – middle
 19 Light wind
 20 Varieties adapted to the place that suit the rain and temperature of your area.
-21 Vegetables all year round with summer rain — 
-22 Well-spread rain helps production all year — 
-23 Subtropical area with rain all year — 
-24 Rainy winter makes good crops grow — 
-25 Typical Mediterranean growing season — 
-26 Drought-tolerant crops are important — 
-27 Cold steppe — 
-28 Dry area — harvest water before any food production. With irrigation: 
-29 Cold dry area — harvesting water is important. Short growing season: 
-30 Short alpine season — 
-31 . Mildly dry winters suit cool-season crops; warm frost-free conditions can also carry 
-32 . Warm frost-free conditions can also carry 
+21 Vegetables all year round with summer rain —
+22 Well-spread rain helps production all year —
+23 Subtropical area with rain all year —
+24 Rainy winter makes good crops grow —
+25 Typical Mediterranean growing season —
+26 Drought-tolerant crops are important —
+27 Cold steppe —
+28 Dry area — harvest water before any food production. With irrigation:
+29 Cold dry area — harvesting water is important. Short growing season:
+30 Short alpine season —
+31 . Mildly dry winters suit cool-season crops; warm frost-free conditions can also carry
+32 . Warm frost-free conditions can also carry
 33  grow well. Middle winters keep delicate crops in frost still able to grow in sheltered places.
 34 . High humidity — choose disease-resistant varieties and open up wide airflow.
-35 . Dry summers need drought-tolerant varieties: 
+35 . Dry summers need drought-tolerant varieties:
 36  grow well. Summer heat requires irrigating annual crops; drought-tolerant trees bear without being irrigated.
-37 . Harvesting water is a must before these: 
-38  in places with harvested water. 
+37 . Harvesting water is a must before these:
+38  in places with harvested water.
 39  are your most suitable ways.
 40  in warm north-facing places. Protect all crops from frost and strong wind.
 41 Your soil test
