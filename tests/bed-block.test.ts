@@ -182,3 +182,140 @@ test('a broken scale yields no paths rather than paths at NaN', () => {
   assert.deepEqual(bedBlockPaths(SPEC, [0.5, 0.5], 0, 0, IMG_W, IMG_H), []);
   assert.deepEqual(bedBlockPaths(SPEC, [Number.NaN, 0.5], 0, M_PER_PX, IMG_W, IMG_H), []);
 });
+
+// Field polygons must become real measured beds, never their bounding box.
+import { bedsInsideField, configureFieldBlock, reconcileFieldBlockEdit, type FieldBlockConfig } from '../lib/bed-block.ts';
+import { normaliseCanvasState, type DesignCanvasState } from '../lib/design-canvas.ts';
+import { bedsFromDesignCanvas } from '../lib/design-beds-bridge.ts';
+import { autoSuggestPlan } from '../lib/crop-autosuggest.ts';
+import { collectReportSiteFacts } from '../lib/report-site-facts-collect.ts';
+
+const fieldFrame = { centerLng: 31, centerLat: -29, zoom: 18, imgW: 100, imgH: 50, mPerPx: 0.2, satDataUrl: null };
+const fieldConfig: FieldBlockConfig = { mode: 'beds', bedLengthM: 4, bedWidthM: 2, pathWidthM: 1, angleDeg: 0 };
+function fieldState(): DesignCanvasState {
+  return { siteId: 'site:fields', frame: fieldFrame, step: 'planting', updatedAt: '2026-10-30T00:00:00Z', items: [], lines: [], zones: [{ id: 'field-a', feature: 'staple_garden', zone: 3, points: [[0,0],[1,0],[1,1],[0,1]] }] };
+}
+
+test('field fill reserves paths at the sides and ends and counts only full planted beds', () => {
+  const state = fieldState();
+  const result = bedsInsideField(state.zones[0].points, fieldConfig, fieldFrame);
+  assert.equal(result.beds.length, 12); // Four 4m lengths across 20m; three 2m widths across 10m.
+  assert.equal(result.paths.length, 17);
+  assert.equal(result.beds.reduce((area,b) => area + b.wM*b.hM, 0), 96);
+  assert.deepEqual(state, fieldState(), 'the source polygon is never changed by a layout calculation');
+});
+
+test('a concave notch crossing a bed rejects it even when all four corners are inside the field', () => {
+  const ring: Array<[number,number]> = [[0,0],[1,0],[1,1],[0.6,1],[0.6,0.1],[0.4,0.1],[0.4,1],[0,1]];
+  const result = bedsInsideField(ring, { ...fieldConfig, bedLengthM: 20 }, fieldFrame);
+  assert.equal(result.beds.length, 0, 'no full-width bed can bridge the missing ground');
+});
+
+test('rotated polygon fill keeps metres correct on a non-square satellite frame', () => {
+  const result = bedsInsideField(fieldState().zones[0].points, { ...fieldConfig, angleDeg: 90 }, fieldFrame);
+  assert.equal(result.beds.length, 14);
+  assert.ok(result.beds.every(b => b.wM === 2 && b.hM === 4 && b.rot === undefined));
+});
+
+test('a field too small for the requested beds is not saved as fictitious capacity', () => {
+  const state = fieldState();
+  assert.throws(() => configureFieldBlock(state, 'field-a', 'West', { ...fieldConfig, bedLengthM: 30 }, fieldFrame), /No full-size beds/);
+  assert.equal(state.items.length, 0);
+  assert.throws(() => bedsInsideField(state.zones[0].points, { ...fieldConfig, pathWidthM: -1 }, fieldFrame), /valid bed/);
+});
+
+test('bed fields survive serialization and do not also count the parent polygon in the crop planner', () => {
+  const state = configureFieldBlock(fieldState(), 'field-a', 'West', fieldConfig, fieldFrame);
+  const restored = normaliseCanvasState(JSON.parse(JSON.stringify(state)), state.siteId);
+  assert.ok(restored, 'path widths and field ownership must survive the real storage validator');
+  const beds = bedsFromDesignCanvas(restored);
+  assert.equal(beds.length, 12);
+  assert.equal(beds.reduce((n,b) => n+b.areaM2, 0), 96);
+  assert.equal(beds[0].label, 'West / Bed 1');
+  assert.ok(beds.every(b => b.id !== 'field-a'));
+});
+
+test('switching an unallocated block to open field removes its generated beds and paths in one edit', () => {
+  const filled = configureFieldBlock(fieldState(), 'field-a', 'West', fieldConfig, fieldFrame);
+  const open = configureFieldBlock(filled, 'field-a', 'West', { ...fieldConfig, mode: 'open' }, fieldFrame);
+  assert.equal(open.items.length, 0);
+  assert.equal(open.lines.length, 0);
+  const spaces = bedsFromDesignCanvas(open);
+  assert.equal(spaces.length, 1);
+  assert.equal(spaces[0].kind, 'plot');
+  assert.equal(spaces[0].areaM2, 200);
+  assert.equal(spaces[0].id, 'field-a');
+});
+
+test('a saved crop allocation prevents rebuilding or deleting its measured field', () => {
+  const filled = configureFieldBlock(fieldState(), 'field-a', 'West', fieldConfig, fieldFrame);
+  const allocated = new Set([filled.items[0].id]);
+  assert.throws(() => configureFieldBlock(filled, 'field-a', 'West', { ...fieldConfig, mode: 'open' }, fieldFrame, allocated), /crop allocations/);
+  assert.throws(() => reconcileFieldBlockEdit(filled, { ...filled, zones: [] }, allocated), /crop allocations/);
+  const deleted = reconcileFieldBlockEdit(filled, { ...filled, zones: [] }, new Set());
+  assert.equal(deleted.items.length, 0);
+  assert.equal(deleted.lines.length, 0);
+  assert.throws(() => reconcileFieldBlockEdit(filled, fieldState(), allocated), /crop allocations/, 'history restoration cannot remove allocated generated beds');
+});
+
+test('an allocated open field keeps its measured outline through ordinary edits', () => {
+  const open = configureFieldBlock(fieldState(), 'field-a', 'West', { ...fieldConfig, mode: 'open' }, fieldFrame);
+  const changed = { ...open, zones: open.zones.map(z => ({ ...z, points: z.points.map(([x,y]): [number,number] => [x/2,y]) })) };
+  assert.throws(() => reconcileFieldBlockEdit(open, changed, new Set(['field-a'])), /crop allocations/);
+  assert.deepEqual(reconcileFieldBlockEdit(open, changed, new Set()), changed);
+});
+
+test('separate bed and open-field blocks both reach the existing automatic crop planner', () => {
+  const state = fieldState();
+  state.zones[0].points = [[0,0],[0.45,0],[0.45,1],[0,1]];
+  state.zones.push({ id: 'field-b', feature: 'staple_garden', zone: 3, points: [[0.55,0],[1,0],[1,1],[0.55,1]] });
+  const filled = configureFieldBlock(state, 'field-a', 'West', fieldConfig, fieldFrame);
+  const both = configureFieldBlock(filled, 'field-b', 'East', { ...fieldConfig, mode: 'open' }, fieldFrame);
+  const beds = bedsFromDesignCanvas(both);
+  assert.equal(beds.filter(b => b.kind === 'plot').length, 1);
+  const result = autoSuggestPlan({ goal: 'commercial', groups: [], rhythm: 'steady', rotateCrops: true, allowVinesInBeds: false, reliableIrrigation: true }, 'summer', beds, [], 10);
+  assert.ok(result.plantings.some(p => p.bedId === 'field-b'), 'the open field receives a crop allocation');
+  assert.ok(result.plantings.some(p => p.bedId.startsWith('field-a:bed:')), 'the generated beds receive allocations');
+  assert.ok(result.plantings.every(p => beds.some(b => b.id === p.bedId)));
+});
+
+test('filling a field leaves existing beds and their occupied ground alone', () => {
+  const state = fieldState();
+  state.items.push({ id: 'existing-bed', defId: 'veg_bed', x: 0.1, y: 0.1, wM: 4, hM: 2, rot: -90 });
+  const filled = configureFieldBlock(state, 'field-a', 'West', fieldConfig, fieldFrame);
+  assert.equal(filled.items.filter(i => i.fieldBlockId === 'field-a').length, 11);
+  assert.deepEqual(filled.items[0], state.items[0]);
+  assert.equal(bedsFromDesignCanvas(filled).reduce((a,b) => a+b.areaM2,0), 96);
+});
+
+test('overlapping field polygons cannot double-book the same land', () => {
+  const state = fieldState();
+  state.zones.push({ ...state.zones[0], id: 'field-b' });
+  assert.throws(() => configureFieldBlock(state, 'field-a', 'West', fieldConfig, fieldFrame), /blocks overlap/);
+});
+
+test('allocated generated beds cannot be deleted or resized through ordinary map editing', () => {
+  const filled = configureFieldBlock(fieldState(), 'field-a', 'West', fieldConfig, fieldFrame);
+  const bed = filled.items[0];
+  const allocated = new Set([bed.id]);
+  assert.throws(() => reconcileFieldBlockEdit(filled, { ...filled, items: filled.items.slice(1) }, allocated), /crop allocations/);
+  assert.throws(() => reconcileFieldBlockEdit(filled, { ...filled, items: filled.items.map(i => i.id === bed.id ? { ...i, wM: 1 } : i) }, allocated), /crop allocations/);
+});
+
+test('a traced patio is excluded from a generated field layout', () => {
+  const state = fieldState();
+  state.zones.push({ id: 'patio', feature: 'patio', zone: 0, points: [[0,0],[0.2,0],[0.2,0.2],[0,0.2]] });
+  const filled = configureFieldBlock(state, 'field-a', 'West', fieldConfig, fieldFrame);
+  assert.equal(filled.items.length, 11, 'the first bed would occupy the patio');
+});
+
+test('reports count the generated beds without also describing their parent as an open crop plot', () => {
+  const filled = configureFieldBlock(fieldState(), 'field-a', 'West', fieldConfig, fieldFrame);
+  filled.zones.push({ id: 'effort', zone: 3, points: [[0,0],[1,0],[1,1],[0,1]] });
+  const collect = (canvas: DesignCanvasState) => collectReportSiteFacts({ siteId: canvas.siteId, lat: -29, lon: 31, canvas, waterPoints: [], cropPlan: null });
+  const facts = collect(filled);
+  assert.equal(facts.design?.zones[0].staplePlots, 0);
+  assert.equal(facts.design?.beds.length, 12);
+  const open = configureFieldBlock(filled, 'field-a', 'West', { ...fieldConfig, mode: 'open' }, fieldFrame);
+  assert.equal(collect(open).design?.zones[0].staplePlots, 1);
+});

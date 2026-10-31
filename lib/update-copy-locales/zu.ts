@@ -3,6 +3,12 @@ import type { UpdateCopy } from '../update-copy';
 const copy:UpdateCopy={
   // Sheet fidelity: docs/audits/2026-10-31/ai-sheet-fidelity-release-drafts.json; unreviewed.
   "AI map guidance separates earthworks from finished planting.": "Imiyalelo yamamephu e-AI ihlukanisa umsebenzi womhlaba nokutshala okuqediwe.",
+  // Field blocks: docs/audits/2026-10-31/field-block-release-drafts.json; unreviewed.
+  "Draw named field blocks and fill them with beds using your own dimensions and path widths.": "Dweba izingxenye zensimu ezinamagama bese uzigcwalisa ngemibhede usebenzisa ubukhulu bakho nobubanzi bezindlela.",
+  "Keep a field open without beds and use both layouts in automatic crop planning.": "Shiya ingxenye yensimu ivulekile ingenamibhede, bese usebenzisa zombili izinhlelo ekuhleleni izitshalo okuzenzakalelayo.",
+  "Lay out your fields": "Hlela izinsimu zakho",
+  "Site design → Planting → Field blocks": "Ukuhlelwa kwesiza → Ukutshala → Izingxenye zensimu",
+  "Draw a polygon, choose beds or open field, save the layout and open the automatic crop planner.": "Dweba umumo onamakhona, khetha imibhede noma insimu evulekile, gcina uhlelo bese uvula umhleli wezitshalo ozenzakalelayo.",
   // Paper recovery: docs/audits/2026-10-31/paper-map-release-drafts.json; unreviewed.
   "Style choices stay visible; plain-paper Water maps keep white backgrounds.": "Izinketho zezitayela zihlala zibonakala; amamephu Amanzi ephepheni elimhlophe agcina ingemuva limhlophe.",
   // Oblique picker: docs/audits/2026-10-30/oblique-style-picker-release-drafts.json; unreviewed.

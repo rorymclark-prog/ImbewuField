@@ -3,6 +3,12 @@ import type { UpdateCopy } from '../update-copy';
 const copy:UpdateCopy={
   // Sheet fidelity: docs/audits/2026-10-31/ai-sheet-fidelity-release-drafts.json; unreviewed.
   "AI map guidance separates earthworks from finished planting.": "Ndaela dza mapa a AI dzi khethekanya mishumo ya mavu na u ṱavha ho no fhelaho.",
+  // Field blocks: docs/audits/2026-10-31/field-block-release-drafts.json; unreviewed.
+  "Draw named field blocks and fill them with beds using your own dimensions and path widths.": "Olani zwipiḓa zwa tsimu zwi re na madzina ni zwi ḓadze nga mibethe ni tshi shumisa mielo yaṋu na vhuphara ha nḓila.",
+  "Keep a field open without beds and use both layouts in automatic crop planning.": "Litshani tshipiḓa tsha tsimu tsho vulea tshi si na mibethe, ni shumise nzudzanyo dzoṱhe mbili kha u pulana zwiliṅwa hu ḓiendelaho.",
+  "Lay out your fields": "Dzudzanyani tsimu dzaṋu",
+  "Site design → Planting → Field blocks": "Dizaini ya fhethu → U ṱavha → Zwipiḓa zwa tsimu",
+  "Draw a polygon, choose beds or open field, save the layout and open the automatic crop planner.": "Olani tshivhumbeo tshi re na khuḓa, khethani mibethe kana tsimu yo vuleaho, vhulungani nzudzanyo ni vule mupulani wa zwiliṅwa ane a ḓiendela.",
   // Paper recovery: docs/audits/2026-10-31/paper-map-release-drafts.json; unreviewed.
   "Style choices stay visible; plain-paper Water maps keep white backgrounds.": "Zwinangwa zwa zwitaila zwi dzula zwi tshi vhonala; mapa a Maḓi kha bammbiri ḽitshena a vhulunga murahu hu hutshena.",
   // Oblique picker: docs/audits/2026-10-30/oblique-style-picker-release-drafts.json; unreviewed.

@@ -3,6 +3,12 @@ import type { UpdateCopy } from '../update-copy';
 const copy:UpdateCopy={
   // Sheet fidelity: docs/audits/2026-10-31/ai-sheet-fidelity-release-drafts.json; unreviewed.
   "AI map guidance separates earthworks from finished planting.": "Swiletelo swa mimepe ya AI swi hambanisa mintirho ya misava ni ku byala loku hetisisiweke.",
+  // Field blocks: docs/audits/2026-10-31/field-block-release-drafts.json; unreviewed.
+  "Draw named field blocks and fill them with beds using your own dimensions and path widths.": "Dirowa swiphemu swa nsimu leswi nga ni mavito kutani u swi tata hi mibedo u tirhisa mipimo ya wena ni ku anama ka tindlela.",
+  "Keep a field open without beds and use both layouts in automatic crop planning.": "Siya xiphemu xa nsimu xi pfulekile xi nga ri na mibedo, kutani u tirhisa malulamiselo hamambirhi eka ku kunguhata swibyariwa loku tiendlekelaka.",
+  "Lay out your fields": "Hlela masimu ya wena",
+  "Site design → Planting → Field blocks": "Dizayini ya ndhawu → Ku byala → Swiphemu swa nsimu",
+  "Draw a polygon, choose beds or open field, save the layout and open the automatic crop planner.": "Dirowa xivumbeko lexi nga ni tikhona, hlawula mibedo kumbe nsimu leyi pfulekeke, hlayisa malulamiselo kutani u pfula xipulani xa swibyariwa lexi tiendlekelaka.",
   // Paper recovery: docs/audits/2026-10-31/paper-map-release-drafts.json; unreviewed.
   "Style choices stay visible; plain-paper Water maps keep white backgrounds.": "Swihlawuriwa swa xitayele swi sala swi vonaka; mimepe ya Mati eka phepha ro basa yi hlayisa le ndzhaku ku basile.",
   // Oblique picker: docs/audits/2026-10-30/oblique-style-picker-release-drafts.json; unreviewed.

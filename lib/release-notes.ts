@@ -44,6 +44,11 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   { when: '31 October 2026', sha: '67be5c64d', changes: [
     'AI map guidance separates earthworks from finished planting.',
   ] },
+  { when: '31 October 2026', sha: 'e6c097ad3', changes: [
+    'Draw named field blocks and fill them with beds using your own dimensions and path widths.',
+    'Keep a field open without beds and use both layouts in automatic crop planning.',
+  ], tour: [{ title: 'Lay out your fields', where: 'Site design → Planting → Field blocks', href: '/design',
+    detail: 'Draw a polygon, choose beds or open field, save the layout and open the automatic crop planner.' }] },
   { when: '31 October 2026', sha: '1a47f8965', changes: [
     'Style choices stay visible; plain-paper Water maps keep white backgrounds.',
   ] },
