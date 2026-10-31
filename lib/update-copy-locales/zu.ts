@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Live render review: docs/audits/2026-10-31/live-map-settings-release-drafts.json; unreviewed.
+  "Earthworks starts with your available aerial photo; plain paper remains a choice.": "Umsebenzi womhlaba uqala ngesithombe sendawo esithathwe phezulu esitholakalayo; iphepha elimhlophe lisekhona njengenketho.",
   // Map defaults: docs/audits/2026-10-31/map-defaults-release-drafts.json; unreviewed.
   "Each map opens with recommended settings and keeps your choices as you switch sheets.": "Imephu ngayinye ivuleka ngezilungiselelo ezinconyiwe futhi igcina ukukhetha kwakho lapho ushintsha amashidi.",
   "Check each map’s settings": "Hlola izilungiselelo zemephu ngayinye",

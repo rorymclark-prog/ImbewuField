@@ -6,6 +6,8 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Paid AI map composition: start here
 
+Latest live output review: [Three fresh AI results and Earthworks starting-image correction — 31 October 2026](2026-10-31/live-ai-map-settings-review-codex.md). Remaining live tests need the owner browser connection restored.
+
 Latest settings continuation: [Per-sheet AI starting settings — 31 October 2026](2026-10-31/map-sheet-defaults-codex.md). Fresh provider quality review remains open.
 
 Latest nine-sheet review: [Earthworks stage, bed footprints and three viewport sizes — 31 October 2026](2026-10-31/ai-sheet-fidelity-codex.md). Actual AI evidence exists for four sheets; five remain unverified.
@@ -256,6 +258,7 @@ date the audit was performed. Inclusion here does not certify current findings.
 | --- | --- |
 | 2026-10-31 | [Nine-sheet AI fidelity and three viewport sizes — Codex](2026-10-31/ai-sheet-fidelity-codex.md) |
 | 2026-10-31 | [Per-sheet AI starting settings — Codex](2026-10-31/map-sheet-defaults-codex.md) |
+| 2026-10-31 | [Live AI map settings/output review — Codex](2026-10-31/live-ai-map-settings-review-codex.md) |
 | 2026-10-30 | [Oblique AI illustration — Codex](2026-10-30/oblique-ai-view-codex.md) |
 | 2026-10-30 | [Phone AI artwork and full-screen fit — Codex](2026-10-30/phone-ai-paper-quality-codex.md) |
 | 2026-10-30 | [Map style footer and oblique feasibility — Codex](2026-10-30/map-style-footer-and-oblique-feasibility-codex.md) |

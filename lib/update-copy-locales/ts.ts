@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Live render review: docs/audits/2026-10-31/live-map-settings-release-drafts.json; unreviewed.
+  "Earthworks starts with your available aerial photo; plain paper remains a choice.": "Mintirho ya misava yi sungula hi xifaniso xa ndhawu lexi tekiweke ehenhla lexi nga kona; phepha ro basa ra ha ri ndlela yo hlawula.",
   // Map defaults: docs/audits/2026-10-31/map-defaults-release-drafts.json; unreviewed.
   "Each map opens with recommended settings and keeps your choices as you switch sheets.": "Mepe wun’wana ni wun’wana wu pfuleka hi swiyimiso leswi bumabumeriwaka naswona wu hlayisa leswi u swi hlawuleke loko u cinca maphepha.",
   "Check each map’s settings": "Kambela swiyimiso swa mepe wun’wana ni wun’wana",

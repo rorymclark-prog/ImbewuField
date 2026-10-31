@@ -47,7 +47,7 @@ test('switching maps applies recommendations once and remembers manual choices w
   const apply=()=>helper('applySheet',{...scope(),setSelectedNo:setter('selectedNo'),setExactSheet:setter('exactSheet'),setAnalysisStyle:setter('analysisStyle'),setFilter:setter('filter')});
   const choose=(sheet:any,mode='ai',loading:any=null)=>helper('chooseSheet',{...scope(),loading,applySheet:apply()})(sheet,mode);
   choose(sheets[1]);
-  assert.deepEqual([ui.selectedNo,ui.underlay,ui.producerStyle,ui.labelMode,ui.aiView],['05','plain',DEFAULT_PRODUCER_STYLE,'codes','top-down']);
+  assert.deepEqual([ui.selectedNo,ui.underlay,ui.producerStyle,ui.labelMode,ui.aiView],['05','photo',DEFAULT_PRODUCER_STYLE,'codes','top-down']);
   Object.assign(ui,{underlay:'satellite',producerStyle:'homestead_storybook',labelMode:'names',aiView:'oblique'});
   choose(sheets[2]);
   assert.deepEqual([ui.selectedNo,ui.underlay,ui.producerStyle,ui.labelMode,ui.aiView],['04','photo',DEFAULT_PRODUCER_STYLE,'names','top-down']);

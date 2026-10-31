@@ -18,7 +18,9 @@ export interface SheetPresentationSettings {
   view: 'top-down' | 'oblique';
 }
 
-/** Digging/zone diagrams need a clean page; physical-system sheets need the site's real context.
+/** Zones need a clean page; illustrated physical-system sheets need the site's real context.
+ * A paid plain Earthworks test invented a roof over paving despite a correct digging register.
+ * Prefer available imagery for that sheet too; a white page alone cannot supply building context.
  * These are starting choices, not a claim that a model's returned geometry has been verified.
  * The caller supplies the routing authority's default style; selecting settings never spends. */
 export function recommendedSheetSettings(
@@ -30,7 +32,7 @@ export function recommendedSheetSettings(
     ? hasFarmerPhoto(frame) ? 'photo' : 'satellite'
     : frame.underlayDataUrl ? 'satellite' : 'plain';
   return {
-    underlay: sheet === 'earthworks' || sheet === 'zones' ? 'plain' : aerial,
+    underlay: sheet === 'zones' ? 'plain' : aerial,
     style: defaultStyle,
     labelMode: sheet === 'earthworks' || sheet === 'planting' || sheet === 'all' ? 'codes' : 'names',
     view: 'top-down',

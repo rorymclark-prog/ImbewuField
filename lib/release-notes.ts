@@ -41,6 +41,9 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '31 October 2026', sha: '9d6854ee6', changes: [
+    'Earthworks starts with your available aerial photo; plain paper remains a choice.',
+  ] },
   { when: '31 October 2026', sha: 'f296fa8df', changes: [
     'Each map opens with recommended settings and keeps your choices as you switch sheets.',
     'AI map guidance separates earthworks from finished planting.',
