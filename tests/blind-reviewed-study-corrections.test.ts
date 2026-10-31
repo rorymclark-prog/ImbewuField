@@ -108,6 +108,8 @@ async function isolatedGuard() {
     'tests/wave-17-history-checks.ts','tests/fixtures/student-page-before-wave-17.tsx.txt',
     // The isiXhosa Studies layer sits on the wave 17 one the same way.
     'tests/xh-studies-history-checks.ts','tests/fixtures/student-page-before-xh-studies.tsx.txt',
+    // The Afrikaans Studies layer sits on the isiXhosa one the same way.
+    'tests/af-studies-history-checks.ts','tests/fixtures/student-page-before-af-studies.tsx.txt',
     // The isiXhosa slide-card layer accounts for its new media in the listing, so the fixture carries it,
     // its release declarations and every declared card.
     'tests/xh-deck-history-checks.ts','lib/course-deck-release-bindings-xh-data.ts',

@@ -41,7 +41,7 @@ import type { ReportSiteFacts } from '@/lib/report-site-facts';
 import { reportSummaryPages, buildInkSummaryPdf, sampleFullSiteReport, preparedSampleReport, preparedExampleNote } from '@/lib/report-summary';
 import { reportUiText, reportUiDate, reportHeadingAliases, reportDocumentText, REPORT_DOCUMENT_LANGUAGES } from '@/lib/report-localisation';
 import LanguageDraftNote from './LanguageDraftNote';
-import { xhInlineDraft } from '@/lib/xh-inline';
+import { inlineDraft, isInlineDraftLang } from '@/lib/xh-inline';
 import { localeDate } from '@/lib/xh-dates';
 import { loadLocale, translate } from '@/lib/i18n';
 import { useLanguage } from '@/lib/i18n';
@@ -343,7 +343,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const simple = useAppLevel() === 'simple';
   const { lang: uiLanguage, t: appT } = useLanguage();
   // isiXhosa: the draft keyed by the exact English (lib/locales/xh-inline), else the dictionary.
-  const xhDraft = (en: string) => uiLanguage === 'xh' ? xhInlineDraft(en) : null;
+  const xhDraft = (en: string) => isInlineDraftLang(uiLanguage) ? inlineDraft(uiLanguage, en) : null;
   const tr = (en: string, zu: string) => xhDraft(en) ?? reportUiText(en, uiLanguage, appT, zu);
   const label = (en: string) => xhDraft(en) ?? reportUiText(en, uiLanguage, appT);
   // The report's own language picker (LANGUAGE_OPTIONS) is independent of the app-wide language,

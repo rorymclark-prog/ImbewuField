@@ -2,7 +2,7 @@
 
 import { Fragment, type ImgHTMLAttributes, type ReactNode } from 'react';
 import { useLanguage } from '@/lib/i18n';
-import { fillInline, inlineText, xhInlineDraft } from '@/lib/xh-inline';
+import { fillInline, inlineDraft, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import ArrowLabel from './ArrowLabel';
 import draftStyles from './DesignDraftCopy.module.css';
 
@@ -16,8 +16,8 @@ import draftStyles from './DesignDraftCopy.module.css';
  */
 export default function Tx({ en, values, lookup, plain }: { en: string; values?: Record<string, string | number>; lookup?: string[]; plain?: boolean }) {
   const { lang } = useLanguage();
-  const draft = lang === 'xh' && !plain ? xhInlineDraft(en) : null;
-  return draft ? <span lang="xh">{render(lang, en, values, lookup)}</span> : <>{render(lang, en, values, lookup)}</>;
+  const draft = isInlineDraftLang(lang) && !plain ? inlineDraft(lang, en) : null;
+  return draft ? <span lang={lang}>{render(lang, en, values, lookup)}</span> : <>{render(lang, en, values, lookup)}</>;
 }
 
 /** `lookup` names the values that are themselves English course text (a lesson title) and get their own draft. */
@@ -37,20 +37,20 @@ export function TxArrow({ en, values, lookup, dir }: { en: string; values?: Reco
  *  (a <strong> with a figure, say) in the English and in the isiXhosa draft alike. */
 export function TxRich({ en, nodes }: { en: string; nodes: Record<string, ReactNode> }) {
   const { lang } = useLanguage();
-  const draft = lang === 'xh' ? xhInlineDraft(en) : null;
+  const draft = isInlineDraftLang(lang) ? inlineDraft(lang, en) : null;
   const parts = (draft ?? en).split(/(\{[a-zA-Z]+\})/);
   const body = parts.map((part, index) => {
     const name = /^\{([a-zA-Z]+)\}$/.exec(part)?.[1];
     return name && name in nodes ? <Fragment key={index}>{nodes[name]}</Fragment> : part;
   });
-  return draft ? <span lang="xh">{body}</span> : <>{body}</>;
+  return draft ? <span lang={lang}>{body}</span> : <>{body}</>;
 }
 
 /** An isiXhosa line that carries values (a file name, a count), which the exact-English lookup of
  *  DesignDraftCopy cannot match. Same markup as DesignDraftCopy's isiXhosa branch: the draft with its
  *  filled English source beneath it. */
-export function XhDraftLine({ xh, en }: { xh: string; en: string }) {
-  return <span lang="xh" style={{ display: 'inline-block', minWidth: 0 }}>{xh}<small lang="en" className={draftStyles.source}>English source: {en}</small></span>;
+export function XhDraftLine({ xh, en, lang = 'xh' }: { xh: string; en: string; lang?: string }) {
+  return <span lang={lang} style={{ display: 'inline-block', minWidth: 0 }}>{xh}<small lang="en" className={draftStyles.source}>English source: {en}</small></span>;
 }
 
 /** An illustration whose alt text is English course copy: isiXhosa readers get the draft for it. */

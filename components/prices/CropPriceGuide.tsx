@@ -16,8 +16,8 @@ import { inlineText } from '@/lib/xh-inline';
 export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: PricedCrop; onChangeCrop: () => void; simple?: boolean }) {
   const { t, lang } = useLanguage();
   const { price } = crop;
-  // isiZulu and isiXhosa both show the exact English source beside the draft wording for prices.
-  const bilingual = lang === 'zu' || lang === 'xh';
+  // isiZulu, isiXhosa and Afrikaans show the exact English source beside the draft wording for prices.
+  const bilingual = lang === 'zu' || lang === 'xh' || lang === 'af';
   const sourced = price.confidence === 'sourced';
   // 'recommended' = the average of the cited prices found (lib/crop-prices.ts). It gets its own
   // badge: calling it a "real market price" overclaims, and "rough estimate" undersells a figure

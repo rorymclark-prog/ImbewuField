@@ -72,7 +72,8 @@ function Toggle({ on, onChange, label }: { on: boolean; onChange: (v: boolean) =
 
 export default function PopiaConsent() {
   const { t, lang } = useLanguage();
-  const showEnglishSource = ENGLISH_SOURCE_LANGS.has(lang);
+  // Afrikaans consent wording is an unreviewed machine draft too (lib/locales/af.ts).
+  const showEnglishSource = ENGLISH_SOURCE_LANGS.has(lang) || lang === 'af';
   const copy = (key: string) => <span><span lang={lang}>{t(key)}</span>{showEnglishSource && <small lang="en" className="block mt-1" style={{ fontSize: 12, fontWeight: 400, lineHeight: 1.4 }}><span lang={lang} className="font-semibold">{t('popiaEnglishSourceLabel')}</span> {translate('en', key)}</small>}</span>;
   // A switch has one native name; its separately tagged source stays available in the reading flow.
   const copyString = (key: string) => t(key);

@@ -33,7 +33,7 @@ import {
   type JournalEntryInput,
 } from '@/lib/field-journal';
 import JournalEntrySheet, { type BedOption } from './JournalEntrySheet';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import { formatXhosaJournalDate, formatXhosaMonth, formatZuluJournalDate, formatZuluMonth, journalCategoryLabel } from './journal-labels';
 import motion from './JournalMotion.module.css';
 import explore from './JournalExplore.module.css';
@@ -418,7 +418,7 @@ export default function FieldJournal() {
       {isZulu && <div role="note" style={{ marginBottom: 10, padding: '9px 12px', borderRadius: 10, background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', color: 'var(--gold-dim)', font: '500 12px/1.45 var(--font-sans), sans-serif' }}>
         Izibonelo namanothi akho akhonjiswa njengoba ebhaliwe. Isibonelo neminye imibhalo isesiNgisini.
       </div>}
-      {lang === 'xh' && <div role="note" style={{ marginBottom: 10, padding: '9px 12px', borderRadius: 10, background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', color: 'var(--gold-dim)', font: '500 12px/1.45 var(--font-sans), sans-serif' }}>
+      {isInlineDraftLang(lang) && <div role="note" style={{ marginBottom: 10, padding: '9px 12px', borderRadius: 10, background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', color: 'var(--gold-dim)', font: '500 12px/1.45 var(--font-sans), sans-serif' }}>
         {inlineText(lang, 'Examples and your own notes are shown as written. The example and other text stay in English.')}
       </div>}
 

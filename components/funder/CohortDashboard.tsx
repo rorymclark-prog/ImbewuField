@@ -311,6 +311,9 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
         {lang === 'xh' && <p role="note" className="px-3 md:px-5 py-2 font-sans" style={{ fontSize: MICRO, color: INK_MUTED, lineHeight: 1.5, background: PAPER }}>
           {inlineText(lang, 'The sharing controls and notices on this page are in isiXhosa. Some charts, data-status warnings and the farmer detail panel are still shown in English; names, figures and evidence typed by people are shown as saved.')}
         </p>}
+        {lang === 'af' && <p role="note" className="px-3 md:px-5 py-2 font-sans" style={{ fontSize: MICRO, color: INK_MUTED, lineHeight: 1.5, background: PAPER }}>
+          {inlineText(lang, 'The sharing controls and notices on this page are in Afrikaans. Some charts, data-status warnings and the farmer detail panel are still shown in English; names, figures and evidence typed by people are shown as saved.')}
+        </p>}
         {lang === 'zu' && <p role="note" className="px-3 md:px-5 py-2 font-sans" style={{ fontSize: MICRO, color: INK_MUTED, lineHeight: 1.5, background: PAPER }}>
           Izilawuli nezaziso zokwabelana kuleli khasi zisesiZulu. Amanye amagrafu, izexwayiso zesimo sedatha nephaneli yemininingwane yomlimi zisaboniswa ngesiNgisi; amagama, amanani nobufakazi obuqoshwe ngabantu kuboniswa njengoba kugcinwe.
         </p>}

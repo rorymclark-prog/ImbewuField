@@ -1,10 +1,10 @@
 import styles from '../ReportView.module.css';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 
 export default function ReportPurposeGuide({ language }: { language: string }) {
   return <details className={`${styles.versionDetails} ${styles.purposeGuide} no-print`} lang="en">
     <summary style={{ minHeight: 44 }}><strong>Which report do I need?</strong></summary>
-    {language !== 'en' && <p lang={language === 'xh' ? 'xh' : undefined}>{inlineText(language, 'This guide is currently in English.')}</p>}
+    {language !== 'en' && <p lang={isInlineDraftLang(language) ? language : undefined}>{inlineText(language, 'This guide is currently in English.')}</p>}
     <p><strong>Choose the purpose first, then the wording and depth.</strong> There are two main site reports, followed by a later progress review.</p>
     <table className={styles.purposeTable}>
       <caption>Report purposes and when to use them</caption>

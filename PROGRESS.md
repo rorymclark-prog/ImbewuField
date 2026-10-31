@@ -65,6 +65,34 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 31 Oct 2026 — Afrikaans: the whole app as a labelled machine draft (PR #1161, stacked on #1090)
+All unreviewed machine drafts; English is the authority and is shown beside each draft where isiXhosa
+shows it. English, isiZulu and isiXhosa output are unchanged.
+- **Dictionary:** the 2,182 keys `lib/locales/af.ts` lacked, plus the survey keys that read the same as English.
+- **Inline drafts:** `lib/locales/af-inline/` covers every string the isiXhosa layer covers (8,165) plus
+  the Afrikaans notices. `lib/xh-inline.ts` keeps one English-keyed map per draft language
+  (`isInlineDraftLang`); `tests/af-inline.test.ts` checks placeholders, numbers, stale keys and xh parity.
+- **Screens:** the isiXhosa-only inline-draft branches (about 110 files) now serve Afrikaans too, each with
+  its own draft notice.
+- **Release notes and tour:** all 235 lines (`lib/update-copy-locales/af.ts`).
+- **Dates, weather, error pages:** on-screen dates use the browser's `af-ZA` month names; the weather card
+  and error/offline pages carry their own Afrikaans tables.
+- **Kept English for Afrikaans on purpose:** report and invoice documents, report summaries and PDF labels
+  (pinned by the report-header and report-costs tests).
+- **Blind review of safety, money and consent drafts:** 1,936 drafts back-translated by six independent
+  reviewers before seeing the English; 44 repairs applied (`docs/translation-reviews/afrikaans-ui-2026-10-31/`).
+- **Studies lessons:** all 10 modules (33 lessons, 646 fields) as source-paired drafts
+  (`lib/course-translation-drafts-af.ts`, built by `scripts/build-af-course-drafts.mjs`); three blind
+  reviewers, 3 repairs (`docs/study-translation-reviews/afrikaans-2026-10-31/`). The Studies page gets an
+  Afrikaans history layer (`tests/af-studies-history-checks.ts`).
+- **Permaculture Manual:** all 14 chapters at `/manual/af` (`content/manual/af/`), with glossary
+  `research/manual/glossary-af.md`. The 52 safety sections had a blind review: 8 repairs
+  (`research/manual/review-af/`, notes and open decisions in `research/manual/REVIEW-af.md`).
+- **Fluent-review hand-off:** `docs/translation-reviews/afrikaans-ui-2026-10-31/fluent-review-handoff-2026-10-31.csv`
+  (11,851 rows, safety first).
+- **Still to do:** the Studies slide decks. These would add about 63 MB of rendered cards, as isiXhosa
+  did, and wait on Rory's decision.
+
 ### 25 Oct 2026 — isiXhosa phases 4–5: reports, crops, production data and Study content (PR #1090)
 All unreviewed machine drafts keyed by the exact English (`lib/locales/xh-inline/g18`–`g26`); English
 and isiZulu output are unchanged.

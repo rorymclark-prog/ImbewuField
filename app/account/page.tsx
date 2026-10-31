@@ -61,7 +61,9 @@ export default function AccountPage() {
   const { lang, setLang,t } = useLanguage();
   // isiXhosa is not an account-copy draft language: xh readers get the unreviewed draft keyed by the
   // same English (lib/locales/xh-inline); en/zu/st/ts/ve keep accountText exactly.
-  const copy:AccountCopy = (en,zu,values) => lang === 'xh' ? inlineTemplate(lang,en,null,values ?? {}) : accountText(lang,en,zu,t,values);
+  // Afrikaans reads the same English-keyed inline drafts.
+  const inlineDraftLang = lang === 'xh' || lang === 'af';
+  const copy:AccountCopy = (en,zu,values) => inlineDraftLang ? inlineTemplate(lang,en,null,values ?? {}) : accountText(lang,en,zu,t,values);
   // Error state holds the English source; AccountErrorText repaints it for the account draft
   // languages, and isiXhosa readers get the login-error keys or the xh-inline draft instead.
   const xhError = (source: string) => <bdi lang={lang}>{Object.hasOwn(AUTH_ERROR_KEYS, source) ? t(AUTH_ERROR_KEYS[source]) : inlineText(lang, source)}</bdi>;
@@ -354,7 +356,7 @@ export default function AccountPage() {
                 {displayName ?? copy('ImbewuField user','Umsebenzisi we-ImbewuField')}
               </div>
               {photoError && (
-                <div className="text-xs font-sans mt-1" style={{ color: 'var(--danger)' }}>{lang === 'xh' ? xhError(photoError) : <AccountErrorText source={photoError}/>}</div>
+                <div className="text-xs font-sans mt-1" style={{ color: 'var(--danger)' }}>{inlineDraftLang ? xhError(photoError) : <AccountErrorText source={photoError}/>}</div>
               )}
               {roleLabel && (
                 <div className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-xs font-sans"
@@ -438,7 +440,7 @@ export default function AccountPage() {
                       )}
                     </div>
                     <div className="text-xs font-sans" style={{ color: logoError ? 'var(--danger)' : 'var(--text-muted)' }}>
-                      {logoError ? (lang === 'xh' ? xhError(logoError) : <AccountErrorText source={logoError}/>) : copy('A photo of your sign works. It is made smaller automatically.', 'Ungafaka isithombe sophawu lwakho. Sizoncishiswa ngokuzenzakalela.')}
+                      {logoError ? (inlineDraftLang ? xhError(logoError) : <AccountErrorText source={logoError}/>) : copy('A photo of your sign works. It is made smaller automatically.', 'Ungafaka isithombe sophawu lwakho. Sizoncishiswa ngokuzenzakalela.')}
                     </div>
                   </div>
                 </div>
@@ -456,7 +458,7 @@ export default function AccountPage() {
 
               {profileError && (
                 <div className="text-xs font-sans rounded-lg px-3 py-2" style={{ color: 'var(--danger)', background: 'var(--danger-soft)', border: '1px solid color-mix(in srgb, var(--danger) 35%, transparent)' }}>
-                  {lang === 'xh' ? xhError(profileError) : <AccountErrorText source={profileError}/>}
+                  {inlineDraftLang ? xhError(profileError) : <AccountErrorText source={profileError}/>}
                 </div>
               )}
 
@@ -503,9 +505,13 @@ export default function AccountPage() {
               org, because consent is granted TO an organisation and the rules pin it to theirs. */}
           {profile?.role === 'farmer' && profile?.org_id && (
             <>
-              {lang === 'xh' && <p className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: '#FFF4D6', color: 'var(--text-secondary)' }} role="note">
+              {lang === 'xh' && <p className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--warn-soft)', color: 'var(--text-secondary)' }} role="note">
                 <strong>isiXhosa machine drafts — not reviewed.</strong> English source wording is shown beside each draft until first-language and consent-meaning review.
                 <span className="block mt-1" lang="xh"><strong>{inlineText(lang, 'isiXhosa machine drafts — not reviewed.')}</strong> {inlineText(lang, 'English source wording is shown beside each draft until first-language and consent-meaning review.')} <span className="font-semibold">({inlineText(lang, 'isiXhosa machine draft')})</span></span>
+              </p>}
+              {lang === 'af' && <p className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: 'var(--warn-soft)', color: 'var(--text-secondary)' }} role="note">
+                <strong>Afrikaans machine drafts — not reviewed.</strong> English source wording is shown beside each draft until first-language and consent-meaning review.
+                <span className="block mt-1" lang="af"><strong>{inlineText(lang, 'Afrikaans machine drafts — not reviewed.')}</strong> {inlineText(lang, 'English source wording is shown beside each draft until first-language and consent-meaning review.')} <span className="font-semibold">({inlineText(lang, 'Afrikaans machine draft')})</span></span>
               </p>}
               <ConsentPanel orgName={orgName} />
             </>
@@ -549,7 +555,7 @@ export default function AccountPage() {
                       )}
                     </div>
                   ))}
-                  {pwError && <p role="alert" className="text-xs font-sans" style={{ color: 'var(--orange)' }}>{lang === 'xh' ? xhError(pwError) : <AccountErrorText source={pwError}/>}</p>}
+                  {pwError && <p role="alert" className="text-xs font-sans" style={{ color: 'var(--orange)' }}>{inlineDraftLang ? xhError(pwError) : <AccountErrorText source={pwError}/>}</p>}
                   <div className="flex gap-2 pt-1">
                     <button onClick={handleChangePw} disabled={pwSaving || !pwForm.current || !pwForm.next || !pwForm.confirm}
                       className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-sans font-semibold"

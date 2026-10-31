@@ -6,8 +6,9 @@
 // tests/page-titles.test.ts) and the reader's language lives only in the browser, so the server
 // cannot localise it. When the language is isiXhosa this reads the title Next.js set, splits off
 // the shared " — ImbewuField" suffix, translates the page part (lib/locales/xh-inline/
-// g29-document-titles.ts) and writes it back. A title with no draft stays English. Other
-// languages are left completely alone.
+// g29-document-titles.ts) and writes it back. A title with no draft stays English. Afrikaans reads
+// its own drafts of the same English (lib/locales/af-inline/) the same way. Other languages are
+// left completely alone.
 //
 // Next.js re-writes <title> on every client navigation (and may replace the element), so a
 // MutationObserver on <head> re-applies the translation. The loop guard: the value this component
@@ -21,13 +22,13 @@ import { inlineText } from '@/lib/xh-inline';
 
 const SUFFIX = ' — ImbewuField';
 
-/** The isiXhosa title for an English document title, or the title unchanged when there is no draft. */
-export function xhDocumentTitle(english: string): string {
-  const whole = inlineText('xh', english);
+/** The isiXhosa (or Afrikaans) title for an English document title, or the title unchanged when there is no draft. */
+export function xhDocumentTitle(english: string, lang = 'xh'): string {
+  const whole = inlineText(lang, english);
   if (whole !== english) return whole;
   if (english.endsWith(SUFFIX)) {
     const part = english.slice(0, -SUFFIX.length);
-    const translated = inlineText('xh', part);
+    const translated = inlineText(lang, part);
     if (translated !== part) return translated + SUFFIX;
   }
   return english;
@@ -42,7 +43,7 @@ export default function DocumentTitle() {
   // `t` is a new function whenever the provider re-renders, including once the lazily loaded
   // isiXhosa chunk (which registers the drafts) lands — so the title is re-applied then too.
   useEffect(() => {
-    if (lang !== 'xh' || typeof document === 'undefined') return;
+    if ((lang !== 'xh' && lang !== 'af') || typeof document === 'undefined') return;
 
     const apply = () => {
       const current = document.title;
@@ -51,7 +52,7 @@ export default function DocumentTitle() {
       if (applied.current === null || current !== applied.current) source.current = current;
       const english = source.current;
       if (english === null) return;
-      const next = xhDocumentTitle(english);
+      const next = xhDocumentTitle(english, lang);
       if (next === english) {
         applied.current = null;
         return;
@@ -66,9 +67,9 @@ export default function DocumentTitle() {
     return () => observer.disconnect();
   }, [lang, pathname, t]);
 
-  // Leaving isiXhosa puts the English back if the title is still the one this component wrote.
+  // Leaving isiXhosa or Afrikaans puts the English back if the title is still the one this component wrote.
   useEffect(() => {
-    if (lang === 'xh') return;
+    if (lang === 'xh' || lang === 'af') return;
     if (applied.current !== null && source.current !== null && document.title === applied.current) {
       document.title = source.current;
     }

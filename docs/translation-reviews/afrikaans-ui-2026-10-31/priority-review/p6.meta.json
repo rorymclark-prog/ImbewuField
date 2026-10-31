@@ -1,0 +1,2249 @@
+[
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "mentorAgreedActionLabel",
+  "english": "Agreed action",
+  "draft": "Ooreengekome aksie"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "mentorVisitNotesVisibility",
+  "english": "Visit notes and photos are visible to the assigned mentor and authorised organisation staff.",
+  "draft": "Besoeknotas en -foto's is sigbaar vir die toegewese mentor en gemagtigde organisasiepersoneel."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "mentorInternalReportNotice",
+  "english": "Internal mentor report · Includes private visit notes. Use the organisation’s published programme report when sharing with funders.",
+  "draft": "Interne mentorverslag · Sluit private besoeknotas in. Gebruik die organisasie se gepubliseerde programverslag wanneer jy met befondsers deel."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "mentorAccessCheckIntro",
+  "english": "Select a member to see their effective programme permissions and assigned farmer group. Save changes in People & permissions first, then refresh here.",
+  "draft": "Kies 'n lid om hul effektiewe programtoestemmings en toegewese boeregroep te sien. Stoor eers veranderinge in Mense en toestemmings, en verfris dan hier."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "mentorAccessTrainingRecordsNote",
+  "english": "Training records are limited to this mentor’s own sessions. Private assessment analysis, when enabled above, covers the organisation’s assessments.",
+  "draft": "Opleidingsrekords is beperk tot hierdie mentor se eie sessies. Private assesseringsontleding, wanneer dit hierbo aangeskakel is, dek die organisasie se assesserings."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "mentorVisibleOnMapAria",
+  "english": "Visible on map",
+  "draft": "Sigbaar op kaart"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "shareButtonTitle",
+  "english": "Share this site",
+  "draft": "Deel hierdie terrein"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "shareFailedToast",
+  "english": "Share failed",
+  "draft": "Deel het misluk"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "nativeEditConfirmDeleteButton",
+  "english": "Confirm delete",
+  "draft": "Bevestig uitvee"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "radioCommunityGroupDesc",
+  "english": "Shared garden, coop, or NGO site",
+  "draft": "Gedeelde tuin, koöp of NRO-terrein"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "myRecordsNoDesigns",
+  "english": "No designs shared with you yet.",
+  "draft": "Geen ontwerpe is nog met jou gedeel nie."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "myRecordsSharedPrefix",
+  "english": "Shared",
+  "draft": "Gedeel"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "myRecordsSharedWithMe",
+  "english": "Shared with me",
+  "draft": "Met my gedeel"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "popiaShareLabel",
+  "english": "Share anonymised results with my NGO",
+  "draft": "Deel geanonimiseerde resultate met my NRO"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "popiaAgreeButton",
+  "english": "I agree, continue",
+  "draft": "Ek stem saam, gaan voort"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "communityBoardDeleteError",
+  "english": "Could not confirm deletion of this post. Check your connection and try again.",
+  "draft": "Kon nie die uitvee van hierdie plasing bevestig nie. Kyk jou verbinding na en probeer weer."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "communityLocationUnsupported",
+  "english": "This device can't share a location.",
+  "draft": "Hierdie toestel kan nie 'n ligging deel nie."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "communityProfileDeleteError",
+  "english": "Could not confirm deletion. Check your connection and try again.",
+  "draft": "Kon nie die uitvee bevestig nie. Kyk jou verbinding na en probeer weer."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "communityProfileDeleting",
+  "english": "Deleting…",
+  "draft": "Vee tans uit…"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "popiaConsentDraftNotice",
+  "english": "Unreviewed consent translation. Read the English source before choosing or agreeing.",
+  "draft": "Onhersiene vertaling van toestemming. Lees die Engelse bron voordat jy kies of instem."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "homeFunderHeroDescription",
+  "english": "Review the programme summaries shared with you.",
+  "draft": "Hersien die programopsommings wat met jou gedeel is."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "reportUiYouHaveCountSavedReportsDeleteOneTo",
+  "english": "You have {count} saved reports — delete one to save this",
+  "draft": "Jy het {count} gestoorde verslae — vee een uit om hierdie een te stoor"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "assessmentState_shared",
+  "english": "shared",
+  "draft": "gedeel"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "sampleProgrammeEnglishAccessNote",
+  "english": "Permission and sharing descriptions remain in English so their meaning stays exact.",
+  "draft": "Beskrywings van toestemmings en deling bly in Engels sodat hul betekenis presies bly."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "mapDeletePlaceTitle",
+  "english": "Delete this place",
+  "draft": "Vee hierdie plek uit"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "mapLayerReliefTitle",
+  "english": "Hillshade relief — shades slopes so hills, valleys and the direction land faces are visible",
+  "draft": "Heuwelskadu-reliëf — skadu hellings sodat heuwels, valleie en die rigting waarin die grond wys sigbaar is"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "evidenceSheetStorageFull",
+  "english": "Storage full — photo not saved. Delete some items to free space.",
+  "draft": "Berging vol — foto nie gestoor nie. Vee 'n paar items uit om plek te maak."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "communityEditProfileIntro",
+  "english": "Share as much or as little as you like. Nothing here is visible until you save it.",
+  "draft": "Deel soveel of so min as wat jy wil. Niks hier is sigbaar voordat jy dit stoor nie."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "communityDeleteProfile",
+  "english": "Delete my community profile",
+  "draft": "Vee my gemeenskapsprofiel uit"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "communityDeleteProfileConfirm",
+  "english": "Delete your community profile? This removes your profile and map pin. Your board posts stay until you close them individually.",
+  "draft": "Vee jou gemeenskapsprofiel uit? Dit verwyder jou profiel en kaartspeld. Jou bordplasings bly totdat jy hulle een vir een sluit."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "myRecordsDeleteError",
+  "english": "Failed to delete. Try again.",
+  "draft": "Kon nie uitvee nie. Probeer weer."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "recordsOrchardOutNote",
+  "english": "Orchard is switched off, so {kg} kg is not in this total: {names}. Nothing was deleted — switch it back on to count it again.",
+  "draft": "Boord is afgeskakel, dus is {kg} kg nie in hierdie totaal nie: {names}. Niks is uitgevee nie — skakel dit weer aan om dit weer te tel."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "deleteSite",
+  "english": "Delete site",
+  "draft": "Vee terrein uit"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "deleteSiteConfirm",
+  "english": "Delete this saved site?",
+  "draft": "Vee hierdie gestoorde terrein uit?"
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "gateDescription",
+  "english": "Private prototype — enter the password to continue.",
+  "draft": "Privaat prototipe — voer die wagwoord in om voort te gaan."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "offlineRemoveConfirm",
+  "english": "Remove this device’s queued change? This cannot be undone here. Download a copy first if you need to keep it. The server record is not deleted.",
+  "draft": "Verwyder hierdie toestel se verandering in die tou? Dit kan nie hier ongedaan gemaak word nie. Laai eers 'n kopie af as jy dit moet hou. Die bedienerrekord word nie uitgevee nie."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "offlineConflictHelp",
+  "english": "For a conflict, keep a downloaded copy, remove this queued change, reconnect and reopen the current record. Compare the versions before saving your corrections. Permission or validation errors must be resolved before resubmitting.",
+  "draft": "By 'n konflik: hou 'n afgelaaide kopie, verwyder hierdie verandering in die tou, koppel weer en maak die huidige rekord weer oop. Vergelyk die weergawes voordat jy jou regstellings stoor. Toestemmings- of valideringsfoute moet opgelos word voordat jy weer indien."
+ },
+ {
+  "cls": "consent",
+  "source": "dictionary",
+  "key": "reportsFunderNotice",
+  "english": "Your funder workspace contains the programme reports shared with you.",
+  "draft": "Jou befondserwerkruimte bevat die programverslae wat met jou gedeel is."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Location permission was declined. Allow location for this site in your browser settings, then try again. Your entry is still here.",
+  "english": "Location permission was declined. Allow location for this site in your browser settings, then try again. Your entry is still here.",
+  "draft": "Toestemming vir ligging is geweier. Laat ligging vir hierdie webwerf toe in jou blaaier se instellings en probeer dan weer. Jou inskrywing is steeds hier."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Your account permissions stay unchanged.",
+  "english": "Your account permissions stay unchanged.",
+  "draft": "Jou rekening se toestemmings bly onveranderd."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Your normal login stays the same. A platform administrator must enable owner access on the correct account; choosing a dashboard does not change your permissions.",
+  "english": "Your normal login stays the same. A platform administrator must enable owner access on the correct account; choosing a dashboard does not change your permissions.",
+  "draft": "Jou gewone aanmelding bly dieselfde. 'n Platformadministrateur moet eienaartoegang op die regte rekening aanskakel; om 'n paneelbord te kies, verander nie jou toestemmings nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "English source wording is shown beside each draft until first-language and consent-meaning review.",
+  "english": "English source wording is shown beside each draft until first-language and consent-meaning review.",
+  "draft": "Die Engelse bronbewoording word langs elke konsep gewys totdat dit vir eerstetaal- en toestemmingsbetekenis hersien is."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "You are viewing demonstration records. Your account permissions stay unchanged.",
+  "english": "You are viewing demonstration records. Your account permissions stay unchanged.",
+  "draft": "Jy kyk na demonstrasierekords. Jou rekening se toestemmings bly onveranderd."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Share as much or as little as you like. Nothing here is visible until you save it.",
+  "english": "Share as much or as little as you like. Nothing here is visible until you save it.",
+  "draft": "Deel soveel of so min as wat jy wil. Niks hier is sigbaar totdat jy dit stoor nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Withdrawn",
+  "english": "Withdrawn",
+  "draft": "Onttrek"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Not visible",
+  "english": "Not visible",
+  "draft": "Nie sigbaar nie"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "No records visible",
+  "english": "No records visible",
+  "draft": "Geen rekords sigbaar nie"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "A plan is visible, but it has no verified crop-cycle kilogram benchmark. Missing evidence is not a 0 kg target.",
+  "english": "A plan is visible, but it has no verified crop-cycle kilogram benchmark. Missing evidence is not a 0 kg target.",
+  "draft": "'n Plan is sigbaar, maar dit het geen geverifieerde kilogram-maatstaf vir die gewassiklus nie. Ontbrekende bewyse is nie 'n teiken van 0 kg nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "The farmer’s crop plan is not readable here. Not visible is not the same as no plan.",
+  "english": "The farmer’s crop plan is not readable here. Not visible is not the same as no plan.",
+  "draft": "Die boer se gewasplan kan nie hier gelees word nie. Nie sigbaar nie is nie dieselfde as geen plan nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": " Showing a real farmer’s books to another account requires a server-side authorisation gate and that farmer’s recorded consent — see the header of this file.",
+  "english": " Showing a real farmer’s books to another account requires a server-side authorisation gate and that farmer’s recorded consent — see the header of this file.",
+  "draft": " Om 'n regte boer se boeke aan 'n ander rekening te wys, vereis 'n magtigingshek aan die bedienerkant en daardie boer se aangetekende toestemming — sien die opskrif van hierdie lêer."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "{n} more farmer is enrolled here but have not agreed to share their figures, so they are not listed.",
+  "english": "{n} more farmer is enrolled here but have not agreed to share their figures, so they are not listed.",
+  "draft": "Nog {n} boer is hier ingeskryf, maar het nie ingestem om hul syfers te deel nie, so hulle word nie gelys nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "{n} more farmers are enrolled here but have not agreed to share their figures, so they are not listed.",
+  "english": "{n} more farmers are enrolled here but have not agreed to share their figures, so they are not listed.",
+  "draft": "Nog {n} boere is hier ingeskryf, maar het nie ingestem om hul syfers te deel nie, so hulle word nie gelys nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Every figure here is shared by the farmer it belongs to, and only for the categories they agreed to.",
+  "english": "Every figure here is shared by the farmer it belongs to, and only for the categories they agreed to.",
+  "draft": "Elke syfer hier word gedeel deur die boer aan wie dit behoort, en slegs vir die kategorieë waartoe hulle ingestem het."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Set member roles, delegate assessments and control funder sharing for this organisation.",
+  "english": "Set member roles, delegate assessments and control funder sharing for this organisation.",
+  "draft": "Stel lede se rolle, delegeer assesserings en beheer deling met befondsers vir hierdie organisasie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Counts are assessment assignments, not unique people. Assigned means available in the app; it does not mean a WhatsApp, email or SMS was sent. Awaiting review means closed but not shared; it is not a separate recorded approval status.",
+  "english": "Counts are assessment assignments, not unique people. Assigned means available in the app; it does not mean a WhatsApp, email or SMS was sent. Awaiting review means closed but not shared; it is not a separate recorded approval status.",
+  "draft": "Getalle is assesseringstoewysings, nie unieke mense nie. Toegewys beteken beskikbaar in die app; dit beteken nie dat 'n WhatsApp, e-pos of SMS gestuur is nie. Wag op hersiening beteken gesluit maar nie gedeel nie; dit is nie 'n aparte aangetekende goedkeuringstatus nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Farmer consent still applies. Assessment summaries remain private until published individually. Previously exported files cannot be recalled.",
+  "english": "Farmer consent still applies. Assessment summaries remain private until published individually. Previously exported files cannot be recalled.",
+  "draft": "Boere se toestemming geld steeds. Assesseringsopsommings bly privaat totdat hulle een vir een gepubliseer word. Lêers wat voorheen uitgevoer is, kan nie teruggeroep word nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Read private analysis",
+  "english": "Read private analysis",
+  "draft": "Lees privaat ontleding"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Private written feedback",
+  "english": "Private written feedback",
+  "draft": "Privaat geskrewe terugvoer"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Summary withdrawn from funder view.",
+  "english": "Summary withdrawn from funder view.",
+  "draft": "Opsomming uit befondseraansig onttrek."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Withdraw funder summary",
+  "english": "Withdraw funder summary",
+  "draft": "Onttrek befondseropsomming"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Your response has been withdrawn.",
+  "english": "Your response has been withdrawn.",
+  "draft": "Jou antwoord is onttrek."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Withdraw my response",
+  "english": "Withdraw my response",
+  "draft": "Onttrek my antwoord"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "I have read or had this notice explained and agree to take part.",
+  "english": "I have read or had this notice explained and agree to take part.",
+  "draft": "Ek het hierdie kennisgewing gelees of dit is aan my verduidelik, en ek stem in om deel te neem."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "closed, not shared",
+  "english": "closed, not shared",
+  "draft": "gesluit, nie gedeel nie"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Closed assessments not yet shared",
+  "english": "Closed assessments not yet shared",
+  "draft": "Geslote assesserings nog nie gedeel nie"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "These assessment tools are available. Results appear below when the organisation has reviewed and shared them; a tool listed here does not mean an assessment is complete.",
+  "english": "These assessment tools are available. Results appear below when the organisation has reviewed and shared them; a tool listed here does not mean an assessment is complete.",
+  "draft": "Hierdie assesseringsinstrumente is beskikbaar. Resultate verskyn hieronder wanneer die organisasie dit hersien en gedeel het; 'n instrument wat hier gelys word, beteken nie dat 'n assessering voltooi is nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "This register does not include the farmer’s private design.",
+  "english": "This register does not include the farmer’s private design.",
+  "draft": "Hierdie register sluit nie die boer se privaat ontwerp in nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Use Reports for the shared portfolio. Farmer consent, organisation sharing and funder access determine which records are included; private identity details are excluded.",
+  "english": "Use Reports for the shared portfolio. Farmer consent, organisation sharing and funder access determine which records are included; private identity details are excluded.",
+  "draft": "Gebruik Verslae vir die gedeelde portefeulje. Boere se toestemming, organisasiedeling en befondsertoegang bepaal watter rekords ingesluit word; privaat identiteitsbesonderhede word uitgesluit."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "No indicators have been shared for this selection.",
+  "english": "No indicators have been shared for this selection.",
+  "draft": "Geen aanwysers is vir hierdie keuse gedeel nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "No {area} indicators have been shared for this selection.",
+  "english": "No {area} indicators have been shared for this selection.",
+  "draft": "Geen {area}-aanwysers is vir hierdie keuse gedeel nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Loading the latest shared production, area and finance records…",
+  "english": "Loading the latest shared production, area and finance records…",
+  "draft": "Laai tans die jongste gedeelde produksie-, oppervlakte- en finansiële rekords…"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Target not yet agreed",
+  "english": "Target not yet agreed",
+  "draft": "Teiken nog nie ooreengekom nie"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "summaries shared",
+  "english": "summaries shared",
+  "draft": "opsommings gedeel"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "The permission and data sharing details below remain in English so their meaning stays exact.",
+  "english": "The permission and data sharing details below remain in English so their meaning stays exact.",
+  "draft": "Die toestemmings- en datadelingsbesonderhede hieronder bly in Engels sodat hul betekenis presies bly."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Permission and sharing descriptions remain in English so their meaning stays exact.",
+  "english": "Permission and sharing descriptions remain in English so their meaning stays exact.",
+  "draft": "Beskrywings van toestemming en deling bly in Engels sodat hul betekenis presies bly."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "reported; may include shared gardens",
+  "english": "reported; may include shared gardens",
+  "draft": "gerapporteer; kan gedeelde tuine insluit"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Training records shared",
+  "english": "Training records shared",
+  "draft": "Opleidingsrekords gedeel"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "farmers sharing course progress",
+  "english": "farmers sharing course progress",
+  "draft": "boere wat kursusvordering deel"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "no training records shared",
+  "english": "no training records shared",
+  "draft": "geen opleidingsrekords gedeel nie"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "No farms are visible to this account yet",
+  "english": "No farms are visible to this account yet",
+  "draft": "Nog geen plase is vir hierdie rekening sigbaar nie"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Farmers appear here once they have agreed to share their records with the organisation.",
+  "english": "Farmers appear here once they have agreed to share their records with the organisation.",
+  "draft": "Boere verskyn hier sodra hulle ingestem het om hul rekords met die organisasie te deel."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "The sharing controls and notices on this page are in isiXhosa. Some charts, data-status warnings and the farmer detail panel are still shown in English; names, figures and evidence typed by people are shown as saved.",
+  "english": "The sharing controls and notices on this page are in isiXhosa. Some charts, data-status warnings and the farmer detail panel are still shown in English; names, figures and evidence typed by people are shown as saved.",
+  "draft": "Die delingskontroles en kennisgewings op hierdie bladsy is in isiXhosa. Sommige grafieke, waarskuwings oor datastatus en die boerbesonderhede-paneel word steeds in Engels gewys; name, syfers en bewyse wat mense getik het, word gewys soos gestoor."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Every figure below is recorded by the {n} farmer it belongs to, and shown only for the categories they agreed to share.",
+  "english": "Every figure below is recorded by the {n} farmer it belongs to, and shown only for the categories they agreed to share.",
+  "draft": "Elke syfer hieronder word aangeteken deur die {n} boer aan wie dit behoort, en slegs gewys vir die kategorieë wat hulle ingestem het om te deel."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Every figure below is recorded by the {n} farmers it belongs to, and shown only for the categories they agreed to share.",
+  "english": "Every figure below is recorded by the {n} farmers it belongs to, and shown only for the categories they agreed to share.",
+  "draft": "Elke syfer hieronder word aangeteken deur die {n} boere aan wie dit behoort, en slegs gewys vir die kategorieë wat hulle ingestem het om te deel."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Manage your team, decide what is shared and explore each role.",
+  "english": "Manage your team, decide what is shared and explore each role.",
+  "draft": "Bestuur jou span, besluit wat gedeel word en verken elke rol."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "People & permissions",
+  "english": "People & permissions",
+  "draft": "Mense en toestemmings"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Explore each role’s workspace. Your account permissions stay unchanged.",
+  "english": "Explore each role’s workspace. Your account permissions stay unchanged.",
+  "draft": "Verken elke rol se werkruimte. Jou rekening se toestemmings bly onveranderd."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Other agreed measures",
+  "english": "Other agreed measures",
+  "draft": "Ander ooreengekome maatstawwe"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Completed installations, mentor visits, agreed actions and evidence checks.",
+  "english": "Completed installations, mentor visits, agreed actions and evidence checks.",
+  "draft": "Voltooide installasies, mentorbesoeke, ooreengekome aksies en bewyskontroles."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Agree support actions with the farmer. At review, record what improved, what did not and what needs to change.",
+  "english": "Agree support actions with the farmer. At review, record what improved, what did not and what needs to change.",
+  "draft": "Kom ondersteuningsaksies met die boer ooreen. Teken by die hersiening aan wat verbeter het, wat nie, en wat moet verander."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Farmers trading with farmers — seed, seedlings, surplus produce, tools and work-share.",
+  "english": "Farmers trading with farmers — seed, seedlings, surplus produce, tools and work-share.",
+  "draft": "Boere wat met boere handel dryf — saad, saailinge, surplusproduk, gereedskap en werkdeling."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "A planter to hire by the day, or two days of work-share",
+  "english": "A planter to hire by the day, or two days of work-share",
+  "draft": "'n Planter om per dag te huur, of twee dae se werkdeling"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Share listing",
+  "english": "Share listing",
+  "draft": "Deel lysting"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Could not share on this device. Copy this yourself and send it:",
+  "english": "Could not share on this device. Copy this yourself and send it:",
+  "draft": "Kon nie op hierdie toestel deel nie. Kopieer dit self en stuur dit:"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your mentor or group — or use Share to hand a listing on yourself.",
+  "english": "No way to contact another farmer from the app yet. For now, note the name and area on their card and arrange it through your mentor or group — or use Share to hand a listing on yourself.",
+  "draft": "Nog geen manier om 'n ander boer uit die app te kontak nie. Skryf vir nou die naam en gebied op hul kaart neer en reël dit deur jou mentor of groep — of gebruik Deel om self 'n lysting aan te stuur."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Listings you post stay on this device. Sharing them between farmers needs the community backend switched on and its security rules extended first.",
+  "english": "Listings you post stay on this device. Sharing them between farmers needs the community backend switched on and its security rules extended first.",
+  "draft": "Lystings wat jy plaas, bly op hierdie toestel. Om hulle tussen boere te deel, moet die gemeenskapsbediener eers aangeskakel en sy sekuriteitsreëls uitgebrei word."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "It is saved on this phone only — nobody else can see it until you send it to them yourself. Share it now, or find it on the board any time and share it later.",
+  "english": "It is saved on this phone only — nobody else can see it until you send it to them yourself. Share it now, or find it on the board any time and share it later.",
+  "draft": "Dit is slegs op hierdie foon gestoor — niemand anders kan dit sien totdat jy dit self na hulle stuur nie. Deel dit nou, of vind dit enige tyd op die bord en deel dit later."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Share to WhatsApp",
+  "english": "Share to WhatsApp",
+  "draft": "Deel na WhatsApp"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "This listing is saved on this phone only. It is not sent to other farmers and nobody else can see it — sharing listings between farmers is not built yet.",
+  "english": "This listing is saved on this phone only. It is not sent to other farmers and nobody else can see it — sharing listings between farmers is not built yet.",
+  "draft": "Hierdie lysting is slegs op hierdie foon gestoor. Dit word nie na ander boere gestuur nie en niemand anders kan dit sien nie — die deel van lystings tussen boere is nog nie gebou nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "It has {n} planting saved, but nothing in it lands in any month. That happens when a planting sits on a bed that has been deleted, when its crop has no verified timings in the app, or when it is an existing crop whose picking months have already passed. Open the crop plan to check it.",
+  "english": "It has {n} planting saved, but nothing in it lands in any month. That happens when a planting sits on a bed that has been deleted, when its crop has no verified timings in the app, or when it is an existing crop whose picking months have already passed. Open the crop plan to check it.",
+  "draft": "Dit het {n} aanplanting gestoor, maar niks daarin val in enige maand nie. Dit gebeur wanneer 'n aanplanting op 'n bedding is wat uitgevee is, wanneer sy gewas geen geverifieerde tye in die app het nie, of wanneer dit 'n bestaande gewas is waarvan die plukmaande reeds verby is. Maak die gewasplan oop om dit na te gaan."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "It has {n} plantings saved, but nothing in it lands in any month. That happens when a planting sits on a bed that has been deleted, when its crop has no verified timings in the app, or when it is an existing crop whose picking months have already passed. Open the crop plan to check it.",
+  "english": "It has {n} plantings saved, but nothing in it lands in any month. That happens when a planting sits on a bed that has been deleted, when its crop has no verified timings in the app, or when it is an existing crop whose picking months have already passed. Open the crop plan to check it.",
+  "draft": "Dit het {n} aanplantings gestoor, maar niks daarin val in enige maand nie. Dit gebeur wanneer 'n aanplanting op 'n bedding is wat uitgevee is, wanneer sy gewas geen geverifieerde tye in die app het nie, of wanneer dit 'n bestaande gewas is waarvan die plukmaande reeds verby is. Maak die gewasplan oop om dit na te gaan."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Share tasks",
+  "english": "Share tasks",
+  "draft": "Deel take"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Share the plan (PDF)",
+  "english": "Share the plan (PDF)",
+  "draft": "Deel die plan (PDF)"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Review the programme summaries shared with you.",
+  "english": "Review the programme summaries shared with you.",
+  "draft": "Gaan die programopsommings na wat met jou gedeel is."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Storage is full — this entry could not be saved. Delete an old entry and try again.",
+  "english": "Storage is full — this entry could not be saved. Delete an old entry and try again.",
+  "draft": "Berging is vol — hierdie inskrywing kon nie gestoor word nie. Vee 'n ou inskrywing uit en probeer weer."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Start in Fieldwork to review due actions and assigned gardens. Record a visit, check a practical skill and agree the next action. Use Training for attendance and feedback, Learning for modules, and Messages for follow-up.",
+  "english": "Start in Fieldwork to review due actions and assigned gardens. Record a visit, check a practical skill and agree the next action. Use Training for attendance and feedback, Learning for modules, and Messages for follow-up.",
+  "draft": "Begin in Veldwerk om aksies wat te doen is en toegewysde tuine na te gaan. Teken 'n besoek aan, kyk na 'n praktiese vaardigheid en kom die volgende aksie ooreen. Gebruik Opleiding vir bywoning en terugvoer, Leer vir modules, en Boodskappe vir opvolg."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Review Cohort totals and charts, then choose Progress & milestones. Compare recorded progress with targets and open the shared assessments or reports.",
+  "english": "Review Cohort totals and charts, then choose Progress & milestones. Compare recorded progress with targets and open the shared assessments or reports.",
+  "draft": "Gaan groeptotale en grafieke na, en kies dan Vordering en mylpale. Vergelyk aangetekende vordering met teikens en maak die gedeelde assesserings of verslae oop."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Choose Request a feature to see how you can describe a change that would help your programme. Explore the form only: sending it contacts the real developer. Customisation scope and pricing are agreed together.",
+  "english": "Choose Request a feature to see how you can describe a change that would help your programme. Explore the form only: sending it contacts the real developer. Customisation scope and pricing are agreed together.",
+  "draft": "Kies Vra vir 'n funksie om te sien hoe jy 'n verandering kan beskryf wat jou program sou help. Verken slegs die vorm: as jy dit stuur, kontak dit die regte ontwikkelaar. Die omvang en pryse van aanpassing word saam ooreengekom."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Open Glossy, choose a sheet and its underlay, then create a Design Map. Inspect the result full screen and use Export & Share for your selected sheets.",
+  "english": "Open Glossy, choose a sheet and its underlay, then create a Design Map. Inspect the result full screen and use Export & Share for your selected sheets.",
+  "draft": "Maak Blink oop, kies 'n vel en sy onderlaag, en skep dan 'n ontwerpkaart. Bekyk die resultaat op volskerm en gebruik Voer uit en deel vir jou gekose velle."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Training & progress brings training and project evidence together. Reports prepares the programme record for review and sharing.",
+  "english": "Training & progress brings training and project evidence together. Reports prepares the programme record for review and sharing.",
+  "draft": "Opleiding en vordering bring opleiding- en projekbewyse saam. Verslae berei die programrekord voor vir hersiening en deling."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Open shared assessments and reports to see the records supporting the totals and the work still to be completed.",
+  "english": "Open shared assessments and reports to see the records supporting the totals and the work still to be completed.",
+  "draft": "Maak gedeelde assesserings en verslae oop om die rekords te sien wat die totale ondersteun en die werk wat nog voltooi moet word."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Review what is shared",
+  "english": "Review what is shared",
+  "draft": "Gaan na wat gedeel word"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Your {role} account opens its matching example view. Other roles are shown below so the full set is visible.",
+  "english": "Your {role} account opens its matching example view. Other roles are shown below so the full set is visible.",
+  "draft": "Jou {role}-rekening maak sy ooreenstemmende voorbeeldaansig oop. Ander rolle word hieronder gewys sodat die volle stel sigbaar is."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Report ready. Use your device’s save or share controls.",
+  "english": "Report ready. Use your device’s save or share controls.",
+  "draft": "Verslag gereed. Gebruik jou toestel se stoor- of deelkontroles."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Choose pictures you have permission to use, then press Save edits.",
+  "english": "Choose pictures you have permission to use, then press Save edits.",
+  "draft": "Kies foto's wat jy toestemming het om te gebruik, en druk dan Stoor wysigings."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Agreed follow-up",
+  "english": "Agreed follow-up",
+  "draft": "Ooreengekome opvolg"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "What you share",
+  "english": "What you share",
+  "draft": "Wat jy deel"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Couldn't load your sharing settings. Check your connection and try again.",
+  "english": "Couldn't load your sharing settings. Check your connection and try again.",
+  "draft": "Kon nie jou deelinstellings laai nie. Gaan jou verbinding na en probeer weer."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "That did not save. Your sharing settings have not changed.",
+  "english": "That did not save. Your sharing settings have not changed.",
+  "draft": "Dit is nie gestoor nie. Jou deelinstellings het nie verander nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "You are not sharing anything.",
+  "english": "You are not sharing anything.",
+  "draft": "Jy deel niks nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Stop sharing everything",
+  "english": "Stop sharing everything",
+  "draft": "Hou op om alles te deel"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Add a title, details and a page path without a query or personal information.",
+  "english": "Add a title, details and a page path without a query or personal information.",
+  "draft": "Voeg 'n titel, besonderhede en 'n bladsypad by sonder 'n navraag of persoonlike inligting."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Tell us what happened or what would help. Please leave out passwords, identity numbers, private survey answers and other people’s personal information.",
+  "english": "Tell us what happened or what would help. Please leave out passwords, identity numbers, private survey answers and other people’s personal information.",
+  "draft": "Vertel ons wat gebeur het of wat sou help. Moet asseblief nie wagwoorde, identiteitsnommers, privaat opname-antwoorde en ander mense se persoonlike inligting insluit nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "English source narration selected. Your regional slides remain visible.",
+  "english": "English source narration selected. Your regional slides remain visible.",
+  "draft": "Vertelling in die Engelse bron gekies. Jou streekskyfies bly sigbaar."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "All visible projects",
+  "english": "All visible projects",
+  "draft": "Alle sigbare projekte"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Shared with funders",
+  "english": "Shared with funders",
+  "draft": "Met befondsers gedeel"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Topics covered, activities completed and evidence. Leave private participant information out.",
+  "english": "Topics covered, activities completed and evidence. Leave private participant information out.",
+  "draft": "Onderwerpe gedek, aktiwiteite voltooi en bewyse. Laat private deelnemerinligting uit."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Share this session summary and reviewed photos with linked funders",
+  "english": "Share this session summary and reviewed photos with linked funders",
+  "draft": "Deel hierdie sessie-opsomming en hersiene foto's met gekoppelde befondsers"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "I reviewed the summary and photos for sharing. Attendance names, IDs, signatures, register photos and written feedback stay private.",
+  "english": "I reviewed the summary and photos for sharing. Attendance names, IDs, signatures, register photos and written feedback stay private.",
+  "draft": "Ek het die opsomming en foto's vir deel hersien. Bywoningsname, ID's, handtekeninge, registerfoto's en geskrewe terugvoer bly privaat."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Share this indicator and its evidence notes with linked funders",
+  "english": "Share this indicator and its evidence notes with linked funders",
+  "draft": "Deel hierdie aanwyser en sy bewysnotas met gekoppelde befondsers"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Reviewed for funder sharing",
+  "english": "Reviewed for funder sharing",
+  "draft": "Hersien vir deel met befondsers"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Reviewed for funder sharing · registers stay private",
+  "english": "Reviewed for funder sharing · registers stay private",
+  "draft": "Hersien vir deel met befondsers · registers bly privaat"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Check the session and confirm the shared content before publishing.",
+  "english": "Check the session and confirm the shared content before publishing.",
+  "draft": "Gaan die sessie na en bevestig die gedeelde inhoud voordat jy publiseer."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "All visible cohorts",
+  "english": "All visible cohorts",
+  "draft": "Alle sigbare groepe"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Selected cohort · no visible records",
+  "english": "Selected cohort · no visible records",
+  "draft": "Gekose groep · geen sigbare rekords nie"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "No farmer records are visible. The report describes this gap; it does not imply zero programme activity.",
+  "english": "No farmer records are visible. The report describes this gap; it does not imply zero programme activity.",
+  "draft": "Geen boererekords is sigbaar nie. Die verslag beskryf hierdie leemte; dit impliseer nie nul programaktiwiteit nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Use the existing records and progress workspace to check gaps and agree the next action.",
+  "english": "Use the existing records and progress workspace to check gaps and agree the next action.",
+  "draft": "Gebruik die bestaande rekords- en vorderingswerkruimte om leemtes na te gaan en die volgende stap ooreen te kom."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Review shared progress",
+  "english": "Review shared progress",
+  "draft": "Hersien gedeelde vordering"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Visible farmers",
+  "english": "Visible farmers",
+  "draft": "Sigbare boere"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "{n} farmer is visible across {c} cohort in this selection.",
+  "english": "{n} farmer is visible across {c} cohort in this selection.",
+  "draft": "{n} boer is sigbaar oor {c} groep in hierdie keuse."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "{n} farmer is visible across {c} cohorts in this selection.",
+  "english": "{n} farmer is visible across {c} cohorts in this selection.",
+  "draft": "{n} boer is sigbaar oor {c} groepe in hierdie keuse."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "{n} farmers are visible across {c} cohort in this selection.",
+  "english": "{n} farmers are visible across {c} cohort in this selection.",
+  "draft": "{n} boere is sigbaar oor {c} groep in hierdie keuse."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "{n} farmers are visible across {c} cohorts in this selection.",
+  "english": "{n} farmers are visible across {c} cohorts in this selection.",
+  "draft": "{n} boere is sigbaar oor {c} groepe in hierdie keuse."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Every measure in the evidence coverage table has a value for every visible farmer. Readable records are not independently verified or necessarily complete.",
+  "english": "Every measure in the evidence coverage table has a value for every visible farmer. Readable records are not independently verified or necessarily complete.",
+  "draft": "Elke maatstaf in die bewysdekkingstabel het 'n waarde vir elke sigbare boer. Leesbare rekords is nie onafhanklik geverifieer of noodwendig volledig nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "No farmers are visible in this selection. This does not establish that the programme has no participants.",
+  "english": "No farmers are visible in this selection. This does not establish that the programme has no participants.",
+  "draft": "Geen boere is sigbaar in hierdie keuse nie. Dit bewys nie dat die program geen deelnemers het nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "{n} enrolled farmer is withheld for consent across the organisation.",
+  "english": "{n} enrolled farmer is withheld for consent across the organisation.",
+  "draft": "{n} ingeskrewe boer word weerhou weens toestemming oor die hele organisasie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "{n} enrolled farmers are withheld for consent across the organisation.",
+  "english": "{n} enrolled farmers are withheld for consent across the organisation.",
+  "draft": "{n} ingeskrewe boere word weerhou weens toestemming oor die hele organisasie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Ask the implementing organisation for a consent-respecting support plan.",
+  "english": "Ask the implementing organisation for a consent-respecting support plan.",
+  "draft": "Vra die implementerende organisasie vir 'n ondersteuningsplan wat toestemming respekteer."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Use the cohort roster to review flagged records, then agree support actions with the mentor and farmer.",
+  "english": "Use the cohort roster to review flagged records, then agree support actions with the mentor and farmer.",
+  "draft": "Gebruik die groeplys om gevlagde rekords te hersien, en kom dan ondersteuningsaksies met die mentor en boer ooreen."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Record an action owner, agreed due date and evidence of completion in Progress & milestones. None is assigned automatically by this report.",
+  "english": "Record an action owner, agreed due date and evidence of completion in Progress & milestones. None is assigned automatically by this report.",
+  "draft": "Teken 'n aksie-eienaar, ooreengekome sperdatum en bewys van voltooiing aan in Vordering en mylpale. Niemand word outomaties deur hierdie verslag toegewys nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Baseline, follow-up, agreed targets and a suitable evaluation design are needed to assess change and the programme’s contribution. Those comparisons are not available in this portfolio report.",
+  "english": "Baseline, follow-up, agreed targets and a suitable evaluation design are needed to assess change and the programme’s contribution. Those comparisons are not available in this portfolio report.",
+  "draft": "'n Basislyn, opvolg, ooreengekome teikens en 'n geskikte evalueringsontwerp is nodig om verandering en die program se bydrae te beoordeel. Daardie vergelykings is nie in hierdie portefeuljeverslag beskikbaar nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Authorised, consent-projected app records; not independently verified. Monthly ledgers use UTC event dates. Known weight only; no estimated conversions from counts or packages.",
+  "english": "Authorised, consent-projected app records; not independently verified. Monthly ledgers use UTC event dates. Known weight only; no estimated conversions from counts or packages.",
+  "draft": "Gemagtigde app-rekords, gefiltreer volgens toestemming; nie onafhanklik geverifieer nie. Maandelikse grootboeke gebruik UTC-gebeurtenisdatums. Slegs bekende gewig; geen geskatte omskakelings van tellings of pakkies nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Coverage = current readable books / visible farmers; the number contributing known weights in this period is not available.",
+  "english": "Coverage = current readable books / visible farmers; the number contributing known weights in this period is not available.",
+  "draft": "Dekking = huidige leesbare boeke / sigbare boere; die getal wat bekende gewigte in hierdie tydperk bydra, is nie beskikbaar nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Coverage = farmers with an available value / visible farmers.",
+  "english": "Coverage = farmers with an available value / visible farmers.",
+  "draft": "Dekking = boere met 'n beskikbare waarde / sigbare boere."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Total visible",
+  "english": "Total visible",
+  "draft": "Totaal sigbaar"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Check the current site stage with the mentor before agreeing the next practical step.",
+  "english": "Check the current site stage with the mentor before agreeing the next practical step.",
+  "draft": "Gaan die huidige terreinfase saam met die mentor na voordat julle die volgende praktiese stap ooreenkom."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Clarify consent and access with the organisation. Missing permission is not poor performance.",
+  "english": "Clarify consent and access with the organisation. Missing permission is not poor performance.",
+  "draft": "Verduidelik toestemming en toegang saam met die organisasie. Ontbrekende toestemming is nie swak prestasie nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "· sow {month} in {bed} ({share}) · picking {span}",
+  "english": "· sow {month} in {bed} ({share}) · picking {span}",
+  "draft": "· saai {month} in {bed} ({share}) · pluk {span}"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Agree the order",
+  "english": "Agree the order",
+  "draft": "Kom die bestelling ooreen"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Only Bed 2 moves, until half of Bed 1’s width is overlapped. Counting both full bed areas would count the shared ground twice.",
+  "english": "Only Bed 2 moves, until half of Bed 1’s width is overlapped. Counting both full bed areas would count the shared ground twice.",
+  "draft": "Slegs Bedding 2 skuif, totdat die helfte van Bedding 1 se breedte oorvleuel word. As albei volle beddingoppervlaktes getel word, sal die gedeelde grond twee keer getel word."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "The shared strip is one piece of ground. Two outlines cannot make it count twice.",
+  "english": "The shared strip is one piece of ground. Two outlines cannot make it count twice.",
+  "draft": "Die gedeelde strook is een stuk grond. Twee uitlyne kan nie maak dat dit twee keer tel nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Use the current arrangement: {arrangement}. Area of a rectangle = width × length. If two outlines overlap, subtract their shared area once when counting the ground they cover. Try on paper or enter your answers below; a comma or point can mark a decimal.",
+  "english": "Use the current arrangement: {arrangement}. Area of a rectangle = width × length. If two outlines overlap, subtract their shared area once when counting the ground they cover. Try on paper or enter your answers below; a comma or point can mark a decimal.",
+  "draft": "Gebruik die huidige uitleg: {arrangement}. Oppervlakte van 'n reghoek = breedte × lengte. As twee uitlyne oorvleuel, trek hul gedeelde oppervlakte een keer af wanneer jy die grond tel wat hulle bedek. Probeer op papier of voer jou antwoorde hieronder in; 'n komma of punt kan 'n desimaal aandui."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Shared strip: {overlap} × {length} = {overlapArea} m². Ground covered once: {bed} + {bed} − {overlapArea} = {covered} m².",
+  "english": "Shared strip: {overlap} × {length} = {overlapArea} m². Ground covered once: {bed} + {bed} − {overlapArea} = {covered} m².",
+  "draft": "Gedeelde strook: {overlap} × {length} = {overlapArea} m². Grond een keer bedek: {bed} + {bed} − {overlapArea} = {covered} m²."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "What changes when care is not agreed?",
+  "english": "What changes when care is not agreed?",
+  "draft": "Wat verander wanneer versorging nie ooreengekom is nie?"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Agree the observer and timing with the household. These are proposed checks; no later field results are supplied.",
+  "english": "Agree the observer and timing with the household. These are proposed checks; no later field results are supplied.",
+  "draft": "Kom die waarnemer en tydsberekening met die huishouding ooreen. Dit is voorgestelde kontroles; geen latere veldresultate word verskaf nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Each unit has a plain-language explanation, worked examples and practice to discuss with a facilitator or learning partner. Use the supplied practice figures; keep your household and customer details private.",
+  "english": "Each unit has a plain-language explanation, worked examples and practice to discuss with a facilitator or learning partner. Use the supplied practice figures; keep your household and customer details private.",
+  "draft": "Elke eenheid het 'n verduideliking in eenvoudige taal, uitgewerkte voorbeelde en oefening om met 'n fasiliteerder of leermaat te bespreek. Gebruik die verskafde oefensyfers; hou jou huishouding- en kliëntbesonderhede privaat."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Plan around four to five teaching hours per day, excluding breaks. This is an estimate to test with learners; translation, device sharing and additional practice may need more time.",
+  "english": "Plan around four to five teaching hours per day, excluding breaks. This is an estimate to test with learners; translation, device sharing and additional practice may need more time.",
+  "draft": "Beplan vir vier tot vyf onderrigure per dag, pouses uitgesluit. Dit is 'n skatting om met leerders te toets; vertaling, die deel van toestelle en bykomende oefening kan meer tyd nodig hê."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "On your copy, mark Plot A and write its reference beside the harvest card. List the access, water and growing information you would still need for a real plan. The card gives no legal access agreement and no forecast of production from this area.",
+  "english": "On your copy, mark Plot A and write its reference beside the harvest card. List the access, water and growing information you would still need for a real plan. The card gives no legal access agreement and no forecast of production from this area.",
+  "draft": "Merk Perseel A op jou kopie en skryf die verwysing daarvan langs die oeskaart. Lys die toegang-, water- en groei-inligting wat jy nog vir 'n regte plan sou nodig hê. Die kaart gee geen wettige toegangsooreenkoms en geen vooruitskatting van produksie van hierdie area nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "household withdrawal",
+  "english": "household withdrawal",
+  "draft": "huishoudelike onttrekking"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Are owner funds, borrowing and household withdrawals classified from their source cards?",
+  "english": "Are owner funds, borrowing and household withdrawals classified from their source cards?",
+  "draft": "Word eienaarsfondse, lenings en huishoudelike onttrekkings volgens hul bronkaarte geklassifiseer?"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Use the existing technical modules when checking a water, soil, planting or animal proposal. This pathway teaches how to connect those decisions. A field plan still needs suitable measurements, local evidence and any relevant advice or permissions.",
+  "english": "Use the existing technical modules when checking a water, soil, planting or animal proposal. This pathway teaches how to connect those decisions. A field plan still needs suitable measurements, local evidence and any relevant advice or permissions.",
+  "draft": "Gebruik die bestaande tegniese modules wanneer jy 'n water-, grond-, plant- of dierevoorstel nagaan. Hierdie leesroete leer hoe om daardie besluite te verbind. 'n Veldplan het steeds geskikte metings, plaaslike bewyse en enige betrokke advies of toestemmings nodig."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Two examples, with their limits visible",
+  "english": "Two examples, with their limits visible",
+  "draft": "Twee voorbeelde, met hul beperkings sigbaar"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "An agreed brief, evidence notes and an existing-features map.",
+  "english": "An agreed brief, evidence notes and an existing-features map.",
+  "draft": "'n Ooreengekome opdrag, bewysnotas en 'n kaart van bestaande kenmerke."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Agree what the household needs",
+  "english": "Agree what the household needs",
+  "draft": "Kom ooreen wat die huishouding nodig het"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Make the learning visible",
+  "english": "Make the learning visible",
+  "draft": "Maak die leer sigbaar"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Welcome and learning agreement",
+  "english": "Welcome and learning agreement",
+  "draft": "Verwelkoming en leerooreenkoms"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Invite each person to share one farm question and one teaching concern. Offer a spoken or drawn response.",
+  "english": "Invite each person to share one farm question and one teaching concern. Offer a spoken or drawn response.",
+  "draft": "Nooi elke persoon om een plaasvraag en een onderrigbekommernis te deel. Bied 'n gesproke of geteken antwoord aan."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Agree how to ask questions, share time and give feedback. Explain attendance separately from photo or app consent.",
+  "english": "Agree how to ask questions, share time and give feedback. Explain attendance separately from photo or app consent.",
+  "draft": "Kom ooreen hoe om vrae te vra, tyd te deel en terugvoer te gee. Verduidelik bywoning afsonderlik van toestemming vir foto's of die app."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Register and a blank flipchart for the group agreement.",
+  "english": "Register and a blank flipchart for the group agreement.",
+  "draft": "Register en 'n leë blaaibord vir die groepooreenkoms."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "A group agreement and a list of questions to revisit.",
+  "english": "A group agreement and a list of questions to revisit.",
+  "draft": "'n Groepooreenkoms en 'n lys vrae om weer na te kyk."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Use two prepared photos or soil samples from a permitted practice site. Ask what is visible before offering an explanation.",
+  "english": "Use two prepared photos or soil samples from a permitted practice site. Ask what is visible before offering an explanation.",
+  "draft": "Gebruik twee voorbereide foto's of grondmonsters van 'n toegelate oefenterrein. Vra wat sigbaar is voordat jy 'n verduideliking gee."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Collect question cards and keep the group agreement visible.",
+  "english": "Collect question cards and keep the group agreement visible.",
+  "draft": "Versamel vraagkaarte en hou die groepooreenkoms sigbaar."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Use a supplied practice site or a consenting participant’s own site. Label every entry as demo or real before entering it.",
+  "english": "Use a supplied practice site or a consenting participant’s own site. Label every entry as demo or real before entering it.",
+  "draft": "Gebruik 'n verskafte oefenterrein of 'n instemmende deelnemer se eie terrein. Merk elke inskrywing as demo of werklik voordat jy dit invoer."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Agree who will lead each part; prepare one question that reveals learning rather than recall.",
+  "english": "Agree who will lead each part; prepare one question that reveals learning rather than recall.",
+  "draft": "Kom ooreen wie elke deel sal lei; berei een vraag voor wat leer eerder as herroeping blootlê."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Keep attendance, consent, skill observation and any programme certificate decision as separate records under ACT’s policy.",
+  "english": "Keep attendance, consent, skill observation and any programme certificate decision as separate records under ACT’s policy.",
+  "draft": "Hou bywoning, toestemming, vaardigheidswaarneming en enige programsertifikaatbesluit as afsonderlike rekords volgens ACT se beleid."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Assessment summaries reviewed and shared by the organisation.",
+  "english": "Assessment summaries reviewed and shared by the organisation.",
+  "draft": "Assesseringsopsommings wat deur die organisasie hersien en gedeel is."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "On iPhone: open the link in Safari, tap Share, then “Add to Home Screen”.",
+  "english": "On iPhone: open the link in Safari, tap Share, then “Add to Home Screen”.",
+  "draft": "Op iPhone: maak die skakel in Safari oop, tik Deel, dan “Voeg by tuisskerm”."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Not shared",
+  "english": "Not shared",
+  "draft": "Nie gedeel nie"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "harvest not shared",
+  "english": "harvest not shared",
+  "draft": "oes nie gedeel nie"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "{prod} of {total} farms share a harvest record",
+  "english": "{prod} of {total} farms share a harvest record",
+  "draft": "{prod} van {total} plase deel 'n oesrekord"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "None of them share both.",
+  "english": "None of them share both.",
+  "draft": "Geeneen van hulle deel albei nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "{n} of them share both.",
+  "english": "{n} of them share both.",
+  "draft": "{n} van hulle deel albei."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "only {n} farms share both",
+  "english": "only {n} farms share both",
+  "draft": "slegs {n} plase deel albei"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "{n} farms share a harvest record",
+  "english": "{n} farms share a harvest record",
+  "draft": "{n} plase deel 'n oesrekord"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "None of these {total} farmers has agreed to share a training record.",
+  "english": "None of these {total} farmers has agreed to share a training record.",
+  "draft": "Geeneen van hierdie {total} boere het ingestem om 'n opleidingsrekord te deel nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "{reporting} of {total} farmers share a training record. The course is {modules} modules.",
+  "english": "{reporting} of {total} farmers share a training record. The course is {modules} modules.",
+  "draft": "{reporting} van {total} boere deel 'n opleidingsrekord. Die kursus is {modules} modules."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "A training record nobody agreed to share is not a farmer who has done no training, so nobody is drawn at zero here — they are simply not drawn.",
+  "english": "A training record nobody agreed to share is not a farmer who has done no training, so nobody is drawn at zero here — they are simply not drawn.",
+  "draft": "'n Opleidingsrekord wat niemand ingestem het om te deel nie, is nie 'n boer wat geen opleiding gedoen het nie, daarom word niemand hier by nul geteken nie — hulle word eenvoudig nie geteken nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "A module counts once the farmer has completed it in the app. Farmers who have not shared a training record are not drawn at zero — they are not drawn at all.",
+  "english": "A module counts once the farmer has completed it in the app. Farmers who have not shared a training record are not drawn at zero — they are not drawn at all.",
+  "draft": "'n Module tel sodra die boer dit in die app voltooi het. Boere wat nie 'n opleidingsrekord gedeel het nie, word nie by nul geteken nie — hulle word glad nie geteken nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Share of mapped growing area occupied each month. The planner reserves each crop through the upper end of its supported maturity and picking range to avoid double-booking; finish a crop earlier only after checking the bed.",
+  "english": "Share of mapped growing area occupied each month. The planner reserves each crop through the upper end of its supported maturity and picking range to avoid double-booking; finish a crop earlier only after checking the bed.",
+  "draft": "Deel van die gekarteerde groeigebied wat elke maand beset is. Die beplanner hou elke gewas gereserveer tot by die boonste grens van sy gestaafde volwassenheids- en plukbestek om dubbele bespreking te vermy; maak 'n gewas eers vroeër klaar nadat jy die bedding nagegaan het."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "{share} bed",
+  "english": "{share} bed",
+  "draft": "{share} bedding"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "{crop} wants room to spread — best in its own dedicated bed rather than shared or split with other crops.",
+  "english": "{crop} wants room to spread — best in its own dedicated bed rather than shared or split with other crops.",
+  "draft": "{crop} wil ruimte hê om uit te sprei — die beste in sy eie toegewyde bedding eerder as gedeel of verdeel met ander gewasse."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "{share} bed — intercropped",
+  "english": "{share} bed — intercropped",
+  "draft": "{share} bedding — tussengeplant"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Sharing this bed with another crop at the same time. The kilogram comparison uses each crop's allocated area only; no generic intercropping bonus or penalty is invented.",
+  "english": "Sharing this bed with another crop at the same time. The kilogram comparison uses each crop's allocated area only; no generic intercropping bonus or penalty is invented.",
+  "draft": "Deel hierdie bedding terselfdertyd met 'n ander gewas. Die kilogramvergelyking gebruik slegs elke gewas se toegewese oppervlakte; geen algemene tussenplant-bonus of -straf word uitgedink nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "No mapped location is attached, so the planner is using the visible summer-rainfall fallback. Map the garden for a location-based climate profile.",
+  "english": "No mapped location is attached, so the planner is using the visible summer-rainfall fallback. Map the garden for a location-based climate profile.",
+  "draft": "Geen gekarteerde ligging is aangeheg nie, so die beplanner gebruik die sigbare somerreënval-terugval. Karteer die tuin vir 'n liggingsgebaseerde klimaatprofiel."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "No kg or value total is shown because the space on these beds does not add up. Open a crop below and change its bed, month or share — the app will not guess which crop loses space.",
+  "english": "No kg or value total is shown because the space on these beds does not add up. Open a crop below and change its bed, month or share — the app will not guess which crop loses space.",
+  "draft": "Geen kg- of waardetotaal word gewys nie, omdat die ruimte op hierdie beddings nie klop nie. Maak 'n gewas hieronder oop en verander sy bedding, maand of aandeel — die app sal nie raai watter gewas ruimte verloor nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "share recorded as {n}% of the bed",
+  "english": "share recorded as {n}% of the bed",
+  "draft": "aandeel aangeteken as {n}% van die bedding"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "no usable share recorded",
+  "english": "no usable share recorded",
+  "draft": "geen bruikbare aandeel aangeteken nie"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Bar length compares crops · % is share of the {kg} kg above",
+  "english": "Bar length compares crops · % is share of the {kg} kg above",
+  "draft": "Balklengte vergelyk gewasse · % is die aandeel van die {kg} kg hierbo"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Compare two provisional concepts against the same household brief. Keep unknowns visible, then update connected records when later care evidence arrives.",
+  "english": "Compare two provisional concepts against the same household brief. Keep unknowns visible, then update connected records when later care evidence arrives.",
+  "draft": "Vergelyk twee voorlopige konsepte met dieselfde huishoudingsopdrag. Hou onbekendes sigbaar en werk dan gekoppelde rekords by wanneer latere versorgingsbewyse opdaag."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "The person expected to manage a proposed compost area has not agreed to that extra work.",
+  "english": "The person expected to manage a proposed compost area has not agreed to that extra work.",
+  "draft": "Die persoon wat na verwagting 'n voorgestelde komposarea sal bestuur, het nie tot daardie ekstra werk ingestem nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Investigate Concept A first; defer physical changes while evidence and household agreement are incomplete.",
+  "english": "Investigate Concept A first; defer physical changes while evidence and household agreement are incomplete.",
+  "draft": "Ondersoek eers konsep A; stel fisiese veranderinge uit terwyl bewyse en die huishouding se instemming onvolledig is."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Agree the work before making changes; the extra compost proposal needs its own agreement.",
+  "english": "Agree the work before making changes; the extra compost proposal needs its own agreement.",
+  "draft": "Kom die werk ooreen voordat jy veranderinge maak; die ekstra komposvoorstel het sy eie ooreenkoms nodig."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Comparable quotations and agreed care are missing. Neither option is proven cheaper.",
+  "english": "Comparable quotations and agreed care are missing. Neither option is proven cheaper.",
+  "draft": "Vergelykbare kwotasies en ooreengekome versorging ontbreek. Geen van die opsies is bewys goedkoper nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Household agreement, route observation, water and soil checks, relevant permissions",
+  "english": "Household agreement, route observation, water and soil checks, relevant permissions",
+  "draft": "Huishouding se instemming, waarneming van die roete, water- en grondkontroles, tersaaklike toestemmings"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Agree who will do the ongoing work before assigning it",
+  "english": "Agree who will do the ongoing work before assigning it",
+  "draft": "Kom ooreen wie die deurlopende werk sal doen voordat dit toegewys word"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Agreement needed",
+  "english": "Agreement needed",
+  "draft": "Ooreenkoms nodig"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Agreement from the person expected to manage it and a practical care plan",
+  "english": "Agreement from the person expected to manage it and a practical care plan",
+  "draft": "Instemming van die persoon wat dit na verwagting sal bestuur en 'n praktiese versorgingsplan"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Agreement not yet recorded",
+  "english": "Agreement not yet recorded",
+  "draft": "Ooreenkoms nog nie aangeteken nie"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Deferred; no agreed carer",
+  "english": "Deferred; no agreed carer",
+  "draft": "Uitgestel; geen ooreengekome versorger nie"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "No person has agreed to the added care work.",
+  "english": "No person has agreed to the added care work.",
+  "draft": "Niemand het ingestem tot die bykomende versorgingswerk nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Household and facilitator to record an agreed care arrangement or leave the component deferred.",
+  "english": "Household and facilitator to record an agreed care arrangement or leave the component deferred.",
+  "draft": "Huishouding en fasiliteerder moet 'n ooreengekome versorgingsreëling aanteken of die komponent uitgestel laat."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Ask the people doing the work to describe the watering and care tasks, limits and what they agree to take on.",
+  "english": "Ask the people doing the work to describe the watering and care tasks, limits and what they agree to take on.",
+  "draft": "Vra die mense wat die werk doen om die natlei- en versorgingstake, beperkings en wat hulle instem om te onderneem, te beskryf."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Revise or defer a component if agreed care is unavailable.",
+  "english": "Revise or defer a component if agreed care is unavailable.",
+  "draft": "Hersien of stel 'n komponent uit as ooreengekome versorging nie beskikbaar is nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Agree what the household wants from the growing area and what water and soil evidence is needed before a change.",
+  "english": "Agree what the household wants from the growing area and what water and soil evidence is needed before a change.",
+  "draft": "Kom ooreen wat die huishouding van die groeiarea wil hê en watter water- en grondbewyse nodig is voor 'n verandering."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Before committing to a change, with later review agreed by the household",
+  "english": "Before committing to a change, with later review agreed by the household",
+  "draft": "Voordat tot 'n verandering verbind word, met 'n latere hersiening waartoe die huishouding instem"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Inspect the document before using Share PDF or Print.",
+  "english": "Inspect the document before using Share PDF or Print.",
+  "draft": "Ondersoek die dokument voordat jy Deel PDF of Druk gebruik."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Shared event cards and answer key",
+  "english": "Shared event cards and answer key",
+  "draft": "Gedeelde gebeurteniskaarte en antwoordsleutel"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Shared practice case",
+  "english": "Shared practice case",
+  "draft": "Gedeelde oefengeval"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "The named parcel, its location and its drawn edge agree with your evidence.",
+  "english": "The named parcel, its location and its drawn edge agree with your evidence.",
+  "draft": "Die benoemde perseel, sy ligging en sy getekende rand stem ooreen met jou bewyse."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Export & Share → Select the saved sheet → Choose format → Download",
+  "english": "Export & Share → Select the saved sheet → Choose format → Download",
+  "draft": "Voer uit en deel → Kies die gestoorde blad → Kies formaat → Laai af"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Keep a dated copy with your site notes. Choose any real recipient yourself after reviewing private details. A download does not send the plan to them.",
+  "english": "Keep a dated copy with your site notes. Choose any real recipient yourself after reviewing private details. A download does not send the plan to them.",
+  "draft": "Hou 'n gedateerde kopie by jou terreinnotas. Kies self enige werklike ontvanger nadat jy private besonderhede hersien het. 'n Aflaai stuur nie die plan na hulle nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "For your own site, review unresolved measurements and decisions with the people who use the land and a suitable adviser. A design drawing does not establish land rights, permissions or the suitability of construction work.",
+  "english": "For your own site, review unresolved measurements and decisions with the people who use the land and a suitable adviser. A design drawing does not establish land rights, permissions or the suitability of construction work.",
+  "draft": "Hersien vir jou eie terrein onopgeloste metings en besluite saam met die mense wat die grond gebruik en 'n geskikte adviseur. 'n Ontwerptekening bewys nie grondregte, toestemmings of die geskiktheid van konstruksiewerk nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Check the month and share of the bed",
+  "english": "Check the month and share of the bed",
+  "draft": "Kontroleer die maand en die deel van die bedding"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Choose the intended sowing month and the area share. A half or quarter means part of the available bed, not extra land. Check the other crops occupying that bed in the same months.",
+  "english": "Choose the intended sowing month and the area share. A half or quarter means part of the available bed, not extra land. Check the other crops occupying that bed in the same months.",
+  "draft": "Kies die bedoelde saaimaand en die oppervlaktedeel. 'n Helfte of kwart beteken deel van die beskikbare bedding, nie ekstra grond nie. Kontroleer die ander gewasse wat daardie bedding in dieselfde maande beset."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Use the action matching your entry. Reopen that crop bar and check its bed share, sowing month and planned harvest window. Editing should change the existing planting, not add a second one.",
+  "english": "Use the action matching your entry. Reopen that crop bar and check its bed share, sowing month and planned harvest window. Editing should change the existing planting, not add a second one.",
+  "draft": "Gebruik die aksie wat by jou inskrywing pas. Maak daardie gewasbalk weer oop en kontroleer sy beddingdeel, saaimaand en beplande oesvenster. Wysiging moet die bestaande aanplanting verander, nie 'n tweede een byvoeg nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Independent practice: follow the sample design into its crop plan, identify one bed’s area and open one planting. Explain its status, month and area share. Change one planned month, save and reopen it, then restore it with Undo.",
+  "english": "Independent practice: follow the sample design into its crop plan, identify one bed’s area and open one planting. Explain its status, month and area share. Change one planned month, save and reopen it, then restore it with Undo.",
+  "draft": "Onafhanklike oefening: volg die voorbeeldontwerp na sy gewasplan, identifiseer een bedding se oppervlakte en maak een aanplanting oop. Verduidelik sy status, maand en oppervlaktedeel. Verander een beplande maand, stoor en maak dit weer oop, en herstel dit dan met Ontdoen."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Check the agreed quantity and total",
+  "english": "Check the agreed quantity and total",
+  "draft": "Kontroleer die ooreengekome hoeveelheid en totaal"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Check the buyer and every line. Keep kilograms, bags, bunches and other units as they were agreed. The app does not know a bag’s weight unless you have measured and recorded it.",
+  "english": "Check the buyer and every line. Keep kilograms, bags, bunches and other units as they were agreed. The app does not know a bag’s weight unless you have measured and recorded it.",
+  "draft": "Kontroleer die koper en elke reël. Hou kilogram, sakke, bossies en ander eenhede soos dit ooreengekom is. Die app weet nie 'n sak se gewig nie, tensy jy dit gemeet en aangeteken het."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "The saved document is the one you intended, and any pending update is visible.",
+  "english": "The saved document is the one you intended, and any pending update is visible.",
+  "draft": "Die gestoorde dokument is die een wat jy bedoel het, en enige hangende bywerking is sigbaar."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "The saved details agree with the source; you have not treated an AI suggestion as proof.",
+  "english": "The saved details agree with the source; you have not treated an AI suggestion as proof.",
+  "draft": "Die gestoorde besonderhede stem ooreen met die bron; jy het nie 'n AI-voorstel as bewys behandel nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Use sample details in a group lesson. Keep real customer and banking details private.",
+  "english": "Use sample details in a group lesson. Keep real customer and banking details private.",
+  "draft": "Gebruik voorbeeldbesonderhede in 'n groepsles. Hou werklike kliënt- en bankbesonderhede privaat."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Check the copy before sharing",
+  "english": "Check the copy before sharing",
+  "draft": "Kontroleer die afskrif voordat jy deel"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "The preview agrees with the paper, including the original date and exact cents.",
+  "english": "The preview agrees with the paper, including the original date and exact cents.",
+  "draft": "Die voorskou stem ooreen met die papier, insluitend die oorspronklike datum en presiese sente."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Keep gaps visible",
+  "english": "Keep gaps visible",
+  "draft": "Hou gapings sigbaar"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Inspect the output before sharing",
+  "english": "Inspect the output before sharing",
+  "draft": "Ondersoek die uitset voordat jy deel"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Compare the same period, units and growing area before drawing a conclusion. Keep uncertain or missing values visible and check the underlying map and records.",
+  "english": "Compare the same period, units and growing area before drawing a conclusion. Keep uncertain or missing values visible and check the underlying map and records.",
+  "draft": "Vergelyk dieselfde tydperk, eenhede en groeiarea voordat jy 'n gevolgtrekking maak. Hou onseker of ontbrekende waardes sigbaar en kontroleer die onderliggende kaart en rekords."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Export records for a lender creates a PDF. Depending on the device, it downloads or opens a share sheet. Save a copy and inspect every page, including the farm name, generation date and Covers dates.",
+  "english": "Export records for a lender creates a PDF. Depending on the device, it downloads or opens a share sheet. Save a copy and inspect every page, including the farm name, generation date and Covers dates.",
+  "draft": "Voer rekords vir 'n lener uit skep 'n PDF. Afhangend van die toestel laai dit af of maak dit 'n deelblad oop. Stoor 'n kopie en ondersoek elke bladsy, insluitend die plaasnaam, opstellingsdatum en die datums wat gedek word."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "For real records, check what your bookkeeper or adviser needs and choose the recipient yourself. Review the attachments and private details before sending. Saving or downloading does not send the file to them.",
+  "english": "For real records, check what your bookkeeper or adviser needs and choose the recipient yourself. Review the attachments and private details before sending. Saving or downloading does not send the file to them.",
+  "draft": "Vir werklike rekords, kontroleer wat jou boekhouer of adviseur nodig het en kies self die ontvanger. Hersien die aanhegsels en private besonderhede voordat jy stuur. Stoor of aflaai stuur nie die lêer na hulle nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "The twelve months visible in the chart",
+  "english": "The twelve months visible in the chart",
+  "draft": "Die twaalf maande wat in die grafiek sigbaar is"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Independent practice: in the sample tour, compare the CSV period with View summary. Open an exported copy, trace one figure to its source, and name one item the file does not contain. Stop before sharing.",
+  "english": "Independent practice: in the sample tour, compare the CSV period with View summary. Open an exported copy, trace one figure to its source, and name one item the file does not contain. Stop before sharing.",
+  "draft": "Onafhanklike oefening: vergelyk in die voorbeeldtoer die CSV-tydperk met Bekyk opsomming. Maak 'n uitgevoerde kopie oop, volg een syfer na sy bron en noem een item wat die lêer nie bevat nie. Stop voordat jy deel."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Have the site name, visit notes, photographs and any original test reports ready. Know when and where each record was made. Use only pictures and information you have permission to include.",
+  "english": "Have the site name, visit notes, photographs and any original test reports ready. Know when and where each record was made. Use only pictures and information you have permission to include.",
+  "draft": "Hou die terreinnaam, besoeknotas, foto's en enige oorspronklike toetsverslae gereed. Weet wanneer en waar elke rekord gemaak is. Gebruik slegs foto's en inligting wat jy toestemming het om in te sluit."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Inspect the copy before sharing",
+  "english": "Inspect the copy before sharing",
+  "draft": "Ondersoek die kopie voordat jy deel"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "In the sample farm, change Mentor notes and follow-up to a clearly labelled practice note. Use Save edits, then Download evidence report. Open the file and find that note and the example-picture labels. Stop before sharing.",
+  "english": "In the sample farm, change Mentor notes and follow-up to a clearly labelled practice note. Use Save edits, then Download evidence report. Open the file and find that note and the example-picture labels. Stop before sharing.",
+  "draft": "Verander in die voorbeeldplaas Mentornotas en opvolg na 'n duidelik gemerkte oefennota. Gebruik Stoor wysigings, dan Laai bewysverslag af. Maak die lêer oop en vind daardie nota en die etikette van die voorbeeldprente. Stop voordat jy deel."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Read the actual assignment before taking a photograph. Keep the original photo and any notes on your device. Use evidence of your own work, with permission for any people shown.",
+  "english": "Read the actual assignment before taking a photograph. Keep the original photo and any notes on your device. Use evidence of your own work, with permission for any people shown.",
+  "draft": "Lees die werklike opdrag voordat jy 'n foto neem. Hou die oorspronklike foto en enige notas op jou toestel. Gebruik bewyse van jou eie werk, met toestemming vir enige mense wat gewys word."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Make a brief with spaces for people and uses, priorities, things to protect, agreed scope, available resources, and questions still open. Use the practice case or obtain consent for a real household exercise. A partner reads it back. Change anything that misrepresents the household.",
+  "english": "Make a brief with spaces for people and uses, priorities, things to protect, agreed scope, available resources, and questions still open. Use the practice case or obtain consent for a real household exercise. A partner reads it back. Change anything that misrepresents the household.",
+  "draft": "Maak 'n opdrag met spasies vir mense en gebruike, prioriteite, dinge om te beskerm, ooreengekome omvang, beskikbare hulpbronne en vrae wat nog oop is. Gebruik die oefengeval of kry toestemming vir 'n oefening met 'n werklike huishouding. 'n Maat lees dit terug. Verander enigiets wat die huishouding verkeerd voorstel."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "The learner distinguishes needs from proposed objects, includes the people doing the work, and leaves missing resources visible. A list of attractive features alone does not pass this task.",
+  "english": "The learner distinguishes needs from proposed objects, includes the people doing the work, and leaves missing resources visible. A list of attractive features alone does not pass this task.",
+  "draft": "Die leerder onderskei behoeftes van voorgestelde voorwerpe, sluit die mense in wat die werk doen, en laat ontbrekende hulpbronne sigbaar. 'n Lys van aantreklike kenmerke alleen slaag nie hierdie taak nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Does agreement on the brief establish permission to alter a neighbour's drainage route?",
+  "english": "Does agreement on the brief establish permission to alter a neighbour's drainage route?",
+  "draft": "Bewys ooreenkoms oor die opdrag toestemming om 'n buurman se dreineringsroete te verander?"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "no. **Reason:** the brief records household aims; permissions and effects beyond the site need their own checks.",
+  "english": "no. **Reason:** the brief records household aims; permissions and effects beyond the site need their own checks.",
+  "draft": "nee. **Rede:** die opdrag teken die huishouding se doelwitte aan; toestemmings en gevolge buite die terrein het hul eie kontroles nodig."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "no. **Reason:** a drawing cannot replace terrain, soil, water, outlet and permission checks or relevant qualified assessment.",
+  "english": "no. **Reason:** a drawing cannot replace terrain, soil, water, outlet and permission checks or relevant qualified assessment.",
+  "draft": "nee. **Rede:** 'n tekening kan nie kontroles van terrein, grond, water, uitlaat en toestemming of tersaaklike gekwalifiseerde beoordeling vervang nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Can several attractive benefits compensate for blocking the only agreed access route?",
+  "english": "Can several attractive benefits compensate for blocking the only agreed access route?",
+  "draft": "Kan verskeie aantreklike voordele vergoed vir die versperring van die enigste ooreengekome toegangsroete?"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "no. **Reason:** drawing software does not replace site-specific assessment or permission.",
+  "english": "no. **Reason:** drawing software does not replace site-specific assessment or permission.",
+  "draft": "nee. **Rede:** tekensagteware vervang nie terreinspesifieke beoordeling of toestemming nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Plants have been bought, but the proposed area has no agreed care or reliable water arrangement. Which dependency was missed?",
+  "english": "Plants have been bought, but the proposed area has no agreed care or reliable water arrangement. Which dependency was missed?",
+  "draft": "Plante is gekoop, maar die voorgestelde area het geen ooreengekome versorging of betroubare waterreëling nie. Watter afhanklikheid is gemis?"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "A project has an installation team but no agreed person to look after it afterwards. What is incomplete?",
+  "english": "A project has an installation team but no agreed person to look after it afterwards. What is incomplete?",
+  "draft": "'n Projek het 'n installeringspan maar geen ooreengekome persoon om daarna daarna om te sien nie. Wat is onvolledig?"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "The learner distinguishes installation from maintenance, records agreement and shows how care capacity affects scope.",
+  "english": "The learner distinguishes installation from maintenance, records agreement and shows how care capacity affects scope.",
+  "draft": "Die leerder onderskei installering van onderhoud, teken ooreenkoms aan en wys hoe versorgingskapasiteit die omvang beïnvloed."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Begin a design presentation with the brief. Show the existing situation and the evidence that mattered most. Then explain the chosen arrangement, an alternative you considered, the important trade-off and the first feasible phase. Keep unknowns visible; explaining a limitation is better than hiding it behind a confident picture.\n\nChoose a format the learner can use: drawings, a printed map, spoken explanation, supported notes or the app. Assess the reasoning and relevant evidence rather than fluency with a device. Ask for consent before recording or sharing a person's presentation.\n\nInvite specific feedback. A reviewer can name a supported strength, a missing assumption and a question that might change the plan. Listen before defending the drawing. Record whether the question exposes missing evidence, a misunderstanding in the presentation or a genuine conflict in the design.",
+  "english": "Begin a design presentation with the brief. Show the existing situation and the evidence that mattered most. Then explain the chosen arrangement, an alternative you considered, the important trade-off and the first feasible phase. Keep unknowns visible; explaining a limitation is better than hiding it behind a confident picture.\n\nChoose a format the learner can use: drawings, a printed map, spoken explanation, supported notes or the app. Assess the reasoning and relevant evidence rather than fluency with a device. Ask for consent before recording or sharing a person's presentation.\n\nInvite specific feedback. A reviewer can name a supported strength, a missing assumption and a question that might change the plan. Listen before defending the drawing. Record whether the question exposes missing evidence, a misunderstanding in the presentation or a genuine conflict in the design.",
+  "draft": "Begin 'n ontwerpaanbieding met die opdrag. Wys die bestaande situasie en die bewyse wat die meeste saak gemaak het. Verduidelik dan die gekose rangskikking, 'n alternatief wat jy oorweeg het, die belangrike afweging en die eerste uitvoerbare fase. Hou onbekendes sigbaar; om 'n beperking te verduidelik, is beter as om dit agter 'n selfversekerde prent te verberg.\n\nKies 'n formaat wat die leerder kan gebruik: tekeninge, 'n gedrukte kaart, mondelinge verduideliking, ondersteunde notas of die app. Assesseer die redenasie en tersaaklike bewyse eerder as vaardigheid met 'n toestel. Vra toestemming voordat jy 'n persoon se aanbieding opneem of deel.\n\nNooi spesifieke terugvoer uit. 'n Beoordelaar kan 'n ondersteunde sterkpunt, 'n ontbrekende aanname en 'n vraag wat die plan kan verander, noem. Luister voordat jy die tekening verdedig. Teken aan of die vraag ontbrekende bewyse, 'n misverstand in die aanbieding of 'n werklike botsing in die ontwerp blootlê."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Link each priority to an observation, a source or method, the person responsible and an agreed review point. State what the observation can and cannot demonstrate. Use practice data only if clearly labelled as supplied classroom data.",
+  "english": "Link each priority to an observation, a source or method, the person responsible and an agreed review point. State what the observation can and cannot demonstrate. Use practice data only if clearly labelled as supplied classroom data.",
+  "draft": "Koppel elke prioriteit aan 'n waarneming, 'n bron of metode, die verantwoordelike persoon en 'n ooreengekome hersieningspunt. Sê wat die waarneming kan en nie kan demonstreer nie. Gebruik oefendata slegs as dit duidelik as verskafde klaskamerdata gemerk is."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Evidence, design and exports guides. Inspect the saved and exported revision, retain the previous record and share only with the household's agreement. A paper/oral handover remains valid.",
+  "english": "Evidence, design and exports guides. Inspect the saved and exported revision, retain the previous record and share only with the household's agreement. A paper/oral handover remains valid.",
+  "draft": "Bewys-, ontwerp- en uitvoergidse. Ondersoek die gestoorde en uitgevoerde hersiening, behou die vorige rekord en deel slegs met die huishouding se instemming. 'n Oorhandiging op papier of mondeling bly geldig."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Build a small evidence folder or envelope, with references that match the notebook. Use sample records if private material cannot be redacted. Keep actual customer details out of classroom screenshots.",
+  "english": "Build a small evidence folder or envelope, with references that match the notebook. Use sample records if private material cannot be redacted. Keep actual customer details out of classroom screenshots.",
+  "draft": "Bou 'n klein bewyslêer of koevert, met verwysings wat by die notaboek pas. Gebruik voorbeeldrekords as private materiaal nie geredigeer kan word nie. Hou werklike kliëntbesonderhede uit klaskamerskermskote."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "If a forecast is relabelled as actual, return to the source status. If an application pays the bill in the model, remove it and restore the gap. If a claim rests on the map's appearance, ask for the appropriate underlying agreement, measurement or record. A legitimate answer may be “not ready to commit; obtain this evidence”. It is not a failure to preserve uncertainty.",
+  "english": "If a forecast is relabelled as actual, return to the source status. If an application pays the bill in the model, remove it and restore the gap. If a claim rests on the map's appearance, ask for the appropriate underlying agreement, measurement or record. A legitimate answer may be “not ready to commit; obtain this evidence”. It is not a failure to preserve uncertainty.",
+  "draft": "As 'n vooruitskatting as werklik heretiketteer word, gaan terug na die bronstatus. As 'n aansoek die rekening in die model betaal, verwyder dit en herstel die gaping. As 'n bewering op die kaart se voorkoms berus, vra vir die gepaste onderliggende ooreenkoms, meting of rekord. 'n Geldige antwoord kan wees “nog nie gereed om te verbind nie; kry hierdie bewyse”. Dit is nie 'n mislukking om onsekerheid te bewaar nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "W-CARE: no agreed care role",
+  "english": "W-CARE: no agreed care role",
+  "draft": "W-CARE: geen ooreengekome versorgingsrol nie"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Agree the task before drawing a solution.",
+  "english": "Agree the task before drawing a solution.",
+  "draft": "Kom die taak ooreen voordat jy 'n oplossing teken."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Record the agreed needs, who uses and cares for the place, and what must remain usable. Note what is outside this phase. Use roles or initials if you prefer.",
+  "english": "Record the agreed needs, who uses and cares for the place, and what must remain usable. Note what is outside this phase. Use roles or initials if you prefer.",
+  "draft": "Teken die ooreengekome behoeftes aan, wie die plek gebruik en versorg, en wat bruikbaar moet bly. Noteer wat buite hierdie fase val. Gebruik rolle of voorletters as jy verkies."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Give each note a reference. Include its date, source and whether it was observed, reported, measured or proposed. Record limits, disagreements and permission to use someone’s information.",
+  "english": "Give each note a reference. Include its date, source and whether it was observed, reported, measured or proposed. Record limits, disagreements and permission to use someone’s information.",
+  "draft": "Gee elke nota 'n verwysing. Sluit die datum, bron en of dit waargeneem, gerapporteer, gemeet of voorgestel is, in. Teken perke, onenigheid en toestemming om iemand se inligting te gebruik, aan."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Give the evidence for your preference, the trade-offs, the unknowns and what could change the choice. A provisional preference is not permission to build.",
+  "english": "Give the evidence for your preference, the trade-offs, the unknowns and what could change the choice. A provisional preference is not permission to build.",
+  "draft": "Gee die bewyse vir jou voorkeur, die afwegings, die onbekendes en wat die keuse kan verander. 'n Voorlopige voorkeur is nie toestemming om te bou nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "List unresolved water, soil, access, technical or permission questions. Explain downstream effects and the evidence or advice needed before the affected work can proceed.",
+  "english": "List unresolved water, soil, access, technical or permission questions. Explain downstream effects and the evidence or advice needed before the affected work can proceed.",
+  "draft": "Lys onopgeloste vrae oor water, grond, toegang, tegniese sake of toestemming. Verduidelik gevolge verder af en die bewyse of advies wat nodig is voordat die betrokke werk kan voortgaan."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Connect the drawing to feasible work and agreed responsibilities.",
+  "english": "Connect the drawing to feasible work and agreed responsibilities.",
+  "draft": "Verbind die tekening met uitvoerbare werk en ooreengekome verantwoordelikhede."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "List the phases, their prerequisites and who agrees that a phase is ready. Include checks before spending or starting work. Keep items with unresolved dependencies on hold.",
+  "english": "List the phases, their prerequisites and who agrees that a phase is ready. Include checks before spending or starting work. Keep items with unresolved dependencies on hold.",
+  "draft": "Lys die fases, hul voorvereistes en wie saamstem dat 'n fase gereed is. Sluit kontroles in voordat geld bestee of werk begin word. Hou items met onopgeloste afhanklikhede terug."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Who has agreed to care for the system?",
+  "english": "Who has agreed to care for the system?",
+  "draft": "Wie het ingestem om die stelsel te versorg?"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Keep animals outside this phase and follow the agreed brief",
+  "english": "Keep animals outside this phase and follow the agreed brief",
+  "draft": "Hou diere buite hierdie fase en volg die ooreengekome opdrag"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "The household has not agreed to that system. A design is judged by how it meets the brief, not by including a standard list of animals.",
+  "english": "The household has not agreed to that system. A design is judged by how it meets the brief, not by including a standard list of animals.",
+  "draft": "Die huishouding het nie tot daardie stelsel ingestem nie. 'n Ontwerp word beoordeel aan hoe dit die opdrag nakom, nie aan die insluiting van 'n standaardlys diere nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Existing work is not consent to additional work. Care responsibilities need discussion and agreement.",
+  "english": "Existing work is not consent to additional work. Care responsibilities need discussion and agreement.",
+  "draft": "Bestaande werk is nie toestemming tot bykomende werk nie. Versorgingsverantwoordelikhede het bespreking en ooreenkoms nodig."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Site analysis reports you can open or share",
+  "english": "Site analysis reports you can open or share",
+  "draft": "Terreinontledingsverslae wat jy kan oopmaak of deel"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Record production, water, land, livelihoods and other agreed indicators. Enter the total or reading on each date; repeated observations are not added together. Leave an unknown baseline or unagreed target blank.",
+  "english": "Record production, water, land, livelihoods and other agreed indicators. Enter the total or reading on each date; repeated observations are not added together. Leave an unknown baseline or unagreed target blank.",
+  "draft": "Teken produksie, water, grond, lewensbestaan en ander ooreengekome aanwysers aan. Voer die totaal of meting op elke datum in; herhaalde waarnemings word nie bymekaargetel nie. Laat 'n onbekende basislyn of nie-ooreengekome teiken leeg."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Check the farmer, observations, follow-up date and photo captions. A named person or follow-up date needs an agreed action.",
+  "english": "Check the farmer, observations, follow-up date and photo captions. A named person or follow-up date needs an agreed action.",
+  "draft": "Kontroleer die boer, waarnemings, opvolgdatum en fotobyskrifte. 'n Genoemde persoon of opvolgdatum het 'n ooreengekome aksie nodig."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "The participant agrees to these answers being recorded for the programme team.",
+  "english": "The participant agrees to these answers being recorded for the programme team.",
+  "draft": "Die deelnemer stem in dat hierdie antwoorde vir die programspan aangeteken word."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Watch a practical skill. Agree an action, owner and date.",
+  "english": "Watch a practical skill. Agree an action, owner and date.",
+  "draft": "Kyk na 'n praktiese vaardigheid. Kom 'n aksie, eienaar en datum ooreen."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Areas checked and shared by the organisation.",
+  "english": "Areas checked and shared by the organisation.",
+  "draft": "Gebiede wat deur die organisasie nagegaan en gedeel is."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Only areas shared by the organisation appear here.",
+  "english": "Only areas shared by the organisation appear here.",
+  "draft": "Slegs gebiede wat deur die organisasie gedeel is, verskyn hier."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Edit, save and change sharing here; no real project is changed.",
+  "english": "Edit, save and change sharing here; no real project is changed.",
+  "draft": "Wysig, stoor en verander deling hier; geen regte projek word verander nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Includes private records; funders see published records only.",
+  "english": "Includes private records; funders see published records only.",
+  "draft": "Sluit private rekords in; befondsers sien slegs gepubliseerde rekords."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Shared total",
+  "english": "Shared total",
+  "draft": "Gedeelde totaal"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Update / change sharing",
+  "english": "Update / change sharing",
+  "draft": "Werk by / verander deling"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Counts show assessment assignments and responses. A participant may appear in several assessments. Missing numerical answers remain unknown. Awaiting review means closed but not shared; it is not a separate recorded approval status.",
+  "english": "Counts show assessment assignments and responses. A participant may appear in several assessments. Missing numerical answers remain unknown. Awaiting review means closed but not shared; it is not a separate recorded approval status.",
+  "draft": "Tellings wys assesseringstoewysings en -antwoorde. 'n Deelnemer kan in verskeie assesserings verskyn. Ontbrekende numeriese antwoorde bly onbekend. Wag op hersiening beteken gesluit maar nie gedeel nie; dit is nie 'n aparte aangetekende goedkeuringstatus nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Offline: this report uses the records currently available on this device. Newer shared records may be missing.",
+  "english": "Offline: this report uses the records currently available on this device. Newer shared records may be missing.",
+  "draft": "Vanlyn: hierdie verslag gebruik die rekords wat tans op hierdie toestel beskikbaar is. Nuwer gedeelde rekords kan ontbreek."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "All visible record owners",
+  "english": "All visible record owners",
+  "draft": "Alle sigbare rekordeienaars"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Bring agreed indicators and assessment evidence into the same review, keeping their populations and dates explicit.",
+  "english": "Bring agreed indicators and assessment evidence into the same review, keeping their populations and dates explicit.",
+  "draft": "Bring ooreengekome aanwysers en assesseringsbewyse in dieselfde hersiening saam, en hou hul populasies en datums duidelik."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Selected project · no visible records",
+  "english": "Selected project · no visible records",
+  "draft": "Gekose projek · geen sigbare rekords nie"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Use the existing assessment and milestone workspaces to record the agreed action, owner, date and evidence.",
+  "english": "Use the existing assessment and milestone workspaces to record the agreed action, owner, date and evidence.",
+  "draft": "Gebruik die bestaande assesserings- en mylpaalwerkruimtes om die ooreengekome aksie, eienaar, datum en bewyse aan te teken."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Agreed indicators, assessment findings and matched change.",
+  "english": "Agreed indicators, assessment findings and matched change.",
+  "draft": "Ooreengekome aanwysers, assesseringsbevindinge en gepaarde verandering."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Personal farm report: review the contents before sharing. Organisation and funder access remain governed by the existing consent controls.",
+  "english": "Personal farm report: review the contents before sharing. Organisation and funder access remain governed by the existing consent controls.",
+  "draft": "Persoonlike plaasverslag: hersien die inhoud voordat jy dit deel. Toegang vir organisasies en befondsers word steeds deur die bestaande toestemmingskontroles beheer."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "{n} entries have future dates within this calendar selection. They remain included, as in Records; review their dates before sharing.",
+  "english": "{n} entries have future dates within this calendar selection. They remain included, as in Records; review their dates before sharing.",
+  "draft": "{n} inskrywings het toekomstige datums binne hierdie kalenderkeuse. Hulle bly ingesluit, soos in Rekords; hersien hul datums voordat jy deel."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Prepared offline from records available on this device. A successful export does not confirm that shared records are current.",
+  "english": "Prepared offline from records available on this device. A successful export does not confirm that shared records are current.",
+  "draft": "Vanlyn voorberei uit rekords wat op hierdie toestel beskikbaar is. 'n Suksesvolle uitvoer bevestig nie dat gedeelde rekords op datum is nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Prepared offline from records available on this device. Newer shared records may be missing.",
+  "english": "Prepared offline from records available on this device. Newer shared records may be missing.",
+  "draft": "Vanlyn voorberei uit rekords wat op hierdie toestel beskikbaar is. Nuwer gedeelde rekords kan ontbreek."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "All visible indicator donors",
+  "english": "All visible indicator donors",
+  "draft": "Alle sigbare skenkers van aanwysers"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Selected donor · no visible indicators",
+  "english": "Selected donor · no visible indicators",
+  "draft": "Gekose skenker · geen sigbare aanwysers nie"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "IDC / SEF · public May 2025 guidance",
+  "english": "IDC / SEF · public May 2025 guidance",
+  "draft": "IDC / SEF · openbare leiding van Mei 2025"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Donor filters apply to linked milestone definitions only. Assessment scope is unchanged. Record donor codes, agreement, measurement period and population in Indicators & targets. The public reference must be checked against your signed agreement.",
+  "english": "Donor filters apply to linked milestone definitions only. Assessment scope is unchanged. Record donor codes, agreement, measurement period and population in Indicators & targets. The public reference must be checked against your signed agreement.",
+  "draft": "Skenkerfilters geld slegs vir gekoppelde mylpaaldefinisies. Die omvang van assesserings bly onveranderd. Teken skenkerkodes, ooreenkoms, meettydperk en populasie aan onder Aanwysers en teikens. Die openbare verwysing moet teen jou ondertekende ooreenkoms nagegaan word."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Earlier {earlierStart} to {earlierEnd}; selected {selectedStart} to {selectedEnd} (UTC). Only available monthly ledger history is compared. Missing months or unshared books withhold a result. A recorded zero does not establish no farming activity. Current months are incomplete. Current consent and membership apply; these totals are not a matched farmer panel or an impact estimate.",
+  "english": "Earlier {earlierStart} to {earlierEnd}; selected {selectedStart} to {selectedEnd} (UTC). Only available monthly ledger history is compared. Missing months or unshared books withhold a result. A recorded zero does not establish no farming activity. Current months are incomplete. Current consent and membership apply; these totals are not a matched farmer panel or an impact estimate.",
+  "draft": "Vroeër {earlierStart} tot {earlierEnd}; gekies {selectedStart} tot {selectedEnd} (UTC). Slegs beskikbare maandelikse grootboekgeskiedenis word vergelyk. Ontbrekende maande of boeke wat nie gedeel is nie, hou 'n resultaat terug. 'n Aangetekende nul bewys nie dat daar geen boerdery-aktiwiteit was nie. Huidige maande is onvoltooid. Huidige toestemming en lidmaatskap geld; hierdie totale is nie 'n gepaarde boerpaneel of 'n impakskatting nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Agreement / reporting reference",
+  "english": "Agreement / reporting reference",
+  "draft": "Ooreenkoms- / verslagverwysing"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Agreed disaggregation and privacy rules",
+  "english": "Agreed disaggregation and privacy rules",
+  "draft": "Ooreengekome disaggregasie- en privaatheidsreëls"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "State “not required by this agreement” if applicable. No demographics are inferred from names. Use the measurement definition above for baseline dates, collection method, evidence and verification.",
+  "english": "State “not required by this agreement” if applicable. No demographics are inferred from names. Use the measurement definition above for baseline dates, collection method, evidence and verification.",
+  "draft": "Stel “nie deur hierdie ooreenkoms vereis nie” indien van toepassing. Geen demografie word uit name afgelei nie. Gebruik die meetdefinisie hierbo vir basislyndatums, insamelingsmetode, bewyse en verifikasie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Could not confirm deletion of this post. Check your connection and try again.",
+  "english": "Could not confirm deletion of this post. Check your connection and try again.",
+  "draft": "Kon nie bevestig dat hierdie plasing uitgevee is nie. Gaan jou verbinding na en probeer weer."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Could not confirm deletion. Check your connection and try again.",
+  "english": "Could not confirm deletion. Check your connection and try again.",
+  "draft": "Kon nie uitvee bevestig nie. Gaan jou verbinding na en probeer weer."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Nothing here is shared unless you switch it on. You can change your mind at any time, and {organisation} will stop seeing it straight away.",
+  "english": "Nothing here is shared unless you switch it on. You can change your mind at any time, and {organisation} will stop seeing it straight away.",
+  "draft": "Niks hier word gedeel tensy jy dit aanskakel nie. Jy kan enige tyd van plan verander, en {organisation} sal dit dadelik ophou sien."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "You are sharing {count} of {total} things.",
+  "english": "You are sharing {count} of {total} things.",
+  "draft": "Jy deel {count} van {total} dinge."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "{n} entry has a future date within this calendar selection. It remains included, as in Records; review its date before sharing.",
+  "english": "{n} entry has a future date within this calendar selection. It remains included, as in Records; review its date before sharing.",
+  "draft": "{n} inskrywing het 'n toekomstige datum binne hierdie kalenderkeuse. Dit bly ingesluit, soos in Rekords; hersien die datum voordat jy deel."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "The sharing controls and notices on this page are in Afrikaans. Some charts, data-status warnings and the farmer detail panel are still shown in English; names, figures and evidence typed by people are shown as saved.",
+  "english": "The sharing controls and notices on this page are in Afrikaans. Some charts, data-status warnings and the farmer detail panel are still shown in English; names, figures and evidence typed by people are shown as saved.",
+  "draft": "Die deelkontroles en kennisgewings op hierdie bladsy is in Afrikaans. Sommige grafieke, datastatuswaarskuwings en die boer se besonderhedepaneel word nog in Engels gewys; name, syfers en bewyse wat mense ingetik het, word gewys soos gestoor."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Compare buying, hiring and sharing",
+  "english": "Compare buying, hiring and sharing",
+  "draft": "Vergelyk koop, huur en deel"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Keep the unknowns visible",
+  "english": "Keep the unknowns visible",
+  "draft": "Hou die onbekendes sigbaar"
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Use this beside your drawings, or work on paper. Read out your answers while a learning partner writes if that helps. Use a practice site or a short site label; private household details are not needed here.",
+  "english": "Use this beside your drawings, or work on paper. Read out your answers while a learning partner writes if that helps. Use a practice site or a short site label; private household details are not needed here.",
+  "draft": "Gebruik dit langs jou tekeninge, of werk op papier. Lees jou antwoorde hardop terwyl 'n leermaat skryf, as dit help. Gebruik 'n oefenterrein of 'n kort terreinetiket; private huishoudelike besonderhede is nie hier nodig nie."
+ },
+ {
+  "cls": "consent",
+  "source": "inline",
+  "key": "Saving keeps one folder for this account on this browser and device. It does not sync to another device. Guest notes are shared by people using this browser. Download a text copy to keep with your drawings, and save before leaving this page.",
+  "english": "Saving keeps one folder for this account on this browser and device. It does not sync to another device. Guest notes are shared by people using this browser. Download a text copy to keep with your drawings, and save before leaving this page.",
+  "draft": "Stoor hou een lêer vir hierdie rekening op hierdie blaaier en toestel. Dit sinkroniseer nie na 'n ander toestel nie. Gasnotas word gedeel deur mense wat hierdie blaaier gebruik. Laai 'n tekskopie af om saam met jou tekeninge te hou, en stoor voordat jy hierdie bladsy verlaat."
+ }
+]

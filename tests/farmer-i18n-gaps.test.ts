@@ -111,8 +111,9 @@ test('farmer-facing English source stays present while only isiZulu gains marked
       // isiXhosa (23 Oct 2026): Rory asked for the whole app in isiXhosa, so its nav label is a
       // machine draft too, marked by the same page-level <LanguageDraftNote> DataPanel renders.
       // The soil advice keys stay English-only: DataPanel shows imp.source for every non-zu locale.
-      if (locale === 'xh' && key === 'designStudioLabel') {
-        assert.match(block, /^  designStudioLabel: ['"]/m, 'the isiXhosa Design Studio draft is missing');
+      // Afrikaans (31 Oct 2026) follows the same whole-app request and the same page-level note.
+      if ((locale === 'xh' || locale === 'af') && key === 'designStudioLabel') {
+        assert.match(block, /^  designStudioLabel: ['"]/m, `the ${locale === 'xh' ? 'isiXhosa' : 'Afrikaans'} Design Studio draft is missing`);
         continue;
       }
       assert.doesNotMatch(

@@ -12,7 +12,7 @@ import { SAMPLE_BRANDING } from '@/lib/sample-branding';
 import styles from './MelDashboard.module.css';
 import reports from './ProgrammeReports.module.css';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 
 export default function ProgrammeReports({ funder = false, onOpenProgress, onOpenCohort }: { funder?: boolean; onOpenProgress?: () => void; onOpenCohort?: () => void }) {
   const { lang } = useLanguage();
@@ -40,7 +40,7 @@ export default function ProgrammeReports({ funder = false, onOpenProgress, onOpe
     cohortId: selectedCohort, basis, startMonth: start, endMonth: end, comparison: comparison !== 'none' && start && end ? programmeComparisonRange(start, end, comparison) : undefined, withheldForConsent: portfolio.withheldForConsent, date };
   const report = buildProgrammeReport({ ...reportOptions, organisation, language: lang });
   // The file name is built from the English title/scope/period so it stays stable across languages.
-  const filenameBase = programmeReportFilename(lang === 'xh' ? buildProgrammeReport({ ...reportOptions, organisation: organisationName }) : report, date);
+  const filenameBase = programmeReportFilename(isInlineDraftLang(lang) ? buildProgrammeReport({ ...reportOptions, organisation: organisationName }) : report, date);
   const choices = [
     { key: 'overview', Icon: FileText, label: funder ? ui('Results brief', 'Isifinyezo semiphumela') : ui('Programme delivery', 'Ukulethwa kohlelo'), desc: ui('The evidence, its limits and the next decisions.', 'Ubufakazi, imikhawulo yabo nezinqumo ezilandelayo.') },
     { key: 'production', Icon: Sprout, label: ui('Production & finances', 'Ukukhiqiza nezimali'), desc: ui('Recorded harvests, sales and costs with coverage.', 'Izivuno, ukuthengisa nezindleko eziqoshiwe kanye nobubanzi bazo.') },
@@ -53,6 +53,8 @@ export default function ProgrammeReports({ funder = false, onOpenProgress, onOpe
     {lang === 'zu' && <p className={reports.languageNote} role="note">Izilawuli zalapha zisesiZulu. Umbhalo wokuhlaziya, amathebula nemininingwane ye-PDF kusengesiNgisi. Amagama nobufakazi kugcinwa njengoba kuqoshwe.</p>}
     {lang === 'xh' && kind !== 'mel' && <p className={reports.languageNote} role="note">{inlineText(lang, 'The controls, analysis text, tables and PDF here are an unreviewed isiXhosa draft. Names and recorded evidence are kept as recorded.')}</p>}
     {lang === 'xh' && kind === 'mel' && <p className={reports.languageNote} role="note">{inlineText(lang, 'The controls here are an unreviewed isiXhosa draft. The MEL analysis text, tables and PDF are in English. Names and recorded evidence are kept as recorded.')}</p>}
+    {lang === 'af' && kind !== 'mel' && <p className={reports.languageNote} role="note">{inlineText(lang, 'The controls, analysis text and tables here are an unreviewed Afrikaans draft. The PDF labels stay in English. Names and recorded evidence are kept as recorded.')}</p>}
+    {lang === 'af' && kind === 'mel' && <p className={reports.languageNote} role="note">{inlineText(lang, 'The controls here are an unreviewed Afrikaans draft. The MEL analysis text, tables and PDF are in English. Names and recorded evidence are kept as recorded.')}</p>}
     <div className={`${reports.choices} ${reports.fourChoices}`} aria-label={ui('Report type', 'Uhlobo lombiko')}>{choices.map(({ key, Icon, label, desc }, i) => <button type="button" key={key} className={reports.choice} aria-label={label} aria-pressed={key === kind} onClick={() => setKind(key)}><span className={reports.choiceTop}><Icon size={22} aria-hidden="true" /><span>0{i + 1}</span></span><strong>{label}</strong><span>{desc}</span></button>)}</div>
     <section className={reports.scope} aria-labelledby="report-scope-heading"><div className={reports.scopeTitle}><SlidersHorizontal size={18} aria-hidden="true" /><h2 id="report-scope-heading">{ui('Set the scope', 'Khetha ububanzi')}</h2><span>{ui('The preview and PDF use the same selection.', 'Ukubuka kuqala ne-PDF kusebenzisa ukukhetha okufanayo.')}</span></div>
       <div className={reports.filters}>

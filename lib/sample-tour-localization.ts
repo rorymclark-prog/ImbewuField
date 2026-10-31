@@ -1,7 +1,7 @@
 import { sampleWorkspaceDraft } from './sample-workspace-copy';
 import { REGIONAL_TOUR } from './sample-tour-regional';
 import { PRODUCT_TOUR, PRODUCT_TOUR_FEATURES, type ProductTourStep, type TourFeature } from './sample-tour';
-import { fillInline, inlineText, xhInlineDraft } from '@/lib/xh-inline';
+import { fillInline, inlineDraft, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 
 const regionalTour=(language:string)=>Object.hasOwn(REGIONAL_TOUR,language)?REGIONAL_TOUR[language]:undefined;
 
@@ -109,8 +109,8 @@ export const PRODUCT_TOUR_FEATURES_ZU: Record<TourFeatureId, readonly LocalizedT
 
 export function productTourStepCopy(step: ProductTourStep, language: string): LocalizedTourStep {
   // isiXhosa: the draft for each exact English string, keyed in lib/locales/xh-inline; anything
-  // without a draft keeps its English.
-  if (language === 'xh') {
+  // without a draft keeps its English. Afrikaans reads its drafts the same way.
+  if (isInlineDraftLang(language)) {
     return {
       ...step,
       title: inlineText(language, step.title),
@@ -128,7 +128,7 @@ export function productTourFeatureCopy(
   language: string,
   fallback: TourFeature | undefined,
 ): TourFeature | undefined {
-  if (language === 'xh') {
+  if (isInlineDraftLang(language)) {
     return fallback && { title: inlineText(language, fallback.title), text: inlineText(language, fallback.text) };
   }
   const table=language==='zu'?PRODUCT_TOUR_FEATURES_ZU:regionalTour(language)?.features;
@@ -149,6 +149,8 @@ const UI_ZU: Record<TourUiKey, string> = {
   browseGardens: 'Buka izingadi', unavailable: 'Ayitholakali kule akhawunti', opening: 'Kuyavulwa…',
   gettingReady: 'Kuyalungiswa…', draftDisclosure: 'Uhlaka lwesiZulu olungakabuyekezwa: izihloko, imisebenzi namacebiso kuhunyushwe ngokuhambisana nombhalo wesiNgisi. Kudinga ukubuyekezwa umuntu okhuluma isiZulu kahle futhi owazi ukusetshenziswa kwalolu hlelo.',
 };
+
+const AF_TOUR_DRAFT_DISCLOSURE = 'Unreviewed Afrikaans draft: titles, tasks and tips are translated to match the English text. They need review by a good Afrikaans speaker who knows how this app is used.';
 
 // The English each tour label shows (the callers pass the same words as their fallback), so the
 // isiXhosa draft is bound to the English sentence in lib/locales/xh-inline.
@@ -174,10 +176,13 @@ function xhDuration(duration: string | number): string {
 }
 
 export function productTourUi(key: TourUiKey, language: string, values: Record<string, string | number> = {}): string | undefined {
-  if (language === 'xh') {
-    const draft = xhInlineDraft(UI_EN[key]);
+  if (isInlineDraftLang(language)) {
+    // The disclosure names its language, so Afrikaans has its own English source sentence; it is
+    // shown in English until its draft exists rather than leaving the notice empty.
+    const english = language === 'af' && key === 'draftDisclosure' ? AF_TOUR_DRAFT_DISCLOSURE : UI_EN[key];
+    const draft = inlineDraft(language, english) ?? (english === AF_TOUR_DRAFT_DISCLOSURE ? english : null);
     if (!draft) return undefined;
-    const filled = key === 'aboutMinutes' && values.duration !== undefined ? { ...values, duration: xhDuration(values.duration) } : values;
+    const filled = key === 'aboutMinutes' && values.duration !== undefined && language === 'xh' ? { ...values, duration: xhDuration(values.duration) } : values;
     return Object.entries(filled).reduce((text, [name, value]) => text.replaceAll(`{${name}}`, String(value)), draft);
   }
   const template=language === 'zu' ? UI_ZU[key] : regionalTour(language)?.ui[key];
@@ -194,7 +199,7 @@ export const PRODUCT_TOUR_ERRORS_ZU:Readonly<Record<string,string>> = {
 };
 
 export function productTourError(message: string, language: string): string {
-  if (language === 'xh') return inlineText(language, message);
+  if (isInlineDraftLang(language)) return inlineText(language, message);
   const errors=language==='zu'?PRODUCT_TOUR_ERRORS_ZU:regionalTour(language)?.errors;
   return errors&&Object.hasOwn(errors,message)?errors[message]:message;
 }
@@ -221,6 +226,6 @@ export function productTourDuration(minutes:number,language:string):string {
 /** Raw shell copy shares one source identity; supplied isiZulu clauses keep their exact original wording. */
 export function sampleWorkspaceText(language:string,english:string,zulu:string,values:Record<string,string|number>={}):string {
   // isiXhosa: the draft keyed by the exact English template (lib/locales/xh-inline).
-  const template=language==='zu'?zulu:language==='xh'?inlineText(language,english):sampleWorkspaceDraft(english,language)??english;
+  const template=language==='zu'?zulu:isInlineDraftLang(language)?inlineText(language,english):sampleWorkspaceDraft(english,language)??english;
   return template.replace(/\{([^{}]+)\}/g,(match,name)=>Object.hasOwn(values,name)?String(values[name]):match);
 }

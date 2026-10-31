@@ -19,7 +19,7 @@ import { clearPulseCookie } from '@/lib/server-rescue';
 import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
 import { useAppConfirm } from '@/components/AppConfirm';
 import { translatedDesignStepLabel } from '@/lib/design-studio-i18n';
-import { inlineTemplate, inlineText } from '@/lib/xh-inline';
+import { inlineTemplate, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 
 import type { LocationData } from '@/lib/types';
 import type { SectorSite } from '@/lib/sector';
@@ -3034,7 +3034,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
 
   // Saved-place name (effect-resolved) with coordinates as the fallback.
   const siteName = placeName ?? `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
-  const stepName = (step: WizardStep) => isZulu ? translatedDesignStepLabel(t, step) : lang === 'xh' ? (step === 'glossy' ? inlineText(lang, 'Preview & Export') : translatedDesignStepLabel(t, step)) : step === 'glossy' ? 'Preview & Export' : STEP_LABELS[step];
+  const stepName = (step: WizardStep) => isZulu ? translatedDesignStepLabel(t, step) : isInlineDraftLang(lang) ? (step === 'glossy' ? inlineText(lang, 'Preview & Export') : translatedDesignStepLabel(t, step)) : step === 'glossy' ? 'Preview & Export' : STEP_LABELS[step];
 
   return (
     <div

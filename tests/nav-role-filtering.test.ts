@@ -155,13 +155,13 @@ test('the Journal tile describes notes and photos in each target language withou
     const src = read(`lib/locales/${f}`);
     assert.doesNotMatch(src, /homeQuickJournalDesc:\s*['"][^'"\n]*(?:Rekhoda izivuno|Log harvests)/i,
       `${f} must not restore the old promise that the Journal records harvests.`);
-    if (['zu.ts', 'xh.ts', 'st.ts', 'ts.ts', 've.ts'].includes(f)) {
+    if (['zu.ts', 'xh.ts', 'af.ts', 'st.ts', 'ts.ts', 've.ts'].includes(f)) {
       assert.match(src, /homeQuickJournalDesc:\s*['"][^'"\n]+['"]/,
         `${f}: the target language needs its own notes-and-photos label`);
       const code = f.slice(0, -3);
       const { default: dict } = await import(`../lib/locales/${code}.ts`);
       assert.notEqual(dict.homeQuickJournalDesc, desc[1], `${f}: the tile is still English`);
-      if (code !== 'zu' && code !== 'xh') assert.equal(dict.homeQuickJournalDesc, journal[code], `${f}: the tile must retain its source-paired review draft`);
+      if (code !== 'zu' && code !== 'xh' && code !== 'af') assert.equal(dict.homeQuickJournalDesc, journal[code], `${f}: the tile must retain its source-paired review draft`);
     } else {
       assert.doesNotMatch(src, /homeQuickJournalDesc:/,
         `${f} remains on the English pending text until its own review draft is prepared`);

@@ -98,6 +98,7 @@ export function portfolioText(answers: PortfolioAnswers, lang = 'en'): string {
   return [tx(PORTFOLIO_NOTICE),
     // isiXhosa is an unreviewed machine draft: a saved copy says so, in one line.
     ...(lang === 'xh' ? [tx('Unreviewed isiXhosa draft.')] : []),
+    ...(lang === 'af' ? [tx('Unreviewed Afrikaans draft.')] : []),
     tx('Paper or drawing references below are not attachments. Keep a separate copy of those sources.'),
     ...PORTFOLIO_STAGES.flatMap(stage => [
       `${stage.id.toUpperCase()} — ${tx(stage.title)}`, tx(stage.purpose),

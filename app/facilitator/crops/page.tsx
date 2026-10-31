@@ -88,7 +88,7 @@ import { UNPRICED_CROPS, asFarmerOwnPrice, isUsablePrice, priceFor, loadCropPric
 // than retyped so the wording cannot drift from the book it describes (that drift is exactly what
 // left this sentence naming a single day after a crop was priced five weeks later).
 import { PRICE_SNAPSHOT_MONTHS } from '@/components/prices/CropPriceGuide.format';
-import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
 import { inlineBuilt, inlineBuiltList } from '@/lib/xh-inline-match';
 import { recordsMonthLong, recordsMonthShort } from '@/lib/records-months';
 import { localeDate } from '@/lib/xh-dates';
@@ -133,7 +133,7 @@ function sharedTaskLine(lang: string, task: CropTask): string {
   return `${inlineText(lang, TASK_TITLE[task.action])} ${task.cropName} (${bedLabelText(lang, task.bedLabel)})${how ? ` — ${taskDetailText(lang, how)}` : ''}`;
 }
 function sharedTaskSentence(lang: string, tasks: CropTask[]): string {
-  if (lang !== 'xh') return taskSentence(tasks);
+  if (!isInlineDraftLang(lang)) return taskSentence(tasks);
   return tasks.length === 0 ? inlineText(lang, 'nothing due') : tasks.map((task) => sharedTaskLine(lang, task)).join(' · ');
 }
 
@@ -170,7 +170,7 @@ const YEAR_REPORT_TEMPLATES = [
 ] as const;
 
 function buyingNoteText(lang: string, note: string): string {
-  if (lang !== 'xh') return note;
+  if (!isInlineDraftLang(lang)) return note;
   // The nursery paragraph is a shared constant (also shown whole elsewhere): look it up whole.
   const GUIDANCE = '\u0000';
   return note.replace(TRANSPLANT_NURSERY_GUIDANCE, GUIDANCE).split(/(?<=[.?]) (?=[A-Z\u0000])/).map((sentence) => (
@@ -359,7 +359,7 @@ const PLAN_NOTE_TEMPLATES = [
 
 /** "Bed 3" / "Plot 2" as the planner labels them; a farmer's own label passes through unchanged. */
 function bedLabelText(lang: string, label: string): string {
-  if (lang !== 'xh') return label;
+  if (!isInlineDraftLang(lang)) return label;
   const bed = /^Bed (\d+)$/.exec(label);
   if (bed) return inlineTemplate(lang, 'Bed {n}', null, { n: bed[1] });
   const plot = /^Plot (\d+)$/.exec(label);
@@ -374,7 +374,7 @@ function monthsInText(lang: string, text: string): string {
 
 /** "Bed 1 (Sep–Dec), Plot 2 (all year)" or "4 plots": labels, months and the two fixed words. */
 function placesAndMonthsText(lang: string, text: string): string {
-  if (lang !== 'xh') return text;
+  if (!isInlineDraftLang(lang)) return text;
   return monthsInText(lang, text
     .replace(/\b(?:Bed|Plot) \d+\b/g, (label) => bedLabelText(lang, label))
     .replace(/\ball year\b/g, inlineText(lang, 'all year'))
@@ -410,7 +410,7 @@ function planNoteValue(lang: string): (name: string, captured: string) => string
 
 /** A plan note or "waiting for their sowing window" sentence, as the lib wrote it, in isiXhosa for xh. */
 function planNoteText(lang: string, text: string): string {
-  if (lang !== 'xh') return text;
+  if (!isInlineDraftLang(lang)) return text;
   const value = planNoteValue(lang);
   return text.split(/(?<=[.?]) (?=[A-Z])/).map((sentence) => inlineBuilt(lang, sentence, PLAN_NOTE_TEMPLATES, value)).join(' ');
 }
@@ -455,7 +455,7 @@ function splitOutsideBrackets(list: string, separator: string): string[] {
  * noun are looked up as words; the count and the proposed tail go through the templates.
  */
 function produceLineText(lang: string, english: string, kind: 'trees' | 'animals'): string {
-  if (lang !== 'xh') return english;
+  if (!isInlineDraftLang(lang)) return english;
   return english.split(' · ').map((part, index) => {
     if (index === 0) {
       const [first, ...rest] = part.split(' — ');
@@ -471,7 +471,7 @@ function produceLineText(lang: string, english: string, kind: 'trees' | 'animals
 
 /** The footnote under the animals row ("On your map, with no month bar — confirm local …"). */
 function animalsNotShownText(lang: string, note: string): string {
-  if (lang !== 'xh') return note;
+  if (!isInlineDraftLang(lang)) return note;
   const value = (name: string, captured: string): string => {
     switch (name) {
       case 'parts': return inlineBuiltList(lang, captured, ANIMALS_NOT_SHOWN_TEMPLATES, '; ', value);
@@ -2046,7 +2046,7 @@ function FacilitatorCropsPageInner() {
   }
 
   function shareTasks() {
-    const picking = (i: number) => (treePicking[i] ?? []).map((line) => `\n  ${lang === 'xh' ? treePickingPhraseText(line, lang) : treePickingPhrase(line)}`).join('');
+    const picking = (i: number) => (treePicking[i] ?? []).map((line) => `\n  ${isInlineDraftLang(lang) ? treePickingPhraseText(line, lang) : treePickingPhrase(line)}`).join('');
     const text = `🌱 ${inlineText(lang, 'Production plan tasks')}\n${monthLabel(currentMonth, lang)}: ${sharedTaskSentence(lang, currentTasks)}${picking(0)}\n${monthLabel(nextMonth, lang)}: ${sharedTaskSentence(lang, nextTasks)}${picking(1)}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
   }
@@ -2273,6 +2273,11 @@ function FacilitatorCropsPageInner() {
           {inlineText(lang, 'Unreviewed isiXhosa draft. This interface and the task instructions are an isiXhosa draft that has not been reviewed by a fluent isiXhosa speaker. Crop names stay in English. Check planting times, climate and price assumptions against their sources and local farming advice before you act on them.')}
         </div>
       )}
+      {lang === 'af' && (
+        <div role="note" lang="af" className="flex-shrink-0 px-3 md:px-5 py-2" style={{ background: 'rgba(192,122,30,0.08)', borderBottom: '1px solid rgba(154,96,24,0.3)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.45 }}>
+          {inlineText(lang, 'Unreviewed Afrikaans draft. This interface and the task instructions are an Afrikaans draft that has not been reviewed by a fluent Afrikaans speaker. Crop names stay in English. Check planting times, climate and price assumptions against their sources and local farming advice before you act on them.')}
+        </div>
+      )}
       {lang === 'zu' && (
         <div role="note" className="flex-shrink-0 px-3 md:px-5 py-2" style={{ background: 'rgba(192,122,30,0.08)', borderBottom: '1px solid rgba(154,96,24,0.3)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.45 }}>
           <strong>IsiZulu draft · Isaziso senguqulo yesiZulu esalungiswa.</strong> This interface draft has not been reviewed by a fluent isiZulu speaker. Crop names, planting times, climate and price assumptions, and task instructions remain in English pending source and local farming review. Amagama ezitshalo, izikhathi zokutshala, isimo sezulu, amanani nemiyalelo yemisebenzi kuseNgisini kuze kubuyekezwe imithombo nolwazi lwezolimo lwendawo.
@@ -2285,7 +2290,7 @@ function FacilitatorCropsPageInner() {
       {showBedCheck && beds.length > 0 && (
         <div className="flex-shrink-0 px-4 py-3" style={{ background: 'var(--bg-1)', borderBottom: '1px solid var(--border)' }}>
           <div className="font-sans mb-2" style={{ fontSize: 11.5, color: 'var(--text-secondary)' }}>
-            {lang === 'xh' ? inlineTemplate(lang, 'This plan grows on {beds} — {area} m² of growing space{tail}', null, {
+            {isInlineDraftLang(lang) ? inlineTemplate(lang, 'This plan grows on {beds} — {area} m² of growing space{tail}', null, {
               beds: `${beds.filter((b) => b.kind !== 'plot').length === 1 ? inlineTemplate(lang, '{n} bed', null, { n: 1 }) : inlineTemplate(lang, '{n} beds', null, { n: beds.filter((b) => b.kind !== 'plot').length })}${beds.some((b) => b.kind === 'plot') ? ` ${inlineText(lang, 'and')} ${inlineTemplate(lang, beds.filter((b) => b.kind === 'plot').length === 1 ? '{n} staple plot' : '{n} staple plots', null, { n: beds.filter((b) => b.kind === 'plot').length })}` : ''}`,
               area: beds.reduce((s, b) => s + b.areaM2, 0).toFixed(1),
               tail: canvasSite ? inlineText(lang, ', traced in your Design Studio map. Resize or add beds there and they update here.') : '.',
@@ -2342,7 +2347,7 @@ function FacilitatorCropsPageInner() {
                 ? cropUi(lang, 'No saved designs yet. Draw your beds in the Design Studio and this is where they will appear.', 'Azikho izakhiwo ezilondoloziwe okwamanje. Dweba imibhede yakho ku-Design Studio; izovela lapha.')
                 : cloudCards.length + studioCards.length === 1
                   ? inlineText(lang, 'One saved design — here is what is on it.')
-                  : lang === 'xh' ? inlineTemplate(lang, '{n} saved designs. Each one is drawn as it sits on the ground.', null, { n: cloudCards.length + studioCards.length }) : `${cloudCards.length + studioCards.length} ${cropUi(lang, 'saved designs. Each one is drawn as it sits on the ground.', 'imiklamo elondoloziwe. Ngayinye iboniswa njengoba injalo emhlabeni.')}`}
+                  : isInlineDraftLang(lang) ? inlineTemplate(lang, '{n} saved designs. Each one is drawn as it sits on the ground.', null, { n: cloudCards.length + studioCards.length }) : `${cloudCards.length + studioCards.length} ${cropUi(lang, 'saved designs. Each one is drawn as it sits on the ground.', 'imiklamo elondoloziwe. Ngayinye iboniswa njengoba injalo emhlabeni.')}`}
             </p>
 
             <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(215px, 1fr))' }}>
@@ -2998,7 +3003,7 @@ function FacilitatorCropsPageInner() {
             {/* Seed BOQ + year-ahead report */}
             <div className="grid gap-4 mt-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
               <div className="rounded-2xl p-4" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
-                <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><Sprout size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {lang === 'xh' ? inlineText(lang, 'Seeds & seedlings — what to buy, and when') : <>Seeds &amp; seedlings — what to buy, and when</>}{lang === 'zu' && <small className="block" lang="zu" style={{ fontSize: 12 }}>Imbewu nezithombo — okuthengwayo nesikhathi</small>}</div>
+                <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.15vw, 17px)', color: 'var(--text-primary)' }}><Sprout size={14} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {isInlineDraftLang(lang) ? inlineText(lang, 'Seeds & seedlings — what to buy, and when') : <>Seeds &amp; seedlings — what to buy, and when</>}{lang === 'zu' && <small className="block" lang="zu" style={{ fontSize: 12 }}>Imbewu nezithombo — okuthengwayo nesikhathi</small>}</div>
                 <p className="font-sans mb-2 mt-0.5" style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.4 }}>
                   {/* The subtitle must not promise which month comes first:
                       buildBuyingSchedule drops months with nothing to buy, so
@@ -3022,7 +3027,7 @@ function FacilitatorCropsPageInner() {
                             one (rollingMonths), so for any plan opened after
                             about March "later in the year" named the wrong
                             year for half these months. */}
-                        {lang === 'xh' ? inlineTemplate(lang, buyingSchedule.length - VISIBLE_BUYING_MONTHS === 1 ? 'Later in the next 12 months ({n} more month)' : 'Later in the next 12 months ({n} more months)', null, { n: buyingSchedule.length - VISIBLE_BUYING_MONTHS }) : <>Later in the next 12 months ({buyingSchedule.length - VISIBLE_BUYING_MONTHS} more {buyingSchedule.length - VISIBLE_BUYING_MONTHS === 1 ? 'month' : 'months'})</>}
+                        {isInlineDraftLang(lang) ? inlineTemplate(lang, buyingSchedule.length - VISIBLE_BUYING_MONTHS === 1 ? 'Later in the next 12 months ({n} more month)' : 'Later in the next 12 months ({n} more months)', null, { n: buyingSchedule.length - VISIBLE_BUYING_MONTHS }) : <>Later in the next 12 months ({buyingSchedule.length - VISIBLE_BUYING_MONTHS} more {buyingSchedule.length - VISIBLE_BUYING_MONTHS === 1 ? 'month' : 'months'})</>}
                       </summary>
                       <div className="space-y-3 mt-2">
                         {buyingSchedule.slice(VISIBLE_BUYING_MONTHS).map((monthGroup) => (
@@ -4670,7 +4675,7 @@ function UnmarkedProduceLine({ line }: { line: CalendarUnmarkedLine }) {
           <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 8 }}>
             {line.records.map((r) => (
               <li key={`${r.region}-${r.source.page}`} style={{ fontSize: 12.5, lineHeight: 1.35 }}>
-                <div style={{ fontWeight: 600 }}>{lang === 'xh' ? `${inlineText(lang, r.region)}: ${inlineText(lang, r.when)}${r.plant ? `, ${r.plant}` : ''}` : flowRecordText(r)}</div>
+                <div style={{ fontWeight: 600 }}>{isInlineDraftLang(lang) ? `${inlineText(lang, r.region)}: ${inlineText(lang, r.when)}${r.plant ? `, ${r.plant}` : ''}` : flowRecordText(r)}</div>
                 <div style={{ fontSize: 11, color: 'var(--text-secondary)', fontStyle: 'italic', marginTop: 2 }}>
                   &ldquo;{r.source.quote}&rdquo;{r.source.page !== null ? ` (p. ${r.source.page})` : ''}
                 </div>
@@ -5197,7 +5202,7 @@ function CropPickerModal({
                 bed, which shows no fraction picker, and used to get no capacity
                 feedback at all. Plain words first, arithmetic in brackets after —
                 this screen is read by farmers, not by a spreadsheet. */}
-            {overlapWarning && crop && lang !== 'xh' && (
+            {overlapWarning && crop && !isInlineDraftLang(lang) && (
               <div className="font-sans mb-2" style={{ fontSize: 11.5, color: 'var(--gold)', lineHeight: 1.45 }}>
                 {/* A staple plot reaches this too — "+ crop" is unconditional on
                     every row, and two whole-plot crops in the same months is
@@ -5220,7 +5225,7 @@ function CropPickerModal({
                 )}
               </div>
             )}
-            {overlapWarning && crop && lang === 'xh' && (
+            {overlapWarning && crop && isInlineDraftLang(lang) && (
               <div className="font-sans mb-2" style={{ fontSize: 11.5, color: 'var(--gold)', lineHeight: 1.45 }}>
                 <TriangleAlert size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} />{' '}
                 {inlineTemplate(lang, isPlot
@@ -5244,7 +5249,7 @@ function CropPickerModal({
               </div>
             )}
 
-            {hasUnverifiedTiming && lang !== 'xh' && (
+            {hasUnverifiedTiming && !isInlineDraftLang(lang) && (
               <div className="font-sans mb-2" style={{ fontSize: 11, color: 'var(--gold)' }}>
                 {/* "the space check above" is only a real reference when the
                     overlap warning actually rendered — with no overlap it
@@ -5255,7 +5260,7 @@ function CropPickerModal({
                   : 'The app cannot tell whether it still holds this ground, so check that the ground is actually free before adding another crop.'}
               </div>
             )}
-            {hasUnverifiedTiming && lang === 'xh' && (
+            {hasUnverifiedTiming && isInlineDraftLang(lang) && (
               <div className="font-sans mb-2" style={{ fontSize: 11, color: 'var(--gold)' }}>
                 <TriangleAlert size={13} aria-hidden style={{ display: 'inline', verticalAlign: '-2px', flexShrink: 0 }} /> {inlineText(lang, isPlot ? 'This plot has a legacy crop whose finish timing is not verified.' : 'This bed has a legacy crop whose finish timing is not verified.')}{' '}
                 {overlapWarning

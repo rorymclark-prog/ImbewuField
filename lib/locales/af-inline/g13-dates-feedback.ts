@@ -1,0 +1,33 @@
+// Unreviewed Afrikaans machine drafts keyed by the exact English (see index.ts).
+const drafts: Record<string, string> = {
+  "Due {date}": "Sperdatum {date}",
+  "ISIXHOSA DRAFT — This translation has not been reviewed by a fluent isiXhosa speaker.": "ISIXHOSA-KONSEP — Hierdie vertaling is nie deur 'n vlot isiXhosa-spreker nagegaan nie.",
+  "Error": "Fout",
+  "Report a bug or suggest a feature": "Rapporteer 'n fout of stel 'n funksie voor",
+  "Add a title, details and a page path without a query or personal information.": "Voeg 'n titel, besonderhede en 'n bladsypad by sonder 'n navraag of persoonlike inligting.",
+  "Tell us what happened or what would help. Please leave out passwords, identity numbers, private survey answers and other people’s personal information.": "Vertel ons wat gebeur het of wat sou help. Moet asseblief nie wagwoorde, identiteitsnommers, privaat opname-antwoorde en ander mense se persoonlike inligting insluit nie.",
+  "Received": "Ontvang",
+  "Saved. Reference:": "Gestoor. Verwysing:",
+  "Write another": "Skryf nog een",
+  "Tell us": "Vertel ons",
+  "What would you like to send?": "Wat wil jy stuur?",
+  "Report a bug": "Rapporteer 'n fout",
+  "Request a feature": "Vra vir 'n funksie",
+  "What did you do, what happened, and what did you expect?": "Wat het jy gedoen, wat het gebeur, en wat het jy verwag?",
+  "What would you like to do, and why would it help?": "Wat wil jy doen, en hoe sou dit help?",
+  "Only this form, your name and your role are sent. No screenshot, GPS position or farm record is attached automatically.": "Slegs hierdie vorm, jou naam en jou rol word gestuur. Geen skermskoot, GPS-posisie of plaasrekord word outomaties aangeheg nie.",
+  "Send this feedback, including from the practice version.": "Stuur hierdie terugvoer, ook vanuit die oefenweergawe.",
+  "Send": "Stuur",
+  "Please add a title, details and a valid page path first.": "Voeg asseblief eers 'n titel, besonderhede en 'n geldige bladsypad by.",
+  "Download a copy": "Laai 'n kopie af",
+  "to send, or download your draft first. Signing in may reload this page.": "om te stuur, of laai eers jou konsep af. Aanmelding kan hierdie bladsy herlaai.",
+  "Developer inbox": "Ontwikkelaar-inmandjie",
+  "Load latest 100 submissions": "Laai nuutste 100 inskrywings",
+  "No feedback yet.": "Nog geen terugvoer nie.",
+  "account": "rekening",
+  "from practice view": "uit oefenaansig",
+  "live app": "regstreekse app",
+  "Page:": "Bladsy:",
+};
+
+export default drafts;

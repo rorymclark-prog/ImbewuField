@@ -8,7 +8,7 @@ import ts from 'typescript';
 import { farmMemoryText } from '../lib/farm-memory-copy.ts';
 import { taskJournalHref, taskHarvestHref } from '../lib/task-record-link.ts';
 import type { BoardTask } from '../lib/task-board.ts';
-import { inlineText, inlineTemplate } from '../lib/xh-inline.ts';
+import { inlineText, inlineTemplate, isInlineDraftLang } from '../lib/xh-inline.ts';
 
 const require = createRequire(import.meta.url);
 const source = readFileSync(new URL('../app/cropplan/page.tsx', import.meta.url), 'utf8');
@@ -24,9 +24,9 @@ const code = ts.transpileModule([...helpers, taskList.getText(tree)].join('\n'),
   jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022,
 } }).outputText;
 const Icon = () => null;
-const TaskList = new Function('require', 'exports', 'workspace', 'actionMeta', 'taskJournalHref', 'taskHarvestHref', 'farmMemoryText', 'inlineText', 'inlineTemplate', 'IsiZuluDraftSource', 'Link', 'CheckCircle2', 'Circle', 'ClipboardList', 'Scissors', `${code}; return TaskList;`)(
+const TaskList = new Function('require', 'exports', 'workspace', 'actionMeta', 'taskJournalHref', 'taskHarvestHref', 'farmMemoryText', 'inlineText', 'inlineTemplate', 'isInlineDraftLang', 'IsiZuluDraftSource', 'Link', 'CheckCircle2', 'Circle', 'ClipboardList', 'Scissors', `${code}; return TaskList;`)(
   require, {}, { cards: 'cards' }, () => ({ Icon, color: '#123456' }), taskJournalHref, taskHarvestHref,
-  farmMemoryText, inlineText, inlineTemplate, ({ english }: { english: string }) => React.createElement('span', null, english),
+  farmMemoryText, inlineText, inlineTemplate, isInlineDraftLang, ({ english }: { english: string }) => React.createElement('span', null, english),
   ({ children, ...props }: any) => React.createElement('a', props, children), Icon, Icon, Icon, Icon,
 ) as React.ComponentType<any>;
 

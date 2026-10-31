@@ -16,7 +16,7 @@ export default function DesignZuluDraftNotice() {
   return (
     <div
       role="note"
-      lang={lang === 'xh' ? 'xh' : 'zu'}
+      lang={lang === 'xh' || lang === 'af' ? lang : 'zu'}
       style={{
         padding: '5px 9px',
         borderRadius: 8,

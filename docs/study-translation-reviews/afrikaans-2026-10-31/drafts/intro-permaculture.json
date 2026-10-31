@@ -1,0 +1,115 @@
+{
+ "id": "intro-permaculture",
+ "title": "Inleiding tot permakultuur",
+ "description": "Etiek, beginsels en patrone — die grondslag vir alles anders wat jy gaan bou.",
+ "lessons": [
+  {
+   "id": "intro-permaculture-l1",
+   "title": "Die drie etiese beginsels: Aardesorg, Mensesorg, Billike Deel",
+   "body": "Permakultuur berus op drie etiese beginsels. Aardesorg beteken dat jy grond, water, plante en diere behandel as lewende stelsels wat jy moet beskerm, nie as hulpbronne om op te gebruik nie. Mensesorg beteken dat jou gesin se behoeftes eerste kom, dan dié van jou gemeenskap. Billike Deel beteken dat jy net neem wat jy nodig het en die oorskot — saad, kos, water, kennis — aan die stelsel teruggee.\n\nDit is nie abstrakte idees nie. 'n Boer wat elke eier en elke groente verkoop, maar niks vir die gesin se tafel terughou nie, slaan Mensesorg oor. 'n Gemeenskap wat 'n gedeelde fontein afkamp, verbreek Billike Deel.\n\nEtiek is belangrik omdat dit jou help besluit wanneer daar geen reëlboek is nie — 'n buurman wat ná 'n droogte vra om beeste te laat wei, 'n vloed wat jou kontoerslote beskadig. Bou hierdie drie in die manier waarop jy dink, voordat jy enigiets op die grond bou.",
+   "keyPoints": [
+    "Aardesorg: beskerm grond, water en biodiversiteit",
+    "Mensesorg: jou gesin se behoeftes kom voor produksie vir die mark",
+    "Billike Deel: gee oorskot aan die stelsel terug — saad, water, kos, kennis",
+    "Etiek lei besluite wanneer daar geen reëlboek is nie"
+   ],
+   "quiz": [
+    {
+     "q": "'n Boer verkoop al sy oorskotmielies, maar hou niks terug vir kompos of om saad te bewaar nie. Watter etiese beginsel verwaarloos hy die meeste?",
+     "options": [
+      "Slegs Aardesorg",
+      "Slegs Mensesorg",
+      "Billike Deel — hy gee niks aan die stelsel terug nie",
+      "Al drie ewe veel"
+     ],
+     "correct": 2,
+     "rationale": "Billike Deel beteken dat jy iets teruggee van wat jy neem — as saad, kompos of kos vir ander. As jy alles verkoop en niks terughou nie, breek jy daardie kringloop."
+    },
+    {
+     "q": "Jou boorgat voorsien jou huishouding. Bure vra ook vir water. Watter optrede weerspieël al drie etiese beginsels die beste?",
+     "options": [
+      "Verkoop toegang aan die hoogste bieër",
+      "Hou al die boorgatwater vir 'n groter besproeiingsarea",
+      "Vind uit of deel toegelaat word en of die boorgat al die gebruikers kan bedien. Kom eers dan ooreen hoe om billik te deel, en hou aan om die watervlak dop te hou.",
+      "Maak die boorgat toe net om grondwater te bewaar"
+     ],
+     "correct": 2,
+     "rationale": "Vind eers uit watter watergebruik toegelaat word en of die bron al die gebruikers kan bedien sonder om te veel water te onttrek. As deel toegelaat word en daar genoeg water is, kom ooreen hoe om billik te deel. Monitering help jou om verandering raak te sien; dit gee nie toestemming om meer water te neem nie."
+    }
+   ],
+   "infographicAlt": "Die drie etiese beginsels as drie gekoppelde sirkels van dieselfde grootte: 'n hand wat grond vashou vir Aardesorg, twee mense vir Mensesorg, en 'n mandjie wat van hand tot hand aangegee word vir Billike Deel."
+  },
+  {
+   "id": "intro-permaculture-l2",
+   "title": "Twaalf beginsels: Ontwerp saam met die natuur",
+   "body": "David Holmgren het twaalf ontwerpbeginsels in Essence of Permaculture uiteengesit. Bill Mollison en David Holmgren het saam die permakultuurkonsep ontwikkel. Drie nuttige beginpunte vir hierdie les is: neem waar en tree in wisselwerking — hou jou grond 'n volle seisoen lank dop voor groot grondwerke; vang en stoor energie — let op reën, son en biomassa voordat dit jou eiendom verlaat; en gebruik rande en waardeer die randgebiede — 'n heininglyn of 'n strook langs 'n paadjie kan 'n nuttige plek wees om waar te neem.\n\nAnder wat die moeite werd is om te ken: produseer geen afval nie (kosreste word kompos, kompos word grond), gebruik klein en stadige oplossings ('n emmer kan 'n bedding sonder elektrisiteit natlei), en gebruik en waardeer diversiteit. Haelskade aan mielies hang af van die storm en die gewas se groeistadium.\n\nKies twee of drie beginsels wat jou grootste probleem aanspreek en pas hulle deeglik toe. Die res word vanself duidelik soos jy aangaan.",
+   "keyPoints": [
+    "Neem jou grond 'n volle seisoen lank waar voor groot grondwerke",
+    "Vang en stoor reën, son en biomassa voordat dit jou eiendom verlaat",
+    "Rande en randgebiede kan nuttige plekke wees om waar te neem wat goed groei",
+    "Haelskade aan mielies hang af van die storm en die gewas se groeistadium"
+   ],
+   "quiz": [
+    {
+     "q": "'n Boer wil kontoerslote grawe om reënwater op te vang. Wat moet sy eerste doen, volgens 'neem waar en tree in wisselwerking'?",
+     "options": [
+      "Grawe dadelik ná die eerste goeie reën",
+      "Hou ten minste een nat seisoen lank dop waar water vloei en plasse vorm",
+      "Kopieer 'n buurman se uitleg van kontoerslote",
+      "Aanvaar dat dieselfde ontwerp vir kontoerslote by elke terrein pas"
+     ],
+     "correct": 1,
+     "rationale": "'n Nat seisoen wys meer as een storm, maar waarneming is net 'n eerste stap. Kontroleer die grond, helling, dreinering en veilige oorlooproete saam met 'n opgeleide plaaslike adviseur voordat jy grawe."
+    },
+    {
+     "q": "Watter uitleg pas 'integreer eerder as om te skei' die beste toe?",
+     "options": [
+      "Hoenders in 'n hok ver van die tuin af",
+      "Tuin, vrugtebome en 'n hoenderloop so uitgelê dat hoenders ná die oes 'n leë bedding gebruik, waarna die boer veilige bestuur nagaan voordat eetbare gewasse terugkom",
+      "Aparte kampe vir elke gewas",
+      "Alle diere word uit die bewerkte sone gehou"
+     ],
+     "correct": 1,
+     "rationale": "Integrasie laat elke element vir sy bure werk — hier ruim hoenders peste op en voeg vrugbaarheid by, in plaas daarvan om ledig in 'n vaste hok te sit. Vars mis kan kieme dra, so gaan veilige bestuur na voordat eetbare gewasse terugkom."
+    }
+   ],
+   "infographicAlt": "Twaalf ontwerpbeginsels gerangskik as segmente rondom 'n saailing in die middel, elkeen as 'n eenvoudige prentjie — 'n oog vir waarneming, 'n druppel vir die opvang van water, 'n son vir energie, 'n lus vir die teruggee van afval."
+  },
+  {
+   "id": "intro-permaculture-l3",
+   "title": "Sones en sektore: Organiseer jou plaas volgens energie",
+   "body": "Sones en sektore help jou om vermorste arbeid te verminder. Sones loop van 0 tot 5, volgens hoe gereeld jy daar kom. Sone 0 is die huis. In hierdie voorbeeld is Sone 1 naby die huis en bevat dit wat jy gereeld pluk — kruie, slaaigroente. Sone 2 is die hooftuin en hoenderloop, wat een of twee keer per dag besoek word. Sone 3 is die hoofland, wat weekliks besoek word. Sone 4 is halfwild — vrugtebome en voer wat af en toe aandag nodig het. Sone 5 word wild gelaat.\n\nSektore is die energieë wat van buite af aankom — son, wind, reën, vloed, vuur. Kyk waarvandaan sterk wind op jou plaas kom. Rekords van 'n nabygeleë weerstasie kan jou help om die windrigting na te gaan. Kyk waar reënwater jou grond binnekom en daaroor vloei. Teken pyle vir wat jy waarneem.\n\nSkets sones en sektore op papier, en jy het die geraamte van jou ontwerp.",
+   "keyPoints": [
+    "In hierdie voorbeeld bevat Sone 1 naby die huis kruie wat gereeld gepluk word",
+    "Sones organiseer arbeid volgens hoe gereeld jy daar moet kom",
+    "Sektore karteer inkomende son, wind, reënwater, vloed en vuur",
+    "'n Eenvoudige skets van sones en sektore is genoeg om met ontwerp te begin"
+   ],
+   "quiz": [
+    {
+     "q": "Jy plant kruie in Sone 3, die hoofland ver van die huis af. Watter probleem skep dit?",
+     "options": [
+      "Kruie groei te groot",
+      "Die ekstra loop kan beteken dat jy hulle minder gereeld pluk of nagaan",
+      "Kruie kruisbestuif met die hoofgewasse",
+      "Sone 3 kry te veel son vir kruie"
+     ],
+     "correct": 1,
+     "rationale": "Plaas 'n gewas wat jy gereeld pluk naby 'n paadjie wat jy daagliks loop. 'n Bedding ver weg beteken meer loop en word dalk minder gereeld nagegaan."
+    },
+    {
+     "q": "Jy sien dat skadelike wind uit die noordweste kom op 'n plaas op die Hoëveld. Waar moet 'n windskerm kom?",
+     "options": [
+      "Suidoostelike grens",
+      "Noordwestelike grens, tussen die wind en die gewasse",
+      "Middel van die eiendom",
+      "Windskerms is nie nodig nie, want winde is seisoenaal"
+     ],
+     "correct": 1,
+     "rationale": "'n Windskerm werk deur tussen die windbron en dit wat die wind sou beskadig te staan — daarom hoort dit aan die kant waarvandaan die wind werklik kom."
+    }
+   ],
+   "infographicAlt": "Geïllustreerde voorbeeldplaas: genommerde merkers 0 tot 5 volg 'n kronkelende voetpad van die huis en die nabye tuin, verby hoenders en 'n land, na bome en 'n wilder gebied langs die rivier. Die merkers is voorbeelde, nie vaste grense of afstande nie."
+  }
+ ]
+}

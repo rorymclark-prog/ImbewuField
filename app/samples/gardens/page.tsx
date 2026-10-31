@@ -14,13 +14,13 @@ import { sampleGardenReportSections, sampleGardenReportUrl } from '@/lib/sample-
 import { samplePortrait } from '@/lib/sample-media';
 import { SAMPLE_BRANDING } from '@/lib/sample-branding';
 import { useLanguage } from '@/lib/i18n-context';
-import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
 import styles from '@/components/SampleExperience.module.css';
 
 export default function SampleGardensPage() {
   const { lang } = useLanguage();
   const ui = (english: string, isiZulu: string) => inlineText(lang, english, isiZulu);
-  const kindLabel = (kind: string | undefined) => !kind ? '' : lang === 'xh' ? inlineText(lang, kind) : lang !== 'zu' ? kind : ({
+  const kindLabel = (kind: string | undefined) => !kind ? '' : isInlineDraftLang(lang) ? inlineText(lang, kind) : lang !== 'zu' ? kind : ({
     'Community garden': 'Ingadi yomphakathi',
     'Crèche garden': 'Ingadi yenkulisa',
     'School garden': 'Ingadi yesikole',
@@ -48,7 +48,7 @@ export default function SampleGardensPage() {
       <div className={styles.grid}>{(SAMPLE_PARTICIPANTS[garden.language??'isiZulu']??[]).map(name=><figure key={name} style={{display:'flex',alignItems:'center',gap:14}}><img data-photo-preview src={samplePortrait(name)} alt={inlineTemplate(lang, 'Portrait illustration of {name}', 'Umfanekiso ka-{name}', { name })} width={80} height={80} style={{borderRadius:'50%',objectFit:'cover'}}/><figcaption>{name}</figcaption></figure>)}</div>
       <div className={styles.actions}><a className={styles.button} href={sampleGardenReportUrl(garden.id)} target="_blank" rel="noreferrer">{ui('Open completed report (PDF)','Vula umbiko ogcwalisiwe (PDF)')}</a><a className={styles.button} href={sampleGardenReportUrl(garden.id)} download={`${garden.id}-tour-report.pdf`}>{ui('Download report','Landa umbiko')}</a></div>
       <p>{ui("The saved report includes this garden's site photograph, layout, assessment narrative, programme figures and next actions. Generate a new report below to create another copy.",'Umbiko ogciniwe uhlanganisa isithombe sendawo yale ngadi, ukuhleleka kwayo, umbhalo wokuhlola, izibalo zohlelo nezinyathelo ezilandelayo. Dala omunye umbiko ngezansi ukuze wenze enye ikhophi.')}</p>
-      {(lang === 'zu' || lang === 'xh') && <p role="note" className={styles.notice} lang={lang}>{lang === 'zu' ? 'Umbhalo wokuhlola nobufakazi obukulo mbiko kusagcinwe ngesiNgisi; akuzona iziyalezo zokulima eziqinisekisiwe ngesiZulu.' : inlineText(lang, 'The assessment text and evidence in this report are still in English; they are not verified isiXhosa farming instructions.')}</p>}
+      {(lang === 'zu' || isInlineDraftLang(lang)) && <p role="note" className={styles.notice} lang={lang}>{lang === 'zu' ? 'Umbhalo wokuhlola nobufakazi obukulo mbiko kusagcinwe ngesiNgisi; akuzona iziyalezo zokulima eziqinisekisiwe ngesiZulu.' : lang === 'af' ? inlineText(lang, 'The assessment text and evidence in this report are still in English; they are not verified Afrikaans farming instructions.') : inlineText(lang, 'The assessment text and evidence in this report are still in English; they are not verified isiXhosa farming instructions.')}</p>}
       <ReportComposer key={`report-${garden.id}`} sample visuals={sampleReportVisuals(garden)} reportDate={SAMPLE_REPORT_DATE} photos={[...sampleSitePhotos(garden.id), { image: `/demo/reports/${garden.id}-layout.png`, caption: `${garden.name} — schematic layout, not to scale` }]} photosByDefault photoHeading="Site reference and schematic layout" title={`${garden.name} — garden report`} branding={{...SAMPLE_BRANDING,garden:{...SAMPLE_BRANDING.garden,label:garden.name}}} sections={sampleGardenReportSections(garden)}/>
       <p><Link href="/samples/farm">{ui('Open the separate editable Ubhejane farm example','Vula isibonelo sepulazi lase-Ubhejane ongasihlela')}</Link></p>
     </section>}

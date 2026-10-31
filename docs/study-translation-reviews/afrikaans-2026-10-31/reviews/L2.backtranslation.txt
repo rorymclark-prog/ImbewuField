@@ -1,0 +1,304 @@
+0 | Soil health and compost
+1 | Build living soil with compost, mulch, cover crops and worm farms.
+2 | Understand your soil: the foundation of everything
+3 | Soil contains many kinds of living organisms. Bacteria and fungi help to break down organic material and recycle nutrients.
+4 | Some fungi help roots to take up nutrients. Worm channels can help water and air penetrate the soil.
+5 | Look at roots, soil structure and water movement, as well as visible soil life.
+6 | Put soil and water in a transparent jar, with a little suitable dispersing detergent. Close it and shake it, and then let it stand undisturbed.
+7 | Sand settles first. Silt settles after that, while clay can stay suspended in the water much longer.
+8 | This is a rough learning exercise. Clumps and clay that have not yet settled can mislead you; use a soil laboratory when accurate texture is needed.
+9 | A thick sand layer under cloudy water does not yet tell you the final proportions. Some fine particles can still be suspended in the water.
+10 | Compare the layers that have settled, and feel the soil in the field.
+11 | Record what you see and what remains uncertain. Do not water or prescribe soil treatments on the basis of just one jar.
+12 | Compaction, poor drainage and loss of organic material can limit roots and soil life.
+13 | Pale colour or few worms does not prove that chemicals have killed the soil. Worm activity also changes with moisture and season.
+14 | Look for patterns across the whole field. Check the management history, drainage and plant growth before you choose a solution.
+15 | A cross-section of soil shows dark topsoil above pale subsoil, with two worms. Alongside, soil settles in a jar into three layers — sand, silt and clay.
+16 | Use several clues to judge the soil's condition
+17 | Soil colour and worm counts alone do not diagnose the cause of a problem
+18 | A jar exercise gives a rough indication of texture, not a complete soil test
+19 | Check drainage, roots and management history before you choose a solution
+20 | A soil jar still has cloudy water above the sand layer. What should the farmer conclude?
+21 | The soil definitely needs less water
+22 | Fine particles can still be suspended in the water; more observation is needed
+23 | All the clay has already settled
+24 | The crop definitely needs gypsum
+25 | Cloudy water can contain fine particles that have not yet settled. One early observation cannot establish the final proportions or the right treatment.
+26 | A farmer finds compacted soil and few worms. What is the useful next step?
+27 | Assume that every soil organism is dead
+28 | Add a treatment without checking the site
+29 | Check drainage, roots, moisture and management history
+30 | Give up, because the soil cannot improve
+31 | Several observations help to identify a problem. Worm activity varies with conditions, so few worms alone do not determine the cause.
+32 | Make and use compost
+33 | Compost is organic material that has broken down under controlled conditions.
+34 | Finished compost can improve soil structure and contribute nutrients.
+35 | The time before compost is ready varies with materials, moisture, air and temperature. A province name or a fixed number of weeks is not a test of whether it is ready.
+36 | Mix dry brown material with fresh green material. Avoid thick, wet layers that keep air out.
+37 | If the heap becomes slimy or smells strongly of ammonia, add dry brown material and turn it.
+38 | Check moisture and air as the heap changes; one recipe does not fit every mixture of materials.
+39 | A hot middle does not prove that every part of a heap has been treated. Time, temperature and management all matter.
+40 | Keep meat, dairy, diseased plants, pet manure and contaminated materials out of this simple household system.
+41 | Do not assume that home composting destroys every weed seed or disease organism. Use a recognised process where sanitation is required.
+42 | Keep wattle seed pods out of the compost heap. An ordinary heap may not ensure that every seed loses its germination ability.
+43 | Use only clean, untreated materials. Bark breaks down slowly; its name alone is not proof that it is free of contamination.
+44 | Check the heap and turn it when it needs more air or mixing. Keep it moist rather than soaked.
+45 | A compost heap that has been cut open shows alternating layers of dry brown material and fresh green material, heat rising from the middle, and an arrow showing how it is turned.
+46 | Balance brown material, green material, moisture and air
+47 | A hot middle does not prove that the whole heap has been sanitised
+48 | Keep seed pods and contaminated materials out
+49 | Judge whether it is ready by the compost's condition, not by a fixed regional schedule
+50 | A farmer's compost heap smells strongly of ammonia and is wet and slimy. How do you solve it?
+51 | Add more nitrogen-rich green material
+52 | Add more dry carbon material such as straw and turn the heap
+53 | Stop turning it and let it cool
+54 | Add more water — the smell means it is too dry
+55 | A wet, slimy heap may need more air and drier material. Add dry brown material and turn the heap to open it up. An ammonia smell can also indicate too much nitrogen-rich material. Check that the heap stays moist, not sopping wet.
+56 | Why do you keep wattle seed pods out of an ordinary compost heap?
+57 | Bark makes every heap too hot
+58 | Some seeds can survive and spread when the compost is used
+59 | Pods always attract termites
+60 | Pods release a gas that kills every soil organism
+61 | An ordinary heap may not expose every seed to conditions that destroy its germination ability. If you exclude pods, you avoid them being spread with the compost.
+62 | Mulch and cover crops: protect and build soil
+63 | Cover bare soil with suitable clean mulch, such as straw, dry grass or wood chips.
+64 | Mulch can reduce evaporation, soften the impact of rain and suppress weeds.
+65 | Keep it away from trunks and stems. Check the moisture underneath and adjust the layer; more mulch is not always better.
+66 | Cover crops can protect soil between main crops. Choose them according to the local weather, available water and the next planting.
+67 | The course's examples include oats, lupins, sunn hemp and cowpea. Check whether they are locally suitable before you sow.
+68 | Legumes need suitable bacteria and growing conditions to fix nitrogen. Nutrients in their plant residues become available as the material decomposes.
+69 | Worm farms can turn suitable food waste and bedding material into worm castings. Check the bin rather than expecting a fixed harvest date.
+70 | Liquid that drains naturally from a worm bin is called leachate. It is not the same as prepared worm-casting tea.
+71 | Leachate can contain harmful organisms or substances. Do not use it on edible plants, and do not assume that dilution makes it safe.
+72 | A field on the Highveld that is left bare after the maize harvest faces two main risks.
+73 | Winter wind can blow dry topsoil away.
+74 | The first heavy spring storm can hit bare soil and damage its surface and structure. If water runs over the field, it can wash loosened soil away.
+75 | Cover crops, mulch and organic material can help to keep soil in its place and keep it alive.
+76 | Two patches of soil under the same sun: bare soil that is cracked and dry, and soil under mulch that is still dark and moist.
+77 | Protect exposed soil with suitable covering
+78 | Keep mulch away from trunks and stems
+79 | Choose cover crops according to local water, weather and the crop that follows
+80 | Leachate from a worm bin is not automatically safe fertiliser; keep it away from edible plants
+81 | A farmer on the Highveld harvests maize in April and leaves the field bare the whole winter. What are the two main risks?
+82 | Overheating in the winter sun and waterlogging by rain
+83 | Frost kills soil life and weeds take over early
+84 | Wind erosion of dry topsoil and loss of soil structure through the impact of spring storms
+85 | The soil's pH drops and nitrogen builds up
+86 | Bare soil is exposed to winter wind, which can blow dry topsoil away. The impact of raindrops can damage the surface; where water runs over the field, it can wash loosened soil away.
+87 | What should you remember about liquid that drains from a worm bin?
+88 | It is always safe on salad leaves
+89 | It can contain harmful organisms or substances; dilution is not a safety guarantee
+90 | It is identical to finished worm castings
+91 | A fixed dilution makes every liquid safe
+92 | Leachate is liquid that drains naturally from a worm bin. Its composition varies, so it should not be presented as a guaranteed safe feed for edible crops.
+93 | Vegetables and staple crops
+94 | Preparation of beds, succession planting, staple crops and pest management — the daily work of growing food.
+95 | Prepare your beds and plant
+96 | Compacted soil loses its air spaces. Roots grow more slowly. Water soaks in differently. The bed becomes harder to work every season.
+97 | The protection is simple. Permanent paths, and a bed that is narrow enough to reach into from both sides.
+98 | One metre to one comma two metres wide. That is the working number. At that width you can reach the middle from any of the paths, and your feet never touch the growing area.
+99 | Now think of your own beds. Can you reach the middle without stepping inside? Go try it before you plant anything else.
+100 | There is not one bed shape that is right everywhere.
+101 | Start with the least disturbance that solves your problem.
+102 | The no-dig method suits most garden soils. Leave the structure alone and build fertility on top.
+103 | Do not dig wet clay. If compaction or poor drainage is serious, identify the cause with local advice before you choose deeper tillage.
+104 | Raised beds suit wet soil, where water must be able to drain somewhere.
+105 | Sunken beds suit dry soil, where you want to catch and hold the rain that you do get.
+106 | Look after heavy rain. Where does water stand or run off? Combine that observation with soil and drainage advice before you choose the bed.
+107 | Some crops tolerate it badly if their roots are disturbed. They do better if they are sown directly where they will grow. Beans, carrots and maize belong in that group.
+108 | Others do better with a protected start in a nursery, and then transplanting. Tomatoes and brassicas belong there.
+109 | Use spacing guidelines for the crop, variety and local conditions. Check the packet and local growers' advice. Watch whether plants are too crowded as they develop.
+110 | Before you plant, mark out the bed.
+111 | One comma two metres wide. Three metres long. One practice bed.
+112 | Use pegs and string. Mark off the rectangle, and mark off both access paths.
+113 | Then prepare for your own soil — no-dig first, and dig deeper only if your soil really needs it.
+114 | A string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.
+115 | That bed becomes easier to improve every season, because you have stopped walking on it.
+116 | A raised bed about 1.2 metres wide, with paths on both sides, so that a person can reach the middle from either side without ever standing on the growing soil.
+117 | Keep beds 1-1.2m wide so that you never have to step on the growing area
+118 | Assess compaction and drainage before you choose deeper tillage; do not work wet clay
+119 | Transplant crops that need a head start; direct-sow crops that tolerate root disturbance badly
+120 | Plants that are too crowded perform worse — space generously for your local climate
+121 | Why do you keep a vegetable bed 1-1.2m wide rather than wider?
+122 | Wider beds get too much sun
+123 | You can reach the middle from either side without stepping on the growing area, and so you avoid compaction
+124 | Narrow beds drain better in all conditions
+125 | It is a fixed rule with no practical reason
+126 | If you step on growing soil, it becomes compacted and roots are damaged — with a bed you can reach from both sides, you never have to step on it.
+127 | Which crop is best suited to direct sowing rather than transplanting?
+128 | Tomatoes, which need an early start
+129 | Brassicas, which need protection while they are small
+130 | Beans, which tolerate root disturbance badly
+131 | Chillies, which germinate slowly
+132 | Beans and other fast crops with sensitive roots establish poorly after transplant shock — if you sow them directly in the bed, you avoid that setback entirely.
+133 | Succession planting and intercropping
+134 | Succession planting is a calendar habit, not a special crop.
+135 | Choose something that your household really eats regularly. Then sow a small amount of it, again and again.
+136 | Plant a short row every two to three weeks.
+137 | Less waste when there is a surplus. Fresh food for longer. And the labour spreads over the season instead of all falling on you at once.
+138 | Separate sowings can reduce the risk that you lose everything at once. They do not guarantee a harvest if difficult conditions continue.
+139 | Which fast crop can you sow in small amounts? Decide on one, and start it this week.
+140 | This is what it looks like in practice.
+141 | Sow the first. Two to three weeks later, sow the second. Then sow the third. Then sow the fourth.
+142 | With suitable timing for the crop, harvests can begin to overlap. The first group will not always be ready by the fourth sowing.
+143 | Two to three weeks is a starting rhythm, not a law. A leaf crop for the cool season can last longer. Heat can speed things up, or cause a failure.
+144 | Watch what your own garden does, and adjust the intervals. That observation is the skill.
+145 | Intercropping is not just pushing different plants together. Every plant needs a job, and enough space to do it.
+146 | The Three Sisters is an example from indigenous farming traditions in the Americas.
+147 | Maize gives height and structure.
+148 | Beans climb up the maize, and are stored as protein.
+149 | Pumpkin spreads over the ground, gives shade on the ground and holds moisture.
+150 | Timing matters. Establish the maize first, so that it is strong enough to carry the beans when they start climbing.
+151 | The plants can still compete with each other. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume that they feed the maize immediately; nutrients in plant residues are released during decomposition.
+152 | A household can have a hunger gap: weeks when stored food runs low before the next harvest is ready.
+153 | Yours may come after the stored maize is finished. It may come before the winter leafy vegetables are ready. It may come in a dry period when water limits the garden.
+154 | Do not copy someone else's calendar. Name your own months first.
+155 | Write them down. Then choose the crop and the sowing date that puts food in that gap.
+156 | This is planned backwards, and it is the difference between a garden that looks productive and a household that eats.
+157 | One bed over three seasons: a fast crop is harvested, then a new sowing is put in next to a slower crop that is still growing, so that the bed is never empty.
+158 | Sow at intervals and adjust the interval for crop, weather and household use
+159 | The Three Sisters come from indigenous farming traditions in the Americas
+160 | Use household food records to identify a hunger gap and plan for it
+161 | Plants in intercropping can still compete; manage space, timing and water
+162 | Why do you sow lettuce every 2-3 weeks in small amounts instead of all at once?
+163 | It uses less seed in total
+164 | It gives a steady harvest instead of a surplus followed by a gap
+165 | Lettuce germinates better in small amounts
+166 | It reduces pest pressure
+167 | A single large sowing ripens all at once — if you spread the sowings, you spread the harvest so that it fits what a household can actually use.
+168 | When can nitrogen in the plant residues of a bean crop become available to other plants?
+169 | Immediately when a bean touches maize
+170 | As soil organisms decompose the plant residues
+171 | Only when pumpkin leaves shade them
+172 | It can never be released
+173 | Beans fix nitrogen with suitable root bacteria. Nitrogen in their plant residues is released through decomposition; growing beans next to maize does not guarantee immediate feeding.
+174 | Staple crops: maize, beans and root crops
+175 | A staple crop earns its place because it feeds the household even after the day of harvest.
+176 | It carries energy or protein. It can be stored, or it stays in the ground until you need it. And often it also carries cultural memory.
+177 | One staple crop leaves you vulnerable. Two or more give you choices when weather or pests strike.
+178 | Grow at least two. Not one.
+179 | Which staple crop does your household rely on most heavily now? That is the one whose failure would hurt the most — so it is the one that needs a companion.
+180 | Each staple crop protects you against something different.
+181 | Maize gives calories, and can be stored dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.
+182 | Beans and cowpeas give a protein harvest that can be stored.
+183 | Sweet potatoes develop some drought tolerance after their storage roots have formed. They need water in the first weeks and while the roots form; water stress at that time can reduce the harvest. Their young leaves are also edible.
+184 | Amadumbe handles wetter soil, where other staple crops struggle.
+185 | Note that they fail under different conditions. That is the whole point.
+186 | Resilience does not mean that nothing fails.
+187 | It means that one failure does not end your household's food plan.
+188 | One crop is one point of failure.
+189 | Two or more staple crops give you more ways to keep eating.
+190 | Different crops use water, soil and seasons differently. That difference is the protection.
+191 | Three staple crops together: a tall grain stalk, a climbing plant up a pole, and a root crop shown half under the ground.
+192 | Open-pollinated maize lets you save seed; hybrid seed will not breed true next season
+193 | Beans are the most important protein crop — productive, storable and nitrogen-fixing
+194 | Sweet potatoes develop some drought tolerance after storage roots have formed, but need water early; young leaves are edible
+195 | Amadumbe (taro) is an underused traditional staple crop that is suited to wetter soil in KZN and on the coast
+196 | Why do you choose open-pollinated maize over a hybrid variety if you plan to save your own seed?
+197 | Open-pollinated varieties yield more
+198 | Hybrid seed does not breed true — the next generation will not be like the parent plant
+199 | Open-pollinated maize is always more drought-tolerant
+200 | Hybrids cannot be planted in South Africa
+201 | Seed saved from an F1 hybrid can grow, but the next generation can vary. A stable open-pollinated variety with managed pollination is more predictable when you save seed.
+202 | Why is amadumbe (taro) a good choice as a staple crop for parts of KZN?
+203 | It thrives in very dry, sandy soil
+204 | It tolerates wetter soil than maize, and suits coastal and high-rainfall conditions
+205 | It requires no tillage at all
+206 | It is the only staple crop that can be stored for several years
+207 | Amadumbe actually prefers moister soil where maize would struggle — it fills a niche that other staple crops cannot handle well.
+208 | Observe and manage pests and disease
+209 | Pest pressure usually rises for a reason.
+210 | Plants under stress. One crop dominating the ground. Or broad use of chemicals that has already removed the predators that helped you.
+211 | So look at the whole system before you treat anything.
+212 | Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?
+213 | A yellow leaf is not automatically an insect. It can be water, nutrition or root damage. Find out which one before you act.
+214 | Work through four steps, in order.
+215 | One. Observe. Look at the damage pattern, the underside of the leaf, the stem and the plants nearby.
+216 | Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.
+217 | Three. Protect what helps you. Useful insects do work that you would otherwise do yourself.
+218 | Four. Only then act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care can help. Check that the action fits the problem and monitor the result.
+219 | If a treatment is needed, use a product that is registered for that crop and pest, and follow its label. This includes neem products. Check the instructions about protection and the waiting period before harvest. Do not improvise mixtures or use stronger doses.
+220 | Be honest with yourself about which step you usually skip.
+221 | A pest on a leaf, and three ways to handle it without chemicals: a useful insect, a physical barrier, and picking it off by hand.
+222 | Identify the cause before you treat damage
+223 | Check water, roots, nutrition and useful insects
+224 | Use suitable physical or crop-care measures and monitor the results
+225 | If treatment is needed, use a product registered for the crop and pest and follow the label
+226 | If a pest problem needs a treatment product, what should guide its use?
+227 | An improvised stronger mixture
+228 | A product registered for the crop and pest, used according to its label
+229 | Any product described as natural
+230 | A neighbour's dose for a different crop
+231 | The crop, pest, dose, protection and instructions about the waiting period before harvest matter. A natural origin does not make an improvised treatment safe or suitable.
+232 | A farmer's brassica leaves are turning yellow. What should she check first before she assumes it is pests?
+233 | Whether it is actually a problem with soil nutrients or water
+234 | Whether the moon phase is right for treatment
+235 | Whether her neighbour has the same problem
+236 | Whether it is specifically aphids
+237 | Yellowing has several common causes, and a soil or water problem needs a completely different solution than a pest — if you check first, you avoid wasted treatment.
+238 | Seeds and Seed Sovereignty
+239 | Save, store and share seed — free from having to buy seed every season.
+240 | Why seed saving matters
+241 | Open-pollinated seed of a stable variety can produce similar plants when pollination is properly managed. F1 hybrids come from selected parents. Their saved seed can germinate, but the next generation varies; it may not keep the combination you wanted.
+242 | Seed sovereignty includes the knowledge and choices needed to grow, save and share suitable seed. Keep the crop and variety identity with each seed lot.
+243 | Choose healthy plants with useful traits. Start with a crop you know and ask a mentor who saves seed how to manage its pollination and selection.
+244 | Two seed packets above a simplified comparison: five plants that look similar on the left and five different plants on the right. Actual offspring depend on variety and pollination.
+245 | Stable open-pollinated varieties need suitable pollination management
+246 | Seed sovereignty means freedom from being dependent on a seed company every season
+247 | Diversity of crops and varieties can support adaptation to climate change when varieties suit local conditions
+248 | Choose healthy plants with useful traits; use crop-specific guidelines for seed saving
+249 | Why will seed saved from a hybrid (F1) tomato not breed true next season?
+250 | Hybrid seed is sterile and will not germinate at all
+251 | Hybrid seed is a one-time genetic cross — its offspring vary unpredictably from the parent
+252 | Hybrids grow only in commercial greenhouses
+253 | Hybrid seed loses its viability faster in storage
+254 | F1 hybrids are bred by crossing two specific parent lines — their seed carries a mixed, unpredictable genetic recombination, not a stable copy of the parent.
+255 | When you choose a parent plant to save seed from, what should guide your choice?
+256 | Whichever plant produced the single largest fruit
+257 | The healthiest, most disease-free, well-formed plant, even if it does not yield the most
+258 | Whichever plant ripened first, regardless of health
+259 | Any plant — selection does not affect future seed quality
+260 | You select for the traits you want to carry forward — health and vigour are more important in the long term than one plant's single largest harvest.
+261 | How to save seed: dry and wet methods
+262 | Dry seed must ripen before it is collected. Remove chaff and damaged seed, and then finish drying it in the shade with airflow.
+263 | Seed in fleshy fruits needs a crop-specific method. Tomato seed can be briefly fermented to help remove the gel, and then rinsed and thoroughly dried. Keep an active jar open or loosely covered. Fermentation is not necessary for every crop with wet seed and does not guarantee disease-free seed.
+264 | Pollination also matters. Maize is pollinated by the wind and can cross with other varieties. Tomatoes mostly pollinate themselves, but crossing is possible. Check the crop and variety before you plan isolation or save seed.
+265 | Dry seed is collected from ripe pods. The example of the wet method for tomatoes shows brief fermentation, rinsing and drying.
+266 | Dry-method crops (beans, maize, sunflower) simply dry on the plant before being collected
+267 | Tomato fermentation removes gel; other wet seeds need their own processing method
+268 | Tomatoes mostly pollinate themselves, but can cross; maize is pollinated by the wind. Check crop- and variety-specific isolation guidelines before you save seed
+269 | Rinse processed tomato seed and dry it thoroughly before storage
+270 | What does brief fermentation help remove when you process tomato seed?
+271 | Fermentation improves the seed's flavour
+272 | It helps to remove the gel around the seed before it is rinsed and dried
+273 | It kills any pests inside the fruit
+274 | It is purely traditional, without any practical function
+275 | Fermentation helps to separate tomato seed from its gel. It is not a guarantee of germination or disease-free seed; dry, store and test the seed lot.
+276 | Why does maize need a much greater isolation distance than tomatoes to keep a variety pure?
+277 | Maize seed is more fragile
+278 | Maize is pollinated by the wind and crosses easily over distance; tomatoes mostly pollinate themselves
+279 | Tomatoes do not cross-pollinate at all, under any circumstances
+280 | Maize flowers for a shorter period
+281 | Wind carries maize pollen much further than insect or self-pollination moves tomato pollen — that difference in pollination method determines the isolation requirement.
+282 | Dry, store and share seed
+283 | Dry seed properly before you store it: paper envelopes, not plastic, in a shady, airy place — never in direct sun or in heat in a closed space. The three enemies of seed viability are heat, light and moisture. How long seed lasts in storage varies according to crop and conditions, so test germination before you rely on saved seed.
+284 | Label each envelope with the crop, variety and date on which it was saved. Keep thoroughly dry seed in a sealed container in a cool, dark, dry place. If you seal damp seed, it can trap moisture and damage the seed.
+285 | Before a new planting season, test a small amount for germination so that you do not rely on seed that has quietly lost its viability.
+286 | Arrange a seed swap with neighbours this season. What one household saves well, several households can share — and the whole group's variety diversity grows with every swap.
+287 | Seed envelopes in a sealed container, kept cool, dark and dry. Alongside lie ten seeds on a damp cloth — some have germinated, some not — as a germination test.
+288 | Dry seed in the shade with good airflow; never in direct sun or in heat in a closed space
+289 | Store labelled seed cool, dark and dry — heat, light and moisture are the three enemies of viability
+290 | Test a small amount for germination before you rely on stored seed for planting
+291 | Seed swaps let everyone's variety diversity grow faster than saving seed alone
+292 | What are the three main enemies of stored seed's viability?
+293 | Wind, insects and fungus
+294 | Heat, light and moisture
+295 | Cold, darkness and drought
+296 | Soil contact, pests and rodents
+297 | If you keep thoroughly dry seed cool and dark, you counter all three. A sealed container helps to keep dry seed dry, but can trap moisture if seed is packed while it is damp.
+298 | Why do you test a small amount of stored seed for germination before the planting season?
+299 | It is a legal requirement for sharing seed
+300 | Seed can quietly lose its viability in storage, and testing prevents you from relying on seed that will not grow
+301 | It improves the seed's flavour
+302 | It is only necessary for hybrid seed
+303 | A germination test catches seed that has died in storage before you have risked a whole season's planting on it.

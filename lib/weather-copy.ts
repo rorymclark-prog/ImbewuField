@@ -62,6 +62,34 @@ export const WEATHER_XH_DRAFTS: Record<string, string> = {
   weatherDescUnsettled: 'Imozulu engazinzanga',
 };
 
+// Unreviewed Afrikaans machine drafts, same keys and the same reason for a table of its own.
+export const WEATHER_AF_DRAFTS: Record<string, string> = {
+  weatherToday: 'Vandag',
+  weatherDaySun: 'So',
+  weatherDayMon: 'Ma',
+  weatherDayTue: 'Di',
+  weatherDayWed: 'Wo',
+  weatherDayThu: 'Do',
+  weatherDayFri: 'Vr',
+  weatherDaySat: 'Sa',
+  weatherNoRain: 'Geen reën nie',
+  weatherFrostBanner: 'Ryp verwag {days} — beskerm saailinge',
+  weatherHeatBanner: 'Hittewaarskuwing {days} — gee vroegoggend water, gee saailinge skaduwee',
+  weatherHeavyRainBanner: 'Swaar reën verwag {days} — kontroleer dreinering, stel plant uit',
+  weatherWaterLoss: 'Gewasse sal vandag omtrent {mm}mm water verloor — gee ongeveer soveel water as dit nie reën nie',
+  weatherDescClear: 'Helder',
+  weatherDescPartlyCloudy: 'Gedeeltelik bewolk',
+  weatherDescOvercast: 'Oortrokke',
+  weatherDescFog: 'Mis',
+  weatherDescDrizzle: 'Motreën',
+  weatherDescRain: 'Reën',
+  weatherDescSnow: 'Sneeu',
+  weatherDescShowers: 'Buie',
+  weatherDescSnowShowers: 'Sneeubuie',
+  weatherDescThunderstorm: 'Donderstorm',
+  weatherDescUnsettled: 'Onbestendig',
+};
+
 const DAY_KEYS = ['weatherDaySun', 'weatherDayMon', 'weatherDayTue', 'weatherDayWed', 'weatherDayThu', 'weatherDayFri', 'weatherDaySat'];
 
 const DESC_KEYS: Record<string, string> = {
@@ -91,9 +119,9 @@ export function weatherEnglish(key: string): string {
   return WEATHER_ENGLISH_PENDING[key];
 }
 
-/** The isiZulu (or isiXhosa) draft for `key` in that language, else the English. */
+/** The isiZulu, isiXhosa or Afrikaans draft for `key` in that language, else the English. */
 export function weatherText(lang: string, key: string): string {
-  return (lang === 'zu' && WEATHER_ZU_DRAFTS[key]) || (lang === 'xh' && WEATHER_XH_DRAFTS[key]) || WEATHER_ENGLISH_PENDING[key];
+  return (lang === 'zu' && WEATHER_ZU_DRAFTS[key]) || (lang === 'xh' && WEATHER_XH_DRAFTS[key]) || (lang === 'af' && WEATHER_AF_DRAFTS[key]) || WEATHER_ENGLISH_PENDING[key];
 }
 
 export function fillWeather(template: string, vars: Record<string, string>): string {

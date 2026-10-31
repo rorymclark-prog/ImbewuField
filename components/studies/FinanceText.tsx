@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText, xhInlineDraft } from '@/lib/xh-inline';
+import { inlineDraft, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import styles from './FinanceCourse.module.css';
 
 function inline(text: string): ReactNode[] {
@@ -24,9 +24,9 @@ function inline(text: string): ReactNode[] {
 export default function FinanceText({ text, headingLevel = 4 }: { text: string; headingLevel?: 3 | 4 }) {
   const { lang } = useLanguage();
   const Heading = headingLevel === 3 ? 'h3' : 'h4';
-  const shown = lang === 'xh' ? (xhInlineDraft(text) ?? xhInlineDraft(text.trim()) ?? text) : text;
+  const shown = isInlineDraftLang(lang) ? (inlineDraft(lang, text) ?? inlineDraft(lang, text.trim()) ?? text) : text;
   const blocks = shown.trim().split(/\n\s*\n/);
-  return <div className={styles.prose} lang={shown !== text ? 'xh' : undefined}>{blocks.map((block, i) => {
+  return <div className={styles.prose} lang={shown !== text ? lang : undefined}>{blocks.map((block, i) => {
     const lines = block.split('\n');
     if (lines[0].startsWith('|') && lines.length > 1 && /^\|[\s:|\-]+\|$/.test(lines[1])) {
       const cells = (line: string) => line.replace(/^\||\|$/g, '').split('|').map(cell => cell.trim());

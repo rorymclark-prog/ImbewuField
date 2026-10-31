@@ -16,7 +16,7 @@ export type { DatedProductionRecord, PreservedFoodRecord, PreservedFoodMethod, P
 import { ageReadyForSeason, treeAgeCalendarNote, buildProductionProjection } from '@/lib/production-projection';
 import { confirmedTreeMonths, formatMonthSpan, isHouseholdFoodHarvest, perennialHarvestFor, type PlacedTreeGroup, type TreeAvailabilityItem, type TreeSeasonChoices, type UnidentifiedPlantGroup } from '@/lib/perennial-harvest';
 import { inlineBuilt } from '@/lib/xh-inline-match';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import { ANIMAL_ENTERPRISES, HOUSING_ANIMALS, PRODUCT_LABEL, confirmedAnimalMonths, isFoodProduct, type AnimalAvailabilityItem, type AnimalSeasonChoices, type HousingKind, type PlacedAnimalGroup } from '@/lib/animal-enterprises';
 
 export function forestEntries(slots: readonly TreeAvailabilityItem[][]): AvailabilityEntry[][] {
@@ -514,7 +514,7 @@ const EXAMPLE_STOCK_LABELS: ReadonlySet<string> = new Set([
  * farm's stock labels are drafted. Crop, tree and any other catalogue names are never translated.
  */
 export function availabilityLabelText(lang: string, label: string): string {
-  if (lang !== 'xh') return label;
+  if (!isInlineDraftLang(lang)) return label;
   if (EXAMPLE_STOCK_LABELS.has(label)) return inlineText(lang, label);
   const dash = label.lastIndexOf(' - ');
   if (dash > 0) {

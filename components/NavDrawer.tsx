@@ -52,7 +52,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   const { t, lang } = useLanguage();
   const isZulu = lang === 'zu';
   // isiXhosa reads the inline drafts keyed by the exact English (the sample-tour tables have none).
-  const ui = (english:string,zulu:string,values:Record<string,string|number>={}) => {const native=lang==='xh'?inlineTemplate(lang,english,null,values):sampleWorkspaceText(lang,english,zulu,values);return isZulu?`${native} (${sampleWorkspaceText('en',english,zulu,values)})`:native;};
+  const ui = (english:string,zulu:string,values:Record<string,string|number>={}) => {const native=(lang==='xh'||lang==='af')?inlineTemplate(lang,english,null,values):sampleWorkspaceText(lang,english,zulu,values);return isZulu?`${native} (${sampleWorkspaceText('en',english,zulu,values)})`:native;};
   // Every link below used to be offered to everybody, including the four staff dashboards. See
   // lib/role-access.ts for why that is a usability failure rather than a security one, and for
   // what `role === null` deliberately does NOT do.
@@ -230,6 +230,11 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         {lang === 'xh' && (
           <p role="note" lang="xh" style={{ margin: '10px 16px 0', padding: '8px 10px', borderRadius: 9, background: 'color-mix(in srgb, var(--color-harvest) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--color-harvest) 28%, transparent)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.4 }}>
             <strong>{inlineText(lang, 'ISIXHOSA MACHINE DRAFT.')}</strong> {inlineText(lang, 'Navigation wording has not been reviewed by a fluent isiXhosa speaker.')}
+          </p>
+        )}
+        {lang === 'af' && (
+          <p role="note" lang="af" style={{ margin: '10px 16px 0', padding: '8px 10px', borderRadius: 9, background: 'color-mix(in srgb, var(--color-harvest) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--color-harvest) 28%, transparent)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.4 }}>
+            <strong>{inlineText(lang, 'AFRIKAANS MACHINE DRAFT.')}</strong> {inlineText(lang, 'Navigation wording has not been reviewed by a fluent Afrikaans speaker.')}
           </p>
         )}
 

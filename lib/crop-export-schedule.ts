@@ -27,6 +27,7 @@ import { productionNeedsReview } from '@/lib/site-survey';
 import { cropVarietyRecord, varietiesForSite, type VarietySource } from '@/lib/crop-varieties';
 import { growingZoneLabel, type GrowingZoneId } from '@/lib/growing-zones';
 import { inlineBuilt } from '@/lib/xh-inline-match';
+import { isInlineDraftLang } from '@/lib/xh-inline';
 import { HOUSING_LABEL } from '@/lib/animal-enterprises';
 import { observedFrostConflictsForPlanting } from '@/lib/crop-autosuggest';
 import {
@@ -784,7 +785,7 @@ export function productionGuideText(lang: string, english: string): string {
     if (name === 'state' || name === 'months' || name === 'variety' || name === 'text' || name === 'housing') return inlineBuilt(lang, captured, []);
     return captured;
   });
-  if (translated !== english || lang !== 'xh') return translated;
+  if (translated !== english || !isInlineDraftLang(lang)) return translated;
   // The product guidance's composed lines (care, buying advice, references) and their pieces.
   const product = productGuideLine(lang, english);
   if (product !== english) return product;

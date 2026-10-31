@@ -1,0 +1,60 @@
+{
+  "unit": "p5",
+  "okCount": 317,
+  "items": [
+    {
+      "index": 20,
+      "verdict": "repair",
+      "english": "Read the shared-cost and unassigned-cost notes. Missing overheads or labour are not silently included. Crop performance may say Cost per m²: not attributed rather than supplying a full crop profit.",
+      "draft": "Lees die notas oor gedeelde koste en ontoegewysde koste. Ontbrekende oorhoofse koste of arbeid word nie stilweg ingesluit nie. Gewasprestasie kan Koste per m²: nie toegeskryf nie sê eerder as om 'n volledige gewaswins te verskaf.",
+      "backtranslation": "Read the notes about shared costs and unallocated costs. Missing overhead or labour is not silently included. Crop performance can say Cost per m²: not attributed rather than provide a complete crop profit.",
+      "problem": "The bare label inside a double-negation sentence (“kan Koste per m²: nie toegeskryf nie sê”) can be read as “crop performance cannot say cost per m²”, inverting the point that the card may show a 'not attributed' label instead of a full crop profit.",
+      "corrected": "Lees die notas oor gedeelde koste en ontoegewysde koste. Ontbrekende oorhoofse koste of arbeid word nie stilweg ingesluit nie. Gewasprestasie kan “Koste per m²: nie toegeskryf nie” sê eerder as om 'n volledige gewaswins te verskaf."
+    },
+    {
+      "index": 47,
+      "verdict": "repair",
+      "english": "Mapping, design and exports guides. Compare the saved dimensions and exported view; preserve the original geometry when improving presentation. No paid render is required.",
+      "draft": "Karterings-, ontwerp- en uitvoergidse. Vergelyk die gestoorde afmetings en uitgevoerde aansig; bewaar die oorspronklike meetkunde wanneer jy die aanbieding verbeter. Geen betaalde weergawe is nodig nie.",
+      "backtranslation": "Mapping, design and export guides. Compare the saved dimensions and exported view; preserve the original geometry when you improve the presentation. No paid version is needed.",
+      "problem": "“Geen betaalde weergawe is nodig nie” means “no paid version is needed”, so a farmer may think there is a paid version of the app; the English says no paid render (rendered image) is required.",
+      "corrected": "Karterings-, ontwerp- en uitvoergidse. Vergelyk die gestoorde afmetings en uitgevoerde aansig; bewaar die oorspronklike meetkunde wanneer jy die aanbieding verbeter. Geen betaalde beeldweergawe is nodig nie."
+    },
+    {
+      "index": 94,
+      "verdict": "repair",
+      "english": "In a separate example, open with R90.00; pay R130.00 on Day 2, receive R80.00 on Day 10 and pay R20.00 on Day 20. Find closing cash, lowest projected cash and the first date requiring a response. Then ask whether the closing answer is complete if an additional payment fee is known to apply but its amount is missing.",
+      "draft": "Open in 'n afsonderlike voorbeeld met R90.00; betaal R130.00 op Dag 2, ontvang R80.00 op Dag 10 en betaal R20.00 op Dag 20. Vind slotkontant, laagste geprojekteerde kontant en die eerste datum wat 'n reaksie vereis. Vra dan of die slotantwoord volledig is as dit bekend is dat 'n bykomende betaalfooi van toepassing is, maar die bedrag daarvan ontbreek.",
+      "backtranslation": "Open in a separate example with R90.00; pay R130.00 on Day 2, receive R80.00 on Day 10 and pay R20.00 on Day 20. Find closing cash, lowest projected cash and the first date that requires a response. Then ask whether the closing answer is complete if it is known that an additional payment fee applies, but its amount is missing.",
+      "problem": "“Open in 'n afsonderlike voorbeeld met R90.00” reads as “open (something) in a separate example”, not “start with an opening balance of R90.00”, so the starting cash of the projection exercise is unclear.",
+      "corrected": "Begin in 'n afsonderlike voorbeeld met R90.00; betaal R130.00 op Dag 2, ontvang R80.00 op Dag 10 en betaal R20.00 op Dag 20. Vind slotkontant, laagste geprojekteerde kontant en die eerste datum wat 'n reaksie vereis. Vra dan of die slotantwoord volledig is as dit bekend is dat 'n bykomende betaalfooi van toepassing is, maar die bedrag daarvan ontbreek."
+    },
+    {
+      "index": 177,
+      "verdict": "repair",
+      "english": "unavailable amount in the selected costs",
+      "draft": "bedrag nie beskikbaar nie in die gekose koste",
+      "backtranslation": "amount not available in the selected costs",
+      "problem": "Misplaced closing “nie” makes the fragment ungrammatical (“amount not available not in the selected costs”); it should simply label an unavailable amount within the selected costs.",
+      "corrected": "onbeskikbare bedrag in die gekose koste"
+    },
+    {
+      "index": 266,
+      "verdict": "repair",
+      "english": "Ask what changes if the buyer pays late, less produce sells, or an input costs more. Change the matching card and recalculate from that point onward. A delay changes when cash arrives. A lower sale changes how much arrives. Test them together too. Write down the evidence needed for your response, and check the plan again before committing.",
+      "draft": "Vra wat verander as die koper laat betaal, minder produkte verkoop, of 'n inset meer kos. Verander die ooreenstemmende kaart en herbereken van daardie punt af. 'n Vertraging verander wanneer kontant aankom. 'n Laer verkoping verander hoeveel aankom. Toets hulle ook saam. Skryf die bewyse neer wat vir jou reaksie nodig is, en kontroleer die plan weer voordat jy jou verbind.",
+      "backtranslation": "Ask what changes if the buyer pays late, sells fewer products, or an input costs more. Change the matching card and recalculate from that point. A delay changes when cash arrives. A lower sale changes how much arrives. Test them together too. Write down the evidence needed for your response, and check the plan again before you commit.",
+      "problem": "“as die koper laat betaal, minder produkte verkoop” makes the buyer the subject of both verbs (“if the buyer pays late, sells fewer products”), instead of the separate scenario that less produce is sold.",
+      "corrected": "Vra wat verander as die koper laat betaal, minder produkte verkoop word, of 'n inset meer kos. Verander die ooreenstemmende kaart en herbereken van daardie punt af. 'n Vertraging verander wanneer kontant aankom. 'n Laer verkoping verander hoeveel aankom. Toets hulle ook saam. Skryf die bewyse neer wat vir jou reaksie nodig is, en kontroleer die plan weer voordat jy jou verbind."
+    },
+    {
+      "index": 319,
+      "verdict": "hold",
+      "english": "The isiZulu wording in this visit workspace is an unreviewed draft. English is shown beside location, privacy, assessment and save meanings. Your notes and names stay exactly as you entered them.",
+      "draft": "Die Afrikaanse bewoording in hierdie besoekwerkruimte is 'n onhersiene konsep. Engels word gewys langs die betekenisse van ligging, privaatheid, assessering en stoor. Jou notas en name bly presies soos jy dit ingevoer het.",
+      "backtranslation": "The Afrikaans wording in this visit workspace is an unreviewed draft. English is shown beside the meanings of location, privacy, assessment and saving. Your notes and names stay exactly as you entered them.",
+      "problem": "The English source says the isiZulu wording is an unreviewed draft, but the draft says the Afrikaans wording is; the draft is probably right for the Afrikaans UI, but it no longer matches the source, so the English string (likely copied from the isiZulu notice) needs an owner decision before a faithful correction can be written.",
+      "corrected": ""
+    }
+  ]
+}

@@ -14,7 +14,7 @@ import { designSiteIdFromLocation } from '@/lib/design-studio';
 import type { SiteSurvey } from '@/lib/site-survey';
 import type { LocationData } from '@/lib/types';
 import { useLanguage } from '@/lib/i18n';
-import { fillInline, inlineText } from '@/lib/xh-inline';
+import { fillInline, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import styles from './ReportPreparation.module.css';
 
 const EvidenceSheet=dynamic(()=>import('../EvidenceSheet'),{ssr:false});
@@ -24,8 +24,8 @@ export default function ReportPreparation({location,place,onSavedPlace,onChanged
   const { lang: language } = useLanguage();
   // isiXhosa: the draft keyed by the exact English template (lib/locales/xh-inline); the
   // checklist's statuses and evidence details stay English for xh (see the note below).
-  const copy = (source: string, values?: Record<string, string | number>) => language === 'xh' ? fillInline(inlineText(language, source), values ?? {}) : reportPreparationText(source, language, values);
-  const xh = (text: string) => language === 'xh' ? inlineText(language, text) : text;
+  const copy = (source: string, values?: Record<string, string | number>) => isInlineDraftLang(language) ? fillInline(inlineText(language, source), values ?? {}) : reportPreparationText(source, language, values);
+  const xh = (text: string) => isInlineDraftLang(language) ? inlineText(language, text) : text;
   const progress=useSiteProgress(location);
   const [evidence,setEvidence]=useState<ReturnType<typeof getSiteEvidence>>({});
   const [sheet,setSheet]=useState<{group:EvidenceCatalogueGroup;item?:EvidenceCatalogueItem}|null>(null);
@@ -55,6 +55,7 @@ export default function ReportPreparation({location,place,onSavedPlace,onChanged
   return <section lang={language} className={`${styles.preparation} no-print`} aria-label={copy('Improve this report')}>
     <details><summary><strong>{copy('Improve this report')}</strong><span>{copy('{count} of 7 areas have records · see what to add or review', { count: items.filter(i=>i.hasRecord).length })}</span></summary>
       {language==='xh'&&<p role="note">{inlineText(language,'The isiXhosa text here is an unreviewed draft. Record statuses, evidence details and the notes below stay in English so their meaning remains accurate.')}</p>}
+      {language==='af'&&<p role="note">{inlineText(language,'The Afrikaans text here is an unreviewed draft. Record statuses, evidence details and the notes below stay in English so their meaning remains accurate.')}</p>}
       <p>{copy('Generate with the information you have, or add more evidence first. Records present do not mean the information has been checked or the design is finished.')}</p>
       {snapshot&&<p>{copy('This checklist describes your current site. The saved report remains an earlier snapshot; generate a new report to use updated evidence.')}</p>}
       {!place&&<form className={styles.save} onSubmit={e=>{e.preventDefault();try{

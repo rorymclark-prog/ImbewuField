@@ -20,7 +20,7 @@ import GuideScreenSlides from './GuideScreenSlides';
 import ArrowLabel from './ArrowLabel';
 import Tx from './Tx';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
 
 function GuideAudio({ guideId, section, title, onPlay }: {
   guideId: string; section: string; title: string; onPlay: (audio: HTMLAudioElement) => void;
@@ -57,7 +57,7 @@ export default function AppGuidePage({ guide }: { guide: AppGuide }) {
     playing.current = audio;
   };
   const tx = (english: string) => inlineText(lang, english);
-  return <div className={styles.page} lang={lang === 'xh' ? 'xh' : 'en'}>
+  return <div className={styles.page} lang={isInlineDraftLang(lang) ? lang : 'en'}>
     <header className={styles.header}>
       <MenuButton />
       <OfflinePageLink href="/student" className={styles.back}><ArrowLeft size={17} /> <Tx en="My Studies" /></OfflinePageLink>

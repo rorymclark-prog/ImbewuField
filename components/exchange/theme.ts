@@ -1,4 +1,4 @@
-import { inlineTemplate, inlineText } from '@/lib/xh-inline';
+import { inlineTemplate, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import { priceLabel, type Listing } from '@/lib/exchange';
 
 /**
@@ -85,7 +85,7 @@ export const ZU_MONTH_LABEL = [
  */
 export function xhPriceLabel(lang: string, listing: Pick<Listing, 'price'>): string {
   const english = priceLabel(listing);
-  if (lang !== 'xh') return english;
+  if (!isInlineDraftLang(lang)) return english;
   const p = listing.price;
   switch (p.type) {
     case 'free': return inlineText(lang, 'Free');

@@ -8,7 +8,7 @@ import type { ReportSiteFacts } from './report-site-facts';
 import type { SampleGarden } from './sample-gardens';
 import { buildBillOfQuantities } from './report-boq';
 import type { ReportFigure } from './report-figures';
-import { xhInlineDraft } from '@/lib/xh-inline';
+import { inlineDraft, isInlineDraftLang } from '@/lib/xh-inline';
 
 export type ReportPresentation = 'screen' | 'colour' | 'ink';
 export type ReportMetric = { label: string; value: string; note: string };
@@ -3054,7 +3054,7 @@ export function reportVisualText(english: string, language: string, values: Reco
   const row = visualCopy.get(english);
   // isiXhosa: the draft keyed by the exact English template (lib/locales/xh-inline), else English.
   const template = language === 'zu' && legacyZulu !== undefined ? legacyZulu
-    : language === 'xh' ? xhInlineDraft(english) ?? english
+    : isInlineDraftLang(language) ? inlineDraft(language, english) ?? english
     : row && (language === 'zu' || language === 'st' || language === 'ts' || language === 've') ? row[language] : english;
   return template.replace(/\{(\w+)\}/g, (placeholder, key: string) => Object.hasOwn(values, key) ? String(values[key]) : placeholder);
 }

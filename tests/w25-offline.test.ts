@@ -98,7 +98,7 @@ test('chunk-load failures and an offline phone get the offline copy; other error
   assert.ok(isOfflineError({ message: 'Loading CSS chunk 7508 failed.' }));
   assert.ok(isOfflineError({ message: 'Failed to fetch dynamically imported module: https://x/a.js' }));
   assert.equal(isOfflineError({ name: 'TypeError', message: "Cannot read properties of undefined (reading 'x')" }), false);
-  for (const lang of ['en', 'zu'] as const) {
+  for (const lang of ['en', 'zu', 'xh', 'af'] as const) {
     const copy = errorPageCopy(lang);
     assert.ok(copy.offlineTitle && copy.offlineBody && copy.offlineSaved);
     assert.notEqual(copy.offlineBody, copy.errorBody);
@@ -106,6 +106,8 @@ test('chunk-load failures and an offline phone get the offline copy; other error
   assert.match(errorPageCopy('en').offlineBody, /isn't saved on your phone/);
   assert.match(errorPageCopy('en').offlineBody, /opened before still work/);
   assert.ok(errorPageCopy('zu').zuluDraftNotice, 'the isiZulu offline copy is covered by the unreviewed-draft notice');
+  assert.ok(errorPageCopy('af').zuluDraftNotice, 'the Afrikaans offline copy is covered by the unreviewed-draft notice');
+  assert.notEqual(errorPageCopy('af').offlineBody, errorPageCopy('en').offlineBody, 'Afrikaans must not fall back to the English copy');
 });
 
 test('error.tsx links to /offline when offline and still never prints the raw error message', () => {
