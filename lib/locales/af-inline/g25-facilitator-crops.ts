@@ -339,7 +339,7 @@ const drafts: Record<string, string> = {
   "The app cannot tell whether it still holds this ground, so check that the ground is actually free before adding another crop.": "Die app kan nie sê of dit nog hierdie grond beset nie, so kontroleer dat die grond werklik vry is voordat jy nog 'n gewas byvoeg.",
   "This is already growing (not a new planting)": "Dit groei reeds (nie 'n nuwe plantery nie)",
   "{share} bed — intercropped": "{share} bedding — tussengeplant",
-  "Sharing this bed with another crop at the same time. The kilogram comparison uses each crop's allocated area only; no generic intercropping bonus or penalty is invented.": "Deel hierdie bedding terselfdertyd met 'n ander gewas. Die kilogramvergelyking gebruik slegs elke gewas se toegewese oppervlakte; geen algemene tussenplant-bonus of -straf word uitgedink nie.",
+  "Sharing this bed with another crop at the same time. The kilogram comparison uses each crop's allocated area only; no generic intercropping bonus or penalty is invented.": "Hierdie bedding word terselfdertyd met 'n ander gewas gedeel. Die kilogramvergelyking gebruik slegs elke gewas se toegewese oppervlakte; geen algemene tussenplant-bonus of -straf word uitgedink nie.",
   "Trays sown — not yet planted out": "Saadlaaie gesaai — nog nie uitgeplant nie",
   "Recorded sowing: {month} · finish timing not verified": "Aangetekende saaiery: {month} · klaarmaak-tydsberekening nie geverifieer nie",
   "Sow {month} → cut or roll down {when}": "Saai {month} → sny of rol plat {when}",

@@ -1,0 +1,323 @@
+0 | Bring water, soil, growing systems, access, care and money together in one reasoned plan. Follow six phases, and then explain and improve your decisions.
+1 | Track work, cost and care dependencies →
+2 | Opening cash and every actual cash movement in the month is provided; there are no other cash accounts or movements in this bounded case study.
+3 | Opening stock of harvest and client balances are zero. There are no other harvests, sales, stock movements, invoice adjustments or refunds.
+4 | The invoice is for the same accepted delivery as the delivery card; the payment is not another sale.
+5 | No tax calculation, registration status or sufficient tax invoice is assessed.
+6 | Production costs, stock values and complete accounts are incomplete. No full profit or balance sheet can be determined.
+7 | Earlier growing costs fall outside the provided budget.
+8 | Water service levy, stock values, equipment use and other costs for the full period are not provided.
+9 | The listed quotations are only included cash costs, not a complete production cost.
+10 | A separate alternative with THE SAME opening cash, not an extra business that can also spend it. No completed sale or full profit is determined.
+11 | A water delivery for the growing activity is confirmed. Its levy and the supporting account are missing. Nothing has yet been paid for this delivery.
+12 | An executable sequence, cost record and agreed care plan.
+13 | Connect the drawing to quantities and money
+14 | Production, sales and expense records
+15 | Farmers record kilograms produced, kilograms sold, and money in and out — and so build a real financial picture of the farm, season after season.
+16 | Cash flow screen that shows money in versus money out, month by month, as a graph
+17 | Money in and out, month by month, from what the farmer actually recorded.
+18 | Every farmer's record is automatically aggregated. Mentors see every farm in the programme from one screen; NGO and funder accounts see production, sales, training completion and photographic evidence for every gardener — without a field visit to collect it.
+19 | Kilograms produced, kilograms sold, and money in and out, aggregated per farmer and across the whole programme.
+20 | ImbewuField is built and maintained by Imbewu Yoshintso NPC. For partnership, funding or pilot enquiries, contact us directly.
+21 | Nothing to cost yet.
+22 | Already on the ground — not counted in the budget
+23 | Quantity sold
+24 | Household use: {used}. Sold: {sold}.
+25 | Semi-arid/extensive-veld range (4-5 kg greasy wool/sheep/year) used as the primary value; the same sentence's figure of 8 kg/year is for a different system (sheep grazing on PLANTED pastures) and is deliberately excluded from the range rather than being counted into an average. A Western Cape Government (Elsenburg) budget for an extensive Dohne Merino enterprise (Ceres-Karoo, 2024) separately reports the total flock wool sold as 4439.64 kg from a flock of '1 519' Small Stock Units, i.e. 4439.64/1519 = 2.92 kg per Small Stock Unit/year - not used as the primary value because the source does not say that 1 Small Stock Unit = 1 sheep (SSU is a standardised livestock-class weighting, not a literal head count), so converting it to kg/sheep would require an unstated conversion factor. A separate NWGA/Mandela Initiative article on the Eastern Cape communal Wool sheep development programme reports a Grootfontein ADI progeny test 'Greasy fleece weight (kg) 2.8 [commercial rams] 2.4 [communal rams]' for communal Eastern Cape flocks - not combined into the primary value because that table is explicitly for '6-month old lambs' (a different life stage from an adult sheep's full annual shearing), in accordance with the rule against mixing figures across life stages; only kept here as Eastern Cape communal context: lambs from commercial rams at 6 months averaged 2.8 kg, lambs from communal rams 2.4 kg, a difference of +16%.
+26 | Harvest and income, month by month
+27 | Kilograms sold
+28 | Kilograms picked and sold
+29 | Money the farmers took in
+30 | Income in rand each month across {n} farms.
+31 | No farm in this group has shared its sales book. Income that nobody agreed to show is not an income of R0, therefore these months are simply not drawn.
+32 | More sold than picked that month
+33 | Sold · {n} farm
+34 | Sold · {n} farms
+35 | Sold without a recorded harvest behind it
+36 | Harvest not linked to a sale is not measured household consumption.
+37 | Unlinked harvest may have been stored, eaten, given away or lost, or a sale entry may be missing. These four figures cover the {n} months drawn here. A group total elsewhere on this page counts every record since each farm joined, so it can be slightly larger — the two are different periods, not two answers.
+38 | {month} — {kg} sold
+39 | Kept is calculated only across the {n} farm that shares both books, so it is not the picked figure above minus the sold figure.
+40 | Kept is calculated only across the {n} farms that share both books, so it is not the picked figure above minus the sold figure.
+41 | A dotted outline is a month in which sales are more than the harvest recorded in that same month. Usually it is produce picked earlier and sold later; sometimes it is a harvest nobody wrote down.
+42 | A dotted sales bar is weight without a harvest record behind it here — either that farmer did not share their harvest book, or the produce was picked in an earlier month. The bar still reaches the full figure sold; nothing is drawn shorter than that.
+43 | sales not shared
+44 | income not shared
+45 | {kg} sold
+46 | {n} share sales
+47 | {n} share sales
+48 | Kilograms picked each month across {n} farms, with sold kilograms and harvest not linked to sales.
+49 | Kilograms picked each month across {n} farms. Nobody here shares a sales record.
+50 | Kilograms sold each month across {n} farms. Nobody here shares a harvest record.
+51 | Kilograms picked each month across {picked} farms, and kilograms sold across {sold} farms, drawn side by side because they are not the same farms.
+52 | Nobody here agreed to share a harvest record, therefore only the sales bars are drawn. The empty half of each column is consent that nobody gave, not a harvest of nothing.
+53 | Nobody here agreed to share a sales record, therefore only the picking bars are drawn. The empty half of each column is consent that nobody gave, not a harvest that nobody sold.
+54 | Picked and sold stand side by side because they are not the same farms: neither can be stacked on, subtracted from or cut to the other.
+55 | Apple year 3 — Langkloof enterprise budget's yield
+56 | Apple year 4–5 — Langkloof enterprise budget's yield
+57 | Apple year 6–7 — Langkloof enterprise budget's yield
+58 | Apple year 8 — Langkloof enterprise budget's yield
+59 | Ask the nursery to name the cultivar or identify a seedling and provide local evidence of fruiting and compatible pollen. 'Fruit Salad Tree' is a general sales label and does not identify a tested cultivar.
+60 | Collect eggs regularly, keep nest litter clean and dry, and handle/store eggs carefully for household use or sale.
+61 | Flame Seedless year 4 — Hex River Valley enterprise budget
+62 | Full production in year 7 in this general KZN guide. No yield per tree at that age is stated, and rootstock, cultivar and management can change bearing. The four Langkloof budgets are separate regional planning assumptions, not measured confirmation of this generic age.
+63 | Regional orchard budget is not evidence of yield per tree
+64 | Commercial budget for year 4: 4,400 cartons/ha at 4.5 kg/carton = 19,800 kg/ha. The source does not provide corresponding vines/ha or row/vine spacing, therefore no kg/vine is derived. This is a budget assumption for one cultivar and region, not a generic age of full bearing or a local production record for mapped vines.
+65 | Unreviewed isiXhosa draft. This interface and the task instructions are an isiXhosa draft that has not been reviewed by a fluent isiXhosa speaker. Crop names stay in English. Check planting times, climate and price assumptions against their sources and local farming advice before you act on them.
+66 | Hidden: the orchard switch is off. This is the same switch as on Money and Records, so showing them here counts the orchard there too.
+67 | The map provides growing areas and plant counts. Record monthly quantities below. For crop R/m², use All tools → Food, field and value → Plan-cycle value and review prices, losses and the quantity sold.
+68 | Vegetables and staple crops are shown in separate rows. Green means ready to pick; gold means stored under source-supported conditions. The source does not provide a kg curve within the window, so this graph deliberately shows no monthly kilograms or money.
+69 | What-if value for the saved plan's metric totals per crop cycle. It is not a monthly cash flow forecast, annual profit, live market quote or harvest promise. Default prices are an editable South African snapshot of {months}; confirm a real buyer and the current local price before you plant to sell.
+70 | % sold (rest kept at home)
+71 | Percentage sold
+72 | % loss or underperformance
+73 | Percentage loss
+74 | Not yet calculated: the sliders start at typical placeholders (100% sold, 25% loss), not an estimate for your farm. Review both assumptions first.
+75 | Mix both: {sold}% of the harvest sold at direct retail prices, the rest ({rest}%) valued at what it would have cost to buy it at retail instead of growing it — divided by {area} m² mapped growing area. A density figure to compare plans or layouts, not a profit guarantee.
+76 | Mix both: {sold}% of the harvest sold at wholesale prices, the rest ({rest}%) valued at what it would have cost to buy it at retail instead of growing it — divided by {area} m² mapped growing area. A density figure to compare plans or layouts, not a profit guarantee.
+77 | The same sliders and prices as the mixed figure. Staple ground naturally reads low per m² — maize, beans and potatoes are cheap per kilogram, but they can be stored and feed the household through the year — so compare beds with beds and plots with plots, not the one against the other.
+78 | Rough bands, not a published statistic: derived from published South African yields, valued at typical retail prices from the same time as this map's price snapshot. Only for orientation — not targets, and not promises.
+79 | Water that runs out in the dry months — the biggest single driver here; one missed month can cost the whole crop cycle, and it is the gap between the two irrigated bands above and the two that are not irrigated.
+80 | Harvest that is lost or not sold — this is the %-loss slider above, already in this figure.
+81 | A crop mix that leans toward crops with a low price per kg. It can still be the right choice — staple crops can be stored and feed the household — and that is why the figures for beds and plots are shown separately.
+82 | cash scenario
+83 | {n}% of the harvest sold, priced at direct retail rates (change the price switch above to swap).
+84 | {n}% of the harvest sold, priced at wholesale rates (change the price switch above to swap).
+85 | The {n}% kept at home — always valued at retail, whichever price switch above is chosen, because retail is the price you would otherwise pay to replace it.
+86 | Subtotal excludes {names} because a verified yield or usable price per kg is missing.
+87 | Hide price assumptions
+88 | [stray char] Review and edit price assumptions
+89 | recommended price (average of prices found)
+90 | Concentrate chosen sales crops in a few beds
+91 | Household and sales
+92 | Set aside sales beds and use the rest for household crops
+93 | Only these crops will be used. Commercial mode compares conservative fresh-weight kg/m² per crop cycle where a supported sowing slot fits; it is not profit, nutrition, buyer demand or proof of a global annual maximum.
+94 | Conservative comparison by mapped area for one cycle of each active or planned planting; no allowance for loss or within-month picking curve is applied here. A completed once-off crop is not repeated in a later year.
+95 | Estimates of field positions come from mapped area and published spacing; they are not guaranteed purchase quantities or allowances for germination/loss. Supplier- and crop-specific guidelines can change what to buy. Botanical seed quantity is not derived from mature spacing: use the packet's crop-specific rate for direct sowing and guidelines for germination. Estimates of planting pieces are shown only for seedlings, cloves(?) ["huisies" = little houses / cells?], tubers, cuttings and seed potatoes when both spacing axes are verified. Where a row layout is not verified, confirm it locally before you buy material.
+96 | Water quantity, quality and reliability; soil suitability; land tenure; drainage levels; usable access; materials, costs, permissions and an agreement on long-term care remain unknown.
+97 | Care and money
+98 | independent fictional exercise; not R2 evidence
+99 | In a separate practice version the proposed caretaker now agrees to discuss the compost work. No new information about water, soil, access, permissions or costs is provided.
+100 | What can be reopened, and what must stay held back? Name the drawing, work, cost and care records that must be revised. Explain which evidence is still missing.
+101 | The compost proposal, its phase/cost status and its care record all change to deferred. The earlier version and reason remain visible.
+102 | Check recent sales before you choose a new sale and invoice.
+103 | Invoice
+104 | Keep the buyer, produce and payment together in one record.
+105 | Search for the payment before you add another cost.
+106 | Money you paid out
+107 | New invoice
+108 | Choose the invoice type and check whether the buyer has paid.
+109 | Paper invoice
+110 | Previous sale or paper invoice
+111 | Choose whether the sale is already in My records.
+112 | Check the sales list before you open the form for a paper copy.
+113 | Reopen the same invoice and check its payment status.
+114 | Invoice copy
+115 | Cash flow
+116 | Sales and buyer balances
+117 | Money cards and worked answers
+118 | A - Worked allocation and answers for cost per unit
+119 | Use the example farm for your first attempt. Keep real client details, payments and private photos out of a group demonstration.
+120 | Menu → Take a tour → Record the work and the sale → Try it now
+121 | Open Take a tour. Choose Record the work and the sale, then Try it now. You will see prepared records in My records.
+122 | Use Map for places and plans. Use My records for Picked, Sold, Spent and Charts. Choose Study in the menu for lessons and these app guides.
+123 | You can name the page for a harvest, an invoice and a lesson.
+124 | My records → Invoice → Saved → Choose an existing invoice
+125 | Go back to the list and reopen that same invoice. Compare the details with your note. A request for another copy is not a new sale.
+126 | Menu → Offline and sync shows the fieldwork queue. Offline or a waiting count next to the menu can also open it. The money book has its own sync system: an empty fieldwork queue does not prove that every invoice or sale is backed up.
+127 | Complete invoice documents and original receipt photos in the money book stay on their original device. A linked sale that appears elsewhere does not prove that the complete invoice or photo is there.
+128 | Keep your source records and checked document copies. Follow the invoice guide to preview a PDF before you share. Downloading a copy does not send it to a buyer.
+129 | Yes. Reopen the same item and resolve its message. An empty fieldwork queue alone does not confirm the separate money book.
+130 | Find me uses the device's location if you choose to allow it. It is only useful when you are at the intended site. You can search and use the map without giving location access.
+131 | Check the area and units used in a forecast. Planned harvests are estimates, not proof of what was picked or sold. Use the harvest, expense and invoice guides for actual records.
+132 | A kilogram metric or Plan-cycle value is a comparison based on the entered plan and its stated assumptions. It is not actual yield, monthly cash received or complete profit. Open What the planner can prove and read the sources and gaps.
+133 | Record actual picked quantities, sales and costs in My records as the work happens. Keep original dates and evidence. Use those records to revise the plan, rather than treating a forecast as picked food or received money.
+134 | Record it as a sale instead
+135 | A planned harvest is not a sale or proof of payment. Record those events from their own evidence.
+136 | A harvest and a sale are different records · illustrated example
+137 | To practise safely, open the example tour, choose Record the work and the sale, then Try it now. Choose Picked. Use example details rather than adding a practice harvest to your own farm.
+138 | Choose Picked to record harvested produce. Sold records sales and Spent records costs. Picking food does not on its own mean that a buyer has paid you.
+139 | Charts → Harvest charts → Picked and sold
+140 | The chart calculates kept as picked minus sold. It does not separately record food eaten at home, gifts, storage, seed, feed or loss. Keep those destinations in a supporting notebook if you need to explain it.
+141 | A harvest total is not sales income or profit. Track a later sale and its payment separately.
+142 | Keep the sale and its payment together.
+143 | Choose the right starting record, check the payment and then find the same sale again.
+144 | Do the produce, price and payment terms match · illustrated example
+145 | Keep the buyer, product, quantity, unit, agreed price and dates with you. Check whether an invoice or sale already exists before you add anything.
+146 | To practise, open the example tour and choose Record the work and the sale. Choose Try it now if the tour tips cover the screen. Example changes are only practice and are reset on a full reload.
+147 | My records → Sold → Recent sales or the money list
+148 | If the sale already has an invoice, choose its View or View invoice link. A buyer asking for another copy does not mean another sale.
+149 | For a sale that has not been recorded, choose New sale and invoice. For an older sale or paper document, choose Previous sale / paper invoice and keep the original reference and date.
+150 | You know whether you are opening an existing record or adding a sale that really has not been recorded.
+151 | What are you recording? → Is this sale already in My records?
+152 | Read the chosen Invoice type. For Produce already sold or an Invoice already written on paper, answer whether the sale is already recorded. Choose the exact existing sale when you link one.
+153 | Make these choices first. If you change the invoice type or the choice of an existing sale, a new form starts, so check the details again before you save.
+154 | For a paper copy, enter the original paper reference. The issue date of the invoice is not automatically the day on which the buyer paid.
+155 | The source choice and any linked sale agree with your evidence.
+156 | Bill to → Crop or product → Quantity → Unit → Price each
+157 | Use the agreed price. A suggested crop price is a guideline, not the buyer's agreement. Compare the line amounts and total with your source.
+158 | Choose a growing area only when the invoice belongs to it. Leave a mixed invoice unassigned rather than giving one bed income from another activity.
+159 | The buyer, units, quantity, agreed price and total agree with the source record.
+160 | Record whether the full payment has arrived
+161 | Has the buyer paid? → Payment received on → Payment method
+162 | Choose Not yet — payment outstanding if the money is still owed. Choose Yes — paid in full only after you have checked that the full payment has arrived.
+163 | For full payment, check the actual receipt date and method. A payment promise or screenshot from the buyer must be checked against your own receipt evidence.
+164 | Keep each instalment's actual receipt date in that separate record. The app gives a paid invoice one payment date for its whole amount, so its charts cannot show the separate instalment dates.
+165 | The status describes the evidence, and a partial payment is not presented as full payment.
+166 | Save and check the same invoice
+167 | Save invoice → Saved → Open the same number
+168 | Choose Save invoice and read the message. Open Saved and find the same invoice number, buyer, amount and payment status.
+169 | Paid invoices add income to My records; paid kilogram lines can create linked crop sale records. Other units keep their quantities. An unpaid invoice is not cash received.
+170 | Trace the record back to Sold
+171 | My records → Sold → View invoice
+172 | When an unpaid invoice is later paid in full, open that existing invoice or its Review payment button, check the receipt date and save the update. Keep the same invoice number.
+173 | To send another copy, reopen the saved invoice and check Share PDF or Print. Downloading a copy does not send it to a client. Review the destination yourself before you send.
+174 | You can trace the sale, payment and document without creating a duplicate.
+175 | Only part of the payment has arrived.
+176 | The invoice is for R120.00. The buyer pays R40.00. What should you do?
+177 | Mark the invoice as paid in full
+178 | R80.00 is still owed. Paid in full would misrepresent the payment; this screen does not keep a partial balance.
+179 | Keep a separate payment record and leave full payment unconfirmed
+180 | Create another product sale of R40.00
+181 | The payment settles part of the existing sale. It does not describe another delivery of produce.
+182 | The invoice document is saved on this device. A synced crop sale row is not a backup of every document detail. Keep the source and a checked copy.
+183 | A saved invoice or payment status does not on its own prove receipt, full profit or tax compliance. For deposits, adjustments or disputed amounts keep a checked supporting balance record and get bookkeeping help.
+184 | Find your sale before you add another one
+185 | Open Sold in your current workspace. Reopen an existing record when there is one.
+186 | Open Sold
+187 | Keep the cost and its evidence together.
+188 | Record what you paid, check the cents and reopen the cost with its supporting receipt.
+189 | Illustration of a grower considering costs with a notebook, pocket calculator and produce at a stall table
+190 | Check the source before you save a cost · illustrated example
+191 | Bring the receipt or payment record
+192 | Keep the item, amount paid and supplier ready. Keep the original payment date. This form records today's entry date and has no date picker yet.
+193 | To practise, open the example tour, choose Record the work and the sale, then Try it now. Choose Spent. Use example details in a group lesson.
+194 | Check the book before you add a cost
+195 | My records → Spent → Record a cost
+196 | For a new cost, choose Record a cost. The form's heading is Money you paid out.
+197 | You know whether you should add a new payment or edit an existing cost.
+198 | Copy the amount and describe the cost
+199 | Write what the payment was for and enter the full amount, including cents. Compare it with the receipt or checked payment evidence.
+200 | Keep the original date in your source record when you enter an older cost. The app places this entry in the month in which you type it.
+201 | Assign the cost only when you know
+202 | Growing area for this entry → Crop this cost was for
+203 | Choose the growing area only when the cost belongs to it. Shared by beds and staple food plots is available for a truly shared cost; Unassigned leaves it unallocated.
+204 | Any assignment to a growing area or crop is supported by what the payment actually covered.
+205 | A receipt photo is optional. You can attach it and fill in the cost yourself. Check that the important details are readable.
+206 | The original receipt photo stays on this device. A cost that appears elsewhere does not mean that its original photo is also available there.
+207 | Record cost → Spent → Edit or View slip
+208 | Choose Record cost and read the save result. Find that same cost in Spent and compare its amount with your evidence.
+209 | You can find the cost again, verify its cents and identify where the original evidence is kept.
+210 | Save both amounts as separate costs
+211 | That would risk counting the same payment twice. Resolve the difference on the one cost.
+212 | Spent records payments, but the app cannot know which costs you have not entered. Sales minus recorded costs does not prove full profit when information is missing.
+213 | Keep original dates and evidence. Equipment, loans and household money each need their own handling when complete accounts are prepared; use the finance workbook and your bookkeeper rather than treating every cash movement as a crop cost.
+214 | Record a checked cost now
+215 | Open Spent in your current workspace. Find an existing entry first, or add the payment once from its source record.
+216 | Make an invoice. Keep the sale together.
+217 | Create an invoice, check payment and find the saved document again.
+218 | Bring the buyer, product, quantity, unit, agreed price and dates. Check payment evidence before you choose paid. To practise, open the example tour and choose Record the work and the sale.
+219 | My records → Invoice → Saved or New invoice
+220 | If the invoice already exists, open Saved and choose that document. A buyer asking for another copy does not mean another sale.
+221 | For a new document, read "What are you recording?" Choose a New invoice, Produce already sold or an Invoice already written on paper.
+222 | For a previous sale or paper copy, answer whether the sale is already in My records. If it is, link the exact available recorded sale. Keep the original paper reference and issue date.
+223 | You can explain whether it is a new sale, an existing sale or another copy of a document.
+224 | Check the buyer, units and price
+225 | Bill to → Line items → Payment due
+226 | Check your seller details and choose the right buyer. For each line check the product, Quantity, Unit and Price each. Use Add line item for another product.
+227 | Check the issue date, payment terms and any reference from the buyer. Compare the preview with your source record before you save.
+228 | The buyer, product, quantity, unit, agreed price and total agree with the source record.
+229 | Say whether payment has arrived
+230 | Has the buyer paid? → Payment received on
+231 | Choose Not yet — payment outstanding when payment is still owed. Choose Yes — paid in full only after the full payment has been received and checked.
+232 | For a paid invoice, check Payment received on and the payment method. The payment date can differ from the invoice's issue date.
+233 | The payment status and receipt date describe what actually happened.
+234 | Save invoice → Saved → Open the same invoice
+235 | Choose Save invoice and read the result. Then open Saved, find the same invoice and check it again.
+236 | Kilogram lines from paid invoices can appear in My records. Other units keep their original quantities; the app does not guess their weight. Check for the linked record before you enter another sale.
+237 | You can reopen the invoice and identify any save or sync message that still needs attention.
+238 | Saved invoice → Share PDF or Print
+239 | On the saved invoice choose Share PDF or Print. Check the buyer, reference, dates, line items, total, payment status and payment details in the output.
+240 | Downloading a PDF does not mean that the buyer has received it. Choose the intended recipient yourself when you are ready to send a real invoice.
+241 | When an unpaid invoice is later paid in full, reopen that same invoice or use Review payment. Check the actual receipt date and save the update.
+242 | You have the right document for the right buyer, and have not recorded the sale twice.
+243 | You already saved the invoice yesterday. What should you do?
+244 | Create a new sale and invoice
+245 | That would risk counting the sale again. The buyer needs another copy of the existing document.
+246 | Open the invoice from Saved
+247 | Yes. Reopen the same invoice, check it and use Share PDF or Print. Another copy is not another sale.
+248 | Mark an unpaid invoice as paid
+249 | A request for a copy is not proof of payment. Check the payment separately and keep its status accurate.
+250 | The VAT/tax number field prints a reference; it does not calculate VAT and does not prove that the document meets the requirements for a tax invoice. Check current SARS guidance together with your bookkeeper.
+251 | Current SARS guidance on VAT
+252 | Open Invoice when you are ready to work in your current workspace. Check whether the sale or invoice already exists before you add anything.
+253 | Bring paper and previous sales into the app
+254 | Keep the old paper. Record the sale once.
+255 | Bring an earlier sale into the app with its original evidence, date and reference.
+256 | Keep the paper and payment evidence ready
+257 | To practise, use the example tour → Record the work and the sale → Try it now. Use a clearly marked fictional example. Example changes are reset on a full reload.
+258 | Search for the sale before you enter it
+259 | My records → Sold → Invoice → Saved
+260 | Check both Sold and Saved. Match the reference, buyer, date, goods and amount. A paper copy and an app entry can describe the same sale.
+261 | You know whether the sale and an invoice are already recorded.
+262 | Sold → Previous sale / paper invoice → What are you recording?
+263 | Choose an Invoice already written on paper to copy over an existing paper invoice. Choose Produce already sold when you document an earlier sale without that paper invoice.
+264 | Answer Is this sale already in My records? Choose Yes — link the existing sale if it is recorded. Choose No — record it with this invoice only after you have checked that it is absent.
+265 | Choose the entry type and the answer about an existing sale before you fill in the rest. If you change these choices, a new form starts, so check all the details again.
+266 | Link only the exact recorded sale
+267 | Yes — link the existing sale → Recorded sale
+268 | Choose the exact available sale in kilograms. Read its crop, weight, amount, buyer and date. Its recorded crop, kilograms, total and payment date stay together.
+269 | If the app says the invoice is on another device, reopen it there. A linked sale can sync without copying the complete invoice document. Connect to the internet before you link a real existing sale.
+270 | Original paper invoice reference → Invoice issue date → Line items
+271 | For a paper copy, enter the original paper number and date. The app also gives its copy an app invoice number. Keep both references; the buyer's order reference is a separate field.
+272 | Check the date in the document preview before you save. Copy over the goods, quantities, units and agreed prices. A suggested price is not the price on your paper.
+273 | Record what actually happened with payment
+274 | Choose Yes — paid in full only when full payment is supported by checked evidence. Use its actual receipt date and method. An old invoice date does not prove that the buyer paid on that day.
+275 | For a linked recorded sale, preserve its recorded payment status and payment date. If it does not agree with your evidence, resolve the original record instead of making a duplicate.
+276 | The invoice date and payment date each describe their own event.
+277 | Save once and read the result. Find the same invoice again and compare the paper reference, issue date, buyer, units, total and payment status.
+278 | If the message says the crop sales book still needs to be updated, connect again and save the same invoice again. Keep the paper even after the app copy is saved.
+279 | You can link one source sale to its app document without counting its income twice.
+280 | The old sale is already recorded.
+281 | Your paper describes a sale that is already in My records. What should you do first?
+282 | Enter a second sale with today's date
+283 | That can duplicate income and change the story of when it happened. Find the existing record first.
+284 | Reopen its invoice, or link the exact suitable sale
+285 | Yes. Match the source first. If an invoice exists, reopen it; otherwise use the supported link to an existing sale.
+286 | Link another sale with a similar amount
+287 | A similar amount does not prove the same sale. Keep the evidence and resolve the missing match.
+288 | An app copy does not replace missing source evidence. It does not convert units, does not prove tax compliance and does not on its own fix a wrong old record.
+289 | Independent exercise: find one existing example invoice and identify its issue date and payment status. Explain which entry route you would use for a paper copy and when you must stop to check a possible duplicate.
+290 | Start by checking Sold
+291 | Search for the existing sale before you open a form for a previous sale or paper copy. Use the example workspace until you can explain your choice.
+292 | Review payment and share the right invoice
+293 | Check payment. Send the right copy.
+294 | Update the existing invoice from checked payment evidence and examine the document before you share.
+295 | Bring the invoice reference and payment evidence
+296 | Keep the buyer, invoice number and payment evidence ready. A buyer asking for a copy is not proof of payment.
+297 | Reopen the right invoice
+298 | Invoice → Saved → Invoice number or Review payment
+299 | Find the existing invoice by number, buyer, issue date and total. Choose its row or Review payment to open it.
+300 | The document and buyer agree with the payment you are examining.
+301 | Check the whole payment
+302 | Compare the payment record with the invoice
+303 | Check that the money was actually received and belongs to this invoice. Compare the amount and reference with your checked payment record.
+304 | A promise, payment request or screenshot that you have not verified is not enough to say paid in full. Resolve differences before you change the status.
+305 | You can explain why the evidence supports full payment, or what remains unresolved.
+306 | Has the buyer paid? → Payment received on → Payment method → Save invoice
+307 | Once full payment has been checked, choose Yes — paid in full. Check Payment received on and choose the method when it is known. Keep the original issue date.
+308 | Save and read the result. Reopen the same invoice from Saved. Check the paid status, receipt date and method. The invoice number must stay the same.
+309 | A sale linked from an existing record keeps its recorded payment details together. If it needs to be corrected, resolve that original record rather than making a new invoice.
+310 | One invoice now carries the checked payment, without an extra sale having been added.
+311 | Check the money book once
+312 | My records → Sold → View the related invoice
+313 | Kilogram lines can provide crop sales evidence. Bunches and bags keep their own units; the app does not guess their kilograms. Read the units next to the amount.
+314 | If the invoice is saved on this device but the update of its crop sales book is pending, connect again and save that same invoice again. Keep the source evidence while you resolve the message.
+315 | The money and units still describe the original sale, counted once.
+316 | First review the document on the screen: seller and buyer, both references where relevant, dates, goods, units, prices, total, payment status and bank details.
+317 | Share PDF and Print save the current form before output is created. Check your edits first. A paid document shows Invoice total and its Paid stamp; an unpaid document shows Total owed.
+318 | Share PDF opens a device share sheet where it is supported, or downloads a PDF. Check the generated copy. If creating the PDF shows an error, the invoice may already be saved; follow the message and try Print rather than creating a duplicate.
+319 | For a real invoice, check the recipient and attachment before you send it through your chosen app. Downloading or printing does not mean the buyer has received it.
+320 | If the buyer needs another copy, reopen the same invoice and share it. Keep a checked copy with the source records.
+321 | The complete invoice stays on its original device. Seeing the sale on another device does not prove that the complete document is also there.
+322 | You can identify which copy was sent, to whom, and to which invoice it belongs.

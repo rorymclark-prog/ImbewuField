@@ -139,7 +139,7 @@ const drafts: Record<string, string> = {
   "Complete": "Voltooi",
   "Not started": "Nie begin nie",
   "Paused": "Onderbreek",
-  "Withdrawn": "Onttrek",
+  "Withdrawn": "Is onttrek",
   "View curriculum": "Bekyk kurrikulum",
   "modules": "modules",
   "That change was not confirmed. Check the reloaded learning records before trying again.": "Daardie verandering is nie bevestig nie. Gaan die herlaaide leerrekords na voordat jy weer probeer.",

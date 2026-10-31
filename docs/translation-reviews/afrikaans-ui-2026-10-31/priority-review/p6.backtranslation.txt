@@ -1,0 +1,321 @@
+0 | Agreed action
+1 | Visit notes and photos are visible to the assigned mentor and authorised organisation staff.
+2 | Internal mentor report · Includes private visit notes. Use the organisation's published programme report when you share with funders.
+3 | Choose a member to see their effective programme permissions and assigned farmer group. First save changes in People and permissions, and then refresh here.
+4 | Training records are limited to this mentor's own sessions. Private assessment analysis, when it is switched on above, covers the organisation's assessments.
+5 | Visible on map
+6 | Share this site
+7 | Share failed
+8 | Confirm delete
+9 | Shared garden, co-op or NGO site
+10 | No designs have been shared with you yet.
+11 | Shared
+12 | Shared with me
+13 | Share anonymised results with my NGO
+14 | I agree, continue
+15 | Could not confirm the deletion of this post. Check your connection and try again.
+16 | This device cannot share a location.
+17 | Could not confirm the deletion. Check your connection and try again.
+18 | Deleting…
+19 | Unreviewed translation of consent. Read the English source before you choose or agree.
+20 | Review the programme summaries that have been shared with you.
+21 | You have {count} saved reports — delete one to save this one
+22 | shared
+23 | Descriptions of permissions and sharing stay in English so that their meaning stays exact.
+24 | Delete this place
+25 | Hill-shade relief — shade slopes so that hills, valleys and the direction in which the ground faces are visible
+26 | Storage full — photo not saved. Delete some items to make space.
+27 | Share as much or as little as you want. Nothing here is visible before you save it.
+28 | Delete my community profile
+29 | Delete your community profile? This removes your profile and map pin. Your board posts stay until you close them one by one.
+30 | Could not delete. Try again.
+31 | Orchard is switched off, so {kg} kg is not in this total: {names}. Nothing has been deleted — switch it back on to count it again.
+32 | Delete site
+33 | Delete this saved site?
+34 | Private prototype — enter the password to continue.
+35 | Remove this device's change in the queue? It cannot be undone here. First download a copy if you need to keep it. The server record is not deleted.
+36 | On a conflict: keep a downloaded copy, remove this change in the queue, reconnect and reopen the current record. Compare the versions before you save your corrections. Permission or validation errors must be resolved before you submit again.
+37 | Your funder workspace contains the programme reports that have been shared with you.
+38 | Permission for location was refused. Allow location for this website in your browser's settings and then try again. Your entry is still here.
+39 | Your account's permissions stay unchanged.
+40 | Your usual sign-in stays the same. A platform administrator must switch on owner access on the correct account; choosing a dashboard does not change your permissions.
+41 | The English source wording is shown next to each draft until it has been reviewed for first-language and permission (consent) meaning.
+42 | You are looking at demonstration records. Your account's permissions stay unchanged.
+43 | Share as much or as little as you want. Nothing here is visible until you save it.
+44 | Withdraw
+45 | Not visible
+46 | No records visible
+47 | A plan is visible, but it has no verified kilogram measure for the crop cycle. Missing evidence is not a target of 0 kg.
+48 | The farmer's crop plan cannot be read here. Not visible is not the same as no plan.
+49 |  Showing a real farmer's books to another account requires a server-side authorisation gate and that farmer's recorded permission/consent — see the header of this file.
+50 | {n} more farmer is enrolled here but has not agreed to share their figures, so they are not listed.
+51 | {n} more farmers are enrolled here but have not agreed to share their figures, so they are not listed.
+52 | Every figure here is shared by the farmer it belongs to, and only for the categories they agreed to.
+53 | Set members' roles, delegate assessments and control sharing with funders for this organisation.
+54 | Numbers are assessment assignments, not unique people. Assigned means available in the app; it does not mean that a WhatsApp, e-mail or SMS was sent. Awaiting review means closed but not shared; it is not a separate recorded approval status.
+55 | Farmers' consent still applies. Assessment summaries stay private until they are published one by one. Files that were previously exported cannot be recalled.
+56 | Read private analysis
+57 | Private written feedback
+58 | Summary withdrawn from funder view.
+59 | Withdraw funder summary
+60 | Your answer has been withdrawn.
+61 | Withdraw my answer
+62 | I have read this notice or it has been explained to me, and I agree to take part.
+63 | closed, not shared
+64 | Closed assessments not yet shared
+65 | These assessment instruments are available. Results appear below when the organisation has reviewed and shared them; an instrument listed here does not mean that an assessment has been completed.
+66 | This register does not include the farmer's private design.
+67 | Use Reports for the shared portfolio. Farmers' consent, organisation sharing and funder access determine which records are included; private identity details are excluded.
+68 | No indicators have been shared for this selection.
+69 | No {area} indicators have been shared for this selection.
+70 | Loading the latest shared production, area and financial records…
+71 | Target not yet agreed
+72 | summaries shared
+73 | The permission and data-sharing details below stay in English so that their meaning stays exact.
+74 | Descriptions of consent/permission and sharing stay in English so that their meaning stays exact.
+75 | reported; may include shared gardens
+76 | Training records shared
+77 | farmers who share course progress
+78 | no training records shared
+79 | No farms are visible for this account yet
+80 | Farmers appear here as soon as they have agreed to share their records with the organisation.
+81 | The sharing controls and notices on this page are in isiXhosa. Some charts, warnings about data status and the farmer-details panel are still shown in English; names, figures and evidence that people typed are shown as saved.
+82 | Every figure below is recorded by the {n} farmer it belongs to, and only shown for the categories they agreed to share.
+83 | Every figure below is recorded by the {n} farmers it belongs to, and only shown for the categories they agreed to share.
+84 | Manage your team, decide what is shared and explore every role.
+85 | People and permissions
+86 | Explore every role's workspace. Your account's permissions stay unchanged.
+87 | Other agreed measures
+88 | Completed installations, mentor visits, agreed actions and evidence checks.
+89 | Agree support actions with the farmer. Record at the review what improved, what didn't, and what must change.
+90 | Farmers who trade with farmers — seed, seedlings, surplus produce, tools and work-sharing.
+91 | A planter to rent per day, or two days' work-sharing
+92 | Share listing
+93 | Could not share on this device. Copy it yourself and send it:
+94 | No way yet to contact another farmer from the app. For now write down the name and area on their card and arrange it through your mentor or group — or use Share to forward a listing yourself.
+95 | Listings you post stay on this device. To share them between farmers, the community server must first be switched on and its security rules extended.
+96 | This is saved only on this phone — nobody else can see it until you send it to them yourself. Share it now, or find it any time on the board and share it later.
+97 | Share to WhatsApp
+98 | This listing is saved only on this phone. It is not sent to other farmers and nobody else can see it — sharing listings between farmers has not been built yet.
+99 | This saved {n} planting, but nothing in it falls in any month. This happens when a planting is on a bed that has been deleted, when its crop has no verified times in the app, or when it is an existing crop whose picking months are already past. Open the crop plan to check it.
+100 | This saved {n} plantings, but nothing in it falls in any month. This happens when a planting is on a bed that has been deleted, when its crop has no verified times in the app, or when it is an existing crop whose picking months are already past. Open the crop plan to check it.
+101 | Share tasks
+102 | Share the plan (PDF)
+103 | Check the programme summaries that have been shared with you.
+104 | Storage is full — this entry could not be saved. Delete an old entry and try again.
+105 | Start in Fieldwork to check actions to do and assigned gardens. Record a visit, observe a practical skill and agree the next action. Use Training for attendance and feedback, Learn for modules, and Messages for follow-up.
+106 | Check group totals and charts, and then choose Progress and milestones. Compare recorded progress with targets and open the shared assessments or reports.
+107 | Choose Ask for a feature to see how you can describe a change that would help your programme. Explore only the form: if you send it, it contacts the real developer. The scope and prices of customisation are agreed together.
+108 | Open Glossy, choose a layer and its base layer, and then create a design map. View the result in full screen and use Export and share for your chosen layers.
+109 | Training and progress brings training and project evidence together. Reports prepares the programme record for review and sharing.
+110 | Open shared assessments and reports to see the records that support the totals and the work that still has to be completed.
+111 | Check what is shared
+112 | Your {role} account opens its matching sample view. Other roles are shown below so that the full set is visible.
+113 | Report ready. Use your device's save or share controls.
+114 | Choose photos that you have permission to use, and then press Save changes.
+115 | Agreed follow-up
+116 | What you share
+117 | Could not load your share settings. Check your connection and try again.
+118 | This was not saved. Your share settings have not changed.
+119 | You are sharing nothing.
+120 | Stop sharing everything
+121 | Add a title, details and a page path without a query or personal information.
+122 | Tell us what happened or what would help. Please do not include passwords, ID numbers, private survey answers and other people's personal information.
+123 | Narration chosen in the English source. Your regional slides stay visible.
+124 | All visible projects
+125 | Shared with funders
+126 | Topics covered, activities completed and evidence. Leave out private participant information.
+127 | Share this session summary and reviewed photos with linked funders
+128 | I have reviewed the summary and photos for sharing. Attendance names, IDs, signatures, register photos and written feedback stay private.
+129 | Share this indicator and its evidence notes with linked funders
+130 | Review for sharing with funders
+131 | Review for sharing with funders · registers stay private
+132 | Check the session and confirm the shared content before you publish.
+133 | All visible groups
+134 | Selected group · no visible records
+135 | No farmer records are visible. The report describes this gap; it does not imply zero programme activity.
+136 | Use the existing records and progress workspace to check gaps and agree the next step.
+137 | Review shared progress
+138 | Visible farmers
+139 | {n} farmer is visible across {c} group in this selection.
+140 | {n} farmer is visible across {c} groups in this selection.
+141 | {n} farmers are visible across {c} group in this selection.
+142 | {n} farmers are visible across {c} groups in this selection.
+143 | Every measure in the evidence-coverage table has a value for every visible farmer. Readable records are not independently verified or necessarily complete.
+144 | No farmers are visible in this selection. This does not prove that the programme has no participants.
+145 | {n} enrolled farmer is withheld because of consent across the whole organisation.
+146 | {n} enrolled farmers are withheld because of consent across the whole organisation.
+147 | Ask the implementing organisation for a support plan that respects consent.
+148 | Use the group list to review flagged records, and then agree support actions with the mentor and farmer.
+149 | Record an action owner, agreed deadline and proof of completion in Progress and milestones. Nobody is automatically assigned by this report.
+150 | A baseline, follow-up, agreed targets and a suitable evaluation design are needed to judge change and the programme's contribution. Those comparisons are not available in this portfolio report.
+151 | Authorised app records, filtered by consent; not independently verified. Monthly ledgers use UTC event dates. Only known weight; no estimated conversions of counts or packets.
+152 | Coverage = current readable books / visible farmers; the number contributing known weights in this period is not available.
+153 | Coverage = farmers with an available value / visible farmers.
+154 | Total visible
+155 | Check the current site phase together with the mentor before you (plural) agree the next practical step.
+156 | Explain consent and access together with the organisation. Missing consent is not poor performance.
+157 | · sow {month} in {bed} ({share}) · pick {span}
+158 | Agree the order
+159 | Only Bed 2 moves, until half of Bed 1's width is overlapped. If both full bed areas are counted, the shared ground will be counted twice.
+160 | The shared strip is one piece of ground. Two outlines cannot make it count twice.
+161 | Use the current layout: {arrangement}. Area of a rectangle = width × length. If two outlines overlap, subtract their shared area once when you count the ground they cover. Try on paper or enter your answers below; a comma or point can indicate a decimal.
+162 | Shared strip: {overlap} × {length} = {overlapArea} m². Ground covered once: {bed} + {bed} − {overlapArea} = {covered} m².
+163 | What changes when care has not been agreed?
+164 | Agree the observer and timing with the household. These are suggested checks; no later field results are provided.
+165 | Every unit has an explanation in plain language, worked examples and practice to discuss with a facilitator or learning partner. Use the provided practice figures; keep your household and client details private.
+166 | Plan for four to five teaching hours per day, breaks excluded. This is an estimate to test with learners; translation, the sharing of devices and additional practice can need more time.
+167 | Mark Plot A on your copy and write its reference next to the harvest map. List the access, water and growth information you would still need for a real plan. The map gives no legal access agreement and no forecast of production from this area.
+168 | household withdrawal
+169 | Are owner's funds, loans and household withdrawals classified according to their source maps/cards?
+170 | Use the existing technical modules when you check a water, soil, plant or animal proposal. This reading route teaches how to connect those decisions. A field plan still needs suitable measurements, local evidence and any relevant advice or permissions.
+171 | Two examples, with their limitations visible
+172 | An agreed brief, evidence notes and a map of existing features.
+173 | Agree what the household needs
+174 | Make the learning visible
+175 | Welcome and learning agreement
+176 | Invite each person to share one farm question and one teaching concern. Offer a spoken or drawn answer.
+177 | Agree how to ask questions, share time and give feedback. Explain attendance separately from permission for photos or the app.
+178 | Register and an empty flipchart for the group agreement.
+179 | A group agreement and a list of questions to look at again.
+180 | Use two prepared photos or soil samples from a permitted practice site. Ask what is visible before you give an explanation.
+181 | Collect question cards and keep the group agreement visible.
+182 | Use a provided practice site or a consenting participant's own site. Mark each entry as demo or real before you enter it.
+183 | Agree who will lead each part; prepare one question that exposes learning rather than recall.
+184 | Keep attendance, consent, skill observation and any programme certificate decision as separate records according to ACT's policy.
+185 | Assessment summaries that have been reviewed and shared by the organisation.
+186 | On iPhone: open the link in Safari, tap Share, then "Add to home screen".
+187 | Not shared
+188 | harvest not shared
+189 | {prod} of {total} farms share a harvest record
+190 | None of them share both.
+191 | {n} of them share both.
+192 | only {n} farms share both
+193 | {n} farms share a harvest record
+194 | None of these {total} farmers have agreed to share a training record.
+195 | {reporting} of {total} farmers share a training record. The course is {modules} modules.
+196 | A training record that nobody agreed to share is not a farmer who has done no training, therefore nobody here is drawn at zero — they are simply not drawn.
+197 | A module counts as soon as the farmer has completed it in the app. Farmers who have not shared a training record are not drawn at zero — they are not drawn at all.
+198 | Share of the mapped growing area that is occupied each month. The planner keeps every crop reserved up to the upper limit of its substantiated maturity and picking span to avoid double booking; only finish a crop earlier after you have checked the bed.
+199 | {share} bed
+200 | {crop} wants room to spread out — best in its own dedicated bed rather than shared or divided with other crops.
+201 | {share} bed — intercropped
+202 | Share this bed at the same time with another crop. The kilogram comparison uses only each crop's allocated area; no general intercropping bonus or penalty is invented.
+203 | No mapped location is attached, so the planner uses the visible summer-rainfall fallback. Map the garden for a location-based climate profile.
+204 | No kg or value total is shown, because the space on these beds does not add up. Open a crop below and change its bed, month or share — the app will not guess which crop loses space.
+205 | share recorded as {n}% of the bed
+206 | no usable share recorded
+207 | Bar length compares crops · % is the share of the {kg} kg above
+208 | Compare two provisional concepts with the same household brief. Keep unknowns visible and then update linked records when later care evidence arrives.
+209 | The person who is expected to manage a proposed compost area has not agreed to that extra work.
+210 | First investigate concept A; postpone physical changes while evidence and the household's consent are incomplete.
+211 | Agree the work before you make changes; the extra compost proposal needs its own agreement.
+212 | Comparable quotations and agreed care are missing. None of the options is proven cheaper.
+213 | Household's consent, observation of the route, water and soil checks, relevant permissions
+214 | Agree who will do the ongoing work before it is assigned
+215 | Agreement needed
+216 | Consent of the person who is expected to manage it and a practical care plan
+217 | Agreement not yet recorded
+218 | Postponed; no agreed carer
+219 | Nobody has agreed to the additional care work.
+220 | Household and facilitator must record an agreed care arrangement or leave the component postponed.
+221 | Ask the people who do the work to describe the watering and care tasks, limitations and what they agree to undertake.
+222 | Revise or postpone a component if agreed care is not available.
+223 | Agree what the household wants from the growing area and what water and soil evidence is needed before a change.
+224 | Before committing to a change, with a later review that the household agrees to
+225 | Inspect the document before you use Share PDF or Print.
+226 | Shared event cards and answer key
+227 | Shared practice case
+228 | The named plot, its location and its drawn boundary match your evidence.
+229 | Export and share → Choose the saved sheet → Choose format → Download
+230 | Keep a dated copy with your site notes. Choose any real recipient yourself after you have reviewed private details. A download does not send the plan to them.
+231 | Review for your own site unresolved measurements and decisions together with the people who use the land and a suitable adviser. A design drawing does not prove land rights, permissions or the suitability of construction work.
+232 | Check the month and the share of the bed
+233 | Choose the intended sowing month and the area share. A half or quarter means part of the available bed, not extra ground. Check the other crops that occupy that bed in the same months.
+234 | Use the action that matches your entry. Reopen that crop bar and check its bed share, sowing month and planned harvest window. Editing must change the existing planting, not add a second one.
+235 | Independent practice: follow the sample design to its crop plan, identify one bed's area and open one planting. Explain its status, month and area share. Change one planned month, save and reopen it, and then restore it with Undo.
+236 | Check the agreed quantity and total
+237 | Check the buyer and every line. Keep kilograms, bags, bunches and other units as they were agreed. The app does not know a bag's weight unless you have measured and recorded it.
+238 | The saved document is the one you intended, and any pending update is visible.
+239 | The saved details match the source; you did not treat an AI suggestion as evidence.
+240 | Use sample details in a group lesson. Keep real client and bank details private.
+241 | Check the copy before you share
+242 | The preview matches the paper, including the original date and exact cents.
+243 | Keep gaps visible
+244 | Inspect the output before you share
+245 | Compare the same period, units and growing area before you draw a conclusion. Keep uncertain or missing values visible and check the underlying map and records.
+246 | Export records for a lender creates a PDF. Depending on the device it downloads or it opens a share sheet. Save a copy and inspect every page, including the farm name, compilation date and the dates covered.
+247 | For real records, check what your bookkeeper or adviser needs and choose the recipient yourself. Review the attachments and private details before you send. Save or download does not send the file to them.
+248 | The twelve months visible in the chart
+249 | Independent practice: in the sample tour compare the CSV period with View summary. Open an exported copy, follow one figure to its source and name one item that the file does not contain. Stop before you share.
+250 | Keep the site name, visit notes, photos and any original test reports ready. Know when and where each record was made. Use only photos and information that you have permission to include.
+251 | Inspect the copy before you share
+252 | In the sample farm change Mentor notes and follow-up to a clearly marked practice note. Use Save changes, then Download evidence report. Open the file and find that note and the labels of the sample images. Stop before you share.
+253 | Read the real brief before you take a photo. Keep the original photo and any notes on your device. Use evidence of your own work, with permission for any people shown.
+254 | Make a brief with spaces for people and uses, priorities, things to protect, agreed scope, available resources and questions that are still open. Use the practice case or get permission for an exercise with a real household. A partner reads it back. Change anything that misrepresents the household.
+255 | The learner distinguishes needs from proposed objects, includes the people who do the work, and leaves missing resources visible. A list of attractive features alone does not pass this task.
+256 | Does agreement on the brief prove permission to change a neighbour's drainage route?
+257 | no. **Reason:** the brief records the household's goals; permissions and consequences outside the site need their own checks.
+258 | no. **Reason:** a drawing cannot replace checks of site, soil, water, outlet and permission or relevant qualified assessment.
+259 | Can several attractive benefits compensate for the blocking of the only agreed access route?
+260 | no. **Reason:** drawing software does not replace site-specific assessment or permission.
+261 | Plants were bought, but the proposed area has no agreed care or reliable water arrangement. Which dependency was missed?
+262 | A project has an installation team but no agreed person to look after it after that after that [duplicated "daarna"]. What is incomplete?
+263 | The learner distinguishes installation from maintenance, records agreement and shows how care capacity influences the scope.
+264 | Begin a design presentation with the brief. Show the existing situation and the evidence that mattered most. Then explain the chosen arrangement, an alternative that you considered, the important trade-off and the first feasible phase. Keep unknowns visible; explaining a limitation is better than hiding it behind a confident picture.\n\nChoose a format that the learner can use: drawings, a printed map, oral explanation, supported notes or the app. Assess the reasoning and relevant evidence rather than skill with a device. Ask permission before you record or share a person's presentation.\n\nInvite specific feedback. A reviewer can name a supported strength, a missing assumption and a question that can change the plan. Listen before you defend the drawing. Record whether the question exposes missing evidence, a misunderstanding in the presentation or a real conflict in the design.
+265 | Link each priority to an observation, a source or method, the responsible person and an agreed review point. Say what the observation can and cannot demonstrate. Use practice data only if it is clearly marked as provided classroom data.
+266 | Evidence, design and export guides. Inspect the saved and exported revision, keep the previous record and share only with the household's consent. A handover on paper or oral stays valid.
+267 | Build a small evidence file or envelope, with references that match the notebook. Use sample records if private material cannot be edited/redacted. Keep real client details out of classroom screenshots.
+268 | If a forecast is relabelled as actual, go back to the source status. If an application pays the bill/account in the model, remove it and restore the gap. If a claim rests on the map's appearance, ask for the appropriate underlying agreement, measurement or record. A valid answer can be "not yet ready to commit; get this evidence". It is not a failure to preserve uncertainty.
+269 | W-CARE: no agreed care role
+270 | Agree the task before you draw a solution.
+271 | Record the agreed needs, who uses and cares for the place, and what must stay usable. Note what falls outside this phase. Use roles or initials if you prefer.
+272 | Give each note a reference. Include the date, source and whether it was observed, reported, measured or proposed. Record limits, disagreement and permission to use someone's information.
+273 | Give the evidence for your preference, the trade-offs, the unknowns and what can change the choice. A provisional preference is not permission to build.
+274 | List unresolved questions about water, soil, access, technical matters or permission. Explain consequences further downstream and the evidence or advice needed before the relevant work can proceed.
+275 | Connect the drawing with feasible work and agreed responsibilities.
+276 | List the phases, their prerequisites and who agrees that a phase is ready. Include checks before money is spent or work is started. Hold back items with unresolved dependencies.
+277 | Who agreed to care for the system?
+278 | Keep animals outside this phase and follow the agreed brief
+279 | The household has not agreed to that system. A design is judged on how it complies with the brief, not on the inclusion of a standard list of animals.
+280 | Existing work is not permission/consent for additional work. Care responsibilities need discussion and agreement.
+281 | Site analysis reports that you can open or share
+282 | Record production, water, soil, livelihood and other agreed indicators. Enter the total or measurement on each date; repeated observations are not added together. Leave an unknown baseline or non-agreed target empty.
+283 | Check the farmer, observations, follow-up date and photo captions. A named person or follow-up date needs an agreed action.
+284 | The participant agrees that these answers are recorded for the programme team.
+285 | Observe a practical skill. Agree an action, owner and date.
+286 | Areas checked and shared by the organisation.
+287 | Only areas shared by the organisation appear here.
+288 | Edit, save and change sharing here; no real project is changed.
+289 | Includes private records; funders see only published records.
+290 | Shared total
+291 | Update / change sharing
+292 | Counts show assessment assignments and answers. A participant can appear in several assessments. Missing numerical answers stay unknown. Awaiting review means closed but not shared; it is not a separate recorded approval status.
+293 | Offline: this report uses the records that are currently available on this device. Newer shared records may be missing.
+294 | All visible record owners
+295 | Bring agreed indicators and assessment evidence together in the same review, and keep their populations and dates clear.
+296 | Selected project · no visible records
+297 | Use the existing assessment and milestone workspaces to record the agreed action, owner, date and evidence.
+298 | Agreed indicators, assessment findings and paired change.
+299 | Personal farm report: review the content before you share it. Access for organisations and funders is still controlled by the existing permission checks.
+300 | {n} entries have future dates within this calendar selection. They stay included, as in Records; review their dates before you share.
+301 | Prepared offline from records available on this device. A successful export does not confirm that shared records are up to date.
+302 | Prepared offline from records available on this device. Newer shared records may be missing.
+303 | All visible donors of indicators
+304 | Selected donor · no visible indicators
+305 | IDC / SEF · public guidance of May 2025
+306 | Donor filters apply only to linked milestone definitions. The scope of assessments stays unchanged. Record donor codes, agreement, measurement period and population under Indicators and targets. The public reference must be checked against your signed agreement.
+307 | Earlier {earlierStart} to {earlierEnd}; selected {selectedStart} to {selectedEnd} (UTC). Only available monthly ledger history is compared. Missing months or books that have not been shared hold back a result. A recorded zero does not prove that there was no farming activity. Current months are incomplete. Current consent and membership apply; these totals are not a paired farmer panel or an impact estimate.
+308 | Agreement / report reference
+309 | Agreed disaggregation and privacy rules
+310 | State "not required by this agreement" if applicable. No demographics are inferred from names. Use the measurement definition above for baseline dates, collection method, evidence and verification.
+311 | Could not confirm that this post has been deleted. Check your connection and try again.
+312 | Could not confirm delete. Check your connection and try again.
+313 | Nothing here is shared unless you switch it on. You can change your mind any time, and {organisation} will stop seeing it immediately.
+314 | You are sharing {count} of {total} things.
+315 | {n} entry has a future date within this calendar selection. It stays included, as in Records; review the date before you share.
+316 | The share controls and notices on this page are in Afrikaans. Some charts, data-status warnings and the farmer's details panel are still shown in English; names, figures and evidence that people typed in are shown as saved.
+317 | Compare buying, renting and sharing
+318 | Keep the unknowns visible
+319 | Use this next to your drawings, or work on paper. Read your answers aloud while a learning partner writes, if it helps. Use a practice site or a short site label; private household details are not needed here.
+320 | Save keeps one file for this account on this browser and device. It does not sync to another device. Guest notes are shared by people who use this browser. Download a text copy to keep with your drawings, and save before you leave this page.

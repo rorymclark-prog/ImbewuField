@@ -1,0 +1,2263 @@
+[
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "If carrying cereal disease over worries you, swap it for broad beans by hand.",
+  "english": "If carrying cereal disease over worries you, swap it for broad beans by hand.",
+  "draft": "As jy bekommerd is dat graansiektes oorgedra word, ruil dit self vir boerbone om."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Your farmer-observed frost months ({months}) were used: frost-sensitive crops are not suggested when their field growing period crosses those months.",
+  "english": "Your farmer-observed frost months ({months}) were used: frost-sensitive crops are not suggested when their field growing period crosses those months.",
+  "draft": "Jou ryp-maande soos deur die boer waargeneem ({months}) is gebruik: rypgevoelige gewasse word nie voorgestel wanneer hul veldgroeitydperk oor daardie maande strek nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Unrecorded months are not a promise of frost-free conditions.",
+  "english": "Unrecorded months are not a promise of frost-free conditions.",
+  "draft": "Maande wat nie aangeteken is nie, is nie 'n belofte van rypvrye toestande nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Yield benchmarks are used only where the catalog has them; missing kilograms are never invented.",
+  "english": "Yield benchmarks are used only where the catalog has them; missing kilograms are never invented.",
+  "draft": "Opbrengsmaatstawwe word slegs gebruik waar die katalogus dit het; ontbrekende kilogram word nooit uitgedink nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Frost-free sowing months for {names} are not yet from a published local table — check those dates with your extension officer before relying on them.",
+  "english": "Frost-free sowing months for {names} are not yet from a published local table — check those dates with your extension officer before relying on them.",
+  "draft": "Rypvrye saaimaande vir {names} kom nog nie uit 'n gepubliseerde plaaslike tabel nie — kontroleer daardie datums met jou voorligtingsbeampte voordat jy daarop staatmaak."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "{names} was left out: no sowing window remains after checking your observed frost months ({months}) and the available site climate.",
+  "english": "{names} was left out: no sowing window remains after checking your observed frost months ({months}) and the available site climate.",
+  "draft": "{names} is weggelaat: geen saaivenster bly oor nadat jou waargenome ryp-maande ({months}) en die beskikbare terreinklimaat nagegaan is nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "{names} were left out: no sowing window remains after checking your observed frost months ({months}) and the available site climate.",
+  "english": "{names} were left out: no sowing window remains after checking your observed frost months ({months}) and the available site climate.",
+  "draft": "{names} is weggelaat: geen saaivenster bly oor nadat jou waargenome ryp-maande ({months}) en die beskikbare terreinklimaat nagegaan is nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Check a protected growing area or local timing with your extension officer before adding frost-sensitive crops by hand.",
+  "english": "Check a protected growing area or local timing with your extension officer before adding frost-sensitive crops by hand.",
+  "draft": "Kontroleer 'n beskutte groeigebied of plaaslike tydsberekening met jou voorligtingsbeampte voordat jy self rypgevoelige gewasse byvoeg."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "the field period crosses your observed frost months",
+  "english": "the field period crosses your observed frost months",
+  "draft": "die veldtydperk strek oor jou waargenome ryp-maande"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "the field period crosses your observed frost months, or another site heat or rainfall check rules it out",
+  "english": "the field period crosses your observed frost months, or another site heat or rainfall check rules it out",
+  "draft": "die veldtydperk strek oor jou waargenome ryp-maande, of 'n ander hitte- of reënvaltoets vir die terrein sluit dit uit"
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": ". The mild, dry winter suits cool-season crops; the warm, frost-free conditions also carry ",
+  "english": ". The mild, dry winter suits cool-season crops; the warm, frost-free conditions also carry ",
+  "draft": ". Die sagte, droë winter pas koelseisoengewasse; die warm, rypvrye toestande dra ook "
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": ". The warm, frost-free conditions also carry ",
+  "english": ". The warm, frost-free conditions also carry ",
+  "draft": ". Die warm, rypvrye toestande dra ook "
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": " thrive. Mild winters keep frost-tender crops viable on protected aspects.",
+  "english": " thrive. Mild winters keep frost-tender crops viable on protected aspects.",
+  "draft": " gedy. Sagte winters hou rypgevoelige gewasse lewensvatbaar op beskutte hellings."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": ". High humidity — select disease-resistant varieties and maximise airflow.",
+  "english": ". High humidity — select disease-resistant varieties and maximise airflow.",
+  "draft": ". Hoë humiditeit — kies siekteweerbare variëteite en sorg vir soveel lugvloei as moontlik."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": " on warm north-facing aspects. Protect all crops from frost and strong wind.",
+  "english": " on warm north-facing aspects. Protect all crops from frost and strong wind.",
+  "draft": " op warm noordhellings. Beskerm alle gewasse teen ryp en sterk wind."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "This reading did not record where its numbers came from. Treat it with the same caution as a model estimate.",
+  "english": "This reading did not record where its numbers came from. Treat it with the same caution as a model estimate.",
+  "draft": "Hierdie meting het nie aangeteken waar sy syfers vandaan kom nie. Behandel dit met dieselfde versigtigheid as 'n modelskatting."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "NOT A READING. No soil data was available for this point, so these are the app's general figures — the same numbers it would show anywhere. Do not spend money on the strength of them. A soil test is the only way to know.",
+  "english": "NOT A READING. No soil data was available for this point, so these are the app's general figures — the same numbers it would show anywhere. Do not spend money on the strength of them. A soil test is the only way to know.",
+  "draft": "NIE 'N METING NIE. Geen gronddata was vir hierdie punt beskikbaar nie, so dit is die app se algemene syfers — dieselfde getalle wat dit oral sou wys. Moenie geld op grond daarvan spandeer nie. 'n Grondtoets is die enigste manier om te weet."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Farmers who choose to be visible show up here as an approximate area — never their exact homestead.",
+  "english": "Farmers who choose to be visible show up here as an approximate area — never their exact homestead.",
+  "draft": "Boere wat kies om sigbaar te wees, verskyn hier as 'n benaderde gebied — nooit hul presiese opstal nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Repeat attendance counts as another attendance, not another person. Attendance and satisfaction are delivery evidence; they do not alone establish skills gained or impact.",
+  "english": "Repeat attendance counts as another attendance, not another person. Attendance and satisfaction are delivery evidence; they do not alone establish skills gained or impact.",
+  "draft": "Herhaalde bywoning tel as nog 'n bywoning, nie nog 'n persoon nie. Bywoning en tevredenheid is bewyse van lewering; hulle bewys nie op hul eie verworwe vaardighede of impak nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "This is a sum of each garden’s latest recorded observation, not necessarily an area planted on one common date. Recheck at each reporting period. Organisation-checked does not mean independently audited. Crop cycles and multiple farmers do not add extra hectares.",
+  "english": "This is a sum of each garden’s latest recorded observation, not necessarily an area planted on one common date. Recheck at each reporting period. Organisation-checked does not mean independently audited. Crop cycles and multiple farmers do not add extra hectares.",
+  "draft": "Dit is 'n som van elke tuin se nuutste aangetekende waarneming, nie noodwendig 'n gebied wat op een gemeenskaplike datum geplant is nie. Kontroleer weer by elke verslagtydperk. Deur die organisasie nagegaan beteken nie onafhanklik geouditeer nie. Gewassiklusse en veelvuldige boere voeg nie ekstra hektaar by nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "I checked that these areas do not overlap and this garden is not registered under another code.",
+  "english": "I checked that these areas do not overlap and this garden is not registered under another code.",
+  "draft": "Ek het nagegaan dat hierdie gebiede nie oorvleuel nie en dat hierdie tuin nie onder 'n ander kode geregistreer is nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Grain maize for mielie meal. Direct-sow in a mapped staple plot once frost risk has passed; use several adjacent rows for wind pollination. The 140-day calendar hold is conservative — confirm cultivar maturity before harvest.",
+  "english": "Grain maize for mielie meal. Direct-sow in a mapped staple plot once frost risk has passed; use several adjacent rows for wind pollination. The 140-day calendar hold is conservative — confirm cultivar maturity before harvest.",
+  "draft": "Graanmielies vir mieliemeel. Saai direk in 'n gekarteerde stapelvoedselperseel sodra die rypgevaar verby is; gebruik verskeie aangrensende rye vir windbestuiwing. Die 140 dae wat in die kalender gereserveer word, is konserwatief — bevestig die kultivar se rypwordingstyd voor die oes."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Plant after frost danger: November to mid-January in frost areas, or March-April in frost-free areas. Leave pods to yellow and dry before shelling and storing.",
+  "english": "Plant after frost danger: November to mid-January in frost areas, or March-April in frost-free areas. Leave pods to yellow and dry before shelling and storing.",
+  "draft": "Plant ná die rypgevaar: November tot middel-Januarie in rypgebiede, of Maart-April in rypvrye gebiede. Laat peule geel word en droog voordat jy dit uitdop en bêre."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Cut-and-come-again leafy brassica: pick outer leaves and the plant keeps producing, and light frost sweetens the flavour. It does not handle extreme heat — in hot areas prefer late-summer and autumn sowings. No South African kale yield has ever been published, so the kilogram estimate here comes from Kenyan and United States extension figures trimmed for a hand-watered bed — treat it as a planning slot, not a promise.",
+  "english": "Cut-and-come-again leafy brassica: pick outer leaves and the plant keeps producing, and light frost sweetens the flavour. It does not handle extreme heat — in hot areas prefer late-summer and autumn sowings. No South African kale yield has ever been published, so the kilogram estimate here comes from Kenyan and United States extension figures trimmed for a hand-watered bed — treat it as a planning slot, not a promise.",
+  "draft": "Sny-en-kom-weer-blaarkoolgewas: pluk die buitenste blare en die plant hou aan met produseer, en ligte ryp maak die smaak soeter. Dit hanteer nie uiterste hitte nie — in warm gebiede is laatsomer- en herfssaaie beter. Geen Suid-Afrikaanse opbrengs vir boerkool is nog ooit gepubliseer nie, so die kilogramskatting hier kom uit Keniaanse en Amerikaanse voorligtingsyfers, verminder vir 'n bedding wat met die hand natgemaak word — beskou dit as 'n plek in die beplanning, nie 'n belofte nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Direct-sow only — carrots don't transplant well. Keep the bed loose and stone-free.",
+  "english": "Direct-sow only — carrots don't transplant well. Keep the bed loose and stone-free.",
+  "draft": "Saai slegs direk — wortels plant nie goed oor nie. Hou die bedding los en klipvry."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Grown from rooted slips, not seed — plant into ridged soil for easy digging later.",
+  "english": "Grown from rooted slips, not seed — plant into ridged soil for easy digging later.",
+  "draft": "Word uit gewortelde steggies gekweek, nie uit saad nie — plant in grond met ruggies sodat dit later maklik uitgegrawe kan word."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Propagate from whole tubers or corm cuttings. Needs consistently moist soil and warm, frost-free conditions.",
+  "english": "Propagate from whole tubers or corm cuttings. Needs consistently moist soil and warm, frost-free conditions.",
+  "draft": "Vermeerder uit hele knolle of stukke van knolle. Het deurgaans klam grond en warm, rypvrye toestande nodig."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "This stand is the audited irrigated geometry. Groundnuts need sandy, well-drained soil and a long frost-free growing season.",
+  "english": "This stand is the audited irrigated geometry. Groundnuts need sandy, well-drained soil and a long frost-free growing season.",
+  "draft": "Hierdie plantestand is die geouditeerde besproeide uitleg. Grondboontjies het sanderige, goed gedreineerde grond en 'n lang rypvrye groeiseisoen nodig."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "The classic 'grows through winter' legume — sow in autumn, it stands through frost and pods in spring.",
+  "english": "The classic 'grows through winter' legume — sow in autumn, it stands through frost and pods in spring.",
+  "draft": "Die klassieke peulgewas wat 'deur die winter groei' — saai in die herfs, dit staan deur ryp en maak peule in die lente."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Real spinach (Spinacia oleracea) — not the Swiss chard South Africans usually call spinach. Cool-season and fast: it bolts in heat, so keep to the cool sowing windows and pick promptly. Same botanical family (Amaranthaceae) as Swiss chard and beetroot, so the rotation rule treats all three as one family — do not follow one with another in the same bed.",
+  "english": "Real spinach (Spinacia oleracea) — not the Swiss chard South Africans usually call spinach. Cool-season and fast: it bolts in heat, so keep to the cool sowing windows and pick promptly. Same botanical family (Amaranthaceae) as Swiss chard and beetroot, so the rotation rule treats all three as one family — do not follow one with another in the same bed.",
+  "draft": "Regte spinasie (Spinacia oleracea) — nie die snybeet wat Suid-Afrikaners gewoonlik spinasie noem nie. Koelseisoen en vinnig: dit skiet in hitte, so hou by die koel saaitye en pluk betyds. Dieselfde botaniese familie (Amaranthaceae) as snybeet en beet, so die wisselbouréël behandel al drie as een familie — moenie een ná 'n ander in dieselfde bedding plant nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Cool-weather Brassica root — direct-sow only and thin early so the roots can swell. Same botanical family as cabbage, kale and broccoli, so don't plan turnips straight after (or before) another brassica in the same bed. Young leaves are a traditional edible green — pick sparingly; the yield figure covers roots only.",
+  "english": "Cool-weather Brassica root — direct-sow only and thin early so the roots can swell. Same botanical family as cabbage, kale and broccoli, so don't plan turnips straight after (or before) another brassica in the same bed. Young leaves are a traditional edible green — pick sparingly; the yield figure covers roots only.",
+  "draft": "Koelweer-Brassica-wortelgewas — saai slegs direk en dun vroeg uit sodat die wortels kan swel. Dieselfde botaniese familie as kool, boerkool en broccoli, so moenie rape direk ná (of voor) 'n ander koolgewas in dieselfde bedding beplan nie. Jong blare is 'n tradisionele eetbare groente — pluk spaarsamig; die opbrengsyfer dek slegs die wortels."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "DAFF: leaves picked about every two weeks once harvesting starts, continuing until frost ends the crop.",
+  "english": "DAFF: leaves picked about every two weeks once harvesting starts, continuing until frost ends the crop.",
+  "draft": "DAFF: blare word ongeveer elke twee weke gepluk sodra die oes begin, en dit gaan voort totdat ryp die gewas beëindig."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A cole crop like cabbage and broccoli — same rotation family, so avoid following one straight after another in the same bed. DAFF states cauliflower survives to about 0°C once established, so it is not flagged frost-tender here, but young transplants still want protection from a hard frost snap.",
+  "english": "A cole crop like cabbage and broccoli — same rotation family, so avoid following one straight after another in the same bed. DAFF states cauliflower survives to about 0°C once established, so it is not flagged frost-tender here, but young transplants still want protection from a hard frost snap.",
+  "draft": "'n Koolgewas soos kool en broccoli — dieselfde wisselboufamilie, so vermy om een direk ná 'n ander in dieselfde bedding te plant. DAFF sê blomkool oorleef tot ongeveer 0°C sodra dit gevestig is, so dit word nie hier as rypgevoelig gemerk nie, maar jong oorplantings moet steeds teen 'n skielike harde ryp beskerm word."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A drought-tolerant grain crop, more heat- and dry-tolerant than maize. A December sowing is left off this catalog's planner because the resulting May harvest would run into frost — still workable with local frost protection, just not auto-scheduled here. No named SA cultivars were found.",
+  "english": "A drought-tolerant grain crop, more heat- and dry-tolerant than maize. A December sowing is left off this catalog's planner because the resulting May harvest would run into frost — still workable with local frost protection, just not auto-scheduled here. No named SA cultivars were found.",
+  "draft": "'n Droogtebestande graangewas, meer hitte- en droogtebestand as mielies. 'n Desembersaai word uit hierdie katalogus se beplanner gelaat omdat die gevolglike Mei-oes in die ryp sou inloop — steeds werkbaar met plaaslike rypbeskerming, net nie hier outomaties geskeduleer nie. Geen benoemde SA-kultivars is gevind nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A nitrogen-fixing legume grain crop grown for dry beans, not green pods. DAFF never states a frost sensitivity for soybean, so it is not flagged frost-tender here — but it is a warm-season crop and these sow months are already timed for that.",
+  "english": "A nitrogen-fixing legume grain crop grown for dry beans, not green pods. DAFF never states a frost sensitivity for soybean, so it is not flagged frost-tender here — but it is a warm-season crop and these sow months are already timed for that.",
+  "draft": "'n Stikstofbindende peulgewas wat vir droë bone gekweek word, nie vir groen peule nie. DAFF noem nooit 'n rypgevoeligheid vir sojabone nie, so dit word nie hier as rypgevoelig gemerk nie — maar dit is 'n warmseisoengewas en hierdie saaimaande is reeds daarvoor getyd."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Solanaceae family, same as tomatoes, peppers, chilli and potato — keep this rotation family together when planning beds. Frost-tender: raise as transplants and set out only once frost risk has passed.",
+  "english": "Solanaceae family, same as tomatoes, peppers, chilli and potato — keep this rotation family together when planning beds. Frost-tender: raise as transplants and set out only once frost risk has passed.",
+  "draft": "Solanaceae-familie, dieselfde as tamaties, soetrissies, brandrissies en aartappel — hou hierdie wisselboufamilie bymekaar wanneer jy beddings beplan. Rypgevoelig: kweek as oorplantings en plant eers uit sodra die rypgevaar verby is."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Cucurbitaceae family, same as pumpkin, butternut, cucumber and watermelon — avoid repeating this family in the same bed. Frost-tender vine crop; no Western Cape sowing calendar was found even though it is a known WC crop, so treat that as a local-confirmation item.",
+  "english": "Cucurbitaceae family, same as pumpkin, butternut, cucumber and watermelon — avoid repeating this family in the same bed. Frost-tender vine crop; no Western Cape sowing calendar was found even though it is a known WC crop, so treat that as a local-confirmation item.",
+  "draft": "Cucurbitaceae-familie, dieselfde as pampoen, botterskorsie, komkommer en waatlemoen — vermy om hierdie familie in dieselfde bedding te herhaal. Rypgevoelige rankgewas; geen Wes-Kaapse saaikalender is gevind nie, al is dit 'n bekende WK-gewas, so beskou dit as iets om plaaslik te bevestig."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A fast-cropping Cucurbitaceae vine picked young and often — same rotation family as pumpkin, gem-squash, cucumber and watermelon. Frost-tender; no Western Cape calendar sourced.",
+  "english": "A fast-cropping Cucurbitaceae vine picked young and often — same rotation family as pumpkin, gem-squash, cucumber and watermelon. Frost-tender; no Western Cape calendar sourced.",
+  "draft": "'n Vinnigdraende Cucurbitaceae-rank wat jonk en dikwels gepluk word — dieselfde wisselboufamilie as pampoen, gem-squash, komkommer en waatlemoen. Rypgevoelig; geen Wes-Kaapse kalender is uit bronne verkry nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Cucurbitaceae melon vine. A January sowing is left off this catalog's planner because the resulting harvest would run into frost — still workable with local frost protection, just not auto-scheduled here.",
+  "english": "Cucurbitaceae melon vine. A January sowing is left off this catalog's planner because the resulting harvest would run into frost — still workable with local frost protection, just not auto-scheduled here.",
+  "draft": "Cucurbitaceae-spanspekrank. 'n Januariesaai word uit hierdie katalogus se beplanner gelaat omdat die gevolglike oes in die ryp sou inloop — steeds werkbaar met plaaslike rypbeskerming, net nie hier outomaties geskeduleer nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Grown and eaten as a fresh vegetable, unlike field maize — the dossier's own food-group is fruiting vegetable, not staple grain, so it is kept there rather than lumped with maize despite the shared species. Tender to frost like maize.",
+  "english": "Grown and eaten as a fresh vegetable, unlike field maize — the dossier's own food-group is fruiting vegetable, not staple grain, so it is kept there rather than lumped with maize despite the shared species. Tender to frost like maize.",
+  "draft": "Word as 'n vars groente gekweek en geëet, anders as veldmielies — die dossier se eie voedselgroep is vrugtegroente, nie stapelgraan nie, so dit word daar gehou eerder as om saam met mielies gegroepeer te word, al is dit dieselfde spesie. Rypgevoelig soos mielies."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "An indigenous nitrogen-fixing legume grown for its underground dry seed pods (a groundnut relative, not a true bean). The yield figure is dry seed, the low end of genotype averages across seven South African trial sites. A December sowing is left off this catalog's planner because the resulting harvest would run into frost.",
+  "english": "An indigenous nitrogen-fixing legume grown for its underground dry seed pods (a groundnut relative, not a true bean). The yield figure is dry seed, the low end of genotype averages across seven South African trial sites. A December sowing is left off this catalog's planner because the resulting harvest would run into frost.",
+  "draft": "'n Inheemse stikstofbindende peulgewas wat gekweek word vir sy ondergrondse droë saadpeule ('n familielid van die grondboontjie, nie 'n ware boontjie nie). Die opbrengsyfer is droë saad, die lae kant van genotipe-gemiddeldes oor sewe Suid-Afrikaanse proefterreine. 'n Desembersaai word uit hierdie katalogus se beplanner gelaat omdat die gevolglike oes in die ryp sou inloop."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "An oilseed grain crop grown for dry seed. Frost sensitivity is taken from ECOCROP (DAFF's own guide does not mention frost), and only a November sowing is auto-scheduled here — December and January sowings are left off this catalog's planner because their harvest would run into frost. No named SA cultivars were found.",
+  "english": "An oilseed grain crop grown for dry seed. Frost sensitivity is taken from ECOCROP (DAFF's own guide does not mention frost), and only a November sowing is auto-scheduled here — December and January sowings are left off this catalog's planner because their harvest would run into frost. No named SA cultivars were found.",
+  "draft": "'n Oliesaadgewas wat vir droë saad gekweek word. Rypgevoeligheid is uit ECOCROP geneem (DAFF se eie gids noem nie ryp nie), en slegs 'n Novembersaai word hier outomaties geskeduleer — Desember- en Januariesaaie word uit hierdie katalogus se beplanner gelaat omdat hul oes in die ryp sou inloop. Geen benoemde SA-kultivars is gevind nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "An indigenous leafy green (Solanum retroflexum, umsobo/nightshade) grown for its leaves, picked young — the ripe berries of some related Solanum species are toxic, so only follow a trusted local source for which parts are eaten. DAFF: sensitive to frost. No South African cultivars or yield figures were found, so it stays manual.",
+  "english": "An indigenous leafy green (Solanum retroflexum, umsobo/nightshade) grown for its leaves, picked young — the ripe berries of some related Solanum species are toxic, so only follow a trusted local source for which parts are eaten. DAFF: sensitive to frost. No South African cultivars or yield figures were found, so it stays manual.",
+  "draft": "'n Inheemse blaargroente (Solanum retroflexum, umsobo/nightshade) wat vir sy blare gekweek en jonk gepluk word — die ryp bessies van sommige verwante Solanum-spesies is giftig, so volg slegs 'n betroubare plaaslike bron oor watter dele geëet word. DAFF: gevoelig vir ryp. Geen Suid-Afrikaanse kultivars of opbrengsyfers is gevind nie, so dit bly handmatig."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A fast-growing biomass/soil-conditioning and grazing cover crop grown to full flowering, not for a food harvest — not counted in kitchen harvest totals. Same botanical family as radish and cabbage, so plan rotation accordingly. Not frost-tender itself, but is killed by the first hard frost or by herbicide, which is the usual way it is terminated.",
+  "english": "A fast-growing biomass/soil-conditioning and grazing cover crop grown to full flowering, not for a food harvest — not counted in kitchen harvest totals. Same botanical family as radish and cabbage, so plan rotation accordingly. Not frost-tender itself, but is killed by the first hard frost or by herbicide, which is the usual way it is terminated.",
+  "draft": "'n Vinniggroeiende dekgewas vir biomassa/grondverbetering en weiding wat tot volle blom gekweek word, nie vir 'n voedseloes nie — dit word nie by die kombuis se oestotale getel nie. Dieselfde botaniese familie as radys en kool, so beplan wisselbou dienooreenkomstig. Self nie rypgevoelig nie, maar word deur die eerste harde ryp of deur onkruiddoder doodgemaak, wat die gewone manier is waarop dit beëindig word."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Quantities stay in their recorded units. Bags, crates, eggs, items and other counts are never converted to kilograms. Names are kept as recorded; differently named crops are not automatically merged.",
+  "english": "Quantities stay in their recorded units. Bags, crates, eggs, items and other counts are never converted to kilograms. Names are kept as recorded; differently named crops are not automatically merged.",
+  "draft": "Hoeveelhede bly in hul aangetekende eenhede. Sakke, kratte, eiers, stuks en ander tellings word nooit na kilogram omgeskakel nie. Name word gehou soos aangeteken; gewasse met verskillende name word nie outomaties saamgevoeg nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "{n} local invoices are currently marked unpaid. They do not enter money received.",
+  "english": "{n} local invoices are currently marked unpaid. They do not enter money received.",
+  "draft": "{n} plaaslike fakture is tans as onbetaal gemerk. Hulle word nie by geld ontvang ingesluit nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Check missing costs, unpaid invoices and supporting slips before sharing the report. Untagged costs are never allocated to crop profit.",
+  "english": "Check missing costs, unpaid invoices and supporting slips before sharing the report. Untagged costs are never allocated to crop profit.",
+  "draft": "Gaan ontbrekende koste, onbetaalde fakture en stawende strokies na voordat jy die verslag deel. Koste sonder etikette word nooit aan gewaswins toegeken nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Follow what happened. A buyer paid for produce. The owner added some of their own money. The farm borrowed money. All three can put money in the tin, but they are different events. Write the reason beside each amount. When the owner takes money home, record that too. Do not hide it among packaging or transport. The farm and household both matter. Clear records help you see how they support each other.",
+  "english": "Follow what happened. A buyer paid for produce. The owner added some of their own money. The farm borrowed money. All three can put money in the tin, but they are different events. Write the reason beside each amount. When the owner takes money home, record that too. Do not hide it among packaging or transport. The farm and household both matter. Clear records help you see how they support each other.",
+  "draft": "Volg wat gebeur het. 'n Koper het vir produkte betaal. Die eienaar het van hul eie geld bygesit. Die plaas het geld geleen. Al drie kan geld in die blik sit, maar dit is verskillende gebeurtenisse. Skryf die rede langs elke bedrag. Wanneer die eienaar geld huis toe neem, teken dit ook aan. Moenie dit tussen verpakking of vervoer wegsteek nie. Die plaas en die huishouding maak albei saak. Duidelike rekords help jou sien hoe hulle mekaar ondersteun."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Give each record a date and a clear reason. Keep the receipt, invoice or another useful reference. After saving, open the entry again and compare it with the source. Check the amount and the unit. A kilogram and a bunch are different. If evidence is missing, write what is unknown. Do not use zero to mean ‘I do not know’. Keep a note of a correction so you can explain it later.",
+  "english": "Give each record a date and a clear reason. Keep the receipt, invoice or another useful reference. After saving, open the entry again and compare it with the source. Check the amount and the unit. A kilogram and a bunch are different. If evidence is missing, write what is unknown. Do not use zero to mean ‘I do not know’. Keep a note of a correction so you can explain it later.",
+  "draft": "Gee elke rekord 'n datum en 'n duidelike rede. Hou die kwitansie, faktuur of 'n ander nuttige verwysing. Maak die inskrywing ná die stoor weer oop en vergelyk dit met die bron. Kontroleer die bedrag en die eenheid. 'n Kilogram en 'n bos is verskillend. As bewyse ontbreek, skryf wat onbekend is. Moenie nul gebruik om ‘ek weet nie’ te beteken nie. Hou 'n nota van 'n korreksie sodat jy dit later kan verduidelik."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Reconcile means compare and explain. Count the cash. Read the wallet statement. Match deliveries, sales, payments and receipts by their references. Check the dates and units as well as the totals. When you find a mistake, keep the original reference and write what changed and why. If you cannot explain a difference yet, say so. Do not add a guessed entry just to make the totals agree.",
+  "english": "Reconcile means compare and explain. Count the cash. Read the wallet statement. Match deliveries, sales, payments and receipts by their references. Check the dates and units as well as the totals. When you find a mistake, keep the original reference and write what changed and why. If you cannot explain a difference yet, say so. Do not add a guessed entry just to make the totals agree.",
+  "draft": "Versoen beteken vergelyk en verduidelik. Tel die kontant. Lees die beursiestaat. Koppel aflewerings, verkope, betalings en kwitansies volgens hul verwysings. Kontroleer die datums en eenhede sowel as die totale. Wanneer jy 'n fout vind, hou die oorspronklike verwysing en skryf wat verander het en hoekom. As jy nog nie 'n verskil kan verduidelik nie, sê so. Moenie 'n geraaide inskrywing byvoeg net om die totale te laat klop nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Start with a product and a period. A direct cost belongs to that product. A shared cost serves more than one product. Use a record of how it was used to divide it, and explain your choice. Divide the cost; do not copy the whole bill into both crops. Keep the family's work hours visible too. No wage paid does not mean no work done. An amount used to value that time is different from cash paid out.",
+  "english": "Start with a product and a period. A direct cost belongs to that product. A shared cost serves more than one product. Use a record of how it was used to divide it, and explain your choice. Divide the cost; do not copy the whole bill into both crops. Keep the family's work hours visible too. No wage paid does not mean no work done. An amount used to value that time is different from cash paid out.",
+  "draft": "Begin met 'n produk en 'n tydperk. 'n Direkte koste behoort aan daardie produk. 'n Gedeelde koste dien meer as een produk. Gebruik 'n rekord van hoe dit gebruik is om dit te verdeel, en verduidelik jou keuse. Verdeel die koste; moenie die hele rekening in albei gewasse oorskryf nie. Hou die gesin se werksure ook sigbaar. Geen loon betaal nie beteken nie geen werk gedoen nie. 'n Bedrag wat gebruik word om daardie tyd te waardeer, is anders as kontant wat uitbetaal is."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A budget is a plan with reasons behind the numbers. Name the activity and the period. Show what you expect to sell and what you expect to use. Keep shared bills once in the farm total. Family work still matters when no wage is paid. Write down what you do not yet know. A positive answer on paper does not prove that the land, water, time or buyers are available.",
+  "english": "A budget is a plan with reasons behind the numbers. Name the activity and the period. Show what you expect to sell and what you expect to use. Keep shared bills once in the farm total. Family work still matters when no wage is paid. Write down what you do not yet know. A positive answer on paper does not prove that the land, water, time or buyers are available.",
+  "draft": "'n Begroting is 'n plan met redes agter die getalle. Noem die aktiwiteit en die tydperk. Wys wat jy verwag om te verkoop en wat jy verwag om te gebruik. Hou gedeelde rekeninge een keer in die plaastotaal. Gesinswerk maak steeds saak wanneer geen loon betaal word nie. Skryf neer wat jy nog nie weet nie. 'n Positiewe antwoord op papier bewys nie dat die grond, water, tyd of kopers beskikbaar is nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Look in your records before you add anything. If the invoice is already there, open it. If the sale is there but needs an invoice, use that sale. If you are bringing in an older or paper record, keep its original reference and dates. Read the save message. Open the saved document and check it. A second copy of a document must not become a second sale.",
+  "english": "Look in your records before you add anything. If the invoice is already there, open it. If the sale is there but needs an invoice, use that sale. If you are bringing in an older or paper record, keep its original reference and dates. Read the save message. Open the saved document and check it. A second copy of a document must not become a second sale.",
+  "draft": "Kyk in jou rekords voordat jy iets byvoeg. As die faktuur reeds daar is, maak dit oop. As die verkoping daar is maar 'n faktuur nodig het, gebruik daardie verkoping. As jy 'n ouer of papierrekord inbring, hou sy oorspronklike verwysing en datums. Lees die stoorboodskap. Maak die gestoorde dokument oop en kontroleer dit. 'n Tweede kopie van 'n dokument mag nie 'n tweede verkoping word nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Write down every payment once, with its evidence. A deposit may arrive before produce is delivered. Keep it linked to that customer and order. Later, applying that same deposit to an invoice does not bring in more money. Keep questions and agreed corrections visible. If money arrives and you do not know who sent it, investigate before matching it to a sale.",
+  "english": "Write down every payment once, with its evidence. A deposit may arrive before produce is delivered. Keep it linked to that customer and order. Later, applying that same deposit to an invoice does not bring in more money. Keep questions and agreed corrections visible. If money arrives and you do not know who sent it, investigate before matching it to a sale.",
+  "draft": "Skryf elke betaling een keer neer, met sy bewyse. 'n Deposito kan aankom voordat produkte afgelewer word. Hou dit gekoppel aan daardie kliënt en bestelling. Om later daardie selfde deposito op 'n faktuur toe te pas, bring nie meer geld in nie. Hou vrae en ooreengekome korreksies sigbaar. As geld aankom en jy weet nie wie dit gestuur het nie, ondersoek dit voordat jy dit aan 'n verkoping koppel."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "The amount borrowed is not the amount you may have left to spend. Read the fees and when they are paid. Each instalment may contain repayment of the amount borrowed, interest and other charges. If a charge is already included, do not add it again. Keep the dates. A smaller-looking instalment is not enough information to choose a loan.",
+  "english": "The amount borrowed is not the amount you may have left to spend. Read the fees and when they are paid. Each instalment may contain repayment of the amount borrowed, interest and other charges. If a charge is already included, do not add it again. Keep the dates. A smaller-looking instalment is not enough information to choose a loan.",
+  "draft": "Die bedrag wat geleen is, is nie die bedrag wat jy dalk oor het om te spandeer nie. Lees die fooie en wanneer hulle betaal word. Elke paaiement kan terugbetaling van die geleende bedrag, rente en ander heffings bevat. As 'n heffing reeds ingesluit is, moenie dit weer byvoeg nie. Hou die datums. 'n Paaiement wat kleiner lyk, is nie genoeg inligting om 'n lening te kies nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "A document can arrive after the work. Payment can happen before or after the service. Keep those dates together. At the end of our month, ask what was delivered, used, owed and still available. A bank line alone cannot answer every question. Check the stock and equipment records too. When evidence is missing, write what you still need. Do not enter zero just to finish a total.",
+  "english": "A document can arrive after the work. Payment can happen before or after the service. Keep those dates together. At the end of our month, ask what was delivered, used, owed and still available. A bank line alone cannot answer every question. Check the stock and equipment records too. When evidence is missing, write what you still need. Do not enter zero just to finish a total.",
+  "draft": "'n Dokument kan ná die werk aankom. Betaling kan voor of ná die diens plaasvind. Hou daardie datums bymekaar. Vra aan die einde van ons maand wat afgelewer, gebruik, geskuld en nog beskikbaar is. 'n Banklyn alleen kan nie elke vraag beantwoord nie. Kontroleer ook die voorraad- en toerustingrekords. Wanneer bewyse ontbreek, skryf wat jy nog nodig het. Moenie nul invoer net om 'n totaal klaar te maak nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Keep the story behind a number. Who supplied what? When did it happen? Which document supports it? Which money movement belongs with it? Keep records organised and safe. Tax and record duties depend on the business and its circumstances. Use current SARS guidance and suitable help. A saved invoice, tax-reference field or app export cannot confirm all those duties for you.",
+  "english": "Keep the story behind a number. Who supplied what? When did it happen? Which document supports it? Which money movement belongs with it? Keep records organised and safe. Tax and record duties depend on the business and its circumstances. Use current SARS guidance and suitable help. A saved invoice, tax-reference field or app export cannot confirm all those duties for you.",
+  "draft": "Hou die storie agter 'n getal. Wie het wat verskaf? Wanneer het dit gebeur? Watter dokument staaf dit? Watter geldbeweging hoort daarby? Hou rekords georden en veilig. Belasting- en rekordpligte hang af van die besigheid en sy omstandighede. Gebruik huidige SARS-riglyne en geskikte hulp. 'n Gestoorde faktuur, belastingverwysingsveld of app-uitvoer kan nie al daardie pligte vir jou bevestig nie."
+ },
+ {
+  "cls": "safety",
+  "source": "inline",
+  "key": "Write one action, the evidence needed, who would obtain it, and a review date. Use classroom roles and dates only. Do not put real customer, household or bank details here.",
+  "english": "Write one action, the evidence needed, who would obtain it, and a review date. Use classroom roles and dates only. Do not put real customer, household or bank details here.",
+  "draft": "Skryf een aksie, die bewyse wat nodig is, wie dit sou verkry, en 'n hersieningsdatum. Gebruik slegs klaskamerrolle en -datums. Moenie regte kliënt-, huishouding- of bankbesonderhede hier plaas nie."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "designGlossyFinishHelpFullTreatment",
+  "english": "Full Treatment is shelved and shown here for review only: it runs AI Polished, then spends a second paid render over the finished artwork.",
+  "draft": "Volle Behandeling is opgeskort en word hier slegs vir hersiening gewys: dit doen AI-gepoleer, en spandeer dan 'n tweede betaalde lewering oor die voltooide kunswerk."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "designGlossyQualityMediumSub",
+  "english": "about a quarter of the cost",
+  "draft": "sowat 'n kwart van die koste"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "designGlossyAiHybridHint",
+  "english": "AI-painted artwork · your labels & legend on top · 1 paid render",
+  "draft": "AI-geverfde kunswerk · jou etikette en sleutel bo-op · 1 betaalde lewering"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "designGlossyFullTreatmentHint",
+  "english": "A 2nd AI pass over the finished sheet · 2 paid renders",
+  "draft": "'n 2de AI-rondte oor die voltooide vel · 2 betaalde lewerings"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "designGlossySavingExact",
+  "english": "Step 1 of {total} — saving the exact geometry-locked map first (no AI cost)…",
+  "draft": "Stap 1 van {total} — stoor eers die presiese, geometrie-vasgeslote kaart (geen AI-koste nie)…"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "designGlossyStartingPolish",
+  "english": "Step 3 of 3 — starting one paid gpt-image-2 polish pass over the AI hybrid…",
+  "draft": "Stap 3 van 3 — begin een betaalde gpt-image-2-poleerrondte oor die AI-hibried…"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "journalWeightsLiveElsewhere",
+  "english": "Harvest weights and sales go in My Records.",
+  "draft": "Oesgewigte en verkope gaan in My rekords."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "chatSuggestionBestCrop",
+  "english": "Which of my crops makes the most money per kg?",
+  "draft": "Watter van my gewasse verdien die meeste geld per kg?"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "goalGenerateIncomeLabel",
+  "english": "Generate income",
+  "draft": "Genereer inkomste"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "challengeFunding",
+  "english": "Funding / costs",
+  "draft": "Befondsing / koste"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "homeQuickMyRecordsDesc",
+  "english": "Crops & sales",
+  "draft": "Gewasse en verkope"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "myRecordsLogSaleHeader",
+  "english": "Log sale",
+  "draft": "Teken verkoop aan"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "myRecordsKgSoldLabel",
+  "english": "Kg sold",
+  "draft": "Kg verkoop"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "myRecordsSaveSale",
+  "english": "Save sale & invoice",
+  "draft": "Stoor verkoop"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "myRecordsNoSales",
+  "english": "No sales logged yet.",
+  "draft": "Nog geen verkope aangeteken nie."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "myRecordsKgSoldSuffix",
+  "english": "kg sold",
+  "draft": "kg verkoop"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "myRecordsSalesHeader",
+  "english": "Recent sales",
+  "draft": "Onlangse verkope"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "popiaGoalIncomeLabel",
+  "english": "Earn an income",
+  "draft": "Verdien 'n inkomste"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "studentGuidesDescription",
+  "english": "Map your site, follow a harvest, keep a cost and its receipt, or make an invoice. Practise in the sample farm before using your own records.",
+  "draft": "Karteer jou terrein, volg 'n oes, hou 'n koste en sy kwitansie, of maak 'n faktuur. Oefen op die voorbeeldplaas voordat jy jou eie rekords gebruik."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "settingsAllToolsDesc",
+  "english": "Everything, including every planning and money tool.",
+  "draft": "Alles, insluitend elke beplannings- en geldinstrument."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "settingsAiTitle",
+  "english": "Paid AI features",
+  "draft": "Betaalde AI-funksies"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "settingsAiAllowAll",
+  "english": "Allow all paid AI tools",
+  "draft": "Laat alle betaalde AI-gereedskap toe"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "homePricesLabel",
+  "english": "Prices",
+  "draft": "Pryse"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "homeTourDescription",
+  "english": "A guided look at your maps, crop plans, harvests, sales and invoices. Practise with Ubhejane Crèche Garden, then return to your own work.",
+  "draft": "'n Begeleide kykie na jou kaarte, gewasplanne, oeste, verkope en fakture. Oefen met Ubhejane Crèche Garden, en keer dan terug na jou eie werk."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "biomeSoilNamaKaroo",
+  "english": "A hard, cemented layer (calcrete) often sits under the topsoil and may need breaking up with a chisel plough so roots can grow down. Add gypsum rather than lime — the soil is already alkaline. Biochar in the soil helps it hold onto water. Bitter Aloe grows well here and can be sold.",
+  "draft": "'n Harde, gesementeerde laag (kalkreet) lê dikwels onder die bogrond en moet dalk met 'n beitelploeg opgebreek word sodat wortels kan afgroei. Voeg gips eerder as kalk by — die grond is reeds alkalies. Biochar in die grond help dit om water te behou. Bitter Aloe groei goed hier en kan verkoop word."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "tipsSearchPlaceholder",
+  "english": "Try invoices, orchard or cash",
+  "draft": "Probeer fakture, boord of kontant"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "studentFinancePreviewCardTitle",
+  "english": "Understand the money. Plan the next season.",
+  "draft": "Verstaan die geld. Beplan die volgende seisoen."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "bookTabSold",
+  "english": "Sold",
+  "draft": "Verkoop"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "myRecordsGuidePriceLabel",
+  "english": "Guide price, July 2026:",
+  "draft": "Riglynprys, Julie 2026:"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "myRecordsGuideEstimated",
+  "english": "Estimated guide — confirm the local price.",
+  "draft": "Geskatte riglyn — bevestig die plaaslike prys."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "myRecordsGuideSourced",
+  "english": "Sourced guide — enter the price you actually agreed.",
+  "draft": "Riglyn uit 'n bron — voer die prys in waarop jy werklik ooreengekom het."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "myRecordsGuideRecommended",
+  "english": "Recommended guide — an average of prices found; confirm locally.",
+  "draft": "Aanbevole riglyn — 'n gemiddeld van pryse wat gevind is; bevestig plaaslik."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "myRecordsGuideMissing",
+  "english": "No trustworthy guide price is stored for this crop. Enter the price you actually agreed.",
+  "draft": "Geen betroubare riglynprys is vir hierdie gewas gestoor nie. Voer die prys in waarop jy werklik ooreengekom het."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "recordsOrchardOutNoteMoney",
+  "english": "Orchard is switched off, so {kg} kg is not in the weight above: {names}. The rand total still counts every sale, orchard included.",
+  "draft": "Boord is afgeskakel, dus is {kg} kg nie in die gewig hierbo nie: {names}. Die randtotaal tel steeds elke verkoping, boord ingesluit."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "coachGoalIncome",
+  "english": "Your goal: earn income — Lima favours market crops.",
+  "draft": "Jou doelwit: verdien inkomste — Lima verkies markgewasse."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "surveySameYearUnit",
+  "english": "Use the same year and unit for quantity, household use and sales. Income is for that same year.",
+  "draft": "Gebruik dieselfde jaar en eenheid vir hoeveelheid, huishoudelike gebruik en verkope. Inkomste is vir daardie selfde jaar."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "surveyGuideIncome",
+  "english": "Enter the amount earned from sales, before costs. The survey records income; it does not calculate profit.",
+  "draft": "Voer die bedrag in wat uit verkope verdien is, voor koste. Die opname teken inkomste aan; dit bereken nie wins nie."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "surveyFullDescription",
+  "english": "Build a fuller picture of your site, including production, harvest months, household use and sales.",
+  "draft": "Bou 'n vollediger beeld van jou terrein, insluitend produksie, oesmaande, huishoudelike gebruik en verkope."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "surveyTipIncome",
+  "english": "Record whether you sell produce and where. Quantities and income belong with each production item.",
+  "draft": "Teken aan of jy produkte verkoop en waar. Hoeveelhede en inkomste hoort by elke produksie-item."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "surveyAddProductionHint",
+  "english": "Open the comprehensive route for yearly quantities, harvest months and sales.",
+  "draft": "Maak die omvattende roete oop vir jaarlikse hoeveelhede, oesmaande en verkope."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "surveyProductionCheck",
+  "english": "Check these figures: quantities need a unit, and household use plus sales cannot exceed the yearly quantity. Name an Other item before saving.",
+  "draft": "Gaan hierdie syfers na: hoeveelhede het 'n eenheid nodig, en huishoudelike gebruik plus verkope kan nie die jaarlikse hoeveelheid oorskry nie. Gee 'n Ander-item 'n naam voordat jy stoor."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "surveyStepIncomeSales",
+  "english": "Income & sales",
+  "draft": "Inkomste en verkope"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "surveyIncomeEarnedLabel",
+  "english": "Income earned (ZAR)",
+  "draft": "Inkomste verdien (ZAR)"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "surveyToggleSellProduceSub",
+  "english": "Your production rows can record what was sold and income earned",
+  "draft": "Jou produksierye kan aanteken wat verkoop is en watter inkomste verdien is"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "surveyIncomeSalesNote",
+  "english": "You can record what was sold and income earned against each item in the Current Production step.",
+  "draft": "Jy kan in die stap Huidige produksie by elke item aanteken wat verkoop is en watter inkomste verdien is."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "offlineAvailableDescription",
+  "english": "Local crop planning, journal notes and downloaded lessons can work without signal. AI chat, AI reports, transcription, receipt scanning, new sign-in and fresh online maps still need a connection. The map offers an Offline canvas for saved drawings and pins without satellite or terrain layers. Receipt originals in the money book remain on their original device.",
+  "draft": "Plaaslike gewasbeplanning, joernaalnotas en afgelaaide lesse kan sonder sein werk. AI-klets, AI-verslae, transkripsie, kwitansieskandering, nuwe aanmelding en vars aanlyn kaarte het steeds 'n verbinding nodig. Die kaart bied 'n Vanlyn doek vir gestoorde tekeninge en spelde sonder satelliet- of terreinlae. Oorspronklike kwitansies in die geldboek bly op hul oorspronklike toestel."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "offlinePageInvoices",
+  "english": "Invoices",
+  "draft": "Fakture"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "pricesFarmGateTitle",
+  "english": "Farm-gate prices",
+  "draft": "Plaashekpryse"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "pricesChooseCrop",
+  "english": "Tap a crop to see wholesale and retail guide prices per kg — for when you are standing at the gate. Check today’s local price before agreeing.",
+  "draft": "Tik 'n gewas om groothandel- en kleinhandel-riglynpryse per kg te sien — vir wanneer jy by die hek staan. Kontroleer vandag se plaaslike prys voordat jy ooreenkom."
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "priceConfidenceSourced",
+  "english": "Real market price",
+  "draft": "Werklike markprys"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "priceConfidenceRecommended",
+  "english": "Recommended price — average of prices found",
+  "draft": "Aanbevole prys — gemiddeld van pryse wat gevind is"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "priceUpdatedCheckToday",
+  "english": "Priced {date} — always check today’s real price before you agree",
+  "draft": "Prys op {date} — kontroleer altyd vandag se werklike prys voordat jy ooreenkom"
+ },
+ {
+  "cls": "money",
+  "source": "dictionary",
+  "key": "pricePerKgShop",
+  "english": "per kg — shop shelf price, not a farm-gate price",
+  "draft": "per kg — winkelrakprys, nie 'n plaashekprys nie"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Under R500",
+  "english": "Under R500",
+  "draft": "Onder R500"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Over R2000",
+  "english": "Over R2000",
+  "draft": "Meer as R2000"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "(heads your invoices)",
+  "english": "(heads your invoices)",
+  "draft": "(verskyn bo-aan jou fakture)"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "(shown on invoices)",
+  "english": "(shown on invoices)",
+  "draft": "(gewys op fakture)"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Leave this empty to invoice under your own name instead.",
+  "english": "Leave this empty to invoice under your own name instead.",
+  "draft": "Laat dit leeg om eerder onder jou eie naam te faktureer."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "None of the production, sales or expense books are readable for this farmer.",
+  "english": "None of the production, sales or expense books are readable for this farmer.",
+  "draft": "Nie een van die produksie-, verkope- of uitgawe-boeke kan vir hierdie boer gelees word nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Income from sales",
+  "english": "Income from sales",
+  "draft": "Inkomste uit verkope"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Costs",
+  "english": "Costs",
+  "draft": "Koste"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Harvest not matched to sales",
+  "english": "Harvest not matched to sales",
+  "draft": "Oes nie aan verkope gekoppel nie"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Illustrative estimate: cash income plus unmatched harvest at an assumed R15/kg. Not revenue, profit or measured household benefit.",
+  "english": "Illustrative estimate: cash income plus unmatched harvest at an assumed R15/kg. Not revenue, profit or measured household benefit.",
+  "draft": "Illustratiewe skatting: kontantinkomste plus ongekoppelde oes teen 'n aangenome R15/kg. Nie omset, wins of gemete voordeel vir die huishouding nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "No sales recorded yet",
+  "english": "No sales recorded yet",
+  "draft": "Nog geen verkope aangeteken nie"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "The sales book is readable and empty",
+  "english": "The sales book is readable and empty",
+  "draft": "Die verkopeboek is leesbaar en leeg"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "No costs recorded yet",
+  "english": "No costs recorded yet",
+  "draft": "Nog geen koste aangeteken nie"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "The expense book is readable and empty",
+  "english": "The expense book is readable and empty",
+  "draft": "Die uitgaweboek is leesbaar en leeg"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Both the sales and expense books are empty",
+  "english": "Both the sales and expense books are empty",
+  "draft": "Die verkope- en uitgaweboeke is albei leeg"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Needs both the sales and production books",
+  "english": "Needs both the sales and production books",
+  "draft": "Het die verkope- en produksieboeke albei nodig"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "None sold yet",
+  "english": "None sold yet",
+  "draft": "Nog niks verkoop nie"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "No positive harvest-sales balance",
+  "english": "No positive harvest-sales balance",
+  "draft": "Geen positiewe balans tussen oes en verkope nie"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Costs above income",
+  "english": "Costs above income",
+  "draft": "Koste hoër as inkomste"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Money in / out per month",
+  "english": "Money in / out per month",
+  "draft": "Geld in / uit per maand"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Sold, as a share of the {kg} harvested",
+  "english": "Sold, as a share of the {kg} harvested",
+  "draft": "Verkoop, as 'n deel van die {kg} geoes"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Farmer income",
+  "english": "Farmer income",
+  "draft": "Boerinkomste"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "It shows farmers’ own production and income figures, so access is limited to programme teams and their funders.",
+  "english": "It shows farmers’ own production and income figures, so access is limited to programme teams and their funders.",
+  "draft": "Dit wys boere se eie produksie- en inkomstesyfers, so toegang is beperk tot programspanne en hul befondsers."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Dormant, under plan, or loss-making",
+  "english": "Dormant, under plan, or loss-making",
+  "draft": "Rustend, onder plan, of verliesgewend"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Pins show status and plot size only — both recorded for every site. Harvest, income and progress are in the panel, where “no data” can be said in words.",
+  "english": "Pins show status and plot size only — both recorded for every site. Harvest, income and progress are in the panel, where “no data” can be said in words.",
+  "draft": "Spelde wys slegs status en grootte van die stuk grond — albei word vir elke terrein aangeteken. Oes, inkomste en vordering is in die paneel, waar “geen data” in woorde gesê kan word."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Your account cannot manage people here. Ask an organisation administrator to grant Manage people access.",
+  "english": "Your account cannot manage people here. Ask an organisation administrator to grant Manage people access.",
+  "draft": "Jou rekening kan nie mense hier bestuur nie. Vra 'n organisasie-administrateur om jou Bestuur mense-toegang te gee."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Sales received",
+  "english": "Sales received",
+  "draft": "Verkope ontvang"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Harvest not matched to sales: unknown — sales exceed recorded harvest",
+  "english": "Harvest not matched to sales: unknown — sales exceed recorded harvest",
+  "draft": "Oes nie aan verkope gekoppel nie: onbekend — verkope oorskry aangetekende oes"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Books — sales",
+  "english": "Books — sales",
+  "draft": "Boeke — verkope"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "The PDF report below is still in English. The recorded site size does not confirm the actual productive area; costs are not included, so this report does not show profit.",
+  "english": "The PDF report below is still in English. The recorded site size does not confirm the actual productive area; costs are not included, so this report does not show profit.",
+  "draft": "Die PDF-verslag hieronder is steeds in Engels. Die aangetekende terreingrootte bevestig nie die werklike produktiewe oppervlakte nie; koste is nie ingesluit nie, so hierdie verslag wys nie wins nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "We could not load {name}'s production, sales and training data. Check your account access and try again.",
+  "english": "We could not load {name}'s production, sales and training data. Check your account access and try again.",
+  "draft": "Ons kon nie {name} se produksie-, verkope- en opleidingsdata laai nie. Gaan jou rekeningtoegang na en probeer weer."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Harvest not matched to sales: {kg} kg",
+  "english": "Harvest not matched to sales: {kg} kg",
+  "draft": "Oes nie aan verkope gekoppel nie: {kg} kg"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Production and sales",
+  "english": "Production and sales",
+  "draft": "Produksie en verkope"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Recorded sales",
+  "english": "Recorded sales",
+  "draft": "Aangetekende verkope"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "sold",
+  "english": "sold",
+  "draft": "verkoop"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "after costs",
+  "english": "after costs",
+  "draft": "ná koste"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "The cohort you are funding",
+  "english": "The cohort you are funding",
+  "draft": "Die groep wat jy befonds"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Income",
+  "english": "Income",
+  "draft": "Inkomste"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "income",
+  "english": "income",
+  "draft": "inkomste"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Income & livelihoods",
+  "english": "Income & livelihoods",
+  "draft": "Inkomste en lewensbestaan"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Produce sold, recorded income and costs, paid work and market access.",
+  "english": "Produce sold, recorded income and costs, paid work and market access.",
+  "draft": "Produkte verkoop, aangetekende inkomste en koste, betaalde werk en marktoegang."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "No priced or measured values available.",
+  "english": "No priced or measured values available.",
+  "draft": "Geen waardes met pryse of metings beskikbaar nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "This is the saved planting plan, not a harvest or sales record. Check actual bed clearance before each next planting.",
+  "english": "This is the saved planting plan, not a harvest or sales record. Check actual bed clearance before each next planting.",
+  "draft": "Dit is die gestoorde plantplan, nie 'n oes- of verkooprekord nie. Gaan na of die bedding werklik skoon is voor elke volgende aanplanting."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Priced infrastructure subtotal",
+  "english": "Priced infrastructure subtotal",
+  "draft": "Subtotaal van infrastruktuur met pryse"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Lines awaiting a price or measurement",
+  "english": "Lines awaiting a price or measurement",
+  "draft": "Reëls wat op 'n prys of meting wag"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Planned budget, not actual spending. A missing price is not zero. Obtain current local quotes.",
+  "english": "Planned budget, not actual spending. A missing price is not zero. Obtain current local quotes.",
+  "draft": "Beplande begroting, nie werklike besteding nie. 'n Ontbrekende prys is nie nul nie. Kry huidige plaaslike kwotasies."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Record harvest weight, food kept or donated, sales and costs with their dates.",
+  "english": "Record harvest weight, food kept or donated, sales and costs with their dates.",
+  "draft": "Teken oesgewig, kos gehou of geskenk, verkope en koste met hul datums aan."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Verify measurements and costs before acting.",
+  "english": "Verify measurements and costs before acting.",
+  "draft": "Verifieer afmetings en koste voordat jy optree."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Site photos and map plates, where available, are shown separately in this report. An AI-generated reference photograph is not evidence of the real site. Missing measurements, quotes or records remain missing. Review the site, dates and evidence with the implementing organisation before using this example for a funding decision.",
+  "english": "Site photos and map plates, where available, are shown separately in this report. An AI-generated reference photograph is not evidence of the real site. Missing measurements, quotes or records remain missing. Review the site, dates and evidence with the implementing organisation before using this example for a funding decision.",
+  "draft": "Terreinfoto's en kaartplate word, waar beskikbaar, apart in hierdie verslag gewys. 'n AI-gegenereerde verwysingsfoto is nie bewys van die regte terrein nie. Ontbrekende afmetings, kwotasies of rekords bly ontbrekend. Gaan die terrein, datums en bewyse saam met die implementerende organisasie na voordat jy hierdie voorbeeld vir 'n befondsingsbesluit gebruik."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "What has been priced",
+  "english": "What has been priced",
+  "draft": "Wat reeds geprys is"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Planned priced subtotal",
+  "english": "Planned priced subtotal",
+  "draft": "Beplande subtotaal met pryse"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "lines still need a price or measurement. Existing items are excluded. Confirm current local quotes.",
+  "english": "lines still need a price or measurement. Existing items are excluded. Confirm current local quotes.",
+  "draft": "reëls het nog 'n prys of meting nodig. Bestaande items is uitgesluit. Bevestig huidige plaaslike kwotasies."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "The order and rough length of each phase, worked out from what is on the saved design. The weeks are a planning guide, not a promise: weather, money and labour will move them. The order should not change.",
+  "english": "The order and rough length of each phase, worked out from what is on the saved design. The weeks are a planning guide, not a promise: weather, money and labour will move them. The order should not change.",
+  "draft": "Die volgorde en rowwe lengte van elke fase, uitgewerk uit wat op die gestoorde ontwerp is. Die weke is 'n beplanningsgids, nie 'n belofte nie: weer, geld en arbeid sal hulle verskuif. Die volgorde behoort nie te verander nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Say how much you have, and whether you want Rand, a swap, or nothing at all.",
+  "english": "Say how much you have, and whether you want Rand, a swap, or nothing at all.",
+  "draft": "Sê hoeveel jy het, en of jy Rand, 'n ruil of glad niks wil hê."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Tour trade board — explore listings from the farmer network. Listings here are not for sale.",
+  "english": "Tour trade board — explore listings from the farmer network. Listings here are not for sale.",
+  "draft": "Toer-ruilbord — verken lystings van die boerenetwerk. Lystings hier is nie te koop nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Highest price first",
+  "english": "Highest price first",
+  "draft": "Hoogste prys eerste"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "No payments, no escrow, no delivery.",
+  "english": "No payments, no escrow, no delivery.",
+  "draft": "Geen betalings, geen trustrekening, geen aflewering nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Money and collection are arranged between the two farmers, off the app.",
+  "english": "Money and collection are arranged between the two farmers, off the app.",
+  "draft": "Geld en afhaal word tussen die twee boere gereël, buite die app."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Price, swap or free",
+  "english": "Price, swap or free",
+  "draft": "Prys, ruil of gratis"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Price in Rand",
+  "english": "Price in Rand",
+  "draft": "Prys in Rand"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Suggested from the app’s price book: about R{price}/kg wholesale. Farm-gate, not shop shelf — change it to whatever you actually want.",
+  "english": "Suggested from the app’s price book: about R{price}/kg wholesale. Farm-gate, not shop shelf — change it to whatever you actually want.",
+  "draft": "Voorgestel uit die app se prysboek: ongeveer R{price}/kg groothandel. Plaashek, nie winkelrak nie — verander dit na wat jy werklik wil hê."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Counted in kilograms but not in the Rand figure — no price on file: {names}.",
+  "english": "Counted in kilograms but not in the Rand figure — no price on file: {names}.",
+  "draft": "In kilogram getel, maar nie in die Rand-syfer nie — geen prys op rekord nie: {names}."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Save a sale and its invoice",
+  "english": "Save a sale and its invoice",
+  "draft": "Stoor 'n verkoping en sy faktuur"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Open My Records, choose Sold and enter the crop, weight and amount received. Save sale & invoice opens the linked paid invoice. For several products or payment later, use Create an invoice.",
+  "english": "Open My Records, choose Sold and enter the crop, weight and amount received. Save sale & invoice opens the linked paid invoice. For several products or payment later, use Create an invoice.",
+  "draft": "Maak My rekords oop, kies Verkoop en voer die gewas, gewig en bedrag ontvang in. Stoor verkoping en faktuur maak die gekoppelde betaalde faktuur oop. Vir verskeie produkte of latere betaling, gebruik Skep 'n faktuur."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Choose your orchard product when recording a harvest or sale. In Charts, use Orchard in to include fruit and nuts, or turn it off to compare annual crops.",
+  "english": "Choose your orchard product when recording a harvest or sale. In Charts, use Orchard in to include fruit and nuts, or turn it off to compare annual crops.",
+  "draft": "Kies jou boordproduk wanneer jy 'n oes of verkoping aanteken. In Grafieke, gebruik Boord in om vrugte en neute in te sluit, of skakel dit af om eenjarige gewasse te vergelyk."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Read your cash balance",
+  "english": "Read your cash balance",
+  "draft": "Lees jou kontantbalans"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Cash surplus is money received minus recorded spending for the selected period. Cash shortfall means spending was higher. Add missing costs before judging how the garden is doing.",
+  "english": "Cash surplus is money received minus recorded spending for the selected period. Cash shortfall means spending was higher. Add missing costs before judging how the garden is doing.",
+  "draft": "Kontantoorskot is geld ontvang min aangetekende besteding vir die gekose tydperk. Kontanttekort beteken besteding was hoër. Voeg ontbrekende koste by voordat jy oordeel hoe die tuin vaar."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Open money charts",
+  "english": "Open money charts",
+  "draft": "Maak geldgrafieke oop"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Put your identity on invoices",
+  "english": "Put your identity on invoices",
+  "draft": "Sit jou identiteit op fakture"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Add your farm name and logo in Account. In Invoice, complete your contact and banking details, then save, share the PDF or print.",
+  "english": "Add your farm name and logo in Account. In Invoice, complete your contact and banking details, then save, share the PDF or print.",
+  "draft": "Voeg jou plaasnaam en logo by in Rekening. Voltooi jou kontak- en bankbesonderhede in Faktuur, stoor dan, deel die PDF of druk dit."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Open Invoice",
+  "english": "Open Invoice",
+  "draft": "Maak Faktuur oop"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "A guided look at your maps, crop plans, harvests, sales and invoices. Practise with Ubhejane Crèche Garden, then return to your own work.",
+  "english": "A guided look at your maps, crop plans, harvests, sales and invoices. Practise with Ubhejane Crèche Garden, then return to your own work.",
+  "draft": "'n Begeleide kykie na jou kaarte, gewasplanne, oeste, verkope en fakture. Oefen met Ubhejane Crèche Garden en keer dan terug na jou eie werk."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Log a sale",
+  "english": "Log a sale",
+  "draft": "Teken 'n verkoping aan"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Explore the app in about {minutes} minutes: plan a garden, learn a skill, follow a sale, support growers and see the programme evidence.",
+  "english": "Explore the app in about {minutes} minutes: plan a garden, learn a skill, follow a sale, support growers and see the programme evidence.",
+  "draft": "Verken die app in ongeveer {minutes} minute: beplan 'n tuin, leer 'n vaardigheid, volg 'n verkoping, ondersteun kwekers en sien die programbewyse."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Record the work and the sale",
+  "english": "Record the work and the sale",
+  "draft": "Teken die werk en die verkoping aan"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Explore an invoice",
+  "english": "Explore an invoice",
+  "draft": "Verken 'n faktuur"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "The next stops connect a garden design with its studies, harvests, sales and programme reports.",
+  "english": "The next stops connect a garden design with its studies, harvests, sales and programme reports.",
+  "draft": "Die volgende stoppe verbind 'n tuinontwerp met sy studies, oeste, verkope en programverslae."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Picked records harvests; Sold records sales; Spent holds costs; Charts brings the figures together. Switch tabs to follow the work from crop to cash.",
+  "english": "Picked records harvests; Sold records sales; Spent holds costs; Charts brings the figures together. Switch tabs to follow the work from crop to cash.",
+  "draft": "Gepluk teken oeste aan; Verkoop teken verkope aan; Bestee hou koste; Grafieke bring die syfers saam. Wissel oortjies om die werk van gewas tot kontant te volg."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Open Invoice, then Saved, to inspect a document. In Spent, open a receipt to see the purchase details behind a cost.",
+  "english": "Open Invoice, then Saved, to inspect a document. In Spent, open a receipt to see the purchase details behind a cost.",
+  "draft": "Maak Faktuur oop, dan Gestoor, om 'n dokument te bekyk. Maak in Bestee 'n kwitansie oop om die aankoopbesonderhede agter 'n koste te sien."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "In Picked, open Records for a lender to view harvest, income and cost history and export the summary.",
+  "english": "In Picked, open Records for a lender to view harvest, income and cost history and export the summary.",
+  "draft": "Maak in Gepluk Rekords vir 'n uitlener oop om oes-, inkomste- en kostegeskiedenis te sien en die opsomming uit te voer."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Open the farm map, crop plan, harvests and example sales.",
+  "english": "Open the farm map, crop plan, harvests and example sales.",
+  "draft": "Maak die plaaskaart, gewasplan, oeste en voorbeeldverkope oop."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Harvest & money",
+  "english": "Harvest & money",
+  "draft": "Oes en geld"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "What you sold",
+  "english": "What you sold",
+  "draft": "Wat jy verkoop het"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Your crop sales and the money you earned from them.",
+  "english": "Your crop sales and the money you earned from them.",
+  "draft": "Jou gewasverkope en die geld wat jy daaruit verdien het."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "What you paid for seed, tools and inputs.",
+  "english": "What you paid for seed, tools and inputs.",
+  "draft": "Wat jy vir saad, gereedskap en insette betaal het."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Funding partner",
+  "english": "Funding partner",
+  "draft": "Befondsingsvennoot"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Recorded harvests, sales and costs with coverage.",
+  "english": "Recorded harvests, sales and costs with coverage.",
+  "draft": "Aangetekende oeste, verkope en koste met dekking."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Ledger dates apply to harvest, sales and costs. Learning and membership remain current snapshots.",
+  "english": "Ledger dates apply to harvest, sales and costs. Learning and membership remain current snapshots.",
+  "draft": "Grootboekdatums geld vir oes, verkope en koste. Leer en lidmaatskap bly huidige momentopnames."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Sales recorded",
+  "english": "Sales recorded",
+  "draft": "Verkope aangeteken"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Sales ledger",
+  "english": "Sales ledger",
+  "draft": "Verkopegrootboek"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Sales weight",
+  "english": "Sales weight",
+  "draft": "Verkopegewig"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Sales income",
+  "english": "Sales income",
+  "draft": "Verkope-inkomste"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Produce sold",
+  "english": "Produce sold",
+  "draft": "Produkte verkoop"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Sales logs; weighed entries only",
+  "english": "Sales logs; weighed entries only",
+  "draft": "Verkopelogboeke; slegs geweegde inskrywings"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Sales ledger; not grant expenditure",
+  "english": "Sales ledger; not grant expenditure",
+  "draft": "Verkopegrootboek; nie toekenningsbesteding nie"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Costs recorded",
+  "english": "Costs recorded",
+  "draft": "Koste aangeteken"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Dated expense logs; coverage is the current readable book count",
+  "english": "Dated expense logs; coverage is the current readable book count",
+  "draft": "Gedateerde uitgawelogboeke; dekking is die huidige getal leesbare boeke"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Expense ledger; reporting may differ from sales",
+  "english": "Expense ledger; reporting may differ from sales",
+  "draft": "Uitgawegrootboek; verslagdoening kan van verkope verskil"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Harvest logged: {harvest}. Sales recorded: {sales}. Basis: {basis}. Each measure has its own coverage; no sales-minus-costs or return-on-investment claim is made.",
+  "english": "Harvest logged: {harvest}. Sales recorded: {sales}. Basis: {basis}. Each measure has its own coverage; no sales-minus-costs or return-on-investment claim is made.",
+  "draft": "Oes aangeteken: {harvest}. Verkope aangeteken: {sales}. Basis: {basis}. Elke maatstaf het sy eie dekking; geen bewering van verkope-min-koste of opbrengs op belegging word gemaak nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Questions for the next funding review",
+  "english": "Questions for the next funding review",
+  "draft": "Vrae vir die volgende befondsingshersiening"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Reconcile sales, harvest dates and expense coverage before drawing livelihood or financial conclusions. Produce picked earlier, purchased stock and missing logs can affect the balance.",
+  "english": "Reconcile sales, harvest dates and expense coverage before drawing livelihood or financial conclusions. Produce picked earlier, purchased stock and missing logs can affect the balance.",
+  "draft": "Versoen verkope, oesdatums en uitgawedekking voordat jy gevolgtrekkings oor lewensbestaan of finansies maak. Produkte wat vroeër gepluk is, aangekoopte voorraad en ontbrekende logboeke kan die balans beïnvloed."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Production and sales logs describe recorded activity. Course completion describes recorded learning progress. Neither establishes an improvement in household income, diet, food security or resilience.",
+  "english": "Production and sales logs describe recorded activity. Course completion describes recorded learning progress. Neither establishes an improvement in household income, diet, food security or resilience.",
+  "draft": "Produksie- en verkopelogboeke beskryf aangetekende aktiwiteit. Kursusvoltooiing beskryf aangetekende leervordering. Geeneen stel 'n verbetering in huishoudelike inkomste, dieet, voedselsekerheid of veerkragtigheid vas nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Grant commitments, disbursements, a programme budget and independently verified expenditure are not available here. Farmer sales and costs are not the organisation’s grant accounts.",
+  "english": "Grant commitments, disbursements, a programme budget and independently verified expenditure are not available here. Farmer sales and costs are not the organisation’s grant accounts.",
+  "draft": "Toekenningsverpligtinge, uitbetalings, 'n programbegroting en onafhanklik geverifieerde besteding is nie hier beskikbaar nie. Boere se verkope en koste is nie die organisasie se toekenningsrekeninge nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Source: shared production, sales and expense books and course records. These are recorded app data, not an independent audit. Consent and account access determine coverage.",
+  "english": "Source: shared production, sales and expense books and course records. These are recorded app data, not an independent audit. Consent and account access determine coverage.",
+  "draft": "Bron: gedeelde produksie-, verkope- en uitgaweboeke en kursusrekords. Dit is aangetekende app-data, nie 'n onafhanklike oudit nie. Toestemming en rekeningtoegang bepaal dekking."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Monthly totals use harvest, sale and expense dates in UTC. Readable empty books contribute zero; unreadable books contribute no value. Only known weights are included; counts and packages are not converted.",
+  "english": "Monthly totals use harvest, sale and expense dates in UTC. Readable empty books contribute zero; unreadable books contribute no value. Only known weights are included; counts and packages are not converted.",
+  "draft": "Maandelikse totale gebruik oes-, verkoop- en uitgawedatums in UTC. Leesbare leë boeke dra nul by; onleesbare boeke dra geen waarde by nie. Slegs bekende gewigte word ingesluit; tellings en pakkies word nie omgeskakel nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Sales ZAR",
+  "english": "Sales ZAR",
+  "draft": "Verkope ZAR"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Costs ZAR",
+  "english": "Costs ZAR",
+  "draft": "Koste ZAR"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Recorded costs exceed sales",
+  "english": "Recorded costs exceed sales",
+  "draft": "Aangetekende koste oorskry verkope"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Review the same dates and complete books; setup spending can precede sales.",
+  "english": "Review the same dates and complete books; setup spending can precede sales.",
+  "draft": "Hersien dieselfde datums en volledige boeke; opstelbesteding kan voor verkope kom."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "No production or sales book visible",
+  "english": "No production or sales book visible",
+  "draft": "Geen produksie- of verkopeboek sigbaar nie"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Enter a price of zero or more, or leave it blank.",
+  "english": "Enter a price of zero or more, or leave it blank.",
+  "draft": "Voer 'n prys van nul of meer in, of laat dit leeg."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "My price per unit (R)",
+  "english": "My price per unit (R)",
+  "draft": "My prys per eenheid (R)"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Optional · your own price",
+  "english": "Optional · your own price",
+  "draft": "Opsioneel · jou eie prys"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "This price is your record, not a live market price or a profit calculation.",
+  "english": "This price is your record, not a live market price or a profit calculation.",
+  "draft": "Hierdie prys is jou rekord, nie 'n lewendige markprys of 'n winsberekening nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Own price: R{price} / {unit}",
+  "english": "Own price: R{price} / {unit}",
+  "draft": "Eie prys: R{price} / {unit}"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Quantity × own price: R{value} before costs",
+  "english": "Quantity × own price: R{value} before costs",
+  "draft": "Hoeveelheid × eie prys: R{value} voor koste"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Quantity × own price needs checking.",
+  "english": "Quantity × own price needs checking.",
+  "draft": "Hoeveelheid × eie prys moet nagegaan word."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Follow a practice sale",
+  "english": "Follow a practice sale",
+  "draft": "Volg 'n oefenverkoping"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "One invoice. Two payments.",
+  "english": "One invoice. Two payments.",
+  "draft": "Een faktuur. Twee betalings."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Payment example stages",
+  "english": "Payment example stages",
+  "draft": "Fases van die betalingsvoorbeeld"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Deliver and invoice",
+  "english": "Deliver and invoice",
+  "draft": "Lewer en faktureer"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Receive part of the payment",
+  "english": "Receive part of the payment",
+  "draft": "Ontvang 'n deel van die betaling"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Order P01 · R120.00 agreed",
+  "english": "Order P01 · R120.00 agreed",
+  "draft": "Bestelling P01 · R120.00 ooreengekom"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Delivery P01 · Invoice P01",
+  "english": "Delivery P01 · Invoice P01",
+  "draft": "Aflewering P01 · Faktuur P01"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Receipt P01-A · R40.00 received",
+  "english": "Receipt P01-A · R40.00 received",
+  "draft": "Kwitansie P01-A · R40.00 ontvang"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Receipt P01-B · another R80.00 received",
+  "english": "Receipt P01-B · another R80.00 received",
+  "draft": "Kwitansie P01-B · nog R80.00 ontvang"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "The buyer has ordered. Nothing has been delivered or paid in this example. Keep the agreement; an order is not a cash receipt.",
+  "english": "The buyer has ordered. Nothing has been delivered or paid in this example. Keep the agreement; an order is not a cash receipt.",
+  "draft": "Die koper het bestel. Niks is in hierdie voorbeeld gelewer of betaal nie. Hou die ooreenkoms; 'n bestelling is nie 'n kontantontvangs nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "The agreed produce is delivered and invoiced for R120.00. The buyer has not paid. Keep the delivery and invoice references together.",
+  "english": "The agreed produce is delivered and invoiced for R120.00. The buyer has not paid. Keep the delivery and invoice references together.",
+  "draft": "Die ooreengekome produkte is gelewer en vir R120.00 gefaktureer. Die koper het nie betaal nie. Hou die aflewering- en faktuurverwysings saam."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "R40.00 settles part of invoice P01. R80.00 remains owed. This is the same produce sale; the receipt does not create another sale.",
+  "english": "R40.00 settles part of invoice P01. R80.00 remains owed. This is the same produce sale; the receipt does not create another sale.",
+  "draft": "R40.00 vereffen 'n deel van faktuur P01. R80.00 bly verskuldig. Dit is dieselfde produkverkoping; die kwitansie skep nie nog 'n verkoping nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Invoice value",
+  "english": "Invoice value",
+  "draft": "Faktuurwaarde"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Still owed",
+  "english": "Still owed",
+  "draft": "Steeds verskuldig"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Not invoiced",
+  "english": "Not invoiced",
+  "draft": "Nie gefaktureer nie"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Cash-window example stages",
+  "english": "Cash-window example stages",
+  "draft": "Fases van die kontantvenster-voorbeeld"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "The selected window begins at zero. R400.00 in less R300.00 out gives a R100.00 running total. We have not supplied a bank opening balance.",
+  "english": "The selected window begins at zero. R400.00 in less R300.00 out gives a R100.00 running total. We have not supplied a bank opening balance.",
+  "draft": "Die gekose venster begin by nul. R400.00 in min R300.00 uit gee 'n lopende totaal van R100.00. Ons het nie 'n bankopeningsaldo verskaf nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Across both months, R600.00 came in and R650.00 went out. The running total is −R50.00. That is a net movement across the window, not proof of an overdraft.",
+  "english": "Across both months, R600.00 came in and R650.00 went out. The running total is −R50.00. That is a net movement across the window, not proof of an overdraft.",
+  "draft": "Oor albei maande het R600.00 ingekom en R650.00 uitgegaan. Die lopende totaal is −R50.00. Dit is 'n netto beweging oor die venster, nie bewys van 'n oortrokke rekening nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Now the window starts at Month B, from zero again. R200.00 in less R350.00 out gives −R150.00. No source record changed; only the selected window changed.",
+  "english": "Now the window starts at Month B, from zero again. R200.00 in less R350.00 out gives −R150.00. No source record changed; only the selected window changed.",
+  "draft": "Nou begin die venster by Maand B, weer van nul af. R200.00 in min R350.00 uit gee −R150.00. Geen bronrekord het verander nie; slegs die gekose venster het verander."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "The bank balance is unknown in every step. A complete result also needs the relevant costs and other records; changing the window does not supply them.",
+  "english": "The bank balance is unknown in every step. A complete result also needs the relevant costs and other records; changing the window does not supply them.",
+  "draft": "Die banksaldo is in elke stap onbekend. 'n Volledige resultaat het ook die betrokke koste en ander rekords nodig; om die venster te verander, verskaf dit nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Invented classroom amounts. Start with the opening cash, then move through the cards one at a time. Sales, cash and money owed answer different questions.",
+  "english": "Invented classroom amounts. Start with the opening cash, then move through the cards one at a time. Sales, cash and money owed answer different questions.",
+  "draft": "Versinde klaskamerbedrae. Begin met die openingskontant, en gaan dan een vir een deur die kaarte. Verkope, kontant en geld verskuldig beantwoord verskillende vrae."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Cash is in the tin. No produce sale, buyer balance or loan has been recorded yet.",
+  "english": "Cash is in the tin. No produce sale, buyer balance or loan has been recorded yet.",
+  "draft": "Kontant is in die blik. Geen produkverkoping, kopersaldo of lening is nog aangeteken nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Cash in tin",
+  "english": "Cash in tin",
+  "draft": "Kontant in blik"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Produce sales recorded",
+  "english": "Produce sales recorded",
+  "draft": "Produkverkope aangeteken"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Buyer still owes",
+  "english": "Buyer still owes",
+  "draft": "Koper skuld nog"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Loan principal still owed",
+  "english": "Loan principal still owed",
+  "draft": "Leningskapitaal nog verskuldig"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Produce sale {reference}: {amount} received now.",
+  "english": "Produce sale {reference}: {amount} received now.",
+  "draft": "Produkverkoping {reference}: {amount} nou ontvang."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Produce sale {reference}: {amount} to be paid later.",
+  "english": "Produce sale {reference}: {amount} to be paid later.",
+  "draft": "Produkverkoping {reference}: {amount} word later betaal."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Buyer pays {amount} for the earlier sale {settles}. This is a receipt, not another sale.",
+  "english": "Buyer pays {amount} for the earlier sale {settles}. This is a receipt, not another sale.",
+  "draft": "Koper betaal {amount} vir die vroeëre verkoping {settles}. Dit is 'n kwitansie, nie nog 'n verkoping nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Loan {reference}: {amount} enters the cash tin and is owed back.",
+  "english": "Loan {reference}: {amount} enters the cash tin and is owed back.",
+  "draft": "Lening {reference}: {amount} gaan in die kontantblik en moet terugbetaal word."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Loan payment {reference}: {amount} leaves cash, including {principal} of principal and {interest} interest.",
+  "english": "Loan payment {reference}: {amount} leaves cash, including {principal} of principal and {interest} interest.",
+  "draft": "Leningsbetaling {reference}: {amount} verlaat kontant, insluitend {principal} kapitaal en {interest} rente."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Owner puts {amount} into the cash tin.",
+  "english": "Owner puts {amount} into the cash tin.",
+  "draft": "Eienaar sit {amount} in die kontantblik."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Owner takes {amount} from the cash tin.",
+  "english": "Owner takes {amount} from the cash tin.",
+  "draft": "Eienaar neem {amount} uit die kontantblik."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Packaging payment {reference}: {amount} leaves the cash tin.",
+  "english": "Packaging payment {reference}: {amount} leaves the cash tin.",
+  "draft": "Verpakkingsbetaling {reference}: {amount} verlaat die kontantblik."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Equipment purchase {reference}: {amount} leaves the cash tin.",
+  "english": "Equipment purchase {reference}: {amount} leaves the cash tin.",
+  "draft": "Toerustingaankoop {reference}: {amount} verlaat die kontantblik."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Transport payment {reference}: {amount} leaves the cash tin.",
+  "english": "Transport payment {reference}: {amount} leaves the cash tin.",
+  "draft": "Vervoerbetaling {reference}: {amount} verlaat die kontantblik."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Use a notebook and calculator, or type here. Enter rand in the money boxes and kilograms in the stock box. Use a minus sign for a cash gap. A comma or point can separate decimals.",
+  "english": "Use a notebook and calculator, or type here. Enter rand in the money boxes and kilograms in the stock box. Use a minus sign for a cash gap. A comma or point can separate decimals.",
+  "draft": "Gebruik 'n notaboek en sakrekenaar, of tik hier. Voer rand in die geldblokkies in en kilogram in die voorraadblokkie. Gebruik 'n minusteken vir 'n kontanttekort. 'n Komma of punt kan desimale skei."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Harvest left = opening stock + harvest − delivery − household food − recorded loss. Compare it with {stockReference}. Invoice value = delivered kilograms × the agreed price per kilogram. The in-month payment clears part of that invoice; {laterReference} is outside this month.",
+  "english": "Harvest left = opening stock + harvest − delivery − household food − recorded loss. Compare it with {stockReference}. Invoice value = delivered kilograms × the agreed price per kilogram. The in-month payment clears part of that invoice; {laterReference} is outside this month.",
+  "draft": "Oes oor = openingsvoorraad + oes − aflewering − huishoudelike kos − aangetekende verlies. Vergelyk dit met {stockReference}. Faktuurwaarde = gelewerde kilogram × die ooreengekome prys per kilogram. Die betaling binne die maand vereffen 'n deel van daardie faktuur; {laterReference} val buite hierdie maand."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "The original forecast starts at {opening}, pays the two quoted amounts, then receives the assumed sale. Actual cash starts at the same opening amount and uses only the dated cash records. It also includes the stated funding and household withdrawal. The unknown, unpaid water charge changes neither the counted cash nor what is known about the missing cost.",
+  "english": "The original forecast starts at {opening}, pays the two quoted amounts, then receives the assumed sale. Actual cash starts at the same opening amount and uses only the dated cash records. It also includes the stated funding and household withdrawal. The unknown, unpaid water charge changes neither the counted cash nor what is known about the missing cost.",
+  "draft": "Die oorspronklike vooruitskatting begin by {opening}, betaal die twee gekwoteerde bedrae, en ontvang dan die aanvaarde verkoping. Werklike kontant begin by dieselfde openingsbedrag en gebruik slegs die gedateerde kontantrekords. Dit sluit ook die genoemde befondsing en huishoudelike onttrekking in. Die onbekende, onbetaalde waterheffing verander nie die getelde kontant of wat oor die ontbrekende koste bekend is nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Actual cash",
+  "english": "Actual cash",
+  "draft": "Werklike kontant"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "unfunded gap, not cash in a tin",
+  "english": "unfunded gap, not cash in a tin",
+  "draft": "onbefondsde tekort, nie kontant in 'n blik nie"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Explain the change from planned to actual cash",
+  "english": "Explain the change from planned to actual cash",
+  "draft": "Verduidelik die verandering van beplande na werklike kontant"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "These changes add to {difference}. They explain the change in closing cash, not profit. In these cases the price per kilogram stays the same; the sales difference comes from quantity.",
+  "english": "These changes add to {difference}. They explain the change in closing cash, not profit. In these cases the price per kilogram stays the same; the sales difference comes from quantity.",
+  "draft": "Hierdie veranderinge tel op tot {difference}. Hulle verduidelik die verandering in sluitingskontant, nie wins nie. In hierdie gevalle bly die prys per kilogram dieselfde; die verskil in verkope kom van hoeveelheid."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Owner contribution or loan received",
+  "english": "Owner contribution or loan received",
+  "draft": "Eienaarsbydrae of lening ontvang"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Household cash withdrawal",
+  "english": "Household cash withdrawal",
+  "draft": "Huishoudelike kontantonttrekking"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Delivered sales compared with the original sales assumption",
+  "english": "Delivered sales compared with the original sales assumption",
+  "draft": "Gelewerde verkope vergeleke met die oorspronklike verkopeaanname"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Part of this sale not collected within the month",
+  "english": "Part of this sale not collected within the month",
+  "draft": "Deel van hierdie verkoping nie binne die maand ingevorder nie"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Quoted costs minus actual packaging and transport payments",
+  "english": "Quoted costs minus actual packaging and transport payments",
+  "draft": "Gekwoteerde koste min werklike verpakking- en vervoerbetalings"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Only discussion and investigation may proceed. Agree the evidence and care first, then define materials and request comparable quotations. No construction budget is supplied.",
+  "english": "Only discussion and investigation may proceed. Agree the evidence and care first, then define materials and request comparable quotations. No construction budget is supplied.",
+  "draft": "Slegs bespreking en ondersoek mag voortgaan. Kom eers die bewyse en versorging ooreen, omskryf dan materiaal en vra vergelykbare kwotasies aan. Geen konstruksiebegroting word verskaf nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Cost:",
+  "english": "Cost:",
+  "draft": "Koste:"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "R1 record:",
+  "english": "R1 record:",
+  "draft": "R1-rekord:"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Use {link} to practise cash timing. A sales or packaging practice budget cannot serve as a garden-construction budget.",
+  "english": "Use {link} to practise cash timing. A sales or packaging practice budget cannot serve as a garden-construction budget.",
+  "draft": "Gebruik {link} om kontanttydsberekening te oefen. 'n Oefenbegroting vir verkope of verpakking kan nie as 'n begroting vir tuinkonstruksie dien nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Record work, costs and agreed care",
+  "english": "Record work, costs and agreed care",
+  "draft": "Teken werk, koste en ooreengekome versorging aan"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Download each diagram you need, plus the source and decision record. It includes the current choice, alternative, conditions, work/cost/care records, next discussion owner and revision history. Keep your own learner notes in your separate design folder.",
+  "english": "Download each diagram you need, plus the source and decision record. It includes the current choice, alternative, conditions, work/cost/care records, next discussion owner and revision history. Keep your own learner notes in your separate design folder.",
+  "draft": "Laai elke diagram af wat jy nodig het, plus die bron- en besluitrekord. Dit sluit die huidige keuse, alternatief, voorwaardes, werk-/koste-/versorgingsrekords, volgende besprekingseienaar en hersieningsgeskiedenis in. Hou jou eie leerdernotas in jou aparte ontwerplêer."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Understand the money.",
+  "english": "Understand the money.",
+  "draft": "Verstaan die geld."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Start with farm and household money",
+  "english": "Start with farm and household money",
+  "draft": "Begin met plaas- en huishoudelike geld"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "The figures are invented classroom examples, not local prices, promised earnings or recommendations for your farm. Each unit supplies its own case and opening balances.",
+  "english": "The figures are invented classroom examples, not local prices, promised earnings or recommendations for your farm. Each unit supplies its own case and opening balances.",
+  "draft": "Die syfers is versinde klaskamervoorbeelde, nie plaaslike pryse, beloofde verdienste of aanbevelings vir jou plaas nie. Elke eenheid verskaf sy eie gevallestudie en openingsaldo's."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Make and manage an invoice",
+  "english": "Make and manage an invoice",
+  "draft": "Maak en bestuur 'n faktuur"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Record a sale once",
+  "english": "Record a sale once",
+  "draft": "Teken 'n verkoping een keer aan"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Record a cost and keep its receipt",
+  "english": "Record a cost and keep its receipt",
+  "draft": "Teken 'n koste aan en hou die kwitansie"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Review payment",
+  "english": "Review payment",
+  "draft": "Hersien betaling"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Bring in paper and past sales",
+  "english": "Bring in paper and past sales",
+  "draft": "Bring papier en vorige verkope in"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Record a paid cost",
+  "english": "Record a paid cost",
+  "draft": "Teken 'n betaalde koste aan"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Start with a plan. Then check what was harvested, delivered and paid. Show your calculations and explain what the evidence cannot tell you.",
+  "english": "Start with a plan. Then check what was harvested, delivered and paid. Show your calculations and explain what the evidence cannot tell you.",
+  "draft": "Begin met 'n plan. Gaan dan na wat geoes, gelewer en betaal is. Wys jou berekeninge en verduidelik wat die bewyse nie vir jou kan sê nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Every date, amount, quantity and measurement in these cases is invented for practice. These are not local prices, expected yields or recommendations for a real farm. Practitioner and learner review remain open.",
+  "english": "Every date, amount, quantity and measurement in these cases is invented for practice. These are not local prices, expected yields or recommendations for a real farm. Practitioner and learner review remain open.",
+  "draft": "Elke datum, bedrag, hoeveelheid en meting in hierdie gevallestudies is vir oefening versin. Dit is nie plaaslike pryse, verwagte opbrengste of aanbevelings vir 'n regte plaas nie. Praktisyn- en leerderhersiening is nog oop."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Keep the original plan separate from the later records. Make a short final pack: a marked site sketch, budget with exclusions, dated cash forecast, harvest destinations, invoice/payment trail, and a review with a next action.",
+  "english": "Keep the original plan separate from the later records. Make a short final pack: a marked site sketch, budget with exclusions, dated cash forecast, harvest destinations, invoice/payment trail, and a review with a next action.",
+  "draft": "Hou die oorspronklike plan apart van die latere rekords. Maak 'n kort finale pakket: 'n gemerkte terreinskets, begroting met uitsluitings, gedateerde kontantvooruitskatting, oesbestemmings, faktuur-/betalingspoor, en 'n hersiening met 'n volgende aksie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "{opening}: cash counted {cash}; harvested stock {stock} kg; customer balance {balance}. Keep the review between {period}.",
+  "english": "{opening}: cash counted {cash}; harvested stock {stock} kg; customer balance {balance}. Keep the review between {period}.",
+  "draft": "{opening}: kontant getel {cash}; geoesde voorraad {stock} kg; kliëntsaldo {balance}. Hou die hersiening tussen {period}."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "{plan}. The enquiry {reference} mentions up to {quantity} kg at {price} per kg. This is an enquiry, not a confirmed order. The plan assumes all that quantity is delivered and paid on {date}. That assumption still needs confirmation.",
+  "english": "{plan}. The enquiry {reference} mentions up to {quantity} kg at {price} per kg. This is an enquiry, not a confirmed order. The plan assumes all that quantity is delivered and paid on {date}. That assumption still needs confirmation.",
+  "draft": "{plan}. Die navraag {reference} noem tot {quantity} kg teen {price} per kg. Dit is 'n navraag, nie 'n bevestigde bestelling nie. Die plan aanvaar dat al daardie hoeveelheid op {date} gelewer en betaal word. Daardie aanname moet nog bevestig word."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Included quoted payments",
+  "english": "Included quoted payments",
+  "draft": "Ingeslote gekwoteerde betalings"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Alternative quoted payments",
+  "english": "Alternative quoted payments",
+  "draft": "Alternatiewe gekwoteerde betalings"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Actual cash records",
+  "english": "Actual cash records",
+  "draft": "Werklike kontantrekords"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "{reference}: {label}. An enquiry mentions {quantity} items at {price} each. The alternative assumes receipt on {date}; no order is confirmed. It needs {hours} owner hours while only {available} are available.",
+  "english": "{reference}: {label}. An enquiry mentions {quantity} items at {price} each. The alternative assumes receipt on {date}; no order is confirmed. It needs {hours} owner hours while only {available} are available.",
+  "draft": "{reference}: {label}. 'n Navraag noem {quantity} items teen {price} elk. Die alternatief aanvaar ontvangs op {date}; geen bestelling is bevestig nie. Dit het {hours} eienaarsure nodig terwyl slegs {available} beskikbaar is."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Compare cash dates, hours and evidence—not the price of one kilogram with the price of one item. More information is needed before choosing a real enterprise.",
+  "english": "Compare cash dates, hours and evidence—not the price of one kilogram with the price of one item. More information is needed before choosing a real enterprise.",
+  "draft": "Vergelyk kontantdatums, ure en bewyse—nie die prys van een kilogram met die prys van een item nie. Meer inligting is nodig voordat jy 'n regte onderneming kies."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "delivered sale",
+  "english": "delivered sale",
+  "draft": "gelewerde verkoping"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "recorded loss",
+  "english": "recorded loss",
+  "draft": "aangetekende verlies"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "The delivery and invoice",
+  "english": "The delivery and invoice",
+  "draft": "Die aflewering en faktuur"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "{order}: {buyer} confirms an order for {quantity} kg at {price} per kg. Accepted delivery {delivery} and invoice {invoice} are dated {date}. The invoice is {amount}. It is the same delivered produce, not another sale. These are classroom cards, not tax invoices.",
+  "english": "{order}: {buyer} confirms an order for {quantity} kg at {price} per kg. Accepted delivery {delivery} and invoice {invoice} are dated {date}. The invoice is {amount}. It is the same delivered produce, not another sale. These are classroom cards, not tax invoices.",
+  "draft": "{order}: {buyer} bevestig 'n bestelling vir {quantity} kg teen {price} per kg. Aanvaarde aflewering {delivery} en faktuur {invoice} is op {date} gedateer. Die faktuur is {amount}. Dit is dieselfde gelewerde produkte, nie nog 'n verkoping nie. Dit is klaskamerkaarte, nie belastingfakture nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "packaging paid",
+  "english": "packaging paid",
+  "draft": "verpakking betaal"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "transport paid",
+  "english": "transport paid",
+  "draft": "vervoer betaal"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "buyer payment",
+  "english": "buyer payment",
+  "draft": "koperbetaling"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "loan received",
+  "english": "loan received",
+  "draft": "lening ontvang"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "{count}: counted cash {amount}. Reconcile the records to this count.",
+  "english": "{count}: counted cash {amount}. Reconcile the records to this count.",
+  "draft": "{count}: getelde kontant {amount}. Versoen die rekords met hierdie telling."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "{payment}: {amount} received for {invoice}. It belongs to the later month’s cash, not this month’s closing cash.",
+  "english": "{payment}: {amount} received for {invoice}. It belongs to the later month’s cash, not this month’s closing cash.",
+  "draft": "{payment}: {amount} ontvang vir {invoice}. Dit behoort aan die latere maand se kontant, nie aan hierdie maand se sluitingskontant nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "{cost}: {description} Keep its cost unknown; find the bill or confirm the charge with the supplier. Zero would state something the evidence does not support.",
+  "english": "{cost}: {description} Keep its cost unknown; find the bill or confirm the charge with the supplier. Zero would state something the evidence does not support.",
+  "draft": "{cost}: {description} Hou die koste daarvan onbekend; vind die rekening of bevestig die heffing by die verskaffer. Nul sou iets beweer wat die bewyse nie ondersteun nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Do the budget and forecast preserve the original dates, assumptions, excluded costs and any early cash gap?",
+  "english": "Do the budget and forecast preserve the original dates, assumptions, excluded costs and any early cash gap?",
+  "draft": "Bewaar die begroting en vooruitskatting die oorspronklike datums, aannames, uitgeslote koste en enige vroeë kontanttekort?"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Does each quantity keep its unit? Do household food and loss remain separate from sales?",
+  "english": "Does each quantity keep its unit? Do household food and loss remain separate from sales?",
+  "draft": "Behou elke hoeveelheid sy eenheid? Bly huishoudelike kos en verlies apart van verkope?"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Can you trace one delivery to one invoice and its payments, without double-counting sales or treating an unpaid amount as cash?",
+  "english": "Can you trace one delivery to one invoice and its payments, without double-counting sales or treating an unpaid amount as cash?",
+  "draft": "Kan jy een aflewering na een faktuur en sy betalings naspoor, sonder om verkope dubbel te tel of 'n onbetaalde bedrag as kontant te behandel?"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Does the review explain quantity, payment timing, costs and financing separately, while leaving missing costs and full profit unknown?",
+  "english": "Does the review explain quantity, payment timing, costs and financing separately, while leaving missing costs and full profit unknown?",
+  "draft": "Verduidelik die hersiening hoeveelheid, betalingstydsberekening, koste en finansiering apart, terwyl ontbrekende koste en volle wins onbekend gelaat word?"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Use the sample farm, not your real financial records. Partial payments stay in this workbook exercise where the app cannot represent them fully.",
+  "english": "Use the sample farm, not your real financial records. Partial payments stay in this workbook exercise where the app cannot represent them fully.",
+  "draft": "Gebruik die voorbeeldplaas, nie jou regte finansiële rekords nie. Deelbetalings bly in hierdie werkboekoefening waar die app hulle nie volledig kan weergee nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Invoice guide",
+  "english": "Invoice guide",
+  "draft": "Faktuurgids"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Payment guide",
+  "english": "Payment guide",
+  "draft": "Betalingsgids"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Expense guide",
+  "english": "Expense guide",
+  "draft": "Uitgawegids"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "The cases and figures are original classroom material. The record categories and the distinction between cash movement and income are informed by {fao} and {iowa}. Local tax rules and foreign worked examples are not imported into this exercise.",
+  "english": "The cases and figures are original classroom material. The record categories and the distinction between cash movement and income are informed by {fao} and {iowa}. Local tax rules and foreign worked examples are not imported into this exercise.",
+  "draft": "Die gevallestudies en syfers is oorspronklike klaskamermateriaal. Die rekordkategorieë en die onderskeid tussen kontantbeweging en inkomste is gerig deur {fao} en {iowa}. Plaaslike belastingreëls en buitelandse uitgewerkte voorbeelde word nie in hierdie oefening ingevoer nie."
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Iowa State University’s farm income statement guidance",
+  "english": "Iowa State University’s farm income statement guidance",
+  "draft": "Iowa State University se riglyne vir 'n plaasinkomstestaat"
+ },
+ {
+  "cls": "money",
+  "source": "inline",
+  "key": "Record expenses",
+  "english": "Record expenses",
+  "draft": "Teken uitgawes aan"
+ }
+]

@@ -54,7 +54,7 @@ const drafts: Record<string, string> = {
   "Harvests and sales may refer to different picking dates, stored produce or bought-in stock. Their difference is not measured household consumption, donations or losses.": "Oeste en verkope kan na verskillende plukdatums, gebergde produkte of aangekoopte voorraad verwys. Hul verskil is nie gemete huishoudelike verbruik, skenkings of verliese nie.",
   "Money received: {received}. Costs recorded: {costs}.": "Geld ontvang: {received}. Koste aangeteken: {costs}.",
   "unavailable amount in the selected receipts": "bedrag nie beskikbaar nie in die gekose ontvangste",
-  "unavailable amount in the selected costs": "bedrag nie beskikbaar nie in die gekose koste",
+  "unavailable amount in the selected costs": "onbeskikbare bedrag in die gekose koste",
   "Recorded cash margin: {margin}. This is receipts minus logged expenses, not full accounting profit or a bank balance.": "Aangetekende kontantmarge: {margin}. Dit is ontvangste min aangetekende uitgawes, nie volle rekeningkundige wins of 'n banksaldo nie.",
   "{n} local invoices are currently marked unpaid. They do not enter money received.": "{n} plaaslike fakture is tans as onbetaal gemerk. Hulle word nie by geld ontvang ingesluit nie.",
   "No dated entries are available for this period. Choose another period or record the activity; no result is inferred.": "Geen gedateerde inskrywings is vir hierdie tydperk beskikbaar nie. Kies 'n ander tydperk of teken die aktiwiteit aan; geen resultaat word afgelei nie.",

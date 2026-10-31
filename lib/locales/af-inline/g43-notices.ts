@@ -27,6 +27,8 @@ const drafts: Record<string, string> = {
   "Unreviewed Afrikaans drafts with English sources; some farming instructions remain in English for review.": "Onhersiene Afrikaanse konsepte met Engelse bronne; sommige boerdery-instruksies bly in Engels vir hersiening.",
   "AFRIKAANS DRAFT — This translation has not been reviewed by a fluent Afrikaans speaker.": "AFRIKAANSE KONSEP — Hierdie vertaling is nie deur 'n vlot Afrikaanse spreker hersien nie.",
   "AFRIKAANS DRAFT — Built-in demonstration text is an unreviewed AI draft. Questions written by an organisation appear in the original English. Ask the survey creator before submitting if anything is unclear.": "AFRIKAANSE KONSEP — Ingeboude demonstrasieteks is 'n onhersiene AI-konsep. Vrae wat deur 'n organisasie geskryf is, verskyn in die oorspronklike Engels. Vra die skepper van die opname voordat jy indien as enigiets onduidelik is.",
+  "Unreviewed Afrikaans AI draft. It has not been checked by a fluent speaker or local farming reviewer. Exact English source is shown alongside the lesson and answers.": "Onhersiene Afrikaanse AI-konsep. Dit is nie deur 'n vlot spreker of 'n plaaslike boerdery-hersiener nagegaan nie. Die presiese Engelse bron word langs die les en antwoorde gewys.",
+  "Unreviewed Afrikaans machine draft.": "Onhersiene Afrikaanse masjienkonsep.",
 };
 
 export default drafts;

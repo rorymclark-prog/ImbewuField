@@ -1,0 +1,51 @@
+{
+  "unit": "p4",
+  "okCount": 318,
+  "items": [
+    {
+      "index": 5,
+      "verdict": "repair",
+      "english": "No tax calculation, registration status or compliant tax invoice is being assessed.",
+      "draft": "Geen belastingberekening, registrasiestatus of voldoende belastingfaktuur word geassesseer nie.",
+      "backtranslation": "No tax calculation, registration status or sufficient tax invoice is assessed.",
+      "problem": "'Compliant tax invoice' became 'voldoende belastingfaktuur' (a sufficient/adequate tax invoice), which is a different tax concept from one that meets the legal requirements.",
+      "corrected": "Geen belastingberekening, registrasiestatus of belastingfaktuur wat aan die vereistes voldoen, word geassesseer nie."
+    },
+    {
+      "index": 21,
+      "verdict": "repair",
+      "english": "Nothing to cost yet.",
+      "draft": "Nog niks om te koste nie.",
+      "backtranslation": "Nothing to cost yet.",
+      "problem": "'Nog niks om te koste nie' is not idiomatic Afrikaans ('koste' does not work as a verb meaning to work out costs), so a farmer may not understand that there is nothing to calculate costs for yet.",
+      "corrected": "Nog niks om koste voor te bereken nie."
+    },
+    {
+      "index": 144,
+      "verdict": "repair",
+      "english": "Agree the produce, price and payment terms · illustrated example",
+      "draft": "Kom die produkte, prys en betaalvoorwaardes ooreen · geïllustreerde voorbeeld",
+      "backtranslation": "Do the produce, price and payment terms match · illustrated example",
+      "problem": "The English tells the farmer to agree the produce, price and payment terms with the buyer, but the draft asks whether they match ('Kom ... ooreen'), and the question is also ungrammatical.",
+      "corrected": "Kom ooreen oor die produkte, prys en betaalvoorwaardes · geïllustreerde voorbeeld"
+    },
+    {
+      "index": 153,
+      "verdict": "repair",
+      "english": "Make these choices first. Changing the invoice type or existing-sale choice starts a fresh form, so check the details again before saving.",
+      "draft": "Maak eers hierdie keuses. As jy die faktuurtipe of die keuse van 'n bestaande verkoping verander, begin 'n nuwe vorm, so kontroleer die besonderhede weer voordat jy stoor.",
+      "backtranslation": "Make these choices first. If you change the invoice type or the choice of an existing sale, a new form starts, so check the details again before you save.",
+      "problem": "'As jy ... verander, begin 'n nuwe vorm' can be read as the instruction 'start a new form', which hides the warning that changing these choices resets the form by itself.",
+      "corrected": "Maak eers hierdie keuses. As jy die faktuurtipe of die keuse van 'n bestaande verkoping verander, begin die app 'n nuwe vorm, so kontroleer die besonderhede weer voordat jy stoor."
+    },
+    {
+      "index": 265,
+      "verdict": "repair",
+      "english": "Choose the entry type and existing-sale answer before filling the rest. Changing these choices starts a fresh form, so check all the details again.",
+      "draft": "Kies die inskrywingstipe en die antwoord oor 'n bestaande verkoping voordat jy die res invul. As jy hierdie keuses verander, begin 'n nuwe vorm, so kontroleer al die besonderhede weer.",
+      "backtranslation": "Choose the entry type and the answer about an existing sale before you fill in the rest. If you change these choices, a new form starts, so check all the details again.",
+      "problem": "'As jy hierdie keuses verander, begin 'n nuwe vorm' can be read as the instruction 'start a new form', which hides the warning that changing these choices resets the form by itself.",
+      "corrected": "Kies die inskrywingstipe en die antwoord oor 'n bestaande verkoping voordat jy die res invul. As jy hierdie keuses verander, begin die app 'n nuwe vorm, so kontroleer al die besonderhede weer."
+    }
+  ]
+}
