@@ -3,12 +3,13 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 import './hybrid-composite-registration.cases.ts';
-import { assertMatchingImageAspects, blendProtectedPixels, countProtectedPixelMismatches, maskEditableFraction, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
+import './ai-map-composition.cases.ts';
+import { registerOpenAiMapOutput, registeredOpenAiMapSize, assertMatchingImageAspects, blendProtectedPixels, countProtectedPixelMismatches, maskEditableFraction, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
 import { buildFinishedSheetPolishPrompt, buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES, SHEET_NO } from '../lib/producer-prompt.ts';
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
-import { exactModelInputMarks, geometryLockCompositionPolicy, hasConflictingRenderAuthority, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
+import { exactModelInputMarks, hybridProtectionPolicy, geometryLockCompositionPolicy, hasConflictingRenderAuthority, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
 import { lineInFilter, REFERENCE_SHEET_LABEL } from '../lib/glossy-filters.ts';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, pairedWaterDestinationCanopyIds, waterFeaturePresentationDimensions, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, earthworksRouteStyleFor } from '../lib/water-cartography.ts';
 import { authenticateApiRequest, MAX_API_BODY_BYTES, oversizedApiBodyResponse } from '../lib/api-auth.ts';
@@ -67,6 +68,63 @@ test('registered maps may change resolution with pixel rounding, but never shape
     { width: 12, height: 8 },
     { width: 12, height: 9 },
   ), /model aspect does not match source/);
+});
+
+test('the paid 1744 by 1888 result is registered without weakening the source or mask guard', () => {
+  const source = { width: 1920, height: 2083 };
+  const raw = { width: 1744, height: 1888 };
+  assert.throws(() => assertMatchingImageAspects(source, raw), /model aspect does not match source/);
+  const registered = registeredOpenAiMapSize(source, raw);
+  assert.deepEqual(registered, { width: 1744, height: 1892 });
+  assert.doesNotThrow(() => assertMatchingImageAspects(source, registered, source));
+  assert.deepEqual(source, { width: 1920, height: 2083 });
+  for (const wrong of [{ width: 1744, height: 1872 }, { width: 1728, height: 1888 }, { width: 1744, height: 1744 }]) {
+    assert.throws(() => registeredOpenAiMapSize(source, wrong), /model aspect does not match source/);
+  }
+  assert.throws(() => assertMatchingImageAspects(source, registered, { width: 1744, height: 1888 }), /mask aspect does not match source/);
+});
+
+test('grid registration resamples only the AI image and releases its temporary canvas', async () => {
+  const previousImage = Object.getOwnPropertyDescriptor(globalThis, 'Image');
+  const previousDocument = Object.getOwnPropertyDescriptor(globalThis, 'document');
+  const decoded: Array<{ width: number; height: number; released: boolean }> = [];
+  const draws: unknown[][] = [];
+  let encodedSize: number[] = [];
+  class DecodedImage {
+    width = 0; height = 0; naturalWidth = 0; naturalHeight = 0; released = false;
+    onload: null | (() => void) = null;
+    onerror: unknown = null;
+    set src(value: string) {
+      [this.width, this.height] = value.includes('source') ? [1920, 2083] : [1744, 1888];
+      this.naturalWidth = this.width; this.naturalHeight = this.height;
+      decoded.push(this);
+      queueMicrotask(() => this.onload?.());
+    }
+    removeAttribute() { this.released = true; }
+  }
+  const canvas = { width: 0, height: 0,
+    getContext: () => ({ drawImage: (...args: unknown[]) => draws.push(args) }),
+    toDataURL() { encodedSize = [this.width, this.height]; return 'data:image/png;base64,registered'; },
+  };
+  Object.defineProperty(globalThis, 'Image', { configurable: true, value: DecodedImage });
+  Object.defineProperty(globalThis, 'document', { configurable: true, value: { createElement: () => canvas } });
+  try {
+    assert.equal(await registerOpenAiMapOutput('data:image/png;base64,source', 'data:image/png;base64,model'), 'data:image/png;base64,registered');
+    assert.deepEqual(encodedSize, [1744, 1892]);
+    assert.equal(draws.length, 1);
+    assert.equal(draws[0][0], decoded[1], 'only generated artwork may be resampled');
+    assert.deepEqual(draws[0].slice(1), [0, 0, 1744, 1892]);
+    assert.deepEqual([decoded[0].width, decoded[0].height], [1920, 2083]);
+    assert.deepEqual([canvas.width, canvas.height], [0, 0]);
+    assert.ok(decoded.every(image => image.released));
+    const glossy = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+    const finish = glossy.slice(glossy.indexOf('async function handleSnapshot('));
+    assert.match(finish, /job\.engine === 'openai'\) raw = await registerOpenAiMapOutput\(sourceImage, raw\)/);
+    assert.ok(finish.indexOf('registerOpenAiMapOutput(sourceImage, raw)') < finish.indexOf('assertMatchingImageAspects(inputDimensions, outputDimensions)'));
+  } finally {
+    if (previousImage) Object.defineProperty(globalThis, 'Image', previousImage); else delete (globalThis as { Image?: unknown }).Image;
+    if (previousDocument) Object.defineProperty(globalThis, 'document', previousDocument); else delete (globalThis as { document?: unknown }).document;
+  }
 });
 
 test('invalid image dimensions cannot reach a restoration canvas', () => {
@@ -175,9 +233,11 @@ test('Satellite Overlay remains the explicit reversible model-authored style', (
   });
 });
 
-test('painted Geometry Lock keeps one editable property interior instead of satellite islands', () => {
-  for (const style of ['precision_atlas', 'extension_blueprint', 'field_ledger', 'homestead_storybook', 'karoo_folk', 'chatgpt_atlas', 'master_atlas'] as const) {
-    assert.deepEqual(geometryLockCompositionPolicy(style, 'photo'), {
+test('painted styles retain a continuous illustrated property with either a photo or paper input', () => {
+  // Rory chose the richer illustrated interior after the phone's plain-input result was flattened.
+  // The white surrounding sheet is still protected; plain input must not mean exact green tiles.
+  for (const style of ['precision_atlas', 'extension_blueprint', 'field_ledger', 'homestead_storybook', 'karoo_folk', 'chatgpt_atlas', 'master_atlas'] as const) for (const source of ['photo', 'paper'] as const) {
+    assert.deepEqual(geometryLockCompositionPolicy(style, source), {
       ground: 'paint',
       protectUnmarkedGround: false,
       protectHousePixels: false,
@@ -197,7 +257,7 @@ test('photo and paper Geometry Lock retain their factual background contracts', 
     useSourceStructurePixels: true,
     useExactGroundOverlay: true,
   });
-  assert.deepEqual(geometryLockCompositionPolicy('precision_atlas', 'paper'), {
+  assert.deepEqual(geometryLockCompositionPolicy('photo_plan', 'paper'), {
     ground: 'paper',
     protectUnmarkedGround: true,
     protectHousePixels: true,
@@ -209,8 +269,13 @@ test('photo and paper Geometry Lock retain their factual background contracts', 
 
 test('the Geometry-Lock finisher obeys the shared composition policy', () => {
   const src = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
-  assert.match(src, /protectUnmarkedGround: composition\.protectUnmarkedGround/,
-    'the protect mask must take its background contract from the shared style policy');
+  assert.match(src, /return hybridProtectionPolicy\(filter, style, hasPhoto\)/,
+    'the mask delegates to the same policy for new jobs and recovered paid jobs');
+  for (const style of ['photo_plan', 'precision_atlas'] as const) for (const hasPhoto of [true, false]) {
+    assert.equal(hybridProtectionPolicy('all', style, hasPhoto).protectUnmarkedGround,
+      geometryLockCompositionPolicy(style, hasPhoto ? 'photo' : 'paper').protectUnmarkedGround,
+      'consolidating the policy must retain the factual background contract');
+  }
   assert.match(src, /locked && compositionPolicy\.useExactGroundOverlay/,
     'painted styles must be able to suppress the exact ground tiles that caused the collage');
   assert.match(src, /compositionPolicy\.useSourceStructurePixels/,

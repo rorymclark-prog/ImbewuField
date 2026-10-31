@@ -1,6 +1,80 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Paper recovery: docs/audits/2026-10-31/paper-map-release-drafts.json; unreviewed.
+  "Style choices stay visible; plain-paper Water maps keep white backgrounds.": "Swihlawuriwa swa xitayele swi sala swi vonaka; mimepe ya Mati eka phepha ro basa yi hlayisa le ndzhaku ku basile.",
+  // Oblique picker: docs/audits/2026-10-30/oblique-style-picker-release-drafts.json; unreviewed.
+  "Oblique styles stay visible when you switch from an exact map.": "Switayele swa Oblique swi sala swi vonaka loko u suka eka mepe lowu pimiweke hi ku kongoma.",
+  // Oblique experiment guide: docs/audits/2026-10-30/oblique-experiment-guide-drafts.json; unreviewed.
+  "Try an angled view": "Ringeta ku languta hi engele",
+  "With AI access, open Glossy and choose Oblique under AI viewpoint to generate your design.": "Loko u ri ni mfikelelo wa AI, pfula Glossy kutani u hlawula Oblique ehansi ka AI viewpoint leswaku u humesa dizayini ya wena.",
+  "Keep the measured plan": "Hlayisa pulani leyi pimiweke",
+  "Use the top-down Design Map for measurements; compare the angled view with it.": "Tirhisa Design Map leyi langutiwaka ehenhla eka mimpimo; pimanisa xifaniso xa engele na yona.",
+  // Oblique beta: docs/audits/2026-10-30/oblique-ai-view-release-drafts.json; unreviewed.
+  "Choose Oblique in AI viewpoint for an angled illustration of your whole design.": "Hlawula Oblique eka AI viewpoint ku vona xifaniso xa pulani ya wena hinkwato xi langutiwe hi le tlhelo.",
+  "The app gathers your layout, photo and terrain; use the top-down plan for measurements.": "App yi lulamisa pulani leyi hlayisiweke, xifaniso xa ndhawu ni vuxokoxoko bya misava leyi kumekaka; tirhisa pulani leyi langutiweke ehenhla ku pima.",
+  // Driveway guide: docs/audits/2026-10-30/glossy-driveway-guide-release-drafts.json; unreviewed.
+  "Glossy AI maps omit duplicate driveway guides; your editable paths stay saved.": "Mimepe yo saseka ya AI a yi kombisi swiletelo leswi phindhiweke swa ndlela ya timovha; tindlela ta wena leti hlelekaka ti sala ti hlayisiwile.",
+  // Roof reference: docs/audits/2026-10-30/aerial-roof-release-drafts.json; unreviewed.
+  "AI maps on plain paper keep real roof detail from satellite imagery.": "Mimepe ya AI eka phepha ro basa yi hlayisa vuxokoxoko bya xiviri bya lwangu ku suka eka swifaniso swa sathelayiti.",
+  // Phone map artwork: docs/audits/2026-10-30/phone-ai-paper-release-drafts.json; unreviewed.
+  "AI maps on plain paper keep illustrated ground instead of flat overlays.": "Mimepe ya AI eka phepha ro basa yi hlayisa misava leyi dirowiweke ematshan'weni ya swiphemu swo andlaleka.",
+  "Full-screen maps fit your phone, including with larger text.": "Mimepe ya xikirini lexi heleleke yi nghena kahle eka riqingho ra wena, hambi ku ri ni matsalelo lamakulu.",
+  "Check the complete map": "Kambisisa mepe lowu heleleke",
+  "Open a saved map full-screen. The whole sheet and legend should fit.": "Pfula mepe lowu hlayisiweke eka xikirini hinkwaxo. Phepha hinkwaro ni tinhlamuselo ta swikombiso swi fanele ku nghena.",
+  "Recover your paid artwork": "Vuyisa xifaniso lexi u xi hakeleke",
+  "Saved maps → Open map": "Mimepe leyi hlayisiweke → Pfula mepe",
+  "Choose Reassemble artwork at the original print quality. No new AI render is bought.": "Hlawula ku hlanganisa xifaniso nakambe hi khwalithi yo sungula ya ku kandziyisa. A wu xavi xifaniso lexintshwa xa AI.",
+  // Map footer: docs/audits/2026-10-30/map-style-footer-release-drafts.json; unreviewed.
+  "Reference Blueprint now appears in small print at the bottom of your maps.": "Reference Blueprint sweswi yi humelela hi matsalelo lamatsongo ehansi ka mimepe ya wena.",
+  "Photo dates are easier to read; scroll through older notes on desktop.": "Masiku ya swifaniso sweswi swa olova ku ma hlaya; skrola eka tinotsi ta khale eka khompyuta.",
+  "Photo dates and journal headings are easier to read.": "Masiku ya swifaniso ni tinhlokomhaka ta jenali sweswi swa olova ku swi hlaya.",
+  // Farm memory release: docs/audits/2026-10-29/farm-memory-release-drafts.json; unreviewed.
+  "Farm memory search, photos and saved copies now support isiZulu.": "Ku lavisisa, swifaniso ni tikopi leti hlayisiweke ta switsundzuxo swa purasi sweswi swi seketela isiZulu.",
+  "Tap a crop or bed on a note to see its journal history.": "Khoma ximilana kumbe mubedo eka notsi ku vona matimu ya xona eka jenali.",
+  "Choose a smaller printable copy with notes only.": "Hlawula kopi leyitsongo leyi nga kandziyisiwaka leyi nga ni tinotsi ntsena.",
+  "Open a field note from a task, with its crop and bed ready to check.": "Pfula notsi ya nsimu eka ntiro, ximilana ni mubedo wa kona swi lunghekele ku kamberiwa.",
+  "Find journal notes by crop, bed, date or words you remember.": "Kuma tinotsi ta jenali hi ximilana, mubedo, siku kumbe marito lawa u ma tsundzukaka.",
+  "Compare dated photos and download selected notes for an adviser.": "Pimanisa swifaniso leswi nga ni masiku kutani u kopa tinotsi leti hlawuriweke ta mutsundzuxi.",
+  "Harvest tasks open the crop and blank quantity field, ready to fill in.": "Mintirho ya ntshovelo yi pfula ximilana ni ndhawu leyi nga riki na nhlayo, yi lunghekele ku tatiwa.",
+  "Explore your farm memory": "Kambela switsundzuxo swa purasi ra wena",
+  "Menu → Field journal": "Menyu → Jenali ya nsimu",
+  "Search your notes, compare saved photos and keep a printable copy.": "Lavisisa tinotsi ta wena, pimanisa swifaniso leswi hlayisiweke kutani u hlayisa kopi leyi nga kandziyisiwaka.",
+  "Record work from a task": "Rhekhoda leswi endliweke eka ntiro",
+  "Menu → Task planner": "Menyu → Mupulani wa mintirho",
+  "Open a draft field note or record an actual harvest from a crop task.": "Pfula mpfapfarhuto wa notsi ya nsimu kumbe u rhekhoda ntshovelo wa xiviri eka ntiro wa ximilana.",
+  // Boundary artwork audit: docs/audits/2026-10-29/ai-map-boundary-release-drafts.json; unreviewed.
+  "AI maps keep tank tops and more foliage visible across the property line.": "Mimepe ya AI yi hlayisa tinhlohla ta mathangi ni matluka yo tala swi vonaka ku tsemakanya ndzilakano wa ndhawu.",
+  // Annual PDF row audit: docs/audits/2026-10-29/annual-product-pdf-release-drafts.json; unreviewed.
+  "PDF exports keep each product and its notes together.": "Ti-PDF leti humesiwaka ti hlayisa xikumiwa xin’wana ni xin’wana ni tinotsi ta xona swin’we.",
+  // Production status audit: docs/audits/2026-10-27/report-production-status-release-drafts.json; unreviewed.
+  "Production plans keep unmarked plants and housing as proposed, matching your design.": "Mapulani ya vuhumelerisi ya hlayisa swimilana ni tindlu ta swifuwo leswi nga funghiwang swi ri leswi kunguhatiweke, ku landzela pulani ya wena.",
+  // PDF sample audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Report headings stay with their opening text when you export a PDF.": "Tinhlokomhaka ta xiviko ti sala ni tsalwa ra tona ro sungula loko u humesa PDF.",
+  // Visual audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Map legends have thinner borders and clearer scale marks.": "Mabokisi ya swikombiso swa mimepe ya ni mindzilakano yo vevuka ni swikombiso swa mpimo leswi nga erivaleni.",
+  "Menu → Site design": "Menyu → Pulani ya ndhawu",
+  "Check the new map lettering": "Kamba matsalelo lamantshwa ya mepe",
+  "Create a free exact map. Check the larger key and the buildings you traced.": "Endla mepe lowu kongomeke wa mahala. Kamba nhlamuselo leyikulu ya swikombiso ni miako leyi u nga yi dirowa.",
+  "Check the maps in your site report": "Kamba mimepe eka xiviko xa ndhawu ya wena",
+  "Review each included map before exporting. Saved older drawings stay available.": "Kamba mepe wun’wana ni wun’wana lowu katsiweke u nga si wu humesa. Swidirowiwa swa khale leswi hlayisiweke swa ha kumeka.",
+  // Map follow-up: docs/audits/2026-10-26/map-release-note-drafts.json; unreviewed.
+  "New map legends use spare margin space for larger, clearer lettering.": "Tinhlamuselo letintshwa ta swikombiso swa mepe ti tirhisa ndhawu leyi nga tirhisiwiki etlhelo leswaku marito ma va makulu ni ku hlayeka kahle.",
+  "Paper base maps show each building you traced, with separate building names.": "Mimepe ya masungulo ya le papileni yi komba muako wun’wana ni wun’wana lowu u nga wu dirowa, ni mavito ya miako lama hambaneke.",
+  "Saved maps stay available; create new drawings to see these improvements.": "Mimepe leyi hlayisiweke ya ha kumeka; endla swidirowiwa leswintshwa ku vona ku antswisiwa loku.",
+  "All nine map sheets use the same legend box, fonts and spacing.": "Mapheji hinkwawo ya nkaye ya mimepe ma tirhisa bokisi rin’we ra swikombiso, tifonto ni swivandla leswi fanaka.",
+  "New drawings keep the legend on the right; your saved maps stay available.": "Swidirowiwa leswintshwa swi veka nhlamuselo ya swikombiso exineneni; mimepe ya wena leyi hlayisiweke ya ha kumeka.",
+  "Long map headings wrap inside their legend box.": "Tinhlokomhaka to leha ta mepe ti aviwa hi tilayini endzeni ka bokisi ra swikombiso.",
+  "Saved AI maps can be reassembled without buying another render.": "Mimepe ya AI leyi hlayisiweke yi nga hlanganisiwa nakambe handle ko xava xifaniso xin’wana.",
+  "AI maps keep continuous artwork, with tree crowns allowed over the boundary.": "Mimepe ya AI yi hlayisa xifaniso lexi yaka mahlweni, marhavi ya mirhi ma nga hundza ndzilakano.",
+  "AI map downloads now remind you to check positions and counts.": "Mimepe ya AI leyi dawunilodiweke sweswi yi ku tsundzuxa ku kambela tindhawu ni tinhlayo.",
+
+  "Saved reports keep their original photos and site water evidence.": "Swiviko leswi hlayisiweke swi hlayisa swifaniso swa swona swo sungula ni vumbhoni bya mati ya ndhawu.",
+  "Field records now accept today’s date after midnight in South Africa.": "Tirhekhodo ta nsimu sweswi ti amukela siku ra namuntlha endzhaku ka vusiku eAfrika Dzonga.",
+  "Map and crop exports give clearer errors and keyboard controls.": "Ku humesa mimepe ni mapulani ya swibyariwa swi nyika swihoxo ni vulawuri bya khibodo leswi twisisekaka.",
+  "Map sheets now use white paper, thin legend borders and clearer plant pictures.": "Maphepha ya mimepe sweswi ma tirhisa phepha ro basa, mindzilakano yo lala ya xilotlelo ni swifaniso swa swimilana leswi vonakaka kahle.",
+  "Paid AI maps now finish when the image service rounds their size.": "Mimepe ya AI leyi hakeriwaka sweswi ya hela loko vukorhokeri bya swifaniso byi rhendzeleka mpimo wa yona.",
+  "New AI glossy maps use GPT Image 2.5 Sunburst.": "Mimepe leyintshwa ya AI yo vangama yi tirhisa GPT Image 2.5 Sunburst.",
   "Offline saving and sending messages now have drafts in all four languages.": "Swiviko swa ku hlayisa handle ka vuhlanganisi ni ku rhumela sweswi swi ni mipfapfarhuto hi tindzimi hinkwato ta mune.",
   "Consent choices now show draft translations and the English source in all four languages.": "Swihlawuriwa swa mpfumelelo sweswi swi komba vuhundzuluxi bya mpfapfarhuto ni tsalwa ro sungula ra Xinghezi hi tindzimi hinkwato ta mune.",
   "Full production and yield notes now have four draft translations.": "Tinotsi leti heleleke ta vuhumelerisi ni ntshovelo sweswi ti ni vuhundzuluxi bya mpfapfarhuto hi tindzimi ta mune.",

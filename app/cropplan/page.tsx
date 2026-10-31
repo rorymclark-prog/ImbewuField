@@ -26,6 +26,8 @@ import {
   loadCompletedTaskIds, setCompletedTaskState,
   type BoardTask, type CropBoardYear,
 } from '@/lib/task-board';
+import { taskJournalHref, taskHarvestHref } from '@/lib/task-record-link';
+import { farmMemoryText } from '@/lib/farm-memory-copy';
 
 // ─── Types & data ────────────────────────────────────────────────────────────
 //
@@ -219,13 +221,16 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel, lang
     <div className={workspace.cards}>
       {tasks.map((task) => {
         const m = actionMeta(task);
+        const journalHref = taskJournalHref(task);
+        const harvestHref = taskHarvestHref(task);
         return (
           <div key={task.id} className="flex items-center gap-3 px-4 py-3.5 rounded-2xl" style={{ background: 'var(--bg-1)', border: '1px solid var(--border)' }}>
             <button
               onClick={() => onToggle(task.id)}
               aria-label={task.completed ? notDoneLabel : doneLabel}
               className="flex-shrink-0"
-              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: 'var(--color-forest-800)' }}
+              aria-pressed={task.completed}
+              style={{ background: 'none', border: 'none', padding: 0, minWidth: 44, minHeight: 44, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-forest-800)' }}
             >
               {task.completed ? <CheckCircle2 size={20} strokeWidth={1.8} /> : <Circle size={20} strokeWidth={1.8} />}
             </button>
@@ -252,6 +257,16 @@ function TaskList({ tasks, onToggle, emptyMessage, doneLabel, notDoneLabel, lang
                   xhosa={taskSubtitleXh(task, lang)}
                 />
               </div>
+              {(journalHref || harvestHref) && (
+                <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1" lang={lang === 'zu' ? 'zu' : 'en'}>
+                  {journalHref && <Link href={journalHref} className="inline-flex items-center gap-1 min-h-11 font-sans text-sm underline underline-offset-4" style={{ color: 'var(--color-forest-800)' }} aria-label={farmMemoryText(lang, 'writeFieldNoteAria', { title: task.title })}>
+                    <ClipboardList size={15} aria-hidden /> {farmMemoryText(lang, 'writeFieldNote')}
+                  </Link>}
+                  {harvestHref && <Link href={harvestHref} className="inline-flex items-center gap-1 min-h-11 font-sans text-sm underline underline-offset-4" style={{ color: 'var(--color-forest-800)' }} aria-label={farmMemoryText(lang, 'logPickedAria', { title: task.title })}>
+                    <Scissors size={15} aria-hidden /> {farmMemoryText(lang, 'logPicked')}
+                  </Link>}
+                </div>
+              )}
             </div>
           </div>
         );

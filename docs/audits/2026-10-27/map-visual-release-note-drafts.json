@@ -1,0 +1,24 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "scope": "Map and report visual-update notices only. Existing native wording and farming content are preserved; no fluent review claimed.",
+  "entries": [
+    {
+      "source": "Map legends have thinner borders and clearer scale marks.",
+      "drafts": {
+        "zu": "Izincazelo zezimpawu zemephu sezinemingcele emincane nezimpawu zesilinganiso ezicacile.",
+        "st": "Mabokose a matshwao a dimmapa a na le meedi e mesesane le matshwao a sekala a hlakileng.",
+        "ts": "Mabokisi ya swikombiso swa mimepe ya ni mindzilakano yo vevuka ni swikombiso swa mpimo leswi nga erivaleni.",
+        "ve": "Mabogisi a zwiga zwa mimepe a na mikano miṱuku na zwiga zwa tshikalo zwi re khagala."
+      }
+    },
+    {
+      "source": "Report headings stay with their opening text when you export a PDF.",
+      "drafts": {
+        "zu": "Izihloko zombiko zihlala nombhalo wazo wokuqala lapho uthekelisa i-PDF.",
+        "st": "Dihlooho tsa tlaleho di dula le mongolo wa tsona wa pele ha o romela PDF.",
+        "ts": "Tinhlokomhaka ta xiviko ti sala ni tsalwa ra tona ro sungula loko u humesa PDF.",
+        "ve": "Thoho dza muvhigo dzi dzula na maipfi adzo a u thoma musi ni tshi bvisa PDF."
+      }
+    }
+  ]
+}

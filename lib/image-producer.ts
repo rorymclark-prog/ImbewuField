@@ -18,10 +18,68 @@
 // does not establish that every tree, bed or route inside it is correct.
 
 import { compareRenders, type DifferenceReport } from '@/lib/render-difference';
-import { drainCanvasToDataUrl, releaseCanvas } from '@/lib/release-canvas';
+import { openAiMapRequestedSize } from '@/lib/ai-render/model';
+import { drainCanvasToDataUrl, releaseCanvas, releaseImageSource } from '@/lib/release-canvas';
 
 /** Either an image source (data URL / base64) or an already-decoded element. */
 export type ImageInput = string | HTMLImageElement;
+
+/** An exterior canopy window must not also retain a round tile of model-painted soil. Select
+ * foliage inside the saved presentation envelope, including nearby flowers/branches. Tank
+ * windows additionally admit blue/teal plastic, which the foliage-only selector used to erase.
+ * This is presentation selection, not species recognition or a test of agricultural accuracy. */
+export function canopyForegroundAlpha(
+  artwork: Uint8ClampedArray, footprint: Uint8ClampedArray, width: number, height: number,
+  tankFootprint?: Uint8ClampedArray,
+  seedFootprint?: Uint8ClampedArray,
+): Uint8ClampedArray {
+  if (artwork.length !== width * height * 4 || footprint.length !== artwork.length
+    || (tankFootprint && tankFootprint.length !== artwork.length)
+    || (seedFootprint && seedFootprint.length !== artwork.length)) throw new Error('canopy raster size mismatch');
+  const selected = new Uint8ClampedArray(width * height);
+  for (let i = 0; i < selected.length; i++) {
+    const p = i * 4;
+    const r = artwork[p], g = artwork[p + 1], b = artwork[p + 2];
+    const leaf = g >= r * 0.98 && g > b * 1.15 && g - b > 8;
+    const tank = leaf || (b > r * 0.8 && g > r * 1.05);
+    if ((footprint[p + 3] && leaf) || (tankFootprint?.[p + 3] && tank)) selected[i] = 255;
+  }
+  if (seedFootprint) {
+    // A larger halo must not recover disconnected neighbouring trees. Grow only colour regions
+    // connected to the saved plant footprint (or a tank window), never every green pixel nearby.
+    const connected = new Uint8Array(selected.length);
+    const queue = new Int32Array(selected.length);
+    let head = 0, tail = 0;
+    for (let i = 0; i < selected.length; i++) if (selected[i]
+      && (seedFootprint[i * 4 + 3] || tankFootprint?.[i * 4 + 3])) {
+      connected[i] = 1; queue[tail++] = i;
+    }
+    while (head < tail) {
+      const i = queue[head++], x = i % width, y = Math.floor(i / width);
+      for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+        if (x + dx < 0 || x + dx >= width || y + dy < 0 || y + dy >= height) continue;
+        const j = (y + dy) * width + x + dx;
+        if (selected[j] && !connected[j]) { connected[j] = 1; queue[tail++] = j; }
+      }
+    }
+    for (let i = 0; i < selected.length; i++) if (!connected[i]) selected[i] = 0;
+  }
+  // One-pixel neighbours keep flower and branch detail without admitting a whole ground tile.
+  const alpha = new Uint8ClampedArray(selected.length);
+  for (let y = 0; y < height; y++) for (let x = 0; x < width; x++) {
+    const i = y * width + x;
+    const envelope = Math.max(footprint[i * 4 + 3], tankFootprint?.[i * 4 + 3] ?? 0);
+    if (!envelope) continue;
+    let strongest = selected[i];
+    for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+      if (x + dx >= 0 && x + dx < width && y + dy >= 0 && y + dy < height) {
+        strongest = Math.max(strongest, selected[(y + dy) * width + x + dx] * 0.65);
+      }
+    }
+    alpha[i] = Math.round(strongest * envelope / 255);
+  }
+  return alpha;
+}
 
 /** A true, in-frame label to burn onto the produced map. All coords are OUTPUT px. */
 export interface ProducerLabel {
@@ -415,6 +473,48 @@ export function assertMatchingImageAspects(
     if (relativeDrift > roundingTolerance) {
       throw new Error(`image registration: ${name} aspect does not match source (${size.width}x${size.height} vs ${source.width}x${source.height})`);
     }
+  }
+}
+
+/** Only the exact size requested by our OpenAI worker earns a grid-rounding repair. Keep the
+ * strict guard intact: a square/crop, a wrong-size return or an unrelated mask still fails. */
+export function registeredOpenAiMapSize(source: ImageDimensions, model: ImageDimensions): ImageDimensions {
+  try {
+    assertMatchingImageAspects(source, model);
+    return { ...model };
+  } catch (error) {
+    if (openAiMapRequestedSize(source.width, source.height) !== `${model.width}x${model.height}`) throw error;
+    const registered = { width: model.width, height: Math.round(model.width * source.height / source.width) };
+    assertMatchingImageAspects(source, registered);
+    return registered;
+  }
+}
+
+/** Undo only the provider's known output-grid rounding, before restoring any source pixels.
+ * The original source/mask and all saved geometry remain untouched; only AI artwork is sampled
+ * into a canvas with the source aspect. The original paid output remains in Storage. */
+export async function registerOpenAiMapOutput(sourceImage: string, modelImage: string): Promise<string> {
+  const [source, model] = await Promise.all([loadImage(sourceImage), loadImage(modelImage)]);
+  try {
+    const size = registeredOpenAiMapSize(
+      { width: source.naturalWidth || source.width, height: source.naturalHeight || source.height },
+      { width: model.naturalWidth || model.width, height: model.naturalHeight || model.height },
+    );
+    if (size.width === (model.naturalWidth || model.width) && size.height === (model.naturalHeight || model.height)) return modelImage;
+    const canvas = document.createElement('canvas');
+    canvas.width = size.width;
+    canvas.height = size.height;
+    const context = canvas.getContext('2d');
+    if (!context) { releaseCanvas(canvas); throw new Error('image registration: 2D context unavailable'); }
+    try {
+      context.drawImage(model, 0, 0, size.width, size.height);
+      return drainCanvasToDataUrl(canvas, 'image/png');
+    } finally {
+      releaseCanvas(canvas);
+    }
+  } finally {
+    releaseImageSource(source);
+    releaseImageSource(model);
   }
 }
 

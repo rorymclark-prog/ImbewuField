@@ -1,11 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { act } from 'react-test-renderer';
+import { journalFixture, mountJournal, renderedButton, renderedText } from './journal-workflow-renderer.ts';
+import { JOURNAL_CATEGORIES, todayISODate } from '../lib/field-journal.ts';
 
 // swarm/w4-vision-journal-simple: Simple / All tools for Lima Vision (/vision) and the Field
-// Journal (FieldJournal + JournalEntrySheet). Source-text guard style, same as
-// tests/design-simple-mode.test.ts: these screens are not pure functions of exported data, so the
-// guard reads the real shipped file and asserts the wiring a farmer would actually hit.
+// Journal. Keep the Vision source guards, but exercise journal modes through the shipped
+// components: the old source-shape checks rejected the task draft's legitimate editable date,
+// bed and crop while failing to prove what a farmer could actually see or save.
 
 const VISION = readFileSync(new URL('../app/vision/page.tsx', import.meta.url), 'utf8');
 const JOURNAL = readFileSync(new URL('../components/journal/FieldJournal.tsx', import.meta.url), 'utf8');
@@ -48,55 +51,115 @@ test('/vision: the mode picker (only two everyday modes) and the capture action 
   );
 });
 
-test('FieldJournal: Simple leads with entries and one add-note action, hiding the stat row, storage note and category filter', () => {
-  assert.match(JOURNAL, /\{!simple && \(\s*<div style=\{\{ display: 'grid', gridTemplateColumns: 'repeat\(3, 1fr\)'/, 'the entries/this-month/since-last-note stat row must not render in Simple');
-  assert.match(JOURNAL, /\{!simple && \(\s*<p style=\{\{\s*margin: '8px 2px 0'/, 'the "where this goes" storage explainer must not render in Simple');
-  assert.match(JOURNAL, /\{!simple && usedCategories\.length > 1 && \(/, 'the category filter chips must not render in Simple');
-  assert.match(
-    JOURNAL,
-    /\{simple \? ui\('Add a note', 'Faka inothi'\) : ui\('New entry', 'Faka okusha'\)\}/,
-    'the primary action must read "Add a note" in Simple and "New entry" in All tools',
-  );
-});
+for (const simple of [true, false]) {
+  const mode = simple ? 'Simple' : 'All tools';
 
-test('FieldJournal: the primary add-note/new-entry action opens the same entry sheet in both modes', () => {
-  // bug-03 wrapped the bare setSheet({ open: true, entry: null }) calls in an openSheet(entry)
-  // helper (it also clears the storage-full sheetError from any previous attempt), so the open
-  // action is still unconditionally reachable here, just through that one extra function.
-  const opens = [...JOURNAL.matchAll(/onClick=\{\(\) => openSheet\(null\)\}/g)];
-  assert.ok(opens.length >= 1, 'at least one control must open a blank entry via openSheet(null)');
-  assert.match(JOURNAL, /function openSheet\(entry: JournalEntry \| null\) \{\s*\n\s*setSheetError\(null\);\s*\n\s*setSheet\(\{ open: true, entry \}\);\s*\n\s*\}/,
-    'openSheet must still end up calling setSheet({ open: true, entry })');
-  // The primary sticky action button (not the empty-state example CTA) must be reachable
-  // regardless of simple — it is not wrapped in any !simple/simple-only guard of its own.
-  assert.match(JOURNAL, /<Plus size=\{20\} \/>\s*\{simple \? ui\('Add a note'/, 'the sticky primary button must render its icon + label pair unconditionally');
-});
+  test(`${mode} journal keeps both notes and one add action, with extra overview and category controls only in All tools`, async () => {
+    const entries = [
+      journalFixture('planting-note', 'Original planting note', '2026-03-01', 'Lettuce'),
+      { ...journalFixture('harvest-note', 'Original harvest note', '2026-03-02', 'Lettuce'), category: 'harvest' as const },
+    ];
+    const app = await mountJournal({ simple, entries });
+    try {
+      assert.equal(app.renderer.root.findAllByType('article').length, 2);
+      for (const label of ['entries', 'this month', 'since last note']) {
+        assert.equal(app.renderer.root.findAllByProps({ label }).length, simple ? 0 : 1, `${label} is extra overview detail`);
+      }
+      assert.equal(renderedText(app.renderer.root).includes('journalLocalOnlyNote'), !simple, 'the storage explainer follows the mode');
+      assert.equal(renderedText(app.renderer.root).includes('journalWeightsLiveElsewhere'), !simple);
+      const primary = simple ? 'Add a note' : 'New entry';
+      assert.equal(app.renderer.root.findAllByType('button').filter(button => renderedText(button) === primary).length, 1);
+      await act(async () => app.renderer.root.findByProps({ 'aria-controls': 'journal-memory-filters' }).props.onClick());
+      for (const label of ['Planting', 'Harvest']) {
+        const choices = app.renderer.root.findAllByType('button').filter(button => renderedText(button).trim() === label);
+        assert.equal(choices.length, simple ? 0 : 1, 'category filtering must remain available only in All tools');
+      }
+      await act(async () => renderedButton(app.renderer, primary).props.onClick());
+      assert.equal(app.renderer.root.findAllByType(app.Sheet).length, 1, 'both primary actions open the same real entry sheet');
+      assert.equal(app.renderer.root.findByType(app.Sheet).props.entry, null);
+      assert.equal(app.writes.length, 0, 'opening a sheet is not a saved observation');
+      await act(async () => app.renderer.root.findByProps({ 'aria-label': 'Close' }).props.onClick());
+      assert.equal(app.renderer.root.findAllByProps({ role: 'dialog' }).length, 0);
+      assert.equal(app.writes.length, 0, 'cancelling the primary action must not create a note');
+    } finally { await app.close(); }
+  });
 
-test('JournalEntrySheet: what (title/notes), photo and save stay in both modes; category, date, bed and crop collapse in Simple', () => {
-  // Proximity check rather than a bare doesNotMatch: prove there is no "{!simple" gate anywhere
-  // in the run-up to each field's own <Label>, not just that some unrelated pattern is absent.
-  for (const [field, needle] of [
-    ['Title', "ui('Title', 'Isihloko')"],
-    ['Notes', "ui('Notes', 'Amanothi')"],
-    ['Photos', "ui('Photos', 'Izithombe')"],
-  ] as const) {
-    const idx = SHEET.indexOf(needle);
-    assert.ok(idx > 0, `${field} field must exist`);
-    const before = SHEET.slice(Math.max(0, idx - 80), idx);
-    assert.doesNotMatch(before, /!simple/, `the ${field} field must not be hidden behind !simple`);
-  }
-  const submitAt = SHEET.indexOf('type="submit"');
-  const saveLabelAt = SHEET.indexOf("{entry ? ui('Save changes'");
-  assert.ok(submitAt > 0 && saveLabelAt > submitAt, 'the Save button must exist and carry its label');
-  assert.doesNotMatch(SHEET.slice(submitAt, saveLabelAt), /simple/, 'the Save button must be unconditional');
+  test(`${mode} blank notes keep title, notes, photos and save, and save the same hidden defaults`, async () => {
+    const app = await mountJournal({ simple });
+    try {
+      await act(async () => renderedButton(app.renderer, simple ? 'Add a note' : 'New entry').props.onClick());
+      const sheet = app.renderer.root.findByType(app.Sheet);
+      assert.equal(sheet.findByProps({ 'aria-label': 'Title' }).props.value, '');
+      assert.equal(sheet.findByProps({ 'aria-label': 'Notes' }).props.value, '');
+      assert.equal(sheet.findAllByProps({ type: 'file' }).length, 1, 'photo capture stays available in both modes');
+      assert.equal(sheet.findAllByType('button').filter(button => renderedText(button) === 'Add').length, 1, 'the hidden file input needs a visible photo action');
+      assert.equal(sheet.findAllByProps({ type: 'date' }).length, simple ? 0 : 1);
+      assert.equal(sheet.findAllByProps({ 'aria-label': 'Bed / plot' }).length, simple ? 0 : 1);
+      assert.equal(sheet.findAllByProps({ 'aria-label': 'Crop' }).length, simple ? 0 : 1);
+      assert.equal(renderedText(sheet).includes('What kind of note?'), !simple);
+      const categoryButtons = sheet.findAllByType('button').filter(button => typeof button.props['aria-pressed'] === 'boolean');
+      assert.deepEqual(categoryButtons.map(button => renderedText(button).trim()), simple ? [] : JOURNAL_CATEGORIES.map(category => category.label));
+      assert.equal(sheet.findByProps({ type: 'submit' }).props.disabled, true, 'a blank note must not be saved');
+      await act(async () => sheet.findByProps({ 'aria-label': 'Title' }).props.onChange({ target: { value: 'My original note' } }));
+      await act(async () => sheet.findByProps({ 'aria-label': 'Notes' }).props.onChange({ target: { value: 'What I actually observed.' } }));
+      assert.equal(sheet.findByProps({ type: 'submit' }).props.disabled, false);
+      assert.equal(renderedText(sheet.findByProps({ type: 'submit' })), 'Save entry');
+      assert.equal(app.writes.length, 0);
+      await act(async () => sheet.findByType('form').props.onSubmit({ preventDefault() {} }));
+      assert.equal(app.stored.length, 1);
+      assert.equal(app.stored[0].date, todayISODate());
+      assert.equal(app.stored[0].category, 'planting');
+      assert.equal(app.stored[0].bedId, null);
+      assert.equal(app.stored[0].bedLabel, null);
+      assert.equal(app.stored[0].cropName, null);
+      assert.equal(app.stored[0].title, 'My original note');
+      assert.equal(app.stored[0].notes, 'What I actually observed.');
+    } finally { await app.close(); }
+  });
 
-  assert.match(SHEET, /\{!simple && \(\s*<div>\s*<Label>\{ui\('What kind of note\?'/, 'the category picker must collapse behind !simple');
-  assert.match(SHEET, /\{!simple && \(\s*<div>\s*<Label>\{ui\('Date'/, 'the Date field must collapse behind !simple');
-  assert.match(SHEET, /\{!simple && \(\s*<div style=\{\{ display: 'flex', gap: 10 \}\}>\s*<div style=\{\{ flex: 1 \}\}>\s*<Label>\{ui\('Bed \/ plot'/, 'the Bed/plot + Crop row must collapse behind !simple');
+  test(`${mode} editing preserves the recorded date, category, bed and crop when only the note changes`, async () => {
+    const entry = { ...journalFixture('original', 'Original note', '2025-09-04', 'Lettuce'),
+      category: 'training' as const, bedId: 'original-bed', bedLabel: 'Original bed', notes: 'Original observation.' };
+    const app = await mountJournal({ simple, entries: [entry] });
+    try {
+      await act(async () => app.renderer.root.findByProps({ 'aria-label': 'Edit entry: Original note' }).props.onClick());
+      const sheet = app.renderer.root.findByType(app.Sheet);
+      await act(async () => sheet.findByProps({ 'aria-label': 'Notes' }).props.onChange({ target: { value: 'My amended observation.' } }));
+      assert.equal(app.writes.length, 0);
+      await act(async () => sheet.findByType('form').props.onSubmit({ preventDefault() {} }));
+      assert.equal(app.stored[0].id, entry.id);
+      for (const field of ['date', 'category', 'bedId', 'bedLabel', 'cropName', 'title'] as const) {
+        assert.equal(app.stored[0][field], entry[field], `${field} must survive hidden controls and an ordinary note edit`);
+      }
+      assert.equal(app.stored[0].notes, 'My amended observation.');
+    } finally { await app.close(); }
+  });
+}
 
-  // Collapsing a field must not change what gets saved: category/date keep their existing
-  // defaults (entry's own value, or 'planting' / today), and bed/crop default to null exactly
-  // as they did before Simple existed — none of those defaults were touched by this change.
-  assert.match(SHEET, /useState<JournalCategory>\(entry\?\.category \?\? 'planting'\)/);
-  assert.match(SHEET, /useState\(entry\?\.date \?\? todayISODate\(\)\)/);
+test('a Simple task draft exposes its date, bed and crop for correction without recording work until saved', async () => {
+  // A task is a plan, not evidence. Hiding these values under the normal Simple rule would
+  // silently record today's date and a planned bed even when the farmer did something else.
+  const app = await mountJournal({ simple: true,
+    url: 'https://farm.example/journal?task=1&crop=lettuce&action=harvest&title=Harvest%20lettuce&bed=planned-bed&bedLabel=Planned%20bed',
+    beds: [{ id: 'planned-bed', label: 'Planned bed' }, { id: 'actual-bed', label: 'Actual bed' }],
+  });
+  try {
+    const sheet = app.renderer.root.findByType(app.Sheet);
+    assert.equal(sheet.findByProps({ 'aria-label': 'Date' }).props.value, todayISODate());
+    assert.equal(sheet.findByProps({ 'aria-label': 'Bed / plot' }).props.value, 'planned-bed');
+    assert.equal(sheet.findByProps({ 'aria-label': 'Crop' }).props.value, 'Lettuce');
+    assert.equal(sheet.findByProps({ 'aria-label': 'Title' }).props.value, 'Harvest lettuce');
+    assert.equal(renderedText(sheet).includes('What kind of note?'), false, 'the category picker remains extra detail');
+    await act(async () => sheet.findByProps({ 'aria-label': 'Date' }).props.onChange({ target: { value: '2026-03-12' } }));
+    await act(async () => sheet.findByProps({ 'aria-label': 'Bed / plot' }).props.onChange({ target: { value: 'actual-bed' } }));
+    await act(async () => sheet.findByProps({ 'aria-label': 'Crop' }).props.onChange({ target: { value: 'Carrots' } }));
+    assert.equal(app.writes.length, 0, 'reviewing and correcting the suggestion must not save it');
+    await act(async () => sheet.findByType('form').props.onSubmit({ preventDefault() {} }));
+    assert.equal(app.stored.length, 1);
+    assert.equal(app.stored[0].date, '2026-03-12');
+    assert.equal(app.stored[0].category, 'harvest', 'the planned note category survives the collapsed picker');
+    assert.equal(app.stored[0].bedId, 'actual-bed');
+    assert.equal(app.stored[0].bedLabel, 'Actual bed');
+    assert.equal(app.stored[0].cropName, 'Carrots');
+  } finally { await app.close(); }
 });

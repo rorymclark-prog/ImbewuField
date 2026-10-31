@@ -256,6 +256,7 @@ test('saved sheets round-trip with provenance and load oldest first', async () =
   const later = sheet('later', 'site-a', '2026-02-01', {
     resultKind: 'ai-polished',
     provider: 'openai',
+    model: 'gpt-image-2.5-sunburst',
     geometryLock: true,
     showcase: true,
     underlay: 'satellite',

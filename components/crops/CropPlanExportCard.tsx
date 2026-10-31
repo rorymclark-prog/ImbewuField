@@ -13,6 +13,7 @@
 
 import { useEffect, useState } from 'react';
 import { useLanguage } from '@/lib/i18n';
+import { userFacingMessage } from '@/lib/user-facing-error';
 import { Share2, CalendarPlus, Hourglass, Download, ClipboardList } from 'lucide-react';
 import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
 import type { PlanNote } from '@/lib/crop-autosuggest';
@@ -64,7 +65,7 @@ type Busy = 'ics' | 'pdf' | null;
 const cropUi = (lang: string, english: string, isiZulu: string) => inlineText(lang, english, isiZulu);
 
 export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, sections, availabilityDetails, preservedProducts, productionRecords, yearReport, planNotes, planNotesAt, availability, treeGroups, treeSeasons, productionGuide, productionProjection, poultryGuidance }: CropPlanExportCardProps) {
-  const { lang } = useLanguage();
+  const { lang, t } = useLanguage();
   const [busy, setBusy] = useState<Busy>(null);
   const [status, setStatus] = useState<string | null>(null);
   const [quickPrintFormat, setQuickPrintFormat] = useState<CropPlanPageFormat>('a4');
@@ -89,7 +90,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
           : `Downloaded ${tasks.length} tasks — open the .ics file to add them to your calendar.`,
       );
     } catch (err) {
-      setStatus(`Could not build the calendar file: ${err instanceof Error ? err.message : 'unknown error'}`);
+      setStatus(userFacingMessage(err, t('reportUiCouldNotExportTheCropPlanPleaseTry'), t));
     } finally {
       setBusy(null);
     }
@@ -125,7 +126,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, now, 
       const blob = await buildCropPlanPdf({ ...input, icons });
       setStatus(await run(blob));
     } catch (err) {
-      setStatus(`Could not build the PDF: ${err instanceof Error ? err.message : 'unknown error'}`);
+      setStatus(userFacingMessage(err, t('reportUiCouldNotBuildThePDF'), t));
     } finally {
       setBusy(null);
     }

@@ -1,0 +1,69 @@
+{
+  "fixture": "Existing public fictional demo farm",
+  "geometry_comparison": "Unchanged JSON before/after each of nine renderers",
+  "maps": [
+    {
+      "sheet": 1,
+      "width": 3462,
+      "height": 2448,
+      "panel_x": 2842,
+      "panel_width": 620
+    },
+    {
+      "sheet": 2,
+      "width": 3462,
+      "height": 2448,
+      "panel_x": 2842,
+      "panel_width": 620
+    },
+    {
+      "sheet": 3,
+      "width": 3462,
+      "height": 2448,
+      "panel_x": 2842,
+      "panel_width": 620
+    },
+    {
+      "sheet": 4,
+      "width": 3462,
+      "height": 2448,
+      "panel_x": 2842,
+      "panel_width": 620
+    },
+    {
+      "sheet": 5,
+      "width": 3462,
+      "height": 2448,
+      "panel_x": 2842,
+      "panel_width": 620
+    },
+    {
+      "sheet": 6,
+      "width": 3462,
+      "height": 2448,
+      "panel_x": 2842,
+      "panel_width": 620
+    },
+    {
+      "sheet": 7,
+      "width": 3462,
+      "height": 2448,
+      "panel_x": 2842,
+      "panel_width": 620
+    },
+    {
+      "sheet": 8,
+      "width": 3462,
+      "height": 2448,
+      "panel_x": 2842,
+      "panel_width": 620
+    },
+    {
+      "sheet": 9,
+      "width": 3462,
+      "height": 2448,
+      "panel_x": 2842,
+      "panel_width": 620
+    }
+  ]
+}

@@ -1,11 +1,122 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import React from 'react';
+import { act, create } from 'react-test-renderer';
+import ts from 'typescript';
 import { newestSavedMapForSheet, savedMapSheetNo } from '../lib/saved-map-preview.ts';
+import { useEscapeClose } from '../lib/use-escape-close.ts';
 
 const glossy = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
 const css = readFileSync(new URL('../components/design/DesignGlossy.module.css', import.meta.url), 'utf8');
 const page = readFileSync(new URL('../app/design/page.tsx', import.meta.url), 'utf8');
+
+// Execute the actual rerun callback: checking only the fresh image's creation misses a saved
+// gallery selection which still wins the centre preview (reproduced in the deployed sample).
+const glossyTree = ts.createSourceFile('DesignGlossy.tsx', glossy, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+let rerunCallback: ts.ArrowFunction | undefined;
+function findRerun(node: ts.Node) {
+  if (ts.isVariableDeclaration(node) && node.name.getText(glossyTree) === 'runCurrentSheet'
+    && node.initializer && ts.isCallExpression(node.initializer)) {
+    const callback = node.initializer.arguments[0];
+    if (callback && ts.isArrowFunction(callback)) rerunCallback = callback;
+  }
+  ts.forEachChild(node, findRerun);
+}
+findRerun(glossyTree);
+assert.ok(rerunCallback, 'the visible render actions need a shared rerun entry point');
+const rerunJs = ts.transpileModule(`const rerun = ${rerunCallback.getText(glossyTree)}; return rerun;`, {
+  compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.None },
+}).outputText;
+
+for (const [label, flags, renderer] of [
+  ['base', { exactSheet: 'base' }, 'renderBaseMap'],
+  ['sector', { exactSheet: 'sector' }, 'renderSectorMap'],
+  ['Phasing', { exactSheet: 'implementation' }, 'renderImplementationMap'],
+  ['Phasing AI', { phasingAiMode: true }, 'generatePhasingViaQueue'],
+  ['sector AI', { restyleAiKind: 'sector' }, 'generateSectorViaQueue'],
+  ['styled', { producerStyle: 'reference' }, 'generateOneViaQueue'],
+  ['analysis', { analysisStyle: 'implementation' }, 'generate'],
+  ['design', {}, 'renderDesignMap'],
+] as const) {
+  test(`a new ${label} render leaves the older saved preview before dispatch`, () => {
+    const events: unknown[][] = [];
+    const autoPreviewHandledKeyRef = { current: null as string | null };
+    const scope: Record<string, unknown> = Object.assign({
+      selectedSheet: null, exactSheet: null, phasingAiMode: false,
+      restyleAiKind: null, producerStyle: null, analysisStyle: null,
+      gallerySiteId: 'qa-site', selectedNo: '09', autoPreviewHandledKeyRef,
+      setGalleryViewId: (id: string | null) => events.push(['preview', id]),
+    }, flags);
+    for (const name of ['renderBaseMap', 'renderSectorMap', 'renderImplementationMap',
+      'generatePhasingViaQueue', 'generateSectorViaQueue', 'generateOneViaQueue', 'generate', 'renderDesignMap']) {
+      scope[name] = () => {
+        assert.deepEqual(events, [['preview', null]],
+          'a selected historical map otherwise masks the newly produced image');
+        assert.equal(autoPreviewHandledKeyRef.current, 'qa-site:09',
+          'late metadata must not reopen an old map after the deliberate rerun');
+        events.push(['render', name]);
+        return name;
+      };
+    }
+    const run = new Function(...Object.keys(scope), rerunJs)(...Object.values(scope));
+    assert.equal(run(), renderer);
+    assert.deepEqual(events, [['preview', null], ['render', renderer]]);
+  });
+}
+
+function expectGalleryEscapeRoutes() {
+  const start = glossy.indexOf('  const galleryDialogRef =');
+  const end = glossy.indexOf('\n  // A stable cache key', start);
+  assert.ok(start > 0 && end > start, 'the real saved-map controls must remain covered');
+  const js = ts.transpileModule(glossy.slice(start, end), {
+    compilerOptions: { target: ts.ScriptTarget.ES2022 },
+  }).outputText;
+  const controls = new Function('scope', `with(scope) { ${js} }`);
+  const previousWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  try {
+    for (const galleryOpen of [false, true]) {
+      const events = new EventTarget();
+      Object.defineProperty(globalThis, 'window', { configurable: true, value: events });
+      const changes: Record<string, unknown> = {};
+      const Probe = ({ zoomOpen }: { zoomOpen: boolean }) => {
+        controls({
+          galleryOpen, galleryZoomOpen: zoomOpen, useRef: React.useRef,
+          useCallback: React.useCallback, useDialogFocus() {}, useEscapeClose,
+          setGalleryOpen: (value: boolean) => { changes.gallery = value; },
+          setGalleryViewId: (value: string | null) => { changes.view = value; },
+          setGalleryZoomOpen: (value: boolean) => { changes.zoom = value; },
+          setExportMode: (value: boolean) => { changes.export = value; },
+          setExportSel: (value: Set<string>) => { changes.selection = value; },
+        });
+        return null;
+      };
+      const press = (key: string) => {
+        const event = new Event('keydown');
+        Object.defineProperty(event, 'key', { value: key });
+        act(() => { events.dispatchEvent(event); });
+      };
+      let view!: ReturnType<typeof create>;
+      act(() => { view = create(React.createElement(Probe, { zoomOpen: true })); });
+      try {
+        press('Enter');
+        assert.deepEqual(changes, {}, 'ordinary keys cannot dismiss a map');
+        press('Escape');
+        assert.deepEqual(changes, { zoom: false }, 'Escape closes the full-screen map first');
+        if (galleryOpen) {
+          act(() => { view.update(React.createElement(Probe, { zoomOpen: false })); });
+          press('Escape');
+          assert.deepEqual(changes, {
+            zoom: false, gallery: false, view: null, export: false, selection: new Set(),
+          }, 'the next Escape closes the gallery and clears its selection');
+        }
+      } finally { act(() => { view.unmount(); }); }
+    }
+  } finally {
+    if (previousWindow) Object.defineProperty(globalThis, 'window', previousWindow);
+    else delete (globalThis as any).window;
+  }
+}
 
 test('Glossy owns the whole studio width instead of inheriting the drawing rails', () => {
   assert.match(page, /canvasState && canvasState\.step !== 'glossy'/,
@@ -209,8 +320,10 @@ test('the centre sheet opens full screen and has three simple ways back', () => 
   assert.match(glossy, /createPortal\(\([\s\S]*?document\.body\)/,
     'phone layouts must mount the viewer at the page root so a sheet container cannot clip it');
   assert.match(glossy, /aria-modal="true"/);
-  assert.match(glossy, /if \(event\.key === 'Escape'\) setGalleryZoomOpen\(false\)/,
-    'Escape should close the full-screen sheet');
+  // The shared Escape hook replaced the inline listener after it lost events during rerenders.
+  // Exercise real key events through that hook and the component's current callbacks instead
+  // of pinning a listener spelling that cannot prove the farmer can dismiss the map.
+  expectGalleryEscapeRoutes();
   assert.match(glossy, /onClick=\{\(\) => setGalleryZoomOpen\(false\)\}[\s\S]*?designGlossyCloseFullScreen/,
     'the backdrop and visible close button should both leave full screen');
 });

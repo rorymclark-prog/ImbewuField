@@ -41,6 +41,99 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '31 October 2026', sha: '1a47f8965', changes: [
+    'Style choices stay visible; plain-paper Water maps keep white backgrounds.',
+  ] },
+  { when: '30 October 2026', sha: 'ef82c465b', changes: [
+    'Oblique styles stay visible when you switch from an exact map.',
+  ] },
+  { when: '30 October 2026', sha: 'f03409726', changes: [
+    'Choose Oblique in AI viewpoint for an angled illustration of your whole design.',
+    'The app gathers your layout, photo and terrain; use the top-down plan for measurements.',
+  ], tour: [{ title: 'Try an angled view', where: 'Menu → Site design', href: '/design',
+    detail: 'With AI access, open Glossy and choose Oblique under AI viewpoint to generate your design.' },
+  { title: 'Keep the measured plan', where: 'Menu → Site design', href: '/design',
+    detail: 'Use the top-down Design Map for measurements; compare the angled view with it.' }] },
+  { when: '30 October 2026', sha: '51d5c5208', changes: [
+    'Glossy AI maps omit duplicate driveway guides; your editable paths stay saved.',
+  ] },
+  { when: '30 October 2026', sha: 'de4a3636f', changes: [
+    'AI maps on plain paper keep real roof detail from satellite imagery.',
+  ] },
+  { when: '30 October 2026', sha: 'c406ecd66', changes: [
+    'AI maps on plain paper keep illustrated ground instead of flat overlays.',
+    'Full-screen maps fit your phone, including with larger text.',
+  ], tour: [{ title: 'Check the complete map', where: 'Menu → Site design', href: '/design',
+    detail: 'Open a saved map full-screen. The whole sheet and legend should fit.' },
+  { title: 'Recover your paid artwork', where: 'Saved maps → Open map', href: '/design',
+    detail: 'Choose Reassemble artwork at the original print quality. No new AI render is bought.' }] },
+  { when: '30 October 2026', sha: 'efdd0cd85', changes: [
+    'Reference Blueprint now appears in small print at the bottom of your maps.',
+  ] },
+  { when: '29 October 2026', sha: 'f05da57a9', changes: [
+    'Farm memory search, photos and saved copies now support isiZulu.',
+    'Tap a crop or bed on a note to see its journal history.',
+    'Choose a smaller printable copy with notes only.',
+    'Photo dates are easier to read; scroll through older notes on desktop.',
+  ], tour: [{ title: 'Explore your farm memory', where: 'Menu → Field journal', href: '/journal',
+    detail: 'Search your notes, compare saved photos and keep a printable copy.' },
+  { title: 'Record work from a task', where: 'Menu → Task planner', href: '/cropplan',
+    detail: 'Open a draft field note or record an actual harvest from a crop task.' }] },
+  { when: '29 October 2026', sha: 'df2bd1a17', changes: [
+    'AI maps keep tank tops and more foliage visible across the property line.',
+  ] },
+  { when: '29 October 2026', sha: '53ed7ab73', changes: [
+    'Open a field note from a task, with its crop and bed ready to check.',
+    'Find journal notes by crop, bed, date or words you remember.',
+    'Compare dated photos and download selected notes for an adviser.',
+    'Harvest tasks open the crop and blank quantity field, ready to fill in.',
+  ], tour: [{ title: 'Explore your farm memory', where: 'Menu → Field journal', href: '/journal',
+    detail: 'Search your notes, compare saved photos and keep a printable copy.' },
+  { title: 'Record work from a task', where: 'Menu → Task planner', href: '/cropplan',
+    detail: 'Open a draft field note or record an actual harvest from a crop task.' }] },
+  { when: '29 October 2026', sha: '3b74a1890', changes: [
+    'PDF exports keep each product and its notes together.',
+  ] },
+  { when: '29 October 2026', sha: '47bdffe30', changes: [
+    'Production plans keep unmarked plants and housing as proposed, matching your design.',
+  ] },
+  { when: '29 October 2026', sha: '1f54713e8', changes: [
+    'Choose Site potential or Complete site plan, then the detail you need.',
+  ], tour: [{ title: 'Open site reports', where: 'Menu → Reports', href: '/reports',
+    detail: 'Review the report purpose, annual production plan and saved maps for your site.' }] },
+  { when: '29 October 2026', sha: '50e82eca3', changes: [
+    'Report headings stay with their opening text when you export a PDF.',
+    'Map legends have thinner borders and clearer scale marks.',
+    'New map legends use spare margin space for larger, clearer lettering.',
+    'Paper base maps show each building you traced, with separate building names.',
+    'Saved maps stay available; create new drawings to see these improvements.',
+  ], tour: [{ title: 'Check the new map lettering', where: 'Menu → Site design', href: '/design',
+    detail: 'Create a free exact map. Check the larger key and the buildings you traced.',
+  }, { title: 'Check the maps in your site report', where: 'Menu → Site reports', href: '/reports',
+    detail: 'Review each included map before exporting. Saved older drawings stay available.',
+  }] },
+  { when: '29 October 2026', sha: 'a484688bd', changes: [
+    'AI maps keep continuous artwork, with tree crowns allowed over the boundary.',
+    'AI map downloads now remind you to check positions and counts.',
+    'Saved AI maps can be reassembled without buying another render.',
+  ] },
+  { when: '28 October 2026', sha: '9e11f2396', changes: [
+    'Saved reports keep their original photos and site water evidence.',
+    'Field records now accept today’s date after midnight in South Africa.',
+    'Map and crop exports give clearer errors and keyboard controls.',
+  ], tour: [{ title: 'Open site reports', where: 'Menu → Reports', href: '/reports',
+    detail: 'Review the report purpose, annual production plan and saved maps for your site.' },
+    { title: 'Open Design Studio', where: 'Menu → Design Studio', href: '/design',
+      detail: 'Open Preview & export, then Record plan for the scaled diagram and its legend.' }] },
+  { when: '28 October 2026', sha: '70dfef97f', changes: [
+    'Map sheets now use white paper, thin legend borders and clearer plant pictures.',
+  ] },
+  { when: '28 October 2026', sha: 'a5972fc7d', changes: [
+    'Paid AI maps now finish when the image service rounds their size.',
+  ] },
+  { when: '28 October 2026', sha: 'e7812ef7a', changes: [
+    'New AI glossy maps use GPT Image 2.5 Sunburst.',
+  ] },
   { when: '27 October 2026', sha: '9d42fedbe', changes: [
     'Turn AI glossy maps on or off in Settings. Saved maps stay available.',
     'The platform owner can enable or suspend AI maps for each organisation.',
@@ -51,6 +144,11 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       detail: 'Open a saved farm, choose a sheet and select AI Polished. Each render is paid.' }] },
   { when: '27 October 2026', sha: '31d0ba80', changes: [
     'Menus, pop-ups and Lima now work fully from a keyboard and keep your place.',
+  ] },
+  { when: '26 October 2026', sha: 'd38b5ea4b', changes: [
+    'All nine map sheets use the same legend box, fonts and spacing.',
+    'New drawings keep the legend on the right; your saved maps stay available.',
+    'Long map headings wrap inside their legend box.',
   ] },
   { when: '26 October 2026', sha: '16bca466', changes: [
     'Home, Map, Studies and Prices now open offline, even before you have visited them.',

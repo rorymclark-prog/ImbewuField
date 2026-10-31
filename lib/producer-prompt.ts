@@ -66,12 +66,17 @@ export function isPhotoPreservingStyle(style: StylePreset): boolean {
  * the same class of contradiction that produced the indistinguishable hybrids this file already
  * documents. Blank paper is what a published planting drawing actually is — ink on white — so the
  * paid pass has a real job on it: illustrate the elements beautifully and leave the paper alone.
+ * Rory's later phone follow-up keeps that fallback for Photo Plan, but chooses a fully
+ * illustrated property for painted styles, with white paper around it. Source absence must
+ * never be described as a real photograph in either contract.
  */
 export type GroundContract = 'photo' | 'paper' | 'paint';
 
 export function groundContractFor(style: StylePreset, groundSource: 'photo' | 'paper' = 'photo'): GroundContract {
-  if (groundSource === 'paper') return 'paper';
-  return isPhotoPreservingStyle(style) ? 'photo' : 'paint';
+  // The phone Earthworks render exposed a different promise: Reference Blueprint should
+  // illustrate the property even without a photo. White paper belongs around that illustration.
+  // Photo Plan still needs its paper fallback when no factual photograph exists to preserve.
+  return isPhotoPreservingStyle(style) ? groundSource === 'paper' ? 'paper' : 'photo' : 'paint';
 }
 
 // STYLE_LINES lives further down (with the showcase-prompt rewrite) since both the strict
@@ -149,6 +154,8 @@ export function buildLockedIllustrationPrompt(
   const ground = groundContractFor(stylePreset, groundSource);
   const onPaper = ground === 'paper';
   const paintGround = ground === 'paint';
+  const paintedPhoto = paintGround && groundSource === 'photo';
+  const paintedPaper = paintGround && groundSource === 'paper';
   // Kept as its own name because several clauses below mean "do not invent ground" rather than
   // "keep the photograph" — and on paper there is no photograph to keep.
   const photoPreserving = ground === 'photo';
@@ -158,8 +165,8 @@ export function buildLockedIllustrationPrompt(
         // Painted styles may change texture, never the site's land cover. A dark forest outside
         // every property was an art-direction instruction with no basis in the source photograph.
         // Photo and paper contracts still skip this block entirely.
-        paintGround ? `TONAL HIERARCHY: preserve the source land-cover pattern and relative light and dark areas inside and beyond the property. Apply the selected illustration style only to surfaces already evidenced by the source; keep unidentifiable surroundings neutral and do not infer vegetation or terrain. Use contrast to make the saved water features readable from directly overhead.` : '',
-        paintGround ? `MATERIAL SEPARATION: distinguish only surfaces identified in the source photograph or saved design through layered watercolor-and-gouache texture with fine dry-brush grain. Preserve each surface's identity and extent; use neutral texture wherever its identity is unknown. Where a driveway is present, keep its supplied surface quiet and flat, with no bright border, kerb, raised edge, hatch, shadow or roof-like treatment.` : '',
+        paintedPhoto ? `TONAL HIERARCHY: preserve the source land-cover pattern and relative light and dark areas inside and beyond the property. Apply the selected illustration style only to surfaces already evidenced by the source; keep unidentifiable surroundings neutral and do not infer vegetation or terrain. Use contrast to make the saved water features readable from directly overhead.` : '',
+        paintedPhoto ? `MATERIAL SEPARATION: distinguish only surfaces identified in the source photograph or saved design through layered watercolor-and-gouache texture with fine dry-brush grain. Preserve each surface's identity and extent; use neutral texture wherever its identity is unknown. Where a driveway is present, keep its supplied surface quiet and flat, with no bright border, kerb, raised edge, hatch, shadow or roof-like treatment.` : '',
         `SOURCE LOCK: preserve the exact top-down source crop, scale, aspect ratio, camera position and geometry. Invent nothing: add no trees, beds, tanks, ponds, paths, fences, buildings or other features not already visible or marked. Add no writing or sheet furniture; the app adds those afterwards.`,
       ].filter(Boolean).join('\n\n')
     : '';
@@ -192,6 +199,8 @@ export function buildLockedIllustrationPrompt(
     ? `TASK: this sheet is a plan DRAWING ON PLAIN WHITE PAPER. There is no photograph and no land beneath it — the white is paper, not ground. Redraw ONLY the marked design elements from the register below as beautiful hand-illustrated botanical plan artwork sitting on that paper, in the manner of a published permaculture planting drawing. Everything you do not illustrate stays exactly the white it already is.`
     : photoPreserving
     ? `TASK: the real aerial photograph beneath this composite is the map and survives intact — see the style line above. Add ONLY the marked design elements from the register below as real illustrated objects sitting on top of the untouched photograph, each with a soft realistic drop shadow so it reads as built or planted on the land, not floating above it.`
+    : paintedPaper
+    ? `TASK: turn the saved design into one fully illustrated top-down ${layer} property. There is no photograph. Paint the entire property interior as a coherent landscape illustration using only the saved layout and named surfaces. Keep the page beyond the property pure white; complete plant crowns may overlap its edge.`
     : `TASK: turn this exact saved design composite into one visibly polished hand-illustrated ${layer} map. Paint edge to edge — every corner becomes artwork, including the land beyond the property boundary.`;
   const groundClause = onPaper
     ? `KEEP THE PAPER WHITE: every part of the sheet the source leaves blank is drawing paper and must come back the same white, untouched. Paint NO soil, grass, lawn, veld, forest, canopy, terrain, contour, shadow, vignette, wash, tint, texture, grain, paper fibre or background colour of any kind anywhere outside a marked feature — not inside the boundary, not beyond it, not in the corners. A flat invented ground is the single failure this contract exists to prevent: it buries a drawing the farmer chose plain paper in order to print cleanly.`
@@ -202,8 +211,10 @@ export function buildLockedIllustrationPrompt(
     // "more roof". This is the Geometry Lock path — the most-used of the three AI-illustration
     // prompts in this file that each independently describe ground texture — so the gap here is
     // the highest-impact of the three to have missed.
+    : paintedPaper
+    ? `ILLUSTRATE THE SAVED PROPERTY: source colours are placement guides, not finished flat fills. Turn each traced building into a complete detailed roof within its saved silhouette, planted beds into distinct cultivated rows, and named lawn, soil, paths and paving into their corresponding illustrated materials within the saved areas. Keep paving flat, never roofed. Unknown surfaces may have restrained neutral texture; do not infer crops, structures, terrain, contours or neighbouring land. No large flat green guide polygons, blank roof holes or pasted circular soil tiles.`
     : `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways, paved ground (patios, concrete slabs, hard standing) as flat light-grey paving — never roofed, never the driveway's tar-black — and every building as its full roof seen from directly above. Neighbouring plots are painted in the same hand as the rest of the sheet, never left as raw photograph.`;
-  const paintedPhotoCompleteness = paintGround
+  const paintedPhotoCompleteness = paintedPhoto
     ? `EDGE-TO-EDGE COMPLETENESS: the source contains a real aerial photograph, so every part of that land must still be represented as finished map artwork. Never replace photographed land with white or cream paper, transparency, empty canvas, an unpainted void or a large flat colour. Open ground still shows its real material — lawn, veld, soil, track or paving — with visible illustrated texture. “No new objects” does not mean “erase the ground”.`
     : '';
   return [
@@ -218,18 +229,22 @@ export function buildLockedIllustrationPrompt(
       ? `PAPER FINISH: the app draws exact feature outlines, technical routes, labels, legend and title over your artwork afterwards. Make each illustrated element clean, well-separated and confident enough to read beneath that precise linework — and leave the white between elements genuinely empty, because that white is where the app's labels and leaders land.`
       : photoPreserving
       ? ''
+      : paintedPaper
+      ? `ILLUSTRATED PROPERTY FINISH: the app adds the measured boundary, labels and inventory after you paint. Your artwork owns the roof, driveway and all property materials; it will not be covered with flat guide polygons. The outside page and legend remain white. Keep building silhouettes, paths, areas and counts faithful to the saved design.`
       : `HYBRID FINISH: the app preserves the exact property edge and then reinforces exact illustrated roof and driveway geometry, technical routes, labels and legend over your artwork. It does not paste raw satellite or ground tiles back inside the painted property. Make the trees, beds, tanks, basins, structures and ground one continuous, visually rich illustration beneath that precise cartographic linework.`,
     waterArtDirection,
     groundClause,
     paintedPhotoCompleteness,
     `INVENT NOTHING: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible or marked in the source. Where the ground is open it stays open — ${onPaper ? 'blank white paper, with nothing painted on it at all' : photoPreserving ? 'the real photographed ground' : 'fully painted as the same open lawn, veld, soil, track or paving already visible in the source, with no new object added'}. Do not decorate, fill space or redesign the site.`,
-    `KEEP THE GEOMETRY: every roof outline, driveway edge, boundary and treeline keeps exactly the shape, size and position the photo shows. Never crop, shrink, rotate, straighten, cover or plant over any part of a roof.`,
+    `KEEP THE GEOMETRY: every roof outline, driveway edge, boundary and treeline keeps exactly the shape, size and position the ${groundSource === 'paper' ? 'saved design' : 'photo'} shows. Never crop, shrink, rotate, straighten, cover or plant over any part of a roof.`,
     `VIEW AND FRAMING: flat orthographic top-down, north-up plan only. Keep exactly the source crop, scale, aspect ratio and camera position. No oblique view, perspective tilt, 3D camera, horizon, isometric view, rotation, zoom, recentering or reframing.`,
     `NO SHEET FURNITURE: no writing, numbers, title, legend, key, panel, border, compass, north arrow, scale bar, pin, icon or emoji anywhere in the image. The app draws all of those afterwards.`,
     onPaper
       ? `FINAL CHECK: every marked design element is a finished illustration at the right place, count and footprint; EVERY OTHER PIXEL IS STILL WHITE PAPER, with no ground, terrain, wash or tint invented anywhere; every roof and boundary stays where the source put it; there is no text anywhere.`
       : photoPreserving
       ? `FINAL CHECK: the photograph itself is pixel-for-pixel the same land the source shows, unrepainted; every marked design element is added on top of it at the right place; every roof and boundary stays where the source put it; there is no text anywhere.`
+      : paintedPaper
+      ? `FINAL CHECK: the entire saved property is illustrated and the surrounding page is pure white; every saved feature keeps its count and position; each roof fills its saved silhouette; no new objects or terrain are inferred; there is no text anywhere.`
       : `FINAL CHECK: the entire frame is illustrated; every saved feature has the exact same count and position; every roof and boundary stays where the source put it; nothing is added; there is no text anywhere.`,
   ].filter(Boolean).join('\n\n');
 }

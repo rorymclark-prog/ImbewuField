@@ -1,6 +1,80 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Paper recovery: docs/audits/2026-10-31/paper-map-release-drafts.json; unreviewed.
+  "Style choices stay visible; plain-paper Water maps keep white backgrounds.": "Izinketho zezitayela zihlala zibonakala; amamephu Amanzi ephepheni elimhlophe agcina ingemuva limhlophe.",
+  // Oblique picker: docs/audits/2026-10-30/oblique-style-picker-release-drafts.json; unreviewed.
+  "Oblique styles stay visible when you switch from an exact map.": "Izitayela ze-Oblique zihlala zibonakala uma usuka ebalazweni elinezilinganiso eziqondile.",
+  // Oblique experiment guide: docs/audits/2026-10-30/oblique-experiment-guide-drafts.json; unreviewed.
+  "Try an angled view": "Zama ukubuka nge-engeli",
+  "With AI access, open Glossy and choose Oblique under AI viewpoint to generate your design.": "Uma ukwazi ukusebenzisa i-AI, vula i-Glossy ukhethe i-Oblique ngaphansi kwe-AI viewpoint ukuze wakhe umdwebo womklamo wakho.",
+  "Keep the measured plan": "Gcina ipulani elinezilinganiso",
+  "Use the top-down Design Map for measurements; compare the angled view with it.": "Sebenzisa i-Design Map ebukwa phezulu ukuze ulinganise; qhathanisa umdwebo obukwa nge-engeli nayo.",
+  // Oblique beta: docs/audits/2026-10-30/oblique-ai-view-release-drafts.json; unreviewed.
+  "Choose Oblique in AI viewpoint for an angled illustration of your whole design.": "Khetha i-Oblique ku-AI viewpoint ukuze ubone umdwebo wawo wonke umklamo wakho ubukwa nge-engeli.",
+  "The app gathers your layout, photo and terrain; use the top-down plan for measurements.": "Uhlelo lulungisa umklamo owugcinile, isithombe sendawo nolwazi lomhlaba olutholakalayo; sebenzisa ipulani ebukwa phezulu ukuze ulinganise.",
+  // Driveway guide: docs/audits/2026-10-30/glossy-driveway-guide-release-drafts.json; unreviewed.
+  "Glossy AI maps omit duplicate driveway guides; your editable paths stay saved.": "Amamephu e-AI acwebezelayo awabonisi imigqa eyengeziwe yendlela yezimoto; izindlela zakho ezihlelwayo zihlala zigciniwe.",
+  // Roof reference: docs/audits/2026-10-30/aerial-roof-release-drafts.json; unreviewed.
+  "AI maps on plain paper keep real roof detail from satellite imagery.": "Amamephu e-AI ephepheni elimhlophe agcina imininingwane yangempela yophahla ezithombeni zesathelayithi.",
+  // Phone map artwork: docs/audits/2026-10-30/phone-ai-paper-release-drafts.json; unreviewed.
+  "AI maps on plain paper keep illustrated ground instead of flat overlays.": "Amamephu e-AI ephepheni elimhlophe agcina umhlaba odwetshiwe esikhundleni sezendlalelo eziyisicaba.",
+  "Full-screen maps fit your phone, including with larger text.": "Amamephu esikrini esigcwele angena kahle ocingweni lwakho, ngisho nombhalo omkhulu.",
+  "Check the complete map": "Hlola imephu ephelele",
+  "Open a saved map full-screen. The whole sheet and legend should fit.": "Vula imephu egciniwe esikrinini esigcwele. Lonke ishidi nezincazelo zezimpawu kufanele kungene.",
+  "Recover your paid artwork": "Buyisa umdwebo owawukhokhele",
+  "Saved maps → Open map": "Amamephu agciniwe → Vula imephu",
+  "Choose Reassemble artwork at the original print quality. No new AI render is bought.": "Khetha ukuhlanganisa umdwebo kabusha ngekhwalithi yokuphrinta yasekuqaleni. Awuthengi umdwebo omusha we-AI.",
+  // Map footer: docs/audits/2026-10-30/map-style-footer-release-drafts.json; unreviewed.
+  "Reference Blueprint now appears in small print at the bottom of your maps.": "I-Reference Blueprint manje ibhalwe ngombhalo omncane ezansi kwamamephu akho.",
+  "Photo dates are easier to read; scroll through older notes on desktop.": "Izinsuku zezithombe sezifundeka kalula; skrola kumanothi amadala kukhompyutha.",
+  "Photo dates and journal headings are easier to read.": "Izinsuku zezithombe nezihloko zejenali sezifundeka kalula.",
+  // Farm memory release: docs/audits/2026-10-29/farm-memory-release-drafts.json; unreviewed.
+  "Farm memory search, photos and saved copies now support isiZulu.": "Ukusesha, izithombe namakhophi agciniwe Ezinkumbulo zepulazi manje kusekela isiZulu.",
+  "Tap a crop or bed on a note to see its journal history.": "Thepha isitshalo noma umbhede kunothi ukuze ubone umlando wako kujenali.",
+  "Choose a smaller printable copy with notes only.": "Khetha ikhophi encane ongayiphrinta enamanothi kuphela.",
+  "Open a field note from a task, with its crop and bed ready to check.": "Vula inothi lasensimini emsebenzini, nesitshalo nombhede walo kulungele ukuhlolwa.",
+  "Find journal notes by crop, bed, date or words you remember.": "Thola amanothi ejenali ngesitshalo, ngombhede, ngosuku noma ngamagama owakhumbulayo.",
+  "Compare dated photos and download selected notes for an adviser.": "Qhathanisa izithombe ezinezinsuku bese ulanda amanothi akhethiwe omeluleki.",
+  "Harvest tasks open the crop and blank quantity field, ready to fill in.": "Imisebenzi yokuvuna ivula isitshalo nendawo yenani engenalutho, elungele ukugcwaliswa.",
+  "Explore your farm memory": "Hlola Izinkumbulo zepulazi lakho",
+  "Menu → Field journal": "Imenyu → Ijenali yasensimini",
+  "Search your notes, compare saved photos and keep a printable copy.": "Sesha amanothi akho, qhathanisa izithombe ezigciniwe bese ugcina ikhophi ongayiphrinta.",
+  "Record work from a task": "Rekhoda okwenziwe emsebenzini",
+  "Menu → Task planner": "Imenyu → Ukuhlela imisebenzi",
+  "Open a draft field note or record an actual harvest from a crop task.": "Vula uhlaka lwenothi lasensimini noma urekhode isivuno sangempela emsebenzini wesitshalo.",
+  // Boundary artwork audit: docs/audits/2026-10-29/ai-map-boundary-release-drafts.json; unreviewed.
+  "AI maps keep tank tops and more foliage visible across the property line.": "Amamephu e-AI agcina iziqongo zamathangi namahlamvu engeziwe zibonakala ngale komngcele wendawo.",
+  // Annual PDF row audit: docs/audits/2026-10-29/annual-product-pdf-release-drafts.json; unreviewed.
+  "PDF exports keep each product and its notes together.": "Ama-PDF athunyelwe agcina umkhiqizo ngamunye namanothi awo ndawonye.",
+  // Production status audit: docs/audits/2026-10-27/report-production-status-release-drafts.json; unreviewed.
+  "Production plans keep unmarked plants and housing as proposed, matching your design.": "Izinhlelo zokukhiqiza zigcina izitshalo nezindlu zezilwane ezingaphawuliwe njengezihleliwe, ngokuhambisana nomklamo wakho.",
+  // PDF sample audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Report headings stay with their opening text when you export a PDF.": "Izihloko zombiko zihlala nombhalo wazo wokuqala lapho uthekelisa i-PDF.",
+  // Visual audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Map legends have thinner borders and clearer scale marks.": "Izincazelo zezimpawu zemephu sezinemingcele emincane nezimpawu zesilinganiso ezicacile.",
+  "Menu → Site design": "Imenyu → Ukuklama indawo",
+  "Check the new map lettering": "Hlola umbhalo omusha wemephu",
+  "Create a free exact map. Check the larger key and the buildings you traced.": "Dala imephu yamahhala enembile. Hlola incazelo yezimpawu enkulu nezakhiwo ozidwebe.",
+  "Check the maps in your site report": "Hlola amamephu embikweni wendawo yakho",
+  "Review each included map before exporting. Saved older drawings stay available.": "Buyekeza imephu ngayinye efakiwe ngaphambi kokuthekelisa. Imidwebo emidala egciniwe isatholakala.",
+  // Map follow-up: docs/audits/2026-10-26/map-release-note-drafts.json; unreviewed.
+  "New map legends use spare margin space for larger, clearer lettering.": "Izincazelo zezimpawu zemephu ezintsha zisebenzisa isikhala esiseceleni ukuze umbhalo ube mkhulu futhi ucace.",
+  "Paper base maps show each building you traced, with separate building names.": "Amamephu ayisisekelo asephepheni abonisa zonke izakhiwo ozidwebe, namagama azo ahlukene.",
+  "Saved maps stay available; create new drawings to see these improvements.": "Amamephu agciniwe ahlala etholakala; dala imidwebo emisha ukuze ubone lezi zinguquko.",
+  "All nine map sheets use the same legend box, fonts and spacing.": "Wonke amakhasi ayisishiyagalolunye amamephu asebenzisa ibhokisi elifanayo lezimpawu, amafonti nezikhala.",
+  "New drawings keep the legend on the right; your saved maps stay available.": "Imidwebo emisha igcina incazelo yezimpawu ngakwesokudla; amamephu akho agciniwe ayatholakala.",
+  "Long map headings wrap inside their legend box.": "Izihloko ezinde zemephu zihlukaniswa ngemigqa ngaphakathi kwebhokisi lezimpawu.",
+  "Saved AI maps can be reassembled without buying another render.": "Amamephu e-AI agciniwe angahlanganiswa futhi ngaphandle kokuthenga omunye umdwebo.",
+  "AI maps keep continuous artwork, with tree crowns allowed over the boundary.": "Amamephu e-AI agcina umdwebo oqhubekayo, imiqhele yezihlahla ingadlula umngcele.",
+  "AI map downloads now remind you to check positions and counts.": "Amamephu e-AI alandiwe manje akukhumbuza ukuhlola izindawo nezibalo.",
+
+  "Saved reports keep their original photos and site water evidence.": "Imibiko egciniwe igcina izithombe zayo zangempela nobufakazi bamanzi bendawo.",
+  "Field records now accept today’s date after midnight in South Africa.": "Amarekhodi asensimini manje amukela usuku lwanamuhla ngemva kwamabili eNingizimu Afrika.",
+  "Map and crop exports give clearer errors and keyboard controls.": "Ukukhipha amamephu nezinhlelo zezitshalo kunemilayezo yamaphutha nezilawuli zekhibhodi ezicacile.",
+  "Map sheets now use white paper, thin legend borders and clearer plant pictures.": "Amashidi amamephu manje asebenzisa iphepha elimhlophe, imingcele emincane yokhiye nezithombe zezitshalo ezicacile.",
+  "Paid AI maps now finish when the image service rounds their size.": "Amamephu e-AI akhokhelwayo manje ayaqedwa lapho isevisi yezithombe isondeza ubukhulu bawo.",
+  "New AI glossy maps use GPT Image 2.5 Sunburst.": "Amamephu amasha e-AI acwebezelayo asebenzisa i-GPT Image 2.5 Sunburst.",
   "Offline saving and sending messages now have drafts in all four languages.": "Imilayezo yokugcina nokuthumela ungaxhunyiwe manje inohlaka kuzo zonke izilimi ezine.",
   "Consent choices now show draft translations and the English source in all four languages.": "Izinketho zemvume manje zibonisa ukuhumusha okusaluhlaka nombhalo wokuqala wesiNgisi kuzo zonke izilimi ezine.",
   "Full production and yield notes now have four draft translations.": "Amanothi aphelele okukhiqiza nesivuno manje anokuhumusha okusaluhlaka ngezilimi ezine.",

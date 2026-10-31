@@ -2,9 +2,10 @@
 
 import workspace from '@/components/layout/Workspace.module.css';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Plus, Pencil, NotebookPen, Sparkles, MapPin, Leaf } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Plus, Pencil, NotebookPen, Sparkles, MapPin, Leaf, Search, SlidersHorizontal, X, Download, Printer, ChevronDown } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
 import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
@@ -23,9 +24,9 @@ import {
   journalCategory,
   journalSummary,
   loadJournal,
-  recentJournalPhotos,
   removeJournalEntry,
   saveJournal,
+  todayISODate,
   upsertJournalEntry,
   type JournalCategory,
   type JournalEntry,
@@ -35,6 +36,14 @@ import JournalEntrySheet, { type BedOption } from './JournalEntrySheet';
 import { inlineText } from '@/lib/xh-inline';
 import { formatXhosaJournalDate, formatXhosaMonth, formatZuluJournalDate, formatZuluMonth, journalCategoryLabel } from './journal-labels';
 import motion from './JournalMotion.module.css';
+import explore from './JournalExplore.module.css';
+import { filterJournalEntries, journalFilterOptions, journalDateRangeError, journalBedFilterValue } from '@/lib/journal-view';
+import { downloadJournalCsv, downloadJournalHtml } from '@/lib/journal-export';
+import { isSampleMode } from '@/lib/sample-mode';
+import { parseTaskJournalQuery } from '@/lib/task-record-link';
+import JournalPhotoReview from './JournalPhotoReview';
+import LanguageDraftNote from '@/components/LanguageDraftNote';
+import { farmMemoryText, farmMemoryCategoryLabel, type FarmMemoryKey } from '@/lib/farm-memory-copy';
 
 type Filter = 'all' | JournalCategory;
 
@@ -94,14 +103,26 @@ const EXAMPLE_JOURNAL_ENTRIES: ReadonlyArray<{
 ];
 
 export default function FieldJournal() {
+  const router = useRouter();
   const { t, lang } = useLanguage();
   const isZulu = lang === 'zu';
+  const memoryLang = isZulu ? 'zu' : 'en';
+  const memory = (key: FarmMemoryKey, vars?: Record<string, string | number>) => farmMemoryText(lang, key, vars);
   const ui = (english: string, zulu: string) => inlineText(lang, english, zulu);
   const simple = useAppLevel() === 'simple';
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [ready, setReady] = useState(false);
   const [filter, setFilter] = useState<Filter>('all');
-  const [sheet, setSheet] = useState<{ open: boolean; entry: JournalEntry | null }>({ open: false, entry: null });
+  const [query, setQuery] = useState('');
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [from, setFrom] = useState('');
+  const [to, setTo] = useState('');
+  const [bed, setBed] = useState('');
+  const [crop, setCrop] = useState('');
+  const [exporting, setExporting] = useState(false);
+  const [includePhotos, setIncludePhotos] = useState(true);
+  const [exportNotice, setExportNotice] = useState<FarmMemoryKey | null>(null);
+  const [sheet, setSheet] = useState<{ open: boolean; entry: JournalEntry | null; draft?: Partial<JournalEntryInput> }>({ open: false, entry: null });
   const [notice, setNotice] = useState<string | null>(null);
   // bug-03: shown INSIDE the sheet (which overlays everything below it), because a storage-full
   // failure used to close the sheet on the farmer, taking the typed note with it. Kept separate
@@ -109,6 +130,8 @@ export default function FieldJournal() {
   const [sheetError, setSheetError] = useState<string | null>(null);
   const [beds, setBeds] = useState<BedOption[]>([]);
   const [crops, setCrops] = useState<string[]>([]);
+  const resultsRef = useRef<HTMLDivElement>(null);
+  const [historyScrollRequest, setHistoryScrollRequest] = useState(0);
 
   const refresh = useCallback(() => setEntries(loadJournal()), []);
 
@@ -119,6 +142,24 @@ export default function FieldJournal() {
     window.addEventListener(JOURNAL_CHANGED_EVENT, onChanged);
     return () => window.removeEventListener(JOURNAL_CHANGED_EVENT, onChanged);
   }, [refresh]);
+
+  useEffect(() => {
+    if (!ready) return;
+    const url = new URL(window.location.href);
+    const draft = parseTaskJournalQuery(url.searchParams);
+    if (!draft) return;
+    // The plan gives context, not proof that work happened. Only saving the
+    // editable sheet creates an observation, dated today rather than a plan month.
+    setSheet({ open: true, entry: null, draft: {
+      date: todayISODate(), title: draft.title, category: draft.category,
+      cropName: draft.cropName, bedId: draft.bedId ?? null,
+      bedLabel: draft.bedLabel ?? null, notes: '',
+    } });
+    for (const parameter of ['task', 'crop', 'action', 'title', 'bed', 'bedLabel']) url.searchParams.delete(parameter);
+    // Keep the app router's URL in step with browser history so returning to
+    // this page cannot replay a draft that was already saved or cancelled.
+    router.replace(`${url.pathname}${url.search}${url.hash}`, { scroll: false });
+  }, [ready, router]);
 
   // Bed/plot options come from the SAME source the crop planner uses (main saved
   // place → Design-Studio canvas → bridge), so a journal entry tagged "Bed 4"
@@ -147,16 +188,72 @@ export default function FieldJournal() {
   }, []);
 
   const summary = useMemo(() => journalSummary(entries), [entries]);
-  const photos = useMemo(() => recentJournalPhotos(entries, 8), [entries]);
-  const visible = useMemo(
-    () => (filter === 'all' ? entries : entries.filter((e) => e.category === filter)),
-    [entries, filter],
-  );
+  const viewFilters = useMemo(() => ({ query, category: filter, from, to, bed, crop }), [query, filter, from, to, bed, crop]);
+  const visible = useMemo(() => filterJournalEntries(entries, viewFilters), [entries, viewFilters]);
+  const filterOptions = useMemo(() => journalFilterOptions(entries, lang), [entries, lang]);
+  const dateError = journalDateRangeError(viewFilters, lang);
+  const advancedFilterCount = Number(filter !== 'all') + Number(Boolean(from)) + Number(Boolean(to)) + Number(Boolean(bed)) + Number(Boolean(crop));
+  const hasFilters = Boolean(query.trim()) || advancedFilterCount > 0;
   const months = useMemo(() => groupJournalByMonth(visible), [visible]);
   const usedCategories = useMemo(
     () => JOURNAL_CATEGORIES.filter((c) => entries.some((e) => e.category === c.key)),
     [entries],
   );
+
+  function clearFilters() {
+    setQuery(''); setFilter('all'); setFrom(''); setTo(''); setBed(''); setCrop('');
+    setExportNotice(null);
+  }
+
+  function showBedHistory(entry: JournalEntry) {
+    const identity = journalBedFilterValue(entry);
+    if (!identity) return;
+    clearFilters();
+    setBed(identity);
+    setFiltersOpen(false);
+    setHistoryScrollRequest(request => request + 1);
+  }
+
+  function showCropHistory(name: string) {
+    clearFilters();
+    setCrop(name);
+    setFiltersOpen(false);
+    setHistoryScrollRequest(request => request + 1);
+  }
+
+  useEffect(() => {
+    // Re-selecting the same tag leaves the filtered rows unchanged. The tap itself
+    // must still reach the results, rather than leaving a scroll pending until a later search.
+    if (!historyScrollRequest) return;
+    resultsRef.current?.scrollIntoView({ block: 'start' });
+  }, [historyScrollRequest]);
+
+  async function exportSelection(format: 'csv' | 'html') {
+    if (exporting || !visible.length || dateError) return;
+    setExporting(true);
+    setExportNotice(null);
+    const selection = [
+      query.trim() ? memory('searchScope', { value: query.trim() }) : '',
+      filter !== 'all' ? memory('categoryScope', { value: farmMemoryCategoryLabel(lang, filter) }) : '',
+      from ? memory('fromScope', { value: from }) : '', to ? memory('toScope', { value: to }) : '',
+      bed ? memory('bedScope', { value: filterOptions.beds.find(option => option.value === bed)?.label ?? bed }) : '',
+      crop ? memory('cropScope', { value: crop }) : '',
+    ].filter(Boolean).join(' · ') || memory('allEntries');
+    try {
+      const options = { sample: isSampleMode(), selection, lang, ...(format === 'html' ? { includePhotos } : {}) };
+      const result = format === 'csv'
+        ? await downloadJournalCsv(visible, options)
+        : await downloadJournalHtml(visible, options);
+      if (result === 'downloaded') setExportNotice(format === 'html'
+        ? 'downloadedHtml'
+        : 'downloadedCsv');
+      else if (result === 'shared') setExportNotice('shared');
+    } catch {
+      setExportNotice('exportFailed');
+    } finally {
+      setExporting(false);
+    }
+  }
 
   function persist(next: JournalEntry[]): boolean {
     const result = saveJournal(next);
@@ -191,11 +288,12 @@ export default function FieldJournal() {
     setSheet({ open: false, entry: null });
   }
 
-  return (
-    // Bottom padding clears the tab bar AND the sample-mode banner stacked above it,
-    // so the oldest entry is never trapped behind them.
-    <div className={`${workspace.workspace} ${workspace.journal}`} style={{ padding: '14px 14px 176px', maxWidth: 1040 }}>
-      <aside className={workspace.journalSidebar} aria-label={ui('Journal overview', 'Uhlolojikelele lwejenali')}>
+  return (<>
+    <div className={explore.draftNotice}><LanguageDraftNote lang={lang} scope="farm-memory" /></div>
+    {/* Bottom padding clears the tab bar AND the sample-mode banner stacked above it,
+       so the oldest entry is never trapped behind them. */}
+    <div className={`${workspace.workspace} ${workspace.journal} ${explore.memoryLayout}`} style={{ padding: '14px 14px 176px', maxWidth: 1040 }}>
+      <aside className={`${workspace.journalSidebar} ${explore.sidebar}`} aria-label={ui('Journal overview', 'Uhlolojikelele lwejenali')}>
       {/* Stat row — extra dashboard detail, not the entries or the add-note action Simple
           leads with. Still one tap away: switch to All tools in Settings. */}
       {!simple && (
@@ -266,62 +364,70 @@ export default function FieldJournal() {
         </div>
       )}
 
-      {/* Photo strip — only when photos exist, so an empty journal never shows a
-          row of dashed placeholder tiles. */}
-      {photos.length > 0 && (
-        <div style={{ marginBottom: 14 }}>
-          <Heading>{ui('Recent photos', 'Izithombe zakamuva')}</Heading>
-          <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 4, WebkitOverflowScrolling: 'touch' }}>
-            {photos.map((p, i) => (
-              <div
-                key={`${p.entryId}-${i}`}
-                style={{ flex: '0 0 auto', width: 92, height: 92, borderRadius: 12, overflow: 'hidden', background: 'var(--bg-2)', position: 'relative' }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={p.src} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                <div style={{
-                  position: 'absolute', left: 0, right: 0, bottom: 0, padding: '10px 6px 4px',
-                  background: 'linear-gradient(transparent, rgba(0,0,0,0.55))',
-                  font: '600 12px/1 var(--font-sans), sans-serif', color: '#fff',
-                }}>
-                  {isZulu ? formatZuluJournalDate(p.date) : lang === 'xh' ? formatXhosaJournalDate(p.date) : formatJournalDate(p.date)}
-                </div>
-              </div>
-            ))}
+      {ready && entries.length > 0 && <section className={explore.tools} aria-label={memory('findEntries')} lang={memoryLang}>
+        <div className={explore.heading}><NotebookPen size={17} aria-hidden="true" /><h2>{memory('title')}</h2></div>
+        <p className={explore.help}>{memory('help')}</p>
+        {lang !== 'en' && lang !== 'zu' && <p className={explore.languageNote} role="note">{memory('englishControls')}</p>}
+        <label className={explore.search}>
+          <Search size={18} aria-hidden="true" />
+          <span className="sr-only">{memory('searchLabel')}</span>
+          <input type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder={memory('searchPlaceholder')} />
+          {query && <button type="button" onClick={() => setQuery('')} aria-label={memory('clearSearch')}><X size={17} aria-hidden="true" /></button>}
+        </label>
+        <button type="button" className={explore.filterToggle} aria-expanded={filtersOpen} aria-controls="journal-memory-filters" onClick={() => setFiltersOpen(value => !value)}>
+          <SlidersHorizontal size={17} aria-hidden="true" /><span>{memory('filters')}{advancedFilterCount ? ` · ${advancedFilterCount}` : ''}</span><ChevronDown size={17} aria-hidden="true" className={filtersOpen ? explore.rotated : undefined} />
+        </button>
+        {filtersOpen && <div id="journal-memory-filters" className={explore.filters}>
+          <div className={explore.dateFields}>
+            <label>{memory('fromDate')}<input type="date" value={from} onChange={event => setFrom(event.target.value)} aria-invalid={Boolean(dateError)} aria-describedby={dateError ? 'journal-date-error' : 'journal-date-help'} /></label>
+            <label>{memory('throughDate')}<input type="date" value={to} onChange={event => setTo(event.target.value)} aria-invalid={Boolean(dateError)} aria-describedby={dateError ? 'journal-date-error' : 'journal-date-help'} /></label>
           </div>
-        </div>
-      )}
+          <p id="journal-date-help" className={explore.help}>{memory('dateHelp')}</p>
+          <label>{memory('bedOrPlot')}<select value={bed} onChange={event => setBed(event.target.value)}><option value="">{memory('allBeds')}</option>{filterOptions.beds.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}</select></label>
+          <label>{memory('cropOrProduct')}<select value={crop} onChange={event => setCrop(event.target.value)}><option value="">{memory('allCrops')}</option>{filterOptions.crops.map(name => <option key={name} value={name}>{name}</option>)}</select></label>
+          {!simple && usedCategories.length > 1 && <div><span className={explore.fieldLabel}>{memory('category')}</span><div className={explore.categoryChoices}>
+            <Chip on={filter === 'all'} onClick={() => setFilter('all')}>{memory('all')} · {entries.length}</Chip>
+            {usedCategories.map(c => <Chip key={c.key} on={filter === c.key} onClick={() => setFilter(c.key)} tint={c.tint} ink={c.ink}>
+              {getElementArt2(`journal_${c.key}`)
+                ? <img className="produce-art produce-art--inline" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden="true" style={{ width: 13, height: 13, objectFit: 'contain', display: 'inline-block' }} />
+                : <c.icon size={13} aria-hidden="true" />}{' '}
+              {isZulu ? journalCategoryLabel(c.key) : c.label}
+            </Chip>)}
+          </div></div>}
+        </div>}
+        {dateError && <p id="journal-date-error" role="alert" className={explore.error}>{dateError}</p>}
+        {advancedFilterCount > 0 && <button type="button" className={explore.clearButton} onClick={clearFilters}><X size={15} aria-hidden="true" />{memory('clearFilters')}</button>}
+        <details className={explore.exports} open={simple ? undefined : true}>
+          <summary className={explore.copyToggle}>{memory(visible.length === 1 ? 'keepCopyOne' : 'keepCopyMany', { n: visible.length })}</summary>
+          <label className={explore.photoChoice}><input type="checkbox" checked={includePhotos} onChange={event => setIncludePhotos(event.target.checked)} />{memory('includePhotos')}</label>
+          <p className={explore.help}>{memory('exportPhotosHelp')}</p>
+          <div className={explore.exportButtons}>
+            <button type="button" onClick={() => void exportSelection('csv')} disabled={exporting || visible.length === 0 || Boolean(dateError)}><Download size={16} aria-hidden="true" />{memory('csv')}</button>
+            <button type="button" onClick={() => void exportSelection('html')} disabled={exporting || visible.length === 0 || Boolean(dateError)}><Printer size={16} aria-hidden="true" />{memory('printableCopy')}</button>
+          </div>
+          <p className={explore.help}>{memory('exportHelp')}</p>
+          <p className={explore.help}>{memory('localStorageHelp')}</p>
+        </details>
+        {(exportNotice || exporting) && <p className={explore.exportNotice} role="status">{exporting ? memory('preparing') : exportNotice ? memory(exportNotice) : null}</p>}
+      </section>}
 
-      {/* desk-18: this filter used to live at the top of the timeline column, where it did
-          nothing for the desktop layout's left rail (previously just stats + the add-note
-          button, with a huge empty band below). Moved into the sidebar so it earns the
-          column, and a desktop reader filters from beside the list rather than above it. */}
-      {!simple && usedCategories.length > 1 && (
-        <div>
-          <Heading>{ui('Categories', 'Izigaba')}</Heading>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
-            <Chip on={filter === 'all'} onClick={() => setFilter('all')}>{ui('All', 'Konke')} · {entries.length}</Chip>
-            {usedCategories.map((c) => (
-              <Chip key={c.key} on={filter === c.key} onClick={() => setFilter(c.key)} tint={c.tint} ink={c.ink}>
-                {getElementArt2(`journal_${c.key}`) ? (
-                  <img className="produce-art produce-art--inline" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain', display: 'inline-block', verticalAlign: '-2px' }} />
-                ) : (
-                  <c.icon size={12} aria-hidden />
-                )}{' '}
-                {isZulu ? journalCategoryLabel(c.key) : inlineText(lang, c.label)}
-              </Chip>
-            ))}
-          </div>
-        </div>
-      )}
+      <JournalPhotoReview entries={visible} lang={lang} />
 
       </aside>
-      <div className={workspace.journalTimeline}>
+      <div className={`${workspace.journalTimeline} ${explore.timeline}`}>
       {isZulu && <div role="note" style={{ marginBottom: 10, padding: '9px 12px', borderRadius: 10, background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', color: 'var(--gold-dim)', font: '500 12px/1.45 var(--font-sans), sans-serif' }}>
         Izibonelo namanothi akho akhonjiswa njengoba ebhaliwe. Isibonelo neminye imibhalo isesiNgisini.
       </div>}
       {lang === 'xh' && <div role="note" style={{ marginBottom: 10, padding: '9px 12px', borderRadius: 10, background: 'color-mix(in srgb, var(--gold) 14%, var(--bg-1))', color: 'var(--gold-dim)', font: '500 12px/1.45 var(--font-sans), sans-serif' }}>
         {inlineText(lang, 'Examples and your own notes are shown as written. The example and other text stay in English.')}
+      </div>}
+
+      {ready && entries.length > 0 && <div className={explore.resultBar} lang={memoryLang} ref={resultsRef}>
+        <div><p className={explore.eyebrow}>{memory(hasFilters ? 'yourSelection' : 'yourNotes')}</p><h2 role="status" aria-live="polite">{memory(hasFilters ? (visible.length === 1 ? 'resultFilteredOne' : 'resultFilteredMany') : (visible.length === 1 ? 'resultOne' : 'resultMany'), { n: visible.length, total: entries.length })}</h2></div>
+        {hasFilters && <button type="button" className={explore.clearButton} onClick={clearFilters}>{memory('showAll')}</button>}
+      </div>}
+      {ready && entries.length > 0 && visible.length === 0 && <div className={explore.noMatches} lang={memoryLang}>
+        <Search size={26} aria-hidden="true" /><h3>{memory('noMatches')}</h3><p>{dateError ?? memory('noMatchesHelp')}</p><button type="button" className={explore.clearButton} onClick={clearFilters}>{memory('clearFilters')}</button>
       </div>}
 
       {/* Timeline */}
@@ -493,8 +599,8 @@ export default function FieldJournal() {
 
                       {(entry.bedLabel || entry.cropName) && (
                         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 8 }}>
-                          {entry.bedLabel && <Pill><MapPin size={12} aria-hidden /> {entry.bedLabel}</Pill>}
-                          {entry.cropName && <Pill><Leaf size={12} aria-hidden /> {entry.cropName}</Pill>}
+                          {entry.bedLabel && <button type="button" className={explore.historyTag} aria-label={memory('bedHistory', { value: entry.bedLabel })} onClick={() => showBedHistory(entry)}><MapPin size={14} aria-hidden="true" />{entry.bedLabel}</button>}
+                          {entry.cropName && <button type="button" className={explore.historyTag} aria-label={memory('cropHistory', { value: entry.cropName })} onClick={() => showCropHistory(entry.cropName!)}><Leaf size={14} aria-hidden="true" />{entry.cropName}</button>}
                         </div>
                       )}
 
@@ -519,7 +625,7 @@ export default function FieldJournal() {
                       onClick={() => openSheet(entry)}
                       aria-label={`${ui('Edit entry', 'Hlela okufakiwe')}: ${entry.title || (isZulu ? formatZuluJournalDate(entry.date) : lang === 'xh' ? formatXhosaJournalDate(entry.date) : formatJournalDate(entry.date))}`}
                       style={{
-                        flexShrink: 0, width: 40, height: 40, borderRadius: 10, cursor: 'pointer',
+                        flexShrink: 0, width: 44, height: 44, borderRadius: 10, cursor: 'pointer',
                         background: 'rgba(31,77,43,0.07)', border: '1px solid rgba(31,77,43,0.16)', color: 'var(--color-forest-800)',
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                       }}
@@ -538,6 +644,7 @@ export default function FieldJournal() {
       {sheet.open && (
         <JournalEntrySheet
           entry={sheet.entry}
+          initialDraft={sheet.draft}
           beds={beds}
           crops={crops}
           error={sheetError}
@@ -547,7 +654,7 @@ export default function FieldJournal() {
         />
       )}
     </div>
-  );
+  </>);
 }
 
 /* ── Small presentational bits ───────────────────────────────────────────── */
@@ -557,17 +664,6 @@ function Stat({ value, label }: { value: string; label: string }) {
     <div style={{ background: 'var(--bg-1)', border: '1px solid var(--border)', borderRadius: 13, padding: '11px 10px', textAlign: 'center' }}>
       <div className="t-hero" style={{ color: 'var(--color-forest-800)' }}>{value}</div>
       <div style={{ font: '500 12px/1.2 var(--font-sans), sans-serif', color: 'var(--text-muted)', marginTop: 4 }}>{label}</div>
-    </div>
-  );
-}
-
-function Heading({ children }: { children: React.ReactNode }) {
-  return (
-    <div style={{
-      font: '700 12px/1 var(--font-sans), sans-serif', letterSpacing: '0.1em',
-      textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 8,
-    }}>
-      {children}
     </div>
   );
 }
@@ -596,7 +692,7 @@ function Chip({
       onClick={onClick}
       aria-pressed={on}
       style={{
-        flex: '0 0 auto', minHeight: 38, padding: '0 13px', borderRadius: 19, cursor: 'pointer',
+        flex: '0 0 auto', minHeight: 44, padding: '0 13px', borderRadius: 19, cursor: 'pointer',
         background: on ? (tint ?? 'var(--badge-bg)') : 'var(--bg-1)',
         border: `1.5px solid ${on ? (ink ?? 'var(--color-forest-800)') : 'var(--border)'}`,
         color: on ? (ink ?? 'var(--color-forest-800)') : 'var(--text-secondary)',

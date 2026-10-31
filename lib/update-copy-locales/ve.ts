@@ -1,6 +1,80 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Paper recovery: docs/audits/2026-10-31/paper-map-release-drafts.json; unreviewed.
+  "Style choices stay visible; plain-paper Water maps keep white backgrounds.": "Zwinangwa zwa zwitaila zwi dzula zwi tshi vhonala; mapa a Maḓi kha bammbiri ḽitshena a vhulunga murahu hu hutshena.",
+  // Oblique picker: docs/audits/2026-10-30/oblique-style-picker-release-drafts.json; unreviewed.
+  "Oblique styles stay visible when you switch from an exact map.": "Zwitaila zwa Oblique zwi dzula zwi tshi vhonala musi ni tshi bva kha mapa wo elwaho nga vhukuma.",
+  // Oblique experiment guide: docs/audits/2026-10-30/oblique-experiment-guide-drafts.json; unreviewed.
+  "Try an angled view": "Lingedzani u lavhelesa nga engele",
+  "With AI access, open Glossy and choose Oblique under AI viewpoint to generate your design.": "Arali ni na tswikelelo ya AI, vulani Glossy ni kone u nanga Oblique fhasi ha AI viewpoint u bveledza pulane yaṋu.",
+  "Keep the measured plan": "Vhulungani pulane yo elwaho",
+  "Use the top-down Design Map for measurements; compare the angled view with it.": "Shumisani Design Map i lavheleswaho nṱha kha mielo; vhambedzani tshifanyiso tsha engele nayo.",
+  // Oblique beta: docs/audits/2026-10-30/oblique-ai-view-release-drafts.json; unreviewed.
+  "Choose Oblique in AI viewpoint for an angled illustration of your whole design.": "Khethani Oblique kha AI viewpoint uri ni vhone tshifanyiso tsha pulane yaṋu yoṱhe tsho sedzwa nga thungo.",
+  "The app gathers your layout, photo and terrain; use the top-down plan for measurements.": "App i lugisa pulane yo vhulungwaho, tshifanyiso tsha fhethu na zwidodombedzwa zwa mavu zwi re hone; shumisani pulane yo sedzwaho nṱha u kala.",
+  // Driveway guide: docs/audits/2026-10-30/glossy-driveway-guide-release-drafts.json; unreviewed.
+  "Glossy AI maps omit duplicate driveway guides; your editable paths stay saved.": "Mapa dza AI dzo nakaho a dzi sumbedzi mitalo yo dovhololwaho ya nḓila ya zwiendedzi; nḓila dzaṋu dzine dza nga dzudzanywa dzi dzula dzo vhulungwa.",
+  // Roof reference: docs/audits/2026-10-30/aerial-roof-release-drafts.json; unreviewed.
+  "AI maps on plain paper keep real roof detail from satellite imagery.": "Mapa dza AI kha bammbiri ḽitshena dzi vhulunga zwidodombedzwa zwa vhukuma zwa ṱhanga zwi bvaho kha zwifanyiso zwa sathelaithi.",
+  // Phone map artwork: docs/audits/2026-10-30/phone-ai-paper-release-drafts.json; unreviewed.
+  "AI maps on plain paper keep illustrated ground instead of flat overlays.": "Mapa dza AI kha bammbiri ḽitshena dzi vhulunga mavu o oliwaho nṱhani ha zwipiḓa zwo ṱanḓavhuwaho.",
+  "Full-screen maps fit your phone, including with larger text.": "Mapa a tshikirini tsho ḓalaho a lingana na luṱingo lwaṋu, na musi maḽeḓere e mahulwane.",
+  "Check the complete map": "Ṱolani mapa o fhelelaho",
+  "Open a saved map full-screen. The whole sheet and legend should fit.": "Vulani mapa o vhulungwaho kha tshikirini tsho ḓalaho. Siaṱari ḽoṱhe na ṱhalutshedzo ya zwiga zwi tea u lingana.",
+  "Recover your paid artwork": "Vhuisani tshifanyiso tshe na badela",
+  "Saved maps → Open map": "Mapa o vhulungwaho → Vulani mapa",
+  "Choose Reassemble artwork at the original print quality. No new AI render is bought.": "Khethani u kuvhanganya tshifanyiso hafhu nga vhuimo ha u gandisa ha u thoma. A hu rengwi tshifanyiso tshiswa tsha AI.",
+  // Map footer: docs/audits/2026-10-30/map-style-footer-release-drafts.json; unreviewed.
+  "Reference Blueprint now appears in small print at the bottom of your maps.": "Reference Blueprint zwino i vhonala nga maḽeḓere maṱuku fhasi ha mapa dzavho.",
+  "Photo dates are easier to read; scroll through older notes on desktop.": "Maḓuvha a zwifanyiso zwino a a vhalea nga hu leluwaho; skrolani kha notsi dza kale kha khomphyutha.",
+  "Photo dates and journal headings are easier to read.": "Maḓuvha a zwifanyiso na ṱhoho dza dzhenala zwino zwi a vhalea nga hu leluwaho.",
+  // Farm memory release: docs/audits/2026-10-29/farm-memory-release-drafts.json; unreviewed.
+  "Farm memory search, photos and saved copies now support isiZulu.": "U ṱoḓa, zwifanyiso na khophi dzo vhulungwaho dza khumbudzo dza bulasi zwino zwi tikedza isiZulu.",
+  "Tap a crop or bed on a note to see its journal history.": "Kwatamani tshimela kana mubethe kha notsi uri ni vhone ḓivhazwakale yatsho kha dzhenala.",
+  "Choose a smaller printable copy with notes only.": "Khethani khophi ṱhukhu ine ya nga gandiswa i re na notsi fhedzi.",
+  "Open a field note from a task, with its crop and bed ready to check.": "Vulani notsi ya tsimuni kha mushumo, tshimela na mubethe zwo lugela u sedzuluswa.",
+  "Find journal notes by crop, bed, date or words you remember.": "Wanani notsi dza dzhenala nga tshimela, mubethe, ḓuvha kana maipfi ane na a humbula.",
+  "Compare dated photos and download selected notes for an adviser.": "Vhambedzani zwifanyiso zwi re na maḓuvha ni kone u dzhenisa notsi dzo khethiwaho dza mueletshedzi.",
+  "Harvest tasks open the crop and blank quantity field, ready to fill in.": "Mishumo ya khaṋo i vula tshimela na fhethu ha tshivhalo hu si na tshithu, ho lugela u ḓadzwa.",
+  "Explore your farm memory": "Sedzulusani khumbudzo dza bulasi yaṋu",
+  "Menu → Field journal": "Menyu → Dzhenala ya tsimuni",
+  "Search your notes, compare saved photos and keep a printable copy.": "Ṱoḓani notsi dzaṋu, vhambedzani zwifanyiso zwo vhulungwaho ni kone u vhulunga khophi ine ya nga gandiswa.",
+  "Record work from a task": "Rekhodani zwo itwaho kha mushumo",
+  "Menu → Task planner": "Menyu → Mudzudzanyi wa mishumo",
+  "Open a draft field note or record an actual harvest from a crop task.": "Vulani mvetamveto ya notsi ya tsimuni kana ni rekhode khaṋo ya vhukuma kha mushumo wa tshimela.",
+  // Boundary artwork audit: docs/audits/2026-10-29/ai-map-boundary-release-drafts.json; unreviewed.
+  "AI maps keep tank tops and more foliage visible across the property line.": "Mapa dza AI dzi ita uri zwipiḓa zwa nṱha zwa mathangi na maṱari manzhi zwi vhonale zwi tshi pfuka mukano wa fhethu.",
+  // Annual PDF row audit: docs/audits/2026-10-29/annual-product-pdf-release-drafts.json; unreviewed.
+  "PDF exports keep each product and its notes together.": "PDF dzi bviswaho dzi vhea tshibveledzwa tshiṅwe na tshiṅwe na notsi dzatsho fhethu huthihi.",
+  // Production status audit: docs/audits/2026-10-27/report-production-status-release-drafts.json; unreviewed.
+  "Production plans keep unmarked plants and housing as proposed, matching your design.": "Pulane dza mveledziso dzi vhea zwimela na zwifhaṱo zwa zwifuwo zwi sa athu u swaiwa sa zwo dzudzanywaho, u tevhedza pulane yaṋu.",
+  // PDF sample audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Report headings stay with their opening text when you export a PDF.": "Thoho dza muvhigo dzi dzula na maipfi adzo a u thoma musi ni tshi bvisa PDF.",
+  // Visual audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Map legends have thinner borders and clearer scale marks.": "Mabogisi a zwiga zwa mimepe a na mikano miṱuku na zwiga zwa tshikalo zwi re khagala.",
+  "Menu → Site design": "Menyu → Puḽane ya fhethu",
+  "Check the new map lettering": "Ṱolani maṅwalwa maswa a mepe",
+  "Create a free exact map. Check the larger key and the buildings you traced.": "Itani mepe wo teaho wa mahala. Ṱolani ṱhalutshedzo khulwane ya zwiga na zwifhaṱo zwe na zwi ola.",
+  "Check the maps in your site report": "Ṱolani mimepe kha muvhigo wa fhethu haṋu",
+  "Review each included map before exporting. Saved older drawings stay available.": "Sedzulusani mepe muṅwe na muṅwe wo katelwaho musi ni sa athu u bvisa faela. Zwifanyiso zwa kale zwo vhulungwaho zwi kha ḓi wanala.",
+  // Map follow-up: docs/audits/2026-10-26/map-release-note-drafts.json; unreviewed.
+  "New map legends use spare margin space for larger, clearer lettering.": "Ṱhalutshedzo ntswa dza zwiga zwa mepe dzi shumisa tshikhala tshi sa shumiswiho thungo uri maṅwalwa a vhe mahulwane nahone a vhalege zwavhuḓi.",
+  "Paper base maps show each building you traced, with separate building names.": "Mimepe ya mutheo ya kha bammbiri i sumbedza tshifhaṱo tshiṅwe na tshiṅwe tshe na tshi ola, na madzina o fhambanaho a zwifhaṱo.",
+  "Saved maps stay available; create new drawings to see these improvements.": "Mimepe yo vhulungwaho i kha ḓi wanala; olani mimepe miswa uri ni vhone khwiniso idzi.",
+  "All nine map sheets use the same legend box, fonts and spacing.": "Masiaṱari oṱhe a ṱahe a mimepe a shumisa bogisi ḽithihi ḽa zwiga, fonto na zwikhala zwi fanaho.",
+  "New drawings keep the legend on the right; your saved maps stay available.": "Zwifanyiso zwiswa zwi vhea ṱhalutshedzo ya zwiga kha tsha u ḽa; mimepe yaṋu yo vhulungwaho i kha ḓi wanala.",
+  "Long map headings wrap inside their legend box.": "Ṱhoho ndapfu dza mepe dzi khethekanywa nga mitaladzi ngomu ha bogisi ḽa zwiga.",
+  "Saved AI maps can be reassembled without buying another render.": "Mapa wa AI wo vhulungwaho u nga kuvhanganywa hafhu hu si na u renga tshiṅwe tshifanyiso.",
+  "AI maps keep continuous artwork, with tree crowns allowed over the boundary.": "Mapa wa AI u vhulunga tshifanyiso tshi bvelaho phanḓa, ṱhoho dza miri dzi nga fhira mukano.",
+  "AI map downloads now remind you to check positions and counts.": "Mapa wa AI wo dzheniswaho zwino u ni humbudza u ṱola fhethu na mbalo.",
+
+  "Saved reports keep their original photos and site water evidence.": "Mivhigo yo vhulungwaho i vhulunga zwifanyiso zwayo zwa u thoma na vhuṱanzi ha maḓi a fhethu.",
+  "Field records now accept today’s date after midnight in South Africa.": "Rekhodo dza tsimuni zwino dzi ṱanganedza datumu ya ṋamusi nga murahu ha vhusiku Afurika Tshipembe.",
+  "Map and crop exports give clearer errors and keyboard controls.": "U bvisa mapa na pulane dza zwiliṅwa zwi ṋea milaedza ya vhukhakhi na ndango dza khibodo dzi pfalaho.",
+  "Map sheets now use white paper, thin legend borders and clearer plant pictures.": "Mashithi a mapa zwino a shumisa bammbiri ḽitshena, mikano misekene ya khii na zwifanyiso zwa zwimela zwi vhonalaho zwavhuḓi.",
+  "Paid AI maps now finish when the image service rounds their size.": "Mapa a AI ane a badelwa zwino a a fhela musi tshumelo ya zwifanyiso i tshi ita uri saizi i vhe nomboro yo tandaho.",
+  "New AI glossy maps use GPT Image 2.5 Sunburst.": "Mapa miswa ya AI i shumisa GPT Image 2.5 Sunburst.",
   "Offline saving and sending messages now have drafts in all four languages.": "Milaedza ya u vhulunga hu si na vhuṱumani na u rumela zwino i na mvetomveto nga nyambo dzoṱhe nṋa.",
   "Consent choices now show draft translations and the English source in all four languages.": "Zwikhetho zwa thendelo zwino zwi sumbedza ṱhalutshedzelo dza mvetomveto na maṅwalwa a u thoma a English nga nyambo dzoṱhe nṋa.",
   "Full production and yield notes now have four draft translations.": "Notsi dzo fhelelaho dza mbveledzo na khaṋo zwino dzi na ṱhalutshedzelo dza mvetomveto nga nyambo nṋa.",

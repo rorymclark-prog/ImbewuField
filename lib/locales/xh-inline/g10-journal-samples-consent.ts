@@ -11,7 +11,6 @@ const drafts: Record<string, string> = {
   "since last note": "ukususela kwinqaku lokugqibela",
   "Add a note": "Yongeza inqaku",
   "New entry": "Okubhaliweyo okutsha",
-  "Recent photos": "Iifoto zakutshanje",
   "Categories": "Iindidi",
   "All": "Onke",
   "Examples and your own notes are shown as written. The example and other text stay in English.": "Imizekelo namanqaku akho abonisiwe njengoko abhalwe ngayo. Umzekelo nezinye iindawo zombhalo zihlala zisesiNgesi.",

@@ -35,8 +35,8 @@ export interface GeometryLockCompositionPolicy {
  * Painted styles need one continuous illustrated property interior. Restoring isolated source
  * rectangles around every saved feature, then burning the exact ground artwork over them, is what
  * turned Reference Blueprint into a collage of satellite keyholes and mismatched crop tiles.
- * Photo Plan and plain paper have the opposite contract: their factual background is already the
- * intended finish, so it remains protected and only the marked design features are editable.
+ * Photo Plan has the opposite contract: its factual background (or paper fallback) remains
+ * protected. Painted styles illustrate the property even when no photograph was supplied.
  */
 export function geometryLockCompositionPolicy(
   style: StylePreset,
@@ -49,11 +49,42 @@ export function geometryLockCompositionPolicy(
     protectUnmarkedGround: keepsSourceGround,
     protectHousePixels: keepsSourceGround,
     protectDrivewayPixels: keepsSourceGround,
-    // Plain paper has no factual roof pixels to recover; its exact corrugated roofs are drawn by
-    // the app. Only a genuinely photographic contract may paste photographed structures back.
+    // Only a genuinely photographic contract may paste photographed structures back.
+    // Photo Plan's paper fallback has app-drawn roofs; painted styles own their roof material.
     useSourceStructurePixels: ground === 'photo',
     useExactGroundOverlay: keepsSourceGround,
   };
+}
+
+/** Photo outline bands were being restored through the paid Whole artwork. Analysis zones
+ * still own their outlines; a painted property uses a separately drawn survey line instead. */
+export function hybridProtectionPolicy(filter: GlossyLayerFilter, style: StylePreset, hasPhoto: boolean) {
+  const composition = geometryLockCompositionPolicy(style, hasPhoto ? 'photo' : 'paper');
+  const painted = composition.ground === 'paint';
+  return {
+    protectOutside: true,
+    protectBoundary: !painted,
+    protectZones: filter === 'zones',
+    allowCanopyOverhang: painted,
+    protectLines: false,
+    protectItems: false,
+    protectHouse: composition.protectHousePixels,
+    protectDriveway: composition.protectDrivewayPixels,
+    protectUnmarkedGround: composition.protectUnmarkedGround,
+    houseHaloRatio: 0.003,
+    houseFeatherRatio: 0.0012,
+  };
+}
+
+/** Standalone downloads must carry the same review status as the gallery. A saved inventory
+ * does not establish which features an image model actually drew. */
+export const AI_MAP_REVIEW_NOTICE =
+  'AI illustration — check positions and counts against your saved Design Map before use.';
+
+/** Earlier paper prompts forbade any roof artwork. Free recovery can keep that roof's exact
+ * drawing without stamping flat ground over all the paid plants and materials again. */
+export function legacyPaperArtworkNeedsRoof(sourcePrompt: string | undefined): boolean {
+  return Boolean(sourcePrompt?.includes('KEEP THE PAPER WHITE:'));
 }
 
 /**

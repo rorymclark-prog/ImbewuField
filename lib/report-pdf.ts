@@ -484,20 +484,38 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
   /** Room the first thing under a chapter heading needs. A heading is only kept on a page when
    * its own text will start there too — never left behind by a paragraph that jumps the page. */
   const openingRoom = (from: number): number => {
-    let room = 0;
-    for (let k = from; k < Math.min(blocks.length, from + 2); k += 1) {
-      const next = blocks[k];
-      if (next.kind === 'h2' || next.kind === 'title') break;
-      if (next.kind === 'table') { room += 64; break; }
-      doc.setFont('helvetica', next.kind === 'h3' || next.kind === 'bold' ? 'bold' : 'normal');
-      doc.setFontSize(next.kind === 'h3' ? 11 : 10);
-      const width = next.kind === 'bullet' ? CW - 14 : next.kind === 'numbered' ? CW - 20 : CW;
-      const count = (doc.splitTextToSize(next.text, width) as string[]).length;
-      if (next.kind === 'h3') { room += count * 15 + 26; continue; } // a sub-heading keeps its first block too
-      room += count * 14 + 8;
-      break;
+    const font = doc.getFont(), fontSize = doc.getFontSize();
+    try {
+      let room = 0;
+      for (let k = from; k < Math.min(blocks.length, from + 2); k += 1) {
+        const next = blocks[k];
+        if (next.kind === 'h2' || next.kind === 'title') break;
+        if (next.kind === 'table') {
+          const widths = layoutTableColumns(next.headers, next.rows, CW);
+          doc.setFontSize(8.5);
+          const rowRoom = (cells: string[], bold: boolean) => {
+            doc.setFont('helvetica', bold ? 'bold' : 'normal');
+            return Math.max(1, ...next.headers.map((_, column) =>
+              (doc.splitTextToSize(cells[column] ?? '', Math.max(10, widths[column] - 8)) as string[]).length,
+            )) * 11 + 8;
+          };
+          room += 16 + rowRoom(next.headers, true) + (next.rows[0] ? rowRoom(next.rows[0], false) : 0);
+          break;
+        }
+        doc.setFont('helvetica', next.kind === 'h3' || next.kind === 'bold' ? 'bold' : 'normal');
+        doc.setFontSize(next.kind === 'h3' ? 11 : 10);
+        const width = next.kind === 'bullet' ? CW - 14 : next.kind === 'numbered' ? CW - 20 : CW;
+        const count = (doc.splitTextToSize(next.text, width) as string[]).length;
+        if (next.kind === 'h3') { room += count * 15 + 26; continue; }
+        room += count * 14 + 8;
+        break;
+      }
+      return room;
+    } finally {
+      // Measuring the opening text must not repaint a subheading in the body's font.
+      doc.setFont(font.fontName, font.fontStyle);
+      doc.setFontSize(fontSize);
     }
-    return room;
   };
   kinds = blocks.map(block => block.kind);
   for (let index = 0; index < blocks.length; index += 1) {
@@ -524,7 +542,8 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
         // A heading alone at the foot of a page is worse than a slightly short page. It stays
         // with its first illustration when that fits here; when it does not, it stays with the
         // opening of its text instead (openingRoom) and the illustration opens the next page.
-        if (!pictures.length || fitHere(pictures.slice(0, 1), headingRoom).count) need(headingRoom);
+        if (!pictures.length) need(headingRoom + openingRoom(index + 1));
+        else if (fitHere(pictures.slice(0, 1), headingRoom).count) need(headingRoom);
         else {
           // The first illustration does not fit under the heading here. Breaking the page keeps
           // them together, and a short gap before a new chapter reads as a chapter opening — but
@@ -548,7 +567,7 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
       case 'h3': {
         doc.setFont('helvetica', 'bold'); doc.setFontSize(11); setInk(INK.gold);
         const lines = doc.splitTextToSize(block.text, CW);
-        need(lines.length * 15 + 26);
+        need(lines.length * 15 + 26 + openingRoom(index + 1));
         y += 8;
         doc.text(lines, M, y); y += lines.length * 15 + 3;
         break;

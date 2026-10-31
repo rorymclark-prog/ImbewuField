@@ -46,6 +46,7 @@ import CropSelect from '@/components/CropSelect';
 import CropIcon from '@/components/CropIcon';
 import { buildCropAliasIndex, cropIdentityOf } from '@/lib/crop-identity';
 import { produceLabel } from '@/lib/produce-label';
+import { parseTaskHarvestQuery } from '@/lib/task-record-link';
 import { getCropArt } from '@/lib/crop-art';
 import { loadCropPriceOverrides, priceFor, type CropPrice } from '@/lib/crop-prices';
 import { parseDecimalInput } from '@/lib/decimal-input';
@@ -300,6 +301,7 @@ interface ProdFormState {
 
 function LogProductionForm({ onSaved }: { onSaved: () => void }) {
   const { t, lang } = useRecordsT();
+  const router = useRouter();
   const [form, setForm] = useState<ProdFormState>({
     crop: '',
     cropKey: null,
@@ -310,6 +312,20 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
     error: '',
   });
   const fileRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const draft = parseTaskHarvestQuery(url.searchParams);
+    if (!draft) return;
+    setForm((current) => ({ ...current, crop: draft.cropName, cropKey: draft.cropKey }));
+    // Switching tabs remounts this form. The original task must not keep replacing
+    // the farmer's next crop, or replay after changing accounts on a shared phone.
+    url.searchParams.delete('crop');
+    // Resolve the anchor after this form has mounted: the book's summary cards
+    // otherwise fill the phone screen before the farmer reaches the empty amount.
+    if (!url.hash) url.hash = 'log-harvest';
+    router.replace(`${url.pathname}${url.search}${url.hash}`, { scroll: true });
+  }, [router]);
 
   const handleFile = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] ?? null;
@@ -391,7 +407,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
   return (
     <Card accent="#1F4D2B" className="md:max-w-xl">
       <SectionLabel>{t('myRecordsLogProductionHeader')}</SectionLabel>
-      <form onSubmit={handleSubmit} className="space-y-3 u-form-column">
+      <form id="log-harvest" onSubmit={handleSubmit} className="space-y-3 u-form-column" style={{ scrollMarginTop: 16 }}>
         {sampleProducePhoto(form.crop) && <figure className="flex items-center gap-3"><img src={sampleProducePhoto(form.crop)!} alt={form.crop} width={56} height={56} style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover' }} /><figcaption className="text-xs">{recordsUi(lang, 'AI-generated crop reference · add your own harvest photo below.', 'Isithombe sesitshalo esenziwe nge-AI · faka esakho isithombe sesivuno ngezansi.')}</figcaption></figure>}
         <div>
           <FieldLabel>{recordsFill(lang, 'Produce / product')}</FieldLabel>

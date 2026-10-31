@@ -4,7 +4,50 @@ This is the shared starting point for Rory, Claude and Codex. Read the latest
 record for the area being worked on before opening another audit. Build on its
 findings and subsequent changes; do not restart from an older snapshot.
 
+## Paid AI map composition: start here
+
+Latest paper recovery: [White Water sheets, retained AI roofs and reachable styling — 31 October 2026](2026-10-31/paper-map-finish-codex.md).
+
+Latest style follow-up: [Complete Oblique style picker across sheets — 30 October 2026](2026-10-30/oblique-style-picker-codex.md).
+
+Latest experimental release: [Oblique current-main integration and explicit wait exception — 30 October 2026](2026-10-30/oblique-experiment-release-codex.md).
+
+Latest implementation: [Oblique AI illustration — 30 October 2026](2026-10-30/oblique-ai-view-codex.md). Release status and actual paid-pipeline evidence belong to its PR/issue #35 ledger.
+Latest guide follow-up: [Duplicate driveway guide and remaining canopy clipping — 30 October 2026](2026-10-30/glossy-driveway-guide-codex.md).
+
+Latest roof follow-up: [Existing roof detail on plain-input AI maps — 30 October 2026](2026-10-30/aerial-roof-detail-codex.md).
+
+Latest phone follow-up: [Plain-input artwork and full-screen fit — 30 October 2026](2026-10-30/phone-ai-paper-quality-codex.md).
+
+Latest footer and feasibility record: [Small style credit and oblique view proposal — 30 October 2026](2026-10-30/map-style-footer-and-oblique-feasibility-codex.md).
+
+Previous boundary follow-up: [Tanks and foliage at the property line — 29 October 2026](2026-10-29/ai-map-boundary-features-codex.md).
+
+Previous implementation: [Paid map composition corrections — 29 October 2026](2026-10-29/ai-map-composition-fixes-codex.md).
+
+Previous audit: [Paid Whole ghost strips, crowns and export provenance — 28 October 2026](https://github.com/rorymclark-prog/ImbewuField/blob/88adb66a7199040ba527c94cfee9df3f69aaf5ac/docs/audits/2026-10-28/ai-map-composition-codex.md).
+
+The prior audit is preserved unchanged. Source-photo seams remain open; deployment and final CI evidence belong to the implementation’s issue #35 completion ledger.
+
 ## Site reports and mapping: start here
+
+Latest production-status verification and PDF follow-up: [Live annual rows and complete product qualifications — 29 October 2026](2026-10-29/annual-product-pdf-pagination-codex.md). REP-S01 and REP-V01 are verified in production `977ea31`; REP-L02's narrow PDF pagination follow-up has its own release gates.
+
+Previous production-status release: [Current-main eligibility correction and full-suite gate - 29 October 2026](2026-10-29/report-status-release-continuation-codex.md). The pending gate described there is superseded by the terminal results above and on #1137.
+
+Latest verification follow-up: [Simple plant-label coverage after Whole grouping — 29 October 2026](2026-10-29/simple-plant-label-coverage-codex.md). REP-V01 replaces an obsolete condition-spelling assertion with actual visibility checks; the failed full run remains recorded and the amended status branch needs fresh full results.
+
+Latest choice-guide follow-up: [Report-purpose comparison and separate wording/depth choices - 29 October 2026](2026-10-29/report-choice-guide-codex.md). Follows #1131 independently of #1137’s production-status gate; release status is recorded on its PR and issue #35.
+
+Latest release continuation: [Current-main reconciliation and remaining release gates - 29 October 2026](2026-10-29/map-report-release-continuation-codex.md). The two earlier PR heads passed CI but remain unpublished; check their new integrated heads before merging.
+
+Latest production truth follow-up: [Use the design status for legacy plants and housing — 27 October 2026](2026-10-27/report-production-status-codex.md). This follows #1131; check its own release gates on issue #35.
+
+Latest PDF sample follow-up: [Keep chapter headings with their opening text — 27 October 2026](2026-10-27/report-pdf-pagination-codex.md). Read its release status on #1131 and issue #35.
+
+Latest published report handoff: [Claude reviewed, merged and checked the two report PRs — 27 October 2026](2026-10-27/site-report-handoff-results-claude.md).
+
+Map release continuation: [Nine-sheet visual audit and current-main integration — 27 October 2026](2026-10-27/map-visual-audit-codex.md). Check its PR/ledger terminal status before treating it as published.
 
 Latest integration: [Site reports with the published role reports and wave 23 — 26 October 2026](2026-10-26/site-report-role-integration-codex.md).
 
@@ -27,6 +70,14 @@ without pretending it was merged into main. The private report folder is listed
 in the catalogue; personal site records are not copied into this archive.
 
 ## Site survey: start here
+
+Latest visual audit: [Fine map frames, legible chrome and consistent print size — 27 October 2026](2026-10-27/map-visual-audit-codex.md).
+
+Latest readability follow-up: [Wider readable legends and plain-paper buildings — 26 October 2026](2026-10-26/map-readable-legend-buildings-codex.md).
+
+Latest legend follow-up: [Consistent legend panels across all nine sheets — 26 October 2026](2026-10-26/map-legend-consistency-codex.md).
+
+Latest map follow-up: [Ubhejane map recovery and current exact-sheet delivery — 26 October 2026](2026-10-26/ubhejane-map-recovery-codex.md).
 
 Latest implementation: [Survey draft recovery and signed-in Ubhejane check — 22 October 2026](2026-10-22/survey-draft-recovery-codex.md).
 
@@ -84,8 +135,45 @@ or main. Local Downloads packs remain dated reading snapshots.
 
 ## Date index
 
+- [White Water sheets, retained AI roofs and reachable styling — 31 October 2026](2026-10-31/paper-map-finish-codex.md).
+
+- [Complete Oblique style picker across sheets — 30 October 2026](2026-10-30/oblique-style-picker-codex.md).
+
+- [Oblique current-main integration and explicit wait exception — 30 October 2026](2026-10-30/oblique-experiment-release-codex.md).
+
+- [Duplicate driveway guide and remaining canopy clipping — 30 October 2026](2026-10-30/glossy-driveway-guide-codex.md).
+
+- [Existing roof detail on plain-input AI maps — 30 October 2026](2026-10-30/aerial-roof-detail-codex.md).
+
+- [Farm memory full-suite verification and language continuation — 29 October 2026](2026-10-29/farm-memory-verification-codex.md).
+
+- [Live annual production and complete product PDF rows — 29 October 2026](2026-10-29/annual-product-pdf-pagination-codex.md).
+
+- [Simple plant-label coverage and failed full-run continuation — 29 October 2026](2026-10-29/simple-plant-label-coverage-codex.md).
+
+- [Production-status current-main release continuation - 29 October 2026](2026-10-29/report-status-release-continuation-codex.md).
+
+- [Report choice tables and wording/depth guidance - 29 October 2026](2026-10-29/report-choice-guide-codex.md).
+- [Map/report current-main release continuation - 29 October 2026](2026-10-29/map-report-release-continuation-codex.md).
+
+- [Paid AI map composition corrections — 29 October 2026](2026-10-29/ai-map-composition-fixes-codex.md).
+
+- [Real-site production status and legacy plants — 27 October 2026](2026-10-27/report-production-status-codex.md).
+
+- [PDF headings kept with their opening evidence — 27 October 2026](2026-10-27/report-pdf-pagination-codex.md).
+
+- [Nine-map visual audit and lighter shared frames — 27 October 2026](2026-10-27/map-visual-audit-codex.md).
+
+- [Phasing public-sample fit and retained final rule — 27 October 2026](2026-10-27/phasing-public-sample-fit-codex.md).
+
 - [Site reports #1099 and #1101 merged and verified on production (Codex handoff results) — 27 October 2026](2026-10-27/site-report-handoff-results-claude.md).
 - [Wave 28 keyboard focus in overlays: w28-01 to w28-06, focus moves in, Tab stays inside, Escape closes and returns focus; Lima opens from the keyboard — 27 October 2026](2026-10-27/wave-28-dialog-focus-claude.md).
+
+- [Wider readable legends and plain-paper buildings — 26 October 2026](2026-10-26/map-readable-legend-buildings-codex.md).
+
+- [Consistent legend panels across all nine sheets — 26 October 2026](2026-10-26/map-legend-consistency-codex.md).
+
+- [Ubhejane map recovery and current exact-sheet delivery — 26 October 2026](2026-10-26/ubhejane-map-recovery-codex.md).
 - [Wave 27 farmer-facing error messages: w27-01 to w27-05, no raw browser, Firebase or storage wording on 14 screens; fieldwork API copy kept — 26 October 2026](2026-10-26/wave-27-raw-errors-claude.md).
 - [Wave 26 Codex hand-offs closed after #1121 merged, and #1121's report screens checked: w26-01 to w26-04 — 26 October 2026](2026-10-26/wave-26-handoffs-claude.md).
 - [Wave 25 forms, offline and keyboard capture: w25-01 to w25-07, practice-mode contact copy, hidden-input focus, offline ChunkLoadError on unvisited routes — 26 October 2026](2026-10-26/wave-25-forms-offline-keyboard-claude.md).
@@ -162,6 +250,11 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-30 | [Oblique AI illustration — Codex](2026-10-30/oblique-ai-view-codex.md) |
+| 2026-10-30 | [Phone AI artwork and full-screen fit — Codex](2026-10-30/phone-ai-paper-quality-codex.md) |
+| 2026-10-30 | [Map style footer and oblique feasibility — Codex](2026-10-30/map-style-footer-and-oblique-feasibility-codex.md) |
+| 2026-10-29 | [Paid AI map boundary foreground — Codex](2026-10-29/ai-map-boundary-features-codex.md) |
+| 2026-10-29 | [Paid AI map composition corrections — Codex](2026-10-29/ai-map-composition-fixes-codex.md) |
 | 2026-10-10 | [Production plan re-audit — Codex](2026-10-10/production-reaudit-codex.md) |
 | 2026-10-07 | [Reading and Vegetables ordinary-clause follow-up — Codex](2026-10-07/study-core-followup-codex.md) |
 | 2026-10-07 | [Tshivenda Reading frost placement — Codex](2026-10-07/study-reading-frost-placement-codex.md) |

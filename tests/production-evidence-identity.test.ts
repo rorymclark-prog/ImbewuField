@@ -88,7 +88,9 @@ test('generic low-chill peach choices expose named references without selecting 
 });
 
 test('a combined lemon and mandarin choice stays one unresolved plant until its actual product is selected', () => {
-  const item = { defId: 'tree_avocado', speciesId: 'citrus-reticulata-citrus-limon' };
+  // This identity hold exercises a standing plant. An unmarked item is a proposal under
+  // the canvas contract, so the fixture must record existing status explicitly.
+  const item = { defId: 'tree_avocado', speciesId: 'citrus-reticulata-citrus-limon', status: 'existing' as const };
   const groups = placedTreeGroups([item]);
   assert.equal(groups.length, 1);
   const group = groups[0];

@@ -5,6 +5,8 @@ import {
   calculateBoundaryPresentationCrop,
   calculateBoundaryPresentationLayout,
   calculatePhasingSheetSize,
+  calculateSheetLegendPlacement,
+  calculateStyleSheetSize,
   MAX_PRESENTATION_MAP_ASPECT,
   MAX_PRESENTATION_SHEET_ASPECT,
   PAPER_SHEET_RATIO,
@@ -13,6 +15,37 @@ import {
 import { sheetGutterWidth } from '@/lib/plan-label-gutter';
 
 const FRAME = { imgW: 960, imgH: 640, mPerPx: 0.4 };
+
+test('an empty leader band enlarges the legend without scaling or covering the map', () => {
+  const size = calculateStyleSheetSize(2200, 2400);
+  const panel = calculateSheetLegendPlacement(size);
+  assert.equal(panel.mapX, size.gutter, 'the drawn map stays in place');
+  assert.equal(panel.legendX, panel.mapX + size.mapW, 'the key starts after the map');
+  assert.ok(panel.legendWidth > size.legendWidth, 'spare paper becomes readable key space');
+  assert.ok(panel.typeWidth > size.legendWidth, 'the shared lettering can grow');
+  assert.ok(panel.typeWidth < panel.legendWidth, 'some width must reduce wrapping, not just enlarge type');
+  assert.equal(panel.W, size.W, 'the improvement does not grow the exported paper');
+  assert.equal(panel.H, size.H);
+});
+
+test('actual margin leaders keep their full band and cannot land under a wider legend', () => {
+  const size = calculateStyleSheetSize(2200, 2400);
+  const panel = calculateSheetLegendPlacement(size, { hasRightGutterLabels: true });
+  assert.equal(panel.legendX - (panel.mapX + size.mapW), size.gutter);
+  assert.equal(panel.legendWidth, size.legendWidth);
+  assert.equal(panel.W, size.W);
+});
+
+test('the compact masterplan shares the wider key at the same right paper edge', () => {
+  const size = calculateStyleSheetSize(2200, 2400);
+  const full = calculateSheetLegendPlacement(size);
+  const compact = calculateSheetLegendPlacement(size, { includeLabelGutters: false });
+  assert.equal(compact.mapX, 0, 'a compact map does not regain duplicate leader margins');
+  assert.equal(compact.legendWidth, full.legendWidth);
+  const leftPaper = full.W - compact.W;
+  assert.ok(leftPaper >= 0, 'padding must not crop the compact map');
+  assert.equal(compact.legendX + leftPaper, full.legendX);
+});
 const SQUARE_BOUNDARY: Array<[number, number]> = [
   [0.4, 0.35],
   [0.6, 0.35],

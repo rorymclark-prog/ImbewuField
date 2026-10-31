@@ -78,7 +78,7 @@ export function drawReportCropSummary(doc: jsPDF, crop: FactCropPlan, _offset = 
 /** The report freezes the planner's own product windows; exporting never recalculates a season. */
 export function drawReportProductionYear(doc: jsPDF, production: ReportProductionYear, capturedAt: string, language = 'en'): void {
   const margin = 40, width = 515, nameWidth = 167, monthWidth = (width - nameWidth) / 12;
-  let y = 0;
+  let y = 0, bodyTop = 0;
   const write = (value: string, x: number, top: number, max: number, size = 9, bold = false) => {
     doc.setFont('helvetica', bold ? 'bold' : 'normal'); doc.setFontSize(size); doc.setTextColor('#203d2d');
     const lines = doc.splitTextToSize(pdfSafe(value), max) as string[];
@@ -96,7 +96,7 @@ export function drawReportProductionYear(doc: jsPDF, production: ReportProductio
       const [month, year] = label.split(' '), x = margin + nameWidth + i * monthWidth;
       write(month, x + 2, y, monthWidth - 3, 8, true); write(year, x + 2, y + 12, monthWidth - 3, 7);
     });
-    y += 34;
+    y += 34; bodyTop = y;
   }
   page();
   if (!production.rows.length) write('No crop or mapped product rows are recorded for this site. An empty plan is not evidence of a food gap.', margin, y, width);
@@ -104,7 +104,14 @@ export function drawReportProductionYear(doc: jsPDF, production: ReportProductio
     doc.setFont('helvetica', 'bold'); doc.setFontSize(10);
     const nameLines = doc.splitTextToSize(pdfSafe(`${row.name} / ${row.product}`), nameWidth - 10) as string[];
     const headingHeight = Math.max(30, nameLines.length * 13 + 8);
-    if (y + headingHeight + 42 > 752) page();
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(9);
+    const notes = doc.splitTextToSize(pdfSafe(`${{crop:'Crop','food-forest':'Food forest',animal:'Animal product'}[row.kind]}: ${row.note}`), width - 10) as string[];
+    // The real export left "first-year crop promised" on a new page without its preceding "No".
+    // Reserve the complete row whenever it fits a fresh page; unusually long notes still use
+    // the existing labelled continuation rather than disappearing or overflowing the paper.
+    const rowHeight = headingHeight + notes.length * (9 * 1.3 + 1) + 15;
+    const openingRoom = rowHeight <= 752 - bodyTop ? rowHeight : headingHeight + 42;
+    if (y + openingRoom > 752) page();
     write(`${row.name} / ${row.product}`, margin + 5, y + 7, nameWidth - 10, 10, true);
     production.months.forEach((_month, i) => {
       const x = margin + nameWidth + i * monthWidth, active = row.months.includes(i);
@@ -112,8 +119,6 @@ export function drawReportProductionYear(doc: jsPDF, production: ReportProductio
       write(active ? row.reference ? 'R' : 'P' : '-', x + 9, y + 8, monthWidth - 10, 9, active);
     });
     y += headingHeight;
-    doc.setFont('helvetica', 'normal'); doc.setFontSize(9);
-    const notes = doc.splitTextToSize(pdfSafe(`${{crop:'Crop','food-forest':'Food forest',animal:'Animal product'}[row.kind]}: ${row.note}`), width - 10) as string[];
     for (const note of notes) {
       if (y + 15 > 752) { page(); y += write(`${row.name} / continued`, margin + 5, y, width - 10, 9, true) + 6; }
       y += write(note, margin + 5, y + 4, width - 10) + 1;

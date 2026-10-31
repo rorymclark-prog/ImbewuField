@@ -1,17 +1,8 @@
 import type { JournalCategory } from '@/lib/field-journal';
-
-const ZULU_CATEGORY_LABELS: Record<JournalCategory, string> = {
-  planting: 'Ukutshala',
-  harvest: 'Ukuvuna',
-  weather: 'Isimo sezulu',
-  pest: 'Izinambuzane / izifo',
-  maintenance: 'Ukunakekela',
-  training: 'Isivakashi / ukuqeqesha',
-  other: 'Okunye',
-};
+import { farmMemoryCategoryLabel } from '@/lib/farm-memory-copy';
 
 export function journalCategoryLabel(key: JournalCategory): string {
-  return ZULU_CATEGORY_LABELS[key];
+  return farmMemoryCategoryLabel('zu', key);
 }
 
 export function formatZuluMonth(monthKey: string): string {

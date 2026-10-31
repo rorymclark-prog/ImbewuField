@@ -23,6 +23,7 @@ import {
 } from './account-local-storage';
 import { reportMapType, type ReportMapType } from './report-map-selection';
 import type { SheetUnderlay } from './sheet-underlay';
+import { isMapModelId } from './ai-render/model';
 
 const DB_NAME = 'imbewu-sheets';
 const DB_VERSION = 1;
@@ -60,6 +61,8 @@ export interface StoredSheet {
    * paid model actually produced the saved pixels. Older rows omit these fields and read as legacy. */
   resultKind?: SheetResultKind;
   provider?: SheetProvider;
+  /** Actual worker model; absent on pre-upgrade maps. */
+  model?: string;
   /** The requested composition policy, not evidence that generated features were verified. */
   geometryLock?: boolean;
   showcase?: boolean;
@@ -126,6 +129,7 @@ function normaliseStoredSheet(value: unknown): StoredSheet | null {
     typeof row.provider !== 'string'
     || !PROVIDERS.has(row.provider as SheetProvider)
   )) return null;
+  if (row.model !== undefined && !isMapModelId(row.model)) return null;
   if (row.geometryLock !== undefined && typeof row.geometryLock !== 'boolean') return null;
   if (row.showcase !== undefined && typeof row.showcase !== 'boolean') return null;
   if (row.jobId !== undefined && !boundedProvenanceString(row.jobId, 256)) return null;
@@ -154,6 +158,7 @@ function normaliseStoredSheet(value: unknown): StoredSheet | null {
     ...(row.renderRecipe === undefined ? {} : { renderRecipe: row.renderRecipe }),
     ...(row.resultKind === undefined ? {} : { resultKind: row.resultKind as SheetResultKind }),
     ...(row.provider === undefined ? {} : { provider: row.provider as SheetProvider }),
+    ...(row.model === undefined ? {} : { model: row.model as string }),
     ...(row.geometryLock === undefined ? {} : { geometryLock: row.geometryLock }),
     ...(row.showcase === undefined ? {} : { showcase: row.showcase }),
     ...(row.jobId === undefined ? {} : { jobId: row.jobId }),

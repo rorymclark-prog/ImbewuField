@@ -4,7 +4,7 @@ import { getApps, getApp, initializeApp } from 'firebase-admin/app';
 import { FieldPath, getFirestore } from 'firebase-admin/firestore';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { melCan, type MelPermission } from '@/lib/mel';
-import { canReadFieldVisit, fieldVisitDocumentId, projectFieldWorkspace, validFieldId, validFieldTeam, validFieldVisit, type FieldTeam, type FieldVisit, type FieldMember } from '@/lib/field-teams';
+import { canReadFieldVisit, fieldVisitDocumentId, projectFieldWorkspace, southAfricanTodayISODate, validFieldId, validFieldTeam, validFieldVisit, type FieldTeam, type FieldVisit, type FieldMember } from '@/lib/field-teams';
 import type { UserRole } from '@/lib/db/types';
 
 export const runtime = 'nodejs';
@@ -54,7 +54,7 @@ async function handle(req: NextRequest, write: boolean) {
     }
     const raw = await req.text();
     if (raw.length > 650000) fail('Use up to three smaller visit photos.', 413);
-    const b = JSON.parse(raw), now = new Date().toISOString();
+    const b = JSON.parse(raw), instant = new Date(), now = instant.toISOString();
     let savedVisit:FieldVisit|undefined;
     if (b.action === 'team') {
       if (raw.length > 20000) fail('This team update is too large.', 413);
@@ -69,7 +69,7 @@ async function handle(req: NextRequest, write: boolean) {
       });
     } else if (b.action === 'visit') {
       const visit={...b,mentorId:auth.uid} as FieldVisit;
-      if (role !== 'mentor' || !validFieldVisit(visit,now.slice(0,10))) fail('Check the assigned farmer, date, observations, follow-up and photo captions.');
+      if (role !== 'mentor' || !validFieldVisit(visit,southAfricanTodayISODate(instant))) fail('Check the assigned farmer, date, observations, follow-up and photo captions.');
       const ref=db.collection('field_team_visits').doc(fieldVisitDocumentId(auth.uid,visit.id));
       const receipt=fieldOperationReceipt(db,auth.uid!,orgId,'visit',b);
       await db.runTransaction(async tx => {

@@ -9,13 +9,61 @@ people act on. That single fact drives most of the rules below.
 
 ---
 
-## 1. Verify with these commands, in this order
+## 1. Verification matched to the change
+
+**Rory approved this policy on 29 October 2026.** It replaces the blanket requirement
+that every small change wait for the entire application suite. This section is the
+verification and merge authority; older queue wording must not override it.
+
+Always verify in this order:
+
+1. `npx tsc --noEmit` — must be clean.
+2. Run the tests that cover the changed behaviour and its affected contracts.
+3. `git diff --check` — no whitespace damage.
+
+For **focused map/rendering changes**, the shared test command is:
 
 ```bash
-npx tsc --noEmit     # must be clean
-npm test             # must be 100% pass, every test, every time
-git diff --check     # no whitespace damage
+npm run test:render
 ```
+
+It covers image registration/restoration, frozen-scene recovery, paid-render gates,
+labels, legends, presentation geometry, saved maps, exports and AI access controls.
+Inspect the actual rendered result too (§5). A UI change outside this group needs
+its own affected-feature tests; passing map tests cannot validate unrelated work.
+
+### When a focused change may merge
+
+A narrowly scoped map/presentation/UI change may merge once its affected tests,
+typecheck, whitespace and release-note checks pass, the **current-head `rules` job**
+is green, and the preview build succeeds. Map/rendering changes also require the
+**current-head `focused-render` CI job** to pass. Record the scope, exact checks and
+visual evidence in the PR/issue #35 before merging.
+
+The full `test` job still runs separately and reports its real result. It may be
+pending for a qualifying focused change; do not describe it as passed. Never merge
+a known new related failure. If a failure is claimed to be unrelated/pre-existing,
+record the baseline evidence and reason rather than quietly ignoring it.
+
+### When the full suite must pass before merge
+
+Run `npm test` and wait for the full current-head `test` job as well as `rules` for:
+
+- authentication, roles, organisation/tenant permissions or security rules;
+- billing, provider dispatch, spending controls or worker/job execution changes;
+- saved-data schemas, persistence/sync or changes to measured saved geometry;
+- farming calculations, species data, lesson/quiz content or other farming advice;
+- shared infrastructure, verification workflows or changes spanning unrelated areas;
+- unclear impact, missing relevant tests, or a regression whose scope is unknown.
+
+Every test in the required suites must pass. Add relevant tests when needed; do not
+choose a smaller group just because a known related test fails. No test deletion,
+weakened assertions, paid-generation bypass or security-rule deployment is authorised.
+
+For this policy transition, Rory explicitly authorised the verification-rule update
+and its separate `focused-render` job alongside the map-composition correction. That
+additive workflow change leaves the full-suite and security jobs intact; it does not
+turn off their results or grant general workflow-editing ownership.
 
 **Never edit a test to make it pass.** If a test fails, either the code is wrong or
 the test encodes a claim that is no longer true — and the second case needs the
@@ -56,7 +104,7 @@ HTTP 403 (no registry access) and any Google Fonts fetch failure.
 > **2026-08-05 — READ THE TOP OF THE QUEUE BEFORE ANYTHING ELSE.** Rory is out of Claude usage
 > until Saturday 8 August. Everywhere this repo says *"Claude reviews and merges behind you"*, that
 > is suspended for the window: you push, you read the CI result, and **you merge to `main` yourself**
-> once `test.yml` is green. `docs/CODEX-QUEUE.md` states the full temporary mode and — more
+> once the checks required by §1 pass. `docs/CODEX-QUEUE.md` states the full temporary mode and — more
 > importantly — what has **not** been widened. Every guardrail in §4 still binds, and the
 > `PLAN_VERSION` rule below binds harder, because nobody is reviewing behind you.
 
@@ -264,6 +312,8 @@ Every push to a non-main branch gets its own stable preview hostname —
 `imbewufield-<slug>.vercel.app` — via `deploy-preview.yml`, so a cloud-only
 contributor can ship something Rory can open on his phone without a laptop.
 
-Every push also runs `test.yml`: typecheck plus the full suite on Node 24. **If you
+Every push also runs `test.yml`: the focused-render checks, the full suite and the
+independent security checks on Node 24. Apply §1 to decide which results must be
+green before merge; the full suite continues to run separately. **If you
 cannot run the tests in your sandbox, push and read the CI result** — that is the
 supported workflow, not a workaround.

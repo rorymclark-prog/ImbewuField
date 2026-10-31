@@ -1,0 +1,15 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "scope": "One UI-only release notice; no fluent review claimed.",
+  "entries": [
+    {
+      "source": "Oblique styles stay visible when you switch from an exact map.",
+      "drafts": {
+        "zu": "Izitayela ze-Oblique zihlala zibonakala uma usuka ebalazweni elinezilinganiso eziqondile.",
+        "st": "Ditaele tsa Oblique di dula di bonahala ha o tloha mmapeng o lekantsweng hantle.",
+        "ts": "Switayele swa Oblique swi sala swi vonaka loko u suka eka mepe lowu pimiweke hi ku kongoma.",
+        "ve": "Zwitaila zwa Oblique zwi dzula zwi tshi vhonala musi ni tshi bva kha mapa wo elwaho nga vhukuma."
+      }
+    }
+  ]
+}

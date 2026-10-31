@@ -28,6 +28,8 @@ import {
 } from '@/lib/animal-enterprises';
 import { bindMountedAccountLocalStorageUid } from '@/lib/account-local-storage';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
+import { statusOf } from '@/lib/design-canvas';
+import { reportProductionYear } from '@/lib/report-crop-plan';
 import { ANIMAL_ART, ANIMAL_ART_ROOT } from '@/lib/animal-art';
 import { enterpriseFromDossier, loadDossiers } from '../scripts/build-animal-enterprises.mjs';
 
@@ -133,16 +135,16 @@ test('wool is never on the food chart', () => {
   }
 });
 
-test('structures are grouped by animal and counted as structures, not animals', () => {
+test('grouped structures preserve the design status without becoming animal counts', () => {
   const groups = placedAnimalGroups([
     { defId: 'chicken_coop', status: 'existing' },
     { defId: 'chicken_tractor', status: 'proposed' },
-    { defId: 'chicken_coop' }, // legacy: no status = existing
+    { defId: 'chicken_coop' }, // legacy: the canvas treats an unmarked placed structure as proposed
     { defId: 'beehive', status: 'proposed' },
     { defId: 'pig_pen', status: 'existing' },
     { defId: 'veg_bed' },
   ]);
-  const expected: [HousingKind, number, number][] = [['chicken', 2, 1], ['bee', 0, 1]];
+  const expected: [HousingKind, number, number][] = [['chicken', 1, 2], ['bee', 0, 1]];
   if (enterprisesForHousing('pig').length) expected.push(['pig', 1, 0]);
   assert.deepEqual(groups.map((g) => [g.housing, g.existing, g.proposed]), expected);
 });
@@ -359,4 +361,33 @@ test('bee purchases use the amended certificate period and protect playground si
   assert.match(siting.source.quote, /playgrounds.*fresh water.*fairly dry/);
   assert.doesNotMatch(siting.point, /\d|metres|meters/,
     'an African manual is not a universal South African legal distance or an approval of this farm location');
+});
+
+
+test('legacy housing follows the design status and cannot create standing production from local months', () => {
+  const items = [
+    { defId: 'chicken_coop', x: 0.2, y: 0.3 },
+    { defId: 'chicken_coop', status: 'existing' as const, x: 0.4, y: 0.5 },
+    { defId: 'chicken_coop', status: 'proposed' as const, x: 0.6, y: 0.7 },
+  ];
+  const before = structuredClone(items);
+  assert.equal(statusOf(items[0]), 'proposed');
+  const groups = placedAnimalGroups(items);
+  assert.deepEqual([groups[0].existing, groups[0].proposed], [1, 2]);
+  const seasons = { chicken: { enterpriseId: 'chicken-layer', months: [2] } };
+  assert.equal(buildAnimalAvailability(groups, { chicken: 'chicken-layer' }, [2], true, seasons)[0][0].structures, 1);
+  assert.equal(buildAnimalAvailability(groups, { chicken: 'chicken-layer' }, [2], false, seasons)[0][0].structures, 3);
+  assert.deepEqual(items, before, 'reading housing status must not edit geometry or saved fields');
+});
+
+test('annual site reports retain legacy housing as proposed without inventing products or months', () => {
+  const items = [{ defId: 'chicken_coop', x: 0.2, y: 0.3 }];
+  const before = structuredClone(items);
+  const year = reportProductionYear({ capturedAt: '2026-10-01T12:00:00Z', beds: [], plantings: [] }, items);
+  const row = year.rows.find(row => row.kind === 'animal');
+  assert.ok(row);
+  assert.equal(row.product, 'Product not selected');
+  assert.match(row.note, /0 existing and 1 proposed housing units/);
+  assert.deepEqual(row.months, []);
+  assert.deepEqual(items, before);
 });

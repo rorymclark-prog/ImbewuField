@@ -1,6 +1,80 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Paper recovery: docs/audits/2026-10-31/paper-map-release-drafts.json; unreviewed.
+  "Style choices stay visible; plain-paper Water maps keep white backgrounds.": "Dikgetho tsa setaele di dula di bonahala; dimmapa tsa Metsi tse pampiring e tshweu di boloka bokamorao bo le bosweu.",
+  // Oblique picker: docs/audits/2026-10-30/oblique-style-picker-release-drafts.json; unreviewed.
+  "Oblique styles stay visible when you switch from an exact map.": "Ditaele tsa Oblique di dula di bonahala ha o tloha mmapeng o lekantsweng hantle.",
+  // Oblique experiment guide: docs/audits/2026-10-30/oblique-experiment-guide-drafts.json; unreviewed.
+  "Try an angled view": "Leka pono ya ka lehlakoreng",
+  "With AI access, open Glossy and choose Oblique under AI viewpoint to generate your design.": "Ha o na le phihlello ya AI, bula Glossy ebe o kgetha Oblique tlasa AI viewpoint ho hlahisa moralo wa hao.",
+  "Keep the measured plan": "Boloka moralo o lekantsweng",
+  "Use the top-down Design Map for measurements; compare the angled view with it.": "Sebedisa Design Map e shebilweng hodimo bakeng sa ditekanyo; bapisa pono ya lehlakoreng le yona.",
+  // Oblique beta: docs/audits/2026-10-30/oblique-ai-view-release-drafts.json; unreviewed.
+  "Choose Oblique in AI viewpoint for an angled illustration of your whole design.": "Kgetha Oblique ho AI viewpoint bakeng sa setshwantsho sa moralo wa hao kaofela se shebilweng ka lehlakore.",
+  "The app gathers your layout, photo and terrain; use the top-down plan for measurements.": "App e lokisa moralo o bolokilweng, foto ya sebaka le tlhahisoleseding ya mobu e fumanehang; sebedisa moralo o shebilweng hodimo bakeng sa ditekanyo.",
+  // Driveway guide: docs/audits/2026-10-30/glossy-driveway-guide-release-drafts.json; unreviewed.
+  "Glossy AI maps omit duplicate driveway guides; your editable paths stay saved.": "Dimmapa tse ntle tsa AI ha di bontshe mela e phetilweng ya tsela ya koloi; ditsela tseo o ka di fetolang di dula di bolokilwe.",
+  // Roof reference: docs/audits/2026-10-30/aerial-roof-release-drafts.json; unreviewed.
+  "AI maps on plain paper keep real roof detail from satellite imagery.": "Dimmapa tsa AI tse pampiring e tshweu di boloka dintlha tsa nnete tsa marulelo ho tswa ditshwantshong tsa sathelaete.",
+  // Phone map artwork: docs/audits/2026-10-30/phone-ai-paper-release-drafts.json; unreviewed.
+  "AI maps on plain paper keep illustrated ground instead of flat overlays.": "Dimmapa tsa AI tse pampiring e tshweu di boloka mobu o takilweng ho e-na le dikarolo tse bataletseng.",
+  "Full-screen maps fit your phone, including with larger text.": "Dimmapa tsa skrine se felletseng di lekana fonong ya hao, le ha mongolo o le moholo.",
+  "Check the complete map": "Hlahloba mmapa o felletseng",
+  "Open a saved map full-screen. The whole sheet and legend should fit.": "Bula mmapa o bolokilweng skrineng se felletseng. Leqephe lohle le tlhaloso ya matshwao di lokela ho lekana.",
+  "Recover your paid artwork": "Fumana hape setshwantsho seo o se lefileng",
+  "Saved maps → Open map": "Dimmapa tse bolokilweng → Bula mmapa",
+  "Choose Reassemble artwork at the original print quality. No new AI render is bought.": "Kgetha ho kopanya setshwantsho hape ka boleng ba pele ba kgatiso. Ha o reke setshwantsho se setjha sa AI.",
+  // Map footer: docs/audits/2026-10-30/map-style-footer-release-drafts.json; unreviewed.
+  "Reference Blueprint now appears in small print at the bottom of your maps.": "Reference Blueprint jwale e hlaha ka mongolo o monyane tlase ho dimmapa tsa hao.",
+  "Photo dates are easier to read; scroll through older notes on desktop.": "Matsatsi a dinepe a se a baleha habonolo; tsamaisetsa dintlheng tsa kgale khomphutheng.",
+  "Photo dates and journal headings are easier to read.": "Matsatsi a dinepe le dihlooho tsa jenale di se di baleha habonolo.",
+  // Farm memory release: docs/audits/2026-10-29/farm-memory-release-drafts.json; unreviewed.
+  "Farm memory search, photos and saved copies now support isiZulu.": "Patlo, dinepe le dikopi tse bolokilweng tsa dikgopotso tsa polasi jwale di tshehetsa isiZulu.",
+  "Tap a crop or bed on a note to see its journal history.": "Tobetsa sejalo kapa bethe ya temo ntlheng e ngotsweng ho bona nalane ya yona jenaleng.",
+  "Choose a smaller printable copy with notes only.": "Kgetha kopi e nyane e ka hatiswang e nang le dintlha tse ngotsweng feela.",
+  "Open a field note from a task, with its crop and bed ready to check.": "Bula ntlha e ngotsweng ya tshimo ho tswa mosebetsing, sejalo le bethe ya temo di loketse ho hlahlojwa.",
+  "Find journal notes by crop, bed, date or words you remember.": "Fumana dintlha tsa jenale ka sejalo, bethe ya temo, letsatsi kapa mantswe ao o a hopolang.",
+  "Compare dated photos and download selected notes for an adviser.": "Bapisa dinepe tse nang le matsatsi mme o jarolle dintlha tse kgethilweng bakeng sa moeletsi.",
+  "Harvest tasks open the crop and blank quantity field, ready to fill in.": "Mesebetsi ya kotulo e bula sejalo le sebaka se se nang letho sa bongata, se loketse ho tlatswa.",
+  "Explore your farm memory": "Hlahloba dikgopotso tsa polasi ya hao",
+  "Menu → Field journal": "Lenane → Jenale ya tshimo",
+  "Search your notes, compare saved photos and keep a printable copy.": "Batla dintlha tsa hao, bapisa dinepe tse bolokilweng mme o boloke kopi e ka hatiswang.",
+  "Record work from a task": "Rekota se entsweng ho tswa mosebetsing",
+  "Menu → Task planner": "Lenane → Moralo wa mesebetsi",
+  "Open a draft field note or record an actual harvest from a crop task.": "Bula moralo wa ntlha ya tshimo kapa o rekote kotulo ya nnete ho tswa mosebetsing wa sejalo.",
+  // Boundary artwork audit: docs/audits/2026-10-29/ai-map-boundary-release-drafts.json; unreviewed.
+  "AI maps keep tank tops and more foliage visible across the property line.": "Dimmapa tsa AI di boloka dihlooho tsa ditanka le mahlaku a mangata di bonahala ka nqane ho moedi wa sebaka.",
+  // Annual PDF row audit: docs/audits/2026-10-29/annual-product-pdf-release-drafts.json; unreviewed.
+  "PDF exports keep each product and its notes together.": "Di-PDF tse romelwang di boloka sehlahiswa ka seng le dintlha tsa sona mmoho.",
+  // Production status audit: docs/audits/2026-10-27/report-production-status-release-drafts.json; unreviewed.
+  "Production plans keep unmarked plants and housing as proposed, matching your design.": "Meralo ya tlhahiso e boloka dimela le meaho ya diphoofolo e sa tshwauwang e le tse rerilweng, ho latela moralo wa hao.",
+  // PDF sample audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Report headings stay with their opening text when you export a PDF.": "Dihlooho tsa tlaleho di dula le mongolo wa tsona wa pele ha o romela PDF.",
+  // Visual audit: docs/audits/2026-10-27/map-visual-release-note-drafts.json; unreviewed.
+  "Map legends have thinner borders and clearer scale marks.": "Mabokose a matshwao a dimmapa a na le meedi e mesesane le matshwao a sekala a hlakileng.",
+  "Menu → Site design": "Lenane → Moralo wa sebaka",
+  "Check the new map lettering": "Hlahloba mongolo o motjha wa mmapa",
+  "Create a free exact map. Check the larger key and the buildings you traced.": "Etsa mmapa o nepahetseng wa mahala. Hlahloba tlhaloso e kgolo ya matshwao le meaho eo o e thaletseng.",
+  "Check the maps in your site report": "Hlahloba dimmapa tlalehong ya sebaka sa hao",
+  "Review each included map before exporting. Saved older drawings stay available.": "Hlahloba mmapa o mong le o mong o kenyelleditsweng pele o o romela kantle. Metako ya kgale e bolokilweng e ntse e fumaneha.",
+  // Map follow-up: docs/audits/2026-10-26/map-release-note-drafts.json; unreviewed.
+  "New map legends use spare margin space for larger, clearer lettering.": "Ditlhaloso tse ntjha tsa matshwao a dimmapa di sebedisa sebaka se se nang letho mahlakoreng hore mongolo o be moholo le ho hlaka.",
+  "Paper base maps show each building you traced, with separate building names.": "Dimmapa tsa motheo tsa pampiri di bontsha moaho o mong le o mong oo o o thaletseng, ka mabitso a arohaneng a meaho.",
+  "Saved maps stay available; create new drawings to see these improvements.": "Dimmapa tse bolokilweng di ntse di fumaneha; etsa metako e metjha ho bona dintlafatso tsena.",
+  "All nine map sheets use the same legend box, fonts and spacing.": "Maqephe ohle a robong a dimmapa a sebedisa lebokose le tshwanang la matshwao, mekgwa ya mongolo le dikgeo.",
+  "New drawings keep the legend on the right; your saved maps stay available.": "Metako e metjha e boloka tlhaloso ya matshwao ka ho le letona; dimmapa tse bolokilweng di ntse di fumaneha.",
+  "Long map headings wrap inside their legend box.": "Dihlooho tse telele tsa dimmapa di arolwa ka mela ka hara lebokose la tlhaloso ya matshwao.",
+  "Saved AI maps can be reassembled without buying another render.": "Limmapa tsa AI tse bolokiloeng li ka kopanngoa hape ntle le ho reka setšoantšo se seng.",
+  "AI maps keep continuous artwork, with tree crowns allowed over the boundary.": "Limmapa tsa AI li boloka setšoantšo se tsoelang pele, meqhaka ea lifate e ka feta moeli.",
+  "AI map downloads now remind you to check positions and counts.": "Limmapa tsa AI tse jarollotsoeng joale li u hopotsa ho hlahloba libaka le lipalo.",
+
+  "Saved reports keep their original photos and site water evidence.": "Litlaleho tse bolokiloeng li boloka linepe tsa tsona tsa pele le bopaki ba metsi a sebaka.",
+  "Field records now accept today’s date after midnight in South Africa.": "Lirekoto tsa tšimo joale li amohela letsatsi la kajeno kamora khitla Afrika Boroa.",
+  "Map and crop exports give clearer errors and keyboard controls.": "Ho romela limmapa le meralo ea lijalo ho fana ka liphoso le taolo ea keyboard tse hlakileng.",
+  "Map sheets now use white paper, thin legend borders and clearer plant pictures.": "Maqephe a limmapa joale a sebelisa pampiri e tšoeu, meeli e mesesane ea senotlolo le litšoantšo tse hlakileng tsa limela.",
+  "Paid AI maps now finish when the image service rounds their size.": "Limmapa tsa AI tse lefelloang joale lia phethoa ha tšebeletso ea litšoantšo e potoloha boholo ba tsona.",
+  "New AI glossy maps use GPT Image 2.5 Sunburst.": "Limmapa tse ncha tse benyang tsa AI li sebelisa GPT Image 2.5 Sunburst.",
   "Offline saving and sending messages now have drafts in all four languages.": "Melaetsa ya ho boloka ntle le kgokahano le ho romela jwale e na le meralo ka dipuo tsohle tse nne.",
   "Consent choices now show draft translations and the English source in all four languages.": "Dikgetho tsa tumello jwale di bontsha diphetolelo tsa moralo le mongolo wa pele wa Senyesemane ka dipuo tsohle tse nne.",
   "Full production and yield notes now have four draft translations.": "Dintlha tse felletseng tsa tlhahiso le kotulo jwale di na le diphetolelo tsa moralo ka dipuo tse nne.",

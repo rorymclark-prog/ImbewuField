@@ -5,6 +5,9 @@
 // Overlay remains the explicit model-authored comparison/rollback style.
 
 import { numberLabel } from '@/lib/format-figures';
+import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
+import { useDialogFocus } from '@/lib/use-dialog-focus';
+import { useEscapeClose } from '@/lib/use-escape-close';
 import { useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { createPortal } from 'react-dom';
 import { Download, RefreshCw, Gem, FlaskConical, Images, MapPin, Maximize2, X, Trash2, Share2, Check, Upload, AlertTriangle, Sparkles, Image as ImageIcon } from 'lucide-react';
@@ -22,14 +25,14 @@ import {
 import polygonClipping from 'polygon-clipping';
 
 import type { CanvasFrame, DesignCanvasState, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
-import { groundFeatureLayer } from '@/lib/design-canvas';
+import { groundFeatureLayer, statusOf, buildSatelliteUrl, fetchImageAsDataUrl } from '@/lib/design-canvas';
 import type { DesignElementDef } from '@/lib/design-elements';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
 import { aiRenderEnabled } from '@/lib/ai-render/flag';
 import { useAuth } from '@/lib/auth';
-import { compositeAccurateMap, measureRenderDifference, restoreProtectedPixels, assertMatchingImageAspects, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
+import { canopyForegroundAlpha, compositeAccurateMap, measureRenderDifference, restoreProtectedPixels, assertMatchingImageAspects, registerOpenAiMapOutput, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
 import { paidRenderDecision, retainedRenderHasVisibleChange } from '@/lib/render-difference';
 import { auditFromReport, recordRenderAudit } from '@/lib/render-audit';
 import { polishedRenderPoints, type RenderPoint } from '@/lib/render-geometry';
@@ -48,10 +51,12 @@ import {
 import { structureRegisterText } from '@/lib/structure-register';
 import { buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { zoneBadgePositions } from '@/lib/canvas-labels';
+import { OPENAI_MAP_MODEL_LABEL, openAiMapModelLabel } from '@/lib/ai-render/model';
 import { enqueueRenderJob, mapSerially, subscribeRenderJob, fetchRenderOutput, fetchRenderJobScene, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, renderJobAttribution, type RenderQuality } from '@/lib/render-jobs';
-import { createRenderSceneSnapshot, type RenderSceneSnapshot } from '@/lib/render-scene';
+import { createRenderSceneSnapshot, decodeRenderSceneSnapshot, type RenderSceneSnapshot } from '@/lib/render-scene';
+import { buildObliquePrompt, isObliqueJobStyle, obliqueJobStyle, obliqueStyleFromJob, obliqueStyleDescription, obliqueTerrainEvidence, paintObliqueReferenceBoard, OBLIQUE_BOARD, OBLIQUE_REVIEW_NOTICE, type AiMapView } from '@/lib/oblique-render';
 import type { RenderEngine } from '@/lib/render-job-contract';
-import { authoritativeHouseFootprints } from '@/lib/house-footprints';
+import { authoritativeHouseFootprints, sameFootprint } from '@/lib/house-footprints';
 import { isSampleMode, SAMPLE_MODE_RENDER_REFUSAL } from '@/lib/sample-mode';
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
 // Re-exported below so existing consumers (lib/producer-prompt.ts comments, app/design/page.tsx,
@@ -90,7 +95,7 @@ import {
   type GutterRow,
 } from '@/lib/plan-label-gutter';
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
-import { geometryLockCompositionPolicy, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
+import { AI_MAP_REVIEW_NOTICE, hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { PLAN_VERSION } from '@/lib/plan-version';
@@ -110,16 +115,20 @@ import {
 } from '@/lib/plant-codes';
 import { paintTopDownVetiverHedge, VETIVER_HEDGE_IDS } from '@/lib/vetiver-hedge';
 import {
+  SHEET_LEGEND_TYPE,
+  sheetLegendPanelMetrics,
   balancedLegendColumnRanges,
   countedLegendText,
   fitLegendFontSize,
   layoutLegendColumn,
   legendHeightFillRatio,
+  legendFooterFontSize,
+  legendWrapWords,
   legendMaxFontSize,
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
 import { PLAIN_HARD_SURFACE_PAINT, SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
-import { frameForUnderlay, hasFarmerPhoto, paintPlainPaperGround, savedSheetUnderlayNote, SHEET_UNDERLAY_LABEL, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
+import { frameForUnderlay, hasFarmerPhoto, paintPlainPaperGround, PLAIN_PAPER_GROUND, savedSheetUnderlayNote, SHEET_UNDERLAY_LABEL, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
 import { drainCanvasToDataUrl, releaseCanvas, releaseImageSource } from '@/lib/release-canvas';
 import { overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
 import { ridgeAngleOf, roofRunoffArrows, gutterToTankArrows, tankOverflowArrows, type StoryArrow } from '@/lib/water-story';
@@ -156,12 +165,14 @@ import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE, type SheetSpec, type SheetRou
 import {
   calculateBoundaryPresentationLayout,
   calculatePhasingSheetSize,
+  calculateSheetLegendPlacement,
+  calculateStyleSheetSize,
   paperSheetCanvas,
   styleSheetLegendWidth,
 } from '@/lib/reference-presentation';
 import { loadSheetMetas, loadSheetImage, patchSheetThumb, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
 import { backfillThumbnails } from '@/lib/gallery-thumbnails';
-import { basemapAttribution } from '@/lib/basemap-imagery';
+import { basemapAttribution, fetchBasemapForFrame } from '@/lib/basemap-imagery';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
@@ -173,7 +184,8 @@ import SettingsButton from '@/components/SettingsButton';
 export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
 export type { GlossyLayerFilter } from '@/lib/glossy-filters';
 
-const PAPER = '#FFFEFA';
+// Rory wants white paper throughout the plan set, including its legends and label margins.
+const PAPER = PLAIN_PAPER_GROUND;
 
 // Persist the active background render job per site, so closing/reopening the Studio re-attaches to
 // an in-flight render (they take minutes) and still collects the finished sheets instead of wasting
@@ -463,10 +475,10 @@ const LINE_COLORS: Record<string, string> = {
 // because the worker branched on a `provider` field nothing ever wrote. Both are fixed; see
 // RENDER_ENGINES in lib/render-job-contract.ts.
 //
-// gpt-image-2 stays the DEFAULT. Changing which vendor a render bills to is Rory's call, not a
+// OpenAI stays the DEFAULT. Changing which vendor a render bills to is Rory's call, not a
 // side effect of making the other one selectable.
 const ENGINES: Array<{ key: 'falgpt' | 'gemini'; label: string; sub: string }> = [
-  { key: 'falgpt', label: 'gpt-image-2', sub: 'sharpest · background (~mins)' },
+  { key: 'falgpt', label: OPENAI_MAP_MODEL_LABEL, sub: 'sharpest · background (~mins)' },
   { key: 'gemini', label: 'Gemini', sub: 'cheaper · background (~mins)' },
 ];
 
@@ -474,19 +486,17 @@ const ENGINES: Array<{ key: 'falgpt' | 'gemini'; label: string; sub: string }> =
  * The three paid-render quality settings, offered so the SAME sheet can be rendered all three ways
  * and compared before anyone commits to one.
  *
- * The costs in the sub-labels are the reason this exists. At the ~3.3 megapixels these sheets are
- * rendered, 'high' is roughly 4x 'medium' and roughly 35x 'low'. Those are computed from OpenAI's
- * own published rates and are estimates, not invoices — which is exactly why the worker now logs
- * the API's real usage block (functions/src/index.ts) instead of discarding it. Treat these as
- * "order of magnitude" until a real bill confirms them.
+ * Model upgrades can change token consumption at the same tier. Keep the existing quality
+ * choices and use the worker's real usage logs rather than promising an old model's cost ratio.
  *
  * Why 'high' may be waste here specifically: the model paints an UNDERLAYER. Every piece of exact
  * geometry, every label and the whole legend are composited back on top afterwards, so much of the
  * fine detail 'high' pays for is covered up again before the farmer ever sees the sheet.
  */
-const RENDER_QUALITY_CHOICES: ReadonlyArray<{ key: RenderQuality; labelKey: string; subKey: string }> = [
+const RENDER_QUALITY_CHOICES: ReadonlyArray<{ key: RenderQuality; labelKey: string; subKey?: string }> = [
   { key: 'high', labelKey: 'designGlossyQualityHigh', subKey: 'designGlossyQualityHighSub' },
-  { key: 'medium', labelKey: 'designGlossyQualityMedium', subKey: 'designGlossyQualityMediumSub' },
+  // The old medium subtitle promises a GPT Image 2 cost ratio that does not apply to 2.5.
+  { key: 'medium', labelKey: 'designGlossyQualityMedium' },
   { key: 'low', labelKey: 'designGlossyQualityLow', subKey: 'designGlossyQualityLowSub' },
 ];
 
@@ -726,6 +736,8 @@ function lockedCompositeMarks(filter: GlossyLayerFilter): CompositeMarkOptions {
 
 interface ProtectMaskOptions {
   protectOutside?: boolean;
+  protectZones?: boolean;
+  allowCanopyOverhang?: boolean;
   protectLines?: boolean;
   protectItems?: boolean;
   protectBoundary?: boolean;
@@ -742,20 +754,7 @@ function lockedProtectMaskOptions(
   style: StylePreset,
   hasPhoto: boolean,
 ): ProtectMaskOptions {
-  const composition = geometryLockCompositionPolicy(style, hasPhoto ? 'photo' : 'paper');
-  const structural = {
-    protectOutside: true,
-    protectLines: false,
-    protectItems: false,
-    protectHouse: composition.protectHousePixels,
-    protectDriveway: composition.protectDrivewayPixels,
-    protectUnmarkedGround: composition.protectUnmarkedGround,
-    houseHaloRatio: 0.003,
-    houseFeatherRatio: 0.0012,
-  };
-  return filter === 'water'
-    ? { ...structural, protectBoundary: true }
-    : structural;
+  return hybridProtectionPolicy(filter, style, hasPhoto);
 }
 
 /**
@@ -774,6 +773,36 @@ function sectorProtectMaskOptions(): ProtectMaskOptions {
     houseHaloRatio: 0.003,
     houseFeatherRatio: 0.0012,
   };
+}
+
+// Rory confirmed the closed duplicate driveway trace is an editable guide, not a walking path.
+function drivewayGuideLines(state: DesignCanvasState, refs: DesignGlossyProps['refLayers']): LineShape[] {
+  const areas = [
+    ...(refs.drivewayClosed && refs.driveway.length >= 3 ? [refs.driveway] : []),
+    ...state.zones.filter((zone) => zone.feature === 'driveway').map((zone) => zone.points),
+  ];
+  return state.lines.filter((line) => {
+    const ring = line.points;
+    if (line.kind !== 'path' || ring.length < 4
+      || Math.hypot(ring[0][0] - ring.at(-1)![0], ring[0][1] - ring.at(-1)![1]) > 1e-6) return false;
+    const area = ringArea(ring);
+    if (!(area > 0)) return false;
+    return areas.some((driveway) => {
+      try {
+        const overlap = polygonClipping.intersection([ring], [driveway])
+          .reduce((sum, polygon) => sum + ringArea(polygon[0])
+            - polygon.slice(1).reduce((holes, hole) => holes + ringArea(hole), 0), 0);
+        // A closed loop covering most of the same area is a duplicate tracing guide. Open
+        // paths, separate walking loops and a large circuit around the house remain real paths.
+        return overlap > area / 2 && overlap > ringArea(driveway) / 2;
+      } catch { return false; }
+    });
+  });
+}
+
+function glossyArtworkState(state: DesignCanvasState, refs: DesignGlossyProps['refLayers']): DesignCanvasState {
+  const guides = new Set(drivewayGuideLines(state, refs).map((line) => line.id));
+  return guides.size ? { ...state, lines: state.lines.filter((line) => !guides.has(line.id)) } : state;
 }
 
 /**
@@ -804,6 +833,7 @@ export function drawMarks(
   drawDesign = true,
   options: CompositeMarkOptions = {},
 ) {
+  state = glossyArtworkState(state, refLayers);
   const px = (n: number) => n * imgW;
   const py = (n: number) => n * imgH;
   const showToolGlyphs = options.showToolGlyphs !== false;
@@ -861,6 +891,9 @@ export function drawMarks(
       // model and the reader exactly where the building is — bright, and thicker than before so it
       // survives the crop — and the earlier "driveway bleeds into the house" failure stays fixed,
       // because a photographed roof was never the near-black the model mistook for tar.
+      // On paper an outline of white on white erased the house from the AI input. The saved
+      // footprint needs a visible guide there; a real photograph keeps its original roof pixels.
+      if (!frame.satDataUrl) { ctx.fillStyle = '#B7BCC0'; ctx.fill(); }
       ctx.strokeStyle = 'rgba(255,255,255,0.96)';
       ctx.lineWidth = 3.5;
       ctx.stroke();
@@ -968,7 +1001,8 @@ export function drawMarks(
         fn.call(ctx, px(x), py(y));
       });
       ctx.closePath();
-      ctx.fillStyle = `${meta.color}33`;
+      // Pale grey courtyard guides were read as another roof on plain-paper Water jobs.
+      ctx.fillStyle = z.feature === 'patio' && !frame.satDataUrl ? '#D8BE92' : `${meta.color}33`;
       ctx.fill();
     }
     // Sheet 01 ("Existing site & base") had zero ground name labels — groundLabelsForSheet was
@@ -1237,12 +1271,106 @@ export async function buildComposite(
   return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
+/** Saved centres and dimensions bound a presentation halo, not an enlarged property. The
+ * illustration's leaves and cylindrical tank tops can extend past their ground footprints. */
+function paintPlannedCanopyFootprints(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  filter: GlossyLayerFilter,
+  W: number,
+  H: number,
+  kind: 'plants' | 'tanks' = 'plants',
+  halo = kind === 'plants' ? 1.15 : 2,
+): void {
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  if (!(pxPerM > 0) || !Number.isFinite(pxPerM)) return;
+  ctx.fillStyle = '#FFFFFF';
+  for (const item of state.items) {
+    const def = ELEMENTS_BY_ID[item.defId];
+    if (!def || (kind === 'plants' ? def.category !== 'growing' : !def.id.startsWith('jojo_') && def.id !== 'rain_barrel')) continue;
+    // Rory's Planting artwork already shows the tanks as physical context. Foreground recovery
+    // may keep their existing silhouette without adding them to that sheet's labels or inventory.
+    // Zones keeps its separate outline-only contract. Missing tank-coloured art retains no pixels.
+    if (kind === 'tanks' ? filter === 'zones'
+      : !itemInFilter(def.category, filter, def.id) && !isContextElement(def, filter)) continue;
+    // A small leaf halo and an upright tank envelope are presentation allowances. Colour
+    // selection still rejects soil; neither allowance changes the saved ground footprint.
+    const rx = (item.wM ?? def.wM) * pxPerM * halo / 2;
+    const ry = (item.hM ?? def.hM) * pxPerM * halo / 2;
+    if (!(rx > 0 && ry > 0) || !Number.isFinite(rx + ry)) continue;
+    ctx.save();
+    // Tank tops project upwards from the saved ground position in the angled illustration.
+    ctx.translate(item.x * W, item.y * H - (kind === 'tanks' ? ry : 0));
+    ctx.rotate((item.rot ?? 0) * Math.PI / 180);
+    // A soft paint edge avoids a hard circular cut where model leaves meet the saved extent.
+    ctx.filter = `blur(${Math.max(1, W * 0.0015)}px)`;
+    ctx.beginPath();
+    if (def.shape === 'circle') ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2);
+    else ctx.rect(-rx, -ry, rx * 2, ry * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+/** Keep planned foliage and tank bodies, not their surrounding ground tiles. */
+async function buildCanopyForeground(
+  art: string, state: DesignCanvasState, frame: CanvasFrame,
+  filter: GlossyLayerFilter, W: number, H: number,
+): Promise<HTMLCanvasElement> {
+  const canvas = document.createElement('canvas');
+  canvas.width = W; canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) { releaseCanvas(canvas); throw new Error('Canopy canvas unavailable'); }
+  paintPlannedCanopyFootprints(ctx, state, frame, filter, W, H);
+  const footprint = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  ctx.clearRect(0, 0, W, H);
+  paintPlannedCanopyFootprints(ctx, state, frame, filter, W, H, 'tanks');
+  const tanks = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  ctx.clearRect(0, 0, W, H);
+  paintPlannedCanopyFootprints(ctx, state, frame, filter, W, H, 'plants', 1);
+  const seeds = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  const image = await loadImage(art);
+  ctx.clearRect(0, 0, W, H);
+  try { ctx.drawImage(image, 0, 0, W, H); } finally { releaseImageSource(image); }
+  const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+  const alpha = canopyForegroundAlpha(pixels.data, footprint, canvas.width, canvas.height, tanks, seeds);
+  for (let i = 0; i < alpha.length; i++) {
+    pixels.data[i * 4] = 255; pixels.data[i * 4 + 1] = 255; pixels.data[i * 4 + 2] = 255;
+    pixels.data[i * 4 + 3] = alpha[i];
+  }
+  ctx.putImageData(pixels, 0, 0);
+  return canvas;
+}
+
+/** Survey line and image clipping have separate jobs. The line goes behind planned crowns;
+ * suppressing its foreground segment does not move the boundary or enlarge the property. */
+async function burnPaintedBoundary(
+  map: string, state: DesignCanvasState, frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'], filter: GlossyLayerFilter, W: number, H: number,
+): Promise<string> {
+  const line = document.createElement('canvas');
+  line.width = W; line.height = H;
+  const ctx = line.getContext('2d');
+  if (!ctx) { releaseCanvas(line); throw new Error('Boundary canvas unavailable'); }
+  drawBlueprintBoundary(ctx, refLayers.boundary, n => n * W, n => n * H, W, state, frame);
+  ctx.save();
+  ctx.globalCompositeOperation = 'destination-out';
+  const foreground = await buildCanopyForeground(map, state, frame, filter, W, H);
+  ctx.drawImage(foreground, 0, 0);
+  releaseCanvas(foreground);
+  ctx.restore();
+  const overlay = drainCanvasToDataUrl(line, 'image/png');
+  return (await stackOverlayImages(map, overlay, W, H))!;
+}
+
 async function buildProtectMask(
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
   filter: GlossyLayerFilter = 'all',
   options: ProtectMaskOptions = {},
+  canopyArtwork?: string,
 ): Promise<string> {
   const imgW = frame.imgW * SCALE;
   const imgH = frame.imgH * SCALE;
@@ -1418,7 +1546,7 @@ async function buildProtectMask(
   // model unable to illustrate inside a zone → flat, plain outline maps. The edge band + the
   // outside-boundary protection + "stay inside the outline" prompt hold the shape while the
   // interior stays free for rich illustration. (Reverted the interior fill-lock, 1871db9→.)
-  for (const zone of zonesInFilter(filter) ? state.zones : []) {
+  for (const zone of options.protectZones !== false && zonesInFilter(filter) ? state.zones : []) {
     if (zone.points.length < 3 || zone.feature) continue; // ground-feature areas aren't effort-zones
     ctx.beginPath();
     zone.points.forEach(([x, y], i) => {
@@ -1471,6 +1599,22 @@ async function buildProtectMask(
     }
   }
 
+  // A crown is foreground, not a transfer of neighbouring land into the design. Only its
+  // saved footprint may cross the survey line; all other exterior pixels remain protected.
+  if (options.allowCanopyOverhang) {
+    ctx.save();
+    ctx.globalCompositeOperation = 'destination-out';
+    if (canopyArtwork) {
+      const foreground = await buildCanopyForeground(canopyArtwork, state, frame, filter, imgW, imgH);
+      ctx.drawImage(foreground, 0, 0);
+      releaseCanvas(foreground);
+    } else {
+      paintPlannedCanopyFootprints(ctx, state, frame, filter, imgW, imgH);
+      paintPlannedCanopyFootprints(ctx, state, frame, filter, imgW, imgH, 'tanks');
+    }
+    ctx.restore();
+  }
+
   return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
@@ -1502,7 +1646,7 @@ async function shareSheetFiles(files: File[], labels: string[]): Promise<void> {
     ? `${labels[0]} — my farm plan, made with ImbewuField`
     : `${labels.length} sheets from my farm plan, made with ImbewuField`;
   if (typeof navigator === 'undefined' || !navigator.canShare?.({ files })) {
-    throw new Error('This phone cannot share files directly — use Download instead.');
+    throw new UserFacingError('This phone cannot share files directly — use Download instead.');
   }
   await navigator.share({ files, title, text });
 }
@@ -1614,7 +1758,11 @@ async function preloadReferenceFeatureArtwork(
     }
   }
   void filter;
-  await Promise.all([...urls].map(async (url) => {
+  await preloadReferenceArtworkUrls(urls);
+}
+
+async function preloadReferenceArtworkUrls(urls: Iterable<string>): Promise<void> {
+  await Promise.all([...new Set(urls)].filter((url) => !referenceFeatureArtworkCache.has(url)).map(async (url) => {
     try {
       const artwork = await settleOptionalReferenceArtLoad(loadImage(url));
       if (artwork) referenceFeatureArtworkCache.set(url, artwork);
@@ -1767,11 +1915,14 @@ export function buildDesignBrief(
   placeName: string | undefined,
   site: DesignGlossyProps['site'],
 ): string {
+  const omittedGuides = drivewayGuideLines(state, refLayers).length;
+  state = glossyArtworkState(state, refLayers);
   // Split so ELEMENTS can be sized against whatever budget the other lines leave (see below).
   const before: string[] = [];
   const after: string[] = [];
 
   before.push(`PLACE: ${placeName ?? 'this smallholding'} — a real South African smallholding.`);
+  if (omittedGuides) before.push('DRIVEWAY GUIDE OMITTED: the duplicate closed tracing guide is not a physical path or kerb. Keep the tar surface unbordered; no yellow dashes, raised edging or invented walking loop.');
 
   // ── Traced base geometry (the references every sheet must agree on first) ──
   if (refLayers.boundary.length >= 3) {
@@ -1797,6 +1948,7 @@ export function buildDesignBrief(
 
   // ── Ground / built features the farmer traced (what is really there today) ──
   const features = state.zones.filter((z) => z.feature && z.points.length >= 3);
+  if (features.some((zone) => zone.feature === 'patio')) before.push('PAVED COURTYARDS: warm tan patio areas are uncovered flat paving, never roofs. Only the separate grey house footprints are buildings. Keep the courtyard open.');
   if (features.length) {
     const parts = features.map((z) => {
       const [cx, cy] = centroidOf(z.points);
@@ -1956,7 +2108,7 @@ async function requestProducer(
   // /api/image-producer, so it must refuse here, at the boundary, where no future call site —
   // generateProducer, generateAllStyledSheets, or one not yet written — can forget it.
   if (isSampleMode()) {
-    throw new Error(SAMPLE_MODE_RENDER_REFUSAL);
+    throw new UserFacingError(SAMPLE_MODE_RENDER_REFUSAL);
   }
   // The cap applies at the boundary itself so no future call site can forget it.
   const capped = stripDataUrl(await capForAiInput(`data:image/png;base64,${imageBase64}`));
@@ -2023,6 +2175,7 @@ function producerElementsText(
   filter: GlossyLayerFilter = 'all',
   includeToolGlyphs = true,
 ): string {
+  state = glossyArtworkState(state, refLayers);
   const counts = new Map<string, { icon: string; n: number }>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
@@ -2926,6 +3079,38 @@ async function buildHouseOverlay(
   return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
+type PaperRoofReference = { overlay: string; credit: string };
+
+// A traced footprint records the eaves, not the ridges. Rory's seven-section roof became a
+// two-pitch corrugated template on plain paper. Recover the existing roof from licensed imagery
+// in the JOB'S frame; never borrow today's edited design or put a photograph over a proposed house.
+async function buildPaperRoofReference(
+  snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers'>,
+): Promise<PaperRoofReference | undefined> {
+  const { state, frame, refLayers } = snapshot;
+  if (frame.satDataUrl) return undefined;
+  const proposedPrimary = state.zones.some((zone) => zone.feature === 'house'
+    && statusOf(zone) === 'proposed' && sameFootprint(zone.points, refLayers.house));
+  const existingRefs = proposedPrimary ? { ...refLayers, house: [] } : refLayers;
+  const existingState = { ...state, zones: state.zones.filter((zone) => statusOf(zone) === 'existing') };
+  if (!authoritativeHouseFootprints(existingState, existingRefs).length) return undefined;
+  const url = buildSatelliteUrl(frame.centerLng, frame.centerLat, frame.zoom, frame.imgW, frame.imgH,
+    process.env.NEXT_PUBLIC_MAPBOX_TOKEN ?? '');
+  const photo = await fetchBasemapForFrame(frame, url, fetchImageAsDataUrl);
+  const size = await loadImage(photo);
+  try { assertMatchingImageAspects({ width: frame.imgW, height: frame.imgH }, size); }
+  finally { releaseImageSource(size); }
+  // Keep the full original scene for the presentation crop, then filter buildings. Otherwise a
+  // proposed zone could change the crop and displace the real roof against the paid artwork.
+  const presentation = await boundaryPresentationContext(state, { ...frame, satDataUrl: photo }, refLayers);
+  const roofState = { ...presentation.state,
+    zones: presentation.state.zones.filter((zone) => statusOf(zone) === 'existing') };
+  const overlay = await buildHouseOverlay(presentation.frame.satDataUrl!, roofState,
+    proposedPrimary ? { ...presentation.refLayers, house: [] } : presentation.refLayers,
+    presentation.frame.imgW * SCALE, presentation.frame.imgH * SCALE, 'source');
+  return overlay ? { overlay, credit: `Roof reference from satellite imagery. ${basemapAttribution()}` } : undefined;
+}
+
 // Draw the traced driveway after generation. This preserves the exact path/area while avoiding
 // the bright editor casing and flat brown guide that Geometry Lock previously pasted back in.
 async function buildDrivewayOverlay(
@@ -3036,9 +3221,10 @@ async function buildPaintedStructureOverlay(
   W: number,
   H: number,
   styleKey: StylePreset,
+  includeDriveway = true,
 ): Promise<string | undefined> {
   const treatment: LockedStructureTreatment = styleKey === 'precision_atlas' ? 'precision_atlas' : 'source';
-  const driveway = await buildDrivewayOverlay(undefined, frame, refLayers, W, H, treatment);
+  const driveway = includeDriveway ? await buildDrivewayOverlay(undefined, frame, refLayers, W, H, treatment) : undefined;
   const hasHouse = authoritativeHouseFootprints(state, refLayers).length > 0;
   if (!driveway && !hasHouse) return undefined;
 
@@ -3078,6 +3264,9 @@ async function buildGeometryLockStructureOverlay(
   styleKey: StylePreset,
   useSourcePixels: boolean,
 ): Promise<string | undefined> {
+  // The model already paints these roofs. A second corrugated slab creates two silhouettes.
+  // Photo Plan's paper fallback still needs the deterministic structure drawing.
+  if (geometryLockCompositionPolicy(styleKey, frame.satDataUrl ? 'photo' : 'paper').ground === 'paint') return undefined;
   return useSourcePixels
     ? buildLockedStructureOverlay(sourceImage, state, frame, refLayers, W, H, styleKey)
     : buildPaintedStructureOverlay(state, frame, refLayers, W, H, styleKey);
@@ -4579,7 +4768,7 @@ function drawLabelGutter(
 
   for (const side of ['left', 'right'] as const) {
     ctx.save();
-    ctx.fillStyle = '#FBF6EC';
+    ctx.fillStyle = PAPER;
     ctx.fillRect(bandX[side], 0, gutter, H);
     ctx.strokeStyle = 'rgba(32,25,15,0.34)';
     ctx.lineWidth = Math.max(1, Math.round(mapW * 0.0009));
@@ -4890,7 +5079,7 @@ function referenceBlueprintLabels(
   return rebalance(curated, 9);
 }
 
-/** Scale bar, bottom-left — the largest "nice" round metre count fitting ~18% of the sheet. */
+/** The map owns the metre width; a paper halo keeps that same measured bar legible on any base. */
 function drawBlueprintScaleBar(
   ctx: CanvasRenderingContext2D,
   W: number,
@@ -4898,27 +5087,40 @@ function drawBlueprintScaleBar(
   pad: number,
   rowH: number,
   pxPerM: number,
+  position: { x?: number; y?: number } = {},
 ): void {
   const niceM = [5, 10, 20, 25, 50, 100, 200];
   let m = niceM[0];
   for (const nm of niceM) if (nm * pxPerM <= W * 0.18) m = nm;
   const barW = m * pxPerM;
-  const bx = pad, by = H - pad - rowH * 0.3;
-  ctx.strokeStyle = '#F3EEE2';
-  ctx.fillStyle = '#F3EEE2';
-  ctx.lineWidth = 3;
+  const bx = position.x ?? pad;
+  const by = position.y ?? H - pad - rowH * 0.3;
+  ctx.save();
+  ctx.globalAlpha = 1;
+  ctx.lineCap = 'butt';
+  ctx.lineJoin = 'round';
   ctx.beginPath();
   ctx.moveTo(bx, by);
   ctx.lineTo(bx + barW, by);
-  ctx.moveTo(bx, by - 8);
-  ctx.lineTo(bx, by + 8);
-  ctx.moveTo(bx + barW, by - 8);
-  ctx.lineTo(bx + barW, by + 8);
+  ctx.moveTo(bx, by - 9);
+  ctx.lineTo(bx, by + 9);
+  ctx.moveTo(bx + barW, by - 9);
+  ctx.lineTo(bx + barW, by + 9);
+  ctx.strokeStyle = '#FBF6EC';
+  ctx.lineWidth = 7;
   ctx.stroke();
-  ctx.font = `700 ${Math.round(W * 0.014)}px ${SHEET_BODY_FONT}`;
+  ctx.strokeStyle = '#20382B';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+  ctx.font = `700 ${Math.max(16, Math.round(W * 0.016))}px ${SHEET_BODY_FONT}`;
   ctx.textBaseline = 'bottom';
   ctx.textAlign = 'left';
-  ctx.fillText(`${m} m`, bx, by - 12);
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = '#FBF6EC';
+  ctx.strokeText(`${m} m`, bx, by - 14);
+  ctx.fillStyle = '#20382B';
+  ctx.fillText(`${m} m`, bx, by - 14);
+  ctx.restore();
 }
 
 /** How many legend rows fit the sheet at this size (the panel must not run off the bottom).
@@ -6993,6 +7195,14 @@ export async function buildBlueprintBaseMap(
       )
     : undefined;
   if (sourceStructures) ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
+  else {
+    // The ground pass omits buildings/access that the source-cutout pass promises to draw. On
+    // plain paper there is no source cutout: without this fallback the classroom had a label
+    // and a legend row pointing to empty paper. Reuse the same footprints and roof symbols as
+    // the design sheets, including buildings beyond the promoted main-map house.
+    drawBlueprintDriveway(ctx, renderRefLayers, px, py, pxPerM, false, !renderFrame.satDataUrl);
+    drawPaperRoofs(ctx, renderState, renderRefLayers, px, py, pxPerM);
+  }
   drawBlueprintBoundary(ctx, renderRefLayers.boundary, px, py, W, renderState, renderFrame);
   // Existing placed items are discrete site facts, so they sit above the traced ground and locked
   // source structures as symbols/footprints rather than becoming another zone wash.
@@ -7676,33 +7886,33 @@ function readableTextOn(hex: string): string {
   return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? '#0B120B' : '#FFFFFF';
 }
 
-/** North arrow on a translucent disc so it reads over any satellite. Frames are north-up with no
- *  rotation (CanvasFrame, lib/design-canvas.ts), so "up" is always true north — no bearing to apply. */
+/** Frames are north-up. One ink-and-paper compass reads on plain and photographic maps alike. */
 function drawImplNorthArrow(ctx: CanvasRenderingContext2D, cx: number, cy: number, size: number): void {
   const R = size * 0.6;
   ctx.save();
-  ctx.beginPath();
-  ctx.arc(cx, cy, R, 0, Math.PI * 2);
-  ctx.fillStyle = 'rgba(10,16,22,0.72)';
-  ctx.fill();
-  ctx.strokeStyle = 'rgba(255,255,255,0.35)';
-  ctx.lineWidth = 1.5;
-  ctx.stroke();
-  // Arrow: filled triangle pointing up, tail notched so it reads as a compass needle, not a play icon.
+  ctx.globalAlpha = 1;
+  ctx.lineJoin = 'round';
   ctx.beginPath();
   ctx.moveTo(cx, cy - R * 0.5);
   ctx.lineTo(cx - R * 0.32, cy + R * 0.34);
   ctx.lineTo(cx, cy + R * 0.16);
   ctx.lineTo(cx + R * 0.32, cy + R * 0.34);
   ctx.closePath();
-  ctx.fillStyle = '#F3EEE2';
+  ctx.strokeStyle = '#FBF6EC';
+  ctx.lineWidth = Math.max(3, size * 0.08);
+  ctx.stroke();
+  ctx.fillStyle = '#20382B';
   ctx.fill();
-  ctx.fillStyle = '#F3EEE2';
-  ctx.font = `800 ${Math.round(size * 0.34)}px ${SHEET_BODY_FONT}`;
+  ctx.font = `800 ${Math.round(size * 0.4)}px ${SHEET_BODY_FONT}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'bottom';
+  ctx.strokeText('N', cx, cy - R * 0.52);
   ctx.fillText('N', cx, cy - R * 0.52);
   ctx.restore();
+}
+
+function drawSheetNorthArrow(ctx: CanvasRenderingContext2D, mapX: number, mapW: number, mapH: number): void {
+  drawImplNorthArrow(ctx, mapX + mapW - Math.round(mapW * 0.04), Math.round(mapH * 0.08), Math.max(30, Math.round(mapW * 0.026)));
 }
 
 interface SectorAnalysisComposition {
@@ -9237,12 +9447,13 @@ function phasingSheetSize(
  * calculation says it is prints with the schedule half over the map. */
 function phasingPanelRect(size: ReturnType<typeof calculatePhasingSheetSize>) {
   const pad = Math.round(size.mapW * 0.02);
-  const lgW = size.legendWidth;
-  const mapX = size.gutter;
-  const lgX = mapX + size.mapW + size.gutter;
+  const placement = calculateSheetLegendPlacement(size);
+  const lgW = placement.legendWidth;
+  const mapX = placement.mapX;
+  const lgX = placement.legendX;
   const lgY = 0;
   const lgBottom = size.H;
-  return { pad, lgW, lgX, lgY, lgBottom, mapX };
+  return { pad, lgW, lgX, lgY, lgBottom, mapX, typeW: placement.typeWidth };
 }
 
 // Draws every EXACT-content layer of the Phasing sheet that is not the schedule panel itself:
@@ -9396,7 +9607,7 @@ async function composePhasingSheet(
   // 1. The model's decorative illustrated background, normalised to the MAP column — not the whole
   //    sheet. The gutters are drawing furniture and must stay paper; letting the model's art run
   //    into them is how a "margin" turns back into more picture.
-  ctx.fillStyle = '#FBF6EC';
+  ctx.fillStyle = PAPER;
   ctx.fillRect(0, 0, W, H);
   const modelImg = await loadImage(baseImage);
   ctx.drawImage(modelImg, mapX, 0, mapW, H);
@@ -9412,8 +9623,7 @@ async function composePhasingSheet(
   const scaleRowH = Math.round(mapW * 0.026);
   drawBlueprintScaleBar(ctx, mapW, mapH, pad, scaleRowH, pxPerM);
   ctx.restore();
-  const naSize = Math.max(30, Math.round(mapW * 0.026));
-  drawImplNorthArrow(ctx, lgX - pad - naSize * 0.6, H - pad - naSize * 0.6, naSize);
+  drawSheetNorthArrow(ctx, mapX, mapW, mapH);
 
   // 4. The schedule panel itself — copied pixel-for-pixel from a freshly built exact sheet, so the
   //    text is guaranteed byte-identical to buildImplementationMap's own render rather than a second,
@@ -9463,7 +9673,7 @@ async function blankPhasingPanel(
   ctx.drawImage(await loadImage(imageDataUrl), 0, 0, W, H);
 
   const { lgW, lgX, lgY, lgBottom } = phasingPanelRect(size);
-  ctx.fillStyle = '#FBF6EC'; // fully opaque — same cream as buildImplementationMap's panel fill
+  ctx.fillStyle = PAPER; // fully opaque — same paper as buildImplementationMap's panel fill
   ctx.fillRect(lgX, lgY, lgW, lgBottom - lgY);
   ctx.strokeStyle = 'rgba(32,25,15,0.34)';
   ctx.lineWidth = 1.5;
@@ -9522,10 +9732,10 @@ export async function buildImplementationMap(
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
   const pxPerM = mapW / (renderFrame.imgW * renderFrame.mPerPx);
-  const { pad, lgW, lgX, lgY, lgBottom, mapX } = phasingPanelRect(size);
+  const { pad, lgW, lgX, lgY, lgBottom, mapX, typeW } = phasingPanelRect(size);
 
   // 1. Satellite + scrim, inset into the map column so the label gutters stay paper.
-  ctx.fillStyle = '#FBF6EC';
+  ctx.fillStyle = PAPER;
   ctx.fillRect(0, 0, W, H);
   ctx.save();
   ctx.translate(mapX, 0);
@@ -9550,37 +9760,29 @@ export async function buildImplementationMap(
   //    or widened sheet width. When content would overflow we shed task bullets and surplus site
   //    rules — never shrink the type — exactly as the spec requires ("fewer task bullets over
   //    unreadable text"). A hard clip at the panel foot guarantees nothing ever spills.
-  const ip = Math.round(lgW * 0.055);
-  const innerX = lgX + ip;
-  const innerW = lgW - ip * 2;
-  const panelBottom = lgBottom - ip;
-
-  ctx.fillStyle = '#FBF6EC';
-  ctx.fillRect(lgX, lgY, lgW, lgBottom - lgY);
-  ctx.strokeStyle = 'rgba(32,25,15,0.34)';
-  ctx.lineWidth = 1.5;
-  ctx.beginPath();
-  ctx.moveTo(lgX, lgY);
-  ctx.lineTo(lgX, lgBottom);
-  ctx.stroke();
+  const panel = drawSheetLegendPanel(ctx, lgX, lgW, lgBottom - lgY);
+  const ip = panel.contentLeft;
+  const innerX = lgX + panel.contentLeft;
+  const innerW = panel.contentRight - panel.contentLeft;
+  // The drawing style is a small colophon, leaving the heading for the farm and sheet.
+  const styleFooterFs = legendFooterFontSize(typeW);
+  const panelBottom = panel.contentBottom - Math.ceil(styleFooterFs * 1.6);
   ctx.save();
   ctx.beginPath();
-  ctx.rect(lgX, lgY, lgW, lgBottom - lgY);
+  ctx.rect(innerX, panel.inset, innerW, panelBottom - panel.inset);
   ctx.clip();
 
-  const fsHeader = Math.round(lgW * 0.051);
-  const fsSection = Math.round(lgW * 0.035);
-  const fsBody = Math.round(lgW * 0.029);
-  const lineH = Math.round(fsBody * 1.34);
-  const blockGap = Math.round(lineH * 0.55);
-  // Sheet 08's header used SHEET_TITLE_FONT (Georgia) while 01–07 set theirs in
-  // REFERENCE_LABEL_FONT, so one sheet of a printed plan set arrived in a different typeface. It
-  // also made the sheet number read as "o8": Georgia has oldstyle figures, so its zero sits at
-  // x-height next to a full-height 8. Nobody chose that — the phasing panel was written separately
-  // and reached for the nearest title constant.
+  const fsHeader = Math.round(typeW * SHEET_LEGEND_TYPE.title);
+  const fsSection = Math.round(typeW * SHEET_LEGEND_TYPE.section);
+  const fsBody = Math.round(typeW * SHEET_LEGEND_TYPE.detail);
+  // The Ubhejane sample schedule is longer than the synthetic example: loose paragraph spacing
+  // hid its site rules even after optional bullets were removed. Keep the larger shared type,
+  // but use a compact reading rhythm so the final instructions still fit the widened legend box.
+  const lineH = Math.round(fsBody * 1.2);
+  const blockGap = Math.round(lineH * 0.3);
   const headerFont = `800 ${fsHeader}px ${REFERENCE_LABEL_FONT}`;
   const sectionFont = `800 ${fsSection}px ${SHEET_BODY_FONT}`;
-  const titleFont = `800 ${Math.round(lgW * 0.034)}px ${SHEET_BODY_FONT}`;
+  const titleFont = `800 ${Math.round(typeW * SHEET_LEGEND_TYPE.section)}px ${SHEET_BODY_FONT}`;
   const bodyFont = `500 ${fsBody}px ${SHEET_BODY_FONT}`;
   const weekFont = `600 ${fsBody}px ${SHEET_BODY_FONT}`;
   const holdFont = `italic 600 ${fsBody}px ${SHEET_BODY_FONT}`;
@@ -9624,7 +9826,9 @@ export async function buildImplementationMap(
     h += wrap(phase.holdPoint, bulletTextW, holdFont).length * lineH; // hold point
     return h + blockGap;
   };
-  const headerH = panelTitleLines.length * Math.round(fsHeader * 1.08) + lineH * 2 + Math.round(lineH * 0.8);
+  const headerH = panel.titleBaseline - ip
+    + panelTitleLines.length * Math.round(fsHeader * 1.08)
+    + Math.round(lgW * (0.006 + 0.035 + 0.045 + 0.03));
   const coLines = wrap(plan.criticalOrder.join('  →  '), innerW, bodyFont);
   const criticalH = plan.criticalOrder.length
     ? Math.round(fsSection * 1.3) + coLines.length * lineH + blockGap
@@ -9655,7 +9859,7 @@ export async function buildImplementationMap(
   while (!fits() && maxRules > 1) maxRules--;
 
   // ── Render top-down (with a hard clip at the panel foot as a belt-and-braces guard) ──────────
-  let y = lgY + ip + fsHeader;
+  let y = panel.titleBaseline;
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
   ctx.fillStyle = '#20190F';
@@ -9664,21 +9868,18 @@ export async function buildImplementationMap(
     ctx.fillText(line, innerX, y);
     y += Math.round(fsHeader * 1.08);
   }
-  ctx.fillStyle = '#6B6355';
-  ctx.font = `italic 500 ${fsBody}px ${SHEET_BODY_FONT}`;
-  ctx.fillText('Reference Blueprint', innerX, y);
-  y += lineH;
+  y += Math.round(lgW * 0.006);
   ctx.fillStyle = '#8A8172';
-  ctx.font = `500 ${fsBody}px ${SHEET_BODY_FONT}`;
+  ctx.font = `600 ${fsBody}px ${SHEET_BODY_FONT}`;
   ctx.fillText(placeName ?? 'Your design', innerX, y);
-  y += Math.round(lineH * 0.45);
-  ctx.strokeStyle = 'rgba(32,25,15,0.24)';
-  ctx.lineWidth = 1;
+  y += Math.round(lgW * 0.035);
+  ctx.strokeStyle = 'rgba(11,18,11,0.25)';
+  ctx.lineWidth = 1.5;
   ctx.beginPath();
   ctx.moveTo(innerX, y);
-  ctx.lineTo(lgX + lgW - ip, y);
+  ctx.lineTo(lgX + panel.contentRight, y);
   ctx.stroke();
-  y += Math.round(lineH * 0.75);
+  y += Math.round(lgW * 0.045) + Math.round(lgW * 0.03);
 
   const drawLines = (lines: string[], x: number, font: string, color: string): void => {
     ctx.font = font;
@@ -9769,9 +9970,12 @@ export async function buildImplementationMap(
   }
   ctx.restore();
 
-  // North arrow, on its disc just left of the panel foot.
-  const naSize = Math.max(30, Math.round(mapW * 0.026));
-  drawImplNorthArrow(ctx, lgX - pad - naSize * 0.6, H - pad - naSize * 0.6, naSize);
+  ctx.fillStyle = '#8A8172';
+  ctx.font = `500 ${styleFooterFs}px ${SHEET_BODY_FONT}`;
+  ctx.fillText('Reference Blueprint', innerX, panel.contentBottom - Math.ceil(styleFooterFs * 0.25));
+
+  // The compass occupies the same map corner as the other eight sheets.
+  drawSheetNorthArrow(ctx, mapX, mapW, mapH);
 
   // ONE PAPER SIZE FOR THE WHOLE SET. Sheet 09 builds its own canvas and returns it directly rather
   // than going through composeStyleSheet, so it was the only sheet that never reached the paper
@@ -10312,7 +10516,7 @@ function drawStyleLegendSymbol(
 // docs/PLAN-SET-SPEC.md). The Blueprint maps bake this in; the Style output never had it, which is
 // most of the visible gap vs ChatGPT's sheets. All drawn deterministically from the real design.
 /**
- * Centre a finished sheet on A-series landscape paper.
+ * Place a finished sheet on A-series landscape paper with its legend anchored at the right.
  *
  * Pure addition: the composed sheet is drawn unchanged into a larger paper-coloured canvas, so no
  * mark moves relative to any other mark and nothing can be clipped. Where the plot's shape does not
@@ -10324,8 +10528,8 @@ function drawStyleLegendSymbol(
  * including the paid ones, where the model has already rendered and this only adds chrome. No AI
  * input is ever a padded sheet.
  */
-function padToPaperSheet(sheet: HTMLCanvasElement): string {
-  const paper = paperSheetCanvas(sheet.width, sheet.height);
+function padToPaperSheet(sheet: HTMLCanvasElement, minimumWidth = sheet.width): string {
+  const paper = paperSheetCanvas(Math.max(sheet.width, minimumWidth), sheet.height);
   if (paper.width === sheet.width && paper.height === sheet.height) {
     return drainCanvasToDataUrl(sheet, 'image/png');
   }
@@ -10337,19 +10541,41 @@ function padToPaperSheet(sheet: HTMLCanvasElement): string {
     releaseCanvas(canvas);
     return drainCanvasToDataUrl(sheet, 'image/png');
   }
-  // The legend panel's own cream, so the margin reads as the sheet's paper rather than as a border
+  // The legend panel's own paper, so the margin reads as the sheet rather than as a border
   // someone forgot to fill.
-  ctx.fillStyle = '#FBF6EC';
+  ctx.fillStyle = PAPER;
   ctx.fillRect(0, 0, paper.width, paper.height);
+  // The compact masterplan omits leader gutters. Put its spare paper on the left so its
+  // legend still sits on the same right-hand trim as the other eight sheets.
   ctx.drawImage(
     sheet,
-    Math.round((paper.width - sheet.width) / 2),
+    paper.width - sheet.width,
     Math.round((paper.height - sheet.height) / 2),
   );
   // drawImage is synchronous: the unpadded sheet is finished once copied. Keeping both backing
   // stores until Safari's next GC doubled the largest exact-sheet allocation on every render.
   releaseCanvas(sheet);
   return drainCanvasToDataUrl(canvas, 'image/png');
+}
+
+// Rory asked for the same box, in the same place, with the same fonts on every map.
+// Previously only Water/Planting/Structures had this frame, and Phasing drew a separate shell.
+function drawSheetLegendPanel(ctx: CanvasRenderingContext2D, x: number, width: number, height: number) {
+  const panel = sheetLegendPanelMetrics(width, height);
+  ctx.save();
+  // A heavy green slab overwhelmed the drawings. Keep the shared white paper and text bounds,
+  // with a fine outline that still defines the key when the plan is printed.
+  ctx.fillStyle = PAPER;
+  ctx.fillRect(x, 0, width, height);
+  roundRectPath(ctx, x + panel.inset, panel.inset,
+    width - panel.inset * 2, height - panel.inset * 2, Math.round(width * 0.055));
+  ctx.fillStyle = PAPER;
+  ctx.fill();
+  ctx.strokeStyle = '#58705C';
+  ctx.lineWidth = Math.max(1.5, width * 0.003);
+  ctx.stroke();
+  ctx.restore();
+  return panel;
 }
 
 async function composeStyleSheet(
@@ -10364,6 +10590,11 @@ async function composeStyleSheet(
   includeToolGlyphs = true,
   exactGeometry = false,
   options: {
+    aiArtwork?: boolean;
+    /** Perspective art cannot carry a metric bar or the top-down north marker. */
+    obliqueArtwork?: boolean;
+    /** Old paid artwork can contain a guide already painted by the model. Keep its old inventory. */
+    preserveLegacyPathGuides?: boolean;
     sheetNumber?: string;
     legendRows?: StyleLegendRow[];
     /** Rows a SHEET adds that sheetLegendRows cannot derive from the design alone — sheet 04's
@@ -10384,16 +10615,22 @@ async function composeStyleSheet(
     includeLabelGutters?: boolean;
   } = {},
 ): Promise<string> {
+  if (options.aiArtwork && !options.preserveLegacyPathGuides) state = glossyArtworkState(state, refLayers);
   const map = await loadImage(mapDataUrl);
-  // Most sheets are [gutter][map][gutter][legend]. A full masterplan is [map][legend]: its grouped
-  // legend plus compact map codes are the complete inventory, so side leaders only waste map area.
-  // `W` remains "everything left of the legend panel", keeping the panel geometry unchanged.
+  // Empty leader bands become readable legend space; a genuine margin-label layout retains them.
+  // The compact masterplan shares that wider key without adding duplicate leader gutters.
   const mapW = map.width;
   const H = map.height;
-  const gutter = options.includeLabelGutters === false ? 0 : sheetGutterWidth(mapW);
-  const W = mapW + gutter * 2;
-  const legendW = styleSheetLegendWidth(W);
-  const outW = W + legendW;
+  const sheetSize = calculateStyleSheetSize(mapW, H);
+  const placement = calculateSheetLegendPlacement(sheetSize, {
+    includeLabelGutters: options.includeLabelGutters,
+    hasRightGutterLabels: Boolean(options.gutterLayout?.rows.some((row) => row.side === 'right')),
+  });
+  const gutter = placement.mapX;
+  const W = placement.legendX;
+  const legendW = placement.legendWidth;
+  const typeW = placement.typeWidth;
+  const outW = placement.W;
   const canvas = document.createElement('canvas');
   canvas.width = outW;
   canvas.height = H;
@@ -10404,7 +10641,7 @@ async function composeStyleSheet(
     return mapDataUrl;
   }
   // Paper under the bands first: the map is inset, and whatever is not map must read as sheet.
-  ctx.fillStyle = '#FBF6EC';
+  ctx.fillStyle = PAPER;
   ctx.fillRect(0, 0, W, H);
   try {
     ctx.drawImage(map, gutter, 0);
@@ -10414,46 +10651,23 @@ async function composeStyleSheet(
   if (gutter > 0 && options.gutterLayout) drawLabelGutter(ctx, options.gutterLayout, gutter, mapW, H);
 
   // ── Legend panel ──
-  const benchmarkPanel = styleLabel === 'Reference Blueprint' && (filter === 'water' || filter === 'planting' || filter === 'structures');
-  const panelInset = benchmarkPanel ? Math.max(12, Math.round(legendW * 0.035)) : 0;
-  ctx.fillStyle = benchmarkPanel ? '#0B2116' : '#FBF6EC';
-  ctx.fillRect(W, 0, legendW, H);
-  if (benchmarkPanel) {
-    ctx.save();
-    ctx.shadowColor = 'rgba(0,0,0,0.3)';
-    ctx.shadowBlur = Math.round(legendW * 0.035);
-    ctx.shadowOffsetY = Math.round(legendW * 0.012);
-    roundRectPath(
-      ctx,
-      W + panelInset,
-      panelInset,
-      legendW - panelInset * 2,
-      H - panelInset * 2,
-      Math.round(legendW * 0.055),
-    );
-    ctx.fillStyle = '#F7F2E7';
-    ctx.fill();
-    ctx.shadowColor = 'transparent';
-    ctx.strokeStyle = 'rgba(67,61,48,0.36)';
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-    ctx.restore();
-  }
-  const pad = Math.round(legendW * 0.075);
-  const lx = W + panelInset + pad;
-  const maxX = outW - panelInset - pad;
+  const panel = drawSheetLegendPanel(ctx, W, legendW, H);
+  const panelInset = panel.inset;
+  const pad = panel.padding;
+  const lx = W + panel.contentLeft;
+  const maxX = W + panel.contentRight;
   ctx.textAlign = 'left';
   ctx.textBaseline = 'alphabetic';
-  let y = panelInset + pad + Math.round(legendW * 0.07);
+  let y = panel.titleBaseline;
   ctx.fillStyle = '#20190F';
-  const titleSize = Math.round(legendW * 0.078);
+  const titleSize = Math.round(typeW * SHEET_LEGEND_TYPE.title);
   ctx.font = `800 ${titleSize}px ${REFERENCE_LABEL_FONT}`;
   const titleWords = `${options.sheetNumber ?? SHEET_NO[filter]} — ${layerLabel.toUpperCase()}`.split(/\s+/);
   const titleLines: string[] = [];
   let titleLine = '';
   for (const word of titleWords) {
     const next = titleLine ? `${titleLine} ${word}` : word;
-    if (titleLine && ctx.measureText(next).width > maxX - lx && titleLines.length < 2) {
+    if (titleLine && ctx.measureText(next).width > maxX - lx) {
       titleLines.push(titleLine);
       titleLine = word;
     } else {
@@ -10461,19 +10675,22 @@ async function composeStyleSheet(
     }
   }
   if (titleLine) titleLines.push(titleLine);
-  for (const line of titleLines.slice(0, 3)) {
+  for (const line of titleLines) {
     ctx.fillText(line, lx, y);
     y += Math.round(titleSize * 1.08);
   }
   y += Math.round(legendW * 0.006);
   ctx.fillStyle = '#6B6355';
-  ctx.font = `600 ${Math.round(legendW * 0.05)}px ${SHEET_BODY_FONT}`;
-  const styleWords = styleLabel.split(/\s+/);
+  ctx.font = `600 ${Math.round(typeW * SHEET_LEGEND_TYPE.style)}px ${SHEET_BODY_FONT}`;
+  // Rory wants the Reference Blueprint credit at the foot, below the useful map information.
+  // Other selected styles keep their existing heading; this does not change the artwork preset.
+  const footerStyleLabel = styleLabel === 'Reference Blueprint' ? styleLabel : '';
+  const styleWords = (footerStyleLabel ? '' : styleLabel).split(/\s+/).filter(Boolean);
   const styleLines: string[] = [];
   let styleLine = '';
   for (const word of styleWords) {
     const next = styleLine ? `${styleLine} ${word}` : word;
-    if (styleLine && ctx.measureText(next).width > maxX - lx && styleLines.length < 2) {
+    if (styleLine && ctx.measureText(next).width > maxX - lx) {
       styleLines.push(styleLine);
       styleLine = word;
     } else {
@@ -10481,13 +10698,13 @@ async function composeStyleSheet(
     }
   }
   if (styleLine) styleLines.push(styleLine);
-  const styleLineH = Math.round(legendW * 0.05);
-  for (const line of styleLines.slice(0, 3)) {
+  const styleLineH = Math.round(legendW * SHEET_LEGEND_TYPE.style);
+  for (const line of styleLines) {
     ctx.fillText(line, lx, y);
     y += styleLineH;
   }
   ctx.fillStyle = '#8A8172';
-  ctx.font = `600 ${Math.round(legendW * 0.045)}px ${SHEET_BODY_FONT}`;
+  ctx.font = `600 ${Math.round(typeW * SHEET_LEGEND_TYPE.detail)}px ${SHEET_BODY_FONT}`;
   ctx.fillText(placeName ?? 'Your design', lx, y);
   y += Math.round(legendW * 0.035);
   ctx.strokeStyle = 'rgba(11,18,11,0.25)';
@@ -10507,8 +10724,15 @@ async function composeStyleSheet(
     ...(options.legendRows ?? sheetLegendRows(state, refLayers, filter, includeToolGlyphs, frame, options.labelMode ?? DEFAULT_SHEET_LABEL_MODE)),
     ...(options.extraLegendRows ?? []),
   ];
+  // A resumed paid sheet may never have drawn the exact feature layer in this tab. Load the
+  // legend's own catalogue artwork before drawing its symbols, or every species becomes the
+  // same fallback disc even though the app already ships distinct fruit and foliage artwork.
+  await preloadReferenceArtworkUrls(rows.flatMap((row) => {
+    const url = row.defId ? referenceFeatureArtworkUrl(row.defId) : null;
+    return url ? [url] : [];
+  }));
   const legendTop = y + Math.round(legendW * 0.03);
-  const footerFs = options.footerText ? Math.max(9, Math.round(legendW * 0.025)) : Math.round(legendW * 0.036);
+  const footerFs = legendFooterFontSize(typeW);
   const footerLineH = Math.max(11, Math.round(footerFs * 1.28));
   const footerBoxPad = options.footerBox ? Math.max(6, Math.round(legendW * 0.024)) : 0;
   const footerTextX = lx + footerBoxPad;
@@ -10516,7 +10740,7 @@ async function composeStyleSheet(
   const wrapFooterText = (value: string): string[] => {
     ctx.font = options.footerHeading
       ? `600 ${footerFs}px ${SHEET_BODY_FONT}`
-      : `italic 500 ${footerFs}px ${SHEET_BODY_FONT}`;
+      : `italic 600 ${footerFs}px ${SHEET_BODY_FONT}`;
     // A NEWLINE IS A HARD BREAK, NOT A SPACE.
     //
     // This wrapped on /\s+/, which treats "\n" as whitespace like any other. The Water sheet's
@@ -10545,7 +10769,10 @@ async function composeStyleSheet(
     }
     return lines;
   };
-  const customFooterLines = options.footerText ? wrapFooterText(options.footerText) : [];
+  const footerText = options.aiArtwork
+    ? [options.obliqueArtwork ? OBLIQUE_REVIEW_NOTICE : AI_MAP_REVIEW_NOTICE, options.footerText, frame.satDataUrl ? basemapAttribution() : '', footerStyleLabel].filter(Boolean).join('\n')
+    : options.footerText ? [options.footerText, footerStyleLabel].filter(Boolean).join('\n') : undefined;
+  const customFooterLines = footerText ? wrapFooterText(footerText) : [];
   const footerHeadingH = options.footerHeading ? Math.round(legendW * 0.06) : 0;
   // Esri's imagery must be credited wherever it is shown — a licence term, not a courtesy — so the
   // exact-plan footer grows a fourth line for it. basemapAttribution() is '' on Mapbox, so this
@@ -10558,17 +10785,24 @@ async function composeStyleSheet(
   // satDataUrl is the same condition drawBlueprintBase uses to lay paper instead of a photo, so the
   // credit and the picture can never disagree.
   const attributionLine = frame.satDataUrl ? basemapAttribution() : '';
+  const defaultFooterLines = wrapFooterText([
+    exactGeometry
+      ? 'Exact plan — geometry and counts\ncome from your saved design.\nNo unsaved features added.'
+      : AI_MAP_REVIEW_NOTICE,
+    attributionLine,
+    footerStyleLabel,
+  ].filter(Boolean).join('\n'));
   const footerBlockH = customFooterLines.length
     ? customFooterLines.length * footerLineH
       + footerHeadingH
       + Math.round(legendW * 0.035)
       + footerBoxPad * 2
-    : Math.round(legendW * (attributionLine ? 0.2 : 0.16));
+    : defaultFooterLines.length * footerLineH;
   const panelBottom = H - panelInset;
   const footerTop = panelBottom - pad - footerBlockH;
   const availableRowsH = Math.max(1, footerTop - legendTop);
   const contentW = maxX - lx;
-  const normalFs = legendRowFontSize(legendW, availableRowsH, rows.length);
+  const normalFs = legendRowFontSize(typeW, availableRowsH, rows.length);
   const baseSw = Math.round(legendW * 0.064);
   const columnGap = Math.max(10, Math.round(legendW * 0.025));
   const singleColumnTextGap = Math.round(legendW * 0.03);
@@ -10577,7 +10811,7 @@ async function composeStyleSheet(
     ctx.font = `600 ${fontSize}px ${SHEET_BODY_FONT}`;
     const lines: string[] = [];
     let current = '';
-    for (const word of value.split(/\s+/)) {
+    for (const word of legendWrapWords(value)) {
       const next = current ? `${current} ${word}` : word;
       if (current && ctx.measureText(next).width > textWidth) {
         lines.push(current);
@@ -10769,7 +11003,7 @@ async function composeStyleSheet(
   // Searching per column count fixes both symptoms at once, and they were always one bug: the
   // space that became gaps is the space the type should have grown into. Fewest columns wins on a
   // tie, so a sparse legend still stays a single readable list.
-  const growthCeiling = legendMaxFontSize(legendW);
+  const growthCeiling = legendMaxFontSize(typeW);
   const fitForColumns = (columnCount: number): number => fitLegendFontSize(
     (fontSize) => {
       const candidate = planColumns(columnCount, fontSize);
@@ -10832,7 +11066,7 @@ async function composeStyleSheet(
     columnPlans = findPlan(true);
     if (!columnPlans.length) columnPlans = findPlan(false);
     if (!columnPlans.length) {
-      throw new Error('Legend facts cannot fit the finished sheet at the 9px readability floor.');
+      throw new UserFacingError('Legend facts cannot fit the finished sheet at the 9px readability floor.');
     }
   }
 
@@ -10930,35 +11164,14 @@ async function composeStyleSheet(
       ctx.fillText(line, footerTextX, footerY);
       footerY += footerLineH;
     }
-  } else if (exactGeometry) {
-    ctx.font = `italic 600 ${Math.round(legendW * 0.036)}px ${SHEET_BODY_FONT}`;
-    // A fourth line does not fit BELOW the third — appending one put the Esri credit through the
-    // bottom of the panel, half-clipped, on the first render that used it. The block is LIFTED
-    // instead, so whatever its line count, it still ends on the baseline the three-line version
-    // ended on. footerBlockH already reserved the extra height above (0.16 -> 0.2 of legendW), so
-    // the legend rows above have the clearance for it.
-    const lift = attributionLine ? Math.round(legendW * 0.045) : 0;
-    ctx.fillText('Exact plan — geometry and counts', lx, H - pad - Math.round(legendW * 0.05) - lift);
-    ctx.fillText('come from your saved design.', lx, H - pad - Math.round(legendW * 0.005) - lift);
-    ctx.fillText('No unsaved features added.', lx, H - pad + Math.round(legendW * 0.04) - lift);
-    // Esri's imagery must be credited wherever it is shown — a licence term, not a courtesy. Only
-    // drawn when the live provider is actually Esri; on Mapbox attributionLine is '' and lift is 0,
-    // so nothing on the sheet moves at all.
-    if (attributionLine) {
-      ctx.fillText(attributionLine, lx, H - pad + Math.round(legendW * 0.04));
-    }
   } else {
-    ctx.font = `italic 600 ${Math.round(legendW * 0.036)}px ${SHEET_BODY_FONT}`;
-    ctx.fillText('Illustrated render — boundary, labels', lx, H - pad - Math.round(legendW * 0.05));
-    ctx.fillText('and elements are exact; artwork is', lx, H - pad - Math.round(legendW * 0.005));
-    ctx.fillText('indicative. Confirm on site.', lx, H - pad + Math.round(legendW * 0.04));
-    // AN ILLUSTRATED SHEET IS BUILT ON THE SAME PHOTOGRAPH. The credit was first added only to the
-    // exact branch, which reads as reasonable until you follow where the imagery goes: satDataUrl
-    // is the underlay handed to the AI hybrid and full-treatment passes, so the illustrated sheets
-    // are DERIVED from Esri's imagery too — and those are the ones a farmer pays for. Crediting the
-    // free sheet and not the paid one would leave the obligation unmet exactly where it matters.
-    if (attributionLine) {
-      ctx.fillText(attributionLine, lx, H - pad + Math.round(legendW * 0.085));
+    // Measure the complete footer, including imagery credit, inside the shared content box.
+    // The old third baseline was below the panel inset once the legend became wider.
+    ctx.font = `italic 600 ${footerFs}px ${SHEET_BODY_FONT}`;
+    let footerY = footerTop + footerFs;
+    for (const line of defaultFooterLines) {
+      ctx.fillText(line, lx, footerY);
+      footerY += footerLineH;
     }
   }
 
@@ -10968,62 +11181,19 @@ async function composeStyleSheet(
   // includes a label gutter on each side; deriving pxPerM from it would draw a bar 26% longer than
   // the distance it claims. A scale bar is the one mark on a plan a farmer is entitled to hold a
   // ruler against, so this must key off the map's own width and sit inside the map's own column.
-  const pxPerM = mapW / (frame.imgW * frame.mPerPx);
-  const niceM = [5, 10, 20, 25, 50, 100, 200];
-  let m = niceM[0];
-  for (const nm of niceM) if (nm * pxPerM <= mapW * 0.18) m = nm;
-  const barW = m * pxPerM;
-  const bx = gutter + Math.round(mapW * 0.03);
-  const by = H - Math.round(H * 0.045);
-  ctx.lineCap = 'butt';
-  ctx.strokeStyle = 'rgba(11,14,10,0.55)';
-  ctx.lineWidth = 7;
-  ctx.beginPath();
-  ctx.moveTo(bx, by); ctx.lineTo(bx + barW, by);
-  ctx.moveTo(bx, by - 9); ctx.lineTo(bx, by + 9);
-  ctx.moveTo(bx + barW, by - 9); ctx.lineTo(bx + barW, by + 9);
-  ctx.stroke();
-  ctx.strokeStyle = '#FBF6EC';
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.moveTo(bx, by); ctx.lineTo(bx + barW, by);
-  ctx.moveTo(bx, by - 9); ctx.lineTo(bx, by + 9);
-  ctx.moveTo(bx + barW, by - 9); ctx.lineTo(bx + barW, by + 9);
-  ctx.stroke();
-  ctx.font = `700 ${Math.round(mapW * 0.016)}px ${REFERENCE_LABEL_FONT}`;
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'bottom';
-  ctx.lineWidth = 4;
-  ctx.strokeStyle = 'rgba(11,14,10,0.6)';
-  ctx.strokeText(`${m} m`, bx, by - 14);
-  ctx.fillStyle = '#FBF6EC';
-  ctx.fillText(`${m} m`, bx, by - 14);
-
-  // ── North arrow (over the map, top-right) ──
-  const nx = gutter + mapW - Math.round(mapW * 0.04);
-  const ny = Math.round(H * 0.08);
-  ctx.beginPath();
-  ctx.moveTo(nx, ny - 30);
-  ctx.lineTo(nx - 11, ny);
-  ctx.lineTo(nx, ny - 9);
-  ctx.lineTo(nx + 11, ny);
-  ctx.closePath();
-  ctx.fillStyle = '#FBF6EC';
-  ctx.strokeStyle = 'rgba(11,14,10,0.65)';
-  ctx.lineWidth = 3;
-  ctx.stroke();
-  ctx.fill();
-  ctx.font = `700 ${Math.round(mapW * 0.017)}px ${REFERENCE_LABEL_FONT}`;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'bottom';
-  ctx.lineWidth = 4;
-  ctx.strokeStyle = 'rgba(11,14,10,0.65)';
-  ctx.strokeText('N', nx, ny - 34);
-  ctx.fillStyle = '#FBF6EC';
-  ctx.fillText('N', nx, ny - 34);
+  if (!options.obliqueArtwork) {
+    const pxPerM = mapW / (frame.imgW * frame.mPerPx);
+    drawBlueprintScaleBar(ctx, mapW, H, 0, 0, pxPerM, {
+      x: gutter + Math.round(mapW * 0.03),
+      y: H - Math.round(H * 0.045),
+    });
+    drawSheetNorthArrow(ctx, gutter, mapW, H);
+  }
 
   // A2 LANDSCAPE, added as PAPER rather than taken out of the map. See PAPER_SHEET_RATIO.
-  return padToPaperSheet(canvas);
+  // The compact masterplan omits leaders, not paper size. A smaller exported bitmap was being
+  // enlarged in the PDF, making its supposedly shared legend and lettering visibly bigger.
+  return padToPaperSheet(canvas, sheetSize.W);
 }
 
 // extendProtectMaskToStyleSheet lived here. It widened a map-space protect mask onto a composed
@@ -11143,8 +11313,9 @@ async function composeSheetChromeOverMapArt(opts: {
     : false;
   const srcW = legacyPageInput ? Math.min(art.width, art.height * (W / H)) : art.width;
   ctx.drawImage(art, 0, 0, srcW, art.height, 0, 0, W, H);
-  drawBlueprintBoundary(ctx, refLayers.boundary, (n) => n * W, (n) => n * H, W, state, frame);
-  const mapArt = drainCanvasToDataUrl(canvas, 'image/png');
+  // Both paid stages share the same saved boundary pass and canopy occlusion policy.
+  const unboundedArt = drainCanvasToDataUrl(canvas, 'image/png');
+  const mapArt = await burnPaintedBoundary(unboundedArt, state, frame, refLayers, filter, W, H);
   const labelled = await burnExactLabelLayer(mapArt, state, frame, refLayers, filter, W, H, labelMode);
   const sheet = await composeStyleSheet(
     labelled.map,
@@ -11158,6 +11329,7 @@ async function composeSheetChromeOverMapArt(opts: {
     false,
     true,
     {
+      aiArtwork: true,
       labelMode,
       gutterLayout: labelled.gutterLayout,
       includeLabelGutters: filter !== 'all',
@@ -11177,6 +11349,7 @@ async function composeSheetChromeOverMapArt(opts: {
 interface SavedGlossy {
   image: string;
   provider: 'gemini' | 'falgpt' | 'exact';
+  model?: string;
   at: string;
   /**
    * Which treatment produced this picture — 'exact', 'hybrid' or 'full'.
@@ -11546,6 +11719,7 @@ interface GalleryItem {
   thumb?: string;
   resultKind: SheetResultKind;
   provider: SheetProvider;
+  model?: string;
   geometryLock: boolean;
   showcase: boolean;
   freshness: SavedSheetFreshness;
@@ -11567,15 +11741,15 @@ function galleryResultBadge(item: GalleryItem): string {
   if (item.freshness !== 'current') return 'Older render · generate again for the current layout';
   if (item.resultKind === 'exact') return 'Design Map';
   if (item.resultKind === 'hybrid') {
-    return `AI Polished · ${item.validationStatus === 'unscored' ? 'comparison unavailable' : 'check against exact map'} · ${item.provider === 'gemini' ? 'Gemini' : 'gpt-image-2'}`;
+    return `AI Polished · ${item.validationStatus === 'unscored' ? 'comparison unavailable' : 'check against exact map'} · ${item.provider === 'gemini' ? 'Gemini' : openAiMapModelLabel(item.model)}`;
   }
   if (item.resultKind === 'ai-polished') {
     // The SHELVED second pass. Named for what it is so a sheet already in a gallery still says
     // honestly which of the two it came from.
-    return `AI Polished + 2nd pass · check against exact map · ${item.provider === 'gemini' ? 'Gemini' : 'gpt-image-2'}`;
+    return `AI Polished + 2nd pass · check against exact map · ${item.provider === 'gemini' ? 'Gemini' : openAiMapModelLabel(item.model)}`;
   }
   if (item.resultKind === 'ai-illustrated') {
-    return `AI illustrated · ${item.provider === 'gemini' ? 'Gemini' : item.provider === 'openai' ? 'gpt-image-2' : 'provider unknown'}`;
+    return `AI illustrated · ${item.provider === 'gemini' ? 'Gemini' : item.provider === 'openai' ? openAiMapModelLabel(item.model) : 'provider unknown'}`;
   }
   return 'Older saved map · provenance unavailable';
 }
@@ -11688,6 +11862,7 @@ export default function DesignGlossy({
   // Rory prefers clean printable sheets on first opening. Photo and satellite remain
   // explicit choices; losing an imported photo returns to the same plain default.
   const [underlay, setUnderlay] = useState<SheetUnderlay>('plain');
+  const [aiView, setAiView] = useState<AiMapView>('top-down');
   useEffect(() => {
     if (underlay === 'photo' && !hasFarmerPhoto(frameProp)) setUnderlay('plain');
   }, [underlay, frameProp]);
@@ -11916,7 +12091,12 @@ export default function DesignGlossy({
   // null (AI mode cleared it) and producerStyle is set, so runCurrentSheet must check this BEFORE
   // falling through to generateOneViaQueue's GlossyLayerFilter path. See generatePhasingViaQueue.
   const phasingAiMode = aiRenderOn && mode === 'ai' && !!selectedSheet && 'exact' in selectedSheet && selectedSheet.exact === 'implementation';
-  const aiLayerMode = aiRenderOn && mode === 'ai' && !!selectedSheet && (!('exact' in selectedSheet) || sectorAiMode || phasingAiMode);
+  // The style picker is how an approved user leaves Exact mode; hiding it there stranded
+  // Water on steps 1, 2, 3, 5 with no way to choose step 4. Selection itself never renders.
+  const aiLayerMode = aiRenderOn && !!selectedSheet;
+  const topDownStyleChoices = selectedSheet && 'exact' in selectedSheet
+    && (selectedSheet.exact === 'base' || selectedSheet.exact === 'sector') ? SECTOR_STYLE_CHOICES : PRODUCER_STYLES;
+  const availableStyleChoices = aiView === 'oblique' ? PRODUCER_STYLES : topDownStyleChoices;
   // `initialFilter` chooses which sheet Preview map opens on; it must not choose a second, retired
   // layout. That coupling is what made the modal fall back to the old full-width control dump while
   // the Glossy step showed the current three-column Preview & Export workspace.
@@ -11931,7 +12111,7 @@ export default function DesignGlossy({
   const [exactSheet, setExactSheet] = useState<null | 'base' | 'sector' | 'implementation'>(null);
   // Whether the CURRENT selection renders without any model — drives the honest caption/pill.
   const isExactRender = exactSheet !== null || (!producerStyle && !analysisStyle);
-  // Render engine. gpt-image-2 is the default; Gemini is selectable again (see ENGINES).
+  // Render engine. OpenAI is the default; Gemini is selectable again (see ENGINES).
   const [engine, setEngine] = useState<'falgpt' | 'gemini'>('falgpt');
   // The picker's key is a UI label ('falgpt'); the job doc's is a VENDOR ('openai'). Every queue
   // enqueue below must use this rather than a literal — four of them hardcoded 'openai', which is
@@ -12021,7 +12201,7 @@ export default function DesignGlossy({
                       }}
                     >
                       <span style={{ fontWeight: 800, fontSize: 13 }}>{t(q.labelKey)}</span>
-                      <span style={{ fontSize: 10.5, opacity: active ? 0.85 : 0.6 }}>{t(q.subKey)}</span>
+                      {q.subKey && <span style={{ fontSize: 10.5, opacity: active ? 0.85 : 0.6 }}>{t(q.subKey)}</span>}
                     </button>
                   );
                 })}
@@ -12115,6 +12295,22 @@ export default function DesignGlossy({
   const [exportQuality, setExportQuality] = useState<SheetExportQuality>('high');
   const [exportBusy, setExportBusy] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const galleryDialogRef = useRef<HTMLDivElement>(null);
+  const galleryZoomRef = useRef<HTMLDivElement>(null);
+  const closeGallery = useCallback(() => {
+    setGalleryOpen(false);
+    setGalleryViewId(null);
+    setGalleryZoomOpen(false);
+    setExportMode(false);
+    setExportSel(new Set());
+  }, []);
+  useDialogFocus(galleryOpen, galleryDialogRef);
+  useDialogFocus(galleryZoomOpen, galleryZoomRef, { returnFocusFallbackRef: galleryDialogRef });
+  // A zoom opened from the gallery closes first; Escape must not also dismiss its parent.
+  useEscapeClose(galleryOpen || galleryZoomOpen, () => {
+    if (galleryZoomOpen) setGalleryZoomOpen(false);
+    else closeGallery();
+  });
 
   // A stable cache key per chosen map (producer style OR design filter OR analysis style).
   // Each map+style combination caches its own render (e.g. producer:storybook:zones).
@@ -12217,15 +12413,10 @@ export default function DesignGlossy({
 
   useEffect(() => {
     if (!galleryZoomOpen) return;
-    const closeOnEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setGalleryZoomOpen(false);
-    };
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', closeOnEscape);
     return () => {
       document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', closeOnEscape);
     };
   }, [galleryZoomOpen]);
 
@@ -12262,6 +12453,7 @@ export default function DesignGlossy({
           thumb: r.thumb,
           resultKind: r.resultKind ?? 'legacy',
           provider: r.provider ?? 'unknown',
+          model: r.model,
           geometryLock: r.geometryLock ?? false,
           showcase: r.showcase ?? false,
           underlay: r.underlay,
@@ -12324,7 +12516,7 @@ export default function DesignGlossy({
     (
       label: string,
       image: string,
-      provenance: Partial<Pick<GalleryItem, 'resultKind' | 'provider' | 'geometryLock' | 'showcase' | 'underlay' | 'jobId' | 'attemptId' | 'designRevision' | 'validationStatus' | 'rawOutputPath'>> & { siteId?: string } = {},
+      provenance: Partial<Pick<GalleryItem, 'resultKind' | 'provider' | 'model' | 'geometryLock' | 'showcase' | 'underlay' | 'jobId' | 'attemptId' | 'designRevision' | 'validationStatus' | 'rawOutputPath'>> & { siteId?: string } = {},
     ) => {
       const targetSiteId = provenance.siteId ?? state.siteId;
       // GalleryItem & {image: string}: fresh renders are the one case that always carries the
@@ -12397,7 +12589,7 @@ export default function DesignGlossy({
         throw new Error('Canvas unavailable');
       }
       if (format === 'jpeg') {
-        ctx.fillStyle = '#FBF6EC';
+        ctx.fillStyle = PAPER;
         ctx.fillRect(0, 0, w, h);
       }
       ctx.imageSmoothingQuality = 'high';
@@ -12495,14 +12687,14 @@ export default function DesignGlossy({
         if (mode === 'share' && files.length) await shareSheetFiles(files, picked.map((g) => g.label));
       } catch (err) {
         if (!(err instanceof DOMException && err.name === 'AbortError')) {
-          setError(err instanceof Error ? err.message : String(err));
+          setError(userFacingMessage(err, t('designGlossyShareError'), t));
         }
       } finally {
         setExportBusy(false);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [gallery, exportSel, exportFormat, exportQuality, exportBusy, gallerySiteName, encodeSheet, buildGalleryPdf, resolveGalleryImage],
+    [gallery, exportSel, exportFormat, exportQuality, exportBusy, gallerySiteName, encodeSheet, buildGalleryPdf, resolveGalleryImage, t],
   );
 
   const removeGallery = useCallback((id: string) => {
@@ -12648,7 +12840,7 @@ export default function DesignGlossy({
           showcase: true,
         });
       } catch (err) {
-        setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+        setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
       } finally {
         setLoading(null);
       }
@@ -12809,6 +13001,7 @@ export default function DesignGlossy({
         geometryLock,
         geometryLock
           ? {
+              aiArtwork: true,
               includeLabelGutters: filter !== 'all',
               ...(filter === 'water'
                 ? {
@@ -12836,7 +13029,7 @@ export default function DesignGlossy({
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -12893,7 +13086,7 @@ export default function DesignGlossy({
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -12932,7 +13125,7 @@ export default function DesignGlossy({
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -12962,7 +13155,7 @@ export default function DesignGlossy({
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -12991,7 +13184,7 @@ export default function DesignGlossy({
       }
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -13055,7 +13248,7 @@ export default function DesignGlossy({
       setGalleryViewId(null);
       setGalleryOpen(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -13177,6 +13370,7 @@ export default function DesignGlossy({
           geometryLock,
           geometryLock
             ? {
+                aiArtwork: true,
                 includeLabelGutters: f !== 'all',
                 ...(f === 'water'
                   ? {
@@ -13220,7 +13414,7 @@ export default function DesignGlossy({
         setGalleryOpen(true);
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : t('designGlossyRenderFailed'));
+      setError(userFacingMessage(err, t('designGlossyRenderFailed'), t));
     } finally {
       setLoading(null);
     }
@@ -13261,6 +13455,8 @@ export default function DesignGlossy({
       polishStage = false,
       snapshot: Pick<RenderSceneSnapshot, 'state' | 'frame' | 'refLayers' | 'site' | 'placeName' | 'labelMode'> = { state, frame, refLayers, site, placeName, labelMode },
       canPublish: () => boolean = () => true,
+      sourcePrompt?: string,
+      roofReference?: PaperRoofReference,
     ): Promise<string> => {
       const { state, frame, refLayers, site, placeName, labelMode } = snapshot;
       // Model-authored pages and geometry-locked pages must use the same boundary-focused frame
@@ -13274,7 +13470,9 @@ export default function DesignGlossy({
       const presentation = useBoundaryPresentation
         ? await boundaryPresentationContext(state, frame, refLayers)
         : { state, frame, refLayers };
-      const renderState = presentation.state;
+      const hideDrivewayGuides = Boolean(sourcePrompt?.includes('DRIVEWAY GUIDE OMITTED:'));
+      const renderState = hideDrivewayGuides
+        ? glossyArtworkState(presentation.state, presentation.refLayers) : presentation.state;
       const renderFrame = presentation.frame;
       const renderRefLayers = presentation.refLayers;
       const W = renderFrame.imgW * SCALE;
@@ -13291,7 +13489,7 @@ export default function DesignGlossy({
           try {
             sheetImage = await restoreProtectedPixels(sourceImage, modelImage, protectMask);
           } catch (err) {
-            throw new Error('Could not restore the source roof. The AI candidate is retained for retry.', { cause: err });
+            throw Object.assign(new UserFacingError('Could not restore the source roof. The AI candidate is retained for retry.'), { cause: err });
           }
         }
         // ZONE GEOMETRY IS NOT THE MODEL'S TO DRAW. Every other style burns buildZoneOverlay — the
@@ -13309,7 +13507,7 @@ export default function DesignGlossy({
             sheetImage = await burnOverlayOnSheetMap(sheetImage, exactZones);
           } catch (err) {
             // A failed burn must never lose a paid render — ship the model's sheet rather than nothing.
-            throw new Error('Could not draw the saved zones. The AI candidate is retained for retry.', { cause: err });
+            throw Object.assign(new UserFacingError('Could not draw the saved zones. The AI candidate is retained for retry.'), { cause: err });
           }
         }
         return sheetImage;
@@ -13403,11 +13601,32 @@ export default function DesignGlossy({
         styleDef.key,
         renderFrame.satDataUrl ? 'photo' : 'paper',
       );
-      const restoredImage = locked && protectMask && cleanSource
-        ? await restoreProtectedPixels(cleanSource, modelImage, protectMask)
+      // Completed paid jobs retain their original masks. Rebuild only the presentation mask
+      // from that job's frozen scene so recovery receives the same correction as a new job.
+      // Validate the stored mask first: a real crop mismatch must still fail, not be hidden.
+      let effectiveMask = protectMask;
+      if (locked && compositionPolicy.ground === 'paint' && cleanSource) {
+        if (protectMask) {
+          const [sourceSize, modelSize, maskSize] = await Promise.all([
+            loadImage(cleanSource), loadImage(modelImage), loadImage(protectMask),
+          ]);
+          try { assertMatchingImageAspects(sourceSize, modelSize, maskSize); }
+          finally { [sourceSize, modelSize, maskSize].forEach(releaseImageSource); }
+        }
+        effectiveMask = await buildProtectMask(renderState, renderFrame, renderRefLayers, f,
+          lockedProtectMaskOptions(f, styleDef.key, Boolean(renderFrame.satDataUrl)), modelImage);
+      }
+      const restoredImage = locked && effectiveMask && cleanSource
+        ? await restoreProtectedPixels(cleanSource, modelImage, effectiveMask)
         : modelImage;
-      const structureOverlay = locked
-        ? await buildGeometryLockStructureOverlay(
+      const legacyPaperRoof = locked && !renderFrame.satDataUrl
+        && compositionPolicy.ground === 'paint' && legacyPaperArtworkNeedsRoof(sourcePrompt);
+      // Only old strict-paper jobs left a blank roof. New artwork already has its roof;
+      // restoring a satellite patch here covered finished roofs with blurry brown slabs.
+      const sourceRoof = legacyPaperRoof ? roofReference : undefined;
+      const structureOverlay = sourceRoof?.overlay ?? (legacyPaperRoof
+        ? await buildPaintedStructureOverlay(renderState, renderFrame, renderRefLayers, W, H, styleDef.key, false)
+        : locked ? await buildGeometryLockStructureOverlay(
             cleanSource,
             renderState,
             renderFrame,
@@ -13417,7 +13636,7 @@ export default function DesignGlossy({
             styleDef.key,
             compositionPolicy.useSourceStructurePixels,
           )
-        : undefined;
+        : undefined);
       const exactGroundOverlay = locked && compositionPolicy.useExactGroundOverlay
         ? await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, f, W, H, 'ground', f === 'water' ? 'illustrated' : 'standard')
         : undefined;
@@ -13473,8 +13692,9 @@ export default function DesignGlossy({
       // badge.
       //
       // Locked now means what the farmer was promised it means: saved geometry, labels and legend
-      // stay exact. Photo Plan keeps the factual photo; painted styles keep Gemini's continuous
-      // property artwork and receive exact illustrated roofs/driveway instead of satellite holes.
+      // stay exact. Photo Plan keeps the factual photo; painted styles keep continuous property
+      // artwork. A plain-input existing roof can use its factual aerial reference instead of a
+      // guessed ridge layout; no garden ground or driveway is restored with that roof.
       const overlayImage = f === 'zones'
         // Zones are saved polygons, not model artwork. The general locked-sheet rule below must
         // not suppress them: that shipped a paid Zones sheet with only Gemini's faint impression
@@ -13490,20 +13710,23 @@ export default function DesignGlossy({
         ? await stackOverlayImages(exactGroundOverlay, structureOverlay, W, H)
         : structureOverlay;
       const mergedOverlay = await stackOverlayImages(groundedStructures, overlayImage, W, H);
-      const final = await compositeAccurateMap({
+      let final = await compositeAccurateMap({
         modelImage: restoredImage,
         satelliteImage: renderFrame.satDataUrl ?? sourceImage ?? modelImage,
         boundaryPx,
         overlayImage: mergedOverlay,
         labels,
         labelStyle: styleDef.labelStyle,
-        contextTreatment: locked && styleDef.key === 'precision_atlas' ? 'precision_atlas' : 'original',
-        focusBoundaryPx: locked && styleDef.key === 'precision_atlas' && f === 'water'
+        contextTreatment: locked && renderFrame.satDataUrl && styleDef.key === 'precision_atlas' ? 'precision_atlas' : 'original',
+        focusBoundaryPx: locked && renderFrame.satDataUrl && styleDef.key === 'precision_atlas' && f === 'water'
           ? renderRefLayers.boundary.flatMap(([x, y]) => [x * W, y * H])
           : undefined,
         width: W,
         height: H,
       });
+      final = locked && compositionPolicy.ground === 'paint'
+        ? await burnPaintedBoundary(final, renderState, renderFrame, renderRefLayers, f, W, H)
+        : final;
       // Full Treatment polishes THIS image — the finished map with exact content burned back and
       // not one glyph of text on it. Stashed pre-labels, so what the model receives has nothing
       // writable to mangle; the label layer is re-drawn from the design over its output.
@@ -13526,13 +13749,17 @@ export default function DesignGlossy({
           ? {
               // The legend prints code prefixes only in the mode that draws them, and the gutter
               // rows must honour the farmer's label-mode choice — same contract as the exact sheet.
+              aiArtwork: true,
+              preserveLegacyPathGuides: !hideDrivewayGuides,
               labelMode,
               gutterLayout: labelled.gutterLayout,
               includeLabelGutters: f !== 'all',
+              footerText: [f === 'water' ? waterReferenceFooterText(renderState, renderFrame, renderRefLayers, site) : '',
+                sourceRoof?.credit ?? (legacyPaperRoof ? 'Approximate roof symbol; roof sections are not recorded.' : '')]
+                .filter(Boolean).join(' '),
               ...(f === 'water'
                 ? {
                     footerHeading: 'NOTES',
-                    footerText: waterReferenceFooterText(renderState, renderFrame, renderRefLayers, site),
                   }
                 : {}),
             }
@@ -13565,7 +13792,7 @@ export default function DesignGlossy({
         outputScale: SCALE, renderRecipe: SHEET_RENDER_RECIPE, planVersion: PLAN_VERSION, cacheSuffix: underlaySuffix,
       });
       if (lockedPolishStage === 'polish' && hybridReadyRevisionRef.current !== sceneSnapshot.designRevision) {
-        throw new Error('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
+        throw new UserFacingError('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
       }
       if (lockedPolishStage !== 'polish' || !renderAttemptRef.current) {
         renderAttemptRef.current = crypto.randomUUID();
@@ -13710,7 +13937,7 @@ export default function DesignGlossy({
       }));
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
+      setError(userFacingMessage(err, t('designGlossyCouldNotStart'), t));
       setLoading(null);
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, finishStyledSheet, pushGallery, effectiveModelChrome, lockActive, promptRewrite, queueEngine, quality, labelMode, underlay, lockedPolishStage, underlaySuffix, aiRenderOn]);
@@ -13745,7 +13972,7 @@ export default function DesignGlossy({
         outputScale: SCALE, renderRecipe: SHEET_RENDER_RECIPE, planVersion: PLAN_VERSION, cacheSuffix: underlaySuffix,
       });
       if (lockedPolishStage === 'polish' && hybridReadyRevisionRef.current !== sceneSnapshot.designRevision) {
-        throw new Error('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
+        throw new UserFacingError('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
       }
       if (lockedPolishStage !== 'polish' || !renderAttemptRef.current) {
         renderAttemptRef.current = crypto.randomUUID();
@@ -13765,7 +13992,7 @@ export default function DesignGlossy({
       // and the flagship render obeyed both by erasing the labels and repainting the legend.
       const polishSource = fullSheetPolish ? hybridMapForPolishRef.current : null;
       if (fullSheetPolish && (!polishSource || polishSource.key !== filter)) {
-        throw new Error('The AI hybrid sheet was not available to polish — please try again.');
+        throw new UserFacingError('The AI hybrid sheet was not available to polish — please try again.');
       }
       const exactSheetInput = fullSheetPolish && polishSource ? polishSource.map : null;
       // Keep a SECOND reference to the same image, deliberately not consumed. The paid pass has to
@@ -13889,10 +14116,82 @@ export default function DesignGlossy({
         : formatDesignTranslation(t('designGlossyBackgroundSheet'), { layer: layerLabel }));
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
+      setError(userFacingMessage(err, t('designGlossyCouldNotStart'), t));
       setLoading(null);
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, filter, effectiveModelChrome, lockActive, promptRewrite, lockedPolishStage, queueEngine, quality, labelMode, underlay, underlaySuffix, aiRenderOn]);
+
+  const generateObliqueViaQueue = useCallback(async () => {
+    if (!aiRenderOn || isSampleMode()) {
+      setError(isSampleMode() ? SAMPLE_MODE_RENDER_REFUSAL : 'AI rendering is available only to approved accounts.');
+      return;
+    }
+    if (loading !== null || queueJobId || gallerySiteId !== state.siteId) return;
+    if (layerContentCount(state, refLayers, 'all') === 0) {
+      setError(emptyLayerMessage('all', t));
+      return;
+    }
+    // An oblique view is one independent paid illustration. It must never consume a staged
+    // top-down Hybrid or arm the shelved second paid pass, including after free recovery.
+    exactAfterFlipRef.current = false;
+    hybridAfterExactRef.current = false;
+    hybridAfterFlipRef.current = false;
+    polishAfterHybridRef.current = false;
+    polishAfterFlipRef.current = false;
+    hybridResultRef.current = null;
+    hybridMapForPolishRef.current = null;
+    setHybridHandoffReady(false);
+    setLockedPolishStage(null);
+    setError(null); setNotice('Preparing the saved design, site photo and available terrain for an oblique view…');
+    setLoading('falgpt');
+    try {
+      const style = producerStyle ?? DEFAULT_PRODUCER_STYLE;
+      const sourceUnderlay: SheetUnderlay = hasFarmerPhoto(frameProp) ? 'photo' : frameProp.satDataUrl ? 'satellite' : 'plain';
+      const sourceFrame = frameForUnderlay(frameProp, sourceUnderlay);
+      const sceneSnapshot = await createRenderSceneSnapshot({
+        state, frame: sourceFrame, refLayers, site, placeName, labelMode, underlay: sourceUnderlay,
+        outputScale: SCALE, renderRecipe: SHEET_RENDER_RECIPE, planVersion: PLAN_VERSION,
+      });
+      // Use the detached scene for every reference: an edit while terrain is loading must not
+      // mix a new bed position with the older paid job's photo and inventory.
+      const frozen = await decodeRenderSceneSnapshot(sceneSnapshot.sceneJson, sceneSnapshot.designRevision, sceneSnapshot.sourceDataUrl);
+      const p = await boundaryPresentationContext(frozen.state, frozen.frame, frozen.refLayers);
+      const contours = await fetchSheetContours(p.frame, p.refLayers.boundary, frozen.site?.elevation?.slopeDeg ?? 0, frozen.site?.elevation?.aspectDeg ?? 0,
+        async (url) => fetch(url, { headers: await paidApiHeaders(), signal: AbortSignal.timeout(15_000) }));
+      const terrain = obliqueTerrainEvidence(contours, frozen.site);
+      const plan = await buildComposite(p.state, { ...p.frame, satDataUrl: null }, p.refLayers, 'all', true, polishModelInputMarks('all'));
+      const designImage = await loadImage(plan);
+      let photo: HTMLImageElement | undefined;
+      const board = document.createElement('canvas');
+      let compositeDataUrl: string;
+      try {
+        if (p.frame.satDataUrl) photo = await loadImage(p.frame.satDataUrl);
+        board.width = OBLIQUE_BOARD.width; board.height = OBLIQUE_BOARD.height;
+        const ctx = board.getContext('2d');
+        if (!ctx) throw new Error('Image preparation unavailable.');
+        paintObliqueReferenceBoard(ctx, { design: designImage, photo, frame: p.frame, boundary: p.refLayers.boundary, contours, terrain });
+        compositeDataUrl = board.toDataURL('image/png');
+      } finally {
+        releaseCanvas(board); releaseImageSource(designImage);
+        if (photo) releaseImageSource(photo);
+      }
+      const prompt = buildObliquePrompt({ style, terrain, hasPhoto: Boolean(p.frame.satDataUrl),
+        elements: producerElementsText(frozen.state, frozen.refLayers, 'all', false),
+        designBrief: buildDesignBrief(frozen.state, frozen.refLayers, frozen.placeName, frozen.site),
+      });
+      const jobId = await enqueueRenderJobCapped({
+        siteId: frozen.state.siteId, style: obliqueJobStyle(style), engine: queueEngine, quality,
+        sceneSnapshot, attemptId: crypto.randomUUID(), outputMode: 'hybrid',
+        sheets: [{ key: 'all', label: 'Oblique design view', prompt, compositeDataUrl,
+          geometryLock: false, showcase: false, resultKind: 'hybrid' }],
+      });
+      persistJobId(frozen.state.siteId, jobId);
+      setQueueJobId(jobId);
+      setNotice('Oblique illustration is rendering in the background. It will open in Saved maps when ready.');
+    } catch (err) {
+      setError(userFacingMessage(err, t('designGlossyCouldNotStart'), t)); setLoading(null);
+    }
+  }, [aiRenderOn, loading, queueJobId, gallerySiteId, state, frameProp, refLayers, site, placeName, labelMode, producerStyle, queueEngine, quality, t]);
 
   // Compatibility finisher for older queued Sector jobs, which contain a ground-only AI pass.
   // New paid Sector jobs persist showcase:true and return the model's complete polished sheet
@@ -13936,7 +14235,7 @@ export default function DesignGlossy({
       canvas.width = W;
       canvas.height = H;
       const ctx = canvas.getContext('2d');
-      if (!ctx) throw new Error('Could not prepare the exact map overlay. The AI candidate is retained for retry.');
+      if (!ctx) throw new UserFacingError('Could not prepare the exact map overlay. The AI candidate is retained for retry.');
       const px = (n: number) => n * W;
       const py = (n: number) => n * H;
       const pxPerM = W / (renderFrame.imgW * renderFrame.mPerPx);
@@ -14064,7 +14363,7 @@ export default function DesignGlossy({
         outputScale: SCALE, renderRecipe: SHEET_RENDER_RECIPE, planVersion: PLAN_VERSION, cacheSuffix: underlaySuffix,
       });
       if (lockedPolishStage === 'polish' && hybridReadyRevisionRef.current !== sceneSnapshot.designRevision) {
-        throw new Error('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
+        throw new UserFacingError('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
       }
       if (lockedPolishStage !== 'polish' || !renderAttemptRef.current) {
         renderAttemptRef.current = crypto.randomUUID();
@@ -14076,7 +14375,7 @@ export default function DesignGlossy({
       // prompt, the same "polish an empty page" bug the 5-sheet path had.
       const polishStage = lockedPolishStage === 'polish';
       if (polishStage && !hybridResultRef.current) {
-        throw new Error('The AI hybrid sheet was not available to polish — please try again.');
+        throw new UserFacingError('The AI hybrid sheet was not available to polish — please try again.');
       }
       const hybridInput = polishStage ? hybridResultRef.current : null;
       if (polishStage) hybridResultRef.current = null; // consume-once
@@ -14164,7 +14463,7 @@ export default function DesignGlossy({
           : t('designGlossyBaseHybrid'));
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
+      setError(userFacingMessage(err, t('designGlossyCouldNotStart'), t));
       setLoading(null);
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, lockedPolishStage, queueEngine, quality, labelMode, underlay, underlaySuffix, aiRenderOn]);
@@ -14217,7 +14516,7 @@ export default function DesignGlossy({
         outputScale: SCALE, renderRecipe: SHEET_RENDER_RECIPE, planVersion: PLAN_VERSION, cacheSuffix: underlaySuffix,
       });
       if (lockedPolishStage === 'polish' && hybridReadyRevisionRef.current !== sceneSnapshot.designRevision) {
-        throw new Error('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
+        throw new UserFacingError('The design changed after the first AI pass. Keep that saved illustration and start a new render for this design.');
       }
       if (lockedPolishStage !== 'polish' || !renderAttemptRef.current) {
         renderAttemptRef.current = crypto.randomUUID();
@@ -14226,7 +14525,7 @@ export default function DesignGlossy({
       // Same consume-once stash contract as generateOneViaQueue / generateSectorViaQueue.
       const polishStage = lockedPolishStage === 'polish';
       if (polishStage && !hybridResultRef.current) {
-        throw new Error('The AI hybrid sheet was not available to polish — please try again.');
+        throw new UserFacingError('The AI hybrid sheet was not available to polish — please try again.');
       }
       let hybridInput = polishStage ? hybridResultRef.current : null;
       if (polishStage) hybridResultRef.current = null; // consume-once
@@ -14318,13 +14617,17 @@ export default function DesignGlossy({
         : t('designGlossyPhasingHybrid'));
     } catch (err) {
       refreshPendingRef.current = false;
-      setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
+      setError(userFacingMessage(err, t('designGlossyCouldNotStart'), t));
       setLoading(null);
     }
   }, [producerStyle, state, frame, refLayers, site, placeName, lockedPolishStage, queueEngine, quality, labelMode, underlay, underlaySuffix, aiRenderOn]);
 
   // One explicit rerun path for the visible refresh button and the main CTA.
   const runCurrentSheet = useCallback(() => {
+    // A selected saved row otherwise keeps winning the preview after a new image is made.
+    // Mark the intent too, so late gallery metadata cannot reopen that historical row.
+    autoPreviewHandledKeyRef.current = `${gallerySiteId}:${selectedNo}`;
+    setGalleryViewId(null);
     // Cross-check against the single routing authority (lib/sheet-render-route.ts): the dispatch
     // below must never independently drift from what sheetRenderRoute computes for the SAME
     // sheet+style — the exact drift pattern that has bitten repeatedly (see that file's header,
@@ -14392,7 +14695,7 @@ export default function DesignGlossy({
     }
     if (analysisStyle) return generate('gemini');
     return renderDesignMap();
-  }, [exactSheet, restyleAiKind, phasingAiMode, producerStyle, engine, geometryLock, analysisStyle, selectedSheet, isExactRender, renderBaseMap, renderSectorMap, renderImplementationMap, generatePhasingViaQueue, generateSectorViaQueue, generateOneViaQueue, generateProducer, generate, renderDesignMap]);
+  }, [gallerySiteId, selectedNo, exactSheet, restyleAiKind, phasingAiMode, producerStyle, engine, geometryLock, analysisStyle, selectedSheet, isExactRender, renderBaseMap, renderSectorMap, renderImplementationMap, generatePhasingViaQueue, generateSectorViaQueue, generateOneViaQueue, generateProducer, generate, renderDesignMap]);
 
   // Direct Step 1 button. If this sheet is already in exact mode, redraw immediately. Otherwise,
   // wait for React to switch the generator selection and then run the deterministic renderer.
@@ -14504,7 +14807,7 @@ export default function DesignGlossy({
       setError,
       missingHybridMessage: t('designGlossyMissingHybrid'),
       setNotice,
-      startingPolishMessage: t('designGlossyStartingPolish'),
+      startingPolishMessage: t('designGlossyStartingPolish').replace('gpt-image-2', OPENAI_MAP_MODEL_LABEL),
       polishingMessage: t('designGlossyPolishing'),
       clearResult: clearLockedPolishResult,
       renderCurrentSheet: runCurrentSheet,
@@ -14630,6 +14933,7 @@ export default function DesignGlossy({
     let lastAssembledGalleryId: string | null = null;
     let lastAssembleError = '';
     let scenePromise: Promise<RenderSceneSnapshot | null> | null = null;
+    let roofReferencePromise: Promise<PaperRoofReference | undefined> | null = null;
     // Snapshots must be handled ONE AT A TIME. Assembling a sheet takes seconds (two downloads plus
     // canvas work) while `finished` is marked synchronously, so an unserialised handler lets the
     // terminal "complete" snapshot overtake an in-flight assembly: it skips the sheet as already
@@ -14682,7 +14986,7 @@ export default function DesignGlossy({
         // showcaseKeysRef stays as fallback for jobs enqueued before the field existed.
         const styleKey = ((job.style || styleRef.current) ?? 'extension_blueprint') as StylePreset;
         const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
-        const attribution = renderJobAttribution(job.engine);
+        const attribution = renderJobAttribution(job.engine, job.model);
         const outputMode = job.outputMode ?? (job.sheets.some((entry) => entry.resultKind === 'ai-polished') ? 'full' : 'hybrid');
         setLoading(attribution.saved);
         for (const sheet of job.sheets) {
@@ -14693,17 +14997,23 @@ export default function DesignGlossy({
               const frozenScene = await scenePromise;
               if (!active) return;
               if (!frozenScene) {
-                throw new Error('This older AI job has no saved design snapshot. Its original output is retained; it cannot be combined safely with the current design.');
+                throw new UserFacingError('This older AI job has no saved design snapshot. Its original output is retained; it cannot be combined safely with the current design.');
               }
               if (frozenScene.outputScale !== SCALE || frozenScene.renderRecipe !== SHEET_RENDER_RECIPE || frozenScene.planVersion !== PLAN_VERSION) {
-                throw new Error('This AI job belongs to a different export setting or renderer version. Its original output is retained; finish it with the original settings.');
+                throw new UserFacingError('This AI job belongs to a different export setting or renderer version. Its original output is retained; finish it with the original settings.');
+              }
+              const obliqueStyle = obliqueStyleFromJob(job.style);
+              if (isObliqueJobStyle(job.style) && (!obliqueStyle || sheet.key !== 'all'
+                || sheet.geometryLock !== false || sheet.showcase !== false || sheet.resultKind !== 'hybrid'
+                || sheet.protectMaskPath || outputMode !== 'hybrid')) {
+                throw new UserFacingError('This oblique job has incompatible view settings. Its original artwork is retained.');
               }
               const auditContext = {
                 siteId: job.siteId, jobId: queueJobId!, attemptId: job.attemptId ?? queueJobId!,
                 designRevision: job.designRevision,
               };
               let validationStatus: 'needs-review' | 'unscored' = 'needs-review';
-              const raw = await fetchRenderOutput(sheet.outputPath);
+              let raw = await fetchRenderOutput(sheet.outputPath);
               const showcase = sheet.showcase ?? showcaseKeysRef.current.has(sheet.key);
               // Jobs can finish after a navigation or reload. Use the flag persisted with the
               // sheet, never the current toggle value. Existing in-flight jobs created before the
@@ -14721,6 +15031,7 @@ export default function DesignGlossy({
               // there is no mask; after a reload this Storage object is the only durable baseline.
               // Both paid stages use the durable input, including after a page reload.
               const sourceImage = await fetchRenderOutput(sheet.inputPath);
+              if (job.engine === 'openai') raw = await registerOpenAiMapOutput(sourceImage, raw);
               const protectMask = sheet.protectMaskPath ? await fetchRenderOutput(sheet.protectMaskPath) : undefined;
               const inputDimensions = await loadImage(sourceImage);
               const outputDimensions = await loadImage(raw);
@@ -14788,6 +15099,23 @@ export default function DesignGlossy({
                   });
                 }
               }
+              if (obliqueStyle) {
+                // Perspective artwork has no top-down pixel correspondence. Restoring the
+                // overhead photograph, boundary or labels here would cut it into ghost strips.
+                // The durable raw-input comparison above still rejects a returned reference board.
+                const obliqueLabel = PRODUCER_STYLES.find((entry) => entry.key === obliqueStyle)?.label ?? obliqueStyle;
+                const finalSheet = await composeStyleSheet(raw, frozenScene.state, frozenScene.frame,
+                  frozenScene.refLayers, 'all', frozenScene.placeName, obliqueLabel, 'Oblique design view', true, false,
+                  { aiArtwork: true, obliqueArtwork: true, sheetNumber: 'VIEW', labelMode: 'names', includeLabelGutters: false });
+                if (!active) return;
+                lastAssembledGalleryId = pushGalleryRef.current(
+                  `Oblique design view · ${obliqueLabel} · ${validationStatus === 'unscored' ? 'comparison unavailable' : 'review against measured plan'}`,
+                  finalSheet, { resultKind: 'ai-illustrated', provider: attribution.gallery, model: job.model,
+                    geometryLock: false, showcase: false, underlay: frozenScene.underlay, ...auditContext,
+                    validationStatus, rawOutputPath: sheet.outputPath });
+                assembled.add(sheet.key);
+                continue;
+              }
               // finishStyledSheet's zone/water-overlay branches and producerLabels() call are
               // meaningless for a sheet with no GlossyLayerFilter — `sheet.key as GlossyLayerFilter`
               // becomes a lie the moment 'sector' can reach this code (RENDER-INVESTIGATION.md
@@ -14840,6 +15168,16 @@ export default function DesignGlossy({
               // the same frozen composition from the input first; legends and labels then cancel
               // out, so only a visible retained change can earn another gallery entry.
               let baselineSheet: string | undefined;
+              // One factual reference per job, shared by the baseline and result. Its pixels
+              // must cancel in the retained-change check; they are never counted as paid AI work.
+              let roofReference: PaperRoofReference | undefined;
+              if (locked && styleDef && !frozenScene.frame.satDataUrl && legacyPaperArtworkNeedsRoof(sheet.prompt)
+                && !['base', 'sector', 'implementation'].includes(sheet.key)
+                && geometryLockCompositionPolicy(styleDef.key, 'paper').ground === 'paint') {
+                roofReferencePromise ??= buildPaperRoofReference(frozenScene).catch(() => undefined);
+                roofReference = await roofReferencePromise;
+                if (!active) return;
+              }
               try {
                 baselineSheet = sheet.key === 'implementation'
                   ? await finishPhasingRef.current(sourceImage, frozenScene)
@@ -14848,7 +15186,7 @@ export default function DesignGlossy({
                   : sheet.key === 'base'
                   ? await finishSiteRef.current(sourceImage, styleKey, frozenScene)
                   : styleDef
-                    ? await finishRef.current(sourceImage, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked, isPolishedResult, frozenScene, () => active)
+                    ? await finishRef.current(sourceImage, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked, isPolishedResult, frozenScene, () => active, sheet.prompt, roofReference)
                     : undefined;
               } catch (comparisonError) {
                 validationStatus = 'unscored';
@@ -14861,7 +15199,7 @@ export default function DesignGlossy({
                 : sheet.key === 'base'
                 ? await finishSiteRef.current(factualModelImage, styleKey, frozenScene)
                 : styleDef
-                  ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked, isPolishedResult, frozenScene, () => active)
+                  ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked, isPolishedResult, frozenScene, () => active, sheet.prompt, roofReference)
                   : raw;
               if (!active) return;
               if (baselineSheet) {
@@ -15042,7 +15380,7 @@ export default function DesignGlossy({
                   stage: isPolishedResult ? 'polish' : 'hybrid', outputMode, style: styleKey,
                   outcome: 'unscored', note: 'one or more comparisons were unavailable; final artwork needs review' });
               }
-              const record: SavedGlossy = { image: finalSheet, provider: attribution.saved, at: new Date().toISOString() };
+              const record: SavedGlossy = { image: finalSheet, model: job.model, provider: attribution.saved, at: new Date().toISOString() };
               // The display effect reads `producer:<style>:<filter>:<mode>` plus the underlay/
               // label-mode suffixes; this save used a three-segment key, so every queue-rendered
               // Hybrid and Full Treatment was written to a slot NOTHING reads — the farmer came
@@ -15090,6 +15428,7 @@ export default function DesignGlossy({
                   // combination is never a genuine paid polish, so it must not claim to be one.
                   resultKind: isPolishedResult ? 'ai-polished' : isHybridResult ? 'hybrid' : 'legacy',
                   provider: attribution.gallery,
+                  model: job.model,
                   geometryLock: finalGeometryLocked,
                   showcase,
                   underlay: frozenScene.underlay,
@@ -15107,7 +15446,7 @@ export default function DesignGlossy({
               console.error('[glossy] finishing a queued sheet failed', sheet.key, e);
               // Let a later snapshot retry this sheet — the worker's output is still in Storage.
               finished.delete(sheet.key);
-              lastAssembleError = e instanceof Error ? e.message : String(e);
+              lastAssembleError = userFacingMessage(e, '', t);
             }
           }
         }
@@ -15120,13 +15459,15 @@ export default function DesignGlossy({
           const rejectedDone = rejected.size;
           const serverDone = job.sheets.filter((s) => s.status === 'done').length;
           const failedSheets = job.sheets.filter((s) => s.status === 'error');
-          // Surface the worker's actual reason (quota, moderation, …) — it was captured
-          // server-side but never shown, leaving farmers guessing (audit find).
-          const firstErr = failedSheets[0]?.error;
+          // Worker diagnostics can contain provider or infrastructure wording. Keep them in
+          // diagnostics; the farmer sees the failed count and the app's own retry guidance.
+          if (job.error || failedSheets.length) console.error('[glossy] queued render failed', job.error, failedSheets);
           if (done > 0) {
-            setNotice(refreshPendingRef.current
+            setNotice(obliqueStyleFromJob(job.style)
+              ? 'Oblique illustration ready in Saved maps. Review positions, heights and terrain against your measured top-down plan.'
+              : refreshPendingRef.current
               ? `AI POLISH COMPLETE — the new ${attribution.label} result is open now — review it against the exact map. The exact no-AI master remains separately saved.`
-              : `AI POLISH COMPLETE — ${done} paid ${attribution.label} result${done === 1 ? '' : 's'} finished for review against the exact map${failedSheets.length ? ` · ${failedSheets.length} failed${firstErr ? ` (${firstErr})` : ''} — try again` : ''}. Results are saved in the gallery; the exact no-AI master remains the reference for positions and counts.`);
+              : `AI POLISH COMPLETE — ${done} paid ${attribution.label} result${done === 1 ? '' : 's'} finished for review against the exact map${failedSheets.length ? ` · ${failedSheets.length} failed — try again` : ''}. Results are saved in the gallery; the exact no-AI master remains the reference for positions and counts.`);
             refreshPendingRef.current = false;
             setGalleryViewId(lastAssembledGalleryId);
             setGalleryOpen(true);
@@ -15146,7 +15487,7 @@ export default function DesignGlossy({
             setLockedPolishStage(null);
             refreshPendingRef.current = false;
           } else {
-            setError(job.error || firstErr || t('designGlossyRenderIncomplete'));
+            setError(t('designGlossyRenderIncomplete'));
             setHybridHandoffReady(false);
             setLockedPolishStage(null);
             refreshPendingRef.current = false;
@@ -15237,6 +15578,28 @@ export default function DesignGlossy({
       : PRODUCER_STYLES.find((style) => galleryViewItem.label.includes(style.label))?.label
         ?? t('designGlossyAiHybrid'))
     : selectedStyleLabel;
+  // Reuse the paid job's own snapshot/output. This action never enters a generation flow;
+  // clear every staged handoff so a recovered Hybrid cannot accidentally buy a polish pass.
+  const reassembleSavedArtwork = useCallback((item: GalleryItem) => {
+    if (!item.jobId || !item.rawOutputPath || item.resultKind === 'exact'
+      || loading !== null || queueJobId || gallerySiteId !== state.siteId || isSampleMode()) return;
+    exactAfterFlipRef.current = false;
+    hybridAfterExactRef.current = false;
+    hybridAfterFlipRef.current = false;
+    polishAfterHybridRef.current = false;
+    polishAfterFlipRef.current = false;
+    hybridResultRef.current = null;
+    setHybridHandoffReady(false);
+    setLockedPolishStage(null);
+    setError(null);
+    setResumeGaveUp(null);
+    clearResumeGaveUp(state.siteId);
+    persistJobId(state.siteId, item.jobId);
+    closeGallery();
+    setNotice('Reassembling your saved artwork. No new AI render will be charged.');
+    setLoading(item.provider === 'openai' ? 'falgpt' : 'gemini');
+    setQueueJobId(item.jobId);
+  }, [loading, queueJobId, gallerySiteId, state.siteId, closeGallery]);
   const handleStageDownload = useCallback(() => {
     if (!stageResultImage) return;
     if (!galleryViewItem) {
@@ -15458,6 +15821,8 @@ export default function DesignGlossy({
           <span style={{ fontSize: 10.5, opacity: 0.6 }}>
             {underlay === 'photo' && !hasFarmerPhoto(frameProp)
               ? 'tap “+ Your photo” to import a drone or phone aerial'
+              : underlay === 'plain' && mode === 'ai' && producerStyle && geometryLockCompositionPolicy(producerStyle, 'paper').ground === 'paint'
+                ? 'no photo — AI illustrates the property; the page stays white'
               : UNDERLAY_HINT[underlay]}
           </span>
         </div>
@@ -15501,7 +15866,7 @@ export default function DesignGlossy({
         {/* HOW THIS SHEET NAMES ITS PLANTS — one or the other, never both. Shown only where the
             selected sheet actually has coded plants, so it appears on Planting and disappears on
             Site or Sector rather than sitting there doing nothing. See lib/plant-codes.ts. */}
-        {sheetHasPlantCodes && !simple && (
+        {sheetHasPlantCodes && sheetElementNaming(filter) === 'individual' && !simple && (
           <>
           <WorkflowHeading number={3} title="Plant labels" />
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
@@ -15525,19 +15890,23 @@ export default function DesignGlossy({
           </>
         )}
 
-        {/* Illustrated styles — the boundary-locked image-producer pipeline (beautiful AND
-            accurate). Shown in AI mode on a design LAYER (03–07) and now also on Sector (02),
-            whose AI render is a restyle with the measured bearings composited on top; Site (01) and
-            Phasing (08) render exact-only, so neither needs a Style. */}
+        {sheetHasPlantCodes && sheetElementNaming(filter) === 'grouped' && !simple && (
+          <p style={{ fontSize: 11, opacity: 0.75 }}>
+            Whole design groups plants in the legend. Open the Planting sheet for individual names or codes.
+          </p>
+        )}
+
+        {/* Oblique needs an appearance choice even when entered from an exact sheet. The
+            top-down analysis routes retain their own style restrictions. */}
         {aiLayerMode && !simple && (
         <>
         <WorkflowHeading number={4} title={t('designGlossyStyle')} />
-        <div style={{ fontSize: 10.5, opacity: 0.6, margin: '-5px 0 7px 34px' }}>
-          {t('designGlossyStyle')} {`(on your ${restyleAiKind === 'base' ? 'Existing Site' : restyleAiKind === 'sector' ? 'Sector' : filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)`}
+        <div lang={aiView === 'oblique' ? 'en' : undefined} style={{ fontSize: 10.5, opacity: 0.6, margin: '-5px 0 7px 34px' }}>
+          {aiView === 'oblique' ? 'For the whole oblique view' : `${t('designGlossyStyle')} (on your ${restyleAiKind === 'base' ? 'Existing Site' : restyleAiKind === 'sector' ? 'Sector' : filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)`}
         </div>
         <div style={{ display: 'grid', gridAutoFlow: 'column', gridAutoColumns: 'calc((100% - 16px) / 3)', gap: 8, overflowX: 'auto', padding: '2px 1px 7px', scrollSnapType: 'x proximity', scrollbarWidth: 'thin' }}>
-          {(sectorAiMode ? SECTOR_STYLE_CHOICES : PRODUCER_STYLES).map((s) => {
-            const active = producerStyle === s.key;
+          {availableStyleChoices.map((s) => {
+            const active = (producerStyle ?? (aiView === 'oblique' ? DEFAULT_PRODUCER_STYLE : null)) === s.key;
             return (
               <button
                 key={s.key}
@@ -15564,7 +15933,7 @@ export default function DesignGlossy({
                 }}
                 disabled={loading !== null}
                 aria-pressed={active}
-                title={`${s.blurb}${s.recommended ? t('designGlossyRecommendedSuffix') : ''}`}
+                title={aiView === 'oblique' ? obliqueStyleDescription(s.key) : `${s.blurb}${s.recommended ? t('designGlossyRecommendedSuffix') : ''}`}
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -15605,7 +15974,7 @@ export default function DesignGlossy({
                 )}
                 <span aria-hidden style={{ display: 'block', height: 34, borderRadius: 8, background: s.swatch, border: '1px solid rgba(20,16,10,0.12)' }} />
                 <span style={{ textAlign: 'center', lineHeight: 1.15 }}>{s.label}</span>
-                <span style={{ fontSize: 9.5, fontWeight: 600, textAlign: 'center', opacity: 0.6, lineHeight: 1.2 }}>{s.blurb}</span>
+                <span style={{ fontSize: 9.5, fontWeight: 600, textAlign: 'center', opacity: 0.6, lineHeight: 1.2 }}>{aiView === 'oblique' ? obliqueStyleDescription(s.key).split(',')[0] : s.blurb}</span>
               </button>
             );
           })}
@@ -15748,7 +16117,7 @@ export default function DesignGlossy({
             : exactSheet === 'implementation'
             ? 'Draw your Implementation & Phasing sheet (plan-set 08) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Review the schedule against your site survey and available resources.'
             : producerStyle
-            ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. ${engine === 'falgpt' ? (effectiveModelChrome ? 'gpt-image-2 paints the whole sheet with its own legend & labels. Renders in the background (~mins); it lands in your gallery.' : 'gpt-image-2 paints the map artwork in the background (~mins); source protections, labels, legend, north arrow and scale are applied afterwards. Compare AI-drawn features with your exact map before using the illustration.') : 'Gemini paints the map artwork in the background (~mins); source protections, labels, legend, north arrow and scale are applied afterwards. Compare AI-drawn features with your exact map before using the illustration. It lands in your gallery.'}`
+            ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. ${engine === 'falgpt' ? (effectiveModelChrome ? `${OPENAI_MAP_MODEL_LABEL} paints the whole sheet with its own legend & labels. Renders in the background (~mins); it lands in your gallery.` : `${OPENAI_MAP_MODEL_LABEL} paints the map artwork in the background (~mins); source protections, labels, legend, north arrow and scale are applied afterwards. Compare AI-drawn features with your exact map before using the illustration.`) : 'Gemini paints the map artwork in the background (~mins); source protections, labels, legend, north arrow and scale are applied afterwards. Compare AI-drawn features with your exact map before using the illustration. It lands in your gallery.'}`
             : analysisStyle
               ? `Generate the ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} analysis map — an illustrated Gemini render (sun/wind, opportunities, phasing) over your real site. These are freer than the design maps: great to look at, less exact on geometry. Takes about a minute.`
               : filter === 'all'
@@ -15852,7 +16221,7 @@ export default function DesignGlossy({
             <div style={{ fontSize: 12, opacity: 0.65 }}>
               {formatDesignTranslation(t('designGlossySavedRender'), {
                 date: relativeDate(saved.at),
-                provider: PROVIDER_LABEL[saved.provider],
+                provider: saved.provider === 'falgpt' ? openAiMapModelLabel(saved.model) : PROVIDER_LABEL[saved.provider],
               })}
             </div>
           )}
@@ -15862,7 +16231,7 @@ export default function DesignGlossy({
               it used to start a Full Treatment while saying "1 AI render", which is two.
               Flipping BACK to exact from an older AI result spends nothing, and a farmer looking at
               a sheet they already paid for must always be able to leave it. */}
-          {aiRenderOn && selectedSheet && !galleryViewItem && (
+          {aiRenderOn && aiView === 'top-down' && selectedSheet && !galleryViewItem && (
             <button
               type="button"
               onClick={() => {
@@ -15981,7 +16350,7 @@ export default function DesignGlossy({
 
               {/* Style ALL sheets — the AI batch (mockup naming). gpt-image-2 → background queue;
                   Gemini → synchronous. */}
-              {aiRenderOn && (<div>
+              {aiRenderOn && aiView === 'top-down' && (<div>
                 <button
                   onClick={generateAllViaQueue}
                   disabled={loading !== null}
@@ -16039,6 +16408,30 @@ export default function DesignGlossy({
           {aiRenderOn && selectedSheet && <WorkflowHeading number={5} title={`${t('designGlossyEngine')} & ${t('designGlossyQuality')}`} />}
           {aiRenderOn && selectedSheet && enginePicker}
           {aiRenderOn && selectedSheet && qualityPicker}
+          {aiRenderOn && selectedSheet && (
+            <div lang="en" style={{ display: 'grid', gap: 7 }}>
+              <div style={{ fontSize: 12, fontWeight: 800 }}>AI viewpoint</div>
+              <div role="group" aria-label="AI viewpoint" style={{ display: 'flex', gap: 6 }}>
+                {(['top-down', 'oblique'] as const).map((view) => (
+                  <button key={view} type="button" aria-pressed={aiView === view} disabled={loading !== null}
+                    onClick={() => {
+                      setAiView(view);
+                      if (view === 'top-down' && producerStyle
+                        && !topDownStyleChoices.some((style) => style.key === producerStyle)) {
+                        setProducerStyle(DEFAULT_PRODUCER_STYLE);
+                      }
+                    }}
+                    style={{ padding: '9px 12px', minHeight: 44, borderRadius: 10, border: `1px solid ${GREEN}`,
+                      background: aiView === view ? GREEN : '#FFFFFF', color: aiView === view ? '#FFFFFF' : GREEN, fontWeight: 700 }}>
+                    {view === 'top-down' ? 'Top-down' : 'Oblique · beta'}
+                  </button>
+                ))}
+              </div>
+              {aiView === 'oblique' && <p style={{ margin: 0, fontSize: 12, lineHeight: 1.5 }}>
+                An angled illustration of the whole design. The app prepares your saved layout, registered drone/aerial photo and available terrain automatically. Heights and landform need review; use your top-down plan for measurements.
+              </p>}
+            </div>
+          )}
           </>
           )}
           {selectedSheet && !simple && <WorkflowHeading number={aiRenderOn ? 6 : 4} title={t('designGlossyFinishHeading')} />}
@@ -16082,7 +16475,7 @@ export default function DesignGlossy({
             <>
             {aiRenderOn && (<button
               type="button"
-              onClick={() => runLockedPolishFlow('hybrid')}
+              onClick={() => aiView === 'oblique' ? generateObliqueViaQueue() : runLockedPolishFlow('hybrid')}
               disabled={loading !== null}
               style={{
                 display: 'flex',
@@ -16105,11 +16498,12 @@ export default function DesignGlossy({
                 opacity: loading !== null ? 0.7 : 1,
               }}
             >
-              <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{resultImage ? <RefreshCw size={16} /> : <Gem size={16} />} {t('designGlossyAiHybrid')}</span>
+              <span lang={aiView === 'oblique' ? 'en' : undefined} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{resultImage ? <RefreshCw size={16} /> : <Gem size={16} />} {aiView === 'oblique' ? 'Generate oblique view' : t('designGlossyAiHybrid')}</span>
               <span style={{ fontSize: 11, fontWeight: 700, opacity: 0.72, textAlign: 'center' }}>
-                {t('designGlossyAiHybridHint')}
+                {aiView === 'oblique' ? 'Whole design · 1 paid AI render · saved illustration' : t('designGlossyAiHybridHint')}
               </span>
             </button>)}
+            {aiView === 'top-down' && (<>
             {aiRenderOn && fullTreatmentVisible && (
             <button
               type="button"
@@ -16141,6 +16535,7 @@ export default function DesignGlossy({
               </span>
             </button>
             )}
+            </>)}
             </>
             )}
           </div>
@@ -16200,7 +16595,7 @@ export default function DesignGlossy({
               {t('designGlossyHowFinishesWork')}
             </summary>
             <p style={{ margin: '0 0 10px', fontSize: 12.5, lineHeight: 1.45 }}>
-              {aiRenderOn ? <><strong>{t('designGlossyChooseFinish')}</strong> {t('designGlossyFinishHelp')}
+              {aiRenderOn ? aiView === 'oblique' ? <span lang="en">{OBLIQUE_REVIEW_NOTICE} One paid render creates the whole view; Exact Canvas remains the measured top-down drawing.</span> : <><strong>{t('designGlossyChooseFinish')}</strong> {t('designGlossyFinishHelp')}
               {fullTreatmentVisible ? ` ${t('designGlossyFinishHelpFullTreatment')}` : ''}</> : t('designGlossyExactFootnote')}
             </p>
           </details>
@@ -16403,6 +16798,11 @@ export default function DesignGlossy({
           }}
         >
           <div
+            ref={galleryDialogRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${formatDesignTranslation(t('designGlossySavedMaps'), { count: gallery.length })} · ${gallerySiteName}`}
+            tabIndex={-1}
             style={{
               width: '100%',
               maxWidth: 520,
@@ -16435,9 +16835,9 @@ export default function DesignGlossy({
                 </button>
               )}
               <button
-                onClick={() => { setGalleryOpen(false); setGalleryViewId(null); setGalleryZoomOpen(false); setExportMode(false); setExportSel(new Set()); }}
+                onClick={closeGallery}
                 aria-label={t('designGlossyCloseSaved')}
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 8, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#755942', cursor: 'pointer' }}
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 44, height: 44, flexShrink: 0, borderRadius: 8, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#755942', cursor: 'pointer' }}
               >
                 <X size={14} />
               </button>
@@ -16484,6 +16884,20 @@ export default function DesignGlossy({
                   >
                     {galleryResultBadge(galleryViewItem)}
                   </div>
+                  {galleryViewItem.jobId && galleryViewItem.rawOutputPath && galleryViewItem.resultKind !== 'exact' && (
+                    <div lang="en" style={{ display: 'grid', gap: 6 }}>
+                      <button type="button"
+                        onClick={() => reassembleSavedArtwork(galleryViewItem)}
+                        disabled={loading !== null || Boolean(queueJobId) || gallerySiteId !== state.siteId || isSampleMode()}
+                        style={{ minHeight: 44, padding: '10px 14px', borderRadius: 12, border: `1px solid ${GREEN}`, background: PAPER, color: GREEN, fontWeight: 700, cursor: 'pointer' }}>
+                        Reassemble artwork · no AI charge
+                      </button>
+                      <span style={{ fontSize: 11, color: '#5C5040' }}>
+                        Uses the original artwork and design; keeps this saved copy. Use the original print quality.
+                        {gallerySiteId !== state.siteId && ' Open this farm in Design Studio first.'}
+                      </span>
+                    </div>
+                  )}
                   <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                     <a
                       href={galleryViewImage ?? galleryViewItem.image ?? galleryViewItem.thumb ?? '#'}
@@ -16725,6 +17139,7 @@ export default function DesignGlossy({
       )}
       {galleryZoomOpen && stageResultImage && typeof document !== 'undefined' && createPortal((
         <div
+          ref={galleryZoomRef}
           role="dialog"
           aria-modal="true"
           aria-label={formatDesignTranslation(t('designGlossyFullScreenNamed'), {
@@ -16740,23 +17155,26 @@ export default function DesignGlossy({
             alignItems: 'center',
             justifyContent: 'center',
             gap: 10,
-            padding: 12,
+            padding: '64px 12px 56px',
+            boxSizing: 'border-box',
+            overflow: 'hidden',
+            minWidth: 0,
+            minHeight: 0,
             background: 'rgba(8,12,8,0.94)',
             cursor: 'zoom-out',
           }}
         >
           <button
             type="button"
-            autoFocus
             onClick={() => setGalleryZoomOpen(false)}
             aria-label={t('designGlossyCloseFullScreen')}
             style={{
-              position: 'fixed',
+              position: 'absolute',
               top: 14,
               right: 14,
               zIndex: 81,
-              width: 42,
-              height: 42,
+              width: 44,
+              height: 44,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -16775,10 +17193,14 @@ export default function DesignGlossy({
             alt={galleryViewItem?.label ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt')}
             onClick={() => setGalleryZoomOpen(false)}
             style={{
-              maxWidth: '97vw',
-              maxHeight: '88vh',
-              width: 'auto',
-              height: 'auto',
+              // Parent-relative dimensions respect the app's text-size zoom. Viewport units
+              // were enlarged again by that zoom, cutting the right legend off on phones.
+              display: 'block',
+              width: '100%',
+              height: '100%',
+              flex: '1 1 0',
+              minWidth: 0,
+              minHeight: 0,
               objectFit: 'contain',
               borderRadius: 10,
               boxShadow: '0 18px 70px rgba(0,0,0,0.55)',
@@ -16803,7 +17225,7 @@ export default function DesignGlossy({
           >
             {t('designGlossyClickMapToMinimise')}
           </span>
-          <span style={{ maxWidth: '90vw', color: '#FBF6EC', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>
+          <span style={{ maxWidth: '100%', flexShrink: 0, overflowWrap: 'anywhere', color: '#FBF6EC', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>
             {galleryViewItem?.label ?? placeName ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt')}
           </span>
         </div>
