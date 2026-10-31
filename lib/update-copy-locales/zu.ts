@@ -7,6 +7,8 @@ const copy:UpdateCopy={
   "Lay out your fields": "Hlela izinsimu zakho",
   "Site design → Planting → Field blocks": "Ukuhlelwa kwesiza → Ukutshala → Izingxenye zensimu",
   "Draw a polygon, choose beds or open field, save the layout and open the automatic crop planner.": "Dweba umumo onamakhona, khetha imibhede noma insimu evulekile, gcina uhlelo bese uvula umhleli wezitshalo ozenzakalelayo.",
+  // Paper recovery: docs/audits/2026-10-31/paper-map-release-drafts.json; unreviewed.
+  "Style choices stay visible; plain-paper Water maps keep white backgrounds.": "Izinketho zezitayela zihlala zibonakala; amamephu Amanzi ephepheni elimhlophe agcina ingemuva limhlophe.",
   // Oblique picker: docs/audits/2026-10-30/oblique-style-picker-release-drafts.json; unreviewed.
   "Oblique styles stay visible when you switch from an exact map.": "Izitayela ze-Oblique zihlala zibonakala uma usuka ebalazweni elinezilinganiso eziqondile.",
   // Oblique experiment guide: docs/audits/2026-10-30/oblique-experiment-guide-drafts.json; unreviewed.

@@ -1001,7 +1001,8 @@ export function drawMarks(
         fn.call(ctx, px(x), py(y));
       });
       ctx.closePath();
-      ctx.fillStyle = `${meta.color}33`;
+      // Pale grey courtyard guides were read as another roof on plain-paper Water jobs.
+      ctx.fillStyle = z.feature === 'patio' && !frame.satDataUrl ? '#D8BE92' : `${meta.color}33`;
       ctx.fill();
     }
     // Sheet 01 ("Existing site & base") had zero ground name labels — groundLabelsForSheet was
@@ -1947,6 +1948,7 @@ export function buildDesignBrief(
 
   // ── Ground / built features the farmer traced (what is really there today) ──
   const features = state.zones.filter((z) => z.feature && z.points.length >= 3);
+  if (features.some((zone) => zone.feature === 'patio')) before.push('PAVED COURTYARDS: warm tan patio areas are uncovered flat paving, never roofs. Only the separate grey house footprints are buildings. Keep the courtyard open.');
   if (features.length) {
     const parts = features.map((z) => {
       const [cx, cy] = centroidOf(z.points);
@@ -12093,10 +12095,12 @@ export default function DesignGlossy({
   // null (AI mode cleared it) and producerStyle is set, so runCurrentSheet must check this BEFORE
   // falling through to generateOneViaQueue's GlossyLayerFilter path. See generatePhasingViaQueue.
   const phasingAiMode = aiRenderOn && mode === 'ai' && !!selectedSheet && 'exact' in selectedSheet && selectedSheet.exact === 'implementation';
-  // Oblique is a whole-design illustration even when opened from an exact/analysis sheet.
-  const aiLayerMode = aiRenderOn && !!selectedSheet && (aiView === 'oblique'
-    || (mode === 'ai' && (!('exact' in selectedSheet) || sectorAiMode || phasingAiMode)));
-  const availableStyleChoices = aiView === 'oblique' || !sectorAiMode ? PRODUCER_STYLES : SECTOR_STYLE_CHOICES;
+  // The style picker is how an approved user leaves Exact mode; hiding it there stranded
+  // Water on steps 1, 2, 3, 5 with no way to choose step 4. Selection itself never renders.
+  const aiLayerMode = aiRenderOn && !!selectedSheet;
+  const topDownStyleChoices = selectedSheet && 'exact' in selectedSheet
+    && (selectedSheet.exact === 'base' || selectedSheet.exact === 'sector') ? SECTOR_STYLE_CHOICES : PRODUCER_STYLES;
+  const availableStyleChoices = aiView === 'oblique' ? PRODUCER_STYLES : topDownStyleChoices;
   // `initialFilter` chooses which sheet Preview map opens on; it must not choose a second, retired
   // layout. That coupling is what made the modal fall back to the old full-width control dump while
   // the Glossy step showed the current three-column Preview & Export workspace.
@@ -13621,8 +13625,9 @@ export default function DesignGlossy({
         : modelImage;
       const legacyPaperRoof = locked && !renderFrame.satDataUrl
         && compositionPolicy.ground === 'paint' && legacyPaperArtworkNeedsRoof(sourcePrompt);
-      const sourceRoof = locked && !renderFrame.satDataUrl && compositionPolicy.ground === 'paint'
-        ? roofReference : undefined;
+      // Only old strict-paper jobs left a blank roof. New artwork already has its roof;
+      // restoring a satellite patch here covered finished roofs with blurry brown slabs.
+      const sourceRoof = legacyPaperRoof ? roofReference : undefined;
       const structureOverlay = sourceRoof?.overlay ?? (legacyPaperRoof
         ? await buildPaintedStructureOverlay(renderState, renderFrame, renderRefLayers, W, H, styleDef.key, false)
         : locked ? await buildGeometryLockStructureOverlay(
@@ -13716,8 +13721,8 @@ export default function DesignGlossy({
         overlayImage: mergedOverlay,
         labels,
         labelStyle: styleDef.labelStyle,
-        contextTreatment: locked && styleDef.key === 'precision_atlas' ? 'precision_atlas' : 'original',
-        focusBoundaryPx: locked && styleDef.key === 'precision_atlas' && f === 'water'
+        contextTreatment: locked && renderFrame.satDataUrl && styleDef.key === 'precision_atlas' ? 'precision_atlas' : 'original',
+        focusBoundaryPx: locked && renderFrame.satDataUrl && styleDef.key === 'precision_atlas' && f === 'water'
           ? renderRefLayers.boundary.flatMap(([x, y]) => [x * W, y * H])
           : undefined,
         width: W,
@@ -15170,7 +15175,7 @@ export default function DesignGlossy({
               // One factual reference per job, shared by the baseline and result. Its pixels
               // must cancel in the retained-change check; they are never counted as paid AI work.
               let roofReference: PaperRoofReference | undefined;
-              if (locked && styleDef && !frozenScene.frame.satDataUrl
+              if (locked && styleDef && !frozenScene.frame.satDataUrl && legacyPaperArtworkNeedsRoof(sheet.prompt)
                 && !['base', 'sector', 'implementation'].includes(sheet.key)
                 && geometryLockCompositionPolicy(styleDef.key, 'paper').ground === 'paint') {
                 roofReferencePromise ??= buildPaperRoofReference(frozenScene).catch(() => undefined);
@@ -16415,8 +16420,8 @@ export default function DesignGlossy({
                   <button key={view} type="button" aria-pressed={aiView === view} disabled={loading !== null}
                     onClick={() => {
                       setAiView(view);
-                      if (view === 'top-down' && sectorAiMode && producerStyle
-                        && !SECTOR_STYLE_CHOICES.some((style) => style.key === producerStyle)) {
+                      if (view === 'top-down' && producerStyle
+                        && !topDownStyleChoices.some((style) => style.key === producerStyle)) {
                         setProducerStyle(DEFAULT_PRODUCER_STYLE);
                       }
                     }}

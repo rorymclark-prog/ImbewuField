@@ -7,6 +7,8 @@ const copy:UpdateCopy={
   "Lay out your fields": "Hlela masimu ya wena",
   "Site design → Planting → Field blocks": "Dizayini ya ndhawu → Ku byala → Swiphemu swa nsimu",
   "Draw a polygon, choose beds or open field, save the layout and open the automatic crop planner.": "Dirowa xivumbeko lexi nga ni tikhona, hlawula mibedo kumbe nsimu leyi pfulekeke, hlayisa malulamiselo kutani u pfula xipulani xa swibyariwa lexi tiendlekelaka.",
+  // Paper recovery: docs/audits/2026-10-31/paper-map-release-drafts.json; unreviewed.
+  "Style choices stay visible; plain-paper Water maps keep white backgrounds.": "Swihlawuriwa swa xitayele swi sala swi vonaka; mimepe ya Mati eka phepha ro basa yi hlayisa le ndzhaku ku basile.",
   // Oblique picker: docs/audits/2026-10-30/oblique-style-picker-release-drafts.json; unreviewed.
   "Oblique styles stay visible when you switch from an exact map.": "Switayele swa Oblique swi sala swi vonaka loko u suka eka mepe lowu pimiweke hi ku kongoma.",
   // Oblique experiment guide: docs/audits/2026-10-30/oblique-experiment-guide-drafts.json; unreviewed.

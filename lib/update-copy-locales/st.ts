@@ -7,6 +7,8 @@ const copy:UpdateCopy={
   "Lay out your fields": "Rala ditshimo tsa hao",
   "Site design → Planting → Field blocks": "Moralo wa sebaka → Ho lema → Dikarolo tsa tshimo",
   "Draw a polygon, choose beds or open field, save the layout and open the automatic crop planner.": "Taka sebopeho se nang le dikgutlo, kgetha dibethe tsa temo kapa tshimo e bulehileng, boloka moralo mme o bule moralo wa dijalo o iketsang.",
+  // Paper recovery: docs/audits/2026-10-31/paper-map-release-drafts.json; unreviewed.
+  "Style choices stay visible; plain-paper Water maps keep white backgrounds.": "Dikgetho tsa setaele di dula di bonahala; dimmapa tsa Metsi tse pampiring e tshweu di boloka bokamorao bo le bosweu.",
   // Oblique picker: docs/audits/2026-10-30/oblique-style-picker-release-drafts.json; unreviewed.
   "Oblique styles stay visible when you switch from an exact map.": "Ditaele tsa Oblique di dula di bonahala ha o tloha mmapeng o lekantsweng hantle.",
   // Oblique experiment guide: docs/audits/2026-10-30/oblique-experiment-guide-drafts.json; unreviewed.

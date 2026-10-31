@@ -49,21 +49,24 @@ test('Oblique exposes every style even when entered from an exact or Sector shee
   }
   const styles = execute(initializers.get('PRODUCER_STYLES')!, {});
   const sectorStyles = execute(initializers.get('SECTOR_STYLE_CHOICES')!, { PRODUCER_STYLES: styles });
-  for (const selectedSheet of [{ exact: 'base' }, { exact: 'sector' }, { exact: 'implementation' }, { filter: 'all' }]) {
+  for (const selectedSheet of [{ exact: 'base' }, { exact: 'sector' }, { exact: 'implementation' }, { exact: 'water' }, { filter: 'all' }]) {
     for (const mode of ['exact', 'ai']) {
-      const scope = { aiRenderOn: true, aiView: 'oblique', selectedSheet, mode, sectorAiMode: 'exact' in selectedSheet,
+      const scope: Record<string,any> = { aiRenderOn: true, aiView: 'oblique', selectedSheet, mode, sectorAiMode: 'exact' in selectedSheet,
         phasingAiMode: false, PRODUCER_STYLES: styles, SECTOR_STYLE_CHOICES: sectorStyles };
+      scope.topDownStyleChoices = execute(initializers.get('topDownStyleChoices')!, scope);
       assert.equal(execute(initializers.get('aiLayerMode')!, scope), true,
         'choosing an angled view must expose its styles regardless of the previous finish');
       assert.deepEqual(new Set(execute(initializers.get('availableStyleChoices')!, scope).map((style:any) => style.key)),
         new Set(Object.keys(STYLE_LINES)), 'Sector restrictions belong only to top-down restyling');
+      assert.equal(execute(initializers.get('aiLayerMode')!, { ...scope, aiView: 'top-down' }), true,
+        'an approved user must be able to choose styling before switching an exact sheet to AI');
       assert.equal(execute(initializers.get('aiLayerMode')!, { ...scope, aiRenderOn: false }), false);
       assert.equal(execute(initializers.get('aiLayerMode')!, { ...scope, selectedSheet: null }), false);
     }
   }
   assert.equal(execute(initializers.get('aiLayerMode')!, { aiRenderOn: true, aiView: 'top-down',
-    selectedSheet: { exact: 'base' }, mode: 'exact', sectorAiMode: false, phasingAiMode: false }), false,
-  'the existing exact top-down screen does not acquire paid style controls');
+    selectedSheet: { exact: 'base' }, mode: 'exact', sectorAiMode: false, phasingAiMode: false }), true,
+  'Rory’s missing-step screenshot supersedes hiding styles in Exact: choosing appearance must be reachable before AI mode');
   assert.ok(selectStyle);
   for (const style of styles) {
     let selected = 'initial', queued = 0;
@@ -84,7 +87,7 @@ test('Oblique exposes every style even when entered from an exact or Sector shee
   for (const view of ['oblique','top-down']) for (const sectorAiMode of [true,false]) for (const style of styles) {
     let selected=style.key;
     execute(selectView!,{view,sectorAiMode,producerStyle:style.key,SECTOR_STYLE_CHOICES:sectorStyles,
-      DEFAULT_PRODUCER_STYLE,setAiView:()=>{},setProducerStyle:(key:string)=>{selected=key;}})();
+      topDownStyleChoices:sectorAiMode?sectorStyles:styles,DEFAULT_PRODUCER_STYLE,setAiView:()=>{},setProducerStyle:(key:string)=>{selected=key;}})();
     assert.equal(selected,view==='top-down'&&sectorAiMode&&!sectorStyles.some((s:any)=>s.key===style.key)
       ? DEFAULT_PRODUCER_STYLE:style.key,
     'returning to top-down Sector replaces only an incompatible style; other choices stay selected');

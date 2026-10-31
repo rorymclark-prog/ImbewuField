@@ -7,6 +7,8 @@ const copy:UpdateCopy={
   "Lay out your fields": "Dzudzanyani tsimu dzaṋu",
   "Site design → Planting → Field blocks": "Dizaini ya fhethu → U ṱavha → Zwipiḓa zwa tsimu",
   "Draw a polygon, choose beds or open field, save the layout and open the automatic crop planner.": "Olani tshivhumbeo tshi re na khuḓa, khethani mibethe kana tsimu yo vuleaho, vhulungani nzudzanyo ni vule mupulani wa zwiliṅwa ane a ḓiendela.",
+  // Paper recovery: docs/audits/2026-10-31/paper-map-release-drafts.json; unreviewed.
+  "Style choices stay visible; plain-paper Water maps keep white backgrounds.": "Zwinangwa zwa zwitaila zwi dzula zwi tshi vhonala; mapa a Maḓi kha bammbiri ḽitshena a vhulunga murahu hu hutshena.",
   // Oblique picker: docs/audits/2026-10-30/oblique-style-picker-release-drafts.json; unreviewed.
   "Oblique styles stay visible when you switch from an exact map.": "Zwitaila zwa Oblique zwi dzula zwi tshi vhonala musi ni tshi bva kha mapa wo elwaho nga vhukuma.",
   // Oblique experiment guide: docs/audits/2026-10-30/oblique-experiment-guide-drafts.json; unreviewed.
