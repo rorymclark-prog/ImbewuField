@@ -1,7 +1,7 @@
 // Unreviewed Afrikaans machine drafts keyed by the exact English (see index.ts).
 const drafts: Record<string, string> = {
   "ACT · Agroecology and permaculture": "ACT · Agro-ekologie en permakultuur",
-  "Teach the Teachers": "Onderrig die Onderrigters",
+  "Teach the Teachers": "Teach the Teachers",
   "A two-day refresher for people who will facilitate the existing core course. Practise teaching with the app, a real object and a paper fallback.": "'n Tweedaagse opknappingskursus vir mense wat die bestaande kernkursus gaan fasiliteer. Oefen om met die app, 'n regte voorwerp en 'n papier-terugval te onderrig.",
   "Day {n}": "Dag {n}",
   "Core modules": "Kernmodules",
@@ -30,7 +30,7 @@ const drafts: Record<string, string> = {
   "Record what you actually saw or heard. Mark each item “seen”, “not yet seen” or “needs another attempt”, and give the facilitator one specific next step. Attendance, a photograph, a quiz answer and a practical demonstration are different kinds of evidence.": "Teken aan wat jy werklik gesien of gehoor het. Merk elke item “gesien”, “nog nie gesien nie” of “het nog 'n poging nodig”, en gee die fasiliteerder een spesifieke volgende stap. Bywoning, 'n foto, 'n vasvra-antwoord en 'n praktiese demonstrasie is verskillende soorte bewyse.",
   "ACT decides any attendance record or certificate wording under its own policy. Do not call this refresher an accredited qualification.": "ACT besluit oor enige bywoningsrekord of sertifikaatbewoording volgens sy eie beleid. Moenie hierdie opknappingskursus 'n geakkrediteerde kwalifikasie noem nie.",
   "Return to My Studies": "Keer terug na My studies",
-  "Adapted from the reserve facilitator guide and the existing five-day Teach the Teachers draft; condensed for this two-day ACT rehearsal.": "Aangepas uit die reserwe-fasiliteerdersgids en die bestaande vyfdaagse Onderrig die Onderrigters-konsep; verkort vir hierdie tweedaagse ACT-oefening.",
+  "Adapted from the reserve facilitator guide and the existing five-day Teach the Teachers draft; condensed for this two-day ACT rehearsal.": "Aangepas uit die reserwe-fasiliteerdersgids en die bestaande vyfdaagse Teach the Teachers-konsep; verkort vir hierdie tweedaagse ACT-oefening.",
   "Make the learning visible": "Maak die leer sigbaar",
   "Each participant plans and tries a short lesson that starts with a farmer’s observation.": "Elke deelnemer beplan en probeer 'n kort les wat met 'n boer se waarneming begin.",
   "Welcome and learning agreement": "Verwelkoming en leerooreenkoms",

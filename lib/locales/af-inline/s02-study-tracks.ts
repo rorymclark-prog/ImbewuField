@@ -158,7 +158,7 @@ const drafts: Record<string, string> = {
   "Record feedback, observation plans and revisions →": "Teken terugvoer, waarnemingsplanne en hersienings aan →",
   "After your attempt: compare the reasoning": "Ná jou poging: vergelyk die redenasie",
   "Download the guided source and decision record": "Laai die begeleide bron- en besluitrekord af",
-  "Open my learning folder →": "Maak my leerlêer oop →",
+  "Open my learning folder →": "Maak my leerportefeulje oop →",
   "Return to the final design stage →": "Keer terug na die finale ontwerpfase →",
   "Navigation, headings, lesson text and exercise prompts on this pathway are unreviewed isiXhosa drafts. Model measurements and narration remain in English.": "Navigasie, opskrifte, lesteks en oefenopdragte op hierdie leerpad is onhersiene isiXhosa-konsepte. Modelafmetings en vertelling bly in Engels.",
 };

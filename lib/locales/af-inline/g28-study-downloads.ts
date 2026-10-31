@@ -8,7 +8,7 @@ const drafts: Record<string, string> = {
   "metres": "meter",
   "Units: {unit}. {axis}.": "Eenhede: {unit}. {axis}.",
   "Teaching frame: {width} × {height} m. Not a land-rights record or fixed physical print scale.": "Onderrigraam: {width} × {height} m. Nie 'n grondregterekord of vaste fisiese drukskaal nie.",
-  "Keep the downloaded diagrams alongside this record. This is the guided example, not your personal learning folder.": "Hou die afgelaaide diagramme saam met hierdie rekord. Dit is die begeleide voorbeeld, nie jou persoonlike leerlêer nie.",
+  "Keep the downloaded diagrams alongside this record. This is the guided example, not your personal learning folder.": "Hou die afgelaaide diagramme saam met hierdie rekord. Dit is die begeleide voorbeeld, nie jou persoonlike leerportefeulje nie.",
   "SOURCE CARDS": "BRONKAARTE",
   "MODEL GEOMETRY — all coordinates supplied fictional inputs": "MODELGEOMETRIE — alle koördinate is verskafte fiktiewe insette",
   "{id} — {label}: x={x}, y={y}, width={width}, height={height} m.": "{id} — {label}: x={x}, y={y}, breedte={width}, hoogte={height} m.",
