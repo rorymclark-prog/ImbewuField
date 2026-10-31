@@ -17,29 +17,48 @@
 // Unreviewed machine drafts (Rory asked for the whole app in isiXhosa, 23 Oct 2026); pages that
 // show them carry the shared <LanguageDraftNote>. See docs/translation-reviews/xhosa-ui-2026-10-23/.
 
-let XH_INLINE: Record<string, string> = {};
+// Afrikaans (27 Oct 2026) uses the same English-keyed lookup: its drafts live in
+// lib/locales/af-inline/*.ts and the af locale chunk registers them the same way.
+export const INLINE_DRAFT_LANGS = ['xh', 'af'] as const;
+export type InlineDraftLang = typeof INLINE_DRAFT_LANGS[number];
+const INLINE: Partial<Record<InlineDraftLang, Record<string, string>>> = {};
+
+export function isInlineDraftLang(lang: string): lang is InlineDraftLang {
+  return (INLINE_DRAFT_LANGS as readonly string[]).includes(lang);
+}
+
+/** Called once by a locale chunk (xh, af). */
+export function registerInlineDrafts(lang: InlineDraftLang, drafts: Record<string, string>): void {
+  INLINE[lang] = drafts;
+}
 
 /** Called once by the xh locale chunk. */
 export function registerXhInline(drafts: Record<string, string>): void {
-  XH_INLINE = drafts;
+  registerInlineDrafts('xh', drafts);
 }
 
 export function placeholdersOf(text: string): string {
   return [...text.matchAll(/\{([a-zA-Z]+)\}/g)].map((m) => m[1]).sort().join(',');
 }
 
-/** The isiXhosa draft for this exact English, or null (caller shows English). */
-export function xhInlineDraft(english: string): string | null {
-  const draft = XH_INLINE[english];
+/** The draft in this language for this exact English, or null (caller shows English). */
+export function inlineDraft(lang: string, english: string): string | null {
+  if (!isInlineDraftLang(lang)) return null;
+  const draft = INLINE[lang]?.[english];
   if (typeof draft !== 'string' || draft.trim() === '') return null;
   // A draft that lost or invented a {placeholder} would drop a figure — refuse it.
   return placeholdersOf(draft) === placeholdersOf(english) ? draft : null;
 }
 
-/** isiZulu when the screen had it, isiXhosa from the shards, otherwise the English. */
+/** The isiXhosa draft for this exact English, or null (caller shows English). */
+export function xhInlineDraft(english: string): string | null {
+  return inlineDraft('xh', english);
+}
+
+/** isiZulu when the screen had it, an isiXhosa or Afrikaans draft from the shards, otherwise the English. */
 export function inlineText(lang: string, english: string, zulu?: string): string {
   if (lang === 'zu' && zulu !== undefined) return zulu;
-  if (lang === 'xh') return xhInlineDraft(english) ?? english;
+  if (isInlineDraftLang(lang)) return inlineDraft(lang, english) ?? english;
   return english;
 }
 
