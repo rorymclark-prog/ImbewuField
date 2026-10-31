@@ -139,7 +139,7 @@ Elke dier op die plaas is 'n klein kunsmisfabriek. Mis voeg organiese materiaal 
 
 1. Komposteer mis voordat dit naby gewasse kom wat jy rou eet. Kompostering maak die meeste kieme en onkruidsaad dood, keer dat die mis wortels brand, en verander dit in **humus**: die donker, stabiele deel van organiese materiaal wat water en voedingstowwe hou.
 2. As jy rou mis moet gebruik, grawe dit minstens 4 maande (120 dae) in voordat jy gewasse oes wat aan die grond raak of rou geëet word, soos blaarslaai, spinasie en geelwortels. Vir gewasse wat bo die grond groei, soos mielies en vrugtebome, gee minstens 3 maande (90 dae). Sit nooit vars mis rondom groente wat reeds groei nie.
-3. Gebruik nooit menslike ontlasting, of honde- of kattemis, in die groentetuin nie. Dit dra wurms en ander parasiete wat mense besmet, veral kinders.
+3. Gebruik nooit menslike ontlasting, of honde- of kattemis, in enige tuin waar jy kos kweek nie. Dit dra wurms en ander parasiete wat mense besmet, veral kinders.
 4. Gebruik varkmis net ná deeglike warm kompostering en lang opberging, en nooit op gewasse wat rou geëet word nie. Sy spoelwurmeiers oorleef jare lank.
 5. Was jou hande nadat jy mis hanteer het, en was groente voordat jy dit eet.
 

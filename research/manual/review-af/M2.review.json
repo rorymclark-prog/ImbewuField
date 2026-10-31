@@ -1,0 +1,46 @@
+{
+  "unit": "M2",
+  "sectionsReviewed": 14,
+  "items": [
+    {
+      "section": "08-soil#6",
+      "verdict": "repair",
+      "english": "Never use human faeces, or dog or cat droppings, in the food garden. They carry worms and other parasites that infect people, children most of all.",
+      "afrikaansBefore": "3. Gebruik nooit menslike ontlasting, of honde- of kattemis, in die groentetuin nie. Dit dra wurms en ander parasiete wat mense besmet, veral kinders.",
+      "afrikaansAfter": "3. Gebruik nooit menslike ontlasting, of honde- of kattemis, in enige tuin waar jy kos kweek nie. Dit dra wurms en ander parasiete wat mense besmet, veral kinders.",
+      "problem": "\"groentetuin\" (vegetable garden) narrows the English \"food garden\", so a farmer could think human faeces or dog and cat droppings are fine around fruit trees, a food forest or other food plants."
+    },
+    {
+      "section": "07-earthworks-and-water#6",
+      "verdict": "repair",
+      "english": "Keep swales and basins at least 3 m from walls and foundations, and never uphill of a pit toilet, septic tank or soak-away.",
+      "afrikaansBefore": "- **Naby geboue.** Hou kontoerslote en komme minstens 3 m van mure en fondamente af, en nooit bo 'n putlatrine, septiese tenk of sypelput nie.",
+      "afrikaansAfter": "- **Naby geboue.** Hou kontoerslote en komme minstens 3 m van mure en fondamente af, en nooit hoër op teen die helling as 'n putlatrine, septiese tenk of sypelput nie.",
+      "problem": "\"nooit bo\" can be read as \"never on top of\", so a farmer could dig a swale just upslope of a pit latrine or septic tank and push water through the sewage, which is exactly what the English forbids."
+    },
+    {
+      "section": "07-earthworks-and-water#10",
+      "verdict": "repair",
+      "english": "Far from drinking water. Never near, or uphill of, a well, borehole or spring.",
+      "afrikaansBefore": "5. **Ver van drinkwater.** Nooit naby, of bo, 'n put, boorgat of fontein nie.",
+      "afrikaansAfter": "5. **Ver van drinkwater.** Nooit naby 'n put, boorgat of fontein nie, en nooit hoër op teen die helling as een nie.",
+      "problem": "\"of bo\" can be read as \"or on top of\" rather than \"uphill of\", so a farmer could lead greywater onto ground upslope of a well, borehole or spring and contaminate drinking water."
+    },
+    {
+      "section": "07-earthworks-and-water#4",
+      "verdict": "repair",
+      "english": "Slope the sides as you dig so they cannot cave in, and keep everyone well away from a working machine.",
+      "afrikaansBefore": "Laat die kante skuins afloop terwyl jy grawe sodat hulle nie kan invaal nie, en hou almal ver weg van 'n masjien wat werk.",
+      "afrikaansAfter": "Laat die kante skuins afloop terwyl jy grawe sodat die kante nie kan ineenstort nie, en hou almal ver weg van 'n masjien wat werk.",
+      "problem": "\"sodat hulle nie kan invaal nie\" reads as \"so that they [people] cannot fall in\" (the next sentence uses \"inval\" for people falling in), so the cave-in hazard to diggers is lost."
+    },
+    {
+      "section": "07-earthworks-and-water#10",
+      "verdict": "repair",
+      "english": "No pools. It must soak in fast, where people and animals will not touch it.",
+      "afrikaansBefore": "3. **Geen poele nie.** Dit moet vinnig insak, waar mense en diere nie daaraan sal raak nie.",
+      "afrikaansAfter": "3. **Geen staande plasse nie.** Dit moet vinnig insak, waar mense en diere nie daaraan sal raak nie.",
+      "problem": "\"poel\" means pond throughout this chapter, so \"Geen poele nie\" reads as \"do not put it in ponds\" instead of \"do not let greywater stand in puddles\" where people and animals can touch it."
+    }
+  ]
+}

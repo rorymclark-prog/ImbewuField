@@ -12,7 +12,7 @@ Sommige permakultuurwoorde het geen kort, alledaagse woord in ons huistale nie. 
 | Biogas digester | Biogasverteerder: 'n geseëlde tenk waarin mis en kosafval sonder lug vrot en biogas (meestal metaan) afgee om mee te kook, asook 'n vloeibare kunsmis wat flodder genoem word. |
 | Biomass | Biomassa: al die plant- en diermateriaal wat op jou grond groei: blare, stamme, grassnysels, snoeisels, mis. Dit kan as deklaag, kompos, voer of brandstof gebruik word. |
 | Biosecurity | Biosekuriteit: die stappe wat jy neem om te keer dat siektes en peste op jou plaas kom of tussen diere versprei, soos om nuwe diere 'n ruk lank apart te hou. |
-| Blackwater | Swartwater: water van toilette en doeke. Dit dra kieme en mag nooit in 'n voedseltuin gebruik word nie. |
+| Blackwater | Swartwater: water van toilette en luiers. Dit dra kieme en mag nooit in 'n voedseltuin gebruik word nie. |
 | Canopy | Kroondak: die boonste laag van 'n voedselwoud: die hoogste bome, wie se blare 'n dak oor die plante onder hulle vorm. |
 | Carbon to nitrogen ratio | Koolstof-tot-stikstof-verhouding: die balans tussen "bruin" materiaal (koolstof, soos droë blare en strooi) en "groen" materiaal (stikstof, soos vars gras en mis) in 'n komposhoop. Omtrent 25 tot 30 dele bruin tot 1 deel groen werk goed. |
 | Catchment | Opvanggebied: die stuk grond of dak waarvandaan reënwater na een plek vloei, soos 'n tenk, dam of stroom. |

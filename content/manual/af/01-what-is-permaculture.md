@@ -61,7 +61,7 @@ Die etiese waardes sê vir ons wat saak maak. Die beginsels is denkgereedskap om
 
 Onderwysers gebruik effens verskillende lyste. Die twaalf hier kom uit David Holmgren se boek *Permaculture: Principles and Pathways Beyond Sustainability* (2002). Holmgren het elke beginsel aan 'n ou spreekwoord gekoppel, en ons gee sommige van daardie gesegdes hier.
 
-### 1. Neem waar en wissel uit
+### 1. Neem waar en tree in wisselwerking
 
 Jy kan nie ontwerp vir grond wat jy nie ken nie. Waar loop die water? Waar lê die ryp? Wat groei goed sonder hulp? Boeke en onderwysers help, maar niks vervang jou eie tyd op jou eie grond nie.
 
@@ -121,7 +121,7 @@ In die natuur is daar geen vullis nie: die uitset van een deel is die inset van 
 
 - **Kombuisafval** voed wurms, en dit is 'n waardevolle "groen" (stikstofryk) bestanddeel in die **kompos**hoop (compost). Kompos is plant- en dierafval wat verrot het tot donker, krummelrige kos vir die grond.
 - **Grassnysels** maak deklaag rondom saailinge. Dit hou die grond koel en klam en hou onkruid terug. Sprei dit dun of laat dit eers droog word, want 'n dik laag vars gras mat saam en word warm.
-- **Gryswater** (greywater) is gebruikte water van baddens, storte en wasbakke. Dit gaan onder deklaag na vrugtebome, nooit op morogo wat jy rou eet nie, en kombuis- of doekwater gaan nooit daarin nie. Gebruik sagte seep met min sout.
+- **Gryswater** (greywater) is gebruikte water van baddens, storte en wasbakke. Dit gaan onder deklaag na vrugtebome, nooit op morogo wat jy rou eet nie, en kombuiswater of luierwater (water waarin doeke gewas is) gaan nooit daarin nie. Gebruik sagte seep met min sout.
 
 ### 7. Ontwerp van patrone na besonderhede
 

@@ -139,7 +139,7 @@ Beplan vir hierdie dinge voordat jy grawe:
 - **Helling.** Hoe steiler die grond, hoe moeiliker is dit om 'n poel of dam te ontwerp en te bou. 'n Dam is werk vir 'n ervare ontwerper.
 - **Oorloop.** Elke poel en dam het 'n breë oorloop nodig, beskerm met klip of digte gras, sodat water nooit oor die wal vloei nie.
 - **Verdamping.** Oor die grootste deel van Suid-Afrika verloor 'n oop wateroppervlak meer as 1 400 mm per jaar, en oor groot dele van die droë binneland 2 000 mm of meer. Dit is dikwels meer as die reën. Teen 5 mm per dag verloor 'n poel met 'n oppervlak van 20 m² elke dag 100 liter. 'n Diep poel met 'n klein oppervlak, wat deur bome geskadu word, verloor minder.
-- **Mense.** Laat die kante skuins afloop terwyl jy grawe sodat hulle nie kan invaal nie, en hou almal ver weg van 'n masjien wat werk. Kamp die klaar poel in met 'n hek wat 'n kind nie kan oopmaak nie, en maak een kant flou skuins sodat 'n mens of dier wat inval, kan uitklim. Waar bilharzia voorkom, moet jy nie in poelwater was, swem of kaalvoet staan nie.
+- **Mense.** Laat die kante skuins afloop terwyl jy grawe sodat die kante nie kan ineenstort nie, en hou almal ver weg van 'n masjien wat werk. Kamp die klaar poel in met 'n hek wat 'n kind nie kan oopmaak nie, en maak een kant flou skuins sodat 'n mens of dier wat inval, kan uitklim. Waar bilharzia voorkom, moet jy nie in poelwater was, swem of kaalvoet staan nie.
 
 ### Die volume van 'n poel uitwerk
 
@@ -203,7 +203,7 @@ Waar die reën ligter is of die grond goed bedek is, kan kontoerslote verder uit
 
 - **Steil hellings.** Hou kontoerslote by hellings van minder as ongeveer 15% ('n daling van 15 m oor 100 m). Nat grond op steil grond kan gly. Gebruik eerder terrasse en bome daar.
 - **Swaar klei of deurdrenkte grond.** As water nie insak nie, word 'n kontoersloot 'n sloot met staande, vrot water. Gebruik 'n poel of 'n afleivoor.
-- **Naby geboue.** Hou kontoerslote en komme minstens 3 m van mure en fondamente af, en nooit bo 'n putlatrine, septiese tenk of sypelput nie.
+- **Naby geboue.** Hou kontoerslote en komme minstens 3 m van mure en fondamente af, en nooit hoër op teen die helling as 'n putlatrine, septiese tenk of sypelput nie.
 - **Baie nat plekke.** Waar die grond die grootste deel van die jaar nat is, het jy dreine nodig wat water weglei.
 
 ### Die kontoersloot grawe
@@ -381,7 +381,7 @@ Elke druppel wat jy dra of pomp, kos jou iets. Die beste besproeiing sit water n
 
 Elke bad en stort stuur goeie water by die drein af. Op 'n droë plaas kan daardie water 'n ry vrugtebome deur die droë seisoen aan die lewe hou.
 
-**Gryswater** is gebruikte water van baddens, storte, handwasbakke en die wasmasjien. **Swartwater** (blackwater) is water van toilette. Swartwater en doeke-water dra kieme en gaan nooit op die tuin nie. Water van die kombuiswasbak is die vuilste gryswater, vol vet en kos; gebruik dit net deur 'n vetvanger, en net op bome en blomme.
+**Gryswater** is gebruikte water van baddens, storte, handwasbakke en die wasmasjien. **Swartwater** (blackwater) is water van toilette. Swartwater en luierwater (water waarin vuil doeke gewas is) dra kieme en gaan nooit op die tuin nie. Water van die kombuiswasbak is die vuilste gryswater, vol vet en kos; gebruik dit net deur 'n vetvanger, en net op bome en blomme.
 
 | Waterbron | Op die tuin? |
 |---|---|
@@ -394,9 +394,9 @@ Elke bad en stort stuur goeie water by die drein af. Op 'n droë plaas kan daard
 
 1. **In die grond, onder deklaag.** Lei gryswater na 'n boomkom, kontoersloot of putbedding met deklaag, deur 'n pyp wat onder die deklaag eindig. Moet dit nooit spuit nie.
 2. **Nooit op kos wat rou geëet word nie.** Hou dit weg van morogo, blaarslaai en wortelgewasse soos geelwortels. Gebruik dit op vrugtebome, piesangs, struike en blomme.
-3. **Geen poele nie.** Dit moet vinnig insak, waar mense en diere nie daaraan sal raak nie.
+3. **Geen staande plasse nie.** Dit moet vinnig insak, waar mense en diere nie daaraan sal raak nie.
 4. **Gebruik dit dieselfde dag.** Gestoorde gryswater word sleg en kweek kieme en muskiete.
-5. **Ver van drinkwater.** Nooit naby, of bo, 'n put, boorgat of fontein nie.
+5. **Ver van drinkwater.** Nooit naby 'n put, boorgat of fontein nie, en nooit hoër op teen die helling as een nie.
 6. **Sagte seep.** Soute, bleikmiddel, boraks en sterk chemikalieë bou op en beskadig grond en plante. Gebruik sagte, bioafbreekbare, soutarm seep; vloeibare wasseep dra gewoonlik minder sout as poeier.
 7. **Skuif dit rond.** Wissel tussen komme af en laat reën die grond uitspoel. Geel blaarrande of 'n wit kors beteken dat sout opbou.
 

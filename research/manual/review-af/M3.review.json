@@ -1,0 +1,8 @@
+{ "unit": "M3", "sectionsReviewed": 20,
+  "items": [
+    { "section": "10-natural-pest-control#3", "verdict": "repair",
+      "english": "1. Net small plots of grain.",
+      "afrikaansBefore": "1. Span net oor klein persele graan.",
+      "afrikaansAfter": "1. Span 'n net oor klein persele graan.",
+      "problem": "Without an article, \"net\" reads first as the adverb \"only\" (\"Only stretch over small plots of grain\"), so a farmer may not see that the step means covering the grain with netting against quelea." }
+  ] }

@@ -53,7 +53,7 @@ Hoenders is **omnivore**: hulle eet plante en diere. 'n Lêhen het nodig:
 - **Energie**, van graan soos mielies, sorghum en koring
 - **Groenvoer**, van gras, onkruid en tuinafval
 - **Kalsium** vir sterk doppe, van fyngemaakte oesterdop, kalksteengruis of gedroogde, fyngemaakte eierdoppe
-- **Gruis**, klein harde klippies of growwe sand wat sy in haar krop hou om kos fyn te maal
+- **Gruis**, klein harde klippies of growwe sand wat sy in haar spiermaag hou om kos fyn te maal
 - **Vitamiene**, veral A van groen blare en geel mielies, en D van sonlig
 - **Skoon water** heeltyd
 

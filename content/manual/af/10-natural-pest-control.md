@@ -122,7 +122,7 @@ Slakke en naakslakke kan rotlongwurm (rat lungworm) dra, 'n parasiet wat in rott
 
 Die meeste voëls is vriende. Die rooibekkwelea (red-billed quelea) is die uitsondering: dit vlieg in yslike swerms en kan sorghum, giers en koring kaal stroop, die ergste wanneer grassaad in die veld skaars is.
 
-1. Span net oor klein persele graan.
+1. Span 'n net oor klein persele graan.
 2. Skrik die voëls vroegoggend en laatmiddag weg, wanneer hulle vreet, met geraas, vlae of blink lint.
 3. Oes sodra die graan ryp is.
 4. Sit nooit gif uit nie. Die arende en uile wat die dooie voëls eet, gaan ook dood.
@@ -186,7 +186,7 @@ Lokgewasse, blomme vir roofinsekte en gemengde aanplantings is goed getoets. Bai
 
 'n Lokgewas waarna jy nooit kyk nie, word 'n broeiplek.
 
-**Reukversteurders.** 'n Sterk reuk kan die gewas wegsteek waarna die pes soek. Tuiniers plant uie om geelwortels teen wortelvlieg (carrot fly). Navorsing in Engeland het gevind dat dit net werk met baie meer uie as geelwortels, en net terwyl die uie jonk en blaarryk is, voordat hulle bolle vorm.
+**Reukversteurders.** 'n Sterk reuk kan die gewas wegsteek waarna die pes soek. Tuiniers plant uie rondom geelwortels teen wortelvlieg (carrot fly). Navorsing in Engeland het gevind dat dit net werk met baie meer uie as geelwortels, en net terwyl die uie jonk en blaarryk is, voordat hulle bolle vorm.
 
 **Versterkplante.** Basiliekruid wat saam met tamaties gekweek is, het in sommige proewe blaaspootjies en witvlieg 'n bietjie verminder. Die bewering dat dit hulle smaak verbeter, is nie bewys nie.
 
