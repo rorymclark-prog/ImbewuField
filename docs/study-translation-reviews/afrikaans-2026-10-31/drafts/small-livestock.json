@@ -1,0 +1,115 @@
+{
+ "id": "small-livestock",
+ "title": "Integrasie van Kleinvee",
+ "description": "Hoenders, eende en bye as dele van die stelsel — nie as 'n nagedagte nie.",
+ "lessons": [
+  {
+   "id": "small-livestock-l1",
+   "title": "Hoenders in die Stelsel: Pesbeheer, Vrugbaarheid en Kos",
+   "body": "Hoenders kan ná die oes met 'n leë bedding help. Hulle krap deur plantreste en eet sommige insekte en onkruidsaad. Hul mis en strooisel kan gekomposteer en na die grond teruggegee word. Skarrel vervang nie 'n gebalanseerde dieet, skoon water, skuiling of daaglikse versorging nie.\n\n'n Hoendertrekker is 'n beweegbare hok sonder 'n vloer. Skuif dit voordat die grond kaal of modderig raak, of swaar met mis bedek is. Die regte tyd hang van die voëls, die grond en die weer af. Daar is geen enkele getal hoenders wat genoeg vrugbaarheid vir elke stuk grond waarborg nie.\n\nHou hoenders weg van saailinge en van gewasse wat vir kos geoes word. Vars mis kan kieme dra. Vra 'n landbouvoorligter hoe om mis veilig te hanteer voor die volgende gewas. Eende krap minder, maar kan steeds plante beskadig en nat grond modderig maak. Hou die voëls dop en skuif hulle wanneer nodig.",
+   "keyPoints": [
+    "Skuif die hok voordat die voëls die grond beskadig of die mis ophoop",
+    "Pas die getal voëls en die gebruik van mis aan by jou grond, gewasse en voervoorraad",
+    "Sit hoenders slegs ná die oes in 'n bedding — nooit rondom jong saailinge nie",
+    "Eende krap minder, maar het steeds toesig nodig rondom plante en nat grond"
+   ],
+   "quiz": [
+    {
+     "q": "Jy wil hê hoenders moet 'n leë bedding vir herplanting voorberei. Wanneer is die regte tyd om hulle in te sit?",
+     "options": [
+      "Net nadat jy saailinge geplant het, sodat hulle die grond rondom die saailinge losmaak",
+      "Ná die oes, sodra die bedding skoongemaak is, voor die volgende aanplanting",
+      "Gedurende die groeiseisoen, sodra die blaredak die gekrap kan weerstaan",
+      "Net in die winter, om hittestres te vermy"
+     ],
+     "correct": 1,
+     "rationale": "Gebruik 'n leë bedding ná die oes. Hou vars mis weg van voedselgewasse en beplan veilige hantering van mis voordat jy herplant."
+    },
+    {
+     "q": "Waarom is eende beter as hoenders geskik vir die onderbegroeiing van 'n gevestigde voedselwoud?",
+     "options": [
+      "Eende produseer meer mis per dag",
+      "Eende eet naakslakke en slakke sonder die swaar gekrap wat wortels en deklaag versteur",
+      "Eende is immuun teen Newcastle-siekte",
+      "Eende slaap in bome, wat grondverdigting verminder"
+     ],
+     "correct": 1,
+     "rationale": "Eende krap nie soos hoenders nie. Hulle kan steeds plante vertrap of eet, so hou die grond dop en skuif hulle wanneer nodig."
+    }
+   ],
+   "infographicAlt": "'n Illustrasie van 'n hoenderhok op wiele wat in twee posisies langs 'n strook grond gewys word. 'n Pyl wys na regs; drie hoenders staan in die hok aan die regterkant, en 'n donkerder, omgekrapte kol lê tussen die twee posisies."
+  },
+  {
+   "id": "small-livestock-l2",
+   "title": "Bye: Bestuiwing, Heuning en Stelselekologie",
+   "body": "Heuningbye en ander insekte dra stuifmeel tussen blomme. Dit help baie vrugte- en groentegewasse, insluitend avokado. Verskillende gewasse en variëteite het verskillende bestuiwingsbehoeftes. 'n Korf waarborg nie oral hoër opbrengste nie: weer, water, plantgesondheid en ander bestuiwers maak ook saak.\n\nSuid-Afrika het twee inheemse heuningby-subspesies. Die Cape honeybee kom in die Wes-Kaap en dele van die Oos-Kaap voor. Die African honeybee is inheems aan sentrale en die grootste deel van suidelike Afrika. Hierdie breë natuurlike verspreidingsgebiede is nie 'n gids vir die verskuiwing van bye nie. Die Departement se beheermaatreëls stel 'n afbakeningslyn vir die verskuiwing van bye vas. Kontroleer die huidige reëls oor verskuiwing by die Departement en 'n ervare plaaslike byeboer voordat jy bye of korwe skuif.\n\nLeer by 'n ervare plaaslike byeboer voordat jy 'n korf kry. Hou korwe weg van besige paadjies, huise en plekke waar kinders speel. Oggendson kan help; 'n veilige plek kom eerste. Sorg deur die seisoene vir blomplante en vermy dat bye aan plaagdoders blootgestel word. Aktiewe bye bewys nie dat die plaas vry van chemikalieë of siektes is nie. Die nasionale beheermaatreëls vir heuningbye vereis registrasie vir omskrewe byeboeraktiwiteite, insluitend bestuurde korwe vir byeprodukte, koninginteelt, kommersiële bestuiwing, en die verwydering, uitroeiing of hervestiging van kolonies. Kontroleer by die Departement as jy nie seker is of die reëls op jou aktiwiteit van toepassing is nie. As 'n kolonie herhaaldelik swerm, vra 'n opgeleide byeboer om dit te inspekteer. Oorbevolking is een moontlike oorsaak, nie 'n diagnose nie.",
+   "keyPoints": [
+    "Bestuiwers help baie gewasse; die voordeel hang van die gewas en die toestande af",
+    "Leer veilige korfversorging by 'n ervare plaaslike byeboer",
+    "Kies 'n veilige korfplek weg van besige paadjies en kinders",
+    "Registreer by die Departement vir aktiwiteite wat deur die nasionale beheermaatreëls vir heuningbye gedek word"
+   ],
+   "quiz": [
+    {
+     "q": "Avokadobome blom, maar set min vrugte. Wat moet die boer oor bestuiwing kontroleer?",
+     "options": [
+      "Aanvaar dat bestuiwing altyd genoeg is en kontroleer niks",
+      "Aanvaar dat net een soort kewer stuifmeel kan dra",
+      "Kontroleer of insekte die blomme besoek en stuifmeel dra; ander oorsake van swak vrugset moet ook gekontroleer word",
+      "Aanvaar dat swak vrugset altyd rypskade beteken"
+     ],
+     "correct": 2,
+     "rationale": "Bye en ander insekte kan stuifmeel tussen avokadoblomme dra. Min besoeke kan bestuiwing beperk, maar die weer en die toestand van die plant kan ook vrugset beïnvloed."
+    },
+    {
+     "q": "'n Korf het herhaaldelik geswerm. Wat is die beste volgende stap?",
+     "options": [
+      "Vra 'n opgeleide byeboer om die kolonie te inspekteer, insluitend ruimte, koningin en gesondheid",
+      "Vervang die koningin sonder om die kolonie te inspekteer",
+      "Aanvaar dat niks gekontroleer of bestuur kan word nie",
+      "Draai die korf om sonder om die oorsaak te vind"
+     ],
+     "correct": 0,
+     "rationale": "Oorbevolking kan swerm aanmoedig, maar dit is nie die enigste oorsaak nie. Inspeksie bepaal die reaksie; om ruimte by te voeg is nie 'n gewaarborgde oplossing nie."
+    }
+   ],
+   "infographicAlt": "'n Byekorf wat oopgesny is en die gestapelde rame binne wys, en 'n wye sirkel oor 'n plaaskaart wat wys hoe ver die bye vlieg om kos te soek."
+  },
+  {
+   "id": "small-livestock-l3",
+   "title": "Integrasie van Veesiklusse: Voedingstowwe wat deur die Plaas Beweeg",
+   "body": "Sommige voedingstowwe kan in kompos wat van mis gemaak is na die groeigebied terugkeer. Vars mis kan skadelike kieme dra. Komposteer mis volledig voordat jy dit rondom voedselgewasse gebruik. Gekoopte voer bring voedingstowwe die plaas in, terwyl kos en ander produkte voedingstowwe wegneem. Hou rekord van voer wat ingekoop word en kos wat verkoop of huis toe geneem word. Kosreste alleen voorsien dalk nie in die diere se behoeftes nie.\n\nTarentale soek na insekte en eet dalk bosluise. Moenie op hulle staatmaak om mense of vee teen bosluise of bosluisoordraagbare siektes te beskerm nie. Kontroleer diere en volg 'n plaaslike diergesondheidsplan.\n\nVra vir elke dier: wat kan dit hier eet? Watter nuttige dinge produseer dit? Wat het dit nog nodig? Sluit water, geskikte voer, skuiling, omheining en daaglikse versorging in.\n\nHoenders wat agter bokke aanloop, is nie 'n bewese plaasvervanger vir wurmbeheer by bokke nie. Weidingsbestuur kan help, maar bokke het steeds gesondheidskontroles en 'n parasietplan van 'n veearts of diergesondheidsadviseur nodig. Moenie behandeling staak omdat hoenders die weikamp besoek het nie.",
+   "keyPoints": [
+    "Gebruik geskikte plaashulpbronne en voorsien terselfdertyd in elke dier se volle behoeftes",
+    "Tarentale wat kos soek, vervang nie bosluiskontroles of 'n diergesondheidsplan nie",
+    "Vra wat elke dier eet, produseer en nodig het, insluitend enige gekoopte insette",
+    "Moenie wurmbeheer by bokke vervang met hoenders wat agter die trop aanloop nie"
+   ],
+   "quiz": [
+    {
+     "q": "'n Boer hou tarentale aan. Hoe moet sy bosluise op haar vee bestuur?",
+     "options": [
+      "Hou op om vee te kontroleer omdat daar voëls is",
+      "Hou aan om diere te kontroleer en volg 'n plaaslike diergesondheidsplan",
+      "Aanvaar dat eende elke bosluis verwyder",
+      "Behandel elke dier sonder om die probleem te kontroleer of advies te kry"
+     ],
+     "correct": 1,
+     "rationale": "Voëls eet dalk bosluise, maar dit bewys nie dat hulle betroubare beskerming teen bosluise of die siektes wat bosluise dra, bied nie."
+    },
+    {
+     "q": "Hoenders het agter die bokke kos gesoek. Wat moet die boer aan wurms by die bokke doen?",
+     "options": [
+      "Gaan voort met gesondheidskontroles en die parasietplan wat met 'n diergesondheidsadviseur ooreengekom is",
+      "Staak alle wurmkontroles omdat daar hoenders was",
+      "Aanvaar dat hoendermis elke wurmeier doodmaak",
+      "Aanvaar dat die skuif van die trop behandeling altyd onnodig maak"
+     ],
+     "correct": 0,
+     "rationale": "Hoenders is nie 'n bewese plaasvervanger vir wurmbeheer by bokke nie. Weidingsbestuur en diergesondheidskontroles moet saamwerk."
+    }
+   ],
+   "infographicAlt": "Gekoopte voer kom die plaas binne. Diere produseer mis, sommige voedingstowwe keer deur volledig gekomposteerde mis na die groeigebied terug, en kos en ander produkte verlaat die plaas."
+  }
+ ]
+}

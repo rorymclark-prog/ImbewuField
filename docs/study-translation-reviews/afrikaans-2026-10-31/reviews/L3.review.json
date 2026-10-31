@@ -1,0 +1,16 @@
+{
+  "unit": "L3",
+  "okCount": 347,
+  "items": [
+    {
+      "index": 194,
+      "path": "small-livestock/small-livestock-l1/keyPoints/2",
+      "verdict": "repair",
+      "english": "Only put chickens in a bed after harvest — never around young seedlings",
+      "draft": "Sit hoenders net ná die oes in 'n bedding — nooit rondom jong saailinge nie",
+      "backtranslation": "Put chickens in a bed right after the harvest — never around young seedlings",
+      "problem": "\"net ná die oes\" reads naturally as \"just/right after the harvest\" (the draft itself uses \"Net nadat\" for \"Right after\" in quiz option 197), so the limit \"only after harvest\" is lost.",
+      "corrected": "Sit hoenders slegs ná die oes in 'n bedding — nooit rondom jong saailinge nie"
+    }
+  ]
+}

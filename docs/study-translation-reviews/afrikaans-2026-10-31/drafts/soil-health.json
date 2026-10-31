@@ -1,0 +1,115 @@
+{
+ "id": "soil-health",
+ "title": "Grondgesondheid en kompos",
+ "description": "Bou lewende grond met kompos, deklaag, dekgewasse en wurmplase.",
+ "lessons": [
+  {
+   "id": "soil-health-l1",
+   "title": "Verstaan jou grond: die fondament van alles",
+   "body": "Grond bevat baie soorte lewende organismes. Bakterieë en swamme help om organiese materiaal af te breek en voedingstowwe te hersirkuleer.\n\nSommige swamme help wortels om voedingstowwe op te neem. Wurmkanale kan help dat water en lug die grond binnedring.\n\nKyk na wortels, grondstruktuur en waterbeweging, sowel as sigbare grondlewe.\n\nSit grond en water in 'n deursigtige fles, met 'n bietjie geskikte dispergerende wasmiddel. Maak dit toe en skud dit, en laat dit dan ongestoord staan.\n\nSand sak eerste. Slik sak daarna, terwyl klei baie langer in die water kan bly sweef.\n\nDit is 'n rowwe leeroefening. Klonte en klei wat nog nie gesak het nie, kan jou mislei; gebruik 'n grondlaboratorium wanneer akkurate tekstuur nodig is.\n\n'n Dik sandlaag onder troebel water vertel jou nog nie die finale verhoudings nie. Sommige fyn deeltjies kan steeds in die water sweef.\n\nVergelyk die lae wat gesak het, en voel die grond op die land.\n\nTeken aan wat jy sien en wat onseker bly. Moenie op grond van net een fles watergee of grondbehandelings voorskryf nie.\n\nVerdigting, swak dreinering en verlies aan organiese materiaal kan wortels en grondlewe beperk.\n\nBleek kleur of min wurms bewys nie dat chemikalieë die grond doodgemaak het nie. Wurmaktiwiteit verander ook met vog en seisoen.\n\nSoek na patrone oor die hele land. Kontroleer die bestuursgeskiedenis, dreinering en plantgroei voordat jy 'n oplossing kies.",
+   "keyPoints": [
+    "Gebruik verskeie leidrade om die grond se toestand te beoordeel",
+    "Grondkleur en wurmtellings alleen diagnoseer nie die oorsaak van 'n probleem nie",
+    "'n Flesoefening gee 'n rowwe aanduiding van tekstuur, nie 'n volledige grondtoets nie",
+    "Kontroleer dreinering, wortels en bestuursgeskiedenis voordat jy 'n oplossing kies"
+   ],
+   "quiz": [
+    {
+     "q": "'n Grondfles het steeds troebel water bo die sandlaag. Wat moet die boer aflei?",
+     "options": [
+      "Die grond het beslis minder water nodig",
+      "Fyn deeltjies kan steeds in die water sweef; meer waarneming is nodig",
+      "Al die klei het reeds gesak",
+      "Die gewas het beslis gips nodig"
+     ],
+     "correct": 1,
+     "rationale": "Troebel water kan fyn deeltjies bevat wat nog nie gesak het nie. Een vroeë waarneming kan nie die finale verhoudings of die regte behandeling vasstel nie."
+    },
+    {
+     "q": "'n Boer kry verdigte grond en min wurms. Wat is die nuttige volgende stap?",
+     "options": [
+      "Aanvaar dat elke grondorganisme dood is",
+      "Voeg 'n behandeling by sonder om die terrein na te gaan",
+      "Kontroleer dreinering, wortels, vog en bestuursgeskiedenis",
+      "Gee op, want die grond kan nie verbeter nie"
+     ],
+     "correct": 2,
+     "rationale": "Verskeie waarnemings help om 'n probleem te identifiseer. Wurmaktiwiteit wissel met toestande, so min wurms alleen bepaal nie die oorsaak nie."
+    }
+   ],
+   "infographicAlt": "'n Deursnee van grond wys donker bogrond bo bleek ondergrond, met twee wurms. Langsaan sak grond in 'n fles in drie lae — sand, slik en klei."
+  },
+  {
+   "id": "soil-health-l2",
+   "title": "Maak en gebruik kompos",
+   "body": "Kompos is organiese materiaal wat onder beheerde toestande afgebreek is.\n\nVoltooide kompos kan grondstruktuur verbeter en voedingstowwe bydra.\n\nDie tyd voordat kompos gereed is, wissel met materiale, vog, lug en temperatuur. 'n Provinsienaam of 'n vaste aantal weke is nie 'n toets of dit gereed is nie.\n\nMeng droë bruin materiaal met vars groen materiaal. Vermy dik, nat lae wat lug uithou.\n\nAs die hoop slymerig word of sterk na ammoniak ruik, voeg droë bruin materiaal by en draai dit om.\n\nKontroleer vog en lug soos die hoop verander; een resep pas nie by elke mengsel van materiale nie.\n\n'n Warm middel bewys nie dat elke deel van 'n hoop behandel is nie. Tyd, temperatuur en bestuur maak almal saak.\n\nHou vleis, suiwel, siek plante, troeteldiermis en besmette materiale uit hierdie eenvoudige huishoudelike stelsel.\n\nMoenie aanvaar dat tuiskompostering elke onkruidsaad of siekte-organisme vernietig nie. Gebruik 'n erkende proses waar sanitasie vereis word.\n\nHou wattle-saadpeule uit die komposhoop. 'n Gewone hoop sorg dalk nie dat elke saad sy kiemkrag verloor nie.\n\nGebruik slegs skoon, onbehandelde materiale. Bas breek stadig af; sy naam alleen is nie bewys dat dit vry van besmetting is nie.\n\nKontroleer die hoop en draai dit om wanneer dit meer lug of vermenging nodig het. Hou dit klam eerder as deurdrenk.",
+   "keyPoints": [
+    "Balanseer bruin materiaal, groen materiaal, vog en lug",
+    "'n Warm middel bewys nie dat die hele hoop gesaniteer is nie",
+    "Hou saadpeule en besmette materiale uit",
+    "Beoordeel of dit gereed is aan die kompos se toestand, nie aan 'n vaste streeksrooster nie"
+   ],
+   "quiz": [
+    {
+     "q": "'n Boer se komposhoop ruik sterk na ammoniak en is nat en slymerig. Hoe los jy dit op?",
+     "options": [
+      "Voeg meer stikstofryke groen materiaal by",
+      "Voeg meer droë koolstofmateriaal soos strooi by en draai die hoop om",
+      "Hou op om dit om te draai en laat dit afkoel",
+      "Voeg meer water by — die reuk beteken dit is te droog"
+     ],
+     "correct": 1,
+     "rationale": "'n Nat, slymerige hoop het dalk meer lug en droër materiaal nodig. Voeg droë bruin materiaal by en draai die hoop om om dit oop te maak. 'n Ammoniakreuk kan ook op te veel stikstofryke materiaal dui. Kontroleer dat die hoop klam bly, nie papnat nie."
+    },
+    {
+     "q": "Hoekom hou jy wattle-saadpeule uit 'n gewone komposhoop?",
+     "options": [
+      "Bas maak elke hoop te warm",
+      "Sommige sade kan oorleef en versprei wanneer die kompos gebruik word",
+      "Peule lok altyd termiete",
+      "Peule stel 'n gas vry wat elke grondorganisme doodmaak"
+     ],
+     "correct": 1,
+     "rationale": "'n Gewone hoop stel dalk nie elke saad bloot aan toestande wat sy kiemkrag vernietig nie. As jy peule uitsluit, vermy jy dat hulle saam met die kompos versprei word."
+    }
+   ],
+   "infographicAlt": "'n Komposhoop wat oopgesny is, wys afwisselende lae droë bruin materiaal en vars groen materiaal, hitte wat uit die middel opstyg, en 'n pyl wat wys hoe dit omgedraai word."
+  },
+  {
+   "id": "soil-health-l3",
+   "title": "Deklaag en dekgewasse: beskerm en bou grond",
+   "body": "Bedek kaal grond met geskikte skoon deklaag, soos strooi, droë gras of houtspaanders.\n\nDeklaag kan verdamping verminder, die impak van reën versag en onkruid onderdruk.\n\nHou dit weg van stamme en stingels. Kontroleer die vog daaronder en pas die laag aan; meer deklaag is nie altyd beter nie.\n\nDekgewasse kan grond tussen hoofgewasse beskerm. Kies hulle volgens die plaaslike weer, beskikbare water en die volgende aanplanting.\n\nDie kursus se voorbeelde sluit hawer, lupiene, sunn hemp en cowpea in. Kontroleer of hulle plaaslik geskik is voordat jy saai.\n\nPeulgewasse het geskikte bakterieë en groeitoestande nodig om stikstof te bind. Voedingstowwe in hul plantreste word beskikbaar soos die materiaal ontbind.\n\nWurmplase kan geskikte kosafval en beddingmateriaal in wurmgietsels omskep. Kontroleer die bak eerder as om 'n vaste oesdatum te verwag.\n\nVloeistof wat natuurlik uit 'n wurmbak dreineer, word uitloogsel genoem. Dit is nie dieselfde as voorbereide wurmgietseltee nie.\n\nUitloogsel kan skadelike organismes of stowwe bevat. Moenie dit op eetbare plante gebruik nie, en moenie aanvaar dat verdunning dit veilig maak nie.\n\n'n Land op die Hoëveld wat ná die mielie-oes kaal gelaat word, staar twee hoofrisiko's in die gesig.\n\nWinterwind kan droë bogrond wegwaai.\n\nDie eerste swaar lentestorm kan kaal grond tref en die oppervlak en struktuur daarvan beskadig. As water oor die land loop, kan dit losgemaakte grond wegspoel.\n\nDekgewasse, deklaag en organiese materiaal kan help om grond op sy plek te hou en dit lewend te hou.",
+   "keyPoints": [
+    "Beskerm blootgestelde grond met geskikte bedekking",
+    "Hou deklaag weg van stamme en stingels",
+    "Kies dekgewasse volgens plaaslike water, weer en die gewas wat volg",
+    "Uitloogsel uit 'n wurmbak is nie outomaties veilige kunsmis nie; hou dit weg van eetbare plante"
+   ],
+   "quiz": [
+    {
+     "q": "'n Boer op die Hoëveld oes mielies in April en laat die land die hele winter kaal. Wat is die twee hoofrisiko's?",
+     "options": [
+      "Oorverhitting in die winterson en waterversadiging deur reën",
+      "Ryp maak grondlewe dood en onkruid neem vroeg oor",
+      "Winderosie van droë bogrond en verlies aan grondstruktuur deur die impak van lentestorms",
+      "Die grond se pH daal en stikstof bou op"
+     ],
+     "correct": 2,
+     "rationale": "Kaal grond is blootgestel aan winterwind, wat droë bogrond kan wegwaai. Die impak van reëndruppels kan die oppervlak beskadig; waar water oor die land loop, kan dit losgemaakte grond wegspoel."
+    },
+    {
+     "q": "Wat moet jy onthou oor vloeistof wat uit 'n wurmbak dreineer?",
+     "options": [
+      "Dit is altyd veilig op slaaiblare",
+      "Dit kan skadelike organismes of stowwe bevat; verdunning is nie 'n veiligheidswaarborg nie",
+      "Dit is identies aan voltooide wurmgietsels",
+      "'n Vaste verdunning maak elke vloeistof veilig"
+     ],
+     "correct": 1,
+     "rationale": "Uitloogsel is vloeistof wat natuurlik uit 'n wurmbak dreineer. Die samestelling daarvan wissel, so dit moet nie voorgestel word as 'n gewaarborgde veilige voeding vir eetbare gewasse nie."
+    }
+   ],
+   "infographicAlt": "Twee kolle grond onder dieselfde son: kaal grond wat gekraak en droog is, en grond onder deklaag wat steeds donker en klam is."
+  }
+ ]
+}

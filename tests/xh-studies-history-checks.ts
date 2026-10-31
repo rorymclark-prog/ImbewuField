@@ -3,6 +3,7 @@ import { createHash } from 'node:crypto';
 import { readFileSync, statSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { afStudiesSourceBefore } from './af-studies-history-checks.ts';
 
 // isiXhosa Studies (23 Oct 2026): the Studies page joins isiXhosa to the source-paired regional
 // lesson path (Sesotho, Xitsonga, Tshivenda) — its draft badge, notices, module-card English
@@ -11,7 +12,9 @@ import { fileURLToPath } from 'node:url';
 // byte-exact, so this layer keeps the exact wave 17 bytes as a fixture (the wave 17 layer and every
 // older owner see their predecessor through it), pins the live file byte-exact itself and holds the
 // named markers that distinguish the two. Round 6 (25 Oct) adds the app-guide card titles and
-// summaries, looked up by their exact English (lib/locales/xh-inline/g26-study-content.ts).
+// summaries, looked up by their exact English (lib/locales/xh-inline/g26-study-content.ts). The
+// Afrikaans Studies layer now sits on this one, so the live file is read through
+// tests/af-studies-history-checks.ts and this layer sees its own successor.
 const root = fileURLToPath(new URL('../', import.meta.url));
 const sha = (v: string | Uint8Array) => createHash('sha256').update(v).digest('hex');
 const read = (file: string) => readFileSync(resolve(root, file));
@@ -45,7 +48,7 @@ export function ensureXhStudiesCurrent(): void {
   for (const [file, row] of Object.entries(files)) {
     const before = read(row.beforePath);
     assert.equal(sha(before), row.beforeSha256, file + ': isiXhosa Studies predecessor fixture may not change');
-    const live = read(file);
+    const live = afStudiesSourceBefore(file, read(file));
     assert.equal(live.length, row.afterBytes, file + ': complete live isiXhosa Studies successor size');
     assert.equal(sha(live), row.afterSha256, file + ': complete live isiXhosa Studies successor, including every unlisted byte');
     const a = before.toString(), b = live.toString();
@@ -70,6 +73,7 @@ export function xhStudiesSourceBefore<T extends string | Uint8Array>(file: strin
   const row = files[file];
   if (!row) return supplied;
   ensureXhStudiesCurrent();
+  supplied = afStudiesSourceBefore(file, supplied);
   if (sha(supplied) !== row.afterSha256) return supplied;
   const before = beforeFiles.get(file)!;
   return (typeof supplied === 'string' ? before.toString() : Buffer.from(before)) as T;

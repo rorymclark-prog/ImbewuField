@@ -79,8 +79,13 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
   and error/offline pages carry their own Afrikaans tables.
 - **Kept English for Afrikaans on purpose:** report and invoice documents, report summaries and PDF labels
   (pinned by the report-header and report-costs tests).
-- **Still to do:** Studies lessons, slide decks and the Manual; a blind back-translation review; the
-  fluent-review hand-off list.
+- **Blind review of safety, money and consent drafts:** 1,936 drafts back-translated by six independent
+  reviewers before seeing the English; 44 repairs applied (`docs/translation-reviews/afrikaans-ui-2026-10-31/`).
+- **Studies lessons:** all 10 modules (33 lessons, 646 fields) as source-paired drafts
+  (`lib/course-translation-drafts-af.ts`, built by `scripts/build-af-course-drafts.mjs`); three blind
+  reviewers, 3 repairs (`docs/study-translation-reviews/afrikaans-2026-10-31/`). The Studies page gets an
+  Afrikaans history layer (`tests/af-studies-history-checks.ts`).
+- **Still to do:** Studies slide decks and the Manual; the fluent-review hand-off list.
 
 ### 25 Oct 2026 — isiXhosa phases 4–5: reports, crops, production data and Study content (PR #1090)
 All unreviewed machine drafts keyed by the exact English (`lib/locales/xh-inline/g18`–`g26`); English

@@ -1,0 +1,260 @@
+0 | Introduction to permaculture
+1 | Ethics, principles and patterns — the foundation for everything else you are going to build.
+2 | The three ethical principles: Earth Care, People Care, Fair Share
+3 | Permaculture rests on three ethical principles. Earth Care means that you treat soil, water, plants and animals as living systems that you must protect, not as resources to use up. People Care means that your family's needs come first, then those of your community. Fair Share means that you take only what you need and give the surplus — seed, food, water, knowledge — back to the system.
+4 | These are not abstract ideas. A farmer who sells every egg and every vegetable, but keeps back nothing for the family's table, skips People Care. A community that fences off a shared spring breaks Fair Share.
+5 | Ethics matter because they help you decide when there is no rulebook — a neighbour who asks after a drought to let cattle graze, a flood that damages your swales. Build these three into the way you think, before you build anything on the land.
+6 | The three ethical principles as three linked circles of the same size: a hand holding soil for Earth Care, two people for People Care, and a basket being passed from hand to hand for Fair Share.
+7 | Earth Care: protect soil, water and biodiversity
+8 | People Care: your family's needs come before production for the market
+9 | Fair Share: give surplus back to the system — seed, water, food, knowledge
+10 | Ethics guide decisions when there is no rulebook
+11 | A farmer sells all his surplus maize, but keeps nothing back for compost or to save seed. Which ethical principle is he neglecting most?
+12 | Only Earth Care
+13 | Only People Care
+14 | Fair Share — he gives nothing back to the system
+15 | All three equally
+16 | Fair Share means that you give back something of what you take — as seed, compost or food for others. If you sell everything and keep nothing back, you break that cycle.
+17 | Your borehole supplies your household. Neighbours also ask for water. Which action reflects all three ethical principles best?
+18 | Sell access to the highest bidder
+19 | Keep all the borehole water for a larger irrigation area
+20 | Find out whether sharing is permitted and whether the borehole can serve all the users. Only then agree how to share fairly, and keep monitoring the water level.
+21 | Close the borehole just to conserve groundwater
+22 | First find out what water use is permitted and whether the source can serve all the users without extracting too much water. If sharing is permitted and there is enough water, agree how to share fairly. Monitoring helps you notice change; it does not give permission to take more water.
+23 | Twelve principles: Design with nature
+24 | David Holmgren set out twelve design principles in Essence of Permaculture. Bill Mollison and David Holmgren together developed the permaculture concept. Three useful starting points for this lesson are: observe and interact — watch your land for a full season before major earthworks; catch and store energy — notice rain, sun and biomass before it leaves your property; and use edges and value the marginal areas — a hedge line or a strip along a path can be a useful place to observe.
+25 | Others worth knowing: produce no waste (food scraps become compost, compost becomes soil), use small and slow solutions (a bucket can water a bed without electricity), and use and value diversity. Hail damage to maize depends on the storm and the crop's growth stage.
+26 | Choose two or three principles that address your biggest problem and apply them thoroughly. The rest becomes clear by itself as you go along.
+27 | Twelve design principles arranged as segments around a seedling in the middle, each as a simple picture — an eye for observation, a drop for catching water, a sun for energy, a loop for returning waste.
+28 | Observe your land for a full season before major earthworks
+29 | Catch and store rain, sun and biomass before it leaves your property
+30 | Edges and marginal areas can be useful places to observe what grows well
+31 | Hail damage to maize depends on the storm and the crop's growth stage
+32 | A farmer wants to dig swales to catch rainwater. What should she do first, according to 'observe and interact'?
+33 | Dig immediately after the first good rain
+34 | Watch for at least one wet season where water flows and forms puddles
+35 | Copy a neighbour's layout of swales
+36 | Assume that the same design for swales fits every site
+37 | A wet season shows more than one storm, but observation is only a first step. Check the soil, slope, drainage and safe overflow routes with a trained local adviser before you dig.
+38 | Which layout applies 'integrate rather than segregate' best?
+39 | Chickens in a pen far from the garden
+40 | Garden, fruit trees and a chicken run laid out so that chickens use an empty bed after the harvest, after which the farmer checks safe management before edible crops come back
+41 | Separate camps for each crop
+42 | All animals are kept out of the cultivated zone
+43 | Integration lets each element work for its neighbours — here chickens clean up pests and add fertility, instead of sitting idle in a fixed pen. Fresh manure can carry germs, so check safe management before edible crops come back.
+44 | Zones and sectors: Organise your farm by energy
+45 | Zones and sectors help you to reduce wasted labour. Zones run from 0 to 5, according to how often you go there. Zone 0 is the house. In this example Zone 1 is near the house and contains what you pick often — herbs, salad greens. Zone 2 is the main garden and chicken run, which is visited once or twice a day. Zone 3 is the main field, which is visited weekly. Zone 4 is semi-wild — fruit trees and fodder that need attention now and then. Zone 5 is left wild.
+46 | Sectors are the energies that arrive from outside — sun, wind, rain, flood, fire. Look where strong wind comes from on your farm. Records from a nearby weather station can help you check the wind direction. Look where rainwater enters your land and flows over it. Draw arrows for what you observe.
+47 | Sketch zones and sectors on paper, and you have the skeleton of your design.
+48 | Illustrated example farm: numbered markers 0 to 5 follow a winding footpath from the house and the nearby garden, past chickens and a field, to trees and a wilder area along the river. The markers are examples, not fixed boundaries or distances.
+49 | In this example Zone 1 near the house contains herbs that are picked often
+50 | Zones organise labour according to how often you must go there
+51 | Sectors map incoming sun, wind, rainwater, flood and fire
+52 | A simple sketch of zones and sectors is enough to start designing
+53 | You plant herbs in Zone 3, the main field far from the house. What problem does this create?
+54 | Herbs grow too big
+55 | The extra walking can mean that you pick or check them less often
+56 | Herbs cross-pollinate with the main crops
+57 | Zone 3 gets too much sun for herbs
+58 | Place a crop that you pick often near a path that you walk daily. A bed far away means more walking and is perhaps checked less often.
+59 | You notice that damaging wind comes from the north-west on a farm on the Highveld. Where should a windbreak go?
+60 | South-eastern boundary
+61 | North-western boundary, between the wind and the crops
+62 | Middle of the property
+63 | Windbreaks are not needed, because winds are seasonal
+64 | A windbreak works by standing between the wind source and what the wind would damage — that is why it belongs on the side the wind actually comes from.
+65 | Reading the landscape
+66 | Identify water flow, sun angles, wind patterns and topography on your site.
+67 | Understand water flow: Where rain goes on your land
+68 | Before you catch water, learn where it already goes. Watch from a safe place during heavy rain. When it is safe afterwards, walk over your land. Look for erosion rills/runnels, places where water fans out, where it forms puddles and where it leaves your property. Some excess water needs a safe route away so that it does not cause damage.
+69 | An A-frame level can help you mark points at the same height and follow a contour line. Its marks are an observation, not a design or approval for earthworks. Before you dig a swale, dam or other structure, have the site assessed. Soil, slope, drainage, storm flow and a safe overflow route are all important. Ask a trained local adviser.
+70 | There is not one placement rule for every slope. Observe where water moves and collects. Poorly laid-out contours can worsen erosion, and soil that takes up water slowly can hold too much water. Choose any waterworks according to the site and plan a safe route for excess water.
+71 | A hillside seen from the side, with arrows showing where rain runs down the slope, where it collects in a hollow and where it sinks in where the ground becomes more level.
+72 | Watch from a safe place during rain, and then walk over the land when it is safe
+73 | An A-frame can mark points at the same height, but it does not show whether earthworks are suitable
+74 | Waterworks and safe overflow routes need a site assessment
+75 | Some excess water needs a safe route away to prevent damage
+76 | What can an A-frame level help you find?
+77 | Points at the same height along a contour
+78 | Whether a swale can be built safely on this slope
+79 | How much storm water the soil can absorb
+80 | Where a dam's overflow should be built
+81 | An A-frame can help to mark points at the same height. It does not assess the soil, drainage, storm flow or whether earthworks are suitable.
+82 | You see fast runoff on a sloping site in KZN. What should you do before you dig a water structure?
+83 | Place it as high as possible on the slope
+84 | Check the soil, slope, drainage and storm flow, and plan a safe overflow together with a trained local adviser
+85 | Place it wherever the water first appears
+86 | Follow the same rule of top, middle and bottom that is used on other farms
+87 | A placement rule cannot show whether a structure fits the site. Poorly laid-out contours can worsen erosion, and excess water needs a safe route.
+88 | Sun angles, shade and aspect: Get the most out of sunlight
+89 | In large parts of South Africa, especially in winter, the sun is in the north. Its path changes with the season and your location. North slopes often get more sun and can be warmer and drier. South slopes are often cooler and damper. Frost can collect in low hollows where cold air settles. Watch your own site before you choose where to plant tender crops or place buildings.
+90 | The winter sun is lower and further north than the summer sun. A wall or shade net can shade a bed for longer in winter than in summer. Before you place anything permanent, stand on the spot on a winter day at 8 a.m., noon and 4 p.m. and look where the shadow falls.
+91 | Papaya and young citrus are sensitive to frost. Keep tender plants out of known low frost spots. Observe local frost before you plant.
+92 | A slope with the sun in the north. Shadows of the building and the tree fall south, down the slope.
+93 | North slopes often get more direct sun; south slopes are often cooler and damper
+94 | The winter sun is lower and further north; check local shade before you build
+95 | Cold air can collect in low hollows; aspect is only one site factor
+96 | Check local frost before you place tender papaya or young citrus
+97 | Where should a farmer first look for a place for a frost-sensitive young papaya on a smallholding on the Highveld?
+98 | The lowest point where cold air collects
+99 | A cold, shaded hollow
+100 | A sunny place outside a known frost hollow, after the site's frost pattern has been checked
+101 | A place chosen without checking the site
+102 | Cold air can collect in low places. A sunnier place outside a known frost spot can reduce the risk, but local frost observations should determine the final place.
+103 | A farmer plans shade net on the north side of her garden. What should she check before she fastens it?
+104 | Where its shadow falls on the bed in winter
+105 | Whether it diverts frost
+106 | Whether the sun is always directly overhead at noon
+107 | Only whether it reduces evaporation in summer
+108 | The winter sun is lower and further north. Shade net can change the hours of sun on a bed. Check the actual shadows at 8 a.m., noon and 4 p.m. before you fasten it.
+109 | Wind, frost and topography: Read the invisible forces
+110 | Wind can damage crops on a smallholding. The direction and strength of damaging wind change with the region, the season and your site's ridges and gaps. Walk over the land on windy days. Note where the wind comes from and what it affects. Check local weather records before you decide where shelter is needed.
+111 | On a clear, windless night cold air can flow down the slope and collect in low places. These places can be colder than nearby slopes. Frost patterns also depend on the site. Compare possible places through the local frost season. Check local records of minimum temperatures where they are available. If records are not available, keep observing over cold nights and ask a local agricultural adviser before you choose a permanent place for tender seedlings.
+112 | Frost is ice that forms on a cold surface. Mist/fog alone does not show that ice has formed, and frost damage can happen without visible ice. Look for ice and plant damage, compare low ground with slopes, and check minimum temperatures where you can. Mark places where cold or damage lasts longest. Keep sensitive plants away from the cold spots that you observe.
+113 | For tomatoes troubled by late blight, airflow and morning sun can help leaves dry. Late blight can still spread during prolonged cool, damp weather. Just moving a bed will not control it; also get local advice on crop health.
+114 | A farm seen from above, with arrows showing the wind direction, cold air draining down the slope to a frost hollow, and the direction of the slope.
+115 | Observe the direction of damaging wind on your site before you place shelter
+116 | Cold air can run down the slope on clear, windless nights and collect in low ground
+117 | Compare plant damage and temperatures after cold nights across your whole site; visible frost is not the only sign
+118 | Airflow and drying can help reduce wet leaves, but do not on their own control late blight
+119 | Where should a farmer first look when he places a nursery for frost-sensitive seedlings on a smallholding on the Highveld?
+120 | A known frost hollow at the bottom of the valley
+121 | An exposed ridge, without checking the wind
+122 | A sunny, sheltered place outside an observed frost hollow, after the site's pattern on cold nights has been checked
+123 | The place with the most shade, without checking frost
+124 | Cold air can settle in low places on clear, windless nights. Compare possible nursery places through the local frost season. Check local records of minimum temperatures or ask a local agricultural adviser before you make a permanent choice. Visible frost is not the only sign of frost damage, and no place on a hillside guarantees that it will stay free of frost.
+125 | A farmer in KZN's tomatoes repeatedly get late blight during cool, damp periods. Which bed placement can help leaves dry, together with local advice on crop health?
+126 | A sealed, unventilated tunnel
+127 | A place with good airflow and morning sun
+128 | A low place near a dam
+129 | A shaded south wall
+130 | Airflow and morning sun can help leaves dry. Late blight is favoured by prolonged cool, damp weather, and just moving the bed is not a complete control plan.
+131 | Make a simple site map: Your design begins on paper
+132 | For a site map you need paper, a measuring tape, a compass and time to walk over your land. Walk along the boundary and make a first sketch. Mark it 'not to scale' until you have checked the distances. Mark north. Add the house, trees, water, roads and fences. Draw arrows for summer and winter wind, shade patterns and where water flows in rain.
+133 | Note where frost lies longest, where the soil smells damp in dry months, and where khakibos or blackjack grows densely. These plants can grow in disturbed places, but their presence alone does not show whether the soil is compacted. Check the soil before you decide what the spot means for your design.
+134 | Lay your zones and sectors over the same sketch. Update it season by season. A pencil sketch that you actually use is worth more than a perfect one that was drawn only once.
+135 | A hand-drawn site map on paper showing north, the buildings, the water and the boundary — rough, as a farmer would draw it.
+136 | For a site map you need only paper, a measuring tape, a compass and observation
+137 | Mark water flow, wind direction, frost spots and existing vegetation
+138 | Mark dense growth of khakibos or blackjack for a closer examination of the soil; it does not prove compaction
+139 | Lay zones and sectors over your base map to complete the skeleton of the design
+140 | You see dense blackjack growing in one corner every year. What should you do next?
+141 | The soil there is unusually fertile
+142 | That area has a higher water table
+143 | Mark the spot and check the soil; the plant alone cannot show compaction
+144 | Blackjack grows only in shade, so there is a hidden seep
+145 | Blackjack can grow in disturbed soil, but its presence alone does not diagnose compaction. Observe and check the soil before you decide what the spot means for your design.
+146 | Why should you mark summer and winter wind separately on your site map?
+147 | Wind direction never changes in SA
+148 | They can come from different directions, which changes where windbreaks and tender crops should go
+149 | Wind is only important in winter on the Highveld
+150 | Wind direction affects only buildings
+151 | Seasonal shifts in the wind mean that a windbreak or crop placement that works for one season can be wrong for the other — that is why both must be marked separately.
+152 | Water harvesting
+153 | Swales, berms, dams, rainwater tanks and greywater — slow, spread and let every drop sink in.
+154 | Swales and berms: Slow water down the slope
+155 | One kind of swale is a level ditch on the contour. It slows and spreads runoff so that part of the water can sink into suitable soil. Other swales are designed with a slight, controlled fall to lead excess water slowly to a safe outlet. Which approach fits your land depends on the soil, slope, drainage and storm flow. Have a trained local adviser check the line, overflow and receiving point before you dig.
+156 | The excavated soil forms a berm on the lower side, where trees can be planted when the site design is suitable.
+157 | Trees planted there can use moisture stored in the soil after rain, depending on the site.
+158 | Heavy rain can fill a swale faster than water sinks into the soil. Plan a safe overflow before you dig.
+159 | The route may not let the slope erode or send damaging water to a neighbour. A swale or dam lower down must be able to receive it safely.
+160 | Ask a trained local adviser to assess the soil, slope and storm flow. A picture is not a construction design.
+161 | Slope alone does not tell you whether a swale is suitable. Soil, drainage, unstable ground and the water arriving from above are all important.
+162 | Keep good ground cover. Get a local assessment before you dig on steep, wet or unstable ground. Grass barriers/strips and terraces also need a design that fits the site.
+163 | Concept cross-section of a level swale with a raised berm below it. Arrows show how runoff slows and spreads; infiltration depends on the soil and the site.
+164 | A level swale can hold runoff for infiltration on a suitable site; other swales need a designed fall and a safe outlet
+165 | Keep good ground cover and plan a safe overflow
+166 | Assess soil, drainage, slope and storm flow before you dig
+167 | A concept picture is not a construction design
+168 | A farmer has planned a level swale. After heavy rain one end holds most of the water. What should the farmer check before the earthwork is changed?
+169 | Whether the ditch can be made deeper without a site check
+170 | The intended design and measured heights together with a trained local adviser; there may be an unintended low point
+171 | Whether a new dam at the lowest point will catch every overflow
+172 | Whether the soil should be compacted to stop all infiltration
+173 | A level contour design should spread water over its whole length. Uneven filling can indicate an unintended low point, but some swales are deliberately designed with a fall to a safe outlet. Check the actual design, soil and overflow route before you change it.
+174 | A farmer wants to control erosion on steep land. What should she do before she digs?
+175 | Standard swales dug as deep as possible
+176 | Keep the soil covered and get a site assessment for suitable erosion control
+177 | A large dam at the bottom to catch all runoff
+178 | Compact the soil surface with a roller
+179 | Slope alone is not enough to choose an earthwork. Soil, drainage, stability and storm flow must also be assessed.
+180 | Farm dams and ponds: Store water for the dry season
+181 | A dam or pond can store runoff, but how much water is available depends on local rain, the catchment area, losses and how much water you use.
+182 | Rainy seasons differ across South Africa. Use local records and plan for dry periods; a full dam is not guaranteed.
+183 | Before you change a watercourse or build storage works, check with the water authority what authorisation is needed.
+184 | A dam needs a site investigation and a design by a suitably qualified person. Runoff from the catchment, soil, foundations, downstream risk and a safe overflow are all important.
+185 | Do not assume that annual rainfall tells you how big a flood will be or how much water you will be able to store.
+186 | Uncontrolled overflow can erode the wall and make it break. Plan a safe route for excess water before construction.
+187 | Water can be lost through evaporation and seepage. Check the water level and look for leaks or erosion.
+188 | Keep the overflow open and maintain the wall cover specified in the design. Do not plant trees on an earth dam wall.
+189 | Animals can damage walls/banks and add manure to the water. Their presence does not make the water clean or safe.
+190 | A farm dam cut through in the middle: water flowing in on one side, the stored water, an overflow at the upper edge for excess water, and a planted wall that holds the soil.
+191 | A dam needs a site assessment and a qualified design
+192 | Design a safe overflow before construction
+193 | Check the required water authorisations before you build
+194 | Maintain the wall cover and keep trees off an earth dam wall
+195 | A farmer builds a dam wall without an overflow. After an exceptional storm the dam overflows. What is the likely result?
+196 | The water irrigates lower fields in a beneficial way
+197 | The water runs over the wall and erodes it, with the risk of a catastrophic breach
+198 | The dam stays full and the overflow drains without damage
+199 | The storage capacity increases permanently
+200 | Without a designed overflow route excess water finds its own way over the wall — and that uncontrolled flow is what erodes the wall and eventually makes it break.
+201 | Which action helps to protect an earth dam?
+202 | A deep, exposed dam without vegetation on the walls
+203 | Maintain the designed wall cover and keep the overflow open
+204 | A full concrete lining and a plastic cover
+205 | A larger surface area to spread evaporation evenly
+206 | An open overflow and well-maintained walls help the dam work as it was designed. Trees must not be planted on an earth dam wall.
+207 | Rainwater tanks and roof catchment: Collect and protect water
+208 | Your roof can catch rainwater. The amount depends on the roof area, rainfall and losses.
+209 | Check whether the roof material is suitable for catching rainwater before you connect a tank.
+210 | Use the roof area as seen from above and local rainfall records. Then make allowance for water that misses the gutter, that is diverted or that overflows from a full tank.
+211 | An annual total does not tell you how much water will be available during a dry period. Compare the supply with the uses you plan.
+212 | Runoff from the roof can carry dust, droppings and other pollution. A first-flush diverter keeps part of the first runoff out of the tank.
+213 | How much water must be diverted depends on the roof and the system. Use the supplier's instructions for size and maintenance; there is not one volume for every roof.
+214 | A diverter does not make the remaining water safe to drink.
+215 | Tank size depends on the water demand, rain, roof area and how long dry periods last.
+216 | List the planned uses and estimate their water demand from your own records. Compare it through the seasons with the supply.
+217 | Plan what you will do when the stored water runs low. A province name alone cannot tell you what tank size you need.
+218 | Keep the tank closed, put mesh over openings against insects, and maintain the roof, gutters and diverter. Keep rainwater separate from drinking-water pipes.
+219 | Water that looks clear can still contain germs or chemicals. Ask the local health authority about testing and treatment that fit the planned use.
+220 | A basic filter alone is not a guarantee of drinking water. Water used on food crops also needs a safety assessment.
+221 | Rain running from a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.
+222 | Roof area, rain, water demand and losses determine how much useful storage capacity you have
+223 | Choose the size of the first-flush diverter for the roof and maintain it
+224 | Clear water can still contain germs or chemicals
+225 | Testing and treatment must fit the planned use
+226 | What information is needed to choose a rainwater tank?
+227 | Only the province where the farm is located
+228 | Roof area, rainfall pattern, water demand and catchment losses
+229 | Only the amount of rain in one storm
+230 | Only the price of the largest available tank
+231 | Tank planning should compare usable supply with water demand through wet and dry periods. One fixed regional size cannot do this.
+232 | Why does a first-flush diverter matter, even for tank water used only for irrigation?
+233 | It does not matter for irrigation, only for drinking water
+234 | The first flush water carries concentrated droppings, dust and pathogens that can contaminate edible crops
+235 | It is more acidic and changes the soil's pH over time
+236 | It prevents the tank becoming overfull in storms
+237 | Diverting early runoff can reduce pollution, but it does not guarantee that later water is safe. Assess the quality for the planned use.
+238 | Greywater: Check before reuse
+239 | Used household water can contain germs, salts, cleaning agents and other substances. Guidelines do not define every source in the same way. South African guidelines differ on kitchen water and laundry water.
+240 | Do not include toilet water, water from cloths, or water from washing a sick person or from animals in a reuse plan. Do not reuse water that contains harmful chemicals.
+241 | Before any reuse, ask the municipality and a qualified local sanitation adviser to check the exact source, the household's water and sanitation services, the planned use and the site. If this advice is not available or not clear, do not reuse the water.
+242 | A general picture is not a farm design. Soil and mulch do not disinfect wastewater. Keep it away from drinking-water plumbing and prevent contact with people or animals. Do not spray it, let it form puddles or let it run off the property into a street, drain or watercourse.
+243 | If a reuse system is already working and the water smells bad, forms puddles or harms plants, stop using it and get qualified local advice.
+244 | Water sources and greywater guidelines can differ
+245 | Check the source, service status, planned use and site locally before any reuse
+246 | Soil and mulch do not disinfect wastewater
+247 | Prevent contact, spraying, ponding, runoff and cross-connections with drinking water
+248 | What must happen before any household washing water is reused?
+249 | Lead it under mulch around a tree
+250 | Ask the municipality and a qualified sanitation adviser to check the source, service status, planned use and site
+251 | Use it if it looks clear
+252 | Use it only on plants that are not eaten raw
+253 | Guidelines differ on some water sources and on the service conditions for reuse. A qualified local check is needed before deciding whether any source and use is suitable or permitted.
+254 | Why should you check the exact water source and cleaning agents before you consider reuse?
+255 | All cleaning agents are safe if the water is diluted
+256 | The composition of the water and the effect of agents differ, so the actual source and agents must be assessed
+257 | The water can be reused when it has no smell
+258 | Mulch removes every harmful substance
+259 | Used water can contain different germs, salts and chemicals. Neither a clear appearance, nor the absence of smell, nor mulch proves that it is safe or suitable.
