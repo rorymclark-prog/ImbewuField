@@ -1,0 +1,32 @@
+{
+  "status": "unreviewed-machine-drafts",
+  "entries": [
+    {
+      "source": "Each map opens with recommended settings and keeps your choices as you switch sheets.",
+      "drafts": {
+        "zu": "Imephu ngayinye ivuleka ngezilungiselelo ezinconyiwe futhi igcina ukukhetha kwakho lapho ushintsha amashidi.",
+        "st": "Mmapa ka mong o bula ka di-setting tse kgothaletswang mme o boloka dikgetho tsa hao ha o fetola maqephe.",
+        "ts": "Mepe wun’wana ni wun’wana wu pfuleka hi swiyimiso leswi bumabumeriwaka naswona wu hlayisa leswi u swi hlawuleke loko u cinca maphepha.",
+        "ve": "Mapa muṅwe na muṅwe u vulea nga nzudzanyo dzi themendelwaho nahone u vhulunga zwe na nanga musi ni tshi shandula masiaṱari."
+      }
+    },
+    {
+      "source": "Check each map’s settings",
+      "drafts": {
+        "zu": "Hlola izilungiselelo zemephu ngayinye",
+        "st": "Hlahloba di-setting tsa mmapa ka mong",
+        "ts": "Kambela swiyimiso swa mepe wun’wana ni wun’wana",
+        "ve": "Ṱolani nzudzanyo dza mapa muṅwe na muṅwe"
+      }
+    },
+    {
+      "source": "Open Glossy and choose a sheet. Adjust its style, background or labels; your choices stay selected when you switch maps and return.",
+      "drafts": {
+        "zu": "Vula i-Glossy ukhethe ishidi. Lungisa isitayela, ingemuva noma amalebula; ukukhetha kwakho kuhlala kukhethiwe lapho ushintsha amamephu bese ubuya.",
+        "st": "Bula Glossy mme o kgethe leqephe. Fetola setaele, bokamorao kapa dileibole; dikgetho tsa hao di sala di kgethilwe ha o fetola dimmapa mme o kgutla.",
+        "ts": "Pfula Glossy u hlawula phepha. Cinca xitayele, le ndzhaku kumbe malebulu; leswi u swi hlawuleke swi sala swi hlawuriwile loko u cinca mimepe u tlhela u vuya.",
+        "ve": "Vulani Glossy ni nange siaṱari. Shandulani tshitaila, murahu kana madzina; zwe na nanga zwi dzula zwo nangwa musi ni tshi shandula mapa na u vhuya."
+      }
+    }
+  ]
+}

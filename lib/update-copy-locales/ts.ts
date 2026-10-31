@@ -1,6 +1,13 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Map defaults: docs/audits/2026-10-31/map-defaults-release-drafts.json; unreviewed.
+  "Each map opens with recommended settings and keeps your choices as you switch sheets.": "Mepe wun’wana ni wun’wana wu pfuleka hi swiyimiso leswi bumabumeriwaka naswona wu hlayisa leswi u swi hlawuleke loko u cinca maphepha.",
+  "Check each map’s settings": "Kambela swiyimiso swa mepe wun’wana ni wun’wana",
+  "Open Glossy and choose a sheet. Adjust its style, background or labels; your choices stay selected when you switch maps and return.": "Pfula Glossy u hlawula phepha. Cinca xitayele, le ndzhaku kumbe malebulu; leswi u swi hlawuleke swi sala swi hlawuriwile loko u cinca mimepe u tlhela u vuya.",
+
+  // Sheet fidelity: docs/audits/2026-10-31/ai-sheet-fidelity-release-drafts.json; unreviewed.
+  "AI map guidance separates earthworks from finished planting.": "Swiletelo swa mimepe ya AI swi hambanisa mintirho ya misava ni ku byala loku hetisisiweke.",
   // Field blocks: docs/audits/2026-10-31/field-block-release-drafts.json; unreviewed.
   "Draw named field blocks and fill them with beds using your own dimensions and path widths.": "Dirowa swiphemu swa nsimu leswi nga ni mavito kutani u swi tata hi mibedo u tirhisa mipimo ya wena ni ku anama ka tindlela.",
   "Keep a field open without beds and use both layouts in automatic crop planning.": "Siya xiphemu xa nsimu xi pfulekile xi nga ri na mibedo, kutani u tirhisa malulamiselo hamambirhi eka ku kunguhata swibyariwa loku tiendlekelaka.",

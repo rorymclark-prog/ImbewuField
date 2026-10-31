@@ -1,6 +1,13 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Map defaults: docs/audits/2026-10-31/map-defaults-release-drafts.json; unreviewed.
+  "Each map opens with recommended settings and keeps your choices as you switch sheets.": "Mapa muṅwe na muṅwe u vulea nga nzudzanyo dzi themendelwaho nahone u vhulunga zwe na nanga musi ni tshi shandula masiaṱari.",
+  "Check each map’s settings": "Ṱolani nzudzanyo dza mapa muṅwe na muṅwe",
+  "Open Glossy and choose a sheet. Adjust its style, background or labels; your choices stay selected when you switch maps and return.": "Vulani Glossy ni nange siaṱari. Shandulani tshitaila, murahu kana madzina; zwe na nanga zwi dzula zwo nangwa musi ni tshi shandula mapa na u vhuya.",
+
+  // Sheet fidelity: docs/audits/2026-10-31/ai-sheet-fidelity-release-drafts.json; unreviewed.
+  "AI map guidance separates earthworks from finished planting.": "Ndaela dza mapa a AI dzi khethekanya mishumo ya mavu na u ṱavha ho no fhelaho.",
   // Field blocks: docs/audits/2026-10-31/field-block-release-drafts.json; unreviewed.
   "Draw named field blocks and fill them with beds using your own dimensions and path widths.": "Olani zwipiḓa zwa tsimu zwi re na madzina ni zwi ḓadze nga mibethe ni tshi shumisa mielo yaṋu na vhuphara ha nḓila.",
   "Keep a field open without beds and use both layouts in automatic crop planning.": "Litshani tshipiḓa tsha tsimu tsho vulea tshi si na mibethe, ni shumise nzudzanyo dzoṱhe mbili kha u pulana zwiliṅwa hu ḓiendelaho.",

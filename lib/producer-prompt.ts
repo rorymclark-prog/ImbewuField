@@ -6,8 +6,9 @@
 // drawBlueprintGround and groundRows in components/design/DesignGlossy.tsx — see that function's
 // doc in lib/glossy-filters.ts. Importing the pure lib here (not the React component) keeps this
 // file server-safe.
-import { groundRegister } from '@/lib/glossy-filters';
-import type { PlacedItem } from '@/lib/design-canvas';
+import { groundRegister, exactSheetElementRegister, type GlossyLayerFilter } from '@/lib/glossy-filters';
+import type { CanvasFrame, PlacedItem } from '@/lib/design-canvas';
+import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 
 export type StylePreset =
   | 'precision_atlas'
@@ -128,8 +129,10 @@ export function buildLockedIllustrationPrompt(
   // Defaults to 'photo' so every existing call site keeps its prompt byte-for-byte. Only the plain
   // underlay passes 'paper', and only it changes.
   groundSource: 'photo' | 'paper' = 'photo',
+  footprintRegister = '',
 ): string {
   const layer = layerLabel.toUpperCase();
+  const diggingStage = showcaseSheetKindForLabel(layerLabel) === 'earthworks';
   const exactFeatures = elementsText.trim()
     ? `AUTHORITATIVE FEATURE REGISTER: ${elementsText.trim()}.`
     : 'AUTHORITATIVE FEATURE REGISTER: use only the placed features already visible in the source.';
@@ -212,7 +215,7 @@ export function buildLockedIllustrationPrompt(
     // prompts in this file that each independently describe ground texture — so the gap here is
     // the highest-impact of the three to have missed.
     : paintedPaper
-    ? `ILLUSTRATE THE SAVED PROPERTY: source colours are placement guides, not finished flat fills. Turn each traced building into a complete detailed roof within its saved silhouette, planted beds into distinct cultivated rows, and named lawn, soil, paths and paving into their corresponding illustrated materials within the saved areas. Keep paving flat, never roofed. Unknown surfaces may have restrained neutral texture; do not infer crops, structures, terrain, contours or neighbouring land. No large flat green guide polygons, blank roof holes or pasted circular soil tiles.`
+    ? `ILLUSTRATE THE SAVED PROPERTY: source colours are placement guides, not finished flat fills. Turn each traced building into a complete detailed roof within its saved silhouette, ${diggingStage ? 'earthworks into bare worked-soil surfaces' : 'planted beds into distinct cultivated rows'}, and named lawn, soil, paths and paving into their corresponding illustrated materials within the saved areas. Keep paving flat, never roofed. Unknown surfaces may have restrained neutral texture; do not infer crops, structures, terrain, contours or neighbouring land. No large flat green guide polygons, blank roof holes or pasted circular soil tiles.`
     : `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways, paved ground (patios, concrete slabs, hard standing) as flat light-grey paving — never roofed, never the driveway's tar-black — and every building as its full roof seen from directly above. Neighbouring plots are painted in the same hand as the rest of the sheet, never left as raw photograph.`;
   const paintedPhotoCompleteness = paintedPhoto
     ? `EDGE-TO-EDGE COMPLETENESS: the source contains a real aerial photograph, so every part of that land must still be represented as finished map artwork. Never replace photographed land with white or cream paper, transparency, empty canvas, an unpainted void or a large flat colour. Open ground still shows its real material — lawn, veld, soil, track or paving — with visible illustrated texture. “No new objects” does not mean “erase the ground”.`
@@ -221,10 +224,12 @@ export function buildLockedIllustrationPrompt(
     STYLE_LINES[stylePreset],
     task,
     exactFeatures,
+    footprintRegister,
+    sheetDrawingScope(showcaseSheetKindForLabel(layerLabel)),
     markerGlossary ? `WHAT THE MARKERS ARE: ${markerGlossary}.` : '',
-    designBrief.trim() ? `WHOLE-SITE CONSISTENCY BRIEF: ${designBrief.trim()}` : '',
+    designBrief.trim() ? `${diggingStage ? 'ORIENTATION CONTEXT ONLY — the whole-site planting list describes a later stage; draw none of its proposed planting on this digging sheet' : 'WHOLE-SITE CONSISTENCY BRIEF'}: ${designBrief.trim()}` : '',
     `PLACED-FEATURE CONTRACT: every coloured footprint, route and editor marker already visible in the source is a saved feature, not a suggestion. Replace each marker with a realistic orthographic illustration of that named feature at the same centre, count, rotation and footprint. Keep the illustration confined to its saved footprint. Do not duplicate it, omit it, move it or leave an emoji/tool marker in the finished artwork.`,
-    `ONE COHERENT DRAWING: coloured source marks are placement guides only, never finished artwork to copy. Repaint every marked feature in one restrained, consistent top-down botanical map style. Do not use stickers, clip-art, cut-out collages, cartoon icons, outlined placeholders or repeated code badges.`,
+    `ONE COHERENT DRAWING: coloured source marks are placement guides only, never finished artwork to copy. Repaint every marked feature in one restrained, consistent top-down ${diggingStage ? 'earth-and-soil' : 'botanical'} map style. Do not use stickers, clip-art, cut-out collages, cartoon icons, outlined placeholders or repeated code badges.`,
     onPaper
       ? `PAPER FINISH: the app draws exact feature outlines, technical routes, labels, legend and title over your artwork afterwards. Make each illustrated element clean, well-separated and confident enough to read beneath that precise linework — and leave the white between elements genuinely empty, because that white is where the app's labels and leaders land.`
       : photoPreserving
@@ -514,7 +519,7 @@ export const STYLE_LINES: Record<StylePreset, string> = {
   // record repaints the ground away, so both photographic entries take the photo plan-set anchor,
   // never the painted one.
   satellite_overlay:
-    'STYLE — Satellite Overlay: the real aerial photograph stays the map, and a crisp printed graphic overlay is drawn on top of it. This is a known genre — the annotated satellite overlay used for irrigation schemes, park interpretive maps and resort site plans. The dark green satellite imagery, real roofs, real tree canopies, real shadows and real ground textures all remain photographic and sharp; the only drawn artwork is the overlay layer — small semi-3D pictorial icons with soft drop shadows, a bone-white post-and-wire boundary fence with small round posts, near-black tar surfaces, bright blue dotted irrigation runs, white ALL-CAPS labels on thin white leader lines with small arrowheads, and a cream legend panel with dark editorial type down the right side, all inside a dark rounded-corner sheet frame. Fixed palette over the photographic base: chartreuse #B4E000, tank blue #2F6FB5, water blue #2E9BFF, earth brown #7A5230, foliage green #4E8B3A, near-black tar #12140F, cream panel #F6F1E4, titling charcoal #1E2418, white lettering. Vector-clean linework and even drop shadows throughout: hard-edged flat vector graphics floating over raw lens imagery — every pixel that is not overlay is the satellite photograph exactly as supplied, native grain, native colour, straight from the sensor.' + PLAN_SET_ANCHOR_PHOTO,
+    'STYLE — Satellite Overlay: the real aerial photograph stays the map, and a crisp printed graphic overlay is drawn on top of it. This is a known genre — the annotated satellite overlay used for irrigation schemes, park interpretive maps and resort site plans. The dark green satellite imagery, real roofs, real tree canopies, real shadows and real ground textures all remain photographic and sharp; the only drawn artwork is the overlay layer — small semi-3D pictorial icons with soft drop shadows, a bone-white post-and-wire boundary fence with small round posts, near-black tar surfaces, bright blue dotted irrigation runs, white ALL-CAPS labels on thin white leader lines with small arrowheads, and a white legend panel with dark editorial type down the right side, all inside a dark rounded-corner sheet frame. Fixed palette over the photographic base: chartreuse #B4E000, tank blue #2F6FB5, water blue #2E9BFF, earth brown #7A5230, foliage green #4E8B3A, near-black tar #12140F, white panel #FFFFFF, titling charcoal #1E2418, white lettering. Vector-clean linework and even drop shadows throughout: hard-edged flat vector graphics floating over raw lens imagery — every pixel that is not overlay is the satellite photograph exactly as supplied, native grain, native colour, straight from the sensor.' + PLAN_SET_ANCHOR_PHOTO,
   field_ledger:
     'STYLE — Field Ledger: a hand-inked site plan — fine dark sepia pen linework over rich watercolour, warm credible surveyor character. Fixed palette: sage-green lawn, olive veld, warm buff soil, slate-grey roofs, muted terracotta accents, off-white paper panels. The ground is always painted as living land with visible lawn/veld/soil texture.' + PLAN_SET_ANCHOR,
   homestead_storybook:
@@ -688,7 +693,55 @@ export function showcaseSheetKindForLabel(layerLabel: string): ShowcaseSheetKind
   return 'all';
 }
 
+// The same saved bed has two stages: ground to prepare on Earthworks, growing crops on Planting.
+// Sharing the planted glossary made the paid setting-out sheet grow a garden over its dig marks.
+function earthworksDrawingContract(): string {
+  return 'EARTHWORKS SETTING-OUT — BEFORE PLANTING: this sheet shows ground preparation, not the finished garden. Each brown rectangular bed is one bare prepared bed with restrained soil and mulch texture; keep every bed separate at its exact corners, width, length, rotation and spacing. Do not subdivide, merge, lengthen, move or add beds. Each small brown circle is one empty tree pit to dig, not a tree canopy, planted basin or pot. A marked banana circle is an excavated basin with a soil rim, without banana plants. Swales are dry on-contour excavated channels and raised spoil berms, in earth colours along the exact saved route and width; never blue water pipes, streams, planted hedges or tree rows. Preserve existing vegetation visible in the photograph as quiet site context, but add no proposed crops, trees, palms, hedges or flowering plants. The whole-site planting brief is future context only. The number of marked pits, beds and swales is authoritative.';
+}
+
+function sheetDrawingScope(sheet: ShowcaseSheetKind): string {
+  if (sheet === 'all') return '';
+  const purpose = {
+    zones: 'the exact numbered effort-zone regions',
+    water: 'water collection, storage, distribution and the already-marked destinations they serve',
+    earthworks: 'bare earthworks and digging positions before planting',
+    planting: 'the saved planting and cultivation layout',
+    structures: 'the saved livestock, structures and access features',
+  }[sheet];
+  return `SHEET SCOPE: this sheet communicates ${purpose}. The whole-site brief describes other sheets too; it is orientation context, never permission to add their proposed features here. Retain only existing photographic context and the faint context footprints already supplied; keep those subordinate to this sheet's named content. Do not turn this layer into another full masterplan.`;
+}
+
+/** Counts alone allowed nine saved beds to become a differently spaced garden. These are
+ * image coordinates derived from saved geometry, never new field measurements. */
+export function bedFootprintRegister(
+  items: readonly PlacedItem[],
+  frame: Pick<CanvasFrame, 'imgW' | 'imgH' | 'mPerPx'>,
+  filter: GlossyLayerFilter,
+): string {
+  const beds = items.filter((item) => {
+    const def = ELEMENTS_BY_ID[item.defId];
+    return def?.shape === 'rect' && /^(veg_bed|raised_bed)$/.test(def.id)
+      && exactSheetElementRegister(def, filter) !== 'absent';
+  });
+  if (!beds.length || !(frame.imgW * frame.imgH * frame.mPerPx > 0)) return '';
+  const pct = (value: number) => (value * 100).toFixed(2);
+  const geometry = beds.map((item, index) => {
+    const def = ELEMENTS_BY_ID[item.defId];
+    return `${index + 1}: centre(${pct(item.x)},${pct(item.y)}), size(${pct((item.wM ?? def.wM) / (frame.imgW * frame.mPerPx))},${pct((item.hM ?? def.hM) / (frame.imgH * frame.mPerPx))}), rotation ${item.rot ?? 0}deg`;
+  });
+  const listed: string[] = [];
+  let length = 0;
+  for (const row of geometry) {
+    if (length + row.length > 3000) break;
+    listed.push(row);
+    length += row.length + 2;
+  }
+  const remainder = listed.length < geometry.length ? `; remaining ${geometry.length - listed.length} beds follow their image footprints` : '';
+  return `BED FOOTPRINTS — ${beds.length} separate saved rectangles. Coordinates are percentages of the supplied image, x right, y down; size is unrotated width,height; rotation is clockwise. Preserve every outer corner and gap; crop rows are texture INSIDE one bed, never extra beds. ${listed.join('; ')}${remainder}. Do not merge or subdivide beds or add a tunnel, roof, hedge or border beside them.`;
+}
+
 function showcaseMarkerGlossary(sheetKind: ShowcaseSheetKind, elementsText: string): string {
+  if (sheetKind === 'earthworks') return earthworksDrawingContract();
   return SHOWCASE_MARKERS_BY_SHEET[sheetKind]
     .filter((key) => SHOWCASE_MARKER_MATCH[key].test(elementsText))
     .map((key) => M[key])
@@ -1173,9 +1226,9 @@ The boundary line itself is the crisp seam between the two.
 
 1b. GROUND NOBODY TRACED IS STILL REAL GROUND. The farmer traces what they had time to trace, and everything else in the photograph is just as real: vehicle tracks, yards, hardstanding, slabs, roofs, bare compacted earth. NEVER plant, pave, build or texture over any of them — no tree, canopy, bed, shrub, hedge or new surface may sit on a track, a yard, a roof or a slab that is visible in the photograph, whether or not anyone drew an outline around it, and no new slab, apron or paved area may be invented anywhere. A design element belongs where the design puts it and nowhere else; if the only free ground near a marker is a track, draw the marker smaller rather than moving it onto the track or planting across it.
 
-2. WHAT YOU DRAW, AND ONLY THIS: (1) a pictorial icon in place of each coloured placeholder marker, (2) the boundary line, (3) the irrigation lines, (4) white labels with leader lines, (5) the cream legend panel, (6) a north arrow and a scale bar${zoneBands ? ', (7) the translucent permaculture zone bands and their number badges (see the ZONE BANDS rule below)' : ''}${siteFabric ? `, (${zoneBands ? 8 : 7}) the existing traced ground areas (see the EXISTING SITE FABRIC rule below)` : ''}. Beyond those, inside the boundary is the clean redrawn ground of rule 1, and outside it is untouched photograph. There is no dark tar surface to add anywhere on this sheet: the access track is already in the photograph and stays exactly as rule 9 describes it.
+2. WHAT YOU DRAW, AND ONLY THIS: (1) a pictorial icon in place of each coloured placeholder marker, (2) the boundary line, (3) the irrigation lines, (4) white labels with leader lines, (5) the white legend panel, (6) a north arrow and a scale bar${zoneBands ? ', (7) the translucent permaculture zone bands and their number badges (see the ZONE BANDS rule below)' : ''}${siteFabric ? `, (${zoneBands ? 8 : 7}) the existing traced ground areas (see the EXISTING SITE FABRIC rule below)` : ''}. Beyond those, inside the boundary is the clean redrawn ground of rule 1, and outside it is untouched photograph. There is no dark tar surface to add anywhere on this sheet: the access track is already in the photograph and stays exactly as rule 9 describes it.
 
-3. THE SHEET LAYOUT IS ALREADY IN PLACE in the supplied image: the photographic map on the left, a blank cream panel down the right. Fill the panel, overlay the map, and leave the photograph exactly where it sits — nothing is resized, shifted or re-cropped to make room.
+3. THE SHEET LAYOUT IS ALREADY IN PLACE in the supplied image: the photographic map on the left, a blank white panel down the right. Fill the panel, overlay the map, and leave the photograph exactly where it sits — nothing is resized, shifted or re-cropped to make room.
 
 4. THE MARKERS ARE THE WHOLE DESIGN, AND THERE ARE EXACTLY AS MANY AS THERE ARE. Trees are the one thing that gets over-drawn: a plan of a real smallholding has FEWER trees than a picture of a garden, and the empty lawn between them is the point. Draw one canopy per tree marker and not one more — no filler trees along the boundary, no shrubs to balance a corner, no planting in the open grass. The same holds for every other element.
 
@@ -1191,7 +1244,7 @@ ${iconRule}
 
 ${labelRule}
 
-11. LEGEND PANEL — YOU DRAW IT TOO. On the cream right-hand panel, in dark #1E2418 type: the title "${title}" as the largest lettering on the sheet${placeName ? `, and beneath it "${placeName}" in smaller grey lettering` : ''}. Then a single left-aligned, evenly spaced column with one row per element TYPE present on the map: on the left a LARGE version of that element's own pictorial icon — the identical icon drawn on the map, at legend size — then the element name in dark sentence case, then its count in round brackets on the same line. Render EXACTLY these rows, every one of them, in this order, each led by that element's own icon. A line in CAPITALS with no icon is a SECTION HEADING — set it in small bold capitals above the rows beneath it, with a little space before it, exactly as the reference plan sets WATER, PLANTING and INFRASTRUCTURE:\n${legendRows}\nEvery row listed here also appears on the map: if it is in this list, it is on the sheet. Line features show a short specimen of the line itself as their swatch; the driveway row shows a plain near-black swatch. Rows and counts come from the element list above and agree exactly with what is drawn on the map. The panel's complete contents, top to bottom: the title, the subtitle, the icon rows listed above — then plain cream to the bottom edge.
+11. LEGEND PANEL — YOU DRAW IT TOO. On the white right-hand panel, in dark #1E2418 type: the title "${title}" as the largest lettering on the sheet${placeName ? `, and beneath it "${placeName}" in smaller grey lettering` : ''}. Then a single left-aligned, evenly spaced column with one row per element TYPE present on the map: on the left a LARGE version of that element's own pictorial icon — the identical icon drawn on the map, at legend size — then the element name in dark sentence case, then its count in round brackets on the same line. Render EXACTLY these rows, every one of them, in this order, each led by that element's own icon. A line in CAPITALS with no icon is a SECTION HEADING — set it in small bold capitals above the rows beneath it, with a little space before it, exactly as the reference plan sets WATER, PLANTING and INFRASTRUCTURE:\n${legendRows}\nEvery row listed here also appears on the map: if it is in this list, it is on the sheet. Line features show a short specimen of the line itself as their swatch; the driveway row shows a plain near-black swatch. Rows and counts come from the element list above and agree exactly with what is drawn on the map. The panel's complete contents, top to bottom: the title, the subtitle, the icon rows listed above — then plain cream to the bottom edge.
 
 12. SHEET FURNITURE: a small white north arrow with a white "N" above it in the top-right of the map area, and a plain white-and-black divided scale bar at the bottom-left reading "20 m".
 
@@ -1369,27 +1422,15 @@ export function buildSectorSheetPolishPrompt(stylePreset: StylePreset, placeName
  * from the recurring-bug-pattern section of the handover: one function per distinct prompt context.
  */
 export function buildPhasingRestylePrompt(stylePreset: StylePreset, placeName?: string): string {
-  const edgeToEdge =
-    `PAINT EDGE TO EDGE: every corner of the image becomes artwork, including the land beyond the property boundary. Neighbouring plots, roofs, trees and tracks are painted in the same hand as the rest of the sheet — never left as raw photograph, never faded out, never framed. No part of the output is a photographic patch.`;
-  const paintWhatIsThere =
-    `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways, and paved ground (patios, concrete slabs, hard standing) as flat light-grey paving — never roofed, never given a ridge or pitch; it reads as ground you can walk on. Render any building as a quiet, low-key roof colour sitting in the ground fabric — the exact outline is drawn separately afterwards. The small coloured circles with numbers on the map are phase-sequence pins; leave them exactly as they appear — they are app-drawn chrome that will be re-composited.`;
-  const restyleOnly =
-    `RESTYLE ONLY: this is a ground-texture and parchment-atmosphere pass, not a survey. Keep the same north-up, flat orthographic top-down view and roughly the same crop and scale as the source photograph — no oblique view, no perspective tilt, no 3D camera, no zoom or recentering. The property boundary, every roof and the driveway will be drawn separately afterwards, at measured positions, directly over this artwork.`;
-  const noInvent =
-    `NO INVENT: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible in the source photograph. Where the ground is open it stays open.`;
-  const noScheduleContent =
-    `DO NOT DRAW THE SCHEDULE: draw no dates, week ranges, task lists, hold points, phase titles, critical-order text or any other scheduling or planning content anywhere on the image. Draw no legend panel, no planning panel content, no title block, no north arrow, no scale bar and no lettering of any kind. This is a ground-only decorative pass — the exact schedule text, phase details and all planning content are drawn by the app afterwards from the real design data, never guessed off this image.`;
-  const blankPanel =
-    `BLANK RIGHT-HAND PANEL: the cream-coloured rectangular area on the right side of the image is reserved for the schedule text the app inserts afterwards. Do not add any text, numbers, titles, labels, lines, colour fills, illustrations or decorations of any kind inside this panel — it must remain a plain cream background, exactly as it already appears in the source.`;
+  const photographic = isPhotoPreservingStyle(stylePreset);
   const body = [
-    `TASK: turn this whole aerial photograph of a real South African smallholding${placeName ? ` (${placeName})` : ''} into one finished illustrated map background, edge to edge, in the style below. This is the decorative underlayer of an implementation and phasing plan sheet — the parchment-style ground artwork behind a build-schedule table; the schedule itself is filled in by the app from the real design data.`,
-    edgeToEdge,
-    paintWhatIsThere,
-    restyleOnly,
-    noInvent,
-    noScheduleContent,
-    blankPanel,
-    `FINAL CHECK: the entire frame is richly illustrated with no photographic patches and no hard edge anywhere; no building is drawn sharper than the ground around it; nothing has been added that was not already there; the cream panel on the right is completely untouched — a plain cream background with no marks in it; there is no text, schedule content, planning information, title, legend, north arrow or scale bar anywhere on the image.`,
+    `TASK: ${photographic ? 'enhance the clarity of' : 'illustrate'} this MAP COLUMN of a real South African smallholding${placeName ? ` (${placeName})` : ''} in the selected style. It is the map artwork for an implementation and phasing sheet. The schedule panel is not in this image; the app adds it afterwards.`,
+    photographic
+      ? `PHOTOGRAPHIC FINISH: keep the real ground photographic. Correct clarity, contrast and exposure without moving, repainting or inventing objects. Retain every already-marked design feature in the same position, count and footprint.`
+      : `ILLUSTRATE THE SUPPLIED MAP: render the existing ground and already-marked design features in one coherent hand, edge to edge. Keep open ground open, paving uncovered and roofs inside their existing silhouettes. Never add proposed planting that is not already marked.`,
+    `GEOMETRY: keep the exact north-up orthographic crop, aspect ratio, scale and camera. Every bed keeps its outer corners, length, width, rotation and gap from its neighbours. Every tree, tank, structure, route and phase pin stays at its supplied position. Do not merge, subdivide, omit or duplicate features.`,
+    `NO PAGE FURNITURE: there is no reserved legend or schedule area inside this map image. Do not create a blank side panel, cream strip, border, title, legend, north arrow or scale bar. Draw no dates, week ranges, tasks, phase names, hold points or other planning text; the app owns every schedule fact. Write nothing.`,
+    `FINAL CHECK: return the same complete map column in the same frame, with visibly improved materials or photographic clarity, and no new feature, panel or text.`,
   ].join('\n\n');
   return `${STYLE_LINES[stylePreset]}\n\n${body}`;
 }
@@ -1414,7 +1455,9 @@ export function buildFinishedSheetPolishPrompt(
   // it is a roofed building or a flat ground surface. Without it the model guessed, and both the
   // concrete slab and the driveway came back rendered as extra buildings.
   structureRegister?: string,
+  footprintRegister = '',
 ): string {
+  const diggingStage = showcaseSheetKindForLabel(layerLabel) === 'earthworks';
   const body = [
     `WHAT YOU HAVE BEEN GIVEN: a FIRST-PASS AI render of the MAP of a ${layerLabel} plan sheet${placeName ? ` for ${placeName}` : ''}. It is a draft, not finished artwork. Its geometry is correct and must stay correct, but its ARTWORK is unfinished: symbols are flat and diagrammatic, materials read as coloured shapes rather than real surfaces, linework is thin and uniform, ground texture is muddy and evenly lit, and the whole image has the look of something plotted rather than drawn.`,
     `YOUR JOB IS THE SECOND PASS: bring that draft up to a frame-worthy authored illustration in the requested style. Give every surface a real material — corrugated roofing, turned soil, mulch, standing water, plastic tank walls, gravel, grass. Vary line weight so structure reads before detail. Light the whole image from one consistent direction with real shadow. Replace flat map symbols with orthographic top-down illustrations of the SAME things, in place.`,
@@ -1422,13 +1465,16 @@ export function buildFinishedSheetPolishPrompt(
     `WHAT MUST NOT MOVE: canvas aspect ratio, map crop, north-up view, and the position, shape, size and count of the boundary, house, driveway, beds, trees, tanks, basins, ponds, structures and routes. Redraw all of them; move none of them. Keep blue water pipes, blue drip emitters and purple greywater routes distinct, with every connection and endpoint where it already is. Invent nothing that is not already on the map, and leave open ground open.`,
     `WRITE NOTHING: no labels, no numbers, no legend, no title, no scale bar, no north arrow, no lettering of any kind anywhere on the image — the sheet's title, legend, plant codes and callouts are drawn afterwards from the farmer's saved design, and any text you add will collide with them and be wrong.`,
     `SOURCE INVENTORY: the supplied map is authoritative. Draw only features already present on it, at the counts it shows. Never reinterpret a dark roof, driveway or paving patch as a tank, basin, building or other new feature. A circular tank may be redrawn only where a circular tank already exists in the supplied map. If a shape is ambiguous, preserve it as the same roof or ground surface instead of inventing an object.`,
+    ...(footprintRegister ? [footprintRegister] : []),
+    sheetDrawingScope(showcaseSheetKindForLabel(layerLabel)),
     ...(structureRegister?.trim()
       ? [
           `STRUCTURE REGISTER: ${structureRegister.trim()} Roof ONLY the buildings this register calls roofed — one roof per building, on its exact footprint, and never merge neighbouring structures under one shared roof. Everything the register calls flat, ground-level or a track stays fully open to the sky: bare concrete reads as bare concrete and a tar or gravel track reads as tar or gravel, drawn in this sheet's art style but never as a building. A small existing building already visible inside the supplied photo keeps its own roof exactly where it is.`,
         ]
       : []),
     `EARTHWORKS ARE DUG GROUND, NOT ROUTES: a brown band running across the slope — a darker excavated lane on one side, a warmer soil ridge on the other, short cross-ticks along the ridge — is a SWALE, an on-contour water-harvesting earthwork. Redraw it as moved earth on exactly the same route and width: a level channel of bare turned soil on the darker side, and along the lighter side a continuous raised spoil berm with a lit crest and a cast shadow down its outer face, grassed along its top, its ends feathering out into the ground. It is dug into the land, so it sits UNDER the light that falls on everything else — a smooth glossy brown tube lying ON the grass means the earthwork has been misread as a pipe.`,
-    `PLANTED CONTENT: a marked vegetable bed is a growing bed, not bare soil — fill each bed with neat top-down rows of leafy green crops at the bed's own scale, visibly planted. Marked hedges, banks and windbreak rows read as dense living plants, not flat strips. This planted detail belongs only inside features the map already marks; unmarked open ground still stays open.`,
+    diggingStage ? earthworksDrawingContract()
+      : `PLANTED CONTENT: a marked vegetable bed is a growing bed, not bare soil — fill each bed with neat top-down rows of leafy green crops at the bed's own scale, visibly planted. Marked hedges, banks and windbreak rows read as dense living plants, not flat strips. This planted detail belongs only inside features the map already marks; unmarked open ground still stays open.`,
     `FEATURES: fully opaque, solid, confidently coloured — never translucent. No grey halo, white halo, selection ring, badge, pin or handle around anything; that is editor residue from the draft and removing it is part of the job. Neighbouring tanks keep their centres but must read as separate vessels with distinct rims and visible ground between them.`,
     `FINAL CHECK: place this image beside the one you were given. If a farmer could not tell within two seconds which is the finished one, the pass has failed. It must be the same map — same geometry, same counts, same routes, no text — and unmistakably better drawn.`,
   ].join('\n\n');

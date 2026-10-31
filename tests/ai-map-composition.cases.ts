@@ -2,10 +2,11 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import ts from 'typescript';
-import { hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, AI_MAP_REVIEW_NOTICE } from '../lib/render-policy.ts';
+import { hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, AI_MAP_REVIEW_NOTICE, recommendedSheetSettings } from '../lib/render-policy.ts';
+import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE } from '../lib/sheet-render-route.ts';
 import { canopyForegroundAlpha, assertMatchingImageAspects } from '../lib/image-producer.ts';
 import { ELEMENTS_BY_ID } from '../lib/design-elements.ts';
-import { itemInFilter, isContextElement, zonesInFilter, lineInFilter } from '../lib/glossy-filters.ts';
+import { itemInFilter, isContextElement, zonesInFilter, lineInFilter, exactSheetElementRegister, EXACT_CONTEXT_ALPHA } from '../lib/glossy-filters.ts';
 import { statusOf } from '../lib/design-canvas.ts';
 import { authoritativeHouseFootprints, sameFootprint } from '../lib/house-footprints.ts';
 import polygonClipping from 'polygon-clipping';
@@ -15,6 +16,7 @@ import polygonClipping from 'polygon-clipping';
 const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
 const tree = ts.createSourceFile('DesignGlossy.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 function helper(name: string, scope: Record<string, unknown>): any {
+  scope = { exactSheetElementRegister, EXACT_CONTEXT_ALPHA, ...scope };
   let code = '';
   function visit(n: ts.Node) {
     if (ts.isFunctionDeclaration(n) && n.name?.text === name) code = n.getText(tree).replace(/^export\s+/, '');
@@ -33,6 +35,32 @@ function helper(name: string, scope: Record<string, unknown>): any {
 type Point = [number, number];
 const drivewayGuideLines = helper('drivewayGuideLines', { polygonClipping, ringArea: helper('ringArea', {}) });
 const glossyArtworkState = helper('glossyArtworkState', { drivewayGuideLines });
+
+test('switching maps applies recommendations once and remembers manual choices without queuing a render', () => {
+  const sheets=[{no:'08',filter:'all'},{no:'05',filter:'earthworks'},{no:'04',filter:'water'},{no:'02',exact:'sector'}];
+  const ui:any={selectedNo:'08',underlay:'photo',producerStyle:'master_atlas',labelMode:'onplant',aiView:'oblique'};
+  const remembered={current:new Map()},state={siteId:'test-site'},frameProp={satDataUrl:'drone',underlayDataUrl:'satellite'};
+  const setter=(key:string)=>(value:any)=>{ui[key]=typeof value==='function'?value(ui[key]):value;};
+  const scope=()=>({...ui,state,frameProp,loading:null,sheetSettingsRef:remembered,DESIGN_SHEETS:sheets,recommendedSheetSettings,DEFAULT_PRODUCER_STYLE,sheetRenderRoute,
+    setUnderlay:setter('underlay'),setLabelMode:setter('labelMode'),setAiView:setter('aiView'),setProducerStyle:setter('producerStyle'),
+    enqueueRenderJobCapped:()=>{throw Error('selection must never spend');}});
+  const apply=()=>helper('applySheet',{...scope(),setSelectedNo:setter('selectedNo'),setExactSheet:setter('exactSheet'),setAnalysisStyle:setter('analysisStyle'),setFilter:setter('filter')});
+  const choose=(sheet:any,mode='ai',loading:any=null)=>helper('chooseSheet',{...scope(),loading,applySheet:apply()})(sheet,mode);
+  choose(sheets[1]);
+  assert.deepEqual([ui.selectedNo,ui.underlay,ui.producerStyle,ui.labelMode,ui.aiView],['05','plain',DEFAULT_PRODUCER_STYLE,'codes','top-down']);
+  Object.assign(ui,{underlay:'satellite',producerStyle:'homestead_storybook',labelMode:'names',aiView:'oblique'});
+  choose(sheets[2]);
+  assert.deepEqual([ui.selectedNo,ui.underlay,ui.producerStyle,ui.labelMode,ui.aiView],['04','photo',DEFAULT_PRODUCER_STYLE,'names','top-down']);
+  choose(sheets[1]);
+  assert.deepEqual([ui.underlay,ui.producerStyle,ui.labelMode,ui.aiView],['satellite','homestead_storybook','names','oblique']);
+  ui.underlay='photo';choose(sheets[1]);
+  assert.equal(ui.underlay,'photo','the current sheet and its exact/AI transitions must not reset a manual background');
+  choose(sheets[3],'ai','busy');assert.equal(ui.selectedNo,'05','settings cannot change under an in-flight job');
+  choose(sheets[0]);
+  assert.deepEqual([ui.underlay,ui.producerStyle,ui.labelMode,ui.aiView],['photo','master_atlas','onplant','oblique']);
+  assert.match(source,/if \(next\) chooseSheet\(next, mode\)/,'desktop dropdown must use the remembered-settings navigation');
+  assert.match(source,/onClick=\{\(\) => chooseSheet\(sheet, mode\)\}/,'compact buttons must use the same navigation');
+});
 
 test('a duplicate closed driveway guide stays editable while genuine paths remain in glossy inputs and briefs', () => {
   const area:Point[]=[[.2,.2],[.5,.2],[.5,.5],[.2,.5],[.2,.2]];
@@ -69,6 +97,40 @@ const frame = { imgW: 100, imgH: 100, mPerPx: 1, satDataUrl: 'photo' };
 const refs = { boundary: [[.1,.1],[.85,.1],[.85,.9],[.1,.9]], house: [], driveway: [] };
 const state = { items: [{ id: 'crown', defId: 'tree_other', x: .84, y: .7, wM: 70/3, hM: 70/3 }],
   lines: [], zones: [{ id: 'zone', zone: 1, points: [[.2,.25],[.75,.25],[.75,.4],[.2,.4]] }] };
+
+test('the AI Earthworks input uses the exact digging painter instead of green beds and blue routes at every scale', () => {
+  const saved={items:[{id:'bed',defId:'veg_bed',x:.4,y:.5}],zones:[],lines:[]};
+  const refs={boundary:[],house:[],driveway:[]};
+  const frozen=JSON.stringify(saved);
+  for(const scale of [1,2,3]) for(const photo of [true,false]) {
+    const calls:Array<{kind:string,x:number,y:number,ppm:number}>=[];
+    const draw=helper('drawMarks',{glossyArtworkState,RENDERED_DRIVEWAY_EDGE:false,SCALE:scale,authoritativeHouseFootprints,
+      ELEMENTS_BY_ID,itemInFilter,lineInFilter,isShadeClothStructure:()=>false,
+      zoneBadgePositions:()=>new Map(),drawFilteredLines:(_ctx:any,source:any,filter:string,px:any,py:any,ppm:number)=>{
+        assert.equal(source,saved);assert.equal(filter,'earthworks');calls.push({kind:'swales',x:px(.4),y:py(.5),ppm});
+      },drawEarthworksFeatures:(_ctx:any,source:any,filter:string,px:any,py:any,ppm:number)=>{
+        assert.equal(source,saved);assert.equal(filter,'earthworks');calls.push({kind:'soil-and-pits',x:px(.4),y:py(.5),ppm});
+      }});
+    draw(probeCanvas([]).getContext(),saved,{...frame,satDataUrl:photo?'photo':null},refs,100*scale,100*scale,'earthworks',true,{showHouseMark:false,showDrivewayMark:false,showToolGlyphs:false});
+    assert.deepEqual(calls,[{kind:'swales',x:40*scale,y:50*scale,ppm:scale},{kind:'soil-and-pits',x:40*scale,y:50*scale,ppm:scale}]);
+  }
+  assert.equal(JSON.stringify(saved),frozen);
+});
+
+test('Water, Zones and Structures show their saved planting context instead of asking the model to guess it', () => {
+  const saved={items:[{id:'bed',defId:'veg_bed',x:.4,y:.5,wM:12,hM:2,rot:17}],zones:[],lines:[]};
+  const refs={boundary:[],house:[],driveway:[]};
+  const frozen=JSON.stringify(saved);
+  const draw=helper('drawMarks',{glossyArtworkState,RENDERED_DRIVEWAY_EDGE:false,SCALE:2,authoritativeHouseFootprints,
+    zoneBadgePositions:()=>new Map(),ELEMENTS_BY_ID,itemInFilter,lineInFilter});
+  for(const [filter,alpha] of [['water',EXACT_CONTEXT_ALPHA.water],['zones',EXACT_CONTEXT_ALPHA.zones],['structures',EXACT_CONTEXT_ALPHA.structures]] as const) {
+    const ctx:any=probeCanvas([]).getContext(),marks:unknown[]=[];
+    ctx.fillRect=(...rect:number[])=>marks.push({rect,alpha:ctx.globalAlpha});ctx.strokeRect=()=>{};ctx.rotate=()=>{};
+    draw(ctx,saved,frame,refs,200,200,filter,true,{showHouseMark:false,showDrivewayMark:false,showToolGlyphs:false});
+    assert.deepEqual(marks,[{rect:[-12,-2,24,4],alpha}],`${filter} keeps the same bed as subordinate context`);
+  }
+  assert.equal(JSON.stringify(saved),frozen);
+});
 
 /** Small vector recorder evaluates probe points independently of canvas antialiasing. Polygon
  * fill uses even/odd crossings; outline uses distance to each segment. It can fail on a band

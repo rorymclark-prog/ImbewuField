@@ -41,6 +41,11 @@ import { MAX_TOUR_STOPS, type UpdateTourStop } from './release-notes-types';
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '31 October 2026', sha: 'f296fa8df', changes: [
+    'Each map opens with recommended settings and keeps your choices as you switch sheets.',
+    'AI map guidance separates earthworks from finished planting.',
+  ], tour: [{ title: 'Check each map’s settings', where: 'Menu → Site design', href: '/design',
+    detail: 'Open Glossy and choose a sheet. Adjust its style, background or labels; your choices stay selected when you switch maps and return.' }] },
   { when: '31 October 2026', sha: 'e6c097ad3', changes: [
     'Draw named field blocks and fill them with beds using your own dimensions and path widths.',
     'Keep a field open without beds and use both layouts in automatic crop planning.',

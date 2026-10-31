@@ -6,6 +6,10 @@ findings and subsequent changes; do not restart from an older snapshot.
 
 ## Paid AI map composition: start here
 
+Latest settings continuation: [Per-sheet AI starting settings — 31 October 2026](2026-10-31/map-sheet-defaults-codex.md). Fresh provider quality review remains open.
+
+Latest nine-sheet review: [Earthworks stage, bed footprints and three viewport sizes — 31 October 2026](2026-10-31/ai-sheet-fidelity-codex.md). Actual AI evidence exists for four sheets; five remain unverified.
+
 Latest paper recovery: [White Water sheets, retained AI roofs and reachable styling — 31 October 2026](2026-10-31/paper-map-finish-codex.md).
 
 Latest style follow-up: [Complete Oblique style picker across sheets — 30 October 2026](2026-10-30/oblique-style-picker-codex.md).
@@ -250,6 +254,8 @@ date the audit was performed. Inclusion here does not certify current findings.
 
 | Date | Area and record |
 | --- | --- |
+| 2026-10-31 | [Nine-sheet AI fidelity and three viewport sizes — Codex](2026-10-31/ai-sheet-fidelity-codex.md) |
+| 2026-10-31 | [Per-sheet AI starting settings — Codex](2026-10-31/map-sheet-defaults-codex.md) |
 | 2026-10-30 | [Oblique AI illustration — Codex](2026-10-30/oblique-ai-view-codex.md) |
 | 2026-10-30 | [Phone AI artwork and full-screen fit — Codex](2026-10-30/phone-ai-paper-quality-codex.md) |
 | 2026-10-30 | [Map style footer and oblique feasibility — Codex](2026-10-30/map-style-footer-and-oblique-feasibility-codex.md) |
