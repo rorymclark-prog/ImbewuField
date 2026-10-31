@@ -16,6 +16,7 @@ import { APP_GUIDE_NARRATION, appGuideTrack, COURSE_NARRATION, resolveNarrationL
 import { APP_GUIDES } from '@/lib/course-app-guides';
 import { COURSE_DECKS, slideImageFor, animationUrls } from '@/lib/course-deck';
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
+import { XH_DECK_ASSET_SIZES } from '@/lib/course-deck-release-bindings-xh-data';
 
 export interface PackEntry {
   url: string;
@@ -53,7 +54,7 @@ export type OfflinePackVariant = 'full' | 'slides';
 
 /** Silent regional decks must not download fallback English audio without a choice. */
 export function regionalPackNeedsNarrationChoice(moduleIds: readonly string[], lang: string): boolean {
-  return ['st', 've', 'ts'].includes(lang) && moduleIds.some(id =>
+  return ['st', 've', 'ts', 'xh'].includes(lang) && moduleIds.some(id =>
     Boolean(COURSE_DECKS[id]) && resolveNarrationLang(id, lang)?.exact !== true,
   );
 }
@@ -83,7 +84,7 @@ function hiVariant(url: string): string | null {
 /** Sizes come from the generated manifest; anything absent is a real gap, not a zero. */
 function entry(url: string, kind: PackEntry['kind'], missing: string[], quality: PackQuality = 'standard'): PackEntry | null {
   const chosen = quality === 'high' ? (hiVariant(url) ?? url) : url;
-  const bytes = COURSE_ASSET_SIZES[chosen];
+  const bytes = COURSE_ASSET_SIZES[chosen] ?? XH_DECK_ASSET_SIZES[chosen];
   if (bytes === undefined) {
     missing.push(chosen);
     return null;

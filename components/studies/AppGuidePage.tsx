@@ -18,29 +18,34 @@ import GuideOfflineDownload from './GuideOfflineDownload';
 import OfflinePageLink from './OfflinePageLink';
 import GuideScreenSlides from './GuideScreenSlides';
 import ArrowLabel from './ArrowLabel';
+import Tx from './Tx';
+import { useLanguage } from '@/lib/i18n';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 
 function GuideAudio({ guideId, section, title, onPlay }: {
   guideId: string; section: string; title: string; onPlay: (audio: HTMLAudioElement) => void;
 }) {
+  const { lang } = useLanguage();
   const audio = useRef<HTMLAudioElement | null>(null);
   const [failedUrl, setFailedUrl] = useState<string | null>(null);
   const track = appGuideTrack(guideId, section);
   if (!track) return null;
   return <div className={`${styles.narration} no-print`}>
-    <p>Listen in English · {formatClock(track.seconds)} · {Math.ceil(track.bytes / 1024)} KB</p>
-    <audio ref={audio} key={track.url} src={track.url} controls preload="none" aria-label={`Listen: ${title}`}
+    <p>{inlineTemplate(lang, 'Listen in English · {time} · {size} KB', null, { time: formatClock(track.seconds), size: Math.ceil(track.bytes / 1024) })}</p>
+    <audio ref={audio} key={track.url} src={track.url} controls preload="none" aria-label={inlineTemplate(lang, 'Listen: {title}', null, { title: inlineText(lang, title) })}
       onPlay={event => onPlay(event.currentTarget)} onError={() => setFailedUrl(track.url)}
       onLoadedData={() => setFailedUrl(null)}>
-      Your browser cannot play this recording. The same instructions are written on this page.
+      <Tx en="Your browser cannot play this recording. The same instructions are written on this page." />
     </audio>
     {failedUrl === track.url && <div role="status">
-      <p>Audio could not load. Check your connection, or use the written steps.</p>
-      <button type="button" onClick={() => { setFailedUrl(null); audio.current?.load(); }}>Retry audio</button>
+      <p><Tx en="Audio could not load. Check your connection, or use the written steps." /></p>
+      <button type="button" onClick={() => { setFailedUrl(null); audio.current?.load(); }}><Tx en="Retry audio" /></button>
     </div>}
   </div>;
 }
 
 export default function AppGuidePage({ guide }: { guide: AppGuide }) {
+  const { lang } = useLanguage();
   // My Studies is the in-flow way back; a second floating Back covered the phone text.
   useRegisterBackControl();
   const [answer, setAnswer] = useState<number | null>(null);
@@ -51,32 +56,33 @@ export default function AppGuidePage({ guide }: { guide: AppGuide }) {
     if (playing.current && playing.current !== audio) playing.current.pause();
     playing.current = audio;
   };
-  return <div className={styles.page} lang="en">
+  const tx = (english: string) => inlineText(lang, english);
+  return <div className={styles.page} lang={lang === 'xh' ? 'xh' : 'en'}>
     <header className={styles.header}>
       <MenuButton />
-      <OfflinePageLink href="/student" className={styles.back}><ArrowLeft size={17} /> My Studies</OfflinePageLink>
+      <OfflinePageLink href="/student" className={styles.back}><ArrowLeft size={17} /> <Tx en="My Studies" /></OfflinePageLink>
       <SettingsButton />
     </header>
     <main className={styles.main}>
       <section className={styles.hero} aria-labelledby="guide-title">
         <div className={styles.heroText}>
-          <p className={styles.eyebrow}>Using ImbewuField · English guide</p>
-          <h1 id="guide-title">{guide.title}</h1>
-          <p>{guide.summary} Keep these steps beside you while you work.</p>
+          <p className={styles.eyebrow}><Tx en="Using ImbewuField · English guide" /></p>
+          <h1 id="guide-title">{tx(guide.title)}</h1>
+          <p>{tx(guide.summary)} <Tx en="Keep these steps beside you while you work." /></p>
           <div className={styles.actions}>
-            <Link href="#steps" className={styles.primary}>Read the steps <ArrowUpRight size={17} /></Link>
-            <Link href="/tour">Practise with the sample farm</Link>
+            <Link href="#steps" className={styles.primary}><Tx en="Read the steps" /> <ArrowUpRight size={17} /></Link>
+            <Link href="/tour"><Tx en="Practise with the sample farm" /></Link>
           </div>
         </div>
-        <figure><img src={guide.image} alt={guide.imageAlt} /><figcaption>{guide.caption}</figcaption></figure>
+        <figure><img src={guide.image} alt={tx(guide.imageAlt)} /><figcaption>{tx(guide.caption)}</figcaption></figure>
       </section>
 
       <GuideOfflineDownload guide={guide} />
 
       <section className={styles.prepare} aria-labelledby="prepare-title">
-        <h2 id="prepare-title">{guide.prepareTitle}</h2>
+        <h2 id="prepare-title">{tx(guide.prepareTitle)}</h2>
         <GuideAudio guideId={guide.id} section="prepare" title="Before you start" onPlay={playOne} />
-        {guide.prepare.map(text => <p key={text}>{text}</p>)}
+        {guide.prepare.map(text => <p key={text}>{tx(text)}</p>)}
       </section>
 
       <GuideScreenSlides guideId={guide.id} />
@@ -87,54 +93,54 @@ export default function AppGuidePage({ guide }: { guide: AppGuide }) {
 
       <div className="no-print"><LimaBar /></div>
 
-      <nav className={styles.contents} aria-label={`${guide.cardTitle} steps`}>
+      <nav className={styles.contents} aria-label={inlineTemplate(lang, '{title} steps', null, { title: tx(guide.cardTitle) })}>
         {/* Native hash links lost the router's history entry: Back from Records kept Records on screen. */}
-        {guide.steps.map((step, index) => <Link key={step.id} href={`#${step.id}`}><span>{index + 1}</span>{step.title}</Link>)}
+        {guide.steps.map((step, index) => <Link key={step.id} href={`#${step.id}`}><span>{index + 1}</span>{tx(step.title)}</Link>)}
       </nav>
 
       <div id="steps" className={styles.steps}>
         {guide.steps.map((step, index) => <section id={step.id} key={step.id} className={styles.step} aria-labelledby={`${step.id}-title`}>
           <div className={styles.stepNumber} aria-hidden="true">{index + 1}</div>
           <div>
-            <h2 id={`${step.id}-title`}>{step.title}</h2>
-            <p className={styles.actionPath}>{step.action}</p>
+            <h2 id={`${step.id}-title`}>{tx(step.title)}</h2>
+            <p className={styles.actionPath}>{tx(step.action)}</p>
             <GuideAudio guideId={guide.id} section={step.id} title={step.title} onPlay={playOne} />
-            {step.paragraphs.map(text => <p key={text}>{text}</p>)}
-            <p className={styles.check}><Check size={19} aria-hidden="true" /><span><strong>Check your work:</strong> {step.check}</span></p>
+            {step.paragraphs.map(text => <p key={text}>{tx(text)}</p>)}
+            <p className={styles.check}><Check size={19} aria-hidden="true" /><span><strong><Tx en="Check your work:" /></strong> {tx(step.check)}</span></p>
           </div>
         </section>)}
       </div>
 
       <section className={styles.practice} aria-labelledby="practice-title">
-        <p className={styles.eyebrow}>Try a decision</p>
-        <h2 id="practice-title">{guide.practice.title}</h2>
-        <p>{guide.practice.question}</p>
+        <p className={styles.eyebrow}><Tx en="Try a decision" /></p>
+        <h2 id="practice-title">{tx(guide.practice.title)}</h2>
+        <p>{tx(guide.practice.question)}</p>
         <GuideAudio guideId={guide.id} section="practice" title="Try a decision" onPlay={playOne} />
-        <div className={styles.choices}>{guide.practice.choices.map((choice, index) => <button key={choice.label} type="button" aria-pressed={answer === index} onClick={() => { playing.current?.pause(); setAnswer(index); }}>{choice.label}</button>)}</div>
-        <div className={styles.feedback} aria-live="polite" aria-atomic="true">{answer !== null && <p data-correct={guide.practice.choices[answer].correct}>{guide.practice.choices[answer].feedback}</p>}</div>
+        <div className={styles.choices}>{guide.practice.choices.map((choice, index) => <button key={choice.label} type="button" aria-pressed={answer === index} onClick={() => { playing.current?.pause(); setAnswer(index); }}>{tx(choice.label)}</button>)}</div>
+        <div className={styles.feedback} aria-live="polite" aria-atomic="true">{answer !== null && <p data-correct={guide.practice.choices[answer].correct}>{tx(guide.practice.choices[answer].feedback)}</p>}</div>
         {answer !== null && <GuideAudio guideId={guide.id} section={`feedback-${answer + 1}`} title="Feedback for your answer" onPlay={playOne} />}
-        <p className={styles.small}>This practice question does not change your records.</p>
+        <p className={styles.small}><Tx en="This practice question does not change your records." /></p>
       </section>
 
       <aside className={styles.limits} aria-labelledby="limits-title">
-        <h2 id="limits-title">{guide.limits.title}</h2>
+        <h2 id="limits-title">{tx(guide.limits.title)}</h2>
         <GuideAudio guideId={guide.id} section="next" title="Practise and continue" onPlay={playOne} />
-        {guide.limits.paragraphs.map(text => <p key={text}>{text}</p>)}
-        {guide.limits.reference && <p><a href={guide.limits.reference.href}>{guide.limits.reference.label}</a></p>}
+        {guide.limits.paragraphs.map(text => <p key={text}>{tx(text)}</p>)}
+        {guide.limits.reference && <p><a href={guide.limits.reference.href}>{tx(guide.limits.reference.label)}</a></p>}
       </aside>
 
       <section className={styles.finish}>
-        <h2>{guide.finish.title}</h2>
-        <p>{guide.finish.text}</p>
+        <h2>{tx(guide.finish.title)}</h2>
+        <p>{tx(guide.finish.text)}</p>
         <div className={styles.actions}>
-          <Link href={guide.finish.href} className={styles.primary}><FileText size={18} /> {guide.finish.label}</Link>
-          <button type="button" onClick={() => window.print()}><Printer size={18} /> Print this guide</button>
-          <OfflinePageLink href="/student">Back to Studies</OfflinePageLink>
+          <Link href={guide.finish.href} className={styles.primary}><FileText size={18} /> {tx(guide.finish.label)}</Link>
+          <button type="button" onClick={() => window.print()}><Printer size={18} /> <Tx en="Print this guide" /></button>
+          <OfflinePageLink href="/student"><Tx en="Back to Studies" /></OfflinePageLink>
         </div>
       </section>
-      <nav className={styles.related} aria-label="More app guides">
-        <h2>Keep learning the app</h2>
-        {APP_GUIDES.filter(item => item.id !== guide.id).map(item => <OfflinePageLink key={item.id} href={item.href}><ArrowLabel>{item.cardTitle}</ArrowLabel></OfflinePageLink>)}
+      <nav className={styles.related} aria-label={tx('More app guides')}>
+        <h2><Tx en="Keep learning the app" /></h2>
+        {APP_GUIDES.filter(item => item.id !== guide.id).map(item => <OfflinePageLink key={item.id} href={item.href}><ArrowLabel>{tx(item.cardTitle)}</ArrowLabel></OfflinePageLink>)}
       </nav>
     </main>
     <div className="no-print"><TabBar /></div>

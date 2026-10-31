@@ -4,11 +4,15 @@ import { useEffect, useRef, useState } from 'react';
 import { translate, useLanguage } from '@/lib/i18n';
 import LanguageDraftNote from './LanguageDraftNote';
 import styles from './PhotoViewer.module.css';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 
 /** Mark only profile/site photos: maps, crop symbols and controls keep their own actions. */
 export default function PhotoViewer() {
   const {lang,t}=useLanguage();
-  const draft=['zu','st','ts','ve'].includes(lang);
+  // isiXhosa is an unreviewed machine draft too; it reads the inline drafts keyed by the English
+  // (its dictionary has no photoViewer* entries yet) and keeps the English source beside errors.
+  const draft=['zu','st','ts','ve','xh'].includes(lang);
+  const ui=(key:string,english:string)=>lang==='xh'?inlineText(lang,english):t(key);
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLImageElement | null>(null);
   // Keep the original caption, so switching language cannot translate or reinterpret a farmer's words.
@@ -21,7 +25,7 @@ export default function PhotoViewer() {
       document.querySelectorAll<HTMLImageElement>('img[data-photo-preview]').forEach(img => {
         img.tabIndex = 0;
         img.setAttribute('role', 'button');
-        img.setAttribute('aria-label', t('photoViewerOpen').replace('{caption}',()=>img.alt || t('photoViewerTriggerFallback')));
+        img.setAttribute('aria-label', lang==='xh' ? inlineTemplate(lang, 'Open photo: {name}', null, { name: img.alt || inlineText(lang, 'profile or site photograph') }) : t('photoViewerOpen').replace('{caption}',()=>img.alt || t('photoViewerTriggerFallback')));
         img.style.cursor = 'zoom-in';
       });
     }
@@ -46,16 +50,16 @@ export default function PhotoViewer() {
 
   // The Close button must exist before showModal chooses its autofocus target.
   useEffect(()=>{if(photo&&dialog.current&&!dialog.current.open)dialog.current.showModal();},[photo]);
-  const caption=photo?.caption||t('photoViewerCaptionFallback');
-  const imageCaption=photo?.sample?`${t('photoViewerSampleLabel')} · ${caption}`:caption;
-  return <dialog ref={dialog} lang={lang} className={styles.viewer} aria-label={t('photoViewerDialogTitle')} onKeyDown={e => e.stopPropagation()}
+  const caption=photo?.caption||ui('photoViewerCaptionFallback','Photograph');
+  const imageCaption=photo?.sample?`${ui('photoViewerSampleLabel','Illustration')} · ${caption}`:caption;
+  return <dialog ref={dialog} lang={lang} className={styles.viewer} aria-label={ui('photoViewerDialogTitle','Photo viewer')} onKeyDown={e => e.stopPropagation()}
     onClick={e => { if (e.target === dialog.current) dialog.current.close(); }}
     onClose={() => { setPhoto(null); setZoom(false); if (trigger.current?.isConnected) trigger.current.focus(); }}>
     {photo && <div className={styles.panel}>
-      <header><p>{photo.sample&&<><span lang={lang}>{t('photoViewerSampleLabel')}</span>{' · '}</>}<span lang={photo.caption?'':lang}>{caption}</span></p><button type="button" autoFocus onClick={() => dialog.current?.close()}>{t('photoViewerClose')}</button></header>
+      <header><p>{photo.sample&&<><span lang={lang}>{ui('photoViewerSampleLabel','Illustration')}</span>{' · '}</>}<span lang={photo.caption?'':lang}>{caption}</span></p><button type="button" autoFocus onClick={() => dialog.current?.close()}>{ui('photoViewerClose','Close ×')}</button></header>
       <LanguageDraftNote lang={lang} scope="photo-viewer"/>
-      <div className={styles.imageArea}>{failed ? <p role="status"><span>{t('photoViewerLoadError')}</span>{draft&&<small lang="en" style={{display:'block',fontSize:12,lineHeight:1.4,marginTop:8}}><span lang={lang}>{t('offlineSourceLabel')}: </span>{translate('en','photoViewerLoadError')}</small>}</p> : <img lang={photo.caption?'':lang} className={zoom ? styles.zoomed : ''} src={photo.src} alt={imageCaption} onError={() => setFailed(true)} />}</div>
-      {!failed && <button type="button" aria-pressed={zoom} onClick={() => setZoom(!zoom)}>{zoom ? t('photoViewerFit') : t('photoViewerEnlarge')}</button>}
+      <div className={styles.imageArea}>{failed ? <p role="status"><span>{ui('photoViewerLoadError','This photo could not load. Close and try again when connected.')}</span>{draft&&<small lang="en" style={{display:'block',fontSize:12,lineHeight:1.4,marginTop:8}}><span lang={lang}>{t('offlineSourceLabel')}: </span>{translate('en','photoViewerLoadError')}</small>}</p> : <img lang={photo.caption?'':lang} className={zoom ? styles.zoomed : ''} src={photo.src} alt={imageCaption} onError={() => setFailed(true)} />}</div>
+      {!failed && <button type="button" aria-pressed={zoom} onClick={() => setZoom(!zoom)}>{zoom ? ui('photoViewerFit','Fit to screen') : ui('photoViewerEnlarge','Enlarge')}</button>}
     </div>}
   </dialog>;
 }

@@ -20,6 +20,8 @@
 import { useEffect, useRef } from 'react';
 import type { WizardStep } from '@/lib/design-canvas';
 import { STEP_ORDER, STEP_LABELS } from './DesignWizard';
+import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 
 const GREEN = '#1F4D2B';
 const PAPER = '#FFFEFA';
@@ -30,6 +32,7 @@ interface CardsStepperProps {
 }
 
 export default function CardsStepper({ step, onStep }: CardsStepperProps) {
+  const { lang } = useLanguage();
   const stripRef = useRef<HTMLDivElement | null>(null);
   const activeRef = useRef<HTMLButtonElement | null>(null);
 
@@ -43,7 +46,7 @@ export default function CardsStepper({ step, onStep }: CardsStepperProps) {
     <div
       ref={stripRef}
       role="tablist"
-      aria-label="Design steps"
+      aria-label={inlineText(lang, 'Design steps')}
       style={{
         display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4,
         width: '100%', minWidth: 0, flex: '1 1 auto',

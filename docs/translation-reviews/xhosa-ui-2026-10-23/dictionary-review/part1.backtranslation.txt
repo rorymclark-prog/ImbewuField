@@ -1,0 +1,454 @@
+0 | designStepBase | Foundation / base
+1 | designStepSector | Section / sector
+2 | designStepWater | Water
+3 | designStepEarthworks | Works of the land (earthworks)
+4 | designStepZones | Zones (areas)
+5 | designStepPlanting | Planting
+6 | designStepStructures | Structures
+7 | designStepReview | Review / check
+8 | designStepGlossy | Shiny (glistening)
+9 | designGuidanceBase | Check that your boundary and your house are visible — they will be on the big map if they are not visible.
+10 | designGuidanceSector | Energy of the land — sun, wind, fire, water. Nothing to draw: check that it agrees with what you know about your land.
+11 | designGuidanceWater | Start with water: put tanks beside the roof, mark the taps, draw swale lines crossing the slope.
+12 | designGuidanceEarthworks | Shape the land: swales and soil walls follow the contour line, soil steps and walls on very sloping places. Open the contour lines so you can see the lines you must follow.
+13 | designGuidanceZones | Paint your zones — Zone 1 near the kitchen door, and it gets more beautiful as the numbers increase. Tap "Where are my zones going?" if you want Lima's advice.
+14 | designGuidancePlanting | Trees should be on the south side of the beds so they do not shade themselves (make shade for themselves). Tap a tree, then tap the map.
+15 | designGuidanceStructures | Add sheds, animal pens, compost, beehives — remember the way the bees fly.
+16 | designGuidanceReview | Open and close the layers to check each map: water, zones, planting.
+17 | designGuidanceGlossy | Shiny map (beta · being tested) — the AI is not reliable at the moment, and you may need to try a few times.
+18 | designWhyThisStep | Why this step?
+19 | designStepProgress | Step {current} of {total}
+20 | designBack | Go back
+21 | designNext | Next
+22 | designNextStep | Next: {step}
+23 | designGuideAllDone | Done — open to check
+24 | designGuideStepByStep | step by step
+25 | designGuideMinimise | Make the guide smaller
+26 | designGuideCelebration | Good — marked. Here is the next one.
+27 | designGuideOptional | it is not compulsory
+28 | designGuideSkipped | it has been skipped
+29 | designGuideDoThis | Do this
+30 | designGuideSkip | Skip
+31 | designGuideLater | Later
+32 | designGuidePlanCrops | Plan my crops
+33 | designGuidePlanCropsHint | Only beds and trees? Jump straight to planning what you will plant — you can come back any time.
+34 | designGuideChecklistWorked | You have finished the checklist of the step: {step}.
+35 | designGuideWhyMatters | Why this matters
+36 | designClose | Close
+37 | designCancel | Cancel
+38 | designLearn | Read / learn
+39 | designDownload | Download
+40 | designShare | Share
+41 | designBackAction | Go back
+42 | designDelete | Delete
+43 | designClearAll | Delete everything
+44 | designPhotoTitle | Use your own photo
+45 | designPhotoIntro | Add a drone photo or any photo taken from above of your land. After that you will be able to align it and set the scale.
+46 | designPhotoChoose | Choose a photo
+47 | designPhotoNotImage | This file is not a photo — please choose a JPEG or PNG.
+48 | designPhotoReadError | Could not read that photo — please try another file.
+49 | designPhotoOpenError | Could not open that photo — please try a JPEG or PNG.
+50 | designPhotoPrepareError | Could not prepare the photo so it can be kept.
+51 | designPhotoSaveError | Could not save your photo — check that you are signed in and try again.
+52 | designPhotoUnknownError | Something went wrong when saving your photo.
+53 | designPhotoNorth | Rotate the photo so its top faces north
+54 | designPhotoRotateLeft | Rotate left by 90 degrees
+55 | designPhotoFineRotation | Rotate a little
+56 | designPhotoRotateRight | Rotate right by 90 degrees
+57 | designPhotoNotTurned | Not rotated — leave it as is if the photo already faces north.
+58 | designPhotoTurned | Rotated by {degrees}°
+59 | designPhotoSetScale | Set the scale
+60 | designPhotoScaleHelp | Tap two places on the photo where you know the real distance between them — like two corners of a building, or two fence posts you can measure.
+61 | designPhotoFirstPoint | Tap the first point.
+62 | designPhotoSecondPoint | Now tap the second point.
+63 | designPhotoEnterDistance | Now enter the real distance between them.
+64 | designPhotoDistanceExample | e.g. 10
+65 | designPhotoMetresApart | metres between
+66 | designPhotoRetap | Tap again
+67 | designPhotoChooseDifferent | Choose another photo
+68 | designPhotoSaving | It is saving...
+69 | designPhotoUse | Use this photo
+70 | designPhotoZoomSize | Size
+71 | designPhotoOpacityLabel | Clarity / transparency
+72 | designPhotoPointInstruction | Tap point {point} of 2 on the photo. The photo will not move while you do this.
+73 | designPhotoMoveInstruction | Drag the photo to move it. Make it faint so you can align it with the satellite underneath.
+74 | designStorageFull | The storage place is full — your design is NOT being saved. Free up space, then open again.
+75 | designPhotoRemoveConfirm | Remove your photo and go back to the satellite view?\n\nYour design is not affected.
+76 | designPhotoRemoveTitle | Remove your photo and go back to the satellite. Your design is not affected.
+77 | designPhotoRemove | Remove the photo
+78 | designPhotoAdjust | Fix/adjust the photo
+79 | designPhotoUseDifferent | Use another photo
+80 | designPhotoUseAerial | Use your own photo taken from above
+81 | designPhotoDragToMove | drag to move
+82 | designPhotoTapping | It is being tapped…
+83 | designPhotoAddScalePoint | Add a scale point ({current}/{total})
+84 | designPhotoUndoPoint | Remove the point
+85 | designPhotoScaleKept | Your existing scale is being kept — measure again only if it looks inaccurate.
+86 | speciesPickerTitle | List of crops
+87 | speciesPickerFilteredFor | Filtered by natural zone: {biome}
+88 | speciesPickerBroadReach | Showing species that grow in many places
+89 | speciesPickerBroadReachSection | Species that grow in many places (the local climate is not known)
+90 | speciesPickerNoteLabel | Take note:
+91 | speciesPickerNoteBody | Not yet checked by an agricultural expert. Use it as a starting point.
+92 | speciesPickerFrostNote | Trees and shrubs that cannot withstand frost are hidden where the lowest expected temperature reaches freezing; check frost at the planting place.
+93 | speciesPickerHarvest | Harvested in {months} according to South African sources
+94 | speciesPickerFirstCrop | first harvest: {years} years
+95 | speciesPickerYield | about {kg} kg per grown tree
+96 | designAdvisorLayerWater | Water
+97 | designAdvisorLayerZones | Zones
+98 | designAdvisorLayerPlanting | Planting
+99 | designAdvisorLayerStructures | Structures
+100 | designAdvisorDesign | design
+101 | designAdvisorTip | advice (singular)
+102 | designAdvisorTips | advices (plural)
+103 | designAdvisorTapToRead | Lima: {count} {tips} ({layer}) — tap to read
+104 | designAdvisorMore | other {count}
+105 | designAdvisorOtherLayers | +{count} {tips} in other layers
+106 | designAdvisorAskLima | Ask Lima
+107 | designAdvisorCloseTip | Close the advice
+108 | designAdvisorNothingToAdd | Lima has nothing to add here — your design looks good.
+109 | designAdvisorUnavailable | Could not reach Lima.
+110 | designAdvisorRequestFailed | The request did not succeed ({status})
+111 | designCanvasUseInDesign | Use on the design
+112 | designCanvasLevelPlaceholder | Height here (m), e.g. 0.0 or -3.0
+113 | designCanvasSlopePlaceholder | Slope here (%) — average {average}%
+114 | designCanvasSwaleWidthLabel | Width of the swale (m)
+115 | designCanvasSwaleWidthPlaceholder | Enter the width
+116 | designCanvasFlatContours | The land looks flat here — there are no useful contour lines to show
+117 | designCanvasContourInterval | Estimated contour lines ~{interval} m apart — place swales/vetiver following these lines
+118 | designCanvasHideBase | Hide the location markers (pointers)
+119 | designCanvasShowBase | Show the location markers
+120 | designCanvasBaseShown | Location markers: being shown — tap to hide them
+121 | designCanvasBaseHidden | Location markers: hidden — tap to show them
+122 | designCanvasSectorOn | Sector energy is opened — tap to hide it
+123 | designCanvasShowSector | Show sector energy (sun, wind, fire, water)
+124 | designCanvasSectorShown | Sector energy: being shown — tap to hide it
+125 | designCanvasSectorHidden | Sector energy: the path of sun, wind, fire and water — tap to show it
+126 | designCanvasShowPhoto | Show your own photo in place of the satellite
+127 | designCanvasShowSatellite | Show the satellite in place of your photo
+128 | designCanvasPhotoShown | Your photo: is being shown — tap to see the satellite
+129 | designCanvasPhotoHidden | Satellite: is being shown — tap to see your own photo
+130 | designCanvasMultiOn | Multi-select is on — tap to close it
+131 | designCanvasSelectMultiple | Choose many
+132 | designCanvasSelectingMultiple | You are choosing many — tap the things to add them, then tap Delete
+133 | designCanvasCancel | ✕ Cancel
+134 | designCanvasPoint | ↩ Place / Location
+135 | designCanvasFinish | ✓ Finish {thing}
+136 | designCanvasLine | line
+137 | designCanvasZone | Zone {zone}
+138 | designCanvasClose | Close
+139 | designCanvasTidy | ✓ Smooth the boundary
+140 | designCanvasSnap | ✓ Stick to the neighbour
+141 | designCanvasCleanup | ✓ Align
+142 | designCanvasMeasure | Measure distance
+143 | designCanvasMeasureOn | It is being measured — tap beside the path
+144 | designCanvasMeasureHint | Tap two places to get the distance, or keep tapping to measure along a path.
+145 | designCanvasMeasureAgain | Keep tapping to add parts to the path.
+146 | designCanvasMeasureClear | Start again
+147 | designCanvasMeasureActually | Real/actual
+148 | designZuluDraftNotice | Unreviewed isiXhosa draft. English stays beside the translated guide of the photo and the drawing. The guide that is not yet translated stays in English.
+149 | designPaletteSelect | ↖ Choose
+150 | designPaletteUndo | ↩ Restore / bring back
+151 | designPaletteRedo | ↪ Repeat
+152 | designPaletteDuplicate | Make a copy
+153 | designPaletteDuplicateTitle | Make a copy of the chosen thing/things — Cmd/Ctrl+D
+154 | designPaletteTidy | Smooth
+155 | designPaletteTidyTitle | Preview the smoothed version of the chosen boundary
+156 | designPaletteSnap | Stick/paste
+157 | designPaletteSnapTitle | Preview the closing of small gaps with the neighbouring zone
+158 | designPaletteCleanup | Align
+159 | designPaletteCleanupTitle | Preview making the chosen things straight and putting them at equal spaces
+160 | designPaletteAngle | Angle
+161 | designPaletteSize | Size
+162 | designPaletteSizeLength | Length
+163 | designPaletteGateLengthTitle | Length of the gate in metres
+164 | designPaletteSizeDown | Reduce everything chosen by 10% — their positions do not change
+165 | designPaletteSizeUp | Enlarge everything chosen by 10% — their positions do not change
+166 | designPaletteSizeWidthTitle | Set the width in metres for everything chosen
+167 | designPaletteSizeHeightTitle | Set the height in metres for everything chosen
+168 | designPaletteDelete | Delete
+169 | designPaletteLayers | Layers
+170 | designPaletteOff | closed
+171 | designPaletteAllOn | Open all
+172 | designPaletteAllOff | Close all
+173 | designPaletteNoLayers | No layer is open — open the things layer (Layers ▸) to place its things.
+174 | designPaletteProLayers | PRO — showing the things of the layers you have opened. Open others in Layers ▸.
+175 | designPaletteClimate | Showing planting choices that suit the climate
+176 | designPaletteClimateFor | in {biome}
+177 | designPaletteClimateHidden | . Trees that are no longer recommended/that invade, or that don't suit the climate, are hidden.
+178 | designPaletteClimateTitle | Better in another climate — {name} may struggle here
+179 | designPaletteFrostRisk | ⓘ Frost risk
+180 | designPaletteFrostHidden | The lowest estimated temperature reaches freezing point. Choices that do not resist frost are hidden; check frost at the planting place.
+181 | designPaletteFrostCheck | ⚠ Check frost
+182 | designPaletteFrostCheckTitle | It may need a sheltered place or a suitable type. Check local frost before planting.
+183 | designPaletteFrostUnavailable | Frost details are not available — the choice of trees uses only the broad climate zone.
+184 | designPaletteExistingHelp | Draw what remains here — tap a thing, then follow its corners.
+185 | designPaletteWindConfirmed | Wind confirmed:
+186 | designPaletteRecorded | (recorded on {date})
+187 | designPaletteChange | Change
+188 | designPaletteClear | Remove
+189 | designPaletteRegionalWind | We think your usual wind comes from {direction}. Is that so on your land?
+190 | designPaletteNoRegionalWind | There is no zone wind pattern at this place yet — do you know where your wind usually blows from?
+191 | designPaletteConfirm | Confirm
+192 | designPaletteSetDirection | Set the side
+193 | designPaletteNotSure | I am not sure
+194 | designPaletteTapPlace | Tap the map to place {name}
+195 | designPaletteDrawFeature | Draw {feature} — tap the corners, then tap ✓ Finish
+196 | designPalettePaintZone | Tap the map to paint Zone {zone}
+197 | designPaletteTapCorners | Tap the corners, then tap ✓ Finish
+198 | designPaletteLearnAbout | Learn about this thing
+199 | designPaletteCollapse | Fold up the palette of things
+200 | designPaletteExpand | Expand the palette of things
+201 | designPaletteLineSwale | Swale
+202 | designPaletteSwaleLength | {length} m length
+203 | designPaletteSwaleLengthTitle | Measured along the line you drew
+204 | designPaletteWidth | Width
+205 | designPaletteSwaleWidthPlaceholder | not specified
+206 | designPaletteSwaleWidthTitle | The specified width of the dug ground; leave it empty when not yet set
+207 | designPaletteSwaleWidthLabel | The specified width of the swale in metres
+208 | designPaletteShow | Show
+209 | designPaletteSelectColumn | Choose
+210 | designPaletteMoveColumn | Move
+211 | designPaletteLayerColumn | Layer
+212 | designPaletteFloat | Release / free
+213 | designPaletteFloatTitle | Release the palette of things — drag it anywhere and scroll down to the buttons
+214 | designPaletteFloatLabel | Release the palette of things
+215 | designPaletteElements | Things
+216 | designPaletteElementsDragTitle | Drag the panel of things
+217 | designPaletteLineFence | Wire
+218 | designPaletteLinePath | Path
+219 | designPaletteLinePipe | Pipe
+220 | designPaletteLineDrip | Dripping (drip)
+221 | designPaletteLineGreywater | Used water
+222 | designPaletteLineWindbreak | Wind protection
+223 | designPaletteLayerBase | Location markers
+224 | designPaletteLayerBoundary | Boundary
+225 | designPaletteSymbolSize | Size
+226 | designPaletteAreaFill | Filling
+227 | designPaletteAreaFillHatch | Lines
+228 | designPaletteAreaFillTint | Colour
+229 | designPaletteAreaFillStrength | Depth of filling
+230 | designPalettePlantFill | Crops
+231 | designPaletteBedBlock | Block of beds
+232 | designPaletteBedLength | Length m
+233 | designPaletteBedWidth | Width m
+234 | designPaletteBedPath | Path m
+235 | designPaletteBedCount | Beds
+236 | designPaletteBedBlockPlace | Place the block
+237 | designPaletteBedBlockCancel | Cancel
+238 | designPaletteClimateUnavailable | Climate details are not available — showing all the choices of trees.
+239 | designPaletteLayerExisting | What exists
+240 | designPaletteLayerWater | Water
+241 | designPaletteLayerEarthworks | Earthworks
+242 | designPaletteLayerZones | Zones
+243 | designPaletteLayerPlanting | Planting
+244 | designPaletteLayerStructures | Structures
+245 | designPaletteLayerAccess | Access
+246 | designPaletteLayerAnimals | Animals
+247 | designPaletteLayerLabels | Labels
+248 | designPaletteLayerIcons | Icons
+249 | designPaletteLayerContours | Contour lines
+250 | designPaletteLayerSector | Sector energy
+251 | designPaletteShowAllElements | Show all
+252 | designPrintTitle | Print / export
+253 | designPrintSubtitle | Plan of 9 maps · accurate · ready for printing
+254 | designPrintSheets | Pages (each on its own page)
+255 | designPrintNothingDrawn | Nothing has been drawn on this layer yet
+256 | designPrintPaper | Page
+257 | designPrintOrientation | Side
+258 | designPrintLandscape | By width (landscape)
+259 | designPrintPortrait | By length (portrait)
+260 | designPrintInclude | Fit on each page
+261 | designPrintTitleBlock | Title block
+262 | designPrintLegend | Key / legend
+263 | designPrintScaleBar | Scale line
+264 | designPrintNorthArrow | North arrow (north interpretation)
+265 | designPrintBuildingPdf | The PDF is being built…
+266 | designPrintExportPdf | Export the PDF ({count} {pages})
+267 | designPrintPage | page
+268 | designPrintPages | pages
+269 | designPrintSavingPngs | PNG is being saved…
+270 | designPrintExportPngs | Export PNG
+271 | designPrintPreparing | It is being prepared…
+272 | designPrintShare | Share (by WhatsApp, etc.)
+273 | designPrintPreview | Look first
+274 | designPrintFirstPage | first page
+275 | designPrintOfPages | of {count}
+276 | designPrintRendering | It is being done…
+277 | designPrintPreviewAlt | Looking at the print first
+278 | designPrintSelectSheet | Choose whether it should be one page.
+279 | designPrintShareError | Could not share the plan: {error}
+280 | designPrintPngError | Could not save the PNG: {error}
+281 | designPrintPdfError | Could not build the PDF: {error}
+282 | designPrintSaveSimple | Save my plan
+283 | designPrintPreviewError | Could not make a preview ({error}).
+284 | designPrintRetry | Try again
+285 | designPrintSheetBase | Existing site and base
+286 | designPrintSheetSector | Analysis of sectors
+287 | designPrintSheetZones | Permaculture zones
+288 | designPrintSheetWater | Water and irrigation
+289 | designPrintSheetEarthworks | Earthworks and marking contour lines
+290 | designPrintSheetPlanting | Planting and tree farming
+291 | designPrintSheetStructures | Livestock and bases
+292 | designPrintSheetAll | Full combined plan
+293 | designPrintSheetImplementation | Implementation and stages
+294 | designLessonHeading | LESSON
+295 | designLessonClose | Close the lesson
+296 | designLessonPrinciple | Rule / principle
+297 | designLessonTryThis | Try this
+298 | designLessonCourse | Learn more in the course
+299 | designLessonDraft | A draft lesson — the full version is coming.
+300 | designSectorFire | FIRE
+301 | designSectorSun | SUN
+302 | designSectorWinterShadow | Midday shadow in mid-winter ×{ratio}
+303 | designSectorSummer | SUMMER
+304 | designSectorWinter | WINTER
+305 | designSectorDownhill | SOUTH (below)
+306 | designSectorDownhillApprox | BELOW ~
+307 | designSectorFrost | FROST
+308 | designSectorSeasonWind | Wind ({season}) · {direction}
+309 | designSectorDirectionNorth | in the north
+310 | designSectorDirectionNorthEast | in the north-east
+311 | designSectorDirectionEast | in the east
+312 | designSectorDirectionSouthEast | in the south-east
+313 | designSectorDirectionSouth | in the south
+314 | designSectorDirectionSouthWest | in the south-west
+315 | designSectorDirectionWest | in the west
+316 | designSectorDirectionNorthWest | in the north-west
+317 | designSectorSunRow | Sun: it is very strong coming from {direction} — put your beds on that side.
+318 | designSectorSunMixed | north in winter, south in summer
+319 | designSectorWindSummer | {direction} in summer
+320 | designSectorWindWinter | {direction} in winter
+321 | designSectorWindRow | Average of the climate grid at this place: wind COMES FROM {directions}. Confirm at the place.
+322 | designSectorFireRow | Fire condition of the zone: {season} Fire can approach coming from {direction} — confirm at your place.
+323 | designSectorWaterRow | Water flows downhill to {direction} — swales must CUT ACROSS that flowing{frost}.
+324 | designSectorFrostNote | · frost stays low where at calm and cold nights
+325 | designSectorTitle | Energy of the land
+326 | designSectorSource | place + zone
+327 | designSectorOpenMap | Open this place on the map first so you can learn its energies.
+328 | designSectorLooksRight | It looks fine
+329 | designTankTitle | Counting the tank
+330 | designTankNeedRain | Open this place on the map to get its rain first — after that this will measure the size of your tanks according to the real rain of the place.
+331 | designTankRoofArea | Size of roof (m²)
+332 | designTankDailyUse | Daily use (ℓ)
+333 | designTankMethod | Uses 30 years of rain of this place and a measure of water from the roof of 0.80. This is a normal year — enlarge the size to prepare for drought.
+334 | designTankEnterValues | Enter the roof size and daily use so you can measure your tanks.
+335 | designTankZuluDraftNotice | This is an unreviewed isiXhosa draft. Read the English text beside each label and each question; the way of calculating the amount stays in English.
+336 | designGlossyPlanSet | Your set of plans · 9 pages (01–09)
+337 | designGlossySheetNumber | page {number}
+338 | designGlossySheet | page
+339 | designGlossySheets | pages
+340 | designGlossyGenerateFive | Make 5 design pages — AI (gpt-image-2)
+341 | designGlossyRenderingBackground | It will be drawn with gpt-image-2 in the background…
+342 | designGlossyBatchNote | All · Zones · Water · Planting · Structures. Site & Stages always stay accurate; Sectors and Earthworks each can have an AI choice on its page — it will arrive in your gallery in a few minutes.
+343 | designGlossyDrawing | It is being drawn…
+344 | designGlossyAllExact | Make all the design pages →
+345 | designGlossyStyle | Style
+346 | designGlossyMoreStyles | Other styles →
+347 | designGlossyRecommended | Recommended
+348 | designGlossyChooseFinish | Choose the look below.
+349 | designGlossyHowFinishesWork | About your map
+350 | designGlossyFinishHelp | The accurate design map is free and fast, and it will draw every label, key and line with full clarity of the page. Polished by AI first keeps that accurate main map, then uses one paid AI drawing to paint the drawing of the map — your boundary, labels, key, title block, north arrow and scale line will be drawn again on top by the app afterward, and not drawn by the model. Not even one choice will ever change your canvas design.
+351 | designGlossyFinishHelpFullTreatment | Full finishing is paused and shown here for checking only: first it makes u-Polished by AI, then uses a second paid drawing over the finished drawing.
+352 | designGlossyExactAlt | Accurate design plan page
+353 | designGlossyAiAlt | Design picture made by AI
+354 | designGlossyBeta | Beta — you may need to try again
+355 | designGlossyDownload | Download
+356 | designGlossySavedMaps | Saved maps ({count})
+357 | designGlossyPreviewTitle | View & export
+358 | designGlossyPreviewHelp | Check the map, choose its look, then export the pages you want.
+359 | designGlossyCurrentSettings | Current view settings
+360 | designGlossyPlanSetShort | Set of plans
+361 | designGlossyPlanSetValue | Set of design plans
+362 | designGlossyChooseSheet | Choose the page
+363 | designGlossyOpenSaved | Open saved maps
+364 | designGlossyExportShare | Export & share
+365 | designGlossyMapPreview | Viewing the map
+366 | designGlossySeasonalSun | The sun through the seasons
+367 | designGlossyPreviewScope | View width
+368 | designGlossyThisSheet | This page
+369 | designGlossyAllSheets | All pages
+370 | designGlossyManage | Control / manage
+371 | designGlossySavedMapsSite | Place
+372 | designGlossyChooseSavedMapsSite | Choose a place with saved maps you want to see
+373 | designGlossyCurrentSite | Current place
+374 | designGlossyUnnamedSite | Place without a name
+375 | designGlossyNoSavedRail | Nothing has been saved of this place yet. Draw a page and it will stay here so you can download it and use it again.
+376 | designGlossyExportSummary | Summary of exporting
+377 | designGlossyEdit | Edit
+378 | designGlossyFormat | Format
+379 | designGlossyInclude | Put in / enter
+380 | designGlossyExportIncludes | Key · Scale line · North arrow · Labels
+381 | designGlossyMoreOptions | Other options
+382 | designGlossyEngine | AI engine
+383 | designGlossyQuality | Quality of the drawing
+384 | designGlossyQualityHigh | High
+385 | designGlossyQualityHighSub | very clear · costs a lot
+386 | designGlossyQualityMedium | Medium
+387 | designGlossyQualityMediumSub | about a quarter of the price
+388 | designGlossyQualityLow | Low
+389 | designGlossyQualityLowSub | very low price · for testing
+390 | designGlossyQualityNote | The AI drawing can change things or make up ones that do not exist. Source security(?), labels and key are put in afterwards, but compare places and numbers with your accurate design map before you use this picture. High AI quality does not guarantee accuracy.
+391 | designGlossyFinishHeading | Map style
+392 | designGlossyExactCanvas | Design map
+393 | designGlossyExactCanvasHint | Your saved design · ready for printing
+394 | designGlossyAiHybrid | Polished by AI
+395 | designGlossyAiHybridHint | A painted drawing by AI · your labels & key on top · 1 paid drawing
+396 | designGlossyFullTreatment | Full finishing (paused)
+397 | designGlossyFullTreatmentHint | 2nd pass of AI over the finished page · 2 paid drawings
+398 | designGlossyGotIt | I understand
+399 | designGlossyCloseSaved | Close saved maps
+400 | designGlossyInspectFullScreen | Tap the map to look at it in full screen
+401 | designGlossyClickMapToMinimise | Tap the map to make it smaller
+402 | designGlossyNoSaved | There is no saved map in this session yet.
+403 | designGlossyCloseFullScreen | Close the full screen map
+404 | designGlossySavedOnDevice | Saved on this device — these stay here even after you close the app.
+405 | designGlossyShareError | We could not share this map — use Download instead.
+406 | designGlossyRecommendedSuffix | (recommended)
+407 | designGlossySavedRender | Saved drawing · {date} · {provider}
+408 | designGlossyGeminiNote | Drawn by Gemini Pro — an analysis with pictures on top of your real place. About one minute.
+409 | designGlossyExactFootnote | Drawn from your saved design, and the picture of your place, boundary, planting, structures and labels.
+410 | designGlossyAnalysisFootnote | Gemini Pro · analysis with pictures — good to look at, not very accurate in shapes and measurements.
+411 | designGlossyEngineFootnote | {engine} · if the result does not look right, make it again or change the engine (Other options).
+412 | designGlossyExactVersion | Your canvas design always stays the accurate version.
+413 | designGlossyOpenFullScreen | Open {label} full screen
+414 | designGlossyOpenResult | Open {label} — {result}
+415 | designGlossyDeleteNamed | Delete {label}
+416 | designGlossyFullScreenNamed | Viewing {label} full screen
+417 | designGlossyEmptyAll | Nothing has been drawn yet — start by drawing your boundary and place some other things.
+418 | designGlossyEmptyLayer | {stepLower} was not found in this design, so there is nothing to make a map — start by drawing them at the step {step}. (A {stepLower} map is built from your real things ({stepLower}), it is never estimated. If you HAVE DRAWN them and still see this, it is a mistake — please report it.)
+419 | designGlossyRenderFailed | The drawing did not succeed.
+420 | designGlossyFallbackGemini | gpt-image-2 was not available — Gemini Pro was used instead.
+421 | designGlossyRefreshed | The current page has been refreshed — the display is refreshed in your gallery.
+422 | designGlossyNothingToPhase | There is nothing to divide into stages yet — start by drawing your boundary and place some other things (water, beds, trees…). The implementation plan is built from your real design, never estimated.
+423 | designGlossyGeneratingProgress | Your set of plans is being made… {count} {sheets} done
+424 | designGlossyDoneExact | Done — {count} pages are in your gallery. Open it to look or print the set.
+425 | designGlossyStylingProgress | Applying style {style} to your set of plans… {count} {sheets} done
+426 | designGlossyNothingToStyle | There is nothing to apply the style to — start by drawing your boundary and place some other things.
+427 | designGlossyDoneStyle | Done — {count} pages of style {style} are in your gallery{fallback}. Open it to look or print.
+428 | designGlossyCouldNotStart | Could not start the drawing.
+429 | designGlossyZonesDone | The zones page is done. Add water, planting or structures so you get others.
+430 | designGlossyNothingToRender | There is nothing to be drawn — start by placing some things.
+431 | designGlossyBackgroundCount | {count} {sheets} will be drawn in the background — they will appear in your gallery when ready (in a few minutes). You can keep working.
+432 | designGlossyFullPolishProgress | Step 3 of 3 — GPT Image polishes the full blended page of {layer} in style {style}. The accurate main map and the AI blend both stay saved separately.
+433 | designGlossyBackgroundSheet | Your page of {layer} will be drawn in the background — it will appear in your gallery when ready (in a few minutes). You can keep working.
+434 | designGlossySectorPolishProgress | Step 3 of 3 — GPT Image polishes the full blended page of {sheet}. The accurate main map and the AI blend both stay saved separately.
+435 | designGlossySectorHybrid | The AI paints the bottom layer of the blend of Analysis of Sectors; the compass sides you measured and the key return locked on top afterwards. It will appear in your gallery when ready (in a few minutes).
+436 | designGlossyBaseHybrid | The blend of Existing site will be drawn in the background — the AI only repaints the ground; your boundary, roof and entrances stay exactly where they are. It will appear in your gallery when ready (in a few minutes).
+437 | designGlossyPhasingPolish | Step 3 of 3 — GPT Image polishes the full blended page of Implementation & Stages. The accurate main map and the AI blend both stay saved separately.
+438 | designGlossyPhasingHybrid | The AI paints a decorative background that looks like an old paper behind the schedule of stages; the full schedule returns locked on top afterwards. It will appear in your gallery when ready (in a few minutes).
+439 | designGlossySavingExact | Step 1 of {total} — first the accurate map locked to the shape is saved (no AI costs)…
+440 | designGlossyBuildingExact | Your saved design will be drawn…
+441 | designGlossyPaintingHybrid | Step 2 of {total} — the bottom layer of the AI blend is painted, then your accurate things are locked back on top…
+442 | designGlossyPreparingHybrid | The AI blend locked to the shape is being prepared from this accurate page…
+443 | designGlossyMissingHybrid | Your AI blend is finished and saved. The second polish did not start because you went to another page — open that page and choose Full finishing to continue it.
+444 | designGlossyStartingPolish | Step 3 of 3 — one paid polish with gpt-image-2 over the AI blend is starting…
+445 | designGlossyPolishing | The AI blend page is being polished…
+446 | designGlossyRefreshing | The current page is being refreshed…
+447 | designGlossyLostConnection | The connection with the background drawing has ended — you may still finish in the background; reopen this step in a few minutes to check before you pay to make it again.
+448 | designGlossyAssembleError | The page was drawn but could not be joined on this device{detail} — tap Refresh to try again.
+449 | designGlossyRenderIncomplete | The drawing was not finished — please try again.
+450 | designGlossyReconnecting | Reconnecting to your background drawing…
+451 | designGlossyResumeGaveUp | Your AI drawing is finished, but opening it kept causing the app to crash, so the app stopped opening it automatically. You can keep designing. To get it, set the Quality of the drawing to Standard and make it again, or open this design on a computer.
+452 | designSpeciesSize | {height}m height × {width}m width
+453 | designSpeciesSectionIndigenousFruit | Native/indigenous fruits

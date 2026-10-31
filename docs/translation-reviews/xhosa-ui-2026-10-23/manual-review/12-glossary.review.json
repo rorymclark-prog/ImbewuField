@@ -1,0 +1,15 @@
+{
+  "unit": "12-glossary",
+  "okCount": 70,
+  "items": [
+    {
+      "where": "Green manure",
+      "verdict": "repair",
+      "english": "A crop, often a legume, grown to be cut or dug back into the soil to feed it, rather than to be harvested.",
+      "draft": "Isityalo, rhoqo esingesosapho lweembotyi (i-legume), esityalelwa ukuba sinqunyulwe ...",
+      "backtranslation": "A plant, usually NOT of the bean family (legume), planted to be cut or dug in ...",
+      "problem": "Negation reversed: 'often a legume' became 'usually not a legume' (-ngesosapho = not of the family).",
+      "corrected": "Isityalo, rhoqo esesosapho lweembotyi (i-legume), esityalelwa ukuba sinqunyulwe ..."
+    }
+  ]
+}

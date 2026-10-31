@@ -2,11 +2,13 @@
 
 import { useId, useRef, useState, type FormEvent } from 'react';
 import { Package } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import { MONTHS_SHORT } from '@/lib/crop-catalog';
 import { numberLabel } from '@/lib/format-figures';
 import { pdfIconUrl } from '@/lib/pdf-icons';
 import { preservedFoodArtUrl } from '@/lib/preserved-food-art';
-import { isVisibleProductionFoodSource } from '@/lib/crop-export-availability';
+import { availabilityLabelText, isVisibleProductionFoodSource } from '@/lib/crop-export-availability';
 import {
   isProductionDate, sanitiseProductionRecords, sanitisePreservedFoodRecords,
   type DatedProductionRecord, type PreservedFoodMethod, type PreservedFoodRecord,
@@ -46,6 +48,8 @@ function RecordArt({ src }: { src: string | null }) {
 export function ProductionRecordsEditor({ products, dates, productionRecords = [], preservedProducts = [],
   onProductionRecordsChange, onPreservedProductsChange }: ProductionRecordsEditorProps) {
   const id = useId();
+  const { lang } = useLanguage();
+  const ui = (english: string) => inlineText(lang, english);
   const productionRef = useRef<HTMLDetailsElement>(null);
   const stockRef = useRef<HTMLDetailsElement>(null);
   const records = sanitiseProductionRecords(productionRecords);
@@ -83,9 +87,9 @@ export function ProductionRecordsEditor({ products, dates, productionRecords = [
     const product = eligibleProducts.find(option => option.iconKey === productKey);
     const date = productionDates.find(option => dateKey(option) === monthKey);
     const amount = optionalNumber(quantity), ownPrice = optionalNumber(price);
-    if (!product || !date || !unit) { setProductionError('Choose the product, month and unit.'); return; }
-    if (!validNumber(amount)) { setProductionError('Enter the amount. Use 0 only when you mean zero; leave unknown production unrecorded.'); return; }
-    if (ownPrice !== undefined && !validNumber(ownPrice)) { setProductionError('Enter a price of zero or more, or leave it blank.'); return; }
+    if (!product || !date || !unit) { setProductionError(ui('Choose the product, month and unit.')); return; }
+    if (!validNumber(amount)) { setProductionError(ui('Enter the amount. Use 0 only when you mean zero; leave unknown production unrecorded.')); return; }
+    if (ownPrice !== undefined && !validNumber(ownPrice)) { setProductionError(ui('Enter a price of zero or more, or leave it blank.')); return; }
     const matching = records.find(record => record.sourceIconKey === productKey && dateKey(record.date) === monthKey && record.status === status);
     const candidate: DatedProductionRecord = {
       id: editingProductionId ?? matching?.id ?? newId('production'), label: product.label,
@@ -94,22 +98,22 @@ export function ProductionRecordsEditor({ products, dates, productionRecords = [
       ...(ownPrice === undefined ? {} : { pricePerUnit: ownPrice }), ...(note.trim() ? { note: note.trim() } : {}),
     };
     const next = sanitiseProductionRecords([...records, candidate]);
-    if (!next.some(record => record.id === candidate.id)) { setProductionError('Check the product, date and amount before adding this record.'); return; }
+    if (!next.some(record => record.id === candidate.id)) { setProductionError(ui('Check the product, date and amount before adding this record.')); return; }
     onProductionRecordsChange(next);
     setProductionError(''); setEditingProductionId(null); setQuantity(''); setPrice(''); setNote('');
   }
 
   function submitStock(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!eligibleProducts.some(product => product.iconKey === stockProductKey)) { setStockError('Choose the original food from this plan.'); return; }
-    if (!stockLabel.trim()) { setStockError('Name the food you are keeping, for example Dried mango.'); return; }
+    if (!eligibleProducts.some(product => product.iconKey === stockProductKey)) { setStockError(ui('Choose the original food from this plan.')); return; }
+    if (!stockLabel.trim()) { setStockError(ui('Name the food you are keeping, for example Dried mango.')); return; }
     const selectedDates = stockDates.filter(date => stockMonths.includes(dateKey(date)));
-    if (!selectedDates.length) { setStockError('Choose at least one month when this food is in store.'); return; }
+    if (!selectedDates.length) { setStockError(ui('Choose at least one month when this food is in store.')); return; }
     const quantities: NonNullable<PreservedFoodRecord['quantities']> = [];
     for (const date of selectedDates) {
       const amount = optionalNumber(stockKg[dateKey(date)] ?? '');
       if (amount === undefined) continue;
-      if (!validNumber(amount)) { setStockError(`${dateLabel(date)}: enter kg of zero or more, or leave the amount blank.`); return; }
+      if (!validNumber(amount)) { setStockError(inlineTemplate(lang, '{date}: enter kg of zero or more, or leave the amount blank.', null, { date: dateLabel(date) })); return; }
       quantities.push({ ...date, kg: amount });
     }
     const candidate: PreservedFoodRecord = {
@@ -118,7 +122,7 @@ export function ProductionRecordsEditor({ products, dates, productionRecords = [
       ...(quantities.length ? { quantities } : {}),
     };
     const next = sanitisePreservedFoodRecords([...stockRecords, candidate]);
-    if (!next.some(record => record.id === candidate.id)) { setStockError('Check the food and its stock months before adding this record.'); return; }
+    if (!next.some(record => record.id === candidate.id)) { setStockError(ui('Check the food and its stock months before adding this record.')); return; }
     onPreservedProductsChange(next);
     setStockError(''); setEditingStockId(null); setStockLabel(''); setStockMonths([]); setStockKg({}); setStockNote('');
   }
@@ -137,75 +141,75 @@ export function ProductionRecordsEditor({ products, dates, productionRecords = [
     setStockNote(record.note); setStockError(''); setStockOpen(true); stockRef.current?.scrollIntoView({ block: 'nearest' });
   }
 
-  return <section className={styles.editor} aria-label="Production and food stock records" data-production-records-editor>
-    <p className={styles.intro}>Use your own records or a locally checked estimate. Missing amounts stay unknown. Eggs, litres and kg are kept separate.</p>
-    {!canRecord && <p className={styles.empty}>Add products to the plan to record their production and food in store.</p>}
+  return <section className={styles.editor} aria-label={ui('Production and food stock records')} data-production-records-editor>
+    <p className={styles.intro}>{ui('Use your own records or a locally checked estimate. Missing amounts stay unknown. Eggs, litres and kg are kept separate.')}</p>
+    {!canRecord && <p className={styles.empty}>{ui('Add products to the plan to record their production and food in store.')}</p>}
     <details ref={productionRef} open={productionOpen} onToggle={event => setProductionOpen(event.currentTarget.open)} className={styles.section}>
-      <summary>Record expected or actual production <span>{records.length} record{records.length === 1 ? '' : 's'}</span></summary>
+      <summary>{ui('Record expected or actual production')} <span>{inlineTemplate(lang, records.length === 1 ? '{n} record' : '{n} records', null, { n: records.length })}</span></summary>
       <div className={styles.body}>
-        <p className={styles.help}>Choose one product and one month. Expected means your estimate; actual means what was produced. Adding the same product, month and status replaces its previous figure.</p>
+        <p className={styles.help}>{ui('Choose one product and one month. Expected means your estimate; actual means what was produced. Adding the same product, month and status replaces its previous figure.')}</p>
         <form onSubmit={submitProduction} noValidate className={styles.form}>
           <div className={styles.fields}>
-            <label>Product<select value={productKey} onChange={event => setProductKey(event.target.value)} disabled={!canRecord}><option value="">Choose product</option>{eligibleProducts.map(product => <option key={product.iconKey} value={product.iconKey}>{product.label}</option>)}</select></label>
-            <label>Month<select value={monthKey} onChange={event => setMonthKey(event.target.value)} disabled={!canRecord}><option value="">Choose month</option>{productionDates.map(date => <option key={dateKey(date)} value={dateKey(date)}>{dateLabel(date)}</option>)}</select></label>
-            <label>Which figure?<select value={status} onChange={event => setStatus(event.target.value as DatedProductionRecord['status'])}><option value="expected">Expected — my estimate</option><option value="actual">Actual — produced</option></select></label>
-            <label>Amount<input type="number" min={0} step="any" inputMode="decimal" value={quantity} onChange={event => setQuantity(event.target.value)} placeholder="Enter amount" /></label>
-            <label>Unit<select value={unit} onChange={event => setUnit(event.target.value as ProductionUnit)}><option value="">Choose unit</option>{Object.entries(unitNames).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></label>
-            <label>My price per unit (R)<span className={styles.optional}>Optional · your own price</span><input type="number" min={0} step="any" inputMode="decimal" value={price} onChange={event => setPrice(event.target.value)} placeholder="Leave blank if unknown" /></label>
+            <label>{ui('Product')}<select value={productKey} onChange={event => setProductKey(event.target.value)} disabled={!canRecord}><option value="">{ui('Choose product')}</option>{eligibleProducts.map(product => <option key={product.iconKey} value={product.iconKey}>{availabilityLabelText(lang, product.label)}</option>)}</select></label>
+            <label>{ui('Month')}<select value={monthKey} onChange={event => setMonthKey(event.target.value)} disabled={!canRecord}><option value="">{ui('Choose month')}</option>{productionDates.map(date => <option key={dateKey(date)} value={dateKey(date)}>{dateLabel(date)}</option>)}</select></label>
+            <label>{ui('Which figure?')}<select value={status} onChange={event => setStatus(event.target.value as DatedProductionRecord['status'])}><option value="expected">{ui('Expected — my estimate')}</option><option value="actual">{ui('Actual — produced')}</option></select></label>
+            <label>{ui('Amount')}<input type="number" min={0} step="any" inputMode="decimal" value={quantity} onChange={event => setQuantity(event.target.value)} placeholder={ui('Enter amount')} /></label>
+            <label>{ui('Unit')}<select value={unit} onChange={event => setUnit(event.target.value as ProductionUnit)}><option value="">{ui('Choose unit')}</option>{Object.entries(unitNames).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></label>
+            <label>{ui('My price per unit (R)')}<span className={styles.optional}>{ui('Optional · your own price')}</span><input type="number" min={0} step="any" inputMode="decimal" value={price} onChange={event => setPrice(event.target.value)} placeholder={ui('Leave blank if unknown')} /></label>
           </div>
-          <label>Note <span className={styles.optional}>Optional</span><textarea maxLength={2000} rows={2} value={note} onChange={event => setNote(event.target.value)} placeholder="Where did this figure come from?" /></label>
-          <p className={styles.help}>This price is your record, not a live market price or a profit calculation.</p>
+          <label>{ui('Note')} <span className={styles.optional}>{ui('Optional')}</span><textarea maxLength={2000} rows={2} value={note} onChange={event => setNote(event.target.value)} placeholder={ui('Where did this figure come from?')} /></label>
+          <p className={styles.help}>{ui('This price is your record, not a live market price or a profit calculation.')}</p>
           {productionError && <p className={styles.error} role="alert">{productionError}</p>}
-          <div className={styles.actions}><button type="submit" disabled={!canRecord} className={styles.primary}>{editingProductionId ? 'Update production record' : 'Add production record'}</button>{editingProductionId && <button type="button" onClick={() => { setEditingProductionId(null); setQuantity(''); setPrice(''); setNote(''); setProductionError(''); }}>Cancel edit</button>}</div>
+          <div className={styles.actions}><button type="submit" disabled={!canRecord} className={styles.primary}>{editingProductionId ? ui('Update production record') : ui('Add production record')}</button>{editingProductionId && <button type="button" onClick={() => { setEditingProductionId(null); setQuantity(''); setPrice(''); setNote(''); setProductionError(''); }}>{ui('Cancel edit')}</button>}</div>
         </form>
         {records.length ? <ul className={styles.list}>{records.map(record => {
           const ownValue = record.pricePerUnit === undefined ? undefined : record.quantity * record.pricePerUnit;
           return <li key={record.id}>
           <RecordArt src={pdfIconUrl(record.sourceIconKey)} />
-          <div className={styles.recordText}><strong>{record.label}</strong><span>{dateLabel(record.date)} · {record.status === 'expected' ? 'Expected' : 'Actual'} · {numberLabel(record.quantity)} {unitNames[record.unit]}</span>
-            {!isVisibleProductionFoodSource(record.sourceIconKey, {}) && <small>Saved record kept for reference. This source is excluded from household food and production totals. Check its food-use guidance.</small>}
-            {record.pricePerUnit !== undefined && <span>Own price: R{numberLabel(record.pricePerUnit)} / {unitNames[record.unit]}</span>}
+          <div className={styles.recordText}><strong>{availabilityLabelText(lang, record.label)}</strong><span>{dateLabel(record.date)} · {record.status === 'expected' ? ui('Expected') : ui('Actual')} · {numberLabel(record.quantity)} {unitNames[record.unit]}</span>
+            {!isVisibleProductionFoodSource(record.sourceIconKey, {}) && <small>{ui('Saved record kept for reference. This source is excluded from household food and production totals. Check its food-use guidance.')}</small>}
+            {record.pricePerUnit !== undefined && <span>{inlineTemplate(lang, 'Own price: R{price} / {unit}', null, { price: numberLabel(record.pricePerUnit), unit: unitNames[record.unit] })}</span>}
             {ownValue !== undefined && <span>{Number.isFinite(ownValue)
-              ? `Quantity × own price: R${numberLabel(ownValue, Math.abs(ownValue) > Number.MAX_VALUE / 100 ? 0 : 2)} before costs`
-              : 'Quantity × own price needs checking.'}</span>}
-            {record.provenance === 'fictional-example' && <small>Made-up example record</small>}{record.note && <small>{record.note}</small>}
+              ? inlineTemplate(lang, 'Quantity × own price: R{value} before costs', null, { value: numberLabel(ownValue, Math.abs(ownValue) > Number.MAX_VALUE / 100 ? 0 : 2) })
+              : ui('Quantity × own price needs checking.')}</span>}
+            {record.provenance === 'fictional-example' && <small>{ui('Made-up example record')}</small>}{record.note && <small>{ui(record.note)}</small>}
           </div>
-          <div className={styles.recordActions}>{eligibleProducts.some(product => product.iconKey === record.sourceIconKey) && <button type="button" onClick={() => editProduction(record)} aria-label={`Edit ${record.label} ${dateLabel(record.date)} ${record.status}`}>Edit</button>}<button type="button" onClick={() => onProductionRecordsChange(records.filter(row => row.id !== record.id))} aria-label={`Remove ${record.label} ${dateLabel(record.date)} ${record.status}`}>Remove</button></div>
-        </li>; })}</ul> : <p className={styles.empty}>No monthly production amounts recorded. Unknown does not mean zero.</p>}
+          <div className={styles.recordActions}>{eligibleProducts.some(product => product.iconKey === record.sourceIconKey) && <button type="button" onClick={() => editProduction(record)} aria-label={inlineTemplate(lang, 'Edit {label} {date} {status}', null, { label: availabilityLabelText(lang, record.label), date: dateLabel(record.date), status: record.status === 'expected' ? ui('expected') : ui('actual') })}>{ui('Edit')}</button>}<button type="button" onClick={() => onProductionRecordsChange(records.filter(row => row.id !== record.id))} aria-label={inlineTemplate(lang, 'Remove {label} {date} {status}', null, { label: availabilityLabelText(lang, record.label), date: dateLabel(record.date), status: record.status === 'expected' ? ui('expected') : ui('actual') })}>{ui('Remove')}</button></div>
+        </li>; })}</ul> : <p className={styles.empty}>{ui('No monthly production amounts recorded. Unknown does not mean zero.')}</p>}
       </div>
     </details>
     <details ref={stockRef} open={stockOpen} onToggle={event => setStockOpen(event.currentTarget.open)} className={styles.section}>
-      <summary>Record food kept in store <span>{stockRecords.length} record{stockRecords.length === 1 ? '' : 's'}</span></summary>
+      <summary>{ui('Record food kept in store')} <span>{inlineTemplate(lang, stockRecords.length === 1 ? '{n} record' : '{n} records', null, { n: stockRecords.length })}</span></summary>
       <div className={styles.body}>
-        <p className={styles.help}>Record food you have kept, bought or carried from an earlier harvest. Choose its months yourself. The plan does not work out a safe shelf life or a preservation recipe.</p>
+        <p className={styles.help}>{ui('Record food you have kept, bought or carried from an earlier harvest. Choose its months yourself. The plan does not work out a safe shelf life or a preservation recipe.')}</p>
         <form onSubmit={submitStock} noValidate className={styles.form}>
           <div className={styles.fields}>
-            <label>Original food<select value={stockProductKey} onChange={event => setStockProductKey(event.target.value)} disabled={!canRecord}><option value="">Choose product</option>{eligibleProducts.map(product => <option key={product.iconKey} value={product.iconKey}>{product.label}</option>)}</select></label>
-            <label>Name of food in store<input maxLength={200} value={stockLabel} onChange={event => setStockLabel(event.target.value)} placeholder="e.g. Dried mango" /></label>
-            <label>How is it kept?<select value={stockMethod} onChange={event => setStockMethod(event.target.value as PreservedFoodMethod)}>{Object.entries(methodNames).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></label>
+            <label>{ui('Original food')}<select value={stockProductKey} onChange={event => setStockProductKey(event.target.value)} disabled={!canRecord}><option value="">{ui('Choose product')}</option>{eligibleProducts.map(product => <option key={product.iconKey} value={product.iconKey}>{availabilityLabelText(lang, product.label)}</option>)}</select></label>
+            <label>{ui('Name of food in store')}<input maxLength={200} value={stockLabel} onChange={event => setStockLabel(event.target.value)} placeholder={ui('e.g. Dried mango')} /></label>
+            <label>{ui('How is it kept?')}<select value={stockMethod} onChange={event => setStockMethod(event.target.value as PreservedFoodMethod)}>{Object.entries(methodNames).map(([key, label]) => <option key={key} value={key}>{ui(label)}</option>)}</select></label>
           </div>
-          <fieldset className={styles.months}><legend>Months with food in store</legend><p className={styles.help} id={`${id}-stock-help`}>Tick each month. Add kg held in that month only if you know it. Blank kg stays unknown; nothing carries forward automatically.</p>
+          <fieldset className={styles.months}><legend>{ui('Months with food in store')}</legend><p className={styles.help} id={`${id}-stock-help`}>{ui('Tick each month. Add kg held in that month only if you know it. Blank kg stays unknown; nothing carries forward automatically.')}</p>
             <div className={styles.monthGrid}>{stockDates.map(date => {
               const key = dateKey(date), selected = stockMonths.includes(key);
               return <div key={key} className={`${styles.month} ${selected ? styles.selectedMonth : ''}`}>
                 <label className={styles.check}><input type="checkbox" checked={selected} onChange={event => setStockMonths(current => event.target.checked ? [...new Set([...current, key])] : current.filter(month => month !== key))} aria-describedby={`${id}-stock-help`} /><span>{dateLabel(date)}</span></label>
-                {selected && <label className={styles.monthAmount}>kg held · optional<input type="number" min={0} step="any" inputMode="decimal" aria-label={`${dateLabel(date)} stock kg, optional`} value={stockKg[key] ?? ''} onChange={event => setStockKg(current => ({ ...current, [key]: event.target.value }))} placeholder="Unknown" /></label>}
+                {selected && <label className={styles.monthAmount}>{ui('kg held · optional')}<input type="number" min={0} step="any" inputMode="decimal" aria-label={inlineTemplate(lang, '{date} stock kg, optional', null, { date: dateLabel(date) })} value={stockKg[key] ?? ''} onChange={event => setStockKg(current => ({ ...current, [key]: event.target.value }))} placeholder={ui('Unknown')} /></label>}
               </div>;
             })}</div>
           </fieldset>
-          <label>Stock note <span className={styles.optional}>Optional</span><textarea maxLength={2000} rows={2} value={stockNote} onChange={event => setStockNote(event.target.value)} placeholder="Bought, carried stock, or kept from which harvest?" /></label>
+          <label>{ui('Stock note')} <span className={styles.optional}>{ui('Optional')}</span><textarea maxLength={2000} rows={2} value={stockNote} onChange={event => setStockNote(event.target.value)} placeholder={ui('Bought, carried stock, or kept from which harvest?')} /></label>
           {stockError && <p className={styles.error} role="alert">{stockError}</p>}
-          <div className={styles.actions}><button type="submit" disabled={!canRecord} className={styles.primary}>{editingStockId ? 'Update stock record' : 'Add stock record'}</button>{editingStockId && <button type="button" onClick={() => { setEditingStockId(null); setStockLabel(''); setStockMonths([]); setStockKg({}); setStockNote(''); setStockError(''); }}>Cancel edit</button>}</div>
+          <div className={styles.actions}><button type="submit" disabled={!canRecord} className={styles.primary}>{editingStockId ? ui('Update stock record') : ui('Add stock record')}</button>{editingStockId && <button type="button" onClick={() => { setEditingStockId(null); setStockLabel(''); setStockMonths([]); setStockKg({}); setStockNote(''); setStockError(''); }}>{ui('Cancel edit')}</button>}</div>
         </form>
         {stockRecords.length ? <ul className={styles.list}>{stockRecords.map(record => <li key={record.id}>
           <RecordArt src={preservedFoodArtUrl(record) ?? pdfIconUrl(record.sourceIconKey)} />
-          <div className={styles.recordText}><strong>{record.label}</strong><span>{methodNames[record.method]} · {record.provenance === 'fictional-example' ? 'Made-up example stock' : 'Farm stock record'}</span>
-            {!isVisibleProductionFoodSource(record.sourceIconKey, {}) && <small>Saved stock record kept for reference. This source is excluded from household food and stock totals. Check its food-use guidance.</small>}
-            {record.dates.map(date => { const amount = record.quantities?.find(quantity => dateKey(quantity) === dateKey(date)); return <span key={dateKey(date)}>{dateLabel(date)} · {amount ? `${numberLabel(amount.kg)} kg held` : 'kg unknown'}</span>; })}
-            {record.note && <small>{record.note}</small>}
+          <div className={styles.recordText}><strong>{availabilityLabelText(lang, record.label)}</strong><span>{ui(methodNames[record.method])} · {record.provenance === 'fictional-example' ? ui('Made-up example stock') : ui('Farm stock record')}</span>
+            {!isVisibleProductionFoodSource(record.sourceIconKey, {}) && <small>{ui('Saved stock record kept for reference. This source is excluded from household food and stock totals. Check its food-use guidance.')}</small>}
+            {record.dates.map(date => { const amount = record.quantities?.find(quantity => dateKey(quantity) === dateKey(date)); return <span key={dateKey(date)}>{dateLabel(date)} · {amount ? inlineTemplate(lang, '{kg} kg held', null, { kg: numberLabel(amount.kg) }) : ui('kg unknown')}</span>; })}
+            {record.note && <small>{ui(record.note)}</small>}
           </div>
-          <div className={styles.recordActions}>{eligibleProducts.some(product => product.iconKey === record.sourceIconKey) && <button type="button" onClick={() => editStock(record)} aria-label={`Edit ${record.label} stock`}>Edit</button>}<button type="button" onClick={() => onPreservedProductsChange(stockRecords.filter(row => row.id !== record.id))} aria-label={`Remove ${record.label} stock`}>Remove</button></div>
-        </li>)}</ul> : <p className={styles.empty}>No kept-food records yet. A harvest does not automatically create stored or processed food.</p>}
+          <div className={styles.recordActions}>{eligibleProducts.some(product => product.iconKey === record.sourceIconKey) && <button type="button" onClick={() => editStock(record)} aria-label={inlineTemplate(lang, 'Edit {label} stock', null, { label: availabilityLabelText(lang, record.label) })}>{ui('Edit')}</button>}<button type="button" onClick={() => onPreservedProductsChange(stockRecords.filter(row => row.id !== record.id))} aria-label={inlineTemplate(lang, 'Remove {label} stock', null, { label: availabilityLabelText(lang, record.label) })}>{ui('Remove')}</button></div>
+        </li>)}</ul> : <p className={styles.empty}>{ui('No kept-food records yet. A harvest does not automatically create stored or processed food.')}</p>}
       </div>
     </details>
   </section>;

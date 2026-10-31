@@ -4,6 +4,7 @@ import { reportUiText, reportUiDate } from '@/lib/report-localisation';
 import { useEffect, useRef, useState } from 'react';
 import type { StoredSheetMeta } from '@/lib/sheet-store';
 import { REPORT_MAP_TYPES, groupReportMaps, loadSiteMapReview, saveSiteMapReview, emptyMapReview, type SiteMapReview, type MapReview } from '@/lib/report-map-selection';
+import { xhInlineDraft } from '@/lib/xh-inline';
 import styles from './ReportMapStocktake.module.css';
 
 export default function ReportMapStocktake({ maps, selectedIds, siteId, scope, designUrl, onSelect, onOpen, language = 'en', busy = false }: {
@@ -14,7 +15,8 @@ export default function ReportMapStocktake({ maps, selectedIds, siteId, scope, d
   const [error, setError] = useState('');
   const [readyScope, setReadyScope] = useState('');
   const { lang: uiLanguage, t: appT } = useLanguage();
-  const tr = (en: string, zu?: string) => reportUiText(en, uiLanguage, appT, zu);
+  // isiXhosa: the draft keyed by the exact English (lib/locales/xh-inline), else the dictionary.
+  const tr = (en: string, zu?: string) => (uiLanguage === 'xh' ? xhInlineDraft(en) : null) ?? reportUiText(en, uiLanguage, appT, zu);
   useEffect(() => {
     const refresh = () => { setReview(loadSiteMapReview(siteId)); setReadyScope(scope); };
     refresh(); window.addEventListener('focus', refresh);
@@ -114,7 +116,7 @@ export function ReportMapPreview({ map, scope, loadImage, onOpen }: { map: Store
     return () => { cancelled = true; };
   }, [map.id, scope, visible, loadImage]);
   return <button ref={ref} className={styles.preview} onClick={onOpen}>
-    {preview || map.thumb ? <img src={preview ?? map.thumb} alt={map.label} /> : <span className={styles.placeholder}>{reportUiText('Open map', lang, t)}</span>}
+    {preview || map.thumb ? <img src={preview ?? map.thumb} alt={map.label} /> : <span className={styles.placeholder}>{(lang === 'xh' ? xhInlineDraft('Open map') : null) ?? reportUiText('Open map', lang, t)}</span>}
     <span>{map.label}</span>
   </button>;
 }

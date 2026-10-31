@@ -4,6 +4,7 @@ import { AlertTriangle, Calculator, CheckCircle2, ChevronLeft } from 'lucide-rea
 import { formatPrice, priceDateLabel, type PricedCrop } from './CropPriceGuide.format';
 import { getCropArt } from '@/lib/crop-art';
 import { translate, useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 
 /**
  * The negotiation screen itself: one crop, two numbers, in the biggest type on the page — and,
@@ -15,6 +16,8 @@ import { translate, useLanguage } from '@/lib/i18n';
 export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: PricedCrop; onChangeCrop: () => void; simple?: boolean }) {
   const { t, lang } = useLanguage();
   const { price } = crop;
+  // isiZulu and isiXhosa both show the exact English source beside the draft wording for prices.
+  const bilingual = lang === 'zu' || lang === 'xh';
   const sourced = price.confidence === 'sourced';
   // 'recommended' = the average of the cited prices found (lib/crop-prices.ts). It gets its own
   // badge: calling it a "real market price" overclaims, and "rough estimate" undersells a figure
@@ -24,7 +27,7 @@ export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: 
   const pricedDate = priceDateLabel(price);
   const dateForDisplay = lang === 'zu' ? pricedDate.replace(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/g, month => ({
     January: 'Januwari', February: 'Februwari', March: 'Mashi', April: 'Ephreli', May: 'Meyi', June: 'Juni', July: 'Julayi', August: 'Agasti', September: 'Septhemba', October: 'Okthoba', November: 'Novemba', December: 'Disemba',
-  })[month] ?? month) : pricedDate;
+  })[month] ?? month) : lang === 'xh' ? pricedDate.replace(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/g, month => inlineText(lang, month).replace(/^u/, '')) : pricedDate;
   return (
     <div className="flex flex-col items-center text-center">
       <button
@@ -72,7 +75,7 @@ export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: 
       >
         {sourced ? <CheckCircle2 size={17} strokeWidth={2.2} /> : recommended ? <Calculator size={17} strokeWidth={2.2} /> : <AlertTriangle size={17} strokeWidth={2.2} />}
         <span className="font-sans font-bold" style={{ fontSize: 13.5 }}>
-          {lang === 'zu' ? <><span className="block">{t(confidenceKey)}</span><span className="block mt-1" style={{ fontSize: 12, fontWeight: 500 }}>{translate('en', confidenceKey)}</span></> : t(confidenceKey)}
+          {bilingual ? <><span className="block">{t(confidenceKey)}</span><span className="block mt-1" style={{ fontSize: 12, fontWeight: 500 }}>{translate('en', confidenceKey)}</span></> : t(confidenceKey)}
         </span>
       </div>
       {/* Methodology/freshness footnote — the confidence badge above already carries the safety-
@@ -80,7 +83,7 @@ export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: 
       {!simple && (
         <div className="font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', marginTop: 6, maxWidth: 260 }}>
           {/* This crop's own research date, not the book's headline date — see priceDateLabel. */}
-          {lang === 'zu'
+          {bilingual
             ? <>{t('priceUpdatedCheckToday').replace('{date}', dateForDisplay)}<span className="block mt-1">{translate('en', 'priceUpdatedCheckToday').replace('{date}', pricedDate)}</span></>
             : t('priceUpdatedCheckToday').replace('{date}', dateForDisplay)}
         </div>
@@ -92,7 +95,7 @@ export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: 
             className="font-sans font-bold uppercase tracking-widest"
             style={{ fontSize: 12, color: 'color-mix(in srgb, var(--on-forest-800) 88%, transparent)', letterSpacing: '0.1em' }}
           >
-            {lang === 'zu' ? <>{t('priceWholesale')}<span className="block mt-1" style={{ fontSize: 12, fontWeight: 500, letterSpacing: 0 }}>{translate('en', 'priceWholesale')}</span></> : t('priceWholesale')}
+            {bilingual ? <>{t('priceWholesale')}<span className="block mt-1" style={{ fontSize: 12, fontWeight: 500, letterSpacing: 0 }}>{translate('en', 'priceWholesale')}</span></> : t('priceWholesale')}
           </div>
           <div
             className="font-display font-bold"
@@ -101,7 +104,7 @@ export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: 
             R{formatPrice(price.wholesalePerKg)}
           </div>
           <div className="font-sans" style={{ fontSize: 13, color: 'color-mix(in srgb, var(--on-forest-800) 88%, transparent)' }}>
-            {lang === 'zu' ? <>{t('pricePerKgTrader')}<span className="block mt-1">{translate('en', 'pricePerKgTrader')}</span></> : t('pricePerKgTrader')}
+            {bilingual ? <>{t('pricePerKgTrader')}<span className="block mt-1">{translate('en', 'pricePerKgTrader')}</span></> : t('pricePerKgTrader')}
           </div>
         </div>
 
@@ -117,7 +120,7 @@ export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: 
             className="font-sans font-bold uppercase tracking-widest"
             style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.1em' }}
           >
-            {lang === 'zu' ? <>{t('priceRetail')}<span className="block mt-1" style={{ fontSize: 12, fontWeight: 500, letterSpacing: 0 }}>{translate('en', 'priceRetail')}</span></> : t('priceRetail')}
+            {bilingual ? <>{t('priceRetail')}<span className="block mt-1" style={{ fontSize: 12, fontWeight: 500, letterSpacing: 0 }}>{translate('en', 'priceRetail')}</span></> : t('priceRetail')}
           </div>
           <div
             className="font-display font-bold"
@@ -126,7 +129,7 @@ export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: 
             R{formatPrice(price.retailPerKg)}
           </div>
           <div className="font-sans" style={{ fontSize: 13, color: 'var(--color-muted)' }}>
-            {lang === 'zu' ? <>{t('pricePerKgShop')}<span className="block mt-1">{translate('en', 'pricePerKgShop')}</span></> : t('pricePerKgShop')}
+            {bilingual ? <>{t('pricePerKgShop')}<span className="block mt-1">{translate('en', 'pricePerKgShop')}</span></> : t('pricePerKgShop')}
           </div>
         </div>
       </div>

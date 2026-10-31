@@ -56,6 +56,7 @@ import { countsWithScope, loadIncludePerennials, DEFAULT_INCLUDE_PERENNIALS } fr
 import { produceDisplayName } from '@/lib/perennial-produce';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useLanguage, translate } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { userFacingMessage } from '@/lib/user-facing-error';
 import { activeAccountUid } from '@/lib/account-local-storage';
 import {
@@ -895,7 +896,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          {isIn && <div className="col-span-2"><RecordQuantityFields idPrefix={alwaysOpen ? 'ledger-modal-sale' : 'ledger-sale'} label="Quantity sold" quantity={form.quantity} unit={form.unit} onQuantityChange={(quantity) => setForm((f) => ({ ...f, quantity }))} onUnitChange={(unit) => setForm((f) => ({ ...f, unit }))} /></div>}
+          {isIn && <div className="col-span-2"><RecordQuantityFields idPrefix={alwaysOpen ? 'ledger-modal-sale' : 'ledger-sale'} label={inlineText(lang, 'Quantity sold')} quantity={form.quantity} unit={form.unit} onQuantityChange={(quantity) => setForm((f) => ({ ...f, quantity }))} onUnitChange={(unit) => setForm((f) => ({ ...f, unit }))} /></div>}
           <div className="col-span-2">
             <label htmlFor={`${idPrefix}-price`} className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>{recordsText(lang, 'Amount (R)', 'Inani (R)')}</label>
             <input id={`${idPrefix}-price`} type="number" placeholder="0.00" step="0.01" min="0"
@@ -1070,16 +1071,27 @@ function filterLedgerRows(rows: LedgerRow[], only: 'picked' | 'in' | 'out' | und
   return rows;
 }
 
-/** The export keeps isiZulu's existing wording; the unreviewed regional drafts never go into a file. */
-const csvLang = (lang: string) => (lang === 'zu' ? 'zu' : 'en');
+/**
+ * The export keeps isiZulu's existing wording and, since 24 Oct 2026, carries isiXhosa headings
+ * (the whole isiXhosa app is an unreviewed machine draft, like the isiZulu one). The unreviewed
+ * Sesotho, Tshivenda and Xitsonga drafts still never go into a file.
+ */
+const csvLang = (lang: string) => (lang === 'zu' ? 'zu' : lang === 'xh' ? 'xh' : 'en');
 
 function exportLedgerCsv(rows: LedgerRow[], period: Period, lang = 'en') {
   const head = lang === 'zu'
     ? ['Usuku', 'Incazelo', 'Inani', 'Ingenayo', 'Umthombo', 'Ephumayo', 'Hlola']
-    : ['Date', 'Description', 'Qty', 'In', 'Source', 'Out', 'Check'];
+    : lang === 'xh'
+      ? ['Umhla', 'Inkcazelo', 'Ubungakanani', 'Engenayo', 'Umthombo', 'Ephumayo', 'Hlola']
+      : ['Date', 'Description', 'Qty', 'In', 'Source', 'Out', 'Check'];
   // The CSV can leave the app for a lender or accountant, so unreviewed Sesotho, Tshivenda and
   // Xitsonga drafts stay out of it: those languages export English headings, as before.
-  const duplicateNote = lang === 'zu' ? 'Kungenzeka ukuthi ukuthengisa kubalwe kabili — i-invoyisi ekhokhiwe isivele ibalwa njengemali engenayo.' : DUPLICATE_ROW_NOTE;
+  // isiXhosa (unreviewed too) is exported on request of the isiXhosa rollout, headings only; every value is unchanged.
+  const duplicateNote = lang === 'zu'
+    ? 'Kungenzeka ukuthi ukuthengisa kubalwe kabili — i-invoyisi ekhokhiwe isivele ibalwa njengemali engenayo.'
+    : lang === 'xh'
+      ? 'Kusenokwenzeka ukuba yintengiso enye — i-invoyisi ehlawulweyo sele ibaliwe njengengeniso.'
+      : DUPLICATE_ROW_NOTE;
   const body = rows.map((r) => [r.date, r.desc, r.qty, r.inAmt != null ? fmtZAR(r.inAmt) : '', r.source, r.outAmt != null ? fmtZAR(r.outAmt) : '', r.duplicateSuspect ? duplicateNote : '']);
   const csv = [head, ...body].map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
   const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));

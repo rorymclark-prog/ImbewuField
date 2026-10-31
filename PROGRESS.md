@@ -65,6 +65,95 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 25 Oct 2026 — isiXhosa phases 4–5: reports, crops, production data and Study content (PR #1090)
+All unreviewed machine drafts keyed by the exact English (`lib/locales/xh-inline/g18`–`g26`); English
+and isiZulu output are unchanged.
+- **Reports:** programme report builder takes a language option (`lib/programme-report.ts`, g18), and
+  the funder cohort charts are translated (g23).
+- **Crops and production:**
+  - Crop components and `/samples/production` (g19).
+  - Production data prose and product guidance (g22, g24). `lib/xh-inline-match.ts` translates
+    sentences a lib has already built, so exports and PDFs stay English.
+  - The facilitator crop-plan page (g25): tasks, auto-suggest, review lines and the WhatsApp share text.
+- **Studies:**
+  - Study components and staff screens (g20, g21).
+  - App guides, the finance practice and source bodies, design lessons and cases, the worked example,
+    its diagram and the design folder (g26, 1,512 strings).
+  - `FinanceText` looks up whole bodies; `components/studies/TxLabelled.tsx` carries aria-labels on
+    server pages. The Design draft notice now says lesson text is drafted.
+- **Round 6 (g27–g31):**
+  - Crop-plan page: lib-built suggestion notes, tree and animal lanes, honey flow, "Bed N" labels and
+    months, translated at render; stored notes and the PDF stay English.
+  - The finance, worked-example and design-folder downloads take an optional `lang`.
+  - `components/DocumentTitle.tsx` translates browser tab titles client-side; layout metadata stays
+    English.
+  - Remaining farmer screens: site-survey recovery and footer warnings, climate panel, atlas soil
+    notes, weather, audio player and accessible names.
+  - Staff, field and demo screens. Consent wording sits beside its English source.
+- **Round 3 blind review of g18–g31:**
+  - 5,047 strings, 215 repairs and 0 holds. Record: `docs/translation-reviews/xhosa-ui-2026-10-23/README.md`.
+  - Repairs included profit "unknown" read as "known", a supervision warning reversed, poison warnings
+    garbled, and fermenting rendered as boiling.
+- **`/student` app-guide cards:** now in isiXhosa; the `xh-studies` byte-pin layer is updated.
+- **26 Oct:**
+  - **Main's new role report screens (g32):** isiXhosa controls and notices.
+  - **Farmer's farm report (g34):** builds in isiXhosa through `buildFarmReport({ language: 'xh' })`, on screen and in the PDF. It uses the money book's wording, keeps every amount and date the same as the English, and keeps the file name in English.
+  - **Crop catalogue advice (g33):** 63 notes, shown at render. `lib/crop-catalog.ts` is unchanged.
+  - **Gaps (g35):** the 8 strings that were wired for isiXhosa but had no draft.
+- **27 Oct:**
+  - **Main's four-language stack (#1122), report history (#1121) and production year (#1099) merged:** main's isiZulu, Sesotho, Xitsonga and Tshivenda output kept exactly; 340 + 11 new dictionary keys and the Record plan dialog get isiXhosa (g37–g40).
+  - **Release notes and the update tour:** isiXhosa is a fifth `lib/update-copy` language (148 drafts, English source shown beside each).
+  - **Report purpose and origin labels** (`siteReportPurposeLabel`, `reportOriginLabel`) give isiXhosa its draft; isiZulu and English unchanged.
+  - **Main's waves 24–28 (#1125, #1136) merged:** farm-report counts keep main's singular/plural agreement as whole templates (English identical to main across 216 report cases); the 42 farmer-facing error messages (`UserFacingError`), 8 release notes and the offline error page have isiXhosa (g41).
+  - **Browser sweep:** all 52 static routes loaded in isiXhosa; the remaining visible English is source lines, farmer-written sample content, citations, the partner pitch deck and the crash-recovery page.
+- **Still English:**
+  - Crop and species names, catalogue notes and custom bed labels.
+  - The site-survey chicken block and the calendar advice holds, both deliberately held until review.
+  - PDFs and download texts.
+  - Narration audio.
+  - The readiness checklist's record statuses and evidence details (a note says so).
+
+### 24 Oct 2026 — isiXhosa phase 3: Studies slide cards and the last English corners (PR #1090)
+- **Studies slide cards:** all 10 modules (240 slides) as isiXhosa silent cards, with the draft above
+  the exact English narration (`docs/narration/<module>.xh.silent-draft.json`).
+  - Built by `scripts/build-xh-deck-release.mjs` into `public/course-decks/<module>/xh-silent/` (69 MB)
+    and `lib/course-deck-release-bindings-xh-data.ts`.
+  - The isiXhosa release has its own registry, so a fault there withdraws only the isiXhosa cards.
+  - `lib/learner-deck-lang.ts` adds xh to the deck-language and narration-choice rules
+    (`course-deck.ts` and `course-audio.ts` are byte-pinned).
+  - Blind back-translation review made 23 repairs, with 0 holds.
+  - No isiXhosa voice: the decks are silent by default, and the learner can choose English source
+    narration.
+  - Tests: `tests/xh-deck-release.test.ts`, and `tests/xh-deck-history-checks.ts` for the media inventory.
+- **Rest of the app:**
+  - Invoice document and money-book CSV in isiXhosa.
+  - isiXhosa month names in `lib/records-months.ts`.
+  - Date lines via `lib/xh-dates.ts`.
+  - The public feedback form gets an isiXhosa notice.
+  - Training feedback and survey answers can be stored as `xh`.
+  - The Studies player and module cards are in isiXhosa.
+- **Round 2 blind review (Manual and inline UI strings):** 35 Manual repairs and 49 UI-string repairs,
+  with 0 holds. Many were safety wording: greywater "never", "uphill of" wells and pit toilets, "close
+  the birds in every night", and parasitic wasps "cannot sting".
+- **Also translated:** the staff training-records screen (ProgrammeEvidence) and the Offline page title.
+- **Record:** `docs/translation-reviews/xhosa-ui-2026-10-23/README.md` (Phase 3) and
+  `docs/study-translation-reviews/isixhosa-2026-10-23/slides/`.
+
+### 23 Oct 2026 — isiXhosa: the whole app as a labelled machine draft (PR #1090)
+- **Dictionary:** `lib/locales/xh.ts` from 693 to 2,514 of 2,556 keys (98.4%; the rest are codes/names); 185 shipped
+  strings fixed for meaning (e.g. "umonakalo" = damage for impact, flipped negation in `challengeLabour`, snow for frost).
+- **Inline isiZulu branches (~400 in 119 files):** `lib/xh-inline.ts` (`inlineText`/`inlineTemplate`) with English-keyed
+  shards in `lib/locales/xh-inline/` (10 component groups + MEL survey questions + Finance/Design study tracks), loaded
+  with the xh chunk; `tests/xh-inline.test.ts` retires any key no source file still shows and checks placeholders.
+- **Money book:** xh in `RECORDS_REGIONAL_LANGS`; `draft-xh.json` blind back-translation reviewed (543 shipped, 1 held).
+- **Studies:** all 10 modules / 33 lessons source-paired in `lib/course-translation-drafts-xh.ts` (generated by
+  `scripts/build-xh-course-drafts.mjs`); five blind reviewers (111 repairs) plus a second check of the 19 meaning repairs;
+  xh joins the regional lesson path, module cards, due/unlock text and the Studies page (new proof layer
+  `tests/xh-studies-history-checks.ts` over the wave 17 bytes). Finance and Design tracks read the same English-keyed drafts.
+- **Manual:** all 14 chapters, glossary (`research/manual/glossary-xh.md`) and reader UI; `/manual/xh` is public.
+- **Marked as draft everywhere:** `LanguageDraftNote`, Settings, survey, Studies and per-screen notices name isiXhosa.
+- **Not translated:** slides with burned-in text and narration audio (no xh media), the printed invoice (English by
+  design), staff training-feedback form (answer language stored as en/zu). Record: `docs/translation-reviews/xhosa-ui-2026-10-23/`.
 ### 27 Oct 2026 — Wave 28: overlays keep keyboard focus; Lima opens from the keyboard
 - **Overlays (Sonnet #1134, reviewed):** `lib/use-dialog-focus.ts` moves focus into Settings, the drawer, the Add sheet,
   evidence sheets, profile, POPIA consent, base-photo import, lesson link, the confirm dialog and the records entry

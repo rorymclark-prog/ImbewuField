@@ -1,0 +1,482 @@
+0 | designStepEarthworks | Earthworks (work of the soil)
+1 | designGuidanceSector | Forces of the land — sun, wind, fire, water. Nothing to draw: check that it agrees with what you know about your land.
+2 | designGuidanceWater | Start with water: place the tanks next to the roof, mark the pumps/taps, and draw swale lines crossing the slope.
+3 | designStorageFull | Storage is full — your design is NOT SAVED. Free up space, then open again.
+4 | speciesPickerFrostNote | Trees and shrubs that cannot withstand frost are hidden where the estimated minimum temperature reaches freezing point; check frost at the planting place.
+5 | designCanvasSlopePlaceholder | Slope here (%) — average {average}%
+6 | designCanvasShowSector | Show sector forces (sun, wind, fire, water)
+7 | designCanvasSectorHidden | Sector forces: sun path, wind, fire and water — tap to show them
+8 | designPaletteFrostRisk | ⓘ Frost risk
+9 | designPaletteFrostHidden | The estimated minimum temperature reaches freezing point. Options that do not withstand frost are hidden; check frost at the planting place.
+10 | designPaletteFrostCheck | ⚠ Check frost
+11 | designPaletteFrostCheckTitle | It may need a protected place or a suitable variety. Check local frost before planting.
+12 | designPaletteFrostUnavailable | Frost details are not available — the tree choice uses only the broad climate zone.
+13 | designPaletteLineGreywater | Used water (greywater)
+14 | designPrintSheetEarthworks | Earthworks and marking contour lines
+15 | designPrintSheetStructures | Livestock and infrastructure/foundations
+16 | designSectorFire | FIRE
+17 | designSectorFrost | FROST
+18 | designSectorFireRow | Fire situation of the region: {season} Fire can come near arriving from {direction} — confirm at your place.
+19 | designSectorWaterRow | Water flows downward going {direction} — swales must CROSS that flow{frost}.
+20 | designSectorFrostNote |  · frost settles low there on calm, cold nights
+21 | designGlossyBatchNote | All · Zones · Water · Planting · Buildings. Site & Phases stay accurate; Sectors and Earthworks each have an AI option on its page — it will arrive in your gallery in a few minutes.
+22 | designSpeciesSectionIndigenousFruit | Indigenous fruits
+23 | offlineDownloadUnsupported | This browser cannot save lessons to be used offline. Chrome on Android can.
+24 | offlineSavedMayClear | Saved, but this phone may delete it if storage runs out. Check your saved lessons again before you leave signal.
+25 | mapPrintWindowInstructions | Print and then draw your design by hand — beds, paths, trees, water, compost. It is drawn to scale; contour lines show the slope.
+26 | siteSummaryFrostProtection | Protect from frost in winter.
+27 | mapGuideHarvestDescription | Draw the edge of your roof, a swale or an earthwork — I calculate how much rain you collect.
+28 | mapGuideWaterPointDescription | Place a pin on the borehole, spring, dam or tank — it marks the development infrastructure on the map.
+29 | mapLayerReliefTitle | Land shape by shadows — it shades the slopes so that hills, valleys and the side the land faces become visible
+30 | chatSuggestionPest | Natural ways to deal with insects & diseases?
+31 | chatSuggestionWater | How can I collect and store rainwater here?
+32 | waterBalanceStorageCapacity | Storage capacity
+33 | waterBalanceStorage | Storage
+34 | waterBalanceDrawHarvestArea | Draw a water-collecting area on the map so you see how big a storage you can build.
+35 | waterBalanceShortfallDetail | The tank level drops below the safe minimum in {month}. Options: increase storage, add a second tank, or reduce irrigation during {season}.
+36 | waterCategoryEarthwork | Earthwork
+37 | waterPointNamingPlaceholder | e.g. Main borehole, Northern dam
+38 | guideDrawHarvestingDesc | Draw a roof, swale or earthwork — I calculate how much rain it collects.
+39 | guideAddWaterPointDesc | Place a pointer on the borehole, spring, dam or tank — it marks the infrastructure on the map.
+40 | statFrostRisk | Frost risk
+41 | calendarFrost | Frost
+42 | profileSkillLivestock | livestock
+43 | biomeChallengesSavanna | Storms are strong but hard to predict | Grass competes with young trees for water and light | Frost can damage plants in high-lying areas | Termites can damage wood and young plants
+44 | biomeChallengesGrassland | Big frosts, going down to about –10°C | Hail storms | Clay soil erodes easily on slopes | Low wet ground (vlei) can be hard to drain water out of
+45 | biomeChallengesFynbos | Fynbos needs fire at certain times to stay healthy, about every 10–15 years | Invasive plants that are not allowed can take over | NO Fynbos plants are edible — bring in soil for any food garden | Hot and dry summers
+46 | biomeChallengesDesert | Extreme heat, above 45°C | Flash floods are not common but can be dangerous | Salt can build up in the soil as water evaporates | Wind can blow away the topsoil
+47 | biomeChallengesIocb | Cyclones and storms can cause damage | High humidity encourages fungal diseases | Steep slopes are at risk of erosion | Risk of landslides on clay slopes
+48 | biomeWaterSavanna | Strong summer rain storms arrive quickly. Dig trenches beside/along the slope (water-holding swales) and small ponds before rain starts in October or September, so water enters the soil instead of running off. Make tanks big: at least 50 litres for each square metre of roof that pours water into them. Dig long narrow dams — about three times longer than wide — on gentle slopes.
+49 | biomeWaterGrassland | Summer brings short storms with heavy rain. On each slope, dig swales that fall slightly following the land (about 1m drop for each 1,000m crossed) so they spread water instead of it rushing. Winter is dry, so storing water is important. As a rule: 1 square metre of roof collects about 1 litre of water for each 1mm of rain.
+50 | biomeWaterFynbos | Rain falls only in winter, so do digging earthworks at the end of autumn (March to May), before the rain comes. Small earth walls following contours and shallow pits covered with mulch work well. Size your water tanks carefully — summer (December to February) is dry. Household water already used (greywater) is fine for food-growing areas, but never use it on natural Fynbos — it has too many nutrients for it.
+51 | biomeWaterSucculentKaroo | On west-facing slopes, shade net can catch fog water. Build a small raised rim around each plant to catch all raindrops where they fall. Reusing household greywater is suitable here. Each 100mm of rain matters — even a small roof tank is valuable.
+52 | biomeWaterDesert | Shade net can catch fog water in the air. Design swales so they safely catch sudden floods. Store water underground, where it stays cool and does not evaporate. Plant trees as windbreaks — they reduce evaporation and give shade before you plant crops.
+53 | biomeWaterAlbanyThicket | Rain falls in winter and summer. Use shallow swales and earth walls following contours. A Spekboom-based food forest can withstand drought and uses water wisely. Small tanks that can irrigate by gravity-fed drip work well. On clay soil, take care that plants do not stand in water.
+54 | biomeWaterIocb | Rain is heavy, so controlling floods is more important than harvesting water. Use shallow swales to slow water on steep slopes. Raised beds prevent plants from staying in water. Contour swales also help prevent landslides on clay soil. Make pipes for roof water to go into underground tanks.
+55 | biomeSoilGrassland | Grazing animals often compact this soil to be hard. Loosen it below the surface before digging swales or ponds. Plant oats or vetch as a winter cover crop to protect and feed the soil. The soil is often slightly acidic (pH 5.5–6.5) — add agricultural lime if it is more acidic than that. Add organic matter to the soil with compost and biochar.
+56 | biomeSoilSucculentKaroo | Cover the soil with stones rather than organic mulch — it is cheap and works well here. Add compost only in the food-growing area. Succulents need well-draining soil, not water-holding soil. In food beds, add biochar and gypsum. Worm farms are a good way to make a strong liquid fertiliser.
+57 | biomeSoilNamaKaroo | A hard cement-like layer (calcrete) often lies below the soil surface and may need to be broken with a special plough (chisel plough) so roots grow downward. Add gypsum rather than lime — the soil is already alkaline. Biochar in the soil helps it hold water. Bitter Aloe grows well here and can be sold.
+58 | biomeSoilDesert | Any organic matter here is valuable — use goat or camel dung. Plant shade trees first, before any food plants. In low-lying areas, plant only species that can withstand salt. Raised sand beds with a wick (a strip of absorbent material pulls water up) work well for vegetables.
+59 | biomeSoilAlbanyThicket | Spekboom is the most important plant here: you can eat it, it stores a lot of carbon, and it withstands drought. To restore damaged land, plant cut pieces of Spekboom directly — no need to first grow them in a nursery. Clay soil needs air moving well, so use raised beds for vegetables.
+60 | biomeSoilIocb | The soil is acidic and nutrients wash out quickly. Add lime to raise the pH to about 6.5. Cover the soil with mulch and plant cover crops to prevent nutrients washing out. A biochar and compost mix (terra preta) greatly improves the amount of food you can grow. Coffee, avocado, banana and sugarcane all grow well here.
+61 | frostLikelyLabel | Frost is likely
+62 | frostFreeLabel | No frost
+63 | earthworksBeforeRainsLabel | → Earthwork before the first rains:
+64 | photoDetailSoilProfile | Dig a small hole — show the colour and layers
+65 | goalRestoreTheLandLabel | Restore the land
+66 | waterSourceBorehole | Borehole
+67 | waterSourceGreyWater | Used water (greywater)
+68 | waterDeliverySprinklerDesc | Overhead sprinkling system
+69 | waterDeliveryFloodLabel | Flooding / furrow
+70 | sectionWaterStorage | Storage of water at the place (choose all)
+71 | waterStorageNone | No storage place
+72 | toggleGuttersSub | It directs rain to tanks or to a storage place
+73 | landPrepNoneDesc | You start from the ground or use a no-dig method
+74 | cropIndigenousPlants | Indigenous plants
+75 | sectionLivestock | Livestock at the place (choose all)
+76 | livestockNone | No livestock
+77 | infraStorageShed | Storage shed
+78 | infraLivestockKraal | Livestock kraal
+79 | practiceConventionalDesc | Chemical fertilisers and insect-killers (pesticides) are used
+80 | challengePests | Insects and diseases
+81 | challengeFlooding | Floods / erosion
+82 | photoTip | Tip: photos of the soil, slope, problem areas, and existing plants help Lima give more precise advice — add them with the camera button on the map.
+83 | notesPlaceholder | e.g. The northern slope gets afternoon shade from the hill. We removed a tree and the soil there is very hard…
+84 | reportWaterStorageLabel | Water storage
+85 | allSectionIndigenousTrees | Indigenous trees
+86 | allSectionAnimalsLivestock | Animals and livestock
+87 | allSectionFireHazards | Fire and hazards
+88 | frostGrowingSeason | Frost & growing season
+89 | climateReportDesc | Frost dates, ET, disease risk & planting calendar
+90 | frostFreePrefix | No frost ≈
+91 | lightFrostPrefix | Light frost:
+92 | lifeGuideIndigenousPlants | Indigenous plants you should put in
+93 | climateFrostExpected | Frost is expected
+94 | climateLightFrost | Risk of light frost
+95 | insightFrostExpected | Frost is expected ({tempC}°C the lowest in winter). Protect weak/tender plants in August–September with covers and small warm spots facing north.
+96 | insightLightFrost | Risk of light frost ({tempC}°C the lowest in winter). Plant trees that cannot withstand cold in raised beds or on north-facing slopes.
+97 | insightFrostFree | No frost all year ({tempC}°C the lowest). Tropical and subtropical food trees can grow here.
+98 | climateRainfallInsight | Most rain falls {wet}. Store water from downpours so it helps you in the dry season of {dry}.
+99 | evidenceSheetStorageFull | Storage is full — the photo was NOT saved. Delete some things so space opens.
+100 | evidenceSheetWaterDesc | Borehole test, use & municipal bills
+101 | evidenceCatalogueEdiblesHeading | Indigenous trees already present give harvest and shade for free — Lima keeps them in the design instead of cutting them down.
+102 | summaryWarmWetSummer | Summer is hot and rainy, and winter is cool and dry with fog often in the mornings. Reliable summer rain and a long frost-free period let you farm much of the year — plan with an eye on the dry winter and summer afternoon downpours.
+103 | summaryReliableRainfall | Reliable rain all year, moderate temperatures, and no long dry period. Good for steady production of many crops — manage humidity and diseases rather than drought.
+104 | summaryHighAltitude | High-lying area with cold winters and a short growing season. Make full use of small warm spots and frost-resistant plants.
+105 | surveyGoalSoil | Restore the land
+106 | insightsEmptyPrompt | It uses your exact slope, rain season, soil pH + OC, and biome to make a precise report for the place
+107 | popiaStoreLabel | Keep my farm and financial data
+108 | popiaStorageRequired | Storage in the cloud is required to use ImbewuField.
+109 | popiaGoalSoilLabel | Restore my land
+110 | coachGoalSoil | Your goal: restoring the land — Lima chooses plants that build the soil.
+111 | surveyGuideWater | Start at the spring/source, then follow the pipe or the carrying path. Look at the water storage place and roof gutters. Areas filled in by the map can be corrected if you measured them on site.
+112 | surveyFullIncludes | Everything in the short survey, plus detailed production records and separate sections for livestock and sales.
+113 | surveyStepLivestockPoultry | Livestock and chickens
+114 | loginErrorStorageBlocked | This browser blocks the storage that Google sign-in needs — open the site in Chrome or Safari.
+115 | loginErrorBackendSampleMode | Firebase is not yet set up — it runs in sample mode.
+116 | loginErrorBackendUnavailable | Firebase is not yet set up.
+117 | offlinePrepareDescription | Prepare the authorised pages and records you need, including visit and training photos. This uses data and device storage. Stay signed in on this device.
+118 | [g04-atlas-network-map] | Summer rain, light frost
+119 | [g04-atlas-network-map] | Frost is expected
+120 | [g04-atlas-network-map] | There may be light frost
+121 | [g05-programme-mel] | The sharing controls and notices on this page are in isiXhosa. Some charts, data-status warnings and the farmer details panel are still shown in English; names, numbers and evidence typed by people are shown as they were saved.
+122 | [g05-programme-mel] | Installed storage places, reliable water access, harvested water and working solar.
+123 | [g06-reports] | Your place put on the map, planned storage and the season's rain.
+124 | [g06-reports] | Indigenous trees
+125 | [g06-reports] | Animals and livestock
+126 | [g06-reports] | Fire and hazards
+127 | [g06-reports] | Storage in the plan
+128 | [g06-reports] | Water storage
+129 | [g06-reports] | SUN · WIND · SLOPE
+130 | [g06-reports] | Greywater pipe
+131 | [g06-reports] | soil item or earthwork item
+132 | [g06-reports] | soil items and earthwork items
+133 | [g06-reports] | Tank storage
+134 | [g06-reports] | storage in the plan
+135 | [g06-reports] | storage needed
+136 | [g06-reports] | fire follows this wind
+137 | [g06-reports] | Fire risk
+138 | [g06-reports] | Fire can come more from / Fire may come mostly from
+139 | [g06-reports] | slope
+140 | [g06-reports] | Where fire is more likely to come from (regional)
+141 | [g06-reports] | Sun, wind and slope
+142 | [g06-reports] | Wind and fire: regional pattern
+143 | [g06-reports] | Slope: elevation model.
+144 | [g08-records-money-crops] | Winter — protect seedlings from frost; harvest leafy and root vegetables.
+145 | [g08-records-money-crops] | Summer rain, light winter frost
+146 | [g08-records-money-crops] | Rain all year, no frost
+147 | [g08-records-money-crops] | Remove tomato plants that have finished producing before disease spreads.
+148 | [g08-records-money-crops] | Plant spinach and carrots in beds well dug with compost.
+149 | [g08-records-money-crops] | Protect tender seedlings from frost with shade cloth or a row cover.
+150 | [g08-records-money-crops] | Water only when the soil is dry — watering too much in winter causes root rot.
+151 | [g08-records-money-crops] | Check stored pumpkins and sweet potatoes for whether they are rotting.
+152 | [g08-records-money-crops] | Prepare spring beds — dig compost into the soil before the heat arrives.
+153 | [g08-records-money-crops] | Remove frost-protection cloth as the days warm — let the sun harden the seedlings.
+154 | [g08-records-money-crops] | Water daily in the morning — watering in the evening brings fungal diseases.
+155 | [g08-records-money-crops] | April is the best time to plant garlic in most of South Africa. Use big healthy cloves from disease-free seed. Spinach sprouts/grows well now — make seedlings 15 cm apart so leaves get big. Cool nights reduce insect pressure: that has helped you.
+156 | [g08-records-money-crops] | Plant spinach in succession every 3 weeks from May to July for a continuous harvest. Carrots planted now will be ready in August. Autumn is the best time to improve the soil — dig ripe compost into the soil now, worms will do the rest in winter.
+157 | [g08-records-money-crops] | June is the coldest month in the Highveld. In frosty areas, protect spinach seedlings at night with protective cloth or dry grass. Along the coast and in the Cape, June is truly good growing weather — there focus on increasing the harvest before spring heat arrives.
+158 | [g08-records-money-crops] | July is a deep rest period for growth. Use it well: get good tomato, bean and maize seed now while it is plentiful and sold at a low price. In mid-July, start tomato seed indoors in trays if you have a warm place — they will be ready for transplanting in September.
+159 | [g08-records-money-crops] | August shows change. Plant tomato seed indoors now — 6 to 8 weeks before your last frost gives seedlings a good start. In frost-free coastal regions you can plant tomatoes directly in the soil at the end of August. Start softening/loosening soil made hard by winter in each bed.
+160 | [g09-farmer-design-home] | NOT SAVED — storage is full
+161 | [g10-journal-samples-consent] | Storage was close to full, so the photos of the oldest entries have been removed. The notes are kept.
+162 | [g10-journal-samples-consent] | Storage is full — this entry could not be saved. Delete old entries and try again.
+163 | [g10-journal-samples-consent] | Insects / diseases
+164 | [g10-journal-samples-consent] | The tour could not start. Please allow session storage.
+165 | [g10-journal-samples-consent] | Compare harvests, sales and costs in the Chart. Open invoices, choose Saved and open an existing invoice to get Share as PDF and Print. See how the farmer keeps a digital record; you are not required to send anything to a buyer.
+166 | [g10-journal-samples-consent] | The sample workspace could not start. Please allow session storage and try again.
+167 | [g10-journal-samples-consent] | Please allow session storage to open this tour.
+168 | [g19-crop-production] | Choose at least one month in which this food is stored.
+169 | [g19-crop-production] | Add products to the plan so you record their production and stored food.
+170 | [g19-crop-production] | Record stored food
+171 | [g19-crop-production] | Name of the stored food
+172 | [g19-crop-production] | Months with stored food
+173 | [g19-crop-production] | Fresh harvest, stored food and recorded stored food.
+174 | [g19-crop-production] | Stored food follows sourced storage conditions for each crop. Freezing, drying, fermenting and other processing come in only through dated storage records. Harvest does not by itself make stored food.
+175 | [g19-crop-production] | No stored-food records are given. Their availability is not known. This graph uses only the marked harvest times and the sourced crop storage times.
+176 | [g19-crop-production] | Weight recorded as present in each month. Stored, dried, frozen, fermented and processed food is storage; it is not a second harvest.
+177 | [g19-crop-production] | {label}: {kg} kg stored
+178 | [g19-crop-production] | Fruits, nuts and indigenous foods
+179 | [g19-crop-production] | in storage only
+180 | [g19-crop-production] | It is assumed there is no frost
+181 | [g19-crop-production] | Plant soil that drains water well
+182 | [g19-crop-production] | Coming from storage
+183 | [g19-crop-production] | Stored
+184 | [g19-crop-production] | Fermented
+185 | [g19-crop-production] | Stored food
+186 | [g20-study-components] | The device storage could not be changed. Try again.
+187 | [g20-study-components] | Save your worksheet before changing cases. The facilitator may collect your written or spoken explanation and your calculations. Self-checking is only practice; it is not an assessment that is submitted or accepted.
+188 | [g20-study-components] | Ask the facilitator or a study partner to review your explanations and numbers. They must give one specific correction and ask you to show it in a new case.
+189 | [g21-staff-misc] | Show a simple soil, water or seed check using local materials after checking the route and the place; stop if the action is not safe.
+190 | [g21-staff-misc] | Identify the local language to be used, the exact English source when the translation is a draft, materials, access support and the stopping point for unsafe or unconfirmed advice.
+191 | [g21-staff-misc] | It stops unsafe or unconfirmed farming advice, and identifies the next source or expert checking.
+192 | [g21-staff-misc] | Integrating Small Livestock
+193 | [g21-staff-misc] | Draw the boundary on the satellite view of the real farm, then plan beds, water systems, earthworks and buildings directly on that land — not a common template.
+194 | [g21-staff-misc] | Each plant in the farm design is a real, sourced species — traditional fruit trees, fruit and nut trees from overseas, shrubs, ground-covering plants and climbers — each with its own water need, mature size and use.
+195 | [g21-staff-misc] | Ten modules, 33 lessons, covering the ethical principles of permaculture, reading the surrounding land, water harvesting, soil health, seed, plant groups, food forests, livestock and the selling garden — each lesson has a short quiz.
+196 | [g21-staff-misc] | The ImbewuField home screen shows the farm's weather forecast, a heat warning and the next recommended step
+197 | [g21-staff-misc] | Today's weather, the heat warning, and what needs to be done next on this farm.
+198 | [g21-staff-misc] | An AI-generated site report showing rain, soil type, frost risk and elevation, plus the site's land pieces placed on a map
+199 | [g21-staff-misc] | Rain, soil, frost risk and elevation at the exact place — plus its land pieces placed on the map.
+200 | [g21-staff-misc] | Production photos go with their own harvest record, so the reviewer sees the crop together with the amount.
+201 | [g21-staff-misc] | ImbewuField is a Progressive Web App — no app stock (store?), no download size. Open it once and add it to the home screen, and it opens like any other app after that.
+202 | [g21-staff-misc] | Lima marked where each zone could work well. Tap a zone, then draw it yourself.
+203 | [g22-production-data] | Is clean drinking water available all the time/regularly?
+204 | [g22-production-data] | Does this place get frost?
+205 | [g22-production-data] | Make sure of reliable clean drinking water before buying other birds.
+206 | [g22-production-data] | Each breed has needs for clean drinking water, suitable food and a safe place to live.
+207 | [g22-production-data] | You reported frost. Check winter shelter and warming of chicks with a local mentor.
+208 | [g22-production-data] | Farming water is [scarce / not scarce — form ambiguous]. Check drinking water separately; garden water does not confirm the availability of safe water for chickens.
+209 | [g22-production-data] | Egg and meat option. It surpassed other indigenous breeds in eggs in a controlled ARC test; those results do not predict what will happen on this farm.
+210 | [g22-production-data] | Option of an indigenous breed kept by the ARC for eggs and meat; check local stock and care needs.
+211 | [g22-production-data] | Option of an indigenous breed described in different South African climates; confirm suitability with local advice.
+212 | [g22-production-data] | Consider it only after checking reliable feed, drinking water, housing, health treatment and controlled lighting. The breed and the seller still need confirming here locally.
+213 | [g22-production-data] | Frost on this farm
+214 | [g22-production-data] | Planned crops that need to be checked for frost
+215 | [g22-production-data] | Frost was seen here in {months}. Check frost-weak crops by comparing with these observations.
+216 | [g22-production-data] | Frost was seen here; the months were not recorded. Check frost-weak crops by comparing with these observations.
+217 | [g22-production-data] | The farmer reports that no frost was seen. This does not confirm that the coming winter will be frost-free.
+218 | [g22-production-data] | Local frost observations are not recorded. Monthly satellite measurements cannot confirm the dates of the first and last frost.
+219 | [g22-production-data] | drains water well, as reported
+220 | [g22-production-data] | These planned crops will be in the ground in months in which frost was seen here. Confirm local protection or change planting before you rely on these dates.
+221 | [g22-production-data] | Fermented cabbage
+222 | [g22-production-data] | Invented/made-up storage months from August to October 2027, not a safe storage period. Fermentation control, a tested preparation recipe and the stored quantity are not provided.
+223 | [g22-production-data] | Invented/made-up storage months from August to October 2027, not a safe storage period. They are made-up peanuts (groundnuts) bought or carried in the shell; no harvest from the sample trees is claimed. Storage conditions, kernel weight and the stored quantity are not provided.
+224 | [g22-production-data] | Inspect every colony regularly to see signs of bee disease that must be reported and Cape-bee (Capensis) infestation.
+225 | [g22-production-data] | Keep written records of colonies, apiary sites, diseases, disease-control measures and colony losses and their causes.
+226 | [g22-production-data] | Report any suspicion of a disease that must be reported (American foulbrood is listed); officials may order that an infected colony be destroyed.
+227 | [g22-production-data] | Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: the state Veterinary Services ensure isolation and movement restriction.
+228 | [g22-production-data] | Any suspected or confirmed abortion associated with brucellosis in cattle must be reported to the State Veterinarian office, as part of the national bovine brucellosis control scheme under the Animal Diseases Act.
+229 | [g22-production-data] | An owner or manager who has animals infected, or that may be infected, with a controlled animal disease must report immediately to the State Veterinary Director/controller.
+230 | [g22-production-data] | Newcastle disease and avian influenza that must be reported are on the state list of controlled and notifiable animal diseases.
+231 | [g22-production-data] | Village scratching chickens grow more slowly than other commercially farmed birds and are more vulnerable to diseases, parasites and predators.
+232 | [g22-production-data] | Check flocks for sudden death, ruffled feathers, swollen wattles/combs or a sudden drop in egg production — these are signs of avian influenza and must be reported immediately.
+233 | [g22-production-data] | Keep ducks away from wild birds and open water/food that attracts them, and control visitors' access to the duck house, to reduce the risk of avian influenza.
+234 | [g22-production-data] | Ducks are domestic birds/poultry, so an avian influenza outbreak in a duck flock is a controlled animal disease under the Animal Diseases Act and must be reported immediately to the state veterinarian.
+235 | [g22-production-data] | The indigenous Mozambique Tilapia (O. mossambicus) is not a listed invasive species and can be farmed without an alien-species permit; the fast-growing Nile Tilapia (O. niloticus) is.
+236 | [g22-production-data] | The owner must not let a goat stay dirty or have parasites, and must get veterinary or other treatment for a sick, injured or diseased animal when able.
+237 | [g22-production-data] | Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act: veterinary services ensure isolation and movement restriction, and a suspected case must be reported.
+238 | [g22-production-data] | The 2016 state goat handbook separates indigenous meat stock, Boer, Savanna and Kalahari Red from dairy/fibre breeds, plus breeding goals and individual records of birth, weaning, weight and sales. Uncontrolled local breeding can produce births at any time; that does not establish year-round availability of meat or weaned kids. Choose stock suitable for the local system and record survival and production level before estimating quantity.
+239 | [g22-production-data] | A goat may be slaughtered for sale only at an abattoir registered under the Meat Safety Act; slaughtering it for the farmer's own use, or for cultural/religious purposes (including ritual slaughter, common for indigenous goats), is not compelled by this rule (exempt), but that meat cannot be sold afterwards.
+240 | [g22-production-data] | ARC Table 1 lists pregnant sows at 10–18 litres of drinking water per day and milk-producing sows at 18–23 litres per day. These are breeding-sow levels, not one quantity for all pigs. Farrowing care separates cooling the sow and warming the piglets; outdoor systems need hardy adapted stock, shade and shelter. Confirm the level, reliable clean water, feed and housing here locally. The handbook does not give confirmed edible kg of meat per breeding sow in this plan.
+241 | [g22-production-data] | African swine fever (ASF) is listed as a controlled animal disease associated with pigs under the Animal Diseases Act; warthogs and Ornithodorus ticks are carriers/vectors.
+242 | [g22-production-data] | Foot-and-mouth disease (FMD) is also listed as a controlled animal disease associated with pigs under the Animal Diseases Act.
+243 | [g22-production-data] | Electric prods, sticks or goading tools may not be used on a sheep.
+244 | [g22-production-data] | Livestock must be given water and fed promptly on arrival at the night camp or final place.
+245 | [g22-production-data] | Foot-and-mouth disease (FMD) is a controlled animal disease under the Animal Diseases Act; veterinary services ensure isolation and movement restriction.
+246 | [g22-production-data] | Sheep scab is a legally controlled disease: a suspected or confirmed case must be reported to the State Veterinarian immediately.
+247 | [g22-production-data] | There must be a sheep scab treatment plan: this disease has a high economic and welfare cost.
+248 | [g22-production-data] | Although foot-and-mouth disease (FMD) is present in South Africa, wool exports continue under the OIE (World Organisation for Animal Health) virus-inactivation rule.
+249 | [g22-production-data] | Village scratching/free-range chickens, KwaZulu-Natal: dry area (40.43) vs wet (49.91), difference not significant ('NS'). The ARC Irene controlled-system test of named indigenous breeds (Grobbelaar, Sutherland & Molalakgotla 2010, Animal Genetic Resources 46: 25-32) reports much higher numbers, now confirmed separately and kept in productionReferences; controlled conditions cannot replace village scavenging.
+250 | [g24-product-guidance] | The ARC identifies Tommy Atkins and Kent among the others as more tolerant of heat/sunburn; Sensation and Keitt are lower in this. Confirm local harvest dates before choosing a sequence.
+251 | [g24-product-guidance] | About year 4–5 in the KZN fruit-farming guide. Condition of hot, frost-free, humid subtropical production areas; variety, propagation age and field establishment are not confirmed. This is a first-harvest indication, not a certain local quantity or full-bearing age.
+252 | [g24-product-guidance] | Allow for slow growth, frost weakness and roots that reach into rock crevices.
+253 | [g24-product-guidance] | Ask a local indigenous-plant nursery to confirm plant identification and suitable provenance; no named superior variety or certain frost measure is confirmed.
+254 | [g24-product-guidance] | Ask an indigenous-plant nursery for the exact species and local material. No high-yield regional food variety is confirmed.
+255 | [g24-product-guidance] | Ask an indigenous-plant nursery for the exact species, local provenance and information on sex; no species with a measured food yield is confirmed.
+256 | [g24-product-guidance] | Assumed planting type: Sunrise Solo, depending on a frost-free, well-draining growing place. Confirm its local harvest months; the calendar uses a labelled regional reference where it was found.
+257 | [g24-product-guidance] | Assumed planting type: Tommy Atkins, depending on a local check of flowering and frost. Confirm its local harvest months; the calendar uses a labelled regional reference where it was found.
+258 | [g24-product-guidance] | You assume light frost; check its severity here locally.
+259 | [g24-product-guidance] | Avoid frost and standing water. Honey Gold needs male and female plants; Sunrise Solo is a hermaphrodite.
+260 | [g24-product-guidance] | Best in summer-rain areas with light frost; protect young trees in cold areas.
+261 | [g24-product-guidance] | Buying advice: for egg production, ask a layer-hen seller for young vaccinated point-of-lay pullets, with records of age, feed and vaccination.
+262 | [g24-product-guidance] | Buying advice: match breed/stock with production, local feed, climate and care skill; confirm with a local livestock or beekeeping mentor.
+263 | [g24-product-guidance] | Check frost, drainage and disease pressure at flowering time. Sensitivity to heat and sunburn differs between varieties.
+264 | [g24-product-guidance] | Check fruit ripening and handling after harvest. Sunburn, cracking and rot differ by variety.
+265 | [g24-product-guidance] | Check local frost and water. Food processing needs a suitable method and clear records of stored stock.
+266 | [g24-product-guidance] | Check measured winter chill, spring frost, drainage and rain near harvest. The old KZN guide saw commercial suitability where it was still being tested; the general climate-zone name does not replace current local advice.
+267 | [g24-product-guidance] | Choose a cool growing season and "sprouted"(?fertile) well-draining soil. Heat lowers the quality of unopened flower heads and frost can damage them.
+268 | [g24-product-guidance] | Choose a sunny, well-draining growing place, protect establishment and plan the cutting of the [garbled: "need"/vegetable] for leaf harvest.
+269 | [g24-product-guidance] | Check at a cold place: these subtropical indications do not confirm suitability here. Confirm a frost-protected place before buying.
+270 | [g24-product-guidance] | Collect eggs regularly, keep nest-box grass clean and dry, and handle/store eggs carefully so they are used at home or sold.
+271 | [g24-product-guidance] | Confirm Rhoicissus digitata; other wild grape species have different stories and cannot give its dates.
+272 | [g24-product-guidance] | Confirm the species-specific chill and spring frost risk. Average winter temperature is not a measure of chill hours.
+273 | [g24-product-guidance] | Confirm the exact species with a suitable indigenous-plant nursery. Do not replace identification with broad berry claims for the whole genus.
+274 | [g24-product-guidance] | Confirm the exact species and the intended hedge use with a local indigenous-plant nursery.
+275 | [g24-product-guidance] | Confirm the exact species and local provenance; the SANBI assessment places it on rocky fynbos/karroid slopes of the Northern and Western Cape.
+276 | [g24-product-guidance] | Confirm the exact species and male/female stock at an indigenous-plant nursery. Keep environmental use separate from an unconfirmed home food system.
+277 | [g24-product-guidance] | Confirm the exact species at a local indigenous-plant nursery; no tested regional variety or measured-yield choice was found.
+278 | [g24-product-guidance] | Dried-fruit flour is a recorded traditional use, not a given safe storage period. October–March is flowering time.
+279 | [g24-product-guidance] | The food is the berry; the same SANBI source says the tuber-like roots are poisonous. September–June describes berry presence, not a measured period for harvesting ripe ones.
+280 | [g24-product-guidance] | For eggs with reliable feed and water, consider commercial laying hens. For eggs and meat, the Potchefstroom Koekoek is a dual-purpose option; Venda, Ovambo and Naked Neck are other options kept by the ARC. Confirm the seller's vaccination, age and care needs.
+281 | [g24-product-guidance] | Frost weakness and drainage restrict the place. Year-round planting at Hluhluwe is a planting reference, not a year-round home harvest window; colder places use the warm months for planting.
+282 | [g24-product-guidance] | It tolerates frost and drought; but early care is still important.
+283 | [g24-product-guidance] | Frost-free forest reference; confirm female fruiting stock and a pollen source.
+284 | [g24-product-guidance] | Frost-free regional reference; male and female trees are separate.
+285 | [g24-product-guidance] | Full sun and well-draining soil; a Cape water-saving groundcover. Flowering dates are not harvest dates.
+286 | [g24-product-guidance] | The government guide identifies pods, removal/shedding because of severe frost, irrigation in dry areas and variation among trees from seed. It recommends grafted material and providing pollen; not all trees have the same crop.
+287 | [g24-product-guidance] | Grafted mango stock in the KZN guide often starts bearing after 3–4 years. The context is hot frost-free/hot subtropical production with low humidity at flowering, including dry Zululand, Valley Bushveld and the Lowveld. The text separates grafted stock from seed-grown Peach/Sabre; do not use this age for an unrecorded seed-grown plant or estimate yearly kg.
+288 | [g24-product-guidance] | Grafted stock often starts bearing at about 3–4 years and can keep producing 20 years or more under the guide's conditions. Seed-grown trees are a different planting-material case. Frost, wet spring flowering conditions, variety and field establishment must be checked; a long life is not a yield-by-age curve.
+289 | [g24-product-guidance] | The old food use refers to the oily coating of the berry, not the common sweet fresh berry. No confirmed home extraction method, recovered food yield or confirmed storage life. The source's coating/oil percentages are not assigned as processing conversion factors.
+290 | [g24-product-guidance] | Imperial has a December reference at Robertson. It is a candidate for local trial, not advice for the frost-free KZN coast.
+291 | [g24-product-guidance] | The KZN advice describes Vaccinium species and lists the rabbiteye varieties Tifblue, Beckyblue and Climax. This reference is not specific to southern highbush blueberries.
+292 | [g24-product-guidance] | Keep the roots well drained; water is important during flowering.
+293 | [g24-product-guidance] | Match growing this dry-region tree with drainage conditions.
+294 | [g24-product-guidance] | Match the variety to table or oil olives. Check drainage, irrigation and winter conditions; humid summer rain can bring disease problems.
+295 | [g24-product-guidance] | Match the variety to the site's small climate; avoid severe frost and soil that does not drain well.
+296 | [g24-product-guidance] | Match the plant to well-draining coastal sand conditions and its seasonal growth.
+297 | [g24-product-guidance] | Match the chosen length type with the sowing date and local frost, rain and water availability; the trial keeps its conditions.
+298 | [g24-product-guidance] | Match this frost-weak plant to dry salty/coastal conditions. Its accumulated salt can return to the soil when the plants die.
+299 | [g24-product-guidance] | Match hot summer and cold, frost-free winter flowering conditions; protect from wind and keep young plants irrigated.
+300 | [g24-product-guidance] | The observed frost contradicts this suggested reference; confirm a protected growing place before buying.
+301 | [g24-product-guidance] | Poisonous parts must always remain visible
+302 | [g24-product-guidance] | Pretoria Hillcrest rain-shelter trial, 2015/16 and 2016/17, drip irrigation on clay-sand soil. Commercial ginger Z. officinale in eight months: 38.3 t/ha fresh and 8.8 t/ha dried rhizomes in the well-irrigated treatment; African ginger was a different species with different values. No matching plant density is given, so no kg/plant or home drying conversion is found. The summary says open field, while the Methods describe a rain shelter; the conditions are kept.
+303 | [g24-product-guidance] | Protect young plants from cold; use well-draining soil in sun or part shade. SANBI describes frost weakness and tolerance of sea winds.
+304 | [g24-product-guidance] | Give climbing support. The tuber-like roots are poisonous; children must not collect food [garbled: "without being worked-for/employed" — supervision meaning lost].
+305 | [g24-product-guidance] | Provide a trellis and pruning; avoid standing water and watch for root rot and virus problems.
+306 | [g24-product-guidance] | Record fresh cuttings and dried tea output separately; no automatic drying conversion or safe storage period is assigned.
+307 | [g24-product-guidance] | Record ripe-fruit harvest and drying separately. No storage period or fermenting recipe is assigned.
+308 | [g24-product-guidance] | Regional reference: frost-free strawberry
+309 | [g24-product-guidance] | Regional reference: light-frost strawberry
+310 | [g24-product-guidance] | Ripe fruit only; the tuber-like roots are poisonous.
+311 | [g24-product-guidance] | SANBI describes a spreading pioneer plant suited to sun and well-draining soil, including coastal and inland areas. Leave room for it to spread.
+312 | [g24-product-guidance] | SANBI describes humid coastal/estuary conditions and it does not tolerate even light frost.
+313 | [g24-product-guidance] | SANBI records a wide range from frost-free coast to winter-frost areas. Its hooked and straight thorns are important in choosing access paths.
+314 | [g24-product-guidance] | SANBI records it in the dry Karoo and Eastern Cape [small peaks/hills], tolerating frost and drought. It can grow in sun or part shade.
+315 | [g24-product-guidance] | SANBI records this shade tree as tolerating frost and drought in Karoo and Kalahari conditions.
+316 | [g24-product-guidance] | SANBI records this slow-growing tree in summer- and winter-rain areas, tolerating frost, drought and wind.
+317 | [g24-product-guidance] | SANBI records this tree in the eastern coastal sand-dune forest from the Eastern Cape to KwaZulu-Natal, tolerating salty sea wind.
+318 | [g24-product-guidance] | SANBI reports cooking use but also poisonous material and toxicity concerns. The preparation report is not a complete safe home recipe.
+319 | [g24-product-guidance] | The seeds and unripe fruit are poisonous. Keep children away from [garbled: "unworked/unemployed"] harvesting and preparation.
+320 | [g24-product-guidance] | September–January describes fruit production; exact dates for harvesting ripe fruit are not described. Do not count leaves used as livestock feed as household food.
+321 | [g24-product-guidance] | Protect this coastal tree from direct salty sea wind; SANBI reports salt burn even though it lives on the coast.
+322 | [g24-product-guidance] | The source describes the tea species and its cultivation in the Southern Cape in sunny, acidic, well-draining soil; it does not give a transferable kg/plant or full-production age.
+323 | [g24-product-guidance] | Summer-rain reference; check frost protection for young plants.
+324 | [g24-product-guidance] | The context of Ethiopian gesho-leaf beer-making establishes a special processed flavour use, not common nourishment from fresh fruit or a South African home recipe. No leaf kg/plant, food storage life or local harvest date is assigned.
+325 | [g24-product-guidance] | A South African report describes growth on river/forest hills and frost tolerance; its berries are described as bird food.
+326 | [g24-product-guidance] | The discussion clearly includes S. undulata among dried ripe currant fruits that are eaten and traditional fermenting use. The calendar of the species in the titled article is not transferred to S. undulata.
+327 | [g24-product-guidance] | The edible berry must be separated from the bark; the source says it (the bark) contains a poisonous glucoside.
+328 | [g24-product-guidance] | The food product is the tuber, not a fruit of the sweet-potato family. Hot summer-rain cultivation with light frost is described; winter/spring flowering after leaf loss is not a dated calendar for digging tubers.
+329 | [g24-product-guidance] | The same source reports poison in the seeds, bark, wood and root. A guava-like look of the fruits is not evidence that the fruits are edible.
+330 | [g24-product-guidance] | The source places it in frost-free areas with moderate rain.
+331 | [g24-product-guidance] | The study analyses processed spekboom leaves. Its laboratory method and composition are not a farm harvest level, storage life or home food-safety recipe.
+332 | [g24-product-guidance] | The three are SL28, Catuai and F6. The property describes removing the cherry skin, fermenting, drying, hulling and roasting after harvest; cherry weight, green beans and roasted output are different products.
+333 | [g24-product-guidance] | This is an old one-hectare financial example; it does not give a matching kg per tree or a measured biological maturity curve. No financial values or pesticide chemical recipes are copied.
+334 | [g24-product-guidance] | This sun-loving coastal groundcover can bind sandy soil. SANBI records frost damage, so check cold exposure before using it inland.
+335 | [g24-product-guidance] | Use a hot, dry, well-draining place and allow for slow growth.
+336 | [g24-product-guidance] | Use a sunny, well-draining coastal, fynbos or Karoo place suited to this water-storing pioneer plant.
+337 | [g24-product-guidance] | Use a hot, frost-free, well-draining place. The KZN production reference is Hluhluwe; it does not establish suitability across all of South Africa.
+338 | [g24-product-guidance] | Use clean suckers and match the variety to the production system and region. Reliable irrigation and disease control are important.
+339 | [g24-product-guidance] | Use frost-free conditions: SANBI describes frost weakness although it tolerates drought, plus natural lowland riverine forest in northern KwaZulu-Natal, Mpumalanga and Limpopo.
+340 | [g24-product-guidance] | Use loose, well-draining soil in full sun under suitably warm conditions.
+341 | [g24-product-guidance] | Use fynbos conditions suited to the species, well drained and acidic, and confirm local frost exposure.
+342 | [g24-product-guidance] | Use sun and well-draining soil. SANBI records dry bushveld, preference for sandy soil and frost tolerance; avoid over-watering established plants.
+343 | [g24-product-guidance] | Use well-draining coastal sand and keep divided plants moist until established.
+344 | [g24-product-guidance] | Use well-draining coastal sand in sun or part shade; fruit production needs planting material of the correct sex.
+345 | [g24-product-guidance] | Use well-draining soil and enough water during establishment; avoid standing water and root rot.
+346 | [g24-product-guidance] | Use well-draining soil and sun. The source excludes the Cape winter-rain area from its natural distribution and separates several subspecies.
+347 | [g24-product-guidance] | Warm, frost-free conditions and reliable water are required. Keep a replacement sucker after removing the fruiting stem.
+348 | [g24-product-guidance] | Warm-climate candidate: Biloxi, a low-chill southern highbush variety, reported by a nursery producing stock in South Africa. Get a compatible southern highbush partner for pollination. Early flowering can suffer from spring frost; local soil, chill and harvest dates still need checking. Do not include rabbiteye plants as a highbush type.
+349 | [g24-product-guidance] | Indigenous goats
+350 | [g25-facilitator-crops] | No general storage advice is taken into account here.
+351 | [g25-facilitator-crops] | Summer rain · light winter frost
+352 | [g25-facilitator-crops] | it avoids only immediate succession of the same family within this year's plan and after a crop marked as already growing. Good multi-year rotation needs dated records of past seasons; this screen does not keep them and does not invent them.
+353 | [g25-facilitator-crops] | Keeps about {n} month stored — {conditions}
+354 | [g25-facilitator-crops] | Keeps about {n} months stored — {conditions}
+355 | [g25-facilitator-crops] | Nothing is planned for harvest in the beds, and nothing with a sourced storage time is still stored.
+356 | [g25-facilitator-crops] | Sliders and prices same as that combined number [unclear]. The land of staple crops often looks low per m² naturally — maize, beans and potatoes cost little per kilogram but they are stored and feed the home all year — so compare beds with beds and plots with plots, not one with the other.
+357 | [g25-facilitator-crops] | A crop mix aimed at crops with a low price per kilogram. That may be a good choice — staple crops store and feed the home — that is why bed and plot numbers are shown separately.
+358 | [g25-facilitator-crops] | Food groups describe what the household eats; rotation follows plant families that share pests and diseases. When "Rotate crops" is on, Auto-suggest avoids immediately repeating the same family — e.g. potato after tomato, or beetroot after Swiss chard. It does not set one sequence for everyone. The ARC crop rotation book treats rotation as a multi-season decision, so also keep records of past seasons.
+359 | [g25-facilitator-crops] | Carrot family
+360 | [g25-facilitator-crops] | This plan does not set a fertiliser or pesticide programme. Soil condition, an accurately checked problem, the exact crop and the current South African label all matter; ask a local extension officer or a qualified expert where possible.
+361 | [g25-facilitator-crops] | note the affected plant, the symptoms, which part of the plant is damaged and how the problem changes. Confirm a pest, disease or nutrient problem before treating it; similar symptoms can need different responses.
+362 | [g25-facilitator-crops] | after an accurate check, consider suitable hygiene, barriers, removal or other non-chemical control methods. This app does not say that a particular companion plant controls a pest.
+363 | [g25-facilitator-crops] | use only a product currently registered for the exact crop and problem. Follow its current label on dose, protective equipment, re-entry, the time before harvest, storage and disposal. Do not assume safety because of "natural" or "organic."
+364 | [g25-facilitator-crops] | and the label on the product in hand. Nothing in this crop plan automatically schedules spraying.
+365 | [g25-facilitator-crops] | Site survey: water and frost
+366 | [g25-facilitator-crops] | Confirm your current water supply before turning on irrigation. Observed frost months are checked when the plan is suggested.
+367 | [g25-facilitator-crops] | Harvest figures use the cautious end of published KZN commercial references where the crop is listed. They compare plans; they do not predict this household's harvest. Heat/light-frost windows, spacing and duration use official tables where those tables cover the crop; catalogue fallbacks and other regional patterns still need local confirmation. Bed occupation uses the upper published maturity/harvest end so two crops are not booked on the same land, but the source says these times are estimates and assume good conditions; real crops may mature later. Any sowing or transplanting in the next season depends on observing that the previous crop is finished and the bed is clear. The app does not split a crop-cycle figure into invented monthly kilograms. Auto-suggest places only crops with confirmed yield, timing and field-spacing support. The family plan starts from a different supported mix; an exact crop list becomes a strict list. It requires irrigation because dense succession without a farm water plan is not safe. Its intensive method is a visible estimation method, not proof of general high density or real row adjustment. Commercial ranking is based on fresh weight per crop cycle; it is not profit, nutrition or buyer-demand evidence.
+368 | [g25-facilitator-crops] | Planning guide only — sowing times in general numbers. Adjust to local rain, frost dates and microclimate.
+369 | [g26-study-content] | Does the report of water crossing the eastern yard confirm elevations or an earthwork design?
+370 | [g26-study-content] | In your work, check the site name and the account and the record. The same name is not enough to identify the correct item.
+371 | [g26-study-content] | Look at the sun, wind, fire and water information shown. Read the source notes and the notes on missing information. Some information is modelled or regional, not a measurement of your land.
+372 | [g26-study-content] | Water → Earthworks → Zones → Planting → Buildings
+373 | [g26-study-content] | A tank or bed icon comes with a starting size. Check the real design needs before saving those values. A drawn earthwork is not a measured or approved building instruction.
+374 | [g26-study-content] | Use Undo ("Buyisela") to undo a practice change. Check both the place and the measurements. Redo repeats the undone change; it is not a second copy. Fit map to view helps you see the whole site again.
+375 | [g26-study-content] | You can move an item on purpose and then return it without accidentally changing its measurements.
+376 | [g26-study-content] | Review → Check the map → Read what says Saved or any warning
+377 | [g26-study-content] | The app saves changes as you work. Read the page header. If it says NOT SAVED or reports that storage is full, keep a copy and resolve the warning before leaving. Saved confirms saving on the device; by itself it does not show that the same version arrived on another device.
+378 | [g26-study-content] | Correct. Restore the original measurements first. Zoom in and separate the body from the resize handles before trying again.
+379 | [g26-study-content] | Independent practice: on the sample farm, identify an existing item and a proposed item. Move one bed, explain what changed, then restore it with Undo. Draw the Design map, download one chosen sheet and find its title and legend in the file.
+380 | [g26-study-content] | Sowing month → How big is the bed? → Read the warnings
+381 | [g26-study-content] | Read the overlap messages and unconfirmed timing. A warning is a reason to review the plan, even if the screen lets you save. Do not assume that two crop bars mean both fit.
+382 | [g26-study-content] | The plan is saved on this device as you work. Read any warning that says Not saving and keep a copy while you fix it. A closed editor does not show that there is a backup copy in the cloud.
+383 | [g26-study-content] | Tasks describe planned work. Availability shows fresh picking windows and storage only where conditions are given. None of them confirms that you harvested or stored food. Field use relates to planned occupation of the mapped area.
+384 | [g26-study-content] | Independent practice: follow the sample design to its crop plan, identify one bed area and open another planting. Explain its status, month and area share. Change one planned month, save and reopen, then restore it with Undo.
+385 | [g26-study-content] | The chart counts what is left as harvested minus sold. It does not separately record food eaten at home, gifts, storage, seed, livestock feed or loss. Keep those destinations in a supporting book if you want to explain them.
+386 | [g26-study-content] | On the phone, the summary at the top says this month. Read the period beside each card below. Check the labels again after changing the screen size or reopening the page.
+387 | [g26-study-content] | Read any Check warning before adding amounts. A possible copy needs investigation against its source. If there are no rows, check the period and the saved records before deciding nothing happened.
+388 | [g26-study-content] | You can follow a row, explain its date and units and identify any warning.
+389 | [g26-study-content] | Choose Save and read the result. If the app says Not saved or reports a saving problem, keep the report open and keep a copy while you resolve it.
+390 | [g26-study-content] | Start while connected, with enough data, battery and free storage space. Use the usual browser or installed app you want to travel with. Stay signed in to your course work.
+391 | [g26-study-content] | Read the download size before starting. Standard uses less data where a high-quality version is offered. Choose what suits your connection and storage.
+392 | [g26-study-content] | If a page, image or voice fails, reconnect and check the download and device storage. Resolve the gap before leaving. Repeat this check when you change devices or find that saved files are going missing.
+393 | [g26-study-content] | Use one device and the usual browser. Clearing site data removes the downloads and can remove unsent work. Low storage can also make the browser delete saved files. Keep the original evidence and check readiness again before the next visit.
+394 | [g26-study-content] | WALK-A records the route and carried containers as seen. TALK-A records the resident's rain report as reported. The learner does not turn that report into a measured contour line or flood depth. Further investigation becomes an action in the evidence register.
+395 | [g26-study-content] | The base map shows the site before the proposed change. It helps everyone discuss the same place. Show existing buildings, access routes, water points, planting areas and other important features in the brief/summary. Mark north when you have checked it, and keep the boundary source visible.\n\nA first sketch can help you understand relationships. Call it "not to scale" if it is so. Before using the plan to judge fit, check the measurements and use a matching scale. Keep units with measurements. Measure suitable widths and areas safely, and record whether the value was measured, taken from a source or estimated. A line that looks clear is not evidence of an accurate measurement.\n\nKeep the existing map and the proposal separate. A transparent sheet over paper, a saved copy or a clearly named proposal layer lets you try ideas while keeping what really exists. Do not quietly change a house, path or boundary to make an idea fit. A traced satellite image can be a first reference; by itself it does not establish legal ownership or a measured boundary.\n\nGive the map a title, date or revision, legend and source notes. Use words and colour so a reader of a print or a colour-blind reader can tell apart existing features, proposed changes and uncertain information. Leave enough space so labels are readable.
+396 | [g26-study-content] | The busy-yard learner keeps the used path clear through every idea. They mark the eastern water report to be investigated again rather than drawing a swale. They ask about the reliability and suitability of the existing water availability before promising a big garden.
+397 | [g26-study-content] | The busy yard already links the home, the water point and the planting area by a carrying route. Before adding another system, the learner asks whether the current care trip can be improved. BRIEF-A includes no animals at this stage, so livestock is not added to complete a decorative circle.
+398 | [g26-study-content] | The learner drew one nice layout. What can they compare it with to decide whether it answers the brief well?
+399 | [g26-study-content] | On a practice site with measurements given by the facilitator, reconcile written measurements, units and the scaled drawing. Point to the evidence that establishes the fit. For your own design, mark any proposal still waiting for measurement or technical measurements. Do not do land measurement that is unsafe or reserved for trained people as course work without supervision.
+400 | [g26-study-content] | Does the presence of a Water or Earthworks tool mean that any place it accepts is suitable?
+401 | [g26-study-content] | The plan reports decisions. Give it a clear title, revision and purpose. Show orientation, scale status, units, legend and sources. Separate existing features from proposed changes and unresolved information using labels or patterns as well as colour. Keep labels close to the correct features without covering important details.\n\nSeparate information when one sheet is crowded. A base map, an analysis sheet, a proposal and a phase sheet can tell different parts of one story. Keep names and evidence documents CHANGING/VARYING between them. A cost record and a care plan must refer to the same items that appear on the map.\n\nCheck the exported item for real at the size it will be used. Can someone read it on a phone or a printed page? Are labels broken? Does the legend describe things that really exist? Does a decorative drawing hide a path or show features never recorded? Fix the output and check again.
+402 | [g26-study-content] | A phase is a manageable part of the work. Its place in the sequence depends on what must be right first. Start with the design decision, then list what is needed first: permission, measurements, advice, suitable materials, tools, access and the people who will look after it.\n\nSeparate investigating from implementing. Getting a suggested price does not bind you to buy. Marking a proposed "discussion" (ingxoxo) place does not give permission to dig. A design can have useful information-gathering steps even if building is stopped.\n\nChoose a first phase that answers the household brief and fits truly agreed resources. Keep access and existing working systems running during the change. Explain what will make the phase ready to start, what will stop it and how you will check its result. Do not start everything just because everything appears in the final vision.
+403 | [g26-study-content] | Revision is part of design. Keep the previous version, identify new evidence and explain which decision changes. Check linked records as well as the drawing. Moving a feature can change access, size, costs, water needs or care. An updated map with an old budget can tell a wrong story.\n\nAgree the revised scope with the people affected. Separate work that can continue from work that still needs evidence or advice. Give the person taking over the current plan, source notes, implementation sequence, care responsibility and unresolved actions. Make the information available in a format they can use without you being present.\n\nUse feedback to plan another attempt where a skill has not yet been shown. Completing course pages, attending sessions or exporting a map is different from showing the whole design process. Record the real evidence behind the assessment, and do not turn a course-completion label into unsupported professional authorisation.
+404 | [g26-study-content] | **BRIEF-A — household discussion.** The household wants vegetables for food, a path that has long been used between the home and the gate, and care work that can fit existing commitments. It does not want animals added in this first stage. A person who regularly carries water asks to be included in placement decisions. Another household member needs a barrier-free path. The household agrees to explore options in its existing yard, but that agreement is not a confirmed boundary survey or permission for work beyond the yard.\n\n**WALK-A — first visit.** The used path crosses the yard between the home and the gate. The existing planting area lies beside that path. The water point is near the home. Containers are carried from it to the planting area. The eastern part of the yard is in shade at the time of this visit. This observation says nothing yet about the full seasonal shade pattern, water pressure, available volume, water quality or production capacity.\n\n**TALK-A — reported history.** The resident says water crossed the eastern part during heavy rain. No rain fell at the first visit. Record the resident's experience as reported information, with consent; do not change it with an invented slope arrow or show it as a measured flood level.\n\n**MAP-A — first sketch.** It places the home, the gate, the used path, the water point, the existing planting area and the area mentioned in TALK-A relative to one another. It is marked "not to scale; boundary, north and measurements need checking". No compass direction was taken from an unconfirmed photo. The given statement that part of the yard is east is the case's description, not a direction the learner measured.\n\n**RESOURCES-A — current limits.** Available care time, reliable water availability, soil conditions, quantity of materials and costs are not yet recorded. No work by anyone or money is promised. No neighbour's land, water route or access is available just because it appears in an image.
+405 | [g26-study-content] | ### D1 — what is the task?\n\nThe brief puts food, working access and manageable care first. Adding a pond or animals is not a reported need. The facilitator asks the people who do the work what they can keep up and what must stay clear. The learner records missing resource information instead of giving an invented budget.\n\nOn the first map the planting area is an existing feature. The idea of a new planting area is on the proposal sheet. The learner does not delete the used path because it spoils the picture. The family's report about rain is kept beside its source; it is not turned into an observed event.\n\n### D2 — what do the facts mean?\n\nDaily watering trips make comfortable access worth investigating. It is not shown that the very nearest place is suitable. The shade picture needs more seasonal evidence, and the reported water route needs checking before considering an intervention.\n\nThe learner writes: "Can we improve the care of the existing area while keeping the path working?" That is a design question. "Build a swale in the eastern yard" would skip the missing evidence of soil, water, suitability and permission.\n\nOn the next safe visit, the learner asks the household to show how people walk through the place. They plan to watch the shade more and ask who can help test the reported water problem. They do not go into a dangerous water area to get a photo. They keep all three options open: improving the existing area, considering another suitable area, or delaying expansion until resources are known.
+406 | [g26-study-content] | The packing and transport amounts below are payments in direct cash activities. They are not a full production cost report. No harvest quantities or crop yields are described.\n\n[Table: Card | Day | Event and source reference | Money in | Money out | Money after card. Opening | Before 1 | Counted cash tin | — | — | R1,000.00. C01 | 1 | Owner adds own money; contribution note O01 | R300.00 | — | R1,300.00. C02 | 1 | Pays packing; receipt P01 | — | R120.00 | R1,180.00. C03 | 2 | Product delivered and paid for; S01 | R200.00 | — | R1,380.00. C04 | 3 | Product delivered on credit; S02 of R150.00 | — | — | R1,380.00. C05 | 4 | Owner takes money home; drawing note W01 | — | R80.00 | R1,300.00. C06 | 5 | Loan principal received; agreement L01 | R500.00 | — | R1,800.00. C07 | 6 | Customer pays the full balance of S02; payment R02 | R150.00 | — | R1,950.00. C08 | 6 | Equipment bought; receipt E01 | — | R400.00 | R1,550.00. C09 | 7 | Transport paid; receipt T01 | — | R60.00 | R1,490.00. C10 | 7 | Payment on L01: R100 principal and R10 interest, per given practice statement L02 | — | R110.00 | R1,380.00. C11 | 7 | Product delivered on credit; S03 of R120.00, still unpaid | — | — | R1,380.00.]\n\nTotals: money in R1,150; money out R770; cash change R380; closing cash R1,380. Product sales are R470, with R350 of customer payments and R120 still owed. Remaining loan principal is R400, from the R500 loan given minus R100 repaid; the R10 interest does not reduce the principal either. No interest rate or suggested loan term is described. Accounting profit stays unknown.\n\n**End-of-unit demonstration:** Give the learner a shuffled copy of these cards. They must restore the order, separate the different reasons for money movement, link S02 with R02, identify S03 as unpaid and explain why profit is unknown. Then use a new part-payment example to test transfer. Reteach any missed difference and test with different amounts. Do not use an estimated profit amount as the expected answer.
+407 | [g26-study-content] | Work with Q04–Q08 in the stock table below. Keep each destination in its column. The book ends at 9 kg. Now reveal the independently given count card: 9 kg. Ask which two different sections of information agree. Do not claim the agreement confirms every record is correct; two errors can cancel each other out. Keep the source check and the amount check.
+408 | [g26-study-content] | Read [Record and check harvest](https://imbewufield.vercel.app/student/guides/harvest). The current form records kilograms and the date the record was entered, not a back-dated harvest date. "Left" in the chart is harvested minus the recorded sold quantity; it cannot separately identify home use, gifts, storage or loss. In this worksheet, 24 kg harvested minus 15 kg delivered is 9 kg; that equals the closing stock by luck because 4 kg opening stock and 4 kg of other outflows cancel. It is a lucky agreement, not a general stock formula or an expected app-chart result. The current invoice link adds kilogram sales evidence when the invoice is fully paid, so unpaid and part-paid deliveries do not match this directly. Use its destination records to explain movement; do not mark an invoice paid just to force the chart to match.
+409 | [g26-study-content] | Show four altered copies, one at a time. Each starts from a clean main packet; do not put it on top of their errors.\n\n[Table: Altered practice copy | What the learner should find | Evidence-led correction. H02 is missing; the book says only 1 kg left | A missing 8 kg harvest | Restore H02 from the given Day 3 weighing record; closing stock becomes 9 kg. PAY02 appears twice; customer payments total R320.00 | One R60.00 payment counted twice | Keep one payment at its one reference; payments go back to R260.00 and S02 still owes R40.00. MOVE01 is called a new sale | The owner's money taken as income | Restore the linked delivery treatment; no customer or new delivery occurred that supports a sale. PACK01 is recorded as R125.00 | A decimal error of R112.50 | Copy R12.50 from the source; do not change the receipt to match the entry.]\n\nWrite a correction note containing the record reference, old entry, corrected entry, source used, correction date and the person checking it. In paper practice use a single line through the error so it stays readable. Follow the correction controls supported by the real app on real records; do not instruct deleting a sale or a linked invoice as a normal correction method.
+410 | [g26-study-content] | The carrot activity has R220.00 of allocated paid costs and 40 kg of saleable product. That is R5.50 per saleable kg for those included costs. When you add a separate family-time comparison of R100.00, the total becomes R320.00, or R8.00 per saleable kg. These are two labelled views of one budget, not two bills to be added together.\n\nIf only 32 kg is expected to be sold, recovering that same R320.00 fully through those sales needs R10.00 per kg sold. This is a **planning sales-recovery target**, not an accounting cost per item sold or a promise that the buyer will pay that. The other 8 kg are not automatically lost or home food; investigate where they go and their value. Do not delete closing stock just because it was not sold. Missing information about land, equipment, management, money and tax means full profit is still unknown.
+411 | [g26-study-content] | B01 gives included fixed costs of R105.00 for the practice cycle and variable costs of R7.50 per packet. Each packet is 1 kg and sells for R12.00. In this example only, every prepared packet is sold, price and variable costs stay unchanged, and fixed costs stay unchanged up to the stated capacity of 30 packets. It is not an estimate taken from a carrot harvest.\n\nContribution per packet is R12.00 minus R7.50 = R4.50. R105.00 divided by R4.50 is 23 and a third packets. Whole packets need rounding **up** to 24. Check both sides: at 23 packets the model loses R1.50; at 24 it has R3.00 left after its included costs. Call it the model remainder, not full farm profit. This model excludes unsold prepared packets, waste, changing prices, bad debts or left-out costs. A real plan with those needs to add them clearly.
+412 | [g26-study-content] | For the 23-packet answer, ask the learner to multiply 23 by R4.50 and compare with R105.00. For a "25% margin", ask "25% of which amount?" For a missing variable cost taken as zero, return the blank source card and ask what evidence is missing. For "profit", ask the learner to name the excluded cost and rename the result.
+413 | [g26-study-content] | The second crop is deliberately not named. Only carrots have a given sold quantity, so the cost per unit of the second crop cannot be calculated.\n\n[Table: Card | Source | Carrots | Second crop | Combined. A01 carrot materials used R96.00/R0.00/R96.00. A02 carrot packing used R24.00/R0.00/R24.00. A03 second-crop materials used R0.00/R144.00/R144.00. A04 second-crop packing used R0.00/R36.00/R36.00. A05 Hire of R120.00; recorded hours 2 and 4 | R40.00 | R80.00 | R120.00. A06 Trip of R90.00; equal box spaces 2 and 1 | R60.00 | R30.00 | R90.00. CASH allocated paid costs R220.00/R290.00/R510.00. TIME unpaid family time: 4 and 6 hours at the comparison rate R100.00/R150.00/R250.00. VIEW included costs plus family-time comparison R320.00/R440.00/R760.00.]\n\n[Table: Answer | Amount | Meaning. A07 R5.50 R220.00 / 40 saleable kg; allocated paid costs only. A08 R8.00 R320.00 / 40 saleable kg; includes family-time comparison. A09 R10.00 R320.00 / 32 kg expected to be sold; included-cost recovery target.]\n\nThe zero entries above mean that the given direct card belongs entirely to the other crop. It does not mean all other costs are known to be zero. Full profit is still unknown.
+414 | [g26-study-content] | Bring a calculator, paper, date cards and counters. Read one card at a time aloud. Learners may point, move cards, explain aloud or ask a fellow learner to write. Use the timeline in the demonstration, then hide its answers in independent practice. Do not force anyone to share private household accounts, customer names or bank details.\n\nAll dates, amounts, work hours and contributions are **invented class** entries. January–March 2027 is a practice period, not a recommended South African planting season. Activities A and B have no described crop, place or harvest. Do not assume one. This is a new activity, not a continuation of the F1-F3 balances. The opening cash tin has R120.00 and the bank R180.00, both assumed available, without restrictions or costs in the given model. Separate opening amounts still owed are R120.00 to be paid by a customer and R80.00 to be paid to a supplier. Neither is opening cash.\n\nA projected balance below zero means the proposed sequence cannot be paid with the stated available cash. It is a warning to revise the plan or to set up a suitable funding arrangement with evidence. It is not available money, an approved overdraft or permission not to pay a bill. Later balances describe an **unsupported estimate**, not evidence that the intermediate activities could happen. The exact shortfall amounts are model results, not suggested loans or an emergency fund.
+415 | [g26-study-content] | Put all source cards in date order, keeping the refundable deposit separate. Check driver, transport, fuel or other included operating items, cleaning, repair, storage, return conditions, insurance and downtime arrangements in a real quote. For this comparison, the stated packet assumptions are limited to the cash movements shown; they do not establish full economic costs. None of these three amounts confirms full profit or a lifetime winner.
+416 | [g26-study-content] | If loan receipts become sales income, link the money to its repayment obligation. If a payment is named twice, trace whether it was held, paid separately or already included. If the learner chooses an unknown quote/application by its visible amount, restore the missing field. Collect a blank or approved [garbled: "deleted"] quote/application and write questions. Keep the original terms and dates. Do not apply for credit, choose a lender, enter private identity details or move money as study work.
+417 | [g26-study-content] | Place A01 across the January–February boundary. The work was completed in January for an agreed fee of R80. The invoice is dated February and the amount is unpaid at the end of January. Under this model, January includes the R80 cost and the liability, while January cash does not change. Keep both documents and dates. Now place F01: money goes out in January, but all the storage service belongs to February. January includes a R120 prepayment asset, not a January storage cost. A real contract may need a different treatment; this case gives the timing and rights clearly.\n\nShow the stock bridge: opening R300 + purchases R400 − goods delivered R350 = R350 before the closing check. C01 supports a R50 loss and R300 remaining. This is a checked reconciliation, not an instruction to call every unexplained difference theft or spoilage. Ask for evidence before choosing a cause or an accounting treatment. Show the equipment bridge: opening R600 + purchase R300 − given period depreciation R60 = R840. The payment/charge spreads the cost in this model but it is not a new payment and it is not tax permission.
+418 | [g26-study-content] | Use the invented packet, not learners' private identities. Put the list of opening balances, source documents, account statements, the stock check, the list of equipment and liabilities, and unresolved items behind a one-page explanation. Give each a reference and a period. Reconcile the explanation with the summary pieces. Mark missing items visibly. Keep real facts separate from estimates. Do not ask learners to send private money documents to a public class or an unconfirmed adviser.\n\nOpen the current official SARS pages in the source notes. Show how to record the page title, the URL, the date checked and the exact question. Example: which business form and registration applies; which records are needed; which retention conditions apply; whether the invoice has the required details for this relevant service; and whether electronic storage arrangements meet the applicable requirements. This is evidence-finding work, not a decision that a particular learner must register or may throw away records. Keep source documents while questions are unresolved. Do not teach a general destruction date from a short web table.
+419 | [g26-study-content] | A small market stall buys finished goods to resell. This is a separate activity inside the farm-business learning path, not a valuation of growing crops, animals, home-grown harvests or the whole household. All amounts and dates are invented. The period is 1–31 January 2027. The prices below are recorded prices given for this activity; they are not market prices. There is no VAT or income-tax calculation. Equipment separation, depreciation and stock-loss treatment are given assumptions, not policies to copy into real accounts.\n\nAt opening: cash R1000; customers [garbled "plant"] R200; resale stock R300; equipment R600. The business [garbled "eats"] suppliers R300 and has no loans. Total assets R2100 minus liabilities R300 leave opening equity of R1800. Equity belongs to the owner; it is not a second cash account. There are no other opening balances in this compact example.\n\n[Table: Reference | Event date | Original source card. R01 | 5 Jan | Collect R200 from the opening customer balance. This old sale is not January income. P01 | 8 Jan | Receive resale goods worth R400. Pay R250; R150 is still owed. S01 | 10 Jan | Deliver an accepted credit sale of R900. The goods delivered have a recorded cost of R350. No receipt yet. R02 | 15 Jan | Receive R600 for S01. Link the receipt to that sale. P02 | 16 Jan | Pay R200 against amounts already owed to suppliers. E01 | 20 Jan | Pay R300 for long-lasting equipment. It qualifies as equipment in this activity. L01 | 21 Jan | Receive a loan of R500 with a matching obligation. No first payment here. L02 | 24 Jan | Pay R110: R100 loan principal and R10 January interest. H01 | 26 Jan | The owner takes R150 for personal use. No wage or business service is given. A01 | 28 Jan | January transport service completed, agreed fee R80, not paid. The invoice arrives on 2 February; a signed January work record supports the amount and timing. F01 | 29 Jan | Pay R120 for a storage service delivered entirely in February. No part of that service is used by 31 January. U01 | 31 Jan | Pay R60 for a service cost wholly related to January. C01 | 31 Jan | An approved count, valuation and reconciliation confirm closing resale stock of R300 and a stock loss of R50. D01 | 31 Jan | The given checked schedule gives January depreciation of R60 across all equipment. It is not an additional cash payment. X01 | 5 Feb | Receive the remaining R300 of S01. This is outside January cash.]
+420 | [g26-study-content] | If an estimate is again called something that happened, go back to the source state. If a quote/application pays a bill in the model, remove it and restore the gap. If a claim depends on how the map looks, ask for a suitable [garbled: "lower"] agreement, measurement or record. A legitimate answer may be "not yet ready to commit; get this evidence". It is not failing to keep uncertainty [ambiguous].
+421 | [g26-study-content] | Follow each step of the bridge back to its source. Ask why the invoice and its two receipts are not three sales, and why the owner's contribution does not grow product income. Keep the January and February windows visible. If the learner changes the plan size to 36, restore the original 40 before comparing. Ask for a reasoned next step such as confirming quality/need and payment conditions, checking current prices, and fitting the work to available hours. The R11 for the actual 36 kg informs the quote/application; it does not confirm the price or next month's sales.
+422 | [g26-study-content] | Size and elevations are not measured; it is not a flood boundary.
+423 | [g26-study-content] | Ask why the pattern matters and how it was confirmed. A slope arrow taken from a rain story, or a seasonal decision taken from one photo, needs correcting.
+424 | [g26-study-content] | State the missing evidence, a better way to get it, who can help and which decision depends on it. Keep unsafe or specialist work [missing verb/preposition: "suitable help"].
+425 | [g26-study-content] | Measured flood level
+426 | [g26-study-content] | No measured flood level. Keep the resident's report and identify what still needs checking.
+427 | [g26-study-content] | Yes. The resident's experience is useful evidence, and its source stays visible. It is not a measured contour line or flood depth.
+428 | [g26-study-content] | Proposal to dig a swale
+429 | [g27-crop-plan-built] | {names}: the crop is selected, but it has no sowing month in the calendar this farm uses ({calendar}) — the sowing guides this plan follows give none for this calendar (usually frost or the rain season), so making room will not help.
+430 | [g27-crop-plan-built] | {names}: the crops are selected, but they have no sowing month in the calendar this farm uses ({calendar}) — the sowing guides this plan follows give none for this calendar (usually frost or the rain season), so making room will not help.
+431 | [g27-crop-plan-built] | summer-rain calendar, with severe frost
+432 | [g27-crop-plan-built] | frost-free calendar
+433 | [g27-crop-plan-built] | summer-rain calendar, with light frost
+434 | [g27-crop-plan-built] | If the staying/carry-over of grain(?) diseases bothers you, swap it for broad beans by hand.
+435 | [g27-crop-plan-built] | {choice} and other well-recorded crops have a sowing time in those slots, but the surrounding months are already fully planted, or crop rotation excludes the families that could fit.
+436 | [g27-crop-plan-built] | Well-recorded crops have a sowing time in those slots, but the surrounding months are already fully planted, or crop rotation excludes the families that could fit.
+437 | [g27-crop-plan-built] | Used the frost months you observed as a farmer ({months}): frost-affected crops are not suggested when their field growing time passes through those months.
+438 | [g27-crop-plan-built] | Months that are not recorded are not a promise that there is no frost.
+439 | [g27-crop-plan-built] | The frost-free sowing months for {names} do not yet come from a published local table — check those dates by asking an extension officer before you rely on them.
+440 | [g27-crop-plan-built] | {names}: the crop is left out: no sowing time remains after checking the frost months you observed ({months}) and the available site climate.
+441 | [g27-crop-plan-built] | {names}: the crops are left out: no sowing time remains after checking the frost months you observed ({months}) and the available site climate.
+442 | [g27-crop-plan-built] | Check a protected growing place or local timing by asking an extension officer before you add frost-affected crops by hand.
+443 | [g27-crop-plan-built] | the field time passes through the frost months you observed
+444 | [g27-crop-plan-built] | the field time passes through the frost months you observed, or another site heat or rain check excludes it
+445 | [g30-farmer-gaps] | Well-spread rain helps production all year —
+446 | [g30-farmer-gaps] | . A moderate dry winter suits cool-season crops; warm frost-free conditions can also carry
+447 | [g30-farmer-gaps] | . Warm frost-free conditions can also carry
+448 | [g30-farmer-gaps] |  grow well. The moderate winter keeps frost-weak plants still able to grow in protected places.
+449 | [g30-farmer-gaps] | . High humidity — choose varieties [garbled: "that cannot be cured by diseases"] and open the airflow widely.
+450 | [g30-farmer-gaps] |  in warm north-facing places. Protect all plants from frost and strong wind.
+451 | [g31-staff-demo] | Restore the saved draft
+452 | [g33-crop-catalog-advice] | Grain maize for maize meal. Sow it directly in the staple-crop plot on the map when frost risk is over; use many adjacent rows so pollen is carried by wind. The 140-day calendar time is set cautiously — confirm the variety's maturity before harvesting.
+453 | [g33-crop-catalog-advice] | Plant after frost danger has passed: November to mid-January in frost areas, or March-April in frost-free areas. Leave the pods to [garbled "zimthuphe" ~ripen] and dry before shelling and storing them.
+454 | [g33-crop-catalog-advice] | Well-dried grains (12-15% moisture), clean closed containers, in a cool and dry place, and bruchid/weevil control (for example mixing cooking oil at 5ml/kg, or storing in the pods).
+455 | [g33-crop-catalog-advice] | A leafy brassica harvested regularly: pick the outer leaves and the plant keeps producing, and light frost makes the flavour sweet. It does not tolerate extreme heat — in hot areas prefer sowing at the end of summer and in autumn. No South African kale yield has ever been printed, so the kilogram estimate here comes from Kenyan and United States agricultural extension details cut down to a hand-watered bed — take it as a planning point, not a promise.
+456 | [g33-crop-catalog-advice] | Press the soil firmly when transplanting seedlings to help the heads form firmly.
+457 | [g33-crop-catalog-advice] | Sow directly only — carrots do not transplant well. Keep the bed soft and stone-free.
+458 | [g33-crop-catalog-advice] | Field-dried bulbs (cured, necks completely dry) stored at room temperature on well-ventilated trays/racks.
+459 | [g33-crop-catalog-advice] | Grown from rooted stems (slips), not seed — plant in soil made into raised ridges so it is easy to dig later.
+460 | [g33-crop-catalog-advice] | Only mature, undamaged roots; cured at 30-32°C/85-90% RH for 4-7 days, then stored handled as little as possible, as cool as possible (the source's best is 13°C) at ~85-90% RH. The sweet potato weevil (Cylas spp.) is the main danger in storage.
+461 | [g33-crop-catalog-advice] | Propagate with whole tubers or corm pieces. It needs constantly moist soil and warm frost-free conditions.
+462 | [g33-crop-catalog-advice] | Cool, dry, well-ventilated storage at a room temperature of 25-30°C — traditionally corms are heaped in shade or covered with grass/plantain leaves.
+463 | [g33-crop-catalog-advice] | This plant arrangement is a geometry checked under irrigated conditions. Groundnuts need sandy, well-draining soil and a long frost-free growing season.
+464 | [g33-crop-catalog-advice] | Well-cured bulbs (dried for several weeks, in the dark/dry/ventilated), then stored not in the fridge in a cool, dry, dark, well-ventilated place (for example mesh bags).
+465 | [g33-crop-catalog-advice] | A well-known "winter-growing" legume — sow in autumn, it withstands frost and forms pods in spring.
+466 | [g33-crop-catalog-advice] | A cool-season Brassica root — sow directly only and thin early so the roots swell. It is the same plant family as cabbage, kale and broccoli, so do not plan turnips directly after (or before) another brassica in the same bed. The young leaves are a common traditional vegetable — pick sparingly; the yield figure includes the roots only.
+467 | [g33-crop-catalog-advice] | DAFF: leaves are picked about every two weeks once harvesting has started, continuing until frost ends the plant.
+468 | [g33-crop-catalog-advice] | A cole crop like cabbage and broccoli — the same rotation family, so do not follow one directly after another in the same bed. DAFF says cauliflower survives down to 0°C once established, so it is not marked frost-tender here, but small transplanted seedlings still need protection from severe frost.
+469 | [g33-crop-catalog-advice] | A drought-tolerant grain crop, tolerating heat and dryness more than maize. December sowing is left out of this catalogue's planner because the harvest coming in May will meet frost — it may work with local frost protection, but it is not planned automatically here. No named South African varieties were found.
+470 | [g33-crop-catalog-advice] | A nitrogen-fixing legume grain crop, planted for dry beans, not green pods. DAFF did not state that soybean is frost-tender, so it is not marked frost-tender here — but it is a warm-season crop and these sowing months are already arranged accordingly.
+471 | [g33-crop-catalog-advice] | Solanaceae family, the same as tomatoes, peppers, chilli and potato — keep this rotation family together when planning beds. Frost-tender: grow it as transplant seedlings and transplant them only when frost risk is over.
+472 | [g33-crop-catalog-advice] | Cucurbitaceae family, like pumpkin, butternut, cucumber and watermelon — do not repeat this family in the same bed. A frost-tender climbing plant; no Western Cape sowing calendar was found even though it is a known Western Cape crop, so that is treated as something needing local confirmation.
+473 | [g33-crop-catalog-advice] | A fast-producing Cucurbitaceae climbing plant, harvested young often — the same rotation family as pumpkin, gem-squash, cucumber and watermelon. It is frost-tender; no Western Cape calendar was found.
+474 | [g33-crop-catalog-advice] | A climbing Cucurbitaceae melon plant. January sowing is left out of this catalogue's planner because the harvest will meet frost — it may work with local frost protection, but it is not planned automatically here.
+475 | [g33-crop-catalog-advice] | Grown and eaten as a fresh vegetable, unlike field maize — the food group recorded in the crop's own file is fruiting vegetables, not staple grains, so it is kept there instead of being combined with maize even though it is the same species. Frost-tender like maize.
+476 | [g33-crop-catalog-advice] | An indigenous nitrogen-fixing legume planted for its dry underground seed pods (a relative of the groundnut, not a true bean). The yield figure is dry seed, the lowest end of genotype mean figures across seven South African trial sites. December sowing is left out of this catalogue's planner because the harvest will meet frost.
+477 | [g33-crop-catalog-advice] | An oilseed crop planted for dry seed. Frost tenderness is taken from ECOCROP (the DAFF guide itself does not mention frost), and only November sowing is planned automatically here — December and January sowings are left out of this catalogue's planner because their harvest will meet frost. No named South African varieties were found.
+478 | [g33-crop-catalog-advice] | An indigenous leafy vegetable (Cleome gynandra), its own plant family (not Brassica despite the similarity). DAFF says no South African varieties have been developed yet and no yield figures are known, so it stays manual. Days to harvest are counted from seedling emergence "at the spring/source" [garbled], not from sowing — take the range as approximate.
+479 | [g33-crop-catalog-advice] | An indigenous leafy vegetable (Solanum retroflexum, umsobo/nightshade) planted for its leaves, picked young — the RIPE berries of some other related Solanum species are poisonous, so follow only a reliable local source about edible parts. DAFF: frost-tender. No South African varieties or yield figures found, so it stays manual.
+480 | [g33-crop-catalog-advice] | A fast-growing cover crop for biomass/soil-improvement and grazing, grown until full flowering, not for food harvest — it is not counted in kitchen harvest totals. It is the same plant family as radish and cabbage, so plan rotation accordingly. It is not frost-tender itself, but it is killed by the first hard frost or by herbicide, the most common way to end it.
+481 | [s02-study-tracks] | Reconciling means comparing and explaining. Count the cash. Read the bag/fund report. Match deliveries, sales, payments and receipts with their references. Check dates and units as well as totals. When you find an error, keep the original reference and write what changed and why. If you cannot yet explain the difference, say so. Do not add an estimated record so that the amounts agree.

@@ -26,6 +26,7 @@ import { ProductTourButton } from './ProductTourProvider';
 import { useSampleRole } from '@/lib/use-role-navigation';
 import { accessibleSourceLabel } from '@/lib/accessible-label';
 import { translate, useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { sampleWorkspaceText } from '@/lib/sample-tour-localization';
 
 export default function MenuButton() {
@@ -40,7 +41,7 @@ export default function MenuButton() {
         onClick={() => setOpen(true)}
         aria-label={accessibleSourceLabel(lang, t('openNavigationAriaLabel'), translate('en', 'openNavigationAriaLabel'))}
         aria-expanded={open}
-        title={sample ? sampleWorkspaceText(lang, 'Tour — open choices and exit', 'Uhambo — vula izinketho bese uphuma') : t('openNavigationAriaLabel')}
+        title={sample ? (lang === 'xh' ? inlineText(lang, 'Tour — open choices and exit') : sampleWorkspaceText(lang, 'Tour — open choices and exit', 'Uhambo — vula izinketho bese uphuma')) : t('openNavigationAriaLabel')}
         className="flex-shrink-0 flex items-center justify-center rounded-full transition-all"
         style={{
           // Tokens, not hexes — the lesson SettingsButton already carries: a control

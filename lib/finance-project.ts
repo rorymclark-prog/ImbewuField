@@ -1,4 +1,5 @@
 import type projectData from './course-finance-project.json';
+import { inlineTemplate, inlineText } from './xh-inline';
 
 export type FinanceProjectCase = typeof projectData.cases[number];
 export type ProjectAnswers = Record<string, string>;
@@ -85,14 +86,16 @@ export function canSaveProjectDraft(baseline: string | null, current: string | n
 }
 
 /** A device-only recovery copy; it deliberately contains no account or household identity. */
-export function projectDraftText(c: FinanceProjectCase, answers: ProjectAnswers) {
+export function projectDraftText(c: FinanceProjectCase, answers: ProjectAnswers, lang = 'en') {
   const questions = [...PROJECT_NUMBER_QUESTIONS, ...PROJECT_REASONING];
   return [
-    'IMBEWUFIELD FARM FINANCE PRACTICE',
-    'Synthetic classroom case. This is not a farm record, financial advice or a submitted assessment.',
-    `Case: ${c.title} (${c.id})`,
-    `Practice period: ${c.period.start} to ${c.period.end}`,
-    ...questions.map(question => `${question.label}\n${answers[question.id]?.trim() || '[Not yet entered]'}`),
+    inlineText(lang, 'IMBEWUFIELD FARM FINANCE PRACTICE'),
+    // isiXhosa is an unreviewed machine draft: a saved copy says so, in one line.
+    ...(lang === 'xh' ? [inlineText(lang, 'Unreviewed isiXhosa draft.')] : []),
+    inlineText(lang, 'Synthetic classroom case. This is not a farm record, financial advice or a submitted assessment.'),
+    inlineTemplate(lang, 'Case: {title} ({id})', null, { title: inlineText(lang, c.title), id: c.id }),
+    inlineTemplate(lang, 'Practice period: {start} to {end}', null, { start: c.period.start, end: c.period.end }),
+    ...questions.map(question => `${inlineText(lang, question.label)}\n${answers[question.id]?.trim() || inlineText(lang, '[Not yet entered]')}`),
   ].join('\n\n') + '\n';
 }
 

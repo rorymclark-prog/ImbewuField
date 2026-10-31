@@ -1,0 +1,42 @@
+{
+  "unit": "04-vegetable-and-staple-crops",
+  "okCount": 70,
+  "items": [
+    {
+      "where": "2. The vegetable garden, step 1",
+      "verdict": "repair",
+      "english": "... so water soaks in instead of running off.",
+      "draft": "... ukuze amanzi angene endaweni yokuqukuqela.",
+      "backtranslation": "... so water goes into the 'place of rolling'.",
+      "problem": "Purpose of contour beds (water soaks in, no run-off) lost; replaced by an unclear phrase.",
+      "corrected": "... ukuze amanzi angene emhlabeni kunokuba abaleke."
+    },
+    {
+      "where": "2. The vegetable garden, step 3",
+      "verdict": "repair",
+      "english": "Skip the edging. Reshape the beds by hand a few times a year.",
+      "draft": "Yeka ukwenza imiphetho. Phinda uyilise iibhedi ngesandla ...",
+      "backtranslation": "Stop making edges. Re-'uyilise' the beds by hand ... (unintelligible verb)",
+      "problem": "'uyilise' is not a recognisable verb for reshaping; the instruction is unclear.",
+      "corrected": "Yeka ukwenza imiphetho. Phinda wenze iibhedi zibe nemo entsha ngesandla izihlandlo ezimbalwa ngonyaka."
+    },
+    {
+      "where": "Try it, step 5 (frost pocket)",
+      "verdict": "repair",
+      "english": "On a still, cold evening, feel where the cold air settles.",
+      "draft": "... vakalisa ukuba umoya obandayo uhlala phi.",
+      "backtranslation": "... announce / make audible where the cold air settles.",
+      "problem": "Wrong verb: 'vakalisa' means make heard/announce, not feel/notice.",
+      "corrected": "... va ukuba umoya obandayo uhlala phi."
+    },
+    {
+      "where": "Plan for the life you have, first sentence",
+      "verdict": "repair",
+      "english": "A big garden you cannot look after soon becomes a weedy, wasted one.",
+      "draft": "Igadi enkulu ongakwaziyo ukuyikhathalela ngokukhawuleza iba yigadi efunge ukhula, elahlekileyo.",
+      "backtranslation": "A big garden that you cannot look after quickly becomes a weedy, lost one.",
+      "problem": "'Soon' attached to 'look after' (cannot look after quickly) instead of to 'becomes weedy'.",
+      "corrected": "Igadi enkulu ongakwaziyo ukuyikhathalela iba yigadi efunge ukhula, elahlekileyo kungekudala."
+    }
+  ]
+}

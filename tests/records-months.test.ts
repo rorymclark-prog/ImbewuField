@@ -6,7 +6,7 @@ import { recordsDate, recordsMonthLong, recordsMonthShort, recordsMonthYear } fr
 import { buildFinanceSeries } from '@/lib/finance-series';
 
 const read = (path: string) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
-const LANGS = ['zu', 'st', 've', 'ts'] as const;
+const LANGS = ['zu', 'st', 've', 'ts', 'xh'] as const;
 const ENGLISH_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 test('English and unlisted languages print exactly what toLocaleDateString(en-ZA) printed before', () => {
@@ -43,6 +43,13 @@ test('isiZulu reuses the month names the app already carries; nothing is coined 
   const existing = [...block.slice(0, block.indexOf('};')).matchAll(/\d+: '([^']+)'/g)].map((m) => m[1]);
   assert.equal(existing.length, 12);
   assert.deepEqual(Array.from({ length: 12 }, (_, i) => recordsMonthLong('zu', i + 1)), existing);
+});
+
+test('isiXhosa reuses the month names the app already carries for Home; nothing is coined for it', () => {
+  const source = read('lib/locales/xh.ts');
+  const keys = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const existing = keys.map((k) => source.match(new RegExp(`homeMonth${k}: '([^']+)'`))?.[1]);
+  assert.deepEqual(Array.from({ length: 12 }, (_, i) => recordsMonthLong('xh', i + 1)), existing);
 });
 
 test('regional months keep the order of the calendar (blind reviewers mapped each name back to its month)', () => {
@@ -89,5 +96,5 @@ test('wiring: the money book, charts, harvest list and saved-invoice list use th
   for (const printed of ['lib/invoice-entry.ts']) {
     assert.doesNotMatch(read(printed), /records-months/, `${printed} must not use regional month names`);
   }
-  assert.match(read('app/records/page.tsx'), /const csvLang = \(lang: string\) => \(lang === 'zu' \? 'zu' : 'en'\);/);
+  assert.match(read('app/records/page.tsx'), /const csvLang = \(lang: string\) => \(lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : 'en'\);/);
 });

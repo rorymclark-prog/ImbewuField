@@ -22,6 +22,7 @@ import SettingsButton from '@/components/SettingsButton';
 import { tabsForRole } from '@/components/TabBar';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { APP_HEADER_STYLE } from '@/lib/app-header';
 
 export default function AppHeader({
@@ -36,7 +37,7 @@ export default function AppHeader({
   right?: ReactNode;
   desktopNav?: boolean;
 }) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const { navigationRole } = useRoleNavigation();
   const pathname = usePathname();
   const tabs = tabsForRole(navigationRole);
@@ -68,7 +69,7 @@ export default function AppHeader({
         </>
       )}
       {desktopNav && (
-        <nav aria-label="Primary" className="hidden lg:flex items-center gap-5 ml-2 shrink-0 whitespace-nowrap">
+        <nav aria-label={inlineText(lang, 'Primary')} className="hidden lg:flex items-center gap-5 ml-2 shrink-0 whitespace-nowrap">
           {tabs.map(({ href, key }) => (
             <Link
               key={href}

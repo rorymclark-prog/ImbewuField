@@ -1,0 +1,73 @@
+{
+ "round": 1,
+ "items": 118,
+ "counts": {
+  "ok": 94,
+  "repair": 24,
+  "hold": 0
+ },
+ "repair_severity": {
+  "minor": 10,
+  "wording": 12,
+  "meaning": 2
+ },
+ "reviewer_note": "Machine reviewer (Claude), not a fluent isiXhosa speaker. These verdicts are not a fluent-speaker approval; a native isiXhosa reviewer should confirm repairs - especially the negation in food-forest-l2/body and the isiZulu-vs-isiXhosa word calls - before shipping.",
+ "top_issues": [
+  {
+   "path": "food-forest/food-forest-l2/body",
+   "severity": "meaning",
+   "issue": "Frost-safety warning 'a regional label or sheltered corner is NOT enough' rendered 'ayanele', which can read as 'is enough'. Rephrased to unambiguous 'ayiyonto eyaneleyo'."
+  },
+  {
+   "path": "food-forest/food-forest-l3/body",
+   "severity": "meaning",
+   "issue": "'unyango' (medical treatment) used for 'care available'; nonsense word 'ingonganga' turns 'keep a backup watering plan' into a conditional; garbled groundcover sentence."
+  },
+  {
+   "path": "food-forest/food-forest-l2/quiz/0/options/2",
+   "severity": "wording",
+   "issue": "Correct option softens 'likely killed by frost' to 'it may possibly happen' (Kusenokwenzeka). Strengthened."
+  },
+  {
+   "path": "intro-permaculture/intro-permaculture-l3/body (+keyPoints/0)",
+   "severity": "wording",
+   "issue": "Zone 1 holds what you 'choose' (-khetha) often instead of 'pick' (-kha); repeated in the key point."
+  },
+  {
+   "path": "intro-permaculture/intro-permaculture-l3/quiz/0/rationale",
+   "severity": "wording",
+   "issue": "Non-word 'ocikha' in the rationale; 'kancinci' vague for 'less often' here and in the correct option."
+  },
+  {
+   "path": "food-forest/food-forest-l3/quiz/1/options/3",
+   "severity": "wording",
+   "issue": "isiZulu 'Ngekhe' (never) in a quiz option."
+  },
+  {
+   "path": "intro-permaculture/intro-permaculture-l1/body",
+   "severity": "wording",
+   "issue": "Wrong object concord 'olusithiyela' for umthombo (fence off a spring); unclear 'ukufudisa iinkomo' for 'graze cattle'."
+  },
+  {
+   "path": "intro-permaculture/intro-permaculture-l2/quiz/0/options/1",
+   "severity": "wording",
+   "issue": "Correct option uses unclear 'amelele' for water 'pools'; rewritten with 'aqokelelana'."
+  },
+  {
+   "path": "intro-permaculture/intro-permaculture-l3/quiz/0/options/2",
+   "severity": "wording",
+   "issue": "Distractor 'cross-pollinate' became 'pass fertiliser powder'; still wrong but nonsensical. Fixed to pollen (umungu)."
+  },
+  {
+   "path": "food-forest/food-forest-l1/body; intro-permaculture-l1 alt; l1 options/1; l2 body",
+   "severity": "wording/minor",
+   "issue": "isiZulu-leaning verbs: -lingisa (imitate), -xhuma (connect), -nisela (water). Replaced with -xelisa, -dibana, -nkcenkceshela."
+  }
+ ],
+ "notes": [
+  "Mulch is rendered throughout as 'ingca yokugquma' (lit. 'covering grass'); this narrows mulch to grass. Left as-is because it appears to be a consistent glossary term - flag for the glossary owner.",
+  "'original example/list' is rendered 'wokuqala' (first) across food-forest; acceptable but loses the 'source example' sense.",
+  "Source-English oddity (not a translation error): the hail-damage-to-maize sentence/keyPoint in intro-permaculture-l2 is a non-sequitur under the diversity principle.",
+  "All quiz options were checked against English: correct options remain right and distractors remain wrong after repairs."
+ ]
+}

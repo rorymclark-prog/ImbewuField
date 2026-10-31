@@ -1,0 +1,10 @@
+# Unit update-copy-xh-1135 — lib/update-copy-locales/xh.ts, indices 158..166 (Phase A, blind: written from the isiXhosa values only)
+158. Settings for AI glossy (shiny) maps
+159. Settings → AI glossy (shiny) maps
+160. Open Settings so that you control your AI maps. The main accounts of the platform can also control each organisation.
+161. Turn on or turn off AI glossy maps in settings. Maps that have been saved stay available.
+162. The owner of the platform can turn on or pause AI maps for each organisation.
+163. Approved organisations can give access to AI maps by role or by person.
+164. Try the AI glossy map
+165. Design studio → Glossy
+166. Open a saved farm, choose a page and then choose AI Polished. Each drawing is paid for (is charged).

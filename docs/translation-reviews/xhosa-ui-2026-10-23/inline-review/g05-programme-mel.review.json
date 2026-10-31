@@ -1,0 +1,24 @@
+{
+ "unit": "g05-programme-mel",
+ "okCount": 451,
+ "items": [
+  {
+   "where": "key #18 (Counts are assessment assignments…)",
+   "verdict": "repair",
+   "english": "…Awaiting review means closed but not shared; it is not a separate recorded approval status.",
+   "draft": "…asiyondawo eyahlukileyo yemvume erekhodiweyo.",
+   "backtranslation": "…it is not a separate place/location of recorded consent.",
+   "problem": "Wrong noun: 'indawo' (place) for 'status'; wrong concord; 'imvume' (consent/permission) for 'approval'.",
+   "corrected": "…akuyomeko eyahlukileyo yokuvunywa erekhodiweyo."
+  },
+  {
+   "where": "key #74 (Funders see these aggregate figures…)",
+   "verdict": "repair",
+   "english": "Written feedback and staff ratings are excluded.",
+   "draft": "Impendulo ebhaliweyo nokuhlelwa kwabasebenzi akufakwanga.",
+   "backtranslation": "Written answers and the arranging/organising of staff are not included.",
+   "problem": "'ukuhlelwa' (arranging) does not mean ratings/scores.",
+   "corrected": "Impendulo ebhaliweyo namanqaku abasebenzi akufakwanga."
+  }
+ ]
+}

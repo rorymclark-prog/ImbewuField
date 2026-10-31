@@ -189,7 +189,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
 
   return (
     <div className="space-y-3">
-      {lang === 'zu' && (
+      {(lang === 'zu' || lang === 'xh') && (
         <p role="note" className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('photoZuluDraftNotice')}</p>
       )}
       <div className="text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--text-muted)' }}>

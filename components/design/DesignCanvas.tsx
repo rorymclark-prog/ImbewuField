@@ -50,6 +50,7 @@ import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { PLAIN_HARD_SURFACE_PAINT } from '@/lib/sheet-base-mute';
 import { authoritativeHouseFootprints, sameFootprint } from '@/lib/house-footprints';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import SectorOverlay from './SectorOverlay';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
@@ -614,7 +615,7 @@ export default function DesignCanvas({
   onConfirmCleanup,
   onCancelCleanup,
 }: DesignCanvasProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const svgRef = useRef<SVGSVGElement>(null);
   const { imgW, imgH, mPerPx, satDataUrl } = frame;
   const underlayDataUrl = frame.underlayDataUrl ?? null;
@@ -3735,7 +3736,7 @@ export default function DesignCanvas({
                 <g transform={rotXf}>
                   {isGate && (
                     <g transform={`translate(0, ${chrome(40)})`} onPointerDown={(e) => startDragItem(e, item.id)} style={{ cursor: 'move', touchAction: 'none' }}>
-                      <title>Drag to move gate</title>
+                      <title>{inlineText(lang, 'Drag to move gate')}</title>
                       <circle r={chrome(22)} fill="transparent" />
                       <circle r={chrome(16)} fill="#1F4D2B" stroke="#FFFFFF" strokeWidth={chrome(1.5)} pointerEvents="none" />
                       <Move x={-chrome(11)} y={-chrome(11)} width={chrome(22)} height={chrome(22)} color="#FFFFFF" strokeWidth={2} pointerEvents="none" aria-hidden />

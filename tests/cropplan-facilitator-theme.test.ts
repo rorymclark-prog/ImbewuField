@@ -67,7 +67,7 @@ test('the month-grid header labels, bed names, bed areas and the production-scor
   );
   assert.match(
     CROPS,
-    /className="font-display font-semibold" style=\{\{ fontSize: 'clamp\(13px, 1vw, 15px\)', color: 'var\(--text-primary\)' \}\}>\s*\{bed\.label\}/,
+    /className="font-display font-semibold" style=\{\{ fontSize: 'clamp\(13px, 1vw, 15px\)', color: 'var\(--text-primary\)' \}\}>\s*\{(?:bedLabelText\(lang, )?bed\.label\)?\}/,
     'the bed name in each row must use a responsive clamp()',
   );
   assert.match(

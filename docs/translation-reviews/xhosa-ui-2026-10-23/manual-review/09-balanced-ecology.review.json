@@ -1,0 +1,15 @@
+{
+  "unit": "09-balanced-ecology",
+  "okCount": 85,
+  "items": [
+    {
+      "where": "Key points, bullet 2",
+      "verdict": "repair",
+      "english": "In Southern Africa it often ends in grassland, savanna or fynbos, not forest.",
+      "draft": "...ihlala iphela ngamadlelo engca yendalo, i-savanna okanye i-fynbos...",
+      "backtranslation": "...it always/usually ends in grassland, savanna or fynbos...",
+      "problem": "'often' strengthened to 'always'.",
+      "corrected": "...idla ngokuphela ngamadlelo engca yendalo, i-savanna okanye i-fynbos..."
+    }
+  ]
+}

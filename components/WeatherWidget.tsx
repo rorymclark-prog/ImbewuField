@@ -6,6 +6,7 @@ import { fetchWeatherForecast, describeWeatherCode, type WeatherForecast } from 
 import { getElementArt2 } from '@/lib/element-art-2';
 import { useLanguage } from '@/lib/i18n';
 import IsiZuluDraftSource from './IsiZuluDraftSource';
+import { inlineText } from '@/lib/xh-inline';
 import { fillWeather, weatherDayKey, weatherDescKey, weatherEnglish, weatherText } from '@/lib/weather-copy';
 
 interface Props {
@@ -84,6 +85,8 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
   const currentDesc = describeWeatherCode(current.weatherCode);
   const today = daily[0];
   const zu = lang === 'zu';
+  // isiXhosa shows its own drafts (lib/weather-copy.ts) the same way, beside the English source.
+  const drafted = zu || lang === 'xh';
   const daysIn = (l: string, list: typeof daily) => list.map((d) => dayLabel(l, d.date, daily.indexOf(d))).join(', ');
   const hazardText = (key: string, list: typeof daily) => ({
     text: fillWeather(weatherText(lang, key), { days: daysIn(lang, list) }),
@@ -137,7 +140,7 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
             <div className="font-display font-bold" style={{ fontSize: compact ? 16 : 18, color: 'var(--text-primary)', lineHeight: 1.1 }}>
               {Math.round(current.tempC)}°C
             </div>
-            <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{zu ? <DescLabel lang={lang} label={currentDesc.label} /> : currentDesc.label}</div>
+            <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>{drafted ? <DescLabel lang={lang} label={currentDesc.label} /> : currentDesc.label}</div>
           </div>
           <div className="flex items-center gap-1 flex-shrink-0" style={{ color: 'var(--text-muted)' }}>
             <Wind size={14} />
@@ -149,10 +152,11 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
           <div className="flex items-center gap-2 px-3.5 py-2" style={{ borderBottom: '1px solid var(--border)' }}>
             <Droplets size={14} style={{ color: 'var(--blue)', flexShrink: 0 }} />
             <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-secondary)' }}>
-              {zu ? (
+              {drafted ? (
                 <IsiZuluDraftSource
                   lang={lang}
                   zulu={fillWeather(weatherText(lang, 'weatherWaterLoss'), { mm: today.et0Mm.toFixed(1) })}
+                  xhosa={lang === 'xh' ? fillWeather(weatherText(lang, 'weatherWaterLoss'), { mm: today.et0Mm.toFixed(1) }) : undefined}
                   english={fillWeather(weatherEnglish('weatherWaterLoss'), { mm: today.et0Mm.toFixed(1) })}
                 />
               ) : (
@@ -186,7 +190,7 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
                   {d.precipMm > 0 ? `${d.precipMm.toFixed(0)}mm` : (
                     <>
                       <span aria-hidden>—</span>
-                      <span className="sr-only" lang={zu ? 'zu' : undefined}>{weatherText(lang, 'weatherNoRain')}</span>
+                      <span className="sr-only" lang={drafted ? lang : undefined}>{weatherText(lang, 'weatherNoRain')}</span>
                     </>
                   )}
                   {d.precipProbability !== null && d.precipProbability > 0 ? ` · ${d.precipProbability}%` : ''}
@@ -200,6 +204,11 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
             Unreviewed isiZulu draft. <span lang="en">English source for the days: {[0, 1, 2, 3, 4, 5, 6].map((n) => weatherEnglish(weatherDayKey(n, false))).join(', ')}; Today.</span>
           </p>
         )}
+        {lang === 'xh' && (
+          <p className="font-sans" style={{ margin: 0, padding: '6px 14px', fontSize: 12, color: 'var(--text-muted)', borderTop: '1px solid var(--border)' }}>
+            {inlineText(lang, 'Unreviewed isiXhosa draft.')} <span lang="en">English source for the days: {[0, 1, 2, 3, 4, 5, 6].map((n) => weatherEnglish(weatherDayKey(n, false))).join(', ')}; Today.</span>
+          </p>
+        )}
       </div>
     </div>
   );
@@ -208,7 +217,7 @@ export default function WeatherWidget({ lat, lon, compact = false, context = 're
 function DescLabel({ lang, label }: { lang: string; label: string }) {
   const key = weatherDescKey(label);
   if (!key) return <>{label}</>;
-  return <IsiZuluDraftSource lang={lang} zulu={weatherText(lang, key)} english={label} />;
+  return <IsiZuluDraftSource lang={lang} zulu={weatherText(lang, key)} xhosa={lang === 'xh' ? weatherText(lang, key) : undefined} english={label} />;
 }
 
 function HazardBanner({ icon, tone, text, english, lang }: { icon: React.ReactNode; tone: 'blue' | 'orange'; text: string; english: string; lang: string }) {
@@ -223,7 +232,7 @@ function HazardBanner({ icon, tone, text, english, lang }: { icon: React.ReactNo
     >
       <span className="flex-shrink-0">{icon}</span>
       <span className="font-sans font-medium" style={{ fontSize: 12, color: c }}>
-        <IsiZuluDraftSource lang={lang} zulu={lang === 'zu' ? text : ''} english={english} />
+        <IsiZuluDraftSource lang={lang} zulu={lang === 'zu' ? text : ''} xhosa={lang === 'xh' ? text : undefined} english={english} />
       </span>
     </div>
   );

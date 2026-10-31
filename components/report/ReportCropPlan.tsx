@@ -10,6 +10,7 @@ import { getCropArt } from '@/lib/crop-art';
 import { buildCropPlanPdf, cropPlanPdfFilename, type CropPlanSection } from '@/lib/crop-export-pdf';
 import { deliverPdf } from '@/lib/report-pdf';
 import type { ReportChart } from '@/lib/report-visuals';
+import { xhInlineDraft } from '@/lib/xh-inline';
 import styles from './ReportCropPlan.module.css';
 import ProductionYearOverview from './ProductionYearOverview';
 
@@ -18,7 +19,8 @@ export default function ReportCropPlan({ crop, siteName, includeWorking, onInclu
   language?: string; month?: number; onMonth?: (v: number) => void; legacyCharts?: ReportChart[];
 }) {
   const { lang: uiLanguage, t: appT } = useLanguage();
-  const tr = (en: string, zu?: string) => reportUiText(en, uiLanguage, appT, zu);
+  // isiXhosa: the draft keyed by the exact English (lib/locales/xh-inline), else the dictionary.
+  const tr = (en: string, zu?: string) => (uiLanguage === 'xh' ? xhInlineDraft(en) : null) ?? reportUiText(en, uiLanguage, appT, zu);
   const s = crop.snapshot;
   const [changed, setChanged] = useState(false), [exporting, setExporting] = useState(false), [error, setError] = useState('');
   useEffect(() => {

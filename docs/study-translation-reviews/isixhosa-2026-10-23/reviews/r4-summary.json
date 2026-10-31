@@ -1,0 +1,28 @@
+{
+ "round": 4,
+ "reviewer": "Independent machine reviewer (Claude). This is a machine review, NOT a fluent-speaker approval; a fluent isiXhosa speaker should still sign off, especially on the repaired items and on coined terms (e.g. 'amaqokobhe embewu' for seed pods, 'ingca yokugquma' for mulch, 'ilingelo' for test).",
+ "items": 118,
+ "counts": {
+  "ok": 97,
+  "repair": 21,
+  "hold": 0
+ },
+ "repair_severity": {
+  "wording": 4,
+  "minor": 9,
+  "meaning": 8
+ },
+ "top_issues": [
+  "soil-health/soil-health-l2 (body, keyPoints/2, quiz/1/q, options/2-3, rationale): 'iingxowa zembewu' = seed BAGS, not wattle seed pods — invasive-species warning lost across 6 fields; repaired to 'amaqokobhe embewu (seed pods)'.",
+  "soil-health/soil-health-l1/keyPoints/2: 'umbono ongqongqo' (strict/rigorous view) inverts 'rough indication' — overstates jar-test reliability; repaired.",
+  "small-livestock/small-livestock-l2/body: 'unezinye iintlobo ... ezimbini' says SA has two OTHER native honeybee subspecies; repaired to 'uneentlobo ezincinci ezimbini'.",
+  "soil-health/soil-health-l2/infographicAlt: 'ixoxiwe' = 'discussed' instead of 'cut open'; repaired to 'isikiwe yavulwa'.",
+  "small-livestock/description: 'into ecinge ekugqibeleni' ungrammatical for 'afterthoughts'; repaired.",
+  "small-livestock/small-livestock-l1/quiz/0/q: non-word 'itywaliswe' for 'replanting'; repaired to 'ityalwe'.",
+  "soil-health/soil-health-l3/infographicAlt: 'utyibilikile' (slippery) for 'cracked'; repaired to 'uqhekekile'.",
+  "soil-health/soil-health-l2/keyPoints/1: 'icocekile' (clean) weaker than 'sanitised'; repaired.",
+  "small-livestock/small-livestock-l2/title: 'nendalo yenkqubo' does not convey 'system ecology'; repaired (minor).",
+  "Source-text quirks (not draft errors, flag to content owner): small-livestock-l3/quiz/0/options/2 says 'ducks' in a guinea-fowl question; soil-health-l2/quiz/1/options/0 says 'Bark' in a seed-pod question. Drafts follow the English; all quiz correct-index options were checked and remain right, distractors remain wrong."
+ ],
+ "notes": "All 12 quizzes checked: correct option still correct and distractors still wrong in isiXhosa. Safety text (fresh manure, guinea-fowl ticks, goat worm treatment, leachate, bee registration) preserves negations and warnings. Minor spelling/concord repairs: Lelipi, noluhlolo x2, kunye→kanye, Linyathelo luluphi, zingene, nicocekileyo. No holds."
+}

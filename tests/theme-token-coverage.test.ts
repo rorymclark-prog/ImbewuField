@@ -368,7 +368,7 @@ test('app/samples/production/ProductionExample.module.css constrains horizontal 
 
 test('app/samples/production/page.tsx\'s hero h1 has a space between its two stacked phrases, not just a <br> (nav-12/nav-17)', () => {
   const src = read('app/samples/production/page.tsx');
-  assert.match(src, /<h1>A whole farm\.<br \/>\{' '\}A year of food\.<\/h1>/, 'the <br /> alone leaves no space in the flattened text content — add a literal space alongside it');
+  assert.match(src, /<h1>(?:\{ui\('A whole farm\.'\)\}|A whole farm\.)<br \/>\{' '\}(?:\{ui\('A year of food\.'\)\}|A year of food\.)<\/h1>/, 'the <br /> alone leaves no space in the flattened text content — add a literal space alongside it');
 });
 
 // dark-12: components/invoice/InvoiceDocument.tsx is a deliberately un-themed printed artefact
@@ -427,7 +427,7 @@ test('app/facilitator/print/page.tsx themes its print-preview surround and capti
   // quantities table border etc.) is deliberately literal, same as every other colour on that
   // sheet, and keeps its own #EDE7DB/#C7BCA6/#755942 on purpose.
   assert.match(src, /@media screen \{[^}]*body \{ background: var\(--bg-0\); \}/, 'the print-preview surround should follow the theme, not the literal paper hex');
-  assert.match(src, /className="no-print"[^>]*>\s*Print preview/, 'the sheet should carry a "Print preview" caption so it reads as deliberate, not broken');
+  assert.match(src, /className="no-print"[^>]*>\s*(?:Print preview|\{tx\('Print preview'\)\})/, 'the sheet should carry a "Print preview" caption so it reads as deliberate, not broken');
 });
 
 // desk-16: components/SampleExperience.module.css's .page h1 used clamp(28px,4vw,42px) while

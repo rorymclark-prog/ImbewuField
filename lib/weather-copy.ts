@@ -32,6 +32,36 @@ export const WEATHER_ZU_DRAFTS: Record<string, string> = {
   weatherDescUnsettled: 'Isimo sezulu asizinzile',
 };
 
+// Unreviewed isiXhosa machine drafts, same keys (PR #1090). A table of its own rather than the
+// English-keyed lib/locales/xh-inline/ lookup, because short words like "Clear" already have a
+// different meaning there (the Clear button).
+export const WEATHER_XH_DRAFTS: Record<string, string> = {
+  weatherToday: 'Namhlanje',
+  weatherDaySun: 'Caw',
+  weatherDayMon: 'Mvu',
+  weatherDayTue: 'Bin',
+  weatherDayWed: 'Tha',
+  weatherDayThu: 'Sin',
+  weatherDayFri: 'Hla',
+  weatherDaySat: 'Mgq',
+  weatherNoRain: 'Akukho mvula',
+  weatherFrostBanner: 'Kulindeleke iqabaka: {days} — khusela izithole zezityalo',
+  weatherHeatBanner: 'Isilumkiso sobushushu: {days} — nkcenkceshela kusasa kakhulu, uthunzele izithole zezityalo',
+  weatherHeavyRainBanner: 'Kulindeleke imvula enkulu: {days} — jonga ukuphuma kwamanzi, ulibazise ukutyala',
+  weatherWaterLoss: 'Izityalo ziza kuphulukana namanzi amalunga no-{mm}mm namhlanje — nkcenkceshela malunga nalo mlinganiselo ukuba akukho mvula',
+  weatherDescClear: 'Kucwengile',
+  weatherDescPartlyCloudy: 'Kunamafu kancinci',
+  weatherDescOvercast: 'Kuguqubele',
+  weatherDescFog: 'Inkungu',
+  weatherDescDrizzle: 'Imvula encinci',
+  weatherDescRain: 'Imvula',
+  weatherDescSnow: 'Ikhephu',
+  weatherDescShowers: 'Imvula yexeshana',
+  weatherDescSnowShowers: 'Ikhephu lexeshana',
+  weatherDescThunderstorm: 'Isaqhwithi neendudumo',
+  weatherDescUnsettled: 'Imozulu engazinzanga',
+};
+
 const DAY_KEYS = ['weatherDaySun', 'weatherDayMon', 'weatherDayTue', 'weatherDayWed', 'weatherDayThu', 'weatherDayFri', 'weatherDaySat'];
 
 const DESC_KEYS: Record<string, string> = {
@@ -61,9 +91,9 @@ export function weatherEnglish(key: string): string {
   return WEATHER_ENGLISH_PENDING[key];
 }
 
-/** The isiZulu draft for `key` when `lang` is isiZulu, else the English. */
+/** The isiZulu (or isiXhosa) draft for `key` in that language, else the English. */
 export function weatherText(lang: string, key: string): string {
-  return (lang === 'zu' && WEATHER_ZU_DRAFTS[key]) || WEATHER_ENGLISH_PENDING[key];
+  return (lang === 'zu' && WEATHER_ZU_DRAFTS[key]) || (lang === 'xh' && WEATHER_XH_DRAFTS[key]) || WEATHER_ENGLISH_PENDING[key];
 }
 
 export function fillWeather(template: string, vars: Record<string, string>): string {

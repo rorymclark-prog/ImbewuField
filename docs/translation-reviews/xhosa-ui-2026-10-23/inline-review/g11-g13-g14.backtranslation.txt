@@ -1,0 +1,1 @@
+Blind back-translation g11/g13/g14 done in-session; see review.json files. g11: Only things explicitly allocated are counted; Original receipt photo. g13: feedback form incl. privacy warning (no passwords, ID numbers, confidential survey answers, others personal info) - read OK; #26 read as "download your design". g14: narration/slide language notes - read OK.

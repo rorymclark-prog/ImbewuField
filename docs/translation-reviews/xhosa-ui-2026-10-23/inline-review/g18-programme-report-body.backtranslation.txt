@@ -1,0 +1,148 @@
+0 Selected group
+1 Group not assigned
+2 From {from} to {to} (event dates in UTC)
+3 {period} · current month up to {date}
+4 No months available in the selected range
+5 Existing records collected · start date not set
+6 Harvest book
+7 Harvest weight
+8 Sales book
+9 Sales weight
+10 Sales income
+11 Learning progress
+12 Selected months
+13 Collected records
+14 Production records; only measured things
+15 Product sold
+16 Sales records; only measured things
+17 Sales book; not grant expenditure
+18 Recorded costs
+19 Dated cost records; coverage is the current number of readable books
+20 Costs book; reporting may differ from sales
+21 Funder outcomes report
+22 Programme delivery report
+23 Production and recorded money
+24 One farmer is visible in {c} group in this selection.
+25 One farmer is visible in {c} groups in this selection.
+26 {n} farmers are visible in {c} group in this selection.
+27 {n} farmers are visible in {c} groups in this selection.
+28 This counts portfolio records, not separate households or those indirectly praised/benefiting.
+29 Recorded harvest: {harvest}. Recorded sales: {sales}. Basis: {basis}. Each measure has its own coverage; no claim of sales minus costs or of income on an investment made.
+30 The recorded course completion average is {value} for {n} farmer.
+31 The recorded course completion average is {value} for {n} farmers.
+32 {done} of the readable course record ({n}) shows the course is completed.
+33 {done} of the {n} readable course records show the course is completed.
+34 The measure {n} of {total} of evidence has incomplete coverage.
+35 The {n} measures of {total} of evidence have incomplete coverage.
+36 Records that are not available are not included in totals, are not counted as zero.
+37 Each measure in the evidence-coverage table has a value for each visible farmer. Readable records are not independently confirmed and are not always complete.
+38 There are no visible farmers in this selection. This does not confirm that the programme has no participants.
+39 {n} farmer has tracking flags based on records.
+40 {n} farmers have tracking flags based on records.
+41 Flags show questions that need to be reviewed, not evidence of poor performance.
+42 {n} farmer has tracking flags; {u} has no readable activity date.
+43 {n} farmer has tracking flags; {u} (plural) have no readable activity date.
+44 {n} farmers have tracking flags; {u} (one) has no readable activity date.
+45 {n} farmers have tracking flags; {u} (plural) have no readable activity date.
+46 Main summary
+47 Scope and basis of reporting
+48 Organisation / selection: {scope}. Prepared on {date}.
+49 Books period: {period}.
+50 Learning, group membership, coverage and tracking flags are current conditions; they are not things achieved in a particular period.
+51 {n} registered farmer is hidden because of consent in the whole organisation.
+52 {n} registered farmers are hidden because of consent in the whole organisation.
+53 This number is not assigned to the selected group. Other access restrictions may also reduce the portfolio.
+54 SAMPLE RECORDS: all numbers in this report are sample numbers and must not be used as evidence of real programme results.
+55 Questions for the next funding review
+56 Main delivery items for the next review
+57 Review the missing evidence of {list}. Make sure gaps show consent, access, or incomplete recording; do not pressure farmers to share.
+58 Check completeness of records and supporting evidence with the programme team before using these numbers externally.
+59 Ask the organisation that makes the support plan to respect consent.
+60 Use the group list to review flagged records, then agree on support actions with the mentor and the farmer.
+61 Record the owner, agreed completion date and completion evidence in the section called Progress and milestones. None of it is assigned automatically by this report.
+62 Reconcile sales, harvest dates and cost coverage before reaching decisions about life or money. Pre-selected production, purchased items and missing records may affect the balance.
+63 Combine course progress with visible practice together with participants' feedback before claiming skills improvement or acceptance.
+64 What the records can confirm
+65 Production and sales records describe recorded work. Course completion describes recorded learning progress. None of them confirms improvement in household income, food, food security or strength.
+66 Baseline, sequence, agreed goals and suitable assessment design are needed to assess change and the programme's contribution. Those comparisons are not available in this portfolio report.
+67 Grant commitments, penalty, programme budget and independently confirmed expenditure are not available here. Farmers' sales and costs are not the organisation's grant accounts.
+68 No estimate is made for farmers whose records are missing. Differences in coverage, crop mix, size of place and reporting time prevent proper comparison of farmers.
+69 Sources and method
+70 Source: harvest, sales and costs books shared, together with course records. This is recorded app data, not independent audit. Consent and account access determine coverage.
+71 Monthly totals use harvest, sales and cost dates in UTC. Books with nothing readable are counted as zero; books that are unreadable have no value. Only known weight is included; numbers and packets are not converted.
+72 Training ranges use available course percentages; completion uses readable module records. Activity means a record within 90 days, not confirmed farm performance.
+73 OECD and FAO TAPE inform the reporting method. This is not a TAPE assessment or a statutory annual NPO report. Organisation accounts and administration records remain outside the scope.
+74 Learning, membership and coverage are current conditions. Missing values are not available, not zero.
+75 Authorised app records, protected by consent; not independently confirmed. Monthly books use event dates in UTC. Known weight only; no estimate conversion derived from numbers or packets.
+76 Measures may cover different farmers. Learning progress is not demonstrated skill. Baseline and sequence are needed to assess change. This is programme evidence, not a statutory NPO report.
+77 Recorded results
+78 Coverage = current readable books / visible farmers; the number contributing to known weight in this period is not available.
+79 Coverage = farmers with an available value / visible farmers.
+80 Readable books do not give a guarantee that records are complete.
+81 Measure
+82 Recorded value
+83 Coverage
+84 Evidence / interpretation
+85 Current condition. Participation and course progress are results of activity, not measured livelihood results.
+86 Coverage / meaning
+87 Average course completion
+88 {a} / {n} farmer
+89 {a} / {n} farmers
+90 {n} readable course record
+91 {n} readable course records
+92 Completed modules
+93 Module completion; not separate people
+94 Activity in the last 90 days
+95 {n} farmer with a readable activity date
+96 {n} farmers with a readable activity date
+97 Evidence coverage
+98 Book numbers describe current readable books, not farmers contributing to known weight in the selected months.
+99 Current availability, not quality of evidence. What is unavailable could mean unassigned, unreadable, or not recorded.
+100 Evidence
+101 Present
+102 Absent
+103 Visible amount
+104 Tracking questions
+105 Tracking delivery
+106 Existing flags based on records. One farmer may appear in more than one line; numbers must not be added up as separate people. Owners and completion dates must be agreed with the group.
+107 Review area
+108 Flagged farmers
+109 Recommended next step
+110 Review the record together with the programme team.
+111 Breakdown by group
+112 Collected records. No names of people, ID numbers or location information (coordinates) included.
+113 Training average
+114 Month book
+115 Whole-organisation totals by event dates for the selected months. Zero does not show anything recorded; it does not show that no farming happened.
+116 Month (UTC)
+117 Harvest kg
+118 Sales ZAR
+119 Costs ZAR
+120 {a} for a farmer ({n}) has readable course records.
+121 {a} for {n} farmers has a readable course record.
+122 {a} for a farmer ({n}) has readable course records.
+123 {a} for {n} farmers have readable course records.
+124 Distribution of course progress
+125 The numbers are current progress, not demonstrated skill.
+126 {done} / {total} modules
+127 {n} farmer
+128 {n} farmers
+129 Recorded harvest per month
+130 {n} readable harvest books.
+131 Known weight only; missing months are left out, not counted as zero.
+132 Where the harvest is recorded
+133 Harvest collected by group. Groups differ in size, in years and in size of records; these collected numbers are not the real order of performance. Coverage is written in the tables.
+134 Recorded results, evidence coverage and questions for the next review.
+135 Delivery evidence, reporting gaps and main tracking areas that are active.
+136 No recent record
+137 Ask whether work has stopped, recording was delayed, or support is needed.
+138 Recorded costs exceed sales
+139 Review same dates and complete books; planning expenditure may come before sales.
+140 Setup record not completed
+141 Check the current stage of the place with the mentor before agreeing on the next practical step.
+142 Give help to finish the survey; leave unknown answers empty.
+143 No visible production or sales book
+144 Clarify consent and access with the organisation. Absence of consent is not poor performance.
+145 Plan comparison needs review
+146 Check the suitable crop cycle and coverage of records before interpreting the gap.
+147 The controls, analysis text, tables and PDF here are an unreviewed draft in isiXhosa. Names and recorded evidence are kept as recorded.

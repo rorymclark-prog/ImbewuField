@@ -15,6 +15,10 @@ import { APP_LANGS, translate, useLanguage } from '@/lib/i18n';
  * so it cannot turn a nav pill into two lines or pad out an accordion label. Dismissible per page
  * for the session (sessionStorage), so returning to the same page later in a fresh tab shows it
  * again rather than hiding it forever after one tap.
+ *
+ * isiXhosa joined isiZulu as a labelled machine-draft language (the full UI dictionary was
+ * drafted in one pass, unreviewed). Its English source line is the same sentence with the
+ * language name swapped (from APP_LANGS), so lib/i18n.tsx does not need a second copy of it.
  */
 export default function LanguageDraftNote({ lang, scope }: { lang: string; scope: string }) {
   const { setLang } = useLanguage();
@@ -29,7 +33,8 @@ export default function LanguageDraftNote({ lang, scope }: { lang: string; scope
     } catch { /* sessionStorage unavailable (private browsing); the note just stays visible */ }
   }, [storageKey]);
 
-  if (!['zu', 'st', 'ts', 've'].includes(lang) || dismissedKey === storageKey) return null;
+  // isiXhosa is an unreviewed machine draft too, so it carries the same notice.
+  if ((lang !== 'xh' && !['zu', 'st', 'ts', 've'].includes(lang)) || dismissedKey === storageKey) return null;
 
   const dismiss = () => {
     setDismissedKey(storageKey);

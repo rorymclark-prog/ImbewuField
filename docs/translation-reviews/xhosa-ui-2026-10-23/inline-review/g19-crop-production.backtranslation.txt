@@ -1,0 +1,427 @@
+0. Choose the produce, the month and the unit.
+1. Enter the quantity. Use 0 only when it means there is nothing; if the produce is not known, do not write it.
+2. Enter a value that is zero or more, or leave it empty.
+3. Check the produce, date and quantity before adding this record.
+4. Choose the starting food for this plan.
+5. Give a name to the food you have stored, for example dried mango.
+6. Choose at least one month in which this food is stored.
+7. {date}: enter zero kg or more, or leave it empty.
+8. Check the food and its storage months before adding this record.
+9. Records of produce and stored food
+10. Use your own records or an estimate checked locally. Quantities that are missing always stay unknown. Eggs, litres and kg are kept separately.
+11. Add produce to the plan so you can record their produce and stored food.
+12. Record expected or actual produce
+13. Record: {n}
+14. Records: {n}
+15. Choose one produce and one month. Expected means your estimate; actual means what was really produced. Adding one produce, one month and one status changes the earlier number.
+16. Produce
+17. Choose produce
+18. Month
+19. Choose month
+20. What amount?
+21. Expected — my estimate
+22. Actual — what was produced
+23. Quantity
+24. Enter quantity
+25. Unit
+26. Choose unit
+27. My price per unit (R)
+28. Not required · your price
+29. Leave it empty if it is not known
+30. Note
+31. Not required
+32. Where does this amount come from?
+33. This price is your record, it is not the current market price or a profit calculation.
+34. Update produce record
+35. Add produce record
+36. Cancel editing
+37. Expected
+38. Actual
+39. The saved record is kept for attention. This source is not counted in the home food and produce totals. Check the guide for using it as food.
+40. Your price: R{price} / {unit}
+41. Quantity × your price: R{value} before costs
+42. Quantity × your price must be checked.
+43. Made-up sample record
+44. Edit {label} {date} {status}
+45. expected
+46. actual
+47. Edit
+48. Remove {label} {date} {status}
+49. Remove
+50. No monthly produce quantity has been recorded. What is unknown does not mean zero.
+51. Record stored food
+52. Record food you stored, bought or carried over from the previous harvest. Choose your months yourself. The plan does not calculate safe storage time or a preserving recipe.
+53. Starting food
+54. Name of stored food
+55. e.g. dried mango
+56. How is it stored?
+57. Months with stored food
+58. Mark each month. Add stored kg for that month only if you know. Empty kg always stay unknown; nothing is carried forward by itself.
+59. stored kg · not required
+60. {date} stored kg, not required
+61. Unknown
+62. Storage note
+63. Bought, carried forward, or stored from which harvest?
+64. Update storage record
+65. Add storage record
+66. Made-up sample storage
+67. Farm storage record
+68. The saved storage record is kept for attention. This source is not counted in the home food and storage totals. Check the guide for using it as food.
+69. {kg} kg stored
+70. kg not known
+71. Edit storage of {label}
+72. Remove storage of {label}
+73. There are no stored food records yet. The harvest does not by itself make stored or processed food.
+74. {n} months
+75. {n} years
+76. Age of crops and future harvest
+77. Put crops that are planted together in one group. Keep old and young crops separate. The expected dates and kg stay on this phone with your harvest months.
+78. First harvest indicator: {age} after planting.
+79. Source
+80. The first harvest age has no source. Add a harvest schedule checked locally.
+81. Indicator of produce already settled (years): {range}. Check the type of crop and the source conditions.
+82. Indicators of age and produce
+83. Check the type, planting material, place and units before using the indicator. The kg schedule you entered gives an assessment of the future time.
+84. First harvest:
+85. Settled produce:
+86. Source produce:
+87. Age group {n}
+88. On the map
+89. {name} group {n} status
+90. Already planted
+91. Will be planted
+92. Number of crops
+93. {name} group {n} crops
+94. Month planted in
+95. Suggested month for planting
+96. {name} group {n} planting month
+97. Year planted in
+98. {name} group {n} planting year
+99. Choose year
+100. Expected harvest per plant per year for each age. Use your records or the nursery's advice for this place. The value stays until the next age you recorded arrives; change it if older crops produce less.
+101. Age in years
+102. {name} group {n} harvest {i} age
+103. kg / plant / year
+104. {name} group {n} harvest {i} kg
+105. Remove harvest {i} of {name} from group {n}
+106. + Add age and harvest
+107. Remove age group
+108. These groups have more crops than your map. Fix the numbers before using the assessment of the future.
+109. {n} crops still need an age group.
+110. + Add age group
+111. Fresh + stored food
+112. Fresh food
+113. New harvest, stored food and recorded stored food.
+114. What was harvested or produced this month, including base crops.
+115. {title} graph; scroll sideways on the phone
+116. {title}: different kinds of food per month
+117. {n} kinds of food
+118. there are times that are marked
+119. Fresh
+120. Food that is put in the pantry
+121. Recorded stored food
+122. Number of kinds of food
+123. Graphs of food availability and planting area
+124. Food and planting area
+125. Include stored food
+126. Some food is counted once, even if it is fresh and frozen. These are suggested or recorded times, not kilograms or cooked food. Times of comparing region with crops or housing without a date are left out of these totals.
+127. What is included in stored food?
+128. Stored food follows the storage conditions with a source for each crop. Freezing, drying, boiling and other processing only enter with dated storage records. The harvest does not by itself make stored food.
+129. made-up storage record
+130. farm storage record
+131. There is no stored food record that matches the chosen graph selections.
+132. There are no stored food records given. Their availability is not known. This graph uses only the marked harvest times and storage times of crops with a source.
+133. Produce in kilograms
+134. Appearance of the kilogram graph
+135. Indicators of the whole cycle of the crop, placed by month where harvesting begins. The bar shows the whole cycle, not the kilograms harvested in that month.
+136. Expected and actual monthly quantity you record. The actual record takes the place of the expected one for that food and that month. Weight that is missing always stays unknown.
+137. Weight recorded as present in each month. Stored, dried, frozen, boiled and processed food is storage; it is not a second harvest.
+138. Graph of produce weight; scroll sideways on the phone
+139. {view} kilograms per month
+140. Whole cycle of the crop
+141. Recorded storage
+142. Monthly produce entered
+143. there is no new crop cycle to start harvesting
+144. quantity is not known
+145. it is not complete, without {items}
+146. Real kg
+147. Expected kg
+148. kg · * = a known amount with missing weight. ? = quantity is not known. – = there is no new crop cycle to start harvesting. Litres, eggs and items keep their units. kg of trees by age stay in the annual assessment; they are not spread over months.
+149. Look at weight and information still needed
+150. {kg} kg in its whole cycle
+151. No new crop cycle to start harvesting
+152. {label}: {kg} kg stored
+153. Storage weight was not entered
+154. Monthly quantity was not entered
+155. Still needed: {items}
+156. Planting area
+157. {area} m² of beds and base crop areas placed on the map. Stored food does not keep the bed occupied.
+158. Graph of planting area; scroll sideways on the phone
+159. Planting area used and free per month
+160. {used} m² used, {free} m² free
+161. Place beds and base crop areas on the map to see used and free area. No planting soil has been measured here yet.
+162. Used
+163. Free between crops
+164. Crop soil only: food forest, animal areas and ponds are not measured here. The graph limits use to the size of each bed; it does not show whether companion planting enters. Keep checking the space in the plan.
+165. expected once it is settled
+166. Care and buying
+167. Check the conditions of your farm
+168. Update site survey
+169. Climate region: {area}.
+170. Your survey gives the observations below.
+171. Choose a place on the map before recording things seen on the farm.
+172. Fruit, nuts and traditional food
+173. The bars use the idea of a marked type or an indicator of the region. New crops need time to produce. They only enter your food totals for months confirmed locally.
+174. Animal products
+175. Kinds of crops to look at locally ({n} crop)
+176. Kinds of crops to look at locally ({n} crops)
+177. Survey information groups can show a match with the climate. Confirm time, soil, water and available material with a local farmer or agricultural officer. A recorded type does not change the crop's time in this plan.
+178. Earlier produce recorded in your survey
+179. Use these records to compare with what is actually collected. They do not predict next year and do not set harvest dates.
+180. no climate volume recorded
+181. Survey group: {zones}
+182. + {n} more
+183. Guide to the types
+184. The survey groups these choices by broad climate. Some kinds are guessed, not tested locally. Confirm the type, sowing time, soil, water and current availability with a local farmer or supplier. Recording the name does not change the crop's overall calendar.
+185. Climate regions that are possible:
+186. Survey note: {zone}
+187. A short list of places like yours
+188. No short climate list is recorded for these possible regions. Other survey routes are below; confirm local suitability.
+189. Other kinds ({n})
+190. No local climate is confirmed. These are survey indicators; no local suitability is held.
+191. Catalogue indicators
+192. Confirm this route with a current packet or the seller's guide.
+193. Fruit, nuts and berries on your map
+194. Harvest months differ by place and type. Calendar marks with outlines are indicators for planning once it is settled. Confirm the months of crops that already give food here so they are counted in the food totals. Crops stay in the printed plan while the dates are not known.
+195. These confirmations are kept on this phone in this design.
+196. {label} · {n} existing, {p} suggested on your map.
+197. {label} · {n} existing on your map.
+198. Choose a type in the Design Studio; harvest dates are not yet known.
+199. {n} existing, {p} suggested
+200. {n} existing
+201. use as food needs to be examined
+202. confirm harvest months
+203. Kept as a list on the map. Check the guide to use as food with a source below before planning the household harvest. This crop is not counted in the usual food totals and harvest tasks.
+204. All existing crops of this kind already give food here.
+205. Suggested crops only: no current harvest dates.
+206. Tap the months you harvest these crops here:
+207. {name} local harvest months
+208. There is no harvest indicator for this plan:
+209. Times for comparing — check place and type:
+210. No food harvest calendar is given while use as food is being examined.
+211. No harvest months confirmed in the source record. Local observations may be recorded above.
+212. {n} weeks
+213. about {n} months
+214. Read the source: {citation}
+215. Read the source
+216. No source
+217. Where this number comes from
+218. These are survey indicators for each animal. Check age, programme/system and units before using the number on your farm.
+219. Harvest per each {unit}
+220. {product} per each {unit}
+221. When
+222. in all sources of South Africa
+223. First produce
+224. Life of the produce
+225. years
+226. Food per each {unit}
+227. kg per day
+228. Water per each {unit}
+229. L per day
+230. Space per each {unit}
+231. {product} is not a food, so it is not included in the availability chart and the year of food.
+232. Produce by age and system
+233. Move the type, stage and units with your livestock. Enter the expected or actual produce of your farm separately.
+234. What they need
+235. Rule/Law
+236. What the sources say ({n})
+237. Animals on your map
+238. The map shows housing places, not the number of animals. Choose what you keep, then confirm the months it gives food here. Housing stays in the printed plan even if dates are not known.
+239. {n} {structure} on the map
+240. {n} planned
+241. What are they used for?
+242. What {housing} are used for
+243. Tap the months your animals already give {product} here. A reference period is not a promise on this farm.
+244. The year-round source is for commercial hens that can be fed and lit under control.
+245. {housing} local production months
+246. Planned housing only: no animals give food at present.
+247. Times for comparing, care and sources
+248. Choose what they are kept for. Production months need confirming locally.
+249. How production changes as the crops keep growing
+250. The next ten years, starting this month. Add planting dates and expected harvests under each crop above. Missing harvests continue to be shown; young trees are not given the harvest of a tree that has already matured.
+251. Vegetables and base crops
+252. Fruit, nuts and berries
+253. Numbers are claims of kg
+254. Check the quantity
+255. Check the beds
+256. * A known amount only. Missing produce does not mean zero. Ends with outlines show a harvest that changes as the crops grow in the year.
+257. Vegetables and base crops:
+258. Fix the conflict of beds
+259. {kg} from cycles that start harvesting at this time
+260. Not counted: {items}
+261. crop
+262. crops
+263. {kg} known + missing harvests
+264. It needs information
+265. What the estimate thinks
+266. Chickens: choose by local advice
+267. Purpose: {purpose}.
+268. Type recorded: {breed}.
+269. Hens laying eggs that you recorded: {n}.
+270. These are things you saw; they do not promise a harvest.
+271. What still needs to be checked in your site survey:
+272. Kinds and production systems to discuss locally
+273. Climate, housing and source indicators
+274. {n}% of the bed
+275. fruits
+276. {first} and {last}
+277. {list} are also expected
+278. {n} kind of crop is already ready to be harvested
+279. {n} kinds of crops are already ready to be harvested
+280. {n} kind of crop that is stored
+281. {n} kinds of crops that are stored
+282. {n} kind of fruit tree
+283. {n} kinds of fruit trees
+284. nothing
+285. nothing new
+286. · sow {month} in {bed} ({share}) · harvest {span}
+287. Plan {crop}, sown in {month} in {bed}
+288. Plan it
+289. There is something new in all 12 months.
+290. There is something new in {n} months of the 12; nothing new in {span}.
+291. Year of food
+292. The plan as it repeats by year, beds, trees and animals together — rows opened in the chart above.
+293. The next 12 months from today, beds, trees and animals together — rows opened in the chart above.
+294. This shows whether food arrives, not whether it is enough. Availability bars count kinds of crops, not kilograms.
+295. fresh vegetables and base crops
+296. animal products
+297. in storage only
+298. Fill the months without a new crop
+299. Sow at the usual time of this region that is permitted by the temperature of your place, in a bed that has space in the months of the crop.
+300. Sow at the usual time of this region, in a bed with space in the months of the crop.
+301. "Plan it" opens the usual planting form so you can check it first.
+302. There is no vegetable bed on the map yet, so there is no place to suggest sowing. Draw a bed on the map.
+303. nothing new at all
+304. no new crop
+305. {names} can be harvested at that time, but there is no bed with space in those months. Free a bed or place another on the map.
+306. and others
+307. No crop with a sourced time is harvested this month from sowing at the time of this region and the temperature of your place.
+308. No crop with a sourced time is harvested this month from sowing at the time of this region.
+309. Show fewer months
+310. Show {n} more month
+311. Show {n} more months
+312. Walk through the samples
+313. Other samples
+314. Print this plan
+315. MADE-UP FARM · HOT KWAZULU-NATAL
+316. A complete farm.
+317. Year of food.
+318. Vegetables and base crops from beds. Fruit, nuts and berries from the food forest. Eggs, milk, meat, honey and fish beside them.
+319. See the produce calendar
+320. Graphs of food and area
+321. Sample food
+322. This is a made-up farm.
+323. Design, ages of crops, banana dates, animal produce and food storage months are samples. Comparison times for fruit and nuts use survey information available from South Africa. Unknown quantities always stay unknown.
+324. This sample plan starts in November 2026. Your plan starts in the current month; weather and kept sowing decide when food will be ready.
+325. SAMPLE PLACE
+326. Everything has its place
+327. Design shown · not a measured map
+328. Vegetable beds
+329. Leafy vegetables, stalk vegetables and fresh vegetables
+330. Base crop fields
+331. Maize, beans, root crops and pumpkin
+332. Food forest
+333. Existing crops: {existing} · planned crops: {planned}
+334. Animal area
+335. Hens, dairy goats, rabbits, ducks and bees
+336. Water and fish
+337. A tilapia pond and reliable water in the dry season taken into account
+338. No frost taken into account
+339. Full sun
+340. Crop soil that drains water well
+341. The condition of hot KZN
+342. MONTH BY MONTH
+343. What is good, and when?
+344. Choose a month to see its food and work. The printed calendar uses the same plan.
+345. Show produce
+346. Harvest time
+347. From storage
+348. Region indicator
+349. Banana and animal marks = made-up local records
+350. Slide the calendar sideways to see all months.
+351. Scrollable produce calendar of twelve months
+352. Produce calendar of the made-up farm. Filled marks show the sample plan, gold shows stored food, covered marks show region indicators.
+353. CROP / PRODUCE
+354. Show {month}
+355. Region indicators together with sample banana records
+356. Made-up local produce records
+357. Sample months · quantity unknown
+358. 3 crops in each banana circle
+359. region indicator
+360. sample plan
+361. Stored food
+362. Harvest / sample produce
+363. No marked production period
+364. Planting area used
+365. {month} planting area used
+366. Indicator — confirm locally
+367. Vegetable and base crop tasks this month
+368. Try your numbers below. They change this made-up sample only and go back to the start when you refresh the page.
+369. AS THE FARM GROWS
+370. Young crops need time
+371. This sample includes crops that are already settled and new crops. Age changes the expected level; it does not tell their kilograms.
+372. Look ahead
+373. Year of estimate
+374. The vegetable indicator needs to be checked
+375. {kg} kg known amount of annual crops
+376. {kg} kg indicator of annual crops
+377. Vegetables and base crops only. Based on beds and crop cycle numbers with a source; not a promise of a monthly harvest. Quantities of fruit, nuts and animals are not added as kilograms that are guessed.
+378. Not included:
+379. {items} — the harvest has no source or cannot be counted.
+380. {existing} existing · planned crops: {planned}
+381. BEFORE PLANTING OR BUYING
+382. Check the details of your farm
+383. This hot KZN sample is not moved unchanged to a cold, dry or winter-rainfall place.
+384. TAKE IT TO THE FARM
+385. The same plan on paper
+386. Download a short booklet, or choose A2 under Calendar and tasks to print on a wall. The detailed indicator includes a planting guide and sources.
+387. ImbewuField · Complete sample of produce · Made-up place and records
+388. Stored
+389. Frozen
+390. Dried
+391. Boiled
+392. Other processing
+393. Stored
+394. Processed
+395. Estimate of the crop cycle
+396. Monthly produce
+397. Stored food
+398. Eggs
+399. Meat
+400. Eggs and meat
+401. Not yet recorded
+402. What is the pen used for?
+403. Keep fish in it?
+404. chicken house or mobile house
+405. chicken houses and mobile houses
+406. goat kraal
+407. goat kraals
+408. beehive
+409. beehives
+410. rabbit cage
+411. rabbit cages
+412. duck pond
+413. duck ponds
+414. pig kraal
+415. pig kraals
+416. pen/kraal
+417. pens/kraals
+418. small pond
+419. small ponds
+420. whole bed
+421. half of the bed
+422. one third of the bed
+423. quarter of the bed
+424. All
+425. Vegetables
+426. Base crops

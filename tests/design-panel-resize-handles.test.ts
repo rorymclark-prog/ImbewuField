@@ -16,7 +16,7 @@ import { readFileSync } from 'node:fs';
 const PALETTE = readFileSync(new URL('../components/design/DesignPalette.tsx', import.meta.url), 'utf8');
 
 test('the Layers resize handle lives on a non-scrolling box', () => {
-  assert.match(PALETTE, /aria-label="Drag to resize the Layers panel"/);
+  assert.match(PALETTE, /aria-label=(?:"Drag to resize the Layers panel"|\{inlineText\(lang, 'Drag to resize the Layers panel'\)\})/);
   // The outer wrapper is the one carrying the panel's zIndex switch; it must
   // not scroll (scrolling + a handle positioned outside the edge = clipped,
   // unreachable handle — the original bug).

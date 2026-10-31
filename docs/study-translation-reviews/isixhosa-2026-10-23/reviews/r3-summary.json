@@ -1,0 +1,73 @@
+{
+ "round": 3,
+ "items": 137,
+ "verdicts": {
+  "ok": 112,
+  "repair": 25
+ },
+ "repair_severity": {
+  "minor": 11,
+  "wording": 10,
+  "meaning": 4
+ },
+ "a_phase_flagged_items": 32,
+ "top_issues": [
+  {
+   "path": "seeds-sovereignty/seeds-sovereignty-l3/body",
+   "severity": "meaning",
+   "issue": "'kunganqanda ukufuma' says sealing damp seed STOPS moisture; English warns it TRAPS moisture. Reversed safety warning. Repaired to 'kungavalela ukufuma ngaphakathi'."
+  },
+  {
+   "path": "seeds-sovereignty/seeds-sovereignty-l2/quiz/1/options/1",
+   "severity": "meaning",
+   "issue": "Correct answer option: 'Umbona ungeniswa ngumoya' = 'maize is brought in by the wind', not wind-pollinated. Repaired."
+  },
+  {
+   "path": "seeds-sovereignty/seeds-sovereignty-l2/body",
+   "severity": "meaning",
+   "issue": "Same 'ungeniswa ngumoya' error plus 'unganxibelelana' (connect) for cross-pollinate; repaired and fermentation term glossed."
+  },
+  {
+   "path": "seeds-sovereignty/seeds-sovereignty-l2/keyPoints/2",
+   "severity": "meaning",
+   "issue": "Same wind-pollination error in key point; repaired."
+  },
+  {
+   "path": "reading-landscape/reading-landscape-l3/body",
+   "severity": "wording",
+   "issue": "Typos/non-words ('echatshazelwa','aziingqongileyo','aziko'), isiZulu 'utamatisi', and 'kodwa' (but) replacing 'alone' in the late-blight caveat. Repaired."
+  },
+  {
+   "path": "seeds-sovereignty/seeds-sovereignty-l3/quiz/1/rationale",
+   "severity": "wording",
+   "issue": "'uthembise ityala lonke lesizini' - 'ityala' (debt/court case) instead of planting; nonsense. Repaired."
+  },
+  {
+   "path": "reading-landscape/reading-landscape-l4/quiz/0/options/2 (+ l4/body, l4 rationale, l3 rationale)",
+   "severity": "wording",
+   "issue": "Systematic 'kodwa' (but) where English says 'alone' (should be 'kuphela'/'sodwa') - garbles the 'X alone does not prove Y' caveats, incl. a correct quiz option."
+  },
+  {
+   "path": "seeds-sovereignty/seeds-sovereignty-l1/quiz/0/rationale",
+   "severity": "wording",
+   "issue": "'zikhiwa' = 'are picked (like fruit)' instead of 'are bred/made' ('zenziwa'); concords fixed."
+  },
+  {
+   "path": "reading-landscape/reading-landscape-l3/quiz/0/q (+ rationale)",
+   "severity": "wording",
+   "issue": "Seedling nursery rendered 'indawo yokuzalela' (place for giving birth); repaired to 'yokukhulisela'."
+  },
+  {
+   "path": "seeds-sovereignty/seeds-sovereignty-l2 (infographicAlt, keyPoints/1, quiz/0/q)",
+   "severity": "minor",
+   "issue": "'ukuvundiswa' for fermentation can read as 'fertilising'; English gloss added. A fluent speaker should confirm the term. Also isiZulu plural 'izimpawu' in seeds-l1 (3 fields) fixed to 'iimpawu'."
+  }
+ ],
+ "notes": [
+  "This is a machine review, not approval by a fluent isiXhosa speaker. Repairs need a native-speaker check before shipping.",
+  "No holds: every problem found had a confident, local fix.",
+  "Quiz correct-answer options were checked and stay right after the repairs (l1-q0 opt0, l1-q1 opt1, l2-q0 opt2, l2-q1 opt0, l3-q0 opt2, l3-q1 opt1, l4-q0 opt2, l4-q1 opt1; seeds l1-q0 opt1, l1-q1 opt1, l2-q0 opt1, l2-q1 opt1, l3-q0 opt1, l3-q1 opt1). The correct-answer index was worked out from the content because the files do not give it.",
+  "Some A-phase flags turned out to follow the English and were marked ok: 'Amanzi athile' (English says 'Some excess water'), 'Imigca yokuphakama' (English 'contours'), 'unuka ukumanzi' (English 'smells damp'), 'Inkungu' (English 'Mist').",
+  "Left as is (minor): 'Zinokuvela' concord in reading-landscape-l4/quiz/1/options/1; 'idibaniso lemfuza' noun class in seeds-l1/quiz/0/options/1."
+ ]
+}

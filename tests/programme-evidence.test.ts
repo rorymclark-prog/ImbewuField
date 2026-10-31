@@ -199,3 +199,28 @@ test('attendance signatures and feedback reject malformed, absent, duplicate and
   const edited={...s,title:'My saved title',updatedAt:'2026-09-08T10:00:00Z',photos:[],photoCount:0,feedback:undefined};
   assert.equal(completeSampleEvidence({...freshEvidenceData(),sessions:[edited]}).sessions[0].title,'My saved title');
 });
+
+test('isiXhosa is a third answer language for training feedback: valid, summarised and worded in isiXhosa',()=>{
+  const s=freshEvidenceData().sessions[0],f=s.feedback![0];
+  for(const language of ['en','zu','xh'] as const)
+    assert.equal(validTrainingRecord({...s,feedback:[{...f,language}]},'2026-09-08'),true,`${language} feedback is valid`);
+  for(const language of ['st','xx','',undefined,null] as const)
+    assert.equal(validTrainingRecord({...s,feedback:[{...f,language:language as never}]},'2026-09-08'),false,`${String(language)} is not an answer language`);
+  const xh=trainingFeedbackSummary({...s,feedback:s.feedback!.map(r=>({...r,language:'xh' as const}))});
+  assert.equal(xh.completed,trainingFeedbackSummary(s).completed,'language does not change who counts as having answered');
+});
+
+test('every training-feedback question and option has an isiXhosa draft, and isiXhosa findings use it',async()=>{
+  const { XH_INLINE_SOURCE } = await import('../lib/locales/xh-inline/index');
+  const { registerXhInline, inlineText } = await import('../lib/xh-inline');
+  const { TRAINING_FEEDBACK_TEMPLATE } = await import('../lib/programme-evidence');
+  registerXhInline(XH_INLINE_SOURCE);
+  try {
+    for(const q of TRAINING_FEEDBACK_TEMPLATE.questions){
+      assert.notEqual(inlineText('xh',q.en),q.en,`no isiXhosa draft for question ${q.id}`);
+      for(const o of q.options??[])assert.notEqual(inlineText('xh',o.en),o.en,`no isiXhosa draft for ${q.id} option ${o.value}`);
+      assert.equal(inlineText('zu',q.en,q.zu),q.zu);
+      assert.equal(inlineText('en',q.en,q.zu),q.en);
+    }
+  } finally { registerXhInline({}); }
+});

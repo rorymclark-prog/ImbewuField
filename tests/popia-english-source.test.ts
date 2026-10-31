@@ -6,8 +6,9 @@ const source = readFileSync(new URL('../components/PopiaConsent.tsx', import.met
 
 // Xitsonga now has source-bound corrections and a missing-goal prompt in this unreviewed flow.
 // The former exclusion assertion pinned the old language list; every target needs source backing.
+// isiXhosa (an unreviewed machine draft on this branch) is paired with the English source too.
 test('first-run consent pairs every target draft with English source and separates the source language', () => {
-  assert.match(source, /ENGLISH_SOURCE_LANGS = new Set\(\['zu', 'st', 'ts', 've'\]\)/);
+  assert.match(source, /ENGLISH_SOURCE_LANGS = new Set\(\['zu', 'xh', 'st', 'ts', 've'\]\)/);
   assert.match(source, /translate\('en', key\)/);
   assert.match(source, /<small lang="en"/);
   assert.match(source, /t\('popiaEnglishSourceLabel'\)/);

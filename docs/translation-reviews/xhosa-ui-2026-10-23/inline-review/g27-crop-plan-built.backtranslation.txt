@@ -1,0 +1,187 @@
+0. {names}: a crop was chosen, but it has no sowing month in the calendar this farm uses ({calendar}) — the sowing guides this plan follows give none in this calendar (usually frost or the rainy season), so making a place will not help.
+1. {names}: crops were chosen, but they have no sowing month in the calendar this farm uses ({calendar}) — [same], so making a place will not help.
+2. summer-rainfall calendar, with heavy frost
+3. winter-rainfall calendar
+4. frost-free calendar
+5. summer-rainfall calendar, with light frost
+6. Ask the extension officer before you try it here.
+7. Ask the extension officer before you try them here.
+8. {names}: a crop was chosen but does not fit anywhere in this plan — all its sowing times are already taken by other crops, or excluded by rotation.
+9. {names}: crops were chosen but do not fit anywhere in this plan — all their sowing times are already taken by other crops, or excluded by rotation.
+10. Add it by hand if you want to make a place.
+11. Add them by hand if you want to make a place.
+12. This plan had one vegetable bed ({area} m² in total) — add beds on the map so more of the crops you chose can fit.
+13. This plan had {n} vegetable beds ({area} m² in total) — add beds on the map so more of the crops you chose can fit.
+14. The commercial order looks only at the cautious fresh weight in kg/m² per crop cycle.
+15. It does not estimate profit, healthy food, customer demand or the world's greatest annual maximum; use your knowledge of customers and prices before committing land.
+16. You asked to focus on {n} crops, but there is only 1 empty bed — one was chosen first using the cautious crop-cycle kg/m² references instead.
+17. You asked to focus on {n} crops, but there are only {m} empty beds — {m} were chosen first using the cautious crop-cycle kg/m² references instead.
+18. None of the crops you chose can be placed at this time — perhaps their sowing time does not arrive on time, or there is no growing place on your map with a suitable shape for them.
+19. Check the local season or add the crop by hand; this does not show that the crop cannot grow here.
+20. No crop fits the shape of this place ({bed}) among the crops you focused on, so it is left for you to plant by hand.
+21. {crop}: there is a sowing time here, but none of the growing places set aside for the crop has a suitable shape or width.
+22. {crop}: no sowing time is written for this rainfall pattern in the current catalogue; confirm with your area rather than say it is agriculturally impossible.
+23. {crop}: the crop could not take all the growing places set aside for it — rotation took it out there, because one crop family grew on that land too recently.
+24. {crop}: the crop could not take all the growing places set aside for it — what is already in the ground fills those beds through all the months of {crop}'s sowing times this year.
+25. {crop}: the crop could not take all the growing places set aside for it — rotation and what is already in the ground both limit where it can go this year.
+26. {crop}: the crop could not be placed in any of the growing places set aside for it — rotation took it out there, because [same family too recently].
+27. {crop}: could not be placed in any of the places set aside — what is already in the ground fills those beds through all the months of sowing this year.
+28. {crop}: could not be placed in any of the places set aside — rotation and what is already in the ground both limit where it can go this year.
+29. {bed}: another focus crop that could not use this place was set aside, so {crop} — also one of the crops you focused on — took its place.
+30. {bed}: nothing planted — none of the crops you focused on has a sowing time that reaches this place in the next twelve months.
+31. {bed}: nothing planted — what has already grown in this place shares one crop family with each crop in your commercial focus, so Rotate crops closes all of them here.
+32. {bed}: nothing planted — what already grows in this place fills the bed in all the sowing times of the crops you focused on this year.
+33. {bed}: nothing planted — some of the crops you focused on could repeat the recent family of this bed under Rotate crops, others cannot enter because of what is already in the ground.
+34. Choose its crop by hand, or add the number of crops you focus on.
+35. {where}: oats is a winter cover crop although a grass-family crop (maize or oats) grew there recently — KZN DARD writes oats as a winter cover crop on maize land, and no cover crop that fits rotation can be placed there.
+36. If the lasting of cereal diseases worries you, change it with broad beans by hand.
+37. {bed}: would have rested the whole winter — {crop} added (sow {month}).
+38. {bed}: would rest all winter — {crop} added (sow {month}) on {pct}% of the area.
+39. It takes the whole place, so nothing else can be sown in it this winter.
+40. {n} growing places would have rested all winter, so a winter crop was added: {lines}.
+41. Where the crop takes the whole place, nothing else can be sown there this winter.
+42. Each of these takes the whole place, so nothing else can be sown in them this winter.
+43. {labels} — {crop} (sow {month}, whole place)
+44. {labels} — {crop} (sow {month}, {pct}% of each place)
+45. {labels} — {crop} (sow {month}, {pct}% of the place)
+46. {bed}: would have been empty at the start, so a first one-season crop was added: {crop} (sow {month}).
+47. Made once, only this year — the repeating plan does not reach these months by itself, so that land will certainly need such one-season help next year unless the plan itself changes.
+48. {n} growing places would have been empty for part of your first year, so a first one-season sowing was added: {lines}.
+49. {labels} — {crop} (sow {month})
+50. Each is made once, only this year — the repeating plan does not reach these months by itself, so expect to sow such a "bridge" again next year unless the plan itself changes.
+51. First-year gap only: {spans}.
+52. The repeating plan starts sowing that land later in the year, and from that time its crop stands through these months every year — so empty only this first year.
+53. No chosen crop is suitable for that land and finishes in time to close it now.
+54. No chosen crop is suitable for those lands and finishes in time to close them now.
+55. First-year rest: {spans}.
+56. No chosen crop is suitable for that land and finishes in time this year — and the repeating plan itself does not reach this gap, so it is not a first-year gap only: it repeats every year unless the plan itself changes.
+57. [same, plural gaps].
+58. One growing place has a gap that cannot be sown freshly: {where}.
+59. {n} growing places have a gap that cannot be sown freshly: {where}.
+60. None of these: {choice}, can fill those gaps in this plan.
+61. Another crop with a confirmed plan can do it — add another only if the household really wants it.
+62. A crop outside the groups you chose, with a confirmed plan, can cover those gaps.
+63. Expand your crop groups only if this crop suits the household.
+64. {choice} and other well-documented crops have a sowing time for those gaps, but the surrounding months are already fully planted, or rotation excludes the families that could match.
+65. Well-documented crops have a sowing time for those gaps, but the surrounding months are already fully planted, or rotation excludes families that could match.
+66. Freeing a nearby month, or letting the land rest, are both good choices.
+67. None of these: {choice}, and there is no other crop the catalogue can plan well — one with a growing time, spacing and a checked yield — that has a sowing time reaching those gaps.
+68. There is no crop the catalogue can plan well — with a growing time, spacing and a checked yield — that has a sowing time reaching those gaps.
+69. Ask in your area what else does well; this plan does not show that nothing can grow at that time.
+70. The staple-crop site plants one crop across the whole block, and its yearly course is already finished, so no second staple crop can follow and no defined winter cover crop reaches those months.
+71. A vegetable crop could cover them, but the planner will not place a vegetable on a thinned-out field alone — planting across the whole width of the block is a big responsibility, so your decision is left.
+72. Sowing another by hand, or letting the land rest, are both good choices.
+73. crops you chose ({names})
+74. {n} crops you chose
+75. Crops you chose ({names})
+76. {n} crops you chose
+77. One inactive or duplicated bed record was left out of the proposal.
+78. {n} inactive or duplicated bed records were left out of the proposal.
+79. The current month was unavailable, so plans start in January.
+80. No automatic crop plan was made because reliable irrigation was not confirmed and this place's own monthly rainfall and temperature were unavailable to plan the time that depends on rain.
+81. This programme deliberately places successive crop cycles, and the regional rainfall label does not show that this farm can irrigate itself.
+82. Rain-dependent plan: a crop is sown only where every month it grows in gets rain of no less than half the estimated evaporation (FAO growing-season rule, using this place's monthly rainfall; evaporation is estimated from temperature by the Thornthwaite method, which may underestimate in dry, windy places).
+83. Average rainfall is not each year's rainfall — irrigate in dry weather if you can.
+84. The frost months you observed as a farmer were used ({months}): frost-sensitive crops are not recommended when their field growing time passes through those months.
+85. Months not listed are no promise of no frost.
+86. Check each sowing month by asking the local extension officer — this calendar has been checked crop by crop only in KwaZulu-Natal.
+87. These sowing months follow the KZN DARD warm-areas calendar.
+88. Outside KwaZulu-Natal, confirm by asking the local extension officer.
+89. One existing planting record had no bed or valid sowing month and could not be planned.
+90. {n} existing planting records had no bed or valid sowing month and could not be planned.
+91. {names}: a crop was chosen, but the catalogue still has no confirmed local time or basis for setting it in the field.
+92. {names}: crops were chosen, but the catalogue still has no confirmed local time or basis for setting them in the field.
+93. It stays chosen for checking but is not placed automatically.
+94. They stay chosen for checking but are not placed automatically.
+95. None of the crops chosen by this home has a confirmed plan for automatic planning.
+96. Review those crops by hand or choose another that the planner can plan; it will not guess another in its place.
+97. {names}: the crop has a confirmed time and field setting, so it can be planned.
+98. {names}: the crops have a confirmed time and field setting, so they can be planned.
+99. No supported food yield guide is available, so kilograms and price are left empty instead of estimated.
+100. Direct crop choice needs a confirmed time and field setting in order to plan.
+101. Yield guides are used only where the catalogue has them; missing kilograms are never made up.
+102. The wide rotating choice uses crops with confirmed yield, time and field spacing so that their production comparison has the same basis of evidence.
+103. The number of people you feed is not used to estimate how much to plant.
+104. The planner tries the crops you chose directly; your place on the map, sowing times and crop rotation decide what fits.
+105. Maize was not placed for you: the app can measure a place on the map but cannot follow or check a wind-eaten block of maize.
+106. Add a staple-crop site to the map, or add maize by hand after you check the row planning.
+107. {crop}: gets its own place ({plot}) — the staple-crop site is exactly the special trellising place it needs.
+108. {names}: the crop needs more climbing space than a vegetable bed gives — plant it at a special site, beside your boundary, or in a food-forest place instead.
+109. {names}: the crops need more climbing space than a vegetable bed gives — plant them at a special site, beside your boundary, or in a food-forest place instead.
+110. Switch on "Plant big climbing trees in a vegetable bed anyway" if you prefer to use one of your beds for it.
+111. Switch on "..." if you prefer to use one of your beds for them.
+112. {crop}: the crop needs a whole bed on its own — no empty one at this time.
+113. {crop}: needs a whole bed on its own, but the biggest empty bed is already too full to measure it at this time.
+114. {crop}: gets its own place ({bed}).
+115. Check the real way of the climbing crop or its ways before agreeing; a map place alone does not show that the climbing place works.
+116. {names}: the crop was left out: it needs a whole bed for months, and giving it your one vegetable bed would crowd out the other crops you chose.
+117. {names}: the crop was left out: needs a whole bed for months, and giving it more than half of your {n} vegetable beds would crowd out the others.
+118. {names}: the crops were left out: each needs a whole bed for months, and giving them your one vegetable bed would crowd out others.
+119. {names}: the crops were left out: each needs a whole bed for months, and giving them more than half of your {n} vegetable beds would crowd out others.
+120. Plant it beside or at a special place, add a bed to the map, or switch on "...".
+121. Plant them beside or at a special place, add a bed to the map, or switch on "...".
+122. Each staple-crop site takes one crop in the entire place — {plotlines}.
+123. {plot}: {crop} (sow {month})
+124. When Rotate crops is on, this proposal avoids immediately repeating a recently recorded crop family; it is not a story kept over many years.
+125. No previous crop is recorded for these sites, so rotation could not guide this first choice — write down what grew there before, if you can.
+126. No growing place has been placed on the map yet, so there was no place to put the vegetables you chose.
+127. Draw a vegetable bed on the map and use the proposal again.
+128. Every growing place on your map is a staple-crop site, and the vegetables you chose need an ordinary vegetable bed.
+129. Draw a vegetable bed on the map, or plant it yourself at a site after you have checked the row planning.
+130. There are no empty beds for family crops after the climbing crops needing a lot of space were placed.
+131. Only one bed is empty — it is kept for feeding the family; add beds so that you can put another beside it for selling.
+132. A few big harvests were chosen: each crop goes in as one big sowing at a time, and its next sowing starts only after this harvest has finished.
+133. No additional small sowing of the month.
+134. Cover crops are turned off in the crop mix, so each site rests after its summer crop instead of getting a winter cover crop of broad beans or oats.
+135. {where}: all the crops you chose directly belong to one family — {family} — so Rotate crops could not provide a neighbour of a different family.
+136. The planner kept the crop you chose rather than swapping it for one you did not choose.
+137. Frost-free sowing months for {names} have not yet come from a published local table — check those dates by asking the extension officer before you rely on them.
+138. {names}: a crop was left out: in this place at least one month in each sowing time is hotter than the crop's upper limit in FAO ECOCROP.
+139. {names}: crops left out: [same plural].
+140. {names}: a crop left out: none of its sowing times has enough rain for the whole crop without irrigating.
+141. {names}: crops left out: none of their sowing times has enough rain for the whole crop without irrigating.
+142. {names}: a crop left out: no sowing time remains after looking at the frost months you observed ({months}) and the available local weather.
+143. {names}: crops left out: [same].
+144. Check for a protected growing place or the local time by asking the extension officer before adding frost-sensitive crops by hand.
+145. Some sowing months were dropped because of this place's weather — {reason}: {cut}.
+146. the field time passes through the frost months you observed
+147. the field time passes through the frost months you observed, or another local temperature or rain check removes it
+148. too hot, or the rain is not enough for the whole crop
+149. the crop would have grown in a month hotter than its upper limit in FAO ECOCROP
+150. except {months}
+151. Some months here are warmer than the suitable range for the crop in FAO ECOCROP, which looks at growth as reduced accordingly (not failing) — mulching with grass and afternoon shade help: {warm}.
+152. {names}: a crop enters only as a first one of the first season — the repeating plan had no place for it, so add it by hand in the following years if you want it.
+153. {names}: crops enter only as first ones of the first season — [same]
+154. This plan follows a repeating cycle of the whole year.
+155. It was chosen by comparing plans starting in each of the 12 months and keeping the one with the fewest months without new harvest — not merely what fits best starting from {month}.
+156. Check before sowing there ({beds}): something is already growing in that bed and this year-round plan may meet it in its first months.
+157. Check before sowing there ({beds}): something is already growing in those beds and this year-round plan may meet it in its first months.
+158. {crop} — its sowing time is open now, but this plan has no place to put it until {month}.
+159. {crop} — its next sowing time opens in {month}, and this plan still has a place for it then.
+160. {crop} — its next sowing time opens in {month}, but this plan has no place to put it in that month; the first sowing month it can fit in is {fit}.
+161. Bed {n}
+162. Site {n}
+163. all year
+164. {n} crop on your map
+165. {n} crops on your map
+166. recommended, no harvest yet
+167. recommended, no harvest yet (first harvest {years} years after planting)
+168. {n} of them recommended
+169. {n} of them recommended (first harvest {years} years after planting)
+170. recommended, no animals yet
+171. On your map, apart from the month bar — {parts}.
+172. confirm the local production months: {products}
+173. say what it is used for under "Animals on your map": {housings}
+174. {product} from {name}
+175. pond
+176. ponds
+177. barn or kraal
+178. barns or kraals
+179. in the Western Cape (Stellenbosch, Cape Peninsula)
+180. in the North-West
+181. in the south of the Free State
+182. in the Eastern Cape
+183. April–May
+184. March–April
+185. December, after the October rains
+186. Early September, as the winter aloe's dripping had finished

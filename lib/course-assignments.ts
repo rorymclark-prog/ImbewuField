@@ -116,7 +116,7 @@ export function formatDue(due_at: string | null, today: string, lang: string = '
   return `Due ${d} ${month}${y === new Date().getFullYear() ? '' : ` ${y}`}`;
 }
 
-const DUE_TEXT_LANGUAGES = new Set(['zu', 'st', 've', 'ts']);
+const DUE_TEXT_LANGUAGES = new Set(['zu', 'st', 've', 'ts', 'xh']);
 
 /**
  * Localise only the known status shapes returned by formatDue. Unsupported languages keep the

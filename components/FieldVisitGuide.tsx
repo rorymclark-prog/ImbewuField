@@ -1,12 +1,15 @@
 import { Droplets, Sprout, ShoppingBasket, GraduationCap } from 'lucide-react';
 import Illustration from './Illustration';
 import styles from './FieldWork.module.css';
+import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 
 export default function FieldVisitGuide({ actProgramme }: { actProgramme: boolean }) {
+  const { lang } = useLanguage();
   return <>
-    <h2>{actProgramme ? 'Food-security visit guide' : 'A useful garden visit'}</h2>
+    <h2>{inlineText(lang, actProgramme ? 'Food-security visit guide' : 'A useful garden visit')}</h2>
     <div className={styles.guideLandscape}><Illustration name="example-hero"/></div>
-    <p>Walk the garden together. Look, ask and practise.</p>
+    <p>{inlineText(lang, 'Walk the garden together. Look, ask and practise.')}</p>
     <ol className={styles.guide}>
       {[
         { title: 'Garden & water', detail: 'Check beds, water access, repairs and crop protection.', Icon: Droplets, tone: 'blue', ink: 'var(--blue)' },
@@ -15,9 +18,9 @@ export default function FieldVisitGuide({ actProgramme }: { actProgramme: boolea
         { title: 'Learning & next action', detail: 'Watch a practical skill. Agree an action, owner and date.', Icon: GraduationCap, tone: 'violet', ink: 'var(--violet)' },
       ].map(({ title, detail, Icon, tone, ink }, index) => <li key={title}>
         <span className={styles.guideIcon} style={{ background: `color-mix(in srgb, var(--${tone}) 12%, var(--bg-1))`, color: ink }} aria-hidden="true"><Icon size={32} strokeWidth={1.65}/></span>
-        <div><strong><span className={styles.stepNumber}>{index + 1}</span>{title}</strong><p>{detail}</p></div>
+        <div><strong><span className={styles.stepNumber}>{index + 1}</span>{inlineText(lang, title)}</strong><p>{inlineText(lang, detail)}</p></div>
       </li>)}
     </ol>
-    <details className={styles.guideNote}><summary>How these records support the programme</summary><p>{actProgramme ? 'These records support ACT’s SEF food-security delivery. Employment attendance and payroll remain in the approved SEF process.' : 'Training attendance and observed practical skills are recorded separately.'}</p></details>
+    <details className={styles.guideNote}><summary>{inlineText(lang, 'How these records support the programme')}</summary><p>{inlineText(lang, actProgramme ? 'These records support ACT’s SEF food-security delivery. Employment attendance and payroll remain in the approved SEF process.' : 'Training attendance and observed practical skills are recorded separately.')}</p></details>
   </>;
 }

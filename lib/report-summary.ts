@@ -6,6 +6,7 @@ import { buildBillOfQuantities } from './report-boq';
 import { registerReportPdfFont, reportPdfText } from './report-pdf-font.ts';
 import { recordsMonthShort } from './records-months.ts';
 import type { BoqLine } from './report-boq';
+import { xhInlineDraft } from '@/lib/xh-inline';
 import type { SavedReport } from './saved-reports';
 
 export type ReportSummaryPage = { title: string; lines: string[] };
@@ -24,7 +25,7 @@ export function preparedExampleNote(language = 'en'): string {
 export function reportSummaryPages(facts: ReportSiteFacts | null, location: LocationData, pageCount: 1 | 5, language = 'en'): ReportSummaryPage[] {
   const t = (en: string, zulu: string) => reportSummaryText(en, language, {}, zulu);
   // Only a supported translation labels its English notes; any other language falls back to English as written.
-  const translated = language === 'zu' || language === 'st' || language === 'ts' || language === 've';
+  const translated = language === 'zu' || language === 'st' || language === 'ts' || language === 've' || language === 'xh';
   const unknown = t('Not recorded', 'Akubhaliwe');
   const area = (value?: number) => value === undefined ? unknown : `${numberLabel(value, 1)} m²`;
   const amount = (value: number) => `R ${numberLabel(value, 0)}`;
@@ -111,7 +112,7 @@ export async function buildInkSummaryPdf(pages: ReportSummaryPage[], stamp: stri
       doc.text(doc.splitTextToSize(text('Additional detail is in the full report.'), 503), 46, 747, { lineHeightFactor: 1.25 });
     }
     doc.setFont(font, 'normal'); doc.setFontSize(8);
-    if (['zu', 'st', 'ts', 've'].includes(language)) {
+    if (['zu', 'xh', 'st', 'ts', 've'].includes(language)) {
       doc.text(doc.splitTextToSize(text('Draft translation · not reviewed by a fluent speaker.'), 503), 46, 776, { lineHeightFactor: 1.25 });
     }
     doc.text(reportPdfText(`ImbewuField · ${stamp} · ${i + 1}/${pages.length}`), 46, 798);
@@ -590,7 +591,9 @@ export const REPORT_SUMMARY_COPY: readonly { english: string; zu: string; st: st
 const summaryCopy = new Map(REPORT_SUMMARY_COPY.map(row => [row.english, row]));
 export function reportSummaryText(english: string, language: string, values: Record<string, string | number> = {}, legacyZulu?: string): string {
   const row = summaryCopy.get(english);
+  // isiXhosa: the draft keyed by the exact English template (lib/locales/xh-inline), else English.
   const template = language === 'zu' && legacyZulu !== undefined ? legacyZulu
+    : language === 'xh' ? xhInlineDraft(english) ?? english
     : row && (language === 'zu' || language === 'st' || language === 'ts' || language === 've') ? row[language] : english;
   return template.replace(/\{(\w+)\}/g, (placeholder, key: string) => Object.hasOwn(values, key) ? String(values[key]) : placeholder);
 }

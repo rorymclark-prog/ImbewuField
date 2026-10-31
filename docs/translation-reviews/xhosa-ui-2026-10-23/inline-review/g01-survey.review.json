@@ -1,0 +1,15 @@
+{
+  "unit": "g01-survey",
+  "okCount": 112,
+  "items": [
+    {
+      "where": "line 95",
+      "verdict": "repair",
+      "english": "AI cleanup is available for your signed-in visits. Practise typing or dictating here without a charge.",
+      "draft": "Ukucocwa nge-AI kufumaneka kutyelelo lwakho olungeneyo. Zilolonge ukubhala okanye ukuthetha apha ngaphandle kwentlawulo.",
+      "backtranslation": "AI cleanup is available on your 'olungeneyo' (unclear/incoming) visit.",
+      "problem": "Relative clause 'olungeneyo' does not clearly say signed-in; reads as an unclear 'incoming' visit.",
+      "corrected": "Ukucocwa nge-AI kufumaneka xa ungenile kwi-akhawunti yakho. Zilolonge ukuchwetheza okanye ukuthetha apha ngaphandle kwentlawulo."
+    }
+  ]
+}

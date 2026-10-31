@@ -7,6 +7,7 @@ import LimaBar from '@/components/LimaBar';
 import LessonLink from '@/components/design/LessonLink';
 import AppHeader from '@/components/layout/AppHeader';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 
 export default function JournalPage() {
   const { lang, t } = useLanguage();
@@ -29,7 +30,7 @@ export default function JournalPage() {
       {/* Header */}
       <AppHeader
         title=""
-        right={<LessonLink id="journal:overview" label={isZulu ? 'Funda' : 'Learn'} />}
+        right={<LessonLink id="journal:overview" label={isZulu ? 'Funda' : inlineText(lang, 'Learn')} />}
       />
       {/* w19-08: the h1 below is the one title; the header no longer repeats it. */}
       {/* nav-17: AppHeader's title is a <span>, not a heading — this page needs its own

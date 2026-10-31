@@ -22,7 +22,7 @@ const MONTH_FULL_KEYS = [
 
 
 function formatDrySeason(drySeason: string, t: (key: string) => string, lang: string): string {
-  if (lang !== 'zu') return drySeason;
+  if (lang !== 'zu' && lang !== 'xh') return drySeason;
   const sourceLabels: Record<string, [string, string]> = {
     'May–Aug': [t('waterBalanceMonthMay'), t('waterBalanceMonthAug')],
     'Nov–Mar': [t('waterBalanceMonthNov'), t('waterBalanceMonthMar')],
@@ -56,8 +56,8 @@ function peopleFromAdults(adults: string | undefined): number {
 
 export default function WaterBalance({ locationData, waterData, survey, siteAreaHa }: Props) {
   const { t, lang } = useLanguage();
-  // Full isiZulu names do not fit the chart's narrow monthly ticks; numbers avoid English initials.
-  const MONTHS = lang === 'zu' ? MONTHS_ZU : MONTHS_EN;
+  // Full isiZulu / isiXhosa names do not fit the chart's narrow monthly ticks; numbers avoid English initials.
+  const MONTHS = lang === 'zu' || lang === 'xh' ? MONTHS_ZU : MONTHS_EN;
   const MONTH_FULL = MONTH_FULL_KEYS.map(key => t(key));
   const { rainfall } = locationData;
   if (!rainfall?.monthly?.length) return null;
@@ -149,7 +149,7 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
         <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('waterBalanceEstimateLabel')}</span>
       </div>
 
-      {lang === 'zu' && (
+      {(lang === 'zu' || lang === 'xh') && (
         <p className="text-xs font-display" style={{ color: 'var(--text-muted)' }}>{t('siteSummaryZuluDraftNotice')}</p>
       )}
 

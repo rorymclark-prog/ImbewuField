@@ -1,11 +1,12 @@
 import type { ReportProductionYear } from '@/lib/report-crop-plan';
 import { pdfIconUrl } from '@/lib/pdf-icons';
 import styles from './ProductionYearOverview.module.css';
+import { inlineText } from '@/lib/xh-inline';
 
 export default function ProductionYearOverview({ production, language = 'en' }: { production?: ReportProductionYear; language?: string }) {
   return <section className={styles.section} lang="en" aria-label="Annual food and product plan">
     <h3>Food and products through the year</h3>
-    {language !== 'en' && <p>This production overview is currently in English.</p>}
+    {language !== 'en' && <p lang={language === 'xh' ? 'xh' : undefined}>{inlineText(language, 'This production overview is currently in English.')}</p>}
     <p>Crops, food-forest products and animal products from this site's saved production plan. These are planning windows, not recorded harvests, measured stock or proof that the household has enough food.</p>
     {!production ? <p>No annual production snapshot is attached. Open the current crop plan to record product choices and timing; older reports keep their original evidence.</p> : <>
       <p className={styles.key}><strong>P</strong> Plan or locally recorded season · <strong>R</strong> Sourced reference · <strong>—</strong> Timing not established. Proposed trees may take years to produce; housing does not establish animal numbers.</p>

@@ -1,6 +1,6 @@
 'use client';
 import { numberLabel, formatStaffDate } from '@/lib/format-figures';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useAuth } from '@/lib/auth';
 import { fieldApi } from '@/lib/field-api';
 import { DEVICE_SAVE_NOTICE } from '@/lib/field-request-model';
@@ -24,6 +24,7 @@ import FieldDataStatus from './FieldDataStatus';
 import { prepareFieldVisitDraft, fieldVisitDraftHasPhotos } from '@/lib/field-visit-draft';
 import { useLanguage } from '@/lib/i18n-context';
 import { translate } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import SurveyZuluDraftPair from './SurveyZuluDraftPair';
 
 const emptyVisit=():FieldVisit=>({id:'',mentorId:'',farmerId:'',date:localTodayISODate(),notes:'',supportRequested:'',observations:'',agreedAction:'',responsiblePerson:'',followUpDate:'',location:'',photos:[],photoCount:0});
@@ -50,16 +51,27 @@ const FIELD_FOCUS_KEYS: Record<FieldFocus, string> = {
   records: 'mentorFocusRecords',
 };
 
+/** isiXhosa counterpart of SurveyZuluDraftPair: the unreviewed draft with its English source beside it. */
+function XhDraftPair({ children, english, label }: { children: ReactNode; english: string; label: string }) {
+  return <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 4 }}>
+    <span lang="xh">{children}</span>
+    {' '}
+    <small lang="en" style={{ fontSize: '12px', fontWeight: 400, opacity: 0.82 }}>{label}{english}</small>
+  </span>;
+}
+
 export default function FieldTeams({ organisation = false, initialFarmerId, onStartTraining }: { organisation?: boolean; initialFarmerId?: string; onStartTraining?:()=>void }) {
   const { lang, t } = useLanguage();
-  const ui = (en: string, zu: string) => lang === 'zu' ? `${zu} · ${en}` : en;
+  const ui = (en: string, zu: string) => lang === 'zu' ? `${zu} · ${en}` : inlineText(lang, en);
   // Preserves this component's already-existing isiZulu drafts (now real lib/locales/zu.ts
   // overrides, see lib/i18n-pending.ts's MENTOR_ENGLISH_PENDING comment) while routing every
   // other string through t(). English is shown alongside the draft the same way every other
   // unreviewed isiZulu draft in this app is (SurveyZuluDraftPair).
   const paired = (key: string) => lang === 'zu'
     ? <SurveyZuluDraftPair english={translate('en', key)}>{t(key)}</SurveyZuluDraftPair>
-    : t(key);
+    : lang === 'xh'
+      ? <XhDraftPair english={translate('en', key)} label={inlineText(lang, 'English: ')}>{t(key)}</XhDraftPair>
+      : t(key);
   const { user, profile } = useAuth();
   const [data, setData] = useState<FieldWorkspace | null>(null), [error, setError] = useState(''), [busy, setBusy] = useState(false);
   const [draft, setDraft] = useState<FieldTeam>({ mentorId: '', location: '', farmerIds: [], guidance: '', updatedAt: '' });
@@ -158,7 +170,9 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
     finally{if(scope===currentScope()&&version===requestVersion.current)setBusy(false);}
   }
   useFieldSync(()=>void reload(),!busy&&!visitOpen);
-  const name = (id: string) => data?.people.find(p => p.id === id)?.name ?? 'Former team member';
+  const name = (id: string) => data?.people.find(p => p.id === id)?.name ?? inlineText(lang, 'Former team member');
+  // The exported report stays English (see the note above `sections`), so it keeps the English fallback.
+  const reportName = (id: string) => data?.people.find(p => p.id === id)?.name ?? 'Former team member';
   const portrait = (id: string, size = 52) => {
     const person = data?.people.find(p => p.id === id);
     return <ProfileAvatar id={id} name={name(id)} photoUrl={person?.photoUrl} sample={!!person && data?.sample} size={size} preview={size>=44}/>;
@@ -187,11 +201,16 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
   // say it; the fallback phrases ('First/Latest recorded visit') are unchanged.
   const scopeFromLabel=from?formatStaffDate(from,lang):recordedVisits.at(-1)?.date?formatStaffDate(recordedVisits.at(-1)!.date,lang):'First recorded visit';
   const scopeToLabel=to?formatStaffDate(to,lang):recordedVisits[0]?.date?formatStaffDate(recordedVisits[0].date,lang):'Latest recorded visit';
-  const scopeLabel=`${farmerFilter?name(farmerFilter):'All assigned participants'} · ${scopeFromLabel} to ${scopeToLabel}`;
+  const scopeFromLabelUi=from?formatStaffDate(from,lang):recordedVisits.at(-1)?.date?formatStaffDate(recordedVisits.at(-1)!.date,lang):inlineText(lang,'First recorded visit');
+  const scopeToLabelUi=to?formatStaffDate(to,lang):recordedVisits[0]?.date?formatStaffDate(recordedVisits[0].date,lang):inlineText(lang,'Latest recorded visit');
+  const scopeLabel=`${farmerFilter?reportName(farmerFilter):'All assigned participants'} · ${scopeFromLabel} to ${scopeToLabel}`;
+  // On-screen counterpart of scopeLabel (which feeds the English report).
+  const scopeLabelUi=`${farmerFilter?name(farmerFilter):inlineText(lang,'All assigned participants')} · ${scopeFromLabelUi} ${inlineText(lang,'to')} ${scopeToLabelUi}`;
   const actionLabel=(record:FieldVisit)=>record.actionCompletedOn?t('mentorActionCompleted'):record.followUpDate?record.followUpDate<today?t('mentorFollowUpOverdue'):record.followUpDate===today?t('mentorFollowUpToday'):t('mentorFollowUpScheduled'):t('mentorDateNeeded');
   const filteredPeople=data?.people.filter(person=>assigned.includes(person.id)&&(!farmerFilter||person.id===farmerFilter)&&`${person.name} ${person.gardenName??''}`.toLowerCase().includes(peopleSearch.toLowerCase()))??[];
   return <section className={`${styles.root} ${workStyles.workspace}`}><div className={styles.wrap}>
     {lang === 'zu' && <p role="note" className={styles.notice}>{paired('mentorZuluDraftNotice')}</p>}
+    {lang === 'xh' && <p role="note" lang="xh" className={styles.notice}>{t('mentorZuluDraftNotice')}</p>}
     <FieldDataStatus data={data} />
     <FieldDraft name={`visit:${org}`} value={prepareFieldVisitDraft(visit,{open:visitOpen,photosReady,photosBusy,captureBusy,saving:busy,readOnly:readOnlyVisit})} onRestore={value=>{
       // Abandon a previous photo load before restoring a different saved draft.
@@ -205,11 +224,11 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
       {!organisation&&<div className={workStyles.heroActions}><button className={styles.primary} disabled={!canRecordVisits||busy||photosBusy||captureBusy} onClick={()=>newVisit()}>{paired('mentorRecordFieldVisit')}</button>{onStartTraining&&<button onClick={onStartTraining}>{paired('mentorTrainingAttendance')}</button>}</div>}
     </div>
     {profile?.role === 'admin' && !isSampleMode() && <label>{t('mentorOrganisationIdLabel')}<input value={org} onChange={e => setOrg(e.target.value)} placeholder={t('mentorOrganisationIdPlaceholder')} /></label>}
-    {error && <p role="alert" className={styles.error}>{error}</p>}{notice && <p role="status" className={styles.notice}>{notice}</p>}
+    {error && <p role="alert" className={styles.error}>{inlineText(lang,error)}</p>}{notice && <p role="status" className={styles.notice}>{inlineText(lang,notice)}</p>}
     {!data && !error && <p>{t('mentorLoadingFieldTeam')}</p>}
     {data && <>
       <nav className={workStyles.tabs} aria-label={t('mentorFieldworkViewsAria')}>{([['overview','mentorTabPriorities'],['people','mentorTabPeopleGardens'],['visits','mentorTabVisitRecords'],['report','mentorTabFieldReport']] as const).map(([key,labelKey])=><button key={key} aria-pressed={panel===key} onClick={()=>setPanel(key)}>{paired(labelKey)}</button>)}</nav>
-      <details className={workStyles.scope}><summary>{t('mentorRecordScopePrefix')} · {scopeLabel}</summary><div className={styles.grid}>
+      <details className={workStyles.scope}><summary>{t('mentorRecordScopePrefix')} · {scopeLabelUi}</summary><div className={styles.grid}>
         <label>{paired('mentorParticipantLabel')}<select value={farmerFilter} onChange={e=>{setFarmerFilter(e.target.value);setVisibleCount(10);}}><option value="">{t('mentorAllAssignedParticipants')}</option>{assigned.map(id=><option key={id} value={id}>{name(id)}</option>)}</select></label>
         <label>{t('mentorFromDateLabel')}<input type="date" max={to||today} value={from} onChange={e=>setFrom(e.target.value)}/></label>
         <label>{t('mentorToDateLabel')}<input type="date" min={from} max={today} value={to} onChange={e=>setTo(e.target.value)}/></label>
@@ -262,10 +281,10 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
           </fieldset>
         </form>
         {/* Exported/copied report content stays English on purpose — goes to English-speaking funders (see programmeLabel above). */}
-        {visitReport&&<><p className={styles.muted}>{t('mentorReportUsesSavedVisit')}</p><ReportComposer deviceData={data} title="Field visit report" sample={data.sample} orgId={org||undefined} photos={visitReport.photos??[]} photoHeading="Visit photographs" sections={[{title:'Visit details',lines:fieldVisitReportLines(visitReport,name(visitReport.farmerId),name(visitReport.mentorId))}]}/></>}
+        {visitReport&&<><p className={styles.muted}>{t('mentorReportUsesSavedVisit')}</p><ReportComposer deviceData={data} title="Field visit report" sample={data.sample} orgId={org||undefined} photos={visitReport.photos??[]} photoHeading="Visit photographs" sections={[{title:'Visit details',lines:fieldVisitReportLines(visitReport,reportName(visitReport.farmerId),reportName(visitReport.mentorId))}]}/></>}
       </section>}
       {panel==='visits'&&scopeValid&&<section className={styles.card} style={{margin:'16px 0'}} aria-label={t('mentorRecordedVisitsAria')}>
-        <h2>{t('mentorRecordedVisitsHeading')}</h2><p className={styles.muted}>{scopeLabel}</p>
+        <h2>{t('mentorRecordedVisitsHeading')}</h2><p className={styles.muted}>{scopeLabelUi}</p>
         {!recordedVisits.length&&<p>{t('mentorNoVisitsRecorded')}</p>}
         {recordedVisits.slice(0,visibleCount).map(record=><article key={record.id} className={styles.metric}><div className={workStyles.actionHeader}><div className={workStyles.personHeading}>{portrait(record.farmerId)}<div><h3 style={{marginBottom:0}}>{name(record.farmerId)}</h3><p className={workStyles.personGarden}>{garden(record.farmerId)}</p></div></div><span className={styles.tag}>{formatStaffDate(record.date,lang)}</span></div><p>{record.observations||record.notes}</p>{record.agreedAction&&<p><strong>{record.actionCompletedOn?t('mentorCompletedActionLabel'):t('mentorNextActionLabel')}</strong> {record.agreedAction}<br/><strong>{t('mentorResponsibleLabel')}</strong> {record.responsiblePerson||t('mentorNotYetAssigned')} · <strong>{t('mentorFollowUpLabel')}</strong> {record.followUpDate?formatStaffDate(record.followUpDate,lang):t('mentorNotYetScheduled')}{record.actionCompletedOn&&<><br/><strong>{t('mentorCompletedLabel')}</strong> {formatStaffDate(record.actionCompletedOn,lang)} · {record.actionOutcome}</>}</p>}{(record.photoCount??record.photos?.length??0)>0&&<p>{t('mentorVisitPhotosCount').replace('{count}',String(record.photoCount??record.photos?.length))}</p>}<button disabled={busy||photosBusy||captureBusy} onClick={()=>void openVisit(record)}>{canRecordVisits&&record.mentorId===data.selfId?t('mentorViewEditVisit'):t('mentorViewVisit')}</button></article>)}
         {recordedVisits.length>visibleCount&&<button onClick={()=>setVisibleCount(n=>n+10)}>{t('mentorShowMoreVisits').replace('{count}',String(recordedVisits.length-visibleCount))}</button>}
@@ -277,7 +296,7 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
       {(panel==='people'||organisation)&&data.teams.map(t => <article key={t.mentorId} className={styles.card} style={{ marginBottom: 16 }}><h2>{t.location}</h2><p style={{ display: 'flex', alignItems: 'center', gap: 12 }}>{portrait(t.mentorId,64)}<span>{translate(lang,'mentorLabelPrefix')} {name(t.mentorId)} · {translate(lang,'mentorUpdatedPrefix')} {formatStaffDate(t.updatedAt.slice(0, 10),lang)}</span></p><h3>{translate(lang,'mentorOrganisationGuidanceHeading')}</h3><p style={{ whiteSpace: 'pre-wrap' }}>{t.guidance || translate(lang,'mentorNoGuidancePosted')}</p><p>{translate(lang,'mentorAssignedParticipantsCount').replace('{count}',String(t.farmerIds.length))} · {ui(FIELD_PROGRAMMES[t.programme??'general'],FIELD_PROGRAMMES_ZU[t.programme??'general'])}</p>{data.canManage && <button onClick={() => setDraft(t)}>{translate(lang,'mentorEditTeamGuidance')}</button>}</article>)}
       {data.canManage && <form className={styles.card} onSubmit={e => { e.preventDefault(); void save(true); }}><h2>{t('mentorAssignUpdateTeam')}</h2><label>{t('mentorMentorLabel')}<select required value={draft.mentorId} onChange={e => setDraft(data.teams.find(t => t.mentorId === e.target.value) ?? { ...draft, mentorId: e.target.value, farmerIds: [], guidance: '', location: '' })}><option value="">{t('mentorChooseMentorOption')}</option>{data.people.filter(p => p.role === 'mentor').map(p => <option key={p.id} value={p.id}>{p.name}</option>)}</select></label><label>{t('mentorServiceLocationLabel')}<input required maxLength={160} value={draft.location} onChange={e => setDraft({ ...draft, location: e.target.value })} /></label><label>{t('mentorProgrammeFocusLabel')}<select value={draft.programme??'general'} onChange={e=>setDraft({...draft,programme:e.target.value as FieldProgramme})}>{Object.entries(FIELD_PROGRAMMES).map(([key,label])=><option key={key} value={key}>{ui(label,FIELD_PROGRAMMES_ZU[key as FieldProgramme])}</option>)}</select></label><h3>{t('mentorParticipantGroupHeading')}</h3><div className={styles.scroll}>{data.people.filter(p => ['farmer', 'student'].includes(p.role)).map(p => <label key={p.id} className={styles.option}><input type="checkbox" checked={draft.farmerIds.includes(p.id)} onChange={e => setDraft({ ...draft, farmerIds: e.target.checked ? [...draft.farmerIds, p.id] : draft.farmerIds.filter(id => id !== p.id) })} />{p.name}</label>)}</div><label>{t('mentorGuidanceForMentorLabel')}<textarea maxLength={4000} value={draft.guidance} onChange={e => setDraft({ ...draft, guidance: e.target.value })} /></label><button className={styles.primary} disabled={busy}>{t('mentorSaveTeamGuidance')}</button></form>}
       {/* Exported/copied report content (ReportComposer's title/photoHeading/metrics/chart/sections) stays English on purpose — goes to English-speaking funders, same decision as programmeLabel above. Only the screen note above it is translated. */}
-      {panel==='report'&&report&&scopeValid&&!data.visitCursor&&<><label><input type="checkbox" disabled={!from||!to} checked={Boolean(comparePrevious&&from&&to)} onChange={event=>setComparePrevious(event.target.checked)}/> Compare with the preceding date range</label><p>Choose both visit dates to compare equal numbers of calendar days. Current assignments apply to both periods; action status is not a historical snapshot.</p><p className={styles.notice}>{t('mentorInternalReportNotice')}</p><ReportComposer deviceData={data} orgId={org||undefined} photos={summary?.visits.flatMap(v=>(visitPhotos[v.id]??v.photos??[]).map(p=>({image:p.image,caption:`${v.date} · ${name(v.farmerId)} · ${p.caption}`}))) ?? []} photoHeading="Visit photographs opened for this report" aggregate title={report.title} sample={data.sample} reportLabel="Field support records" reportDate={today} filenameBase={report.filename} subtitle={report.scope} metrics={report.metrics} chart={report.chart} tables={report.tables} sections={report.sections} /></>}
+      {panel==='report'&&report&&scopeValid&&!data.visitCursor&&<><label><input type="checkbox" disabled={!from||!to} checked={Boolean(comparePrevious&&from&&to)} onChange={event=>setComparePrevious(event.target.checked)}/> {inlineText(lang, 'Compare with the preceding date range')}</label><p>{inlineText(lang, 'Choose both visit dates to compare equal numbers of calendar days. Current assignments apply to both periods; action status is not a historical snapshot.')}</p><p className={styles.notice}>{t('mentorInternalReportNotice')}</p><ReportComposer deviceData={data} orgId={org||undefined} photos={summary?.visits.flatMap(v=>(visitPhotos[v.id]??v.photos??[]).map(p=>({image:p.image,caption:`${v.date} · ${reportName(v.farmerId)} · ${p.caption}`}))) ?? []} photoHeading="Visit photographs opened for this report" aggregate title={report.title} sample={data.sample} reportLabel="Field support records" reportDate={today} filenameBase={report.filename} subtitle={report.scope} metrics={report.metrics} chart={report.chart} tables={report.tables} sections={report.sections} /></>}
     </>}
   </div></section>;
 }

@@ -58,6 +58,8 @@ import { BreakTop } from '@/components/ChartBreakMark';
 import { kgLabel, kgTotalLabel, randLabel, randTick } from '@/lib/format-figures';
 import { soldBarParts, type CohortMonth, type CohortSeries, type SoldBarParts } from '@/lib/cohort-series';
 import type { CohortTraining } from '@/lib/cohort-report';
+import { useLanguage } from '@/lib/i18n';
+import { inlineTemplate, inlineText } from '@/lib/xh-inline';
 
 /* White programme cards and darker labels; preserve the harvest/sales colour meanings. */
 const CARD_STYLE: React.CSSProperties = { background: 'var(--bg-1)', border: '1px solid var(--border)' };
@@ -146,12 +148,13 @@ function NoChart({ reason }: { reason: string }) {
 
 /* staff-16: one disclosure row for every chart note — 44px tap target, chevron that turns open. */
 function CountedSummary() {
+  const { lang } = useLanguage();
   return (
     <summary
       className="font-sans flex items-center gap-1.5 cursor-pointer list-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] rounded"
       style={{ fontSize: MICRO, color: FAINT, minHeight: 44 }}
     >
-      How this is counted
+      {inlineText(lang, 'How this is counted')}
       <ChevronDown size={14} aria-hidden="true" />
     </summary>
   );
@@ -330,6 +333,7 @@ function SplitKgColumn({ m, parts, scale, maxKg }: ColumnProps) {
 }
 
 export function CohortTimeline({ series, className }: { series: CohortSeries; className?: string }) {
+  const { lang } = useLanguage();
   const months = series.months;
 
   const kgTops = useMemo(() => months.map(kgTopOf), [months]);
@@ -356,19 +360,23 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
     const out: string[] = [];
     months.forEach((m, i) => {
       const picked = m.producedKg ?? 0;
-      if (kgScale.isClipped(picked)) out.push(`${m.longLabel} — ${kgTotalLabel(picked)} picked`);
-      if (kgScale.isClipped(soldParts[i].totalKg)) {
-        out.push(`${m.longLabel} — ${kgTotalLabel(soldParts[i].totalKg)} sold`);
+      if (kgScale.isClipped(picked)) {
+        out.push(inlineTemplate(lang, '{month} — {kg} picked', null, { month: m.longLabel, kg: kgTotalLabel(picked) }));
       }
-      if (zarScale.isClipped(zarTops[i])) out.push(`${m.longLabel} — ${randLabel(zarTops[i])} in`);
+      if (kgScale.isClipped(soldParts[i].totalKg)) {
+        out.push(inlineTemplate(lang, '{month} — {kg} sold', null, { month: m.longLabel, kg: kgTotalLabel(soldParts[i].totalKg) }));
+      }
+      if (zarScale.isClipped(zarTops[i])) {
+        out.push(inlineTemplate(lang, '{month} — {amount} in', null, { month: m.longLabel, amount: randLabel(zarTops[i]) }));
+      }
     });
     return out;
-  }, [months, soldParts, zarTops, kgScale, zarScale]);
+  }, [months, soldParts, zarTops, kgScale, zarScale, lang]);
 
   if (!series.renderable) {
     return (
       <div className={className}>
-        <ChartCard title="Harvest and income, month by month" icon={<BarChart3 size={13} />}>
+        <ChartCard title={inlineText(lang, 'Harvest and income, month by month')} icon={<BarChart3 size={13} />}>
           <NoChart reason={series.reason} />
         </ChartCard>
       </div>
@@ -385,20 +393,20 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
   return (
     <div className={className}>
       <ChartCard
-        title="Harvest and income, month by month"
+        title={inlineText(lang, 'Harvest and income, month by month')}
         icon={<BarChart3 size={13} />}
-        note={coverageSentence(series)}
+        note={coverageSentence(series, lang)}
       >
         {/* Window totals above the bars, so the chart is readable without reading a bar. */}
         <div className="px-4 py-3 flex flex-wrap" style={{ gap: '10px 22px' }}>
           <Figure
-            label={`Picked, ${months.length} months`}
-            value={series.totalProducedKg === null ? 'Not shared' : kgTotalLabel(series.totalProducedKg)}
+            label={inlineTemplate(lang, 'Picked, {n} months', null, { n: months.length })}
+            value={series.totalProducedKg === null ? inlineText(lang, 'Not shared') : kgTotalLabel(series.totalProducedKg)}
             tone={series.totalProducedKg === null ? FAINT : INK}
           />
           <Figure
-            label="Sold"
-            value={series.totalSoldKg === null ? 'Not shared' : kgTotalLabel(series.totalSoldKg)}
+            label={inlineText(lang, 'Sold')}
+            value={series.totalSoldKg === null ? inlineText(lang, 'Not shared') : kgTotalLabel(series.totalSoldKg)}
             tone={series.totalSoldKg === null ? FAINT : SOLD}
           />
           {/* Named for the population it is actually made of. A kept figure worked out across four
@@ -410,14 +418,14 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
               figure's own text goes back to INK like the other totals beside it. */}
           <Figure
             label={paired || series.comparableFarmers === 0
-              ? 'Harvest not matched to sales'
-              : `Unmatched, on ${series.comparableFarmers} farms`}
-            value={series.totalKeptKg === null ? 'Not comparable' : kgTotalLabel(series.totalKeptKg)}
+              ? inlineText(lang, 'Harvest not matched to sales')
+              : inlineTemplate(lang, 'Unmatched, on {n} farms', null, { n: series.comparableFarmers })}
+            value={series.totalKeptKg === null ? inlineText(lang, 'Not comparable') : kgTotalLabel(series.totalKeptKg)}
             tone={series.totalKeptKg === null ? FAINT : INK}
           />
           <Figure
-            label="Farmer income"
-            value={series.totalIncomeZar === null ? 'Not shared' : randLabel(series.totalIncomeZar)}
+            label={inlineText(lang, 'Farmer income')}
+            value={series.totalIncomeZar === null ? inlineText(lang, 'Not shared') : randLabel(series.totalIncomeZar)}
             tone={series.totalIncomeZar === null ? FAINT : SOLD}
           />
         </div>
@@ -428,8 +436,8 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
             <span className="font-sans" style={{ fontSize: MICRO, color: FAINT }}>
               {/* Names only the bars actually below it. */}
               {paired || series.salesFarmers === 0
-                ? 'Kilograms picked'
-                : series.productionFarmers === 0 ? 'Kilograms sold' : 'Kilograms picked, and sold'}
+                ? inlineText(lang, 'Kilograms picked')
+                : series.productionFarmers === 0 ? inlineText(lang, 'Kilograms sold') : inlineText(lang, 'Kilograms picked, and sold')}
             </span>
             <span className="font-sans" style={{ fontSize: MICRO, color: FAINT, fontVariantNumeric: 'tabular-nums' }}>
               {kgTotalLabel(maxKg)}
@@ -437,7 +445,7 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
           </div>
           <div
             role="img"
-            aria-label={kgPlotDescription(series, paired)}
+            aria-label={kgPlotDescription(series, paired, lang)}
             style={{
               display: 'grid', gridTemplateColumns: columns, alignItems: 'end', gap: 2,
               height: PLOT_KG, borderBottom: `1px solid ${AXIS}`,
@@ -449,7 +457,7 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
                 key={m.key}
                 className="relative flex flex-col justify-end"
                 style={{ height: '100%' }}
-                title={monthTooltip(m)}
+                title={monthTooltip(m, lang)}
               >
                 {paired
                   ? <PairedKgColumn m={m} parts={soldParts[i]} scale={kgScale} maxKg={maxKg} />
@@ -462,9 +470,9 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
         {/* ── panel 2: rands, on its own scale, sharing the month axis below ── */}
         <div className="px-4" style={{ marginTop: 12 }}>
           <div className="flex items-baseline justify-between" style={{ marginBottom: 4 }}>
-            <span className="font-sans" style={{ fontSize: MICRO, color: FAINT }}>Money the farmers took in</span>
+            <span className="font-sans" style={{ fontSize: MICRO, color: FAINT }}>{inlineText(lang, 'Money the farmers took in')}</span>
             <span className="font-sans" style={{ fontSize: MICRO, color: FAINT, fontVariantNumeric: 'tabular-nums' }}>
-              {zarWithheld ? 'Not shared' : randTick(maxZar)}
+              {zarWithheld ? inlineText(lang, 'Not shared') : randTick(maxZar)}
             </span>
           </div>
           {zarWithheld ? (
@@ -473,14 +481,13 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
                panel and must not shift when this one has nothing to draw. */
             <div className="flex items-center" style={{ height: PLOT_ZAR, borderBottom: `1px solid ${AXIS}` }}>
               <p className="font-sans" style={{ fontSize: 13, color: MUTED, lineHeight: 1.55, margin: 0 }}>
-                No farm in this cohort has shared its sales book. Income nobody agreed to show is
-                not an income of R0, so these months are simply not drawn.
+                {inlineText(lang, 'No farm in this cohort has shared its sales book. Income nobody agreed to show is not an income of R0, so these months are simply not drawn.')}
               </p>
             </div>
           ) : (
           <div
             role="img"
-            aria-label={`Rand income each month across ${series.salesFarmers} farms.`}
+            aria-label={inlineTemplate(lang, 'Rand income each month across {n} farms.', null, { n: series.salesFarmers })}
             style={{
               display: 'grid', gridTemplateColumns: columns, alignItems: 'end', gap: 2,
               height: PLOT_ZAR, borderBottom: `1px solid ${AXIS}`,
@@ -493,7 +500,7 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
                   key={m.key}
                   className="flex flex-col justify-end"
                   style={{ height: '100%' }}
-                  title={monthTooltip(m)}
+                  title={monthTooltip(m, lang)}
                 >
                   {pct > 0 && (
                     <div
@@ -531,9 +538,9 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
           <div className="flex flex-wrap items-center" style={{ gap: '5px 14px' }}>
             {paired ? (
               <>
-                <Key colour={SOLD} label="Sold" />
-                <Key colour={KEPT} label="Harvest not matched to sales" />
-                {anyOverSold && <Key colour={OVER} label="More sold than picked that month" outline />}
+                <Key colour={SOLD} label={inlineText(lang, 'Sold')} />
+                <Key colour={KEPT} label={inlineText(lang, 'Harvest not matched to sales')} />
+                {anyOverSold && <Key colour={OVER} label={inlineText(lang, 'More sold than picked that month')} outline />}
               </>
             ) : (
               /* Only the bars actually on the plot get a key. A "Sold · 0 farms" swatch beside an
@@ -541,14 +548,14 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
                  key means nothing until there really are two populations to keep apart. */
               <>
                 {series.productionFarmers > 0 && (
-                  <Key colour={PICKED} label={`Picked · ${series.productionFarmers} ${series.productionFarmers === 1 ? 'farm' : 'farms'}`} />
+                  <Key colour={PICKED} label={inlineTemplate(lang, series.productionFarmers === 1 ? 'Picked · {n} farm' : 'Picked · {n} farms', null, { n: series.productionFarmers })} />
                 )}
                 {series.salesFarmers > 0 && (
-                  <Key colour={SOLD} label={`Sold · ${series.salesFarmers} ${series.salesFarmers === 1 ? 'farm' : 'farms'}`} />
+                  <Key colour={SOLD} label={inlineTemplate(lang, series.salesFarmers === 1 ? 'Sold · {n} farm' : 'Sold · {n} farms', null, { n: series.salesFarmers })} />
                 )}
-                {anyUnbacked && <Key colour={OVER} label="Sold with no harvest logged behind it" outline />}
+                {anyUnbacked && <Key colour={OVER} label={inlineText(lang, 'Sold with no harvest logged behind it')} outline />}
                 {series.productionFarmers > 0 && series.salesFarmers > 0 && (
-                  <SplitKey label="Different farmers — never stacked" />
+                  <SplitKey label={inlineText(lang, 'Different farmers — never stacked')} />
                 )}
               </>
             )}
@@ -557,42 +564,40 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
           {/* staff-16: up to five Footnote paragraphs could stack here at once — a wall of
               text on phone under every chart. Folded into one disclosure; the chart and its
               Key legend above stay visible without opening it. */}
-          <Footnote>Harvest not matched to a sale is not measured household consumption.</Footnote>
+          <Footnote>{inlineText(lang, 'Harvest not matched to a sale is not measured household consumption.')}</Footnote>
           <details style={{ marginTop: 3 }}>
             <CountedSummary />
             <Footnote>
-              Unmatched harvest may be stored, eaten, donated, lost or missing a sales entry.
-              These four figures cover the {months.length} months drawn here. A cohort total
-              elsewhere on this page counts every record since each farm joined, so it can be a
-              little larger — the two are different periods, not two answers.
+              {inlineTemplate(lang, 'Unmatched harvest may be stored, eaten, donated, lost or missing a sales entry. These four figures cover the {n} months drawn here. A cohort total elsewhere on this page counts every record since each farm joined, so it can be a little larger — the two are different periods, not two answers.', null, { n: months.length })}
             </Footnote>
             {cutInFull.length > 0 && (
               <Footnote>
-                Drawn short so the rest of the year stays readable: {cutInFull.join(' · ')}.
+                {inlineTemplate(lang, 'Drawn short so the rest of the year stays readable: {list}.', null, { list: cutInFull.join(' · ') })}
               </Footnote>
             )}
             {!paired && (series.productionFarmers > 0 || series.salesFarmers > 0) && (
-              <Footnote>{populationSentence(series)}</Footnote>
+              <Footnote>{populationSentence(series, lang)}</Footnote>
             )}
             {!paired && series.totalKeptKg !== null && (
               <Footnote>
-                Kept is worked out only across the {series.comparableFarmers}{' '}
-                {series.comparableFarmers === 1 ? 'farm' : 'farms'} sharing both books, so it is not
-                the picked figure above minus the sold one.
+                {inlineTemplate(
+                  lang,
+                  series.comparableFarmers === 1
+                    ? 'Kept is worked out only across the {n} farm sharing both books, so it is not the picked figure above minus the sold one.'
+                    : 'Kept is worked out only across the {n} farms sharing both books, so it is not the picked figure above minus the sold one.',
+                  null,
+                  { n: series.comparableFarmers },
+                )}
               </Footnote>
             )}
             {paired && anyOverSold && (
               <Footnote>
-                A dashed outline is a month whose sales run past the harvest logged in that same
-                month. Usually that is produce picked earlier and sold later; occasionally it is a
-                harvest nobody wrote down.
+                {inlineText(lang, 'A dashed outline is a month whose sales run past the harvest logged in that same month. Usually that is produce picked earlier and sold later; occasionally it is a harvest nobody wrote down.')}
               </Footnote>
             )}
             {!paired && anyUnbacked && (
               <Footnote>
-                A dashed sold bar is weight with no harvest record behind it here — either that
-                farmer has not shared their harvest book, or the produce was picked in an earlier
-                month. The bar still reaches the full figure it sold; nothing is drawn short of it.
+                {inlineText(lang, 'A dashed sold bar is weight with no harvest record behind it here — either that farmer has not shared their harvest book, or the produce was picked in an earlier month. The bar still reaches the full figure it sold; nothing is drawn short of it.')}
               </Footnote>
             )}
           </details>
@@ -602,29 +607,41 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
   );
 }
 
-function monthTooltip(m: CohortMonth): string {
+function monthTooltip(m: CohortMonth, lang: string): string {
   const bits: string[] = [m.longLabel];
-  bits.push(m.producedKg === null ? 'harvest not shared' : `${kgLabel(m.producedKg)} picked`);
-  bits.push(m.soldKg === null ? 'sales not shared' : `${kgLabel(m.soldKg)} sold`);
-  bits.push(m.incomeZar === null ? 'income not shared' : `${randLabel(m.incomeZar)} in`);
+  bits.push(m.producedKg === null ? inlineText(lang, 'harvest not shared') : inlineTemplate(lang, '{kg} picked', null, { kg: kgLabel(m.producedKg) }));
+  bits.push(m.soldKg === null ? inlineText(lang, 'sales not shared') : inlineTemplate(lang, '{kg} sold', null, { kg: kgLabel(m.soldKg) }));
+  bits.push(m.incomeZar === null ? inlineText(lang, 'income not shared') : inlineTemplate(lang, '{amount} in', null, { amount: randLabel(m.incomeZar) }));
   if (m.activeFarmers > 0) {
-    bits.push(`${m.activeFarmers} ${m.activeFarmers === 1 ? 'farm logging' : 'farms logging'}`);
+    bits.push(inlineTemplate(lang, m.activeFarmers === 1 ? '{n} farm logging' : '{n} farms logging', null, { n: m.activeFarmers }));
   }
   return bits.join(' · ');
 }
 
 /** Stated on the card, never left implied: whose books these bars are actually made of. */
-function coverageSentence(series: CohortSeries): string {
+function coverageSentence(series: CohortSeries, lang: string): string {
   const total = series.farmerCount;
-  const farms = total === 1 ? 'farm shares' : 'farms share';
   const sold = series.salesFarmers;
-  const both = series.keptComparable
-    ? '' // every farmer here shares both, so naming the overlap would only repeat the two counts
-    : ` ${series.comparableFarmers === 0 ? 'None' : series.comparableFarmers} of them ${series.comparableFarmers === 1 ? 'shares' : 'share'} both.`;
-  return (
-    `${series.productionFarmers} of ${total} ${farms} a harvest record and ${sold} ${sold === 1 ? 'shares' : 'share'} sales.${both} ` +
-    'Anyone who has not is absent from these bars, not counted as a zero.'
+  const prod = series.productionFarmers;
+  const comparable = series.comparableFarmers;
+  const harvestClause = inlineTemplate(
+    lang,
+    total === 1 ? '{prod} of {total} farm shares a harvest record' : '{prod} of {total} farms share a harvest record',
+    null,
+    { prod, total },
   );
+  const salesClause = inlineTemplate(lang, sold === 1 ? '{n} shares sales' : '{n} share sales', null, { n: sold });
+  const parts = [inlineTemplate(lang, '{a} and {b}.', null, { a: harvestClause, b: salesClause })];
+  // every farmer here shares both, so naming the overlap would only repeat the two counts
+  if (!series.keptComparable) {
+    parts.push(
+      comparable === 0
+        ? inlineText(lang, 'None of them share both.')
+        : inlineTemplate(lang, comparable === 1 ? '{n} of them shares both.' : '{n} of them share both.', null, { n: comparable }),
+    );
+  }
+  parts.push(inlineText(lang, 'Anyone who has not is absent from these bars, not counted as a zero.'));
+  return parts.join(' ');
 }
 
 /**
@@ -632,16 +649,22 @@ function coverageSentence(series: CohortSeries): string {
  * page — a stack, two bars apart, or a single population's bars — because the alternative is a
  * blind funder being told about a split that is not there or a stack that is not either.
  */
-function kgPlotDescription(series: CohortSeries, paired: boolean): string {
+function kgPlotDescription(series: CohortSeries, paired: boolean, lang: string): string {
   const { productionFarmers: picked, salesFarmers: sold } = series;
   if (paired) {
-    return `Kilograms picked each month across ${picked} farms, showing sold kilograms and harvest not matched to sales.`;
+    return inlineTemplate(lang, 'Kilograms picked each month across {n} farms, showing sold kilograms and harvest not matched to sales.', null, { n: picked });
   }
-  if (sold === 0) return `Kilograms picked each month across ${picked} farms. Nobody here shares a sales record.`;
-  if (picked === 0) return `Kilograms sold each month across ${sold} farms. Nobody here shares a harvest record.`;
-  return (
-    `Kilograms picked each month across ${picked} farms, and kilograms sold across ${sold} farms, `
-    + 'drawn side by side because they are not the same farms.'
+  if (sold === 0) {
+    return inlineTemplate(lang, 'Kilograms picked each month across {n} farms. Nobody here shares a sales record.', null, { n: picked });
+  }
+  if (picked === 0) {
+    return inlineTemplate(lang, 'Kilograms sold each month across {n} farms. Nobody here shares a harvest record.', null, { n: sold });
+  }
+  return inlineTemplate(
+    lang,
+    'Kilograms picked each month across {picked} farms, and kilograms sold across {sold} farms, drawn side by side because they are not the same farms.',
+    null,
+    { picked, sold },
   );
 }
 
@@ -653,24 +676,23 @@ function kgPlotDescription(series: CohortSeries, paired: boolean): string {
  * the true position is stated in words. Here the mark is the two bars standing apart with their
  * own key, and this is the sentence.
  */
-function populationSentence(series: CohortSeries): string {
+function populationSentence(series: CohortSeries, lang: string): string {
   const { productionFarmers: picked, salesFarmers: sold, comparableFarmers: both } = series;
   if (picked === 0) {
-    return 'Nobody here has agreed to share a harvest record, so only the sold bars are drawn. '
-      + 'The empty half of each column is a permission nobody gave, not a harvest of nothing.';
+    return inlineText(lang, 'Nobody here has agreed to share a harvest record, so only the sold bars are drawn. The empty half of each column is a permission nobody gave, not a harvest of nothing.');
   }
   if (sold === 0) {
-    return 'Nobody here has agreed to share a sales record, so only the picked bars are drawn. '
-      + 'The empty half of each column is a permission nobody gave, not a harvest nobody sold.';
+    return inlineText(lang, 'Nobody here has agreed to share a sales record, so only the picked bars are drawn. The empty half of each column is a permission nobody gave, not a harvest nobody sold.');
   }
   const overlap = both === 0
-    ? 'no farm shares both'
-    : `only ${both} ${both === 1 ? 'farm shares' : 'farms share'} both`;
+    ? inlineText(lang, 'no farm shares both')
+    : inlineTemplate(lang, both === 1 ? 'only {n} farm shares both' : 'only {n} farms share both', null, { n: both });
+  const harvestClause = inlineTemplate(lang, picked === 1 ? '{n} farm shares a harvest record' : '{n} farms share a harvest record', null, { n: picked });
+  const salesClause = inlineTemplate(lang, sold === 1 ? '{n} shares sales' : '{n} share sales', null, { n: sold });
   return (
-    `${picked} ${picked === 1 ? 'farm shares' : 'farms share'} a harvest record and ${sold} `
-    + `${sold === 1 ? 'shares' : 'share'} sales, but ${overlap}. `
-    + 'Picked and sold stand side by side because they are not the same farms: neither can be '
-    + 'stacked on, subtracted from, or cut down to the other.'
+    inlineTemplate(lang, '{a} and {b}, but {c}.', null, { a: harvestClause, b: salesClause, c: overlap })
+    + ' '
+    + inlineText(lang, 'Picked and sold stand side by side because they are not the same farms: neither can be stacked on, subtracted from, or cut down to the other.')
   );
 }
 
@@ -679,43 +701,50 @@ function populationSentence(series: CohortSeries): string {
  * ══════════════════════════════════════════════════════════════════════════*/
 
 export function CohortTrainingChart({ training, className }: { training: CohortTraining; className?: string }) {
+  const { lang } = useLanguage();
   const { bands, modulesTotal, reporting, total } = training;
   const tallest = bands.reduce((max, b) => Math.max(max, b.farmers), 0);
 
   const note =
     reporting === 0
-      ? `None of these ${total} farmers has agreed to share a training record.`
-      : `${reporting} of ${total} ${total === 1 ? 'farmer shares' : 'farmers share'} a training record. ` +
-        `The course is ${modulesTotal} modules.`;
+      ? inlineTemplate(lang, 'None of these {total} farmers has agreed to share a training record.', null, { total })
+      : inlineTemplate(
+          lang,
+          total === 1
+            ? '{reporting} of {total} farmer shares a training record. The course is {modules} modules.'
+            : '{reporting} of {total} farmers share a training record. The course is {modules} modules.',
+          null,
+          { reporting, total, modules: modulesTotal },
+        );
 
   return (
     <div className={className}>
-      <ChartCard title="Course progress across the cohort" icon={<GraduationCap size={13} />} note={note}>
+      <ChartCard title={inlineText(lang, 'Course progress across the cohort')} icon={<GraduationCap size={13} />} note={note}>
         {reporting === 0 ? (
-          <NoChart reason="A training record nobody agreed to share is not a farmer who has done no training, so nobody is drawn at zero here — they are simply not drawn." />
+          <NoChart reason={inlineText(lang, 'A training record nobody agreed to share is not a farmer who has done no training, so nobody is drawn at zero here — they are simply not drawn.')} />
         ) : (
           <>
             <div className="px-4 py-3 flex flex-wrap" style={{ gap: '10px 22px' }}>
               <Figure
-                label="Average of the course done"
+                label={inlineText(lang, 'Average of the course done')}
                 value={training.averagePct === null ? '—' : `${training.averagePct}%`}
                 tone={TRAIN}
               />
-              <Figure label="Finished every module" value={String(training.finishedCourse)} tone={INK} />
-              <Figure label="Started the course" value={String(training.started)} tone={INK} />
-              <Figure label="Modules finished in total" value={String(training.modulesCompleted)} tone={INK} />
+              <Figure label={inlineText(lang, 'Finished every module')} value={String(training.finishedCourse)} tone={INK} />
+              <Figure label={inlineText(lang, 'Started the course')} value={String(training.started)} tone={INK} />
+              <Figure label={inlineText(lang, 'Modules finished in total')} value={String(training.modulesCompleted)} tone={INK} />
             </div>
 
             <div className="px-4">
               <div className="flex items-baseline justify-between" style={{ marginBottom: 4 }}>
-                <span className="font-sans" style={{ fontSize: MICRO, color: FAINT }}>Farmers</span>
+                <span className="font-sans" style={{ fontSize: MICRO, color: FAINT }}>{inlineText(lang, 'Farmers')}</span>
                 <span className="font-sans" style={{ fontSize: MICRO, color: FAINT, fontVariantNumeric: 'tabular-nums' }}>
                   {tallest}
                 </span>
               </div>
               <div
                 role="img"
-                aria-label={`How many of the ${reporting} reporting farmers have finished each number of course modules, from none to all ${modulesTotal}.`}
+                aria-label={inlineTemplate(lang, 'How many of the {reporting} reporting farmers have finished each number of course modules, from none to all {modules}.', null, { reporting, modules: modulesTotal })}
                 style={{
                   display: 'grid', gridTemplateColumns: `repeat(${bands.length}, minmax(0, 1fr))`,
                   alignItems: 'end', gap: 2, height: PLOT_TRAINING, borderBottom: `1px solid ${AXIS}`,
@@ -728,7 +757,14 @@ export function CohortTrainingChart({ training, className }: { training: CohortT
                       key={band.done}
                       className="flex flex-col justify-end"
                       style={{ height: '100%' }}
-                      title={`${band.farmers} ${band.farmers === 1 ? 'farmer has' : 'farmers have'} finished ${band.done} of ${modulesTotal} modules`}
+                      title={inlineTemplate(
+                        lang,
+                        band.farmers === 1
+                          ? '{n} farmer has finished {done} of {total} modules'
+                          : '{n} farmers have finished {done} of {total} modules',
+                        null,
+                        { n: band.farmers, done: band.done, total: modulesTotal },
+                      )}
                     >
                       {band.farmers > 0 && (
                         <div
@@ -761,7 +797,7 @@ export function CohortTrainingChart({ training, className }: { training: CohortT
                 ))}
               </div>
               <p className="font-sans text-center" style={{ fontSize: MICRO, color: FAINT, margin: '6px 0 0' }}>
-                Modules finished, out of {modulesTotal}
+                {inlineTemplate(lang, 'Modules finished, out of {total}', null, { total: modulesTotal })}
               </p>
             </div>
 
@@ -769,8 +805,7 @@ export function CohortTrainingChart({ training, className }: { training: CohortT
               <details>
                 <CountedSummary />
                 <Footnote>
-                  A module counts once the farmer has completed it in the app. Farmers who have not
-                  shared a training record are not drawn at zero — they are not drawn at all.
+                  {inlineText(lang, 'A module counts once the farmer has completed it in the app. Farmers who have not shared a training record are not drawn at zero — they are not drawn at all.')}
                 </Footnote>
               </details>
             </div>

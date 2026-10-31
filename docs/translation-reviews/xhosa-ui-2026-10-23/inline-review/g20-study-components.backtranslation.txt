@@ -1,0 +1,564 @@
+0. Follow the practice sale
+1. One invoice. Two payments.
+2. Prices are made up for learning. This example does not change your records.
+3. Steps of the payment example
+4. Agree on the order
+5. Deliver and give the invoice
+6. Receive part of the payment
+7. Receive the balance
+8. Order P01 · R120.00 approved
+9. Delivery P01 · Invoice P01
+10. Receipt P01-A · R40.00 received
+11. Receipt P01-B · another R80.00 received
+12. The buyer has ordered. Nothing has been delivered or paid in this example. Keep the agreement; an order is not a money receipt.
+13. The approved produce was delivered and invoiced at R120.00. The buyer has not paid. Keep the delivery references and invoice references.
+14. R40.00 pays part of invoice P01. R80.00 still has to be paid. This is one sale of produce; a receipt does not make another sale.
+15. The two receipts together make R120.00. Invoice P01 is fully paid in this example. Keep both receipts and the original invoice; do not add their amounts as separate sales.
+16. Invoice price
+17. Not yet issued/removed
+18. Received so far
+19. Still to be paid
+20. Not yet invoiced
+21. For now the app records only fully paid or unpaid. Keep part payments and the remaining amount in a separate record that is checked; do not mark an invoice fully paid only after a deposit.
+22. Stop the example
+23. Play the example
+24. Previous
+25. Next
+26. Step {n} of {total}
+27. Follow the practice time window
+28. The time window changes the total amount.
+29. Receipts and payments made up for learning. These controls do not change My records.
+30. Steps of the money-window example
+31. Month A
+32. Month B
+33. Start with Month A
+34. Add Month B
+35. Start the window later
+36. The chosen window starts at zero. R400.00 coming in without R300.00 going out gives a running total of R100.00. It does not give a starting bank amount.
+37. In both months, R600.00 came in and R650.00 went out. The running total is −R50.00. That is the combined change over the whole window; it is not proof that the bank went past the limit (overdraft).
+38. Now the window starts at Month B, from zero again. R200.00 coming in without R350.00 going out gives −R150.00. No source record changed; only the chosen window changed.
+39. Inside this window
+40. Outside this window
+41. Coming in {amount}
+42. Going out {amount}
+43. {incoming} coming in − {outgoing} going out =
+44. The bank amount is not known at each step. A complete result needs the relevant costs and other records; changing the window does not provide them.
+45. Previous example step
+46. Next example step
+47. Practice illustration of card F1
+48. Follow the source cards
+49. Watch four records change
+50. Card {n} of {total}
+51. Amounts made up for the class. Start with opening money, then go through the cards one at a time. Sales, cash in hand and money to be paid answer different questions.
+52. Day {day} · {id}
+53. Opening situation
+54. Money is in the tin. There is no produce sale yet, no remaining customer amount and no recorded loan.
+55. Money in the tin
+56. Recorded produce sales
+57. The buyer still has to pay
+58. Loan principal amount still to be paid
+59. Previous card
+60. Next card
+61. These records do not show a full profit. Use your source documents on a real farm.
+62. Produce sale {reference}: {amount} received now.
+63. Produce sale {reference}: {amount} will be paid later.
+64. The buyer pays {amount} for the earlier sale {settles}. This is a receipt, not a new sale.
+65. Loan {reference}: {amount} enters the money tin and must be paid back.
+66. Loan payment {reference}: {amount} goes out of the money, including {principal} of principal and {interest} of interest.
+67. The owner puts {amount} into the money tin.
+68. The owner takes {amount} out of the money tin.
+69. Packaging payment {reference}: {amount} goes out of the money tin.
+70. Buying equipment {reference}: {amount} goes out of the money tin.
+71. Transport payment {reference}: {amount} goes out of the money tin.
+72. Source card {id}.
+73. Your worksheet
+74. Follow the records. Explain the decisions.
+75. Use a notebook and calculator, or type here. Put rand in the money boxes and kilograms in the stock box. Use the minus sign for a money gap. A comma or a dot can separate decimals.
+76. Try all calculations before checking. You may read aloud/outside or point out your reasoning while the facilitator writes down. These self-checks give no course credit.
+77. Your practice page is opening…
+78. Explain using the source references
+79. Save practice work on this device
+80. Download my answers as text
+81. Print the case and my answers
+82. Check my calculations
+83. Practice answers stay on this device. Use Save before leaving this case.
+84. The existing practice draft could not be opened. Its saved copy was not changed. Download or print a copy of the work before leaving.
+85. The practice work opened, but the existing saved copy could not be read. Download or print your work to keep it.
+86. There are changes that need saving.
+87. There is a new saved worksheet in another tab. This page did not overwrite it. Download or print your current answers, then reopen this case.
+88. Saved for this example session only. Example answers are deleted when the session ends.
+89. Saved on this device. This is not a submitted assessment.
+90. The device could not save your answers. Keep this page open or print your work.
+91. The text copy was requested. Look in Downloads for your money practice answers.
+92. Fill all nine number boxes with valid numbers to open the maths answer. Your written explanations need a facilitator or study partner to check them.
+93. {n} of these {total} calculations match the given records
+94. This only checks the calculations, not the quality of your reasoning or your readiness to manage a real business. No assessment result is submitted.
+95. Matches
+96. Check again
+97. Follow the answer
+98. Remaining harvest = opening stock + harvest − deliveries − home food − recorded loss. Compare with {stockReference}. Invoice price = kilograms delivered × approved price per kilogram. The monthly payment pays part of that invoice; {laterReference} is outside this month.
+99. The first estimate starts at {opening}, pays two quoted amounts, so that an estimated sale is obtained. Actual cash starts with the same opening amount and uses only the dated money records. It also includes the stated support and the home withdrawal. An unknown, unpaid water payment does not change the counted money or what is known about the missing cost.
+100. The full profit is not known. The source packet does not give complete production costs, stock prices, equipment use and other relevant measures. Do not treat the money amount, the money change or the difference between the sale and the two payments as full profit.
+101. Check the running totals
+102. First estimate
+103. Actual money
+104. a money gap, not money in the tin
+105. Explain the change from planned money to actual money
+106. These changes add up to {difference}. They explain the change in closing money, not profit. In these cases the price per kilogram stays the same; the sales difference comes from quantity.
+107. Discuss and try a new case
+108. For each adjustment, point to the source and explain where it went. Use the next case after the answer. Repeating remembered amounts does not show the method.
+109. Written answers
+110. Not yet written
+111. Owner's contribution or loan received
+112. Home withdrawal
+113. Delivered sale compared with the sale estimated at the start
+114. Part of this sale not received within the month
+115. Quoted costs without actual packaging and transport payments
+116. Take this guide home
+117. Save the written steps, screenshots and English recordings while you have signal.
+118. Recordings and photos: {size}. The files needed to open the guide are also downloaded.
+119. This browser cannot save the full guide for offline use. You can print the written steps.
+120. The guide is saved on this device.
+121. Before leaving the signal area, turn off your connection, reopen this guide and try the recording.
+122. Part of this guide is saved. Finish downloading before leaving the signal area.
+123. This guide has not been saved for offline use.
+124. Finish downloading
+125. Download this guide
+126. Stop downloading
+127. Remove this guide's recordings
+128. Check the saved guide
+129. {saved} of {total} recordings and photos saved.
+130. The phone may delete what you downloaded when space runs low. Check again before leaving the signal area.
+131. This saves the guide and its photos, not the example farm or all the app's tools. Removing recordings keeps the written page and photos.
+132. Checking what is saved on this device…
+133. Saving recordings and photos…
+134. This guide is missing a file. Please carry on using the written steps while it is fixed.
+135. {n} files could not be saved. Reconnect and choose Finish downloading; saved files will be used again.
+136. Preparing the written guide and My studies…
+137. The written guide is not yet ready to open offline. Keep your connection and choose Finish downloading.
+138. The guide could not finish downloading. Reconnect and try again.
+139. Some recordings could not be removed. Try again.
+140. The device's storage could not be changed. Try again.
+141. Take this learning path home
+142. Save all English study pages, their photos and printable practice tools while you have signal.
+143. Photos and practice tools: {size}. The pages and files needed to open them are also downloaded.
+144. This browser cannot save the whole learning path for offline use. You can print the written pages.
+145. {title} is saved on this device.
+146. Before leaving the signal area, turn off your connection and reopen the lesson.
+147. Part of this learning path is saved. Finish downloading before leaving the signal area.
+148. This learning path has not been saved for offline use.
+149. Download this learning path
+150. Check the saved path
+151. Saving photos and practice tools…
+152. Preparing study pages…
+153. This saves only the teaching pages of this learning path. Download the app guides and other learning paths separately; outside source links need a connection. It does not save a copy of your account, answers, app records or live maps.
+154. The saved files could not be checked. Keep your connection and try again.
+155. This learning path is missing a file. Continue using the written pages while it is fixed.
+156. Preparing all study pages and their starting files…
+157. Some study pages are not yet ready to open offline. Keep your connection and choose Finish downloading.
+158. This learning path could not finish downloading. Reconnect and try again.
+159. Farm money
+160. Design a working home
+161. App pictures
+162. See where you are going
+163. These screens use the example farm. Your records may look different. Swipe sideways to see each screen; open the photo to enlarge it.
+164. Example app screens
+165. Open the photo of {title} at full size
+166. {title} screen on the example farm
+167. Screen {n} of {total}: {title}
+168. Listen in English · {time} · {size} KB
+169. Listen: {title}
+170. Before starting
+171. Try the decision
+172. Feedback on your answer
+173. Practise and continue
+174. Your browser cannot play this recording. The same instructions are written on this page.
+175. The audio could not be loaded. Check your connection, or use the written steps.
+176. Try the audio again
+177. My studies
+178. Using ImbewuField · English guide
+179. Keep these steps beside you while you work.
+180. Learn the steps
+181. Practise on the example farm
+182. Steps of {title}
+183. Check your work:
+184. This practice question does not change your records.
+185. Print this guide
+186. Back to Studies
+187. Other app guides
+188. Continue learning the app
+189. Bed 1 and Bed 2 each have the given width {width} and length {length}. In the model they are side by side, with a clear gap of {gap} between their edges.
+190. These measurements describe a software example. Whether people can work and move comfortably needs a separate site check.
+191. The coordinates show the top-left corner in the metre frame of the example model. They are not latitude and longitude or measurements taken by the learner. This task uses the same two bed records as the app's example garden.
+192. Model coordinates given
+193. Record
+194. Width (m)
+195. Length (m)
+196. Bed 1
+197. Bed 2
+198. The given gap is the left edge of Bed 2 minus the right edge of Bed 1: {x2} − ({x1} + {width}) = {gap} m.
+199. Arrangement of the beds
+200. The drawings of the two beds stay at the places given by the app's example model.
+201. Only Bed 2 moves. Its left edge meets the right edge of Bed 1. There is no clear gap between them.
+202. Only Bed 2 moves, until half the width of Bed 1 overlaps. Counting both full bed areas would count the shared land twice.
+203. Given gap
+204. Edges touch
+205. Drawings overlap
+206. The width and length of the beds stay the same.
+207. Scale drawing; the large view can be scrolled
+208. The gap is outside the drawings of both beds. Do not count it as bed area.
+209. Edges that touch leave no gap. A rectangle laid side by side does not show that there is a usable access path.
+210. The shared strip is one piece of land. The two drawings cannot make it be counted twice.
+211. Changing the view only changes the screen size. It does not change the given measurements or improve their evidence.
+212. Use the current arrangement: {arrangement}. Rectangle area = width × length. If two drawings overlap, take their shared area exactly once when counting the land they cover. Try on paper or enter your answers below; a comma or a dot can show a decimal.
+213. Enter a number in each box to check. This is practice; no result is saved or given as course credit. Changing the arrangement deletes the earlier answers.
+214. Area of Bed 1
+215. Width of the overlapping area
+216. Width of the clear gap
+217. Land inside the bed drawings, counted with the overlap only once
+218. {n} of these {total} calculations match this model
+219. One bed: {width} × {length} = {area} m².
+220. Shared strip: {overlap} × {length} = {overlapArea} m². Land covered once: {bed} + {bed} − {overlapArea} = {covered} m².
+221. No overlap: {bed} + {bed} = {covered} m² inside the bed drawings.
+222. The outer rectangle covers {area} m².
+223. That includes {gapArea} m² between the beds; this gap is not bed area.
+224. In this arrangement there is no gap between the drawings. That does not make it a real suitable plan.
+225. Now explain whether the drawing confirms an access path, a usable planting area or an expected harvest. It confirms only the given geometry; those real-world decisions need extra evidence.
+226. The downloaded drawing includes its model measurements. Its size on paper depends on print settings: do not measure the print with a ruler and call it a distance on the ground, unless you confirmed it and checked the printed scale.
+227. Keep the measured source, units and the version of the drawing together. Check the clear space between the real edges, not only the distance between centres. Then also check with the people who do the work, the proposed process and the suitable technical guidance. A complete plan for a complicated site still needs its own measured source packet.
+228. The drawing was requested: {name}. It carries model measurements, not a fixed printed scale.
+229. English teaching demonstration.
+230. Steps of the solved example
+231. 1 · Read the summary and the source map
+232. What must this plan answer?
+233. Read the source cards before accepting a symbol in the drawing. The frame is a class model; the top edge is normally the model's north.
+234. All values below are class values made up by imagination, in metres. The existing symbols come from W-MAP; some arrangement comes from W-B; the compost suggestion comes from W-A. No value is taken from a picture.
+235. Frame: {width} × {height} m.
+236. Imagined geometry given
+237. Reference
+238. Width × length (m)
+239. Reference place only
+240. 2 · Read the effects
+241. Follow the people and the care before adding symbols
+242. The water place, planting place and the path from home to the gate show a journey that should be discussed with the people who do the work. They do not set a measured walking time or an agreed workload.
+243. Reported, not measured:
+244. View of the solved example drawing
+245. Use the measurements written on the drawing. Printing may change its size; no visible print scale is held.
+246. 3 · Compare other ways fairly
+247. Which option would you investigate?
+248. A keeps the existing planting place. B investigates a different place with the same model area of {area} m². Both must answer the same summary of food, access and care. Neither is approved for building.
+249. Choose A, B or delay. Explain aloud or on paper: which source supports your choice, what remains to be given, and what new evidence could change your mind?
+250. Temporary answer
+251. Discuss the reason, not only the choice.
+252. Investigating B can make sense if you explain its additional site check. A drawing of a moved site is not evidence of better planting conditions.
+253. The same standards for both ideas
+254. Compare each option with the same evidence
+255. Standard / source
+256. Idea A
+257. Idea B
+258. Not yet known
+259. This is a discussion task, not an assessment result. The facilitator reviews the evidence and explanation.
+260. 4 · Develop and check
+261. Measure between the real edges
+262. The guided choice is to investigate A while the visible change stays fixed. B always remains another way. Check each drawing against the given frame and the existing path.
+263. In B, count the horizontal gap from the right edge of the path to the left edge of the proposed planting place. Use E-ROUTE in W-MAP and P-B-PLOT in W-B. These rectangles overlap in the north-south direction, so this is their clear horizontal separation.
+264. Left edge of B ({left} m) minus the right edge of the path ({right} m) = {gap} m. The centre-to-centre distance includes parts of both rectangles and would answer a different question.
+265. The path area and the given gap are imagined geometry, not access standards. They do not set drainage, crop separation, soil suitability or a safe working place. The first planting place remains the existing evidence when B is shown; do not count the drawings of both as productive output.
+266. 5 · Make the work and care happen
+267. Keep each symbol linked to its next task
+268. Only discussion and investigation can proceed. First agree about the evidence and care, then describe the things to be used and ask for comparable prices. No building money is given.
+269. Drawing references:
+270. Before physical work:
+271. Cost:
+272. R1 record:
+273. Who discusses the next check:
+274. Use {link} to practise the money period. A practice sales or packaging budget cannot serve as a garden-building budget.
+275. Record the work, costs and agreed care
+276. 6 · Respond to later information
+277. What changes when care is not agreed?
+278. Before opening the record, explain what must change in the drawing, the work sequence, the purchasing and the care plan.
+279. Work:
+280. Quantity / purchase:
+281. Care:
+282. Next owner:
+283. Plan the next observation
+284. Agree with the household about what is observed and the time. These are proposed observations; no later field results are given.
+285. When:
+286. What will trigger a review:
+287. Independent practice and discussion with a facilitator
+288. Use this method with new evidence
+289. Explain the guided evidence
+290. Keep your spoken or written explanation for the facilitator to review. Reading or showing an answer does not give design skill.
+291. 7 · Pass on the current record
+292. Keep the plan and its reasons together
+293. Download each drawing you want, together with the source record and decisions. It includes the current choice, another arrangement, the conditions, the work/cost/care records, the owner of the next discussion and the update history. Keep your learner notes in your separate design folder.
+294. Download requested: {name}. Open the saved file and check it before leaving this page.
+295. Farm money · English teaching demonstration
+296. Understand money.
+297. Plan the next season.
+298. From your first farm record to a checked business plan. Read, work with examples and practise with a notebook, calculator and the app.
+299. 8 units · 24 lessons
+300. Take this course alone, or together with permaculture.
+301. Start with farm and household money
+302. See all lessons
+303. Teaching demonstration.
+304. Content review, testing with learners and final assessment are still being prepared.
+305. There are drafts of English lessons and solved practice work. Content review, testing with learners, audio explanation, translation and final assessment are still being prepared.
+306. Learn by doing
+307. Each unit has a plain-language explanation, solved examples and practice work that can be discussed with a facilitator or study partner. Use the given practice numbers; keep your household's and customers' details private.
+308. These numbers are examples made up for the class, not local prices, promised income or advice for your farm. Each unit gives its own case and opening numbers.
+309. Continue here
+310. See all units
+311. Suggested ten-day course
+312. Days 1–8
+313. One unit a day, combining explanation, guided work and independent practice.
+314. Days 9–10
+315. A supported project, then hands-on assessment, feedback and other practice where needed.
+316. Plan about four to five hours of teaching a day, excluding breaks. This is an estimate for testing with learners; translation, sharing tools and additional practice work may need more time.
+317. Learners who go on their own can take the lessons at their own pace. The combined project now gives a supported case, independent practice and repeating with a new case. Review by hands-on staff and the final combination of the tested course are still being prepared. Studying this demonstration does not give a qualification.
+318. Open the working project
+319. Unit {n}
+320. Read the lesson
+321. Work with examples
+322. Practice tools
+323. Work with these examples with a facilitator or study partner. The amounts and dates are made-up practice entries, not advice for your accounts.
+324. Overview
+325. Practice tools for unit {n}
+326. Use the opening amounts and source cards of this unit. Do not use the amounts of the previous unit in this work.
+327. Open the printable worksheet (PDF)
+328. Use the event cards and solved examples below together with a notebook and calculator.
+329. Open the unit situation, source cards and solved answers
+330. Solved examples and practice work
+331. Some examples include their solved answers. Stop before reading them and try the calculation or decision yourself. These are practice tasks, not a marked assessment.
+332. Try another example
+333. Discuss the mistakes and try again
+334. Use the app beside this lesson
+335. Read the suitable guide, then practise on the example farm. Keep the worksheet's numbers separate from your real farm records.
+336. Find the way and keep work safe
+337. Make and manage the invoice
+338. Record the harvest
+339. Record a sale only once
+340. Record a cost and keep its receipt
+341. Read the charts
+342. Check the crop plan
+343. Review the payment
+344. Bring in pages and earlier sales
+345. Record a cost paid
+346. Export the records and prepare evidence
+347. Make a map of your place
+348. Keep field evidence
+349. Sources and further reading
+350. Combine the course
+351. Try the combined practice case, then work with an independent case with new numbers.
+352. Keep your place
+353. Next: {title}
+354. Back to the course list
+355. Working project
+356. Combine the course · {title}
+357. Work together
+358. Try it yourself
+359. New case
+360. One planting place.
+361. Follow every record.
+362. Start with the plan. Then check what was harvested, delivered and paid. Show your calculations and explain what the evidence cannot tell you.
+363. Read the source cards
+364. Go to my worksheet
+365. Every date, amount, quantity and measurement in these cases is made up for practice. They are not local prices, expected harvests or advice for a real farm. Review by staff and by learners is still open.
+366. How to use this project
+367. On the day of the supported project, use "Work together". For independent practice, use "Try it yourself". After feedback, use "New case". Each case starts again with its own sources and its own opening numbers.
+368. Save your worksheet before changing cases. The facilitator can collect your written or spoken explanation together with your calculations. Self-checking is practice only; it is not a submitted or accepted assessment.
+369. Keep the first plan separate from the later records. Make a short final packet: a marked-up site drawing, a budget with the omitted items, a dated money estimate, harvest places, an invoice/payment trail, and a review with a next step.
+370. 1 · Set the boundary
+371. Practice place and opening record
+372. Practice place made up for the class, and Site A
+373. A place of {width} metres by {height} metres. Site A is {plotWidth} metres by {plotHeight} metres, from the left edge by {x} metres and from the top edge by {y} metres. This is not a real place.
+374. Site A
+375. Place made up · not a real place
+376. On your copy, mark Site A and write its reference beside the harvest card. Write down the access, water and planting information you would still need for a real plan. The card gives no agreement of permission to enter and no production estimate from this place.
+377. {opening}: counted money {cash}; harvested stock {stock} kg; customer amount {balance}. Keep the review within {period}.
+378. {start} and {end}
+379. 2 · Keep the first plan
+380. What was expected
+381. {plan}. Enquiry {reference} mentions up to {quantity} kg at a price of {price} per kg. It is an enquiry, not a confirmed order. The plan assumes all that quantity is delivered and paid on {date}. That assumption still needs to be confirmed.
+382. {version} · written {written}
+383. Quoted payments included
+384. Quoted payments of another option
+385. Harvest places
+386. Actual money records
+387. Expected date
+388. Quote
+389. Going to
+390. Quantity
+391. Reason
+392. Coming in or going out
+393. Scroll sideways if there are hidden columns.
+394. The worksheet allows {available} owner hours and assumes this work uses {used}. These assumptions are for practice, not recommended work speeds.
+395. Compare different work
+396. {reference}: {label}. The enquiry mentions {quantity} items at a price of {price} each. Another option assumes it is received on {date}; no confirmed orders. It needs {hours} owner hours while only {available} are available.
+397. Compare money dates, hours and evidence—not the price of one kilogram and the price of one part. More information is needed before choosing a real business.
+398. 3 · Follow later evidence
+399. What happens in the given records
+400. {harvest}: The harvest of Site A ({plot}) weighed {quantity} kg. This weight is given by the made-up harvest card; do not take it from the site place.
+401. delivered sale
+402. recorded loss
+403. {count}: the closing count is {quantity} kg. Show that the quantity records explain this count.
+404. Delivery with the invoice
+405. {order}: {buyer} confirms an order of {quantity} kg at a price of {price} per kg. The accepted delivery {delivery} and invoice {invoice} are dated {date}. The invoice is {amount}. It is the same delivered produce, not another sale. These are class cards, not tax invoices.
+406. paid for packaging
+407. owner's contribution
+408. paid for transport
+409. customer payment
+410. home withdrawal
+411. loan received
+412. of {reference}
+413. Coming in
+414. Going out
+415. {count}: counted money {amount}. Reconcile the records with this count.
+416. {payment}: {amount} received for {invoice}. It belongs to last month's money, not this month's closing money.
+417. A lost amount stays lost
+418. {cost}: {description} Keep its cost unknown; get the bill or confirm the payment with the supplier. Zero may mean something not supported by evidence.
+419. Review the whole working packet
+420. Ask the facilitator or study partner to review your explanations and numbers. They must give some correction and ask you to show it in a new case.
+421. Does the harvest record describe the site on the map without taking the drawing as evidence of rights or harvest?
+422. Do the budget and estimate keep the starting dates, assumptions, omitted costs and any early money gap?
+423. Does each quantity keep its unit? Do home food and loss stay separate from sales?
+424. Can you follow a delivery with one invoice and its payments, without counting a sale twice or taking an unpaid amount as money?
+425. Are the owner's money, the loan and the home withdrawal arranged on the source cards?
+426. Does the review separate quantity, payment timing, costs and funding, while leaving lost costs and full profit unknown?
+427. Does the next step describe the evidence needed, the responsible class role and a review date?
+428. The reviewer can record "shown", "needs one more practice" or "not yet seen" beside each item, with the source reference and feedback. An unanswered item is not a win. The app's numeric self-check cannot make this decision.
+429. Practise the supported app tasks
+430. Use the example farm, not your real money records. Part payments stay in this worksheet task where the app cannot fully show them.
+431. Map guide
+432. Harvest guide
+433. Invoice guide
+434. Payment guide
+435. Cost guide
+436. Why these differences matter
+437. The cases and numbers are class-first content. Record types and the difference between money movement and income were informed by {fao} and {iowa}. Local tax rules and outside solved examples are not brought into this task.
+438. FAO record-keeping guide
+439. Iowa State University farm income statement guide
+440. English teaching demonstration · {n} lesson drafts.
+441. Reading these pages gives no course credit or design confirmation.
+442. Learn and practise with a facilitator or study partner. There is a made-up solved demonstration with scale work; a real field plan still needs its own checked measurements, evidence and review. Updated lesson translations and audio explanation are not yet available. Some page labels may appear as unreviewed isiXhosa drafts. Save the learning path for offline use here before leaving the signal area.
+443. Keep your summary, observations, existing map, other ways, chosen plan, work and care arrangements, and update together. Use paper, spoken explanations or the app. Each step adds a reasoned decision, not just another thing on the drawing.
+444. Use the available technical modules when checking water, soil, planting or animal suggestions. This learning path teaches how to combine those decisions. A field plan still needs suitable measurements, evidence of the place and any relevant permit or permission.
+445. Learning needs observing and practice
+446. Work at a speed that allows observation in the field, discussion and further practice after feedback. The eighteen study pages do not set the course time or replace the evidence of the season. The facilitator reviews what you can explain and show.
+447. Sources of this learning path
+448. The teaching sequence is based on the Imbewu course guidelines of Rory, the handbook on farming in southern Africa and the RVCC garden training/planning tools. Old technical advice is not carried out as universal instructions.
+449. The complicated-yard example teaches what should be observed before drawing. The solved demonstration is a separate made-up model with the given coordinates, fair other ways and an update after later care evidence. None is a building plan or a record of a real home.
+450. The solved demonstration uses the given class geometry and a named source packet. It is different from the unscaled complicated-yard task.
+451. Compare drawings of two beds with a gap, touching edges and overlap. Follow the given measurements to check what the area amount counts. This is an example-model task, not a measurement of a complicated-yard home.
+452. Practise first on the example farm. Keep the source map and its measurements when trying a suggestion. A design folder on paper also works.
+453. Farm money course
+454. Getting started
+455. Make a map of the place
+456. Keep evidence
+457. Use the Design Studio
+458. Plan crops
+459. Export and check the plan
+460. Record costs
+461. Drawn from Rory's course guidelines, handbook and RVCC planning tools, with the design framework checked by comparison with these main sources.
+462. Back to the learning path
+463. From looking to a working plan
+464. Design while thinking about people. Work with the place.
+465. Combine water, soil, planting systems, access, care and money into one logical plan. Follow the six steps, then explain and improve your decisions.
+466. Start with the home summary →
+467. Meet the practice home
+468. Build one design folder as you learn
+469. Open your design learning folder →
+470. See all steps
+471. Two examples, their boundaries visible
+472. Follow the solved design demonstration →
+473. Read the first evidence case →
+474. Learn the scale and check the place →
+475. Use the Design Studio guide →
+476. Combine the plan with Farm money →
+477. Design a home
+478. Read the overview
+479. Try the task
+480. Check your understanding
+481. Complicated yard · class example made up
+482. Follow the decision
+483. See the whole case and source notes →
+484. Make the next part of your folder
+485. What your partner or facilitator should check
+486. Record this step in your design folder →
+487. Guided made-up model
+488. Look at this step in the full relationship of decisions
+489. Practice by seeing · given model measurements
+490. Learn the scale and check the place
+491. Open the scale task →
+492. Stop and explain
+493. Try your explanation before opening the discussion answer.
+494. Compare your thinking
+495. Use a notebook, drawings or supported spoken answers. The made-up solved demonstration supports the lesson method; a real field plan still needs checked measurements, evidence and review. These pages do not confirm a design or give assessed progress. Audio and translations are not yet available; save the learning path from its summary before leaving the signal area.
+496. Read the summary and the given source map →
+497. Read the reported effects and their limits →
+498. Compare two temporary ideas →
+499. Check the measurements and the temporary choice →
+500. Follow work dependencies, costs and care →
+501. Review later evidence and the update →
+502. Step 1
+503. Step 2
+504. Step 3
+505. Step 4
+506. Step 5
+507. Step 6
+508. Made-up picture of home record keeping with a farmer, a notebook and source documents
+509. Made-up home situation of keeping real farm records
+510. A made-up farmer reading records at a home table
+511. Made-up farmers discussing a paper plan beside a home garden; the drawing only shows, it is not to scale
+512. A place made up in metres, with no real place. Site A is only a reference for the source cards. The measurements do not set harvest, rights, safety or planting advice.
+513. This is a record task for one month, not a full planting season or a harvest estimate.
+514. The opening money and all real money movement in the month are given; there are no other money accounts or movements in this bounded case.
+515. The opening harvested stock and customer amounts are zero. There are no other harvests, sales, stock movements, invoice changes or refunds.
+516. The invoice is for the same accepted delivery as the delivery card; the payment is not a new sale.
+517. No tax calculation, registration threshold or legally compliant tax invoice is checked.
+518. Production costs, stock prices and full accounts are not complete. There is no full profit or settled balance sheet.
+519. The loan card confirms the money received and the same principal amount still to be paid at the end of the month. There is no loan repayment here. Terms and interest are not given: do not recommend this loan or assume it has no cost.
+520. Packaging quote
+521. Transport quote
+522. Quote for buying baskets
+523. Delivery quote
+524. Upfront planting costs are above the given budget.
+525. Water service payment, stock prices, equipment use and other full-time costs are not given.
+526. The quotes listed are only the included money costs, not the full costs of production.
+527. Another way of selling baskets
+528. A different option using the SAME OPENING MONEY, not another business that could use it too. No completed sale or full profit is set.
+529. food for home taken out of planting [or: planted for home food]
+530. Class buyer G
+531. Class buyer I
+532. Class buyer R
+533. The water delivery for the planting work is confirmed. Its payment and the supporting bill are missing. Nothing has yet been paid for this delivery.
+534. Understand the people and the place
+535. An agreed summary, evidence notes and a map of existing features.
+536. Agree on what the home wants
+537. Look, ask and keep the source
+538. Make a base map you can rely on
+539. Learn the patterns and constraints
+540. Analysis tools and design questions together with checking what is missing.
+541. Use zones and sectors for different questions
+542. Learn water, access and the seasons of the year together
+543. Turn observations into decisions to be tested
+544. Combine the tasks and compare the options
+545. Connections, different ideas and a reasoned choice.
+546. Ask what each part needs and what it contributes
+547. Make other ways before choosing
+548. Choose with reasons, not for beauty of decoration
+549. Develop and check the plan
+550. A checked arrangement, connected systems and a readable plan set.
+551. Go from an idea to a measured arrangement
+552. Check connections before agreeing the work
+553. Make a plan another person can read
+554. Plan the work and continuing care
+555. A possible sequence, a cost record and an agreed care plan.
+556. Decide what must happen first
+557. Combine the drawing with quantity and money
+558. Design care after installation
+559. Explain, test and improve
+560. A specified design, a way of monitoring and a reasoned update.
+561. Clarify the thinking behind the plan
+562. Check whether the design helps
+563. Update and hand over a workable plan

@@ -47,13 +47,28 @@ import {
 import { APP_HEADER_STYLE } from '@/lib/app-header';
 import { useAppLevel } from '@/lib/app-level';
 import { formatStaffDate } from '@/lib/format-figures';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { formatXhosaDate } from '@/lib/xh-dates';
 
-const tr = (lang: string, en: string, zu: string) => lang === 'zu' ? zu : en;
+const tr = (lang: string, en: string, zu: string) => inlineText(lang, en, zu);
 const MENTOR_STATUS_ZU: Record<EnrollmentStatus, string> = {
   invited: 'Umenyiwe', active: 'Usayaqhubeka', paused: 'Kumisiwe', completed: 'Kuqediwe', withdrawn: 'Uhoxile',
 };
 
 function localizedDueDate(dueAt: string | null, today: string, lang: string): string | null {
+  if (lang === 'xh') {
+    // formatDue returns English; the near-term phrases get their isiXhosa draft, the dated one stays as is.
+    const en = formatDue(dueAt, today, lang);
+    if (!en) return en;
+    const overdue = en.match(/^(\d+) days overdue$/);
+    if (overdue) return inlineTemplate(lang, '{n} days overdue', null, { n: overdue[1] });
+    const soon = en.match(/^Due in (\d+) days$/);
+    if (soon) return inlineTemplate(lang, 'Due in {n} days', null, { n: soon[1] });
+    // A far-off date: formatDue has no isiXhosa month names (browsers have no 'xh-ZA' pack), so
+    // write it day-month-year like the isiZulu line below, from the app's own month names.
+    if (dueAt && /^Due \d/.test(en)) return inlineTemplate(lang, 'Due {date}', null, { date: formatXhosaDate(new Date(`${dueAt}T00:00:00`), { day: true, month: 'short', year: true }) });
+    return inlineText(lang, en);
+  }
   if (lang !== 'zu') return formatDue(dueAt, today, lang);
   if (!dueAt) return null;
   const days = daysBetween(today, dueAt);
@@ -133,7 +148,7 @@ function ProgressBar({ value, max, lang }: { value: number; max: number; lang: s
       <div
         className="flex-1 rounded-full overflow-hidden"
         role="img"
-        aria-label={tr(lang, `${value} of ${max} modules complete`, `Kuqediwe amamojula angu-${value} kwangu-${max}`)}
+        aria-label={inlineTemplate(lang, '{value} of {max} modules complete', 'Kuqediwe amamojula angu-{value} kwangu-{max}', { value, max })}
         style={{ height: 5, background: 'rgba(32,25,15,0.10)' }}
       >
         <div style={{ width: `${pct}%`, height: '100%', background: col, borderRadius: 999, transition: 'width 0.4s' }} />
@@ -186,7 +201,7 @@ function TraineeCard({
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        aria-label={tr(lang, `${trainee.full_name ?? 'Learner'} — ${open ? 'hide' : 'show'} learning details`, `${trainee.full_name ?? 'Umfundi'} — ${open ? 'fihla' : 'bonisa'} imininingwane yokufunda`)}
+        aria-label={lang === 'zu' ? `${trainee.full_name ?? 'Umfundi'} — ${open ? 'fihla' : 'bonisa'} imininingwane yokufunda` : inlineTemplate(lang, '{name} — {state} learning details', null, { name: trainee.full_name ?? inlineText(lang, 'Learner'), state: inlineText(lang, open ? 'hide' : 'show') })}
         className="w-full flex items-center gap-3 px-4 py-3.5 text-left"
         style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
         <ProfileAvatar id={trainee.id} name={trainee.full_name || tr(lang, 'Unnamed', 'Akanagama')} photoUrl={trainee.photo_url} sample={isSampleMode()} size={44}/>
@@ -200,7 +215,7 @@ function TraineeCard({
                 style={simple
                   ? { background: SIMPLE_STATUS_TONE[SIMPLE_NEEDS_ATTENTION.has(status) ? 'needsAttention' : 'onTrack'].bg, color: SIMPLE_STATUS_TONE[SIMPLE_NEEDS_ATTENTION.has(status) ? 'needsAttention' : 'onTrack'].fg }
                   : { background: STATUS_TONE[status].bg, color: STATUS_TONE[status].fg }}>
-                {simple ? simpleStatusLabel(status, lang) : lang === 'zu' ? MENTOR_STATUS_ZU[status] : STATUS_LABEL[status]}
+                {simple ? simpleStatusLabel(status, lang) : lang === 'zu' ? MENTOR_STATUS_ZU[status] : inlineText(lang, STATUS_LABEL[status])}
               </span>
             ) : (
               <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
@@ -242,7 +257,7 @@ function TraineeCard({
                     sentence, enrolment date first, matching the fix's 'Enrolled 16 Oct 2026 ·
                     Cohort A' order, and the shared staff date format (formatStaffDate) instead
                     of toLocaleDateString's en-ZA numeric date. */}
-                {tr(lang, 'Enrolled', 'Wabhaliswa ngo-')} {formatStaffDate(toDateKey(new Date(enrollment.enrolled_at)), lang)}{enrollment.cohort ? ` · ${enrollment.cohort}` : ''}
+                {inlineTemplate(lang, 'Enrolled {date}', 'Wabhaliswa ngo- {date}', { date: formatStaffDate(toDateKey(new Date(enrollment.enrolled_at)), lang) })}{enrollment.cohort ? ` · ${enrollment.cohort}` : ''}
               </span>
               <div className="flex-1" />
               <button
@@ -327,7 +342,7 @@ function TraineeCard({
                   </span>
                   {enrollment && (assignment ? (
                     <button onClick={() => onUnassign(trainee.id, mod.id)} disabled={busy}
-                      aria-label={tr(lang, `Remove the ${mod.title} assignment`, `Susa isabelo se-${mod.title}`)}
+                      aria-label={inlineTemplate(lang, 'Remove the {title} assignment', 'Susa isabelo se-{title}', { title: mod.title })}
                       className="flex-shrink-0 flex items-center justify-center rounded-lg"
                       style={{ width: 44, height: 44, background: 'transparent', border: '1px solid var(--border)', color: 'var(--text-muted)', cursor: busy ? 'wait' : 'pointer' }}>
                       <X size={12} />
@@ -662,6 +677,7 @@ export default function MentorPage() {
       </DashboardTabs>
 
       {lang === 'zu' && <p className="px-4 pt-2 text-xs" style={{ color: 'var(--text-muted)' }}>Izihloko zamamojula, izincazelo zokuqeqeshwa, imibiko nobufakazi bokuhlolwa kusaboniswa ngesiNgisi.</p>}
+      {lang === 'xh' && <p lang="xh" className="px-4 pt-2 text-xs" style={{ color: 'var(--text-muted)' }}>{inlineText(lang, 'Module titles, training descriptions, reports and assessment evidence are still shown in English.')}</p>}
 
       {/* code-14: this main had no max-width at all, so cards ran edge to edge at 1280px —
           workspace.workspace caps it at 90rem like the rest of the app's framed pages, and

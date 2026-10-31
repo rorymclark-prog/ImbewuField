@@ -4413,7 +4413,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               <p className="font-sans mb-3" style={{ fontSize: 13.5, color: 'var(--text-secondary)', lineHeight: 1.5 }}>
                 {t('mapGuideIntro')}
               </p>
-              {lang === 'zu' && (
+              {(lang === 'zu' || lang === 'xh') && (
                 <p className="font-sans mb-3" style={{ fontSize: 12.5, color: '#765A18', lineHeight: 1.4 }}>
                   {t('mapGuideZuluDraftNotice')}
                 </p>

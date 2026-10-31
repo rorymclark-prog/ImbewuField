@@ -50,7 +50,8 @@ const FONT = 'Arial, sans-serif';
 
 type Translate = (en: string, zu: string) => string;
 const translator = (language: string): Translate => (en, zu) => reportVisualText(en, language, {}, zu);
-const nativeDraft = (language: string) => ['zu', 'st', 'ts', 've'].includes(language);
+// isiXhosa drafts (via reportVisualText) are as long as the other native drafts, so they wrap too.
+const nativeDraft = (language: string) => ['zu', 'xh', 'st', 'ts', 've'].includes(language);
 const finite = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v);
 const escapeXml = (s: string) => s.replace(/[<>&"']/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&apos;' }[c]!));
 /** Space-grouped thousands and a decimal point, built by hand: en-ZA's own formatter groups with

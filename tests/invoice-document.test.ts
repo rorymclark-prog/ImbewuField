@@ -7,7 +7,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import {
-  buildInvoiceDocument, formatInvoiceZar, formatQuantity, INVOICE_FOOTER,
+  buildInvoiceDocument, formatInvoiceZar, formatQuantity, INVOICE_FOOTER, INVOICE_DOCUMENT_COPY, unitLabel,
   type InvoiceDocumentInput,
 } from '../lib/invoice-document.ts';
 
@@ -307,4 +307,61 @@ test('a paid copy keeps its invoice amount without asking the buyer to pay it ag
   assert.equal(paid.totalHeading, 'Invoice total');
   assert.equal(paid.totalLabel, unpaid.totalLabel, 'payment changes the status, not the value of the goods');
   assert.equal(paid.paidStamp, 'Paid · 2 Jul 2026');
+});
+
+// ── isiXhosa (unreviewed machine draft, 24 Oct 2026) ─────────────────────────────────────────
+test('the isiXhosa invoice copy has exactly the English keys, every one filled, and keeps the brand', () => {
+  const en = Object.keys(INVOICE_DOCUMENT_COPY.en).sort();
+  assert.deepEqual(Object.keys(INVOICE_DOCUMENT_COPY.xh).sort(), en);
+  assert.deepEqual(Object.keys(INVOICE_DOCUMENT_COPY.zu).sort(), en);
+  for (const key of en) {
+    const xh = (INVOICE_DOCUMENT_COPY.xh as Record<string, string>)[key];
+    assert.ok(xh.trim().length > 0, `${key} is empty`);
+    assert.equal(/\{[a-zA-Z]+\}/.test(xh), /\{[a-zA-Z]+\}/.test((INVOICE_DOCUMENT_COPY.en as Record<string, string>)[key]), `${key} placeholders`);
+  }
+  assert.match(INVOICE_DOCUMENT_COPY.xh.footer, /ImbewuField/);
+  assert.notEqual(INVOICE_DOCUMENT_COPY.xh.invoice, INVOICE_DOCUMENT_COPY.en.invoice);
+});
+
+test('an isiXhosa invoice changes only words: same number, amounts, bank details, VAT line and dates in isiXhosa months', () => {
+  const input: InvoiceDocumentInput = {
+    ...BASE,
+    issuedISO: '2026-10-23T08:00:00.000Z',
+    dueISO: '2026-11-22T08:00:00.000Z',
+    seller: { name: 'Thandi Mbeki', taxNumber: '4123456789' },
+    items: [{ desc: 'Spinach', qty: 12.5, unit: 'bunches', price: 35 }, { desc: 'Eggs', qty: 1, unit: 'trays', price: 0 }],
+    banking: { bankName: 'FNB', accountName: 'T Mbeki', accountNumber: '62001234567', branchCode: '250655' },
+    status: 'paid', paidAt: '2026-10-24T08:00:00.000Z', paymentMethod: 'mobile', notes: 'Thank you',
+  };
+  const en = buildInvoiceDocument({ ...input, language: 'en' });
+  const xh = buildInvoiceDocument({ ...input, language: 'xh' });
+  assert.equal(xh.number, en.number);
+  assert.equal(xh.totalLabel, en.totalLabel);
+  assert.deepEqual(xh.rows.map((r) => r.amount), en.rows.map((r) => r.amount));
+  assert.deepEqual(xh.sellerLines, en.sellerLines);
+  assert.match(xh.bankingLines.join('|'), /62001234567/);
+  assert.match(xh.bankingLines.join('|'), /250655/);
+  assert.match(xh.issuedLabel, /^23 Okthobha 2026$/);
+  assert.match(xh.dueLabel ?? '', /^22 Novemba 2026$/);
+  assert.match(xh.paidStamp ?? '', /^Ihlawulwe · 24 Okt 2026 · Ngefowuni$/);
+  assert.equal(xh.rows[0].detail, '12,5 izinyanda × R35,00');
+  assert.equal(xh.rows[1].detail, '1 itreyi');
+  assert.equal(xh.totalHeading, INVOICE_DOCUMENT_COPY.xh.total);
+  assert.equal(xh.labels.invoice, 'I-invoyisi');
+  assert.match(xh.notes ?? '', /^Amanqaku: Thank you$/);
+  // English and isiZulu output must not move.
+  assert.equal(buildInvoiceDocument({ ...input }).issuedLabel, en.issuedLabel);
+  assert.match(en.issuedLabel, /^23 October 2026$/);
+  assert.match(buildInvoiceDocument({ ...input, language: 'zu' }).issuedLabel, /^23 Okthoba 2026$/);
+  assert.equal(unitLabel(2, 'bags', 'xh'), 'iingxowa');
+  assert.equal(unitLabel(1, 'bags', 'xh'), 'ingxowa');
+  assert.equal(unitLabel(1, 'bags', 'zu'), 'isaka');
+  assert.equal(unitLabel(1, 'kg', 'xh'), 'kg');
+});
+
+test('the invoice screen, the money book and the picker pass isiXhosa through to the document', () => {
+  assert.match(src('../app/invoice/page.tsx'), /language=\{lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : 'en'\}/);
+  assert.match(src('../components/MyRecords.tsx'), /language=\{lang === 'zu' \? 'zu' : lang === 'xh' \? 'xh' : 'en'\}/);
+  assert.match(src('../components/CropSelect.tsx'), /language\?: 'en' \| 'zu' \| 'xh'/);
+  assert.match(src('../app/invoice/page.tsx'), /lang === 'xh'\s*\? formatXhosaDate\(new Date\(inv\.dateISO\)/);
 });

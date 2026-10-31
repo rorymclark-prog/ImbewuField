@@ -1,0 +1,56 @@
+{
+ "module": "reading-landscape",
+ "items": [
+  {
+   "n": 1,
+   "field": "body[1]",
+   "verdict": "repair",
+   "english": "Read the land before you change it. Find where water moves, where sunlight falls, where wind travels, and where cold air settles.",
+   "draft": "Funda umhlaba phambi kokuba uwutshintshe. Fumana apho amanzi ahamba khona, apho ilanga liwela khona, apho umoya uhamba khona, nalapho umoya obandayo uhlala khona.",
+   "backtranslation": "Read the land before you change it. Find where the water goes, where the sun sets/crosses, where the wind goes, and where the cold air stays.",
+   "problem": "\"liwela\" = sun sets/crosses, not \"where sunlight falls\"",
+   "corrected": "Funda umhlaba phambi kokuba uwutshintshe. Fumana apho amanzi ahamba khona, apho ilanga likhanya khona, apho umoya uhamba khona, nalapho umoya obandayo uhlala khona."
+  },
+  {
+   "n": 7,
+   "field": "body[2]",
+   "verdict": "repair",
+   "english": "Poorly laid contours can increase erosion, and soil that takes in water slowly can hold too much. Choose any water works for the site and plan a safe route for excess water.",
+   "draft": "Imigca yokuphakama ebekwe kakubi inokunyusa ukukhukuliseka komhlaba, kwaye umhlaba ofunxa amanzi kancinci unokubamba amanzi amaninzi kakhulu. Khetha nayiphi na imisebenzi yamanzi efanelekileyo kwindawo yakho kwaye ucwangcise indlela ekhuselekileyo yamanzi agqithisileyo.",
+   "backtranslation": "Contours placed badly can increase soil erosion, and soil that absorbs water slowly can hold too much water. Choose whatever water works suit your place and plan a safe route for excess water.",
+   "problem": "\"ofunxa amanzi kancinci\" reads as soil absorbing a little water (not slowly) and sounds contradictory with holding too much",
+   "corrected": "Imigca yokuphakama ebekwe kakubi inokunyusa ukukhukuliseka komhlaba, kwaye umhlaba ofunxa amanzi ngokucotha unokubamba amanzi amaninzi kakhulu. Khetha nayiphi na imisebenzi yamanzi efanelekileyo kwindawo yakho kwaye ucwangcise indlela ekhuselekileyo yamanzi agqithisileyo."
+  },
+  {
+   "n": 16,
+   "field": "body[2]",
+   "verdict": "repair",
+   "english": "Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.",
+   "draft": "Emva koko zoba iindlela ozibonileyo. Imephu yakho iba sisakhelo soyilo lwayo yonke ifama encinci.",
+   "backtranslation": "After that, draw the paths you have seen. Your map becomes the framework of the design of the whole small farm.",
+   "problem": "\"patterns\" rendered as \"iindlela\" (ways/roads), which reads as roads/paths already listed in the same lesson",
+   "corrected": "Emva koko zoba iipatheni ozibonileyo. Imephu yakho iba sisakhelo soyilo lwayo yonke ifama encinci."
+  },
+  {
+   "n": 20,
+   "field": "body[1]",
+   "verdict": "repair",
+   "english": "Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.",
+   "draft": "Buya ekuseni kakhulu ngentsasa ebandayo yoJuni. Phawula inkungu, amathontsi enkungu akhenkcezileyo, neendawo apho iqabaka lihlala ixesha elide.",
+   "backtranslation": "Come back very early in the morning on a cold June morning. Mark fog, frozen drops of fog, and places where frost stays a long time.",
+   "problem": "\"frozen dew\" rendered as frozen fog droplets",
+   "corrected": "Buya ekuseni kakhulu ngentsasa ebandayo yoJuni. Phawula inkungu, amazolo akhenkcezileyo, neendawo apho iqabaka lihlala ixesha elide."
+  },
+  {
+   "n": 21,
+   "field": "body[2]",
+   "verdict": "repair",
+   "english": "Add summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it.",
+   "draft": "Yongeza imicibisholo yomoya wasehlotyeni nowasebusika, ukuqwalasela umthunzi nge-8am, emini nge-4pm, neendawo (zones) neesektha (sectors) zakho. Gcina imephu uze uyihlaziye.",
+   "backtranslation": "Add arrows for summer and winter wind, shade observations at 8am, noon and 4pm, and your zones and sectors. Keep the map and update it.",
+   "problem": "missing comma makes \"midday at 4pm\" read as one time",
+   "corrected": "Yongeza imicibisholo yomoya wasehlotyeni nowasebusika, ukuqwalasela umthunzi nge-8am, emini, nge-4pm, neendawo (zones) neesektha (sectors) zakho. Gcina imephu uze uyihlaziye."
+  }
+ ],
+ "okCount": 71
+}

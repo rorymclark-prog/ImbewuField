@@ -12,6 +12,7 @@ import st from '../lib/locales/st.ts';
 import ts from '../lib/locales/ts.ts';
 import ve from '../lib/locales/ve.ts';
 import { englishDictionary } from './translation-inventory.ts';
+import * as xhInline from '../lib/xh-inline.ts';
 import { beforeSettingsTranslations, englishBeforeSettingsTranslations } from './settings-translation-preservation.ts';
 
 const english = englishDictionary();
@@ -33,6 +34,8 @@ function settingsHtml(lang: keyof typeof locales, replacement?: string): string 
       translate: (code: keyof typeof locales, key: string) => locales[code]?.[key] ?? english[key] ?? key,
       useLanguage: () => ({ lang, setLang: noOp, t: (key: string) => dictionary[key] ?? english[key] ?? key }),
     },
+    // The isiXhosa inline drafts (lib/xh-inline.ts) are plain data, used as shipped.
+    '@/lib/xh-inline': xhInline,
     '@/lib/theme': { useTheme: () => ({ theme: 'earth', mode: 'light', textScale: 1, setTheme: noOp, setMode: noOp, setTextScale: noOp }) },
     '@/lib/site-progress': {}, '@/lib/tts': {},
     '@/lib/app-level': { useAppLevel: () => 'simple', setAppLevel: noOp },

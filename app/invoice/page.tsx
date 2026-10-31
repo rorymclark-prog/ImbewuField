@@ -29,6 +29,7 @@ import {
   loadLetterhead, saveLetterhead, dueDateISO, EMPTY_LETTERHEAD, type SellerLetterhead,
 } from '@/lib/invoice-seller';
 import { buildInvoiceDocument, formatInvoiceZar } from '@/lib/invoice-document';
+import { formatXhosaDate } from '@/lib/xh-dates';
 import { buildInvoicePdf } from '@/lib/invoice-pdf';
 import InvoiceDocumentView from '@/components/invoice/InvoiceDocument';
 import LessonLink from '@/components/design/LessonLink';
@@ -953,7 +954,9 @@ export default function InvoicePage() {
                               #{String(inv.no).padStart(4, '0')} · {inv.billTo || ui('No buyer')}
                             </div>
                             <div className="text-xs font-sans" style={{ color: 'var(--text-muted)' }}>
-                              {isRecordsRegionalLang(lang)
+                              {lang === 'xh'
+                                ? formatXhosaDate(new Date(inv.dateISO), { day: true, month: 'short', year: true })
+                                : isRecordsRegionalLang(lang)
                                 ? recordsDate(lang, new Date(inv.dateISO), true)
                                 : new Date(inv.dateISO).toLocaleDateString(lang === 'zu' ? 'zu-ZA' : 'en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                             </div>
@@ -1181,7 +1184,7 @@ export default function InvoicePage() {
                     <div className="flex-1 min-w-0">
                       <CropSelect
                         ariaLabel={ui('Crop or product')}
-                        language={lang === 'zu' ? 'zu' : 'en'}
+                        language={lang === 'zu' ? 'zu' : lang === 'xh' ? 'xh' : 'en'}
                         value={it.desc}
                         rememberedCrops={products.map((product) => product.desc)}
                         onChange={(crop, cropKey) => chooseCrop(it.id, crop, cropKey)}

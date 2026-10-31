@@ -1,0 +1,790 @@
+{
+  "language": "xh",
+  "sourceLanguage": "en",
+  "reviewStatus": "unreviewed",
+  "slides": [
+    {
+      "n": 1,
+      "english": {
+        "heading": "Vegetables and Staple Crops",
+        "body": [
+          "Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training.",
+          "A productive garden is not the one that looks fullest on one day. It's the one that keeps food moving into the household, week after week.",
+          "In the next few minutes, we'll cover four things. How to build a bed. How to keep harvests coming. Which staples to grow. And what to do when pests arrive."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Imifuno nezityalo eziyisiseko"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Wamkelekile. Esi sisifundo esithi Imifuno nezityalo eziyisiseko. Lelinye kwiimodyuli ezilishumi zoqeqesho lwe-ImbewuField."
+          },
+          {
+            "status": "draft",
+            "text": "Igadi evelisayo ayiyiyo leyo ibonakala igcwele ngosuku olunye. Yeyo eqhubeka ingenisa ukutya ekhayeni, iveki nganye."
+          },
+          {
+            "status": "draft",
+            "text": "Kwimizuzu embalwa ezayo, siza kuthetha ngezinto ezine. Indlela yokwakha ibhedi. Indlela yokugcina izivuno zisiza. Zeziphi izityalo eziyisiseko ekufuneka uzilime. Kwaye yintoni ekufuneka uyenze xa kufika izitshabalalisi."
+          }
+        ]
+      }
+    },
+    {
+      "n": 2,
+      "english": {
+        "heading": "Why This Matters",
+        "body": [
+          "Let's start with the problem.",
+          "One big sowing gives you a glut. Everything is ready at once. You eat what you can, you give some away, and the rest is wasted.",
+          "Then comes the gap. Nothing is ready. The garden is full of plants, but there's no food in it.",
+          "Small sowings create a rhythm instead. Planting, tending and harvesting overlap. Something is always coming ready.",
+          "That rhythm is what feeds a household. Not the size of the garden."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Kutheni kubalulekile"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Masiqale ngengxaki."
+          },
+          {
+            "status": "draft",
+            "text": "Ukuhlwayela okukhulu kanye kukunika isivuno esiphuphumayo. Yonke into ilunga ngaxeshanye. Utya oko unokukutya, unike abanye, kwaye okushiyekileyo kuyonakala."
+          },
+          {
+            "status": "draft",
+            "text": "Emva koko kuza isikhewu. Akukho nto ilungileyo. Igadi igcwele izityalo, kodwa akukho kutya kuyo."
+          },
+          {
+            "status": "draft",
+            "text": "Ukuhlwayela kancinci kudala isingqi endaweni yoko. Ukutyala, ukunyamekela nokuvuna kuyadibana. Kusoloko kukho into eza kulunga."
+          },
+          {
+            "status": "draft",
+            "text": "Sisingqi eso esondla ikhaya. Asikokukhula kwegadi."
+          }
+        ]
+      }
+    },
+    {
+      "n": 3,
+      "english": {
+        "heading": "Learning Outcomes",
+        "body": [
+          "By the end of this module, you'll be able to make four decisions in your own field.",
+          "One. Build the right bed — matching the width and the bed type to your soil and your rainfall.",
+          "Two. Keep harvests moving, using succession planting and intercropping.",
+          "Three. Choose staples that protect you when one crop fails.",
+          "Four. Read a pest problem before you treat it.",
+          "These four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Iziphumo zokufunda"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ekupheleni kwale modyuli, uya kukwazi ukwenza izigqibo ezine kwintsimi yakho."
+          },
+          {
+            "status": "draft",
+            "text": "Okokuqala. Yakha ibhedi efanelekileyo — uhlanganise ububanzi nohlobo lwebhedi nomhlaba wakho kunye nemvula yakho."
+          },
+          {
+            "status": "draft",
+            "text": "Okwesibini. Gcina izivuno zisiza, usebenzisa ukutyala ngokulandelelana nokuxuba izityalo."
+          },
+          {
+            "status": "draft",
+            "text": "Okwesithathu. Khetha izityalo eziyisiseko ezikukhusela xa esinye isityalo singaphumeleli."
+          },
+          {
+            "status": "draft",
+            "text": "Okwesine. Funda ingxaki yesitshabalalisi phambi kokuba uyinyange."
+          },
+          {
+            "status": "draft",
+            "text": "Ezi zine zihambelana. Ibhedi eyakhiwe kakuhle isenokungaphumeleli xa yonke into ityalwa ngosuku olunye. Ukutyala okuhlukeneyo nako kusenokulwa xa ucinga ukuba igqabi ngalinye elimthubi yingxaki yenambuzane."
+          }
+        ]
+      }
+    },
+    {
+      "n": 4,
+      "english": {
+        "heading": "Roots Need Loose Soil, Paths Need Your Feet",
+        "body": [
+          "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.",
+          "The protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.",
+          "One metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.",
+          "Now think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Iingcambu zifuna umhlaba okhululekileyo, iindlela zifuna iinyawo zakho"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Umhlaba ocinezelekileyo ulahlekelwa zizithuba zawo zomoya. Iingcambu ziyacotha. Amanzi angena ngendlela eyahlukileyo. Ibhedi iba nzima ngakumbi ukuyisebenza ixesha ngalinye lonyaka."
+          },
+          {
+            "status": "draft",
+            "text": "Ukukhusela kulula. Iindlela ezisisigxina, kunye nebhedi emxinwa ngokwaneleyo ukuze ufikelele embindini usuka macala omabini."
+          },
+          {
+            "status": "draft",
+            "text": "Ububanzi obuyimitha e-1 ukuya kwi-1.2. Yinani elisebenzayo elo. Kububanzi obunjalo unokufikelela embindini usuka kwenye yeendlela, kwaye iinyawo zakho aziyichukumisi indawo ekulinywa kuyo."
+          },
+          {
+            "status": "draft",
+            "text": "Ngoku cinga ngamabhedi akho. Ngaba unokufikelela embindini ungangeni ngaphakathi? Yiya uzame oko phambi kokuba utyale enye into."
+          }
+        ]
+      }
+    },
+    {
+      "n": 5,
+      "english": {
+        "heading": "Choose the Bed for the Soil and Rainfall",
+        "body": [
+          "There's no single bed shape that's right everywhere.",
+          "Start with the least disturbance that solves your problem.",
+          "No-dig suits most garden soils. Leave the structure alone and build fertility on top.",
+          "Do not dig wet clay. If compaction or poor drainage is severe, identify the cause with local advice before choosing deeper cultivation.",
+          "Raised beds suit wet ground, where water needs somewhere to drain away to.",
+          "Sunken beds suit dry ground, where you want to catch and hold what rain you get.",
+          "Look after heavy rain. Where does water sit or run off? Combine that observation with soil and drainage advice before choosing the bed."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Khetha ibhedi ngokomhlaba nemvula"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Akukho simo sibhedi esinye esilungileyo kuyo yonke indawo."
+          },
+          {
+            "status": "draft",
+            "text": "Qala ngeyona ndlela iphazamisa umhlaba kancinci, kodwa esonjulula ingxaki yakho."
+          },
+          {
+            "status": "draft",
+            "text": "Indlela yokungembi (no-dig) ilungele uninzi lwemihlaba yegadi. Ungawuphazamisi ulwakhiwo lwawo, wakhe ubutyebi bomhlaba phezulu."
+          },
+          {
+            "status": "draft",
+            "text": "Musa ukumba udongwe olumanzi. Ukuba ukucinezeleka komhlaba okanye ukungaphumi kakuhle kwamanzi kubi kakhulu, chonga unobangela ngokufumana icebiso lasekuhlaleni phambi kokukhetha ukulima nzulu ngakumbi."
+          },
+          {
+            "status": "draft",
+            "text": "Amabhedi aphakanyisiweyo (raised beds) alungele umhlaba omanzi, apho amanzi efuna indawo anokuhamba kuyo."
+          },
+          {
+            "status": "draft",
+            "text": "Amabhedi angena emhlabeni (sunken beds) alungele umhlaba owomileyo, apho ufuna ukubamba nokugcina imvula oyifumanayo."
+          },
+          {
+            "status": "draft",
+            "text": "Jonga emva kwemvula enkulu. Amanzi ahlala phi okanye abaleka phi? Dibanisa oko ukubonileyo necebiso lomhlaba nelokuphuma kwamanzi phambi kokukhetha ibhedi."
+          }
+        ]
+      }
+    },
+    {
+      "n": 6,
+      "english": {
+        "heading": "Seed or Seedling?",
+        "body": [
+          "Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.",
+          "Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.",
+          "Use spacing guidance for the crop, variety and local conditions. Check the packet and local grower advice. Watch for crowding as plants develop."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Imbewu okanye isithole?"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ezinye izityalo azikuthandi ukuphazanyiswa kweengcambu zazo. Zikhula kakuhle xa zihlwayelwa ngqo apho ziza kukhula khona. Iimbotyi, iminqathe (carrots) nombona zikweli qela."
+          },
+          {
+            "status": "draft",
+            "text": "Ezinye zikhula kakuhle xa ziqala zikhuselekile kwindawo yokuhlwayela imbewu (nursery), emva koko zitshintshelwe kwenye indawo. Iitumato neebrassica (izityalo zosapho lwekhaphetshu) zikweli qela."
+          },
+          {
+            "status": "draft",
+            "text": "Sebenzisa isikhokelo somgama phakathi kwezityalo ngokwesityalo, uhlobo lwaso neemeko zasekuhlaleni. Jonga ipakethi yembewu necebiso labalimi basekuhlaleni. Qaphela ukuxinana njengoko izityalo zikhula."
+          }
+        ]
+      }
+    },
+    {
+      "n": 7,
+      "english": {
+        "heading": "Mark the Working Shape",
+        "body": [
+          "Before you plant, mark the bed out.",
+          "One point two metres wide. Three metres long. One practice bed.",
+          "Use pegs and string. Mark the rectangle, and mark both access paths.",
+          "Then prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.",
+          "A string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.",
+          "That bed gets easier to improve every season, because you stopped walking on it."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Phawula isimo sokusebenza"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Phambi kokuba utyale, phawula ibhedi."
+          },
+          {
+            "status": "draft",
+            "text": "Ububanzi obuyimitha e-1.2. Ubude obuyimitha emithathu. Ibhedi enye yokuziqhelanisa."
+          },
+          {
+            "status": "draft",
+            "text": "Sebenzisa izikhonkwane nentambo. Phawula unxande, uphawule neendlela zombini zokufikelela."
+          },
+          {
+            "status": "draft",
+            "text": "Emva koko lungiselela umhlaba wakho — qala ngokungembi, kwaye wembe nzulu kuphela xa umhlaba wakho uyidinga ngokwenene."
+          },
+          {
+            "status": "draft",
+            "text": "Umgca wentambo uguqula ingcamango ibe sisigqibo. Xa iindlela sele zikhona, zigcine. Xa indawo ekulinywa kuyo sele ikhona, ikhusele."
+          },
+          {
+            "status": "draft",
+            "text": "Loo bhedi iba lula ngakumbi ukuyiphucula ixesha ngalinye lonyaka, kuba uyekile ukuhamba phezu kwayo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 8,
+      "english": {
+        "heading": "A Sowing Rhythm Keeps Food Moving",
+        "body": [
+          "Succession planting is a calendar habit, not a special crop.",
+          "Choose something your household actually eats often. Then sow a small amount of it, again and again.",
+          "Plant a short row every two to three weeks.",
+          "Less waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.",
+          "Separate sowings may reduce the risk of losing everything at once. They do not guarantee a harvest if difficult conditions continue.",
+          "Which fast crop could you sow in small batches? Decide on one, and start it this week."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Isingqi sokuhlwayela sigcina ukutya kuhamba"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ukutyala ngokulandelelana (succession planting) yimikhwa yekhalenda, hayi isityalo esikhethekileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Khetha into edliwa rhoqo yikhaya lakho. Emva koko uhlwayele isixa esincinci sayo, kuphindaphindwe."
+          },
+          {
+            "status": "draft",
+            "text": "Tyala umqolo omfutshane rhoqo emva kweeveki ezimbini ukuya kwezintathu."
+          },
+          {
+            "status": "draft",
+            "text": "Ukonakala kuncinci xa kunesivuno esiphuphumayo. Ukutya okutsha ixesha elide. Kwaye umsebenzi usasazeka ebudeni bexesha lonyaka endaweni yokuwela phezu kwakho kanye."
+          },
+          {
+            "status": "draft",
+            "text": "Ukuhlwayela ngamaxesha ahlukeneyo kunokunciphisa ingozi yokulahlekelwa yiyo yonke into kanye. Akuqinisekisi isivuno ukuba iimeko ezinzima ziyaqhubeka."
+          },
+          {
+            "status": "draft",
+            "text": "Sisiphi isityalo esikhawulezayo onokusihlwayela ngamaqela amancinci? Khetha esinye, uqale kule veki."
+          }
+        ]
+      }
+    },
+    {
+      "n": 9,
+      "english": {
+        "heading": "Sow Little and Often",
+        "body": [
+          "Here's what it looks like in practice.",
+          "Sow one. Then two to three weeks later, sow two. Then sow three. Then sow four.",
+          "With suitable crop timing, harvests can begin to overlap. The first batch will not always be ready by the fourth sowing.",
+          "Two to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.",
+          "Watch what your own garden does, and adjust the interval. That observation is the skill."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Hlwayela kancinci rhoqo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Nantsi indlela ekubonakala ngayo ekusebenzeni."
+          },
+          {
+            "status": "draft",
+            "text": "Hlwayela eyodwa. Emva koko emva kweeveki ezimbini ukuya kwezintathu, hlwayela ezimbini. Emva koko hlwayela ezintathu. Emva koko hlwayela ezine."
+          },
+          {
+            "status": "draft",
+            "text": "Ngexesha elifanelekileyo lesityalo, izivuno ziyakwazi ukuqala ukudibana. Iqela lokuqala alisoloko lilungile ngexesha lokuhlwayela okwesine."
+          },
+          {
+            "status": "draft",
+            "text": "Iiveki ezimbini ukuya kwezintathu sisingqi sokuqala, asingomthetho. Isityalo samagqabi sexesha elibandayo sinokuhlala ixesha elide. Ubushushu bunokukhawulezisa izinto, okanye bubangele ukuba isityalo singaphumeleli."
+          },
+          {
+            "status": "draft",
+            "text": "Qaphela oko igadi yakho ikwenzayo, kwaye uguqule ixesha eliphakathi kokuhlwayela. Oko kuqwalasela kokona buchule."
+          }
+        ]
+      }
+    },
+    {
+      "n": 10,
+      "english": {
+        "heading": "Each Crop Earns Its Place",
+        "body": [
+          "Intercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.",
+          "The Three Sisters is an example from Indigenous farming traditions in the Americas.",
+          "Maize gives height and structure.",
+          "Beans climb the maize, and store as protein.",
+          "Pumpkin spreads across the ground, shading the soil and holding moisture.",
+          "Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.",
+          "The plants can still compete. Give them suitable space, water and light. Beans fix nitrogen with root bacteria, but do not assume they immediately feed the maize; nutrients in residues are released during decomposition."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Isityalo ngasinye sifumana indawo yaso"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ukuxuba izityalo (intercropping) akukuthi nje ukuzixinaniselanisa izityalo ezahlukeneyo. Isityalo ngasinye sidinga umsebenzi, nendawo eyaneleyo yokuwenza."
+          },
+          {
+            "status": "draft",
+            "text": "I-Three Sisters ngumzekelo ovela kwizithethe zokulima zabantu bomthonyama baseMerika (the Americas)."
+          },
+          {
+            "status": "draft",
+            "text": "Umbona unika ukuphakama nesakhiwo."
+          },
+          {
+            "status": "draft",
+            "text": "Iimbotyi ziyakhwela kumbona, kwaye zigcina iprotheyini."
+          },
+          {
+            "status": "draft",
+            "text": "Ithanga lisasazeka emhlabeni, lisithile umhlaba kwaye ligcina ukumanzi."
+          },
+          {
+            "status": "draft",
+            "text": "Ixesha liyabaluleka. Qala umbona kuqala, ukuze ube nokomelela ngokwaneleyo ukuthwala iimbotyi xa ziqala ukukhwela."
+          },
+          {
+            "status": "draft",
+            "text": "Izityalo zisenokukhuphisana. Zinike indawo, amanzi nokukhanya okufanelekileyo. Iimbotyi zibamba inayitrojeni kunye neebhaktheriya zeengcambu, kodwa musa ukuthatha ngokuthi zondla umbona kwangoko; izondlo ezikwintsalela zikhululwa ngexesha lokubola."
+          }
+        ]
+      }
+    },
+    {
+      "n": 11,
+      "english": {
+        "heading": "Plan Backwards From Your Hungry Gap",
+        "body": [
+          "A household may have a hungry gap: weeks when stored food runs low before the next harvest is ready.",
+          "Yours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.",
+          "Don't copy somebody else's calendar. Name your own months first.",
+          "Write them down. Then choose the crop and the sowing date that puts food into that gap.",
+          "That's planning backwards, and it's the difference between a garden that looks productive and a household that eats."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Cwangcisa ubuyela umva usuka kwisikhewu sakho sendlala"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ikhaya linokuba nesikhewu sendlala (hungry gap): iiveki apho ukutya okugciniweyo kuncipha phambi kokuba isivuno esilandelayo silunge."
+          },
+          {
+            "status": "draft",
+            "text": "Eyakho isenokuza emva kokuba umbona ogciniweyo uphelile. Isenokuza phambi kokuba imifuno eluhlaza yasebusika ilunge. Isenokuza ngexesha elomileyo apho amanzi ekhawulela igadi."
+          },
+          {
+            "status": "draft",
+            "text": "Musa ukukopa ikhalenda yomnye umntu. Qala ngokubiza amagama eenyanga zakho."
+          },
+          {
+            "status": "draft",
+            "text": "Zibhale phantsi. Emva koko ukhethe isityalo nomhla wokuhlwayela ofaka ukutya kuloo sikhewu."
+          },
+          {
+            "status": "draft",
+            "text": "Oko kukucwangcisa ubuyela umva, kwaye yiyo eyahlula igadi ebonakala ivelisa kwikhaya elidlayo ngokwenene."
+          }
+        ]
+      }
+    },
+    {
+      "n": 12,
+      "english": {
+        "heading": "Staples Are Food Insurance",
+        "body": [
+          "A staple earns its place because it feeds the household beyond the day of harvest.",
+          "It carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.",
+          "One staple leaves you vulnerable. Two or more give you options when weather or pests hit.",
+          "Grow at least two. Not one.",
+          "Which staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Izityalo eziyisiseko zikukhusela ekungatyini"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Isityalo esiyisiseko sifanelwe sisikhundla saso kuba sondla ikhaya ngaphaya kosuku lwesivuno."
+          },
+          {
+            "status": "draft",
+            "text": "Sithwala amandla okanye iprotheyini. Siyagcinwa, okanye sihlala emhlabeni ude usidinge. Kwaye rhoqo sithwala nenkumbulo yenkcubeko."
+          },
+          {
+            "status": "draft",
+            "text": "Isityalo esiyisiseko esinye sikushiya ungakhuselekanga. Ezimbini okanye ngaphezulu zikunika ukhetho xa imozulu okanye izitshabalalisi zibetha."
+          },
+          {
+            "status": "draft",
+            "text": "Lima ubuncinane ezimbini. Hayi enye."
+          },
+          {
+            "status": "draft",
+            "text": "Sesiphi isityalo esiyisiseko ekuxhomekeke kuso ikhaya lakho kakhulu ngoku? Yiloo nto engahlukumeza kakhulu ukuba ayiphumelelanga — ngoko yiyo leyo efuna iqabane."
+          }
+        ]
+      }
+    },
+    {
+      "n": 13,
+      "english": {
+        "heading": "Different Staples Protect Against Different Risks",
+        "body": [
+          "Each staple protects you against something different.",
+          "Maize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.",
+          "Beans and cowpeas give a storable protein harvest.",
+          "Sweet potato develops some drought tolerance after its storage roots form. It needs water in the first weeks and while roots are forming; water stress then can reduce the harvest. Its young leaves are edible too.",
+          "Amadumbe handles wetter ground, where other staples struggle.",
+          "Notice that they fail in different conditions. That's the whole point."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Izityalo eziyisiseko ezahlukeneyo zikukhusela kwiingozi ezahlukeneyo"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Isityalo ngasinye esiyisiseko sikukhusela kwinto eyahlukileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Umbona unika iikhalori, kwaye ugcinwa womile. Umbona we-open-pollinated (uthuli lwentyatyambo lwawo luthwalwa ngokwendalo ngumoya okanye zizinambuzane) ukuvumela ukuba ugcine nembewu yakho, ukuba ulawula ukwahlukaniswa kwezityalo (isolation) nokukhetha (selection)."
+          },
+          {
+            "status": "draft",
+            "text": "Iimbotyi ne-cowpeas zinika isivuno seprotheyini enokugcinwa."
+          },
+          {
+            "status": "draft",
+            "text": "Ibhatata iphuhlisa ukunyamezela imbalela ngokuthile emva kokuba iingcambu zokugcina sezenziwe. Ifuna amanzi kwiiveki zokuqala nangoxa iingcambu zisenziwa; uxinzelelo lwamanzi ngelo xesha lunokunciphisa isivuno. Amagqabi ayo amancinci nawo ayadleka."
+          },
+          {
+            "status": "draft",
+            "text": "Amadumbe asinda emhlabeni omanzi ngakumbi, apho ezinye izityalo eziyisiseko zilwa."
+          },
+          {
+            "status": "draft",
+            "text": "Qaphela ukuba ziyasilela kwiimeko ezahlukeneyo. Yiloo nto kanye."
+          }
+        ]
+      }
+    },
+    {
+      "n": 14,
+      "english": {
+        "heading": "Diversity Keeps Food Moving",
+        "body": [
+          "Resilience doesn't mean nothing fails.",
+          "It means one failure doesn't finish your household's food plan.",
+          "One crop is one point of failure.",
+          "Two or more staples give you more ways to keep eating.",
+          "Different crops use water, soil and seasons differently. That difference is the protection."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Ukwahluka kugcina ukutya kuhamba"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ukunyamezela akuthethi ukuba akukho nto isilelayo."
+          },
+          {
+            "status": "draft",
+            "text": "Kuthetha ukuba ukusilela okunye akuliphelisi icebo lokutya lekhaya lakho."
+          },
+          {
+            "status": "draft",
+            "text": "Isityalo esinye siyindawo enye yokusilela."
+          },
+          {
+            "status": "draft",
+            "text": "Izityalo ezimbini okanye ngaphezulu eziyisiseko zikunika iindlela ezininzi zokuqhubeka udla."
+          },
+          {
+            "status": "draft",
+            "text": "Izityalo ezahlukeneyo zisebenzisa amanzi, umhlaba namaxesha ngokwahlukeneyo. Loo mahluko yikhuseleko."
+          }
+        ]
+      }
+    },
+    {
+      "n": 15,
+      "english": {
+        "heading": "Pests Are Messengers Before They Are Enemies",
+        "body": [
+          "Pest pressure usually rises for a reason.",
+          "Plants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.",
+          "So before you treat anything, look at the whole system.",
+          "Is the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?",
+          "A yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Izitshabalalisi zizigidimi phambi kokuba zibe ziintshaba"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Uxinzelelo lwezitshabalalisi rhoqo lunyuka ngesizathu."
+          },
+          {
+            "status": "draft",
+            "text": "Izityalo ezikuxinzelelo. Isityalo esinye esilawula umhlaba. Okanye ukusetyenziswa kakhulu kweekhemikhali sele kwasusa izilwanyana ezizingelayo ebezikunceda."
+          },
+          {
+            "status": "draft",
+            "text": "Ngoko phambi kokuba unyange nantoni na, jonga yonke inkqubo."
+          },
+          {
+            "status": "draft",
+            "text": "Ngaba isityalo sinqongophele amanzi? Ngaba umhlaba ucinezelekile, okanye awunazondlo ezaneleyo? Ngaba izilwanyana ezizingelayo sele zisebenza ukusonjulula ingxaki?"
+          },
+          {
+            "status": "draft",
+            "text": "Igqabi elimthubi aliyiyo ngokuzenzekelayo inambuzane. Linokuba ngamanzi, ukondliwa, okanye umonakalo wengcambu. Zazi ukuba kungoluphi phambi kokuba wenze nto."
+          }
+        ]
+      }
+    },
+    {
+      "n": 16,
+      "english": {
+        "heading": "Treat the Cause Before the Insect",
+        "body": [
+          "Work through four steps, in order.",
+          "One. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.",
+          "Two. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.",
+          "Three. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.",
+          "Four. Only then, act — and start with the lightest thing that works. Physical removal, barriers or changes in crop care may help. Check that the action suits the problem and monitor the result.",
+          "If a treatment is needed, use a product registered for that crop and pest, and follow its label. This includes neem products. Check protection and harvest waiting instructions. Do not improvise mixtures or stronger doses.",
+          "Be honest with yourself about which step you usually skip."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Phatha unobangela phambi kwenambuzane"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Landela amanyathelo amane, ngokulandelelana."
+          },
+          {
+            "status": "draft",
+            "text": "Okokuqala. Jonga. Jonga indlela umonakalo obonakala ngayo, ingaphantsi legqabi, isiqu, nezityalo ezikufutshane."
+          },
+          {
+            "status": "draft",
+            "text": "Okwesibini. Khangela uxinzelelo. Ukumanza komhlaba, iingcambu, umgama phakathi kwezityalo, ukondliwa, ukuphuma kwamanzi."
+          },
+          {
+            "status": "draft",
+            "text": "Okwesithathu. Khusela abakunceda. Izinambuzane ezinceda zenza umsebenzi obungawenza wena."
+          },
+          {
+            "status": "draft",
+            "text": "Okwesine. Kuphela emva koko, yenza into — kwaye uqale ngento elula esebenzayo. Ukususa ngokwasemzimbeni, imiqobo okanye utshintsho kunakekelo lwesityalo kunokunceda. Qinisekisa ukuba isenzo sifanelana nengxaki kwaye ubone iziphumo."
+          },
+          {
+            "status": "draft",
+            "text": "Ukuba unyango luyadingeka, sebenzisa imveliso ebhaliselwe eso sityalo nesitshabalalisi, kwaye ulandele ileyibhile yayo. Oku kubandakanya iimveliso ze-neem. Jonga imiyalelo yokhuseleko nexesha lokulinda phambi kokuvuna. Musa ukuyila imixube okanye iidosi ezomeleleyo ngakumbi."
+          },
+          {
+            "status": "draft",
+            "text": "Yiba nyanisekile kuwe ngowuphi umnyathelo osoloko ewutsiba."
+          }
+        ]
+      }
+    },
+    {
+      "n": 17,
+      "english": {
+        "heading": "Field Assignment",
+        "body": [
+          "Now the lesson finishes in the soil.",
+          "Build one bed that can keep feeding you. One point two metres by three metres.",
+          "Reach the middle from both sides. Keep every foot on the paths. Space your plants for your own climate. Mulch the bed.",
+          "Check the bed regularly from planting. Use the ten-day photograph as an assignment checkpoint, not a reason to delay care.",
+          "Photograph it when it's planted. Then come back after ten days with what you observed.",
+          "The aim isn't a perfect picture. The aim is a bed whose shape, spacing and rhythm you chose on purpose."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Umsebenzi wasentsimini"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Ngoku isifundo siphelela emhlabeni."
+          },
+          {
+            "status": "draft",
+            "text": "Yakha ibhedi enye enokuqhubeka ikondla. Imitha e-1.2 ngemitha emithathu."
+          },
+          {
+            "status": "draft",
+            "text": "Fikelela embindini usuka macala omabini. Gcina inyawo ngalinye ezindleleni. Beka umgama phakathi kwezityalo ngokwemozulu yakho. Gquma ibhedi ngengca yokugquma."
+          },
+          {
+            "status": "draft",
+            "text": "Hlola ibhedi rhoqo ukususela ekutyaleni. Sebenzisa ifoto yeentsuku ezilishumi njengendawo yokukhangela umsebenzi, hayi njengesizathu sokulibazisa ukunakekela."
+          },
+          {
+            "status": "draft",
+            "text": "Thatha ifoto yayo xa sele ityaliwe. Emva koko buya emva kweentsuku ezilishumi unoko ukubonileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Injongo ayiyiyo ifoto egqibeleleyo. Injongo yibhedi onyule ngabom isimo sayo, umgama wezityalo nesingqi sayo."
+          }
+        ]
+      }
+    },
+    {
+      "n": 18,
+      "english": {
+        "heading": "Field Action",
+        "body": [
+          "This week, put one bed into production.",
+          "One. Mark the bed and the paths.",
+          "Two. Plant, with your spacing and your sowing rhythm.",
+          "Three. Return after ten days, with a photo.",
+          "Then observe. Adjust. And write it down.",
+          "Record the sowing date. The rain. What germinated. Pest pressure. What you harvested.",
+          "Season by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.",
+          "Use your record with reliable local advice when making the next decision."
+        ]
+      },
+      "target": {
+        "heading": {
+          "status": "draft",
+          "text": "Isenzo sasentsimini"
+        },
+        "body": [
+          {
+            "status": "draft",
+            "text": "Kule veki, beka ibhedi enye ekuveliseni."
+          },
+          {
+            "status": "draft",
+            "text": "Okokuqala. Phawula ibhedi neendlela."
+          },
+          {
+            "status": "draft",
+            "text": "Okwesibini. Tyala, ngomgama wakho nesingqi sakho sokuhlwayela."
+          },
+          {
+            "status": "draft",
+            "text": "Okwesithathu. Buya emva kweentsuku ezilishumi, unefoto."
+          },
+          {
+            "status": "draft",
+            "text": "Emva koko jonga. Lungisa. Kwaye bhala phantsi."
+          },
+          {
+            "status": "draft",
+            "text": "Bhala umhla wokuhlwayela. Imvula. Oko kuhlumileyo. Uxinzelelo lwezitshabalalisi. Oko ukuvunileyo."
+          },
+          {
+            "status": "draft",
+            "text": "Ixesha ngexesha, igadi yakho ixhomekeka kancinci ekuqikeleleni, ixhomekeke ngakumbi koko uye wakubona kusenzeka emhlabeni wakho."
+          },
+          {
+            "status": "draft",
+            "text": "Sebenzisa irekhodi yakho kunye nocebiso lwasekuhlaleni olunokuthenjwa xa wenza isigqibo esilandelayo."
+          }
+        ]
+      }
+    }
+  ]
+}

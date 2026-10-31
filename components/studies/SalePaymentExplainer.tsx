@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useLanguage } from '@/lib/i18n';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import styles from './SalePaymentExplainer.module.css';
 
 // One sale stays fixed while receipts settle it. These are teaching values, never records.
@@ -13,6 +15,8 @@ const stages = [
 const rand = (value: number) => `R${value.toFixed(2)}`;
 
 export default function SalePaymentExplainer() {
+  const { lang } = useLanguage();
+  const tx = (english: string) => inlineText(lang, english);
   const [step, setStep] = useState(0);
   const [playing, setPlaying] = useState(false);
   const stage = stages[step];
@@ -24,29 +28,29 @@ export default function SalePaymentExplainer() {
   }, [playing, step]);
   function choose(value: number) { setPlaying(false); setStep(value); }
   return <section className={styles.example} aria-labelledby="payment-example-title">
-    <p className={styles.eyebrow}>Follow a practice sale</p>
-    <h2 id="payment-example-title">One invoice. Two payments.</h2>
-    <p>Invented values for learning. This example does not change your records.</p>
-    <div className={styles.stages} aria-label="Payment example stages">
-      {stages.map((item, index) => <button key={item.title} type="button" aria-pressed={step === index} onClick={() => choose(index)}><span>{index + 1}</span>{item.title}</button>)}
+    <p className={styles.eyebrow}>{tx('Follow a practice sale')}</p>
+    <h2 id="payment-example-title">{tx('One invoice. Two payments.')}</h2>
+    <p>{tx('Invented values for learning. This example does not change your records.')}</p>
+    <div className={styles.stages} aria-label={tx('Payment example stages')}>
+      {stages.map((item, index) => <button key={item.title} type="button" aria-pressed={step === index} onClick={() => choose(index)}><span>{index + 1}</span>{tx(item.title)}</button>)}
     </div>
     <div className={styles.paper} aria-live="polite" aria-atomic="true">
-      <p className={styles.source}>{stage.source}</p>
-      <h3>{stage.title}</h3>
+      <p className={styles.source}>{tx(stage.source)}</p>
+      <h3>{tx(stage.title)}</h3>
       <div className={styles.amounts}>
-        <div><span>Invoice value</span><strong>{step === 0 ? 'Not issued' : rand(stage.invoice)}</strong></div>
-        <div><span>Received so far</span><strong>{rand(stage.received)}</strong></div>
-        <div><span>Still owed</span><strong>{step === 0 ? 'Not invoiced' : rand(stage.owed)}</strong></div>
+        <div><span>{tx('Invoice value')}</span><strong>{step === 0 ? tx('Not issued') : rand(stage.invoice)}</strong></div>
+        <div><span>{tx('Received so far')}</span><strong>{rand(stage.received)}</strong></div>
+        <div><span>{tx('Still owed')}</span><strong>{step === 0 ? tx('Not invoiced') : rand(stage.owed)}</strong></div>
       </div>
       <div className={styles.paymentBar} aria-hidden="true"><span style={{ width: `${stage.received / 120 * 100}%` }} /><span style={{ width: `${stage.owed / 120 * 100}%` }} /></div>
-      <p>{stage.text}</p>
+      <p>{tx(stage.text)}</p>
     </div>
-    <p className={styles.limit}>The app currently records paid in full or unpaid. Keep part payments and the remaining balance in a separate checked record; do not mark the invoice fully paid after only a deposit.</p>
+    <p className={styles.limit}>{tx('The app currently records paid in full or unpaid. Keep part payments and the remaining balance in a separate checked record; do not mark the invoice fully paid after only a deposit.')}</p>
     <div className={styles.controls}>
-      <button type="button" aria-pressed={playing} onClick={() => { if (playing) setPlaying(false); else { if (step === stages.length - 1) setStep(0); setPlaying(true); } }}>{playing ? 'Pause example' : 'Play example'}</button>
-      <button type="button" onClick={() => choose(step - 1)} disabled={step === 0}>Previous</button>
-      <button type="button" onClick={() => choose(step + 1)} disabled={step === stages.length - 1}>Next</button>
-      <span>Step {step + 1} of {stages.length}</span>
+      <button type="button" aria-pressed={playing} onClick={() => { if (playing) setPlaying(false); else { if (step === stages.length - 1) setStep(0); setPlaying(true); } }}>{playing ? tx('Pause example') : tx('Play example')}</button>
+      <button type="button" onClick={() => choose(step - 1)} disabled={step === 0}>{tx('Previous')}</button>
+      <button type="button" onClick={() => choose(step + 1)} disabled={step === stages.length - 1}>{tx('Next')}</button>
+      <span>{inlineTemplate(lang, 'Step {n} of {total}', null, { n: step + 1, total: stages.length })}</span>
     </div>
   </section>;
 }

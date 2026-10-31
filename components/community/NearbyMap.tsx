@@ -6,6 +6,7 @@ import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import type { CommunityProfile } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
 
@@ -19,6 +20,8 @@ interface Props {
 // and this view only ever needs coarse pins + a popup.
 export default function NearbyMap({ people, onOpenProfile }: Props) {
   const { t,lang } = useLanguage();
+  // communityMapViewProfile is not in the isiXhosa dictionary yet; isiXhosa reads the inline draft.
+  const viewProfile = lang === 'xh' ? inlineText(lang, 'View profile') : t('communityMapViewProfile');
   const [activeUid, setActiveUid] = useState<string | null>(null);
   const trigger=useRef<HTMLButtonElement|null>(null);
   const closePopup=()=>{setActiveUid(null);trigger.current?.focus();};
@@ -45,7 +48,7 @@ export default function NearbyMap({ people, onOpenProfile }: Props) {
             anchor="bottom"
           >
             {/* A pin is a map control; the global photo viewer must not capture its image click. */}
-            <button type="button" aria-label={`${t('communityMapViewProfile')}: ${p.display_name}`} onClick={e=>{e.stopPropagation();trigger.current=e.currentTarget;setActiveUid(p.uid);}} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, cursor: 'pointer',padding:3,border:'none',background:'transparent' }}>
+            <button type="button" aria-label={`${viewProfile}: ${p.display_name}`} onClick={e=>{e.stopPropagation();trigger.current=e.currentTarget;setActiveUid(p.uid);}} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2, cursor: 'pointer',padding:3,border:'none',background:'transparent' }}>
               <div style={{
                 width: 38, height: 38, borderRadius: '50%', overflow: 'hidden',
                 border: '2.5px solid var(--brand)', background: 'var(--brand)',
@@ -80,7 +83,7 @@ export default function NearbyMap({ people, onOpenProfile }: Props) {
                   borderRadius: 100, padding: '5px 12px', fontSize: 12, cursor: 'pointer',
                 }}
               >
-                {t('communityMapViewProfile')}
+                {viewProfile}
               </button>
             </div>
           </Popup>

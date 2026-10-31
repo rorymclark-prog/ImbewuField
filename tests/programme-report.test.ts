@@ -185,3 +185,45 @@ test('unreadable activity history is unavailable while a readable old log can es
   o.rows[0].metrics.daysSinceActivity = 1;
   assert.equal(activity()[1], '1');
 });
+
+test('language: omitting it, English and isiZulu are byte-identical; isiXhosa translates the fixed wording and keeps every figure', async () => {
+  const { XH_INLINE_SOURCE } = await import('../lib/locales/xh-inline/index');
+  const { registerXhInline } = await import('../lib/xh-inline');
+  const figures = (value: unknown) => (JSON.stringify(value).match(/\d+(?:\.\d+)?/g) ?? []).join(' ');
+  const shapes: Partial<ProgrammeReportOptions>[] = [
+    {}, { kind: 'production', funder: false }, { kind: 'training', funder: false },
+    { basis: 'window', startMonth: DEMO_COHORT_MONTHLY.months[1].key, endMonth: DEMO_COHORT_MONTHLY.months.at(-1)!.key, date: `${DEMO_COHORT_MONTHLY.months.at(-1)!.key}-15` },
+    { rows: structuredClone(DEMO_NETWORK.farmers.slice(0, 1)), withheldForConsent: 1 }, { rows: [] },
+  ];
+  try {
+    registerXhInline(XH_INLINE_SOURCE);
+    for (const shape of shapes) {
+      const plain = buildProgrammeReport(options(shape));
+      assert.deepEqual(buildProgrammeReport({ ...options(shape), language: 'en' }), plain);
+      assert.deepEqual(buildProgrammeReport({ ...options(shape), language: 'zu' }), plain);
+      const xh = buildProgrammeReport({ ...options(shape), language: 'xh' });
+      // Data and numbers are untouched: the same figures, the same row/section/table structure, the same cohort and month names.
+      assert.equal(figures(xh), figures(plain));
+      assert.equal(xh.rows.length, plain.rows.length);
+      assert.equal(xh.sections.length, plain.sections.length);
+      assert.deepEqual(xh.tables.map(t => t.rows.length), plain.tables.map(t => t.rows.length));
+      assert.deepEqual(xh.coverage.map(c => [c.available, c.total]), plain.coverage.map(c => [c.available, c.total]));
+      assert.notEqual(xh.title, plain.title);
+      assert.notEqual(xh.subtitle, plain.subtitle);
+      assert.notEqual(xh.period, plain.period);
+      assert.notEqual(xh.chart!.title, plain.chart!.title);
+      assert.deepEqual(xh.sections.map(s => s.title).filter(title => plain.sections.some(s => s.title === title)), [], 'every section title is isiXhosa');
+      assert.deepEqual(xh.tables.map(t => t.title).filter(title => plain.tables.some(t => t.title === title)), [], 'every table title is isiXhosa');
+      assert.ok(xh.sections.every(s => s.lines.every((line, i) => line !== plain.sections[xh.sections.indexOf(s)].lines[i])), 'every section line is isiXhosa');
+    }
+    // Recorded names stay as data, and the caveats survive in isiXhosa.
+    const named = options({ language: 'xh', cohortId: DEMO_NETWORK.farmers[0].farmer.cohortId! });
+    const cohortName = named.rows.find(r => r.farmer.cohortId === named.cohortId)!.farmer.cohortName!;
+    const report = buildProgrammeReport(named);
+    assert.ok(report.scope.includes(cohortName) && report.scope.includes('Example organisation'));
+    assert.match(allText(report), /asingo|akuqinisekisi|azizizo|asiziyo/);
+    assert.ok(!/not evidence|does not imply/i.test(allText(report)));
+  } finally { registerXhInline({}); }
+  // Without the isiXhosa drafts loaded (the server, English readers) the English comes back unchanged.
+  assert.deepEqual(buildProgrammeReport({ ...options(), language: 'xh' }), buildProgrammeReport(options()));
+});

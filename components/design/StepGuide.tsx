@@ -18,6 +18,7 @@ import {
   translatedDesignStepLabel,
 } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { STEP_ORDER, LessonPanel } from './DesignWizard';
 import SpeakButton from '@/components/SpeakButton';
 import TankCalculator from './TankCalculator';
@@ -181,7 +182,7 @@ export default function StepGuide({
   if (collapsed) {
     return (
       <div style={{ padding: '6px 12px 0', display: 'flex', flexDirection: 'column', gap: 4 }}>
-        {lang === 'zu' && <DesignZuluDraftNotice />}
+        {(lang === 'zu' || lang === 'xh') && <DesignZuluDraftNotice />}
         <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
         <button
           type="button"
@@ -236,8 +237,8 @@ export default function StepGuide({
           <button
             type="button"
             onClick={onHide}
-            title="Hide the step guide — bring it back with “hidden” next to the handle"
-            aria-label="Hide the step guide"
+            title={inlineText(lang, 'Hide the step guide — bring it back with “hidden” next to the handle')}
+            aria-label={inlineText(lang, 'Hide the step guide')}
             style={{
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
               width: 26, height: 26, flexShrink: 0,
@@ -267,7 +268,7 @@ export default function StepGuide({
           overflow: 'hidden',
         }}
       >
-        {lang === 'zu' && <div style={{ padding: '7px 10px 0' }}><DesignZuluDraftNotice /></div>}
+        {(lang === 'zu' || lang === 'xh') && <div style={{ padding: '7px 10px 0' }}><DesignZuluDraftNotice /></div>}
         {/* Header — accent-coloured band naming the current layer */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', background: accent }}>
           <Compass size={17} color={PAPER} style={{ flexShrink: 0 }} />

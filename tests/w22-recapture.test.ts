@@ -16,7 +16,8 @@ test('w22-01: /home computes the day and date after mount, never during the prer
 });
 
 test('w22-05/06: isiZulu draft source labels use the secondary text token on tinted panels', () => {
-  assert.match(read('app/calendar/page.tsx'), /text-\[var\(--text-secondary\)\]">isiZulu translation pending — English source: /);
+  // The isiXhosa branch (PR #1090) wraps the same isiZulu label; either form keeps the secondary token.
+  assert.match(read('app/calendar/page.tsx'), /text-\[var\(--text-secondary\)\]">(?:isiZulu translation pending — English source: |\{lang === 'xh' \? inlineText\(lang, 'isiXhosa translation pending — English source:'\) : 'isiZulu translation pending — English source:'\} )/);
   assert.match(read('components/studies/DesignDraftCopy.module.css'), /\.source \{[^}]*color:var\(--text-secondary\);/);
 });
 

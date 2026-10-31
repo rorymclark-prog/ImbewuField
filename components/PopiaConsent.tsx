@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { ShieldCheck, Check, Utensils, TrendingUp, Recycle, ArrowRight } from 'lucide-react';
 import { useDialogFocus } from '@/lib/use-dialog-focus';
 import { translate, useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import {
   activeAccountLocalStorageKey,
   removeSignedInLegacyLocalStorageKey,
@@ -11,7 +12,8 @@ import {
 
 const POPIA_KEY = 'imbewu_popia';
 const ONBOARD_KEY = 'permamap_onboarded';
-const ENGLISH_SOURCE_LANGS = new Set(['zu', 'st', 'ts', 've']);
+// isiXhosa is an unreviewed machine draft too, so it keeps the English source beside every line.
+const ENGLISH_SOURCE_LANGS = new Set(['zu', 'xh', 'st', 'ts', 've']);
 
 type Goal = 'feed' | 'income' | 'soil';
 
@@ -144,7 +146,7 @@ export default function PopiaConsent() {
           maxHeight: 'calc(100dvh - 2rem)',
         }}
       >
-        {showEnglishSource && <p lang={lang} role="note" className="rounded-lg px-3 py-2 mb-4 font-sans" style={{ fontSize: 12, lineHeight: 1.4, background: 'color-mix(in srgb, var(--gold) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 25%, transparent)', color: 'var(--text-muted)' }}>{t('popiaConsentDraftNotice')}</p>}
+        {showEnglishSource && <p lang={lang} role="note" className="rounded-lg px-3 py-2 mb-4 font-sans" style={{ fontSize: 12, lineHeight: 1.4, background: 'color-mix(in srgb, var(--gold) 8%, transparent)', border: '1px solid color-mix(in srgb, var(--gold) 25%, transparent)', color: 'var(--text-muted)' }}>{lang === 'xh' ? inlineText(lang, 'Unreviewed consent translation. Read the English source before choosing or agreeing.') : t('popiaConsentDraftNotice')}</p>}
         {/* ── Step indicator ── */}
         <div className="flex gap-1.5 mb-6">
           {([1, 2] as const).map((s) => (

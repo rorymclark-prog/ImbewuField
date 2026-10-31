@@ -24,3 +24,24 @@ export function formatZuluJournalDate(value: string): string {
   const months = ['Jan', 'Feb', 'Mas', 'Eph', 'Mey', 'Jun', 'Jul', 'Aga', 'Sep', 'Okt', 'Nov', 'Dis'];
   return `${days[date.getUTCDay()]} ${date.getUTCDate()} ${months[date.getUTCMonth()]}`;
 }
+
+// isiXhosa twins of the two isiZulu formatters above (same reason: browser locale packs fall back
+// to English for xh-ZA). Unreviewed machine draft, like the rest of the isiXhosa journal copy.
+export function formatXhosaMonth(monthKey: string): string {
+  const match = /^(\d{4})-(\d{2})$/.exec(monthKey);
+  if (!match) return 'Umhla awaziwa';
+  const month = Number(match[2]);
+  if (month < 1 || month > 12) return 'Umhla awaziwa';
+  const names = ['Janyuwari', 'Februwari', 'Matshi', 'Epreli', 'Meyi', 'Juni', 'Julayi', 'Agasti', 'Septemba', 'Okthobha', 'Novemba', 'Disemba'];
+  return `${names[month - 1]} ${match[1]}`;
+}
+
+export function formatXhosaJournalDate(value: string): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return value;
+  const date = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3])));
+  if (date.toISOString().slice(0, 10) !== value) return value;
+  const days = ['Caw', 'Mvu', 'Bin', 'Tha', 'Sin', 'Hla', 'Mgq'];
+  const months = ['Jan', 'Feb', 'Mat', 'Epr', 'Mey', 'Jun', 'Jul', 'Aga', 'Sep', 'Okt', 'Nov', 'Dis'];
+  return `${days[date.getUTCDay()]} ${date.getUTCDate()} ${months[date.getUTCMonth()]}`;
+}

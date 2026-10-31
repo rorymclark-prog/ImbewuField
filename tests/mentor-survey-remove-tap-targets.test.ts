@@ -15,7 +15,7 @@ test('mentor: the module-unassign control clears the 44px floor and keeps its ar
   const at = src.indexOf('onClick={() => onUnassign(trainee.id, mod.id)}');
   assert.ok(at > 0, 'the module-unassign button moved — recheck this guard by hand');
   const nearby = src.slice(at, at + 400);
-  assert.match(nearby, /aria-label=\{tr\(lang, `Remove the \$\{mod\.title\} assignment`/, 'lost its aria-label');
+  assert.match(nearby, /aria-label=\{(?:tr\(lang, `Remove the \$\{mod\.title\} assignment`|inlineTemplate\(lang, 'Remove the \{title\} assignment')/, 'lost its aria-label');
   const width = nearby.match(/width:\s*(\d+)/);
   const height = nearby.match(/height:\s*(\d+)/);
   assert.ok(width && height, 'could not find the unassign button\'s width/height declaration');
@@ -41,7 +41,7 @@ test('surveys: the remove-option control clears the 44px floor and keeps its ari
   const at = src.indexOf('onClick={() => removeOption(i)}');
   assert.ok(at > 0, 'the remove-option button moved — recheck this guard by hand');
   const nearby = src.slice(at, at + 400);
-  assert.match(nearby, /aria-label=\{localUi\(`Remove option \$\{i \+ 1\}`, `Susa impendulo \$\{i \+ 1\}`, lang\)\}/, 'lost its aria-label');
+  assert.match(nearby, /aria-label=\{inlineTemplate\(lang, 'Remove option \{n\}', 'Susa impendulo \{n\}', \{ n: i \+ 1 \}\)\}/, 'lost its aria-label');
   const width = nearby.match(/width:\s*(\d+)/);
   const height = nearby.match(/height:\s*(\d+)/);
   assert.ok(width && height, 'could not find the remove-option button\'s width/height declaration');

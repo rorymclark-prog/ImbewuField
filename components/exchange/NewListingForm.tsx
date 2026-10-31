@@ -8,7 +8,6 @@ import { loadCropPriceOverrides, priceFor } from '@/lib/crop-prices';
 import {
   LISTING_CATEGORIES,
   LISTING_UNITS,
-  priceLabel,
   quantityLabel,
   type Listing,
   type ListingCategory,
@@ -20,8 +19,9 @@ import {
 import { parseDecimalInput } from '@/lib/decimal-input';
 import { saveLocalListing } from './listing-store';
 import ShareListingButton from './ShareListingButton';
-import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL, ZU_CATEGORY_LABEL, ZU_KIND_LABEL, ZU_MONTH_LABEL, ZU_PRICE_MODE_LABEL } from './theme';
+import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL, ZU_CATEGORY_LABEL, ZU_KIND_LABEL, ZU_MONTH_LABEL, ZU_PRICE_MODE_LABEL, xhPriceLabel } from './theme';
 import { useLanguage } from '@/lib/i18n';
+import { inlineTemplate, inlineText } from '@/lib/xh-inline';
 import { ExchangeSourceCopy } from './ExchangeCopy';
 
 /** The bases a farmer actually quotes against. `PriceBasis` allows every unit; this is the useful subset. */
@@ -74,7 +74,8 @@ export default function NewListingForm({
 }) {
   const { lang } = useLanguage();
   const zu = lang === 'zu';
-  const tx = (en: string, dz: string) => zu ? dz : en;
+  const xh = lang === 'xh';
+  const tx = (en: string, dz: string) => inlineText(lang, en, dz);
   const simple = useAppLevel() === 'simple';
   // Simple starts the extra fields (offer/want, category, headline, detail, month, name, town,
   // share-location) collapsed behind "More options" — a farmer posting a quick "cabbages for
@@ -128,7 +129,7 @@ export default function NewListingForm({
     setCropKey(key);
     const def = CROPS.find((c) => c.key === key);
     if (def && !titleDirty) {
-      setTitle(kind === 'want' ? (zu ? `Ngifuna ${def.name}` : `Looking for ${def.name}`) : (zu ? `${def.name} iyatholakala` : `${def.name} available`));
+      setTitle(kind === 'want' ? (zu ? `Ngifuna ${def.name}` : inlineTemplate(lang, 'Looking for {crop}', null, { crop: def.name })) : (zu ? `${def.name} iyatholakala` : inlineTemplate(lang, '{crop} available', null, { crop: def.name })));
     }
     if (!priceDirty && priceMode === 'zar' && priceBasis === 'kg') {
       const suggested = suggestedPricePerKg(key);
@@ -216,14 +217,14 @@ export default function NewListingForm({
           </h2>
         </div>
         <p className="font-sans" style={{ fontSize: 13, color: EX.muted, lineHeight: 1.55, margin: 0 }}>
-          {zu ? <ExchangeSourceCopy en="It is saved on this phone only — nobody else can see it until you send it to them yourself. Share it now, or find it on the board any time and share it later." zu="Sigcinwe kule foni kuphela — akekho omunye ongakwazi ukusibona uze usithumele wena. Yabelana ngaso manje noma usithole ebhodini kamuva." /> : 'It is saved on this phone only — nobody else can see it until you send it to them yourself. Share it now, or find it on the board any time and share it later.'}
+          {zu || xh ? <ExchangeSourceCopy en="It is saved on this phone only — nobody else can see it until you send it to them yourself. Share it now, or find it on the board any time and share it later." zu="Sigcinwe kule foni kuphela — akekho omunye ongakwazi ukusibona uze usithumele wena. Yabelana ngaso manje noma usithole ebhodini kamuva." /> : 'It is saved on this phone only — nobody else can see it until you send it to them yourself. Share it now, or find it on the board any time and share it later.'}
         </p>
         <div className="rounded-xl" style={{ background: 'var(--bg-2)', padding: 12 }}>
           <div className="font-display font-semibold" style={{ fontSize: 14, color: EX.ink, marginBottom: 4 }}>
             {listing.title}
           </div>
           <div className="font-sans" style={{ fontSize: 12.5, color: EX.muted }}>
-            {[qty, zu && listing.price.type === 'free' ? 'Mahhala' : zu && listing.price.type === 'swap' ? `Ukushintshisana: ${listing.price.wants}` : zu && listing.price.type === 'ask' ? 'Cela isipho sentengo' : priceLabel(listing)].filter(Boolean).join(' · ')}
+            {[qty, zu && listing.price.type === 'free' ? 'Mahhala' : zu && listing.price.type === 'swap' ? `Ukushintshisana: ${listing.price.wants}` : zu && listing.price.type === 'ask' ? 'Cela isipho sentengo' : xhPriceLabel(lang, listing)].filter(Boolean).join(' · ')}
           </div>
         </div>
         <ShareListingButton listing={listing} label={tx('Share to WhatsApp', 'Yabelana nge-WhatsApp')} />
@@ -271,7 +272,7 @@ export default function NewListingForm({
               border: `1px solid ${kind === k ? KIND_COLOR[k] : EX.border}`,
             }}
           >
-            {zu ? ZU_KIND_LABEL[k] : KIND_LABEL[k]}
+            {zu ? ZU_KIND_LABEL[k] : inlineText(lang, KIND_LABEL[k])}
           </button>
         ))}
       </div>
@@ -297,7 +298,7 @@ export default function NewListingForm({
               border: `1px solid ${category === c ? EX.green : EX.border}`,
             }}
           >
-            {zu ? ZU_CATEGORY_LABEL[c] : CATEGORY_LABEL[c]}
+            {zu ? ZU_CATEGORY_LABEL[c] : inlineText(lang, CATEGORY_LABEL[c])}
           </button>
         ))}
       </div>
@@ -433,7 +434,7 @@ export default function NewListingForm({
           </div>
           {cropKey !== '' && suggestedPricePerKg(cropKey) !== null && (
             <p className="font-sans" style={{ fontSize: 12, color: EX.faint, margin: '6px 0 0', lineHeight: 1.45 }}>
-              {zu ? <ExchangeSourceCopy en={`Suggested from the app’s price book: about R${suggestedPricePerKg(cropKey)}/kg wholesale. Farm-gate, not shop shelf — change it to whatever you actually want.`} zu={`Intengo ephakanyisiwe isuselwa encwadini yohlelo yokubala amanani: cishe u-R${suggestedPricePerKg(cropKey)}/kg ngenani le-wholesale. Lena intengo yasepulazini, hhayi eyasesitolo — yishintshe ibe yinani olifunayo.`} /> : <>Suggested from the app&rsquo;s price book: about R{suggestedPricePerKg(cropKey)}/kg wholesale. Farm-gate, not shop shelf — change it to whatever you actually want.</>}
+              {zu || xh ? <ExchangeSourceCopy en={`Suggested from the app’s price book: about R${suggestedPricePerKg(cropKey)}/kg wholesale. Farm-gate, not shop shelf — change it to whatever you actually want.`} tpl="Suggested from the app’s price book: about R{price}/kg wholesale. Farm-gate, not shop shelf — change it to whatever you actually want." vars={{ price: suggestedPricePerKg(cropKey) ?? '' }} zu={`Intengo ephakanyisiwe isuselwa encwadini yohlelo yokubala amanani: cishe u-R${suggestedPricePerKg(cropKey)}/kg ngenani le-wholesale. Lena intengo yasepulazini, hhayi eyasesitolo — yishintshe ibe yinani olifunayo.`} /> : <>Suggested from the app&rsquo;s price book: about R{suggestedPricePerKg(cropKey)}/kg wholesale. Farm-gate, not shop shelf — change it to whatever you actually want.</>}
             </p>
           )}
           {!priceValid && (
@@ -471,7 +472,7 @@ export default function NewListingForm({
         style={fieldStyle}
       >
         <option value="">{tx('Any time', 'Noma nini')}</option>
-        {MONTH_LABEL.map((m, i) => <option key={m} value={i + 1}>{zu ? ZU_MONTH_LABEL[i] : m}</option>)}
+        {MONTH_LABEL.map((m, i) => <option key={m} value={i + 1}>{zu ? ZU_MONTH_LABEL[i] : inlineText(lang, m)}</option>)}
       </select>
     </div>
   );
@@ -515,7 +516,7 @@ export default function NewListingForm({
       <span className="font-sans" style={{ fontSize: 12.5, color: EX.muted, lineHeight: 1.5 }}>
         {tx('Show roughly where I am, so nearby farmers see the distance.', 'Khombisa cishe indawo engikuyo ukuze abalimi abaseduze babone ibanga.')}
         <span style={{ color: EX.faint }}>
-          {' '}{zu ? <ExchangeSourceCopy en={`Your location is rounded to about a kilometre before it is saved — never your exact homestead. Based on ${mySite.name}.`} zu={`Indawo yakho isondezwa cishe kwikhilomitha elilodwa ngaphambi kokugcinwa — akuboniswa umuzi wakho ngqo. Kususelwa ku-${mySite.name}.`} /> : <>Your location is rounded to about a kilometre before it is saved — never your exact homestead. Based on <strong style={{ fontWeight: 600 }}>{mySite.name}</strong>.</>}
+          {' '}{zu || xh ? <ExchangeSourceCopy en={`Your location is rounded to about a kilometre before it is saved — never your exact homestead. Based on ${mySite.name}.`} tpl="Your location is rounded to about a kilometre before it is saved — never your exact homestead. Based on {name}." vars={{ name: mySite.name }} zu={`Indawo yakho isondezwa cishe kwikhilomitha elilodwa ngaphambi kokugcinwa — akuboniswa umuzi wakho ngqo. Kususelwa ku-${mySite.name}.`} /> : <>Your location is rounded to about a kilometre before it is saved — never your exact homestead. Based on <strong style={{ fontWeight: 600 }}>{mySite.name}</strong>.</>}
         </span>
       </span>
     </label>
@@ -597,7 +598,7 @@ export default function NewListingForm({
       >
         <Info size={13} strokeWidth={1.9} style={{ color: EX.faint, marginTop: 1.5, flexShrink: 0 }} />
         <span className="font-sans" style={{ fontSize: 12, color: EX.faint, lineHeight: 1.5 }}>
-          {zu ? <ExchangeSourceCopy en="This listing is saved on this phone only. It is not sent to other farmers and nobody else can see it — sharing listings between farmers is not built yet." zu="Lesi sikhangiso sigcinwa kule foni kuphela. Asithunyelwa kwabanye abalimi futhi akekho omunye ongakwazi ukusibona — ukwabelana ngezikhangiso phakathi kwabalimi akukakhiwa." /> : 'This listing is saved on this phone only. It is not sent to other farmers and nobody else can see it — sharing listings between farmers is not built yet.'}
+          {zu || xh ? <ExchangeSourceCopy en="This listing is saved on this phone only. It is not sent to other farmers and nobody else can see it — sharing listings between farmers is not built yet." zu="Lesi sikhangiso sigcinwa kule foni kuphela. Asithunyelwa kwabanye abalimi futhi akekho omunye ongakwazi ukusibona — ukwabelana ngezikhangiso phakathi kwabalimi akukakhiwa." /> : 'This listing is saved on this phone only. It is not sent to other farmers and nobody else can see it — sharing listings between farmers is not built yet.'}
         </span>
       </div>
 

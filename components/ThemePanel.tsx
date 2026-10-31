@@ -11,6 +11,7 @@ import { getGuidedState, setGuidedState, GUIDED_CHANGED_EVENT } from '@/lib/site
 import { isTtsSupported, getTtsMuted, setTtsMuted } from '@/lib/tts';
 import { APP_LANGS, useLanguage, translate, loadLocale, T_en, getLoadedDict } from '@/lib/i18n';
 import { setAppLevel, useAppLevel, type AppLevel } from '@/lib/app-level';
+import { inlineText } from '@/lib/xh-inline';
 import { coverageOf, type LangCoverage } from '@/lib/lang-coverage';
 import Link from 'next/link';
 import { useEscapeClose } from '@/lib/use-escape-close';
@@ -70,7 +71,11 @@ interface Props {
 
 export default function ThemePanel({ open, onClose }: Props) {
   const { theme, mode, textScale, setTheme, setMode, setTextScale } = useTheme();
-  const { lang, setLang, t } = useLanguage();
+  const { lang, setLang, t: dictionaryT } = useLanguage();
+  // The settings* keys arrived after the isiXhosa dictionary was drafted, so isiXhosa reads the
+  // inline draft for the English of any key its dictionary does not have yet. Every other
+  // language (and every key isiXhosa has) reads the dictionary exactly as before.
+  const t = (key: string) => lang === 'xh' && getLoadedDict('xh')[key] === undefined ? inlineText(lang, translate('en', key)) : dictionaryT(key);
   const panelRef = useRef<HTMLDivElement>(null);
   useDialogFocus(open, panelRef);
   const level = useAppLevel();
@@ -266,8 +271,14 @@ export default function ThemePanel({ open, onClose }: Props) {
                 <span lang="en">/ Unreviewed Xitsonga draft.</span>
               </p>
             )}
-            {lang !== 'ts' && <LanguageDraftNote lang={lang} scope="settings" />}
-            {lang !== 'ts' && isPartialLang(lang) && (
+            {lang === 'xh' && (
+              <p role="note" style={{ margin: '10px 0 0', fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
+                <span lang="xh">{t('xhosaUiDraftNotice')}</span>{' '}
+                <span lang="en">/ Unreviewed isiXhosa machine draft.</span>
+              </p>
+            )}
+            {lang !== 'ts' && lang !== 'xh' && <LanguageDraftNote lang={lang} scope="settings" />}
+            {lang !== 'ts' && lang !== 'xh' && isPartialLang(lang) && (
               <p role="note" style={{ margin: '10px 0 0', fontSize: 12, lineHeight: 1.5, color: 'var(--text-muted)' }}>
                 {translate(lang, 'langPartialActiveNote').replace('{lang}', APP_LANGS.find((l) => l.code === lang)?.native ?? lang)}
               </p>

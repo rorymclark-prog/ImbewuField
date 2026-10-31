@@ -9,6 +9,7 @@ import { Camera, Loader2, Check, Trash2, X } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import LanguageDraftNote from '@/components/LanguageDraftNote';
 import { translate,useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { useAppLevel } from '@/lib/app-level';
 import { useAppConfirm } from '@/components/AppConfirm';
 import { communityEnabled } from '@/lib/community/flag';
@@ -71,8 +72,11 @@ function Toggle({ label, sub, on, onChange }: { label: string; sub?: React.React
 
 export default function CommunityProfilePage() {
   const { user, loading } = useAuth();
-  const { t, lang } = useLanguage();
-  const draft=['zu','st','ts','ve'].includes(lang);
+  const { t: localeT, lang } = useLanguage();
+  // isiXhosa: a key the xh locale has not translated yet falls back to English; show the unreviewed
+  // draft keyed by that same English instead (lib/locales/xh-inline). Other languages keep localeT.
+  const t = (key: string) => { const text = localeT(key); return lang === 'xh' && text === translate('en', key) ? inlineText(lang, text) : text; };
+  const draft=['zu','xh','st','ts','ve'].includes(lang);
   const paired=(key:string)=><><span lang={t(key)===translate('en',key)?'en':lang}>{t(key)}</span>{draft&&<small lang="en" style={{display:'block',fontSize:12,lineHeight:1.4,marginTop:4}}><span lang={lang}>{t('offlineSourceLabel')}: </span>{translate('en',key)}</small>}</>;
   const appConfirm = useAppConfirm();
   const router = useRouter();

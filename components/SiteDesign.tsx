@@ -8,6 +8,7 @@ import { paidApiHeaders } from '@/lib/api-client-auth';
 import { networkFailureMessage } from '@/lib/network-failure';
 import { UserFacingError, userFacingMessage } from '@/lib/user-facing-error';
 import { useLanguage } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 
 interface Props {
   locationData: LocationData | null;
@@ -67,7 +68,7 @@ function renderDesign(text: string) {
 }
 
 export default function SiteDesign({ locationData, photoAnalysis, appLang, placeName }: Props) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [preview, setPreview] = useState<string>('');
   const [imageData, setImageData] = useState<{ data: string; mediaType: string } | null>(null);
   const [design, setDesign] = useState('');
@@ -84,7 +85,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
       const resized = await resizeImage(file);
       setImageData(resized);
     } catch (err: unknown) {
-      setError(userFacingMessage(err, 'Could not process image', t));
+      setError(inlineText(lang, userFacingMessage(err, 'Could not process image', t)));
       return;
     }
     if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);

@@ -16,6 +16,7 @@
  */
 
 import { recordsMonthLong, recordsMonthShort } from './records-months';
+import { formatXhosaDate } from './xh-dates';
 import type { InvoiceItem, InvoiceStatus, PaymentMethod } from './invoices';
 
 /** Where the app actually lives. `fieldproof.vercel.app` is retired and resolves nowhere. */
@@ -60,6 +61,8 @@ function longDate(iso: string, language?: string): string | null {
   const d = new Date(ms);
   // w18-41: isiZulu dates come from the app's month table ('23 Okthoba 2026'); the platform locale falls back to US-order English.
   if (language === 'zu') return `${d.getDate()} ${recordsMonthLong('zu', d.getMonth() + 1)} ${d.getFullYear()}`;
+  // isiXhosa: browsers fall back to English for xh-ZA, so the month word comes from the app's own table.
+  if (language === 'xh') return formatXhosaDate(d, { day: true, month: 'long', year: true });
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
@@ -68,6 +71,7 @@ function shortDate(iso: string, language?: string): string | null {
   if (!Number.isFinite(ms)) return null;
   const d = new Date(ms);
   if (language === 'zu') return `${d.getDate()} ${recordsMonthShort('zu', d.getMonth() + 1)} ${d.getFullYear()}`;
+  if (language === 'xh') return formatXhosaDate(d, { day: true, month: 'short', year: true });
   return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
@@ -88,8 +92,15 @@ function lines(...values: (string | null | undefined)[]): string[] {
 const SINGULAR_UNIT: Record<string, string> = {
   bags: 'bag', crates: 'crate', bunches: 'bunch', trays: 'tray',
 };
+// isiXhosa unit words: the plurals are the money book's drafts (lib/records-regional-drafts-data.ts);
+// the singulars are the same words with the singular class prefix.
+const XHOSA_UNITS: Record<string, string> = {
+  bag: 'ingxowa', bags: 'iingxowa', crate: 'ikreyiti', crates: 'iikreyiti',
+  bunch: 'isinyanda', bunches: 'izinyanda', tray: 'itreyi', trays: 'iitreyi', each: 'nganye',
+};
 export function unitLabel(qty: number, unit: string, language?: string): string {
   const label = qty === 1 ? (SINGULAR_UNIT[unit] ?? unit) : unit;
+  if (language === 'xh') return XHOSA_UNITS[label] ?? label;
   if (language !== 'zu') return label;
   const isiZuluUnits: Record<string, string> = {
     bag: 'isaka', bags: 'amasaka', crate: 'ikhreyithi', crates: 'amakhreyithi',
@@ -207,10 +218,23 @@ const DOCUMENT_COPY = {
     total: 'Isamba se-invoyisi', totalDue: 'Isamba esisafuneka', footer: 'Kwenziwe nge-ImbewuField', page: 'ikhasi', continued: 'iyaqhubeka',
     notesLabel: 'Amanothi',
   },
+  // Unreviewed isiXhosa machine draft (23 Oct 2026). Like the isiZulu copy above, the printed document
+  // carries no draft notice: every figure, date, reference and bank detail on it is unchanged.
+  xh: {
+    sellerPlaceholder: 'Igama leshishini lakho', invoice: 'I-invoyisi', issued: 'Yakhutshwa', due: 'Ifanele ukuhlawulwa',
+    buyerReference: 'Isalathiso sakho', originalPaperInvoice: 'I-invoyisi yokuqala yephepha', billTo: 'Umhlawuli',
+    buyerPlaceholder: 'Igama lomthengi', item: 'Into', amount: 'Isixa', noItems: 'Azikho izinto okwangoku',
+    howToPay: 'Indlela yokuhlawula', paid: 'Ihlawulwe', account: 'I-akhawunti', branchCode: 'Ikhowudi yesebe',
+    total: 'Isixa se-invoyisi', totalDue: 'Isixa esifanele ukuhlawulwa', footer: 'Yenziwe nge-ImbewuField', page: 'iphepha', continued: 'iyaqhubeka',
+    notesLabel: 'Amanqaku',
+  },
 } as const;
 
+/** The copy tables, exported so tests can pin that every language has the same keys and figures. */
+export const INVOICE_DOCUMENT_COPY = DOCUMENT_COPY;
+
 export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocument {
-  const copy = input.language === 'zu' ? DOCUMENT_COPY.zu : DOCUMENT_COPY.en;
+  const copy = input.language === 'zu' ? DOCUMENT_COPY.zu : input.language === 'xh' ? DOCUMENT_COPY.xh : DOCUMENT_COPY.en;
   const items = input.items.filter((item) => item.desc.trim().length > 0);
   const total = items.reduce((sum, item) => sum + item.qty * item.price, 0);
 
@@ -243,7 +267,9 @@ export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocume
   const paidOn = input.status === 'paid' && input.paidAt ? shortDate(input.paidAt, input.language) : null;
   const paymentLabels = input.language === 'zu'
     ? { cash: 'Ukheshi', eft: 'EFT', card: 'Ikhadi', mobile: 'Inkokhelo yeselula', other: 'Okunye' }
-    : { cash: 'Cash', eft: 'EFT', card: 'Card', mobile: 'Mobile', other: 'Other' };
+    : input.language === 'xh'
+      ? { cash: 'Ikheshi', eft: 'EFT', card: 'Ikhadi', mobile: 'Ngefowuni', other: 'Okunye' }
+      : { cash: 'Cash', eft: 'EFT', card: 'Card', mobile: 'Mobile', other: 'Other' };
   const paidStamp = input.status === 'paid'
     ? [copy.paid, paidOn, input.paymentMethod ? paymentLabels[input.paymentMethod] : null]
       .filter((part): part is string => Boolean(part))

@@ -48,7 +48,7 @@ test('the actual Atlas source component preserves English rendering and shows co
 });
 
 test('native Atlas pages declare draft status while report assurance uses the shared complete builder',()=>{
- const page=read('app/atlas/page.tsx');assert.match(page,/LanguageDraftNote lang=\{lang\} scope="atlas"/);assert.match(page,/\['zu','st','ts','ve'\]\.includes\(lang\)/);const route=read('app/api/generate-report/route.ts');assert.ok(route.includes('assuranceMarkdown(langCode,{soilSource:d.soil.soilSource})'));assert.ok(!route.includes('zuluClosing?.assurance'));assert.ok(!read('lib/report-localisation.ts').includes('  const assurance ='));
+ const page=read('app/atlas/page.tsx');assert.match(page,/LanguageDraftNote lang=\{lang\} scope="atlas"/);assert.match(page,/\['zu',(?:'xh',)?'st','ts','ve'\]\.includes\(lang\)/);const route=read('app/api/generate-report/route.ts');assert.ok(route.includes('assuranceMarkdown(langCode,{soilSource:d.soil.soilSource})'));assert.ok(!route.includes('zuluClosing?.assurance'));assert.ok(!read('lib/report-localisation.ts').includes('  const assurance ='));
 });
 
 test('the actual report API emits full native assurances and chooses the existing soil caution for every supplied source',async()=>{

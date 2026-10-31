@@ -1,0 +1,104 @@
+0 Continue with your unfinished survey?
+1 Your unfinished answers are saved in this browser. They are different from your saved survey and from your report.
+2 This browser could not read the draft. Close this screen to keep it, or throw it away and use your saved answers.
+3 Your saved survey has changed since this draft began. Check the answers carefully before saving the draft you are continuing.
+4 The draft could not be discarded, or it was changed in another tab. Close this screen and open the survey again to try again.
+5 Continue with the draft
+6 Discard the draft and use the saved answers
+7 Close and keep the draft
+8 Your unfinished answers could not be saved in this browser, or were changed in another tab. Keep this screen open.
+9 Try saving the draft again
+10 Your saved survey has changed while this screen was still open. Your draft is different. Close and open the survey again to look at the new saved answers before saving.
+11 Unfinished answers are saved in this browser. Your report changes only after tapping Save and continue.
+12 Check the number of laying hens before saving. Enter a complete number, zero, or leave it empty.
+13 Check the year of the production report before saving. Use a written year up to {year}, or leave it empty.
+14 Changeable climate — use your area's rain and temperature data to plan a calendar of seasonal crops.
+15 Lots of sun in a rainy summer — use full sun in autumn and spring.
+16 Lots of sun in a dry winter — suitable for cool-season crops and drying produce.
+17 Middle – strong
+18 Light – middle
+19 Light wind
+20 Varieties adapted to the place that suit the rain and temperature of your area.
+21 Vegetables all year round with summer rain —
+22 Well-spread rain helps production all year —
+23 Subtropical area with rain all year —
+24 Rainy winter makes good crops grow —
+25 Typical Mediterranean growing season —
+26 Drought-tolerant crops are important —
+27 Cold steppe —
+28 Dry area — harvest water before any food production. With irrigation:
+29 Cold dry area — harvesting water is important. Short growing season:
+30 Short alpine season —
+31 . Mildly dry winters suit cool-season crops; warm frost-free conditions can also carry
+32 . Warm frost-free conditions can also carry
+33  grow well. Middle winters keep delicate crops in frost still able to grow in sheltered places.
+34 . High humidity — choose disease-resistant varieties and open up wide airflow.
+35 . Dry summers need drought-tolerant varieties:
+36  grow well. Summer heat requires irrigating annual crops; drought-tolerant trees bear without being irrigated.
+37 . Harvesting water is a must before these:
+38  in places with harvested water.
+39  are your most suitable ways.
+40  in warm north-facing places. Protect all crops from frost and strong wind.
+41 Your soil test
+42 Made by a model — SoilGrids
+43 Not a measurement
+44 Source unknown
+45 This study did not record where its number comes from. Treat it with the same care as a model estimate.
+46 It comes from the SoilGrids world model, which reads an area much bigger than your field. Treat it as a district, not your land. Only a soil test can tell you about yours.
+47 NOT A MEASUREMENT. No soil data is available for this place, so these are general app calculations — the same numbers it would show anywhere. Do not spend money because of them. Only a soil test can inform you.
+48 Comes from a soil test uploaded for this place. This is the most trustworthy soil calculation in the app, and it overrides the world model.
+49 Climate is not available at the moment.
+50 Climate is not available at the moment — local climate data is shown below instead.
+51 The source comparison has changed; the record is not available until checked.
+52 {language} — AI draft + English
+53 No narration available ({language}). Clearly choose the English source narration so you can listen.
+54 {narration} is selected. Tap Play to listen.
+55 {language} — narration
+56 This isiZulu narration is awaiting review by a person who speaks the language well.
+57 Machine-made narration ({language}) not yet reviewed, with correct English texts. Review by a person who speaks the language well, in home farming and in listening, is awaited.
+58 Dashboard sections
+59 Scroll sections to the left
+60 Scrollable dashboard sections
+61 Scroll sections to the right
+62 Open photo: {name}
+63 profile or place photo
+64 Photo
+65 Drawing · {caption}
+66 Photo viewer
+67 Close ×
+68 This photo could not load. Close and try again when connected.
+69 Fit to screen
+70 Enlarge
+71 Open your profile
+72 ImbewuField home
+73 Tour — choose how to look
+74 Raised vegetable beds and a water tank on a small South African farm at sunrise
+75 Wide view of a small South African farm with raised beds, a house, hills and stored rainwater in warm morning light
+76 See how farms and learners are doing
+77 Place analysis reports you can open or share
+78 Farmers, mentors and partners near you
+79 Nearby
+80 Board
+81 We could not load the community layer at the moment. Check your connection and try again.
+82 We could not open this chat. Check your connection and try again.
+83 People and a list near you
+84 There are no community profiles nearby yet.
+85 Community board
+86 New notice
+87 There is nothing on the board yet.
+88 What are you offering or looking for?
+89 Describe the item or request
+90 Area
+91 Your area or town
+92 We could not publish your notice. Check your connection and try again.
+93 There are no messages yet.
+94 Farmers who choose to be visible appear here as an estimated area — never their exact home.
+95 No nearby farmers have agreed so far.
+96 Trade board
+97 Nothing posted so far — be the first.
+98 Type
+99 Description
+100 e.g. Heirloom tomato seedlings, 20 available
+101 e.g. Bergville, KZN
+102 There is no chat yet.
+103 We could not publish — check your connection and try again.

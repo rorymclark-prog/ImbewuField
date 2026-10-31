@@ -1,0 +1,71 @@
+{
+  "unit": "g27-crop-plan-built",
+  "shard": "g27-crop-plan-built.ts",
+  "range": "all",
+  "okCount": 180,
+  "items": [
+    {
+      "index": 47,
+      "key": "It runs once, this year only — the repeating plan does not reach these months on its own, so this ground will likely need the same kind of one-off help again next year unless the plan itself changes.",
+      "verdict": "repair",
+      "draft": "Senziwa kube kanye, kulo nyaka kuphela — isicwangciso esiphindaphindayo asifikeleli kwezi nyanga ngokwaso, ngoko loo mhlaba uya kudinga ngokuqinisekileyo uncedo olunjalo lwexesha elinye kunyaka olandelayo ngaphandle kokuba isicwangciso ngokwaso sitshintshile.",
+      "backtranslation": "Made once, only this year — the repeating plan does not reach these months by itself, so that land will certainly need such one-season help next year unless the plan itself changes.",
+      "problem": "\"will likely need\" hardened to \"will certainly\" (ngokuqinisekileyo).",
+      "corrected": "Senziwa kube kanye, kulo nyaka kuphela — isicwangciso esiphindaphindayo asifikeleli kwezi nyanga ngokwaso, ngoko kusenokwenzeka ukuba loo mhlaba udinge uncedo olunjalo lwexesha elinye kunyaka olandelayo ngaphandle kokuba isicwangciso ngokwaso sitshintshile."
+    },
+    {
+      "index": 58,
+      "key": "1 growing area has a stretch with no new sowing: {where}.",
+      "verdict": "repair",
+      "draft": "Indawo yokulima enye inesithuba esingenakuhlwayelwa kutsha: {where}.",
+      "backtranslation": "One growing place has a gap that cannot be sown freshly: {where}.",
+      "problem": "\"a stretch with no new sowing\" became \"a gap that cannot be sown fresh\" (none scheduled vs impossible).",
+      "corrected": "Indawo yokulima enye inesithuba apho kungekho kuhlwayela kutsha: {where}."
+    },
+    {
+      "index": 59,
+      "key": "{n} growing areas have a stretch with no new sowing: {where}.",
+      "verdict": "repair",
+      "draft": "Iindawo zokulima ezi-{n} zinesithuba esingenakuhlwayelwa kutsha: {where}.",
+      "backtranslation": "{n} growing places have a gap that cannot be sown freshly: {where}.",
+      "problem": "Same as 58.",
+      "corrected": "Iindawo zokulima ezi-{n} zinesithuba apho kungekho kuhlwayela kutsha: {where}."
+    },
+    {
+      "index": 71,
+      "key": "A vegetable crop could cover them, but the planner will not put a vegetable on a traced field on its own — planted at full block width that is a sizeable commitment, so it is left as your decision.",
+      "verdict": "repair",
+      "draft": "Isityalo semifuno singazigubungela, kodwa icwangcisi ayizukubeka umfuno kwintsimi ehlanjululweyo yodwa — ukutyala ngobubanzi obupheleleyo bebhloko luxanduva olukhulu, ngoko kushiyelwe isigqibo sakho.",
+      "backtranslation": "A vegetable crop could cover them, but the planner will not place a vegetable on a thinned-out field alone — planting across the whole width of the block is a big responsibility, so your decision is left.",
+      "problem": "\"traced field\" (a field drawn on the map) rendered \"ehlanjululweyo\" (rinsed/diluted); \"on its own\" (automatically) lost.",
+      "corrected": "Isityalo semifuno singazigubungela, kodwa icwangcisi ayizukubeka umfuno ngokwayo kwintsimi ezotywe kwimephu — ukutyala ngobubanzi obupheleleyo bebhloko luxanduva olukhulu, ngoko kushiyelwe isigqibo sakho."
+    },
+    {
+      "index": 102,
+      "key": "Broad automatic choices use crops with verified yield, duration and field spacing so their productivity comparison has a common evidence basis.",
+      "verdict": "repair",
+      "draft": "Ukhetho olubanzi olujikelezayo lusebenzisa izityalo ezinesivuno, ixesha nesithuba sensimi eziqinisekisiweyo ukuze uthelekiso lwazo lwemveliso lube nesiseko esifanayo sobungqina.",
+      "backtranslation": "The wide rotating choice uses crops with confirmed yield, time and field spacing so that their production comparison has the same basis of evidence.",
+      "problem": "\"Broad automatic choices\" rendered \"olujikelezayo\" (rotating/circulating).",
+      "corrected": "Ukhetho olubanzi olwenziwa ngokuzenzekelayo lusebenzisa izityalo ezinesivuno, ixesha nesithuba sensimi eziqinisekisiweyo ukuze uthelekiso lwazo lwemveliso lube nesiseko esifanayo sobungqina."
+    },
+    {
+      "index": 105,
+      "key": "Maize was not placed for you: the app can measure mapped area, but it cannot draw or check a wind-pollinated maize block.",
+      "verdict": "repair",
+      "draft": "Umbona awubekwanga ngenxa yakho: i-app inokulinganisa indawo ekwimephu, kodwa ayinakuyilanda okanye ihlole ibhloko yombona edliwa ngumoya.",
+      "backtranslation": "Maize was not placed for you: the app can measure a place on the map but cannot follow or check a wind-eaten block of maize.",
+      "problem": "\"wind-pollinated\" rendered \"edliwa ngumoya\" (eaten by wind); \"draw\" rendered \"follow\".",
+      "corrected": "Umbona awubekwanga ngenxa yakho: i-app inokulinganisa indawo ekwimephu, kodwa ayinakuyizoba okanye ihlole ibhloko yombona exhomekeke emoyeni ekuhambiseni impova."
+    },
+    {
+      "index": 115,
+      "key": "Check the actual vine path or trellis before accepting; mapped area alone does not prove that sprawling room works.",
+      "verdict": "repair",
+      "draft": "Jonga indlela yokwenene yesityalo esikhasayo okanye iindlela zaso phambi kokuvuma; indawo ekwimephu yodwa ayibonisi ukuba indawo yokuhlandlekela iyasebenza.",
+      "backtranslation": "Check the real way of the climbing crop or its ways before agreeing; a map place alone does not show that the climbing place works.",
+      "problem": "\"trellis\" lost - rendered \"iindlela zaso\" (its paths).",
+      "corrected": "Jonga indlela yokwenene yesityalo esikhasayo okanye isakhelo sokusikhasisa phambi kokuvuma; indawo ekwimephu yodwa ayibonisi ukuba indawo yokuhlandlekela iyasebenza."
+    }
+  ]
+}

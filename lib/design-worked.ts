@@ -1,4 +1,5 @@
 import worked from './course-design-worked.json' with { type: 'json' };
+import { inlineTemplate, inlineText } from './xh-inline';
 
 export const DESIGN_WORKED = worked;
 export type WorkedPack = typeof worked;
@@ -60,22 +61,30 @@ export function workedEdgeGap(pack: WorkedPack = DESIGN_WORKED) {
   return { routeRight, alternativeLeft: alternative.x, gap: alternative.x - routeRight };
 }
 
-export function workedHandoverText() {
+/** English by default (the tests and every other language); isiXhosa readers get the drafts for each fixed line and each supplied card. */
+export function workedHandoverText(lang = 'en') {
   const pack = DESIGN_WORKED;
+  const tx = (english: string) => inlineText(lang, english);
+  const features = [...pack.existing, ...pack.concepts.flatMap(concept => concept.geometry), pack.proposal];
+  const revisionLine = (name: string, state: { phase: string; quantity: string; costStatus: string; careStatus: string }) => inlineTemplate(lang, '{revision}: {phase}; {quantity}; cost {cost}; {care}.', null, { revision: name, phase: tx(state.phase), quantity: tx(state.quantity), cost: tx(state.costStatus), care: tx(state.careStatus) });
   return [
-    `${pack.caseId} — ${pack.title} — ${pack.currentRevision}`,
-    pack.notice,
-    `Units: ${pack.coordinateSystem.unit}. ${pack.coordinateSystem.axis}.`,
-    `Teaching frame: ${pack.frame.width} × ${pack.frame.height} m. Not a land-rights record or fixed physical print scale.`,
-    'Keep the downloaded diagrams alongside this record. This is the guided example, not your personal learning folder.',
-    'SOURCE CARDS', ...pack.sourceCards.map(card => `${card.id} — ${card.kind}\n${card.title}: ${card.text}`),
-    'MODEL GEOMETRY — all coordinates supplied fictional inputs',
-    ...[...pack.existing, ...pack.concepts.flatMap(concept => concept.geometry), pack.proposal].map(feature => `${feature.id} — ${feature.label}: x=${feature.x}, y=${feature.y}${isRect(feature) ? `, width=${feature.width}, height=${feature.height} m` : ' m (reference point)'}.`),
-    'FAIR COMPARISON', ...pack.comparison.map(row => `${row.criterion} (${row.source})\nA: ${row.A}\nB: ${row.B}\nUnknown: ${row.limit}`),
-    'PROVISIONAL CHOICE', pack.decision.provisional, pack.decision.rejected, pack.reconsider,
-    'CONNECTED WORK, COST AND CARE', ...pack.dependencies.map(row => `${row.item} (${row.featureIds.join(', ')})\nBefore work: ${row.before}\nR1: ${row.R1.phase}; ${row.R1.quantity}; cost ${row.R1.costStatus}; ${row.R1.careStatus}.\nR2: ${row.R2.phase}; ${row.R2.quantity}; cost ${row.R2.costStatus}; ${row.R2.careStatus}.\nCost detail: ${row.cost}\nNext discussion: ${row.owner}`),
-    'REVISION', `${pack.revision.from} → ${pack.revision.to}; ${pack.revision.source}`, pack.revision.change, pack.revision.reason, pack.revision.nextOwner,
-    'OBSERVATION PLAN — no outcomes supplied', ...pack.observationPlan.map(row => `${row.goal} (${row.featureIds.join(', ')}): ${row.task}\nWhen: ${row.trigger}\nReview: ${row.review}`),
-    'Facilitator, practitioner, learner and language review are still required. This preview awards no assessed progress.',
+    `${pack.caseId} — ${tx(pack.title)} — ${pack.currentRevision}`,
+    // isiXhosa is an unreviewed machine draft: a saved copy says so, in one line.
+    ...(lang === 'xh' ? [tx('Unreviewed isiXhosa draft.')] : []),
+    tx(pack.notice),
+    inlineTemplate(lang, 'Units: {unit}. {axis}.', null, { unit: tx(pack.coordinateSystem.unit), axis: tx(pack.coordinateSystem.axis) }),
+    inlineTemplate(lang, 'Teaching frame: {width} × {height} m. Not a land-rights record or fixed physical print scale.', null, { width: pack.frame.width, height: pack.frame.height }),
+    tx('Keep the downloaded diagrams alongside this record. This is the guided example, not your personal learning folder.'),
+    tx('SOURCE CARDS'), ...pack.sourceCards.map(card => `${card.id} — ${tx(card.kind)}\n${tx(card.title)}: ${tx(card.text)}`),
+    tx('MODEL GEOMETRY — all coordinates supplied fictional inputs'),
+    ...features.map(feature => isRect(feature)
+      ? inlineTemplate(lang, '{id} — {label}: x={x}, y={y}, width={width}, height={height} m.', null, { id: feature.id, label: tx(feature.label), x: feature.x, y: feature.y, width: feature.width, height: feature.height })
+      : inlineTemplate(lang, '{id} — {label}: x={x}, y={y} m (reference point).', null, { id: feature.id, label: tx(feature.label), x: feature.x, y: feature.y })),
+    tx('FAIR COMPARISON'), ...pack.comparison.map(row => `${tx(row.criterion)} (${row.source})\nA: ${tx(row.A)}\nB: ${tx(row.B)}\n${tx('Unknown:')} ${tx(row.limit)}`),
+    tx('PROVISIONAL CHOICE'), tx(pack.decision.provisional), tx(pack.decision.rejected), tx(pack.reconsider),
+    tx('CONNECTED WORK, COST AND CARE'), ...pack.dependencies.map(row => `${tx(row.item)} (${row.featureIds.join(', ')})\n${tx('Before work:')} ${tx(row.before)}\n${revisionLine('R1', row.R1)}\n${revisionLine('R2', row.R2)}\n${tx('Cost detail:')} ${tx(row.cost)}\n${tx('Next discussion:')} ${tx(row.owner)}`),
+    tx('REVISION'), `${pack.revision.from} → ${pack.revision.to}; ${pack.revision.source}`, tx(pack.revision.change), tx(pack.revision.reason), tx(pack.revision.nextOwner),
+    tx('OBSERVATION PLAN — no outcomes supplied'), ...pack.observationPlan.map(row => `${tx(row.goal)} (${row.featureIds.join(', ')}): ${tx(row.task)}\n${tx('When:')} ${tx(row.trigger)}\n${tx('Review:')} ${tx(row.review)}`),
+    tx('Facilitator, practitioner, learner and language review are still required. This preview awards no assessed progress.'),
   ].join('\n\n') + '\n';
 }

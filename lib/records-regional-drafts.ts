@@ -24,10 +24,10 @@ import { kgPreciseLabel } from '@/lib/format-figures';
 import { RECORDS_DRAFTS } from '@/lib/records-regional-drafts-data';
 import { recordQuantity, recordUnit, type RecordQuantityRow, type RecordUnit } from '@/lib/farm-records';
 
-export type RecordsDraftLang = 'zu' | 'st' | 've' | 'ts';
-export type RecordsRegionalLang = 'st' | 've' | 'ts';
+export type RecordsDraftLang = 'zu' | 'st' | 've' | 'ts' | 'xh';
+export type RecordsRegionalLang = 'st' | 've' | 'ts' | 'xh';
 
-export const RECORDS_REGIONAL_LANGS: readonly RecordsRegionalLang[] = ['st', 've', 'ts'];
+export const RECORDS_REGIONAL_LANGS: readonly RecordsRegionalLang[] = ['st', 've', 'ts', 'xh'];
 
 export function isRecordsRegionalLang(lang: string): lang is RecordsRegionalLang {
   return (RECORDS_REGIONAL_LANGS as readonly string[]).includes(lang);
@@ -109,7 +109,7 @@ export function recordsQuantityLabel(row: RecordQuantityRow, lang: string): stri
   return `${quantity.toLocaleString('en-ZA', { maximumSignificantDigits: 21 })} ${recordsUnitWord(unit, lang)}`;
 }
 
-const LANGUAGE_NAMES: Record<RecordsRegionalLang, string> = { st: 'Sesotho', ve: 'Tshivenda', ts: 'Xitsonga' };
+const LANGUAGE_NAMES: Record<RecordsRegionalLang, string> = { st: 'Sesotho', ve: 'Tshivenda', ts: 'Xitsonga', xh: 'isiXhosa' };
 
 /** The visible draft notice for the regional languages. English on purpose: it is a status line. */
 export function recordsDraftNotice(lang: RecordsRegionalLang): string {

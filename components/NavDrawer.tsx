@@ -23,6 +23,7 @@ import { useDialogFocus } from '@/lib/use-dialog-focus';
 import SettingsButton from './SettingsButton';
 import LessonLink from './design/LessonLink';
 import RoleSwitcher from './RoleSwitcher';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import { useEscapeClose } from '@/lib/use-escape-close';
 
 interface NavDrawerProps {
@@ -50,7 +51,8 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   const pathname = usePathname();
   const { t, lang } = useLanguage();
   const isZulu = lang === 'zu';
-  const ui = (english:string,zulu:string,values:Record<string,string|number>={}) => {const native=sampleWorkspaceText(lang,english,zulu,values);return isZulu?`${native} (${sampleWorkspaceText('en',english,zulu,values)})`:native;};
+  // isiXhosa reads the inline drafts keyed by the exact English (the sample-tour tables have none).
+  const ui = (english:string,zulu:string,values:Record<string,string|number>={}) => {const native=lang==='xh'?inlineTemplate(lang,english,null,values):sampleWorkspaceText(lang,english,zulu,values);return isZulu?`${native} (${sampleWorkspaceText('en',english,zulu,values)})`:native;};
   // Every link below used to be offered to everybody, including the four staff dashboards. See
   // lib/role-access.ts for why that is a usability failure rather than a security one, and for
   // what `role === null` deliberately does NOT do.
@@ -225,6 +227,12 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
 
         <div style={{margin:'10px 16px 0'}}><LanguageDraftNote lang={lang} scope="navigation-drawer"/></div>
 
+        {lang === 'xh' && (
+          <p role="note" lang="xh" style={{ margin: '10px 16px 0', padding: '8px 10px', borderRadius: 9, background: 'color-mix(in srgb, var(--color-harvest) 10%, transparent)', border: '1px solid color-mix(in srgb, var(--color-harvest) 28%, transparent)', color: 'var(--text-secondary)', fontSize: 12, lineHeight: 1.4 }}>
+            <strong>{inlineText(lang, 'ISIXHOSA MACHINE DRAFT.')}</strong> {inlineText(lang, 'Navigation wording has not been reviewed by a fluent isiXhosa speaker.')}
+          </p>
+        )}
+
         <nav aria-label={ui('Main navigation', 'Ukuzulazula okuyinhloko')} style={{ margin: '12px 16px', display: 'grid', gap: 8 }}>
           {/* A real fill under fixed white type, not var(--color-harvest) (the text-only dim-ochre
               token) under var(--text-primary) — that measured ~2.1:1 in light and ~1.7:1 in dark.
@@ -232,7 +240,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
           <Link href="/tour" onClick={onClose} style={{ display:'flex',alignItems:'center',gap:10,minHeight:48,padding:'10px 14px',borderRadius:12,background:'#9A6018',color:'#fff',fontWeight:700 }}><Footprints size={20}/>{t('navTour')}</Link>
           <Link href="/tips" onClick={onClose} style={{ display:'flex',alignItems:'center',gap:10,minHeight:44,padding:'10px 14px',borderRadius:12,border:'1px solid var(--border)' }}><Sparkles size={20}/>{t('navTipsHelp')}</Link>
         </nav>
-        {sample && <section style={{margin:'8px 16px',padding:12,border:'1px solid var(--border)',borderRadius:12}} aria-label={t('navTourControls')}><strong>{ui('Practice workspace', 'Indawo yokuzilolonga')}</strong><p style={{fontSize:12,margin:'6px 0'}}>{ui('You are viewing demonstration records. Your account permissions stay unchanged.', 'Ubuka amarekhodi okubonisa. Izimvume ze-akhawunti yakho zihlala zinjalo.')}{['st','ts','ve'].includes(lang) && <span lang="en" style={{display:'block',marginTop:4}}><span lang={lang}>{t('offlineSourceLabel')}: </span>You are viewing demonstration records. Your account permissions stay unchanged.</span>}</p><div style={{display:'grid',gap:8}}><Link href="/samples" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{ui('Choose a view', 'Khetha isikrini')}</Link><Link href="/samples/gardens" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{t('navTourGardensReports')}</Link><Link href="/tour" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{t('navTour')}</Link><button type="button" onClick={()=>{exitSampleMode();window.location.href='/home';}} style={{minHeight:44,textAlign:'left'}}>{t('navExitTour')}</button></div></section>}
+        {sample && <section style={{margin:'8px 16px',padding:12,border:'1px solid var(--border)',borderRadius:12}} aria-label={t('navTourControls')}><strong>{ui('Practice workspace', 'Indawo yokuzilolonga')}</strong><p style={{fontSize:12,margin:'6px 0'}}>{ui('You are viewing demonstration records. Your account permissions stay unchanged.', 'Ubuka amarekhodi okubonisa. Izimvume ze-akhawunti yakho zihlala zinjalo.')}{['st','ts','ve','xh'].includes(lang) && <span lang="en" style={{display:'block',marginTop:4}}><span lang={lang}>{t('offlineSourceLabel')}: </span>You are viewing demonstration records. Your account permissions stay unchanged.</span>}</p><div style={{display:'grid',gap:8}}><Link href="/samples" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{ui('Choose a view', 'Khetha isikrini')}</Link><Link href="/samples/gardens" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{t('navTourGardensReports')}</Link><Link href="/tour" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>{t('navTour')}</Link><button type="button" onClick={()=>{exitSampleMode();window.location.href='/home';}} style={{minHeight:44,textAlign:'left'}}>{t('navExitTour')}</button></div></section>}
         <section aria-label={ui('Page controls', 'Izilawuli zekhasi')} style={{ margin: '8px 16px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12 }}>
           <SettingsButton showLabel />
           <LessonLink id={pageLesson} label={t('navPageHelp')} tone="menu" />

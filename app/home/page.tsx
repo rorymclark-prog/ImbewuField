@@ -39,6 +39,7 @@ import BackButton from '@/components/BackButton';
 import HomeHeroCard from '@/components/home/HomeHeroCard';
 import CropIcon from '@/components/CropIcon';
 import { useLanguage, translate } from '@/lib/i18n';
+import { inlineText } from '@/lib/xh-inline';
 import { useAuth } from '@/lib/auth';
 import { canSeeNavLink } from '@/lib/role-access';
 import { canSeeWorkspaceLink } from '@/lib/role-navigation';
@@ -67,6 +68,12 @@ const LANG_TO_LOCALE: Record<string, string> = {
   ss: 'ss-ZA',
   nr: 'nr-ZA',
 };
+// isiXhosa: these Home keys are still English in the xh locale; xh readers get the unreviewed
+// draft keyed by that same English (lib/locales/xh-inline). Every other language keeps t(key).
+const xhKeyText = (lang: string, t: (key: string) => string, key: string) => {
+  const text = t(key);
+  return lang === 'xh' && text === translate('en', key) ? inlineText(lang, text) : text;
+};
 
 // zu-01: zu-ZA has no Intl.DateTimeFormat data in most browsers, so toLocaleDateString silently
 // fell back to the runtime default locale and rendered English, month-first ('FRIDAY · OCTOBER
@@ -81,6 +88,12 @@ function getDayDate(lang: string, now: Date = new Date()) {
   if (lang === 'zu') {
     const day = translate('zu', ZU_WEEKDAY_KEYS[now.getDay()]);
     const month = translate('zu', ZU_MONTH_KEYS[now.getMonth()]);
+    return `${day} · ${now.getDate()} ${month}`;
+  }
+  // xh-ZA has the same missing-Intl problem as zu-ZA, so isiXhosa reads the same key tables.
+  if (lang === 'xh') {
+    const day = translate('xh', ZU_WEEKDAY_KEYS[now.getDay()]);
+    const month = translate('xh', ZU_MONTH_KEYS[now.getMonth()]);
     return `${day} · ${now.getDate()} ${month}`;
   }
   if (['st', 'ts', 've'].includes(lang)) {
@@ -220,7 +233,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
           >
             <button
               onClick={() => onToggle(task.id)}
-              aria-label={t(task.completed ? 'homeTaskMarkNotDone' : 'homeTaskMarkDone')}
+              aria-label={xhKeyText(lang, t, task.completed ? 'homeTaskMarkNotDone' : 'homeTaskMarkDone')}
               className={`relative before:absolute before:-inset-3 before:content-[''] ${task.completed ? 'imf-task-check' : ''}`}
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: 'var(--color-forest-800)', flexShrink: 0 }}
             >
@@ -240,7 +253,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
             </div>
             <button
               onClick={() => downloadTaskIcs(task)}
-              aria-label={t('homeTaskAddCalendar')}
+              aria-label={xhKeyText(lang, t, 'homeTaskAddCalendar')}
               className="relative before:absolute before:-inset-[13px] before:content-['']"
               style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: 'var(--color-muted)', flexShrink: 0 }}
             >
@@ -433,14 +446,14 @@ function HomeLandingInner() {
     { href: '/journal',           Icon: Leaf,          label: t('homeQuickJournal'),     desc: t('homeQuickJournalDesc'),     color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
     { href: '/facilitator/crops', Icon: CalendarDays,  label: t('homeQuickCropPlanner'), desc: t('homeQuickCropPlannerDesc'), color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
     { href: '/records',           Icon: Wheat,         label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
-    { href: '/prices',            Icon: Tag,           label: t('homePricesLabel'), desc: t('homePricesDescription'), color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
+    { href: '/prices',            Icon: Tag,           label: xhKeyText(lang, t, 'homePricesLabel'), desc: xhKeyText(lang, t, 'homePricesDescription'), color: 'var(--emerald)', bg: 'color-mix(in srgb, var(--emerald) 14%, var(--bg-1))' },
   ];
   const STAFF_LINKS = !staffRole ? [] : [
     // w19-09: the role dashboard link is gone — the hero CTA and the Dashboard tab already go there.
     // isiZulu descriptions are not drafted: lang zu shows the English line until a reviewed one exists.
-    { href: '/assessments', Icon: ClipboardList, label: t('navAssessments'), desc: 'Check how farms and learners are doing' },
-    { href: '/reports', Icon: FileText, label: t('siteReportOverline'), desc: 'Site analysis reports you can open or share' },
-    { href: '/network', Icon: Users, label: t('navNetwork'), desc: 'Farmers, mentors and partners near you' },
+    { href: '/assessments', Icon: ClipboardList, label: t('navAssessments'), desc: inlineText(lang, 'Check how farms and learners are doing') },
+    { href: '/reports', Icon: FileText, label: t('siteReportOverline'), desc: inlineText(lang, 'Site analysis reports you can open or share') },
+    { href: '/network', Icon: Users, label: t('navNetwork'), desc: inlineText(lang, 'Farmers, mentors and partners near you') },
   ].filter(({ href }) => canSeeNavLink(navigationRole, href) && canSeeWorkspaceLink(navigationRole, href));
   const quickActions = simple ? QUICK_ACTIONS.filter((q) => q.href !== '/records') : QUICK_ACTIONS;
 
@@ -454,7 +467,7 @@ function HomeLandingInner() {
       {staffRole && (
         <AppHeader
           title={dayDate || '\u00a0'}
-          right={<LessonLink id="home:overview" label={t('homeLearnAction')} />}
+          right={<LessonLink id="home:overview" label={xhKeyText(lang, t, 'homeLearnAction')} />}
         />
       )}
       {/* ── Header ── */}
@@ -484,7 +497,7 @@ function HomeLandingInner() {
         <DesktopPrimaryNav />
         <div className="flex-1" />
 
-        <LessonLink id="home:overview" label={t('homeLearnAction')} />
+        <LessonLink id="home:overview" label={xhKeyText(lang, t, 'homeLearnAction')} />
         <button
           onClick={() => setSettingsOpen(true)}
           aria-label={t('settingsButtonAriaLabel')}
@@ -695,7 +708,7 @@ function HomeLandingInner() {
             </span>
           </div>
           <p className="font-sans" style={{ fontSize: 12.5, color: 'var(--color-muted-strong)', lineHeight: 1.4 }}>
-            {t('homeTourDescription')}
+            {xhKeyText(lang, t, 'homeTourDescription')}
           </p>
         </button>}
 

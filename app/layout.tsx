@@ -15,6 +15,7 @@ import PhotoViewer from '@/components/PhotoViewer';
 import LocalizedPageTitle from '@/components/LocalizedPageTitle';
 import ProductTourProvider from '@/components/ProductTourProvider';
 import AccountOnboardingGates from '@/components/AccountOnboardingGates';
+import DocumentTitle from '@/components/DocumentTitle';
 
 const newsreader = Newsreader({
   subsets: ['latin'],
@@ -120,6 +121,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <AuthProvider>
             <LanguageProvider>
+              <DocumentTitle />
               {/* AppConfirm replaces window.confirm app-wide: embedded webviews suppress native
                   dialogs and auto-return false, silently killing (or inverting) every
                   confirm-gated flow. Inside LanguageProvider so translated surfaces can pass

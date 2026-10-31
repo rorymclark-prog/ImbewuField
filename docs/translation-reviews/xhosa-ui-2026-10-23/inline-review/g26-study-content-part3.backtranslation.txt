@@ -1,0 +1,922 @@
+1008. "U-Ask for help on Studies open Lima. AI speech and AI reports need a connection. A saved lesson may be read while you wait; save a note of your question for the facilitator."
+1009. For fieldwork, "Offline and sync" has a different action saying "Prepare fieldwork on this device". Read its results then open saved design, crop plans and reports on the line before trusting being without signal. Downloading a lesson does not download all app pages or all records of your farm.
+1010. Use one device and the usual browser. Deleting site data removes what was downloaded and may remove work not sent. Little storage space can also cause the browser to delete saved files. Keep original evidence and check readiness again before the next visit.
+1011. You know what is ready here, what is still waiting to be sent and what needs a connection.
+1012. One slide opens, but files are still missing.
+1013. The module says Finish downloading. Is the whole module ready to take offline?
+1014. Yes, because the first picture loads
+1015. The working picture only shows that this picture is available. Other slides or narration may be missing.
+1016. Finish the download then test without connection
+1017. Correct. Check "On this phone" in that module, then open again and try picture, text and narration while cut off for a short time.
+1018. Mark the module done after finishing download
+1019. "Mark done" records your progress. It does not download missing files or send your working evidence.
+1020. A saved lesson is one part of learning
+1021. Independent practice: choose an available module, state its size and language, download it and show its picture, text and voice offline. Reconnect after that. Point to one action that still needs connection.
+1022. These app guides differ from the assessed modules. Reading this guide does not submit course work. In your real course, check progress and messages to send in your account; ask the facilitator about assessment and report.
+1023. The field-task timeline and money book have their own separate saving processes. Absence of income in the field-task timeline does not show that all money records are synced. Follow the result shown by the process you used.
+1024. Open "Offline and sync"
+1025. Choose a lesson to walk with
+1026. Open "My studies" connected. Begin with one available module and test the saved lesson on this device.
+1027. The drawing contains a pond, a fruit garden, a chicken area and many beds. The household asked for food near the home and a little carrying. Has the drawing answered the brief?
+1028. The brief says what the design must help people do. Start by listening. Ask who uses the place, what already works well and what is hard. Ask about food, movement, care work and things people want to protect. People may value privacy, a common meeting place or a clear path as much as another planting place.
+
+Involve the people who do the work. Don't ask only the person who speaks first. A suggestion that depends on another person's daily work needs their permission. Ask what happens when the usual caretaker is absent. Keep private household details out of the public course example.
+
+Separate need from idea. "We need a reliable way to water the existing garden" states a need. "We need a new tank" suggests one possible answer. The answer still needs information about availability, demand, place, cost and care. Drawing it does not answer these questions.
+
+Write main things in simple language, or record them with permission as a spoken description. Say what is outside this first stage. Record available resources as known, reported or not yet known. Read the brief back to the household and invite corrections. Disagreement is useful information; don't hide it to finish the page.
+1029. BRIEF-A in the busy yard case puts first food, clear access and practical care. The household did not ask for animals. RESOURCES-A has no budget or care time figures. The learner writes "confirm care time and costs", not a designed amount, and keeps the path in the brief.
+1030. Make a brief with people and use gaps, main things, things that must be protected, agreed scope, available resources and open questions. Use the practice case or get permission for a real household job. Your study partner reads it by returning it. Change anything that doesn't correctly represent the household.
+1031. The learner separated needs from suggestions, included the people doing the work, and left missing resources visible. A list of attractive features alone does not pass this task.
+1032. Does agreeing on the brief establish permission to change the neighbour's water outflow?
+1033. no. **Reason:** the brief records the household's aims; permissions and off-site effects need to be checked on their own.
+1034. Starter guides and evidence. A paper brief is allowed; don't put private household details in the public example.
+1035. A resident describes water crossing the yard in heavy rain. The visit happens when dry. How should that information appear in the notes?
+1036. Look first at what exists. Walk safely with someone who knows the place. Look at paths, water places, ground cover, shade, buildings, planting places and signs of earlier use. Listen to the people who use the place. A short visit and a long memory give different evidence.
+
+Keep those different kinds visible. "I saw this" is observation. "The resident described this" is a report. "I measured this" needs a method and unit. "I think this may be possible" is interpretation. "I want to put this here" is a proposal. All can be useful, but they are not interchangeable.
+
+Record when and under what conditions you looked. A piece of shade during one visit is not a complete record of the season's sun. A water place that is dry on one day does not alone explain the cause or the presence of water all year. Look again when safe and helpful. Don't wait for perfect information before saving a record, and don't pretend a short visit gives it.
+
+Use a notebook, a labelled drawing or a photo with permission. Give each piece of evidence a short reference you can put on the map. If a plant, pipe or boundary is not certain, write the uncertainty. Don't identify a plant or an underground service from a nice picture.
+1037. WALK-A records the path and portable containers as seen. TALK-A records the resident's rain report as reported. The learner does not turn that report into a measured contour line or flood depth. Ongoing research became an action in the evidence register.
+1038. For each note, record the thing, what is known, how it was known, source/conditions, and what must be checked. Ask your study partner to point to any sentence where a guess sounds like a measured fact. Fix the label, not the evidence.
+1039. The learner separated observed, reported, measured, derived and suggested information, and named the next useful check. More photos don't automatically mean better evidence.
+1040. Is "water always comes from this path" supported by one visit on a dry day?
+1041. no. **Reason:** the claim goes beyond the evidence. Record the report and want a suitable observation or assessment.
+1042. Evidence guide. Keep source and marker; exporting a picture does not confirm the information in it.
+1043. The learner moves an existing path on the base map to make a proposed bed area. What information is missing?
+1044. A base map shows the place before proposed change. It helps everyone talk about the same place. Show existing buildings, access paths, water places, planting places and other important features in the brief. Mark north once checked, and keep the source of the boundary visible.
+
+A first drawing can help you understand relationships. Call it "not to scale" if it is. Before using a plan to judge fit, check measurements and use a suitable scale. Keep units and measurements. Measure widths and suitable areas safely, record whether the value was measured, taken from a source or estimated. A line that looks clear is not proof of an exact measurement.
+
+Keep the existing map and the proposal separate. A transparent sheet over paper, a saved copy or a proposal layer with clear names lets you try ideas and keep what really exists. Don't silently change a house, path or boundary to make an idea fit. A traced satellite image may be a first reference; alone it is not legal ownership or a measured boundary.
+
+Give the map a title, date or update, meaning and source notes. Use words and colour so a printing learner or colour-blind reader can tell existing features, proposed changes and uncertain information apart. Leave enough space for labels to be readable.
+1045. MAP-A is useful for discussion but has no confirmed measurements and direction. The learner keeps its label "not to scale" and writes the needed measurements. They cannot say a new bed fits just because a small rectangle fits in the drawing.
+1046. Make a map of existing features and a separate blank proposal sheet. Link each important feature with a note from D1.2. If measuring is not possible, identify the missing measurement and the decision it blocks. On a real site, keep original measurements while testing a new arrangement.
+1047. Existing and proposed features stay distinct; scale status, direction status, units and source notes are clear. Fit is not confirmed without suitable measurements.
+1048. Can a clean exported map turn an estimated boundary into a measured one?
+1049. no. **Reason:** exporting changes appearance, not the source or boundary certainty.
+1050. Map and design guides. Practise first on a copy or example. Confirm the saved feature and its measurements after editing; use Undo for accidental change instead of accepting a ready distortion.
+1051. One interpretation follows the daily watering trip. Another marks reported wind direction. Do they describe the same kind of information?
+1052. Zone planning considers how people use and care for things. Something needing frequent attention should be looked at in relation to routes people already take. Look at real work: visiting, watering, harvesting, feeding, carrying and checking. A short distance on paper can be hard if there is a step that's a slope, a locked gate or a closed path.
+
+Zones are a thinking tool, not forced circles. A small place need not contain all zones. Don't give each animal or plant a fixed zone without thinking about its care and the home. The place should match the need of that thing.
+
+Sector analysis considers influences such as sun, wind, incoming water and other activities in the nearby area. Use evidence from this place. Mark direction as observed, reported or still to be confirmed. A zone description is not proof that the wind at this home always comes from another direction.
+
+Lay layers beside each other. Comfort may give a place near the home; shade, access or other barriers may make that place unsuitable. It is a question to be solved, not a reason to ignore one of the layers. State both the advantage and the limit of a proposed position.
+1053. WALK-A shows portable containers carried to an existing place. That supports investigating a care trip. A picture of eastern shade and TALK-A's water report are always separate evidence. Neither alone gives enough information to announce that a new planting place is suitable.
+1054. On one sheet, draw a real care trip and mark its purpose and stage in the household record. On another, show relevant outside influence and evidence sources. Point to where two needs may conflict. Keep uncertain information looking uncertain.
+1055. The learner explains the difference between a care trip and an outside influence, uses evidence of the place, and identifies what to hand over in placement.
+1056. Must a small household contain all zones for the design to be legitimate?
+1057. no. **Reason:** the tool helps plan real tasks and care; place and household decide what should be there.
+1058. Design guide, Base and Sector stages. Adding interpretation is a way to record a claim, not a way to confirm it.
+1059. The easiest route to the proposed garden crosses the place where water was reported in heavy rain. What must be checked before choosing that arrangement?
+1060. Design puts together different information. Follow how people reach the places they use, where water was observed or reported, and where shade changes. Think how the arrangement may work in different conditions. Keep a useful access path visible while thinking about a new planting place.
+
+A water place's position doesn't say how much suitable water is reliably available. A tank drawn high on the map is not necessarily high on the ground. Interpreting water flow gives no heights, soil information, safe outlet or permission to change water. These questions need suitable evidence and, where appropriate, suitable help. Keep outflow and building suggestions separate from what is already known.
+
+A photo of a green place doesn't confirm year-round presence. Ask what changes in the dry season (?"umlinyo" = ploughing/harvest?), rain, cold or when the home is empty. Use records from here and season-planning lessons to decide what else must be checked. Don't copy a calendar or a fixed compass rule from elsewhere without checking fit.
+
+Other barriers change the scope of the proposal. If water, access or care is not yet solved, improving a small existing place may deserve comparison with expanding. Delay can be a good design decision. State the missing evidence and next action so that "later" does not mean "forgotten".
+1061. The busy-yard learner keeps the used route clear throughout the idea. They mark the eastern water report so it can be investigated again rather than drawing a swale. They ask about reliability and suitability of existing water before promising a large garden.
+1062. Choose one proposed use. Follow a person's trip, the water it will need and evidence of its place. Write what is known, what may change with seasons, and what must be checked before starting. Refer to water, soil and season modules for technical questions.
+1063. The learner links access, care and environmental information without inventing a design limit or taking an unresolved technology suggestion as ready to build.
+1064. Does drawing a swale decide it is suitable or safe to build?
+1065. no. **Reason:** a drawing doesn't replace checking the place, soil, water, outlet and permission or suitable assessment of information.
+1066. Map, design and crop-planning guides. Keep the suggested water item marked as suggested; do not take software availability as site suitability.
+1067. "Put a new bed here" gives a place. "How can we plant food without closing access or adding more care than we can handle?" gives a design question. Which helps you compare options?
+1068. Analysis turns the brief and evidence into questions that can guide the design. For each important observed thing, say why it matters to the household. Then identify a possible answer and what must be true for that answer to work.
+
+Keep the chain visible: need, evidence, results, possible answer, missing checks. If a step is missing, go back to it. The learner may notice a path is used often, but still needs to ask who uses it and what they carry before changing its shape.
+
+Use real ethics. Who benefits from the proposal? Who takes the big work? Which existing life, soil, water or shared resources could be harmed? The benefit of one thing can produce a problem elsewhere. Don't call a system lasting just because it has many things or reuses something.
+
+Write standards before choosing your favourite drawing. Standards come from the brief and site evidence: access keeps working, care is agreed, water needs can be met, and important unknowns are resolved or affected work is delayed. A standard needs evidence. "Looks natural" alone doesn't show the household can keep it.
+1069. The question becomes: "Can the existing place work better while keeping the path usable?" The learner also keeps moving to another place and delaying expansion there for comparison. BRIEF-A supports practical care; WALK-A supports the access concern; RESOURCES-A blocks the claim that expansion can be paid for. None of these facts currently chooses the final design.
+1070. Make a decision sheet with columns for need, evidence reference, results, possible answers and missing checks. Ask your study partner to dispute the answer: "What evidence would make you change your mind?" Keep the answer for comparing ideas in D3.
+1071. The learner follows a decision back to the evidence, names what must be handed over and the reason for analysis. The facilitator asks for a new explanation if the learner only repeats the principle's name.
+1072. Does choosing a design with many things equal assessing quality?
+1073. no. **Reason:** things must answer the brief and work together within the limits of the place and household.
+1074. Evidence and design guides. The decision sheet may stay on paper with the exported map. It is a planning description, not an automatic app result.
+1075. A compost heap is placed beside the garden in the drawing. What could make that relationship useful in daily work?
+1076. A useful relationship is more than a line between two things. Ask what each part needs, what it produces, who looks after it and how things are moved between parts. A compost place can receive suitable materials and give finished compost, but someone must sort, carry and handle. Its place should allow that work and suit local safety and site conditions.
+
+Write needs and products beside the features you are thinking of. Include water, suitable materials, place, access, time and skills. Don't count a product before the thing exists and is fit for its purpose. A proposed animal system gives no free abundance: animals also need care, food, water, their health, and waste management.
+
+Look for useful relationships, but also check for conflicts. A good place may block a path. A product useful to one person may create a burden of handling for another. A relationship that needs daily attention may disappoint if nobody agrees to meet it. Keep purchased things and things leaving the place visible; a clean circle drawing doesn't show everything is supplied in the place.
+1077. The busy yard already links home, water place and planting place by carrying. Before adding another system, the learner asks whether the present care trip can be improved. BRIEF-A includes no animals at this stage, so livestock is not added to complete a decorative circle.
+1078. Draw the needs, products, trips and people responsible for the features in your brief. Mark a supposed relationship and name the evidence needed to confirm it. Use the suitable technical module before recommending using a thing.
+1079. The learner describes a real relationship, its care need and possible conflict, without promising a closed or maintenance-free system.
+1080. Does a trace from animals to garden confirm that the garden doesn't need other things that add soil bulk?
+1081. no. **Reason:** amounts, suitability, losses, other inputs and plant needs are not yet confirmed.
+1082. The learner drew one good arrangement. What can she compare it with to decide whether it answers the brief well?
+1083. The first idea is a starting point. Make different arrangement ideas while change is still easy. Keep one brief, base map and the same evidence for each. A comparison is unfair if one option gets invented water or unpaid work while another has to use recorded resources.
+
+An idea shows the main relationships and intended use. It has not yet finished all measurements or technical details. Use a proposal sheet so existing features stay visible. Mark what is kept, changed, added or delayed. Keep unresolved issues beside the affected part in each option.
+
+Make other options really useful. They might compare improving an existing planting place with moving it elsewhere, or a limited first stage and later expansion. Don't make an option deliberately weak so your favourite wins. Keeping the present arrangement while collecting evidence can also be a good option.
+1084. Busy-yard idea A improves care of the existing place while keeping access. Idea B investigates another place, also keeping access. B still has to answer questions with a water report, shade, soil, measurement and care; A still has to answer whether the existing place can meet the household's main aims. Neither gets a promised harvest or invented cost benefit.
+1085. Draw alternative ideas on copies of the same base. Under each, write its intended benefit, possible burden, important unknown and what would end it. Ask your study partner whether both options use the same evidence.
+1086. Other options differ meaningfully, keep existing facts, and are compared with equal thought. The drawings are marked as ideas rather than plans ready to build.
+1087. Can an idea be called cheap while the amount of its materials and costs is missing?
+1088. no. **Reason:** "cost not known" must stay visible until supported by a comparable estimate.
+1089. One option looks better in a made picture. Another keeps daily access better. What must the decision record explain?
+1090. Compare options with the standards you wrote in the brief. Begin with the non-negotiable needs: working access, agreed care, required permissions and the proposal's basic suitability. Then consider benefits, burdens, costs and what may change over time.
+
+Use words and evidence notes. "Possible, but water evidence is missing" is more honest than a score that looks exact without a basis. If using scoring, agree what each score means and who chooses the main things. Adding up scores must not cancel an unresolved safety or permission need.
+
+Ask the household to state their choice in their own words. The designer's preference must not silently change the household's main things. Record why one option was chosen, why another was put aside and what new information could change the decision. A conditional choice is allowed when the condition is clear and affected work waits.
+1091. The busy-yard household provisionally prefers investigating improvement of the existing place because the brief values practical care and keeping access. This is not evidence of low cost or high harvest. Moving elsewhere stays possible if later measurements or a site assessment show the existing place cannot meet the brief.
+1092. Complete a comparison page: standard, supporting evidence, results for each option, remaining checks and the decision. Give the strongest argument for the option you did not choose. Then record the household's response.
+1093. The choice follows the brief and evidence, accepts what must be handed over and sets a reason to rethink. The name of a principle alone is not a reason.
+1094. Can many attractive benefits pay for blocking one agreed access path?
+1095. no, unless that access need is resolved with the affected people. **Reason:** a sum of numbers or an attractive picture cannot cancel a necessary condition.
+1096. Design and evidence guides. Keep versions of alternative ideas; don't overwrite the existing base or silently change measured features when comparing arrangements.
+1097. A proposed bed fits in the drawing. What must be known before saying it fits on the ground?
+1098. An idea describes an arrangement. A developed design must also show its parts fit the existing place. Go back to base map measurements. Check work-related limits, existing features, access and the distances needed to place the proposal. Keep the measurement method and units with the record.
+
+Use a fixed scale in the plan. Check a known distance against the scale instead of trusting the image size on screen. Changing image size may change its printed scale. The measurement label and the drawn geometry must agree; if they don't, find the source of error before using either.
+
+Leave room for work access and the needs of the chosen system. Don't borrow a usual distance from a decorative drawing. Use an approved technical source for a real plant, structure or system, including growth and maintenance needs. If a needed measurement is unknown, mark that part as unfinished.
+1099. MAP-A is not to scale. The busy-yard learner cannot yet show that the new bed fits beside the path. She writes the measurements needed and keeps the existing path. The right next step is getting a suitable measured base, not shrinking the path until the picture looks finished.
+1100. In a practice site with measurements supplied by the facilitator, match the written measurements, units and scaled drawing. Point to the evidence that it fits. In your own design, mark any proposal still waiting for measurement or technical dimensions. Don't do unsafe or specialised technical investigation as course work without supervision.
+1101. The learner uses fixed units, checks fit with evidence and makes no claim from missing measurements. This task cannot pass with a busy-yard drawing that has not been measured alone.
+1102. Does zooming in the app make an estimated distance more accurate?
+1103. no. **Reason:** zooming changes appearance, not the measurement source.
+1104. Every proposed feature fits inside the boundary. Is the whole plan ready to carry out?
+1105. Things fitting is one part of checking. Follow the trips of people, water, tools and maintenance between them. Check the path is still right when people carry tools or produce. Ask whether a grown plant or stored item could block the clear access in today's drawing.
+
+Look beyond the chosen place. A water change may affect lower places; a fence may affect shared access. Record the people and resources affected. The design folder should identify the permissions and suitable technical advice, not assume them from the boundary or a software tool.
+
+Ask how the system behaves when something goes wrong. If supply is interrupted, who responds? If a part blocks or fills, where can the problem go? Technical design needs suitable assessment; don't design a safe outlet or discharge capacity. When evidence is incomplete, hold the affected work and state the dependence.
+1106. The busy-yard proposal keeps the path visible, but the learner still checks it with its users. A new tank always remains an idea only: water demand, availability, placement, support, cost and overflow are not confirmed. The design can move forward in other places while this proposal is unresolved.
+1107. Walk through the proposed daily work using the map. Mark possible conflict, evidence needed to solve it and who should help. Check normal use and relevant disruption. Refer to technical modules instead of giving a measurement or estimated capacity.
+1108. The learner checks relationships and results, identifies unresolved dependences and keeps the related work conditional.
+1109. Does the availability of a Water or Earthworks tool mean any place it accepts is suitable?
+1110. no. **Reason:** drawing software does not replace specialised site assessment or permission.
+1111. The map has attractive plants but no difference between existing and proposed features. What might a person doing the work misunderstand?
+1112. A plan communicates decisions. Give it a clear title, update and purpose. Show direction, scale status, units, meaning and sources. Separate existing features from proposed change and unresolved information using labels or patterns together with colour. Keep labels close to accurate features without covering important details.
+
+Divide information when one page is crowded. A base map, analysis sheet, proposal and stage page can tell different parts of one story. Keep names and evidence references consistent among them. The cost record and care plan should refer to the same things that appear on the map.
+
+Check the real export at the size it will be used. Can someone read it on a phone or printed page? Are labels cut? Does the meaning describe what really exists? Does a decorative drawing hide a path or show features never recorded? Fix the result and check again.
+1113. MAP-A keeps its "not to scale" state in all exports. Looking at the proposal shouldn't lose that limit just because a smoothed background was obtained. The learner uses separate labels on the saved place and on any future idea.
+1114. Give your study partner the plan without first explaining it. Ask them to identify what exists, what is proposed, where access is affected and which work is set. Record confusion, update the page and repeat the learning task.
+1115. Another learner can read the plan correctly, and the learner has checked the actual export. Clicking the export button is not enough.
+1116. Is an AI image evidence that a saved plan contains the same geometry?
+1117. no. **Reason:** an image and a scaled plan have different evidential roles; check the real plan and its sources.
+1118. Map, design and export guides. Compare saved measurements with the exported appearance; keep original geometry when improving display. No paid image is required.
+1119. Plants are purchased, but the proposed place has no agreed care or reliable water arrangement. Which dependence is missing?
+1120. A stage is a manageable part of work. Its place in the sequence depends on what must be right first. Begin with the design decision, then write the prerequisites: permission, measurements, advice, suitable materials, tools, access and the people who will look after it.
+
+Separate investigating from carrying out. Getting a suggested price does not bind you to buy. Marking a proposed place for discussion gives no permission to dig. A design may have useful steps for collecting information even when building is on hold.
+
+Choose a first stage that answers the household's brief and fits resources really agreed. Keep access and working systems that exist operating during change. Explain what will make a stage ready to start, what will stop it and how you will check its result. Don't start everything just because it all comes from the final vision.
+1121. The busy-yard first stage begins by checking care capacity, access and existing place conditions. Buying animals is not in scope. New drainage intervention remains on hold. Improving the design record is real progress even before visible change is justified.
+1122. Make a sequence list with action, prerequisites, responsible person, evidence of readiness and the next place to review. Ask your study partner to find anything placed before something it needs first. Fix the order and explain the reason.
+1123. The learner identifies dependences and a possible first stage, rather than a calendar of unsupported promises.
+1124. Is a proposed planting stage ready because seedlings are available?
+1125. not for that reason alone. **Reason:** the destination, suitable conditions, tools and ongoing care must also be ready.
+1126. The drawing includes a tank and fence, but the budget can only buy plants. Does the budget explain the plan?
+1127. Give proposed items fixed references in the plan and the cost record. Get quantities from a checked design or record their source. Keep unknown quantities unknown. Ask for suitable prices when considering purchase; don't turn a remembered price into a current seller's quote.
+
+Include the work and supporting materials the proposal needs, not only its most visible item. Separate one-time purchase from ongoing care costs. Record the household's contribution honestly. A donated item may need transport, repair or storage; a volunteer's time still needs agreement.
+
+The date money is needed matters. A future sale does not pay today's bill unless the funding really exists. Use money lessons to keep budgets, dated cash estimates, actual payments and amounts still needed separate. Don't count a hoped-for harvest as certain money, or a plan made by a tool as evidence of profit.
+1128. RESOURCES-A has no prices, quantities or committed work. The busy-yard learner makes a register of unknown costs with evidence needed for each proposed change. She cannot say idea A is affordable just because it keeps the old place.
+1129. Choose a proposed item and trace it from the plan to its quantity source, suggested or unknown price, payment timing and care costs. Explain what the current record includes and excludes. Compare the first stage with existing resources before committing to it.
+1130. The plan and budget describe the same scope; the learner keeps omitted items, unknowns and money timing. No purchase is needed to show the method.
+1131. Should an item with no price be entered as zero so a total works?
+1132. no. **Reason:** zero states a known price; missing information needs a different unknown and a follow-up action.
+1133. The project has a planting team but nobody agreed to look after it afterwards. Only what?  [sic: "Kuphela ntoni?" = "Only what?"]
+1134. Design continues after planting. Ask what must be checked, kept, cleaned, repaired, harvested or recorded. Use the suitable technical lesson and local advice to establish real work. Don't give a general weekly plan to living systems with different care needs.
+
+Agree who will do each task and what they need. Ask about usual commitments and absences. Work is not assigned just because a name is written beside it; a person must understand and accept responsibility. Plan how they will ask for help and what can be reduced when the load is higher.
+
+Identify relevant disruptions. Water interruption, damaged access, an absent caretaker or unavailable tools can change what is possible. Set a response that keeps health and safety. Where the response depends on technical advice, record that dependence rather than designing an emergency system.
+1135. A person carrying water in the busy-yard case helps review the care plan. The design does not assume she can take on extra work. If care capacity remains unknown, expansion stays conditional while the household still tests its daily work.
+1136. Make a care page with task, reason, responsible person, tools needed, time or evidence-based reason, support arrangement and record. Discuss disruption with the household or study partner; update the proposal if its care cannot be supported.
+1137. The learner separates installation from care, records the agreement, and shows how care capacity affects scope.
+1138. Can a photo of the installation show that ongoing care is arranged?
+1139. no. **Reason:** it records appearance at one time; care needs responsibility, tools and evidence of follow-through.
+1140. Money, costs and crop-planning guides. Use class/example records to practise and keep unknowns visible where the app place can't safely stand alone. The guide does not replace the design's care plan.
+1141. The learner labels every feature on the map. Has she explained why the design meets the household's needs?
+1142. Begin presenting the design with the brief. Show existing conditions and the most important evidence. Then describe the chosen arrangement, one other option considered, an important thing handed over and a possible first stage. Keep unknowns visible; describing a limit is better than hiding it with a confident picture.
+
+Choose a format the learner can use: drawings, a printed map, spoken description, supporting notes or the app. Assess thinking and suitable evidence rather than ability to use a tool. Ask permission before recording or sharing a person's presentation.
+
+Invite specific feedback. The reviewer can name supporting strengths, a missing idea and a question that could change the plan. Listen before defending the drawing. Record whether the question shows missing evidence, misunderstanding in the presentation or a real conflict in the design.
+1143. The busy-yard learner explains why access and care shaped the provisional choice. She shows that water and measurements are unresolved. A claim that the plan is ready to build cannot come from that evidence, however good the presentation.
+1144. Give your folder to a study partner. Ask them to follow the decision from brief to evidence to proposal. Record their question and your answer or next check. Use the end-standards to identify anything not yet shown.
+1145. The learner explains the choice and its limits, answers an important question and identifies a reasoned next action.
+1146. Does confident presentation resolve unknown water availability?
+1147. no. **Reason:** speaking clearly can convey evidence; it cannot create missing evidence.
+1148. A farming place looks green after rain. Does that show the design met the household's food and workload aims?
+1149. Decide what you're looking for from the aims in the brief. If access was a main need, ask its users whether the path works, and look at it under suitable conditions. If care was a complaint, record tasks and problems. A harvest record can tell food production, but alone does not show improved feeding of the household or income.
+
+Keep a starting record so later observation has context. Record what was really done, when, and any departure from the plan. Note conditions and other matters that could affect the result. Don't give the design all the credit or blame without considering other explanations.
+
+A short course cannot show a whole-year result. Agree a suitable sequence for the decision and situation, with real dates fixed at hand-over. If no carrying-out took place, assess the plan and its reasoning as it is. Don't put a made-up picture or imagined harvest in place of observed results.
+1150. The busy-yard brief suggests tracking usability of access and care needs. No later harvest or success story is claimed in the given case. The learner prepares a checking page and says what will count as useful evidence; she cannot fill it with invented results.
+1151. Link each important thing with a check, source or method, responsible person and an agreed review place. Say what the check can and cannot show. Use practice data only if clearly marked as given class data.
+1152. The monitoring plan matches the brief and separates proposed, reported and observed results. No result is claimed before evidence exists.
+1153. Does a photo establish that income went up?
+1154. no. **Reason:** that claim needs suitable money evidence and context, not appearance alone.
+1155. New evidence changes a placement decision. Should the old plan disappear without a record of what changed?
+1156. Updating is part of design. Keep the earlier version, identify the new evidence and say which decision changes. Check linked records, even the drawing. Moving a feature may change access, size, costs, water needs or care. An updated map with an old budget can tell the wrong story.
+
+Agree the updated scope with affected people. Separate work that can proceed from work still needing evidence or advice. Give whoever takes over the current plan, source notes, carrying-out sequence, care responsibility and unresolved actions. Make the information available in a format they can use without you present.
+
+Use feedback to plan another attempt where skill is not yet shown. Finishing course pages, attending sessions or exporting a map are different from demonstrating the whole design process. Record real evidence beside the assessment; don't turn a course-completion label into unsupported technical authority.
+1157. If later busy-yard evidence shows the chosen option cannot keep access, the learner returns to other options. This is a conditional teaching example, not a reported event. The update would update the plan, decision record, cost scope and care discussion together.
+1158. Make an update record with the question, new evidence, affected decision, change and updated linked records. Ask your study partner to use the hand-over packet to state the next action and what is on hold. If they can't, improve the packet and try again.
+1159. The learner explains a reasoned update, keeps its reason and makes a usable hand-over packet. The facilitator records that it was shown, needs another attempt, or has not yet been checked against evidence.
+1160. Is changing the picture alone enough when the proposal's material quantities change?
+1161. no. **Reason:** combined quantities, cost thinking and carrying-out information must also be checked.
+1162. Evidence, design and export guides. Check saved and exported updates, keep the earlier record and share only with the household's agreement. Paper/spoken hand-over is always allowed.
+1163. All the people, observations and events below are invented for class discussion. It is not a report of a real household or evidence of an intervention's success. No measurements, rainfall amounts, water volumes, costs, harvests or crop performance are given. Don't take them out into a picture of the future.
+1164. **BRIEF-A — household discussion.** The household wants vegetables to eat, the path that has always been used between home and gate, and care work that can fit existing commitments. They do not want animals added at this first stage. The person who often carries water asks to be included in placement decisions. Another household member needs a path without obstacles. The household agrees to explore options in its existing yard, but that agreement is not a confirmed boundary survey or permission for work beyond the yard.
+
+**WALK-A — first visit.** The used path crosses the yard between the home and gate. The existing planting place lies beside that path. The water place is near the home. Containers are carried from it to the planting place. The eastern part of the yard has shade during this visit. This observation says nothing yet about the whole seasonal shade pattern, water pressure, available volume, water quality or production capacity.
+
+**TALK-A — reported history.** The resident says water crossed the eastern part in heavy rain. No rain fell on the first visit. Record the resident's experience as reported information, with permission; do not change it with an invented slope interpretation or show it as a measured flooding level.
+
+**MAP-A — first drawing.** It places the home, gate, used path, water place, existing planting place and the place mentioned in TALK-A relative to each other. It is marked "not to scale; boundary, north and measurements need checking". No compass direction was got from an unconfirmed photo. The supplied statement that part of the yard is east is a way of describing the case, not a direction the learner measured.
+
+**RESOURCES-A — current limits.** Available care time, reliable water availability, soil conditions, quantities of materials and costs are not yet recorded. No one else's work or money is promised. Neighbour's land, a water route or access is not available just because it appears in a picture.
+1165. ### D1 — whose work?
+
+The brief puts first food, working access and practical care. Adding a pond or animals is not a reported need. The facilitator asks the people doing the work what they can keep and what must stay clear. The learner records missing resource information rather than giving an invented budget.
+
+On the first map the planting place is an existing feature. The idea of a new planting place is on the proposal sheet. The learner doesn't erase the used path because it disturbs the picture. The family's rain report is kept beside its source; it is not turned into an observed event.
+
+### D2 — what do the facts mean?
+
+The daily watering trip makes comfortable access worth investigating. It does not show that the nearest place is suitable. The shade picture needs more seasonal evidence, and the reported water path needs checking before considering intervention.
+
+The learner writes: "Can we improve care of the existing place while keeping the path working?" It's a design question. "Build a swale in the eastern yard" could skip the missing soil, water, suitability and permission evidence.
+
+On a coming safe visit, the learner asks the household to show how people move through the place. They plan to check shade more and ask who could help assess the reported water issue. They do not enter a hazardous watery place to get a photo. They keep all three options open: improve the existing place, consider another suitable place, or delay expansion until resources are known.
+1166. Idea A explores improving care of the existing place. Idea B explores another place while keeping the access path. Both must meet BRIEF-A. A has not been shown to cost little; B has not been shown to produce much. Both still need materials and site checks recorded in D1–D2. The provisional choice to investigate A rests on practical care and existing access, not on an invented function. Don't silently add new measurements or material quantities. When a later source card gives information, identify what changed, why it is reliable within the case, and which earlier decision it affects.
+
+A finished worked example must eventually show a scaled source packet, idea comparison, developed design, dependence and care, cost/unknown record and update after feedback. This file at present gives a brief, analysis and a list of conditional ideas; it is not a completed example. The D4–D6 lesson text is written, but a scaled display, a real plan set and an assigned late-evidence/update task are not yet finished.
+1167. Place the starting balance card: R1,000. Add C01, the owner's contribution of R300. Count R1,300. Put C01 under "Extra money from owner", not "Produce sold". Remove C02, the R120 paid for packaging: R1,180 remains. Add C03, a cash sale of R200: R1,380 remains. Point back to reasons, not only the final amount.
+1168. Give the learners C05, C06, C08 and C10 below. Use headings "Money taken by the household", "Loan", "Buying equipment" and "Loan repayment and interest". Ask which change cash. All four change it. Ask whether any of them is another sale of produce. None. Don't count the final profit of the accounts from these headings. The principal loan amount, interest and equipment need different treatment in full accounts; F6 and F7 develop that difference.
+1169. A grower sells produce for R90 and takes R30 home. Ask separately: "What was the sale?" and "How much cash is on the farm from that money received?" Answers: sale of R90; R60 remains of that money received. R60 is not the sales price and is not a profit calculation. Then ask where the R30 should appear: in the money-taken-by-household record.
+1170. If the learner says the sale was R60, put the R90 customer payment card beside the R30 money-taken card. Keep both events visible and ask again. If the learner calls the contribution a sale, ask which produce the owner bought. On this card he buys nothing.
+1171. Make headings for farm sales, farm costs, owner contribution and money taken by household in a notebook. Use a private record or new practice cards. No one's personal money is to be shared in class.
+1172. Make three cards: "Sales", "Money in hand" and "Customer owes". Start after C03, with sales of R200, cash R1,380 and no debt. Read C04: produce delivered R150, customer pays later. Sales become R350; customer owes R150; cash stays R1,380. Don't move the cash marker. Later, read C07: customer pays that R150. Move the marker for the amount still owed to "Paid" and add the cash once. Sales stay R350. Keep invoice reference S02 on both cards so the link shows.
+1173. Work through the event table in order. At the end, sales are R470, money received from customers is R350 and customers still owe R120. Ask the learner to point to S03, which explains that difference. Don't call the closing cash of R1,380 a profit: it includes the starting cash, the owner's contribution and a loan, and this packet does not give the whole cost of production, stock or equipment-use information.
+1174. A customer receives produce worth R240. He pays R100 now and agrees to pay R140 later. Ask for the sales price, the payment received and the amount still owed. Answers: R240, R100 and R140. The current app has an invoice state of fully paid / unpaid, not a book of part-payments. Keep this work in the workbook; don't mark the whole invoice paid or make another sale to force the app to show a balance.
+1175. If cash is given as R240, cover the unpaid R140 card and ask what money actually arrived. If sales are given as R340, put the payment under its existing sale instead of adding it as a new sale. Check with a new example, a sale of R180 and R60 received: R120 is still owed.
+1176. Read [Create and manage invoice](link). On the existing sample tour, identify the paid/unpaid option and how to link to an existing sale. Don't enter this whole workbook as crop sales: a loan and household withdrawal are different events. The currently published guide teaches the text and practice, not a record on screen that is narrated.
+1177. Using practice or deleted evidence, link one sale to its payment. Keep both dates when they differ. If the payment cannot be found, keep the situation unresolved and name the evidence it needs.
+1178. Put S02, "Delivered sale of R150 on Day 3", beside C07, "Payment of R150 on Day 6 for S02". Draw a line between their references. The duplicate card says "New produce sale of R150 on Day 6" but shows the same payment reference. Ask which new delivery it confirms. None. In the practice worksheet, mark the duplicate card, keep a short correction note and recount the sales. Don't instruct deleting real items without checking how the linked invoice works.
+1179. Give these independent cards: (a) the receipt says 2.5 kg, the entry says 2.5 bunches; (b) the source says R12.50, the entry says R125; (c) the transport receipt is missing, the entry says zero. Learners identify the unit errors, the decimal and the missing evidence. Fix (a) and (b) from their sources. For (c), leave the cost unknown until evidence is found; a possible amount is not evidence. These are new error-finding exercises, not additional events in the money table below.
+1180. Give the learner one correct record and one altered copy. Ask them to find the changed date or unit, identify the source that resolves it and explain their fix. Then ask them to reopen the saved practice entry. A final message is not enough for this practice: compare with the reopened amount and unit. A pending sync message isn't evidence that another device has the entry.
+1181. If the learner can repeat the rule but misses the altered record, simplify it to only two parts and bring back the date. Success requires finding the error in a new example, not repeating "check the receipt".
+1182. Build a small evidence folder or envelope, with references that match the notebook. Use example records if private things can't be deleted. Keep real customers' details out of class screenshots.
+1183. Use a notebook, calculator and the event cards below. Learners may point, arrange or describe aloud. Read each card aloud before showing the table. Don't ask anyone to show household income, loans, customer details or bank records in the group.
+
+**All the amounts below are made up only to practise calculation.** They are not local prices or recommended budgets. "Day 1" to "Day 7" is an invented week. There is one practice farm, one owner and one money tin. There is no bank account, tax, starting debt, starting customer balance, refund or other money movements in this example. The starting R1,000 is counted money already in the tin, not a new sale. The cash result in this deliberately manageable example is complete; the production costs and profit are not complete.
+
+Show each card's reference beside the written entry. All events and amounts are also in [f1-practice.json](f1-practice.json). The JSON uses whole cents to keep the calculation accurate; learner-facing tools use rand and cents.
+1184. The packaging and transport amounts below are payments in cash transactions. They are not a complete statement of production costs. No harvest quantities or crop yields are described.
+
+| Card | Day | Event and source reference | Money in | Money out | Money after card |
+Opening | Before 1 | Counted money tin | — | — | R1,000.00
+C01 | 1 | Owner adds own money; contribution note O01 | R300.00 | — | R1,300.00
+C02 | 1 | Pays for packaging; receipt P01 | — | R120.00 | R1,180.00
+C03 | 2 | Produce delivered and paid; S01 | R200.00 | — | R1,380.00
+C04 | 3 | Produce delivered on credit; S02 of R150.00 | — | — | R1,380.00
+C05 | 4 | Owner takes money home; withdrawal note W01 | — | R80.00 | R1,300.00
+C06 | 5 | Principal loan amount received; agreement L01 | R500.00 | — | R1,800.00
+C07 | 6 | Customer pays whole balance of S02; payment R02 | R150.00 | — | R1,950.00
+C08 | 6 | Equipment is bought; receipt E01 | — | R400.00 | R1,550.00
+C09 | 7 | Transport paid; receipt T01 | — | R60.00 | R1,490.00
+C10 | 7 | Payment of L01: R100 of principal loan amount and R10 interest, per the given practice statement L02 | — | R110.00 | R1,380.00
+C11 | 7 | Produce delivered on credit; S03 of R120.00, not yet paid | — | — | R1,380.00
+
+Totals: money in R1,150; money out R770; change in cash R380; closing cash R1,380. Produce sales R470, with R350 of customer payments and R120 still owed. Remaining principal loan amount R400, from the R500 loan less R100 repaid; the R10 interest doesn't reduce the principal amount either. No interest rate or suggested loan period is given. Accounting profit stays unknown.
+
+**End-of-unit demonstration:** Give the learner a mixed-up copy of these cards. They must restore the order, separate the different reasons for cash movement, link S02 with R02, identify S03 as unpaid and explain why profit is unknown. Then use a new part-payment example to test transfer. Re-teach any missed difference and test with different amounts. Don't use an estimated profit amount as the expected answer.
+1185. Place four counters as starting stock, then add 16 kg of H01. Now there are twenty kilograms. Move six counters to Sold for delivery D01, two to Home for HOME01. Twelve remain. Read the source reference as you write each row. The sold quantity belongs to sale S01; the home quantity is not a sale or a cash payment.
+1186. Work with Q04–Q08 in the stock table below. Keep each destination in its own column. The book ends at 9 kg. Now bring out the independently given counting card: 9 kg. Ask which two different pieces of information agree. Don't claim that agreement proves every record is accurate; two errors can cancel each other. Keep the source check along with the quantity check.
+1187. Use a new worksheet example of 10 kg. Ask the learner to show 3 kg sold, 2 kg used at home and 4 kg counted at closing. The record explains only 9 kg. One kilogram is unexplained. There is no note of loss or a second count at present, so "1 kg spoiled" is not a supported answer. Ask what might be checked: re-weighing, a missing gift or delivery record, the starting quantity and units. Don't suggest that all differences have one reason.
+1188. If the learner enters bunches as kilograms, raise the written unit and ask what was actually measured. Weigh the same practice bunch or keep its count in a separate record. No conversion is supplied in this packet. If the learner records all the remaining produce as household food, point to the box that still exists. Remaining stock and food already used are different destinations.
+1189. Read [Record and check harvest](link). The current form records kilograms and the entry date, not a back-dated harvest date. "Remaining" in the chart is harvested minus recorded sold quantity; it can't separately identify household use, gifts, storage or loss. In this workbook, 24 kg harvested minus 15 kg delivered is 9 kg; that equals the closing stock by luck because 4 kg of starting stock and 4 kg of other outflows cancel. It is a coincidence of agreement, not a general stock formula or an expected app chart result. The current invoice chain adds kilogram sales evidence when the invoice is fully paid, so unpaid and part-paid deliveries don't correspond directly to this. Use its destination records to explain the movement; don't mark an invoice paid just to force the chart to match.
+1190. Choose one product and a short agreed period. Write the starting amount, unit and how it was measured. Keep source references for additions and for the destination. Compare with a separate closing count and write down anything unresolved. Don't invent the weight of an unweighed bunch.
+1191. Read S02: 5 kg delivered on Day 2 for R100.00. Nothing is paid that day. Put R100.00 under "Customer B owes". On Day 4, PAY02 shows R60.00 received towards S02. Subtract R60.00 from the amount owed and put it among the wallet receipts; R40.00 is still owed. The sales price stays R100.00 and the delivered weight stays 5 kg. The payment did not produce another delivery.
+1192. Before MOVE01 the money tin holds R607.50 and the wallet R100.00. Move R100.00 from cash to the wallet. Cash becomes R507.50 and the wallet R200.00. Combined money remains R707.50. Keep both sides linked by MOVE01. This transfer is complete; no cost related to it is in the given evidence. FEE01 is a separate wallet charge of R2.50 on Day 3, not an estimated cost of the transfer. If a real transfer is pending, record and investigate that situation; don't pretend the receiving account already has it.
+1193. Complete all seven money rows. The farm receives R260.00 from customers and pays R45.00 in recorded costs. Combined money changes from R600.00 to R815.00. Total sales are R300.00; R40.00 is still owed on S02. Neither R815.00 nor R215.00 is an established accounting profit. The packet leaves out production costs and stock prices needed for that decision.
+1194. A new sale of R90.00 has a payment of R30.00. Ask separately for the sales price, money received and amount owed: R90.00, R30.00 and R60.00. Then give the learner a new internal transfer of R20.00 between accounts. The transfer, though, doesn't change total money or sales. An independently recorded charge of R1.00 would reduce money by R1.00; it would not make the transfer itself a purchase of produce. These are separate exercises, not extra rows in the main tables.
+1195. If a learner adds the transfer to income, move one physical marker between the two account mats and ask how many markers were created. If a part-payment pays off the whole sale in her answer, place the R60.00 payment under the R100.00 sale and open a R40.00 gap. If the cents disappear, compare R12.50 of PACK01 with the recorded entries before recounting.
+1196. Use [Record a cost and keep its receipt](link) and [Create and manage invoice](link). The current app gives an unpaid or fully paid invoice state; it doesn't imitate part-payment or money-tin/wallet books in this practice. Keep those in the workbook. Don't mark S02 fully paid, make another sale for its payment, or enter your account transfer as a crop sale to make the app look like the worksheet.
+1197. Use one approved practice or deleted sale and its payment evidence. Record the different dates and the account, match the reference, count any balance and name missing evidence. Don't contact a real customer as part of this class work.
+1198. The practice book doesn't include FEE01 and reports wallet money of R340.00. The given closing wallet statement shows R337.50. Compare the rows, find the R2.50 charge on the statement and add its missing source reference. The book now agrees with the statement. This correction is supported by FEE01, not by an invented "balancing charge". If the statement had not shown what happened, the difference would remain unresolved.
+1199. Show four altered copies, one at a time. Each starts from the clean main packet; do not stack them on top of their errors.
+
+| Altered practice copy | What the learner should find | Evidence-led correction |
+H02 is missing; the book says only 1 kg remains | The lost 8 kg harvest | Restore H02 from the given Day 3 weighing record; closing stock becomes 9 kg
+PAY02 appears twice; customer payments add up to R320.00 | One R60.00 payment counted twice | Keep one payment at its single reference; payments return to R260.00 and S02 still owes R40.00
+MOVE01 is called a new sale | Owner's money treated as income | Restore the linked transfer treatment; no customer or new delivery took place to support a sale
+PACK01 is written as R125.00 | A decimal error of R112.50 | Copy R12.50 from the source; don't change the receipt to match the entry
+
+Write a correction note containing the record reference, old entry, corrected entry, source used, correction date and the person checking it. In paper practice use a single line over the error so it stays readable. Follow the correction controls supported by the real app in real records; do not instruct deleting a sale or linked invoice as the normal way to correct.
+1200. The worksheet gives an 8 kg record changed to "8 bunches", a Day 2 delivery with a Day 4 payment, and a closing count not yet explained. The learner must keep the original unit of measure, keep both event dates and leave the unknown reason unresolved. Being able to repeat the rule doesn't pass this task; she must find and explain each difference in the new copy.
+1201. If a learner changes the source document so it matches the total, ask which record was evidence and which was a copy. If she stops after the totals agree, show two cancelling errors: an omitted R5.00 receipt and an omitted R5.00 payment. The net change is zero, but both records are still missing. Ask her to identify the missing events rather than celebrate an equal amount. These two example events are not in the main packet.
+1202. The published guides give save/reopen steps for harvests, costs and invoices. Practise on the existing sample tour in one tab. The sample farm's edited data stays in memory: reloading the whole page restores the original data, although the tab may stay in sample mode. Reopening within the same session is the work here; sample persistence doesn't show real account sync. In a real account, read the pending/offline messages and check the saved result without entering the same event twice. The harvests list currently has no Edit control; keep the exact correction needed rather than creating a correcting harvest.
+1203. Reconcile a small agreed set of practice records. Mark each source as checked, record the difference, make only supported corrections and leave the unresolved list. Ask for bookkeeping help for treatment you can't support. Don't show account numbers, payment access details or private customer information to the group.
+1204. Use [the learner worksheet](f2-worksheet.md) or [the four-page printable workbook](path to pdf), a calculator, notebook and counters representing kilograms and money. Read one event at a time aloud. Let learners point, arrange cards, describe aloud or ask another to write their answer. Bring in the second money account after the learner can follow the money tin. Keep the household's real money, customer details and payment confirmations out of group work and screenshots.
+
+All weights, prices, service charges and amounts in this packet are made up to practise calculation. They are not local market evidence, recommended currencies, budgets or yields. This is a separate four-day practice period of a made-up farm; do not take or add the F1 balances. The starting position is given: 4 kg of carrots in stock, R500.00 in the money tin and R100.00 in the phone money wallet, with no customer balance still owed. No field area or production period is given, so no per-area yield can be calculated.
+
+The practice follows one product in a comparable measurement situation. It does not include buying, driving, refunds, unknown reductions, expected changes, tax, loans or equipment. In real work, identify other movements and changes in measurement conditions instead of forcing them into this example. No permission for a suggested loss of numbers is given. Exact quantities are kept as whole grams and money as whole cents in [f2-practice.json](f2-practice.json); the teaching tables use kg and rand.
+1205. All rows describe carrots in kg. The starting stock comes from before this practice; it isn't a second harvest of the current period. "Sold" means quantity delivered, whether paid or not. The independent closing count is 9 kg.
+
+| Card | Day | Reference and event | In kg | Out kg | Stock after card kg |
+Opening | Before 1 | Counted starting stock | — | — | 4
+Q01 | 1 | H01 harvested | 16 | — | 20
+Q02 | 1 | D01 delivered for S01 | — | 6 | 14
+Q03 | 1 | HOME01 food used at home | — | 2 | 12
+Q04 | 2 | D02 delivered for S02 | — | 5 | 7
+Q05 | 2 | GIFT01 given to others | — | 1 | 6
+Q06 | 3 | H02 harvested | 8 | — | 14
+Q07 | 3 | LOSS01 recorded spoilage | — | 1 | 13
+Q08 | 3 | D03 delivered for S03 | — | 4 | 9
+
+Check: 4 kg starting + 24 kg harvested = 15 kg delivered + 2 kg home use + 1 kg gift + 1 kg recorded loss + 9 kg closing stock. These are quantity records, not money values or profit calculations.
+1206. Sale | Delivery day | Quantity kg | Agreed price | Payment reference and day | Received | Still owed
+S01 | 1 | 6 | R120.00 | PAY01, Day 1, cash | R120.00 | R0.00
+S02 | 2 | 5 | R100.00 | PAY02, Day 4, wallet | R60.00 | R40.00
+S03 | 3 | 4 | R80.00 | PAY03, Day 3, wallet | R80.00 | R0.00
+
+Total agreed sales R300.00 = customer payments R260.00 + closing amount still owed R40.00. The starting customer balance is zero and this practice has no credit books, refunds or earlier deposits. This reconciliation would need those extra movements if they existed.
+1207. The closing cash count is R477.50 and the closing wallet statement shows R337.50. These observations are given separately for the book's continuing answers. The transfer is complete; no money is on the way at closing.
+
+| Card | Day | Source and event | Money tin after card | Wallet after card | Combined after card |
+Opening | Before 1 | Given starting amounts | R500.00 | R100.00 | R600.00
+M01 | 1 | PAY01 received for S01 in cash | R620.00 | R100.00 | R720.00
+M02 | 1 | PACK01 packaging paid in cash, R12.50 | R607.50 | R100.00 | R707.50
+M03 | 2 | MOVE01, R100.00 cash moved to wallet | R507.50 | R200.00 | R707.50
+M04 | 3 | PAY03 received for S03 in wallet | R507.50 | R280.00 | R787.50
+M05 | 3 | Wallet charge FEE01 paid, R2.50 | R507.50 | R277.50 | R785.00
+M06 | 4 | Part-payment PAY02 of S02 in wallet | R507.50 | R337.50 | R845.00
+M07 | 4 | TRAVEL01 transport paid in cash, R30.00 | R477.50 | R337.50 | R815.00
+
+Combined check: starting R600.00 + R260.00 of customer receipts − R45.00 of recorded costs = R815.00 closing. MOVE01 contributes zero to this combined change. The R100.00 fall in cash and R100.00 rise in the wallet are still visible in their separate records. The R215.00 rise in combined money is not an established accounting profit.
+1208. The learner passes the working task by (a) tracing the 28 kg present across all destinations; (b) matching three sales with payments and keeping the R40.00 balance of S02; (c) keeping the internal transfer out of sales and costs; (d) checking the cents; and (e) explaining supported corrections and unresolved differences. Give a different example after feedback. A guessed zero for missing information, or a matching sum only by cancelling errors, doesn't pass the reconciliation.
+
+Worksheet answers: stock task 10 − 3 − 2 − 4 = 1 kg unexplained; payment task R90.00 − R30.00 = R60.00 still owed; transfer between your accounts creates no extra combined money; an independently recorded R1.00 charge reduces it by R1.00. For the altered H02 unit, keep 8 kg in the measurement record. Keep Day 2 as delivery and Day 4 as payment. No evidence supports calling the unexplained kilogram stolen, spoiled or given.
+1209. Put A01–A04 under their crop headings. A05 is one hire bill of R120.00. The tool record shows two hours for carrots and four for another crop: carrots get 2/6 of the bill, the other crop 4/6. Together the shares must still equal one bill. A06 is a separate market trip of R90.00. Its agreed practice basis is equal crate spaces occupied, two for carrots and one for the other crop. Explain why this bill uses a different record.
+
+There is no general rule that hours or crate spaces always give the fairest allocation. Ask what caused the shared cost and whether the record describes it. The chosen basis must fit the decision and the period. If a usage record is missing, show the unallocated amount and investigate. Don't silently give it all to the crop that looks more profitable.
+1210. "Which product does it use?" gives direct or shared. "What changes if this work changes?" gives fixed or variable. Hiring a tool for an agreed day may be direct to one crop but not change if that day's produce is slightly less. Extra packaging may change with the packs sold. A shared bill may contain variable items. Always say the period and the change being considered.
+1211. Allocate both shared bills, add each crop's direct costs and check the combined amount. Then add a comparison of household time written separately: four and six hours at an estimated R25.00 an hour. Keep the money column complete. No payment is made up, and no household time should be added twice if already paid and included elsewhere.
+1212. A new hire bill of R75.00 was used one hour by one job and two hours by another. Divide it and check the total. Then explain why "shared" doesn't automatically mean "fixed". Plan owner's withdrawals and equipment purchases separately; neither should be hidden among the costs of materials used. Equipment use and its cash purchase may happen at different times; ask for suitable bookkeeping help.
+1213. If both crops get R120.00, place one hire receipt between them and ask how the farm got two bills. If the learner divides all shared costs equally, ask which source supports an equal split. If household time becomes a cash payment, ask for payment evidence. Try again with a new hire bill rather than repeating the first numbers.
+1214. Use the published [costs guide](link) to record an actual paid cost and find its receipt in the sample system. Use this workbook for the allocation work. Don't make a second cost just to allocate one existing bill to another crop, or enter an unpaid comparison value as money spent. Current app records are not evidence that all costs are included.
+1215. Choose one small practice business. Name it by its product, unit and period. Gather three deleted-cost references, identify a shared cost and record a possible allocation basis. Write missing evidence. Don't force learners to take away private household financial details.
+1216. The carrot job has R220.00 of allocated paid costs and 40 kg of sellable produce. That is R5.50 per sellable kg for those included costs. If you add a separate household-time comparison of R100.00, the total becomes R320.00, or R8.00 per sellable kg. These are two named views of one budget, not two bills to be joined.
+
+If only 32 kg is expected to be sold, recovering that same R320.00 fully through those sales needs R10.00 per kg sold. This is a **planning goal for recovering through sales**, not the accounting cost of each item sold or a promise that a customer will pay it. The other 8 kg is not automatically lost or household food; investigate where it goes and its value. Don't delete closing stock just because it isn't sold. Missing information about land, equipment, management, money and tax means full profit is still unknown.
+1217. B01 gives fixed included costs of R105.00 for the practice round and variable costs of R7.50 per pack. Each pack is 1 kg and sells for R12.00. In this example only, every prepared pack is sold, the price and variable costs stay unchanged, and the fixed costs stay unchanged up to a stated capacity of 30 packs. It is not an estimate from a carrot harvest.
+
+The contribution per pack is R12.00 minus R7.50 = R4.50. R105.00 divided by R4.50 is 23 and a third packs. Whole packs must be rounded **up** to 24. Check both sides: at 23 packs the model loses R1.50; at 24 it has R3.00 left after its included costs. Call the amount remaining the model's, not the farm's full profit. This model does not include unsold prepared packs, waste, changing prices, bad debts or omitted costs. A real plan with those needs them added explicitly.
+1218. For 30 packs, calculate income and both kinds of included costs. Repeat for 18 prepared packs sold. Then keep the real prices but reduce capacity to 20. The break-even calculation point doesn't change but is outside that capacity. Don't advise "sell more" without testing production capacity and evidence of demand. Expected sales are ideas, not confirmed orders.
+
+If the price equals or is below the variable costs while the fixed costs are on the ground, no quantity covers those fixed costs under this model. Say no break-even quantity is possible under these assumptions, not zero units. If a cost is missing, the result is unknown; an empty price is not free income.
+1219. A separate card gives an included cost of R8.00 and a selling price of R10.00. The difference is R2.00. As a share of cost it is a 25% markup; as a share of the selling price it is a 20% margin on those included costs. These are different dividers. Neither is a full net profit margin if costs are missing.
+1220. Use fixed costs of R80.00, a price of R10.00, variable costs of R6.00 and a capacity of 18 whole packs. Find the break-even quantity and explain the capacity problem. Then compare an included cost of R6.00 with a selling price of R7.50: calculate markup and margin, naming the divider each time.
+1221. For the 23-pack answer, ask the learner to multiply 23 by R4.50 and compare with R105.00. For "25% margin", ask "25% of which amount?" For a missing variable cost treated as zero, restore the empty source card and ask which evidence is missing. For "profit", ask the learner to name the cost removed and name the result again.
+1222. Keep these "what if" calculation explanations in the workbook. Don't enter proposed sales as real sales in my records. Use the existing costs and harvest guides to find the real records underneath. A chart based on saved rows doesn't give missing stock value, household time value or a depreciation policy.
+1223. Prepare one named unit-cost estimate using agreed practice data. Write the period, included costs, omitted costs, unit, expected quantity to be sold and source date. Test small sales quantities. Explain what evidence is needed before using the estimate to discuss a real price.
+1224. Decision C offers the same 20 kg of accepted produce to Customer A or Customer B. A offers R10.00/kg, collects it, needs no extra packaging and pays on Day 0. B offers R12.00/kg, but the grower pays R35.00 for delivery and R10.00 for extra packaging; B promises to pay on Day 7. These are alternative options, not two simultaneous sales of one product.
+
+A leaves R200.00 after the stated cash costs of each offer. B leaves R195.00. A's lower price leaves R5.00 more at this stage. Both options relate to the same R140.00 of costs already incurred; removing them leaves R60.00 and R55.00 respectively. Those are partial results, not full profit. Don't plant a shared cost twice or add the two offers together.
+
+The cards separately record extra unpaid selling work: half an hour for A, an hour and a half for B. At the same estimated comparison value, that adds R12.50 or R37.50 to the management view, leaving R47.50 or R17.50 after the same stated costs and the additional household time value. The farm did not pay those wages. Other work or omitted costs may change the whole result.
+1225. State what the evidence given supports: A keeps more after these stated costs, needs a little extra time and pays immediately. Don't claim the buyer is reliable just because a card promises payment. Ask about confirmed quantity, acceptance standards, rejection, collection arrangements and how the agreement will be recorded. A real buyer relationship may have benefits the cards don't state; name them separately rather than inventing a money score.
+1226. For a new 10 kg, the collecting buyer offers R10.00/kg and the delivering buyer R12.00/kg. The delivery charge is missing. Find the charge at which their cash results would be equal, and explain why there is no justified final ranking. Another buyer quotes a price for a box without the weight of the box: explain what must be measured before comparing it with a per-kg price.
+1227. If a learner chooses B just because 12 is bigger than 10, place the delivery and packaging cards beside that offer. If Day 7 money is treated as today's money, move its payment card on the paper calendar. If the missing delivery charge becomes zero, keep the result empty and write down the next question to ask.
+1228. The [invoice guide](link) covers checking the customer, units, amounts and payment status after an agreement. An invoice isn't evidence that payment arrived. Link an existing recorded sale rather than recording it again. These suggested prices for other options stay in the workbook; don't make two example sales and show both as a finished business. Part-payments still need a separate balance record; don't mark an invoice fully paid after a deposit.
+1229. Find two deleted or facilitator-supplied offers for a clearly described product. Record the date of the quoted price and all conditions. Compare supported costs and payment timing. Give a reasoned choice or say exactly which missing fact stops another.
+1230. Bring paper, a calculator and the learner's workbook. Read cards aloud if needed. Learners may point, arrange cards or explain their answer to a study partner; perfect reading is not the test. Start by asking what it costs from one product in the garden to reaching the buyer's hands. Keep quantity, time and money in separate rows.
+
+All amounts, weights, work hours and quotes below are **made-up class entries**. They are not prices, wages, production levels or suggested yields. The R25.00 hourly price is a comparison idea, not a legal wage or payment order. No place, real planting time or tax status is given. Don't take them out. A, B and C are different tasks; don't add their totals or take the F1/F2 balances.
+
+Outcomes: allocate a cost once; explain the basis for sharing it; keep unpaid work visible; use the correct divider; separate markup from margin; test a manageable break-even calculation; and compare buyer terms without equating the highest price with the better result.
+1231. The second crop is deliberately unnamed. Only carrots have a given sellable quantity, so the second crop's cost per unit can't be calculated.
+
+Card | Source | Carrots | Second crop | Together
+A01 | Carrot tools used | R96.00 | R0.00 | R96.00
+A02 | Carrot packaging used | R24.00 | R0.00 | R24.00
+A03 | Second-crop tools used | R0.00 | R144.00 | R144.00
+A04 | Second-crop packaging used | R0.00 | R36.00 | R36.00
+A05 | Hire of R120.00; recorded hours 2 and 4 | R40.00 | R80.00 | R120.00
+A06 | Trip of R90.00; equal box spaces 2 and 1 | R60.00 | R30.00 | R90.00
+CASH | Paid costs allocated | R220.00 | R290.00 | R510.00
+TIME | Unpaid household time: 4 and 6 hours at comparison value | R100.00 | R150.00 | R250.00
+VIEW | Included costs and household time comparison | R320.00 | R440.00 | R760.00
+
+Answer | Amount | Meaning
+A07 | R5.50 | R220.00 / 40 sellable kg; allocated paid costs only
+A08 | R8.00 | R320.00 / 40 sellable kg; includes household time comparison
+A09 | R10.00 | R320.00 / 32 kg expected to be sold; goal for recovering included costs
+
+A zero entry above means the given direct card belongs wholly to the other crop. It doesn't mean all other costs are known to be zero. Full profit is still unknown.
+1232. Each case starts from B01 and applies only its stated change.
+
+Case | Change | Contribution per pack | Whole-pack break-even | Within capacity? | Result at stated sales
+B01 | Base; capacity and sales 30 | R4.50 | 24 | Yes | R30.00
+B02 | Only 18 prepared sold | R4.50 | 24 | Yes; demand still matters | -R24.00
+B03 | Capacity and sales 20 | R4.50 | 24 | No | -R15.00
+B04 | Price R7.50 | R0.00 | None | No | -R105.00
+B05 | Price R7.00 | -R0.50 | None | No | -R120.00
+B06 | Variable cost missing | Unknown | Unknown | Unknown | Unknown
+
+At 23 packs B01 is **-R1.50**; at 24 it is **R3.00**. A break-even quantity below capacity is not evidence of demand. B04/B05 have positive fixed costs and no positive unit contribution; B06 lacks required evidence.
+
+Card | Included cost | Selling price | Difference | Markup on cost | Margin on selling price
+M01 | R8.00 | R10.00 | R2.00 | 25% | 20%
+1233. Offer | Agreed sale price | Extra delivery and packaging | After those cash costs | After the same R140.00 | Extra time value | After that time value | Promised payment
+C01 | R200.00 | R0.00 | R200.00 | R60.00 | R12.50 | R47.50 | Day 0
+C02 | R240.00 | R45.00 | R195.00 | R55.00 | R37.50 | R17.50 | Day 7
+
+These are alternative offers and partial management results, not money already received or full net profit. The extra household hours relate only to this sale decision; they are not hours from A.
+1234. The allocation of the new R75.00 hire bill is **R25.00 and R50.00**. The new break-even case needs **20 packs**, above the capacity of 18; at 18 its model result is **-R8.00**. A cost of R6.00 and price of R7.50 give a **difference of R1.50, 25% markup and 20% margin**. The new buyer comparison gives a collecting price of R100.00 against a delivery price of R120.00 before an unknown charge: the cash results are equal at **R20.00 of delivery cost**. Below that charge the delivery offer keeps more; above it collecting keeps more, considering only these stated money items. With a missing charge, no final ranking follows.
+
+To pass, the learner must allocate each bill once, check the total, name the basis, keep time value separate from money, use and label the correct divider, round break-even up to a whole unit, identify a capacity or evidence gap, and compare an offer beyond its price. One correct total with an incorrect explanation is not enough. Give a new case after feedback; record what the learner actually shows. Completion is evidence of these practice skills, not a certificate of business profit.
+1235. The source cards give expected sales of R600.00 for A and R500.00 for B. Direct inputs are R220.00 and R180.00. Share R120.00 of hire using recorded planned hours, two for A and four for B. Share R90.00 of trip using equal box spaces, two and one. A gets R40.00 hire and R60.00 trip; B gets R80.00 and R30.00. Combined shared allocations stay R210.00, not R420.00.
+
+The stated money items of the budget total R610.00. Separately show four and six hours of unpaid family work at a comparison work value of R25.00 an hour, giving R250.00. This value is a comparison idea, not wage advice or a claim about outside needs. After these included costs the two jobs show a planned remainder of R240.00. Land, use of existing equipment, management, financing costs, tax and other missing costs prevent this from establishing the farm's full profit. Don't mix the time comparison with money payments.
+1236. Build columns for A and B and match their total with the original shared bills. Explain why paying R250.00 for equipment in March is a money movement but doesn't establish a R250.00 cost of using the equipment in this work period. Its use cost and the accounts treatment need different evidence and bookkeeping review. Household withdrawals are also money movements, not automatically a crop input.
+1237. A whole-farm plan also needs real availability and timing of land, water, labour, tools and markets. Two jobs can't be given all of one unfinished thing at the same time. This packet gives cost-sharing hours, not evidence that a particular tool or worker is available on the needed days. Keep those checks unresolved until evidence exists. Don't invent a harvest from a sales price.
+1238. A new shared bill of R60.00 was split by recorded use of one unit and two units. Allocate and check the total. The learner says a funding request of R500.00 makes both jobs profitable: ask her to identify approval, receipt of money and whether the funding is a sale. Don't assume a grant or loan when the terms are missing.
+1239. If the farm total includes both the shared bill and its shares, physically remove the duplicate card. If unpaid family time becomes a cash payment, ask for payment evidence. If a missing cost becomes zero, replace the zero with an unresolved source request. Give a new allocation after feedback.
+1240. [The costs guide](link) helps find actual recorded costs. It doesn't make estimates. Keep the proposed budget in the workbook, mark actual evidence and estimates, and date each estimate's source. Bring one deleted price and one question about the capacity of local review.
+1241. Start with R300.00. Pay the planned R220.00 on 5 January: R80.00 remains. The next planned payment of R180.00 on 10 January produces an estimated amount below zero of R100.00. Stop the cards here and ask how that payment can be made. No loan or extra money is given. Continue the calculation as a clearly marked unsupported estimate, not as an instruction to pay money that isn't there. A hire of R120.00 on 20 January goes to a below-zero amount of R220.00; a receipt of R600.00 on 25 January takes it to R380.00.
+
+The first shortfall is on 10 January and the deepest shortfall in the base case is R220.00 after the payment on 20 January. Nevertheless January closes with a positive R380.00. A month-end closing check alone throws away the earlier gap. If a receipt and a payment share a real date, check which is processed first; this practice avoids the same-date uncertainty. Combined available money also doesn't show that the correct payment account has money available when needed.
+1242. Continue in February and March. Opening balance plus receipts minus payments equals closing balance. February opens with January's R380.00, not the original R300.00. March's R120.00 collection relates to a customer balance from before the practice; it is a cash receipt now, not another sale of the current period. Paying an old R80.00 supplier bill also needs cash now though it is not one of the current work's inputs.
+
+Set aside X01, a R50.00 transfer from bank to money tin: both are already inside combined money, and the given transfer has no charge. It changes location, not the combined amount. Set aside X02, a R500.00 request not approved. Keep the two issued invoices X03/X04 as links to expected customer receipts; don't count each invoice and its final receipt as two incoming payments. A household time comparison is also not a payment.
+1243. In a different example, open with R90.00; pay R130.00 on Day 2, receive R80.00 on Day 10 and pay R20.00 on Day 20. Find the closing cash, the lowest estimated cash and the first date needing an answer. Then ask whether the closing answer is complete if it's known that an extra payment applies but its amount is missing.
+1244. For a learner who removes negative incomings [sic: "net incomings"], use counters: opening R10.00, receipt R5.00 and payment R3.00 leave R12.00. For a learner who sees only a positive ending, replay one card at a time and stop at the first below-zero estimate. For an invoice counted as cash, place its promised receipt on a later date. Ask for a new example with dates after correction.
+1245. The working records/charts series summarises recorded events and has its own limits of payment and missing data. This is not dated forecasting or confirmation of an existing bank balance. Keep invented examples and expected future receipts out of my real records. Use [the invoice guide](link) to check an existing unpaid invoice and its source, without marking it paid to make the plan balance. Build a short deleted forecast with exact dates; match its opening cash and write down obstacles or uncertain timing.
+1246. In LATE, move only the R600.00 receipt of A from 25 January to 28 February. Don't make a new receipt or change the sales price. March closing remains R430.00, but the deepest gap grows from R220.00 to R310.00, after the trip payment of 5 February. Equal ending amounts don't mean equal ability to pay on time.
+
+In HIGH, raise the B input payment from R180.00 to R240.00, with no other change. In COMBINED, apply this increase together with the late A receipt. Don't combine the balances of each case: each case starts from the same starting position and recalculates the changed events. The combined deepest gap is R370.00 and the closing balance is R370.00.
+1247. LOW reduces expected sales and the B receipt from R500.00 to R350.00; this is a low-sales case, not a claim that the R500.00 debt was fully paid. OUTSIDE moves the same R500.00 B receipt to 20 April, beyond the 31 March period. It remains expected as an amount still owed, not vanished money; do not include it in money received inside the period. UNKNOWN removes the price of B's inputs. The later exact balances and deepest gap become unknown, not large good balances caused by taking an empty value as free.
+1248. DEFER moves the proposed R250.00 equipment purchase to 10 April, assuming the purchase date can be changed by agreement. It improves the March closing calculation to R680.00 but leaves January's R220.00 gap. So it doesn't solve that earlier problem. A response must work before the shortfall: options that can be investigated include changing scale and its related costs/income, agreeing timing with the buyer or seller, or identifying money that actually exists. Don't just remove essential inputs, assume a buyer pays immediately, cut the household's basic needs, or take an unapproved request as available money. Borrowing requires all its terms and a repayment plan; this unit doesn't recommend a lender or loan size.
+1249. Give the learner LATE and DEFER without the answer table. Ask which date failed first, whether the proposed delay of equipment solves it, and what evidence would be needed for a different response. Then show an unknown actual price: accept "can't be calculated now" together with an exact source request. Don't give an estimated zero wage because it produces a clean budget.
+1250. A good response names the date and amount affected, what could really change, what must be agreed, and the effects on later costs, production and receipts. After a corrective response, use the new dates or prices. In the practice plan of a deleted place, keep the base and bad cases both, mark ideas and set a review date. Compare real evidence with the plan as it arrives; keep the first estimate rather than rewriting it to pretend it predicted the result.
+1251. Bring a calculator, paper, day cards and counters. Read one card at a time aloud. Learners may point, move cards, describe aloud or ask a study partner to write. Use a timeline in the demonstration, then hide its answers for independent practice. Don't force anyone to share private household accounts, customer names or bank details.
+
+All dates, amounts, work hours and offers are **made-up class entries**. January–March 2027 is a practice period, not a recommended South African planting season. Jobs A and B have no defined crop, place or harvest. Don't assume one. This is new work, not a continuation of the F1–F3 balances. The starting money tin has R120.00 and the bank R180.00, both assumed available, with no barriers or costs in the given model. The separate starting amounts still owed are R120.00 that a customer must pay and R80.00 that must be paid to a supplier. Neither is starting cash.
+
+An estimated balance below zero means the proposed sequence can't be paid from the stated available cash. It is a warning to revise the plan or establish a suitable funding arrangement with evidence. It isn't available money, an approved overdraft or permission to not pay a bill. Later balances describe **unsupported estimates**, not evidence that the middle jobs could have happened. Exact shortfall amounts are model results, not recommended loans or an emergency fund.
+1252. ### Included job budget
+
+Job | Planned sales | Direct inputs | Hire share | Trip share | Money items | Unpaid time comparison | Amount left after included costs
+A | R600.00 | R220.00 | R40.00 | R60.00 | R320.00 | R100.00 | R180.00
+B | R500.00 | R180.00 | R80.00 | R30.00 | R290.00 | R150.00 | R60.00
+TOTAL | R1,100.00 | R400.00 | R120.00 | R90.00 | R610.00 | R250.00 | R240.00
+
+### Base monthly estimate
+
+Month | Opening | Receipts | Payments | Closing
+2027-01 | R300.00 | R600.00 | R520.00 | R380.00
+2027-02 | R380.00 | R500.00 | R240.00 | R640.00
+2027-03 | R640.00 | R120.00 | R330.00 | R430.00
+
+Receipts total R1,220.00 and payments R1,090.00. The opening R300.00 and R130.00 of net income give a closing R430.00. Don't add the three opening balances or three closing balances as cash in hand. Current job receipts of R1,100.00 minus current input payments of R610.00 give R490.00 before other money movement. Add R120.00 from the old customer, subtract the old R80.00 bill, the R150.00 withdrawal and the R250.00 purchase: the net cash movement is R130.00. Separately, taking the unpaid time comparison of R250.00 from R490.00 gives a partial budget remainder of R240.00. Neither equals an established full profit.
+
+### Cases before new funding or a repair agreement
+
+Case | Closing on 31 March | Lowest dated balance | Deepest estimated gap | First below-zero date
+BASE | R430.00 | -R220.00 | R220.00 | 2027-01-10
+LATE | R430.00 | -R310.00 | R310.00 | 2027-01-10
+LOW | R280.00 | -R220.00 | R220.00 | 2027-01-10
+HIGH | R370.00 | -R280.00 | R280.00 | 2027-01-10
+COMBINED | R370.00 | -R370.00 | R370.00 | 2027-01-10
+OUTSIDE | -R70.00 | -R220.00 | R220.00 | 2027-01-10
+DEFER | R680.00 | -R220.00 | R220.00 | 2027-01-10
+UNKNOWN | Unknown | Unknown | Unknown | Unknown
+
+Independent allocation: R20.00 and R40.00, which still add up to R60.00.
+
+Independent case: closing R20.00; lowest -R40.00; gap R40.00 before any extra unknown payment. The first below-zero date is Day 2. An extra unknown payment stops a complete shaped estimate; it can't be silently left as zero. The given calculation without the payment remains a labelled comparison.
+1253. Place P01: order O01 on Day 1 for R120.00; completed delivery and invoice delivery D01-I01 for R120.00 on Day 2; receipt R01-A for R40.00 on Day 3. The invoice price is R120.00, money received R40.00 and the recorded balance R80.00. On Day 4 the customer asks for another copy. I01-COPY is the same invoice, not another sale of R120.00. On Day 5 receipt R01-B adds R80.00. The accumulated amount is now R120.00 and the balance is zero. Don't add the order, invoice, copy and receipts together as income.
+
+Use the four-step payment example in the app guide to show one step at a time. Stop before each answer. The animated picture is an explanation using made-up numbers, not a live account or a demonstration that the app supports allocating a part-payment.
+1254. Invoice M01 has two rows: 2.5 kg at R12.00/kg and three bunches at R8.00/bunch. Calculate each row, then add the money. The result is R54.00. Don't add quantities as 5.5 kg. The bunch has no given weight. If a row lacks a price or unit, stop and resolve that source rather than choosing zero or a ready conversion.
+1255. Give the learner four new blank document cards. Read aloud: an agreement is made, the produce is delivered, an invoice is issued, and the customer pays only part of it later. Ask the learner to put each card in the right order and identify the evidence still needed. Then give an independent invoice of R150.00 and a receipt of R50.00. Ask the recorded amount still owed and what would show payment.
+1256. If the invoice price becomes money received, move the unpaid part to the envelope "customer owes". If a copy creates new income, put it behind the original invoice instead of beside it in a second basket. If mixed quantities become kilograms, return to the two labelled rows. Give a new example after the answer.
+1257. Use [Record a sale once](link). Before any real entry, find the matching existing sale or invoice. Gather a deleted set of order, delivery, invoice and receipt references and describe any gap. This lesson doesn't require sending a message to a customer or sharing private documents.
+1258. Start on the sample tour, confirm that it is sample data, and open My records → Sold. Show New sale and invoice and Past sale / paper invoice. Show View invoice on an already linked sale and Make invoice when a suitable existing sale needs it. Reopening is different from starting an empty form.
+
+Choose the invoice type and, when asked, the existing sale record **before entering** customer and row details. Changing either one starts a new form in the current app. A new invoice starts a new document. In "Produce already sold" and "Invoice already written on paper" it asks whether a sale exists. Choose the source sale where suitable; do not choose No just to avoid linking it. A sale that already has an invoice must be reopened, not invoiced again. Keep the original paper reference when the paper route asks for it.
+
+Check the customer, product, quantity, unit, agreed price, field where suitable, dates and payment status. A suggested price is not evidence of the customer's agreement. Keep bags and bunches as their real units. The app can link paid kilogram rows to crop sales evidence; it can't guess the weight of other units. Linking an existing sale depends on supported source records. Don't split one earlier sale into invented new sales to make the form accept it.
+
+Finally, read the actual message, reopen one invoice under Saved or through its sale link. Check its number, total, date and status. Saving on the device while crop-sale synchronisation is pending is not a reason to make another invoice. Documents are currently kept on the device within the account's scope; synchronising the crop sale doesn't show that the full invoice document is available on another device.
+1259. Sort these situations: (a) an already saved invoice; (b) a suitable existing recorded sale without an invoice; (c) a completed sale not yet recorded; (d) an old paper invoice whose sale may already exist. Explain the checking step and route for each. For (d), missing evidence about an existing sale stays unresolved until checked. "Paper" doesn't mean "unpaid".
+
+Use a corrected sample invoice to show unpaid → fully paid only when the work gives evidence of full payment. Keep the same invoice identity. The receipt date and the invoice issue date answer different questions. The current app gives every fully paid invoice a single receipt date in its records/chart series. For part-payments on different dates, a separate supporting list must keep each real receipt date; the app's chart can't show all that money history. If the app doesn't honestly support the original record, keep it separately and identify the limit rather than producing a history of changes.
+1260. Show the saved invoice of R150.00 and the receipt of R50.00 from F5.1. Ask whether a second sale of R50.00 should be made, the original invoice marked fully paid, or the part-payment kept in a separate checked balance record. Only the last matches these facts. Then ask what must be checked before downloading a requested copy of an existing invoice.
+1261. For duplicate copies, start at the existing reference and follow it to the document. For full payment brought in early, compare the invoice amount with all checked receipts. For changed dates, return to the original evidence. In the sample workspace, reopen one corrected invoice and identify its amount, payment status and source. Print/PDF is a separate check of the document; downloading doesn't send it to the customer. Use [the invoice guide](link) for detailed steps.
+1262. Order O02 on Day 1 is R90.00. Deposit DEP02 on Day 2 is R30.00; nothing is delivered and no invoice is issued in this work. Money received is R30.00 and the customer's deposit stays held separately in the record. This describes an obligation still owed, not a promise that a separate bank account physically exists. It is not yet completed-sale income.
+
+Completed delivery and invoice delivery D02-I02 on Day 5 is R90.00. First identify the original R30.00 receipt, then record ALLOC02 to apply it to this invoice. After allocation, the recorded amount still owed is R60.00, the deposit held is zero and the total money received remains R30.00. The middle table row before allocation purposely leaves the deposit standing alone until it matches. Receipt R02 on Day 6 of R60.00 pays the balance. Total collected money is R90.00, not R120.00. Real deposits, cancellations, refund terms and tax timing need a real agreement and local bookkeeping guidance; this packet doesn't design any of them.
+1263. Invoice D03-I03 is R200.00; R03-A confirms R120.00 received. Q03 records that the customer disputes R40.00. Keep the issue and evidence visible. Just entering this question doesn't change the recorded balance of R80.00 to zero or establish that the disputed amount is legally still owed. Investigate the delivery, price and agreement. In this made-up case only, ADJ03 is an agreed reduction of R20.00 recorded separately. Keep the original invoice and the correction trail. The recorded balance becomes R60.00. Receipt R03-B of R60.00 pays it. This is bookkeeping work, not advice to claim the disputed amount or authority to make a tax credit note in the app.
+1264. BANK04 confirms R25.00 has arrived, but no customer or invoice is identified. Money received is R25.00; it remains unmatched. Don't choose a suitable unpaid invoice or call it a produce sale without evidence. Check the reference and the right source safely. If unresolved, keep that situation for review.
+1265. Invoice D05-I05 is R50.00; R05 confirms receipt of R60.00. Only R50.00 pays that invoice. Keep the extra R10.00 as an unresolved customer credit; it is not automatically extra produce income or a tip. Confirm suitable agreed treatment and its evidence. This task makes no refund, allocates no future sale and moves no money.
+1266. Build a separate customer list with the original invoice reference, dated receipt references, agreed corrections, allocations and remaining recorded balance. Keep earlier deposits, unknown receipts and customer credits visible. Don't combine credits and unrelated customer debts into one misleading amount. In these cases, the original invoice minus agreed reductions minus allocated receipts gives the remaining balance, and any larger amount is shown as customer credit. The model does not include fees, tax and other arrangements.
+1267. An invoice of R150.00 with R50.00 received. The customer disputes R30.00; no change is agreed. State the recorded balance and name the unresolved question. Then a R10.00 reduction supported by evidence is agreed: recount. In a separate case, an invoice of R35.00 and a receipt of R40.00: identify the credit. Explain why the app's fully-paid control can't represent the earlier part-payment history or a credit book.
+1268. If allocation creates money, use the same receipt card instead of bringing another coin. If a dispute changes the invoice automatically, ask for the source of an agreed correction and keep the question separate. If an overpayment raises sales, return to the delivered amount. Prepare an empty customer list and use a new deleted case or approved deleted records. Identify the next evidence needed to resolve one item; don't show customer details or contact anyone as an automatic course action.
+1269. Bring paper cards for orders, deliveries, invoices and receipts; counters; a calculator; and two envelopes labelled "customer owes" and "money received". Let learners point, sort, explain aloud or ask a study partner to write. Keep real customers' names, account numbers and private receipts out of group discussion. The app tour uses sample records; these class amounts must not be entered in a learner's real farm.
+
+All the amounts and days counted below are **made-up class entries**. Each P case starts separately with no earlier invoice, cash receipt, deposit or credit. The cases have no tax, discount, payment fees, refund or cost unless the event clearly describes a correction. So they don't establish a full profit or a tax-compliant invoice. One invoice covers each completed delivery in these simple cases. Real contract terms, tax treatment and disputed rights need suitable review.
+1270. Each case is separate. Amounts are combined **within that case**, not balances to be added across all document rows. "Still owed" is the recorded balance under the stated work assumptions, not a legal decision. A deposit is held separately until its allocation event is clear; money isn't counted again when allocated.
+
+Reference | Original invoice | Agreed reductions | Money received | Recorded amount still owed | Deposit held | Customer credit | Unmatched money
+(rows as listed: O01 all zero; D01-I01 R120 invoice, R120 owed; R01-A received R40, owed R80; I01-COPY same R120/R40/R80; R01-B received R120, owed R0; O02 zero; DEP02 received R30, deposit held R30; D02-I02 invoice R90, received R30, owed R90, deposit R30; ALLOC02 owed R60, deposit R0; R02 received R90, owed R0; D03-I03 R200 owed R200; R03-A received R120 owed R80; Q03 same R80; ADJ03 reduction R20 owed R60; R03-B received R180 owed R0; BANK04 received R25, unmatched R25; D05-I05 R50 owed R50; R05 received R60, owed R0, customer credit R10)
+
+M01: 2.5 kg × R12.00 = R30.00; 3 bunches × R8.00 = R24.00; total R54.00.
+
+Independent answers: R100.00 still owed before the agreed correction; R90.00 after it; a customer credit of R5.00 in a separate overpayment case.
+
+An unresolved question of R30.00 stays attached to the independent case until settled; this practice doesn't establish a legal claim amount. For route sorting: reopen (a); use the suitable source-sale invoice action (b); use the past-sale route not yet recorded (c); check whether the sale exists, then keep the paper reference and suitable link (d). A copy keeps the original invoice identity. None of these actions confirms profit or tax compliance.
+1271. The practice need is the same suitable service of a tool on Days 2, 10 and 20 within a 30-day period. Starting available cash is R500.00. Suitability, safe operation and access to BUY and HIRE are assumed confirmed so as to separate only the money work. SHARE may have an unconfirmed booking on Day 10. No other receipts are given.
+
+BUY pays R900.00 on Day 1, R60.00 of working materials on Day 10 and R40.00 of maintenance on Day 20. Total payments R1,000.00. The plan is already short by R400.00 on Day 1 and ends short by R500.00. It can't be supported by the stated cash of R500.00. The buyer would keep the item, but its remaining price and useful life are unknown. Don't call everything bought a cost established for the 30 days of use, or assume the retained item is worth zero. A future sale of that item isn't money until its price, costs and date have evidence.
+
+HIRE pays R210.00 for all three uses, R60.00 transport and R150.00 refundable deposit on Day 1. These are three parts of one request, not three separate R210.00 service payments. The practice says working and maintenance service costs are included, no other charges apply, and the R150.00 deposit is fully returned on Day 30. Cash needed first is R420.00, leaving R80.00. After the refund, net paid money is R270.00 and closing cash R230.00. The net R270.00 doesn't mean the grower could have started with only R270.00. The refund returns the grower's money; it isn't a produce sale.
+
+SHARE pays R300.00 to the owner on Day 1, a working contribution of R30.00 on Day 10 and maintenance contribution of R20.00 on Day 20. The conditional cash plan uses R350.00 and ends with R150.00. The value of the kept share is unknown. An unconfirmed booking means this request hasn't been shown to meet the same need. A useful cash amount can't solve an availability problem.
+1272. Put all source cards in date order, keeping the returned deposit separate. Check the driver, transport, fuel or other working materials included, cleaning, repair, storage, return terms, insurance and idle-time arrangements in a real request. In this comparison, the stated package ideas are complete for the cash movements shown; they don't establish full economic cost. None of the three amounts establishes full profit or the whole life of the item.
+1273. A separate hire costs R80.00, with a R50.00 security deposit fully returned later. Find the amount needed before hiring and net paid money after the refund. Then remove the refund agreement: which conclusion no longer stands? For a shared tool, refer to a missing agreement if two members need the same time.
+1274. If the deposit is ignored, place the payment before first use and its refund after the last use. If the unknown value of the item becomes zero, replace it with an exact evidence request. If sharing is called cheaper without availability, ask how the Day 10 work would be done. Find a dated deleted quote or a list of questions for a seller/group. Record the work, dates, what's included, ownership and access conditions. Don't buy, borrow or sign anything as an automatic course task.
+1275. Use [the costs guide](link) for actual supported cost entries and receipt evidence. Keep the comparison, the deposit plan and the item/share record separate. The app's cost tag isn't a full asset register, depreciation calculation or tool-booking system. Don't enter each proposed option as an actual cost or make a made-up produce sale for a deposit refund.
+1276. Use the current [NCR price form](link) to find the parts, not to make a contract. Identify the principal amount, deposit if applicable, number/frequency of payments, interest information, fees, required and optional insurance, security and payment arrangements. Ask a trained local adviser about how it works and unclear terms. Don't assume a legal limit or right in this course. There is no form to sign.
+1277. In this practice example, a loan principal of R600.00 is issued on 1 January 2027 and put in in full. A fee of R30.00 is paid separately that day, leaving R570.00 of the issued money available for the intended purpose. The suggested repayment schedule has three principal payments of R200.00. The interest parts are R12.00, R8.00 and R4.00. Each payment includes R6.00 of service and R4.00 of required insurance. No optional insurance or other charges are assumed in this model. These are the given payment amounts, not an interest calculation or a statement that those terms comply with the law.
+
+The payments due are R222.00 on 31 January, R218.00 on 28 February and R214.00 on 31 March. Their total is R654.00. With the separate R30.00 fee, total money going out is R684.00 against R600.00 of money issued in full. The stated cost of money is R84.00: interest R24.00, service R18.00, insurance R12.00 and the initial fee R30.00. Repaying the R600.00 principal isn't an extra interest cost of R600.00 or a produce sale. The remaining principal is R400.00, R200.00 and zero after the three scheduled payments. This figure doesn't include future costs; call it the remaining principal amount, not the full cost of early repayment.
+1278. Now keep the same principal, payments and repayment schedule, but the provider holds the R30.00 fee once before paying out R570.00. Don't subtract it again from the R570.00 actually paid in. The scheduled outflow of R654.00 minus the R570.00 received still gives a cost of money of R84.00. The visible bank receipt differs, but these two cases have the same net starting cash and the same total stated costs. A fee added to the principal could be a different arrangement and needs its own stated schedule; it isn't silently changed here.
+1279. A separate practice request shows a principal of R600.00, a separate fee of R30.00, three principal parts of R200.00 and interest of R10.00 per payment, with no service fee. Required insurance applies but its amount is missing. Each full payment, the full repayment amount and the total cost of money all remain unknown. The remaining principal shown assumes the stated principal payments are made; it doesn't confirm payment or complete repayment while costs are unresolved. Don't set the missing insurance to zero and announce this loan cheap. Get the required amount, its payment timing and the corrected full schedule.
+1280. Separate principal and fees in every dated row. Match the total with the document instead of adding the included service charge twice. Link each proposed payment date to a cash estimate that includes other obligations. Check the real purpose, the time of issue, the basis of the rate, whether a variable rate applies, fees, insurance, security and the effects of non-payment with suitable help. This practice packet lacks a whole-business income forecast, household obligations or a lender's assessment, so it can neither confirm affordability nor recommend borrowing.
+1281. A separate payment includes a principal of R100.00, interest of R10.00 and a service of R2.00 already included in the payment. Calculate the payment. A learner who adds the service again: explain the error. Then give a request with possibly absent compulsory insurance and ask what prevents a full comparison.
+1282. If loan receipts become sales income, link the money to its repayment obligation. If a fee is counted twice, trace whether it was held, paid separately or already included. If a learner picks a request with an unknown amount by its visible amount, restore the missing piece. Collect an empty or approved deleted request and write down questions. Keep original terms and dates. Don't submit a credit application, choose a lender, enter private identity details or move money as course work.
+1283. A summary of my current records and an export of lender records are not this repayment schedule, a credit assessment, or an automatic finance acceptance decision. Keep the full schedule and supporting evidence separate. F4 gives a dated cash plan; F7 will discuss statement limits. Don't force loan receipts to become produce sales or assume the app automatically separates principal and money payments.
+1284. Start this separate case with R800.00 total money given by the owner: R600.00 for daily work and R200.00 set aside. Both are in one pool, available to the owner, with no given transfer fees or legal restrictions. Setting aside is a management allocation method; real contract restrictions must be checked separately. The R500.00 goal is a made-up wish of this practice, not a recommended reserve amount.
+
+On Day 5 allocate R100.00 from daily work to the reserve. Daily work becomes R500.00 and the reserve R300.00; the total remains R800.00. On Day 10 pay a R120.00 maintenance bill from the reserve: the reserve R180.00 and the total R680.00. On Day 15 an evidence-supported working receipt of R80.00 arrives: daily work R580.00, reserve R180.00, total R760.00. Its source travels with the receipt; an amount alone doesn't establish profit. On Day 25 a stated essential bill of R550.00 leaves daily work R30.00 and reserve R180.00, total R210.00. The reserve is R320.00 below the made-up R500.00 goal.
+
+Keep D01, a separate estimate of R50.00 of equipment use that is not a cash right, outside these money movements. It doesn't pay for repair or move money to the bank. Also keep the unapproved funding request G01 of R300.00 outside. A proposal is not money received. This lesson doesn't set depreciation or its tax treatment.
+1285. Return to the starting opening position and open a R250.00 repair on Day 20. After Day 15 only R180.00 is set aside. Using only that R70.00 from daily work is a proposed plan of change, not extra income. The total falls from R760.00 to R510.00, with the reserve at zero. The later essential bill of R550.00 would therefore produce a shortfall of R40.00. Stop investigating a possible response before the bill arrives. Don't silently round the below-zero response to zero or take an unapproved request as the missing R40.00.
+1286. If the reserved money were legally blocked or unavailable, permission/access would be separate barriers; this practice doesn't consider them. A response may require renegotiating timing, finding other reliable repair options or reassessing the work and its results. Don't automatically cancel essential maintenance, move protected money or borrow. Recalculate dates and outgoing amounts from real evidence. A reserve goal should be based on a farmer's conditions, not a general percentage.
+1287. Start a new case with R400.00 total and no reserve. Set aside R90.00. Then pay R20.00 from that reserve. State the total money after allocation and after the external payment, including what remains reserved. Explain why an estimate of a cost that isn't cash can't pay for the following repair.
+1288. If allocation reduces total money, physically move counters between two envelopes without removing any. For an external payment, remove its counters once. If the later shortfall vanishes, replay the repair before the essential bill. Prepare a deleted list of maintenance needs, their evidence, possible payment dates, money actually available and unresolved costs. Keep the goal, the real balance and the commitments separate. No private bank balance should be shared with the class.
+1289. Keep reserve allocation and repayment planning in the workbook unless the supporting records book honestly represents them. Use the costs guide for actual recorded costs, with the original receipt evidence. The app chart doesn't establish your bank balance without barriers, the value of an item or an accumulated depreciation.
+1290. Bring three cards labelled Buy, Hire and Share, counters, a calculator and two envelopes labelled Daily work and Set aside. Read one source card at a time. Learners may point, sort, explain aloud or ask a study partner to write. Keep private financial details out of group work. Use only approved deleted documents when people agree to discuss them.
+
+All rand prices, days, dates, payments and schedules here are **made up to practise calculation**. None is a local price, usual price, legal maximum, rate-estimate advice or credit request. The tool is deliberately undefined. No crop, harvest, machine capacity or farming task order is given. Each practice starts separately; don't carry money or debt from one case into another. Full profit is still unknown.
+
+An estimated cash below zero is an unsupported lack of money, not usable money or an approved overdraft. Continuing the calculation shows a problem in the proposed plan; it doesn't show that later payments can be made. Real affordability needs full household/farm obligations and evidence of income, which this section doesn't provide.
+1291. These are separate practice cases. Don't add the balances of calculation rows. The tool cases are cash estimates within 30 days, not full ownership costs or profit. Amounts below zero are unsupported. A missing remaining item/share value stays unknown.
+
+### Tool cash comparison
+
+Case | Total payments | Deposit returned | Net paid | Cash needed first | Closing estimate | Deepest cash gap
+BUY | R1,000.00 | R0.00 | R1,000.00 | R1,000.00 | -R500.00 | R500.00
+HIRE | R420.00 | R150.00 | R270.00 | R420.00 | R230.00 | R0.00
+SHARE | R350.00 | R0.00 | R350.00 | R350.00 | R150.00 | R0.00
+
+### Loan summary
+
+Case | Net starting cash | Scheduled payments | Stated costs of money
+SEPARATE | R570.00 | R654.00 | R84.00
+WITHHELD | R570.00 | R654.00 | R84.00
+UNKNOWN | R570.00 | Unknown | Unknown
+
+### Suggested parts and remaining principal
+
+(SEPARATE-1..3 and WITHHELD-1..3: 31 Jan, 28 Feb, 31 Mar; principal R200 each; interest R12, R8, R4; service R6; insurance R4; payment R222, R218, R214; remaining principal R400, R200, R0. UNKNOWN-1..3: principal R200; interest R10; service R0; insurance unknown; payment unknown; remaining principal R400, R200, R0.)
+
+### Reserve estimate
+
+(BASE/A01 day 5: daily R500, set aside R300, total R800; BASE/M01 day 10: R500/R180/R680; BASE/R01 day 15: R580/R180/R760; BASE/E01 day 25: R30/R180/R210; SHOCK/A01 day 5: same as A01; SHOCK/M01, SHOCK/R01 same; SHOCK/X01 day 20: R510/R0/R510; SHOCK/E01 day 25: -R40/R0/-R40.)
+
+Independent: R130.00 needed before hiring; R80.00 net after refund; payment step R112.00 including its service charge; R400.00 total after allocation; R380.00 after payment, including R70.00 still set aside.
+
+The independent deposit refund depends on its stated assumption of full return. Remove that agreement and the net paid money isn't resolved. In loan examples, the given principal is repaid directly; the real amount still owed, early repayment or changing interest needs its own evidence. BASE closes with a reserve of R180.00, R320.00below the goal. SHOCK has no reserve and may have an estimated cash shortfall of R40.00 after the essential bill; no source of funding is given.
+1292. Set up three areas: Cash, Period result, Position. Show R01. Move R200 from "customer owes" to "cash"; don't add January sales. Show S01: add R900 to sales and customer balance; move R350 of stock to cost of goods. Cash stays R950 after P01. The running result is R550 before later costs and checks. Then R02 moves R600 from the customer balance to cash. Sales stay R900; R300 is still owed. This model assumes the delivery and accepted invoice establish that sale; an order or an unfulfilled promise alone is not the same evidence.
+
+Continue with L01: cash and debt rise by R500, while the result stays unchanged. Use the interactive aid one card at a time. Invite the learner to predict which of the three views changes before moving on. The first cards show the running result from the evidence processed so far, not a completed monthly profit.
+1293. Sort P02, E01, L02 and H01. For each, state which money goes out and whether the given case records a cost for the period. P02 pays the supplier's balance. E01 changes cash into equipment. L02 has two parts: principal reduces debt; the R10 interest is a cost for the period. H01 reduces cash and the owner's equity; it isn't a business cost here. Don't make this personal withdrawal into a rule about wages in every business form.
+1294. Cash receipts total R1300: R200 old balance + R600 current receipt + R500 loan. Payments total R1190. Opening R1000 + R1300 − R1190 = closing cash R1110, a rise of R110. February's R300 receipt is not included. This is a cash summary; it isn't a report complying with the standard for cash-flow by all categories and analysis.
+
+Sales R900 less delivered goods R350, interest R10, transport R80, services R60, stock loss R50 and depreciation R60 gives **a result of R290 before tax in this model**. No tax amount is estimated. Closing assets are cash R1110 + customers who owe R300 + stock R300 + equipment R840 + prepayment R120 = R2670. Liabilities are supplier/service balances R330 + loan R400 = R730. Equity is R1940. Check R2670 = R730 + R1940, and the starting equity R1800 + result R290 − personal withdrawals R150 = R1940.
+1295. Start another case: cash R400 and resale stock R120, no debts. Move all the stock out in a credit sale of R300, then receive R200 of that sale. Ask for cash, customer balance, remaining stock, result and total assets. Answer: cash R600, R100 still owed, no stock left, result R180 and assets R700. Starting equity R520 and the result R180 also equal R700. The R200 receipt must not be counted as another sale.
+1296. If the learner calls R110 January's profit, ask which cash movements were loan, equipment or household withdrawals and which period costs had no payment in January. If she adds the receipt to sales twice, physically join the invoice and receipt with the same reference, then repeat with a new example.
+1297. Choose one deleted recorded sale and its evidence. Explain which part is the sale, the receipt or the unpaid amount. Read the app's Sales and Invoice guides before changing an entry. Charts show recorded information; they don't create full position, stock value or a loan book. Keep these practice numbers out of my real records.
+1298. Place A01 within the January–February limit. The work was completed in January with an agreed fee of R80. The invoice is dated February and the amount was unpaid at the end of January. Under this model, January includes the R80 cost and a debt, while January cash doesn't change. Keep both documents and dates. Now place F01: money goes out in January, but the whole maintenance service belongs to February. January includes a prepayment asset of R120, not a January maintenance cost. A real contract may need different treatment; this case states period and rights clearly.
+
+Show the stock bridge: opening R300 + purchases R400 − goods delivered R350 = R350 before the closing check. C01 supports a loss of R50 and R300 remaining. This is a checked reconciliation, not an order to call every unexplained difference theft or spoilage. Ask for evidence before choosing a reason or accounting treatment. Show the equipment bridge: opening R600 + purchase R300 − the given period depreciation R60 = R840. The charge spreads the cost in this model but is not a new payment and not a tax permission.
+1299. Use the lost-stock case. Hide C01 completely. The book shows R350 before review, but the physical count, value and correction are unknown. Cash R1110, customer balances R300, equipment R840, prepayment R120, payables R330 and loan R400 are still supported. **Corrected stock, full period result, total assets and equity are unknown.** Don't reuse the R300 from the finished case after its evidence has been removed. Ask the learner to identify the complete document that would permit reliable updating.
+1300. New case: start with R200 cash and no other balance. Pay R90 for a service delivered wholly next month, with the right unused at the end of this month. Cash becomes R110; prepayment R90; period result R0; total assets remain R200. If the service period is missing from the document, the payment of R90 is known but its type isn't established. Ask for the agreement and service dates rather than assuming everything is a current cost.
+1301. If the learner puts A01 only in February because of the invoice date, point to the evidence of January service. If they call all payments costs, compare the stock still kept, the equipment and the service already used. If they compare equal totals with correct accounts, show that wrong splits can still balance: you need evidence and a timing check too.
+1302. Put together a small end-of-period folder: opening balances, sales and deliveries, receipts, supplier bills, payments, stock evidence, equipment list, loan list and unresolved questions. Keep original references and dates. An export from the app is one item going into that folder. Don't invent stock items, depreciation or loan income in a crop sale form to force the chart to match this work.
+1303. Use the made-up packet, not the learner's private identifiers. Place the opening balances list, source documents, account statements, stock check, equipment and loan lists, and unresolved items after a one-page description. Give each a reference and period. Match the description to the summary pieces. Mark missing items visibly. Keep real facts separate from estimates. Don't ask learners to send private financial documents to a practice class or an unverified adviser.
+
+Open the current official SARS pages for source notes. Show how to record the page title, URL, date checked and the exact question. For example: what business form and registration apply; which records are required; what retention terms apply; whether the invoice has the required details for this suitable service; and whether electronic storage arrangements meet applicable requirements. This is evidence-finding work, not a decision that a particular learner must register or may discard records. Keep source documents while questions are unresolved. Don't teach a general destruction date from a short web table.
+1304. Discuss four cards:
+
+1. "The app printed a VAT number, so this is a valid tax invoice." **Not established.** The place or heading alone doesn't establish registration, treatment of the service or all required details. Check the document against the current suitable guide.
+2. "I didn't want to claim a refund, so no records are needed." **Not established.** Don't assume all record duties from that fact. Ask about applicable requirements and any continuing bookkeeping, dispute or other obligation.
+3. "My export is a full set of accounts and confirms the loan." **Not established.** Check it against other evidence. An export doesn't establish completeness, creditworthiness or approval.
+4. "The value of lost stock should be zero." **Incorrect.** Ask for the count, value and reconciliation. Don't hide missing information as a measured result.
+1305. Give an invoice and a cash export without a stock check, list of unpaid customers or equipment list. Ask the learner to prepare a description of the evidence given and missing, name one specific bookkeeper question, and record a current SARS source to refer to for one compliance question. Accept a spoken description or card sorting. A strong answer separates known from missing documents and doesn't claim an export confirms profit, full accounts or tax compliance. The answer must rest on the given packet, not private records.
+1306. If the learner asks for "the tax number that makes everything right", return to the service, business situation, document and current rules. If they try to fill gaps with likely numbers, ask them to name the gap and identify who or what could resolve it. Repeat with a different missing document.
+1307. Reopen a suitable saved invoice and check its details without sending it. Use the invoice guide and, where available, the export guide. Prepare a private evidence description and questions for suitable local help. Keep a readable copy and a recovery plan for required records. Don't assume a document on that device is linked to another device, or that a course-completion mark confirms business accounts.
+1308. A small market stall buys finished goods for resale. This is a separate task within a farm-business learning path, not a valuation of growing crops, animals, home-grown harvests or the whole household. All amounts and dates are made up. The period is 1–31 January 2027. The prices below are the written prices given in this task; they aren't market prices. There is no VAT or income-tax calculation. Division of equipment, depreciation and treatment of stock losses are given assumptions, not rules to copy into real accounts.
+
+At opening: cash R1000; customers owe R200; resale stock R300; equipment R600. The business owes suppliers R300 and has no loan. Total assets R2100 less debts R300 leave opening equity R1800. Equity goes back to the owner; it isn't a second cash account. There are no other opening balances in this manageable example.
+
+Reference | Event date | Original source card
+R01 | 5 Jan | Collect R200 from the opening customer balance. This old sale isn't January income.
+P01 | 8 Jan | Receive resale goods worth R400. Pay R250; R150 is still owed.
+S01 | 10 Jan | Deliver an accepted credit sale of R900. Delivered goods have a written cost of R350. No receipt yet.
+R02 | 15 Jan | Receive R600 on S01. Link the receipt to that sale.
+P02 | 16 Jan | Pay R200 against amounts already owed to suppliers.
+E01 | 20 Jan | Pay R300 for a long-lasting tool. It qualifies as equipment in this task.
+L01 | 21 Jan | Receive a R500 loan with a matching obligation. No initial fee here.
+L02 | 24 Jan | Pay R110: R100 of loan principal and R10 January interest.
+H01 | 26 Jan | The owner takes R150 for personal use. No wage or business service is given.
+A01 | 28 Jan | January transport service completed, agreed fee R80, unpaid. The invoice arrives on 2 February; the signed January work record supports the amount and timing.
+F01 | 29 Jan | Pay R120 for a maintenance service delivered wholly in February. No part of that service was used by 31 January.
+U01 | 31 Jan | Pay R60 of service cost fully relating to January.
+C01 | 31 Jan | An approved count, valuation and reconciliation confirm closing resale stock R300 and stock loss R50.
+D01 | 31 Jan | The reviewed list given provides January depreciation of R60 on all equipment. It is not an additional cash payment.
+X01 | 5 Feb | Receive the remaining R300 of S01. This lies outside January cash.
+1309. Running model balances after each source card; the first rows are before the later end-of-period checks. Amounts in rand. "Result" means the running model result given before tax, not bank money or a final real farm profit. In the missing case, the full unsupported result is deliberately not shown.
+
+Source | Cash | Result | Stock | Customers owe | Payables | Loan | Assets | Equity
+OPEN | R1000 | R0 | R300 | R200 | R300 | R0 | R2100 | R1800
+R01 | R1200 | R0 | R300 | R0 | R300 | R0 | R2100 | R1800
+P01 | R950 | R0 | R700 | R0 | R450 | R0 | R2250 | R1800
+S01 | R950 | R550 | R350 | R900 | R450 | R0 | R2800 | R2350
+R02 | R1550 | R550 | R350 | R300 | R450 | R0 | R2800 | R2350
+P02 | R1350 | R550 | R350 | R300 | R250 | R0 | R2600 | R2350
+E01 | R1050 | R550 | R350 | R300 | R250 | R0 | R2600 | R2350
+L01 | R1550 | R550 | R350 | R300 | R250 | R500 | R3100 | R2350
+L02 | R1440 | R540 | R350 | R300 | R250 | R400 | R2990 | R2340
+H01 | R1290 | R540 | R350 | R300 | R250 | R400 | R2840 | R2190
+A01 | R1290 | R460 | R350 | R300 | R330 | R400 | R2840 | R2110
+F01 | R1170 | R460 | R350 | R300 | R330 | R400 | R2840 | R2110
+U01 | R1110 | R400 | R350 | R300 | R330 | R400 | R2780 | R2050
+C01 | R1110 | R350 | R300 | R300 | R330 | R400 | R2730 | R2000
+D01 | R1110 | R290 | R300 | R300 | R330 | R400 | R2670 | R1940
+MISSING/C01 | R1110 | Unknown | Unknown | R300 | R330 | R400 | Unknown | Unknown
+MISSING/D01 | R1110 | Unknown | Unknown | R300 | R330 | R400 | Unknown | Unknown
+
+New-sale columns: cash, customer balance, remaining stock, result, assets. FRESH-SALE: cash R600; still owed R100; stock R0; result R180; assets R700.
+
+New-prepayment columns: cash, prepayment, result, assets. FRESH-PREPAY: cash R110; prepayment R90; result R0; assets R200.
+1310. Place M-A and M-B. Ask the learner to point to a written statement, a planning idea and an unanswered question. M-A is a question about maybe reaching 40 kg at R12 per kg, depending on quality and confirmation. The estimate assumes the whole quantity sells and money arrives on 30 January. M-B shows interest in baskets at R30 each but doesn't confirm quantity. The 20 items of the estimate are an idea, not completed market research or an approved order. No document confirms a secure market. Ask about quality, acceptance, quantity, delivery costs, payment terms, repeat demand and other buyers. Keep the date and source beside each answer.
+1311. For January, Plan A estimates sales of R480 and working payments of R280. Plan B estimates R600 and working payments of R480. Their included cash amounts are R200 and R120 respectively, assuming all the estimated sales are paid within the period. These are not full profit: closing stock, equipment use, extra costs and unpaid work are not fully given. Don't treat omitted costs as zero. Don't compare R12 per kg with R30 per item as if the bigger number identifies the better business.
+
+Each starts with R300. A's proposed payments leave R120 on 5 January, R80 on 10 January and R20 on 20 January. The assumed R480 receipt on 30 January brings the closing estimate to R500. B's payments leave R20, then an unsupported -R120, then -R180; its assumed receipt brings the closing estimate to R420. A positive closing estimate doesn't make those earlier B payments supported. Below-zero amounts are estimated gaps, not a claim that the money tin held below-zero notes or that an overdraft is approved.
+
+The given work plan allows eight owner hours. A needs six; B needs ten besides its paid helper. B has a gap of two hours of the owner's time. These are work needs, not recommended levels of work. A's apparent fit doesn't establish that a real farm has enough land, water, skills, labour or permissions. Check each real barrier separately with suitable local evidence.
+1312. Sort each source as "supports this fact", "idea to test" or "missing". Show the first estimated shortage on the dated cash line. Ask the learner to justify the next step, not to announce an overall successful business. A safe response is to investigate A further while confirming buyer terms, full costs and deliverability. Another is to revise B's scope and find evidence of work and money arrangements before committing. "B succeeds because R600 is bigger" fails. "A is confirmed profitable" also fails.
+1313. Hide the demonstration. Give a different case: ten planned items at R15 each, payments of R60 and an opening cash of R80. Ask for sales and closing cash, then whether these alone show profit. Then remove the confirmed customer quantity from the new request. The learner must name the market question rather than fill the gap with ten. Finally show kg beside items: ask which measurements can be compared and which can't be added directly.
+1314. If sales are treated as profit, put the removed cost card beside the remaining amount. If the final January cash hides an earlier gap, replay B one bill at a time. If a learner calls a request an order, point to its conditional words. Use a new example after correction; don't give a pass for repeating the model answer.
+1315. Prepare a small market-request sheet with product, unit, quality, quantity, collection/delivery, date and payment terms. Record who gave the information and permission to keep it; use deleted copies in class. Use the map guide to identify the right place and distinguish beds from the whole area. A place pin doesn't establish productive land or land rights. Keep this business estimating in the workbook; My records is for real supported income.
+1316. Build eight short sections: purpose and chosen work; market evidence; place and access to tools; work sequence and delivery; cost ideas; dated cash estimate; risks and responses; review actions. Give each important number a reference, date, unit, scope and status. Mark a price as a price, a request as a request and an actual payment as a record. Keep the first version of the plan and the update date. Describe the business in simple language before showing numbers.
+
+For A, link three price cards to the cash line and the assumed customer payment. Keep B as a real alternative, with its hours and early cash gap visible. Don't add the two opening balances of R300. The funding request F-ASK of R180 has no approval, terms or release date. It does not fill B's gap. Even approval may have conditions and timing to check; this lesson gives no approval or borrowing advice. F6 gives questions for learning real finance terms.
+1317. Move all of A's assumed R480 receipt to 5 February, keeping the dates of January costs. January now has no customer receipt and ends with R20. The estimated sale remains R480; the timing of payment has changed, not the quantity or price. The amount is still expected from the customer at the end of the window under this scenario. This is the January period, not a full plan for the following period: later bills and commitments still need their own dated rows. A real forecast should cover the relevant operating cycle and obligations, rather than copying this task's short period blindly.
+
+Responses must be confirmed and checked. For example, ask the buyer to confirm terms, then record any real agreement and recalculate; find one actual transport price; reconsider the proposed quantity against capacity. Don't assume a deposit, delay a supplier bill without agreement, cut required care or enter hoped-for funding as certain income. Explain the effects on quality, workload, household needs and others before accepting a change.
+1318. Give one learner a proposed plan and another the evidence cards. For each claim ask "which record supports it?" Put the missing demand confirmation, the full cost treatment and the place/tool evidence in an action register with an owner and review date. The suggested model review date of 10 February 2027 is a class date, not general planning timing. Ask what could make the plan wrong and which check would trigger rethinking. Keep information requested for a funding packet separate from what the class knows now.
+1319. The learner submits a clean map, a screenshot of the estimated closing cash of R420, and the R180 request. Explain why these don't establish land rights, earlier cash flow, profit or funding approval. Ask for B's dated payments and the missing work-hours arrangement. Then give the delayed-receipt case of A without the answer and ask the learner to build January cash. She must leave February's receipt out of January.
+1320. If an estimate is again called something that happened, return to the source condition. If a request pays a bill in the model, remove it and restore the gap. If a claim depends on how the map looks, ask for a suitable agreement, measurement or record below. A legitimate answer may be "not yet ready to commit; get this evidence". Keeping the uncertainty is not a failure.
+1321. Build a deleted practice plan with a short evidence description. Use the live map, invoice and Charts guides for supported tasks. An export of a record or a "Records made for a money lender" summary is a supporting item, not a complete application, name document, full financial statements or an eligibility decision. Check current requirements and the suitable organisation when preparing a real packet. Keep private documents safe; this lesson sends nothing to a lender or buyer.
+1322. The actual A has 36 kg delivered at R11 per kg on 25 January, an invoice of R396. R300 arrives on 30 January, leaving R96 owed on 31 January. The remaining R96 arrives on 5 February; it isn't January money. Actual payments are R180 purchase, R50 packaging and R80 transport, totalling R310. A confirmed owner contribution of R20 arrives on 15 January from outside the business's money boundary. It is not a sale or a loan. Starting from R300, the actual cash sequence is R120, R70, R90, R10 and R310. ACT-C1 reconciles the final R310 with cash count and statement evidence. This full model has no unsupported below-zero balance in the actual case.
+
+The closing estimate was R500; the checked closing cash is R310, R190 less than the estimate. Don't call this R190 a business loss. The sales price difference is R84, and neither difference establishes full profit. Use the visible bridge in this defined sequence:
+
+- Quantity effect: (36 − 40) kg at planned price R12 per kg = −R48.
+- Price effect: actual 36 kg at (R11 − R12) per kg = −R36.
+- January unpaid balance: −R96 of the invoiced amount not yet received.
+- Purchase payment difference: R180 compared to R180, no change.
+- Packaging payment difference: R50 compared to R40 reduces cash by R10.
+- Transport payment difference: R80 compared to R60 reduces cash by R20.
+- Owner contribution adds R20 cash, not sales.
+
+R500 − R48 − R36 − R96 − R10 − R20 + R20 = R310. The quantity and price effects add up to the sales difference of R84. This split gives the effect of a quantity change at planned price and of a price change at actual quantity; a different formal method allocates the interaction separately. It is a description with numbers, not evidence of cause. The records don't say why fewer kilograms were sold or why the price changed. Don't invent crop destruction, laziness, buyer misbehaviour or weather as explanation. Investigate with suitable evidence.
+1323. Trace each bridge step back to its source. Ask why the invoice and its two receipts are not three sales, and why the owner's contribution doesn't increase produce income. Keep the January and February windows visible. If the learner changes the plan quantity to 36, restore the original 40 before comparing. Ask for a reasoned next step such as confirming quality/demand and payment terms, checking current prices, and matching work to available hours. The R11 for the actual 36 kg informs the request; it doesn't confirm the price or next month's sales.
+1324. Hide the amount of ACT-P2 and remove ACT-C1's closing reconciliation. The packaging was paid but its amount is unavailable. Total payments, closing cash, the cash difference and the deepest gap now stay unknown. The sales of R396 and the customer balance for January of R96 remain supported. Don't use the closing cash of R310 from another case to rebuild the missing amount. With a separate reliable closing reconciliation, the difference could be investigated; this case deliberately provides none. Keep the receipt request and reconciliation open.
+1325. Go back to the different-items case. Plan: ten items at R15, payments of R60, opening R80. Actual: eight items at R14, R90 received, payments of R70 and R20 contributed by the owner; no other movements or opening customer balance. Find actual sales, customer balance, closing cash and the difference from the plan. Split the sales change in the same order as the demonstration. Then remove the actual cost evidence and ask which answers are still supported. Don't call a missing amount zero.
+1326. The learner should produce sales of R112, R22 still owed and closing cash of R120 against a plan of R170, a cash difference below (−R50). The sales quantity effect is on the side (−R30) and the price effect (−R8), together (−R38). Closing bridge: R170 − R30 − R8 − R22 − R10 + R20 = R120. Accurate explanations separate produce sales, money received, owner money and timing. If the idea is not understood, give a correction response and a new small set of sources; do not change the old answer to count it as an independent success.
+1327. Write a short review with the original idea, real evidence, the explained difference, an unresolved question, next action, responsible person and review date. Use the Chart guide to check the time window of each display and cost scope. The app's single full-payment date doesn't reproduce a part-payment history; keep a payment list separately and don't mark a deposit as full payment. Don't put made-up class numbers into real farm records.
+1328. Use `f8-practice.json`, the learner workbook and the visual comparison together. All money, dates, quantities and hours are made-up class entries. They are not local prices, yields, suggested workloads or farming estimates. This case focuses on the work of selling produce and selling baskets; it doesn't represent produce grown from land. Keep kilograms and items separate. Both are options using the same opening money, not two jobs that can use it simultaneously. The real case is a made-up set of records shown after the plan, not a prediction of what will happen.
+
+Build on F3's cost limits, F4's cash timing, F5's payment evidence and F7's limits of full accounts. Provide counters, source cards, a calculator and writing space. The learner may explain aloud or point while the facilitator records the thinking. No real customer details or bank documents are required.
+1329. All money amounts are within the defined January range. Plan gaps are unsupported estimates. Full profit stays unknown. The real cases compare money over the same period, not quantities in unlike units.
+
+Case | Sales | Customer receipts | Payments | Closing cash | Lowest cash | Cash gap
+Plan A | R480.00 | R480.00 | R280.00 | R500.00 | R20.00 | R0.00
+Plan B | R600.00 | R600.00 | R480.00 | R420.00 | −R180.00 | R180.00
+Actual A | R396.00 | R300.00 | R310.00 | R310.00 | R10.00 | R0.00
+
+Plan B needs two more owner hours than those given. Delayed Plan A has estimated sales of R480, no January customer receipt and a January closing cash of R20. Actual A still has R96 owed on 31 January. The owner's R20 is included only in the actual cash. Closing cash for the missing case and the full profit stay unknown.
+1330. The learner delivers a first/updated plan pair containing: a page of market evidence; a check of tools and access; a job budget with omitted items; dated cash rows; a delivery/invoice/payment trail; an explanation of cost evidence; a review of actual against plan; and a register of next actions. Use only processes suitable for that learner. A farming plan needs suitable land, tools and technical evidence beyond this market exercise. The app's map and records can support the packet but can't replace those checks.
+
+Assess whether the learner can spot an unconfirmed customer idea, an unsupported prepayment, double-counted income, unlike units, an unpaid invoice counted as cash, an owner contribution called a sale, a receipt outside the period, missing costs shown as zero, and estimates shown as actuals. Record evidence of performance, feedback and further practice. Don't claim accounting skill, business viability, approval or funding from a class packet.
+1331. Existing evidence
+1332. Idea A · R1
+1333. Updated A · R2
+1334. The download could not be arranged [lit: "could not be fixed"]. Keep this page open and try again.
+1335. Investigate A first
+1336. Investigate B first
+1337. Delay visible changes
+1338. Hide comparison answer
+1339. Compare my thinking
+1340. The calculation agrees.
+1341. Check the edges again.
+1342. Update R2
+1343. Refresh the drawing to fit the screen
+1344. Enlarge the drawing
+1345. Scrollable drawing of the made-up class yard plan
+1346. Made-up class plan in metres. Existing evidence stays visible in all views. Idea A keeps the existing planting place and shows a proposed compost place before the update. Idea B shows a different alternative planting place while keeping the original planting place. Update R2 visibly delays the compost because there is no approved caretaker. The outer frame is a teaching frame, not a land-rights boundary, and the reported eastern water problem has no measured size or heights.
+1347. Metres · x increases to the right; y increases downward
+1348. The top edge is the model's north by class custom only
+1349. MADE-UP MODEL · VIEW {view} · PACKET {pack} · NOT A SURVEY OR BUILD DRAWING
+1350. Teaching frame and existing evidence
+1351. Teaching frame — model geometry only; not a land-rights boundary
+1352. Water place
+1353. Idea A proposal
+1354. Proposal of the other Idea B
+1355. Measurements of the existing planting place
+1356. Update of the delayed compost
+1357. P-COMPOST delayed — R2
+1358. W-CARE: no approved caretaker
+1359. Scale and source notes
+1360. 5 m of model distance
+1361. Window drawing only
+1362. No print scale claimed
+1363. Reported water observation point
+1364. W-OBS: reported water problem in the eastern yard
+1365. It is reported that water crosses the eastern yard in heavy rain.
+1366. Size and heights have not been measured; it is not a flood boundary.
+1367. Meaning and origin
+1368. Meaning · symbols are references to source cards, not evidence of suitability
+1369. 1 Existing planting place · E-PLOT-A · W-MAP
+1370. 2 Home · E-HOME · made-up model supplied
+1371. 3 Existing path · E-ROUTE · its place only, not a width guide
+1372. 4 Water place · E-WATER · W-OBS does not establish size, quality or reliability
+1373. 5 Gate marker · E-GATE · point only
+1374. 6 Compost proposal · P-COMPOST · W-A; before R2 only
+1375. 7 Alternative planting place B · P-B-PLOT · W-B
+1376. Existing evidence stays visible in all views. Idea A keeps the existing planting place and, before the update, shows only a separate compost proposal. Idea B keeps the original place as evidence while showing a different alternative; they are not both productive places. The geometry shows the proportions of the given model only. It doesn't establish water, soil, land-holding right, outlet, working access, cost, permissions or a care agreement.
+1377. Design learning folder — English teaching display. Notes are not a submitted assessment, a confirmed site survey or permission to carry out a plan. Keep real drawings and evidence together with this record.
+1378. People, place and evidence
+1379. Agree the work before drawing a solution.
+1380. Ask the learner to follow the need back to the household brief and follow what's on the map back to its evidence. A clean map with an unexplained boundary or without a measurement source needs more work.
+1381. In the busy-yard case, BRIEF-A needs food, working access and practical care. WALK-A records a water place beside the home. TALK-A is the resident's rain report. MAP-A remains not to scale; there is no confirmed boundary or measurements packet.
+1382. What matters to the household?
+1383. Record agreed needs, who uses and looks after the place, and what must keep working. Mark what is outside this stage. Use roles or initials if you like.
+1384. What do you know, and where did it come from?
+1385. Give each note a reference. Add its date, source and whether it was observed, reported, measured or proposed. Record limits, disagreements and permission to use another person's information.
+1386. Which base map and measurements will you use?
+1387. Record the drawing's name and update. Keep with it the existing features, access, boundary status, direction, units and measuring method. Write the missing measurements. Keep the real drawing separate with this folder.
+1388. Patterns and design questions
+1389. Explain what the evidence means for the design.
+1390. Ask why the pattern matters and how it was confirmed. A slope interpretation taken from a rain story, or a seasonal decision from one photo, needs correcting.
+1391. The watering trip makes care and access worth investigating. It doesn't show that a new place is suitable. Observing eastern shade and reported rainwater crossing still need evidence of sequence.
+1392. Which patterns affect the plan?
+1393. Refer to evidence for movement, water, shade, seasons, soil and exposure. Separate frequent use from outside influences. Keep one visit separate from a seasonal pattern.
+1394. Which decisions need research?
+1395. Turn what you saw into questions. Say whose needs each question serves and which options are still open.
+1396. What should be checked next?
+1397. State the missing evidence, a better way to get it, who could help and which decision depends on them. Keep unsafe or specialised work for suitable help.
+1398. Alternative options and reasoned choice
+1399. Compare ways to meet one brief.
+1400. Ask the learner to explain what must be honestly handed over among alternative options. More features or a nice picture don't establish a better answer to the brief.
+1401. Idea A investigates care of the existing place. Idea B considers another place while keeping access. The case provisionally prefers to investigate A; it doesn't establish that A costs less or B produces more.
+1402. What does each proposed part need and give?
+1403. Trace water, tools, people and care between features. Identify useful relationships and possible conflict. Don't assume a product meets another part's needs without checking suitability.
+1404. How do your alternative options compare?
+1405. Name the drawing pages of the alternatives. Compare them against the same evidence of household needs, access, care, water and costs. Include keeping the present arrangement or delaying work where suitable.
+1406. Which option will you investigate or develop, and why?
+1407. Give the evidence for your choice, the things to be handed over, the unknowns and what could change the choice. A provisional choice isn't permission to build.
+1408. A plan that can be checked
+1409. Show what fits, what relates and what's still unresolved.
+1410. Ask the learner to show fit with measurements and trace the daily trip in the real proposal. Placing software or a pleasant export doesn't establish suitability.
+1411. The busy-yard case has no scaled source packet. The learner should mark the scaled arrangement as unfinished. A finished drawing and fit check cannot be shown from MAP-A alone.
+1412. Which drawings show the developed proposal?
+1413. Write the base, analysis, proposal and detail pages with their updates, scale status, units, meaning and sources. Refer to the real files or pages; typing their names here doesn't attach them.
+1414. How did you check fit and access?
+1415. Identify the measured dimensions and suitable technical sources used. Explain how you checked the drawing and the exported copy. Record a reading test with someone else and the correction.
+1416. Which work is conditional or on hold?
+1417. Write unresolved questions about water, soil, access, technical matters or permission. State the downstream effects and the evidence or advice needed before the affected work continues.
+1418. Work, money and ongoing care
+1419. Link the drawing with possible work and agreed responsibility.
+1420. Trace one proposed item from drawing to its sequence, the materials record and the care agreement. A complete cost without timing, missing costs or an unasked caretaker needs updating.
+1421. RESOURCES-A has no care time, reliable water quantity or budget. The next stage must establish those resources and the household. The person who carries water cannot automatically be given all new tasks.
+1422. What must happen first?
+1423. Write stages, prerequisites and who agrees that a stage is ready. Include checks before spending money or starting work. Keep items with unresolved dependencies on hold.
+1424. What money and materials does each stage need?
+1425. Use the same feature references as the drawings. Record measured quantities, references to suggested prices, dates and when money is needed. Mark estimates and missing costs. Refer to your money worksheet; don't turn an unknown into zero.
+1426. Who has agreed to look after the system?
+1427. Describe tasks, agreed roles, time and tools available, and what happens when water, money or the usual caretaker is absent. Record the agreement rather than assigning another person's work.
+1428. Feedback, monitoring and update
+1429. Explain the design and keep improving it against the brief.
+1430. Ask what evidence could change the learner's choice. Review the real explanation and the update record; ticked boxes don't show knowledge or prove construction work.
+1431. The busy-yard case gives no later field results. The learner can suggest what should be monitored, but can't claim that harvests, access or costs improved. Keep the monitoring plan separate from observed results.
+1432. What did the household or reviewer say?
+1433. Record the date, the reviewer's role, the discussed drawing update, what they understood and what needs trying again. Explain how your choice answers what was in the original brief.
+1434. How will you find out whether it works?
+1435. Choose monitoring tied to household needs. Record initial evidence, who agrees to check, when or after which event, and what will trigger a review. Don't invent results.
+1436. What changed, why, and what is the next step?
+1437. Keep the earlier version. Identify the new evidence or feedback, the changed decision and affected drawing, cost or care records. Record remaining checks and the next review.
+1438. Your folder is empty. Save your notes before you leave.
+1439. The saved folder of this tool is open.
+1440. The saved folder could not be opened. Its saved copy hasn't been changed. You can write here and download a copy of the text.
+1441. Keep this work by downloading a copy of the text. A saved design that can't be read is protected.
+1442. You have notes to keep. Save before following another lesson's link.
+1443. This saved folder changed in another tab. Download your current notes before reopening the saved folder. This page hasn't overwritten it.
+1444. Saved in this sample session. Download a copy before ending the session.
+1445. Saved on this device. Not uploaded or sent.
+1446. This device could not save the folder. Keep this page open and download a copy of the text.
+1447. A copy of the text was requested. Look in your Downloads for imbewu-design-learning-folder.txt. The drawing files are separate.
+1448. Opening your design folder…
+1449. Discuss what is supported, what needs more evidence and what to try next. Record the response and change at stage 6.
+1450. The reviewer needs your evidence notes, drawings and explanation together. Check that each reference describes the right update. Describe one alternative you rejected, a decision put on hold and what might make you update the plan.
+1451. Design Studio guide
+1452. {n} letters left. Keep long evidence in a separate document and refer to it here.
+1453. Stage 1 · Evidence of your design
+1454. Stage 2 · Evidence of your design
+1455. Stage 3 · Evidence of your design
+1456. Stage 4 · Evidence of your design
+1457. Stage 5 · Evidence of your design
+1458. Stage 6 · Evidence of your design
+1459. Investigate the difference
+1460. One place. Three different records.
+1461. Choose a layer to see what it says.
+1462. Picture layer
+1463. The place pin sits beside the house. A four-cornered boundary surrounds the house, paths, trees and four vegetable beds. The beds fill only part of the section. The picture is not to scale and has no measured area.
+1464. Planting beds
+1465. Teaching picture · not to scale · no measured area
+1466. {name} on a simple home drawing
+1467. Choose a description, read the answer, then try again if necessary. These are practice discussions; no result is saved or sent.
+1468. Source: {source}
+1469. Your saved reading list could not be opened. You can still read all lessons.
+1470. The reading mark was not saved. Your lesson is still available.
+1471. Lessons marked as read
+1472. The reading list is not available.
+1473. Opening your reading list…
+1474. Marked as read · cancel
+1475. Mark this lesson as read
+1476. This is your reading list, not an assessment result.
+1477. Sample marks are temporary and are deleted when the sample session ends.
+1478. Saved on this device only.
+1479. Lessons marked as read on this device: {done} of {total}.
+1480. Place pin
+1481. Where is the place?
+1482. The pin shows a location. It has no planting area of its own.
+1483. Land boundary
+1484. Which land does the boundary include?
+1485. The boundary goes around the section. It may include a house, paths and land not planted.
+1486. Where will the crop grow?
+1487. The beds take up part of this example section. Check their measurements and the area used by the crop plan and money estimate.
+1488. A resident says water crossed the eastern yard in heavy rain. The learner visited on a dry day. How should the note be marked?
+1489. Measured flood level
+1490. There is no measured flood level. Keep the resident's report and identify what still needs checking.
+1491. Reported experience
+1492. Yes. The resident's experience is useful evidence, and its source stays visible. It isn't a measured contour line or depth of flooding.
+1493. Proposal to dig a swale
+1494. The report describes what the resident experienced. A swale would be a separate proposal needing site assessment and suitable checks.
+1495. The drawing says "not to scale". A new rectangle fits beside the drawn path. What can the learner conclude?
+1496. The new bed will fit on the ground
+1497. Its appearance on a drawing without scale can't establish fit. Suitable measurements and system needs are still required.
+1498. Exporting the drawing will confirm its measurements
+1499. Exporting keeps the appearance; it doesn't add missing measurements or confirm the boundary.
+1500. It is an idea to be checked against measurements
+1501. Yes. Keep the idea on the proposal sheet and get the necessary measurements before claiming it fits.
+1502. The household doesn't want animals at this first stage. Its care capacity is not recorded. What should the design do?
+1503. Keep animals out of this stage and follow the agreed brief
+1504. Yes. A design doesn't need every possible system. Follow the household's main things and confirm care for what is proposed.
+1505. Add chickens because every permaculture plan needs them
+1506. The household did not agree to that system. A design is judged by how it meets the brief, not by including a usual list of animals.
+1507. Give animal care to whoever already carries the water
+1508. Existing work is not permission for extra work. Care responsibility needs discussion and agreement.
+1509. Return to the screen-fitting view
+1510. Enlarge the view
+1511. Design folder stages

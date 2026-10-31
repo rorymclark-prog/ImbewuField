@@ -20,7 +20,7 @@ test('w19-27/28: diagram keeps its size on phones, no blanket invert, 22px legen
 
 test('w19-29: course notice summaries carry a rotating Lucide chevron', () => {
   for (const p of ['app/student/design/page.tsx', 'app/student/finance/page.tsx', 'app/student/teach-the-teachers/page.tsx']) {
-    assert.match(read(p), /<summary>More<ChevronDown className=\{styles\.chevron\}/, p);
+    assert.match(read(p), /<summary>(?:More|<(?:T|Tx) en="More" \/>|\{[^}]*'More'[^}]*\})<ChevronDown className=\{styles\.chevron\}/, p);
   }
   assert.match(fin, /\.notice details\[open\] > summary \.chevron \{ transform: rotate\(180deg\)/);
   assert.match(ref, /\.notice details\[open\] > summary \.chevron \{ transform: rotate\(180deg\)/);
@@ -74,6 +74,7 @@ test('w19-36: list indent, even rhythm, 72ch captions', () => {
 });
 
 test('w19-37: English notice is hidden in isiZulu; source line is sans 400', () => {
-  assert.match(read('app/student/design/page.tsx'), /<EnglishOnly><aside[^>]*><p><strong>English teaching preview/);
+  // The strong text may sit inside <Tx en="…" /> (isiXhosa draft lookup); the English is unchanged.
+  assert.match(read('app/student/design/page.tsx'), /<EnglishOnly><aside[^>]*><p><strong>(?:<Tx en=")?English teaching preview/);
   assert.match(read('components/studies/DesignDraftCopy.module.css'), /\.source \{[^}]*font-family:var\(--font-sans\)[^}]*font-weight:400/);
 });

@@ -41,6 +41,8 @@ import type { ReportSiteFacts } from '@/lib/report-site-facts';
 import { reportSummaryPages, buildInkSummaryPdf, sampleFullSiteReport, preparedSampleReport, preparedExampleNote } from '@/lib/report-summary';
 import { reportUiText, reportUiDate, reportHeadingAliases, reportDocumentText, REPORT_DOCUMENT_LANGUAGES } from '@/lib/report-localisation';
 import LanguageDraftNote from './LanguageDraftNote';
+import { xhInlineDraft } from '@/lib/xh-inline';
+import { localeDate } from '@/lib/xh-dates';
 import { loadLocale, translate } from '@/lib/i18n';
 import { useLanguage } from '@/lib/i18n';
 import { paidApiHeaders } from '@/lib/api-client-auth';
@@ -340,8 +342,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   useEffect(() => { setCropMapMonth(0); setIncludeCropWorkingPlan(false); }, [activeSaved?.id]);
   const simple = useAppLevel() === 'simple';
   const { lang: uiLanguage, t: appT } = useLanguage();
-  const tr = (en: string, zu: string) => reportUiText(en, uiLanguage, appT, zu);
-  const label = (en: string) => reportUiText(en, uiLanguage, appT);
+  // isiXhosa: the draft keyed by the exact English (lib/locales/xh-inline), else the dictionary.
+  const xhDraft = (en: string) => uiLanguage === 'xh' ? xhInlineDraft(en) : null;
+  const tr = (en: string, zu: string) => xhDraft(en) ?? reportUiText(en, uiLanguage, appT, zu);
+  const label = (en: string) => xhDraft(en) ?? reportUiText(en, uiLanguage, appT);
   // The report's own language picker (LANGUAGE_OPTIONS) is independent of the app-wide language,
   // so its locale chunk may never have been fetched — load it so translate() below has real text
   // to find rather than always falling back to English.
@@ -381,7 +385,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       'Could not build the PDF. Check your connection and try again.': 'Umbiko we-PDF awukwazanga ukwakhiwa. Hlola uxhumano lwakho bese uzama futhi.',
       'No signal — writing the report needs internet. Your section choices are kept; try again when you have bars.': 'Ayikho inethiwekhi — kudingeka i-inthanethi ukuze kubhalwe umbiko. Izigaba ozikhethile zigciniwe; zama futhi uma inethiwekhi isibuya.',
     };
-    return reportUiText(message, uiLanguage, appT, known[message]);
+    return xhDraft(message) ?? reportUiText(message, uiLanguage, appT, known[message]);
   };
   const showVisuals = reading === 'full' && (presentation !== 'print' || includeImages);
   // The drawn figures (site plan, climate, water budget, sun and wind, soil, build order) read the
@@ -896,7 +900,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         soilPh: d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.ph : undefined,
         language: contentLanguage,
         meanTempC: d.climate.meanTemp,
-        dateLabel: new Date(reportDate).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { year: 'numeric', month: 'long', day: 'numeric' }),
+        dateLabel: localeDate(language, new Date(reportDate), { year: 'numeric', month: 'long', day: 'numeric' }, language === 'zu' ? 'zu-ZA' : 'en-ZA'),
         sheets: includeImages ? plates : [],
         loadSheetImage,
         // The same photographs the model read and the screen shows — so the printed report a
@@ -1318,7 +1322,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 </div>
                 <div className="text-right">
                   <div className={`${styles.date} font-sans`}>
-                    {new Date(reportDate).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { year: 'numeric', month: 'long', day: 'numeric' })}
+                    {localeDate(language, new Date(reportDate), { year: 'numeric', month: 'long', day: 'numeric' }, language === 'zu' ? 'zu-ZA' : 'en-ZA')}
                   </div>
                 </div>
               </div>

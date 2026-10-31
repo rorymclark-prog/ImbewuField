@@ -6,6 +6,7 @@ import{act,create,type ReactTestRenderer,type ReactTestInstance}from'react-test-
 import{CONSENT_PANEL_HEADING,CONSENT_SCOPES,emptyConsent,hasConsent,grantedScopes,setScope,revokeAll}from'../lib/consent.ts';
 import{controlT,type ControlLanguage}from'./control-icon-renderers.ts';
 import{accountText,accountRoleName,accountErrorText,allowanceResetLabel,fillAccountText,isAccountDraftLanguage}from'../lib/account-copy.ts';
+import{inlineText,inlineTemplate,xhInlineDraft}from'../lib/xh-inline.ts';
 const read=(p:string)=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
 const cache=new Map<string,string>();
 function compile(path:string,result:string,scope:Record<string,unknown>):any {
@@ -32,6 +33,7 @@ export async function actualAccountUi(initial:ControlLanguage,options:AccountUiO
  const router={push:(url:string)=>calls.routes.push(url),replace:(url:string)=>calls.replace.push(url)};
  let renderer!:ReactTestRenderer,Component:React.ComponentType<any>,ask:((opts:any)=>Promise<boolean>)|undefined;
  const scope:Record<string,unknown>={React,...React,...Icons,window,sessionStorage,setTimeout:window.setTimeout,clearTimeout:window.clearTimeout,APP_LANGS,
+  inlineText,inlineTemplate,xhInlineDraft,
   accountText,accountRoleName,accountErrorText,allowanceResetLabel,fillAccountText,isAccountDraftLanguage,CONSENT_PANEL_HEADING,CONSENT_SCOPES,hasConsent,grantedScopes,
   useLanguage:()=>({lang,t:controlT(lang),setLang:(next:ControlLanguage)=>{lang=next;renderer.update(React.createElement(Component));}}),translate:(l:ControlLanguage,k:string)=>controlT(l)(k),
   useRouter:()=>router,useAppLevel:()=>simple?'simple':'full',useSampleRole:()=>options.sample?'ngo':'',isBackendConfigured:()=>options.backend??false,

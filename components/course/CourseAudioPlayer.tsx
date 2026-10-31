@@ -18,10 +18,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Play, Pause, Volume2, AlertCircle } from 'lucide-react';
 import {
-  availableNarrationLanguages, formatClock, narrationFor, requiresExplicitNarrationChoice, resolveNarrationLang, trackTitle, trackUrl,
+  availableNarrationLanguages, formatClock, narrationFor, resolveNarrationLang, trackTitle, trackUrl,
   type NarrationTrack,
 } from '@/lib/course-audio';
+import { requiresLearnerNarrationChoice } from '@/lib/learner-deck-lang';
 import { useLanguage } from '@/lib/i18n-context';
+import { inlineText, inlineTemplate } from '@/lib/xh-inline';
 import { narrationReviewPending, regionalNarrationDraft } from '@/lib/narration-blockers';
 import { isiZuluDeckReviewHold } from '@/lib/course-deck-review-holds';
 
@@ -60,7 +62,7 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
 
   // Chosen language is state so the learner can override the resolved default. Re-resolves if
   // the app language changes underneath us.
-  const needsExplicitChoice = requiresExplicitNarrationChoice(moduleId, appLang);
+  const needsExplicitChoice = requiresLearnerNarrationChoice(moduleId, appLang);
   const defaultLang = needsExplicitChoice ? null : resolved?.lang ?? null;
   const [lang, setLang] = useState<string | null>(defaultLang);
   const selectionRef = useRef({ moduleId, lang: defaultLang });
@@ -96,10 +98,10 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
     const reason = isiZuluDeckReviewHold(moduleId, slide);
     if (reason) return reason;
     if (trackUrl(moduleId, lang, slide) === null) {
-      return 'Source comparison changed; recording unavailable until checked.';
+      return inlineText(appLang, 'Source comparison changed; recording unavailable until checked.');
     }
     return null;
-  }, [lang, moduleId]);
+  }, [lang, moduleId, appLang]);
 
   // App-language changes or source edits can make a previously selected row unavailable. Stop
   // and clear its old src immediately so a stale button or ended event cannot resume it.
@@ -242,9 +244,9 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
                   }}
                 >
                   {needsExplicitChoice && code === 'en'
-                    ? 'English source narration'
+                    ? inlineText(appLang, 'English source narration')
                     : regionalNarrationDraft(moduleId, code)
-                    ? `${langName(code, appLang)} AI draft + English`
+                    ? inlineTemplate(appLang, '{language} AI draft + English', null, { language: langName(code, appLang) })
                     : langName(code, appLang)}
                 </button>
               );
@@ -259,7 +261,7 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
       </div>
 
       {needsExplicitChoice && lang === null && <p className="font-sans text-xs px-3.5 pt-2.5 leading-relaxed" style={{ color: MUTED }}>
-        No {langName(appLang, appLang)} narration is available. Choose English source narration explicitly to listen.
+        {inlineTemplate(appLang, 'No {language} narration is available. Choose English source narration explicitly to listen.', null, { language: langName(appLang, appLang) })}
       </p>}
 
       {mismatch && lang && (
@@ -267,7 +269,11 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
           {playing ? t('courseAudioLanguageMissing')
             .replace('{appLanguage}', langName(appLang, appLang))
             .replace('{playingLanguage}', langName(lang, appLang))
-            : `${needsExplicitChoice && lang === 'en' ? 'English source narration' : langName(lang, appLang) + ' narration'} selected. Press Play to listen.`}
+            : inlineTemplate(appLang, '{narration} selected. Press Play to listen.', null, {
+              narration: needsExplicitChoice && lang === 'en'
+                ? inlineText(appLang, 'English source narration')
+                : inlineTemplate(appLang, '{language} narration', null, { language: langName(lang, appLang) }),
+            })}
         </p>
       )}
 
@@ -275,14 +281,13 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
         <p className="font-sans text-xs px-3.5 pt-2.5 leading-relaxed" style={{ color: MUTED }}>
           {appLang === 'zu'
             ? 'Lo msindo wesiZulu usalindele ukubuyekezwa ngumuntu olwazi kahle ulimi.'
-            : 'This isiZulu narration is awaiting review by a fluent speaker.'}
+            : inlineText(appLang, 'This isiZulu narration is awaiting review by a fluent speaker.')}
         </p>
       )}
 
       {lang && regionalNarrationDraft(moduleId, lang) && (
         <p className="font-sans text-xs px-3.5 pt-2.5 leading-relaxed" style={{ color: MUTED }}>
-          Unreviewed machine {langName(lang, appLang)} narration with exact English passages.
-          Fluent-speaker, local-farming and listening review are pending.
+          {inlineTemplate(appLang, 'Unreviewed machine {language} narration with exact English passages. Fluent-speaker, local-farming and listening review are pending.', null, { language: langName(lang, appLang) })}
         </p>
       )}
 

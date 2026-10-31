@@ -194,7 +194,8 @@ export default function SectorSummary({ lat, lon, site, onLooksRight }: SectorSu
     [effSite, effLat, effLon],
   );
 
-  const native = ['zu','st','ts','ve'].includes(lang);
+  // isiXhosa is an unreviewed machine draft too, so its rows keep the English source under them.
+  const native = ['zu','xh','st','ts','ve'].includes(lang);
   const rows = useMemo(() => (model ? buildRows(model, t, englishSectorText) : []), [model, t]);
   // Honest degradation/provenance: show missing-data caveats first, otherwise disclose the
   // regional profile rather than implying it was measured at this property.

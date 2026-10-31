@@ -1,0 +1,106 @@
+{
+  "unit": "dictionary-old1",
+  "okCount": 337,
+  "items": [
+    {
+      "index": 6,
+      "key": "heroSub",
+      "verdict": "repair",
+      "english": "Tap anywhere in South Africa to get a full permaculture plan for your land.",
+      "draft": "Cofa naphi na eMzantsi Afrika ufumane isicwangciso esipheleleyo somhlaba wakho.",
+      "backtranslation": "Tap anywhere in South Africa and get a complete plan for your land.",
+      "problem": "The word \"permaculture\" is dropped: the draft promises just a complete plan for the land, not a full permaculture plan.",
+      "corrected": "Cofa naphi na eMzantsi Afrika ufumane isicwangciso se-permaculture esipheleleyo somhlaba wakho."
+    },
+    {
+      "index": 71,
+      "key": "zoomOutTitle",
+      "verdict": "repair",
+      "english": "Zoom out",
+      "draft": "Qhelisa",
+      "backtranslation": "Make accustomed / practise (does not clearly say zoom out)",
+      "problem": "\"Qhelisa\" means to accustom/make used to something (practise); it does not say zoom out, and sits opposite \"Sondeza\" (zoom in) with no clear meaning.",
+      "corrected": "Hambisa kude"
+    },
+    {
+      "index": 72,
+      "key": "zoomOutAriaLabel",
+      "verdict": "repair",
+      "english": "Zoom out",
+      "draft": "Qhelisa",
+      "backtranslation": "Make accustomed / practise (does not clearly say zoom out)",
+      "problem": "Same as zoomOutTitle: \"Qhelisa\" does not mean zoom out.",
+      "corrected": "Hambisa kude"
+    },
+    {
+      "index": 77,
+      "key": "labelsHatchToggle",
+      "verdict": "repair",
+      "english": "Hatching",
+      "draft": "Isakhelo",
+      "backtranslation": "Frame / structure",
+      "problem": "\"Isakhelo\" means a frame/structure; hatching is the line-pattern fill drawn on map shapes. Wrong term.",
+      "corrected": "Iipetheni zemigca"
+    },
+    {
+      "index": 128,
+      "key": "shapeCategoryOrchard",
+      "verdict": "kept",
+      "english": "Orchard",
+      "draft": "Isitiya seziqhamo",
+      "backtranslation": "Fruit enclosure/pen",
+      "problem": "\"Isitiya\" is an animal pen/enclosure, not an orchard; the label would read as a fruit pen. Coordinator: kept; isitiya means garden in isiXhosa, so \"Isitiya seziqhamo\" (fruit garden) is a fair rendering of Orchard.",
+      "corrected": "Igadi yemithi yeziqhamo"
+    },
+    {
+      "index": 133,
+      "key": "waterCategoryContourBank",
+      "verdict": "repair",
+      "english": "Contour bank",
+      "draft": "Udonga lokunqanda amanzi",
+      "backtranslation": "Wall for holding back water",
+      "problem": "The \"contour\" element is lost: a wall for holding back water is not a bank built along the contour, which is the defining feature of a contour bank.",
+      "corrected": "Udonga olulandela imigca yokuphakama"
+    },
+    {
+      "index": 312,
+      "key": "waterSourceGreyWater",
+      "verdict": "repair",
+      "english": "Grey water",
+      "draft": "Amanzi asetyenzisiweyo",
+      "backtranslation": "Water that has been used",
+      "problem": "\"Amanzi asetyenzisiweyo\" is just \"used water\" and does not identify household grey water; safety-relevant water term made vague (keeps the English term in brackets).",
+      "corrected": "Amanzi asetyenzisiweyo asekhaya (i-grey water)"
+    },
+    {
+      "index": 316,
+      "key": "waterDeliveryDripDesc",
+      "verdict": "repair",
+      "english": "Lines / emitters direct to roots",
+      "draft": "Imigca / iimpompo eziya ngqo kwiingcambu",
+      "backtranslation": "Lines / pipes going straight to the roots",
+      "problem": "\"Iimpompo\" means taps/pumps, not drip emitters; the line says taps go straight to the roots.",
+      "corrected": "Imigca / izithontsisi eziya ngqo kwiingcambu"
+    },
+    {
+      "index": 338,
+      "key": "roofMainBuildingGuide",
+      "verdict": "repair",
+      "english": "Use a roof outline traced on the map or measured on site. Leave this blank if you do not know.",
+      "draft": "Sebenzisa umda wophahla ozotywe emephini okanye olinganiswe endaweni. Shiya apha kungabhalwanga ukuba akwazi.",
+      "backtranslation": "Use the roof boundary drawn on the map or measured on site. Leave it here unwritten if you don't know.",
+      "problem": "\"ukuba akwazi\" is ungrammatical (not second-person negative); should be \"ukuba awazi\" for \"if you do not know\". Could be read as a statement about a third person.",
+      "corrected": "Sebenzisa umda wophahla ozotywe emephini okanye olinganiswe endaweni. Shiya apha kungabhalwanga ukuba awazi."
+    },
+    {
+      "index": 341,
+      "key": "sectionSecondaryRoofs",
+      "verdict": "repair",
+      "english": "Secondary roofs — barn, shed, workshop (m²) — optional",
+      "draft": "Olunye uphahla — isisele, ishedi, indawo yokusebenzela (m²) — ngokuzikhethela",
+      "backtranslation": "Other roofs — \"isisele\" (unfamiliar word, not clearly a known building term), shed, workshop (m²) — if you choose",
+      "problem": "\"Isisele\" is not a recognised word for barn; the building type is unclear to the reader.",
+      "corrected": "Olunye uphahla — indlu yokugcina izinto, ishedi, indawo yokusebenzela (m²) — ngokuzikhethela"
+    }
+  ]
+}

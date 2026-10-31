@@ -13,7 +13,7 @@ test('w19-16/17: production nav has no leftover MenuButton padding, themed CTA, 
   assert.match(prod, /\.printLabel \{ display:none; \}/);
   assert.match(prod, /\.primary \{[^}]*background:var\(--color-forest-800\); color:var\(--on-forest-800\)/);
   const page = read('app/samples/production/page.tsx');
-  assert.match(page, /aria-label="Print this plan"/);
+  assert.match(page, /aria-label=(?:"Print this plan"|\{ui\('Print this plan'\)\})/);
   assert.match(page, /This example plan runs from November 2026\./);
   assert.doesNotMatch(page, /screen, paper and tests/);
 });
@@ -43,7 +43,7 @@ test('w19-20/21/22: one Tour control, one radius, Lucide arrows, even gaps', () 
 });
 
 test('w19-23/24: Atlas title, sans body text, farmer-facing feedback label', () => {
-  assert.match(read('app/atlas/page.tsx'), /<AppHeader title="Atlas" \/>/);
+  assert.match(read('app/atlas/page.tsx'), /<AppHeader title=(?:"Atlas"|\{inlineText\(lang, 'Atlas'\)\}) \/>/);
   assert.doesNotMatch(read('app/example/page.tsx'), /rounded-full font-display/);
   const fb = read('app/feedback/page.tsx');
   assert.match(fb, /Which screen\? \(optional\)/);

@@ -81,7 +81,7 @@ test('PeoplePanel.tsx routes its chrome through t()', () => {
   // The accessibility guard (tests/a11y-modal-semantics.test.ts) pins this exact literal aria-label
   // and element-switch — they must survive untouched by this translation pass.
   assert.match(s, /const Wrapper = isCurrentUser \? 'button' : 'div'/);
-  assert.match(s, /aria-label=\{isCurrentUser \? 'Open your profile' : undefined\}/);
+  assert.match(s, /aria-label=\{isCurrentUser \? (?:'Open your profile'|inlineText\(lang, 'Open your profile'\)) : undefined\}/);
 
   // Regression guard: the old hard-coded role-label map must be gone.
   assert.doesNotMatch(s, /ngo: 'NGO Staff',/, 'ROLE_LABEL reverted to a hard-coded English map');

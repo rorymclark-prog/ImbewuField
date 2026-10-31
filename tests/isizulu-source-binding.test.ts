@@ -245,7 +245,7 @@ test('Student shows English source panels only for source-paired drafts', () => 
     'a localized ZU key point shows its exact English counterpart');
   assert.match(page, /englishSource=\{sourcePairedDraft \? lesson\.quiz\[i\] : undefined\}/,
     'question, ordered options, and rationale receive the matching English source');
-  assert.match(page, /lang === 'zu' \? 'isiZulu' : 'Tshivenda'/,
+  assert.match(page, /lang === 'zu' \? 'isiZulu' : lang === 'xh' \? 'isiXhosa' : 'Tshivenda'/,
     'a ZU infographic description is labelled with the correct language and source');
   assert.match(page, /lang === 'zu' && presentation\.status === 'draft'[\s\S]*?studentZuluLessonDraftNotice/,
     'the existing truthful unreviewed ZU notice remains visible');
