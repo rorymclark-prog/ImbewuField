@@ -5,7 +5,7 @@ import ts from 'typescript';
 import { hybridProtectionPolicy, geometryLockCompositionPolicy, legacyPaperArtworkNeedsRoof, AI_MAP_REVIEW_NOTICE } from '../lib/render-policy.ts';
 import { canopyForegroundAlpha, assertMatchingImageAspects } from '../lib/image-producer.ts';
 import { ELEMENTS_BY_ID } from '../lib/design-elements.ts';
-import { itemInFilter, isContextElement, zonesInFilter, lineInFilter } from '../lib/glossy-filters.ts';
+import { itemInFilter, isContextElement, zonesInFilter, lineInFilter, exactSheetElementRegister, EXACT_CONTEXT_ALPHA } from '../lib/glossy-filters.ts';
 import { statusOf } from '../lib/design-canvas.ts';
 import { authoritativeHouseFootprints, sameFootprint } from '../lib/house-footprints.ts';
 import polygonClipping from 'polygon-clipping';
@@ -15,6 +15,7 @@ import polygonClipping from 'polygon-clipping';
 const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
 const tree = ts.createSourceFile('DesignGlossy.tsx', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
 function helper(name: string, scope: Record<string, unknown>): any {
+  scope = { exactSheetElementRegister, EXACT_CONTEXT_ALPHA, ...scope };
   let code = '';
   function visit(n: ts.Node) {
     if (ts.isFunctionDeclaration(n) && n.name?.text === name) code = n.getText(tree).replace(/^export\s+/, '');
@@ -69,6 +70,40 @@ const frame = { imgW: 100, imgH: 100, mPerPx: 1, satDataUrl: 'photo' };
 const refs = { boundary: [[.1,.1],[.85,.1],[.85,.9],[.1,.9]], house: [], driveway: [] };
 const state = { items: [{ id: 'crown', defId: 'tree_other', x: .84, y: .7, wM: 70/3, hM: 70/3 }],
   lines: [], zones: [{ id: 'zone', zone: 1, points: [[.2,.25],[.75,.25],[.75,.4],[.2,.4]] }] };
+
+test('the AI Earthworks input uses the exact digging painter instead of green beds and blue routes at every scale', () => {
+  const saved={items:[{id:'bed',defId:'veg_bed',x:.4,y:.5}],zones:[],lines:[]};
+  const refs={boundary:[],house:[],driveway:[]};
+  const frozen=JSON.stringify(saved);
+  for(const scale of [1,2,3]) for(const photo of [true,false]) {
+    const calls:Array<{kind:string,x:number,y:number,ppm:number}>=[];
+    const draw=helper('drawMarks',{glossyArtworkState,RENDERED_DRIVEWAY_EDGE:false,SCALE:scale,authoritativeHouseFootprints,
+      ELEMENTS_BY_ID,itemInFilter,lineInFilter,isShadeClothStructure:()=>false,
+      zoneBadgePositions:()=>new Map(),drawFilteredLines:(_ctx:any,source:any,filter:string,px:any,py:any,ppm:number)=>{
+        assert.equal(source,saved);assert.equal(filter,'earthworks');calls.push({kind:'swales',x:px(.4),y:py(.5),ppm});
+      },drawEarthworksFeatures:(_ctx:any,source:any,filter:string,px:any,py:any,ppm:number)=>{
+        assert.equal(source,saved);assert.equal(filter,'earthworks');calls.push({kind:'soil-and-pits',x:px(.4),y:py(.5),ppm});
+      }});
+    draw(probeCanvas([]).getContext(),saved,{...frame,satDataUrl:photo?'photo':null},refs,100*scale,100*scale,'earthworks',true,{showHouseMark:false,showDrivewayMark:false,showToolGlyphs:false});
+    assert.deepEqual(calls,[{kind:'swales',x:40*scale,y:50*scale,ppm:scale},{kind:'soil-and-pits',x:40*scale,y:50*scale,ppm:scale}]);
+  }
+  assert.equal(JSON.stringify(saved),frozen);
+});
+
+test('Water, Zones and Structures show their saved planting context instead of asking the model to guess it', () => {
+  const saved={items:[{id:'bed',defId:'veg_bed',x:.4,y:.5,wM:12,hM:2,rot:17}],zones:[],lines:[]};
+  const refs={boundary:[],house:[],driveway:[]};
+  const frozen=JSON.stringify(saved);
+  const draw=helper('drawMarks',{glossyArtworkState,RENDERED_DRIVEWAY_EDGE:false,SCALE:2,authoritativeHouseFootprints,
+    zoneBadgePositions:()=>new Map(),ELEMENTS_BY_ID,itemInFilter,lineInFilter});
+  for(const [filter,alpha] of [['water',EXACT_CONTEXT_ALPHA.water],['zones',EXACT_CONTEXT_ALPHA.zones],['structures',EXACT_CONTEXT_ALPHA.structures]] as const) {
+    const ctx:any=probeCanvas([]).getContext(),marks:unknown[]=[];
+    ctx.fillRect=(...rect:number[])=>marks.push({rect,alpha:ctx.globalAlpha});ctx.strokeRect=()=>{};ctx.rotate=()=>{};
+    draw(ctx,saved,frame,refs,200,200,filter,true,{showHouseMark:false,showDrivewayMark:false,showToolGlyphs:false});
+    assert.deepEqual(marks,[{rect:[-12,-2,24,4],alpha}],`${filter} keeps the same bed as subordinate context`);
+  }
+  assert.equal(JSON.stringify(saved),frozen);
+});
 
 /** Small vector recorder evaluates probe points independently of canvas antialiasing. Polygon
  * fill uses even/odd crossings; outline uses distance to each segment. It can fail on a band

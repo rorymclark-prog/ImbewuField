@@ -1,6 +1,8 @@
 import type { UpdateCopy } from '../update-copy';
 // Unreviewed drafts; exact English source pairs are in update-notice-drafts.json.
 const copy:UpdateCopy={
+  // Sheet fidelity: docs/audits/2026-10-31/ai-sheet-fidelity-release-drafts.json; unreviewed.
+  "AI map guidance separates earthworks from finished planting.": "Imiyalelo yamamephu e-AI ihlukanisa umsebenzi womhlaba nokutshala okuqediwe.",
   // Paper recovery: docs/audits/2026-10-31/paper-map-release-drafts.json; unreviewed.
   "Style choices stay visible; plain-paper Water maps keep white backgrounds.": "Izinketho zezitayela zihlala zibonakala; amamephu Amanzi ephepheni elimhlophe agcina ingemuva limhlophe.",
   // Oblique picker: docs/audits/2026-10-30/oblique-style-picker-release-drafts.json; unreviewed.

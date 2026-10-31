@@ -3,6 +3,9 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import {
+  bedFootprintRegister,
+  buildFinishedSheetPolishPrompt,
+  buildPhasingRestylePrompt,
   buildLockedIllustrationPrompt,
   groundContractFor,
   isPhotoPreservingStyle,
@@ -164,4 +167,48 @@ test('the model input builder uses the painter, and the khaki exists nowhere', (
   // margins ride into downstream sheets and AI inputs exactly like buildComposite's own fill.
   assert.doesNotMatch(glossySource, /CBB98A/i, 'khaki ground in the model input builder');
   assert.doesNotMatch(designCanvasSource, /CBB98A/i, 'khaki backdrop in the photo bake');
+});
+
+test('Earthworks stays at the digging stage in both paid passes and every visual style', () => {
+  const styles = ['precision_atlas','photo_plan','master_atlas','chatgpt_atlas','field_ledger','homestead_storybook','extension_blueprint','karoo_folk','satellite_overlay'] as const;
+  for (const style of styles) {
+    for (const source of ['photo','paper'] as const) {
+      const input=buildLockedIllustrationPrompt('Earthworks',style,'Vegetable Bed ×9, Tree pit to dig (one per tree) ×32, Swale ×2','Proposed fruit trees',source);
+      assert.match(input,/BEFORE PLANTING/);
+      assert.match(input,/one bare prepared bed/);
+      assert.match(input,/one empty tree pit/);
+      assert.match(input,/never blue water pipes/);
+      assert.doesNotMatch(input,/planted beds into distinct cultivated rows|consistent top-down botanical map style|a PLANTED vegetable bed in full growth/);
+      assert.match(input,/whole-site planting list describes a later stage/);
+    }
+    const polish=buildFinishedSheetPolishPrompt('Earthworks',style);
+    assert.match(polish,/BEFORE PLANTING/);
+    assert.doesNotMatch(polish,/PLANTED CONTENT:|fill each bed with neat top-down rows of leafy green crops/);
+  }
+  assert.match(buildFinishedSheetPolishPrompt('Planting','master_atlas'),/PLANTED CONTENT:/,'the growing-stage sheet must keep its planted-bed direction');
+});
+
+test('saved bed coordinates describe the same geometry at every print resolution without changing it', () => {
+  const items=[{id:'bed-1',defId:'veg_bed',x:.2,y:.4,wM:12,hM:2,rot:17}, {id:'bed-2',defId:'veg_bed',x:.3,y:.5,wM:12,hM:2,rot:17}];
+  const frozen=JSON.stringify(items),frame={imgW:1000,imgH:500,mPerPx:.1};
+  const register=bedFootprintRegister(items,frame,'planting');
+  assert.match(register,/2 separate saved rectangles/);
+  assert.match(register,/centre\(20.00,40.00\), size\(12.00,4.00\), rotation 17deg/);
+  assert.match(register,/centre\(30.00,50.00\)/);
+  for(const scale of [1,2,3]) assert.equal(bedFootprintRegister(items,{imgW:frame.imgW*scale,imgH:frame.imgH*scale,mPerPx:frame.mPerPx/scale},'earthworks'),register);
+  assert.equal(bedFootprintRegister(items,frame,'structures'),register,'Structures retains the exact sheet\'s planting context at its saved footprint');
+  assert.equal(bedFootprintRegister(items,{...frame,mPerPx:0},'planting'),'');
+  assert.equal(JSON.stringify(items),frozen);
+  assert.match(buildLockedIllustrationPrompt('Planting','precision_atlas','Vegetable Bed ×2','','photo',register),/BED FOOTPRINTS/);
+  assert.match(buildFinishedSheetPolishPrompt('Planting','precision_atlas',undefined,undefined,register),/BED FOOTPRINTS/);
+});
+
+test('the Phasing map-only upload never asks the model to reserve a nonexistent schedule panel', () => {
+  const painted=buildPhasingRestylePrompt('precision_atlas');
+  assert.match(painted,/MAP COLUMN/);
+  assert.match(painted,/schedule panel is not in this image/);
+  assert.match(painted,/no reserved legend or schedule area/);
+  assert.match(painted,/Every bed keeps its outer corners/);
+  assert.doesNotMatch(painted,/BLANK RIGHT-HAND PANEL|reserved for the schedule text|plain cream background/);
+  assert.match(buildPhasingRestylePrompt('photo_plan'),/PHOTOGRAPHIC FINISH/);
 });

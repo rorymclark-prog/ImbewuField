@@ -1,0 +1,9 @@
+{
+  "source": "Actual DesignGlossy fullscreen JSX fixture; privately composed owned artwork",
+  "viewports": [{"device":"phone","width":390,"height":844},{"device":"ipad","width":820,"height":1180},{"device":"laptop","width":1440,"height":900}],
+  "exactSheets": ["base","sector","zones","water","earthworks","planting","structures","all","implementation"],
+  "aiSheets": ["earthworks","water","planting","all"],
+  "normal": {"cases":39,"loaded":39,"fitContain":39,"overflow":0},
+  "enlargedText": {"zoom":1.4,"cases":39,"loaded":39,"fitContain":39,"outsideViewport":0},
+  "limits": ["Viewport fixture, not physical-device or authenticated full-app verification","Immediate PNG paint screenshots rejected; settled representative screenshots inspected","Five sheets lack saved paid AI output; no new generation purchased"]
+}

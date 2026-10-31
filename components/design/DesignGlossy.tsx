@@ -49,7 +49,7 @@ import {
   type FrameLike as BoundaryFrameGeom,
 } from '@/lib/boundary-geometry';
 import { structureRegisterText } from '@/lib/structure-register';
-import { buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
+import { bedFootprintRegister, buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { zoneBadgePositions } from '@/lib/canvas-labels';
 import { OPENAI_MAP_MODEL_LABEL, openAiMapModelLabel } from '@/lib/ai-render/model';
 import { enqueueRenderJob, mapSerially, subscribeRenderJob, fetchRenderOutput, fetchRenderJobScene, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, renderJobAttribution, type RenderQuality } from '@/lib/render-jobs';
@@ -76,6 +76,7 @@ import {
   EXACT_DRIVEWAY_LEGEND_TEXT,
   INTEGRATED_LEGEND_FAMILIES,
   exactSheetElementLegendGroups,
+  exactSheetElementRegister,
   exactSheetGroundLegendGroups,
   existingSiteGroundRings,
   existingSiteItems,
@@ -1071,6 +1072,15 @@ export function drawMarks(
     }
   }
 
+  // Earthworks is the digging stage. The generic green bed markers and blue dashed swales
+  // instructed the image model to grow vegetables and draw irrigation on the setting-out sheet.
+  // Share the exact sheet's soil footprints, derived pits and cut/berm route vocabulary instead.
+  if (drawDesign && filter === 'earthworks') {
+    if (showDesignLines) drawFilteredLines(ctx, state, filter, px, py, pxPerM);
+    if (showDesignItems) drawEarthworksFeatures(ctx, state, filter, px, py, pxPerM);
+    return;
+  }
+
   // Lines
   for (const line of drawDesign && showDesignLines ? state.lines : []) {
     if (line.points.length < 2 || !lineInFilter(line.kind, filter)) continue;
@@ -1109,11 +1119,12 @@ export function drawMarks(
   // FIRST and faintly, so this sheet's own water elements always sit on top of them.
   const contextItems = (drawDesign && showDesignItems ? state.items : []).filter((it) => {
     const def = ELEMENTS_BY_ID[it.defId];
-    return def && !itemInFilter(def.category, filter, def.id) && isContextElement(def, filter);
+    return def && exactSheetElementRegister(def, filter) === 'context';
   });
   if (contextItems.length) {
     ctx.save();
-    ctx.globalAlpha = 0.45;
+    ctx.globalAlpha = filter === 'structures' ? EXACT_CONTEXT_ALPHA.structures
+      : filter === 'zones' ? EXACT_CONTEXT_ALPHA.zones : EXACT_CONTEXT_ALPHA.water;
     for (const item of contextItems) {
       const def = ELEMENTS_BY_ID[item.defId]!;
       const wLogical = (item.wM ?? def.wM) * pxPerM;
@@ -2188,6 +2199,10 @@ function producerElementsText(
   const parts = [...counts.entries()].map(([name, g]) =>
     `${includeToolGlyphs ? `${g.icon} ` : ''}${name}${g.n > 1 ? ` ×${g.n}` : ''}`,
   );
+  if (filter === 'earthworks') {
+    const pits = derivedTreeBasinCount(state, state.frame);
+    if (pits > 0) parts.push(`Tree pit to dig (one per tree) ×${pits}`);
+  }
   // On the zones layer, describe the effort-zone areas instead of individual elements.
   if (zonesInFilter(filter)) {
     for (const z of state.zones.filter((z) => !z.feature)) parts.push(`Zone ${z.zone} — ${ZONE_DEFS[z.zone].label}`);
@@ -5798,7 +5813,7 @@ function drawEarthworksFeatures(
 /** How many tree pits sheet 05 will DERIVE — trees with no basin of their own already placed.
  *  Exported so the legend can name them: nothing is drawn on these sheets without a legend row,
  *  and a derived mark is no exception. */
-export function derivedTreeBasinCount(state: DesignCanvasState, frame: CanvasFrame): number {
+export function derivedTreeBasinCount(state: DesignCanvasState, frame: Pick<CanvasFrame, 'imgW' | 'imgH' | 'mPerPx'>): number {
   const basinDef = ELEMENTS_BY_ID.tree_basin;
   if (!basinDef) return 0;
   const pxPerM = 1 / frame.mPerPx;
@@ -13896,7 +13911,7 @@ export default function DesignGlossy({
           // the plain underlay, and there the prompt must be told there is no photograph — see
           // groundContractFor. Sending 'photo' there asked the model to preserve pixels that do not
           // exist, and it filled the void with an invented khaki ground.
-          ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief, renderFrame.satDataUrl ? 'photo' : 'paper')
+          ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief, renderFrame.satDataUrl ? 'photo' : 'paper', bedFootprintRegister(renderState.items, renderFrame, f))
           : effectiveModelChrome
             ? (promptRewrite
               ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', f, renderState.items)
@@ -14073,7 +14088,7 @@ export default function DesignGlossy({
       }
       showcaseKeysRef.current = new Set(authorityFlags.showcase ? [filter] : []);
       const prompt = fullSheetPolish
-        ? buildFinishedSheetPolishPrompt(layerLabel, styleKey, placeName, structureRegisterText(renderState, renderRefLayers))
+        ? buildFinishedSheetPolishPrompt(layerLabel, styleKey, placeName, structureRegisterText(renderState, renderRefLayers), bedFootprintRegister(renderState.items, renderFrame, filter))
         : isModelChromeStyle(styleKey)
         ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(renderState), placeName, sheetKind: filter, hasDriveway: renderRefLayers.driveway.length >= 2, items: renderState.items })
         : lockActive
@@ -14081,7 +14096,7 @@ export default function DesignGlossy({
         // the plain underlay, and there the prompt must be told there is no photograph — see
         // groundContractFor. Sending 'photo' there asked the model to preserve pixels that do not
         // exist, and it filled the void with an invented khaki ground.
-        ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief, renderFrame.satDataUrl ? 'photo' : 'paper')
+        ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief, renderFrame.satDataUrl ? 'photo' : 'paper', bedFootprintRegister(renderState.items, renderFrame, filter))
         : useShowcase
           ? (promptRewrite
             ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', filter, renderState.items)
