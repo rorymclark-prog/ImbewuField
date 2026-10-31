@@ -333,7 +333,7 @@
 332 | waterStoragePond | Pond / storage hole
 333 | waterStorageCistern | Tank under the ground
 334 | waterStorageNone | There is no place of storing
-335 | roofCatchmentWhyMattersLabel | Why this matters: 
+335 | roofCatchmentWhyMattersLabel | Why this matters:
 336 | roofCatchmentWhyMattersText | Lima uses the size of the roof to calculate how much rainwater you can collect each year — it directly determines your recommendations for tank, swale design, and irrigation planning.
 337 | sectionMainBuildingRoofArea | Size of the roof of the main building (m²)
 338 | roofMainBuildingGuide | Use the roof boundary drawn on the map or measured on site. Leave it here unwritten if you don't know.

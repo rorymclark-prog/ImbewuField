@@ -41,7 +41,7 @@
 40. Outside this window
 41. Coming in {amount}
 42. Going out {amount}
-43. {incoming} coming in − {outgoing} going out = 
+43. {incoming} coming in − {outgoing} going out =
 44. The bank amount is not known at each step. A complete result needs the relevant costs and other records; changing the window does not provide them.
 45. Previous example step
 46. Next example step
