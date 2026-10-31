@@ -65,6 +65,23 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 31 Oct 2026 — Afrikaans: the whole app as a labelled machine draft (PR #1161, stacked on #1090)
+All unreviewed machine drafts; English is the authority and is shown beside each draft where isiXhosa
+shows it. English, isiZulu and isiXhosa output are unchanged.
+- **Dictionary:** the 2,182 keys `lib/locales/af.ts` lacked, plus the survey keys that read the same as English.
+- **Inline drafts:** `lib/locales/af-inline/` covers every string the isiXhosa layer covers (8,165) plus
+  the Afrikaans notices. `lib/xh-inline.ts` keeps one English-keyed map per draft language
+  (`isInlineDraftLang`); `tests/af-inline.test.ts` checks placeholders, numbers, stale keys and xh parity.
+- **Screens:** the isiXhosa-only inline-draft branches (about 110 files) now serve Afrikaans too, each with
+  its own draft notice.
+- **Release notes and tour:** all 235 lines (`lib/update-copy-locales/af.ts`).
+- **Dates, weather, error pages:** on-screen dates use the browser's `af-ZA` month names; the weather card
+  and error/offline pages carry their own Afrikaans tables.
+- **Kept English for Afrikaans on purpose:** report and invoice documents, report summaries and PDF labels
+  (pinned by the report-header and report-costs tests).
+- **Still to do:** Studies lessons, slide decks and the Manual; a blind back-translation review; the
+  fluent-review hand-off list.
+
 ### 25 Oct 2026 — isiXhosa phases 4–5: reports, crops, production data and Study content (PR #1090)
 All unreviewed machine drafts keyed by the exact English (`lib/locales/xh-inline/g18`–`g26`); English
 and isiZulu output are unchanged.
