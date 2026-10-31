@@ -52,9 +52,9 @@ const FIELD_FOCUS_KEYS: Record<FieldFocus, string> = {
 };
 
 /** isiXhosa counterpart of SurveyZuluDraftPair: the unreviewed draft with its English source beside it. */
-function XhDraftPair({ children, english, label }: { children: ReactNode; english: string; label: string }) {
+function XhDraftPair({ children, english, label, lang = 'xh' }: { children: ReactNode; english: string; label: string; lang?: string }) {
   return <span style={{ display: 'inline-flex', flexDirection: 'column', gap: 4 }}>
-    <span lang="xh">{children}</span>
+    <span lang={lang}>{children}</span>
     {' '}
     <small lang="en" style={{ fontSize: '12px', fontWeight: 400, opacity: 0.82 }}>{label}{english}</small>
   </span>;
@@ -69,8 +69,8 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
   // unreviewed isiZulu draft in this app is (SurveyZuluDraftPair).
   const paired = (key: string) => lang === 'zu'
     ? <SurveyZuluDraftPair english={translate('en', key)}>{t(key)}</SurveyZuluDraftPair>
-    : lang === 'xh'
-      ? <XhDraftPair english={translate('en', key)} label={inlineText(lang, 'English: ')}>{t(key)}</XhDraftPair>
+    : lang === 'xh' || lang === 'af'
+      ? <XhDraftPair english={translate('en', key)} label={inlineText(lang, 'English: ')} lang={lang}>{t(key)}</XhDraftPair>
       : t(key);
   const { user, profile } = useAuth();
   const [data, setData] = useState<FieldWorkspace | null>(null), [error, setError] = useState(''), [busy, setBusy] = useState(false);
@@ -210,7 +210,7 @@ export default function FieldTeams({ organisation = false, initialFarmerId, onSt
   const filteredPeople=data?.people.filter(person=>assigned.includes(person.id)&&(!farmerFilter||person.id===farmerFilter)&&`${person.name} ${person.gardenName??''}`.toLowerCase().includes(peopleSearch.toLowerCase()))??[];
   return <section className={`${styles.root} ${workStyles.workspace}`}><div className={styles.wrap}>
     {lang === 'zu' && <p role="note" className={styles.notice}>{paired('mentorZuluDraftNotice')}</p>}
-    {lang === 'xh' && <p role="note" lang="xh" className={styles.notice}>{t('mentorZuluDraftNotice')}</p>}
+    {(lang === 'xh' || lang === 'af') && <p role="note" lang={lang} className={styles.notice}>{t('mentorZuluDraftNotice')}</p>}
     <FieldDataStatus data={data} />
     <FieldDraft name={`visit:${org}`} value={prepareFieldVisitDraft(visit,{open:visitOpen,photosReady,photosBusy,captureBusy,saving:busy,readOnly:readOnlyVisit})} onRestore={value=>{
       // Abandon a previous photo load before restoring a different saved draft.

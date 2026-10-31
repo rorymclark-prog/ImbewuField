@@ -59,7 +59,7 @@ import {
   type NetworkSortKey,
 } from '@/lib/network';
 import { DEMO_NETWORK_NOTICE } from '@/lib/network-demo';
-import { inlineTemplate, inlineText } from '@/lib/xh-inline';
+import { inlineTemplate, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import type { GardenStatus } from '@/lib/db/types';
 import { NETWORK_STATUS_COLOR } from '@/components/network/status-colors';
 
@@ -302,7 +302,7 @@ export default function NetworkPage() {
         </div>
       )}
 
-      {(isZulu || lang === 'xh') && (
+      {(isZulu || isInlineDraftLang(lang)) && (
         <p role="note" className="flex-shrink-0 px-3 md:px-4 py-1.5 font-sans"
           style={{ fontSize: 12, color: INK_SOFT, background: PAPER, borderBottom: `1px solid ${LINE}` }}>
           {isZulu

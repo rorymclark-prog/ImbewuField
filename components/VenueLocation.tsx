@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from '@/lib/i18n-context';
-import { fillInline, inlineTemplate, inlineText } from '@/lib/xh-inline';
+import { fillInline, inlineTemplate, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 
 /** Coordinates stay behind a one-tap control; never locate anyone on page load. */
 export default function VenueLocation({ latitude, longitude, sample, venue = '', recordKind = 'session', onChange }: {
@@ -14,7 +14,7 @@ export default function VenueLocation({ latitude, longitude, sample, venue = '',
   const ui = (en: string, zu: string, vars: Record<string, string | number> = {}) => {
     const english = fillInline(en, vars);
     if (lang === 'zu') return `${zu} · ${english}`;
-    const xh = lang === 'xh' ? inlineTemplate(lang, en, null, vars) : english;
+    const xh = isInlineDraftLang(lang) ? inlineTemplate(lang, en, null, vars) : english;
     return xh === english ? english : `${xh} · ${english}`;
   };
   const byKind = (session: string, visit: string) => recordKind === 'visit' ? visit : session;

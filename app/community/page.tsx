@@ -54,7 +54,7 @@ const KIND_TEXT:Record<BoardKind,string>={have:'var(--color-canvas)',want:'var(-
 function useCommunityLanguage() {
   const language = useLanguage();
   const { lang } = language;
-  const t = (key: string) => { const text = language.t(key); return lang === 'xh' && text === translate('en', key) ? inlineText(lang, text) : text; };
+  const t = (key: string) => { const text = language.t(key); return (lang === 'xh' || lang === 'af') && text === translate('en', key) ? inlineText(lang, text) : text; };
   return { ...language, t };
 }
 
@@ -74,7 +74,7 @@ const categoryLabel=(value:BoardCategory,t:CommunityTranslate)=>t(({seed:'commun
 const kindLabel=(value:BoardKind,t:CommunityTranslate)=>t(({have:'communityBoardKindHave',want:'communityBoardKindWant',free:'communityBoardKindFree'})[value]);
 function CommunitySource({id}:{id:string}) {
   const {t,lang}=useCommunityLanguage();
-  return <><span lang={t(id)===translate('en',id)?'en':lang}>{t(id)}</span>{['zu','xh','st','ts','ve'].includes(lang)&&<small lang="en" style={{display:'block',fontSize:12,lineHeight:1.4,marginTop:4}}><span lang={lang}>{t('offlineSourceLabel')}: </span>{translate('en',id)}</small>}</>;
+  return <><span lang={t(id)===translate('en',id)?'en':lang}>{t(id)}</span>{['zu','xh','af','st','ts','ve'].includes(lang)&&<small lang="en" style={{display:'block',fontSize:12,lineHeight:1.4,marginTop:4}}><span lang={lang}>{t('offlineSourceLabel')}: </span>{translate('en',id)}</small>}</>;
 }
 
 export default function CommunityHubPage() {

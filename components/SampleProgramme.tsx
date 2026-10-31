@@ -94,5 +94,5 @@ export function SampleFunderGate({ children }: { children: React.ReactNode }) {
   const { lang } = useLanguage();
   useEffect(() => { setAllowed(!isSampleMode() || readSampleProgramme().funderAccess); }, []);
   if (allowed === null) return null;
-  return allowed ? children : <section className={styles.root}>{lang === 'zu' && <p role="note">{translate('zu', 'sampleProgrammeEnglishAccessNote')}</p>}{lang === 'xh' && <p role="note">{translate('xh', 'sampleProgrammeEnglishAccessNote')}</p>}<h1>Funder access is off</h1><p>The organisation has hidden its dashboards. Switch to Organisation → Control centre → People & permissions to turn sharing back on.</p></section>;
+  return allowed ? children : <section className={styles.root}>{lang === 'zu' && <p role="note">{translate('zu', 'sampleProgrammeEnglishAccessNote')}</p>}{lang === 'xh' && <p role="note">{translate('xh', 'sampleProgrammeEnglishAccessNote')}</p>}{lang === 'af' && <p role="note">{translate('af', 'sampleProgrammeEnglishAccessNote')}</p>}<h1>Funder access is off</h1><p>The organisation has hidden its dashboards. Switch to Organisation → Control centre → People & permissions to turn sharing back on.</p></section>;
 }

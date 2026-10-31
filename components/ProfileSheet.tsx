@@ -332,7 +332,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
         style={{ padding: '24px 20px 120px' }}
       >
         <div className="space-y-6">
-          {(lang === 'zu' || lang === 'xh') && (
+          {(lang === 'zu' || lang === 'xh' || lang === 'af') && (
             <p role="note" className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t('profileZuluDraftNotice')}</p>
           )}
 

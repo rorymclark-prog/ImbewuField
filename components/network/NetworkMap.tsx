@@ -75,7 +75,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { X, Maximize2, Info, MapPinOff, Plus, Minus } from 'lucide-react';
 import EmptyState from '@/components/EmptyState';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import {
   attentionFlags,
   networkBounds,
@@ -174,7 +174,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
         mapUnsupportedMessage: 'Farmer details still work from the list — open a farmer to see their panel.',
       };
   // isiXhosa reads the English strings above through its drafts (keyed by the exact English).
-  const copy = lang === 'xh'
+  const copy = isInlineDraftLang(lang)
     ? (Object.fromEntries(Object.entries(baseCopy).map(([key, english]) => [key, inlineText(lang, english)])) as typeof baseCopy)
     : baseCopy;
   const mapRef = useRef<MapRef>(null);
@@ -670,7 +670,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
           </div>
 
           <div className="flex-1 overflow-y-auto px-3.5 pb-5 pt-1" style={{ minHeight: 0 }}>
-            {(isiZulu || lang === 'xh') && (
+            {(isiZulu || isInlineDraftLang(lang)) && (
               <p className="font-sans text-xs mb-2" lang={lang} role="note">
                 {copy.sourceLanguageNotice}
               </p>

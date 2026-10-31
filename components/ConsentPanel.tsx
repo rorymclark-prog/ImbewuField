@@ -30,8 +30,10 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
   // isiXhosa gets the same treatment as the account-table languages: the English consent wording
   // always stays on screen and the unreviewed isiXhosa machine draft sits above it.
   const isXhosa=lang==='xh';
-  const draft=isAccountDraftLanguage(lang)||isXhosa;
-  const text=(english:string,zulu:string,values:AccountValues={})=>isXhosa?fillAccountText(inlineText(lang,english),values):accountText(lang,english,zulu,t,values);
+  // Afrikaans reads the same English-keyed inline drafts (lib/xh-inline.ts).
+  const inlineDraftLang=isXhosa||lang==='af';
+  const draft=isAccountDraftLanguage(lang)||inlineDraftLang;
+  const text=(english:string,zulu:string,values:AccountValues={})=>inlineDraftLang?fillAccountText(inlineText(lang,english),values):accountText(lang,english,zulu,t,values);
   const paired=(english:string,zulu:string,values:AccountValues={},sourceValues=values)=><><span lang={draft?lang:'en'}>{text(english,zulu,values)}</span>{draft&&<small lang="en" style={{display:'block',fontSize:12,lineHeight:1.4}}><span lang={lang}>{t('popiaEnglishSourceLabel')}: </span>{fillAccountText(english,sourceValues)}</small>}</>;
   const [consent, setConsent] = useState<FarmerConsent | null>(null);
   const [loading, setLoading] = useState(true);
@@ -87,7 +89,7 @@ export default function ConsentPanel({ orgName }: { orgName?: string | null }) {
           {paired(CONSENT_PANEL_HEADING.label,CONSENT_PANEL_HEADING.labelZuDraft)}
         </div>
       </div>
-      {draft&&<p role="note" lang={lang} className="text-xs mt-2">{isXhosa?inlineText(lang,'Unreviewed consent translation. Read the English source before choosing or agreeing.'):t('popiaConsentDraftNotice')}</p>}
+      {draft&&<p role="note" lang={lang} className="text-xs mt-2">{inlineDraftLang?inlineText(lang,'Unreviewed consent translation. Read the English source before choosing or agreeing.'):t('popiaConsentDraftNotice')}</p>}
       <p className="text-sm font-display mt-3 leading-snug" style={{ color: 'var(--text-secondary)' }}>
         {paired('Nothing here is shared unless you switch it on. You can change your mind at any time, and {organisation} will stop seeing it straight away.','Akukho lutho olwabiwayo lapha ngaphandle kokuthi uyivule. Ungashintsha umqondo wakho noma nini, futhi {organisation} izoyeka ukukubona ngokushesha.',{organisation:isXhosa&&xhInlineDraft('Nothing here is shared unless you switch it on. You can change your mind at any time, and {organisation} will stop seeing it straight away.')?whoXh:organisation},{organisation:who})}
       </p>

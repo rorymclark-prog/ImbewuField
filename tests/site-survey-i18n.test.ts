@@ -306,6 +306,11 @@ test('new SiteSurveySheet copy is available as an isiZulu draft while other loca
         assert.match(block, new RegExp(`^  ${key}: ['"]`, 'm'), `isiXhosa draft is missing ${key}`);
         continue;
       }
+      // Afrikaans (31 Oct 2026): fully drafted, unreviewed, and marked by its own survey notice line.
+      if (locale === 'af') {
+        assert.match(block, new RegExp(`^  ${key}: ['"]`, 'm'), `Afrikaans draft is missing ${key}`);
+        continue;
+      }
       assert.doesNotMatch(
         block,
         new RegExp(`^  ${key}:`, 'm'),

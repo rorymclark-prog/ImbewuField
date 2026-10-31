@@ -357,7 +357,7 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
   // The isiXhosa draft is keyed by the English wording below; if lib/plan-assurance.ts changes its
   // sentence the draft stops matching and the footer falls back to the new English.
   const ASSURANCE_ONE_LINE_KEY = 'Not checked by an agronomist — a planning guide, not an instruction. Show it to your extension officer, and get a soil test before spending on soil.';
-  const assuranceLine = (language?: string) => language === 'xh' && ASSURANCE_ONE_LINE === ASSURANCE_ONE_LINE_KEY ? inlineText('xh', ASSURANCE_ONE_LINE_KEY) : ASSURANCE_ONE_LINE;
+  const assuranceLine = (language?: string) => (language === 'xh' || language === 'af') && ASSURANCE_ONE_LINE === ASSURANCE_ONE_LINE_KEY ? inlineText(language, ASSURANCE_ONE_LINE_KEY) : ASSURANCE_ONE_LINE;
   const footer = (pageNumber = doc.getNumberOfPages()) => {
     // Page breaks must not change the font of the paragraph being carried over.
     // Previously the 6.5pt footer leaked into body text after need() added a page.

@@ -6,7 +6,7 @@ import { listingShareText, type Listing } from '@/lib/exchange';
 import { shareListing } from './share';
 import { EX } from './theme';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import { ExchangeSourceCopy } from './ExchangeCopy';
 
 /**
@@ -30,7 +30,7 @@ export default function ShareListingButton({
 }) {
   const { lang } = useLanguage();
   const zu = lang === 'zu';
-  const xh = lang === 'xh';
+  const xh = isInlineDraftLang(lang); // isiXhosa or Afrikaans: the English-keyed inline drafts
   const buttonLabel = label ?? (zu ? 'Yabelana ngesikhangiso' : inlineText(lang, 'Share listing'));
   const [state, setState] = useState<'idle' | 'copied' | 'failed'>('idle');
 

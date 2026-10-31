@@ -123,7 +123,7 @@ function HomeInner() {
           title: t('reportsOfflineTitle'),
           message: recoveryDraft
             ? `${t('reportsOfflineMessage')}\n\n${recoveryDraftNotice}\n\nEnglish source: ${translate('en', 'reportsOfflineTitle')}\n${translate('en', 'reportsOfflineMessage')}`
-            : lang === 'zu' || lang === 'xh'
+            : lang === 'zu' || lang === 'xh' || lang === 'af'
             ? `${t('reportsOfflineMessage')}\n${t('reportsOfflineZuluDraftNotice')}\n\nEnglish source: ${translate('en', 'reportsOfflineMessage')}`
             : t('reportsOfflineMessage'),
           confirmLabel: recoveryDraft ? `${t('reportsOfflineRetry')} · ${translate('en', 'reportsOfflineRetry')}` : t('reportsOfflineRetry'),
@@ -431,11 +431,15 @@ function HomeInner() {
             ? `${t('openSurveyNoSiteTitleZuDraft')} — ${translate('zu', 'designStudioZuluDraftBadge')} / unreviewed isiZulu draft. English: ${translate('en', 'openSurveyNoSiteTitle')}`
             : lang === 'xh'
             ? `${t('openSurveyNoSiteTitle')} / ${inlineText(lang, 'Unreviewed isiXhosa draft. English:')} ${translate('en', 'openSurveyNoSiteTitle')}`
+            : lang === 'af'
+            ? `${t('openSurveyNoSiteTitle')} / ${inlineText(lang, 'Unreviewed Afrikaans draft. English:')} ${translate('en', 'openSurveyNoSiteTitle')}`
             : t('openSurveyNoSiteTitle'),
           message: lang === 'zu'
             ? `${t('openSurveyNoSiteMessageZuDraft')}\n\nUnreviewed isiZulu draft. English source: ${translate('en', 'openSurveyNoSiteMessage')}`
             : lang === 'xh'
             ? `${t('openSurveyNoSiteMessage')}\n\n${inlineText(lang, 'Unreviewed isiXhosa draft. English source:')} ${translate('en', 'openSurveyNoSiteMessage')}`
+            : lang === 'af'
+            ? `${t('openSurveyNoSiteMessage')}\n\n${inlineText(lang, 'Unreviewed Afrikaans draft. English source:')} ${translate('en', 'openSurveyNoSiteMessage')}`
             : t('openSurveyNoSiteMessage'),
           confirmLabel: lang === 'zu' ? t('openSurveyNoSiteConfirmZuDraft') : t('openSurveyNoSiteConfirm'),
         });

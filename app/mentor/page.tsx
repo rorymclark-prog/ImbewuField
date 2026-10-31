@@ -47,7 +47,7 @@ import {
 import { APP_HEADER_STYLE } from '@/lib/app-header';
 import { useAppLevel } from '@/lib/app-level';
 import { formatStaffDate } from '@/lib/format-figures';
-import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
 import { formatXhosaDate } from '@/lib/xh-dates';
 
 const tr = (lang: string, en: string, zu: string) => inlineText(lang, en, zu);
@@ -56,7 +56,7 @@ const MENTOR_STATUS_ZU: Record<EnrollmentStatus, string> = {
 };
 
 function localizedDueDate(dueAt: string | null, today: string, lang: string): string | null {
-  if (lang === 'xh') {
+  if (isInlineDraftLang(lang)) {
     // formatDue returns English; the near-term phrases get their isiXhosa draft, the dated one stays as is.
     const en = formatDue(dueAt, today, lang);
     if (!en) return en;
@@ -66,7 +66,7 @@ function localizedDueDate(dueAt: string | null, today: string, lang: string): st
     if (soon) return inlineTemplate(lang, 'Due in {n} days', null, { n: soon[1] });
     // A far-off date: formatDue has no isiXhosa month names (browsers have no 'xh-ZA' pack), so
     // write it day-month-year like the isiZulu line below, from the app's own month names.
-    if (dueAt && /^Due \d/.test(en)) return inlineTemplate(lang, 'Due {date}', null, { date: formatXhosaDate(new Date(`${dueAt}T00:00:00`), { day: true, month: 'short', year: true }) });
+    if (lang === 'xh' && dueAt && /^Due \d/.test(en)) return inlineTemplate(lang, 'Due {date}', null, { date: formatXhosaDate(new Date(`${dueAt}T00:00:00`), { day: true, month: 'short', year: true }) });
     return inlineText(lang, en);
   }
   if (lang !== 'zu') return formatDue(dueAt, today, lang);
@@ -677,7 +677,7 @@ export default function MentorPage() {
       </DashboardTabs>
 
       {lang === 'zu' && <p className="px-4 pt-2 text-xs" style={{ color: 'var(--text-muted)' }}>Izihloko zamamojula, izincazelo zokuqeqeshwa, imibiko nobufakazi bokuhlolwa kusaboniswa ngesiNgisi.</p>}
-      {lang === 'xh' && <p lang="xh" className="px-4 pt-2 text-xs" style={{ color: 'var(--text-muted)' }}>{inlineText(lang, 'Module titles, training descriptions, reports and assessment evidence are still shown in English.')}</p>}
+      {isInlineDraftLang(lang) && <p lang={lang} className="px-4 pt-2 text-xs" style={{ color: 'var(--text-muted)' }}>{inlineText(lang, 'Module titles, training descriptions, reports and assessment evidence are still shown in English.')}</p>}
 
       {/* code-14: this main had no max-width at all, so cards ran edge to edge at 1280px —
           workspace.workspace caps it at 90rem like the rest of the app's framed pages, and

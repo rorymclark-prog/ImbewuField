@@ -32,7 +32,7 @@ import {
   HARD_FROST_COLDEST_MONTH_C,
   LIGHT_FROST_COLDEST_MONTH_C,
 } from '@/lib/koppen-global';
-import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
 
 export type GrowingZoneId =
   | 'highveld'
@@ -81,7 +81,7 @@ export function growingZoneLabel(zones: readonly GrowingZoneId[]): string {
  * the word "or" are translated for an isiXhosa reader. Everyone else gets the label unchanged.
  */
 export function growingAreaText(lang: string, area: string): string {
-  if (lang !== 'xh') return area;
+  if (!isInlineDraftLang(lang)) return area;
   const fixed = inlineText(lang, area);
   if (fixed !== area) return fixed;
   const or = area.lastIndexOf(' or ');

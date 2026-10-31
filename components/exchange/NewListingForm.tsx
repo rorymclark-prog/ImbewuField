@@ -21,7 +21,7 @@ import { saveLocalListing } from './listing-store';
 import ShareListingButton from './ShareListingButton';
 import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL, ZU_CATEGORY_LABEL, ZU_KIND_LABEL, ZU_MONTH_LABEL, ZU_PRICE_MODE_LABEL, xhPriceLabel } from './theme';
 import { useLanguage } from '@/lib/i18n';
-import { inlineTemplate, inlineText } from '@/lib/xh-inline';
+import { inlineTemplate, inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import { ExchangeSourceCopy } from './ExchangeCopy';
 
 /** The bases a farmer actually quotes against. `PriceBasis` allows every unit; this is the useful subset. */
@@ -74,7 +74,7 @@ export default function NewListingForm({
 }) {
   const { lang } = useLanguage();
   const zu = lang === 'zu';
-  const xh = lang === 'xh';
+  const xh = isInlineDraftLang(lang); // isiXhosa or Afrikaans: the English-keyed inline drafts
   const tx = (en: string, dz: string) => inlineText(lang, en, dz);
   const simple = useAppLevel() === 'simple';
   // Simple starts the extra fields (offer/want, category, headline, detail, month, name, town,

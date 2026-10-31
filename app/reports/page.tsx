@@ -94,6 +94,7 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
       {sample && <p className={styles.notice}>{t('reportsSampleWorkspaceNotice')}</p>}
       {['zu', 'st', 'ts', 've'].includes(lang) && hasEnglishSavedReport && <p className={styles.notice} role="note">{t('reportsEnglishSavedNote').replace('{language}', APP_LANGS.find((locale) => locale.code === lang)?.native ?? lang)}</p>}
       {lang === 'xh' && hasEnglishSavedReport && <p className={styles.notice} role="note">{inlineText(lang, 'Some saved reports have full English text. The controls here are in isiXhosa.')}</p>}
+      {lang === 'af' && hasEnglishSavedReport && <p className={styles.notice} role="note">{inlineText(lang, 'Some saved reports have full English text. The controls here are in Afrikaans.')}</p>}
       <div className={styles.row} role="group" aria-label={t('reportsChooseSitesOrReports')}><button aria-pressed={view==='sites'} onClick={()=>setView('sites')}>{t('reportsSavedSites')} · {choices.filter(c=>c.place).length}</button><button aria-pressed={view==='reports'} onClick={()=>setView('reports')}>{t('reportsSavedReports')} · {reports.length}</button></div>
       <Link href="/farmer?reportSite=new&guided=1" className={styles.card} style={{ display:'flex', gap:14, alignItems:'center', margin:'20px 0' }}><Plus size={28}/><div><h2>{t('reportsSelectNewSite')}</h2><p style={{margin:0}}>{t('reportsSelectNewSiteHelp')}</p></div><ArrowRight style={{marginLeft:'auto',flexShrink:0}}/></Link>
       {error && <p role="alert" className={styles.error}>{error}</p>}

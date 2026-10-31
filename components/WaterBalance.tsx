@@ -149,7 +149,7 @@ export default function WaterBalance({ locationData, waterData, survey, siteArea
         <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{t('waterBalanceEstimateLabel')}</span>
       </div>
 
-      {(lang === 'zu' || lang === 'xh') && (
+      {(lang === 'zu' || lang === 'xh' || lang === 'af') && (
         <p className="text-xs font-display" style={{ color: 'var(--text-muted)' }}>{t('siteSummaryZuluDraftNotice')}</p>
       )}
 

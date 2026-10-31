@@ -24,7 +24,7 @@ const ROLE_ALIASES: Record<string, string> = { facilitator: 'mentor' };
 export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { current: string; inMenu?: boolean; onNavigate?: () => void }) {
   const { t, lang } = useLanguage();
   // isiXhosa reads the inline drafts keyed by the exact English (the sample-tour tables have none).
-  const ui = (english:string,zulu:string,values:Record<string,string|number>={}) => lang==='xh' ? inlineTemplate(lang,english,null,values) : sampleWorkspaceText(lang,english,zulu,values);
+  const ui = (english:string,zulu:string,values:Record<string,string|number>={}) => (lang==='xh'||lang==='af') ? inlineTemplate(lang,english,null,values) : sampleWorkspaceText(lang,english,zulu,values);
   const router = useRouter();
   const { accountRole, navigationRole, sample } = useRoleNavigation();
   const visible = visibleRoleTabs(navigationRole);

@@ -75,7 +75,8 @@ export default function ThemePanel({ open, onClose }: Props) {
   // The settings* keys arrived after the isiXhosa dictionary was drafted, so isiXhosa reads the
   // inline draft for the English of any key its dictionary does not have yet. Every other
   // language (and every key isiXhosa has) reads the dictionary exactly as before.
-  const t = (key: string) => lang === 'xh' && getLoadedDict('xh')[key] === undefined ? inlineText(lang, translate('en', key)) : dictionaryT(key);
+  // Afrikaans does the same for any key its dictionary lacks.
+  const t = (key: string) => (lang === 'xh' || lang === 'af') && getLoadedDict(lang)[key] === undefined ? inlineText(lang, translate('en', key)) : dictionaryT(key);
   const panelRef = useRef<HTMLDivElement>(null);
   useDialogFocus(open, panelRef);
   const level = useAppLevel();

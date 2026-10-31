@@ -91,7 +91,7 @@ export default function PricesPage() {
         <div className={workspace.priceWorkspace}>
           <div className={selected ? workspace.pricePickerActive : undefined}>
             <p className="font-sans" style={{ fontSize: 13, color: 'var(--color-muted-strong)', lineHeight: 1.5 }}>
-              {lang === 'zu' || lang === 'xh' ? <>{t('pricesChooseCrop')}<span className="block mt-1">{translate('en', 'pricesChooseCrop')}</span></> : t('pricesChooseCrop')}
+              {lang === 'zu' || lang === 'xh' || lang === 'af' ? <>{t('pricesChooseCrop')}<span className="block mt-1">{translate('en', 'pricesChooseCrop')}</span></> : t('pricesChooseCrop')}
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3" style={{ marginTop: 16 }}>
               {visibleCrops.map((crop) => (

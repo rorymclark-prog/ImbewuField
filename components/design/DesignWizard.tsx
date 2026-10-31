@@ -170,7 +170,7 @@ function GuidedWizard({
           padding: '8px 12px',
         }}
       >
-        {(lang === 'zu' || lang === 'xh') && <DesignZuluDraftNotice />}
+        {(lang === 'zu' || lang === 'xh' || lang === 'af') && <DesignZuluDraftNotice />}
         {translatedDesignStepGuidance(t, step)}
       </div>
 

@@ -18,7 +18,7 @@ import { canAccessRolePage } from '@/lib/role-access';
 import type { UserRole } from '@/lib/db/types';
 import { useLanguage } from '@/lib/i18n-context';
 import { useAppLevel } from '@/lib/app-level';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 const tr = (lang: string, en: string, zu: string) => inlineText(lang, en, zu);
 
 // Simple / All tools (Settings → "How much to show", lib/app-level.ts). All tools is this tab
@@ -168,7 +168,7 @@ export default function FunderPage() {
       </DashboardTabs>
 
       {lang === 'zu' && <p className="px-4 pt-2 text-xs" style={{ color: 'var(--text-secondary)' }}>Imibiko, ubufakazi obunemithombo, neminye imininingwane yohlelo kusaboniswa ngesiNgisi.</p>}
-      {lang === 'xh' && <p className="px-4 pt-2 text-xs" style={{ color: 'var(--text-secondary)' }}>{inlineText(lang, 'Reports, sourced evidence and other programme details are still shown in English.')}</p>}
+      {isInlineDraftLang(lang) && <p className="px-4 pt-2 text-xs" style={{ color: 'var(--text-secondary)' }}>{inlineText(lang, 'Reports, sourced evidence and other programme details are still shown in English.')}</p>}
 
       <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden">
         <SampleFunderGate key={view}>{view === 'evidence' ? <ProgrammeEvidence funder /> : view === 'reports' ? <ProgrammeReports funder onOpenProgress={() => setView('evidence')} onOpenCohort={() => setView('cohort')} /> : view === 'cohort' ? (

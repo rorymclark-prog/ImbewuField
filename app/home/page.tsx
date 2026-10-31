@@ -39,7 +39,7 @@ import BackButton from '@/components/BackButton';
 import HomeHeroCard from '@/components/home/HomeHeroCard';
 import CropIcon from '@/components/CropIcon';
 import { useLanguage, translate } from '@/lib/i18n';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import { useAuth } from '@/lib/auth';
 import { canSeeNavLink } from '@/lib/role-access';
 import { canSeeWorkspaceLink } from '@/lib/role-navigation';
@@ -72,7 +72,7 @@ const LANG_TO_LOCALE: Record<string, string> = {
 // draft keyed by that same English (lib/locales/xh-inline). Every other language keeps t(key).
 const xhKeyText = (lang: string, t: (key: string) => string, key: string) => {
   const text = t(key);
-  return lang === 'xh' && text === translate('en', key) ? inlineText(lang, text) : text;
+  return isInlineDraftLang(lang) && text === translate('en', key) ? inlineText(lang, text) : text;
 };
 
 // zu-01: zu-ZA has no Intl.DateTimeFormat data in most browsers, so toLocaleDateString silently

@@ -92,6 +92,7 @@ export function projectDraftText(c: FinanceProjectCase, answers: ProjectAnswers,
     inlineText(lang, 'IMBEWUFIELD FARM FINANCE PRACTICE'),
     // isiXhosa is an unreviewed machine draft: a saved copy says so, in one line.
     ...(lang === 'xh' ? [inlineText(lang, 'Unreviewed isiXhosa draft.')] : []),
+    ...(lang === 'af' ? [inlineText(lang, 'Unreviewed Afrikaans draft.')] : []),
     inlineText(lang, 'Synthetic classroom case. This is not a farm record, financial advice or a submitted assessment.'),
     inlineTemplate(lang, 'Case: {title} ({id})', null, { title: inlineText(lang, c.title), id: c.id }),
     inlineTemplate(lang, 'Practice period: {start} to {end}', null, { start: c.period.start, end: c.period.end }),

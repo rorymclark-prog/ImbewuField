@@ -9,7 +9,7 @@ import { useProductTour } from '@/components/ProductTourProvider';
 import { PRODUCT_TOUR } from '@/lib/sample-tour';
 import { sampleWorkspaceText, productTourDuration, productTourError, productTourStepCopy, productTourUi } from '@/lib/sample-tour-localization';
 import { useLanguage } from '@/lib/i18n-context';
-import { inlineText, inlineTemplate } from '@/lib/xh-inline';
+import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
 import styles from '@/components/ProductTour.module.css';
 import cards from './Tour.module.css';
 
@@ -21,7 +21,7 @@ const STOP_ICONS: Record<string, LucideIcon> = {
 export default function TourPage() {
   const { lang, t } = useLanguage();
   // isiXhosa: the unreviewed draft keyed by the exact English template (lib/locales/xh-inline).
-  const ui = (english:string,zulu:string,values:Record<string,string|number>={})=>lang==='xh'?inlineTemplate(lang,english,null,values):sampleWorkspaceText(lang,english,zulu,values);
+  const ui = (english:string,zulu:string,values:Record<string,string|number>={})=>(lang==='xh'||lang==='af')?inlineTemplate(lang,english,null,values):sampleWorkspaceText(lang,english,zulu,values);
   const tour = useProductTour();
   const tourUi = (key: Parameters<typeof productTourUi>[0], fallback: string, values: Record<string, string | number> = {}) =>
     productTourUi(key, lang, values) ?? fallback;
@@ -56,7 +56,7 @@ export default function TourPage() {
     </section>
     {tour?.error && <p role="alert" lang={productTourError(tour.error,lang)===tour.error?'':lang}>{productTourError(tour.error, lang)}{['zu','xh','st','ts','ve'].includes(lang)&&productTourError(tour.error,lang)!==tour.error&&<small lang="en" style={{display:'block',fontSize:12}}><span lang={lang}>{lang==='xh'?inlineText(lang,'English source'):t('offlineSourceLabel')}: </span>{tour.error}</small>}</p>}
     <p className={styles.notice}>{ui('Try the app with prepared records. Your own project stays unchanged.', 'Zama uhlelo ngamarekhodi alungisiwe. Iphrojekthi yakho ayishintshi.')}</p>
-    {['zu','xh','st','ts','ve'].includes(lang) && <p className={styles.notice} role="note">{tourUi('draftDisclosure', '')}</p>}
+    {['zu','xh','af','st','ts','ve'].includes(lang) && <p className={styles.notice} role="note">{tourUi('draftDisclosure', '')}</p>}
     {tried > 0 && !tour?.active && <section className={styles.complete}><h2>{tried === PRODUCT_TOUR.length ? ui('You’ve explored the whole tour.', 'Usuhlole lonke uhambo.') : ui('Keep exploring at your own pace.', 'Qhubeka uhlole ngejubane lakho.')}</h2><p>{ui("{tried} of {total} stops marked as explored. These are your checklist choices, not a training certificate.", "Izindawo ezingu-{tried} kwezingu-{total} zimakwe njengezihloliwe. Lokhu kuwuhlu lokuzihlola kwakho, akusona isitifiketi sokuqeqeshwa.", {tried: tried, total: PRODUCT_TOUR.length})}</p><div className={styles.controls}><Link href="/samples">{ui('Explore another role', 'Hlola enye indima')}</Link><Link href="/feedback">{ui('Request a feature or ask about customisation', 'Cela isici noma ubuze ngokwenza uhlelo lufanele wena')}</Link></div></section>}
     <h2>{ui('Nine stops, one connected story.', 'Izindawo eziyisishiyagalolunye, indaba eyodwa exhunyiwe.')}</h2>
     <p className={styles.hint}>{ui('Choose any stop below to open its screen and guide. Use the Tour button beside the menu to return to the tips or move to another stop.', 'Khetha noma iyiphi indawo ngezansi ukuze uvule isikrini nomhlahlandlela wayo. Sebenzisa inkinobho ethi Tour eduze kwemenyu ukuze ubuyele emacebisweni noma uye kwenye indawo.')}</p>
@@ -64,7 +64,7 @@ export default function TourPage() {
     <div className={styles.grid}>{PRODUCT_TOUR.map((step,index) => {
       const copy = productTourStepCopy(step, lang);
       // isiXhosa: the unit drafted from lib/locales/xh-inline; every other language keeps productTourDuration.
-      const duration = lang === 'xh' ? (step.minutes === 1 ? inlineText(lang, '1 minute') : inlineTemplate(lang, '{n} minutes', null, { n: step.minutes }))
+      const duration = isInlineDraftLang(lang) ? (step.minutes === 1 ? inlineText(lang, '1 minute') : inlineTemplate(lang, '{n} minutes', null, { n: step.minutes }))
         : productTourDuration(step.minutes,lang);
       const Icon = STOP_ICONS[step.id] ?? Sprout;
       const allowed = !!tour?.ready && tour.allowed(index);

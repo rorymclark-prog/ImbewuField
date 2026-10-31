@@ -25,7 +25,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { Search, X, Loader2, Earth, MapPinOff } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { networkFailureMessage } from '@/lib/network-failure';
 import EmptyState from '@/components/EmptyState';
@@ -44,7 +44,7 @@ type FetchState =
 export default function AtlasExplorer() {
   const { lang, t } = useLanguage();
   const isZulu = lang === 'zu';
-  const isXhosa = lang === 'xh';
+  const isXhosa = isInlineDraftLang(lang); // isiXhosa or Afrikaans: the English-keyed inline drafts
   // isiXhosa follows the same "draft first, English beside it" pairing the isiZulu strings use.
   const bi = (en: string) => { const xh = inlineText(lang, en); return xh === en ? en : `${xh} / ${en}`; };
   const mapRef = useRef<MapRef>(null);

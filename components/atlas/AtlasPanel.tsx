@@ -25,7 +25,7 @@ import type { LocationData } from '@/lib/types';
 import { planSoilCaution, planSoilCautionTitle } from '@/lib/plan-assurance';
 import { getCropArt } from '@/lib/crop-art';
 import { useLanguage } from '@/lib/i18n';
-import { inlineText } from '@/lib/xh-inline';
+import { inlineText, isInlineDraftLang } from '@/lib/xh-inline';
 import {
   atlasRainPattern, catalogMonthFor, koppenFrom, sowableInMonth,
   type AtlasRainPattern,
@@ -96,7 +96,7 @@ function MiniStat({ label, value, sub }: { label: React.ReactNode; value: string
 function pairedLabel(english: string, zulu: string, lang: string): React.ReactNode {
   // isiZulu has a reviewed-by-hand label here; isiXhosa reads its draft. Either way the English
   // stays underneath so a mentor or farmer can check it against the source.
-  const translated = lang === 'zu' ? zulu : lang === 'xh' ? inlineText(lang, english) : null;
+  const translated = lang === 'zu' ? zulu : isInlineDraftLang(lang) ? inlineText(lang, english) : null;
   return translated !== null && translated !== english ? (
     <>
       <span>{translated}</span>
@@ -106,10 +106,10 @@ function pairedLabel(english: string, zulu: string, lang: string): React.ReactNo
 }
 
 function heldTechnicalLabel(english: string, lang: string): React.ReactNode {
-  return lang === 'zu' || lang === 'xh' ? (
+  return lang === 'zu' || isInlineDraftLang(lang) ? (
     <>
       <span>{english}</span>
-      <span className="block font-normal normal-case" style={{ fontSize: 'clamp(11px, 0.8vw, 12px)', letterSpacing: 0, color: 'var(--text-muted)' }}>{lang === 'zu' ? 'isiZulu translation pending' : inlineText(lang, 'isiXhosa translation pending')}</span>
+      <span className="block font-normal normal-case" style={{ fontSize: 'clamp(11px, 0.8vw, 12px)', letterSpacing: 0, color: 'var(--text-muted)' }}>{lang === 'zu' ? 'isiZulu translation pending' : lang === 'af' ? inlineText(lang, 'Afrikaans translation pending') : inlineText(lang, 'isiXhosa translation pending')}</span>
     </>
   ) : english;
 }
@@ -162,12 +162,12 @@ const SOIL_CAUTION_DRAFTABLE: Record<'lab' | 'soilgrids' | 'estimate', string> =
 function SoilProvenance({ source, language='en' }: { source: LocationData['soil']['soilSource']; language?:string }) {
   const key = source&&Object.hasOwn(SOIL_CAUTION_STYLE,source)?source:'unknown';
   const st = SOIL_CAUTION_STYLE[key];
-  const text = language==='xh' ? inlineText(language, planSoilCaution(source,'en')) : planSoilCaution(source,language);
+  const text = (language==='xh'||language==='af') ? inlineText(language, planSoilCaution(source,'en')) : planSoilCaution(source,language);
   return (
-    <div lang={['zu','xh','st','ts','ve'].includes(language)?language:undefined} className="flex gap-2 items-start rounded-xl px-3 py-2.5 mt-3" style={{ background: st.bg, border: `1px solid ${st.border}` }}>
+    <div lang={['zu','xh','af','st','ts','ve'].includes(language)?language:undefined} className="flex gap-2 items-start rounded-xl px-3 py-2.5 mt-3" style={{ background: st.bg, border: `1px solid ${st.border}` }}>
       <AlertTriangle size={13} style={{ color: st.color, flexShrink: 0, marginTop: 2 }} />
       <div>
-        <div className="font-sans font-bold uppercase" style={{ fontSize: 'clamp(11px, 0.8vw, 12px)', letterSpacing: '0.1em', color: st.color }}>{language==='xh' ? inlineText(language, planSoilCautionTitle(source,'en')) : planSoilCautionTitle(source,language)}</div>
+        <div className="font-sans font-bold uppercase" style={{ fontSize: 'clamp(11px, 0.8vw, 12px)', letterSpacing: '0.1em', color: st.color }}>{(language==='xh'||language==='af') ? inlineText(language, planSoilCautionTitle(source,'en')) : planSoilCautionTitle(source,language)}</div>
         <p className="font-display leading-relaxed mt-0.5" style={{ fontSize: 12.5, color: '#3A2E22' }}>{text}</p>
       </div>
     </div>
@@ -210,14 +210,14 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
 
   return (
     <div className="space-y-3">
-      {(lang === 'zu' || lang === 'xh') && (
+      {(lang === 'zu' || isInlineDraftLang(lang)) && (
         <div role="note" className="rounded-xl px-3 py-2 font-sans" style={{ fontSize: 11, lineHeight: 1.45, color: 'var(--text-secondary)', background: '#FFF8E8', border: '1px solid #E7D4A9' }}>
           {lang === 'zu'
             ? 'Umbhalo wesiZulu oboniswe lapha uwuhlaka olungakabuyekezwa. IsiNgisi sikhonjiswa ngaphansi kwamalebula ahunyushiwe. Idatha, amagama ezindawo nezinhlobo zezitshalo, izincazelo, imithombo nezixwayiso zokulima kuhlala njengoba zinikeziwe.'
-            : inlineText(lang, 'IsiXhosa interface wording is an unreviewed draft. English is shown under translated labels. Data, place and species names, explanations, sources and farming cautions remain as supplied.')}
+            : lang === 'af' ? inlineText(lang, 'Afrikaans interface wording is an unreviewed draft. English is shown under translated labels. Data, place and species names, explanations, sources and farming cautions remain as supplied.') : inlineText(lang, 'IsiXhosa interface wording is an unreviewed draft. English is shown under translated labels. Data, place and species names, explanations, sources and farming cautions remain as supplied.')}
           <span className="block mt-1">{lang === 'zu'
             ? 'IsiZulu interface wording is an unreviewed draft. English is shown under translated labels. Data, place and species names, explanations, sources and farming cautions remain as supplied.'
-            : 'IsiXhosa interface wording is an unreviewed draft. English is shown under translated labels. Data, place and species names, explanations, sources and farming cautions remain as supplied.'}</span>
+            : lang === 'af' ? 'Afrikaans interface wording is an unreviewed draft. English is shown under translated labels. Data, place and species names, explanations, sources and farming cautions remain as supplied.' : 'IsiXhosa interface wording is an unreviewed draft. English is shown under translated labels. Data, place and species names, explanations, sources and farming cautions remain as supplied.'}</span>
         </div>
       )}
 
