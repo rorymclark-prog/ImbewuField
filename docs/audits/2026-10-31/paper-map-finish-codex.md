@@ -18,16 +18,19 @@ Oblique and its nine styles are live. The previous fix exposed styles on Oblique
 | AI-MAP-020 | Missing step 4 in exact top-down Water. | Implemented: approved users with a selected sheet can choose styles in either mode/view. Simple, AI-off and no-sheet gates retained. Top-down Base/Sector style restrictions now depend on the selected sheet, not the previous render mode. The earlier assertion expecting hidden exact styles was explicitly superseded by this user-visible requirement; denial/no-purchase coverage remains. |
 | AI-MAP-022 | Plain-paper Water has a grey exterior and muted artwork. | Implemented and locally visually verified: the photographic Reference Blueprint Water focus/palette treatment was applied even with no photo. It now requires a photographic frame. Recovered paper is white and the model's property colour is retained. |
 | AI-MAP-023 | Satellite roof patches cover already completed AI roofs. | Implemented and locally visually verified: factual roof recovery is limited to old strict-paper prompts whose original model left a blank roof. New painted jobs keep their completed roof art and no longer fetch/credit an unused satellite roof. Legacy seven-section roof recovery remains covered. |
+| AI-MAP-024 | The AI invented a roof across the saved courtyard. | Input correction implemented; provider result unresolved. The actual input has two separate house footprints and a large pale patio; raw artwork wrongly roofs the patio. Plain-paper patio input is now opaque warm tan with an explicit uncovered-paving instruction. An opaque paving overlay trial was rejected after inspection: it left roof remnants and looked like a pasted slab. The existing paid image remains geometrically wrong; white-background recovery does not certify it. No replacement generation was purchased. |
 | AI-MAP-019 | Existing canopy clipping. | Open; this release does not claim complete foreground segmentation. |
 
 ## Verification
 
 - Actual saved Water raw art inspected: white exterior, detailed roofs and brighter garden. Actual deployed finisher reproduced grey/muted output with satellite roof patches. Corrected finisher inspected at scale 3: white exterior, intact AI roofs, original labels/legend and scene unchanged. Private originals and recovered PNG remain outside Git.
 - Tests execute the real finisher and assert photographic treatment/focus only for photo frames, no source-roof credit for new painted jobs, retained old-paper recovery, reachable exact Water styles, denied AI-off/no-sheet controls and no paid request on selection.
-- Typecheck, render/UI/security-control tests, whitespace/notes and current-head release checks recorded in PR / issue #35 before merge. No full-suite pass claimed.
+- Local `npx tsc --noEmit`, `npm run test:render` (595 passed), affected notice/UI/access/kill-switch tests (50 passed) and `git diff --check` pass. Current-head release checks recorded in PR / issue #35 before merge. No full-suite pass claimed.
 - No new provider image, geometry mutation or physical-device certification. Native compositor uses fallback fonts. Four notice translations are unreviewed drafts.
 - **This changes the picture.** PLAN_VERSION v93 and recipe r8 are unchanged, preserving free recovery of this existing paid job.
 
 ## Next continuation
 
 Merge after focused-render, rules and preview succeed. Verify production SHA. Use the existing Water map's Reassemble artwork at original High/scale-3 print quality, keeping the old copy. Continue canopy clipping separately.
+
+The roof/courtyard discrepancy was found by inspecting the actual input after the initial composition correction. The private recovered image is a background-only improvement and must not be described as a corrected site plan. Input changes need a future explicitly authorised provider test.

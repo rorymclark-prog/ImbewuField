@@ -144,6 +144,24 @@ test('a plain-input building is visible to the model without painting over a pho
   assert.equal(JSON.stringify({saved,rings}),before);
 });
 
+test('a courtyard input reads as warm paving rather than another grey roof', () => {
+  const saved={items:[],lines:[],zones:[{id:'patio',feature:'patio',points:[[.2,.2],[.8,.2],[.8,.8],[.2,.8]]}]};
+  const rings={boundary:[],house:[],driveway:[]};
+  const before=JSON.stringify(saved),canvas=probeCanvas([[150,150]]),ctx:any=canvas.getContext();
+  const fills:string[]=[];const fill=ctx.fill;ctx.fill=()=>{fills.push(ctx.fillStyle);fill();};
+  helper('drawMarks',{glossyArtworkState,RENDERED_DRIVEWAY_EDGE:false,SCALE:3,authoritativeHouseFootprints,
+    GROUND_FEATURES:{patio:{color:'#EEEEEE'}},zoneBadgePositions:()=>new Map()})(ctx,saved,{...frame,satDataUrl:null},rings,300,300,'water',false);
+  assert.equal(fills.length,1);
+  assert.match(fills[0],/^#[\dA-F]{6}$/i,'paving guide must be opaque, not a near-white wash');
+  const [r,g,b]=fills[0].slice(1).match(/../g)!.map(c=>parseInt(c,16));
+  assert.ok(r>g&&g>b,'courtyard must be visibly distinct from neutral-grey roof markers');
+  fills.length=0;
+  helper('drawMarks',{glossyArtworkState,RENDERED_DRIVEWAY_EDGE:false,SCALE:3,authoritativeHouseFootprints,
+    GROUND_FEATURES:{patio:{color:'#EEEEEE'}},zoneBadgePositions:()=>new Map()})(ctx,saved,frame,rings,300,300,'water',false);
+  assert.deepEqual(fills,['#EEEEEE33'],'a photo keeps its visible paving instead of receiving an opaque guide');
+  assert.equal(JSON.stringify(saved),before);
+});
+
 test('boundary foreground includes tank tops and rectangular planting but respects each sheet', () => {
   const points:Point[]=[[100,70],[100,50],[190,100],[216,100],[20,20]];
   const canvas=probeCanvas(points);

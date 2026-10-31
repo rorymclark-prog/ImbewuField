@@ -1001,7 +1001,8 @@ export function drawMarks(
         fn.call(ctx, px(x), py(y));
       });
       ctx.closePath();
-      ctx.fillStyle = `${meta.color}33`;
+      // Pale grey courtyard guides were read as another roof on plain-paper Water jobs.
+      ctx.fillStyle = z.feature === 'patio' && !frame.satDataUrl ? '#D8BE92' : `${meta.color}33`;
       ctx.fill();
     }
     // Sheet 01 ("Existing site & base") had zero ground name labels — groundLabelsForSheet was
@@ -1947,6 +1948,7 @@ export function buildDesignBrief(
 
   // ── Ground / built features the farmer traced (what is really there today) ──
   const features = state.zones.filter((z) => z.feature && z.points.length >= 3);
+  if (features.some((zone) => zone.feature === 'patio')) before.push('PAVED COURTYARDS: warm tan patio areas are uncovered flat paving, never roofs. Only the separate grey house footprints are buildings. Keep the courtyard open.');
   if (features.length) {
     const parts = features.map((z) => {
       const [cx, cy] = centroidOf(z.points);
