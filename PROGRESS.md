@@ -154,8 +154,10 @@ and isiZulu output are unchanged.
   notes stay as written.
 - **M&E evidence and facilitator reports (1 Nov):** `buildMelEvidenceReport` and `buildTrainingReport` take a
   `language` option; on screen and in the PDF the body follows isiXhosa once the drafts load (`xh-inline/g45`,
-  `g46`, 244 drafts). English is identical across 3,456 MEL and 144 training scenarios. Still English: the
-  mentor field report (`lib/field-report.ts`, `FieldTeams.tsx`).
+  `g46`, 244 drafts). English is identical across 3,456 MEL and 144 training scenarios.
+- **Mentor field report (1 Nov):** `buildFieldReport` and `fieldVisitReportLines` take a language; the
+  field implementation report, the saved-visit report and the focus and programme labels follow isiXhosa
+  (`xh-inline/g47-field-report.ts`, 109 drafts). The download keeps its English file name (`filenameTitle`).
 - **Blind review of the 1 Nov drafts:** 435 strings, 11 repairs ("Berm" had read as a gun; "drawn" as
   "counted") — `docs/translation-reviews/xhosa-ui-2026-10-23/blind-review-2026-11-01/`.
 - **Crops and production:**

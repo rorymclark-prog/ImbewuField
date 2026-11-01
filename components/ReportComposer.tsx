@@ -21,7 +21,7 @@ import { prepareVisualPdfAssets } from '@/lib/report-visual-pdf';
 
 import { buildProgrammePdf, pdfLabelDraft, programmeReportMetrics, programmeReportTableRows, programmeReportColumnWidths, type ReportMetric, type ReportChart, type ReportTable, type ReportSection } from '@/lib/programme-report-pdf';
 export type { ReportSection } from '@/lib/programme-report-pdf';
-export default function ReportComposer({ title, sample, sections: suppliedSections, deviceData, branding: suppliedBranding, orgId, photos = [], photoHeading = 'Site photographs', photosByDefault = false, visuals, reportDate, metrics, chart, session, funder = false, tables = [], subtitle, filenameBase, reportLabel, ownerLabel, aggregate = false }: { title: string; sample: boolean; sections: ReportSection[]; deviceData?: unknown; branding?: ProgrammeBranding; orgId?: string | null; photos?: VenuePhoto[]; photoHeading?: string; photosByDefault?: boolean; visuals?: ReportVisuals; reportDate?: string; metrics?: ReportMetric[]; chart?: ReportChart; session?: TrainingRecord; funder?: boolean; tables?: ReportTable[]; subtitle?: string; filenameBase?: string; reportLabel?: string; ownerLabel?: string; aggregate?: boolean }) {
+export default function ReportComposer({ title, sample, sections: suppliedSections, deviceData, branding: suppliedBranding, orgId, photos = [], photoHeading = 'Site photographs', photosByDefault = false, visuals, reportDate, metrics, chart, session, funder = false, tables = [], subtitle, filenameBase, filenameTitle, reportLabel, ownerLabel, aggregate = false }: { title: string; sample: boolean; sections: ReportSection[]; deviceData?: unknown; branding?: ProgrammeBranding; orgId?: string | null; photos?: VenuePhoto[]; photoHeading?: string; photosByDefault?: boolean; visuals?: ReportVisuals; reportDate?: string; metrics?: ReportMetric[]; chart?: ReportChart; session?: TrainingRecord; funder?: boolean; tables?: ReportTable[]; subtitle?: string; filenameBase?: string; filenameTitle?: string; reportLabel?: string; ownerLabel?: string; aggregate?: boolean }) {
   const { lang } = useLanguage();
   const zu = lang === 'zu';
   const ui = (en: string, zuText: string) => inlineText(lang, en, zuText);
@@ -72,7 +72,7 @@ export default function ReportComposer({ title, sample, sections: suppliedSectio
       })) : [];
       const visual = visuals && presentation !== 'ink' ? { visuals, assets: await prepareVisualPdfAssets(visuals, attached), date: reportDate ?? new Date().toISOString().slice(0, 10) } : undefined;
       const doc = await buildProgrammePdf(title, sample, sections, format, branding, attached, localizedPhotoHeading, visual, {metrics:reportMetrics,chart:reportChart,session,funder,ink:presentation==='ink',language:zu?'zu':lang==='xh'?'xh':lang==='af'?'af':'en',tables,subtitle,date:reportDate,reportLabel,ownerLabel});
-      await deliverFile(doc.output('blob'), filenameBase ? `${filenameBase}-${format}${presentation === 'ink' ? '-ink' : ''}.pdf` : `ImbewuField-${title.replace(/[^a-zA-Z0-9]+/g, '-')}.pdf`, title);
+      await deliverFile(doc.output('blob'), filenameBase ? `${filenameBase}-${format}${presentation === 'ink' ? '-ink' : ''}.pdf` : `ImbewuField-${(filenameTitle ?? title).replace(/[^a-zA-Z0-9]+/g, '-')}.pdf`, title);
     } catch { setError('The PDF could not be created. Your records have not changed.'); }
     finally { setBusy(false); }
   }
