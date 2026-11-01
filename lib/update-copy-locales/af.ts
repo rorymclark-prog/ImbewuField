@@ -237,5 +237,11 @@ const copy:UpdateCopy={
   "Try an AI glossy map": "Probeer 'n AI-blinkkaart",
   "Design Studio → Glossy": "Ontwerpateljee → Glossy",
   "Open a saved farm, choose a sheet and select AI Polished. Each render is paid.": "Maak 'n gestoorde plaas oop, kies 'n blad en kies AI Polished. Elke weergawe word betaal.",
+  // Harvest and sales-unit targets (main #1163, #1164); unreviewed machine drafts.
+  "Plan harvest targets in produce packs with your own pack weights and saleable share.": "Beplan oesteikens in produkpakke met jou eie pakgewigte en verkoopbare deel.",
+  "Set weekly harvest targets and review growing space, dated sowings and gaps.": "Stel weeklikse oesteikens en hersien groeiruimte, gedateerde saaiings en gapings.",
+  "Plan from a harvest target": "Beplan vanaf 'n oesteiken",
+  "Crop planner → Harvest targets": "Gewasbeplanner → Oesteikens",
+  "Choose a crop, weekly weight and harvest months. Review the proposal before adding its dated sowings to your crop plan.": "Kies 'n gewas, weeklikse gewig en oesmaande. Hersien die voorstel voordat jy sy gedateerde saaiings by jou gewasplan voeg.",
 };
 export default copy;
