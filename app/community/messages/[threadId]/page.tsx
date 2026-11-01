@@ -19,14 +19,15 @@ import type { MessageThread, ThreadMessage } from '@/lib/db/types';
 import LessonLink from '@/components/design/LessonLink';
 import AppHeader from '@/components/layout/AppHeader';
 
-// isiXhosa: communityTimeAgo spells a date older than a day with the en-ZA month; isiXhosa
-// writes its own month names (lib/xh-dates). Every other language keeps communityTimeAgo exactly.
-function xhCommunityDate(ts: unknown, shown: string): string {
+// isiXhosa and Afrikaans: communityTimeAgo spells a date older than a day with the en-ZA month; isiXhosa
+// writes its own month names (lib/xh-dates) and Afrikaans uses af-ZA. Every other language keeps
+// communityTimeAgo exactly.
+function xhCommunityDate(ts: unknown, shown: string, lang: 'xh' | 'af' = 'xh'): string {
   const value = ts as { toDate?: () => Date; seconds?: number } | null;
   if (!value || !shown) return shown;
   try {
     const d = typeof value.toDate === 'function' ? value.toDate() : new Date((value.seconds ?? 0) * 1000);
-    return Date.now() - d.getTime() < 86_400_000 ? shown : localeDate('xh', d, { day: 'numeric', month: 'short' }, 'en-ZA');
+    return Date.now() - d.getTime() < 86_400_000 ? shown : localeDate(lang, d, { day: 'numeric', month: 'short' }, lang === 'af' ? 'af-ZA' : 'en-ZA');
   } catch { return shown; }
 }
 
@@ -260,7 +261,7 @@ export default function MessageThreadPage() {
                 </div>
                 {!simple && (
                   <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2, textAlign: mine ? 'right' : 'left' }}>
-                    {lang === 'xh' ? xhCommunityDate(m.created_at, communityTimeAgo(m.created_at,lang,t,true)) : communityTimeAgo(m.created_at,lang,t,true)}
+                    {(lang === 'xh' || lang === 'af') ? xhCommunityDate(m.created_at, communityTimeAgo(m.created_at,lang,t,true), lang) : communityTimeAgo(m.created_at,lang,t,true)}
                   </div>
                 )}
               </div>

@@ -39,6 +39,7 @@ const drafts: Record<string, string> = {
   "Unreviewed Afrikaans draft": "Onhersiene Afrikaanse konsep",
   "The Afrikaans text in assessments has not yet been reviewed by a fluent Afrikaans speaker. Do not treat it as fully translated and approved.": "Die Afrikaanse teks in assesserings is nog nie deur 'n vlot Afrikaanse spreker hersien nie. Moenie dit as volledig vertaal en goedgekeur beskou nie.",
   "Some Afrikaans wording in this assessment is an unreviewed draft; the English source text is shown below it.": "Sommige Afrikaanse bewoording in hierdie assessering is 'n onhersiene konsep; die Engelse bronteks word daaronder gewys.",
+  "These are sample assessment questions. Any Afrikaans text here has not been reviewed by a fluent Afrikaans speaker.": "Dit is voorbeeld-assesseringsvrae. Enige Afrikaanse teks hier is nie deur 'n vlot Afrikaanse spreker hersien nie.",
 };
 
 export default drafts;

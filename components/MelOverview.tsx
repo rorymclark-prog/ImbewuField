@@ -5,7 +5,7 @@ import { ClipboardList, CheckCircle2, Eye, Share2, Flag, BookOpen, GraduationCap
 import { MEL_STAGES, type MelAssessment, type MelStage } from '@/lib/mel';
 import { translate } from '@/lib/i18n';
 import { inlineText } from '@/lib/xh-inline';
-import { recordsMonthShort } from '@/lib/records-months';
+import { recordsBookMonthShort, recordsMonthShort } from '@/lib/records-months';
 import { MEL_TEMPLATES } from '@/lib/mel-templates';
 import styles from './MelDashboard.module.css';
 
@@ -18,7 +18,7 @@ const stateLabelsEn = { draft: 'Draft', open: 'Open', closed: 'Closed' } as cons
 function overviewDate(iso: string, lang: string) {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
   if (!m) return iso;
-  const month = recordsMonthShort(lang === 'zu' || lang === 'af' ? lang : 'en', Number(m[2]));
+  const month = lang === 'af' ? recordsBookMonthShort('af', Number(m[2])) : recordsMonthShort(lang === 'zu' ? lang : 'en', Number(m[2]));
   return month ? `${Number(m[3])} ${month} ${m[1]}` : iso;
 }
 

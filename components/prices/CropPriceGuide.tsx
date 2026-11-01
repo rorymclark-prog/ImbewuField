@@ -27,7 +27,7 @@ export function CropPriceDetail({ crop, onChangeCrop, simple = false }: { crop: 
   const pricedDate = priceDateLabel(price);
   const dateForDisplay = lang === 'zu' ? pricedDate.replace(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/g, month => ({
     January: 'Januwari', February: 'Februwari', March: 'Mashi', April: 'Ephreli', May: 'Meyi', June: 'Juni', July: 'Julayi', August: 'Agasti', September: 'Septhemba', October: 'Okthoba', November: 'Novemba', December: 'Disemba',
-  })[month] ?? month) : lang === 'xh' ? pricedDate.replace(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/g, month => inlineText(lang, month).replace(/^u/, '')) : pricedDate;
+  })[month] ?? month) : lang === 'xh' ? pricedDate.replace(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/g, month => inlineText(lang, month).replace(/^u/, '')) : lang === 'af' ? pricedDate.replace(/\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/g, month => inlineText(lang, month)) : pricedDate;
   return (
     <div className="flex flex-col items-center text-center">
       <button

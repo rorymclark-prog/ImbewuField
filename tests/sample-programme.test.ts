@@ -416,3 +416,11 @@ test('visit photos cannot overflow a record or point to untrusted external image
   assert.equal(validVisitPhotos([{...p,caption:'x'.repeat(201)}]),false);
   assert.equal(validVisitPhotos([{...p,image:'data:image/jpeg;base64,'+'A'.repeat(150000)}]),false);
 });
+
+test('the sample programme gives Afrikaans the same draft treatment as isiXhosa', () => {
+  const sample = readFileSync('components/SampleProgramme.tsx', 'utf8');
+  assert.match(sample, /setAf\(appLang === 'af'\)/);
+  assert.match(sample, /const lang = zu \? 'zu' : xh \? 'xh' : af \? 'af' : 'en'/);
+  assert.match(sample, /\{af && <>/);
+  assert.match(sample, /Any Afrikaans text here has not been reviewed by a fluent Afrikaans speaker\./);
+});

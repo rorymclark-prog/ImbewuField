@@ -1401,7 +1401,7 @@ function FacilitatorCropsPageInner() {
       bedCount: beds.length,
       areaM2: beds.reduce((sum, b) => sum + b.areaM2, 0),
       savedLabel: ms
-        ? inlineTemplate(lang, 'saved {date}', null, { date: localeDate(lang, new Date(ms), { day: 'numeric', month: 'short', year: 'numeric' }, 'en-ZA') })
+        ? inlineTemplate(lang, 'saved {date}', null, { date: localeDate(lang, new Date(ms), { day: 'numeric', month: 'short', year: 'numeric' }, lang === 'af' ? 'af-ZA' : 'en-ZA') })
         : null,
     };
   }), [myDesignsList, lang]);

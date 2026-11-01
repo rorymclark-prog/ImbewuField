@@ -16,6 +16,7 @@ import { sowMarksForPattern, type PlantMark } from '@/lib/crop-calendar';
 import type { RainPattern } from '@/lib/crop-catalog';
 import { useLanguage } from '@/lib/i18n';
 import { useAppLevel } from '@/lib/app-level';
+import { recordsBookMonthShort } from '@/lib/records-months';
 import { loadCropPlan } from '@/lib/crop-plan';
 import IsiZuluDraftSource from '@/components/IsiZuluDraftSource';
 import { inlineText, inlineTemplate, isInlineDraftLang } from '@/lib/xh-inline';
@@ -393,7 +394,9 @@ export default function CalendarPage() {
     ? [t('surveyMonthJan'), t('surveyMonthFeb'), t('surveyMonthMar'), t('surveyMonthApr'),
        t('surveyMonthMay'), t('surveyMonthJun'), t('surveyMonthJul'), t('surveyMonthAug'),
        t('surveyMonthSep'), t('surveyMonthOct'), t('surveyMonthNov'), t('surveyMonthDec')]
-    : MONTH_ABBR;
+    : lang === 'af'
+      ? MONTH_ABBR.map((_, i) => recordsBookMonthShort('af', i + 1))
+      : MONTH_ABBR;
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth());
   // The crops the farmer actually planted, read from lib/crop-plan.ts's loadCropPlan() — the same
   // store the crop planner (app/cropplan, app/facilitator/crops) writes to. This used to read
@@ -559,8 +562,8 @@ export default function CalendarPage() {
                   aria-current={idx === currentMonth ? 'date' : undefined}
                   aria-label={
                     idx === currentMonth
-                      ? (lang === 'zu' ? `Khetha u-${monthLabels[idx]} — le nyanga` : inlineTemplate(lang, 'Select {month} — this month', null, { month: lang === 'xh' ? monthLabels[idx] : MONTH_ABBR[idx] }))
-                      : (lang === 'zu' ? `Khetha u-${monthLabels[idx]}` : inlineTemplate(lang, 'Select {month}', null, { month: lang === 'xh' ? monthLabels[idx] : MONTH_ABBR[idx] }))
+                      ? (lang === 'zu' ? `Khetha u-${monthLabels[idx]} — le nyanga` : inlineTemplate(lang, 'Select {month} — this month', null, { month: lang === 'xh' || lang === 'af' ? monthLabels[idx] : MONTH_ABBR[idx] }))
+                      : (lang === 'zu' ? `Khetha u-${monthLabels[idx]}` : inlineTemplate(lang, 'Select {month}', null, { month: lang === 'xh' || lang === 'af' ? monthLabels[idx] : MONTH_ABBR[idx] }))
                   }
                 >
                   {monthLabels[idx]}

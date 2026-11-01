@@ -67,6 +67,8 @@ function localizedDueDate(dueAt: string | null, today: string, lang: string): st
     // A far-off date: formatDue has no isiXhosa month names (browsers have no 'xh-ZA' pack), so
     // write it day-month-year like the isiZulu line below, from the app's own month names.
     if (lang === 'xh' && dueAt && /^Due \d/.test(en)) return inlineTemplate(lang, 'Due {date}', null, { date: formatXhosaDate(new Date(`${dueAt}T00:00:00`), { day: true, month: 'short', year: true }) });
+    // Afrikaans: the same far-off date in the browser's af-ZA month names.
+    if (lang === 'af' && dueAt && /^Due \d/.test(en)) return inlineTemplate(lang, 'Due {date}', null, { date: new Date(`${dueAt}T00:00:00`).toLocaleDateString('af-ZA', { day: 'numeric', month: 'short', year: 'numeric' }) });
     return inlineText(lang, en);
   }
   if (lang !== 'zu') return formatDue(dueAt, today, lang);

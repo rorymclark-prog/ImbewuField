@@ -58,14 +58,15 @@ function useCommunityLanguage() {
   return { ...language, t };
 }
 
-// isiXhosa: communityTimeAgo spells a date older than a day with the en-ZA month; isiXhosa
-// writes its own month names (lib/xh-dates). Every other language keeps communityTimeAgo exactly.
-function xhCommunityDate(ts: unknown, shown: string): string {
+// isiXhosa and Afrikaans: communityTimeAgo spells a date older than a day with the en-ZA month; isiXhosa
+// writes its own month names (lib/xh-dates) and Afrikaans uses af-ZA. Every other language keeps
+// communityTimeAgo exactly.
+function xhCommunityDate(ts: unknown, shown: string, lang: 'xh' | 'af' = 'xh'): string {
   const value = ts as { toDate?: () => Date; seconds?: number } | null;
   if (!value || !shown) return shown;
   try {
     const d = typeof value.toDate === 'function' ? value.toDate() : new Date((value.seconds ?? 0) * 1000);
-    return Date.now() - d.getTime() < 86_400_000 ? shown : localeDate('xh', d, { day: 'numeric', month: 'short' }, 'en-ZA');
+    return Date.now() - d.getTime() < 86_400_000 ? shown : localeDate(lang, d, { day: 'numeric', month: 'short' }, lang === 'af' ? 'af-ZA' : 'en-ZA');
   } catch { return shown; }
 }
 
@@ -348,7 +349,7 @@ function BoardTab({
                 </span>
                 <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{categoryLabel(p.category,t)}</span>
                 <div style={{ flex: 1 }} />
-                <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{lang === 'xh' ? xhCommunityDate(p.created_at, communityTimeAgo(p.created_at,lang,t)) : communityTimeAgo(p.created_at,lang,t)}</span>
+                <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)' }}>{(lang === 'xh' || lang === 'af') ? xhCommunityDate(p.created_at, communityTimeAgo(p.created_at,lang,t), lang) : communityTimeAgo(p.created_at,lang,t)}</span>
               </div>
               {/* The caption identifies the farmer's photo without translating their name. */}
               {p.photo_url && (
@@ -564,7 +565,7 @@ function MessagesTab({ threads, myUid, onOpen }: { threads: MessageThread[]; myU
             <div style={{ flex: 1, minWidth: 0 }}>
               <div className="flex items-baseline justify-between gap-2">
                 <span lang={ownedOtherName===undefined?lang:''} className="font-display font-semibold" style={{ fontSize: 14, color: 'var(--text-primary)' }}>{otherName}</span>
-                <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', flexShrink: 0 }}>{lang === 'xh' ? xhCommunityDate(th.last_message_at, communityTimeAgo(th.last_message_at,lang,t)) : communityTimeAgo(th.last_message_at,lang,t)}</span>
+                <span className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', flexShrink: 0 }}>{(lang === 'xh' || lang === 'af') ? xhCommunityDate(th.last_message_at, communityTimeAgo(th.last_message_at,lang,t), lang) : communityTimeAgo(th.last_message_at,lang,t)}</span>
               </div>
               <div lang={th.last_message?'':lang} className="font-sans truncate" style={{ fontSize: 12.5, color: 'var(--text-secondary)' }}>{th.last_message || t('communitySayHello')}</div>
             </div>

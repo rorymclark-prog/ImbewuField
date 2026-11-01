@@ -900,7 +900,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         soilPh: d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.ph : undefined,
         language: contentLanguage,
         meanTempC: d.climate.meanTemp,
-        dateLabel: localeDate(language, new Date(reportDate), { year: 'numeric', month: 'long', day: 'numeric' }, language === 'zu' ? 'zu-ZA' : 'en-ZA'),
+        dateLabel: localeDate(language, new Date(reportDate), { year: 'numeric', month: 'long', day: 'numeric' }, language === 'zu' ? 'zu-ZA' : language === 'af' ? 'af-ZA' : 'en-ZA'),
         sheets: includeImages ? plates : [],
         loadSheetImage,
         // The same photographs the model read and the screen shows — so the printed report a
@@ -1322,7 +1322,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 </div>
                 <div className="text-right">
                   <div className={`${styles.date} font-sans`}>
-                    {localeDate(language, new Date(reportDate), { year: 'numeric', month: 'long', day: 'numeric' }, language === 'zu' ? 'zu-ZA' : 'en-ZA')}
+                    {localeDate(language, new Date(reportDate), { year: 'numeric', month: 'long', day: 'numeric' }, language === 'zu' ? 'zu-ZA' : language === 'af' ? 'af-ZA' : 'en-ZA')}
                   </div>
                 </div>
               </div>
