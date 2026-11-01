@@ -237,5 +237,11 @@ const copy:UpdateCopy={
   "Lay out your fields": "Cwangcisa ubeko lwamasimi akho",
   "Site design → Planting → Field blocks": "Uyilo lwendawo → Ukutyala → Field blocks",
   "Draw a polygon, choose beds or open field, save the layout and open the automatic crop planner.": "Zoba i-polygon, khetha imibhede okanye intsimi evulekileyo, gcina ubeko uze uvule umcwangcisi wezityalo ozenzekelayo.",
+  // Harvest and sales-unit targets (main #1163, #1164); unreviewed machine drafts.
+  "Plan harvest targets in produce packs with your own pack weights and saleable share.": "Cwangcisa iinjongo zesivuno ngeepakethi zemveliso usebenzisa obakho ubunzima bepakethi nesabelo esinokuthengiswa.",
+  "Set weekly harvest targets and review growing space, dated sowings and gaps.": "Beka iinjongo zesivuno zeveki nganye uze uhlole indawo yokukhulisa, ukuhlwayela okunemihla kunye nezikhewu.",
+  "Plan from a harvest target": "Cwangcisa ukusuka kwinjongo yesivuno",
+  "Crop planner → Harvest targets": "Isicwangcisi sezityalo → Iinjongo zesivuno",
+  "Choose a crop, weekly weight and harvest months. Review the proposal before adding its dated sowings to your crop plan.": "Khetha isityalo, ubunzima beveki nganye kunye neenyanga zokuvuna. Hlola isindululo phambi kokongeza ukuhlwayela kwaso okunemihla kwisicwangciso sakho sezityalo.",
 };
 export default copy;
