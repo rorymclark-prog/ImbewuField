@@ -1030,7 +1030,7 @@ test('standard written Xitsonga uses the same exact source and paragraph pairing
   assert.equal(validated.at(-1)!.target.body.at(-1)!.text, 'Draft copy');
   lastSlide.english.body[lastSlide.english.body.length - 1] += ' Changed.';
   assert.throws(() => validatePairedDraft(draft, source, 'ts'), /English body differs/);
-  assert.throws(() => validatePairedDraft(completeHold('af'), source, 'af'), /language is unsupported/);
+  assert.throws(() => validatePairedDraft(completeHold('nso'), source, 'nso'), /language is unsupported/);
 });
 
 test('Tshivenda source pairing uses its native visible label and the same exact source checks', () => {
@@ -1043,7 +1043,7 @@ test('Tshivenda source pairing uses its native visible label and the same exact 
   assert.throws(() => validatePairedDraft(draft, source, 've'), /language must be ve/);
   assert.equal(pairedDraftLanguageLabel('xh'), 'ISIXHOSA');
   assert.equal(pairedDraftLanguageLabel('af'), 'AFRIKAANS');
-  assert.equal(pairedDraftLanguageLabel('af'), null);
+  assert.equal(pairedDraftLanguageLabel('nso'), null);
 });
 
 const forestGuildLessonDrafts = {
@@ -2960,11 +2960,11 @@ test('the CLI preflights all supported paired languages and rejects unsupported 
     assert.equal(existsSync(output), false);
 
     const unsupported = spawnSync(process.execPath,
-      ['scripts/make-lesson-slides.mjs', 'intro-permaculture', 'af', output,
+      ['scripts/make-lesson-slides.mjs', 'intro-permaculture', 'nso', output,
         '--paired-draft', json, '--validate-only'],
       { cwd: process.cwd(), encoding: 'utf8' });
     assert.notEqual(unsupported.status, 0);
-    assert.match(unsupported.stderr, /supports st, ts, ve, xh and zu/);
+    assert.match(unsupported.stderr, /supports st, ts, ve, xh, af and zu/);
     assert.equal(existsSync(output), false);
   } finally {
     rmSync(temp, { recursive: true, force: true });

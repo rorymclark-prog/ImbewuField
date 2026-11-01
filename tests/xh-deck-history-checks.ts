@@ -21,7 +21,11 @@ const declared = new Map(XH_DECK_RELEASE_ROWS.flatMap(row => row.slides.map(slid
 let lastSuccessfulSignature = '';
 /** The media listing as it was before the isiXhosa cards, after proving the cards are exactly the release's. */
 export function xhDeckListingBefore(supplied: readonly string[]): string[] {
-  const paths = afDeckListingBefore(supplied);
+  return xhCardsBefore(afDeckListingBefore(supplied));
+}
+
+// The isiXhosa check itself, on a listing the Afrikaans layer has already projected.
+function xhCardsBefore(paths: readonly string[]): string[] {
   const cards = paths.filter(path => XH_CARD.test(path)).sort();
   assert.deepEqual(cards, [...declared.keys()].sort(), 'isiXhosa card folders hold exactly the declared release cards');
   const signature = cards.map(path => {
@@ -47,6 +51,6 @@ export function xhDeckUrlsBefore(supplied: readonly string[], moduleId: string):
   const cards = urls.filter(url => url.startsWith(prefix)).sort();
   const expected = [...declared.keys()].filter(path => path.startsWith('public' + prefix)).map(path => path.slice('public'.length)).sort();
   assert.deepEqual(cards, expected, `${moduleId}: isiXhosa card folder holds exactly the declared release cards`);
-  xhDeckListingBefore(cards.map(url => 'public' + url).concat([...declared.keys()].filter(path => !path.startsWith('public' + prefix))));
+  xhCardsBefore(cards.map(url => 'public' + url).concat([...declared.keys()].filter(path => !path.startsWith('public' + prefix))));
   return urls.filter(url => !url.startsWith(prefix));
 }
