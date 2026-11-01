@@ -93,7 +93,7 @@ const drafts: Record<string, string> = {
   "{n} visible farmer records; coverage is not total project reach": "{n} sigbare boerrekords; dekking is nie die projek se totale bereik nie",
   "Area figures use each garden’s latest observation. Farmer production and finances use available cumulative records, whose reporting periods and coverage may differ.": "Oppervlaktesyfers gebruik elke tuin se jongste waarneming. Boere se produksie en finansies gebruik beskikbare kumulatiewe rekords, wie se verslagtydperke en dekking kan verskil.",
   "Sales are revenue. Profit and R/m² require costs, production area and dates matched to the same activity; those ratios are not calculated here.": "Verkope is inkomste. Wins en R/m² vereis koste, produksie-oppervlakte en datums wat by dieselfde aktiwiteit pas; daardie verhoudings word nie hier bereken nie.",
-  "{n} enrolled farmers are withheld from the portfolio for consent.": "{n} ingeskrewe boere word weens toestemming uit die portefeulje weggelaat.",
+  "{n} enrolled farmers are withheld from the portfolio for consent.": "{n} ingeskrewe boere word weens ontbrekende toestemming uit die portefeulje weggelaat.",
   // Example photo captions (/samples/farm)
   "AI-generated example garden aerial. Not a satellite image or photograph of Ubhejane.": "AI-gegenereerde voorbeeld van 'n tuin uit die lug. Nie 'n satellietbeeld of foto van Ubhejane nie.",
   "AI-generated example harvest. Not evidence of the real garden's production.": "AI-gegenereerde voorbeeldoes. Nie bewys van die regte tuin se produksie nie.",
