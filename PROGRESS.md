@@ -119,8 +119,11 @@ shows it. English, isiZulu and isiXhosa output are unchanged.
   cover, contents, figure labels and months follow Afrikaans (`af-inline/g45-site-report.ts`, 389 drafts;
   `reportDocumentText` reads them). They are Afrikaans only once the drafts are loaded; before that the
   output is the English byte for byte, and the old "af is English" assertions stay as that check. The
-  generate-report route loads the drafts for Afrikaans requests only. Still English: the 39 preparation
-  checklist rows and the crop-plan PDF pages (the same for isiXhosa).
+  generate-report route loads the drafts for Afrikaans requests only. Still English: the
+  crop-plan PDF pages (the same for isiXhosa). The 39 preparation checklist rows followed on 1 Nov
+  (`af-inline/g46-report-preparation.ts`), as for isiXhosa.
+- **Blind review of the 1 Nov drafts:** 858 money book, site report and release-note drafts back-translated
+  before seeing the English; 24 repairs (`docs/translation-reviews/afrikaans-ui-2026-10-31/blind-review-2026-11-01/`).
 - **isiXhosa fix found on the way:** the invoice page told isiXhosa farmers the buyer's invoice "stays in
   English", but it uses `DOCUMENT_COPY.xh`. The note now says so (fixed on #1090).
 - **Staff and map screens:** the M&E dashboard and overview, sector overlay compass words, rainfall chart
